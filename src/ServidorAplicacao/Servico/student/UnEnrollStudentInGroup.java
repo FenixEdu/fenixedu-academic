@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.student;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -78,7 +78,7 @@ public class UnEnrollStudentInGroup implements IServico
             if (studentGroup == null)
                 throw new InvalidSituationServiceException();
 
-            IDisciplinaExecucao executionCourse = studentGroup.getGroupProperties().getExecutionCourse();
+            IExecutionCourse executionCourse = studentGroup.getGroupProperties().getExecutionCourse();
             IStudent student = persistentStudent.readByUsername(userName);
             IFrequenta attend =
                 persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);

@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.Turno;
@@ -102,7 +102,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices {
 		  assertNotNull(student);
 		  infoStudent = Cloner.copyIStudent2InfoStudent(student);
 		  
-		  IDisciplinaExecucao executionCourse = null;
+		  IExecutionCourse executionCourse = null;
 		  executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		  assertNotNull(executionCourse);
 		  

@@ -10,7 +10,7 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 	protected String authors;
 	protected String reference;
 	protected Boolean optional;
-	protected IDisciplinaExecucao executionCourse;
+	protected IExecutionCourse executionCourse;
 	protected String year;
 	private Integer keyExecutionCourse;
 
@@ -22,14 +22,14 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 		setIdInternal(idInternal);
 	}
 
-	public BibliographicReference(IDisciplinaExecucao executionCourse, String reference, Boolean facultative) {
+	public BibliographicReference(IExecutionCourse executionCourse, String reference, Boolean facultative) {
 		setExecutionCourse(executionCourse);
 		setReference(reference);
 		setOptional(facultative);
 	}
 
 	public BibliographicReference(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		String title,
 		String authors,
 		String reference,
@@ -51,7 +51,7 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 		this.keyExecutionCourse = keyExecutionCourse;
 	}
 
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -75,7 +75,7 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 		return title;
 	}
 
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public void setExecutionCourse(IExecutionCourse executionCourse) {
 		this.executionCourse = executionCourse;
 	}
 

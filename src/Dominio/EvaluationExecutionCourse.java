@@ -8,14 +8,14 @@ package Dominio;
 public class EvaluationExecutionCourse extends DomainObject implements IEvalutionExecutionCourse {
 
 	private IEvaluation evaluation;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 
 	private Integer keyEvaluation;
 	private Integer keyExecutionCourse;
 
 	public EvaluationExecutionCourse() {}
 	
-	public EvaluationExecutionCourse(IEvaluation evaluation, IDisciplinaExecucao executionCourse) {
+	public EvaluationExecutionCourse(IEvaluation evaluation, IExecutionCourse executionCourse) {
 		this.setEvaluation(evaluation);
 		this.setExecutionCourse(executionCourse);
 	}
@@ -47,7 +47,7 @@ public class EvaluationExecutionCourse extends DomainObject implements IEvalutio
 	/**
 	 * @return
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -75,7 +75,7 @@ public class EvaluationExecutionCourse extends DomainObject implements IEvalutio
 	/**
 	 * @param execucao
 	 */
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
+	public void setExecutionCourse(IExecutionCourse execucao) {
 		executionCourse = execucao;
 	}
 

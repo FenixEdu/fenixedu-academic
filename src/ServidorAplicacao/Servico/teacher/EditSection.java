@@ -6,7 +6,7 @@ import java.util.List;
 import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.Section;
@@ -15,7 +15,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -124,7 +124,7 @@ public class EditSection implements IServico {
 		
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSection persistentSection = sp.getIPersistentSection();
 
@@ -139,8 +139,8 @@ public class EditSection implements IServico {
 			iSection.setName(newSectionName);
 			persistentSection.lockWrite(iSection);
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					new DisciplinaExecucao(infoExecutionCourseCode),
 					false);
 

@@ -8,7 +8,7 @@ import Dominio.DegreeCurricularPlan;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Frequenta;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IFrequenta;
@@ -133,7 +133,7 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 		frequentaPersistente = persistentSupport.getIFrequentaPersistente();
 		try {
 			IStudent student = enrolment.getStudentCurricularPlan().getStudent();
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) enrolment.getCurricularCourseScope().getCurricularCourse().getAssociatedExecutionCourses().get(0);
+			IExecutionCourse executionCourse = (IExecutionCourse) enrolment.getCurricularCourseScope().getCurricularCourse().getAssociatedExecutionCourses().get(0);
 
 			IFrequenta frequenta = frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 

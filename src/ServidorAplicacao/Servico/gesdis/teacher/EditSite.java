@@ -8,7 +8,7 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -44,7 +44,7 @@ public class EditSite implements IServico {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();		 
 		persistentSite = sp.getIPersistentSite();		
 		ISite siteOld = Cloner.copyInfoSite2ISite(infoSiteOld);
-		IDisciplinaExecucao executionCourse = siteOld.getExecutionCourse();		
+		IExecutionCourse executionCourse = siteOld.getExecutionCourse();		
 		siteOld = persistentSite.readByExecutionCourse(executionCourse);
 		
 		

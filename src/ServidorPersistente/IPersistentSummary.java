@@ -7,7 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISummary;
 import Util.TipoAula;
 
@@ -20,10 +20,10 @@ import Util.TipoAula;
  * 
  */
 public interface IPersistentSummary extends IPersistentObject{
-	public  List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public  List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;		
 	public  List readByExecutionCourseAndType(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		TipoAula summaryType)
 		throws ExcepcaoPersistencia;
 	public abstract void delete (ISummary summary) throws ExcepcaoPersistencia;	

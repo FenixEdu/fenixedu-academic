@@ -13,7 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import DataBeans.InfoExam;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IFrequenta;
 import ServidorAplicacao.IServico;
@@ -94,7 +94,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
             while (iter.hasNext())
             {
                 IFrequenta frequenta = (IFrequenta)iter.next();
-                IDisciplinaExecucao disciplinaExecucao = frequenta.getDisciplinaExecucao();
+                IExecutionCourse disciplinaExecucao = frequenta.getDisciplinaExecucao();
                 frequentaExecutionCourses.add(disciplinaExecucao);
             }
             intersection =

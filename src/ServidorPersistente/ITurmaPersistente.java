@@ -13,7 +13,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -73,6 +73,6 @@ public interface ITurmaPersistente extends IPersistentObject {
 	 * @param executionCourse
 	 * @return
 	 */
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 }

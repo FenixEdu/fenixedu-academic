@@ -10,7 +10,7 @@ import java.util.List;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -85,7 +85,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico
             Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
             while (iter.hasNext())
             {
-                IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iter.next();
+                IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
                 Integer executionCourseId = executionCourse.getIdInternal();
                 Boolean hasSite = sp.getIDisciplinaExecucaoPersistente().readSite(executionCourseId);
                 infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);

@@ -22,12 +22,12 @@ public interface IAula extends Serializable,IDomainObject{
   public Calendar getFim();
   public TipoAula getTipo();
   public ISala getSala();
-  public IDisciplinaExecucao getDisciplinaExecucao();
+  public IExecutionCourse getDisciplinaExecucao();
 
   public void setDiaSemana(DiaSemana diaSemana);
   public void setInicio(Calendar inicio);
   public void setFim(Calendar fim);
   public void setTipo(TipoAula tipo);
   public void setSala(ISala sala);
-  public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao);
+  public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
 }

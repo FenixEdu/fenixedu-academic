@@ -23,7 +23,7 @@ import Dominio.ExecutionPeriod;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISite;
 import Dominio.Site;
@@ -87,8 +87,8 @@ public class SiglaDataLoader {
 		
 		Iterator iter = problems.iterator();
 		while (iter.hasNext()) {
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) iter.next();
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) iter.next();
 			System.out.println(executionCourse);
 		}
 		System.out.println(
@@ -242,8 +242,8 @@ public class SiglaDataLoader {
 		iter = executionCourses.iterator();
 
 		while (iter.hasNext()) {
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) iter.next();
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) iter.next();
 			//NOTE: only executionCourses of current executionPeriod are updated
 			if (executionCourse
 				.getExecutionPeriod()
@@ -261,7 +261,7 @@ public class SiglaDataLoader {
 	 * @param broker
 	 */
 	private static void updateSite(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		Plano_curricular_2003final siglaCurricularCourse,
 		PersistenceBroker broker) {
 		Criteria crit = new Criteria();
@@ -286,7 +286,7 @@ public class SiglaDataLoader {
 	 * @param broker
 	 */
 	private static void updateBibliographicReferences(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		PersistenceBroker broker,
 		SiglaDataLoader loader) {
 		List fenixCurricularCourses =
@@ -320,7 +320,7 @@ public class SiglaDataLoader {
 	 * @param broker
 	 */
 	private static void insertBibliographicReferences(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		Plano_curricular_2003final siglaCurricularCourse,
 		PersistenceBroker broker) {
 			
@@ -333,7 +333,7 @@ public class SiglaDataLoader {
 	
 	}
 
-	private static void storeBibliographicReference(IDisciplinaExecucao executionCourse, Plano_curricular_2003final siglaCurricularCourse, PersistenceBroker broker, String title) {
+	private static void storeBibliographicReference(IExecutionCourse executionCourse, Plano_curricular_2003final siglaCurricularCourse, PersistenceBroker broker, String title) {
 		if (title!=null && !title.equals("")){
 			IBibliographicReference bibliographicReference =
 						new BibliographicReference(
@@ -503,15 +503,6 @@ public class SiglaDataLoader {
 	private static boolean sigla2FenixBasic(String string) {
 		return string.equals("True");
 	}
-
-	/**
-	 * @param siglaCurricularCourse
-	 */
-	private static void printSiglaCurricularCourse(Plano_curricular_2003final siglaCurricularCourse) {
-		System.out.println(siglaCurricularCourse);
-	}
-
-	
 
 	/**
 	 * @return

@@ -51,7 +51,7 @@ import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
@@ -203,7 +203,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 
 			IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
 			List summaries = null;
@@ -238,7 +238,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	 * @return
 	 */
 	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
-		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		IExecutionCourse executionCourse = site.getExecutionCourse();
 		List evaluations = executionCourse.getAssociatedEvaluations();
 		List infoEvaluations = new ArrayList();
 		Iterator iter = evaluations.iterator();
@@ -259,7 +259,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
 
-		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		IExecutionCourse executionCourse = site.getExecutionCourse();
 		List exams = executionCourse.getAssociatedExams();
 		List infoExams = new ArrayList();
 		Iterator iter = exams.iterator();
@@ -300,7 +300,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 			// read degrees
 
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 
 			infoCurricularCourseList = readCurricularCourses(executionCourse);
 
@@ -386,7 +386,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao disciplinaExecucao = site.getExecutionCourse();
+			IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao);
 
 			if (shifts == null || shifts.isEmpty()) {
@@ -437,7 +437,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 
 			List aulas = sp.getIAulaPersistente().readByExecutionCourse(executionCourse);
 
@@ -464,7 +464,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		throws FenixServiceException {
 		List infoCurricularCourseList = new ArrayList();
 
-		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		IExecutionCourse executionCourse = site.getExecutionCourse();
 
 		infoCurricularCourseList = readCurricularCourses(executionCourse);
 
@@ -472,7 +472,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		return component;
 	}
 
-	private List readCurricularCourses(IDisciplinaExecucao executionCourse) {
+	private List readCurricularCourses(IExecutionCourse executionCourse) {
 		List infoCurricularCourseScopeList;
 		List infoCurricularCourseList = new ArrayList();
 		if (executionCourse.getAssociatedCurricularCourses() != null)
@@ -508,7 +508,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentBibliographicReference = sp.getIPersistentBibliographicReference();
 
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 
 			references = persistentBibliographicReference.readBibliographicReference(executionCourse);
 
@@ -538,7 +538,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ISite site) throws FenixServiceException {
 		try {
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
@@ -561,7 +561,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 			List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
 			Iterator iter = curricularCourses.iterator();
@@ -632,7 +632,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	private List readCurriculum(ISite site) throws ExcepcaoPersistencia {
 
-		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		IExecutionCourse executionCourse = site.getExecutionCourse();
 
 		ISuportePersistente sp;
 
@@ -659,7 +659,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		try {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 
 			InfoAnnouncement infoAnnouncement = readLastAnnouncement(persistentSupport, executionCourse);
 
@@ -710,7 +710,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		}
 	}
 
-	private List readLecturingTeachers(ISuportePersistente persistentSupport, IDisciplinaExecucao executionCourse)
+	private List readLecturingTeachers(ISuportePersistente persistentSupport, IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		List domainLecturingTeachersList = null;
 		IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
@@ -730,7 +730,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		return lecturingInfoTeachersList;
 	}
 
-	private List readResponsibleTeachers(ISuportePersistente persistentSupport, IDisciplinaExecucao executionCourse)
+	private List readResponsibleTeachers(ISuportePersistente persistentSupport, IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		List responsibleDomainTeachersList = null;
 
@@ -751,7 +751,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		return responsibleInfoTeachersList;
 	}
 
-	private InfoAnnouncement readLastAnnouncement(ISuportePersistente persistentSupport, IDisciplinaExecucao executionCourse)
+	private InfoAnnouncement readLastAnnouncement(ISuportePersistente persistentSupport, IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
 		IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement().readLastAnnouncementForSite(site);
@@ -787,7 +787,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 			// read degrees
 
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			IExecutionCourse executionCourse = site.getExecutionCourse();
 			infoCurricularCourseList = readCurricularCourses(executionCourse);
 
 			// read shifts and classes

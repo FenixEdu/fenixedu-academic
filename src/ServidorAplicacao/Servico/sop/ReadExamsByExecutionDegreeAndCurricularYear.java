@@ -18,7 +18,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -70,8 +70,8 @@ public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
 					executionPeriod, executionDegree);
 
 			for (int i = 0; i < executionCourses.size(); i++) {
-				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) executionCourses.get(i);
+				IExecutionCourse executionCourse =
+					(IExecutionCourse) executionCourses.get(i);
 
 				InfoExecutionCourseAndExams infoExecutionCourseAndExams =
 					new InfoExecutionCourseAndExams();

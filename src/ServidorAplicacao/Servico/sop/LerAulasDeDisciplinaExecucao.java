@@ -19,11 +19,11 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -57,14 +57,14 @@ public class LerAulasDeDisciplinaExecucao implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
 					infoExecutionCourse.getInfoExecutionPeriod());
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				executionCourseDAO
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					infoExecutionCourse.getSigla(),

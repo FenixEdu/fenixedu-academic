@@ -9,13 +9,13 @@ import java.util.HashMap;
 import DataBeans.InfoGroupProperties;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -30,9 +30,9 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 	ISuportePersistente persistentSupport = null;
 	IPersistentExecutionYear persistentExecutionYear = null;
 	IPersistentExecutionPeriod persistentExecutionPeriod = null;
-	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	IPersistentExecutionCourse persistentExecutionCourse = null;
 
-	IDisciplinaExecucao executionCourse = null;
+	IExecutionCourse executionCourse = null;
 
 	/**
 	 * @param testName

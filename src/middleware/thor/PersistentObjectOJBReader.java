@@ -27,7 +27,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularSemester;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 
 /**
@@ -227,13 +227,13 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	}
 
-	public IDisciplinaExecucao readExecutionCourse(String sigla) {
+	public IExecutionCourse readExecutionCourse(String sigla) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("sigla", sigla);
 		criteria.addEqualTo("keyExecutionPeriod", new Integer(2));
 		List result = query(DisciplinaExecucao.class, criteria);
 		if (result.size() == 1) {
-			return (IDisciplinaExecucao) result.get(0);
+			return (IExecutionCourse) result.get(0);
 		} else if (result.size() > 1) {
 			System.out.println(
 				"ERROR READING EXECUTION_COURSE: " + sigla);

@@ -23,7 +23,7 @@ import DataBeans.teacher.InfoTeachingCareer;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IQualification;
@@ -182,7 +182,7 @@ public class ReadTeacherInformation implements IServico
                 public Object transform(Object o)
                 {
                     IProfessorship professorship = (IProfessorship) o;
-                    IDisciplinaExecucao executionCourse = professorship.getExecutionCourse();
+                    IExecutionCourse executionCourse = professorship.getExecutionCourse();
                     List curricularCourses = executionCourse.getAssociatedCurricularCourses();
                     List infoCurricularCourses =
                         (List) CollectionUtils.collect(curricularCourses, new Transformer()

@@ -8,11 +8,11 @@ package ServidorAplicacao.Servico.commons;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -44,10 +44,10 @@ public class ReadExecutionCourseByOID implements IServico {
 		InfoExecutionCourse result = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionDegreeDAO =
+			IPersistentExecutionCourse executionDegreeDAO =
 				sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) executionDegreeDAO.readByOID(
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) executionDegreeDAO.readByOID(
 					DisciplinaExecucao.class,
 					oid);
 			if (executionCourse != null) {

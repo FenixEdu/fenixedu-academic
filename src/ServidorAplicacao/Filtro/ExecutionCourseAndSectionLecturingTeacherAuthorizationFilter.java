@@ -9,7 +9,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ISection;
 import Dominio.ITeacher;
@@ -17,7 +17,7 @@ import Dominio.Section;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentTeacher;
@@ -75,7 +75,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 		IUserView id,
 		Object[] argumentos) {
 		InfoExecutionCourse infoExecutionCourse = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		ISuportePersistente sp;
 		ISection section = null;
 		InfoSection infoSection = null;
@@ -86,7 +86,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 		try {
 
 			sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
 				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
@@ -95,7 +95,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 						infoExecutionCourse);
 			} else {
 				executionCourse =
-					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+					(IExecutionCourse) persistentExecutionCourse.readByOId(
 						new DisciplinaExecucao((Integer) argumentos[0]),
 						false);
 			}
@@ -134,7 +134,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 		IUserView id,
 		Object[] argumentos) {
 		InfoExecutionCourse infoExecutionCourse = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		ISuportePersistente sp;
 		IProfessorship professorship = null;
 		if (argumentos == null) {
@@ -143,7 +143,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 		try {
 
 			sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
 				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
@@ -152,7 +152,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 						infoExecutionCourse);
 			} else {
 				executionCourse =
-					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+					(IExecutionCourse) persistentExecutionCourse.readByOId(
 						new DisciplinaExecucao((Integer) argumentos[0]),
 						false);
 			}

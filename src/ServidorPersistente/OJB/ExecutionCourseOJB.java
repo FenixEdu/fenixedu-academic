@@ -16,7 +16,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
 import Dominio.ISite;
@@ -24,14 +24,14 @@ import Dominio.ITurno;
 import Dominio.Professorship;
 import Dominio.Site;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
-public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplinaExecucaoPersistente
+public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExecutionCourse
 {
 
-    public DisciplinaExecucaoOJB()
+    public ExecutionCourseOJB()
     {
     }
 
@@ -48,11 +48,11 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
         }
     }
 
-    public void escreverDisciplinaExecucao(IDisciplinaExecucao executionCourseToWrite)
+    public void escreverDisciplinaExecucao(IExecutionCourse executionCourseToWrite)
         throws ExcepcaoPersistencia, ExistingPersistentException
     {
 
-        IDisciplinaExecucao executionCourseFromDB = null;
+        IExecutionCourse executionCourseFromDB = null;
 
         // If there is nothing to write, simply return.
         if (executionCourseToWrite == null)
@@ -95,7 +95,7 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
         }
     }
 
-    public IDisciplinaExecucao readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+    public IExecutionCourse readBySiglaAndAnoLectivoAndSiglaLicenciatura(
         String sigla,
         String anoLectivo,
         String siglaLicenciatura)
@@ -103,7 +103,7 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
     {
         try
         {
-            IDisciplinaExecucao disciplinaExecucao = null;
+            IExecutionCourse disciplinaExecucao = null;
             String oqlQuery = "select disciplinaExecucao from " + DisciplinaExecucao.class.getName();
             oqlQuery += " where sigla = $1";
             oqlQuery += " and executionPeriod.executionYear.year = $2";
@@ -115,7 +115,7 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
             List result = (List) query.execute();
             lockRead(result);
             if (result.size() != 0)
-                disciplinaExecucao = (IDisciplinaExecucao) result.get(0);
+                disciplinaExecucao = (IExecutionCourse) result.get(0);
             return disciplinaExecucao;
         } catch (QueryException ex)
         {
@@ -156,7 +156,7 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
     /**
      * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
      */
-    public IDisciplinaExecucao readByExecutionCourseInitialsAndExecutionPeriod(
+    public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriod(
         String courseInitials,
         IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia
@@ -169,10 +169,10 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
             "executionPeriod.executionYear.year",
             executionPeriod.getExecutionYear().getYear());
         criteria.addEqualTo("sigla", courseInitials);
-        return (IDisciplinaExecucao) queryObject(DisciplinaExecucao.class, criteria);
+        return (IExecutionCourse) queryObject(DisciplinaExecucao.class, criteria);
     }
 
-    public void deleteExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia
+    public void deleteExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
     {
         try
         {
@@ -191,7 +191,7 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 
             if (!result.isEmpty())
             {
-                IDisciplinaExecucao executionCourseTemp = (IDisciplinaExecucao) result.get(0);
+                IExecutionCourse executionCourseTemp = (IExecutionCourse) result.get(0);
                 // Delete All Attends
 
                 List attendsTemp =
@@ -293,11 +293,11 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
         return queryList(Professorship.class, criteria);
     }
 
-    public void lockWrite(IDisciplinaExecucao executionCourseToWrite)
+    public void lockWrite(IExecutionCourse executionCourseToWrite)
         throws ExcepcaoPersistencia, ExistingPersistentException
     {
 
-        IDisciplinaExecucao executionCourseFromDB = null;
+        IExecutionCourse executionCourseFromDB = null;
 
         // If there is nothing to write, simply return.
         if (executionCourseToWrite == null)
@@ -342,7 +342,7 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
         return result;
     }
 
-    public IDisciplinaExecucao readbyCurricularCourseAndExecutionPeriod(
+    public IExecutionCourse readbyCurricularCourseAndExecutionPeriod(
         ICurricularCourse curricularCourse,
         IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia
@@ -352,7 +352,7 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
         criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
         criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
 
-        return (IDisciplinaExecucao) queryObject(DisciplinaExecucao.class, criteria);
+        return (IExecutionCourse) queryObject(DisciplinaExecucao.class, criteria);
 
     }
 	public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {

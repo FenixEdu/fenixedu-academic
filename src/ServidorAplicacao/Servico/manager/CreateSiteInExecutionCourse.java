@@ -4,14 +4,14 @@
 package ServidorAplicacao.Servico.manager;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.Site;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -40,11 +40,11 @@ public class CreateSiteInExecutionCourse  implements IServico {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 								
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-			IDisciplinaExecucao executionCourseToRead = new DisciplinaExecucao();
+			IExecutionCourse executionCourseToRead = new DisciplinaExecucao();
 			executionCourseToRead.setIdInternal(executionCourseId);
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourseToRead, false);
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourseToRead, false);
 				
 			if(executionCourse == null)
 				throw new NonExistingServiceException("message.non.existing.execution.course", null);

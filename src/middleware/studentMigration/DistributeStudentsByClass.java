@@ -20,7 +20,7 @@ import org.apache.commons.collections.Predicate;
 
 import Dominio.Frequenta;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -148,7 +148,7 @@ public class DistributeStudentsByClass
         Iterator executionCourseIterator = executionCourseShiftListMap.keySet().iterator();
         while (executionCourseIterator.hasNext())
         {
-            IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) executionCourseIterator.next();
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseIterator.next();
             IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 
             if (attend == null)
@@ -210,7 +210,7 @@ public class DistributeStudentsByClass
     private static void enrollToExecutionCourseShifts(
         IStudent student,
         ITurma group,
-        IDisciplinaExecucao executionCourse, List executionCourseShiftList,
+        IExecutionCourse executionCourse, List executionCourseShiftList,
         ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {

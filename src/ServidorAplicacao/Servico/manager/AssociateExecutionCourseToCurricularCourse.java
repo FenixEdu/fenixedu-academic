@@ -9,13 +9,13 @@ import java.util.List;
 import Dominio.CurricularCourse;
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -46,8 +46,8 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 			
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
-				IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
-				IDisciplinaExecucao executionCourse;
+				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+				IExecutionCourse executionCourse;
 				
 				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
@@ -60,12 +60,12 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 				Iterator iter = executionCourses.iterator();
 			
 				while(iter.hasNext()){
-				Integer associatedExecutionPeriodId = ((IDisciplinaExecucao) iter.next()).getExecutionPeriod().getIdInternal();
+				Integer associatedExecutionPeriodId = ((IExecutionCourse) iter.next()).getExecutionPeriod().getIdInternal();
 				if(associatedExecutionPeriodId.equals(executionPeriodId))
 					throw new ExistingServiceException("message.unavailable.execution.period",null);
 				}
 				
-				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
+				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
 				if(executionCourse == null)
 					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
 				else {

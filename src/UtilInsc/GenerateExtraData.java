@@ -19,7 +19,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
@@ -27,7 +27,7 @@ import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
@@ -61,7 +61,7 @@ public class GenerateExtraData {
 
 // APAGO TODAS AS EXECUTION_COURSE PORQUE VOU ESCREVELAS DE RAIZ:
 		turnOnPersistentSuport();
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 		persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
 		turnOffPersistentSuport();
 
@@ -336,7 +336,7 @@ public class GenerateExtraData {
 		turnOnPersistentSuport();
 
 		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 		
 		ICurricularCourse curricularCourseToAssociate = null;
@@ -348,7 +348,7 @@ public class GenerateExtraData {
 			e.printStackTrace(System.out);
 		}
 		
-		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+		IExecutionCourse executionCourse = new DisciplinaExecucao();
 		executionCourse.setAssociatedExams(null);
 		executionCourse.setComment(null);
 		executionCourse.setIdInternal(null);

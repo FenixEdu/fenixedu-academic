@@ -9,7 +9,7 @@ import java.util.List;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.gesdis.InfoCourseReport;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import Dominio.ResponsibleFor;
@@ -20,7 +20,7 @@ import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -92,10 +92,10 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
-            IDisciplinaExecucao executionCourse =
-                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new DisciplinaExecucao(infoExecutionCourse.getIdInternal()),
                     false);
 

@@ -17,13 +17,13 @@ import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurriculum;
@@ -70,7 +70,7 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
             IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             IPersistentCurricularCourseScope persistentCurricularCourseScope =
                 sp.getIPersistentCurricularCourseScope();
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
@@ -145,7 +145,7 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
 
     private InfoCurriculum createInfoCurriculum(
         ICurriculum curriculum,
-        IDisciplinaExecucaoPersistente persistentExecutionCourse)
+        IPersistentExecutionCourse persistentExecutionCourse)
         throws ExcepcaoPersistencia
     {
         InfoCurriculum infoCurriculum;
@@ -169,7 +169,7 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
         Iterator iterExecutionCourses = executionCourses.iterator();
         while (iterExecutionCourses.hasNext())
         {
-            IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterExecutionCourses.next();
+            IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
             InfoExecutionCourse infoExecutionCourse =
                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
             infoExecutionCourse.setHasSite(

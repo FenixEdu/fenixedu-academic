@@ -21,7 +21,7 @@ public interface ITurno extends IDomainObject {
   public Integer getAvailabilityFinal();
   public Integer getOcupation();
   public Double getPercentage();
-  public IDisciplinaExecucao getDisciplinaExecucao();
+  public IExecutionCourse getDisciplinaExecucao();
 
   public void setAvailabilityFinal(Integer i);
   public void setOcupation(Integer i);
@@ -29,7 +29,7 @@ public interface ITurno extends IDomainObject {
   public void setNome(String nome);
   public void setTipo(TipoAula tipo);
   public void setLotacao(Integer Lotacao);
-  public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao);
+  public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
   
   public List getAssociatedShiftProfessorship();
   public void setAssociatedShiftProfessorship(List list);

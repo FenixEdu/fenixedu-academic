@@ -6,13 +6,13 @@ import java.util.List;
 
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -59,12 +59,12 @@ public class ReadEvaluations implements IServico {
 	public List run(Integer executionCourseCode) throws FenixServiceException {
 		try {
 			ISuportePersistente sp;
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseCode);
+			IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseCode);
 
 			sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
-			executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 			if (executionCourse == null) {
 				throw new NonExistingServiceException();
 			}

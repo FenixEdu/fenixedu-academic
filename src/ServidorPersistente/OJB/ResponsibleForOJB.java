@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import Dominio.Professorship;
@@ -50,7 +50,7 @@ public class ResponsibleForOJB
 
 	public IResponsibleFor readByTeacherAndExecutionCourse(
 		ITeacher teacher,
-		IDisciplinaExecucao executionCourse)
+		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		try {
 			IResponsibleFor responsibleFor = null;
@@ -102,7 +102,7 @@ public class ResponsibleForOJB
 		}
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
 		crit.addEqualTo("executionCourse.idInternal",executionCourse.getIdInternal());
@@ -153,7 +153,7 @@ public class ResponsibleForOJB
 	 */
 	public IResponsibleFor readByTeacherAndExecutionCoursePB(
 		ITeacher teacher,
-		IDisciplinaExecucao executionCourse)
+		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		
 		Criteria criteria = new Criteria();

@@ -16,12 +16,12 @@ import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -103,8 +103,8 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 			
-			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao ide = null;
+			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IExecutionCourse ide = null;
 			
 			if(existing) {
 				ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);

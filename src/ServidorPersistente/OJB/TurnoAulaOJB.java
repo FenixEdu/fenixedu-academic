@@ -17,7 +17,7 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
@@ -165,7 +165,7 @@ public class TurnoAulaOJB
 			query.create(oqlQuery);
 
 			
-			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
+			IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 			
 			query.bind(shift.getNome());
 			query.bind(executionCourse.getIdInternal());
@@ -213,7 +213,7 @@ public class TurnoAulaOJB
 
 			query.create(oqlQuery);
 
-			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
+			IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 			
 			query.bind(shift.getNome());
 			

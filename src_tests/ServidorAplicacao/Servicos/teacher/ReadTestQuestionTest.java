@@ -12,7 +12,7 @@ import DataBeans.InfoTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IQuestion;
 import Dominio.ITest;
 import Dominio.ITestQuestion;
@@ -21,7 +21,7 @@ import Dominio.Test;
 import Dominio.TestQuestion;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentQuestion;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
@@ -77,11 +77,11 @@ public class ReadTestQuestionTest extends TestCaseReadServices
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
-            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(new Integer(26));
+            IExecutionCourse executionCourse = new DisciplinaExecucao(new Integer(26));
             executionCourse =
-                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
             assertNotNull("executionCourse null", executionCourse);
 
             IPersistentTest persistentTest = sp.getIPersistentTest();

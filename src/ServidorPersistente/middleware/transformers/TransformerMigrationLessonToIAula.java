@@ -11,7 +11,7 @@ import org.apache.commons.collections.Transformer;
 
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISala;
 import ServidorPersistente.middleware.MigrationExecutionCourse;
 import ServidorPersistente.middleware.MigrationLesson;
@@ -56,8 +56,8 @@ public class TransformerMigrationLessonToIAula implements Transformer
                     migrationLesson.getMigrationExecutionCourse();
                 TransformerMigrationExecutionCourse2ExecutionCourse transf =
                     new TransformerMigrationExecutionCourse2ExecutionCourse();
-                IDisciplinaExecucao executionCourse =
-                    (IDisciplinaExecucao) transf.transform(migrationExecutionCourse);
+                IExecutionCourse executionCourse =
+                    (IExecutionCourse) transf.transform(migrationExecutionCourse);
                 lesson.setDisciplinaExecucao(executionCourse);
 
                 migrationLesson.setLesson(lesson);

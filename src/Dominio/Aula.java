@@ -21,7 +21,7 @@ public class Aula extends DomainObject implements IAula {
   protected Calendar _fim;
   protected TipoAula _tipo;
   protected ISala _sala;
-  protected IDisciplinaExecucao _disciplinaExecucao;
+  protected IExecutionCourse _disciplinaExecucao;
   protected IExecutionPeriod executionPeriod;
     
   // c�digos internos da base de dados
@@ -65,7 +65,7 @@ public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
   	 }
     
   public Aula(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo, ISala sala,
-              IDisciplinaExecucao disciplinaExecucao) {
+              IExecutionCourse disciplinaExecucao) {
     setDiaSemana(diaSemana);
     setInicio(inicio);
     setFim(fim);
@@ -122,11 +122,11 @@ public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
     _chaveDisciplinaExecucao = chaveDisciplinaExecucao;
   }
 
-  public IDisciplinaExecucao getDisciplinaExecucao() {
+  public IExecutionCourse getDisciplinaExecucao() {
     return _disciplinaExecucao;
   }
     
-  public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) {
+  public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao) {
     _disciplinaExecucao = disciplinaExecucao;
     if (disciplinaExecucao!=null){
     setExecutionPeriod(disciplinaExecucao.getExecutionPeriod());}

@@ -19,7 +19,7 @@ import DataBeans.InfoLessonServiceResult;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
@@ -29,7 +29,7 @@ import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -71,7 +71,7 @@ public class CriarAula implements IServico {
 			System.out.println("infoLesson.getInfoSala().getNome()= " + infoLesson.getInfoSala().getNome());
 			System.out.println("sala= " + sala);
 
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			IExecutionPeriod executionPeriod =
@@ -80,7 +80,7 @@ public class CriarAula implements IServico {
 						.getInfoDisciplinaExecucao()
 						.getInfoExecutionPeriod());
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				executionCourseDAO
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					infoLesson.getInfoDisciplinaExecucao().getSigla(),

@@ -14,7 +14,7 @@ import Dominio.Enrolment;
 import Dominio.Frequenta;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
@@ -75,7 +75,7 @@ public class LoadInscricoes extends LoadDataFile {
 		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(almeida_inscricoes);
 		ICurricularCourse curricularCourse = readCurricularCourse(almeida_inscricoes);
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao disciplinaExecucao = null;
+		IExecutionCourse disciplinaExecucao = null;
 
 		if (curricularCourse != null) {
 			executionPeriod = readActiveExecutionPeriod();
@@ -129,7 +129,7 @@ public class LoadInscricoes extends LoadDataFile {
 	 * @param executionPeriod
 	 * @return
 	 */
-	private IDisciplinaExecucao readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
+	private IExecutionCourse readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 		return persistentObjectOJB.readExecutionCourse(curricularCourse, executionPeriod);
 
 	}

@@ -12,7 +12,7 @@ package Dominio;
  */
 public class Frequenta extends DomainObject implements IFrequenta {
 	protected IStudent _aluno;
-	protected IDisciplinaExecucao _disciplinaExecucao;
+	protected IExecutionCourse _disciplinaExecucao;
 	protected IEnrolment _enrolment;
 
 	// códigos internos da base de dados
@@ -24,14 +24,14 @@ public class Frequenta extends DomainObject implements IFrequenta {
 	public Frequenta() {
 	}
 
-	public Frequenta(IStudent aluno, IDisciplinaExecucao disciplinaExecucao) {
+	public Frequenta(IStudent aluno, IExecutionCourse disciplinaExecucao) {
 		setAluno(aluno);
 		setDisciplinaExecucao(disciplinaExecucao);
 	}
 
 	public Frequenta(
 		IStudent aluno,
-		IDisciplinaExecucao disciplinaExecucao,
+		IExecutionCourse disciplinaExecucao,
 		IEnrolment enrolment) {
 		setAluno(aluno);
 		setDisciplinaExecucao(disciplinaExecucao);
@@ -54,11 +54,11 @@ public class Frequenta extends DomainObject implements IFrequenta {
 		_chaveAluno = chaveAluno;
 	}
 
-	public IDisciplinaExecucao getDisciplinaExecucao() {
+	public IExecutionCourse getDisciplinaExecucao() {
 		return _disciplinaExecucao;
 	}
 
-	public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) {
+	public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao) {
 		_disciplinaExecucao = disciplinaExecucao;
 	}
 

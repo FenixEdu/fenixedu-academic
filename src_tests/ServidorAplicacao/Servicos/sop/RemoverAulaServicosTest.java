@@ -21,7 +21,7 @@ import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.ICurso;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionYear;
 import Dominio.ISala;
 import Dominio.ITurno;
@@ -30,7 +30,7 @@ import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
@@ -150,9 +150,9 @@ public class RemoverAulaServicosTest
 			IAula lesson = null;
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				persistentExecutionCourse
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"TFCI",

@@ -9,7 +9,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourseScope;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
@@ -48,7 +48,7 @@ public abstract class EnrolmentStrategy implements IEnrolmentStrategy {
 				
 			final List executionCourseInExecutionPeriod = (List) CollectionUtils.select(executionCourseList, new Predicate() {
 				public boolean evaluate(Object obj) {
-					IDisciplinaExecucao disciplinaExecucao = (IDisciplinaExecucao) obj;
+					IExecutionCourse disciplinaExecucao = (IExecutionCourse) obj;
 					return disciplinaExecucao.getExecutionPeriod().equals(executionPeriod);
 				}
 			});

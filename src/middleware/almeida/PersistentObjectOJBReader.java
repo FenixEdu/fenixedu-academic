@@ -40,7 +40,7 @@ import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
@@ -196,7 +196,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 * @param executionPeriod
 	 * @return
 	 */
-	public IDisciplinaExecucao readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
+	public IExecutionCourse readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("associatedCurricularCourses.idInternal", ((CurricularCourse) curricularCourse).getIdInternal());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
@@ -204,7 +204,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		List result = query(DisciplinaExecucao.class, criteria);
 		//System.out.println("result.size" + result.size());
 		if (result.size() == 1) {
-			return (IDisciplinaExecucao) result.get(0);
+			return (IExecutionCourse) result.get(0);
 		} else {
 			return null;
 		}
@@ -282,7 +282,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 * @param disciplinaExecucao
 	 * @return
 	 */
-	public IFrequenta readFrequenta(IStudent student, IDisciplinaExecucao disciplinaExecucao) {
+	public IFrequenta readFrequenta(IStudent student, IExecutionCourse disciplinaExecucao) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("aluno.idInternal", ((Student) student).getIdInternal());
 		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
@@ -787,14 +787,14 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return result;
 	}
 
-	public IDisciplinaExecucao readExecutionCourseByUnique(String code, IExecutionPeriod executionPeriod) {
+	public IExecutionCourse readExecutionCourseByUnique(String code, IExecutionPeriod executionPeriod) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("sigla", code);
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 		criteria.addEqualTo("executionPeriod.name.executionYear.year", executionPeriod.getExecutionYear().getYear());
 		List result = query(DisciplinaExecucao.class, criteria);
 		if (result.size() == 1) {
-			return (IDisciplinaExecucao) result.get(0);
+			return (IExecutionCourse) result.get(0);
 		} else if (result.size() > 1) {
 			System.out.println("readExecutionCourse mais que um\n");
 		}

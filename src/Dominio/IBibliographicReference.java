@@ -15,12 +15,12 @@ public interface IBibliographicReference extends IDomainObject {
     String getAuthors();
     String getReference();
     String getYear();
-    IDisciplinaExecucao getExecutionCourse();
+    IExecutionCourse getExecutionCourse();
     Boolean getOptional(); 
     void setTitle(String title);
     void setAuthors(String author);
     void setReference(String reference);
     void setYear(String year);
     void setOptional(Boolean optional);
-	void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	void setExecutionCourse(IExecutionCourse executionCourse);
 }

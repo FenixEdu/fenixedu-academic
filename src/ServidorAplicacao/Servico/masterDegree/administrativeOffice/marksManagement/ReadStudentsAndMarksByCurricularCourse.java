@@ -21,7 +21,7 @@ import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExam;
@@ -224,7 +224,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico
         Iterator iterator = curricularCourse.getAssociatedExecutionCourses().listIterator();
         while (iterator.hasNext())
         {
-            IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator.next();
+            IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
             if (executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(yearString))
             {
 

@@ -19,7 +19,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -114,7 +114,7 @@ public class ResponsiblesDataLoader
         Iterator iterFenix = fenixExecutionCourses.iterator();
         while (iterFenix.hasNext())
         {
-            loader.updateExecutionCourse((IDisciplinaExecucao) iterFenix.next(), broker, loader);
+            loader.updateExecutionCourse((IExecutionCourse) iterFenix.next(), broker, loader);
         }
     }
 
@@ -124,7 +124,7 @@ public class ResponsiblesDataLoader
 	 * @param loader
 	 */
     private void updateExecutionCourse(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         PersistenceBroker broker,
         ResponsiblesDataLoader loader)
     {
@@ -139,7 +139,7 @@ public class ResponsiblesDataLoader
 	 * @param loader
 	 */
     private void writeResponsibles(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         List siglaResponsibles,
         PersistenceBroker broker,
         ResponsiblesDataLoader loader)
@@ -171,7 +171,7 @@ public class ResponsiblesDataLoader
 	 * @param loader
 	 */
     private void updateProblems(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         List fenixResponsibles,
         List siglaResponsibles2,
         List responsiblesToDelete,
@@ -188,7 +188,7 @@ public class ResponsiblesDataLoader
     /**
 	 * @param executionCourse
 	 */
-    private void addToFenixProblems(IDisciplinaExecucao executionCourse, ResponsiblesDataLoader loader)
+    private void addToFenixProblems(IExecutionCourse executionCourse, ResponsiblesDataLoader loader)
     {
         if (!loader.getFenixProblems().contains(executionCourse))
         {
@@ -267,7 +267,7 @@ public class ResponsiblesDataLoader
 	 * @return
 	 */
     private List getFenixResponsibles(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         PersistenceBroker broker,
         ResponsiblesDataLoader loader)
     {
@@ -285,7 +285,7 @@ public class ResponsiblesDataLoader
 	 * @param loader
 	 */
     private void writeResponsible(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         Responsavel siglaResponsible,
         PersistenceBroker broker,
         ResponsiblesDataLoader loader)
@@ -377,7 +377,7 @@ public class ResponsiblesDataLoader
 	 * @return
 	 */
     private List getSiglaResponsibles(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         PersistenceBroker broker,
         ResponsiblesDataLoader loader)
     {

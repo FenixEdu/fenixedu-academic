@@ -20,7 +20,7 @@ import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
@@ -86,8 +86,8 @@ public class ReadExamsByDayAndBeginning implements IServico {
 
 				if (tempExam.getAssociatedExecutionCourses() != null) {
 					for(int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++ ) {
-						IDisciplinaExecucao executionCourse =
-							(IDisciplinaExecucao) tempExam.getAssociatedExecutionCourses().get(k);
+						IExecutionCourse executionCourse =
+							(IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
 						tempInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
 						// prepare degrees associated with exam

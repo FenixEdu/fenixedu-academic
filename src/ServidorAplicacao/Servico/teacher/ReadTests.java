@@ -14,13 +14,13 @@ import DataBeans.InfoTest;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITest;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -50,11 +50,11 @@ public class ReadTests implements IServico
         {
             persistentSuport = SuportePersistenteOJB.getInstance();
 
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 persistentSuport.getIDisciplinaExecucaoPersistente();
-            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
             executionCourse =
-                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
             if (executionCourse == null)
             {
                 throw new InvalidArgumentsServiceException();

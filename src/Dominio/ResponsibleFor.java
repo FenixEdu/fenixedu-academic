@@ -13,7 +13,7 @@ package Dominio;
 public class ResponsibleFor extends DomainObject implements IResponsibleFor
 {
     protected ITeacher teacher;
-    protected IDisciplinaExecucao executionCourse;
+    protected IExecutionCourse executionCourse;
 
     private Integer keyTeacher;
     private Integer keyExecutionCourse;
@@ -24,7 +24,7 @@ public class ResponsibleFor extends DomainObject implements IResponsibleFor
     {
     }
 
-    public ResponsibleFor(ITeacher teacher, IDisciplinaExecucao executionCourse)
+    public ResponsibleFor(ITeacher teacher, IExecutionCourse executionCourse)
     {
         setTeacher(teacher);
         setExecutionCourse(executionCourse);
@@ -33,7 +33,7 @@ public class ResponsibleFor extends DomainObject implements IResponsibleFor
     /**
 	 * @return IDisciplinaExecucao
 	 */
-    public IDisciplinaExecucao getExecutionCourse()
+    public IExecutionCourse getExecutionCourse()
     {
         return executionCourse;
     }
@@ -68,7 +68,7 @@ public class ResponsibleFor extends DomainObject implements IResponsibleFor
 	 * @param executionCourse
 	 *            The executionCourse to set
 	 */
-    public void setExecutionCourse(IDisciplinaExecucao executionCourse)
+    public void setExecutionCourse(IExecutionCourse executionCourse)
     {
         this.executionCourse = executionCourse;
     }

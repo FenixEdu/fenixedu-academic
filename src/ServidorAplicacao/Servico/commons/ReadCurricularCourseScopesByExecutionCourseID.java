@@ -9,7 +9,7 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -46,9 +46,9 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
 			// Read The ExecutionCourse
-			IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao();
+			IExecutionCourse executionCourseTemp = new DisciplinaExecucao();
 			executionCourseTemp.setIdInternal(executionCourseID);
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false); 
+			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false); 
 
 			// For all associated Curricular Courses read the Scopes
 			

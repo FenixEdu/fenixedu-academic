@@ -16,7 +16,7 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IFrequenta;
 import Dominio.IMark;
@@ -33,7 +33,7 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrat
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentMark;
@@ -76,14 +76,14 @@ public class InsertEvaluationMarks implements IServico {
 		throws ExcepcaoInexistente, FenixServiceException {
 
 		ISite site = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		IEvaluation evaluation = null;
 		List infoMarksList = null;
 		List marksErrorsInvalidMark = null;
 		List marksErrorsStudentExistence = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
 			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
@@ -91,7 +91,7 @@ public class InsertEvaluationMarks implements IServico {
 
 			//Execution Course
 			executionCourse = new DisciplinaExecucao(executionCourseCode);
-			executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 			//Site
 			site = persistentSite.readByExecutionCourse(executionCourse);
@@ -181,7 +181,7 @@ public class InsertEvaluationMarks implements IServico {
 		return infoMark;
 	}
 
-	private InfoMark completeMark(InfoMark infoMark, IEvaluation evaluation, IDisciplinaExecucao disciplinaExecucao)
+	private InfoMark completeMark(InfoMark infoMark, IEvaluation evaluation, IExecutionCourse disciplinaExecucao)
 		throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();

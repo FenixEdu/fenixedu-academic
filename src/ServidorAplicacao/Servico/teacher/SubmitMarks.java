@@ -23,7 +23,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -39,7 +39,7 @@ import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
@@ -96,11 +96,11 @@ public class SubmitMarks implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//execution course and execution course's site
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(executionCourseCode);
-			executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			ISite site = persistentSite.readByExecutionCourse(executionCourse);
@@ -136,7 +136,7 @@ public class SubmitMarks implements IServico {
 	private List submitMarks(
 		UserView userView,
 		Date evaluationDate,
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		IEvaluation evaluation,
 		List marksList)
 		throws FenixServiceException {
@@ -212,7 +212,7 @@ public class SubmitMarks implements IServico {
 	}
 
 	private void setEnrolmentEvaluation(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		Date evaluationDate,
 		IEnrolment enrolment,
 		String publishedMark,

@@ -10,7 +10,7 @@ package Dominio;
  */
 public class Site extends DomainObject implements ISite {
 	
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 	private Integer keyExecutionCourse;
 
 	private String alternativeSite;
@@ -32,7 +32,7 @@ public class Site extends DomainObject implements ISite {
 	/** 
 	 * Construtor
 	 */
-	public Site(IDisciplinaExecucao executionCourse) {
+	public Site(IExecutionCourse executionCourse) {
 
 		setExecutionCourse(executionCourse);
 	}
@@ -40,7 +40,7 @@ public class Site extends DomainObject implements ISite {
 	/**
 	 * @return IDisciplinaExecucao
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -48,7 +48,7 @@ public class Site extends DomainObject implements ISite {
 	 * Sets the executionCourse.
 	 * @param executionCourse The executionCourse to set
 	 */
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public void setExecutionCourse(IExecutionCourse executionCourse) {
 		this.executionCourse = executionCourse;
 	}
 

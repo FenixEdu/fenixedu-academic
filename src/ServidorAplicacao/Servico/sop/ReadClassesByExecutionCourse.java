@@ -8,7 +8,7 @@ import org.apache.commons.collections.Transformer;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurma;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -49,8 +49,8 @@ public class ReadClassesByExecutionCourse implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) sp
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) sp
 					.getIDisciplinaExecucaoPersistente()
 					.readByOID(
 					DisciplinaExecucao.class,

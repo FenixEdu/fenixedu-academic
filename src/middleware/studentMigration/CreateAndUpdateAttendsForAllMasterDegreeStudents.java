@@ -6,13 +6,13 @@ import java.util.List;
 
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -116,7 +116,7 @@ public class CreateAndUpdateAttendsForAllMasterDegreeStudents
 	 */
 	private static IFrequenta createOrUpdateAttend(IStudent student, IEnrolment enrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = fenixPersistentSuport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = fenixPersistentSuport.getIDisciplinaExecucaoPersistente();
 		IFrequentaPersistente persistentAttend = fenixPersistentSuport.getIFrequentaPersistente();
 
 		ICurricularCourse curricularCourse = enrolment.getCurricularCourseScope().getCurricularCourse();
@@ -124,7 +124,7 @@ public class CreateAndUpdateAttendsForAllMasterDegreeStudents
 		
 		if (executionPeriod.getState().equals(PeriodState.CURRENT))
 		{
-			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+			IExecutionCourse executionCourse = persistentExecutionCourse.readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 
 			IFrequenta attend = null;
 			

@@ -11,7 +11,7 @@ import java.util.List;
 import DataBeans.InfoGroupProperties;
 import Dominio.DisciplinaExecucao;
 import Dominio.GroupProperties;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.ITurno;
@@ -19,7 +19,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -169,15 +169,15 @@ public class EditGroupProperties implements IServico {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
 			IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
 
 			IGroupProperties groupProperties = new GroupProperties(infoGroupProperties.getIdInternal());
 			groupProperties = (IGroupProperties) persistentGroupProperties.readByOId(groupProperties, false);
 
 			if (checkIfAlreadyExists(infoGroupProperties, groupProperties)) {
 				result = checkIfIsPossibleToEdit(infoGroupProperties, groupProperties);
-				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(objectCode), false);
+				IExecutionCourse executionCourse =
+					(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(objectCode), false);
 
 				groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
 				groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());

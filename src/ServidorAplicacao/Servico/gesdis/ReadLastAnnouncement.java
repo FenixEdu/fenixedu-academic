@@ -5,7 +5,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -49,7 +49,7 @@ public class ReadLastAnnouncement implements IServico {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
 			InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 
 			ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
 

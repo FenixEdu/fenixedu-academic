@@ -12,7 +12,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
@@ -23,7 +23,7 @@ import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentTeacher;
@@ -87,16 +87,16 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 
             IPersistentShiftProfessorship shiftProfessorshipDAO =
                 sp.getIPersistentTeacherShiftPercentage();
             IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
 
             //read execution course
-            IDisciplinaExecucao executionCourse =
+            IExecutionCourse executionCourse =
                 new DisciplinaExecucao(infoExecutionCourse.getIdInternal());
-            executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+            executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
             //read teacher
             ITeacher teacher = new Teacher(infoTeacher.getIdInternal());

@@ -11,7 +11,7 @@ import org.odmg.QueryException;
 
 import Dominio.EvaluationExecutionCourse;
 import Dominio.ExamExecutionCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IEvalutionExecutionCourse;
 import Dominio.IExam;
@@ -22,7 +22,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements IPersistentEvaluationExecutionCourse {
 
-	public IEvalutionExecutionCourse readBy(IEvaluation evaluation, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public IEvalutionExecutionCourse readBy(IEvaluation evaluation, IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
 		IEvalutionExecutionCourse evalutionExecutionCourse = null;
 
@@ -54,7 +54,7 @@ public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements IPer
 		}
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 		try {
 
 			String oqlQuery = "select examexecutioncourse from " + ExamExecutionCourse.class.getName();
@@ -111,7 +111,7 @@ public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements IPer
 			tx.begin();
 
 			IEvaluation evaluation = evalutionExecutionCourseToWrite.getEvaluation();
-			IDisciplinaExecucao executionCourse = evalutionExecutionCourseToWrite.getExecutionCourse();
+			IExecutionCourse executionCourse = evalutionExecutionCourseToWrite.getExecutionCourse();
 
 			List associatedExecutionCourses = evalutionExecutionCourseToWrite.getEvaluation().getAssociatedExecutionCourses();
 			List associatedEvaluations = evalutionExecutionCourseToWrite.getExecutionCourse().getAssociatedExams();

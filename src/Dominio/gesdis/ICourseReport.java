@@ -8,7 +8,7 @@ package Dominio.gesdis;
 
 import java.util.Date;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IDomainObject;
 
 /**
@@ -19,9 +19,9 @@ import Dominio.IDomainObject;
 public interface ICourseReport extends IDomainObject {
 
 	public String getReport();
-	public IDisciplinaExecucao getExecutionCourse();
+	public IExecutionCourse getExecutionCourse();
 	public Date getLastModificationDate();
 	public void setReport(String report);
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	public void setExecutionCourse(IExecutionCourse executionCourse);
     public void setLastModificationDate(Date lastModificationDate);
 }

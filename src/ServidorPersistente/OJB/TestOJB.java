@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITest;
 import Dominio.Test;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -21,7 +21,7 @@ public class TestOJB extends ObjectFenixOJB implements IPersistentTest {
 	public TestOJB() {
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo(

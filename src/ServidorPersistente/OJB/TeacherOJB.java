@@ -13,7 +13,7 @@ import org.odmg.QueryException;
 import Dominio.Employee;
 import Dominio.EmployeeHistoric;
 import Dominio.IDepartment;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -105,7 +105,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentTeacher#readTeacherByExecutionCourse()
      */
-    public List readTeacherByExecutionCourseProfessorship(IDisciplinaExecucao executionCourse)
+    public List readTeacherByExecutionCourseProfessorship(IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
         try
@@ -129,7 +129,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentTeacher#readTeacherByExecutionCourseResponsibility(Dominio.IDisciplinaExecucao)
      */
-    public List readTeacherByExecutionCourseResponsibility(IDisciplinaExecucao executionCourse)
+    public List readTeacherByExecutionCourseResponsibility(IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
         try

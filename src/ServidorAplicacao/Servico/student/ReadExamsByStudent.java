@@ -12,7 +12,7 @@ import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IFrequenta;
@@ -88,7 +88,7 @@ public class ReadExamsByStudent implements IServico
                         Cloner.copyIExam2InfoExam(examStudentRoom.getExam()));
                     infoExamStudentRoom.getInfoExam().setInfoExecutionCourse(
                         Cloner.copyIExecutionCourse2InfoExecutionCourse(
-                            (IDisciplinaExecucao) examStudentRoom
+                            (IExecutionCourse) examStudentRoom
                                 .getExam()
                                 .getAssociatedExecutionCourses()
                                 .get(
@@ -158,7 +158,7 @@ public class ReadExamsByStudent implements IServico
                         InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
                         infoExam.setInfoExecutionCourse(
                             Cloner.copyIExecutionCourse2InfoExecutionCourse(
-                                (IDisciplinaExecucao) exam.getAssociatedExecutionCourses().get(0)));
+                                (IExecutionCourse) exam.getAssociatedExecutionCourses().get(0)));
                         infoExamsToEnroll.add(infoExam);
                     }
                 }

@@ -8,7 +8,7 @@ package ServidorPersistente.OJB.gesdis;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.gesdis.CourseReport;
 import Dominio.gesdis.ICourseReport;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -38,7 +38,7 @@ public class CourseReportOJB
 	 * 
 	 * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
 	 */
-	public ICourseReport readCourseReportByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public ICourseReport readCourseReportByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();

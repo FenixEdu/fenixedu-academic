@@ -26,7 +26,7 @@ public class Summary extends DomainObject implements ISummary {
 	private Date lastModifiedDate;
 	private String summaryText;
 	private TipoAula summaryType;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 	private Integer keyExecutionCourse;
 
 	/**
@@ -58,14 +58,14 @@ public class Summary extends DomainObject implements ISummary {
 	/**
 	 * @return
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
 	/**
 	 * @param executionCourse
 	 */
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public void setExecutionCourse(IExecutionCourse executionCourse) {
 		this.executionCourse = executionCourse;
 	}
 

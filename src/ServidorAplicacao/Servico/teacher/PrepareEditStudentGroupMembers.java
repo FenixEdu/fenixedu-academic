@@ -10,7 +10,7 @@ import java.util.List;
 
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -19,7 +19,7 @@ import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -64,7 +64,7 @@ public class PrepareEditStudentGroupMembers  implements IServico {
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+		IPersistentExecutionCourse persistentExecutionCourse = null;
 		List frequentas = new ArrayList();
 		List infoStudentList = new ArrayList();
 				
@@ -76,7 +76,7 @@ public class PrepareEditStudentGroupMembers  implements IServico {
 			persistentStudentGroup = ps.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 			
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			IStudentGroup studentGroup = (IStudentGroup)ps.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
 			
 			

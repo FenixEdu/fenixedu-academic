@@ -13,7 +13,7 @@ package ServidorAplicacao.Servico.sop;
  **/
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -52,7 +52,7 @@ public class ApagarTurno implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
+			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
 
 			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 

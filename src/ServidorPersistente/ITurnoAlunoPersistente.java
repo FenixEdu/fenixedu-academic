@@ -12,7 +12,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.ITurma;
@@ -32,12 +32,12 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
     public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;   
-	public List readByStudentAndExecutionCourse(IStudent student,IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+	public List readByStudentAndExecutionCourse(IStudent student,IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 	
 	// FIXME : Method is all messed up !! Query, name and parameters 
 	public ITurno readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
 				throws ExcepcaoPersistencia;
 
 	public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
-    public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student, IDisciplinaExecucao executionCourse, TipoAula lessonType, ITurma group) throws ExcepcaoPersistencia;
+    public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student, IExecutionCourse executionCourse, TipoAula lessonType, ITurma group) throws ExcepcaoPersistencia;
 }

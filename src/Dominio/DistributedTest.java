@@ -23,7 +23,7 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 	private CorrectionAvailability correctionAvailability;
 	private Boolean studentFeedback;
 	private Integer numberOfQuestions;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 	private Integer keyExecutionCourse;
 
 	public DistributedTest() {
@@ -105,7 +105,7 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 		title = string;
 	}
 
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -113,7 +113,7 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 		return keyExecutionCourse;
 	}
 
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
+	public void setExecutionCourse(IExecutionCourse execucao) {
 		executionCourse = execucao;
 	}
 

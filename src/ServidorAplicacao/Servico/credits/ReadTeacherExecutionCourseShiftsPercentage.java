@@ -19,7 +19,7 @@ import DataBeans.teacher.professorship.TeacherExecutionCourseProfessorshipShifts
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
 import Dominio.ITurno;
@@ -27,7 +27,7 @@ import Dominio.Teacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
@@ -75,7 +75,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IDisciplinaExecucao executionCourse = readExecutionCourse(infoExecutionCourse, sp);
+            IExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse, sp);
             ITeacher teacher = readTeacher(infoTeacher, sp);
 
             result.setInfoExecutionCourse(
@@ -150,14 +150,14 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
             (ITeacher) teacherDAO.readByOId(new Teacher(infoTeacher.getIdInternal()), false);
         return teacher;
     }
-    private IDisciplinaExecucao readExecutionCourse(
+    private IExecutionCourse readExecutionCourse(
         InfoExecutionCourse infoExecutionCourse,
         ISuportePersistente sp)
     {
-        IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+        IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 
-        IDisciplinaExecucao executionCourse =
-            (IDisciplinaExecucao) executionCourseDAO.readByOId(
+        IExecutionCourse executionCourse =
+            (IExecutionCourse) executionCourseDAO.readByOId(
                 new DisciplinaExecucao(infoExecutionCourse.getIdInternal()),
                 false);
         return executionCourse;

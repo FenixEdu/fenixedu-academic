@@ -17,7 +17,7 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -53,7 +53,7 @@ public class LerTurnosDeDisciplinaExecucao implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 
 			infoShiftList = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
 			Iterator itShiftList = infoShiftList.iterator();

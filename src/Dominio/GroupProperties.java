@@ -22,7 +22,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	private Integer groupMaximumNumber;
 	private String name;
 	private Integer keyExecutionCourse;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 	private TipoAula shiftType;
 	private Calendar enrolmentBeginDay;
 	private Calendar enrolmentEndDay;
@@ -44,7 +44,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	/** 
 	 * Construtor
 	 */
-	public GroupProperties(IDisciplinaExecucao executionCourse,String name) {
+	public GroupProperties(IExecutionCourse executionCourse,String name) {
 			this.executionCourse=executionCourse;
 			this.name = name;
 	}
@@ -54,7 +54,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	 */
 	public GroupProperties(Integer maximumCapacity,Integer minimumCapacity,
 							Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
-	 						Integer groupMaximumNumber,String name,IDisciplinaExecucao executionCourse,
+	 						Integer groupMaximumNumber,String name,IExecutionCourse executionCourse,
 							TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay,String projectDescription) {
 		this.maximumCapacity=maximumCapacity;
 		this.minimumCapacity=minimumCapacity;
@@ -162,7 +162,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	/**
 	 * @return DisciplinaExecucao
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 	
@@ -255,7 +255,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	* Sets the executionCourse.
 	* @param executionCourse The executionCourse to set
 	*/
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public void setExecutionCourse(IExecutionCourse executionCourse) {
 		this.executionCourse=executionCourse;
 	}	
 

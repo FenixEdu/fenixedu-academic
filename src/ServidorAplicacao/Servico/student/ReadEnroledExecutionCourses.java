@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -83,7 +83,7 @@ public class ReadEnroledExecutionCourses implements IServico {
 			allInfoExecutionCourses = new ArrayList();
 
 			while (iter.hasNext()) {
-				IDisciplinaExecucao executionCourse = ((IFrequenta) iter.next()).getDisciplinaExecucao();
+				IExecutionCourse executionCourse = ((IFrequenta) iter.next()).getDisciplinaExecucao();
 				List allGroupProperties = persistentGroupProperties.readAllGroupPropertiesByExecutionCourse(executionCourse);
 				boolean result = checkPeriodEnrollment(allGroupProperties);
 				if (result) {

@@ -16,7 +16,7 @@ import DataBeans.util.Cloner;
 
 import Dominio.DisciplinaExecucao;
 import Dominio.DistributedTest;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
@@ -25,7 +25,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -54,11 +54,11 @@ public class ReadDistributedTestMarksToString implements IServico
         try
         {
             persistentSuport = SuportePersistenteOJB.getInstance();
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 persistentSuport.getIDisciplinaExecucaoPersistente();
-            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
             executionCourse =
-                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
             if (executionCourse == null)
             {
                 throw new InvalidArgumentsServiceException();

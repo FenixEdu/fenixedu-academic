@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.Site;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,7 +29,7 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
 	}
 
 	
-	public ISite readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public ISite readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
 		crit.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
 		return (ISite) queryObject(Site.class, crit);

@@ -12,7 +12,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.GroupProperties;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGroupProperties;
@@ -25,7 +25,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGroupProperties
 {
 
-    public List readAllGroupPropertiesByExecutionCourse(IDisciplinaExecucao executionCourse)
+    public List readAllGroupPropertiesByExecutionCourse(IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
 
@@ -44,7 +44,7 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
     }
 
     public IGroupProperties readGroupPropertiesByExecutionCourseAndName(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         String name)
         throws ExcepcaoPersistencia
     {

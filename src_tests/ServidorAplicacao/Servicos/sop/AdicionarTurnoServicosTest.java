@@ -21,7 +21,7 @@ import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurma;
@@ -30,7 +30,7 @@ import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -116,8 +116,8 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
 			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
 			ITurma turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice, iep);
 			
-			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
+			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 			
 			ITurnoPersistente itp = sp.getITurnoPersistente();
 			ITurno it = null;

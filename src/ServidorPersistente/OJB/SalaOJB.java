@@ -21,7 +21,7 @@ import org.odmg.QueryException;
 
 import Dominio.Aula;
 import Dominio.Exam;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.ISala;
 import Dominio.ITurmaTurno;
@@ -244,13 +244,13 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 				query.bind(exam.getDay());
 				query.bind(exam.getBeginning());
 				query.bind(
-					((IDisciplinaExecucao) examFromDB
+					((IExecutionCourse) examFromDB
 						.getAssociatedExecutionCourses()
 						.get(0))
 						.getExecutionPeriod()
 						.getName());
 				query.bind(
-					((IDisciplinaExecucao) examFromDB
+					((IExecutionCourse) examFromDB
 						.getAssociatedExecutionCourses()
 						.get(0))
 						.getExecutionPeriod()

@@ -19,7 +19,7 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentExamDistributions;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExamStudentRoom;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
@@ -82,8 +82,8 @@ public class ReadExamsWithRooms implements IServico
             while (iter.hasNext())
             {
                 IExamStudentRoom examStudentRoom = (IExamStudentRoom) iter.next();
-                IDisciplinaExecucao executionCourse =
-                    (IDisciplinaExecucao) examStudentRoom.getExam().getAssociatedExecutionCourses().get(
+                IExecutionCourse executionCourse =
+                    (IExecutionCourse) examStudentRoom.getExam().getAssociatedExecutionCourses().get(
                         0);
                 if (currentPeriod != null
                     && executionCourse != null

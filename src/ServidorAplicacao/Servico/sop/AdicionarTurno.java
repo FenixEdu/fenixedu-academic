@@ -15,7 +15,7 @@ import DataBeans.InfoClass;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
@@ -67,7 +67,7 @@ public class AdicionarTurno implements IServico {
 			ICursoExecucao executionDegree =
 				Cloner.copyInfoExecutionDegree2ExecutionDegree(
 					infoClass.getInfoExecutionDegree());
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				Cloner.copyInfoExecutionCourse2ExecutionCourse(
 					infoShift.getInfoDisciplinaExecucao());
 

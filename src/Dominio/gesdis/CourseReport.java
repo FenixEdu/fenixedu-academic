@@ -9,7 +9,7 @@ package Dominio.gesdis;
 import java.util.Date;
 
 import Dominio.DomainObject;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 
 /**
  * @author Leonor Almeida
@@ -20,7 +20,7 @@ public class CourseReport extends DomainObject implements ICourseReport {
 
 	private String report;
 	private Integer keyExecutionCourse;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
     private Date lastModificationDate;
 
 	public CourseReport() {
@@ -44,7 +44,7 @@ public class CourseReport extends DomainObject implements ICourseReport {
 		return keyExecutionCourse;
 	}
 
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -61,7 +61,7 @@ public class CourseReport extends DomainObject implements ICourseReport {
 		this.keyExecutionCourse = keyExecutionCourse;
 	}
 	
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public void setExecutionCourse(IExecutionCourse executionCourse) {
 		this.executionCourse = executionCourse;
 	}
 	

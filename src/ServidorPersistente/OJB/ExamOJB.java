@@ -19,7 +19,7 @@ import org.odmg.QueryException;
 
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -67,8 +67,8 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 			if (associatedExecutionCourses != null) {
 				for (int i = 0; i < associatedExecutionCourses.size(); i++) {
-					IDisciplinaExecucao executionCourse =
-						(IDisciplinaExecucao) associatedExecutionCourses.get(i);
+					IExecutionCourse executionCourse =
+						(IExecutionCourse) associatedExecutionCourses.get(i);
 					executionCourse.getAssociatedExams().remove(exam);
 
 					IExamExecutionCourse examExecutionCourseToDelete =

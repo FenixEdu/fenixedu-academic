@@ -7,13 +7,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISite;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentSite;
@@ -64,7 +64,7 @@ public class ReadAnnouncementsServiceTest extends TestCaseReadServices {
 		ISuportePersistente sp = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		ISite site = null;
 		try {
 			    sp = SuportePersistenteOJB.getInstance();
@@ -76,7 +76,7 @@ public class ReadAnnouncementsServiceTest extends TestCaseReadServices {
 				IPersistentExecutionPeriod ipep = sp.getIPersistentExecutionPeriod();
                 executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-				IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
 				executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",executionPeriod);
 
                 IPersistentSite ips = sp.getIPersistentSite();

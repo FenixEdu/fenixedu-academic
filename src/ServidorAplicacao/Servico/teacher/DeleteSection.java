@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.Section;
@@ -15,7 +15,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -36,13 +36,13 @@ public class DeleteSection implements IServico {
 		throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			IPersistentSection persistentSection = sp.getIPersistentSection();
 			ISite site = null;
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					new DisciplinaExecucao(infoExecutionCourseCode),
 					false);
 			site = persistentSite.readByExecutionCourse(executionCourse);

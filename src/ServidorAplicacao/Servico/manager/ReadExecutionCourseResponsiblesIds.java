@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -59,8 +59,8 @@ public class ReadExecutionCourseResponsiblesIds implements IServico
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IDisciplinaExecucao executionCourse =
-                (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
                     new DisciplinaExecucao(executionCourseId),
                     false);
             responsibles = sp.getIPersistentResponsibleFor().readByExecutionCourse(executionCourse);

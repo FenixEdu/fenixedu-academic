@@ -14,14 +14,14 @@ import DataBeans.InfoSiteItems;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.Item;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
@@ -84,14 +84,14 @@ public class TeacherAdministrationSiteComponentServiceItemsTest extends TestCase
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             IPersistentItem persistentItem = sp.getIPersistentItem();
 
-            IDisciplinaExecucao executionCourse =
-                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new DisciplinaExecucao(new Integer(24)),
                     false);
             infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);

@@ -6,8 +6,8 @@ package Dominio;
  */
 public interface IEvalutionExecutionCourse {
 	public IEvaluation getEvaluation();
-	public IDisciplinaExecucao getExecutionCourse();
+	public IExecutionCourse getExecutionCourse();
 
 	public void setEvaluation(IEvaluation evaluation);
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	public void setExecutionCourse(IExecutionCourse executionCourse);
 }

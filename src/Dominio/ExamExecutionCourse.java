@@ -12,14 +12,14 @@ package Dominio;
 public class ExamExecutionCourse extends EvaluationExecutionCourse implements IExamExecutionCourse {
 
 	protected IExam exam;
-	protected IDisciplinaExecucao executionCourse;
+	protected IExecutionCourse executionCourse;
 
 	private Integer keyExam;
 	private Integer keyExecutionCourse;
 
 	public ExamExecutionCourse() {}
 	
-	public ExamExecutionCourse(IExam exam, IDisciplinaExecucao executionCourse) {
+	public ExamExecutionCourse(IExam exam, IExecutionCourse executionCourse) {
 		this.setExam(exam);
 		this.setExecutionCourse(executionCourse);
 	}
@@ -53,7 +53,7 @@ public class ExamExecutionCourse extends EvaluationExecutionCourse implements IE
 	/**
 	 * @return
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -81,7 +81,7 @@ public class ExamExecutionCourse extends EvaluationExecutionCourse implements IE
 	/**
 	 * @param execucao
 	 */
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
+	public void setExecutionCourse(IExecutionCourse execucao) {
 		executionCourse = execucao;
 	}
 

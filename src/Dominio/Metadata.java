@@ -6,7 +6,7 @@ package Dominio;
 
 public class Metadata extends DomainObject implements IMetadata {
 	private String MetadataFile;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 	private Integer keyExecutionCourse;
 	private Boolean visibility;
 
@@ -17,7 +17,7 @@ public class Metadata extends DomainObject implements IMetadata {
 		setIdInternal(metadataId);
 	}
 
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 	
@@ -29,7 +29,7 @@ public class Metadata extends DomainObject implements IMetadata {
 		return MetadataFile;
 	}
 
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
+	public void setExecutionCourse(IExecutionCourse execucao) {
 		executionCourse = execucao;
 	}
 

@@ -13,12 +13,12 @@ package ServidorAplicacao.Servico.sop;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -50,14 +50,14 @@ public class EditExecutionCourse implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			
-			IDisciplinaExecucao executionCourseAux = new DisciplinaExecucao(infoExecutionCourse.getIdInternal());
+			IExecutionCourse executionCourseAux = new DisciplinaExecucao(infoExecutionCourse.getIdInternal());
 						
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourseAux, true);
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) executionCourseDAO.readByOId(executionCourseAux, true);
 				
 			if (executionCourse == null) {
 				throw new NonExistingServiceException();

@@ -8,14 +8,14 @@ import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.DisciplinaExecucao;
 import Dominio.IAnnouncement;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -30,7 +30,7 @@ public class EditAnnouncementService implements IServico {
 	ISuportePersistente persistentSupport = null;
 	private IPersistentSite persistentSite = null;
 	private IPersistentAnnouncement persistentAnnouncement = null;
-	private IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+	private IPersistentExecutionCourse persistentExecutionCourse = null;
 	private static EditAnnouncementService service = new EditAnnouncementService();
 	/**
 	 * The singleton access method of this class.
@@ -98,8 +98,8 @@ public class EditAnnouncementService implements IServico {
 			date = infoAnnouncement.getCreationDate();
 
 			// read executionCourse and site
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
 			checkIfAnnouncementExists(announcementOldTitle, date, announcementNewTitle, site);

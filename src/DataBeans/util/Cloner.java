@@ -177,7 +177,7 @@ public abstract class Cloner
     public static ITurno copyInfoShift2Shift(InfoShift infoShift)
     {
         ITurno shift = new Turno();
-        IDisciplinaExecucao executionCourse =
+        IExecutionCourse executionCourse =
             Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
         copyObjectProperties(shift, infoShift);
 
@@ -191,9 +191,9 @@ public abstract class Cloner
 	 * @param infoExecutionCourse
 	 * @return IDisciplinaExecucao
 	 */
-    public static IDisciplinaExecucao copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse)
+    public static IExecutionCourse copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse)
     {
-        IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+        IExecutionCourse executionCourse = new DisciplinaExecucao();
         IExecutionPeriod executionPeriod =
             Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
                 infoExecutionCourse.getInfoExecutionPeriod());
@@ -204,7 +204,7 @@ public abstract class Cloner
         return executionCourse;
     }
 
-    public static InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IDisciplinaExecucao executionCourse)
+    public static InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IExecutionCourse executionCourse)
     {
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
         InfoExecutionPeriod infoExecutionPeriod =
@@ -311,7 +311,7 @@ public abstract class Cloner
         if (infoShift == null)
             return null;
         ITurno shift = new Turno();
-        IDisciplinaExecucao executionCourse =
+        IExecutionCourse executionCourse =
             Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
 
         copyObjectProperties(shift, infoShift);
@@ -1137,7 +1137,7 @@ public abstract class Cloner
     public static IBibliographicReference copyInfoBibliographicReference2IBibliographicReference(InfoBibliographicReference infoBibliographicReference)
     {
         IBibliographicReference bibliographicReference = new BibliographicReference();
-        IDisciplinaExecucao executionCourse =
+        IExecutionCourse executionCourse =
             Cloner.copyInfoExecutionCourse2ExecutionCourse(
                 infoBibliographicReference.getInfoExecutionCourse());
         copyObjectProperties(bibliographicReference, infoBibliographicReference);
@@ -1164,7 +1164,7 @@ public abstract class Cloner
     public static ISite copyInfoSite2ISite(InfoSite infoSite)
     {
         ISite site = new Site();
-        IDisciplinaExecucao executionCourse =
+        IExecutionCourse executionCourse =
             Cloner.copyInfoExecutionCourse2ExecutionCourse(infoSite.getInfoExecutionCourse());
 
         //		ISection initialSection = Cloner.copyInfoSection2ISection(
@@ -1678,7 +1678,7 @@ public abstract class Cloner
     public static ICourseReport copyInfoCourseReport2ICourseReport(InfoCourseReport infoCourseReport)
     {
         ICourseReport courseReport = new CourseReport();
-        IDisciplinaExecucao executionCourse =
+        IExecutionCourse executionCourse =
             copyInfoExecutionCourse2ExecutionCourse(infoCourseReport.getInfoExecutionCourse());
         copyObjectProperties(courseReport, infoCourseReport);
 
@@ -2522,7 +2522,7 @@ public abstract class Cloner
         IProfessorship professorship = new Professorship();
 
         copyObjectProperties(professorship, infoProfessorShip);
-        IDisciplinaExecucao executionCourse = null;
+        IExecutionCourse executionCourse = null;
         if (infoExecutionCourse != null)
         {
             executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
@@ -2674,7 +2674,7 @@ public abstract class Cloner
         IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
 
         InfoExecutionCourse infoExecutionCourse = infoFrequenta.getDisciplinaExecucao();
-        IDisciplinaExecucao disciplinaExecucao =
+        IExecutionCourse disciplinaExecucao =
             Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 
         InfoEnrolment infoEnrolment = infoFrequenta.getInfoEnrolment();
@@ -2762,7 +2762,7 @@ public abstract class Cloner
     {
         ISummary summary = new Summary();
         copyObjectProperties(summary, infoSummary);
-        IDisciplinaExecucao executionCourse =
+        IExecutionCourse executionCourse =
             copyInfoExecutionCourse2ExecutionCourse(infoSummary.getInfoExecutionCourse());
         summary.setExecutionCourse(executionCourse);
         return summary;
@@ -2873,7 +2873,7 @@ public abstract class Cloner
     {
         IGroupProperties groupProperties = new GroupProperties();
 
-        IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+        IExecutionCourse executionCourse = new DisciplinaExecucao();
         groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
         groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
         groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
@@ -3683,7 +3683,7 @@ public abstract class Cloner
     {
 
         IEvaluationMethod evaluationMethod = new EvaluationMethod();
-        IDisciplinaExecucao executionCourse =
+        IExecutionCourse executionCourse =
             Cloner.copyInfoExecutionCourse2ExecutionCourse(
                 infoEvaluationMethod.getInfoExecutionCourse());
 

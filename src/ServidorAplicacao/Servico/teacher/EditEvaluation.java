@@ -3,12 +3,12 @@ package ServidorAplicacao.Servico.teacher;
 import DataBeans.InfoEvaluationMethod;
 import Dominio.DisciplinaExecucao;
 import Dominio.EvaluationMethod;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -40,7 +40,7 @@ public class EditEvaluation implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(infoExecutionCourseCode); 
 				
 			IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
@@ -51,8 +51,8 @@ public class EditEvaluation implements IServico {
 				
 				evaluationMethod.setKeyExecutionCourse(infoExecutionCourseCode);
 								
-				IDisciplinaExecucaoPersistente persistenteExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-				evaluationMethod.setExecutionCourse((IDisciplinaExecucao) persistenteExecutionCourse.readByOId(executionCourse, false));				
+				IPersistentExecutionCourse persistenteExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+				evaluationMethod.setExecutionCourse((IExecutionCourse) persistenteExecutionCourse.readByOId(executionCourse, false));				
 			} 
 			
 			evaluationMethod.setEvaluationElements(infoEvaluationMethod.getEvaluationElements());

@@ -11,7 +11,7 @@ import java.util.List;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.DistributedTest;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
@@ -54,10 +54,10 @@ public class ReadShiftsByDistributedTest implements IServico {
 						.getIPersistentStudentTestQuestion()
 						.readStudentsByDistributedTest(distributedTest);
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				new DisciplinaExecucao(executionCourseId);
 			executionCourse =
-				(IDisciplinaExecucao) persistentSuport
+				(IExecutionCourse) persistentSuport
 					.getIDisciplinaExecucaoPersistente()
 					.readByOId(executionCourse, false);
 			if (executionCourse == null) {

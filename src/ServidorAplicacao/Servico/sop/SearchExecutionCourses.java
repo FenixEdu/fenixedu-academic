@@ -29,7 +29,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
@@ -110,7 +110,7 @@ System.out.println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 
 				private void checkEqualLoads(Object arg0, InfoExecutionCourse infoExecutionCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-					IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0; 
+					IExecutionCourse executionCourse = (IExecutionCourse) arg0; 
 					infoExecutionCourse.setEqualLoad(Boolean.TRUE.toString());
 
 					Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
@@ -142,7 +142,7 @@ System.out.println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					InfoExecutionCourse infoExecutionCourse;
 					// Get the associated Shifs					
 					ISuportePersistente spTemp = SuportePersistenteOJB.getInstance();
-					IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0;
+					IExecutionCourse executionCourse = (IExecutionCourse) arg0;
 					
 					// FIXME: Find a better way to get the total capacity for each type of Shift
 					Integer theoreticalCapacity = new Integer(0);

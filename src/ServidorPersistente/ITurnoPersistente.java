@@ -15,7 +15,7 @@ import java.util.List;
 
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -24,7 +24,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface ITurnoPersistente extends IPersistentObject {
 	public ITurno readByNameAndExecutionCourse(
 		String nome,
-		IDisciplinaExecucao IDE)
+		IExecutionCourse IDE)
 		throws ExcepcaoPersistencia;
 	public void lockWrite(ITurno turno)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
@@ -41,11 +41,11 @@ public interface ITurnoPersistente extends IPersistentObject {
 		throws ExcepcaoPersistencia;
 
 	public List readByExecutionCourseAndType(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		Integer type)
 		throws ExcepcaoPersistencia;
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	/**
 	 * @param executionDegree

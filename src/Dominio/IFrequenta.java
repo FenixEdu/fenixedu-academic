@@ -12,11 +12,11 @@ package Dominio;
  */
 public interface IFrequenta extends IDomainObject {
 	public IStudent getAluno();
-	public IDisciplinaExecucao getDisciplinaExecucao();
+	public IExecutionCourse getDisciplinaExecucao();
 	public IEnrolment getEnrolment();
 
 	public void setAluno(IStudent aluno);
-	public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao);
+	public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
 	public void setEnrolment(IEnrolment enrolment);
 
 	public Integer getChaveAluno();

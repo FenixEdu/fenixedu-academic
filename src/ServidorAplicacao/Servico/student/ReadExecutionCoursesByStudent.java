@@ -10,7 +10,7 @@ import java.util.List;
 
 import DataBeans.util.Cloner;
 import Dominio.Frequenta;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
@@ -53,7 +53,7 @@ public class ReadExecutionCoursesByStudent implements IServico {
 			Iterator it = attendList.iterator();
 			while (it.hasNext()) {
 				IFrequenta attend = (Frequenta) it.next();
-				IDisciplinaExecucao executionCourse =
+				IExecutionCourse executionCourse =
 					attend.getDisciplinaExecucao();
 				result.add(
 					Cloner.copyIExecutionCourse2InfoExecutionCourse(

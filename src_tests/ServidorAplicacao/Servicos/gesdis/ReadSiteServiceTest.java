@@ -9,12 +9,12 @@ package ServidorAplicacao.Servicos.gesdis;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -56,7 +56,7 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 		ISuportePersistente sp = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
@@ -70,7 +70,7 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 			executionPeriod =
 				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep =
+			IPersistentExecutionCourse idep =
 				sp.getIDisciplinaExecucaoPersistente();
 			executionCourse =
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(
@@ -105,7 +105,7 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 		ISuportePersistente sp = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
@@ -119,7 +119,7 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 			executionPeriod =
 				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep =
+			IPersistentExecutionCourse idep =
 				sp.getIDisciplinaExecucaoPersistente();
 			executionCourse =
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(

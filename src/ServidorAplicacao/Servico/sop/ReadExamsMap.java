@@ -21,7 +21,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -154,14 +154,14 @@ public class ReadExamsMap implements IServico {
 				for (int j = 0; j < executionCourses.size(); j++) {
 					InfoExecutionCourse infoExecutionCourse =
 						Cloner.copyIExecutionCourse2InfoExecutionCourse(
-							(IDisciplinaExecucao) executionCourses.get(j));
+							(IExecutionCourse) executionCourses.get(j));
 
 					infoExecutionCourse.setCurricularYear(
 						(Integer) curricularYears.get(i));
 
 					List associatedInfoCurricularCourses = new ArrayList();
 					List associatedCurricularCourses =
-						((IDisciplinaExecucao) executionCourses.get(j))
+						((IExecutionCourse) executionCourses.get(j))
 							.getAssociatedCurricularCourses();
 					// Curricular courses
 					for (int k = 0;
@@ -181,7 +181,7 @@ public class ReadExamsMap implements IServico {
 
 					List associatedInfoExams = new ArrayList();
 					List associatedExams =
-						((IDisciplinaExecucao) executionCourses.get(j))
+						((IExecutionCourse) executionCourses.get(j))
 							.getAssociatedExams();
 					// Exams
 					for (int k = 0; k < associatedExams.size(); k++) {

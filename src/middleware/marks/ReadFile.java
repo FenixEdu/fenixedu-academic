@@ -22,7 +22,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
@@ -267,7 +267,7 @@ public class ReadFile extends LoadDataFile {
 		}
 
 		//update frequenta
-		IDisciplinaExecucao disciplinaExecucao = readExecutionCourse(curricularCourse, executionPeriod);
+		IExecutionCourse disciplinaExecucao = readExecutionCourse(curricularCourse, executionPeriod);
 		if (disciplinaExecucao != null) {
 			IFrequenta frequenta = persistentObjectOJB.readFrequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
 			if (frequenta == null) {
@@ -493,7 +493,7 @@ public class ReadFile extends LoadDataFile {
 		}
 	} //readExecutionPeriod
 
-	private IDisciplinaExecucao readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
+	private IExecutionCourse readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 		return persistentObjectOJB.readExecutionCourse(curricularCourse, executionPeriod);
 	}
 

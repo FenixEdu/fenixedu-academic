@@ -15,7 +15,7 @@ public class Test extends DomainObject implements ITest {
 	private Integer numberOfQuestions;
 	private Date creationDate;
 	private Date lastModifiedDate;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 	private Integer keyExecutionCourse;
 
 	public Test() {
@@ -25,7 +25,7 @@ public class Test extends DomainObject implements ITest {
 		setIdInternal(testId);
 	}
 
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -41,7 +41,7 @@ public class Test extends DomainObject implements ITest {
 		return title;
 	}
 
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
+	public void setExecutionCourse(IExecutionCourse execucao) {
 		executionCourse = execucao;
 	}
 

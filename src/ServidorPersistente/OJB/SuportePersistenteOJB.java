@@ -26,7 +26,7 @@ import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentAdvisory;
 import ServidorPersistente.IPersistentAnnouncement;
@@ -403,9 +403,9 @@ public class SuportePersistenteOJB implements ISuportePersistente
     {
         return new CurricularCourseOJB();
     }
-    public IDisciplinaExecucaoPersistente getIDisciplinaExecucaoPersistente()
+    public IPersistentExecutionCourse getIDisciplinaExecucaoPersistente()
     {
-        return new DisciplinaExecucaoOJB();
+        return new ExecutionCourseOJB();
     }
     public IPersistentCountry getIPersistentCountry()
     {

@@ -35,7 +35,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
@@ -260,7 +260,7 @@ public class UpdateStudentEnrolments
 	 */
 	private static IFrequenta updateAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
-		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IExecutionCourse executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		IFrequenta attend = null;
 		if (executionCourse == null)
 		{
@@ -652,7 +652,7 @@ public class UpdateStudentEnrolments
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 
 			// Find the Attend.
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(enrolment.getCurricularCourseScope().getCurricularCourse(), executionPeriod);
 			if (executionCourse == null)
 			{
@@ -820,7 +820,7 @@ public class UpdateStudentEnrolments
 	 */
 	private static void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
-		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IExecutionCourse executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 
 		if (executionCourse == null)
 		{
@@ -852,7 +852,7 @@ public class UpdateStudentEnrolments
 	 */
 	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
-		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IExecutionCourse executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		if (executionCourse == null)
 		{
 			return false;
@@ -888,7 +888,7 @@ public class UpdateStudentEnrolments
 			Iterator iterator2 = associatedExecutionCourses.iterator();
 			while (iterator2.hasNext())
 			{
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator2.next();
+				IExecutionCourse executionCourse = (IExecutionCourse) iterator2.next();
 				if (executionCourse.getExecutionPeriod().equals(executionPeriod))
 				{
 					if (!executionCourses.contains(executionCourse))

@@ -27,7 +27,7 @@ import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
 import Dominio.IProfessorship;
 import Dominio.ISite;
@@ -39,7 +39,7 @@ import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -96,11 +96,11 @@ public class ReadCourseInformation implements IServico
             TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView();
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
 
-            IDisciplinaExecucao executionCourse =
-                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new DisciplinaExecucao(executionCourseId),
                     false);
 
@@ -227,7 +227,7 @@ public class ReadCourseInformation implements IServico
 	 * @return
 	 */
     private List getInfoBibliographicReferences(
-        IDisciplinaExecucao executionCourse,
+        IExecutionCourse executionCourse,
         ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
@@ -247,7 +247,7 @@ public class ReadCourseInformation implements IServico
         return infoBibliographicReferences;
     }
 
-    private List getInfoLecturingTeachers(IDisciplinaExecucao executionCourse, ISuportePersistente sp)
+    private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
@@ -281,7 +281,7 @@ public class ReadCourseInformation implements IServico
         return infoCurriculums;
     }
 
-    private List getInfoResponsibleTeachers(IDisciplinaExecucao executionCourse, ISuportePersistente sp)
+    private List getInfoResponsibleTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
@@ -330,7 +330,7 @@ public class ReadCourseInformation implements IServico
         return infoScopes;
     }
 
-    private List getInfoLessons(IDisciplinaExecucao executionCourse, ISuportePersistente sp)
+    private List getInfoLessons(IExecutionCourse executionCourse, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
         IAulaPersistente persistentLesson = sp.getIAulaPersistente();

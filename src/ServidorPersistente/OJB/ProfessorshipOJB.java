@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.Professorship;
@@ -49,7 +49,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentProfessorship#readByTeacherIDAndExecutionCourseID(Dominio.ITeacher, Dominio.IDisciplinaExecucao)
 	 */
-	public IProfessorship readByTeacherIDAndExecutionCourseID(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia
+	public IProfessorship readByTeacherIDAndExecutionCourseID(ITeacher teacher, IExecutionCourse executionCourse) throws ExcepcaoPersistencia
 	{
 	    Criteria criteria = new Criteria();
 	    criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
@@ -57,7 +57,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 		return (IProfessorship) queryObject(Professorship.class, criteria);
 	}
 
-	public IProfessorship readByTeacherAndExecutionCourse(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public IProfessorship readByTeacherAndExecutionCourse(ITeacher teacher, IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 		try {
 			IProfessorship professorship = null;
 			String oqlQuery =
@@ -84,7 +84,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 		}
 	}
 
-	public IProfessorship readByTeacherAndExecutionCoursePB(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public IProfessorship readByTeacherAndExecutionCoursePB(ITeacher teacher, IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		
 		criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
@@ -110,7 +110,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 		}
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
 		crit.addEqualTo("executionCourse.idInternal",executionCourse.getIdInternal());
 	return queryList(Professorship.class,crit);

@@ -8,14 +8,14 @@ import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -147,9 +147,9 @@ public class ReadExecutionCourseTest
 					executionYear);
 			assertNotNull(executionPeriod);
 
-			IDisciplinaExecucaoPersistente disciplinaExecucaoPersistente =
+			IPersistentExecutionCourse disciplinaExecucaoPersistente =
 				sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				disciplinaExecucaoPersistente
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					"TFCI",

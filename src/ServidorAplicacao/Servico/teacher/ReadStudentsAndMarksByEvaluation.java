@@ -15,7 +15,7 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IFrequenta;
 import Dominio.IMark;
@@ -27,7 +27,7 @@ import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentMark;
@@ -72,7 +72,7 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 		List infoMarksList = new ArrayList();
 
 		ISite site = new Site();
-		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+		IExecutionCourse executionCourse = new DisciplinaExecucao();
 		IEvaluation evaluation = new Evaluation();
 		InfoEvaluation infoEvaluation = new InfoEvaluation();
 
@@ -83,8 +83,8 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 			executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(executionCourseCode);
 
-			IDisciplinaExecucaoPersistente disciplinaExecucaoDAO = sp.getIDisciplinaExecucaoPersistente();
-			executionCourse = (IDisciplinaExecucao) disciplinaExecucaoDAO.readByOId(executionCourse, false);
+			IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIDisciplinaExecucaoPersistente();
+			executionCourse = (IExecutionCourse) disciplinaExecucaoDAO.readByOId(executionCourse, false);
 
 			//Site
 			IPersistentSite siteDAO = sp.getIPersistentSite();

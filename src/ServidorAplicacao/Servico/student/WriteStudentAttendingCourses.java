@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import DataBeans.InfoStudent;
 import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentGroupAttend;
@@ -17,7 +17,7 @@ import Dominio.ITurnoAluno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
@@ -94,15 +94,15 @@ public class WriteStudentAttendingCourses implements IServico {
 
 			List attendingCourses = getExecutionCoursesFromAttends(attends);
 
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 
 			//Gets the database objects for the wanted courses
 			List wantedAttendingCourses = new ArrayList();
 			Iterator i = infoExecutionCourses.iterator();
 			while (i.hasNext()) {
 				Integer executionCourseId = new Integer((String) i.next());
-				IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
-				executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+				IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
+				executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 				if (executionCourse == null) {
 					System.out.println("Execution course with ID=" + executionCourseId + " does not exist in the database!");
@@ -125,7 +125,7 @@ public class WriteStudentAttendingCourses implements IServico {
 			i = attendingCoursesToAdd.iterator();
 			while (i.hasNext()) {
 
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) i.next();
+				IExecutionCourse executionCourse = (IExecutionCourse) i.next();
 
 				IFrequenta attendsEntry = attendsDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 				if (attendsEntry == null) {
@@ -164,7 +164,7 @@ public class WriteStudentAttendingCourses implements IServico {
 			ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
 			IPersistentStudentGroupAttend studentGroupAttendDAO = sp.getIPersistentStudentGroupAttend();
 			while (iterator.hasNext()) {
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator.next();
+				IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
 				IFrequenta attends = persistentAttends.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 				IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attends);
 				

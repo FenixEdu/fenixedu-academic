@@ -12,13 +12,13 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IBibliographicReference;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 
 public interface IPersistentBibliographicReference extends IPersistentObject{
 
-    public IBibliographicReference readBibliographicReference(IDisciplinaExecucao executionCourse,String title,String authors,String reference,String year)throws ExcepcaoPersistencia;
+    public IBibliographicReference readBibliographicReference(IExecutionCourse executionCourse,String title,String authors,String reference,String year)throws ExcepcaoPersistencia;
     public void lockWrite(IBibliographicReference  bibliographicReference) throws ExcepcaoPersistencia;
     public void delete(IBibliographicReference bibliographicReference ) throws ExcepcaoPersistencia ;
     public void deleteAll() throws ExcepcaoPersistencia;  	
-	public List readBibliographicReference(IDisciplinaExecucao executionCourse)throws ExcepcaoPersistencia;
+	public List readBibliographicReference(IExecutionCourse executionCourse)throws ExcepcaoPersistencia;
 }

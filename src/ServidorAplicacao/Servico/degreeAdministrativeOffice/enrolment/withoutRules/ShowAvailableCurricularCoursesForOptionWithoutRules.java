@@ -11,7 +11,7 @@ import org.apache.commons.collections.Transformer;
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
@@ -22,7 +22,7 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -188,7 +188,7 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 	private List filterByExecutionCourses(List curricularCoursesList, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 		
 		List curricularCoursesToRemove = new ArrayList();
 		
@@ -196,7 +196,7 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 		while (iterator.hasNext()) {
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 		
-			IDisciplinaExecucao executionCourseCriteria = new DisciplinaExecucao();
+			IExecutionCourse executionCourseCriteria = new DisciplinaExecucao();
 			executionCourseCriteria.setExecutionPeriod(executionPeriod);
 			executionCourseCriteria.setNome(curricularCourse.getName());
 			executionCourseCriteria.setSigla(curricularCourse.getCode());

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Professorship extends DomainObject implements IProfessorship {
 	protected ITeacher teacher;
-	protected IDisciplinaExecucao executionCourse;
+	protected IExecutionCourse executionCourse;
 	
 	private Integer keyTeacher;
 	private Integer keyExecutionCourse;
@@ -23,7 +23,7 @@ public class Professorship extends DomainObject implements IProfessorship {
 	 */
 	public Professorship() {}
 
-	public Professorship(ITeacher teacher,IDisciplinaExecucao executionCourse) {
+	public Professorship(ITeacher teacher,IExecutionCourse executionCourse) {
 	setTeacher(teacher);
 	setExecutionCourse(executionCourse);
 	}
@@ -31,7 +31,7 @@ public class Professorship extends DomainObject implements IProfessorship {
 	/**
 	 * @return IDisciplinaExecucao
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -60,7 +60,7 @@ public class Professorship extends DomainObject implements IProfessorship {
 	 * Sets the executionCourse.
 	 * @param executionCourse The executionCourse to set
 	 */
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public void setExecutionCourse(IExecutionCourse executionCourse) {
 		this.executionCourse = executionCourse;
 	}
 

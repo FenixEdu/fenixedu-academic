@@ -5,14 +5,14 @@
 package ServidorAplicacao.Servico.teacher;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITest;
 import Dominio.Test;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -44,12 +44,12 @@ public class InsertTest implements IServico {
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				new DisciplinaExecucao(executionCourseId);
 			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,
 					false);
 			if (executionCourse == null) {

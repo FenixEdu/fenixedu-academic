@@ -8,7 +8,7 @@ package ServidorAplicacao.Servico.publico;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.Site;
 import ServidorAplicacao.IServico;
@@ -17,7 +17,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingAssociatedCurricularCoursesServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -59,7 +59,7 @@ public class ExecutionCourseSiteComponentService implements IServico {
 		ExecutionCourseSiteView siteView = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			
 			ISite site = null;
@@ -71,7 +71,7 @@ public class ExecutionCourseSiteComponentService implements IServico {
 					throw new NonExistingServiceException();
 				}
 			} else {
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
 				if (executionCourse == null) {
 					throw new FenixServiceException();
 				}

@@ -9,9 +9,9 @@ package Dominio;
 public interface IExamExecutionCourse extends IEvalutionExecutionCourse{
 
 	public IExam getExam();
-	public IDisciplinaExecucao getExecutionCourse();
+	public IExecutionCourse getExecutionCourse();
 
 	public void setExam(IExam exam);
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	public void setExecutionCourse(IExecutionCourse executionCourse);
 
 }

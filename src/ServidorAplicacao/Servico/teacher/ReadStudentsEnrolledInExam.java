@@ -17,7 +17,7 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.ISite;
@@ -26,7 +26,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentSite;
@@ -59,14 +59,14 @@ public class ReadStudentsEnrolledInExam implements IServico {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExam persistentExam = sp.getIPersistentExam();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 
 			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					new DisciplinaExecucao(executionCourseCode),
 					false);
 			ISite site = persistentSite.readByExecutionCourse(executionCourse);

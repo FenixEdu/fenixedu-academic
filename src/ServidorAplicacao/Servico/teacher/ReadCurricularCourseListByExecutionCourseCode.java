@@ -17,14 +17,14 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -64,12 +64,12 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IServico {
 		List infoCurricularCourseList = new ArrayList();
 		ISite site = null;
 		try {
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(executionCourseCode);
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
-			executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 			if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
 				for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {

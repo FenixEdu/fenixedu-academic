@@ -7,7 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -24,11 +24,11 @@ public interface IPersistentProfessorship extends IPersistentObject
     public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
     public IProfessorship readByTeacherAndExecutionCourse(
         ITeacher teacher,
-        IDisciplinaExecucao executionCourse)
+        IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia;
-    public IProfessorship readByTeacherIDAndExecutionCourseID(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+    public IProfessorship readByTeacherIDAndExecutionCourseID(ITeacher teacher, IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
     
-    public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
     public void delete(IProfessorship professorship) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
     public void lockWrite(IProfessorship professorship)
@@ -36,7 +36,7 @@ public interface IPersistentProfessorship extends IPersistentObject
     public List readAll() throws ExcepcaoPersistencia;
     public IProfessorship readByTeacherAndExecutionCoursePB(
         ITeacher teacher,
-        IDisciplinaExecucao executionCourse)
+        IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia;
     /**
      * Read ProfessorShips from a teacher, given a type of degree.

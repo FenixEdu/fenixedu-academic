@@ -22,7 +22,7 @@ import DataBeans.InfoStudent;
 import DataBeans.TypeLessonAndInfoShift;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
@@ -71,7 +71,7 @@ public class ReadShiftEnrolment implements IServico {
       List frequencies = sp.getIFrequentaPersistente().readByStudentNumber(infoStudent.getNumber());
       for(int i = 0; i < frequencies.size(); i++) {
 		IFrequenta frequent = (IFrequenta) frequencies.get(i);
-		IDisciplinaExecucao de = frequent.getDisciplinaExecucao();
+		IExecutionCourse de = frequent.getDisciplinaExecucao();
 		
 	//	InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		
@@ -87,7 +87,7 @@ public class ReadShiftEnrolment implements IServico {
 //		executionCoure.setAnoLectivo(de.getLicenciaturaExecucao().getAnoLectivo());
 //		executionCoure.setCurso(degree);
 
-		IDisciplinaExecucao executionDegree = new DisciplinaExecucao();
+		IExecutionCourse executionDegree = new DisciplinaExecucao();
 		executionDegree.setSigla(de.getSigla());
 
 		ITurno shift1 = new Turno();

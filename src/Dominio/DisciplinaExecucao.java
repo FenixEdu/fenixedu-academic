@@ -4,7 +4,7 @@ import java.util.List;
 
 import fileSuport.INode;
 
-public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecucao {
+public class DisciplinaExecucao extends DomainObject implements IExecutionCourse {
 
 	private String nome;
 	private String sigla;
@@ -54,8 +54,8 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof IDisciplinaExecucao) {
-			IDisciplinaExecucao de = (IDisciplinaExecucao) obj;
+		if (obj instanceof IExecutionCourse) {
+			IExecutionCourse de = (IExecutionCourse) obj;
 
 			resultado =
 				(getSigla().equals(de.getSigla()))

@@ -6,7 +6,7 @@ import java.util.ListIterator;
 import Dominio.EvaluationMethod;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -60,7 +60,7 @@ public class migrationEvaluationElements {
 
 						ListIterator iterator2 = executionCoursesList.listIterator();
 						while (iterator2.hasNext()) {
-							IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator2.next();
+							IExecutionCourse executionCourse = (IExecutionCourse) iterator2.next();
 							System.out.println("Writing EvaluationMethods of the execution course " + executionCourse.getIdInternal());
 
 							//if (curriculum.getEvaluationElements() != null && curriculum.getEvaluationElements().length() > 0 &&

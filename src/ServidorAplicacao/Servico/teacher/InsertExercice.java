@@ -24,7 +24,7 @@ import org.apache.struts.upload.FormFile;
 import org.xml.sax.SAXParseException;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.Metadata;
@@ -34,7 +34,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentQuestion;
 import ServidorPersistente.ISuportePersistente;
@@ -73,12 +73,12 @@ public class InsertExercice implements IServico {
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				new DisciplinaExecucao(executionCourseId);
 			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,
 					false);
 			if (executionCourse == null) {

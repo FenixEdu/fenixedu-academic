@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.manager;
 import DataBeans.InfoExecutionCourse;
 import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISite;
 import Dominio.Site;
@@ -15,7 +15,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -42,7 +42,7 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 	
 
 	public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
-		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+		IExecutionCourse executionCourse = new DisciplinaExecucao();
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 								
@@ -52,7 +52,7 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 			if(executionPeriod == null)
 				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 			
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 				
 			executionCourse.setNome(infoExecutionCourse.getNome());

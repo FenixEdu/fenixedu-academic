@@ -20,14 +20,14 @@ import java.util.HashMap;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISection;
 import Dominio.ISite;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentSection;
@@ -93,7 +93,7 @@ public class ReadItemsServiceTest extends TestCaseReadServices {
 		ISuportePersistente persistentSupport = null;
 		IPersistentExecutionYear persistentExecutionYear = null;
 		IPersistentExecutionPeriod persistentExecutionPeriod = null;
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+		IPersistentExecutionCourse persistentExecutionCourse = null;
 		IPersistentSite persistentSite = null;
 		IPersistentSection persistentSection = null;
 		ISection section = null;
@@ -120,7 +120,7 @@ public class ReadItemsServiceTest extends TestCaseReadServices {
 					"2º Semestre",
 					executionYear);
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				persistentExecutionCourse
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					"TFCI",

@@ -23,7 +23,7 @@ import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
@@ -525,7 +525,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         throws ExcepcaoPersistencia
     {
         ITurno shiftExample = new Turno();
-        IDisciplinaExecucao executionCourseExample = new DisciplinaExecucao();
+        IExecutionCourse executionCourseExample = new DisciplinaExecucao();
         List associatedStudents = new ArrayList();
         associatedStudents.add(student);
         executionCourseExample.setAttendingStudents(associatedStudents);
@@ -706,7 +706,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     {
 
         final TipoAula type = shift.getTipo();
-        final IDisciplinaExecucao course = shift.getDisciplinaExecucao();
+        final IExecutionCourse course = shift.getDisciplinaExecucao();
 
         ArrayList resultList = (ArrayList) CollectionUtils.select(list, new Predicate()
         {
@@ -734,7 +734,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     {
 
         final TipoAula type = shift.getTipo();
-        final IDisciplinaExecucao course = shift.getDisciplinaExecucao();
+        final IExecutionCourse course = shift.getDisciplinaExecucao();
 
         return (ITurno) CollectionUtils.find(l, new Predicate()
         {
@@ -763,7 +763,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     {
         ArrayList result = new ArrayList();
 
-        final IDisciplinaExecucao course = shift.getDisciplinaExecucao();
+        final IExecutionCourse course = shift.getDisciplinaExecucao();
 
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.teacher;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITeacher;
 import Dominio.Professorship;
 import ServidorAplicacao.IServico;
@@ -8,7 +8,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -46,14 +46,14 @@ public class AssociateTeacher implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			
 			ITeacher iTeacher = persistentTeacher.readTeacherByNumber(teacherNumber);
 			if (iTeacher == null) {
 				throw new InvalidArgumentsServiceException();
 			}
 			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
-			IDisciplinaExecucao iExecutionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 			persistentProfessorship.lockWrite(new Professorship(iTeacher, iExecutionCourse));
 		} catch (ExistingPersistentException ex){
 			throw new ExistingServiceException(ex); 

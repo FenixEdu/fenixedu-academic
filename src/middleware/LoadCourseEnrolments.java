@@ -16,7 +16,7 @@ import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -28,7 +28,7 @@ import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Dominio.Turno;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
@@ -70,7 +70,7 @@ public class LoadCourseEnrolments extends DataFileLoader
             IPersistentStudent iAlunoPersistente = sp.getIPersistentStudent();
             //			IPersistentCurricularCourse iDisciplinaCurricularPersistente =
             //				sp.getIPersistentCurricularCourse();
-            IDisciplinaExecucaoPersistente iDisciplinaExecucaoPersistente =
+            IPersistentExecutionCourse iDisciplinaExecucaoPersistente =
                 sp.getIDisciplinaExecucaoPersistente();
             IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
             IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
@@ -145,7 +145,7 @@ public class LoadCourseEnrolments extends DataFileLoader
                     // Ver se existe o frequenta
                     IFrequenta frequentaCriteria = new Frequenta();
                     frequentaCriteria.setAluno(studentCriteria);
-                    IDisciplinaExecucao disciplinaExecucaoCriteria = new DisciplinaExecucao();
+                    IExecutionCourse disciplinaExecucaoCriteria = new DisciplinaExecucao();
                     disciplinaExecucaoCriteria.setNome(
                         alunoDisciplinaCurricular.getNomeDisciplinaCurricular());
                     frequentaCriteria.setDisciplinaExecucao(disciplinaExecucaoCriteria);
@@ -156,9 +156,9 @@ public class LoadCourseEnrolments extends DataFileLoader
                     if (frequenta == null)
                     {
                         //Adicionar o frequenta equivalente a inscricao
-                        IDisciplinaExecucao disciplinaExecucao =
+                        IExecutionCourse disciplinaExecucao =
                             (
-                                IDisciplinaExecucao) iDisciplinaExecucaoPersistente
+                                IExecutionCourse) iDisciplinaExecucaoPersistente
                                     .readDomainObjectByCriteria(
                                 disciplinaExecucaoCriteria);
                         if (disciplinaExecucao != null)
@@ -214,7 +214,7 @@ public class LoadCourseEnrolments extends DataFileLoader
                     ICurricularCourse curricularCourse =
                         enrolment.getCurricularCourseScope().getCurricularCourse();
 
-                    IDisciplinaExecucao executionCourse =
+                    IExecutionCourse executionCourse =
                         iDisciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
                             curricularCourse.getCode(),
                             "2002/2003",

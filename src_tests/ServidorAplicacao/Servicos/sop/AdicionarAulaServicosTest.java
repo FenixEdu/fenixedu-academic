@@ -20,7 +20,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISala;
@@ -28,7 +28,7 @@ import Dominio.ITurno;
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISalaPersistente;
@@ -243,8 +243,8 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 				nomeDisciplinaExecucao = "TFCII";
 			}
 
-			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao ide = idep.readByExecutionCourseInitialsAndExecutionPeriod(nomeDisciplinaExecucao, iep);
+			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod(nomeDisciplinaExecucao, iep);
 			
 			ITurnoPersistente itp = sp.getITurnoPersistente();
 			ITurno it = itp.readByNameAndExecutionCourse(nomeTurno, ide);

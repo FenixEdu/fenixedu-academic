@@ -14,14 +14,14 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -127,10 +127,10 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 				
 				
-				IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao();
+				IExecutionCourse executionCourseTemp = new DisciplinaExecucao();
 				executionCourseTemp.setIdInternal(executionCourseID);
 				
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
+				IExecutionCourse executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
 				
 				// For all Associated Curricular Courses
 				Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses().iterator();
@@ -176,7 +176,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             IUserView id,
             Object[] argumentos) {
             InfoExecutionCourse infoExecutionCourse = null;
-            IDisciplinaExecucao executionCourse = null;
+            IExecutionCourse executionCourse = null;
             ISuportePersistente sp;
             IProfessorship professorship = null;       
             if (argumentos == null) {
@@ -185,7 +185,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             try {
 
                 sp = SuportePersistenteOJB.getInstance();
-                IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                IPersistentExecutionCourse persistentExecutionCourse =
                     sp.getIDisciplinaExecucaoPersistente();
                 if (argumentos[0] instanceof InfoExecutionCourse) {
                     infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
@@ -194,7 +194,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                             infoExecutionCourse);
                 } else {
                     executionCourse =
-                        (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+                        (IExecutionCourse) persistentExecutionCourse.readByOId(
                             new DisciplinaExecucao((Integer) argumentos[0]),
                             false);
                 }

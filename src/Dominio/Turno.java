@@ -21,7 +21,7 @@ public class Turno extends DomainObject implements ITurno {
 	protected Integer ocupation;
 	protected Double percentage;
 	private   Integer  availabilityFinal;
-	protected IDisciplinaExecucao _disciplinaExecucao;
+	protected IExecutionCourse _disciplinaExecucao;
 	private List associatedShiftProfessorship;
 	
 	private List associatedLessons;
@@ -41,7 +41,7 @@ public class Turno extends DomainObject implements ITurno {
 		String nome,
 		TipoAula tipo,
 		Integer lotacao,
-		IDisciplinaExecucao disciplinaExecucao) {
+		IExecutionCourse disciplinaExecucao) {
 		setNome(nome);
 		setTipo(tipo);
 		setLotacao(lotacao);
@@ -80,11 +80,11 @@ public class Turno extends DomainObject implements ITurno {
 		_lotacao = lotacao;
 	}
 
-	public IDisciplinaExecucao getDisciplinaExecucao() {
+	public IExecutionCourse getDisciplinaExecucao() {
 		return _disciplinaExecucao;
 	}
 
-	public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) {
+	public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao) {
 		_disciplinaExecucao = disciplinaExecucao;
 	}
 

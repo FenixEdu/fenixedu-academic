@@ -6,7 +6,7 @@ import java.util.List;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -48,7 +48,7 @@ public class ReadShiftsByTypeFromExecutionCourse implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(iDE);
+			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(iDE);
 			List dshifts =
 				sp.getITurnoPersistente().readByExecutionCourseAndType(
 						executionCourse,

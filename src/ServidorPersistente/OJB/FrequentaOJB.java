@@ -20,7 +20,7 @@ import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.Frequenta;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -41,7 +41,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 
     public IFrequenta readByAlunoAndDisciplinaExecucao(
         IStudent aluno,
-        IDisciplinaExecucao disciplinaExecucao)
+        IExecutionCourse disciplinaExecucao)
         throws ExcepcaoPersistencia
     {
      
@@ -137,7 +137,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         return queryList(Frequenta.class, crit);
     }
 
-    public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
     {
         try
         {
@@ -159,7 +159,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         }
     }
 
-    public Integer countStudentsAttendingExecutionCourse(IDisciplinaExecucao executionCourse)
+    public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();

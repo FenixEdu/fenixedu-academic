@@ -7,7 +7,7 @@ package ServidorPersistente.middleware.transformers;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorPersistente.middleware.MigrationExecutionCourse;
 import ServidorPersistente.middleware.constants.Constants;
 
@@ -23,7 +23,7 @@ public class TransformerMigrationExecutionCourse2ExecutionCourse
 	public Object transform(Object obj) {
 		MigrationExecutionCourse migrationExecutionCourse =
 			(MigrationExecutionCourse) obj;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		if (migrationExecutionCourse.getExecutionCourse() == null) {
 			executionCourse = new DisciplinaExecucao();
 

@@ -5,15 +5,15 @@ import java.util.List;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
-public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
+public interface IPersistentExecutionCourse extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
 	public boolean apagarTodasAsDisciplinasExecucao();
-	public void escreverDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao)
+	public void escreverDisciplinaExecucao(IExecutionCourse disciplinaExecucao)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
 
 	/**
@@ -24,7 +24,7 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	 * @return IDisciplinaExecucao
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IDisciplinaExecucao readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+	public IExecutionCourse readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 		String sigla,
 		String anoLectivo,
 		String siglaLicenciatura)
@@ -42,12 +42,12 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	 * @return IDisciplinaExecucao
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IDisciplinaExecucao readByExecutionCourseInitialsAndExecutionPeriod(
+	public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriod(
 		String courseInitials,
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia;
 
-	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse)
+	public void deleteExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	public List readByExecutionPeriod(IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia;
@@ -78,7 +78,7 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 //	public List readExecutionCourseTeachersInCharge(Integer executionCourseId) throws ExcepcaoPersistencia;
 	  
 	public List readExecutionCourseTeachers(Integer executionCourseId) throws ExcepcaoPersistencia ;
-	public void lockWrite(IDisciplinaExecucao executionCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
+	public void lockWrite(IExecutionCourse executionCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public Boolean readSite(Integer executionCourseId) throws ExcepcaoPersistencia;
 	
 	/**
@@ -88,7 +88,7 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IDisciplinaExecucao readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	public IExecutionCourse readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
 	public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 	

@@ -12,7 +12,7 @@ import java.util.List;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
@@ -56,7 +56,7 @@ public class ReadTeachersByExecutionCourseProfessorship implements IServico {
 			List result= null;
 			ISuportePersistente sp;
 			sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 						Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			result = persistentProfessorship.readByExecutionCourse(executionCourse);

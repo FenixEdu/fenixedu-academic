@@ -15,7 +15,7 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
 	private String evaluationElements;
 	private String evaluationElementsEn;
 	private Integer keyExecutionCourse;
-	private IDisciplinaExecucao executionCourse;
+	private IExecutionCourse executionCourse;
 
 	/**
 	 * 
@@ -23,15 +23,15 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
 	public EvaluationMethod() {
 	}
 
-	public EvaluationMethod(IDisciplinaExecucao executionCourse) {
+	public EvaluationMethod(IExecutionCourse executionCourse) {
 		setExecutionCourse(executionCourse);
 	}
 
-	public EvaluationMethod(IDisciplinaExecucao executionCourse, String evaluationElements) {
+	public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements) {
 		setExecutionCourse(executionCourse);
 		setEvaluationElements(evaluationElements);
 	}
-	public EvaluationMethod(IDisciplinaExecucao executionCourse, String evaluationElements, String evaluationElementsEn) {
+	public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements, String evaluationElementsEn) {
 		setExecutionCourse(executionCourse);
 		setEvaluationElements(evaluationElements);
 		setEvaluationElementsEn(evaluationElementsEn);
@@ -53,7 +53,7 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
 	/**
 	 * @return
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -67,7 +67,7 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
 	/**
 	 * @param execucao
 	 */
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
+	public void setExecutionCourse(IExecutionCourse execucao) {
 		executionCourse = execucao;
 	}
 

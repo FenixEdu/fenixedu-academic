@@ -23,7 +23,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 
 /**
@@ -300,7 +300,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 				siglaDE += "-" + numElements.intValue() + 1;
 			}
 
-			IDisciplinaExecucao disciplinaExecucao = null;
+			IExecutionCourse disciplinaExecucao = null;
 			//				persistentObjectOJB.readExecutionCourse(siglaDE);
 
 			for (int j = 0; j < courseDegreesPair.degrees.size(); j++) {
@@ -315,7 +315,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 						.getAssociatedExecutionCourses()
 						.isEmpty()) {
 					disciplinaExecucao =
-						(IDisciplinaExecucao) curricularCourse
+						(IExecutionCourse) curricularCourse
 							.getAssociatedExecutionCourses()
 							.get(
 							0);

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
 import Dominio.Turno;
@@ -23,7 +23,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -60,12 +60,12 @@ public class CriarTurno implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 			
 			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoTurno.getInfoDisciplinaExecucao().getInfoExecutionPeriod());
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				executionCourseDAO
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					infoTurno.getInfoDisciplinaExecucao().getSigla(),

@@ -7,13 +7,13 @@ package ServidorAplicacao.Servico.teacher;
 import DataBeans.InfoGroupProperties;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -51,15 +51,15 @@ public class CreateGroupProperties implements IServico {
 	 */
 	public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties) throws FenixServiceException {
 
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		try {
 
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 
 			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
 
 			infoGroupProperties.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 

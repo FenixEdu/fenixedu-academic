@@ -17,7 +17,7 @@ import org.odmg.QueryException;
 
 import Dominio.Exam;
 import Dominio.ExamExecutionCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -30,7 +30,7 @@ public class ExamExecutionCourseOJB
 
 	public IExamExecutionCourse readBy(
 		IExam exam,
-		IDisciplinaExecucao executionCourse)
+		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		try {
 			IExamExecutionCourse examExecutionCourse = null;
@@ -66,7 +66,7 @@ public class ExamExecutionCourseOJB
 		}
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		try {
 
@@ -133,7 +133,7 @@ public class ExamExecutionCourseOJB
 			tx.begin();
 
 			IExam exam = examExecutionCourseToWrite.getExam();
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				examExecutionCourseToWrite.getExecutionCourse();
 
 			List associatedExecutionCourses =

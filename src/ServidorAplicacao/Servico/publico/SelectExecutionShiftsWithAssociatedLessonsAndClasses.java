@@ -7,7 +7,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
@@ -54,7 +54,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao disciplinaExecucao =
+			IExecutionCourse disciplinaExecucao =
 				Cloner.copyInfoExecutionCourse2ExecutionCourse(
 					infoExecutionCourse);
 			List shifts =

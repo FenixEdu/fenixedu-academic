@@ -18,7 +18,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -26,7 +26,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -66,7 +66,7 @@ public class EditExam implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			IExecutionPeriod executionPeriod =
@@ -76,7 +76,7 @@ public class EditExam implements IServico {
 						.get(0))
 						.getInfoExecutionPeriod());
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				executionCourseDAO
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					((InfoExecutionCourse) infoViewOldExam

@@ -16,7 +16,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ExamExecutionCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -24,7 +24,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -59,20 +59,20 @@ public class AssociateExecutionCourseToExam implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
 					infoExecutionCourse.getInfoExecutionPeriod());
 
-			IDisciplinaExecucao executionCourseToBeAssociatedWithExam =
+			IExecutionCourse executionCourseToBeAssociatedWithExam =
 				executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(
 					infoExecutionCourse.getSigla(),
 					executionPeriod);
 
 			// We assume it's the same execution period.
-			IDisciplinaExecucao someExecutionCourseAlreadyAssociatedWithExam =
+			IExecutionCourse someExecutionCourseAlreadyAssociatedWithExam =
 				executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(
 					((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0)).getSigla(),
 					executionPeriod);

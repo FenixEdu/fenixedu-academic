@@ -5,7 +5,7 @@
 package ServidorPersistente;
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 
 /**
@@ -16,8 +16,8 @@ public interface IPersistentGroupProperties extends IPersistentObject{
 	public void delete(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
     public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
-	public List readAllGroupPropertiesByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+	public List readAllGroupPropertiesByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 	public void lockWrite(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
-	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IDisciplinaExecucao executionCourse,String name) throws ExcepcaoPersistencia;
+	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IExecutionCourse executionCourse,String name) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 }

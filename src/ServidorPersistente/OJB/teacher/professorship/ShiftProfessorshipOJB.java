@@ -10,7 +10,7 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.IShiftProfessorship;
@@ -40,7 +40,7 @@ public class ShiftProfessorshipOJB
 
 		Criteria criteria = new Criteria();
 
-		IDisciplinaExecucao executionCourse =
+		IExecutionCourse executionCourse =
 			teacherShiftPercentage.getShift().getDisciplinaExecucao();
 
 		criteria.addEqualTo(

@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -19,7 +19,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
@@ -62,7 +62,7 @@ public class DeleteStudentGroupMembers implements IServico {
 	public boolean run(Integer executionCourseCode, Integer studentGroupCode,List studentUsernames) throws FenixServiceException {
 		
 		
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+		IPersistentExecutionCourse persistentExecutionCourse = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudent persistentStudent = null;
@@ -79,7 +79,7 @@ public class DeleteStudentGroupMembers implements IServico {
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
 		
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			IStudentGroup studentGroup =(IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
 			
 			if(studentGroup==null)

@@ -19,7 +19,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoViewAllExams;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -105,8 +105,8 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 								executionDegree);
 
 					for (int i = 0; i < executionCourses.size(); i++) {
-						IDisciplinaExecucao executionCourse =
-							(IDisciplinaExecucao) executionCourses.get(i);
+						IExecutionCourse executionCourse =
+							(IExecutionCourse) executionCourses.get(i);
 
 						InfoExecutionCourseAndExams infoExecutionCourseAndExams =
 							new InfoExecutionCourseAndExams();

@@ -7,7 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -21,13 +21,13 @@ public interface IPersistentResponsibleFor extends IPersistentObject {
 	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 	public IResponsibleFor readByTeacherAndExecutionCourse(
 		ITeacher teacher,
-		IDisciplinaExecucao executionCourse)
+		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	public IResponsibleFor readByTeacherAndExecutionCoursePB(
 		ITeacher teacher,
-		IDisciplinaExecucao executionCourse)
+		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;	
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	public void delete(IResponsibleFor responsibleFor)
 		throws ExcepcaoPersistencia;

@@ -24,7 +24,7 @@ import Dominio.Curso;
 import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
 import Dominio.ICurso;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -91,7 +91,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 		ICurso c = new Curso();
 		c.setSigla(sCP.getDegreeCurricularPlan().getDegree().getSigla());
 		//	cE.setCurso(c);
-		IDisciplinaExecucao dE = new DisciplinaExecucao();
+		IExecutionCourse dE = new DisciplinaExecucao();
 	//	dE.setLicenciaturaExecucao(cE);
 		List ldE = sp.getIDisciplinaExecucaoPersistente().readByCriteria(dE);
 		
@@ -105,7 +105,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 		}
 
 		for(int i = 0; i < ldE.size(); i++) {
-			IDisciplinaExecucao disciplinaExecucao = (IDisciplinaExecucao) ldE.get(i);
+			IExecutionCourse disciplinaExecucao = (IExecutionCourse) ldE.get(i);
 			
 			InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(disciplinaExecucao);
 			
@@ -126,7 +126,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 
 //			executionCoure.setAnoLectivo(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
 //			executionCoure.setCurso(degree);
-			IDisciplinaExecucao executionDegree = new DisciplinaExecucao();
+			IExecutionCourse executionDegree = new DisciplinaExecucao();
 			executionDegree.setSigla(disciplinaExecucao.getSigla());
 			ITurno shift1 = new Turno();
 			shift1.setDisciplinaExecucao(executionDegree);

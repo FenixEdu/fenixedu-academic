@@ -10,7 +10,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -51,7 +51,7 @@ public class ReadEvaluation implements IServico {
 			
 			InfoCurriculum infoCurriculum = null;
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 			
 			ICurriculum curriculum = sp.getIPersistentCurriculum().readCurriculumByCurricularCourse((ICurricularCourse) executionCourse);			
 			

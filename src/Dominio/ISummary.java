@@ -22,11 +22,11 @@ public interface ISummary extends IDomainObject {
 	/**
 	 * @return
 	 */
-	public abstract IDisciplinaExecucao getExecutionCourse();
+	public abstract IExecutionCourse getExecutionCourse();
 	/**
 	 * @param executionCourse
 	 */
-	public abstract void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	public abstract void setExecutionCourse(IExecutionCourse executionCourse);
 	/**
 	 * @return
 	 */

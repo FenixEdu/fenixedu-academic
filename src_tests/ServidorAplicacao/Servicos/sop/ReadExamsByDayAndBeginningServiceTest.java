@@ -22,7 +22,7 @@ import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.ISala;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -108,8 +108,8 @@ public class ReadExamsByDayAndBeginningServiceTest
 				tempInfoExecutionCourses = new ArrayList();
 
 				for(int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++ ) {
-					IDisciplinaExecucao executionCourse =
-						(IDisciplinaExecucao) tempExam.getAssociatedExecutionCourses().get(k);
+					IExecutionCourse executionCourse =
+						(IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
 					tempInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
 					tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();

@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 
 /**
  * @author jpvl
@@ -22,7 +22,7 @@ public class MigrationExecutionCourse {
 
 	private HashMap degreeToSopCourse;
 
-	private IDisciplinaExecucao executionCourse = null;
+	private IExecutionCourse executionCourse = null;
 	private String initials;
 	private boolean migrated = false;
 	private String name;
@@ -132,7 +132,7 @@ public class MigrationExecutionCourse {
 	/**
 	 * @return IDisciplinaExecucao
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
+	public IExecutionCourse getExecutionCourse() {
 		return executionCourse;
 	}
 
@@ -215,7 +215,7 @@ public class MigrationExecutionCourse {
 	 * Sets the executionCourse.
 	 * @param executionCourse The executionCourse to set
 	 */
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public void setExecutionCourse(IExecutionCourse executionCourse) {
 		this.executionCourse = executionCourse;
 	}
 

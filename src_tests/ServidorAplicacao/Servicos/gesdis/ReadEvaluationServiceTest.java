@@ -6,12 +6,12 @@ package ServidorAplicacao.Servicos.gesdis;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -46,7 +46,7 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 		ISuportePersistente sp = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
@@ -60,7 +60,7 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 			executionPeriod =
 				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep =
+			IPersistentExecutionCourse idep =
 				sp.getIDisciplinaExecucaoPersistente();
 			executionCourse =
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(
@@ -82,7 +82,7 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 		ISuportePersistente sp = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
@@ -96,7 +96,7 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 			executionPeriod =
 				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep =
+			IPersistentExecutionCourse idep =
 				sp.getIDisciplinaExecucaoPersistente();
 			executionCourse =
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(
@@ -129,7 +129,7 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 		ISuportePersistente sp = null;
 			IExecutionYear executionYear = null;
 			IExecutionPeriod executionPeriod = null;
-			IDisciplinaExecucao executionCourse = null;
+			IExecutionCourse executionCourse = null;
 			try {
 				sp = SuportePersistenteOJB.getInstance();
 				sp.iniciarTransaccao();
@@ -143,7 +143,7 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 				executionPeriod =
 					iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-				IDisciplinaExecucaoPersistente idep =
+				IPersistentExecutionCourse idep =
 					sp.getIDisciplinaExecucaoPersistente();
 				executionCourse =
 					idep.readByExecutionCourseInitialsAndExecutionPeriod(

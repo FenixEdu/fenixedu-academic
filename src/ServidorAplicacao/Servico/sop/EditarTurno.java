@@ -19,7 +19,7 @@ import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
@@ -99,8 +99,8 @@ public class EditarTurno implements IServico {
 					shift.getAvailabilityFinal().intValue()
 						+ capacityDiference));
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) sp
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) sp
 					.getIDisciplinaExecucaoPersistente()
 					.readByOID(
 					DisciplinaExecucao.class,

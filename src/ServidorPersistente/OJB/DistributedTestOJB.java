@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.DistributedTest;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDistributedTest;
@@ -24,7 +24,7 @@ public class DistributedTestOJB
 	public DistributedTestOJB() {
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo(

@@ -3,11 +3,11 @@ package ServidorAplicacao.Servico.teacher;
 import Dominio.BibliographicReference;
 import Dominio.DisciplinaExecucao;
 import Dominio.IBibliographicReference;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -51,12 +51,12 @@ public class CreateBibliographicReference implements IServico {
 		try {
 
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentSupport.getIPersistentBibliographicReference();
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
 
 			IBibliographicReference newBibliographicReference = new BibliographicReference();
 

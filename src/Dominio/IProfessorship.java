@@ -14,12 +14,12 @@ import java.util.List;
 public interface IProfessorship extends IDomainObject
 {
     public ITeacher getTeacher();
-    public IDisciplinaExecucao getExecutionCourse();
+    public IExecutionCourse getExecutionCourse();
     public Double getCredits();
     public void setCredits(Double credits);
 
     public void setTeacher(ITeacher teacher);
-    public void setExecutionCourse(IDisciplinaExecucao executionCourse);
+    public void setExecutionCourse(IExecutionCourse executionCourse);
 
     public List getAssociatedShiftProfessorship();
     public void setAssociatedShiftProfessorship(List associatedTeacherShiftPercentage);

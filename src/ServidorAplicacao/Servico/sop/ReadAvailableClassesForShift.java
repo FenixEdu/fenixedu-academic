@@ -13,7 +13,7 @@ import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turno;
@@ -75,7 +75,7 @@ public class ReadAvailableClassesForShift implements IServico {
 				scopes.addAll(curricularCourse.getScopes());
 			}
 
-			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
+			IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 
 			ITurmaPersistente classDAO = sp.getITurmaPersistente();
 			List classes =

@@ -7,7 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
 
 /**
@@ -17,9 +17,9 @@ import Dominio.IEvaluationMethod;
  */
 public interface IPersistentEvaluationMethod extends IPersistentObject {
 	
-	public IEvaluationMethod readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+	public IEvaluationMethod readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 	
-	public IEvaluationMethod readByIdExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+	public IEvaluationMethod readByIdExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 		
 	public List readAll() throws ExcepcaoPersistencia;
 	

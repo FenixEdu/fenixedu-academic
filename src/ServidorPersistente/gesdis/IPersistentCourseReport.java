@@ -6,7 +6,7 @@
  */
 package ServidorPersistente.gesdis;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.gesdis.ICourseReport;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -20,6 +20,6 @@ import ServidorPersistente.IPersistentObject;
  */
 public interface IPersistentCourseReport extends IPersistentObject {
 
-	public ICourseReport readCourseReportByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public ICourseReport readCourseReportByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 }

@@ -22,7 +22,7 @@ import org.apache.commons.collections.Transformer;
 
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IFrequenta;
@@ -110,7 +110,7 @@ public class ExamRoomDistribution implements IServico {
 				List executionCourses = exam.getAssociatedExecutionCourses();
 				Iterator iterCourse = executionCourses.iterator();
 				while (iterCourse.hasNext()) {
-					List attends = persistentAttends.readByExecutionCourse((IDisciplinaExecucao) iterCourse.next());
+					List attends = persistentAttends.readByExecutionCourse((IExecutionCourse) iterCourse.next());
 					students.addAll(CollectionUtils.collect(attends, new Transformer() {
 						public Object transform(Object arg0) {
 							IFrequenta frequenta = (IFrequenta) arg0;

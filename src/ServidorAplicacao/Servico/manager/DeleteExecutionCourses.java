@@ -8,14 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
@@ -55,7 +55,7 @@ public class DeleteExecutionCourses implements IServico
         {
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
@@ -75,8 +75,8 @@ public class DeleteExecutionCourses implements IServico
             while (iter.hasNext())
             {
                 internalId = (Integer) iter.next();
-                IDisciplinaExecucao executionCourse =
-                    (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+                IExecutionCourse executionCourse =
+                    (IExecutionCourse) persistentExecutionCourse.readByOId(
                         new DisciplinaExecucao(internalId),
                         false);
                 if (executionCourse != null)

@@ -14,7 +14,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEvaluation;
@@ -23,7 +23,7 @@ import Dominio.IMark;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -74,11 +74,11 @@ public class ValidateSubmitMarks implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//execution course and execution course's site
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(executionCourseCode);
-			executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 
 			//evaluation
 			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();

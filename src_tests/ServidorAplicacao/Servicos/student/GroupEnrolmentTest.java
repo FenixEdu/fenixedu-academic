@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.Servicos.TestCaseCreateServices;
 
 /**
@@ -17,7 +17,7 @@ import ServidorAplicacao.Servicos.TestCaseCreateServices;
  */
 public class GroupEnrolmentTest extends TestCaseCreateServices {
 
-	IDisciplinaExecucao executionCourse = null;
+	IExecutionCourse executionCourse = null;
 
 	/**
 	 * @param testName

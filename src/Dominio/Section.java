@@ -255,7 +255,7 @@ public class Section extends DomainObject implements ISection {
 	public INode getParentNode() {
 		if (getSuperiorSection()==null) {
 			ISite site = getSite();
-			IDisciplinaExecucao executionCourse=site.getExecutionCourse();
+			IExecutionCourse executionCourse=site.getExecutionCourse();
 			return executionCourse;
 		}else {
 			ISection section = getSuperiorSection();

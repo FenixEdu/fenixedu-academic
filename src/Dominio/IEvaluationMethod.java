@@ -18,7 +18,7 @@ public interface IEvaluationMethod extends IDomainObject {
 	public void setEvaluationElementsEn(String string);
 	public Integer getKeyExecutionCourse();
 	public void setKeyExecutionCourse(Integer integer);
-	public IDisciplinaExecucao getExecutionCourse();
-	public void setExecutionCourse(IDisciplinaExecucao execucao);
+	public IExecutionCourse getExecutionCourse();
+	public void setExecutionCourse(IExecutionCourse execucao);
 
 }

@@ -15,7 +15,7 @@ import fileSuport.INode;
  *
  * @author Nuno Nunes & Joana Mota
  */
-public interface IDisciplinaExecucao extends Serializable, IDomainObject,INode {
+public interface IExecutionCourse extends Serializable, IDomainObject,INode {
 	public String getNome();
 	public void setNome(java.lang.String nome);
 	public String getSigla();

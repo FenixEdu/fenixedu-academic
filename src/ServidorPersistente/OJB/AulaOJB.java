@@ -19,7 +19,7 @@ import org.odmg.QueryException;
 
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import Dominio.ITurnoAula;
@@ -151,7 +151,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		super.deleteAll(oqlQuery);
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		if (executionCourse == null)
 			return new ArrayList();
@@ -181,7 +181,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 	}
 
 	public List readByExecutionCourseAndLessonType(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		TipoAula lessonType)
 		throws ExcepcaoPersistencia {
 		try {

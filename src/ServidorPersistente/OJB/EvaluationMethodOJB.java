@@ -12,7 +12,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.EvaluationMethod;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -28,7 +28,7 @@ public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEv
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentEvaluationMethod#readByExecutionCourse(Dominio.IDisciplinaExecucao)
 	 */
-	public IEvaluationMethod readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public IEvaluationMethod readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 		try {
 			IEvaluationMethod evaluation = null;
 			String oqlQuery = "select all from " + EvaluationMethod.class.getName();
@@ -51,7 +51,7 @@ public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEv
 		}
 	}
 
-	public IEvaluationMethod readByIdExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public IEvaluationMethod readByIdExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyExecutionCourse", new Integer(String.valueOf(executionCourse.getIdInternal())));
 		return (IEvaluationMethod) queryObject(EvaluationMethod.class, criteria);

@@ -23,7 +23,7 @@ public interface IDistributedTest extends IDomainObject {
 	public abstract Boolean getStudentFeedback();
 	public abstract TestType getTestType();
 	public abstract Integer getNumberOfQuestions() ;
-	public abstract IDisciplinaExecucao getExecutionCourse();
+	public abstract IExecutionCourse getExecutionCourse();
 	public abstract Integer getKeyExecutionCourse();
 	public abstract void setTitle(String string);
 	public abstract void setTestInformation(String string);
@@ -35,6 +35,6 @@ public interface IDistributedTest extends IDomainObject {
 	public abstract void setStudentFeedback(Boolean feedback);
 	public abstract void setTestType(TestType type);
 	public abstract void setNumberOfQuestions(Integer integer);
-	public abstract void setExecutionCourse(IDisciplinaExecucao execucao);
+	public abstract void setExecutionCourse(IExecutionCourse execucao);
 	public abstract void setKeyExecutionCourse(Integer integer);
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -52,19 +52,19 @@ public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 
-			IDisciplinaExecucao disciplinaExecucao25 =
+			IExecutionCourse disciplinaExecucao25 =
 				new DisciplinaExecucao(new Integer(25));
-			IDisciplinaExecucao disciplinaExecucao26 =
+			IExecutionCourse disciplinaExecucao26 =
 				new DisciplinaExecucao(new Integer(26));
 
 			disciplinaExecucao25 =
-				(IDisciplinaExecucao) sp
+				(IExecutionCourse) sp
 					.getIDisciplinaExecucaoPersistente()
 					.readByOId(
 					disciplinaExecucao25,
 					false);
 			disciplinaExecucao26 =
-				(IDisciplinaExecucao) sp
+				(IExecutionCourse) sp
 					.getIDisciplinaExecucaoPersistente()
 					.readByOId(
 					disciplinaExecucao26,

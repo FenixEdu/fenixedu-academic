@@ -19,7 +19,7 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.Turno;
@@ -64,7 +64,7 @@ public class LerAlunosDeTurno implements IServico {
       ITurno shift = new Turno();
       
       
-      IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
+      IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
 
 //      shift.setDisciplinaExecucao(executionCourse);
 //      shift.setNome(keyTurno.getShiftName());

@@ -17,14 +17,14 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceTestCase;
 import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -92,7 +92,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
             ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-            IDisciplinaExecucaoPersistente disciplinaExecucaoPersistente =
+            IPersistentExecutionCourse disciplinaExecucaoPersistente =
                 sp.getIDisciplinaExecucaoPersistente();
             IPersistentExam examePersistente = sp.getIPersistentExam();
             sp.iniciarTransaccao();
@@ -141,7 +141,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             sp.iniciarTransaccao();
 
-            IDisciplinaExecucao executionCourse2 = (DisciplinaExecucao) executionCourses1ano.get(0);
+            IExecutionCourse executionCourse2 = (DisciplinaExecucao) executionCourses1ano.get(0);
             disciplinaExecucaoPersistente.simpleLockWrite(executionCourse2);
 
             List list2 = new ArrayList();
@@ -150,7 +150,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             list2.add(exam2);
             executionCourse2.setAssociatedExams(list2);
 
-            IDisciplinaExecucao executionCourse1 = (DisciplinaExecucao) executionCourses1ano.get(1);
+            IExecutionCourse executionCourse1 = (DisciplinaExecucao) executionCourses1ano.get(1);
 
             disciplinaExecucaoPersistente.simpleLockWrite(executionCourse1);
 
@@ -159,13 +159,13 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             list1.add(exam1);
             executionCourse1.setAssociatedExams(list1);
 
-            IDisciplinaExecucao executionCourse3 = (DisciplinaExecucao) executionCourses1ano.get(2);
+            IExecutionCourse executionCourse3 = (DisciplinaExecucao) executionCourses1ano.get(2);
 
             disciplinaExecucaoPersistente.simpleLockWrite(executionCourse3);
 
             List list3 = new ArrayList();
             executionCourse3.setAssociatedExams(list3);
-            IDisciplinaExecucao executionCourse4 = null;
+            IExecutionCourse executionCourse4 = null;
 
             for (int i = 3; i < executionCourses1ano.size(); i++)
             {
@@ -180,7 +180,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             for (int i = 0; i < executionCourses2ano.size(); i++)
             {
-                IDisciplinaExecucao executionCourse5 = (DisciplinaExecucao) executionCourses2ano.get(i);
+                IExecutionCourse executionCourse5 = (DisciplinaExecucao) executionCourses2ano.get(i);
 
                 disciplinaExecucaoPersistente.simpleLockWrite(executionCourse5);
 
@@ -209,7 +209,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
                 List examsService = infoExecutionCourse.getAssociatedInfoExams();
 
-                List exams = ((IDisciplinaExecucao) executionCourses1ano.get(i)).getAssociatedExams();
+                List exams = ((IExecutionCourse) executionCourses1ano.get(i)).getAssociatedExams();
 
                 assertEquals(exams.size(), examsService.size());
                 n_exams = exams.size();

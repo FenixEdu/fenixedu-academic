@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.Section;
@@ -13,7 +13,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -89,12 +89,12 @@ public class InsertSection implements IServico {
 		try {
 
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 
 			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
-			IDisciplinaExecucao iExecutionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 			ISite iSite = persistentSite.readByExecutionCourse(iExecutionCourse);
 
 			ISection parentSection = null;

@@ -10,7 +10,7 @@ import Util.CurricularCourseType;
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 
 /**
@@ -90,7 +90,7 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 			Iterator iteratorExecutionPeriod = executionPeriodList.iterator();
 			while (iteratorExecutionPeriod.hasNext()) {
 				IExecutionPeriod executionPeriod = (IExecutionPeriod) iteratorExecutionPeriod.next();
-				IDisciplinaExecucao executionCourse =
+				IExecutionCourse executionCourse =
 					loader.persistentObjectOJB.readExecutionCourseByUnique(curricularCourse.getCode(), executionPeriod);
 				if (executionCourse != null) {
 					errorMessage =

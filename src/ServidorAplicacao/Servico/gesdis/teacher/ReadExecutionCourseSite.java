@@ -9,12 +9,12 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -65,10 +65,10 @@ public class ReadExecutionCourseSite implements IServico {
 			ISuportePersistente sp;
 			
 			sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IExecutionCourse executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
-			executionCourse =  (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+			executionCourse =  (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 			
 			
 			site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);

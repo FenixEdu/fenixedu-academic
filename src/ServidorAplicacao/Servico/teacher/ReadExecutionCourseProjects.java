@@ -13,7 +13,7 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteProjects;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -63,8 +63,8 @@ public class ReadExecutionCourseProjects implements IServico
 
             try {
                 ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-                IDisciplinaExecucao executionCourse =
-                    (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(
+                IExecutionCourse executionCourse =
+                    (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
                         new DisciplinaExecucao(executionCourseCode),
                         false);
 

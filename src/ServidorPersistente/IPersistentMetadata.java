@@ -7,7 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 
 /**
@@ -15,9 +15,9 @@ import Dominio.IMetadata;
  */
 
 public interface IPersistentMetadata extends IPersistentObject {
-	public abstract List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public abstract List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
-	public abstract List readByExecutionCourseAndVisibility(IDisciplinaExecucao executionCourse)
+	public abstract List readByExecutionCourseAndVisibility(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	public void delete(IMetadata metadata) throws ExcepcaoPersistencia;
 }

@@ -15,7 +15,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.DistributedTest;
 import Dominio.Frequenta;
 import Dominio.IAdvisory;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IFrequenta;
 import Dominio.IMetadata;
@@ -82,9 +82,9 @@ public class EditDistributedTest implements IServico
         {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
             executionCourse =
-                (IDisciplinaExecucao) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
+                (IExecutionCourse) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
                     executionCourse,
                     false);
             if (executionCourse == null)
@@ -267,9 +267,9 @@ public class EditDistributedTest implements IServico
             {
                 if (students[i].equals("Todos os Alunos"))
                 {
-                    IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+                    IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
                     executionCourse =
-                        (IDisciplinaExecucao) persistentSuport
+                        (IExecutionCourse) persistentSuport
                             .getIDisciplinaExecucaoPersistente()
                             .readByOId(
                             executionCourse,

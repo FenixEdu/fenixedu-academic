@@ -18,7 +18,7 @@ import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -66,7 +66,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
 					infoExecutionPeriod);
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				sp
 					.getIDisciplinaExecucaoPersistente()
 					.readByExecutionCourseInitialsAndExecutionPeriod(
@@ -87,8 +87,8 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod
 					for (int j = 0;
 						j < exam.getAssociatedExecutionCourses().size();
 						j++) {
-						IDisciplinaExecucao tempExecutionCourse =
-							(IDisciplinaExecucao) exam
+						IExecutionCourse tempExecutionCourse =
+							(IExecutionCourse) exam
 								.getAssociatedExecutionCourses()
 								.get(
 								j);

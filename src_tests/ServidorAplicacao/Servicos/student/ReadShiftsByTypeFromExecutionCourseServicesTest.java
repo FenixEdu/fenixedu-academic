@@ -3,7 +3,7 @@ package ServidorAplicacao.Servicos.student;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -41,7 +41,7 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-		IDisciplinaExecucao executionCourse = null; 
+		IExecutionCourse executionCourse = null; 
 		try {
 			SuportePersistenteOJB.getInstance().iniciarTransaccao();
 			executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
@@ -56,7 +56,7 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
 	  }
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-	  IDisciplinaExecucao executionCourse = null; 
+	  IExecutionCourse executionCourse = null; 
 	  try {
 		  SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		  executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");

@@ -16,7 +16,7 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -55,7 +55,7 @@ public class ReadShiftLessonsTest extends TestCaseReadServices {
 
   protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-	IDisciplinaExecucao executionCourse = null; 
+	IExecutionCourse executionCourse = null; 
   	try {
 		SuportePersistenteOJB.getInstance().iniciarTransaccao();
   		executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
@@ -70,7 +70,7 @@ public class ReadShiftLessonsTest extends TestCaseReadServices {
   }
 
   protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-	IDisciplinaExecucao executionCourse = null; 
+	IExecutionCourse executionCourse = null; 
 	try {
 		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");

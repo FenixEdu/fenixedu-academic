@@ -11,7 +11,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -89,7 +89,7 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico
         while (iterator.hasNext())
         {
             InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse((IDisciplinaExecucao) iterator.next());
+                Cloner.copyIExecutionCourse2InfoExecutionCourse((IExecutionCourse) iterator.next());
             try
             {
                 hasSite =

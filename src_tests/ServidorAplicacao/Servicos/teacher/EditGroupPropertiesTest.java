@@ -2,13 +2,13 @@ package ServidorAplicacao.Servicos.teacher;
 
 import DataBeans.InfoGroupProperties;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGroupProperties;
@@ -22,7 +22,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditGroupPropertiesTest extends TestCaseReadServices {
 
-	IDisciplinaExecucao executionCourse = null;
+	IExecutionCourse executionCourse = null;
 	IGroupProperties groupProperties = null;
 
 	/**
@@ -52,7 +52,7 @@ public class EditGroupPropertiesTest extends TestCaseReadServices {
 		IPersistentExecutionYear persistentExecutionYear = null;
 		IPersistentExecutionPeriod persistentExecutionPeriod = null;
 		IPersistentGroupProperties persistentGroupProperties = null;
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+		IPersistentExecutionCourse persistentExecutionCourse = null;
 
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
@@ -88,7 +88,7 @@ public class EditGroupPropertiesTest extends TestCaseReadServices {
 		IPersistentExecutionYear persistentExecutionYear = null;
 		IPersistentExecutionPeriod persistentExecutionPeriod = null;
 		IPersistentGroupProperties persistentGroupProperties = null;
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+		IPersistentExecutionCourse persistentExecutionCourse = null;
 
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();

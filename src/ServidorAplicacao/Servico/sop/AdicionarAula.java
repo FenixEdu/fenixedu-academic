@@ -20,7 +20,7 @@ import DataBeans.InfoShiftServiceResult;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.Turno;
@@ -66,7 +66,7 @@ public class AdicionarAula implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				Cloner.copyInfoExecutionCourse2ExecutionCourse(
 					infoShift.getInfoDisciplinaExecucao());
 

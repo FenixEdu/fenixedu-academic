@@ -6,7 +6,7 @@ package ServidorPersistente.middleware.transformers;
 
 import org.apache.commons.collections.Transformer;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorPersistente.middleware.MigrationShift;
@@ -35,8 +35,8 @@ public class TransformerMigrationShift2Shift implements Transformer {
 				shift.setTipo(
 					LessonTypeUtils.convertLessonType(
 						migrationShift.getType()));
-				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) transf.transform(
+				IExecutionCourse executionCourse =
+					(IExecutionCourse) transf.transform(
 						migrationShift.getMigrationExecutionCourse());
 				shift.setDisciplinaExecucao(executionCourse);
 				migrationShift.setShift(shift);

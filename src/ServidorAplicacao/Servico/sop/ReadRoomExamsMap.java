@@ -21,7 +21,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomExamsMap;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
@@ -110,7 +110,7 @@ public class ReadRoomExamsMap implements IServico {
 			InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
 			infoExam.setInfoExecutionCourse(
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					(IDisciplinaExecucao) ((IExam) exam)
+					(IExecutionCourse) ((IExam) exam)
 						.getAssociatedExecutionCourses()
 						.get(
 						0)));

@@ -8,7 +8,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -20,7 +20,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface IPersistentExamExecutionCourse extends IPersistentObject {
 	public IExamExecutionCourse readBy(
 		IExam exam,
-		IDisciplinaExecucao executionCourse)
+		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IExamExecutionCourse examExecutionCourseToWrite)
@@ -29,7 +29,7 @@ public interface IPersistentExamExecutionCourse extends IPersistentObject {
 		throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public void delete(IExam exam) throws ExcepcaoPersistencia;
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	
 		

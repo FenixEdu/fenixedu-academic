@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 
@@ -12,7 +12,7 @@ import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 public class EditStudentGroupShiftTest extends TestCaseDeleteAndEditServices {
 
 
-	IDisciplinaExecucao executionCourse = null;
+	IExecutionCourse executionCourse = null;
 	IGroupProperties groupProperties = null;
 	
 	/**

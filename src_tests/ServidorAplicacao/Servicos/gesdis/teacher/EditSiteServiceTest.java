@@ -2,13 +2,13 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
 
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISite;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentSite;
@@ -48,7 +48,7 @@ public class EditSiteServiceTest extends TestCaseDeleteAndEditServices {
 		ISuportePersistente sp = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		//InfoSection infoSection = null;
 		ISite site = null;
 
@@ -63,7 +63,7 @@ public class EditSiteServiceTest extends TestCaseDeleteAndEditServices {
 
 			executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
 			executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 

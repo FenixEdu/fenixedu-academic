@@ -24,7 +24,7 @@ import DataBeans.InfoStudentGroupAttend;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.GroupProperties;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -93,8 +93,8 @@ public class GroupSiteComponentBuilder {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
 					new DisciplinaExecucao(executionCourseCode),
 					false);
 

@@ -16,13 +16,13 @@ import junit.framework.TestSuite;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurno;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -105,8 +105,8 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
 			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
+			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 			
 			ITurnoPersistente itp = sp.getITurnoPersistente();
 			ITurno it = null;

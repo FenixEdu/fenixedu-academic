@@ -9,7 +9,7 @@ import java.util.List;
 import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -54,12 +54,12 @@ public class ReadShiftsByExecutionCourseID implements IServico {
 		try {
 			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 			
-			IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao();
+			IExecutionCourse executionCourseTemp = new DisciplinaExecucao();
 			executionCourseTemp.setIdInternal(executionCourseID);
 			
 			
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-			executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
+			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
 	
 	
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);

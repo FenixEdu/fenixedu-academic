@@ -12,7 +12,7 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.DistributedTest;
 import Dominio.Frequenta;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IFrequenta;
 import ServidorAplicacao.IServico;
@@ -48,9 +48,9 @@ public class ReadStudentsWithoutDistributedTest implements IServico
         {
             persistentSuport = SuportePersistenteOJB.getInstance();
 
-            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
             executionCourse =
-                (IDisciplinaExecucao) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
+                (IExecutionCourse) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
                     executionCourse,
                     false);
             if (executionCourse == null)

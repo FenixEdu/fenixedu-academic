@@ -15,7 +15,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourseScope;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IFrequenta;
 import Dominio.ISite;
@@ -25,7 +25,7 @@ import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
@@ -74,7 +74,7 @@ public class ReadStudentsByCurricularCourse implements IServico
 
         List infoStudentList = new ArrayList();
         ISite site = null;
-        IDisciplinaExecucao executionCourse = null;
+        IExecutionCourse executionCourse = null;
         ICurricularCourseScope curricularCourseScope = null;
         try
         {
@@ -82,8 +82,8 @@ public class ReadStudentsByCurricularCourse implements IServico
             executionCourse.setIdInternal(executionCourseCode);
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
-            executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+            IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+            executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
             site = persistentSite.readByExecutionCourse(executionCourse);

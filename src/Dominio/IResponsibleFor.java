@@ -12,8 +12,8 @@ package Dominio;
  */
 public interface IResponsibleFor extends IDomainObject {
 	public ITeacher getTeacher();
-	public IDisciplinaExecucao getExecutionCourse();
+	public IExecutionCourse getExecutionCourse();
 
 	public void setTeacher(ITeacher teacher);
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	public void setExecutionCourse(IExecutionCourse executionCourse);
 }

@@ -19,7 +19,7 @@ import org.odmg.QueryException;
 
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
@@ -38,7 +38,7 @@ import Util.TipoAula;
 public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
 {
 
-    public ITurno readByNameAndExecutionCourse(String shiftName, IDisciplinaExecucao executionCourse)
+    public ITurno readByNameAndExecutionCourse(String shiftName, IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
@@ -233,7 +233,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
-    public List readByExecutionCourseAndType(IDisciplinaExecucao executionCourse, Integer type)
+    public List readByExecutionCourseAndType(IExecutionCourse executionCourse, Integer type)
         throws ExcepcaoPersistencia
     {
         try
@@ -259,7 +259,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
     /**
      * @see ServidorPersistente.ITurnoPersistente#readByExecutionCourse(Dominio.IDisciplinaExecucao)
      */
-    public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
     {
         try
         {

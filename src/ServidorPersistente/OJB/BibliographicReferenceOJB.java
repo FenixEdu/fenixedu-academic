@@ -6,7 +6,7 @@ import org.odmg.QueryException;
 
 import Dominio.BibliographicReference;
 import Dominio.IBibliographicReference;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBibliographicReference;
 /**
@@ -30,7 +30,7 @@ public class BibliographicReferenceOJB
 		super.deleteAll(oqlQuery);
 	}
 	public IBibliographicReference readBibliographicReference(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		String title,
 		String authors,
 		String reference,
@@ -71,7 +71,7 @@ public class BibliographicReferenceOJB
 		}
 	}
 
-	public List readBibliographicReference(IDisciplinaExecucao executionCourse)
+	public List readBibliographicReference(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 			Criteria crit = new Criteria();
 			crit.addEqualTo("keyExecutionCourse",executionCourse.getIdInternal());

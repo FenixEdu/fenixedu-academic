@@ -12,7 +12,7 @@ import java.util.List;
 import DataBeans.InfoSite;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ISite;
 import Dominio.ITeacher;
@@ -77,7 +77,7 @@ public class ReadTeacherExecutionCoursesSitesService implements IServico {
 			Iterator iter = professorships.iterator();
 			while (iter.hasNext()) {
 				IProfessorship professorship = (IProfessorship) iter.next();
-				IDisciplinaExecucao executionCourse =
+				IExecutionCourse executionCourse =
 					professorship.getExecutionCourse();
 				ISite site =
 					persistentSite.readByExecutionCourse(executionCourse);

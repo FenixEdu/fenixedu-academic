@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.teacher;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
@@ -10,7 +10,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
@@ -48,7 +48,7 @@ public class DeleteTeacher implements IServico {
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
 			Teacher teacher = new Teacher(teacherCode);
 			ITeacher iTeacher = (ITeacher) persistentTeacher.readByOId(teacher, false);
@@ -57,7 +57,7 @@ public class DeleteTeacher implements IServico {
 			}
 			
 			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
-			IDisciplinaExecucao iExecutionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 			
 			//note: removed the possibility for a responsible teacher to remove from himself the professorship 
 			//(it was a feature that didnt make sense)

@@ -22,7 +22,7 @@ import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISite;
 import Dominio.Site;
@@ -207,7 +207,7 @@ public class MigrateDisciplina2Fenix {
 				
 				
 				// Execution Course for the public site
-				IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+				IExecutionCourse executionCourse = new DisciplinaExecucao();
 //				executionCourse.setLabHours(curricularCourse2Write.getLabHours());
 //				executionCourse.setTheoPratHours(curricularCourse2Write.getTheoPratHours());
 //				executionCourse.setTheoreticalHours(curricularCourse2Write.getTheoreticalHours());

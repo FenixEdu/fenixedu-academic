@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISummary;
 import Dominio.Summary;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -33,7 +33,7 @@ public class SummaryOJB extends ObjectFenixOJB implements IPersistentSummary {
 	public SummaryOJB() {
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo(
@@ -44,7 +44,7 @@ public class SummaryOJB extends ObjectFenixOJB implements IPersistentSummary {
 	}
 
 	public List readByExecutionCourseAndType(
-		IDisciplinaExecucao executionCourse,
+		IExecutionCourse executionCourse,
 		TipoAula summaryType)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();

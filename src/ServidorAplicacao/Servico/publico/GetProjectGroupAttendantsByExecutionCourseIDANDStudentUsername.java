@@ -8,14 +8,14 @@ import java.util.List;
 
 import DataBeans.StudentGroupAttendacyInformation;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
@@ -60,11 +60,11 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername impl
 			IPersistentStudentGroupAttend persistentStudentGroupAttend=
 				persistenceSupport.getIPersistentStudentGroupAttend();
 			//
-			IDisciplinaExecucaoPersistente persistentExecutionCourse=
+			IPersistentExecutionCourse persistentExecutionCourse=
 				persistenceSupport.getIDisciplinaExecucaoPersistente();
 			//
-			IDisciplinaExecucao executionCourse=
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOID(
+			IExecutionCourse executionCourse=
+				(IExecutionCourse) persistentExecutionCourse.readByOID(
 					DisciplinaExecucao.class,
 					executionCourseID);
 			//

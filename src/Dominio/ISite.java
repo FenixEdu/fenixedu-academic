@@ -10,8 +10,8 @@ package Dominio;
  */
 public interface ISite extends IDomainObject {
 
-	public IDisciplinaExecucao getExecutionCourse();
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	public IExecutionCourse getExecutionCourse();
+	public void setExecutionCourse(IExecutionCourse executionCourse);
 	public String getAlternativeSite();
 	public void setAlternativeSite(String alternativeSite);
 	public String getMail();

@@ -17,11 +17,11 @@ import DataBeans.util.Cloner;
 import Dominio.CurricularYear;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -60,7 +60,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			IExecutionPeriod executionPeriod =
@@ -90,8 +90,8 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 			Iterator iterator = listDCDE.iterator();
 			listInfoDE = new ArrayList();
 			while (iterator.hasNext()) {
-				IDisciplinaExecucao elem =
-					(IDisciplinaExecucao) iterator.next();
+				IExecutionCourse elem =
+					(IExecutionCourse) iterator.next();
 
 				listInfoDE.add(
 					Cloner.copyIExecutionCourse2InfoExecutionCourse(elem));

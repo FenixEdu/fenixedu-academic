@@ -9,7 +9,7 @@ import Dominio.Announcement;
 import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
 import Dominio.IAnnouncement;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IMark;
 import Dominio.ISite;
@@ -17,7 +17,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentMark;
@@ -66,9 +66,9 @@ public class PublishMarks implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Execution Course
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseCode);
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
-			executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+			IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseCode);
+			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 			//Site
 			IPersistentSite siteDAO = sp.getIPersistentSite();

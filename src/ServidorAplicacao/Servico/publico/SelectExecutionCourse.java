@@ -8,11 +8,11 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -57,7 +57,7 @@ public class SelectExecutionCourse implements IServico {
 			List executionCourseList = null;
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 
  			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
  			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
@@ -66,8 +66,8 @@ public class SelectExecutionCourse implements IServico {
 					executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,executionPeriod,executionDegree);
 
 			for (int i = 0; i < executionCourseList.size(); i++) {
-				IDisciplinaExecucao aux =
-					(IDisciplinaExecucao) executionCourseList.get(i);
+				IExecutionCourse aux =
+					(IExecutionCourse) executionCourseList.get(i);
 				InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(aux);
 				infoExecutionCourseList.add(infoExecutionCourse);
 			}

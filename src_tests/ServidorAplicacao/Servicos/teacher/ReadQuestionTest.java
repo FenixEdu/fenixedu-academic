@@ -12,14 +12,14 @@ import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.Metadata;
 import Dominio.Question;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentQuestion;
 import ServidorPersistente.ISuportePersistente;
@@ -75,11 +75,11 @@ public class ReadQuestionTest extends TestCaseReadServices
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+            IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
-            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(new Integer(26));
+            IExecutionCourse executionCourse = new DisciplinaExecucao(new Integer(26));
             executionCourse =
-                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
             assertNotNull("executionCourse null", executionCourse);
 
             IPersistentMetadata persistentMetadata = sp.getIPersistentMetadata();

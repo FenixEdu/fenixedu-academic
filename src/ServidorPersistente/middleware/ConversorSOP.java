@@ -26,7 +26,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionYear;
 import Dominio.ISala;
 import Dominio.ITurma;
@@ -43,7 +43,7 @@ import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -168,7 +168,7 @@ public class ConversorSOP {
 
 	ITurmaPersistente classDAO = sp.getITurmaPersistente();
 	ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
-	IDisciplinaExecucaoPersistente executionCourseDAO =
+	IPersistentExecutionCourse executionCourseDAO =
 		sp.getIDisciplinaExecucaoPersistente();
 
 	ICursoExecucaoPersistente executionDegreeDAO =
@@ -1237,8 +1237,8 @@ public class ConversorSOP {
 		while (iter.hasNext()) {
 			MigrationExecutionCourse migrationExecutionCourse =
 				(MigrationExecutionCourse) iter.next();
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) t.transform(migrationExecutionCourse);
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) t.transform(migrationExecutionCourse);
 			// TODO not saving relation with curricular course?????
 			try {
 				sp.iniciarTransaccao();

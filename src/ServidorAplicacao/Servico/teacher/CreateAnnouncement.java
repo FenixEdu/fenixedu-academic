@@ -6,13 +6,13 @@ import java.util.Calendar;
 import Dominio.Announcement;
 import Dominio.DisciplinaExecucao;
 import Dominio.IAnnouncement;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -88,13 +88,13 @@ public class CreateAnnouncement implements IServico {
 
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSupport.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite =
 				persistentSupport.getIPersistentSite();
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					new DisciplinaExecucao(infoExecutionCourseCode),
 					false);
 			site = persistentSite.readByExecutionCourse(executionCourse);

@@ -18,7 +18,7 @@ import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -651,8 +651,8 @@ public class ExecutionPeriodOJB
 			count(DisciplinaExecucao.class, criteria);
 
 		for (int i = 0; i < numberOfExecutionCoursesToTransfer; i++) {
-			IDisciplinaExecucao executionCourseToTransfer =
-				(IDisciplinaExecucao) readSpan(
+			IExecutionCourse executionCourseToTransfer =
+				(IExecutionCourse) readSpan(
 					DisciplinaExecucao.class,
 					criteria,
 					new Integer(1),
@@ -795,8 +795,8 @@ public class ExecutionPeriodOJB
 		// Execution Courses
 		List executionCourses = queryList(DisciplinaExecucao.class, criteria);
 		for (int i = 0; i < executionCourses.size(); i++) {
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) executionCourses.get(i);
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) executionCourses.get(i);
 			SuportePersistenteOJB
 				.getInstance()
 				.getIDisciplinaExecucaoPersistente()
@@ -1023,7 +1023,7 @@ public class ExecutionPeriodOJB
 	 */
 	private DisciplinaExecucao findCorrespondingExecutionCourse(
 		IExecutionPeriod executionPeriodToImportDataTo,
-		IDisciplinaExecucao executionCourse)
+		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("sigla", executionCourse.getSigla());
@@ -1216,14 +1216,14 @@ public class ExecutionPeriodOJB
 
 	private class PREDICATE_EXECUTION_COURSE implements Predicate {
 
-		private IDisciplinaExecucao executionCourse;
+		private IExecutionCourse executionCourse;
 
-		public PREDICATE_EXECUTION_COURSE(IDisciplinaExecucao executionCourse) {
+		public PREDICATE_EXECUTION_COURSE(IExecutionCourse executionCourse) {
 			this.executionCourse = executionCourse;
 		}
 
 		public boolean evaluate(Object arg0) {
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0;
+			IExecutionCourse executionCourse = (IExecutionCourse) arg0;
 
 			return this.executionCourse.getSigla().equals(
 				executionCourse.getSigla());

@@ -13,14 +13,14 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IBibliographicReference;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -62,7 +62,7 @@ public class ReadBibliographicReference implements IServico {
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentBibliographicReference =
 					sp.getIPersistentBibliographicReference();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			IExecutionYear executionYear =
@@ -75,7 +75,7 @@ public class ReadBibliographicReference implements IServico {
 				persistentExecutionPeriod.readByNameAndExecutionYear(
 					infoExecutionCourse.getInfoExecutionPeriod().getName(),
 					executionYear);
-			IDisciplinaExecucao executionCourse =
+			IExecutionCourse executionCourse =
 				persistentExecutionCourse
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					infoExecutionCourse.getSigla(),

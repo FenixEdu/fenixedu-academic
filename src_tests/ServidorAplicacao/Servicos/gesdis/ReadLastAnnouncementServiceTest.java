@@ -9,13 +9,13 @@ import DataBeans.InfoAnnouncement;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISite;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentSite;
@@ -65,7 +65,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 		ISuportePersistente persistentSupport = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		ISite site = null;
 		
 		try {
@@ -78,7 +78,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 			IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
 			executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = persistentSupport.getIDisciplinaExecucaoPersistente();
 			executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod(
 				"TFCI", executionPeriod);
 
@@ -111,7 +111,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 		ISuportePersistente persistentSupport = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+		IExecutionCourse executionCourse = null;
 		ISite site = null;
 		
 		try {
@@ -124,7 +124,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 			IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
 			executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = persistentSupport.getIDisciplinaExecucaoPersistente();
 			executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod(
 				"TFCI", executionPeriod);
 

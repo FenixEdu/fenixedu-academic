@@ -8,12 +8,12 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -60,7 +60,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriod
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IDisciplinaExecucaoPersistente executionCourseDAO =
+			IPersistentExecutionCourse executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
 			ICursoExecucao executionDegree =
@@ -82,8 +82,8 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriod
 			}
 
 			for (int i = 0; i < executionCourseList.size(); i++) {
-				IDisciplinaExecucao aux =
-					(IDisciplinaExecucao) executionCourseList.get(i);
+				IExecutionCourse aux =
+					(IExecutionCourse) executionCourseList.get(i);
 				InfoExecutionCourse infoExecutionCourse =
 					Cloner.copyIExecutionCourse2InfoExecutionCourse(aux);
 				infoExecutionCourseList.add(infoExecutionCourse);

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionCourse;
 import Util.TipoAula;
 
 public abstract class ReportDistribution
@@ -26,7 +26,7 @@ public abstract class ReportDistribution
 		}
 	}
 
-	public static void addCapacityExceed(IDisciplinaExecucao executionCourse, String className, TipoAula lessonType)
+	public static void addCapacityExceed(IExecutionCourse executionCourse, String className, TipoAula lessonType)
 	{
 		List errors = (List) capacityExceed.get(executionCourse);
 		if (errors == null)
@@ -58,7 +58,7 @@ public abstract class ReportDistribution
 		Iterator iterator = capacityExceed.keySet().iterator();
 		while (iterator.hasNext())
 		{
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator.next();
+			IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
 			System.out.println(executionCourse.getIdInternal() + "-" + executionCourse.getNome());
 			List list = (List) capacityExceed.get(executionCourse);
 			
