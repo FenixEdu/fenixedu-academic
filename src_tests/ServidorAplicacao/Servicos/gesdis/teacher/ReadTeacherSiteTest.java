@@ -143,8 +143,6 @@ public class ReadTeacherSiteTest extends TestCaseReadServices {
 				"Seccao1deTFCI",
 				new Integer(0),
 				infoSite,
-				null,
-				null,
 				null));
 	//the site no longer knows his sections
 	//	infoSite.setInfoSections(infoSections);

@@ -1,9 +1,6 @@
 package DataBeans.gesdis;
 
 import java.util.Date;
-import java.util.List;
-
-import DataBeans.util.ViewUtils;
 
 
 /**
@@ -21,7 +18,7 @@ public class InfoSection {
     protected Date lastModifiedDate;
     protected InfoSite infoSite;
     protected InfoSection infoSuperiorSection;
-    protected List superiorSectionsNames;
+    protected Integer depth = new Integer(0);
 //    protected List inferiorInfoSections;
 //    protected List infoItems;
     
@@ -49,13 +46,13 @@ public class InfoSection {
 	* Construtor
 	*/
 	
-    public InfoSection(String name, Integer sectionOrder, InfoSite infoSite, InfoSection infoSuperiorSection, List inferiorInfoSections, List infoItems) {
+    public InfoSection(String name, Integer sectionOrder, InfoSite infoSite, InfoSection infoSuperiorSection) {
         this.name = name;
         this.sectionOrder = sectionOrder;        
         this.infoSite = infoSite;
         this.infoSuperiorSection =infoSuperiorSection;
-		this.superiorSectionsNames =
-        ViewUtils.buildQualifiedName(infoSuperiorSection);
+        this.depth = calculateDepth();
+		
         
 //        if ((inferiorInfoSections != null) &&
 //        !inferiorInfoSections.isEmpty()) {
@@ -128,6 +125,7 @@ public class InfoSection {
 	*/
 	public void setSectionOrder(Integer sectionOrder) {
 		this.sectionOrder=sectionOrder;
+		this.depth = calculateDepth();
 		}
     
 	
@@ -182,21 +180,10 @@ public class InfoSection {
 	}
     
     
-	/**
-	 * @return List
-	 */
-	public List getSuperiorSectionsNames() {
-		return superiorSectionsNames;
-	}
 	
 	
-	/**
-	* Sets the superiorSectionsNames.
-	* @param superiorSectionsNames The superiorSectionsNames to set
-	*/
-	public void setSuperiorSectionsNames(List superiorSectionsNames) {
-		this.superiorSectionsNames = superiorSectionsNames;
-	}
+	
+	
 	
 //
 //	/**
@@ -238,13 +225,12 @@ public class InfoSection {
 	 */
 	public String toString() {
 		String result = "[INFOSECTION";
-		result += ", internalCode=" + internalCode;
-		result += ", name=" + name;
-		result += ", sectionOrder=" + sectionOrder;
+		result += ", internalCode=" + getInternalCode();
+		result += ", name=" + getName();
+		result += ", sectionOrder=" + getSectionOrder();
 		result += ", infoSite=" + getInfoSite();
 		result += ", superiorInfoSection=" + getSuperiorInfoSection();
-//		result += ", inferiorInfoSections=" + getInferiorInfoSections();
-//		result += ", infoItems=" +getInfoItems();		
+		result += ", depth=" + getDepth();
 		result += "]";
 		return result;
 	}
@@ -264,5 +250,30 @@ public class InfoSection {
         return resultado;
     }
 
+
+	public Integer calculateDepth(){
+		InfoSection section=this;
+		int depth=0;
+		while (section.getSuperiorInfoSection()!=null){
+			depth++;
+			section=section.getSuperiorInfoSection();
+		}
+		return new Integer(depth);
+	}
+
+	/**
+	 * @return int
+	 */
+	public Integer getDepth() {
+		return depth;
+	}
+
+	/**
+	 * Sets the depth.
+	 * @param depth The depth to set
+	 */
+	public void setDepth(Integer depth) {
+		this.depth = depth;
+	}
 
 }
