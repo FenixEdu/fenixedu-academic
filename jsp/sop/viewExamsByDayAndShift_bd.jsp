@@ -22,22 +22,24 @@
 	<table align="center" border='1' cellpadding='10'>
 		<tr align="center">
 			<td>
-				<bean:message key="property.course.initials"/>
-			</td>
-			<td>
 				<bean:message key="property.course"/>
 			</td>
+			<td>
+				<bean:message key="property.degrees"/>
+			</td>
 		</tr>
-		<logic:iterate id="infoExam" name="infoExams" scope="session">
+		<logic:iterate id="infoViewExam" name="infoExams" scope="session">
 			<tr align="center">
 				<td>
-					<bean:write name="infoExam" property="infoExecutionCourse.sigla"/>
+					<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.nome"/>
 				</td>
 				<td>
-					<bean:write name="infoExam" property="infoExecutionCourse.nome"/>
+					<logic:iterate id="infoDegree" name="infoViewExam" property="infoDegrees">
+						<bean:write name="infoDegree" property="sigla"/> <br/>
+					</logic:iterate>
 				</td>
 			</tr>
-				</logic:iterate>
+		</logic:iterate>
 	</table>
 		
 </logic:present>
