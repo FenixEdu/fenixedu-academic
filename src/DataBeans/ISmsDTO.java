@@ -11,7 +11,7 @@ package DataBeans;
  */
 public interface ISmsDTO {
     /**
-     * Returns an Sms Text with length <= 160 characters
+     * Returns an Sms Text 
      * @return
      */
     public String toSmsText();

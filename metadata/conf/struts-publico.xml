@@ -553,8 +553,8 @@
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
 	</action>
 
-	<action path="/updateSmsDeliveryReport" 
-		type="ServidorApresentacao.Action.publico.sms.UpdateSmsDeliveryReportDispatchAction" 
+	<action path="/smsController" 
+		type="ServidorApresentacao.Action.publico.sms.SmsControllerDispatchAction" 
 		parameter="method" >	
 	</action>
 

@@ -1,12 +1,18 @@
 package ServidorAplicacao.utils.smsResponse;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import DataBeans.ISmsDTO;
+import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.utils.SmsUtil;
+import ServidorAplicacao.utils.exceptions.FenixUtilException;
 import ServidorAplicacao.utils.exceptions.SmsCommandConfigurationException;
 import Util.sms.SmsCommandAuthenticationType;
 import framework.factory.ServiceManagerServiceFactory;
@@ -322,16 +328,16 @@ public class SmsCommand {
 
                 VariableInformation password = (VariableInformation) this.variablesInformation
                         .get(SmsCommandExpressionConstants.PASSWORD_VARIABLE);
-                Object[] authenticationArgs = new Object[2];
+                Object[] authenticationArgs = new Object[3];
 
-                authenticationArgs[0] = matcher.group(password.variablePosition);
+                authenticationArgs[1] = matcher.group(password.variablePosition);
 
                 if (this.smsCommandAuthenticationType.equals(SmsCommandAuthenticationType.USER_PASS)) {
 
                     VariableInformation username = (VariableInformation) this.variablesInformation
                             .get(SmsCommandExpressionConstants.USERNAME_VARIABLE);
 
-                    authenticationArgs[1] = matcher.group(username.variablePosition);
+                    authenticationArgs[0] = matcher.group(username.variablePosition);
 
                 }
                 /*
@@ -343,7 +349,7 @@ public class SmsCommand {
                  * "ReadUsernameByMobilePhone", argsReadUsername);
                  * authenticationArgs[1] = username; }
                  */
-
+                authenticationArgs[2] = Autenticacao.EXTRANET;
                 userView = (UserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
                         authenticationArgs);
 
@@ -353,12 +359,54 @@ public class SmsCommand {
                     .executeService(userView, this.serviceName, args);
 
             if ((result != null) && (this.replyToSender == true)) {
-
-                // billing model should be inserted here
-                //(depends of who is going to charge the response sms money?
-                // Fenix or Mobile Operator?)
-                ISmsDTO smsDTO = (ISmsDTO) result;
-                System.out.println("RESPONSE: " + smsDTO.toSmsText());
+            	
+            	ISmsDTO smsDTO = null;
+            	StringBuffer responseMessage = new StringBuffer();
+            		
+            	if (!(result instanceof Collection))
+            	{	
+            		smsDTO = (ISmsDTO) result;
+            		responseMessage.append(smsDTO.toSmsText());
+            		
+            	}
+            	else
+            	{
+            		List resultList = (List) result;
+            		Iterator it = resultList.iterator();
+            		
+            		while (it.hasNext())
+            		{
+            			smsDTO = (ISmsDTO) it.next();
+            			responseMessage.append(smsDTO.toSmsText());
+            		}
+            		
+            	}
+            	
+            	List responseMessagesList = SmsUtil.getInstance().splitMessage(responseMessage, SmsCommandExpressionConstants.MAX_SMS_SIZE);
+            	
+            	Iterator responseIterator = responseMessagesList.iterator();
+            	String smsMessage;
+            	
+            	//send the SMS
+            	while(responseIterator.hasNext()){
+            	
+            		smsMessage = (String) responseIterator.next();
+            		System.out.println(smsMessage);
+            		try
+					{
+						SmsUtil.getInstance().sendSmsWithoutDeliveryReports(new Integer(senderMsisdn), smsMessage);
+					}
+					catch (FenixUtilException e1)
+					{
+						e1.printStackTrace();
+					}
+					
+					// billing model should be inserted here
+					// (depends of who is going to charge the response sms money?
+					// Fenix or Mobile Operator?)
+            		
+            	}
+            	        
             }
 
         } catch (FenixServiceException e) {
@@ -373,7 +421,8 @@ public class SmsCommand {
 
     }
 
-    private Object[] computeServiceArgs(String senderMsisdn, Matcher matcher) {
+
+	private Object[] computeServiceArgs(String senderMsisdn, Matcher matcher) {
         Object[] args = new Object[this.serviceArgs.length];
 
         for (int i = 0; i < this.serviceArgs.length; i++) {

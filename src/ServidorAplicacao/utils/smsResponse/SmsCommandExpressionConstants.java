@@ -30,4 +30,7 @@ public class SmsCommandExpressionConstants
     //Fixed variables for authentication
     public static final String USERNAME_VARIABLE = "USERNAME";
     public static final String PASSWORD_VARIABLE = "PASSWORD";
+    
+    // Misc constants
+    public static final int MAX_SMS_SIZE = 160;
 }
