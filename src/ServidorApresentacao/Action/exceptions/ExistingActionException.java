@@ -9,6 +9,7 @@ package ServidorApresentacao.Action.exceptions;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForward;
 
+
 /**
  *
  * @author  Luis Cruz & Nuno Nunes & João Mota
@@ -31,12 +32,14 @@ public class ExistingActionException extends FenixActionException {
 		super(key, values, cause);
 	}
 	
+	public ExistingActionException(String text) {
+		super(text);
+	}
+	
 	public ExistingActionException(String text, ActionForward actionForward) {
 		   super(actionForward);
 		   error = new ActionError(text);
-	   }
-
-    
+	}
 
 	/**
 	 * @return String
