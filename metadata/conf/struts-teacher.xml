@@ -174,24 +174,48 @@
 	<action-mappings type="org.apache.struts.action.ActionMapping">
    
    
-
+	<!-- for editing -->
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
 				scope="session"
       			name="bibliographicReferenceForm"
-      			input="/editBibliographicReference.jsp"
                 type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"            
-                validate="true">	           
+                validate="true"
+        		className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+				<set-property property="componentClassName" value="DataBeans.InfoSiteBibliography"/>
+				<set-property property="inputForwardName" value="editErrorValidation"/>
+
+				<forward name="editErrorValidation" path="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference&amp;page=0"/>				
+
+				<forward name="insertBibliographicReference" path="/createBibliographicReference.do"/>
+				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
+				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
+	</action>             
+
+	<!-- for create -->
+	<action     path="/createBibliographicReference"
+				parameter="method"      			
+				scope="session"
+      			name="bibliographicReferenceForm"
+                type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"            
+                validate="true"
+        		className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+				<set-property property="componentClassName" value="DataBeans.InfoSiteBibliography"/>
+				<set-property property="inputForwardName" value="insertBibliographicReference"/>
+				
 				<forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"/>
 				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             
+
+
+
 	
 	<action     path="/alternativeSite"   
 				parameter="method"   			
 				scope="session"
       			name="alternativeSiteForm"
-      			input="/alternativeSiteManagement.jsp"
+      			input="/alternativeSite.do?method=prepareCustomizationOptions&amp;page=0"
                 type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"            
                 validate="true">	           
 				<forward name="editAlternativeSite" path="/alternativeSiteManagement.jsp"/>	
@@ -205,8 +229,11 @@
 		scope="session"
 		parameter="method"      			
         path="/announcementManagementAction" 
-        input="/insertAnnouncement.jsp"
-		validate="true">		
+		validate="true"
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteAnnouncement"/>
+			<set-property property="inputForwardName" value="insertAnnouncement"/>
+		
 		<forward name="showAnnouncements" path="/announcementManagement.jsp" />
         <forward name="insertAnnouncement" path="/insertAnnouncement.jsp" />
         <forward name="editAnnouncement" path="/editAnnouncement.jsp" />
@@ -219,8 +246,13 @@
 		parameter="method"      			
         path="/editAnnouncement" 
         input="/editAnnouncement.jsp"
-		validate="true">
-        <forward name="showAnnouncements" path="/announcementManagement.jsp" />
+		validate="true"        
+		className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoAnnouncement"/>
+			<set-property property="inputForwardName" value="editAnnouncement"/>
+
+	        <forward name="editAnnouncement" path="/editAnnouncement.jsp" />
+        	<forward name="showAnnouncements" path="/announcementManagement.jsp" />
 	</action>
 
 	
@@ -228,27 +260,30 @@
 	<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 	<!-- Actions For Teachers  -->
 	<action 
-		input="/viewTeachers.jsp"
 		parameter="method"
 		path="/teachersManagerDA"
         type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        >    
-	<exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+ 		className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteTeachers"/>
+			<set-property property="inputForwardName" value="viewTeachers"/>
+
+			<exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
          	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
                 	
-    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
-     
-    
+	    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
 	</action>
+
 	<action 
-		name="teacherForm"
-		input="/associateTeacher.jsp"
-		parameter="method"
 		path="/teacherManagerDA"
+		name="teacherForm"
+		parameter="method"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true">    
+        validate="true"
+ 		className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteTeachers"/>
+			<set-property property="inputForwardName" value="associateTeacher"/>
 	
     <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -271,10 +306,13 @@
 		input="/editObjectives.jsp"
 		path="/objectivesManagerDA"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true">    
-    <forward name="viewObjectives" path="/viewObjectives.jsp"/>    
-    <forward name="editObjectives" path="/editObjectives.jsp"/>
-     
+        validate="true"
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+		<set-property property="componentClassName" value="DataBeans.InfoSiteObjectives"/>
+		<set-property property="inputForwardName" value="editObjectives"/>
+
+	    <forward name="viewObjectives" path="/viewObjectives.jsp"/>    
+    	<forward name="editObjectives" path="/editObjectives.jsp"/>
 	</action>
 	
 	<action 
@@ -283,10 +321,12 @@
 		input="/editProgram.jsp"
 		path="/programManagerDA"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true"	>    
-     <forward name="viewProgram" path="/viewProgram.jsp"/>
-     <forward name="editProgram" path="/editProgram.jsp"/>
-     
+        validate="true"	
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteProgram"/>
+			<set-property property="inputForwardName" value="editProgram"/>
+			<forward name="viewProgram" path="/viewProgram.jsp"/>
+			<forward name="editProgram" path="/editProgram.jsp"/>
 	</action>
 	
 	<action 
@@ -315,34 +355,41 @@
 	
 	<!-- Insert Section -->
 	<action name="sectionForm"
-		input="/createSection.jsp"
 		path="/createSection"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true">    
+        validate="true"
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteRootSections"/>
+			<set-property property="inputForwardName" value="createSection"/>
         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
-       <forward name="viewSite" path="/viewSite.jsp"/>
+		<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>               
+       <forward name="createSection" path="/createSection.jsp"/>
 	</action>
 
 	<!-- Edit Section -->
 	<action name="editSectionForm"
-		input="/editSection.jsp"
 		path="/editSection"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true" >
+        validate="true" 
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteSections"/>
+			<set-property property="inputForwardName" value="editSection"/>
         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
        <forward name="editSection" path="/editSection.jsp"/>
        <forward name="prepareEditSection" path="/editSection.do?method=prepareEdit"/>
-       <forward name="viewSite" path="/viewSite.do"/>
-       <forward name="changeParent" path="/changeParent.jsp"/>
+		<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>               
        <forward name="viewSection" path="/viewSection.jsp"/>       
 	</action>
 	
@@ -371,7 +418,7 @@
  			 parameter="method"
               type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
      <forward name="viewSection" path="/viewSection.jsp"/>         
-     <forward name="viewSite" path="/viewSite.jsp"/>
+		<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>               
       </action>
 	
 	<!-- Delete Item -->
@@ -390,7 +437,10 @@
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true" >
+        validate="true" 
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteItems"/>
+			<set-property property="inputForwardName" value="editItem"/>        
         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
@@ -402,12 +452,14 @@
 	<!-- Insert Item -->
 
 	<action name="itemForm"
-		input="/insertItem.jsp"
 		path="/insertItem"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true" >
+        validate="true" 
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoSiteSection"/>
+			<set-property property="inputForwardName" value="insertItem"/>        
          <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
@@ -420,14 +472,15 @@
 	
 	<action 
 		path="/viewExams"
+		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.ViewExamsAction">		
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
        <forward name="viewExams" path="/viewExams.jsp"/>
 	</action>
 	
 	
 	<action 
-		input="/viewExams.do"
+		input="/viewExams.do?method=viewExams"
 		name="examEnrollmentForm"
 		path="/examEnrollmentEditionManager"
 		parameter="method"
@@ -435,7 +488,7 @@
 		type="ServidorApresentacao.Action.teacher.ExamEnrollmentDispatchAction"
 		validate="true"
         >       
-       <forward name="viewExams" path="/viewExams.do"/>
+       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>
 	</action>
 	
 	
@@ -460,7 +513,9 @@
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
 		validate="true"
-        >
+        className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
+			<set-property property="componentClassName" value="DataBeans.InfoEvaluation"/>
+			<set-property property="inputForwardName" value="editEvaluation"/>
        <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
        <forward name="editEvaluation" path="/editEvaluation.jsp"/>
        
@@ -508,6 +563,14 @@
 			<forward name="viewSite" path="/viewSite.jsp"/>
 			<forward name="editAlternativeSite" path="/alternativeSiteManagement.jsp"/>				
 			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
+		</action>
+		<action path="/sectionViewer"
+				name="alternativeSiteForm"
+				input="/teacherAdministrationViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+			<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>
 		</action>
 
 	<!-- End of Action for Teacher Administration Site -->
