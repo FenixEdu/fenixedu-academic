@@ -31,48 +31,48 @@ public class InscTeste {
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
 
-/*		Object serviceArgs2[] = { infoEnrolmentContext };
-		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
-		showAvailableDegreesForOption(infoEnrolmentContext);
+//		Object serviceArgs2[] = { infoEnrolmentContext };
+//		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
+//		showAvailableDegreesForOption(infoEnrolmentContext);
+//
+//		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+//
+//		Object serviceArgs3[] = { infoEnrolmentContext };
+//		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
+//		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+//
+//		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(3)));
+//
+//		Object serviceArgs4[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(0) };
+//		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
+//		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
 
-		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+//		Object serviceArgs5[] = { infoEnrolmentContext };
+//		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs5);
+//		showAvailableDegreesForOption(infoEnrolmentContext);
+//
+//		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+//
+//		Object serviceArgs6[] = { infoEnrolmentContext };
+//		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs6);
+//		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+//
+//		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
+//
+//		Object serviceArgs7[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(1) };
+//		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs7);
+//		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
+//
+//		Object serviceArgs8[] = { infoEnrolmentContext };
+//		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs8);
+//		showAvailableDegreesForOption(infoEnrolmentContext);
+//
+//		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+//
+//		Object serviceArgs9[] = { infoEnrolmentContext };
+//		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs9);
+//		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
 
-		Object serviceArgs3[] = { infoEnrolmentContext };
-		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
-		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
-
-		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
-
-		Object serviceArgs4[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(0) };
-		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
-		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
-
-		Object serviceArgs5[] = { infoEnrolmentContext };
-		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs5);
-		showAvailableDegreesForOption(infoEnrolmentContext);
-
-		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-
-		Object serviceArgs6[] = { infoEnrolmentContext };
-		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs6);
-		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
-
-		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
-
-		Object serviceArgs7[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(1) };
-		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs7);
-		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
-
-		Object serviceArgs8[] = { infoEnrolmentContext };
-		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs8);
-		showAvailableDegreesForOption(infoEnrolmentContext);
-
-		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-
-		Object serviceArgs9[] = { infoEnrolmentContext };
-		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs9);
-		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
-*/
 //		for(int i = 0; i < 1; i++) {
 //			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 //			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);

@@ -24,7 +24,6 @@ public class EnrolmentFilterFinalistRule implements IEnrolmentRule {
 					enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().remove(curricularCourseScope);
 				}
 			}
-
 		}
 
 		return enrolmentContext;

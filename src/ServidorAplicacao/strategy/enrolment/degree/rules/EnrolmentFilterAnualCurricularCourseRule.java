@@ -50,7 +50,7 @@ public class EnrolmentFilterAnualCurricularCourseRule implements IEnrolmentRule 
 				while (iterator.hasNext()) {
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 					if (	(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() < year) &&
-								(curricularCourseScope.getCurricularSemester().getSemester().intValue() == 1) ) {
+							(curricularCourseScope.getCurricularSemester().getSemester().intValue() == 1) ) {
 						year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue();
 						index = aux.indexOf(curricularCourseScope);
 					}

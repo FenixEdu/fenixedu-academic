@@ -10,6 +10,7 @@ import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import Util.CurricularCourseType;
 import Util.EnrolmentState;
 
 /**
@@ -48,32 +49,31 @@ public class SelectOptionalCurricularCourse implements IServico {
 	 */
 	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext, InfoCurricularCourse infoCurricularCourse) throws FenixServiceException {
 
-		InfoEnrolmentInOptionalCurricularCourse infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
-		infoEnrolment.setInfoCurricularCourse(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse());
-		infoEnrolment.setInfoExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
-		infoEnrolment.setInfoStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
-		infoEnrolment.setState(new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
-		infoEnrolment.setInfoCurricularCourseForOption(infoCurricularCourse);
+		if(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) {
+			InfoEnrolmentInOptionalCurricularCourse infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
+			infoEnrolment.setInfoCurricularCourse(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse());
+			infoEnrolment.setInfoExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
+			infoEnrolment.setInfoStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
+			infoEnrolment.setState(new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+			infoEnrolment.setInfoCurricularCourseForOption(infoCurricularCourse);
 
-		// For one optional curricular course chosen there can be only one coresponding curricular course.
-		final InfoCurricularCourse infoCurricularCourseChosen = infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse();
-		List enrolmentsList = (List) CollectionUtils.select(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments(), new Predicate() {
-			public boolean evaluate(Object obj) {
-				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) obj;
-				return infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().equals(infoCurricularCourseChosen);
+			// For one optional curricular course chosen there can be only one coresponding curricular course.
+			final InfoCurricularCourse infoCurricularCourseChosen = infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse();
+			List enrolmentsList = (List) CollectionUtils.select(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments(), new Predicate() {
+				public boolean evaluate(Object obj) {
+					InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) obj;
+					return infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().equals(infoCurricularCourseChosen);
+				}
+			});
+
+			// There for the substituition is done.
+			if (!enrolmentsList.isEmpty()) {
+				infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().remove(enrolmentsList.get(0));
 			}
-		});
-
-		// There for the substituition is done.
-		if (!enrolmentsList.isEmpty()) {
-			infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().remove(enrolmentsList.get(0));
+			infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().add(infoEnrolment);
+		} else {
+			throw new IllegalStateException("Cannot associate a curricular course to a non optional curricular course!");
 		}
-		infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().add(infoEnrolment);
-
-		// Automaticaly add the enrolment in the chosen curricular course to the actual enrolments list for this student.
-//		if (!infoEnrolmentContext.getActualEnrolment().contains(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope())) {
-//			infoEnrolmentContext.getActualEnrolment().add(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope());
-//		}
 		return infoEnrolmentContext;
 	}
 }

@@ -73,7 +73,7 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 			public boolean evaluate(Object obj) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
 				return( (curricularCourseScope.getScopeType().equals(new ScopeType(ScopeType.MANDATORY))) &&
-								(curricularCourseScope.getCurricularSemester().getSemester().equals(semester)));
+						(curricularCourseScope.getCurricularSemester().getSemester().equals(semester)));
 			}
 		});
 

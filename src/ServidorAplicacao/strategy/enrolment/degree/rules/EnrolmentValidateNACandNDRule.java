@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import Util.CurricularCourseType;
 
 /**
  * @author dcs-rjao
@@ -30,7 +31,11 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
 				NAC = NAC + MAX_INCREMENT_NAC;
 			} else {
-				NAC = NAC + MIN_INCREMENT_NAC;
+				if(curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) {
+					NAC = NAC + (2 * MIN_INCREMENT_NAC);
+				} else {
+					NAC = NAC + MIN_INCREMENT_NAC;
+				}
 			}
 		}
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import Util.CurricularCourseType;
 
 /**
  * @author dcs-rjao
@@ -43,7 +44,11 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 					if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
 						possibleNAC = possibleNAC + MAX_INCREMENT_NAC;
 					} else {
-						possibleNAC = possibleNAC + MIN_INCREMENT_NAC;
+						if(curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) {
+							possibleNAC = possibleNAC + (2 * MIN_INCREMENT_NAC);
+						} else {
+							possibleNAC = possibleNAC + MIN_INCREMENT_NAC;
+						}
 					}
 				}
 			}
@@ -58,7 +63,11 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 					if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
 						possibleNAC = possibleNAC + MAX_INCREMENT_NAC;
 					} else {
-						possibleNAC = possibleNAC + MIN_INCREMENT_NAC;
+						if(curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) {
+							possibleNAC = possibleNAC + (2 * MIN_INCREMENT_NAC);
+						} else {
+							possibleNAC = possibleNAC + MIN_INCREMENT_NAC;
+						}
 					}
 				}
 			}

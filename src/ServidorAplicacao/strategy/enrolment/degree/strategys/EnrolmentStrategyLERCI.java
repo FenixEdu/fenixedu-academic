@@ -30,25 +30,25 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 	public EnrolmentContext getAvailableCurricularCourses() {
 		IEnrolmentRule enrolmentRule = null;
 
-		enrolmentRule = new EnrolmentFilterBranchRule();
-		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
-
-		enrolmentRule = new EnrolmentFilterFinalistRule();
-		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
-
-		enrolmentRule = new EnrolmentFilterAnualCurricularCourseRule();
-		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
-
 		enrolmentRule = new EnrolmentFilterSemesterRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
-		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
-		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
+		enrolmentRule = new EnrolmentFilterBranchRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		enrolmentRule = new EnrolmentFilterPrecedenceRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		enrolmentRule = new EnrolmentFilterCurricularYearPrecedence();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
+
+		enrolmentRule = new EnrolmentFilterFinalistRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		enrolmentRule = new EnrolmentFilterAnualCurricularCourseRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
