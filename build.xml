@@ -420,7 +420,7 @@
         </sql>
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
+            url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}">
@@ -470,7 +470,7 @@
             description="Cria as tabelas da base de dados.">
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
+            url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
@@ -485,7 +485,7 @@
 
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
+            url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
@@ -501,7 +501,7 @@
 
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
+            url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
@@ -517,7 +517,7 @@
 
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
+            url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
@@ -533,7 +533,7 @@
 
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
+            url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
@@ -548,7 +548,7 @@
 
        <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
+            url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
@@ -566,7 +566,7 @@
     <target name="dump-db"
             description="Uses dbunit to load database to xml file">
 	  <dbunit driver="com.mysql.jdbc.Driver"
-    	      url="jdbc:mysql://localhost/ciapl"
+    	      url="jdbc:mysql://localhost/${db.name}"
         	  userid="${db.user}"
 	          password="${db.pass}">
     	  <export dest="${sql}/dbContents.xml" encoding="ISO-8859-1"/> 

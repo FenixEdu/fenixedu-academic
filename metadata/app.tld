@@ -333,11 +333,11 @@
 </attribute>
 </tag>
 
-<!-- ACRESCENTADO POR DAVID SANTOS -->
+	<!-- OptionsTag: Tânia & Fernanda da Assiduidade -->
   <tag>
   
     <name>options</name>
-    <tagclass>ServidorApresentacao.TagLib.OptionsTag</tagclass>
+    <tagclass>ServidorApresentacao.TagLib.assiduousness.OptionsTag</tagclass>
     <bodycontent>empty</bodycontent>
 
     <attribute>
@@ -383,5 +383,4 @@
     </attribute>
   
   </tag>
-
 </taglib>
