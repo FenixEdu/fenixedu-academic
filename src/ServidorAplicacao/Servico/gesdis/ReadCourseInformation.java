@@ -5,11 +5,14 @@
 package ServidorAplicacao.Servico.gesdis;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
@@ -18,12 +21,14 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import DataBeans.gesdis.InfoSiteEvaluationInformation;
+import DataBeans.gesdis.InfoSiteEvaluationStatistics;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.ExecutionCourse;
@@ -38,6 +43,7 @@ import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import Dominio.ISite;
 import Dominio.ITeacher;
 import Dominio.ITurno;
@@ -184,6 +190,19 @@ public class ReadCourseInformation implements IService
         }
     }
 
+    private List removeDuplicates(List responsiblesFor)
+    {
+        List result = new ArrayList();
+        Iterator iter = responsiblesFor.iterator();
+        while (iter.hasNext())
+        {
+            IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+            if (!result.contains(responsibleFor))
+                result.add(responsibleFor);
+        }
+        return result;
+    }
+
     /**
 	 * @param period
 	 * @param curricularCourses
@@ -201,23 +220,91 @@ public class ReadCourseInformation implements IService
         while (iter.hasNext())
         {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+
+            InfoSiteEvaluationStatistics infoSiteEvaluationStatistics =
+                new InfoSiteEvaluationStatistics();
+            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
+            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
+            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
+
             InfoSiteEvaluationInformation infoSiteEvaluationInformation =
                 new InfoSiteEvaluationInformation();
-
-            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
-            infoSiteEvaluationInformation.setEnrolled(new Integer(enrolled.size()));
-
-            infoSiteEvaluationInformation.setEvaluated(getEvaluated(enrolled));
-
-            Integer approved = getApproved(executionPeriod, curricularCourse, sp);
-            infoSiteEvaluationInformation.setApproved(approved);
-
+            infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
             InfoCurricularCourse infoCurricularCourse =
                 Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
             infoSiteEvaluationInformation.setInfoCurricularCourse(infoCurricularCourse);
+            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(
+                getInfoSiteEvaluationsHistory(executionPeriod.getSemester(), curricularCourse, sp));
             infoSiteEvalutationInformations.add(infoSiteEvaluationInformation);
         }
         return infoSiteEvalutationInformations;
+    }
+
+    /**
+	 * @param executionPeriod
+	 * @param curricularCourse
+	 * @param sp
+	 * @return
+	 */
+    private List getInfoSiteEvaluationsHistory(
+        Integer semester,
+        ICurricularCourse curricularCourse,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        List infoSiteEvaluationsHistory = new ArrayList();
+        List executionPeriods =
+            (
+                List) CollectionUtils
+                    .collect(curricularCourse.getAssociatedExecutionCourses(), new Transformer()
+        {
+            public Object transform(Object arg0)
+            {
+                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                return executionCourse.getExecutionPeriod();
+            }
+
+        });
+        // filter the executionPeriods by semester
+        final Integer historySemester = semester;
+        executionPeriods = (List) CollectionUtils.select(executionPeriods, new Predicate()
+        {
+            public boolean evaluate(Object arg0)
+            {
+                IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
+                return executionPeriod.getSemester().equals(historySemester);
+            }
+        });
+        Collections.sort(executionPeriods, new Comparator()
+        {
+            public int compare(Object o1, Object o2)
+            {
+                IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
+                IExecutionPeriod executionPeriod2 = (IExecutionPeriod) o2;
+                return executionPeriod1.getExecutionYear().getYear().compareTo(
+                    executionPeriod2.getExecutionYear().getYear());
+            }
+        });
+        Iterator iter = executionPeriods.iterator();
+        while (iter.hasNext())
+        {
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
+
+            InfoSiteEvaluationStatistics infoSiteEvaluationStatistics =
+                new InfoSiteEvaluationStatistics();
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(
+                (InfoExecutionPeriod) Cloner.get(executionPeriod));
+            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
+            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
+            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+            infoSiteEvaluationsHistory.add(infoSiteEvaluationStatistics);
+        }
+
+        return infoSiteEvaluationsHistory;
     }
 
     /**
@@ -225,19 +312,20 @@ public class ReadCourseInformation implements IService
 	 * @param sp
 	 * @return
 	 */
-    private Integer getApproved(
-        IExecutionPeriod executionPeriod,
-        ICurricularCourse curricularCourse,
-        ISuportePersistente sp)
-        throws ExcepcaoPersistencia
+    private Integer getApproved(List enrolments) throws ExcepcaoPersistencia
     {
-        IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
-        List approved =
-            persistentEnrolment.readByCurricularCourseAndExecutionPeriodAndEnrolmentState(
-                curricularCourse,
-                executionPeriod,
-                EnrolmentState.APROVED);
-        return new Integer(approved.size());
+        int approved = 0;
+        Iterator iter = enrolments.iterator();
+        while (iter.hasNext())
+        {
+            IEnrolment enrolment = (IEnrolment) iter.next();
+            EnrolmentState enrolmentState = enrolment.getEnrolmentState();
+            if (enrolmentState.equals(EnrolmentState.APROVED))
+            {
+                approved++;
+            }
+        }
+        return new Integer(approved);
     }
 
     /**
@@ -292,6 +380,7 @@ public class ReadCourseInformation implements IService
     {
         IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
         List infoDepartments = new ArrayList();
+        responsiblesFor = removeDuplicates(responsiblesFor);
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext())
         {

@@ -8,7 +8,8 @@ import fileSuport.INode;
 /**
  * Created on 11/Fev/2003
  * 
- * @author João Mota ciapl Dominio
+ * @author João Mota 
+ * ciapl Dominio
  *  
  */
 public class ExecutionYear extends DomainObject implements IExecutionYear

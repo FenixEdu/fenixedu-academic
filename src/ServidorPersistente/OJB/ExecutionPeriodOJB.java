@@ -90,8 +90,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         {
             super.lockWrite(executionPeriodToWrite);
             // else Throw an already existing exception
-        }
-        else
+        } else
             throw new ExistingPersistentException();
     }
 
@@ -118,12 +117,10 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             if (classes.isEmpty() && executionCourses.isEmpty())
             {
                 super.delete(executionPeriod);
-            }
-            else
+            } else
                 return false;
 
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             return false;
         }
@@ -142,8 +139,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             deleteAllDataRelatedToExecutionPeriod(executionPeriod);
 
             super.delete(executionPeriod);
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             return false;
         }
@@ -170,10 +166,10 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
-        crit.addEqualTo("name",executionPeriodName);
-        crit.addEqualTo("executionYear.year",executionYear.getYear());
-        return (IExecutionPeriod) queryObject(ExecutionPeriod.class,crit);
-      
+        crit.addEqualTo("name", executionPeriodName);
+        crit.addEqualTo("executionYear.year", executionYear.getYear());
+        return (IExecutionPeriod) queryObject(ExecutionPeriod.class, crit);
+
     }
 
     /*
@@ -325,34 +321,26 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         System.out.println("Finished creating sites.");
         /*
 		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		 * System.out.println("Starting transaction.");
-		 * SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		 * System.out.println("Clearing cache.");
-		 * SuportePersistenteOJB.getInstance().clearCache();
+		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
+		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		 * System.out.println("Clearing cache."); SuportePersistenteOJB.getInstance().clearCache();
 		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		 * System.out.println("Starting transaction.");
-		 * SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
+		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		 * 
-		 * transferProfessorships( executionPeriodToImportDataTo,
-		 * executionPeriodToExportDataFrom);
+		 * transferProfessorships( executionPeriodToImportDataTo, executionPeriodToExportDataFrom);
 		 * 
 		 * System.out.println("Finished creating professorships.");
 		 * 
 		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		 * System.out.println("Starting transaction.");
-		 * SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		 * System.out.println("Clearing cache.");
-		 * SuportePersistenteOJB.getInstance().clearCache();
+		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
+		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		 * System.out.println("Clearing cache."); SuportePersistenteOJB.getInstance().clearCache();
 		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		 * System.out.println("Starting transaction.");
-		 * SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
+		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		 * 
-		 * transferResponsibleFors( executionPeriodToImportDataTo,
-		 * executionPeriodToExportDataFrom);
+		 * transferResponsibleFors( executionPeriodToImportDataTo, executionPeriodToExportDataFrom);
 		 * 
 		 * System.out.println("Finished creating responsiblefor.");
 		 */
@@ -743,8 +731,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
 
             store(executionDegreeToCreate);
             return executionDegreeToCreate;
-        }
-        else
+        } else
         {
             return (CursoExecucao) queryObject(CursoExecucao.class, criteria);
         }
@@ -829,8 +816,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         try
         {
             store(classToCreate);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -883,8 +869,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(lessonToCreate);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -934,8 +919,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(shiftToCreate);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -965,8 +949,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(shiftLessonToCreate);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -1033,8 +1016,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(classShiftToCreate);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -1116,8 +1098,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(siteToCreate);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -1137,7 +1118,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addNotEqualTo("state", PeriodState.CLOSED);
         return queryList(ExecutionPeriod.class, criteria);
     }
-    
+
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
@@ -1146,5 +1127,4 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addGreaterThan("semester", new Integer(0));
         return queryList(ExecutionPeriod.class, criteria);
     }
-
 }

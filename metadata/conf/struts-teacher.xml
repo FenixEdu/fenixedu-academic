@@ -1039,11 +1039,11 @@
 			path="/teachingReport" name="teachingReportForm" 
 			input="/teachingReport.do?page=0&amp;method=prepareEdit" 
 			parameter="method" validate="true" scope="request">
-			<!--<exception 
-				type="ServidorAplicacao.Servico.exceptions.FenixServiceException" 
+			<exception 
+				type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
 				key="error.exception.notAuthorized" 
 				handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" 
-				/>-->
+				/>
 			<forward name="successfull-read" path="view-teaching-report"/>
 			<forward name="show-form" path="teaching-report-management"/>
 		</action>

@@ -8,7 +8,7 @@
 <bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
 <bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 <bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
-<table width="90%" border="0" cellspacing="1">
+<table width="90%" border="0" cellspacing="1" style="border: 1px solid #666;">
 	<tr>
 		<td width="25%"><strong><bean:message key="message.teachingReport.courseName"/></strong></td>
 		<td><bean:write name="executionCourse" property="nome" /></td>
@@ -16,14 +16,7 @@
 	<tr>
 		<td><strong><bean:message key="message.teachingReport.courseInfo"/></strong></td>
 		<td>
-			<logic:iterate id="curricularCourse" name="siteCourseInformation" property="infoCurricularCourses">
-		  			<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
-						<bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" />&nbsp;
-						<bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" />&nbsp;
-						<bean:write name="curricularCourseScope" property="infoBranch.code" />
-						<br />			
-				 	</logic:iterate>	
-			</logic:iterate>
+			<bean:write name="executionCourse" property="infoExecutionPeriod.semester"/>
 		</td>
 	</tr>
 	<tr>
@@ -55,15 +48,15 @@
 	</tr>
 </table>
 <br />
+<h3 class="bluetxt"><bean:message key="message.teachingReport.executionYear" />
+&nbsp;<bean:write name="executionYear" property="year" />*</h3>
 <logic:iterate id="siteEvaluationInformation" name="siteCourseInformation" property="infoSiteEvaluationInformations">
-	<h3 class="bluetxt"><bean:message key="message.teachingReport.executionYear" />
-	&nbsp;<bean:write name="executionYear" property="year" />*</h3>
-	<bean:define id="evaluated" name="siteEvaluationInformation" property="evaluated"/>
-	<bean:define id="enrolled" name="siteEvaluationInformation" property="enrolled"/>
-	<bean:define id="approved" name="siteEvaluationInformation" property="approved"/>
+	<bean:define id="evaluated" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.evaluated" type="java.lang.Integer"/>
+	<bean:define id="enrolled" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.enrolled" type="java.lang.Integer"/>
+	<bean:define id="approved" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.approved" type="java.lang.Integer"/>
 	<table width="90%" border="0" cellspacing="1">
 		<tr>
-			<td width="35%"><strong><bean:message key="message.teachingReport.degreeName"/></strong></td>
+			<td width="35%"><strong><bean:message key="message.teachingReport.curricularName"/></strong></td>
 			<td><bean:write name="siteEvaluationInformation" 
 							property="infoCurricularCourse.name"/>
 			</td>
@@ -80,23 +73,18 @@
 			<td><strong><bean:message key="message.teachingReport.AP"/></strong></td>
 			<td><bean:write name="approved"/></td>
 		</tr>
-		<% int ap_en = (int) (((double) ((Integer) approved).intValue() / (double) ((Integer) enrolled).intValue()) * 100); %>
+		<% int ap_en = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AP/IN"/></strong></td>
 			<td><%= ap_en %>%</td>
 		</tr>
-		<% int ap_ev = (int) (((double) ((Integer) approved).intValue() / (double) ((Integer) evaluated).intValue()) * 100); %>
+		<% int ap_ev = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AP/AV"/></strong></td>
 			<td><%= ap_ev %>%</td>
 		</tr>
 	</table>
 	<br/>
-	<p>
-		<bean:message key="message.teachingReport.note1"/> dd/mm/yyyy
-		<br />
-		<bean:message key="message.teachingReport.note2"/>
-	</p>
 	<h3 class="bluetxt"><bean:message key="message.teachingReport.approvalRates"/></h3>
 	<table width="50%">
 		<tr>
@@ -104,21 +92,33 @@
 			<td class="listClasses-header"><bean:message key="message.teachingReport.AP/IN"/></td>
 			<td class="listClasses-header"><bean:message key="message.teachingReport.AP/AV"/></td>
 		</tr>
-		<%-- FALTA UM LOGIC ITERATE --%>
-		<tr>
-			<td class="listClasses"><%--<bean:write name=""/>--%>1</td>
-			<td class="listClasses"><%--<bean:write name=""/>--%>2</td>
-			<td class="listClasses"><%--<bean:write name=""/>--%>3</td>
-		</tr>
+		<logic:iterate id="siteEvaluationStatistics" name="siteEvaluationInformation" property="infoSiteEvaluationHistory" offset="1" length="6">
+			<bean:define id="evaluated" name="siteEvaluationStatistics" property="evaluated" type="java.lang.Integer"/>
+			<bean:define id="enrolled" name="siteEvaluationStatistics" property="enrolled" type="java.lang.Integer"/>
+			<bean:define id="approved" name="siteEvaluationStatistics" property="approved" type="java.lang.Integer"/>
+			<tr>
+				<td class="listClasses">
+					<bean:write name="siteEvaluationStatistics" property="infoExecutionPeriod.infoExecutionYear.year"/>
+				</td>
+				<% int ap_en_h = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
+				<td class="listClasses"><%= ap_en_h %>%</td>
+				<% int ap_ev_h = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
+				<td class="listClasses"><%= ap_ev_h %>%</td>
+			</tr>
+		</logic:iterate>
 	</table>
+	<br/>
+	<br/>
+	<hr width="90%"/>
 </logic:iterate>
 <br />
+<p>
+	<bean:message key="message.teachingReport.note1"/>
+	<br />
+	<bean:message key="message.teachingReport.note2"/>
+</p>
 <h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
-<bean:message key="message.teachingReport.note3"/>
-<br />
-<bean:write name="siteCourseInformation" property="infoCourseReport.report" />
-<br />
-<br />
+<p><bean:write name="siteCourseInformation" property="infoCourseReport.report" /></p>
 <strong><bean:message key="message.teachingReport.text1"/>
 dd/mm/YYYY
 <bean:message key="message.teachingReport.text2"/></strong>

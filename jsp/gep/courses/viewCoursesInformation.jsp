@@ -136,9 +136,25 @@
 							</td>
 							<td class="listClasses" >&nbsp;
 								<logic:present name="infoSiteCourseInformation" property="lastModificationDate"> 
-									<dt:format pattern="dd/MM/yyyy HH:mm">
-										<bean:write name="infoSiteCourseInformation" property="lastModificationDate.time"/>
-									</dt:format>
+									<bean:define id="formatDate">
+										<dt:format pattern="dd/MM/yyyy">
+											<bean:write name="infoSiteCourseInformation" property="lastModificationDate.time"/>
+										</dt:format>
+									</bean:define>
+									<logic:notEqual name="formatDate" value="03/12/2003">
+										<logic:notEqual name="formatDate" value="01/01/2003">
+											<dt:format pattern="dd/MM/yyyy HH:mm">
+												<bean:write name="infoSiteCourseInformation" property="lastModificationDate.time"/>
+											</dt:format>
+										</logic:notEqual>
+									</logic:notEqual>
+									<logic:equal name="formatDate" value="03/12/2003">
+										<bean:message key="label.gep.courseInformation.previousYear" bundle="GEP_RESOURCES"/>
+									</logic:equal>
+									<logic:equal name="formatDate" value="01/01/2003">
+										<bean:message key="label.gep.courseInformation.previousYear" bundle="GEP_RESOURCES"/>
+									</logic:equal>
+								
 								</logic:present>
 								<logic:notPresent name="infoSiteCourseInformation" property="lastModificationDate"> 
 									<bean:message key="label.gep.courseInformation.notModified" 
@@ -198,9 +214,25 @@
 						</td>
 						<td class="listClasses" >&nbsp;
 							<logic:present name="infoSiteCourseInformation" property="lastModificationDate"> 
-								<dt:format pattern="dd/MM/yyyy HH:mm">
-									<bean:write name="infoSiteCourseInformation" property="lastModificationDate.time"/>
-								</dt:format>
+								<bean:define id="formatDate">
+									<dt:format pattern="dd/MM/yyyy">
+										<bean:write name="infoSiteCourseInformation" property="lastModificationDate.time"/>
+									</dt:format>
+								</bean:define>
+								<logic:notEqual name="formatDate" value="03/12/2003">
+									<logic:notEqual name="formatDate" value="01/01/2003">
+										<dt:format pattern="dd/MM/yyyy HH:mm">
+											<bean:write name="infoSiteCourseInformation" property="lastModificationDate.time"/>
+										</dt:format>
+									</logic:notEqual>
+								</logic:notEqual>
+								<logic:equal name="formatDate" value="03/12/2003">
+									<bean:message key="label.gep.courseInformation.previousYear" bundle="GEP_RESOURCES"/>
+								</logic:equal>
+								<logic:equal name="formatDate" value="01/01/2003">
+									<bean:message key="label.gep.courseInformation.previousYear" bundle="GEP_RESOURCES"/>
+								</logic:equal>
+							
 							</logic:present>
 							<logic:notPresent name="infoSiteCourseInformation" property="lastModificationDate"> 
 								<bean:message key="label.gep.courseInformation.notModified" 

@@ -4,6 +4,8 @@
  */
 package DataBeans.gesdis;
 
+import java.util.List;
+
 import DataBeans.InfoCurricularCourse;
 
 /**
@@ -14,10 +16,9 @@ import DataBeans.InfoCurricularCourse;
 public class InfoSiteEvaluationInformation
 {
     private InfoCurricularCourse infoCurricularCourse;
-    private Integer enrolled;
-    private Integer evaluated;
-    private Integer approved;
-    
+    private InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;
+    private List infoSiteEvaluationHistory;
+
     /**
      * 
      */
@@ -27,53 +28,37 @@ public class InfoSiteEvaluationInformation
     }
 
     /**
-     * @return Returns the approved.
+     * @return Returns the infoSiteEvaluationHistory.
      */
-    public Integer getApproved()
+    public List getInfoSiteEvaluationHistory()
     {
-        return approved;
+        return infoSiteEvaluationHistory;
     }
 
     /**
-     * @param approved The approved to set.
+     * @param infoSiteEvaluationHistory The infoSiteEvaluationHistory to set.
      */
-    public void setApproved(Integer approved)
+    public void setInfoSiteEvaluationHistory(List infoSiteEvaluationHistory)
     {
-        this.approved = approved;
+        this.infoSiteEvaluationHistory = infoSiteEvaluationHistory;
     }
 
     /**
-     * @return Returns the enrolled.
+     * @return Returns the infoSiteEvaluationStatistics.
      */
-    public Integer getEnrolled()
+    public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics()
     {
-        return enrolled;
+        return infoSiteEvaluationStatistics;
     }
 
     /**
-     * @param enrolled The enrolled to set.
+     * @param infoSiteEvaluationStatistics The infoSiteEvaluationStatistics to set.
      */
-    public void setEnrolled(Integer enrolled)
+    public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics)
     {
-        this.enrolled = enrolled;
+        this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
-
-    /**
-     * @return Returns the evaluated.
-     */
-    public Integer getEvaluated()
-    {
-        return evaluated;
-    }
-
-    /**
-     * @param evaluated The evaluated to set.
-     */
-    public void setEvaluated(Integer evaluated)
-    {
-        this.evaluated = evaluated;
-    }
-
+    
     /**
      * @return Returns the infoCurricularCourse.
      */
