@@ -253,7 +253,7 @@
     of the desired sequence manager implementation - it is mandatory
     when using the sequence-manager element.
     All sequence manager implementations you find will under
-    org.apache.ojb.broker.util.sequence package net.sourceforge.fenixedu.named as SequenceManagerXXXImpl.
+    org.apache.ojb.broker.util.sequence package named as SequenceManagerXXXImpl.
     For configuration examples please consult documentation.
 -->
 <!ATTLIST sequence-manager
