@@ -661,9 +661,11 @@
 		name="marksForm"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.LoadMarksAction"
+		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
 		  >
-       <forward name="success" path="/loadMarks.jsp" />       
+       <forward name="success" path="/loadMarks.jsp" /> 
+       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>  
+            
 	</action>
 	<!-- End Marks List -->
 	

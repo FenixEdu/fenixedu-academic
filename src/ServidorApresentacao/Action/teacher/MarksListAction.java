@@ -71,9 +71,9 @@ public class MarksListAction extends DispatchAction {
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer executionCourseCode = getFromRequest("objectCode", request);
+		Integer executionCourseCode = (Integer) getFromRequest("objectCode", request);
 
-		Integer examCode = getFromRequest("examCode", request);
+		Integer examCode = (Integer) getFromRequest("examCode", request);
 
 		Object[] args = { executionCourseCode, examCode };
 

@@ -24,6 +24,7 @@ public class InfoMark {
 	public InfoMark(String mark, String publishedMark, InfoFrequenta frequenta, InfoExam exam) {
 			setInfoFrequenta(frequenta);
 			setInfoExam(exam);
+			setPublishedMark(mark);
 			setPublishedMark(publishedMark);			
 	}
 
@@ -41,7 +42,7 @@ public class InfoMark {
   public String toString() {
     String result = "[InfoStudent";
     result += ", mark=" + mark;
-    result += ", published mark=" + mark;
+    result += ", published mark=" + publishedMark;
 
     if (infoExam != null)
     	result += ", exam" + infoExam.toString();

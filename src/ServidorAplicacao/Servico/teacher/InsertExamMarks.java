@@ -100,6 +100,7 @@ public class InsertExamMarks implements IServico {
 
 			//Attend List
 			List attendList = persistentAttend.readByExecutionCourse(executionCourse);
+			System.out.println("-->InsertExamMarks: leu attendList");	
 
 			infoMarksList = new ArrayList();
 			marksErrorsInvalidMark = new ArrayList();
@@ -109,6 +110,8 @@ public class InsertExamMarks implements IServico {
 			ListIterator iterMarks = examMarks.listIterator();
 			while (iterMarks.hasNext()) {
 				InfoMark infoMark = (InfoMark) iterMarks.next();
+					
+
 
 				completeMark(infoMark, exam, executionCourse);
 				if (infoMark.getMark().length() > 0) {
@@ -173,11 +176,14 @@ public class InsertExamMarks implements IServico {
 			//Student
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			IStudent student = new Student();
+
 			student.setIdInternal(infoMark.getInfoFrequenta().getAluno().getIdInternal());
 			student = (IStudent) persistentStudent.readByOId(student, false);
-
 			//Attend			
 			IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+
+
+
 			IFrequenta frequenta = frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, disciplinaExecucao);
 			InfoFrequenta infoFrequenta = Cloner.copyIFrequenta2InfoFrequenta(frequenta);
 

@@ -66,6 +66,7 @@ public class ReadStudent implements IServico {
       	infoPerson.setNacionalidade(student.getPerson().getNacionalidade());
       	infoPerson.setNomePai(student.getPerson().getNomePai());
       	infoPerson.setNomeMae(student.getPerson().getNomeMae());
+      	infoPerson.setIdInternal(student.getPerson().getIdInternal());
       	
 		infoStudent =
 			new InfoStudent(
@@ -73,7 +74,9 @@ public class ReadStudent implements IServico {
 				student.getState(),
 				infoPerson,
 				student.getDegreeType());
+		infoStudent.setIdInternal(student.getIdInternal());
       }
+      
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
     }
