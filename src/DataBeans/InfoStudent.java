@@ -15,10 +15,10 @@ import Util.TipoCurso;
  */
 
 public class InfoStudent {
-	protected Integer _number;
-	protected StudentState _state = new StudentState(1);
-	private InfoPerson _infoPerson;
-	protected TipoCurso _degreeType;
+	protected Integer number;
+	protected StudentState state = new StudentState(1);
+	private InfoPerson infoPerson;
+	protected TipoCurso degreeType;
 	
 	public InfoStudent() {}
 
@@ -30,35 +30,35 @@ public class InfoStudent {
 	}
 
 	public InfoPerson getInfoPerson() {
-	  return _infoPerson;
+	  return infoPerson;
 	}
 
 	public void setInfoPerson(InfoPerson pessoa) {
-		_infoPerson = pessoa;
+		infoPerson = pessoa;
 	  }
 
 	 public Integer getNumber() {
-	  return _number;
+	  return number;
 	 }
 
 	 public void setNumber(Integer numero) {
-	  _number = numero;
+	  number = numero;
 	 }
 
 	 public StudentState getState() {
-		 return _state;
+		 return state;
 	 }
 
 	  public void setState(StudentState estado) {
-		 _state = estado;
+		 state = estado;
 	 }
 
 	public TipoCurso getDegreeType() {
-	 return _degreeType;
+	 return degreeType;
 	}
 
 	public void setDegreeType(TipoCurso degreeType) {
-	 _degreeType = degreeType;
+	 this.degreeType = degreeType;
 	}
 
 
@@ -74,11 +74,11 @@ public class InfoStudent {
   
   public String toString() {
     String result = "[InfoStudent";
-    result += ", numero=" + _number;
-    result += ", degreeType=" + _degreeType;
-    result += ", estado=" + _state;
-    if (_infoPerson != null)
-    	result += ", pessoa" + _infoPerson.toString();
+    result += ", numero=" + number;
+    result += ", degreeType=" + degreeType;
+    result += ", estado=" + state;
+    if (infoPerson != null)
+    	result += ", pessoa" + infoPerson.toString();
     result += "]";
     return result;
   }

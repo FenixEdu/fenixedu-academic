@@ -65,10 +65,13 @@ public class EnrolmentState {
 			case ENROLED :
 				valueS = "ENROLED";
 				break;
+			case TEMPORARILY_ENROLED :
+				valueS = "TEMPORARILY_ENROLED";
+				break;
 			default:
 				break;
 		}
 
-		return "[" + this.getClass().getName() + ": " + valueS + "]";
+		return "[" + this.getClass().getName() + ": " + valueS + "]\n";
 	}
 }

@@ -18,6 +18,7 @@ import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
@@ -59,6 +60,7 @@ import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
+import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Equivalence;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
@@ -83,6 +85,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
@@ -384,7 +387,7 @@ public abstract class Cloner {
 
 			// FIXME : See InfoDegree variables for root cause.
 			if (degree != null && degree.getTipoCurso() != null) {
-				infoDegree.setDegreeType(degree.getTipoCurso().toString());
+				infoDegree.setDegreeTypeString(degree.getTipoCurso().toString());
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -1462,11 +1465,20 @@ public abstract class Cloner {
 		*/
 	public static InfoEnrolment copyIEnrolment2InfoEnrolment(IEnrolment enrolment) {
 
-		InfoEnrolment infoEnrolment = new InfoEnrolment();
+		InfoEnrolment infoEnrolment = null;
+		InfoCurricularCourse infoCurricularCourseOption = null;
 
 		InfoStudentCurricularPlan infoStudentCurricularPlan =	Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolment.getStudentCurricularPlan());
 		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
 		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(enrolment.getExecutionPeriod());
+		
+		if(enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
+			infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
+			infoCurricularCourseOption = Cloner.copyCurricularCourse2InfoCurricularCourse(((IEnrolmentInOptionalCurricularCourse)enrolment).getCurricularCourseForOption());
+			((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment).setInfoCurricularCourseForOption(infoCurricularCourseOption);
+		} else {
+			infoEnrolment = new InfoEnrolment();
+		}
 
 		copyObjectProperties(infoEnrolment, enrolment);
 
@@ -1484,11 +1496,20 @@ public abstract class Cloner {
 		*/
 	public static IEnrolment copyInfoEnrolment2IEnrolment(InfoEnrolment infoEnrolment) {
 
-		IEnrolment enrolment = new Enrolment();
+		IEnrolment enrolment = null;
+		ICurricularCourse curricularCourseOption = null;
 
 		IStudentCurricularPlan studentCurricularPlan =	Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoEnrolment.getInfoStudentCurricularPlan());
 		ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoEnrolment.getInfoCurricularCourse());
 		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoEnrolment.getInfoExecutionPeriod());
+
+		if(infoEnrolment instanceof InfoEnrolmentInOptionalCurricularCourse) {
+			enrolment = new EnrolmentInOptionalCurricularCourse();
+			curricularCourseOption = Cloner.copyInfoCurricularCourse2CurricularCourse(((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment).getInfoCurricularCourseForOption());
+			((IEnrolmentInOptionalCurricularCourse) enrolment).setCurricularCourseForOption(curricularCourseOption);
+		} else {
+			enrolment = new Enrolment();
+		}
 
 		copyObjectProperties(enrolment, infoEnrolment);
 

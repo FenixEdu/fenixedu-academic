@@ -10,7 +10,6 @@ package Util;
 public class EquivalenceType {
 
 	public static final int EQUIVALENT_COURSE = 1;
-	public static final int OPTIONAL_COURSE = 2;
 
 	private Integer type;
 
@@ -50,9 +49,6 @@ public class EquivalenceType {
 		switch (value) {
 			case EQUIVALENT_COURSE :
 				valueS = "EQUIVALENT_COURSE";
-				break;
-			case OPTIONAL_COURSE :
-				valueS = "OPTIONAL_COURSE";
 				break;
 			default:
 				break;

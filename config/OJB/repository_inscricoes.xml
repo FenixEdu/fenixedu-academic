@@ -349,9 +349,71 @@
 		class-ref="Dominio.ExecutionPeriod" proxy="false">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	
-	
+
+	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+	<extent-class class-ref="Dominio.EnrolmentInOptionalCurricularCourse"/>
 </class-descriptor>
+
+<class-descriptor class="Dominio.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
+	<field-descriptor
+		name="internalID"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+	<field-descriptor
+		name="studentCurricularPlanKey"
+		column="KEY_STUDENT_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>    
+	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>    
+	<field-descriptor
+		name="state"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentState2SqlEnrolmentStateFieldConversion"
+	/>
+	<reference-descriptor
+			name="studentCurricularPlan"
+			class-ref="Dominio.StudentCurricularPlan"
+			proxy="false">
+		<foreignkey field-ref="studentCurricularPlanKey"/>
+	</reference-descriptor>      
+	<reference-descriptor
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="false">
+		<foreignkey field-ref="curricularCourseKey"/>
+	</reference-descriptor>      
+	<reference-descriptor name="executionPeriod"
+		class-ref="Dominio.ExecutionPeriod" proxy="false">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+
+	<field-descriptor
+		name="curricularCourseForOptionKey"
+		column="KEY_CURRICULAR_COURSE_FOR_OPTION"
+		jdbc-type="INTEGER"
+	/>    
+	<reference-descriptor
+			name="curricularCourseForOption"
+			class-ref="Dominio.CurricularCourse"
+			proxy="false">
+		<foreignkey field-ref="curricularCourseForOptionKey"/>
+	</reference-descriptor>      
+</class-descriptor>
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularYear -->

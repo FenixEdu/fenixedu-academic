@@ -20,7 +20,10 @@ public class Enrolment implements IEnrolment {
 	private Integer curricularCourseKey;
 	private Integer keyExecutionPeriod;
 
+	private String ojbConcreteClass;
+
 	public Enrolment() {
+		this.ojbConcreteClass = this.getClass().getName();
 	}
 
 	public Enrolment(
@@ -51,9 +54,8 @@ public class Enrolment implements IEnrolment {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
-		result += "studentCurricularPlan = "
-			+ this.studentCurricularPlan
-			+ "; ";
+		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
+		result += "state = " + this.state + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "]\n";
 		return result;
 	}
@@ -179,6 +181,21 @@ public class Enrolment implements IEnrolment {
 	 */
 	public void setKeyExecutionPeriod(Integer integer) {
 		keyExecutionPeriod = integer;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getOjbConcreteClass() {
+		return ojbConcreteClass;
+	}
+
+	/**
+	 * Sets the ojbConcreteClass.
+	 * @param ojbConcreteClass The ojbConcreteClass to set
+	 */
+	public void setOjbConcreteClass(String ojbConcreteClass) {
+		this.ojbConcreteClass = ojbConcreteClass;
 	}
 
 }

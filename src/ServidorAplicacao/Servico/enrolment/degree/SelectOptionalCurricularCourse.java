@@ -6,13 +6,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoEnrolment;
-import DataBeans.InfoEquivalence;
+import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import Util.EnrolmentState;
-import Util.EquivalenceType;
 
 /**
  * @author dcs-rjao
@@ -48,44 +46,31 @@ public class SelectOptionalCurricularCourse implements IServico {
 	 * @return List
 	 * @throws FenixServiceException
 	 */
-	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext, InfoCurricularCourse infoCurricularCourse)
-		throws FenixServiceException {
+	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext, InfoCurricularCourse infoCurricularCourse) throws FenixServiceException {
 
-		InfoEnrolment infoEnrolmentEquivalent = new InfoEnrolment();
-		infoEnrolmentEquivalent.setInfoCurricularCourse(infoCurricularCourse);
-
-		infoEnrolmentEquivalent.setInfoExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
-
-		infoEnrolmentEquivalent.setInfoStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
-		infoEnrolmentEquivalent.setState(new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
-
-		InfoEnrolment infoEnrolment = new InfoEnrolment();
+		InfoEnrolmentInOptionalCurricularCourse infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
 		infoEnrolment.setInfoCurricularCourse(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse());
-
-		//FIXME David-Ricardo: o execution period tera de vir no contexto
 		infoEnrolment.setInfoExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
 		infoEnrolment.setInfoStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
-		infoEnrolmentEquivalent.setState(new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+		infoEnrolment.setState(new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+		infoEnrolment.setInfoCurricularCourseForOption(infoCurricularCourse);
 
-		InfoEquivalence infoEquivalence = new InfoEquivalence();
-		infoEquivalence.setInfoEnrolment(infoEnrolment);
-		infoEquivalence.setInfoEquivalentEnrolment(infoEnrolmentEquivalent);
-		infoEquivalence.setEquivalenceType(new EquivalenceType(EquivalenceType.OPTIONAL_COURSE));
-
-		final InfoCurricularCourse infoCurricularCourseEnrolment =
-			infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse();
-		List equivalenceList = (List) CollectionUtils.select(infoEnrolmentContext.getInfoOptionalCurricularCoursesEquivalences(), new Predicate() {
+		// For one optional curricular course chosen there can be only one coresponding curricular course.
+		final InfoCurricularCourse infoCurricularCourseChosen = infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope().getInfoCurricularCourse();
+		List enrolmentsList = (List) CollectionUtils.select(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments(), new Predicate() {
 			public boolean evaluate(Object obj) {
-				InfoEquivalence infoEquivalence = (InfoEquivalence) obj;
-				return infoEquivalence.getInfoEnrolment().getInfoCurricularCourse().equals(infoCurricularCourseEnrolment);
+				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) obj;
+				return infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().equals(infoCurricularCourseChosen);
 			}
 		});
 
-		if (!equivalenceList.isEmpty()) {
-			infoEnrolmentContext.getInfoOptionalCurricularCoursesEquivalences().remove(equivalenceList.get(0));
+		// There for the substituition is done.
+		if (!enrolmentsList.isEmpty()) {
+			infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().remove(enrolmentsList.get(0));
 		}
-		infoEnrolmentContext.getInfoOptionalCurricularCoursesEquivalences().add(infoEquivalence);
+		infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().add(infoEnrolment);
 
+		// Automaticaly add the enrolment in the chosen curricular course to the actual enrolments list for this student.
 		if (!infoEnrolmentContext.getActualEnrolment().contains(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope())) {
 			infoEnrolmentContext.getActualEnrolment().add(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope());
 		}

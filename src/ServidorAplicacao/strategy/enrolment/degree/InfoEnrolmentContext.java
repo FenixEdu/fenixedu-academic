@@ -34,7 +34,7 @@ public class InfoEnrolmentContext {
 	private List infoDegreesForOptionalCurricularCourses;
 	private List optionalInfoCurricularCoursesToChooseFromDegree;
 	private List infoCurricularCoursesDoneByStudent;
-	private List infoOptionalCurricularCoursesEquivalences;
+	private List infoOptionalCurricularCoursesEnrolments;
 
 	public InfoEnrolmentContext() {
 		setAcumulatedEnrolments(null);
@@ -254,16 +254,16 @@ public class InfoEnrolmentContext {
 	/**
 	 * @return List
 	 */
-	public List getInfoOptionalCurricularCoursesEquivalences() {
-		return infoOptionalCurricularCoursesEquivalences;
+	public List getInfoOptionalCurricularCoursesEnrolments() {
+		return infoOptionalCurricularCoursesEnrolments;
 	}
 
 	/**
-	 * Sets the infoOptionalCurricularCoursesEquivalences.
-	 * @param infoOptionalCurricularCoursesEquivalences The infoOptionalCurricularCoursesEquivalences to set
+	 * Sets the infoOptionalCurricularCoursesEnrolments.
+	 * @param infoOptionalCurricularCoursesEnrolments The infoOptionalCurricularCoursesEnrolments to set
 	 */
-	public void setInfoOptionalCurricularCoursesEquivalences(List infoOptionalCurricularCoursesEquivalences) {
-		this.infoOptionalCurricularCoursesEquivalences = infoOptionalCurricularCoursesEquivalences;
+	public void setInfoOptionalCurricularCoursesEnrolments(List infoOptionalCurricularCoursesEquivalences) {
+		this.infoOptionalCurricularCoursesEnrolments = infoOptionalCurricularCoursesEquivalences;
 	}
 
 	/**

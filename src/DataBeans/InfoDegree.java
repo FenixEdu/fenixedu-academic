@@ -9,6 +9,8 @@ package DataBeans;
 import java.io.Serializable;
 import java.util.List;
 
+import Util.TipoCurso;
+
 /**
  *
  * @author  tfc130
@@ -16,8 +18,10 @@ import java.util.List;
 public class InfoDegree implements Serializable {
 	protected String sigla;
 	protected String nome;
-	// FIXME : this should be a util!!! Why istn't it?
-	protected String degreeType;
+	protected TipoCurso tipoCurso;
+
+//FIXME : Esta variavel e para sair
+	protected String degreeTypeString;
 	private List infoDegreeCurricularPlans;
 
 	public InfoDegree() {
@@ -28,10 +32,19 @@ public class InfoDegree implements Serializable {
 		setNome(nome);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public InfoDegree(String sigla, String nome, String degreeType) {
 		setSigla(sigla);
 		setNome(nome);
-		setDegreeType(degreeType);
+		setDegreeTypeString(degreeType);
+	}
+
+	public InfoDegree(String sigla, String nome, TipoCurso degreeType) {
+		setSigla(sigla);
+		setNome(nome);
+		setTipoCurso(degreeType);
 	}
 
 	public String getSigla() {
@@ -63,24 +76,24 @@ public class InfoDegree implements Serializable {
 		String result = "[INFOLICENCIATURA";
 		result += ", sigla=" + this.sigla;
 		result += ", nome=" + this.nome;
-		result += ", degreeType=" + this.degreeType;
+		result += ", tipoCurso=" + this.tipoCurso;
 		result += "]";
 		return result;
 	}
 
 	/**
-	 * @return String
+	 * @return TipoCurso
 	 */
-	public String getDegreeType() {
-		return degreeType;
+	public TipoCurso getTipoCurso() {
+		return tipoCurso;
 	}
 
 	/**
-	 * Sets the degreeType.
+	 * Sets the tipoCurso.
 	 * @param degreeType The degreeType to set
 	 */
-	public void setDegreeType(String degreeType) {
-		this.degreeType = degreeType;
+	public void setTipoCurso(TipoCurso tipoCurso) {
+		this.tipoCurso = tipoCurso;
 	}
 
 	/**
@@ -96,6 +109,23 @@ public class InfoDegree implements Serializable {
 	 */
 	public void setInfoDegreeCurricularPlans(List infoDegreeCurricularPlans) {
 		this.infoDegreeCurricularPlans = infoDegreeCurricularPlans;
+	}
+
+	/**
+	 * @return String
+	 * @deprecated
+	 */
+	public String getDegreeTypeString() {
+		return degreeTypeString;
+	}
+
+	/**
+	 * Sets the degreeTypeString.
+	 * @param degreeTypeString The degreeTypeString to set
+	 * @deprecated
+	 */
+	public void setDegreeTypeString(String degreeTypeString) {
+		this.degreeTypeString = degreeTypeString;
 	}
 
 }

@@ -53,7 +53,7 @@ public class InscTeste {
 			result = gestor.executar(userView, "SelectOptionalCurricularCourse", serviceArgs4);
 			infoEnrolmentContext = (InfoEnrolmentContext) result;
 			System.out.println("\nCHOSEN COURSE AND EQUIVALENCE:");
-			System.out.println(infoEnrolmentContext.getInfoOptionalCurricularCoursesEquivalences());
+			System.out.println(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments());
 
 			Object serviceArgs5[] = {infoEnrolmentContext};
 			result = gestor.executar(userView, "ShowAvailableDegreesForOption", serviceArgs5);
@@ -73,7 +73,7 @@ public class InscTeste {
 			result = gestor.executar(userView, "SelectOptionalCurricularCourse", serviceArgs7);
 			infoEnrolmentContext = (InfoEnrolmentContext) result;
 			System.out.println("\nCHOSEN COURSE AND EQUIVALENCE:");
-			System.out.println(infoEnrolmentContext.getInfoOptionalCurricularCoursesEquivalences());
+			System.out.println(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments());
 
 			Object serviceArgs8[] = {infoEnrolmentContext};
 			result = gestor.executar(userView, "ShowAvailableDegreesForOption", serviceArgs8);

@@ -41,7 +41,7 @@ public final class EnrolmentContext {
 
 	private List degreesForOptionalCurricularCourses;
 	private List optionalCurricularCoursesToChooseFromDegree;
-	private List optionalCurricularCoursesEquivalences;
+	private List optionalCurricularCoursesEnrolments;
 
 	/**
 	 *  
@@ -265,16 +265,16 @@ public final class EnrolmentContext {
 	/**
 	 * @return List
 	 */
-	public List getOptionalCurricularCoursesEquivalences() {
-		return optionalCurricularCoursesEquivalences;
+	public List getOptionalCurricularCoursesEnrolments() {
+		return optionalCurricularCoursesEnrolments;
 	}
 
 	/**
-	 * Sets the optionalCurricularCoursesEquivalences.
-	 * @param optionalCurricularCoursesEquivalences The optionalCurricularCoursesEquivalences to set
+	 * Sets the optionalCurricularCoursesEnrolments.
+	 * @param optionalCurricularCoursesEnrolments The optionalCurricularCoursesEnrolments to set
 	 */
-	public void setOptionalCurricularCoursesEquivalences(List optionalCurricularCoursesEquivalences) {
-		this.optionalCurricularCoursesEquivalences = optionalCurricularCoursesEquivalences;
+	public void setOptionalCurricularCoursesEnrolments(List optionalCurricularCoursesEquivalences) {
+		this.optionalCurricularCoursesEnrolments = optionalCurricularCoursesEquivalences;
 	}
 
 	/**

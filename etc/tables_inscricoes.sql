@@ -111,6 +111,8 @@ create table ENROLMENT (
    KEY_CURRICULAR_COURSE int(11) not null,
    KEY_EXECUTION_PERIOD int(11) not null,
    STATE int(11) not null,
+   CLASS_NAME varchar(250) not null,
+   KEY_CURRICULAR_COURSE_FOR_OPTION int (11),
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD)
 )type=InnoDB;

@@ -99,7 +99,7 @@ public class ExecutionPeriod implements IExecutionPeriod {
 		result += ", internalCode=" + internalCode;
 		result += ", name=" + name;
 		result += ", executionYear=" + getExecutionYear();
-		result += "]";
+		result += "]\n";
 		return result;
 	}
 

@@ -11,7 +11,7 @@ import org.apache.commons.collections.Transformer;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEquivalence;
+import Dominio.IEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -67,10 +67,10 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 
 			List curricularCoursesEnroledByStudent = getDistinctCurricularCoursesOfScopes(enrolmentContext.getCurricularCoursesScopesEnroledByStudent());
 			List curricularCoursesFromFinalSpan = getDistinctCurricularCoursesOfScopes(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
-			List curricularCoursesEquivalentList = (List) CollectionUtils.collect(enrolmentContext.getOptionalCurricularCoursesEquivalences(), new Transformer() {
+			List opionalCurricularCoursesEnrolmentsList = (List) CollectionUtils.collect(enrolmentContext.getOptionalCurricularCoursesEnrolments(), new Transformer() {
 				public Object transform(Object obj) {
-					IEquivalence equivalence = (IEquivalence) obj;
-					return equivalence.getEquivalentEnrolment().getCurricularCourse();
+					IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) obj;
+					return enrolmentInOptionalCurricularCourse.getCurricularCourseForOption();
 				}
 			});
 
@@ -87,7 +87,7 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 						(!enrolmentContext.getCurricularCoursesDoneByStudent().contains(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCoursesEnroledByStudent.contains(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCoursesFromFinalSpan.contains(curricularCourseScope.getCurricularCourse())) &&
-						(!curricularCoursesEquivalentList.contains(curricularCourseScope.getCurricularCourse()))
+						(!opionalCurricularCoursesEnrolmentsList.contains(curricularCourseScope.getCurricularCourse()))
 					) {
 						finalCurricularCourseList.add(curricularCourseScope.getCurricularCourse());
 				}

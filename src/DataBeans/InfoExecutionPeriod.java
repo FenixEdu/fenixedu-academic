@@ -70,7 +70,7 @@ public class InfoExecutionPeriod {
 			String result = "[INFOEXECUTIONPERIOD";
 				result += ", name=" + name;
 				result += ", infoExecutionYear=" + infoExecutionYear;
-				result += "]";
+				result += "]\n";
 			return result;
 		}
 	/**
