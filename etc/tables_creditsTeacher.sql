@@ -25,6 +25,22 @@ create table CREDITS (
    type=InnoDB;
    
 ----------------------------
+-- Table structure for CREDIT_LINE
+-- Types : Sabática, Outro, Dispensa de Serviço Docente, Cargos de Gestão
+----------------------------
+drop table if exists CREDIT_LINE;
+create table CREDIT_LINE (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_TEACHER int(11) not null,
+   CREDITS float not null,
+   CREDIT_LINE_TYPE int(11) not null,
+   EXPLANATION varchar(250) not null,
+   START_DATE date not null,
+   END_DATE date not null,
+   primary key (ID_INTERNAL),
+)type=InnoDB;   
+
+----------------------------
 -- Table structure for CREDITS_MANAGER_DEPARTMENT
 --  This table tells what departments that a person can manage the teacher credits.
 ----------------------------
@@ -61,21 +77,7 @@ create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
    unique U1 (KEY_STUDENT, KEY_TEACHER, KEY_EXECUTION_YEAR)
 )type=InnoDB;
 
-----------------------------
--- Table structure for CREDIT_LINE
--- Types : Sabática, Outro, Dispensa de Serviço Docente, Cargos de Gestão
-----------------------------
-drop table if exists CREDIT_LINE;
-create table CREDIT_LINE (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_TEACHER int(11) not null,
-   CREDITS float not null,
-	 CREDIT_LINE_TYPE int(11) not null,
-   EXPLANATION varchar(250) not null,
-   START_DATE date not null,
-   END_DATE date not null,
-   primary key (ID_INTERNAL),
-)type=InnoDB;
+
 
 
 drop table if exists TEACHER_INSTITUTION_WORK_TIME;
