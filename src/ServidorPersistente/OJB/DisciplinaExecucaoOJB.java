@@ -64,10 +64,10 @@ public class DisciplinaExecucaoOJB
 		else if (
 			(executionCourseToWrite instanceof DisciplinaExecucao)
 				&& ((DisciplinaExecucao) executionCourseFromDB)
-					.getCodigoInterno()
+					.getIdInternal()
 					.equals(
 					((DisciplinaExecucao) executionCourseToWrite)
-						.getCodigoInterno())) {
+						.getIdInternal())) {
 			super.lockWrite(executionCourseToWrite);
 			// else Throw an already existing exception
 		} else
