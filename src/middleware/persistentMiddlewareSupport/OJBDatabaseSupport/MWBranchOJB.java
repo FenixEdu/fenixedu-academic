@@ -31,5 +31,4 @@ public class MWBranchOJB extends ObjectFenixOJB implements IPersistentMWBranch {
 	
 		return (MWBranch) queryObject(MWBranch.class, criteria);
 	}
-    
 }

@@ -131,47 +131,43 @@ public class CreateAndUpdateAllPastCurriculums
 		try {
 			IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllPastCurriculums.getDegreeCurricularPlan(mwCurricularCourseScope.getDegreecode(), fenixPersistentSuport);
 			if (degreeCurricularPlan == null) {
-				// This should NEVER happen!
-				System.out.println("[ERROR 01] No record of Degree with code: [" + mwCurricularCourseScope.getDegreecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
+				System.out.println("[ERROR 101] No record of Degree with code: [" + mwCurricularCourseScope.getDegreecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
 				return;
 			}
 
 			IBranch branch = CreateAndUpdateAllPastCurriculums.getBranch(mwCurricularCourseScope.getDegreecode(), mwCurricularCourseScope.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
 			if (branch == null) {
-				// This should NEVER happen!
-				System.out.println("[ERROR 02] No record of Branch with code: [" + mwCurricularCourseScope.getBranchcode() + "] for Degree with code: [" + mwCurricularCourseScope.getDegreecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
+				System.out.println("[ERROR 102] No record of Branch with code: [" + mwCurricularCourseScope.getBranchcode() + "] for Degree with code: [" + mwCurricularCourseScope.getDegreecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
 				return;
 			}
 
 			ICurricularCourse curricularCourse = CreateAndUpdateAllPastCurriculums.getCurricularCourse(mwCurricularCourseScope.getCoursecode(), degreeCurricularPlan, fenixPersistentSuport);
 			if (curricularCourse == null) {
-				// This should NEVER happen!
-				System.out.println("[ERROR 03] No record of CurricularCourse with code: [" + mwCurricularCourseScope.getCoursecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
+				System.out.println("[ERROR 103] No record of CurricularCourse with code: [" + mwCurricularCourseScope.getCoursecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
 				return;
 			}
 
 			ICurricularCourseScope curricularCourseScope = CreateAndUpdateAllPastCurriculums.getCurricularCourseScope(mwCurricularCourseScope, curricularCourse, branch, fenixPersistentSuport);
 			if (curricularCourseScope == null) {
-				// This should NEVER happen!
-				System.out.print("[ERROR 04] No record of CurricularCourseScope with data: ");
+				System.out.print("[ERROR 104] No record of CurricularCourseScope with data: ");
 				System.out.print("Course Code - [" + mwCurricularCourseScope.getCoursecode() + "], ");
 				System.out.print("Degree Code - [" + mwCurricularCourseScope.getDegreecode() + "], ");
 				System.out.print("Branch Code - [" + mwCurricularCourseScope.getBranchcode() + "], ");
 				System.out.print("Curricular Year - [" + mwCurricularCourseScope.getCurricularyear() + "], ");
-				System.out.println("Curricular Semester - [" + mwCurricularCourseScope.getCurricularsemester() + "], ");
-				System.out.println("ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
+				System.out.print("Curricular Semester - [" + mwCurricularCourseScope.getCurricularsemester() + "], ");
+				System.out.println("Execution Year: [" + mwCurricularCourseScope.getExecutionyear() + "]!");
 				return;
 			}
 
 		} catch (Exception e) {
-			System.out.println("[ERROR 09] Exception migrating MWCurricularCourseScope!");
-			System.out.println("[ERROR 09] Execution Year: [" + mwCurricularCourseScope.getExecutionyear() + "]");
-			System.out.println("[ERROR 09] Course Code: [" + mwCurricularCourseScope.getCoursecode() + "]");
-			System.out.println("[ERROR 09] Degree Code: [" + mwCurricularCourseScope.getDegreecode() + "]");
-			System.out.println("[ERROR 09] Branch Code: [" + mwCurricularCourseScope.getBranchcode() + "]");
-			System.out.println("[ERROR 09] Curricular Year: [" + mwCurricularCourseScope.getCurricularyear() + "]");
-			System.out.println("[ERROR 09] Curricular Semester: [" + mwCurricularCourseScope.getCurricularsemester() + "]");
-			System.out.println("[ERROR 09] Course Type: [" + mwCurricularCourseScope.getCoursetype() + "]");
+			System.out.println("[ERROR 109] Exception migrating MWCurricularCourseScope!");
+			System.out.println("[ERROR 109] Execution Year: [" + mwCurricularCourseScope.getExecutionyear() + "]");
+			System.out.println("[ERROR 109] Course Code: [" + mwCurricularCourseScope.getCoursecode() + "]");
+			System.out.println("[ERROR 109] Degree Code: [" + mwCurricularCourseScope.getDegreecode() + "]");
+			System.out.println("[ERROR 109] Branch Code: [" + mwCurricularCourseScope.getBranchcode() + "]");
+			System.out.println("[ERROR 109] Curricular Year: [" + mwCurricularCourseScope.getCurricularyear() + "]");
+			System.out.println("[ERROR 109] Curricular Semester: [" + mwCurricularCourseScope.getCurricularsemester() + "]");
+			System.out.println("[ERROR 109] Course Type: [" + mwCurricularCourseScope.getCoursetype() + "]");
 			throw new Exception(e);
 		}
 	}
@@ -232,7 +228,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Exception
 	 */
-	public static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Exception
+	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWBranch persistentMWBranch = mws.getIPersistentMWBranch();
@@ -288,7 +284,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Exception
 	 */
-	private static ICurricularCourse getCurricularCourse(String courseCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Exception
+	public static ICurricularCourse getCurricularCourse(String courseCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		IPersistentCurricularCourse persistentCurricularCourse = fenixPersistentSuport.getIPersistentCurricularCourse();
 
@@ -299,8 +295,7 @@ public class CreateAndUpdateAllPastCurriculums
 		}
 
 		if (curricularCourses.size() > 1) {
-			// This should NEVER happen!
-			System.out.println("[ERROR 05] Several Fenix CurricularCourses with code [" + StringUtils.trim(courseCode) + "] were found for Degree [" + degreeCurricularPlan.getDegree().getNome() + "]!");
+			System.out.println("[ERROR 105] Several Fenix CurricularCourses with code [" + StringUtils.trim(courseCode) + "] were found for Degree [" + degreeCurricularPlan.getDegree().getNome() + "]!");
 			return null;
 		} else if (curricularCourses.size() < 1) {
 			// In fact this can only be curricularCourses.size() == 0 but better safe than sorry :)
@@ -308,8 +303,7 @@ public class CreateAndUpdateAllPastCurriculums
 
 			String curricularCourseName = CreateAndUpdateAllPastCurriculums.getCurricularCourseName(StringUtils.trim(courseCode));
 			if (curricularCourseName == null) {
-				// This should NEVER happen!
-				System.out.println("[ERROR 06] Couldn't find name for CurricularCourse with code [" + StringUtils.trim(courseCode) + "]!");
+				System.out.println("[ERROR 106] Couldn't find name for CurricularCourse with code [" + StringUtils.trim(courseCode) + "]!");
 				return null;
 			}
 
@@ -349,7 +343,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Exception
 	 */
-	private static ICurricularCourseScope getCurricularCourseScope(MWCurricularCourseScope mwCurricularCourseScope, ICurricularCourse curricularCourse, IBranch branch, ISuportePersistente fenixPersistentSuport) throws Exception
+	public static ICurricularCourseScope getCurricularCourseScope(MWCurricularCourseScope mwCurricularCourseScope, ICurricularCourse curricularCourse, IBranch branch, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = fenixPersistentSuport.getIPersistentCurricularCourseScope();
 		IPersistentCurricularSemester persistentCurricularSemester = fenixPersistentSuport.getIPersistentCurricularSemester();
@@ -357,15 +351,13 @@ public class CreateAndUpdateAllPastCurriculums
 		
 		ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(mwCurricularCourseScope.getCurricularyear());
 		if (curricularYear == null) {
-			// This should NEVER happen!
-			System.out.println("[ERROR 07] Can't find in Fenix DB CurricularYear with year [" + mwCurricularCourseScope.getCurricularyear() + "]!");
+			System.out.println("[ERROR 107] Can't find in Fenix DB CurricularYear with year [" + mwCurricularCourseScope.getCurricularyear() + "]!");
 			return null;
 		}
 
 		ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(mwCurricularCourseScope.getCurricularsemester(), curricularYear);
 		if (curricularSemester == null) {
-			// This should NEVER happen!
-			System.out.println("[ERROR 08] Can't find in Fenix DB CurricularSemester with semester [" + mwCurricularCourseScope.getCurricularsemester() + "] and year [" + curricularYear.getYear() + "]!");
+			System.out.println("[ERROR 108] Can't find in Fenix DB CurricularSemester with semester [" + mwCurricularCourseScope.getCurricularsemester() + "] and year [" + curricularYear.getYear() + "]!");
 			return null;
 		}
 
@@ -389,8 +381,8 @@ public class CreateAndUpdateAllPastCurriculums
 			curricularCourseScope.setTheoPratHours(mwCurricularCourseScope.getTheoprathours());
 			curricularCourseScope.setBeginDate(Calendar.getInstance());
 			curricularCourseScope.setEndDate(Calendar.getInstance());
-			curricularCourseScope.setEctsCredits(null);
 
+			curricularCourseScope.setEctsCredits(null);
 			curricularCourseScope.setWeigth(null);
 
 			CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated++;
@@ -403,7 +395,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Exception
 	 */
-	private static String getCurricularCourseName(String curricularCourseCode) throws Exception
+	public static String getCurricularCourseName(String curricularCourseCode) throws Exception
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWCurricularCourse persistentMWCurricualrCourse = mws.getIPersistentMWCurricularCourse();

@@ -157,8 +157,100 @@ public class MWEnrolment
 
 
   public String toString(){
-    return  " [branchCode] " + branchcode + " [courseCode] " + coursecode + " [curricularCourseSemester] " + curricularcoursesemester + " [curricularCourseYear] " + curricularcourseyear + " [degreeCode] " + degreecode + " [enrolmentYear] " + enrolmentyear + " [examDate] " + examdate + " [grade] " + grade + " [idinternal] " + idinternal + " [number] " + number + " [remarks] " + remarks + " [season] " + season + " [teacherNumber] " + teachernumber + " [universityCode] " + universitycode;
+	StringBuffer stringBuffer = new StringBuffer();
+	stringBuffer.append("\n")
+				.append(this.getClass().getName())
+				.append(":\n")
+				.append("IdInternal: [")
+				.append(idinternal)
+				.append("]\n")
+				.append("Number: [")
+				.append(number)
+				.append("]\n")
+				.append("BranchCode: [")
+				.append(branchcode)
+				.append("]\n")
+				.append("CourseCode: [")
+				.append(coursecode)
+				.append("]\n")
+				.append("CurricularCourseSemester: [")
+				.append(curricularcoursesemester)
+				.append("]\n")
+				.append("CurricularCourseYear: [")
+				.append(curricularcourseyear)
+				.append("]\n")
+				.append("DegreeCode: [")
+				.append(degreecode)
+				.append("]\n")
+				.append("EnrolmentYear: [")
+				.append(enrolmentyear)
+				.append("]\n")
+				.append("ExamDate: [")
+				.append(examdate)
+				.append("]\n")
+				.append("Grade: [")
+				.append(grade)
+				.append("]\n")
+				.append("Remarks: [")
+				.append(remarks)
+				.append("]\n")
+				.append("Season: [")
+				.append(season)
+				.append("]\n")
+				.append("TeacherNumber: [")
+				.append(teachernumber)
+				.append("]\n")
+				.append("UniversityCode: [")
+				.append(universitycode)
+				.append("]\n");
 
+	return stringBuffer.toString();
+//    return  " [branchCode] " + branchcode + " [courseCode] " + coursecode + " [curricularCourseSemester] " + curricularcoursesemester + " [curricularCourseYear] " + curricularcourseyear + " [degreeCode] " + degreecode + " [enrolmentYear] " + enrolmentyear + " [examDate] " + examdate + " [grade] " + grade + " [idinternal] " + idinternal + " [number] " + number + " [remarks] " + remarks + " [season] " + season + " [teacherNumber] " + teachernumber + " [universityCode] " + universitycode;
+  }
+  
+  public String toFlatString(){
+	StringBuffer stringBuffer = new StringBuffer();
+	stringBuffer.append("Number: [")
+				.append(number)
+				.append("], ")
+				.append("DegreeCode: [")
+				.append(degreecode)
+				.append("], ")
+				.append("CourseCode: [")
+				.append(coursecode)
+				.append("], ")
+				.append("BranchCode: [")
+				.append(branchcode)
+				.append("], ")
+				.append("CurricularCourseSemester: [")
+				.append(curricularcoursesemester)
+				.append("], ")
+				.append("CurricularCourseYear: [")
+				.append(curricularcourseyear)
+				.append("], ")
+				.append("EnrolmentYear: [")
+				.append(enrolmentyear)
+				.append("], ")
+				.append("ExamDate: [")
+				.append(examdate)
+				.append("], ")
+				.append("Grade: [")
+				.append(grade)
+				.append("], ")
+				.append("Remarks: [")
+				.append(remarks)
+				.append("], ")
+				.append("Season: [")
+				.append(season)
+				.append("], ")
+				.append("TeacherNumber: [")
+				.append(teachernumber)
+				.append("], ")
+				.append("UniversityCode: [")
+				.append(universitycode)
+				.append("]");
+
+	return stringBuffer.toString();
   }
   
 	/**

@@ -16,6 +16,7 @@ import java.util.List;
 import Dominio.IBranch;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Specialization;
@@ -122,4 +123,5 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 	 */
 	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 
+	public List readAllByStudentAntState(IStudent student, StudentCurricularPlanState state) throws ExcepcaoPersistencia;
 }

@@ -1221,7 +1221,7 @@ public class UpdateStudentEnrolments
 // -----------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------
 
-    public static String getRealCurricularCourseCodeForCodesAZx(MWEnrolment mwEnrolment)
+    private static String getRealCurricularCourseCodeForCodesAZx(MWEnrolment mwEnrolment)
     {
         if (mwEnrolment.getCoursecode().equals("AZ2")
             && mwEnrolment.getCurricularcoursesemester().intValue() == 2)

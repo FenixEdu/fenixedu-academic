@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import middleware.middlewareDomain.MWEnrolment;
+
 
 /**
  * @author David Santos
@@ -16,314 +18,155 @@ import java.util.Map;
 public class ReportAllPastEnrollmentMigration
 {
 	// For errors:
-	private static HashMap notFoundDegreeCurricularPlans = new HashMap();
-	private static HashMap notFoundStudentCurricularPlans = new HashMap();
-	private static HashMap notFoundCurricularCourseScopes = new HashMap();
-	private static HashMap notFoundCurricularCourses = new HashMap();
+	private static HashMap unknownCurricularCourses = new HashMap();
+	private static HashMap unknownTeachersAndEmployees = new HashMap();
 
 	// For information:
-	private static HashMap curricularCourses = new HashMap();
-	private static HashMap degrees = new HashMap();
-	private static int enrolmentsMigrated = 0;
+	private static int totalStudentCurricularPlansCreated = 0;
+	private static int totalEnrollmentsCreated = 0;
+	private static int totalEnrollmentEvaluationsCreated = 0;
+	private static int totalCurricularCoursesCreated = 0;
+	private static int totalCurricularCourseScopesCreated = 0;
 
-//	------------------------------------------------------------------------------------------------------------------------------
-//	------------------------------------------------------------------------------------------------------------------------------
-//	------------------------------------------------------------------------------------------------------------------------------
+	private static int unknownCurricularCoursesTimes = 0;
+	private static int unknownTeachersAndEmployeesTimes = 0;
 
 	/**
-	 * @param degreeCode
-	 * @param studentNumber
+	 * @param mwEnrolment
 	 */
-	public static void addNotFoundStudentCurricularPlan(String degreeCode, String studentNumber)
+	public static void addUnknownCurricularCourse(MWEnrolment mwEnrolment)
 	{
-		ReportAllPastEnrollmentMigration.addDegreeName(degreeCode);
+		String key = mwEnrolment.getCoursecode();
 
-		String key = new String(degreeCode);
-
-		List studentList = (List) ReportAllPastEnrollmentMigration.notFoundStudentCurricularPlans.get(key);
-		if (studentList == null)
+		List mwEnrolmentCasesList = (List) ReportAllPastEnrollmentMigration.unknownCurricularCourses.get(key);
+		if (mwEnrolmentCasesList == null)
 		{
-			studentList = new ArrayList();
-			studentList.add(studentNumber);
+			mwEnrolmentCasesList = new ArrayList();
+			mwEnrolmentCasesList.add(mwEnrolment);
 		} else
 		{
-			if (!studentList.contains(studentNumber)) {
-				studentList.add(studentNumber);
+			if (!mwEnrolmentCasesList.contains(mwEnrolment)) {
+				mwEnrolmentCasesList.add(mwEnrolment);
 			}
 		}
 		
-		ReportAllPastEnrollmentMigration.notFoundStudentCurricularPlans.put(key, studentList);
+		ReportAllPastEnrollmentMigration.unknownCurricularCourses.put(key, mwEnrolmentCasesList);
+		ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes++;
 	}
 
 	/**
-	 * @param degreeCode
-	 * @param studentNumber
+	 * @param mwEnrolment
 	 */
-	public static void addNotFoundDegreeCurricularPlan(String degreeCode, String studentNumber)
+	public static void addUnknownTeachersAndEmployees(MWEnrolment mwEnrolment)
 	{
-		ReportAllPastEnrollmentMigration.addDegreeName(degreeCode);
+		String key = mwEnrolment.getTeachernumber().toString();
 
-		String key = new String(degreeCode);
-
-		List studentList = (List) ReportAllPastEnrollmentMigration.notFoundDegreeCurricularPlans.get(key);
-		if (studentList == null)
+		List mwEnrolmentCasesList = (List) ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.get(key);
+		if (mwEnrolmentCasesList == null)
 		{
-			studentList = new ArrayList();
-			studentList.add(studentNumber);
+			mwEnrolmentCasesList = new ArrayList();
+			mwEnrolmentCasesList.add(mwEnrolment);
 		} else
 		{
-			if (!studentList.contains(studentNumber)) {
-				studentList.add(studentNumber);
+			if (!mwEnrolmentCasesList.contains(mwEnrolment)) {
+				mwEnrolmentCasesList.add(mwEnrolment);
 			}
 		}
 		
-		ReportAllPastEnrollmentMigration.notFoundDegreeCurricularPlans.put(key, studentList);
-	}
-
-	/**
-	 * @param courseCode
-	 * @param degreeCode
-	 * @param studentNumber
-	 * @param year
-	 * @param semester
-	 * @param branchCode
-	 */
-	public static void addNotFoundCurricularCourseScope(String courseCode, String degreeCode, String studentNumber, String year, String semester, String branchCode)
-	{
-		ReportAllPastEnrollmentMigration.addCurricularCourseName(courseCode);
-		ReportAllPastEnrollmentMigration.addDegreeName(degreeCode);
-
-		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode).append(" - ").append(year).append(" - ").append(semester).append(" - ").append(branchCode);
-
-		List studentList = (List) ReportAllPastEnrollmentMigration.notFoundCurricularCourseScopes.get(key.toString());
-		if (studentList == null)
-		{
-			studentList = new ArrayList();
-			studentList.add(studentNumber);
-		} else
-		{
-			if (!studentList.contains(studentNumber)) {
-				studentList.add(studentNumber);
-			}
-		}
-		
-		ReportAllPastEnrollmentMigration.notFoundCurricularCourseScopes.put(key.toString(), studentList);
-	}
-
-	/**
-	 * @param courseCode
-	 * @param degreeCode
-	 * @param studentNumber
-	 */
-	public static void addNotFoundCurricularCourse(String courseCode, String degreeCode, String studentNumber)
-	{
-		ReportAllPastEnrollmentMigration.addCurricularCourseName(courseCode);
-		ReportAllPastEnrollmentMigration.addDegreeName(degreeCode);
-
-		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
-
-		List studentList = (List) ReportAllPastEnrollmentMigration.notFoundCurricularCourses.get(key.toString());
-		if (studentList == null)
-		{
-			studentList = new ArrayList();
-			studentList.add(studentNumber);
-		} else
-		{
-			if (!studentList.contains(studentNumber)) {
-				studentList.add(studentNumber);
-			}
-		}
-		
-		ReportAllPastEnrollmentMigration.notFoundCurricularCourses.put(key.toString(), studentList);
-	}
-
-// ------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------
-
-	/**
-	 * @param courseCode
-	 */
-	private static void addCurricularCourseName(String courseCode)
-	{
-		String key = courseCode;
-		String courseName = ReportEnrolment.findCurricularCourseName(courseCode);
-
-		String value = (String) ReportAllPastEnrollmentMigration.curricularCourses.get(key);
-		if (value == null) {
-			ReportAllPastEnrollmentMigration.curricularCourses.put(key, courseName);
-		}
-	}
-
-	/**
-	 * @param degreeCode
-	 */
-	private static void addDegreeName(String degreeCode)
-	{
-		String key = degreeCode;
-		String degreeName = ReportEnrolment.findDegreeName(degreeCode);
-
-		String value = (String) ReportAllPastEnrollmentMigration.degrees.get(key);
-		if (value == null) {
-			ReportAllPastEnrollmentMigration.degrees.put(key, degreeName);
-		}
+		ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.put(key, mwEnrolmentCasesList);
+		ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes++;
 	}
 
 	/**
 	 * @param value
 	 */
-	public static void addEnrolmentMigrated(int value)
+	public static void addEnrolmentsMigrated(int value)
 	{
-		ReportAllPastEnrollmentMigration.enrolmentsMigrated = ReportAllPastEnrollmentMigration.enrolmentsMigrated + value;
+		ReportAllPastEnrollmentMigration.totalEnrollmentsCreated += value;
 	}
 
 	/**
-	 *
+	 * @param value
 	 */
-	public static void addEnrolmentMigrated()
+	public static void addStudentCurricularPlansMigrated(int value)
 	{
-		ReportAllPastEnrollmentMigration.enrolmentsMigrated++;
+		ReportAllPastEnrollmentMigration.totalStudentCurricularPlansCreated += value;
 	}
-
-//	------------------------------------------------------------------------------------------------------------------------------
-//	------------------------------------------------------------------------------------------------------------------------------
-//	------------------------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * @param out
-	 * @return
+	 * @param value
 	 */
-	private static int printNotFoundDegreeCurricularPlans(PrintWriter out)
+	public static void addEnrollmentEvaluationsMigrated(int value)
 	{
-		int totalNotFoundDegreeCurricularPlans = 0;
-		if(!ReportAllPastEnrollmentMigration.notFoundDegreeCurricularPlans.entrySet().isEmpty()) {
-			out.println("\nERROR TYPE 1 - NOT FOUND DEGREE CURRICULAR PLANS");
-			Iterator iterator = ReportAllPastEnrollmentMigration.notFoundDegreeCurricularPlans.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				String key = (String) mapEntry.getKey();
-				List studentList = (List) mapEntry.getValue();
-				out.print("\tCurso: [" + key + "] ");
-				out.println("Happened [" + studentList.size() + "] time(s)...");
-				out.println("\t\tStudents: "+ studentList.toString());
-				totalNotFoundDegreeCurricularPlans = totalNotFoundDegreeCurricularPlans + studentList.size();
-			}
-			out.println("TOTAL: " + totalNotFoundDegreeCurricularPlans);
-		}
-		return totalNotFoundDegreeCurricularPlans;
+		ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsCreated += value;
 	}
+
+	/**
+	 * @param value
+	 */
+	public static void addCurricularCoursesMigrated(int value)
+	{
+		ReportAllPastEnrollmentMigration.totalCurricularCoursesCreated += value;
+	}
+
+	/**
+	 * @param value
+	 */
+	public static void addCurricularCourseScopesMigrated(int value)
+	{
+		ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated += value;
+	}
+
 
 	/**
 	 * @param out
 	 * @return
 	 */
-	private static int printNotFoundCurricularCourseScopes(PrintWriter out)
+	private static void printUnknownCurricularCourses(PrintWriter out)
 	{
-		int totalNotFoundCurricularCourseScopes = 0;
-		if(!ReportAllPastEnrollmentMigration.notFoundCurricularCourseScopes.entrySet().isEmpty()) {
-			out.println("\nERROR TYPE 2 - NOT FOUND CURRICULAR COURSE SCOPES");
-			Iterator iterator = ReportAllPastEnrollmentMigration.notFoundCurricularCourseScopes.entrySet().iterator();
+		if(!ReportAllPastEnrollmentMigration.unknownCurricularCourses.entrySet().isEmpty()) {
+			out.println("\nERROR TYPE 1 - UNKNOWN CURRICULAR COURSES");
+			Iterator iterator = ReportAllPastEnrollmentMigration.unknownCurricularCourses.entrySet().iterator();
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
 				String key = (String) mapEntry.getKey();
-				List studentList = (List) mapEntry.getValue();
-				out.print("\tCourse - Degree - Year - Semester - Branch: [" + key + "] ");
-				out.println("Happened [" + studentList.size() + "] times(s)...");
-				out.println("\t\tStudents: "+ studentList.toString());
-				totalNotFoundCurricularCourseScopes = totalNotFoundCurricularCourseScopes + studentList.size();
+				List mwEnrolmentCasesList = (List) mapEntry.getValue();
+				out.println("\tCourse Code: [" + key + "]. Happened [" + mwEnrolmentCasesList.size() + "] times!");
+				out.println("\tCases:");
+				Iterator iterator2 = mwEnrolmentCasesList.iterator();
+				while (iterator2.hasNext()) {
+					MWEnrolment mwEnrolment = (MWEnrolment) iterator2.next();
+					out.println("\t\t" + mwEnrolment.toFlatString());
+				}
 			}
-			out.println("TOTAL: " + totalNotFoundCurricularCourseScopes);
+			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes);
 		}
-		return totalNotFoundCurricularCourseScopes;
 	}
 
 	/**
 	 * @param out
 	 * @return
 	 */
-	private static int printNotFoundCurricularCourses(PrintWriter out)
+	private static void printNotFoundCurricularCourseScopes(PrintWriter out)
 	{
-		int totalNotFoundCurricularCourses = 0;
-		if(!ReportAllPastEnrollmentMigration.notFoundCurricularCourses.entrySet().isEmpty()) {
-			out.println("\nERROR TYPE 3 - NOT FOUND CURRICULAR COURSES");
-			Iterator iterator = ReportAllPastEnrollmentMigration.notFoundCurricularCourses.entrySet().iterator();
+		if(!ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.entrySet().isEmpty()) {
+			out.println("\nERROR TYPE 2 - UNKNOWN TEACHERS AND EMPLOYEES");
+			Iterator iterator = ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.entrySet().iterator();
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
 				String key = (String) mapEntry.getKey();
-				List studentList = (List) mapEntry.getValue();
-				out.print("\tCourse - Degree: [" + key + "] ");
-				out.println("Happened [" + studentList.size() + "] times(s)...");
-				out.println("\t\tStudents: "+ studentList.toString());
-				totalNotFoundCurricularCourses = totalNotFoundCurricularCourses + studentList.size();
+				List mwEnrolmentCasesList = (List) mapEntry.getValue();
+				out.println("\tNumber: [" + key + "]. Happened [" + mwEnrolmentCasesList.size() + "] times!");
+				out.println("\tCases:");
+				Iterator iterator2 = mwEnrolmentCasesList.iterator();
+				while (iterator2.hasNext()) {
+					MWEnrolment mwEnrolment = (MWEnrolment) iterator2.next();
+					out.println("\t\t" + mwEnrolment.toFlatString());
+				}
 			}
-			out.println("TOTAL: " + totalNotFoundCurricularCourses);
-		}
-		return totalNotFoundCurricularCourses;
-	}
-
-	/**
-	 * @param out
-	 * @return
-	 */
-	private static int printNotFoundStudentCurricularPlans(PrintWriter out)
-	{
-		int totalNotFoundStudentCurricularPlans = 0;
-		if(!ReportAllPastEnrollmentMigration.notFoundStudentCurricularPlans.entrySet().isEmpty()) {
-			out.println("\nERROR TYPE 4 - NOT FOUND STUDENT CURRICULAR PLANS");
-			Iterator iterator = ReportAllPastEnrollmentMigration.notFoundStudentCurricularPlans.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				String key = (String) mapEntry.getKey();
-				List studentList = (List) mapEntry.getValue();
-				out.print("\tDegree: [" + key + "] ");
-				out.println("Happened [" + studentList.size() + "] times(s)...");
-				out.println("\t\tStudents: "+ studentList.toString());
-				totalNotFoundStudentCurricularPlans = totalNotFoundStudentCurricularPlans + studentList.size();
-			}
-			out.println("TOTAL: " + totalNotFoundStudentCurricularPlans);
-		}
-		return totalNotFoundStudentCurricularPlans;
-	}
-
-	/**
-	 * @param out
-	 * @param totalEnrolmentsNotMigrated
-	 */
-	private static void printCurricularCoursesNames(PrintWriter out, int totalEnrolmentsNotMigrated)
-	{
-		if((!ReportAllPastEnrollmentMigration.curricularCourses.entrySet().isEmpty()) && (totalEnrolmentsNotMigrated > 0)) {
-			out.println("\nCURRICULAR COURSES");
-			Iterator iterator = ReportAllPastEnrollmentMigration.curricularCourses.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				String key = (String) mapEntry.getKey();
-				String value = (String) mapEntry.getValue();
-				out.println("\t[" + key + "] - [" + value + "]");
-			}
-		}
-	}
-
-	/**
-	 * @param out
-	 * @param totalEnrolmentsNotMigrated
-	 */
-	private static void printDegreesNames(PrintWriter out, int totalEnrolmentsNotMigrated)
-	{
-		if((!ReportAllPastEnrollmentMigration.degrees.entrySet().isEmpty()) && (totalEnrolmentsNotMigrated > 0)) {
-			out.println("\nCURSOS");
-			Iterator iterator = ReportAllPastEnrollmentMigration.degrees.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				String key = (String) mapEntry.getKey();
-				String value = (String) mapEntry.getValue();
-				out.println("\t[" + key + "] - [" + value + "]");
-			}
+			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes);
 		}
 	}
 
@@ -336,17 +179,14 @@ public class ReportAllPastEnrollmentMigration
 		out.println("\n------------------------------ ERROR CASES --------------------------------");
 		out.println("\n---------------------------------------------------------------------------");
 
-		int totalNotFoundDegreeCurricularPlans = ReportAllPastEnrollmentMigration.printNotFoundDegreeCurricularPlans(out);
-		int totalNotFoundCurricularCourseScopes = ReportAllPastEnrollmentMigration.printNotFoundCurricularCourseScopes(out);
-		int totalNotFoundCurricularCourses = ReportAllPastEnrollmentMigration.printNotFoundCurricularCourses(out);
-		int totalNotFoundStudentCurricularPlans = ReportAllPastEnrollmentMigration.printNotFoundStudentCurricularPlans(out);
-		
-		
-		if(ReportAllPastEnrollmentMigration.enrolmentsMigrated > 0) {
-			out.println("\nTOTAL MIGRATED ENROLMENTS: " + ReportAllPastEnrollmentMigration.enrolmentsMigrated);
+		ReportAllPastEnrollmentMigration.printUnknownCurricularCourses(out);
+		ReportAllPastEnrollmentMigration.printNotFoundCurricularCourseScopes(out);
+
+		if(ReportAllPastEnrollmentMigration.totalEnrollmentsCreated > 0) {
+			out.println("\nTOTAL MIGRATED ENROLMENTS: " + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated);
 		}
 
-		int totalEnrolmentsNotMigrated = totalNotFoundDegreeCurricularPlans + totalNotFoundCurricularCourseScopes + totalNotFoundCurricularCourses + totalNotFoundStudentCurricularPlans;
+		int totalEnrolmentsNotMigrated = ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes + ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes;
 		if(totalEnrolmentsNotMigrated > 0) {
 			out.println("\nTOTAL ENROLMENTS NOT MIGRADTED: " + totalEnrolmentsNotMigrated);
 		}
@@ -355,9 +195,38 @@ public class ReportAllPastEnrollmentMigration
 		out.println("\n----------------------------- INFORMATIONS --------------------------------");
 		out.println("\n---------------------------------------------------------------------------");
 		
-		ReportAllPastEnrollmentMigration.printCurricularCoursesNames(out, totalEnrolmentsNotMigrated);
-		ReportAllPastEnrollmentMigration.printDegreesNames(out, totalEnrolmentsNotMigrated);
+		out.println("[INFO] DONE!");
+		out.println("[INFO] Total StudentCurricularPlans created: [" + ReportAllPastEnrollmentMigration.totalStudentCurricularPlansCreated + "].");
+		out.println("[INFO] Total Enrolments created: [" + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated + "].");
+		out.println("[INFO] Total EnrolmentEvaluations created: [" + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsCreated + "].");
+		out.println("[INFO] Total CurricularCourses created: [" + ReportAllPastEnrollmentMigration.totalCurricularCoursesCreated + "].");
+		out.println("[INFO] Total CurricularCourseScopes created: [" + ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated + "].");
 
 		out.close();
+	}
+
+	/**
+	 * @param courseCode
+	 */
+	private static String getCurricularCourseName(String courseCode)
+	{
+		String courseName = null;
+		try
+		{
+			courseName = CreateAndUpdateAllPastCurriculums.getCurricularCourseName(courseCode);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return courseName;
+	}
+
+	/**
+	 * @param degreeCode
+	 */
+	private static String getDegreeName(String degreeCode)
+	{
+		String degreeName = ReportEnrolment.findDegreeName(degreeCode);
+		return degreeName;
 	}
 }

@@ -112,6 +112,9 @@ public class StudentCurricularPlanState {
 			case INACTIVE :
 				valueS = "INACTIVE";
 				break;
+			case PAST :
+				valueS = "PAST";
+				break;
 			default :
 				break;
 		}

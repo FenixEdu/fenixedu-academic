@@ -23,6 +23,7 @@ import Dominio.IBranch;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
+import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -140,8 +141,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		super.deleteAll(oqlQuery);
 	}
 
-	public List readAllFromStudent(int studentNumber /*, StudentType studentType */
-	) throws ExcepcaoPersistencia {
+	public List readAllFromStudent(int studentNumber) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
 			oqlQuery += " where student.number = " + studentNumber;
@@ -272,6 +272,13 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		
 		return storedStudentCurricularPlan;
 		
+	}
+
+	public List readAllByStudentAntState(IStudent student, StudentCurricularPlanState state) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentKey", student.getIdInternal());
+		criteria.addEqualTo("currentState", state);
+		return queryList(StudentCurricularPlan.class, criteria);
 	}
 
 }

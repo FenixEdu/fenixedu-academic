@@ -103,36 +103,38 @@ public class EnrolmentEvaluationType
 
         switch (value)
         {
-            case IMPROVEMENT :
-                valueS = "Melhoria";
-                break;
             case NORMAL :
-                valueS = "Normal";
+                valueS = "NORMAL";
+                break;
+            case IMPROVEMENT :
+                valueS = "IMPROVEMENT";
                 break;
             case SPECIAL_SEASON :
-                valueS = "Epoca Especial";
+                valueS = "SPECIAL_SEASON";
+                break;
+            case EXTERNAL :
+                valueS = "EXTERNAL";
                 break;
             case EQUIVALENCE :
-                valueS = "Equivalência";
+                valueS = "EQUIVALENCE";
                 break;
-
+            case CLOSED :
+                valueS = "CLOSED";
+                break;
+            case FIRST_SEASON :
+                valueS = "FIRST_SEASON";
+                break;
+            case SECOND_SEASON :
+                valueS = "SECOND_SEASON";
+                break;
+            case NO_SEASON :
+                valueS = "NO_SEASON";
+                break;
             default :
                 break;
         }
 
         return valueS;
-    }
-
-    public EnrolmentEvaluationType(String type)
-    {
-        if (type.equals(EnrolmentEvaluationType.NORMAL_STRING))
-            this.type = new Integer(EnrolmentEvaluationType.NORMAL);
-        if (type.equals(EnrolmentEvaluationType.IMPROVEMENT_STRING))
-            this.type = new Integer(EnrolmentEvaluationType.IMPROVEMENT);
-        if (type.equals(EnrolmentEvaluationType.SPECIAL_SEASON_STRING))
-            this.type = new Integer(EnrolmentEvaluationType.SPECIAL_SEASON);
-        if (type.equals(EnrolmentEvaluationType.EQUIVALENCE_STRING))
-            this.type = new Integer(EnrolmentEvaluationType.EQUIVALENCE);
     }
 
     public ArrayList toArrayList()
