@@ -354,5 +354,47 @@
       </reference-descriptor> 
    </class-descriptor>   
 
-   
+<!-- Definitions for Dominio.Exam -->
+<!--   <class-descriptor
+   	  class="Dominio.Exam"
+   	  table="EXAM"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="day"
+         column="DAY"
+         jdbc-type="INTEGER"
+         conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
+      />
+      <field-descriptor
+         name="beginning"
+         column="BEGINNING"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="end"
+         column="END"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+      <field-descriptor
+         name="keyExecutionCourse"
+         column="KEY_EXECUTION_COURSE"
+         jdbc-type="INTEGER"
+      />
+     <reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+      >
+         <foreignkey field-ref="keyExecutionCourse"/>
+      </reference-descriptor>      
+   </class-descriptor>
+-->
 <!-- Mapping of User defined classes ends here -->
