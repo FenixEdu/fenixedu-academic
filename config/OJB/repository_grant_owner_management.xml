@@ -453,17 +453,17 @@
 		column="KEY_TEACHER"
 		jdbc-type="INTEGER"
 	 />
+	 <reference-descriptor
+		name="grantPaymentEntity"
+		class-ref="Dominio.grant.contract.GrantPaymentEntity"
+		proxy="true">
+		<foreignkey field-ref="keyGrantPaymentEntity"/>
+	</reference-descriptor>
 	<reference-descriptor
 		name="grantSubsidy"
 		class-ref="Dominio.grant.contract.GrantSubsidy"
 		proxy="true">
 		<foreignkey field-ref="keyGrantSubsidy"/>
-	</reference-descriptor>
-	<reference-descriptor
-		name="grantPaymentEntity"
-		class-ref="Dominio.grant.contract.GrantPaymentEntity"
-		proxy="true">
-		<foreignkey field-ref="keyGrantPaymentEntity"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="responsibleTeacher"

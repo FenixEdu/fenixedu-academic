@@ -26,9 +26,8 @@ public class GrantSubsidyOJB extends ObjectFenixOJB implements IPersistentGrantS
         IGrantSubsidy grantSubsidy = null;
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyGrantContract", grantContractId);
+        criteria.addEqualTo("grantContract.idInternal", grantContractId);
         grantSubsidy = (IGrantSubsidy) queryObject(GrantSubsidy.class, criteria);
         return grantSubsidy;
     }
-
 }

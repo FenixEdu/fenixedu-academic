@@ -3,6 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<p class="infoselected">
+		<b><bean:message key="label.grant.contract.information"/></b><br/>
+    	<bean:message key="label.grant.contract.number"/>:&nbsp;<bean:write name="contractNumber"/><br/>
+    	<bean:message key="label.grant.type.name"/>:&nbsp;<bean:write name="grantTypeName"/>
+	</p>
+	
 <strong><p align="center"><bean:message key="label.grant.subsidy.edition"/></p></strong><br/>
 
 <html:form action="/editGrantSubsidy" style="display:inline">
@@ -16,13 +22,17 @@
 	<html:hidden property="method" value="doEdit"/>
 	<html:hidden property="page" value="1"/>
 
+	<%-- In case of validation error --%>
+	<html:hidden property="contractNumber" value='<%= request.getAttribute("contractNumber").toString() %>' />
+	<html:hidden property="grantTypeName" value='<%= request.getAttribute("grantTypeName").toString() %>' />
+	
 	<%-- grant contract --%>
-	<html:hidden property="idGrantContract"/>
+	<html:hidden property="idGrantContract"/> 
 	
 	<%-- grant subsidy --%>
 	<html:hidden property="idGrantSubsidy"/>
 
-	<%-- grant owner --%>
+	<%-- grant owner  --%>
 	<html:hidden property="idGrantOwner"/>
 
 	<table>
@@ -74,3 +84,12 @@
 			</td>
 		</tr>
 	</table>
+	
+<br/><br/>
+
+<logic:present name="idSubsidy">
+	<bean:message key="message.grant.part.manage"/>:&nbsp;
+	<html:link page='<%= "/manageGrantPart.do?method=prepareManageGrantPart&amp;idSubsidy=" + request.getAttribute("idSubsidy").toString()%>'>
+	<bean:message key="link.manage.grant.part"/>
+	</html:link>
+</logic:present>

@@ -232,6 +232,22 @@
 			</field>			
     	</form>
 
+		<!-- Edit Grant Part Form -->
+        <form name="editGrantPartForm">
+            <field property="percentage" depends="required, integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.part.percentage" resource="true"/>
+		    </field>
+		    <field property="grantPaymentEntityNumber" depends="required, integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.part.grantPaymentEntity.number" resource="true"/>
+		    </field>
+		    <field property="responsibleTeacherNumber" depends="required, integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.part.responsibleTeacher.number" resource="true"/>
+		    </field>
+		</form>
+		
     </formset>
 </form-validation>
 

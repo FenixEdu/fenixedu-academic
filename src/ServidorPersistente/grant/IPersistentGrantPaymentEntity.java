@@ -3,6 +3,8 @@
  */
 package ServidorPersistente.grant;
 
+import Dominio.grant.contract.IGrantPaymentEntity;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
 /**
@@ -11,5 +13,5 @@ import ServidorPersistente.IPersistentObject;
  */
 public interface IPersistentGrantPaymentEntity extends IPersistentObject
 {
-
+    public IGrantPaymentEntity readByNumber(Integer entityNumber) throws ExcepcaoPersistencia;
 }

@@ -50,23 +50,43 @@ public class EditGrantSubsidyAction extends DispatchAction
         }
         catch (Exception e)
         {
-            grantSubsidyForm.set("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
             request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
+            if(request.getParameter("idSubsidy") != null && !request.getParameter("idSubsidy").equals(""))
+            	request.setAttribute("idSubsidy", new Integer(request.getParameter("idSubsidy")));
+            
+            request.setAttribute("contractNumber", request.getParameter("contractNumber"));            
+            request.setAttribute("grantTypeName", request.getParameter("grantTypeName"));
+            
             return mapping.findForward("edit-grant-subsidy");
         }
         try
         {
-			//Read the contract
+			//Read the subsidy
 			Object[] args = { idContract };
 			InfoGrantSubsidy infoGrantSubsidy =
 				(InfoGrantSubsidy) ServiceUtils.executeService(
 					userView,
 					"ReadActualGrantSubsidyByGrantContract",
 					args);
+            
+            InfoGrantContract infoGrantContract =
+            (InfoGrantContract) ServiceUtils.executeService(
+                    userView,
+                    "ReadGrantContract",
+                    args);
 
+            if(infoGrantContract != null)
+            {
+                request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
+                request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());   
+            }
+            
 			//Populate the form
 			if (infoGrantSubsidy != null)
+            {         
 				setFormGrantSubsidy(grantSubsidyForm, infoGrantSubsidy);
+                request.setAttribute("idSubsidy", infoGrantSubsidy.getIdInternal());
+            }
 
 			grantSubsidyForm.set("idGrantContract", idContract);
 			grantSubsidyForm.set("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));

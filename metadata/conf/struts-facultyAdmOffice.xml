@@ -138,7 +138,18 @@
 				<form-property name="totalCost" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
-			
+
+			<form-bean name="editGrantPartForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="percentage" type="java.lang.String"/>
+				<form-property name="grantSubsidyId" type="java.lang.Integer"/>
+				<form-property name="paymentEntityType" type="java.lang.Integer"/>
+				<form-property name="grantPaymentEntityNumber" type="java.lang.String"/>
+				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+						
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -316,6 +327,28 @@
    			type="ServidorApresentacao.Action.grant.contract.EditGrantTypeAction">
   			<forward name="edit-grant-type" path="editGrantTypeForm"/>
   			<forward name="manage-grant-type" path="/manageGrantType.do?method=prepareManageGrantTypeForm"/>
+    </action>
+
+    <!-- ===================== USE CASE: MANAGE GRANT PART  ============================== -->
+	<action path="/manageGrantPart" 
+			input="/manageGrantPart.do?page=0&amp;method=prepareManageGrantPart" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantPartAction">
+  			<forward name="manage-grant-part" path="manageGrantPart"/> 
+    </action>
+
+    <!-- ===================== USE CASE: EDIT GRANT PART ============================== -->
+	<action path="/editGrantPart" 
+			input="/editGrantPart.do?page=0&amp;method=prepareEditGrantPartForm" 
+			name="editGrantPartForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantPartAction">
+  			<forward name="edit-grant-part" path="editGrantPartForm"/>
+  			<forward name="manage-grant-part" path="/manageGrantPart.do?method=prepareManageGrantPart"/>
     </action>
 
 

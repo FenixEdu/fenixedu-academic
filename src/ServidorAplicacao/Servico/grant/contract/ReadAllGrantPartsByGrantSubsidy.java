@@ -6,7 +6,12 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.util.Cloner;
+import Dominio.grant.contract.IGrantPart;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -29,18 +34,28 @@ public class ReadAllGrantPartsByGrantSubsidy implements IService
 
     public List run(Integer grantSubsidyId) throws FenixServiceException
     {
-        List grantParts = null;
+        List result = null;
         IPersistentGrantPart pgp = null;
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             pgp = sp.getIPersistentGrantPart();
-            grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
+            List grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
+            
+            result = (List) CollectionUtils.collect(grantParts, new Transformer()
+                {
+                public Object transform(Object o)
+                {
+                    IGrantPart grantPart = (IGrantPart) o;
+                    return Cloner.copyIGrantPart2InfoGrantPart(grantPart);
+                }
+            });
+            
         } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e.getMessage());
         }
 
-        return grantParts;
+        return result;
     }
 }

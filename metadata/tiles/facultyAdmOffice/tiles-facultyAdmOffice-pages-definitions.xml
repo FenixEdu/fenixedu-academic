@@ -51,4 +51,11 @@
 	<definition name="editGrantTypeForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantType.jsp"></put>
 	</definition>
+	<!-- GRANT PART -->
+	<definition name="manageGrantPart" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantPart.jsp"></put>
+	</definition>
+		<definition name="editGrantPartForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantPart.jsp"></put>
+	</definition>
 </tiles-definitions>

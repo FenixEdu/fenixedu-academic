@@ -26,7 +26,7 @@ public class GrantPartOJB extends ObjectFenixOJB implements IPersistentGrantPart
     {
         List grantPartsList = null;
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("key_grant_subsidy", grantSubsidyId);
+        criteria.addEqualTo("grantSubsidy.idInternal", grantSubsidyId);
         grantPartsList = queryList(GrantPart.class,criteria);
         return grantPartsList;
     }

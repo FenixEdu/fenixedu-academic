@@ -9,11 +9,20 @@ import Dominio.DomainObject;
  * @author pica
  * @author barbosa
  */
-public class GrantPaymentEntity extends DomainObject implements IGrantPaymentEntity
+public abstract class GrantPaymentEntity extends DomainObject implements IGrantPaymentEntity
 {
-    private Integer number;
-    private String designation;
-    private String ojbConcreteClass;
+    protected Integer number;
+    protected String designation;
+    protected String ojbConcreteClass;
+    
+    /**
+     * Constructor
+     */
+    public GrantPaymentEntity()
+    {
+        super();
+        this.ojbConcreteClass = this.getClass().getName();
+    }
     
 	/**
 	 * @return Returns the designation.
@@ -61,4 +70,5 @@ public class GrantPaymentEntity extends DomainObject implements IGrantPaymentEnt
 	{
 		this.ojbConcreteClass = ojbConcreteClass;
 	}
+	
 }
