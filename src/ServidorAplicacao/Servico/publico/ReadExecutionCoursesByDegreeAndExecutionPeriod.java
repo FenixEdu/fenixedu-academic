@@ -46,7 +46,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriod implements IServico
     /**
 	 * Returns the _servico.
 	 * 
-	 * @return SelectExecutionCourse
+	 * @return ReadExecutionCoursesByDegreeAndExecutionPeriod
 	 */
     public static ReadExecutionCoursesByDegreeAndExecutionPeriod getService()
     {
