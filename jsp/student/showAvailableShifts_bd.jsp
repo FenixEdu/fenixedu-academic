@@ -6,18 +6,36 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="DataBeans.InfoLesson" %>
-<h3>
-<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">
-	Visualizar Turmas e Horário
-</html:link>
-</h3>
-
+<br/>
+<table width="50%" align="center">
+	<tr>
+		<td style="text-align: left;"><h2 class="redtxt">Informações de utilização:</h2>
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left;">Estes são os agrupamentos de aulas correspondentes à turma que escolheu.
+			 Seleccione os que deseja frequentar. Note que:
+			<ul>
+				<li>As inscrições em laboratórios são da responsabilidade dos docentes da disciplina.</li>
+				<li>Carregue no botão inscrever para proceder à submissão das suas alterações.</li> 
+				<li>Poderá seguir o link "Visualizar Turmas e Horário" para voltar à página de escolha de turma e visualização
+			 		do horário e estado da inscrição.</li> 
+				<li>Lembre-se que a qualquer momento, durante o período de inscrição, pode efectuar alterações.</li> 
+				<li>Em caso de dúvida ou se necessitar de ajuda, contacte-nos utilizando: <a href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</a></li> 
+			</ul>
+		</td>
+	</tr>
+</table>
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
 <div align="center"><h3><bean:write name="infoStudentShiftEnrolment" property="infoStudent.infoPerson.nome"/></h3></div>
-
+<div align="center"><h3>
+<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">
+	(Visualizar Turmas e Horário)
+</html:link>
+</h3></div>
 <logic:present name="infoStudentShiftEnrolment">
 				
-<div align="center"><table>
+<div align="center"><table width="50%">
 	<tr>
 		<td class="listClasses-header">
 			Turnos onde está inscrito:
@@ -61,7 +79,7 @@
 				<br /> 
 
 <div align="center"><h3>Turnos onde se pode inscrever:</h3></div>
-<div align="center"><table>
+<div align="center"><table width="50%">
 				<html:form action="studentShiftEnrolmentManager">
 					<html:hidden property="method" value="validateAndConfirmShiftEnrolment"/>
 					<bean:define id="index" value="0"/>
@@ -74,10 +92,10 @@
 					<bean:write name="list" property="type"/>
 	</td>
 	<td class="listClasses-header">
-				&nbsp;
+				Aulas:
 	</td>	
 	<td class="listClasses-header">
-		Aulas:
+		&nbsp;
 	</td>
 </tr>
 						<logic:iterate name="list" id="sublist" property="list" indexId="groupIndex">
@@ -88,13 +106,8 @@
 		</td>
 		
 							<logic:iterate name="sublist" id="shiftWithLessons" property="list" >
-				<td class="listClasses">			
-								<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
-								&nbsp
-								<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />
-								
-								
-				</td>		
+						<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
+					
 				<td class="listClasses">				
 									<logic:iterate id="lesson" name="shiftWithLessons" property="infoLessons">
 									
@@ -109,7 +122,10 @@
 										</dt:format>
 										<br />
 									</logic:iterate>
-					</td>			
+					</td>
+				<td class="listClasses">
+					<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />			
+				</td>					
 							</logic:iterate>
 					<bean:define id="index" value="<%=  (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
 				</tr>
