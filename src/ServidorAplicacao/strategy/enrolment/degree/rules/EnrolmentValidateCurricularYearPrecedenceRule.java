@@ -8,6 +8,7 @@ import org.apache.commons.collections.Predicate;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 
 /**
  * @author dcs-rjao
@@ -46,8 +47,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 			});
 
 			if(!enrolmentContext.getActualEnrolment().containsAll(precedentCurricularCourses)) {
-				// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
-				enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Para se inscrever as disciplinas de um dado ano, deve inscrever-se obrigatoriamente a todas as disciplinas dos anos anteriores");
+				enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MUST_ENROLL_IN_EARLIER_CURRICULAR_COURSES);
 				return enrolmentContext;
 			}
 		}

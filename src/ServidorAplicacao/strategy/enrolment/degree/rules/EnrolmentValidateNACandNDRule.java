@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import Util.CurricularCourseType;
 
 /**
@@ -39,16 +40,16 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 			}
 		}
 
-		// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
+		
 		// FIXME: David-Ricardo: A regra dos MINCOURSES nao se aplica aos trabalhadores estudantes
 		if (enrolmentContext.getActualEnrolment().size() < MINCOURSES) {
-			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Deve inscrever-se a pelo menos 3 disciplinas");
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MINIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(MINCOURSES));
 		}
 		if (enrolmentContext.getActualEnrolment().size() > MAXCOURSES) {
-			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Não se pode inscrever a mais de 7 disciplinas");
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MAXIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(MAXCOURSES));
 		}
 		if (NAC > MAXNAC) {
-			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Não se pode inscrever a mais de 10 disciplinas acumuladas");
+			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.ACUMULATED_CURRICULAR_COURSES, String.valueOf(MAXNAC));
 		}
 		return enrolmentContext;
 	}

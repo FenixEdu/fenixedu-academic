@@ -14,6 +14,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -67,8 +68,7 @@ public class ConfirmActualEnrolment implements IServico {
 		if (enrolmentContext.getEnrolmentValidationResult().isSucess()) {
 			try {
 				writeTemporaryEnrolment(enrolmentContext);
-				//FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
-				enrolmentContext.getEnrolmentValidationResult().setSucessMessage("Inscrição realizada com sucesso");
+				enrolmentContext.getEnrolmentValidationResult().setSucessMessage(EnrolmentValidationResult.SUCCESS_ENROLMENT);
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
 				//FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
