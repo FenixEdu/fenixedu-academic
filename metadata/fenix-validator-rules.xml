@@ -72,7 +72,42 @@
                        javax.servlet.ServletContext"
                 msg="errors.required.checkbox"
                 />
-                  
+                
+<!-- 
+The validateMultiBox rule is used to ensure that multiboxes have at least one field selected!
+It uses two variables, arrayProperty and femininProperty. The arrayProperty is the name of the
+String Array used by the multibox form, the femininProperty is just for display purposes, 
+if equal to true, it will use the feminin error message (errors.required.a.checkbox), otherwise it will use the masculine
+error message (errors.required.checkbox).
+
+Example:
+
+<form name="addShiftToClasses">
+	<field property="classesList" depends="validateMultiBox" >
+	<arg0 key="turma" resource="true"/>
+		<var>
+        	<var-name>arrayProperty</var-name>
+            <var-value>classesList</var-value>
+        </var>
+        <var>
+        	<var-name>femininProperty</var-name>
+            <var-value>true</var-value>
+        </var>
+	</field>
+</form>  
+
+-->                
+     <validator name="validateMultiBox"
+     			classname="ServidorApresentacao.validator.form.ValidateMultiBox" 
+     			method="validate"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                msg="errors.required.checkbox"
+                />             
    </global>
 
 </form-validation>

@@ -60,7 +60,10 @@
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-		<action path="/index" type="org.apache.struts.actions.ForwardAction" parameter="df.index"/>
+		<action path="/index" type="ServidorApresentacao.Action.credits.IndexAction">
+			<forward name="creditsManager" path="df.index"></forward>
+			<forward name="creditsManagerDepartment" path="department.teacher.list"></forward>			
+		</action>
 	   
 	   	<action path="/teacherSearch" type="ServidorApresentacao.Action.credits.TeacherSearchDispatchAction" 
 	   			name="teacherSearchForm"

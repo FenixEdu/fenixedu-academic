@@ -1,7 +1,6 @@
-#-----------------------------
-# Data for table 'ROLE'
-#-----------------------------
-delete from ROLE;
+-- ---------------------------
+-- Data for table 'ROLE'
+-- ---------------------------
 delete from ROLE;
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (1,1,'/person','/index.do','portal.person');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (2,2,'/student','/index.do','portal.student');
@@ -14,4 +13,5 @@ insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAM
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (9,9,'/employee','/index.do','portal.employee');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (10,10,'/managementAssiduousness','/index.do','portal.employee');
 insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (11,11,'/manager','/index.do','portal.manager');
-insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (13.13,'/credits','/index.do','portal.credits');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (13,13,'/credits','/index.do','portal.credits');
+insert into ROLE (ID_INTERNAL, ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values (14,14,'/credits','/index.do','portal.credits');
