@@ -41,7 +41,7 @@ public class ProfessorShipShiftPercentageDispatchAction extends DispatchAction {
 		DynaValidatorForm professorshipShiftPercentageForm = (DynaValidatorForm) form;
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		Integer idInternal = (Integer) professorshipShiftPercentageForm.get("executionCourseInternalCode");
+		Integer idInternal = (Integer) professorshipShiftPercentageForm.get("objectCode");
 		infoExecutionCourse.setIdInternal(idInternal);
 
 		HttpSession session = request.getSession();
@@ -82,7 +82,9 @@ public class ProfessorShipShiftPercentageDispatchAction extends DispatchAction {
 
 			saveErrors(request, actionErrors);
 			
-			request.setAttribute("executionCourseInternalCode", getInfoExecutionCourse((DynaActionForm) form).getIdInternal());
+			
+			// TODO Para que é que se está a fazer isto?
+			request.setAttribute("objectCode", getInfoExecutionCourse((DynaActionForm) form).getIdInternal());
 
 			return mapping.getInputForward();
 		}
@@ -92,7 +94,7 @@ public class ProfessorShipShiftPercentageDispatchAction extends DispatchAction {
 
 	private InfoExecutionCourse getInfoExecutionCourse(DynaActionForm form) {
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		infoExecutionCourse.setIdInternal((Integer) form.get("executionCourseInternalCode"));
+		infoExecutionCourse.setIdInternal((Integer) form.get("objectCode"));
 		return infoExecutionCourse;
 	}
 
@@ -121,7 +123,7 @@ public class ProfessorShipShiftPercentageDispatchAction extends DispatchAction {
 				}
 			}
 		}
-		professorshipShiftPercentageForm.set("shiftProfessorships", shiftsInternalCodes);
+		professorshipShiftPercentageForm.set("shiftProfe	ssorships", shiftsInternalCodes);
 	}
 
 	private List processForm(DynaActionForm form, HttpServletRequest request) {

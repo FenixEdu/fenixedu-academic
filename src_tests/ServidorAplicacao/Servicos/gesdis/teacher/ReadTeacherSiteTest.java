@@ -41,7 +41,7 @@ public class ReadTeacherSiteTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadTeacherSite";
+		return "ReadExecutionCourseSite";
 
 	}
 

@@ -2,14 +2,20 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
+	<definition name="df.page.teacher-index" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/teacher/firstPage.jsp" />
+	</definition>
 	<definition name="df.page.viewProfessorships" extends="definition.teacher.two-column">
 		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
 	</definition>
-	<definition name="df.page.initial.management.execution_course" extends="df.teacher.execution-course-management">
-		<put name="body" value="" />
+	<definition name="df.page.management.execution-courses" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
 	</definition>
-	<definition name="df.teacher.showShiftsPercentageTable" extends="df.teacher.execution-course-management">
+	<definition name="df.teacher.showShiftsPercentageTable" extends="definition.teacher.two-column">
 		<put name="body" value="/teacher/credits/showShiftsPercentageTable_bd.jsp" />
 	</definition>
-	
+	<definition name="df.page.management.credits" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/credits/creditsManagement.jsp" />
+	</definition>
 </tiles-definitions>

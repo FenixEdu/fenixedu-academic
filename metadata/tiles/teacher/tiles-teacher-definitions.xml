@@ -12,5 +12,13 @@
 	    <put name="navLocal" value="/teacher/commons/localNavBar.jsp"/>		
 		<put name="body-context" value="/teacher/executionCourseName.jsp"></put>
 	</definition>
-	
+	<definition name="df.teacher.credits-management" extends="definition.teacher.two-column">
+	    <put name="navLocal" value="/teacher/commons/creditsManagementLocalNavigationBar.jsp"/>	
+	</definition>
+	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
+				controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
+		<put name="title" value=""/>
+	    <put name="link" value=""/>
+   	    <put name="professorshipList" />
+	</definition>
 </tiles-definitions>

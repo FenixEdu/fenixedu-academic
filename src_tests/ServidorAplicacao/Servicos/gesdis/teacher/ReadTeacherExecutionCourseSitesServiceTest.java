@@ -22,12 +22,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ReadProfessorshipsServiceTest extends TestCaseReadServices {
+public class ReadTeacherExecutionCourseSitesServiceTest extends TestCaseReadServices {
 
 	/**
 	 * @param testName
 	 */
-	public ReadProfessorshipsServiceTest(String testName) {
+	public ReadTeacherExecutionCourseSitesServiceTest(String testName) {
 		super(testName);
 		
 	}
@@ -36,7 +36,7 @@ public class ReadProfessorshipsServiceTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadProfessorships";
+		return "ReadTeacherExecutionCourseSites";
 	}
 
 	/* (non-Javadoc)

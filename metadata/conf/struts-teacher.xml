@@ -117,7 +117,7 @@
 	<form-bean name="executionCourseShiftsPercentageForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
         dynamic="true">
-        <form-property name="executionCourseInternalCode" type="java.lang.Integer"/>
+        <form-property name="objectCode" type="java.lang.Integer"/>
         <form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
         <form-property name="method" type="java.lang.String"></form-property>       
 	</form-bean> 		          
@@ -294,12 +294,18 @@
        <forward name="viewCurriculum" path="/viewSite.jsp"/>
 	</action>
 	
-	<action	path="/index"
+	
+	<action	path="/index" type="org.apache.struts.actions.ForwardAction" parameter="df.page.teacher-index" />
+
+	<action	path="/manageExecutionCourses" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.execution-courses" />
+	<action	path="/manageCredits" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.credits" />	
+		
+	<!--	<action	path="/index"
         type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
 		>    
       <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>      
-<!--		<forward name="viewProfessorships" path="df.page.viewProfessorships"/> -->    
-	</action>
+		<forward name="viewProfessorships" path="df.page.viewProfessorships"/>
+	</action> -->
 	
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
@@ -440,9 +446,11 @@
 	<!-- start of evaluation mappings -->
 	
 	<!-- Actions for Teacher credits -->
+	<action path="/creditsManagement" type="org.apache.struts.actions.ForwardAction" parameter="df.page.credits-management"/>
+	
 	<action 
 		name="executionCourseShiftsPercentageForm"
-		input="/editEvaluation.jsp"
+		input="/"
 		path="/executionCourseShiftsPercentageManager"
 		parameter="method"
 		scope="request"

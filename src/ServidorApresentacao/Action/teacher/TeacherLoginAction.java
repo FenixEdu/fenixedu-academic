@@ -37,11 +37,11 @@ public class TeacherLoginAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		
+
 		HttpSession session = getSession(request);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		
+
 		InfoTeacher teacher = null;
 		try {
 			Object args[] = { userView.getUtilizador()};
@@ -52,17 +52,19 @@ public class TeacherLoginAction extends FenixAction {
 					"ReadTeacherByUsername",
 					args);
 			//TODO: fix the situation where the teacher is null
-			if (teacher==null) {throw new InvalidSessionActionException();		
+			if (teacher == null) {
+				throw new InvalidSessionActionException();
 			}
 			List sites = null;
-			Object args1[]={teacher};
-			sites = (List) serviceManager.executar(
-			userView,
-			"ReadProfessorships",
-			args1);
-			
-			session.setAttribute(SessionConstants.INFO_TEACHER,teacher);
-			session.setAttribute(SessionConstants.INFO_SITES_LIST,sites);
+			Object args1[] = { teacher };
+			sites =
+				(List) serviceManager.executar(
+					userView,
+					"ReadTeacherExecutionCoursesSitesService",
+					args1);
+
+			session.setAttribute(SessionConstants.INFO_TEACHER, teacher);
+			session.setAttribute(SessionConstants.INFO_SITES_LIST, sites);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

@@ -8,23 +8,25 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadTeacherSite implements IServico {
+public class ReadExecutionCourseSite implements IServico {
 
-	private static ReadTeacherSite service = new ReadTeacherSite();
+	private static ReadExecutionCourseSite service = new ReadExecutionCourseSite();
 
 	/**
 	 * The singleton access method of this class.
 	 **/
 
-	public static ReadTeacherSite getService() {
+	public static ReadExecutionCourseSite getService() {
 
 		return service;
 
@@ -34,7 +36,7 @@ public class ReadTeacherSite implements IServico {
 	 * The ctor of this class.
 	 **/
 
-	private ReadTeacherSite() {
+	private ReadExecutionCourseSite() {
 	}
 
 	/**
@@ -42,9 +44,7 @@ public class ReadTeacherSite implements IServico {
 	 **/
 
 	public final String getNome() {
-
-		return "ReadTeacherSite";
-
+		return "ReadExecutionCourseSite";
 	}
 
 	/**
@@ -65,10 +65,16 @@ public class ReadTeacherSite implements IServico {
 			ISuportePersistente sp;
 			
 			sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao executionCourse =
-				Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
+			executionCourse =  (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse);
+			
+			
 			site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
+			
 			InfoSite  infoSite=null;
+			
 			if (site != null){
 				infoSite = Cloner.copyISite2InfoSite(site);
 			}
