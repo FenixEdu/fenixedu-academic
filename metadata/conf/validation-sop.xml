@@ -346,9 +346,11 @@
 
 
     <form name="searchEmptyRoomsForm">
+<!--
       <field property="executionPeriodIndex" depends="required, integer" page="1">
         <arg0 key="property.index"/>
       </field>
+-->
 
       <field property="weekDay" depends="required,integer,range" page="1">
         <arg0 key="property.aula.weekDay"/>
@@ -424,6 +426,72 @@
         <arg0 key="property.room.capacity.normal"/>
       </field>
 
+	
+	
+	<!-- added by amsg (7/7/2004) -->
+      <field property="startDay" depends="required,integer,range" page="1">
+        <arg0 key="property.search.empty.room.start.day"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>31</var-value>
+        </var>
+      </field>
+
+      <field property="startMonth" depends="required,integer,range" page="1">
+        <arg0 key="property.search.empty.room.start.month"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>12</var-value>
+        </var>
+      </field>
+      
+      <field property="startYear" depends="required,integer" page="1">
+        <arg0 key="property.search.empty.room.start.year"/>
+      </field>
+
+      <field property="endDay" depends="required,integer,range" page="1">
+        <arg0 key="property.search.empty.room.end.day"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>31</var-value>
+        </var>
+      </field>
+
+      <field property="endMonth" depends="required,integer,range" page="1">
+        <arg0 key="property.search.empty.room.end.month"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>12</var-value>
+        </var>
+      </field>
+      
+      <field property="endYear" depends="required,integer" page="1">
+        <arg0 key="property.search.empty.room.end.year"/>
+      </field>
     </form>
 
     <form name="indexForm">
@@ -652,7 +720,7 @@
         <arg0 key="property.aula.weekDay"/>
         	<var>
         		<var-name>mask</var-name>
-          		<var-value>[23456sSdD]$</var-value>
+          		<var-value>[23456sS]$</var-value>
 			</var>
       </field>
       <field property="horaInicio" depends="required,integer,range" page="1">
@@ -697,6 +765,19 @@
       </field>
       <field property="nomeSala" depends="required" page="2">
         <arg0 key="property.aula.sala"/>
+      </field>
+      <field property="week" depends="integer,range" page="1">
+        <arg0 key="property.aula.time.week"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>2</var-value>
+        </var>
       </field>
     </form>
 

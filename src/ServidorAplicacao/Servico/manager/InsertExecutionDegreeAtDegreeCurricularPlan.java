@@ -3,7 +3,12 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoPeriod;
 import Dominio.Campus;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
@@ -12,6 +17,8 @@ import Dominio.ICampus;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
+import Dominio.IPeriod;
+import Dominio.Period;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -20,6 +27,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -75,9 +83,9 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
             IPersistentExecutionYear persistentExecutionYear = persistentSuport
                     .getIPersistentExecutionYear();
 
-            executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, infoExecutionDegree
-                            .getInfoExecutionYear().getIdInternal());
+          	IExecutionYear execYear = new ExecutionYear();
+            execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+            executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
 
             if (executionYear == null) {
 
@@ -96,6 +104,8 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
                     .getTemporaryExamMap());
             executionDegree.setCampus(campus);
 
+       		setPeriods(executionDegree, infoExecutionDegree);
+
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException(
                     "O curso em execução referente ao ano lectivo em execução "
@@ -104,4 +114,86 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }
+
+    private void setPeriods(ICursoExecucao executionDegree, InfoExecutionDegree infoExecutionDegree)
+            throws FenixServiceException {
+        InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
+        setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
+
+        InfoPeriod infoPeriodExamsSecondSemester = infoExecutionDegree
+                .getInfoPeriodExamsSecondSemester();
+        setCompositePeriod(executionDegree, infoPeriodExamsSecondSemester, 12);
+
+        InfoPeriod infoPeriodLessonsFirstSemester = infoExecutionDegree
+                .getInfoPeriodLessonsFirstSemester();
+        setCompositePeriod(executionDegree, infoPeriodLessonsFirstSemester, 21);
+
+        InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree
+                .getInfoPeriodLessonsSecondSemester();
+        setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
+}
+    private void setCompositePeriod(ICursoExecucao executionDegree, InfoPeriod infoPeriod,
+            int periodToAssociateExecutionDegree) throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentPeriod periodDAO = persistentSuport.getIPersistentPeriod();
+            List infoPeriodList = new ArrayList();
+
+            infoPeriodList.add(infoPeriod);
+
+            while (infoPeriod.getNextPeriod() != null) {
+                infoPeriodList.add(infoPeriod.getNextPeriod());
+                infoPeriod = infoPeriod.getNextPeriod();
+            }
+
+            //inicializacao
+            int infoPeriodListSize = infoPeriodList.size();
+
+            InfoPeriod infoPeriodNew = (InfoPeriod) infoPeriodList.get(infoPeriodListSize - 1);
+
+            IPeriod period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew
+                    .getStartDate(), infoPeriodNew.getEndDate(), null);
+
+            if (period == null) {
+                Calendar startDate = infoPeriodNew.getStartDate();
+                Calendar endDate = infoPeriodNew.getEndDate();
+                period = new Period(startDate, endDate);
+                periodDAO.simpleLockWrite(period);
+            }
+
+            //iteracoes
+            for (int i = infoPeriodListSize - 2; i >= 0; i--) {
+                Integer keyNextPeriod = period.getIdInternal();
+
+                IPeriod nextPeriod = period;
+
+                infoPeriodNew = (InfoPeriod) infoPeriodList.get(i);
+
+                period = (IPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate(),
+                        infoPeriodNew.getEndDate(), keyNextPeriod);
+
+                if (period == null) {
+                    Calendar startDate = infoPeriodNew.getStartDate();
+                    Calendar endDate = infoPeriodNew.getEndDate();
+                    period = new Period(startDate, endDate);
+                    periodDAO.simpleLockWrite(period);
+                    period.setNextPeriod(nextPeriod);
+                }
+            }
+
+            if (periodToAssociateExecutionDegree == 11) {
+                executionDegree.setPeriodExamsFirstSemester(period);
+            } else if (periodToAssociateExecutionDegree == 12) {
+                executionDegree.setPeriodExamsSecondSemester(period);
+            } else if (periodToAssociateExecutionDegree == 21) {
+                executionDegree.setPeriodLessonsFirstSemester(period);
+            } else if (periodToAssociateExecutionDegree == 22) {
+                executionDegree.setPeriodLessonsSecondSemester(period);
+            }
+
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
+
 }

@@ -10,6 +10,7 @@
 	<html:hidden property="page" value="1"/>
     	<input type="hidden" name="method" value="doSearch"/>
    	<table cellspacing="0">
+<!--
 		<tr>
         	<td nowrap class="formTD"><bean:message key="property.executionPeriod"/></td>
           	<td nowrap class="formTD">
@@ -17,6 +18,24 @@
 					<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>" />
 				</html:select></td>
       	</tr>                
+-->
+       	<!-- added by rspl -->
+	    <tr>
+        	<td nowrap="nowrap" class="formTD"> De </td>
+            <td nowrap="nowrap">
+				<html:text maxlength="2" size="2" property="startDay"/>
+			   	/
+		  		<html:text maxlength="2" size="2" property="startMonth"/>
+			   	/
+		  		<html:text maxlength="4" size="4" property="startYear"/>                        	
+			    &nbsp;a&nbsp;
+   				<html:text maxlength="2" size="2" property="endDay"/>
+			   	/
+		  		<html:text maxlength="2" size="2" property="endMonth"/>
+			   	/
+		  		<html:text maxlength="4" size="4" property="endYear"/>
+			</td>
+      	</tr>
 	    <tr>
         	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/></td>
         	<td nowrap class="formTD">

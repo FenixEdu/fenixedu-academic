@@ -26,8 +26,16 @@ public class InfoExecutionDegree extends InfoObject {
 
     //added by Tânia Pousão
     private InfoCampus infoCampus;
+    
+	// added by amsg 4 Jun 2004
+	private InfoPeriod infoPeriodLessonsFirstSemester;
+	private InfoPeriod infoPeriodExamsFirstSemester;
+	private InfoPeriod infoPeriodLessonsSecondSemester;
+	private InfoPeriod infoPeriodExamsSecondSemester;
 
-    public InfoExecutionDegree() {
+
+    public InfoExecutionDegree()
+    {
     }
 
     /**
@@ -146,6 +154,47 @@ public class InfoExecutionDegree extends InfoObject {
     public void setCoordinatorsList(List coordinatorsList) {
         this.coordinatorsList = coordinatorsList;
     }
+
+    public InfoPeriod getInfoPeriodExamsFirstSemester()
+    {
+        return infoPeriodExamsFirstSemester;
+    }
+
+    public void setInfoPeriodExamsFirstSemester(InfoPeriod infoPeriodExamsFirstSemester)
+    {
+        this.infoPeriodExamsFirstSemester = infoPeriodExamsFirstSemester;
+    }
+
+    public InfoPeriod getInfoPeriodExamsSecondSemester()
+    {
+        return infoPeriodExamsSecondSemester;
+    }
+
+    public void setInfoPeriodExamsSecondSemester(InfoPeriod infoPeriodExamsSecondSemester)
+    {
+        this.infoPeriodExamsSecondSemester = infoPeriodExamsSecondSemester;
+    }
+
+    public InfoPeriod getInfoPeriodLessonsFirstSemester()
+    {
+        return infoPeriodLessonsFirstSemester;
+    }
+
+    public void setInfoPeriodLessonsFirstSemester(InfoPeriod infoPeriodLessonsFirstSemester)
+    {
+        this.infoPeriodLessonsFirstSemester = infoPeriodLessonsFirstSemester;
+    }
+
+    public InfoPeriod getInfoPeriodLessonsSecondSemester()
+    {
+        return infoPeriodLessonsSecondSemester;
+    }
+
+    public void setInfoPeriodLessonsSecondSemester(InfoPeriod infoPeriodLessonsSecondSemester)
+    {
+        this.infoPeriodLessonsSecondSemester = infoPeriodLessonsSecondSemester;
+    }
+
 
     public void copyFromDomain(ICursoExecucao executionDegree) {
         super.copyFromDomain(executionDegree);

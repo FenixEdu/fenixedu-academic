@@ -179,12 +179,10 @@
 			name="associatedLessons"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			element-class-ref="Dominio.Aula"
-			indirection-table="SHIFT_LESSON"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">
-		<fk-pointing-to-this-class column="KEY_SHIFT"/>
-		<fk-pointing-to-element-class column="KEY_LESSON"/>
+		<inverse-foreignkey field-ref="keyShift"/>
 	</collection-descriptor>
 	<!-- collection-class="org.apache.ojb.broker.util.collections.ManageableVector" -->
      <collection-descriptor
@@ -234,11 +232,17 @@
          column="KEY_ROOM"
          jdbc-type="INTEGER"
       />
-      <field-descriptor id="6"
+<!--      <field-descriptor id="6"
          name="chaveDisciplinaExecucao"
          column="KEY_EXECUTION_COURSE"
          jdbc-type="INTEGER"
       />
+-->     
+      <field-descriptor id="6"
+         name="keyShift"
+         column="KEY_SHIFT"
+         jdbc-type="INTEGER"
+      /> 
       <field-descriptor id="7"
          name="tipo"
          column="TYPE"
@@ -250,6 +254,11 @@
          column="KEY_EXECUTION_PERIOD"
          jdbc-type="INTEGER"
       />
+      <field-descriptor id="9"
+         name="keyRoomOccupation"
+         column="KEY_ROOM_OCCUPATION"
+         jdbc-type="INTEGER"
+      />            
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -262,17 +271,30 @@
       >
          <foreignkey field-id-ref="5"/>
       </reference-descriptor>
-     <reference-descriptor
+<!--     <reference-descriptor
          name="disciplinaExecucao"
          class-ref="Dominio.ExecutionCourse"
       >
          <foreignkey field-id-ref="6"/>
       </reference-descriptor>      
+-->      
       <reference-descriptor
+         name="shift"
+         class-ref="Dominio.Turno"
+      >
+         <foreignkey field-ref="keyShift"/>
+      </reference-descriptor>
+	 <reference-descriptor
          name="executionPeriod"
          class-ref="Dominio.ExecutionPeriod"
       >
          <foreignkey field-id-ref="8"/>
+      </reference-descriptor>     
+   	  <reference-descriptor
+         name="roomOccupation"
+         class-ref="Dominio.RoomOccupation"
+      >
+         <foreignkey field-id-ref="9"/>
       </reference-descriptor>     
 </class-descriptor>
 
@@ -364,7 +386,7 @@
 
 
    <!-- Definitions for Dominio.TurnoAula -->
-   <class-descriptor
+<!--   <class-descriptor
    	  class="Dominio.TurnoAula"
    	  table="SHIFT_LESSON"
    >
@@ -406,7 +428,7 @@
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>      
    </class-descriptor>
-   
+-->   
 <!-- Definitions for Dominio.Frequenta -->
    <class-descriptor
    	  class="Dominio.Frequenta"
@@ -706,6 +728,16 @@
          column="KEY_PERIOD"
          jdbc-type="INTEGER"
       />
+     <field-descriptor id="7"
+         name="frequency"
+         column="FREQUENCY"
+         jdbc-type="INTEGER"         
+      />
+     <field-descriptor id="8"
+         name="weekOfQuinzenalStart"
+         column="START_WEEK"
+         jdbc-type="INTEGER"         
+      />      
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -751,12 +783,23 @@
          jdbc-type="DATE"
          conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
       />
+      <field-descriptor id="4"
+         name="keyPeriod"
+         column="KEY_PERIOD"
+         jdbc-type="INTEGER"
+      />
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
       />
+      <reference-descriptor
+         name="nextPeriod"
+         class-ref="Dominio.Period"
+      >
+         <foreignkey field-id-ref="4"/>
+      </reference-descriptor>
       <collection-descriptor
          name="roomOccupations"
          collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

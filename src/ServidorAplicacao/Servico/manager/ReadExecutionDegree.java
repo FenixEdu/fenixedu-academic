@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoPeriod;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
@@ -87,6 +88,27 @@ public class ReadExecutionDegree implements IServico {
             infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
         }
 
+		if(executionDegree.getPeriodExamsFirstSemester() != null)
+		{
+		    infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
+			//infoExecutionDegree.setInfoPeriodExamsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsFirstSemester()));
+		}
+		if(executionDegree.getPeriodExamsSecondSemester() != null)
+		{
+		    infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
+			//infoExecutionDegree.setInfoPeriodExamsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsSecondSemester()));
+		}
+		if(executionDegree.getPeriodLessonsFirstSemester() != null)
+		{
+		    infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
+			//infoExecutionDegree.setInfoPeriodLessonsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsFirstSemester()));
+		}
+		if(executionDegree.getPeriodLessonsSecondSemester() != null)
+		{
+		    infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
+			//infoExecutionDegree.setInfoPeriodLessonsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsSecondSemester()));
+		}
+		
         return infoExecutionDegree;
     }
 }

@@ -46,7 +46,12 @@ public class ReadLessonByOID implements IServico {
 			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
 			IAula lesson = (IAula) lessonDAO.readByOID(Aula.class, oid);
 			if (lesson != null) {
-				result = Cloner.copyILesson2InfoLesson(lesson);
+				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+//				ITurno shift = lesson.getShift();
+//				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+//				infoLesson.setInfoShift(infoShift);
+				
+				result = infoLesson;
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);

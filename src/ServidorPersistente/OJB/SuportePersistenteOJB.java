@@ -344,11 +344,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	{
 		return new TurnoAlunoOJB();
 	}
-	public ITurnoAulaPersistente getITurnoAulaPersistente()
+/*	public ITurnoAulaPersistente getITurnoAulaPersistente()
 	{
 		return new TurnoAulaOJB();
 	}
-
+*/
 	public IPersistentCurricularCourse getIPersistentCurricularCourse()
 	{
 		return new CurricularCourseOJB();
@@ -1278,6 +1278,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new ReimbursementGuideEntryOJB();
 
 	}
+
 	
 	
 	public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope()

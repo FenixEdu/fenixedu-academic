@@ -22,6 +22,8 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
+import Dominio.Period;
+import Dominio.RoomOccupation;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -104,7 +106,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek };
+        Object args[] = { new Period(examDate, examDate), examStartTime, examEndTime, dayOfWeek, null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false)};
 
         List availableInfoRoom =
             (List) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);

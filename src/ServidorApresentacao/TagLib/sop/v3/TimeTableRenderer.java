@@ -48,7 +48,7 @@ public class TimeTableRenderer {
 
 	public StringBuffer render() {
 		StringBuffer strBuffer = new StringBuffer("");
-
+		
 		TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
 		strBuffer.append(
@@ -117,7 +117,7 @@ public class TimeTableRenderer {
 							colspan = lessonSlotListResolved.length;
 							slotIndex = lessonSlotListResolved.length - 1;
 						}
-
+						
 						strBuffer.append(" class='");
 						strBuffer.append(
 							getSlotCssClass(
@@ -130,7 +130,7 @@ public class TimeTableRenderer {
 						strBuffer.append("' ");
 
 						strBuffer.append(">");
-
+						
 						if (infoLessonWrapper != null) {
 							if (infoLessonWrapper
 								.getLessonSlot()
@@ -187,6 +187,21 @@ public class TimeTableRenderer {
 			(infoLessonWrapper != null)
 				&& (infoLessonWrapper.getNumberOfCollisions().intValue() == 0));
 	}
+
+	/**
+	 * Method getEmptyLessonSlotNumber.
+	 * @param lessonSlotListResolved
+	 * @return int
+	 */
+	private int getEmptyLessonSlotNumber(InfoLessonWrapper[] lessonSlotList) {
+		int emptyLessonSlot = 0;
+		for (int index = 0; index < lessonSlotList.length; index++) {
+			if (lessonSlotList[index] == null)
+				emptyLessonSlot++;
+		}
+		return emptyLessonSlot;
+	}
+
 
 	/**
 	 * 
@@ -280,7 +295,8 @@ public class TimeTableRenderer {
 			&& ((slotColisions != null)
 				&& (infoLessonWrapper == null)
 				&& (slotColisions[slotIndex + 1] != null)
-				&& (slotColisions[slotIndex + 1].getInfoLesson() != null))) {
+				//&& (slotColisions[slotIndex + 1].getInfoLesson() != null))) {
+				&& (slotColisions[slotIndex + 1].getInfoShowOccupation() != null))) {
 			strBuffer.append("_lesson");
 		}
 

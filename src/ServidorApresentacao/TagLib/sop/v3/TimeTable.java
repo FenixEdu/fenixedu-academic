@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import DataBeans.InfoLesson;
+import DataBeans.InfoShowOccupation;
 import Util.DiaSemana;
 
 /**
@@ -80,13 +80,14 @@ public class TimeTable {
 	 * This method will break infoLesson in minute slots. 
 	 * @param infoLesson
 	 */
-	public void addLesson(InfoLesson infoLesson) {
-		int dayIndex = getDayIndex(infoLesson.getDiaSemana());
+	public void addLesson(InfoShowOccupation infoShowOccupation) {
 
+	    int dayIndex = getDayIndex(infoShowOccupation.getDiaSemana());
+	    
 		DayColumn dayColumn = (DayColumn) this.days.get(dayIndex);
 
-		int startIndex = getHourIndex(infoLesson.getInicio(), this.minimumHourInMinutes, this.slotSize.intValue());
-		int endIndex = getHourIndex(infoLesson.getFim(), this.minimumHourInMinutes, this.slotSize.intValue());
+		int startIndex = getHourIndex(infoShowOccupation.getInicio(), this.minimumHourInMinutes, this.slotSize.intValue());
+		int endIndex = getHourIndex(infoShowOccupation.getFim(), this.minimumHourInMinutes, this.slotSize.intValue());
 
 		/* break lesson in slots */
 		for (int hourIndex = startIndex;
@@ -94,7 +95,7 @@ public class TimeTable {
 			hourIndex++) {
 			LessonSlot lessonSlot =
 				new LessonSlot(
-					getInfoLessonWrapper(infoLesson),
+					getInfoLessonWrapper(infoShowOccupation),
 					startIndex,
 					endIndex - 1);
 			TimeTableSlot timeTableSlot =
@@ -106,14 +107,23 @@ public class TimeTable {
 	 * Method getInfoLessonWrapper.
 	 * @param infoLesson
 	 */
-	private InfoLessonWrapper getInfoLessonWrapper(InfoLesson infoLesson) {
+/*	private InfoLessonWrapper getInfoLessonWrapper(InfoLesson infoLesson) {
 		InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap.get(infoLesson);
 		if (infoLessonWrapper == null){
 			infoLessonWrapper = new InfoLessonWrapper (infoLesson);
 			this.infoLessonWrapperMap.put(infoLesson, infoLessonWrapper);
 		}
 		return infoLessonWrapper;
+	}*/
+	private InfoLessonWrapper getInfoLessonWrapper(InfoShowOccupation infoShowOccupation) {
+		InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap.get(infoShowOccupation);
+		if (infoLessonWrapper == null){
+			infoLessonWrapper = new InfoLessonWrapper (infoShowOccupation);
+			this.infoLessonWrapperMap.put(infoShowOccupation, infoLessonWrapper);
 	}
+		return infoLessonWrapper;
+	}
+	
 	/**
 	 * Method getTimeTableSlot.
 	 * @param dayIndex

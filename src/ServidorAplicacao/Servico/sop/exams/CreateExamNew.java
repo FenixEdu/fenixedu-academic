@@ -180,7 +180,7 @@ public class CreateExamNew implements IServico
 			{
 				try
 	            {
-					period = (IPeriod) sp.getIPersistentPeriod().readBy(examDate, examDate);
+					period = (IPeriod) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate, examDate,null);
 					if (period == null)
 					{
 						period = new Period(examDate, examDate);
@@ -211,7 +211,7 @@ public class CreateExamNew implements IServico
                     DiaSemana day = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
                     RoomOccupation roomOccupation =
-                        new RoomOccupation(room, examStartTime, examEndTime, day);
+                        new RoomOccupation(room, examStartTime, examEndTime, day, RoomOccupation.DIARIA);
                     roomOccupation.setPeriod(period);
 
 					Iterator iter = roomOccupationInDBList.iterator();

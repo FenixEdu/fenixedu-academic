@@ -11,28 +11,26 @@ package ServidorAplicacao.Servico.sop;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoLesson;
-import DataBeans.InfoLessonWithInfoRoomAndInfoExecutionCourse;
-import DataBeans.InfoRoom;
+import DataBeans.InfoShift;
 import DataBeans.InfoViewRoomSchedule;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
+import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
-import commons.CollectionUtils;
 
 public class ReadPavillionsRoomsLessons implements IService {
 
@@ -67,34 +65,39 @@ public class ReadPavillionsRoomsLessons implements IService {
             List rooms = roomDAO.readByPavillions(pavillions);
 
             // Read rooms classes
-            List roomNames = (List) CollectionUtils.collect(rooms, new Transformer() {
-                public Object transform(Object input) {
-                    ISala room = (ISala) input;
-                    InfoViewRoomSchedule roomSchedule = new InfoViewRoomSchedule();
-                    roomSchedule.setRoomLessons(new ArrayList());
-                    roomSchedule.setInfoRoom(InfoRoom.newInfoFromDomain(room));
-                    roomViews.put(room.getNome(), roomSchedule);
-                    // keep the reference on the return list
-                    infoViewRoomScheduleList.add(roomSchedule);
-                    return room.getNome();
-                }
-            });
+			for (int i = 0; i < rooms.size(); i++) {
+				InfoViewRoomSchedule infoViewRoomSchedule =
+					new InfoViewRoomSchedule();
+				ISala room = (ISala) rooms.get(i);
+				List lessonList =
+					lessonDAO.readByRoomAndExecutionPeriod(
+						room,
+						executionPeriod);
+				Iterator iterator = lessonList.iterator();
+				List infoLessonsList = new ArrayList();
+				while (iterator.hasNext()) {
+					IAula elem = (IAula) iterator.next();
+					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);					
+					ITurno shift = elem.getShift();
+					if (shift == null)
+					{
+						continue;
+					}
+					InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+					infoLesson.setInfoShift(infoShift);
+					
+					infoLessonsList.add(infoLesson);
+				}
 
-            List lessonList = lessonDAO.readByRoomNamesAndExecutionPeriod(roomNames, executionPeriod);
+				infoViewRoomSchedule.setInfoRoom(
+					Cloner.copyRoom2InfoRoom(room));
+				infoViewRoomSchedule.setRoomLessons(infoLessonsList);				
+				infoViewRoomScheduleList.add(infoViewRoomSchedule);
+			}
 
-            for (int i = 0; i < lessonList.size(); i++) {
-                IAula lesson = (IAula) lessonList.get(i);
-                String roomName = lesson.getSala().getNome();
-                InfoViewRoomSchedule roomSchedule = (InfoViewRoomSchedule) roomViews.get(roomName);
-
-                InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoExecutionCourse
-                        .newInfoFromDomain(lesson);
-                
-                roomSchedule.getRoomLessons().add(infoLesson);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
-        return infoViewRoomScheduleList;
-    }
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+		}
+		return infoViewRoomScheduleList;
+	}
 }

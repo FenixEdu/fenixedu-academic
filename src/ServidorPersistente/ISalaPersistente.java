@@ -40,4 +40,5 @@ public interface ISalaPersistente extends IPersistentObject
      */
     public List readByPavillions(List pavillionsName) throws ExcepcaoPersistencia;
 	public List readAllBuildings() throws ExcepcaoPersistencia;
+	public List readByNormalCapacity(Integer capacity) throws ExcepcaoPersistencia;
 }

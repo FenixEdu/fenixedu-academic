@@ -8,9 +8,14 @@
 	<tr>
 		<td class="infoselected"><p>Crit&eacute;rios:</p>
 			<strong>
+<!--
 				<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="name" scope="request"/>
 				-
 				<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="infoExecutionYear.year" scope="request"/>
+				<br/>
+-->
+				Entre <bean:write name="startDate" scope="request"/> e 
+				<bean:write name="endDate" scope="request"/> 
 				<br/>
 				<bean:write name="weekDay" scope="request"/>,
 				das <bean:write name="intervalStart" scope="request"/>

@@ -212,7 +212,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
             "disciplinaExecucao.executionPeriod.idInternal",
             schoolClass.getExecutionPeriod().getIdInternal());
 
-        List shifts = queryList(Turno.class, criteria);
+        List shifts = queryList(Turno.class, criteria, true);
 
         List classShifts =
             SuportePersistenteOJB.getInstance().getITurmaTurnoPersistente().readByClass(schoolClass);
@@ -245,6 +245,24 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
 			return null;
 		
 	}
+	
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ITurnoPersistente#readByLesson()
+	 */
+	public ITurno readShiftByLesson(IAula lesson) throws ExcepcaoPersistencia
+	{
+		if (lesson != null)
+		{
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("associatedLessons.idInternal", lesson.getIdInternal());
+			return (ITurno) queryObject(Turno.class, criteria);
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.ITurmaPersistente#readShiftsThatContainsStudentAttendsOnExecutionPeriod(Dominio.IStudent, Dominio.IExecutionPeriod)

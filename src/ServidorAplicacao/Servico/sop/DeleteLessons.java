@@ -10,74 +10,37 @@ package ServidorAplicacao.Servico.sop;
  */
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.ITurnoAula;
-import ServidorAplicacao.IServico;
+import Dominio.ITurno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class DeleteLessons implements IServico {
+public class DeleteLessons implements IService {
 
-    private static DeleteLessons _servico = new DeleteLessons();
+	public Object run(List lessonOIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static DeleteLessons getService() {
-        return _servico;
-    }
+		boolean result = false;
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-    /**
-     * The actor of this class.
-     */
-    private DeleteLessons() {
-    }
+			for (int j = 0; j < lessonOIDs.size(); j++) {
+				IAula lesson =
+					(IAula) sp.getIAulaPersistente().readByOID(
+						Aula.class,
+						(Integer) lessonOIDs.get(j));
 
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "DeleteLessons";
-    }
+				sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
+				sp.getIAulaPersistente().delete(lesson);
+			}
 
-    public Object run(List lessonOIDs) throws FenixServiceException {
+			result = true;
 
-        boolean result = false;
+	return new Boolean(result);
 
-        try {
-
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
-            for (int j = 0; j < lessonOIDs.size(); j++) {
-                IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
-                        Aula.class, (Integer) lessonOIDs.get(j));
-
-                if (lesson != null) {
-                    ITurnoAulaPersistente persistentShiftLesson = sp
-                            .getITurnoAulaPersistente();
-
-                    List shiftLessonList = persistentShiftLesson
-                            .readByLesson(lesson);
-                    for (int i = 0; i < shiftLessonList.size(); i++) {
-                        persistentShiftLesson
-                                .delete((ITurnoAula) shiftLessonList.get(i));
-                    }
-                    
-                    sp.getIAulaPersistente().delete(lesson);
-                }
-            }
-
-            result = true;
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException("Error deleting lesson");
-        }
-
-        return new Boolean(result);
-
-    }
+}
 
 }

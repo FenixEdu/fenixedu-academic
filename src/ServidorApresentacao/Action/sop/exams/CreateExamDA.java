@@ -23,6 +23,8 @@ import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomOccupation;
+import Dominio.Period;
+import Dominio.RoomOccupation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
@@ -155,9 +157,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         examEndTime.set(Calendar.SECOND, 0);
         if (examStartTime.after(examEndTime))
         {
-            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.dateSwitched", actionError);
+            actionErrors.add("error.timeSwitched", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
@@ -434,9 +436,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
 
         if (examStartTime.after(examEndTime))
         {
-            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.dateSwitched", actionError);
+            actionErrors.add("error.timeSwitched", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
@@ -714,9 +716,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         examEndTime.set(Calendar.SECOND, 0);
         if (examStartTime.after(examEndTime))
         {
-            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.dateSwitched", actionError);
+            actionErrors.add("error.timeSwitched", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
 
@@ -889,9 +891,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
 
         if (examStartTime.after(examEndTime))
         {
-            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.dateSwitched", actionError);
+            actionErrors.add("error.timeSwitched", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
@@ -916,7 +918,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             return prepare(mapping, form, request, response);
         }
 
-        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek };
+         Object args[] = { new Period(examDate, examDate), examStartTime, examEndTime, dayOfWeek, null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false)};
 
         List availableInfoRoom =
             (List) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);

@@ -17,11 +17,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
+import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -39,13 +41,15 @@ public class LerAulasDeSalaEmSemestre implements IService {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IExecutionPeriod executionPeriod = null;
-            if (executionPeriodId != null) {
-                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-                        .readByOID(ExecutionPeriod.class, executionPeriodId);
+            if (executionPeriodId != null)
+            {
+                executionPeriod =
+                    (IExecutionPeriod) persistentExecutionPeriod.readByOId(
+                        new ExecutionPeriod(executionPeriodId),
+                        false);
             } else {
                 executionPeriod = Cloner
                         .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
@@ -53,14 +57,21 @@ public class LerAulasDeSalaEmSemestre implements IService {
 
             ISala room = Cloner.copyInfoRoom2Room(infoRoom);
 
-            List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room,
-                    executionPeriod);
+            List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
 
             Iterator iterator = lessonList.iterator();
             infoAulas = new ArrayList();
             while (iterator.hasNext()) {
                 IAula elem = (IAula) iterator.next();
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+                ITurno shift = elem.getShift();
+                if (shift == null)
+                {
+					continue;
+                }
+                InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                infoLesson.setInfoShift(infoShift);
+
                 infoAulas.add(infoLesson);
             }
         } catch (ExcepcaoPersistencia ex) {

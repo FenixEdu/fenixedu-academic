@@ -315,6 +315,8 @@ public abstract class Cloner {
         IAula lesson = new Aula();
         ISala sala = null;
 
+        IRoomOccupation roomOccupation = null;
+        //ITurno shift = null;
         try {
             BeanUtils.copyProperties(lesson, infoLesson);
         } catch (Exception e) {
@@ -323,8 +325,11 @@ public abstract class Cloner {
         }
 
         sala = Cloner.copyInfoRoom2Room(infoLesson.getInfoSala());
+        roomOccupation = Cloner.copyInfoRoomOccupation2RoomOccupation(infoLesson.getInfoRoomOccupation());
+        //        shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
         lesson.setSala(sala);
-
+        lesson.setRoomOccupation(roomOccupation);
+        //		lesson.setShift(shift);
         return lesson;
     }
 
@@ -355,6 +360,27 @@ public abstract class Cloner {
     }
 
     /**
+     * Method copyInfoRoomOccupation2RoomOccupation.
+     * @param infoRoomOccupation
+     */
+    public static IRoomOccupation copyInfoRoomOccupation2RoomOccupation(InfoRoomOccupation infoRoomOccupation) {
+        IRoomOccupation roomOccupation = new RoomOccupation();
+        copyObjectProperties(roomOccupation, infoRoomOccupation);
+        return roomOccupation;
+    }
+    /**
+     * Method copyRoomOccupation2InfoRoomOccupation.
+     * @param roomOccupation
+     */
+    public static InfoRoomOccupation copyRoomOccupation2InfoRoomOccupation(IRoomOccupation roomOccupation) {
+        if (roomOccupation != null) {
+            InfoRoomOccupation infoRoomOccupation = new InfoRoomOccupation();
+            copyObjectProperties(infoRoomOccupation, roomOccupation);
+            return infoRoomOccupation;
+        }
+        return null;
+    }
+    /**
      * Method copyInfoLesson2Lesson.
      * 
      * @param lessonExample
@@ -383,15 +409,18 @@ public abstract class Cloner {
         }
 
         InfoLesson infoLesson = new InfoLesson();
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(lesson
+/*        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(lesson
                 .getDisciplinaExecucao());
-
+*/
         InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
-
+        InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+        //		InfoShift infoShift = Cloner.copyShift2InfoShift(lesson.getShift());
         copyObjectProperties(infoLesson, lesson);
 
         infoLesson.setInfoSala(infoRoom);
-        infoLesson.setInfoDisciplinaExecucao(infoExecutionCourse);
+        infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+        //        infoLesson.setInfoShift(infoShift);
+        //        infoLesson.setInfoDisciplinaExecucao(infoExecutionCourse);
         return infoLesson;
     }
 
@@ -409,9 +438,16 @@ public abstract class Cloner {
                 .getInfoDisciplinaExecucao());
 
         copyObjectProperties(shift, infoShift);
-
+        List lessons = new ArrayList();
+        if (shift.getAssociatedLessons() != null) {
+            for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
+                InfoLesson infoLesson = (InfoLesson) shift.getAssociatedLessons().get(i);
+                IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
+                lessons.add(lesson);
+            }
+        }
         shift.setDisciplinaExecucao(executionCourse);
-
+        shift.setAssociatedLessons(lessons);
         return shift;
     }
 
@@ -1104,10 +1140,17 @@ public abstract class Cloner {
         InfoExam infoExam = new InfoExam();
 
         copyObjectProperties(infoExam, exam);
+        List infoRooms = new ArrayList();
         List infoCurricularCourseScope = new ArrayList();
         List infoRoomOccupation = new ArrayList();
         List infoExecutionCourse = new ArrayList();
 
+        if (exam != null && exam.getAssociatedRooms() != null && exam.getAssociatedRooms().size() > 0) {
+            for (int i = 0; i < exam.getAssociatedRooms().size(); i++) {
+                infoRooms.add(copyRoom2InfoRoom((ISala) exam.getAssociatedRooms().get(i)));
+            }
+        }
+        
         //associate curricularCourseScopes
         if (exam != null && exam.getAssociatedCurricularCourseScope() != null
                 && exam.getAssociatedCurricularCourseScope().size() > 0) {

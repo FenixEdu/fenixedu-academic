@@ -62,6 +62,18 @@
 	            <html:text property="minutosFim"  size="2"/>
     	    </td> 
 	 	</tr> 
+	 	<tr>
+	        <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.quinzenal"/>: </td>
+    	    <td nowrap="nowrap">
+        	 	<html:checkbox property="quinzenal"/>
+    	    </td> 
+	 	</tr>
+	 	<tr>
+	        <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.week"/>: </td>
+    	    <td nowrap="nowrap">
+        	 	<html:text property="week" size="1"/>
+    	    </td> 
+	 	</tr>
 	</table>
 	<br />
 	<html:submit styleClass="inputbutton">

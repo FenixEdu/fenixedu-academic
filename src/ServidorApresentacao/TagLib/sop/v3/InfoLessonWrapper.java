@@ -1,21 +1,26 @@
 package ServidorApresentacao.TagLib.sop.v3;
 
-import DataBeans.InfoLesson;
+import DataBeans.InfoShowOccupation;
 
 /**
  * @author jpvl
  *
  */
 public class InfoLessonWrapper implements Comparable {
-	private InfoLesson infoLesson;
+	//private InfoLesson infoLesson;
+    private InfoShowOccupation infoShowOccupation;
 	private boolean locked;
 	private int slotIndex;
 	private LessonSlot lessonSlot;
 
 	private Integer numberOfCollisions = new Integer(0);
 
-	public InfoLessonWrapper(InfoLesson infoLesson) {
+/*	public InfoLessonWrapper(InfoLesson infoLesson) {
 		this.infoLesson = infoLesson;
+		this.locked = false;
+	}*/
+	public InfoLessonWrapper(InfoShowOccupation infoShowOccupation) {
+		this.infoShowOccupation = infoShowOccupation;
 		this.locked = false;
 	}
 	/**
@@ -43,8 +48,11 @@ public class InfoLessonWrapper implements Comparable {
 	 * Returns the infoLesson.
 	 * @return InfoLesson
 	 */
-	public InfoLesson getInfoLesson() {
+/*	public InfoLesson getInfoLesson() {
 		return infoLesson;
+	}*/
+	public InfoShowOccupation getInfoShowOccupation() {
+		return infoShowOccupation;
 	}
 
 	protected void setLessonSlot(LessonSlot lessonSlot) {

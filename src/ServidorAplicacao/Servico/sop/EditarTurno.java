@@ -97,7 +97,8 @@ public class EditarTurno implements IService
                     sp.getIAulaPersistente().simpleLockWrite(
                             (IDomainObject) shift.getAssociatedLessons().get(i));
                     ((IAula) shift.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
-                    ((IAula) shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
+					((IAula) shift.getAssociatedLessons().get(i)).setShift(shift);
+                    //((IAula) shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
                 }
             }
 
@@ -145,9 +146,9 @@ public class EditarTurno implements IService
         {
             IAula lesson = ((IAula) shiftLessons.get(i));
             shiftDuration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-            if (lesson.getSala().getCapacidadeNormal().intValue() > maxCapacity.intValue())
+            if (lesson.getRoomOccupation().getRoom().getCapacidadeNormal().intValue() > maxCapacity.intValue())
             {
-                maxCapacity = lesson.getSala().getCapacidadeNormal();
+                maxCapacity = lesson.getRoomOccupation().getRoom().getCapacidadeNormal();
             }
         }
 

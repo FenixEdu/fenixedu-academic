@@ -15,15 +15,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerAulasDeTurno implements IServico {
 
@@ -50,15 +48,16 @@ public class LerAulasDeTurno implements IServico {
   public List run(ShiftKey shiftKey) {
     ArrayList infoAulas = null;
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+ //   try {
+   //   ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       
       
       ITurno shift = Cloner.copyInfoShift2Shift(new InfoShift(shiftKey.getShiftName(),null, null, shiftKey.getInfoExecutionCourse()));
 
 	System.out.println("shift= " + shift);
       
-      List aulas = sp.getITurnoAulaPersistente().readByShift(shift);
+      //List aulas = sp.getITurnoAulaPersistente().readByShift(shift);
+      List aulas = shift.getAssociatedLessons();
 
 	System.out.println("aulas.size= " + aulas.size());
 
@@ -67,12 +66,18 @@ public class LerAulasDeTurno implements IServico {
 
       while(iterator.hasNext()) {
       	IAula elem = (IAula)iterator.next();
-		infoAulas.add(Cloner.copyILesson2InfoLesson(elem));
+      	
+		InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+					
+		InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+		infoLesson.setInfoShift(infoShift);
+      	
+		infoAulas.add(infoLesson);
       }
 
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-    }
+//    } catch (ExcepcaoPersistencia ex) {
+//      ex.printStackTrace();
+//    }
     
     return infoAulas;
   }

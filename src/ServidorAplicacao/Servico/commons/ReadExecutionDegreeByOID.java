@@ -12,6 +12,7 @@ import java.util.ListIterator;
 import DataBeans.InfoCoordinatorWithInfoPerson;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
+import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
@@ -78,6 +79,24 @@ public class ReadExecutionDegreeByOID implements IServico
 
                     infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
                 }
+                
+				if(executionDegree.getPeriodExamsFirstSemester() != null)
+				{
+					infoExecutionDegree.setInfoPeriodExamsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsFirstSemester()));
+            }
+				if(executionDegree.getPeriodExamsSecondSemester() != null)
+				{
+					infoExecutionDegree.setInfoPeriodExamsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsSecondSemester()));
+        }
+				if(executionDegree.getPeriodLessonsFirstSemester() != null)
+				{
+					infoExecutionDegree.setInfoPeriodLessonsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsFirstSemester()));
+				}
+				if(executionDegree.getPeriodLessonsSecondSemester() != null)
+				{
+					infoExecutionDegree.setInfoPeriodLessonsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsSecondSemester()));
+				}
+
             }
         }
         catch (ExcepcaoPersistencia ex)

@@ -169,6 +169,16 @@ public class InfoWrittenEvaluation extends InfoEvaluation{
     {
         associatedExecutionCourse = list;
     }
+
+    public Calendar getInicio() 
+    {
+        return getBeginning(); 
+    }
+    
+    public Calendar getFim() 
+    {
+        return getEnd(); 
+    }
     
     public void copyFromDomain(IWrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);

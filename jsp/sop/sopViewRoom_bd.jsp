@@ -9,8 +9,9 @@
 <span class="error"><html:errors/></span>  
 <h2><bean:message key="title.view.room"/></h2>
 <br />
-<html:form action="/chooseExecutionPeriod">
+<html:form action="/viewRoom">
 	<table border="0" cellspacing="0" cellpadding="0">
+<!--
 		<tr>
 		    <td nowrap="nowrap" width="125"><bean:message key="property.executionPeriod"/>:</td>
 		    <td nowrap="nowrap"><jsp:include page="selectExecutionPeriodList.jsp"/></td>
@@ -18,6 +19,27 @@
 			<td>
 				<bean:define id="infoRoomOID" name="<%= SessionConstants.ROOM%>" property="idInternal" scope="request"/>
 				<html:hidden property="method" value="chooseForViewRoom"/>
+				<html:hidden property="<%= SessionConstants.ROOM_OID%>" value="<%=infoRoomOID.toString()%>"/>
+				<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />				
+				<html:hidden property="page" value="1"/>
+			    <html:submit styleClass="inputbutton"><bean:message key="label.choose"/>
+          		</html:submit>
+			</td>
+		</tr>
+-->
+		<tr>
+		    <td nowrap="nowrap" width="125"><bean:message key="property.week"/>:</td>
+		    <td nowrap="nowrap">
+		        <html:select property="indexWeek" size="1">
+     				<html:options property="value" 
+     					labelProperty="label" 
+						collection="<%= SessionConstants.LABELLIST_WEEKS%>" />
+				</html:select>
+			</td>
+			<td width="10"></td>
+			<td>
+				<bean:define id="infoRoomOID" name="<%= SessionConstants.ROOM%>" property="idInternal" scope="request"/>
+				<html:hidden property="method" value="execute"/>
 				<html:hidden property="<%= SessionConstants.ROOM_OID%>" value="<%=infoRoomOID.toString()%>"/>
 				<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />				
 				<html:hidden property="page" value="1"/>

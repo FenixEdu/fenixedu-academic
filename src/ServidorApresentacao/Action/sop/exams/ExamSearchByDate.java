@@ -144,9 +144,9 @@ public class ExamSearchByDate extends FenixContextDispatchAction
 
         if (examStartTime != null && examEndTime != null && examStartTime.after(examEndTime))
         {
-            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.dateSwitched", actionError);
+            actionErrors.add("error.timeSwitched", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }

@@ -153,6 +153,20 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam
         return queryList(Exam.class, criteria);
     }
 
+    public List readByRoomAndWeek(ISala room, Calendar day) throws ExcepcaoPersistencia
+    {
+        List list = new ArrayList();
+        day.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
+        for (int i = 0; i < 6; i++){
+	        Criteria criteria = new Criteria();
+	        criteria.addEqualTo("day", day);
+	        criteria.addEqualTo("associatedRoomOccupation.room.nome", room.getNome());	        
+	        list.addAll(queryList(Exam.class, criteria));
+	        day.add(Calendar.DATE, 1);
+        }
+        return list;
+    }
+
     public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername)
     		throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();

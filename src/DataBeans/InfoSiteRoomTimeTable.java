@@ -13,14 +13,15 @@ import java.util.List;
  */
 public class InfoSiteRoomTimeTable extends DataTranferObject implements ISiteComponent {
 
-	private List infoLessons;
+	//private List infoLessons;
+    private List infoShowOccupation;
 	private InfoRoom infoRoom;
 
 	/**
 	 * @return
 	 */
-	public List getInfoLessons() {
-		return infoLessons;
+	public List getInfoShowOccupation() {
+		return infoShowOccupation;
 	}
 
 	/**
@@ -33,8 +34,8 @@ public class InfoSiteRoomTimeTable extends DataTranferObject implements ISiteCom
 	/**
 	 * @param list
 	 */
-	public void setInfoLessons(List list) {
-		infoLessons = list;
+	public void setInfoShowOccupation(List list) {
+		infoShowOccupation = list;
 	}
 
 	/**

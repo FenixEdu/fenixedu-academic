@@ -50,7 +50,7 @@ public class AddClassesDA
 					"ReadAvailableClassesForShift",
 					args);
 		} catch (FenixServiceException e) {
-			throw new FenixActionException();
+			throw new FenixActionException(e);
 		}
 
 		if (classes != null && !classes.isEmpty()) {

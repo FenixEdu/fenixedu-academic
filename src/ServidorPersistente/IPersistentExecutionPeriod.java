@@ -31,8 +31,6 @@ public interface IPersistentExecutionPeriod extends IPersistentObject
 	 */
     public boolean delete(IExecutionPeriod executionPeriod);
 
-    public boolean deleteWorkingArea(IExecutionPeriod executionPeriod);
-
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia;
 
     /**
@@ -59,11 +57,11 @@ public interface IPersistentExecutionPeriod extends IPersistentObject
 	 * @param workingArea
 	 * @param executionPeriodToExportDataFrom
 	 */
-    public void transferData(
+/*    public void transferData(
         IExecutionPeriod executionPeriodToImportDataTo,
         IExecutionPeriod executionPeriodToExportDataFrom)
         throws ExcepcaoPersistencia;
-
+*/
     public List readPublic() throws ExcepcaoPersistencia;
 
     /**

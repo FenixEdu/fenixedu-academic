@@ -6,7 +6,7 @@
 <html:errors/>
         <html:form action="/pesquisarSala">
             <table>
-            	<tr>
+<!--            	<tr>
                     <td class="formTD">
                         <bean:message key="property.room.name"/>
                     </td>
@@ -24,7 +24,7 @@
                        
                     </td>
                 </tr>
-                <tr>
+-->                <tr>
                     <td class="formTD">
                         <bean:message key="property.room.name"/>
                     </td>

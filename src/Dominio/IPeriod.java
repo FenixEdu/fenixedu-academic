@@ -22,4 +22,11 @@ public interface IPeriod extends IDomainObject{
 	public List getRoomOccupations();
 	public void setRoomOccupations(List roomOccupations);
 
+    public IPeriod getNextPeriod();
+
+    public void setNextPeriod(IPeriod nextPeriod);
+    
+    public Calendar getEndDateOfComposite();
+    
+    public boolean intersectPeriods(IPeriod period);
 }

@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
@@ -88,7 +89,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
                     "ReadExecutionDegreesByExecutionYear",
                     argsLerLicenciaturas);
             Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-
+            
             Boolean selectAllDegrees =
                 (Boolean) chooseViewAllClassesSchedulesContextForm.get("selectAllDegrees");
             List selectedInfoExecutionDegrees = null;
@@ -100,10 +101,13 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
                 String[] selectedDegreesIndexes =
                     (String[]) chooseViewAllClassesSchedulesContextForm.get("selectedDegrees");
                 selectedInfoExecutionDegrees = new ArrayList();
+                
                 for (int i = 0; i < selectedDegreesIndexes.length; i++)
                 {
                     Integer index = new Integer("" + selectedDegreesIndexes[i]);
-                    selectedInfoExecutionDegrees.add(infoExecutionDegreeList.get(index.intValue()));
+                    InfoExecutionDegree infoEd = (InfoExecutionDegree) infoExecutionDegreeList.get(index.intValue());
+                                    
+                    selectedInfoExecutionDegrees.add(infoEd);
                 }
             }
 

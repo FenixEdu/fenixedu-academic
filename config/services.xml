@@ -51,15 +51,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ApagarAula</name>
-        <implementationClass>ServidorAplicacao.Servico.sop.ApagarAula</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>ApagarSala</name>
         <implementationClass>ServidorAplicacao.Servico.sop.ApagarSala</implementationClass>
         <description/>
@@ -108,15 +99,6 @@
     <service>
         <name>CreateLesson</name>
         <implementationClass>ServidorAplicacao.Servico.sop.CreateLesson</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>CriarAula</name>
-        <implementationClass>ServidorAplicacao.Servico.sop.CriarAula</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -216,15 +198,6 @@
     <service>
         <name>EditExamRooms</name>
         <implementationClass>ServidorAplicacao.Servico.sop.EditExamRooms</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>EditarAula</name>
-        <implementationClass>ServidorAplicacao.Servico.sop.EditarAula</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -6975,6 +6948,22 @@
         <isTransactional>true</isTransactional>
         <filterChains>         
         </filterChains>
+    </service>
+    <service>
+        <name>EditExecutionDegreePeriods</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.EditExecutionDegreePeriods</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadLessonsAndExamsInWeekAndRoom</name>
+        <implementationClass>ServidorAplicacao.Servico.sop.ReadLessonsAndExamsInWeekAndRoom</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
     </service>
 
 </serviceDefinitions>

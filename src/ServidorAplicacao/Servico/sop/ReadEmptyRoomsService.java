@@ -27,6 +27,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadEmptyRoomsService implements IService
 {
+	//SERVICO NAO USADO
 
     public ReadEmptyRoomsService()
     {
@@ -96,7 +97,6 @@ public class ReadEmptyRoomsService implements IService
                         && !infoLesson.getIdInternal().equals(
                                 infoLessonAux.getIdInternal()))
                 {
-                    System.out.println(infoLessonAux.getInfoSala());
                     infoRoomList.remove(infoLessonAux.getInfoSala());
                 }
                 else if (infoLesson.getIdInternal() == null)

@@ -21,6 +21,7 @@ public class InfoExamsMap extends InfoObject implements Serializable  {
 	Calendar startSeason2;
 	Calendar endSeason2;
 	InfoExecutionDegree infoExecutionDegree;
+	InfoExecutionPeriod infoExecutionPeriod;
 
 	public InfoExamsMap() {
 		super();
@@ -130,10 +131,21 @@ public class InfoExamsMap extends InfoObject implements Serializable  {
 	}
 
 	/**
+	 * @return Returns the infoExecutionDegree.
+	 */
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return infoExecutionPeriod;
+	}
+
+	
+	/**
 	 * @param infoExecutionDegree The infoExecutionDegree to set.
 	 */
 	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
 		this.infoExecutionDegree = infoExecutionDegree;
 	}
 
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
 }

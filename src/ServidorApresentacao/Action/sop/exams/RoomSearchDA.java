@@ -19,6 +19,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoRoom;
+import Dominio.Period;
+import Dominio.RoomOccupation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -94,9 +96,9 @@ public class RoomSearchDA extends FenixContextDispatchAction
         searchEndTime.set(Calendar.SECOND, 0);
         if (searchStartTime.after(searchEndTime))
         {
-            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.dateSwitched", actionError);
+            actionErrors.add("error.timeSwitched", actionError);
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
@@ -104,7 +106,7 @@ public class RoomSearchDA extends FenixContextDispatchAction
         int dayOfWeekInt = searchDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { searchDate, searchDate, searchStartTime, searchEndTime, dayOfWeek };
+        Object args[] = { new Period(searchDate, searchDate), searchStartTime, searchEndTime, dayOfWeek, null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false)};
         List availableInfoRoom = null;
         try
         {

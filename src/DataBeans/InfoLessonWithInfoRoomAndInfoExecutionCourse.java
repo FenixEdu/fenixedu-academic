@@ -15,10 +15,6 @@ public class InfoLessonWithInfoRoomAndInfoExecutionCourse extends
 
     public void copyFromDomain(IAula lesson) {
         super.copyFromDomain(lesson);
-        if (lesson != null) {
-            setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod
-                    .newInfoFromDomain(lesson.getDisciplinaExecucao()));
-        }
     }
 
     public static InfoLesson newInfoFromDomain(IAula lesson) {

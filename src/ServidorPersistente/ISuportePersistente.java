@@ -81,7 +81,7 @@ public interface ISuportePersistente
 	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();
 	public ITurmaTurnoPersistente getITurmaTurnoPersistente();
 	public ITurnoAlunoPersistente getITurnoAlunoPersistente();
-	public ITurnoAulaPersistente getITurnoAulaPersistente();
+//	public ITurnoAulaPersistente getITurnoAulaPersistente();
 
 	public IPersistentCurricularCourse getIPersistentCurricularCourse();
 	public IPersistentExecutionCourse getIPersistentExecutionCourse();

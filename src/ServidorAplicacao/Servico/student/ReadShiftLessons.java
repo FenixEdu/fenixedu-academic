@@ -20,9 +20,6 @@ import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadShiftLessons implements IServico {
 
@@ -49,25 +46,27 @@ public class ReadShiftLessons implements IServico {
 	public Object run(InfoShift infoShift) {
 		List infoLessons = new ArrayList();
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+//		try {
+//			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
 			ITurno shift = Cloner.copyInfoShift2Shift(infoShift); 
 			
 			List lessons =
-				sp.getITurnoAulaPersistente().readByShift(
-					shift);
+				shift.getAssociatedLessons();
+//				sp.getITurnoAulaPersistente().readByShift(
+//					shift);
 
 			for (int i = 0; i < lessons.size(); i++) {
 				IAula lesson = (IAula) lessons.get(i);
 
-				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);				
+				infoLesson.setInfoShift(infoShift);
 
 				infoLessons.add(infoLesson);
 			}
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
+//		} catch (ExcepcaoPersistencia ex) {
+//			ex.printStackTrace();
+//		}
 
 		return infoLessons;
 	}

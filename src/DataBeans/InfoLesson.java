@@ -18,14 +18,16 @@ import Dominio.IAula;
 import Util.DiaSemana;
 import Util.TipoAula;
 
-public class InfoLesson extends InfoObject implements ISmsDTO
+public class InfoLesson extends InfoShowOccupation implements ISmsDTO
 {
 	protected DiaSemana _diaSemana;
 	protected Calendar _fim;
-	protected InfoExecutionCourse _infoDisciplinaExecucao;
+//    protected InfoExecutionCourse _infoDisciplinaExecucao;
 	protected InfoRoom _infoSala;
 	protected Calendar _inicio;
 	protected TipoAula _tipo;
+	protected InfoShift _infoShift;
+	protected InfoRoomOccupation infoRoomOccupation;
 
 	private List infoShiftList = new ArrayList();
 
@@ -46,14 +48,18 @@ public class InfoLesson extends InfoObject implements ISmsDTO
 		Calendar fim,
 		TipoAula tipo,
 		InfoRoom infoSala,
-		InfoExecutionCourse infoDisciplinaExecucao)
+        InfoRoomOccupation infoRoomOccupation,
+		InfoShift shift/*,
+        InfoExecutionCourse infoDisciplinaExecucao*/)
 	{
 		setDiaSemana(diaSemana);
 		setInicio(inicio);
 		setFim(fim);
 		setTipo(tipo);
 		setInfoSala(infoSala);
-		setInfoDisciplinaExecucao(infoDisciplinaExecucao);
+        setInfoRoomOccupation(infoRoomOccupation);
+		setInfoShift(shift);
+//        setInfoDisciplinaExecucao(infoDisciplinaExecucao);
 	}
 
 	public boolean equals(Object obj)
@@ -69,7 +75,8 @@ public class InfoLesson extends InfoObject implements ISmsDTO
 					&& (getInicio().get(Calendar.MINUTE) == infoAula.getInicio().get(Calendar.MINUTE))
 					&& (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim().get(Calendar.HOUR_OF_DAY))
 					&& (getFim().get(Calendar.MINUTE) == infoAula.getFim().get(Calendar.MINUTE))
-					&& (getInfoSala().equals(infoAula.getInfoSala()));
+                    && (getInfoSala().equals(infoAula.getInfoSala()))
+                    && (getInfoRoomOccupation().equals(infoAula.getInfoRoomOccupation()));
 		}
 
 		return resultado;
@@ -84,12 +91,12 @@ public class InfoLesson extends InfoObject implements ISmsDTO
 	{
 		return _fim;
 	}
-
+/*
 	public InfoExecutionCourse getInfoDisciplinaExecucao()
 	{
 		return _infoDisciplinaExecucao;
 	}
-
+*/
 	public InfoRoom getInfoSala()
 	{
 		return _infoSala;
@@ -122,12 +129,12 @@ public class InfoLesson extends InfoObject implements ISmsDTO
 	{
 		_fim = fim;
 	}
-
+/*
 	public void setInfoDisciplinaExecucao(InfoExecutionCourse infoDisciplinaExecucao)
 	{
 		_infoDisciplinaExecucao = infoDisciplinaExecucao;
 	}
-
+*/
 	public void setInfoSala(InfoRoom infoSala)
 	{
 		_infoSala = infoSala;
@@ -182,18 +189,24 @@ public class InfoLesson extends InfoObject implements ISmsDTO
 		return hours + ":" + minutes;
 	}
 
+   
+/*    
 	public Double getTotalDuration()
 	{
 		Double numberOfLessons = null;
 
 		if (this._tipo.equals(new TipoAula(TipoAula.TEORICA)))
-			numberOfLessons = this._infoDisciplinaExecucao.getTheoreticalHours();
+			numberOfLessons = ((InfoShift)this.infoShiftList.get(0))._infoDisciplinaExecucao.getTheoreticalHours();
+            //numberOfLessons = this._infoDisciplinaExecucao.getTheoreticalHours();
 		if (this._tipo.equals(new TipoAula(TipoAula.PRATICA)))
-			numberOfLessons = this._infoDisciplinaExecucao.getPraticalHours();
+			numberOfLessons = ((InfoShift)this.infoShiftList.get(0))._infoDisciplinaExecucao.getPraticalHours();
+            //numberOfLessons = this._infoDisciplinaExecucao.getPraticalHours();
 		if (this._tipo.equals(new TipoAula(TipoAula.LABORATORIAL)))
-			numberOfLessons = this._infoDisciplinaExecucao.getLabHours();
+            numberOfLessons = ((InfoShift)this.infoShiftList.get(0))._infoDisciplinaExecucao.getLabHours();
+			//numberOfLessons = this._infoDisciplinaExecucao.getLabHours();
 		if (this._tipo.equals(new TipoAula(TipoAula.TEORICO_PRATICA)))
-			numberOfLessons = this._infoDisciplinaExecucao.getTheoPratHours();
+            numberOfLessons = ((InfoShift)this.infoShiftList.get(0))._infoDisciplinaExecucao.getTheoPratHours();
+			//numberOfLessons = this._infoDisciplinaExecucao.getTheoPratHours();
 
 		int hours = this._fim.get(Calendar.HOUR_OF_DAY) - this._inicio.get(Calendar.HOUR_OF_DAY);
 		int minutes = this._fim.get(Calendar.MINUTE) - this._inicio.get(Calendar.MINUTE);
@@ -207,19 +220,51 @@ public class InfoLesson extends InfoObject implements ISmsDTO
 			((hours * numberOfLessons.doubleValue()) + ((minutes * numberOfLessons.doubleValue()) / 60));
 		return new Double(totalDuration);
 	}
-
+*/
 	public String toString()
 	{
 		String result = "[INFOAULA";
 		result += ", diaSemana=" + _diaSemana;
-		result += ", inicio=" + _inicio;
-		result += ", fim=" + _fim;
+//        result += ", inicio=" + _inicio;
+//        result += ", fim=" + _fim;
 		result += ", tipo=" + _tipo;
 		result += ", sala=" + _infoSala;
-		result += ", disciplinaExecucao=" + _infoDisciplinaExecucao;
+//        result += ", disciplinaExecucao=" + _infoDisciplinaExecucao;
+		result += ", shift=" + _infoShift;
 		result += "]";
 		return result;
 	}
+
+    /**
+     * @return
+     */
+    public InfoShift getInfoShift() {
+        return _infoShift;
+    }
+
+    /**
+     * @param shift
+     */
+    public void setInfoShift(InfoShift shift) {
+        _infoShift = shift;
+    }
+
+    /**
+     * @return
+     */
+    public InfoRoomOccupation getInfoRoomOccupation()
+    {
+        return infoRoomOccupation;
+    }
+
+    /**
+     * @param infoRoomOccupation
+     */
+    public void setInfoRoomOccupation(InfoRoomOccupation infoRoomOccupation)
+    {
+        this.infoRoomOccupation = infoRoomOccupation;
+    }
+
 
 	public void copyFromDomain(IAula lesson)
 	{
@@ -257,7 +302,7 @@ public class InfoLesson extends InfoObject implements ISmsDTO
 
 		String result = "";
 		result += _diaSemana.toString() + "\n";
-		result += _infoDisciplinaExecucao.getSigla() + " (" + _tipo.getSiglaTipoAula() + ")";
+		result += getInfoShift().getInfoDisciplinaExecucao().getSigla() + " (" + _tipo.getSiglaTipoAula() + ")";
 		result += "\n" + beginTime;
 		result += "-" + endTime;
 		result += "\nSala=" + _infoSala.getNome();

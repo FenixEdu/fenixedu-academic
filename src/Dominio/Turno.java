@@ -10,6 +10,7 @@ package Dominio;
  * 
  * @author tfc130
  */
+import java.util.ArrayList;
 import java.util.List;
 
 import Util.TipoAula;
@@ -54,6 +55,8 @@ public class Turno extends DomainObject implements ITurno {
         setTipo(tipo);
         setLotacao(lotacao);
         setDisciplinaExecucao(disciplinaExecucao);
+        setAssociatedLessons(new ArrayList());
+        setAssociatedClasses(new ArrayList());
     }
 
     public String getNome() {
@@ -100,7 +103,9 @@ public class Turno extends DomainObject implements ITurno {
         boolean resultado = false;
         if (obj instanceof ITurno) {
             ITurno turno = (ITurno) obj;
-            resultado = (getNome().equals(turno.getNome())) && (getTipo().equals(turno.getTipo()))
+            resultado =
+                (getNome().equals(turno.getNome()))
+                    && (getTipo().equals(turno.getTipo()))
                     && (getDisciplinaExecucao().equals(turno.getDisciplinaExecucao()))
                     && (getLotacao().equals(turno.getLotacao()));
         }

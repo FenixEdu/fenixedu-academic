@@ -95,6 +95,8 @@
         <form-property name="horaFim" type="java.lang.String"/>
         <form-property name="minutosFim" type="java.lang.String"/>
         <form-property name="nomeSala" type="java.lang.String"/>
+        <form-property name="quinzenal" type="java.lang.Boolean"/>
+        <form-property name="week" type="java.lang.String"/>
       </form-bean>
 
 	  <!-- Dynamic-FormBean for adding shifts to class -->
@@ -166,6 +168,7 @@
                 type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
         <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="indexWeek" type="java.lang.Integer"/>
       </form-bean>
 
 	  <form-bean name="searchEmptyRoomsForm"
@@ -179,6 +182,13 @@
 			<form-property name="endMinutes" type="java.lang.String"/>	        	        
 	        <form-property name="normalCapacity" type="java.lang.String"/>
 	        <form-property name="page" type="java.lang.Integer"/>
+	        <form-property name="startDay" type="java.lang.String"/>
+			<form-property name="startMonth" type="java.lang.String"/>
+	        <form-property name="startYear" type="java.lang.String"/>
+	        <form-property name="endDay" type="java.lang.String"/>
+	        <form-property name="endMonth" type="java.lang.String"/>
+			<form-property name="endYear" type="java.lang.String"/>
+	        	        	        	        	        	        
 	  </form-bean>
 
 	  <!-- TURNOS -->

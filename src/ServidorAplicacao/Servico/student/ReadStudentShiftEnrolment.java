@@ -46,7 +46,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
-import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
@@ -238,11 +237,11 @@ public class ReadStudentShiftEnrolment implements IServico {
                 composedShift.setInfoClasses((List) CollectionUtils
                         .intersection(allowedClasses, classList));
                 composedShift.setInfoShift(thisInfoShift);
-                composedShift.setInfoLessons(sp.getITurnoAulaPersistente()
-                        .readByShift(
-                                (ITurno) (sp.getITurnoPersistente().readByOID(
-                                        Turno.class, thisInfoShift
-                                                .getIdInternal()))));
+//                composedShift.setInfoLessons(sp.getITurnoAulaPersistente()
+//                        .readByShift(
+//                                (ITurno) (sp.getITurnoPersistente().readByOID(
+//                                        Turno.class, thisInfoShift
+//                                                .getIdInternal()))));
                 //Copy the Shifts associated with the course in which the
                 // student is enrolled
                 composedShift.setInfoLessons((List) CollectionUtils
@@ -279,19 +278,21 @@ public class ReadStudentShiftEnrolment implements IServico {
         List infoShiftsWithLessons = new ArrayList();
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        ITurnoAulaPersistente persistentShiftLesson = sp
-                .getITurnoAulaPersistente();
+          //  ITurnoAulaPersistente persistentShiftLesson = sp.getITurnoAulaPersistente();
         Iterator iter = list.iterator();
         while (iter.hasNext()) {
             InfoShift infoShift = (InfoShift) iter.next();
             ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
                     infoShift.getIdInternal());
-            List lessons = persistentShiftLesson.readByShift(shift);
+//            List lessons = persistentShiftLesson.readByShift(shift);
+			List lessons = shift.getAssociatedLessons();
             Iterator iter1 = lessons.iterator();
             List infoLessons = new ArrayList();
             while (iter1.hasNext()) {
                 IAula lesson = (IAula) iter1.next();
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+					infoLesson.setInfoShift(infoShift);
+					
                 infoLessons.add(infoLesson);
             }
             infoShift.setInfoLessons(infoLessons);
@@ -310,8 +311,8 @@ public class ReadStudentShiftEnrolment implements IServico {
             throws ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        ITurnoAulaPersistente persistentShiftLesson = sp
-                .getITurnoAulaPersistente();
+//        ITurnoAulaPersistente persistentShiftLesson = sp
+//                .getITurnoAulaPersistente();
         List currentEnrollment = infoShiftStudentEnrolment
                 .getCurrentEnrolment();
         Iterator iter = currentEnrollment.iterator();
@@ -320,7 +321,9 @@ public class ReadStudentShiftEnrolment implements IServico {
             InfoShift infoShift = (InfoShift) iter.next();
             ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
                     infoShift.getIdInternal());
-            List shiftLessons = persistentShiftLesson.readByShift(shift);
+//            List shiftLessons = persistentShiftLesson.readByShift(shift);
+			List shiftLessons = shift.getAssociatedLessons();
+
             List infoLessons = new ArrayList();
             Iterator iter1 = shiftLessons.iterator();
             while (iter1.hasNext()) {

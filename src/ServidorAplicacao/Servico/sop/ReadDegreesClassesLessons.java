@@ -22,14 +22,15 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoViewClassSchedule;
 import DataBeans.util.Cloner;
+import Dominio.CursoExecucao;
 import Dominio.IAula;
+import Dominio.ICursoExecucao;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadDegreesClassesLessons implements IServico
@@ -69,17 +70,15 @@ public class ReadDegreesClassesLessons implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
-            ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
+            //ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
 
             // Read executionDegrees classes
             List classes = new ArrayList();
             for (int i = 0; i < infoExecutionDegrees.size(); i++)
             {
-                List degreeClasses =
-                    classDAO.readByExecutionDegreeAndExecutionPeriod(
-                        Cloner.copyInfoExecutionDegree2ExecutionDegree(
-                            (InfoExecutionDegree) infoExecutionDegrees.get(i)),
-                        Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod));
+                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
+                ICursoExecucao executionDegree = (ICursoExecucao) classDAO.readByOID(CursoExecucao.class, infoExecutionDegree.getIdInternal());
+                List degreeClasses = classDAO.readByExecutionDegree(executionDegree);
                 Iterator iterator = degreeClasses.iterator();
                 CollectionUtils.addAll(classes, iterator);
             }
@@ -97,13 +96,16 @@ public class ReadDegreesClassesLessons implements IServico
                 {
                     ITurno shift = (ITurno) iterator.next();
                     InfoShift infoShift = (InfoShift) Cloner.get(shift);
-                    List lessonList = shiftLessonDAO.readByShift(shift);
+					List lessonList = shift.getAssociatedLessons();
+                    //List lessonList = shiftLessonDAO.readByShift(shift);
                     Iterator lessonIterator = lessonList.iterator();
                     while (lessonIterator.hasNext())
                     {
                         IAula elem = (IAula) lessonIterator.next();
                         InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
                         if (infoLesson != null) {
+                        	infoLesson.setInfoShift(infoShift);
+                        	
                         	infoLesson.getInfoShiftList().add(infoShift);
                         	infoLessonList.add(infoLesson);
                         }

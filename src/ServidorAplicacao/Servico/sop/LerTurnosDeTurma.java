@@ -94,7 +94,9 @@ public class LerTurnosDeTurma implements IServico {
 				InfoLesson infoLesson;
 					
 				while(itLessons.hasNext()){
-					 infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
+					 infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());					
+					
+					 infoLesson.setInfoShift(infoTurno);
 					 infoLessons.add(infoLesson);
 				}
 				

@@ -308,11 +308,82 @@
       </field>
     </form>
     
-    <!--<form name="executionDegreeForm">
-      <field property="coordinatorNumber" depends="required, integer" page="1" >
-        <arg0 key="label.manager.executionDegree.coordinator" resource="true"/>
+    <form name="executionDegreeForm">
+		<field property="lessonsFirstStartDay" depends="integerArray" page="2">
+			<arg0 key="property.lessonFirstStart"/>
       </field>
-    </form> -->
+		<field property="lessonsFirstStartMonth" depends="integerArray" page="2">
+			<arg0 key="property.lessonFirstStart"/>
+		</field>
+		<field property="lessonsFirstStartYear" depends="integerArray" page="2">
+			<arg0 key="property.lessonFirstStart"/>
+		</field>
+		<field property="lessonsFirstEndDay" depends="integerArray" page="2">
+			<arg0 key="property.lessonFirstEnd"/>
+		</field>
+		<field property="lessonsFirstEndMonth" depends="integerArray" page="2">
+			<arg0 key="property.lessonFirstEnd"/>
+		</field>
+		<field property="lessonsFirstEndYear" depends="integerArray" page="2">
+			<arg0 key="property.lessonFirstEnd"/>
+		</field>
+		<field property="examsFirstStartDay" depends="integerArray" page="2">
+			<arg0 key="property.examsFirstStart"/>
+		</field>
+		<field property="examsFirstStartMonth" depends="integerArray" page="2">
+			<arg0 key="property.examsFirstStart"/>
+		</field>
+		<field property="examsFirstStartYear" depends="integerArray" page="2">
+			<arg0 key="property.examsFirstStart"/>
+		</field>
+		<field property="examsFirstEndDay" depends="integerArray" page="2">
+			<arg0 key="property.examsFirstEnd"/>
+		</field>
+		<field property="examsFirstEndMonth" depends="integerArray" page="2">
+			<arg0 key="property.examsFirstEnd"/>
+		</field>
+		<field property="examsFirstEndYear" depends="integerArray" page="2">
+			<arg0 key="property.examsFirstEnd"/>
+		</field>
+
+
+		<field property="lessonsSecondStartDay" depends="integerArray" page="2">
+			<arg0 key="property.lessonSecondStart"/>
+		</field>
+		<field property="lessonsSecondStartMonth" depends="integerArray" page="2">
+			<arg0 key="property.lessonSecondStart"/>
+		</field>
+		<field property="lessonsSecondStartYear" depends="integerArray" page="2">
+			<arg0 key="property.lessonSecondStart"/>
+		</field>
+		<field property="lessonsSecondEndDay" depends="integerArray" page="2">
+			<arg0 key="property.lessonSecondEnd"/>
+		</field>
+		<field property="lessonsSecondEndMonth" depends="integerArray" page="2">
+			<arg0 key="property.lessonSecondEnd"/>
+		</field>
+		<field property="lessonsSecondEndYear" depends="integerArray" page="2">
+			<arg0 key="property.lessonSecondEnd"/>
+		</field>
+		<field property="examsSecondStartDay" depends="integerArray" page="2">
+			<arg0 key="property.examsSecondStart"/>
+		</field>
+		<field property="examsSecondStartMonth" depends="integerArray" page="2">
+			<arg0 key="property.examsSecondStart"/>
+		</field>
+		<field property="examsSecondStartYear" depends="integerArray" page="2">
+			<arg0 key="property.examsSecondStart"/>
+		</field>
+		<field property="examsSecondEndDay" depends="integerArray" page="2">
+			<arg0 key="property.examsSecondEnd"/>
+		</field>
+		<field property="examsSecondEndMonth" depends="integerArray" page="2">
+			<arg0 key="property.examsSecondEnd"/>
+		</field>
+		<field property="examsSecondEndYear" depends="integerArray" page="2">
+			<arg0 key="property.examsSecondEnd"/>
+		</field>
+    </form>
 
     <form name="teacherManagementForm">
       <field property="teacherNumber" depends="required,integer" page="1" >

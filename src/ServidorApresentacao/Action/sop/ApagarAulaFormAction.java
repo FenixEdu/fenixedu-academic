@@ -11,20 +11,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
-import DataBeans.KeyLesson;
-import DataBeans.RoomKey;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author tfc130
@@ -75,11 +68,7 @@ public class ApagarAulaFormAction
 
 			Object argsApagarAula[] =
 				{
-					new KeyLesson(
-						infoAula.getDiaSemana(),
-						infoAula.getInicio(),
-						infoAula.getFim(),
-						new RoomKey(infoAula.getInfoSala().getNome())),
+					infoAula,
 					infoExecutionPeriod };
 			Boolean result =
 				(Boolean) ServiceManagerServiceFactory.executeService(

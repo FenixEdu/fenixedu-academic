@@ -20,6 +20,28 @@ public class InfoRoomOccupation extends InfoObject {
 	protected InfoRoom infoRoom;
 	protected InfoPeriod infoPeriod;
 	
+	protected Integer frequency;
+    protected Integer weekOfQuinzenalStart;
+	
+    public Integer getFrequency() {
+        return frequency;
+    }
+ 
+    public void setFrequency(int frequency) {
+        this.frequency = new Integer(frequency);
+    }
+
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
+    }
+
+    public Integer getWeekOfQuinzenalStart() {
+        return weekOfQuinzenalStart;
+    }
+
+    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
+        this.weekOfQuinzenalStart = weekOfQuinzenalStart;
+    }
 	
 	/**
 	 * @return

@@ -14,6 +14,7 @@
                 type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
         <form-property name="roomName" type="java.lang.String"/>
+        <form-property name="indexWeek" type="java.lang.Integer"/>
       </form-bean>
 	
       <form-bean name="pagedIndexForm"
@@ -447,7 +448,9 @@
     <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 		<action path="/siteViewer"
 				input="/siteViewerError.jsp"
+				name="indexForm"
 				scope="request"
+              	validate="false"
 				parameter="method"
 				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
 			<forward name="roomViewer" path="/viewRoom.jsp"/>

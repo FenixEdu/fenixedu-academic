@@ -8,6 +8,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import DataBeans.InfoRoomOccupation;
+import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -64,6 +67,9 @@ public class ReadStudentTimeTable implements IService {
             while (iter.hasNext()) {
                 IAula lesson = (IAula) iter.next();
                 InfoLesson infolesson = copyILesson2InfoLesson(lesson);
+				ITurno shift = lesson.getShift();
+				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+				infolesson.setInfoShift(infoShift);				
                 infoLessons.add(infolesson);
             }
 
@@ -84,10 +90,9 @@ public class ReadStudentTimeTable implements IService {
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
             infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
-            infoLesson
-                    .setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(lesson
-                            .getDisciplinaExecucao()));
 
+            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
         }
         return infoLesson;
     }

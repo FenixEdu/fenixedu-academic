@@ -33,6 +33,17 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	private ICampus campus;
 	
 
+	// added by amsg 4 Jun 2004
+	private IPeriod periodLessonsFirstSemester;
+	private IPeriod periodExamsFirstSemester;
+	private IPeriod periodLessonsSecondSemester;
+	private IPeriod periodExamsSecondSemester;
+	private Integer keyPeriodLessonsFirstSemester;
+	private Integer keyPeriodExamsFirstSemester;
+	private Integer keyPeriodLessonsSecondSemester;
+	private Integer keyPeriodExamsSecondSemester;
+	
+
 	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
 	public CursoExecucao() {
 	}
@@ -230,4 +241,84 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	{
 		this.coordinatorsList = coordinatorsList;
 	}	
+		
+	public IPeriod getPeriodExamsFirstSemester()
+	{
+	    return periodExamsFirstSemester;
+}
+    public void setPeriodExamsFirstSemester(IPeriod periodExamsFirstSemester)
+    {
+        this.periodExamsFirstSemester = periodExamsFirstSemester;
+    }
+
+    public IPeriod getPeriodExamsSecondSemester()
+    {
+        return periodExamsSecondSemester;
+    }
+
+    public void setPeriodExamsSecondSemester(IPeriod periodExamsSecondSemester)
+    {
+        this.periodExamsSecondSemester = periodExamsSecondSemester;
+    }
+
+    public IPeriod getPeriodLessonsSecondSemester()
+    {
+        return periodLessonsSecondSemester;
+    }
+
+    public void setPeriodLessonsSecondSemester(IPeriod periodLessonsSecondSemester)
+    {
+        this.periodLessonsSecondSemester = periodLessonsSecondSemester;
+    }
+
+    public IPeriod getPeriodLessonsFirstSemester()
+    {
+        return periodLessonsFirstSemester;
+    }
+
+    public void setPeriodLessonsFirstSemester(IPeriod periodLessonsFirstSemester)
+    {
+        this.periodLessonsFirstSemester = periodLessonsFirstSemester;
+    }
+
+    public Integer getKeyPeriodExamsFirstSemester()
+    {
+        return keyPeriodExamsFirstSemester;
+    }
+
+    public void setKeyPeriodExamsFirstSemester(Integer keyPeriodExamsFirstSemester)
+    {
+        this.keyPeriodExamsFirstSemester = keyPeriodExamsFirstSemester;
+    }
+
+    public Integer getKeyPeriodExamsSecondSemester()
+    {
+        return keyPeriodExamsSecondSemester;
+    }
+
+    public void setKeyPeriodExamsSecondSemester(Integer keyPeriodExamsSecondSemester)
+    {
+        this.keyPeriodExamsSecondSemester = keyPeriodExamsSecondSemester;
+    }
+
+    public Integer getKeyPeriodLessonsFirstSemester()
+    {
+        return keyPeriodLessonsFirstSemester;
+    }
+
+    public void setKeyPeriodLessonsFirstSemester(Integer keyPeriodLessonsFirstSemester)
+    {
+        this.keyPeriodLessonsFirstSemester = keyPeriodLessonsFirstSemester;
+    }
+
+    public Integer getKeyPeriodLessonsSecondSemester()
+    {
+        return keyPeriodLessonsSecondSemester;
+    }
+
+    public void setKeyPeriodLessonsSecondSemester(Integer keyPeriodLessonsSecondSemester)
+    {
+        this.keyPeriodLessonsSecondSemester = keyPeriodLessonsSecondSemester;
+    }
+
 }

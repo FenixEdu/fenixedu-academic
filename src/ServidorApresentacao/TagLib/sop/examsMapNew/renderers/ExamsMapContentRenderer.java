@@ -48,6 +48,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
                 + SessionConstants.EXECUTION_DEGREE_OID
                 + "="
                 + examsMap.getInfoExecutionDegree().getIdInternal()
+	            + "&amp;"
+	            + SessionConstants.EXECUTION_PERIOD_OID
+	            + "="
+	            + examsMap.getInfoExecutionPeriod().getIdInternal()
                 + "&amp;"
                 + SessionConstants.CURRICULAR_YEAR_OID
                 + "="

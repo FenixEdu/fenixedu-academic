@@ -21,8 +21,7 @@ import ServidorPersistente.IPersistentPeriod;
  */
 public class PeriodOJB extends ObjectFenixOJB implements IPersistentPeriod{
 
-	public List readBy(Calendar startDate)
-		throws ExcepcaoPersistencia {
+    public List readBy(Calendar startDate) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("startDate", startDate);
 		return queryList(Period.class, criteria);
@@ -55,11 +54,14 @@ public class PeriodOJB extends ObjectFenixOJB implements IPersistentPeriod{
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentPeriod#readBy(java.util.Calendar, java.util.Calendar)
      */
-    public Object readBy(Calendar startDate, Calendar endDate) throws ExcepcaoPersistencia
-    {
+    public Object readByCalendarAndNextPeriod(Calendar startDate, Calendar endDate, Integer keyNextPeriod)
+            throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("startDate", startDate);
 		criteria.addEqualTo("endDate", endDate);
+        if (keyNextPeriod != null) {
+            criteria.addEqualTo("nextPeriod.idInternal", keyNextPeriod);
+        }
 		return queryObject(Period.class, criteria);
     }
 

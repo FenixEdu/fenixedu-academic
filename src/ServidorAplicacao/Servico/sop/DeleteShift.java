@@ -111,8 +111,9 @@ public class DeleteShift implements IServico {
                     }
 
                     for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
-                        sp.getIAulaPersistente().delete(
-                                (IAula) shift.getAssociatedLessons().get(i));
+					    IAula lesson = (IAula) shift.getAssociatedLessons().get(i);
+					    sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
+						sp.getIAulaPersistente().delete(lesson);
                     }
 
                     for (int i = 0; i < shift.getAssociatedClasses().size(); i++) {

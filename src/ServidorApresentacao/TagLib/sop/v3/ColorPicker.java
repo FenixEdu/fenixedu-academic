@@ -7,7 +7,7 @@ package ServidorApresentacao.TagLib.sop.v3;
 
 import java.util.HashMap;
 
-import DataBeans.InfoLesson;
+import DataBeans.InfoShowOccupation;
 
 /**
  * @author jpvl
@@ -40,12 +40,16 @@ public abstract class ColorPicker {
 
 	public String getBackgroundColor(InfoLessonWrapper infoLessonWrapper) {
 		if ((infoLessonWrapper == null)
-			|| (infoLessonWrapper.getInfoLesson() == null)) {
+//			|| (infoLessonWrapper.getInfoLesson() == null)) {
+		    || (infoLessonWrapper.getInfoShowOccupation() == null)) {
 			/* blank slot color*/
 			return "#CCCCCC";
-		} 
-			InfoLesson infoLesson = infoLessonWrapper.getInfoLesson();
-			String colorKeyInfoLesson = getColorKeyFromInfoLesson(infoLesson);
+		} else {		    
+			//InfoLesson infoLesson = infoLessonWrapper.getInfoLesson();
+		    InfoShowOccupation infoShowOccupation = infoLessonWrapper.getInfoShowOccupation();
+
+			String colorKeyInfoLesson = getColorKeyFromInfoLesson(infoShowOccupation);
+
 			String color = (String) lessonColors.get(colorKeyInfoLesson);
 
 			if (color == null) {
@@ -54,10 +58,11 @@ public abstract class ColorPicker {
 				lessonColors.put(colorKeyInfoLesson, color);
 			}
 			return color;
-		
+		}
 
 	}
 
-	abstract protected String getColorKeyFromInfoLesson(InfoLesson infoLesson);
+	//abstract protected String getColorKeyFromInfoLesson(InfoLesson infoLesson);
+	abstract protected String getColorKeyFromInfoLesson(InfoShowOccupation infoShowOccupation);
 
 }

@@ -71,6 +71,9 @@ public class LerTurnosDeDisciplinaExecucao implements IServico {
 
 				while (itLessons.hasNext()) {
 					infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
+					
+					infoLesson.setInfoShift(infoTurno);
+					
 					infoLessons.add(infoLesson);
 				}
 

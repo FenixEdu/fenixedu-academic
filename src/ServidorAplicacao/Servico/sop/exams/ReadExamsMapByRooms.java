@@ -23,11 +23,14 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomExamsMap;
 import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IPeriod;
+import Dominio.Period;
 import ServidorAplicacao.IServico;
-import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -66,7 +69,7 @@ public class ReadExamsMapByRooms implements IServico
 
         // Exam seasons hardcoded because this information
         // is not yet available from the database
-        // TODO ISTO NÂO PODE TAR HARDCODED
+        /*
         Calendar startSeason1 = Calendar.getInstance();
         startSeason1.set(Calendar.YEAR, 2004);
         startSeason1.set(Calendar.MONTH, Calendar.JUNE);
@@ -83,40 +86,48 @@ public class ReadExamsMapByRooms implements IServico
         endSeason2.set(Calendar.MINUTE, 0);
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);		
-
+        */
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             //List rooms = sp.getISalaPersistente().readForRoomReservation();
-			InfoRoom room = null;
-			InfoRoomExamsMap infoExamsMap = null;
+            InfoRoom room = null;
+            InfoRoomExamsMap infoExamsMap = null;
+
+            // Translate to execute following queries
+            IExecutionPeriod executionPeriod =
+                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 			
-			// Translate to execute following queries
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+			IPeriod period = calculateExamsSeason(executionPeriod);
+			Calendar startSeason1 = period.getStartDate();
+			Calendar endSeason2 = period.getEndDate();
+            // The calendar must start at a monday
+            if (startSeason1.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
+            {
+                int shiftDays = Calendar.MONDAY - startSeason1.get(Calendar.DAY_OF_WEEK);
+                startSeason1.add(Calendar.DATE, shiftDays);
+            }
 
             for (int i = 0; i < infoRooms.size(); i++)
-            {				
+            {
                 room = (InfoRoom) infoRooms.get(i);
-
                 infoExamsMap = new InfoRoomExamsMap();
-
                 // Set Exam Season info
                 infoExamsMap.setInfoRoom(room);
                 infoExamsMap.setStartSeason1(startSeason1);
                 infoExamsMap.setEndSeason1(null);
                 infoExamsMap.setStartSeason2(null);
                 infoExamsMap.setEndSeason2(endSeason2);
-
                 List exams =
-                    sp.getIPersistentExam().readByRoomAndExecutionPeriod(Cloner.copyInfoRoom2Room(room), executionPeriod);
+                    sp.getIPersistentExam().readByRoomAndExecutionPeriod(
+                        Cloner.copyInfoRoom2Room(room),
+                        executionPeriod);
                 infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
-
                 infoRoomExamMapList.add(infoExamsMap);
             }
 
         }
-        catch (ExcepcaoPersistencia ex)
+        catch (Exception ex)
         {
             ex.printStackTrace();
         }
@@ -136,4 +147,62 @@ public class ReadExamsMapByRooms implements IServico
         }
     };
 
+    private Period calculateExamsSeason(IExecutionPeriod executionPeriod) throws Exception
+    {
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+            int semester = executionPeriod.getSemester().intValue();
+
+            List executionDegreesList =
+                sp.getICursoExecucaoPersistente().readByExecutionYear(
+                    executionPeriod.getExecutionYear().getYear());
+            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesList.get(0);
+
+            Calendar startSeason1 = null;
+            Calendar endSeason2 = null;
+            if (semester == 1)
+            {
+                startSeason1 = executionDegree.getPeriodExamsFirstSemester().getStartDate();
+                endSeason2 = executionDegree.getPeriodExamsFirstSemester().getEndDateOfComposite();
+            }
+            else
+            {
+                startSeason1 = executionDegree.getPeriodExamsSecondSemester().getStartDate();
+                endSeason2 = executionDegree.getPeriodExamsSecondSemester().getEndDateOfComposite();
+            }
+
+            for (int i = 1; i < executionDegreesList.size(); i++)
+            {
+                executionDegree = (ICursoExecucao) executionDegreesList.get(i);
+                Calendar startExams;
+                Calendar endExams;
+                if (semester == 1)
+                {
+                    startExams = executionDegree.getPeriodExamsFirstSemester().getStartDate();
+                    endExams = executionDegree.getPeriodExamsFirstSemester().getEndDateOfComposite();
+                }
+                else
+                {
+                    startExams = executionDegree.getPeriodExamsSecondSemester().getStartDate();
+                    endExams = executionDegree.getPeriodExamsSecondSemester().getEndDateOfComposite();
+                }
+                if (startExams.before(startSeason1))
+                {
+                    startSeason1 = startExams;
+                }
+                if (endExams.after(endSeason2))
+                {
+                    endSeason2 = endExams;
+                }
+
+            }
+            return new Period(startSeason1, endSeason2);
+        }
+        catch (Exception e)
+        {
+			throw new FenixServiceException("Error calculating exams season");
+        }
+    }
 }

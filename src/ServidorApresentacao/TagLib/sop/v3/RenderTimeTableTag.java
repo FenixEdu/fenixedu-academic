@@ -16,6 +16,7 @@ import org.apache.struts.util.MessageResources;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoLesson;
+import DataBeans.InfoShowOccupation;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
 import ServidorApresentacao.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
@@ -121,8 +122,11 @@ public final class RenderTimeTableTag extends TagSupport {
 		Iterator lessonIterator = lessonList.iterator();
 
 		while (lessonIterator.hasNext()) {
-			InfoLesson infoLesson = (InfoLesson) lessonIterator.next();
-			timeTable.addLesson(infoLesson);
+		    
+			//InfoLesson infoLesson = (InfoLesson) lessonIterator.next();
+		    //timeTable.addLesson(infoLesson);
+		    InfoShowOccupation infoShowOccupation = (InfoShowOccupation) lessonIterator.next();			
+		    timeTable.addLesson(infoShowOccupation);
 		}
 
 		return timeTable;
@@ -141,10 +145,13 @@ public final class RenderTimeTableTag extends TagSupport {
 		ArrayList listaAuxiliar = new ArrayList();
 		Iterator iterator = listaAulas.iterator();
 		while (iterator.hasNext()) {
-			InfoLesson elem = (InfoLesson) iterator.next();
-			SubtitleEntry subtitleEntry = new SubtitleEntry(elem.getInfoDisciplinaExecucao().getSigla(), elem.getInfoDisciplinaExecucao().getNome());
+		    InfoShowOccupation elem = (InfoShowOccupation) iterator.next();		    
+		    if(elem instanceof InfoLesson)
+		    {
+				SubtitleEntry subtitleEntry = new SubtitleEntry(elem.getInfoShift().getInfoDisciplinaExecucao().getSigla(), elem.getInfoShift().getInfoDisciplinaExecucao().getNome());
 			if (!listaAuxiliar.contains(subtitleEntry))
 				listaAuxiliar.add(subtitleEntry);
+		}
 		}
 
 		if (listaAuxiliar.size() > 1) {
@@ -168,6 +175,13 @@ public final class RenderTimeTableTag extends TagSupport {
 			if (listaAuxiliar.size() % 2 == 1) {
 				result.append("<td colspan='3'>&nbsp;</td></tr>");
 			}
+			
+			//TODO(rspl): Will it stay like this the interface for showing
+			// the legend of a quinzenal lesson?
+			result.append("<tr><td style='vertical-align:top'><b>[Q]</b></td>");
+			result.append("<td  style='vertical-align:top'>-</td>");
+			result.append("<td wrap='wrap'>Identifica uma aula como sendo quinzenal</td></tr>");
+			
 			result.append("</table>");
 
 		}

@@ -11,6 +11,8 @@ import java.util.ListIterator;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCoordinatorWithInfoPerson;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoPeriod;
+import DataBeans.util.Cloner;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYear;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICoordinator;
@@ -78,6 +80,24 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
 
                 infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
             }
+
+			if(executionDegree.getPeriodExamsFirstSemester() != null)
+			{
+				infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
+			}
+			if(executionDegree.getPeriodExamsSecondSemester() != null)
+			{
+				infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
+			}
+			if(executionDegree.getPeriodLessonsFirstSemester() != null)
+			{
+				infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
+			}
+			if(executionDegree.getPeriodLessonsSecondSemester() != null)
+			{
+				infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
+			}
+
 
             result.add(infoExecutionDegree);
         }

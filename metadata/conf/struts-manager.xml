@@ -102,6 +102,32 @@
 				<form-property name="tempExamMap" type="java.lang.String" />
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<!-- Periods -->
+				<form-property name="lessonsFirstStartDay" type="java.lang.String[]" />
+				<form-property name="lessonsFirstStartMonth" type="java.lang.String[]" />
+				<form-property name="lessonsFirstStartYear" type="java.lang.String[]" />
+				<form-property name="lessonsFirstEndDay" type="java.lang.String[]" />
+				<form-property name="lessonsFirstEndMonth" type="java.lang.String[]" />
+				<form-property name="lessonsFirstEndYear" type="java.lang.String[]" />				
+				<form-property name="lessonsSecondStartDay" type="java.lang.String[]" />
+				<form-property name="lessonsSecondStartMonth" type="java.lang.String[]" />
+				<form-property name="lessonsSecondStartYear" type="java.lang.String[]" />
+				<form-property name="lessonsSecondEndDay" type="java.lang.String[]" />
+				<form-property name="lessonsSecondEndMonth" type="java.lang.String[]" />
+				<form-property name="lessonsSecondEndYear" type="java.lang.String[]" />											
+				<form-property name="examsFirstStartDay" type="java.lang.String[]" />
+				<form-property name="examsFirstStartMonth" type="java.lang.String[]" />
+				<form-property name="examsFirstStartYear" type="java.lang.String[]" />
+				<form-property name="examsFirstEndDay" type="java.lang.String[]" />
+				<form-property name="examsFirstEndMonth" type="java.lang.String[]" />
+				<form-property name="examsFirstEndYear" type="java.lang.String[]" />											
+				<form-property name="examsSecondStartDay" type="java.lang.String[]" />
+				<form-property name="examsSecondStartMonth" type="java.lang.String[]" />
+				<form-property name="examsSecondStartYear" type="java.lang.String[]" />
+				<form-property name="examsSecondEndDay" type="java.lang.String[]" />
+				<form-property name="examsSecondEndMonth" type="java.lang.String[]" />
+				<form-property name="examsSecondEndYear" type="java.lang.String[]" />
+				<form-property name="periodToEdit" type="java.lang.String" />				
 		</form-bean>
 		
 		<form-bean name="curriculumForm"
@@ -687,10 +713,12 @@
 	<action
 		path="/insertExecutionDegree"
 		name="executionDegreeForm"
+		attribute="executionDegreeForm"
 		input="/insertExecutionDegree.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertExecutionDegreeDispatchAction">
+		type="ServidorApresentacao.Action.manager.InsertExecutionDegreeDispatchAction"
+		validate="true">
 		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -705,6 +733,7 @@
 	<action
 		path="/editExecutionDegree"
 		name="executionDegreeForm"
+		attribute="executionDegreeForm"
 		input="/editExecutionDegree.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
@@ -726,6 +755,7 @@
     <action 
       	path="/deleteExecutionDegrees"
       	name="executionDegreeForm"
+      	attribute="executionDegreeForm"
       	input="/readDegreeCurricularPlanInput.do"
       	scope="request"
       	type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">

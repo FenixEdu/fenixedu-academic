@@ -17,6 +17,7 @@ import org.apache.commons.collections.Transformer;
 import Dominio.IExam;
 import Util.EvaluationType;
 import Util.Season;
+import Util.DiaSemana;
 
 public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
 
@@ -255,6 +256,12 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         return result;
     }
 
+    public DiaSemana getDiaSemana() 
+    {
+        Calendar day = this.getDay();
+        return new DiaSemana(day.get(Calendar.DAY_OF_WEEK));
+    }
+    
     /**
      * @return Returns the infoExecutionCourses.
      */

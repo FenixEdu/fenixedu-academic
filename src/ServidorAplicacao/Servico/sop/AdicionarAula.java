@@ -23,15 +23,12 @@ import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.ITurno;
-import Dominio.ITurnoAula;
 import Dominio.Turno;
-import Dominio.TurnoAula;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 public class AdicionarAula implements IService {
@@ -45,7 +42,7 @@ public class AdicionarAula implements IService {
     public List run(InfoShift infoShift, String[] classesList)
             throws FenixServiceException {
 
-        ITurnoAula turnoAula = null;
+		//ITurnoAula turnoAula = null;
         InfoShiftServiceResult result = null;
         List serviceResult = new ArrayList();
         try {
@@ -65,15 +62,21 @@ public class AdicionarAula implements IService {
                 IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
                         Aula.class, lessonId);
                 if (lesson != null) {
-                    turnoAula = new TurnoAula(turno1, lesson);
+					//turnoAula = new TurnoAula(turno1, lesson);
                     result = valid(turno1, lesson);
                     serviceResult.add(result);
                     if (result.isSUCESS()) {
-                        try {
+/*                        try {
                             sp.getITurnoAulaPersistente().simpleLockWrite(
                                     turnoAula);
                         } catch (ExistingPersistentException ex) {
                             throw new ExistingServiceException(ex);
+						}*/
+						try {
+							sp.getIAulaPersistente().simpleLockWrite(lesson);
+							lesson.setShift(turno1);
+						} catch(ExcepcaoPersistencia ex) {
+							
                         }
                     }
                 }
@@ -140,19 +143,12 @@ public class AdicionarAula implements IService {
 
     private double getTotalHoursOfShiftType(ITurno shift)
             throws ExcepcaoPersistencia {
-        ITurno shiftCriteria = new Turno();
+/*		ITurno shiftCriteria = new Turno();
         shiftCriteria.setNome(shift.getNome());
         shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
 
         List lessonsOfShiftType = SuportePersistenteOJB.getInstance()
                 .getITurnoAulaPersistente().readLessonsByShift(shiftCriteria);
-
-        //		List lessonsOfShiftType =
-        //			SuportePersistenteOJB
-        //				.getInstance()
-        //				.getITurnoAulaPersistente()
-        //				.readByCriteria(
-        //				new TurnoAula(shiftCriteria, null));
 
         IAula lesson = null;
         double duration = 0;
@@ -161,6 +157,17 @@ public class AdicionarAula implements IService {
             duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
 
         }
+		return duration;*/
+		
+		IAula lesson = null;
+		double duration = 0;
+		List associatedLessons = shift.getAssociatedLessons();
+
+		for (int i = 0; i < associatedLessons.size(); i++) {
+			lesson = (IAula) associatedLessons.get(i);
+			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
+		}
+		
         return duration;
     }
 

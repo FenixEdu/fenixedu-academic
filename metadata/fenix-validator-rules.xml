@@ -203,7 +203,19 @@ Example:
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext" 
-			msg="errors.required.checkbox" />
+                msg="errors.required.checkbox"
+                />             
+
+   	 <validator name="integerArray"
+            classname="ServidorApresentacao.validator.form.ValidateIntegerArray"
+               method="validate"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="error.integerArray"/>
 	</global>
 
 </form-validation>

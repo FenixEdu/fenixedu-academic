@@ -18,8 +18,8 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -65,12 +65,15 @@ public class LerAulasDeTurma implements IService {
                 Iterator lessonIterator = lessonList.iterator();
                 while (lessonIterator.hasNext()) {
                     IAula elem = (IAula) lessonIterator.next();
-                    IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
-                            Aula.class, elem.getIdInternal());
+                    //IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
+                    //        Aula.class, elem.getIdInternal());
                     //InfoLesson infoLesson =
                     // Cloner.copyILesson2InfoLesson(elem);
                     InfoLesson infoLesson = Cloner
-                            .copyILesson2InfoLesson(lesson);
+                            .copyILesson2InfoLesson(elem);
+
+					InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+					infoLesson.setInfoShift(infoShift);
 
                     if (infoLesson != null) {
                         infoLessonList.add(infoLesson);

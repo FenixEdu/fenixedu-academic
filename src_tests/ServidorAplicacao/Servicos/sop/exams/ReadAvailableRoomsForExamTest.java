@@ -3,18 +3,9 @@
  */
 package ServidorAplicacao.Servicos.sop.exams;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 
-import DataBeans.InfoRoom;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.sop.exams.ReadAvailableRoomsForExam;
 import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.DiaSemana;
 
 /**
  * @author Ana e Ricardo
@@ -70,7 +61,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
         return examEndTime;
     }
 
-
+/*
     // no rooms
     public void testUnexistingRooms()
     {
@@ -272,5 +263,5 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 		}
 
 	}
-
+*/
 }

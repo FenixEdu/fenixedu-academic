@@ -16,6 +16,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoClass;
+import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
@@ -77,7 +78,12 @@ public class ReadShiftsByClass implements IServico {
 								shift.getAssociatedLessons(),
 								new Transformer() {
 						public Object transform(Object arg0) {
-							return Cloner.copyILesson2InfoLesson((IAula) arg0);
+							InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((IAula) arg0);
+							ITurno shift = ((IAula) arg0).getShift();
+							InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+							infoLesson.setInfoShift(infoShift);
+							
+							return infoLesson;
 						}
 					}));
 					return infoShift;

@@ -9,6 +9,7 @@ package DataBeans;
 /**
  * @author tfc130
  */
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +46,8 @@ public class InfoShift extends InfoObject {
         setTipo(tipo);
         setLotacao(lotacao);
         setInfoDisciplinaExecucao(infoDisciplinaExecucao);
+		setInfoClasses(new ArrayList());
+		setInfoLessons(new ArrayList());
     }
 
     /**
@@ -54,7 +57,10 @@ public class InfoShift extends InfoObject {
         setIdInternal(shiftIdInternal);
     }
 
-    public Integer getSize() {
+    public Integer getSize()
+    {
+    	if (infoClasses == null)
+    		return new Integer(0);
         return new Integer(infoClasses.size());
     }
 
@@ -143,7 +149,7 @@ public class InfoShift extends InfoObject {
             result += ":";
             result += minutesFormatter(lesson.getFim().get(Calendar.MINUTE));
             result += ") ";
-            result += lesson.getInfoSala().getNome().toString();
+            result += lesson.getInfoRoomOccupation().getInfoRoom().getNome().toString();
             int last = (infoLessonsList.size());
             if (index != last || (index != 1 && index != last)) {
                 result += " , ";

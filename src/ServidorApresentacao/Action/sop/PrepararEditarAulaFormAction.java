@@ -95,7 +95,7 @@ public class PrepararEditarAulaFormAction
 			editarAulaForm.set(
 				"tipoAula",
 				String.valueOf(infoAula.getTipo().getTipo().intValue()));
-			editarAulaForm.set("nomeSala", infoAula.getInfoSala().getNome());
+			editarAulaForm.set("nomeSala", infoAula.getInfoRoomOccupation().getInfoRoom().getNome());
 
 			RequestUtils.setLessonTypes(request);
 

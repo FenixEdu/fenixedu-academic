@@ -32,8 +32,8 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
-import DataBeans.InfoLessonWithInfoRoomAndInfoExecutionCourse;
 import DataBeans.InfoProfessorshipWithAll;
+import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoSection;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
@@ -607,21 +607,22 @@ public class ExecutionCourseSiteComponentBuilder {
                             InfoShiftWithInfoExecutionCourseAndCollections
                                     .newInfoFromDomain(shift), null, null);
 
-                    List lessons = sp.getITurnoAulaPersistente().readByShift(
-                            shift);
+        
+                    //List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
+					List lessons = shift.getAssociatedLessons();
                     List infoLessons = new ArrayList();
                     List classesShifts = sp.getITurmaTurnoPersistente()
                             .readClassesWithShift(shift);
                     List infoClasses = new ArrayList();
 
                     for (int j = 0; j < lessons.size(); j++)
-                        infoLessons
-                                .add(InfoLessonWithInfoRoomAndInfoExecutionCourse
-                                        .newInfoFromDomain((IAula) lessons
-                                                .get(j)));
-
-                    shiftWithAssociatedClassesAndLessons
-                            .setInfoLessons(infoLessons);
+          {
+                    	InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                    	InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)); 
+                        infoLesson.setInfoShift(infoShift);
+                        infoLessons.add(infoLesson);
+                    }
+                    shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
 
                     for (int j = 0; j < classesShifts.size(); j++)
                         infoClasses.add(InfoClassWithInfoExecutionDegree
@@ -655,22 +656,34 @@ public class ExecutionCourseSiteComponentBuilder {
     private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component,
             ISite site) throws FenixServiceException {
         ArrayList infoLessonList = null;
-
+        
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            List aulas = sp.getIAulaPersistente().readByExecutionCourse(
-                    executionCourse);
+//                 List aulas = sp.getIAulaPersistente().readByExecutionCourse(executionCourse);
+			List aulas = new ArrayList();
 
+			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+			for (int i=0; i < shifts.size(); i++)
+            {                
+             	ITurno shift = (ITurno) shifts.get(i);
+             	List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
+             	
+             	aulas.addAll(aulasTemp);  
+            }
+			
             Iterator iterator = aulas.iterator();
             infoLessonList = new ArrayList();
             while (iterator.hasNext()) {
                 IAula elem = (IAula) iterator.next();
-                InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoExecutionCourse
-                        .newInfoFromDomain(elem);
+//                InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoExecutionCourse
+//                        .newInfoFromDomain(elem);
+                InfoLesson infoLesson = copyILesson2InfoLesson(elem);
+                
                 infoLessonList.add(infoLesson);
+                                
             }
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
@@ -679,6 +692,26 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
+    private InfoLesson copyILesson2InfoLesson(IAula lesson) {
+        InfoLesson infoLesson = null;
+        if (lesson != null) {
+            infoLesson = new InfoLesson();
+            infoLesson.setIdInternal(lesson.getIdInternal());
+            infoLesson.setDiaSemana(lesson.getDiaSemana());
+            infoLesson.setFim(lesson.getFim());
+            infoLesson.setInicio(lesson.getInicio());
+            infoLesson.setTipo(lesson.getTipo());
+            //infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));  
+            
+            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+            
+			ITurno shift = lesson.getShift();
+			InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+			infoLesson.setInfoShift(infoShift);
+        }
+        return infoLesson;
+    }
     /**
      * @param courses
      * @param site

@@ -1,19 +1,25 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -33,6 +39,7 @@ import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.RoomKey;
 import DataBeans.SiteView;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -40,6 +47,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoAula;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction
 {
@@ -448,13 +456,15 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         HttpServletResponse response)
         throws Exception
     {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String roomName = request.getParameter("roomName");
         if (roomName == null)
         {
             roomName = (String) request.getAttribute("roomName");
         }
-
+        request.setAttribute("roomName", roomName);
         RoomKey roomKey = null;
 
         if (roomName != null)
@@ -462,16 +472,57 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 
             roomKey = new RoomKey(roomName);
 
-            Integer objectCode = null;
+/*            Integer objectCode = null;
             String objectCodeString = request.getParameter("objectCode");
             if (objectCodeString == null)
             {
                 objectCodeString = (String) request.getAttribute("objectCode");
             }
             objectCode = new Integer(objectCodeString);
+*/          
             ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
+			DynaActionForm indexForm = (DynaActionForm) form;
+			Integer indexWeek = (Integer) indexForm.get("indexWeek");
+			Calendar today = Calendar.getInstance();
+			ArrayList weeks = new ArrayList();
+            try {
+                //              weeks
+                InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
+                        userView, "ReadCurrentExecutionPeriod", new Object[] {});
+                Calendar begin = Calendar.getInstance();
+                begin.setTime(executionPeriod.getBeginDate());
+                Calendar end = Calendar.getInstance();
+                end.setTime(executionPeriod.getEndDate());
+                ArrayList weeksLabelValueList = new ArrayList();
+                begin.add(Calendar.DATE, Calendar.MONDAY - begin.get(Calendar.DAY_OF_WEEK));
+                int i = 0;
+                boolean selectedWeek = false;
+                while (begin.before(end) || begin.before(Calendar.getInstance())) {
+                    Calendar day = Calendar.getInstance();
+                    day.setTimeInMillis(begin.getTimeInMillis());
+                    weeks.add(day);
+                    String beginWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
+                    begin.add(Calendar.DATE, 5);
+                    String endWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
+                    weeksLabelValueList.add(new LabelValueBean(beginWeekString + " - " + endWeekString,
+                            new Integer(i).toString()));
+                    begin.add(Calendar.DATE, 2);
+                    if (!selectedWeek && indexWeek == null && Calendar.getInstance().before(begin)) {
+                        indexForm.set("indexWeek", new Integer(i));
+                        selectedWeek = true;
+                    }
+                    i++;
+                }
 
-            Object[] args = { bodyComponent, roomKey, objectCode };
+                request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException();
+            }
+			if (indexWeek != null)
+			{
+                today = (Calendar) weeks.get(indexWeek.intValue()); 			    
+			}
+            Object[] args = { bodyComponent, roomKey, today };
 
             try
             {
@@ -479,7 +530,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
                     (SiteView) ServiceUtils.executeService(null, "RoomSiteComponentService", args);
 
                 request.setAttribute("siteView", siteView);
-                request.setAttribute("objectCode", objectCode);
+//                request.setAttribute("objectCode", objectCode);
 
             } catch (NonExistingServiceException e)
             {

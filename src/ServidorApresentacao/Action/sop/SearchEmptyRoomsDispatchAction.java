@@ -1,37 +1,26 @@
 package ServidorApresentacao.Action.sop;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoLesson;
-import DataBeans.InfoRoom;
 import DataBeans.comparators.RoomAlphabeticComparator;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import Dominio.Period;
+import Dominio.RoomOccupation;
 import ServidorAplicacao.Servico.sop.ReadEmptyRoomsService.InvalidTimeInterval;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 import Util.DiaSemana;
@@ -51,13 +40,12 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
+//		HttpSession session = request.getSession(false);
 		request.setAttribute("minutes", Util.getMinutes());
 		request.setAttribute("hours", Util.getHours());
 		request.setAttribute("weekDays", Util.getDaysOfWeek());
 
-		// execution period selection		
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+/*		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Object argsReadExecutionPeriods[] = {
 		};
@@ -100,7 +88,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		request.setAttribute(
 			SessionConstants.LABELLIST_EXECUTIONPERIOD,
 			executionPeriodsLabelValueList);
-
+*/
 		return mapping.findForward("searchPage");
 	}
 
@@ -113,7 +101,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
+				
 		try {
 			DynaValidatorForm searchForm = (DynaValidatorForm) form;
 			Integer normalCapacity = new Integer(0);
@@ -124,8 +112,9 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 				//ignored
 			}
 
-			Integer weekDay = new Integer((String) searchForm.get("weekDay"));
-
+			Integer weekDayInteger = new Integer((String) searchForm.get("weekDay"));
+			DiaSemana weekDay = new DiaSemana(weekDayInteger); 
+			
 			Calendar start = Calendar.getInstance();
 			start.set(
 				Calendar.HOUR_OF_DAY,
@@ -143,49 +132,49 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 				Integer.parseInt((String) searchForm.get("endMinutes")));
 			end.set(Calendar.SECOND, 0);
 
-			InfoRoom infoRoom = new InfoRoom();
-			infoRoom.setCapacidadeNormal(normalCapacity);
-
-			InfoLesson infoLesson = new InfoLesson();
-
-			infoLesson.setDiaSemana(new DiaSemana(weekDay));
-			infoLesson.setInicio(start);
-			infoLesson.setFim(end);
-
-			Object argsReadExecutionPeriods[] = {
-			};
-			ArrayList infoExecutionPeriodList;
-			try {
-				infoExecutionPeriodList =
-					(ArrayList) ServiceUtils.executeService(
-						null,
-						"ReadExecutionPeriods",
-						argsReadExecutionPeriods);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException();
+			if (start.after(end))
+			{
+				ActionError actionError = new ActionError("error.timeSwitched");
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add("error.timeSwitched", actionError);
+				saveErrors(request, actionErrors);
+				return prepare(mapping, form, request, response);
+			}
+								
+			Calendar startDate = Calendar.getInstance();
+			Calendar endDate = Calendar.getInstance();
+			int startDay = Integer.parseInt((String) searchForm.get("startDay"));
+			int startMonth = Integer.parseInt((String) searchForm.get("startMonth")) - 1;
+			int startYear = Integer.parseInt((String) searchForm.get("startYear"));
+			int endDay = Integer.parseInt((String) searchForm.get("endDay"));
+			int endMonth = Integer.parseInt((String) searchForm.get("endMonth")) - 1;
+			int endYear = Integer.parseInt((String) searchForm.get("endYear"));
+			 
+			startDate.set(Calendar.DAY_OF_MONTH, startDay);
+			startDate.set(Calendar.MONTH, startMonth);
+			startDate.set(Calendar.YEAR, startYear);
+			endDate.set(Calendar.DAY_OF_MONTH, endDay);
+			endDate.set(Calendar.MONTH, endMonth);
+			endDate.set(Calendar.YEAR, endYear);
+					
+			if (startDate.after(endDate))
+			{
+				ActionError actionError = new ActionError("error.dateSwitched");
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add("error.dateSwitched", actionError);
+				saveErrors(request, actionErrors);
+				return prepare(mapping, form, request, response);
 			}
 
-			Integer index = (Integer) searchForm.get("executionPeriodIndex");
-
-			InfoExecutionPeriod infoExecutionPeriod = null;
-			if (infoExecutionPeriodList != null && index != null) {
-				infoExecutionPeriod =
-					(InfoExecutionPeriod) infoExecutionPeriodList.get(
-						index.intValue());
-			}
-			// Set selected executionPeriod in request
-			request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-			request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());			
-			
-			// --------------------------------	
-
-			Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
+												
+			Object args[] = {new Period(startDate, endDate), start, end, weekDay, null, normalCapacity, new Integer(RoomOccupation.SEMANAL), null, new Boolean(true)};
 
 			List emptyRoomsList =
 				(List) ServiceUtils.executeService(
 					SessionUtils.getUserView(request),
-					"ReadEmptyRoomsService",
+					"ReadAvailableRoomsForExam",
 					args);
+										
 			Collections.sort(emptyRoomsList,new RoomAlphabeticComparator());
 			if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
 				ActionErrors actionErrors = new ActionErrors();
@@ -198,10 +187,12 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 			}
 			// keep search criteria in request 
 			// (executionPeriod is already in session...)
-			request.setAttribute("weekDay", infoLesson.getDiaSemana());
-			request.setAttribute("intervalStart",timeToString(infoLesson.getInicio()));
-			request.setAttribute("intervalEnd",timeToString(infoLesson.getFim()));
+			request.setAttribute("weekDay", weekDay);
+			request.setAttribute("intervalStart",timeToString(start));
+			request.setAttribute("intervalEnd",timeToString(end));
 			request.setAttribute("minimumCapacity", normalCapacity);
+			request.setAttribute("startDate",dateToString(startDate));
+			request.setAttribute("endDate",dateToString(endDate));
 			//--------------------------------------------
 
 			request.setAttribute("roomList", emptyRoomsList);
@@ -216,7 +207,25 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		}
 	}
 
-	private String timeToString(Calendar time) {
+    private String dateToString(Calendar date)
+    {
+		String dayStr = "";
+		String monthStr = "";
+		String yearStr = "";
+		
+		if (date.get(Calendar.DAY_OF_MONTH) < 10)
+			dayStr = "0";
+		if (date.get(Calendar.MONTH) + 1 < 10)
+			monthStr = "0";
+
+		dayStr += date.get(Calendar.DAY_OF_MONTH);
+		monthStr += date.get(Calendar.MONTH) + 1;
+		yearStr += date.get(Calendar.YEAR);
+      
+        return dayStr + "/" + monthStr + "/" + yearStr;
+    }
+
+    private String timeToString(Calendar time) {
 		String hourStr = "" + time.get(Calendar.HOUR_OF_DAY);
 		String minutesStr = "" + time.get(Calendar.MINUTE);
 

@@ -20,6 +20,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.CurricularYear;
@@ -138,14 +139,18 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
                     IAula lesson = (IAula) ((ITurno) shifts.get(i)).getAssociatedLessons().get(j);
                     InfoLesson infoLesson = new InfoLesson();
                     InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
-
+					InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+					
                     infoLesson.setDiaSemana(lesson.getDiaSemana());
                     infoLesson.setFim(lesson.getFim());
                     infoLesson.setIdInternal(lesson.getIdInternal());
                     infoLesson.setInicio(lesson.getInicio());
                     infoLesson.setTipo(lesson.getTipo());
                     infoLesson.setInfoSala(infoRoom);
-                    infoLesson.setInfoDisciplinaExecucao(infoExecutionCourse);
+					infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+					                    
+                    infoLesson.setInfoShift(infoShift);
+                    //infoLesson.setInfoDisciplinaExecucao(infoExecutionCourse);
 
                     infoShift.getInfoLessons().add(infoLesson);
 

@@ -18,6 +18,6 @@ public interface IPersistentPeriod extends IPersistentObject{
 	public List readAll() throws ExcepcaoPersistencia;
 	public void delete(IPeriod period) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
-    public Object readBy(Calendar startDate, Calendar endDate)throws ExcepcaoPersistencia;
+    public Object readByCalendarAndNextPeriod(Calendar startDate, Calendar endDate, Integer keyNextPeriod)throws ExcepcaoPersistencia;
 
 }

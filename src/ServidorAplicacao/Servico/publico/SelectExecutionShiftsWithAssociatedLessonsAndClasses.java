@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
@@ -74,16 +76,20 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses
 							null,
 							null);
 	
-					List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
+					//List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
+					List lessons = shift.getAssociatedLessons();
 					List infoLessons = new ArrayList();
 					List classesShifts =
 						sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
 					List infoClasses = new ArrayList();
 	
 					for (int j = 0; j < lessons.size(); j++)
-						infoLessons.add(
-							Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
-	
+					{
+						InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+						InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)); 
+						infoLesson.setInfoShift(infoShift);
+						infoLessons.add(infoLesson);	
+					}
 					shiftWithAssociatedClassesAndLessons.setInfoLessons(
 						infoLessons);
 	

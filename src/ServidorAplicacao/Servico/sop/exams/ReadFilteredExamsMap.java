@@ -22,13 +22,14 @@ import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriodAndExams;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionDegreeWithInfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionPeriod;
+import Dominio.CursoExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrollment;
@@ -73,6 +74,7 @@ public class ReadFilteredExamsMap implements IServico
 
         // Set Execution Degree
         infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
+        infoExamsMap.setInfoExecutionPeriod(infoExecutionPeriod);
 
         // Set List of Curricular Years
         infoExamsMap.setCurricularYears(curricularYears);
@@ -80,6 +82,8 @@ public class ReadFilteredExamsMap implements IServico
         // TODO: change this code when exams season available from database 
         // Exam seasons hardcoded because this information
         // is not yet available from the database
+        /*
+          
         Calendar startSeason1 = Calendar.getInstance();
         startSeason1.set(Calendar.YEAR, 2004);
         startSeason1.set(Calendar.MONTH, Calendar.JUNE);
@@ -112,18 +116,13 @@ public class ReadFilteredExamsMap implements IServico
             startSeason1.set(Calendar.DAY_OF_MONTH, 21);
             endSeason2.set(Calendar.DAY_OF_MONTH, 17);
         }
-
-        // Set Exam Season info
-        infoExamsMap.setStartSeason1(startSeason1);
-        infoExamsMap.setEndSeason1(null);
-        infoExamsMap.setStartSeason2(null);
-        infoExamsMap.setEndSeason2(endSeason2);
+*/
 
         // Translate to execute following queries
         //CLONER
         //ICursoExecucao executionDegree =
            //Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-        ICursoExecucao executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan.newDomainFromInfo(infoExecutionDegree);
+        //ICursoExecucao executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan.newDomainFromInfo(infoExecutionDegree);
         
         //CLONER
         //IExecutionPeriod executionPeriod =
@@ -134,6 +133,36 @@ public class ReadFilteredExamsMap implements IServico
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+
+            ICursoExecucao executionDegree =
+                (ICursoExecucao) sp.getICursoExecucaoPersistente().readByOID(
+                    CursoExecucao.class,
+                    infoExecutionDegree.getIdInternal());
+
+            IPeriod period = null;
+
+            if (infoExecutionPeriod.getSemester().equals(new Integer(1)))
+            {
+                period = executionDegree.getPeriodExamsFirstSemester();
+            }
+            else
+            {
+                period = executionDegree.getPeriodExamsSecondSemester();
+            }
+            Calendar startSeason1 = period.getStartDate();
+            Calendar endSeason2 = period.getEndDateOfComposite();
+            // The calendar must start at a monday
+            if (startSeason1.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
+            {
+                int shiftDays = Calendar.MONDAY - startSeason1.get(Calendar.DAY_OF_WEEK);
+                startSeason1.add(Calendar.DATE, shiftDays);
+            }
+
+            // Set Exam Season info
+            infoExamsMap.setStartSeason1(startSeason1);
+            infoExamsMap.setEndSeason1(null);
+            infoExamsMap.setStartSeason2(null);
+            infoExamsMap.setEndSeason2(endSeason2);
 
             // List of execution courses
             List infoExecutionCourses = new ArrayList();

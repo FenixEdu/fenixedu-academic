@@ -49,9 +49,11 @@ public class ViewClassesAction extends FenixContextAction {
         SiteView siteView = null;
         Object[] args = { component,
                 infoExecutionPeriod.getInfoExecutionYear().getYear(),
-                infoExecutionPeriod.getName(), degreeInitials,
-                nameDegreeCurricularPlan, null, curricularYear, null};
-
+				infoExecutionPeriod.getName(),
+				degreeInitials,
+				nameDegreeCurricularPlan,
+				null,
+				curricularYear,null };
         try {
             siteView = (SiteView) ServiceUtils.executeService(null,
                     "ClassSiteComponentService", args);

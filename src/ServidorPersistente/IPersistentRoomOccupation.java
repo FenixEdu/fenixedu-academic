@@ -6,6 +6,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.IAula;
 import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
 

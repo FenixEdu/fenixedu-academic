@@ -26,13 +26,20 @@ public interface IRoomOccupation extends IDomainObject{
 	public void setPeriod(IPeriod period);
 	
 	public boolean roomOccupationForDateAndTime(
-						Calendar startDate, Calendar endDate,
+						IPeriod period,
 						Calendar startTime, Calendar endTime, 
-						DiaSemana dayOfWeek, ISala room);
+						DiaSemana dayOfWeek, Integer frequency,
+						Integer week,ISala room);
 	public boolean roomOccupationForDateAndTime(
-						Calendar startDate, Calendar endDate,
+						IPeriod period,
 						Calendar startTime, Calendar endTime, 
-						DiaSemana dayOfWeek);
+						DiaSemana dayOfWeek, Integer frequency,
+						Integer week);
 	public boolean roomOccupationForDateAndTime(IRoomOccupation roomOccupation);
 
+	public Integer getFrequency();
+    public void setFrequency(int frequency);
+    public void setFrequency(Integer frequency);
+    public Integer getWeekOfQuinzenalStart();
+    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart);
 }

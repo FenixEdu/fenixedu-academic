@@ -29,7 +29,7 @@ import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoLesson;
-import DataBeans.InfoLessonWithInfoExecutionCourse;
+import DataBeans.InfoShift;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoTeacherWithPersonAndCategory;
 import DataBeans.TeacherAdministrationSiteView;
@@ -37,6 +37,7 @@ import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import DataBeans.gesdis.InfoSiteEvaluationInformation;
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
+import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.ExecutionCourse;
 import Dominio.IAula;
@@ -690,18 +691,34 @@ public class ReadCourseInformation implements IService {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private List getInfoLessons(IExecutionCourse executionCourse,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-        List lessons = persistentLesson.readByExecutionCourse(executionCourse);
+    private List getInfoLessons(IExecutionCourse executionCourse, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        //IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+        //List lessons = persistentLesson.readByExecutionCourse(executionCourse);
+		List lessons = new ArrayList();
+			
+		List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+		for (int i=0; i < shifts.size(); i++)
+		{                
+			ITurno shift = (ITurno) shifts.get(i);
+			List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
+             	
+			lessons.addAll(aulasTemp);  
+		}
+		
         List infoLessons = new ArrayList();
         Iterator iter = lessons.iterator();
-        while (iter.hasNext()) {
+        while (iter.hasNext())
+        {
             IAula lesson = (IAula) iter.next();
-            //CLONER
-            //infoLessons.add(Cloner.copyILesson2InfoLesson(lesson));
-            infoLessons.add(InfoLessonWithInfoExecutionCourse
-                    .newInfoFromDomain(lesson));
+            
+            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+            ITurno shift = lesson.getShift();
+            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+            infoLesson.setInfoShift(infoShift);
+            
+            infoLessons.add(infoLesson);
         }
         return infoLessons;
     }

@@ -27,35 +27,40 @@ public class Aula extends DomainObject implements IAula {
 
     protected ISala _sala;
 
-    protected IExecutionCourse _disciplinaExecucao;
-
+    //  protected IExecutionCourse _disciplinaExecucao;
+    protected ITurno _shift;
     protected IExecutionPeriod executionPeriod;
+    protected IRoomOccupation roomOccupation;
 
     // c�digos internos da base de dados
     private Integer _chaveSala;
 
-    private Integer _chaveDisciplinaExecucao;
+    private Integer _keyShift;
+    //    private Integer _chaveDisciplinaExecucao;
 
     private Integer keyExecutionPeriod;
-
+    private Integer keyRoomOccupation;
     /**
      * @return
      */
-    public IExecutionPeriod getExecutionPeriod() {
+    public IExecutionPeriod getExecutionPeriod()
+    {
         return executionPeriod;
     }
 
     /**
      * @param executionPeriod
      */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public void setExecutionPeriod(IExecutionPeriod executionPeriod)
+    {
         this.executionPeriod = executionPeriod;
     }
 
     /**
      * @return
      */
-    public Integer getKeyExecutionPeriod() {
+    public Integer getKeyExecutionPeriod()
+    {
         return keyExecutionPeriod;
     }
 
@@ -76,15 +81,24 @@ public class Aula extends DomainObject implements IAula {
     public Aula(Integer idInternal) {
         setIdInternal(idInternal);
     }
-
-    public Aula(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo, ISala sala,
-            IExecutionCourse disciplinaExecucao) {
+    public Aula(
+        DiaSemana diaSemana,
+        Calendar inicio,
+        Calendar fim,
+        TipoAula tipo,
+        ISala sala,
+        IRoomOccupation roomOccupation,
+        ITurno shift /* ,IExecutionCourse disciplinaExecucao*/
+    )
+    {
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
         setTipo(tipo);
         setSala(sala);
-        setDisciplinaExecucao(disciplinaExecucao);
+        setRoomOccupation(roomOccupation);
+        setShift(shift);
+        //    setDisciplinaExecucao(disciplinaExecucao);
     }
 
     public DiaSemana getDiaSemana() {
@@ -126,7 +140,7 @@ public class Aula extends DomainObject implements IAula {
     public void setChaveSala(Integer chaveSala) {
         _chaveSala = chaveSala;
     }
-
+    /* 
     public Integer getChaveDisciplinaExecucao() {
         return _chaveDisciplinaExecucao;
     }
@@ -145,7 +159,7 @@ public class Aula extends DomainObject implements IAula {
             setExecutionPeriod(disciplinaExecucao.getExecutionPeriod());
         }
     }
-
+*/
     public ISala getSala() {
         return _sala;
     }
@@ -158,14 +172,15 @@ public class Aula extends DomainObject implements IAula {
         boolean resultado = false;
         if (obj instanceof IAula) {
             IAula aula = (IAula) obj;
-
-            resultado = getDiaSemana().equals(aula.getDiaSemana())
-                    && (getInicio().get(Calendar.HOUR_OF_DAY) == aula.getInicio().get(
-                            Calendar.HOUR_OF_DAY))
+            resultado =
+                getDiaSemana().equals(aula.getDiaSemana())
+                    && (getInicio().get(Calendar.HOUR_OF_DAY)
+                        == aula.getInicio().get(Calendar.HOUR_OF_DAY))
                     && (getInicio().get(Calendar.MINUTE) == aula.getInicio().get(Calendar.MINUTE))
                     && (getFim().get(Calendar.HOUR_OF_DAY) == aula.getFim().get(Calendar.HOUR_OF_DAY))
                     && (getFim().get(Calendar.MINUTE) == aula.getFim().get(Calendar.MINUTE))
-                    && getSala().getNome().equals(aula.getSala().getNome());
+                    && getSala().getNome().equals(aula.getSala().getNome())
+                    && getRoomOccupation().getRoom().getNome().equals(aula.getRoomOccupation().getRoom().getNome());
         }
 
         return resultado;
@@ -182,9 +197,37 @@ public class Aula extends DomainObject implements IAula {
             result += ", fim=" + _fim.get(Calendar.HOUR_OF_DAY) + ":" + _fim.get(Calendar.MINUTE);
         result += ", tipo=" + _tipo;
         result += ", chaveSala=" + _chaveSala;
-        result += ", chaveDisciplinaExecucao=" + _chaveDisciplinaExecucao;
+        //    result += ", chaveDisciplinaExecucao=" + _chaveDisciplinaExecucao;
         result += "]";
         return result;
+    }
+    /**
+     * @return
+     */
+    public ITurno getShift()
+    {
+        return _shift;
+    }
+    /**
+     * @param shift
+     */
+    public void setShift(ITurno shift)
+    {
+        this._shift = shift;
+    }
+    /**
+     * @return
+     */
+    public Integer getKeyShift()
+    {
+        return _keyShift;
+    }
+    /**
+     * @param shift
+     */
+    public void setKeyShift(Integer shift)
+    {
+        _keyShift = shift;
     }
 
     /*
@@ -195,6 +238,25 @@ public class Aula extends DomainObject implements IAula {
     public double hours() {
         TimePeriod timePeriod = new TimePeriod(this.getInicio(),this.getFim());
         return timePeriod.hours().doubleValue();
+    }
+    public Integer getKeyRoomOccupation()
+    {
+        return keyRoomOccupation;
+    }
+
+    public void setKeyRoomOccupation(Integer keyRoomOccupation)
+    {
+        this.keyRoomOccupation = keyRoomOccupation;
+    }
+
+    public IRoomOccupation getRoomOccupation()
+    {
+        return roomOccupation;
+    }
+
+    public void setRoomOccupation(IRoomOccupation roomOccupation)
+    {
+        this.roomOccupation = roomOccupation;
     }
 
 }

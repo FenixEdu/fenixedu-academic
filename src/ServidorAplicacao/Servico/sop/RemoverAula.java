@@ -10,6 +10,7 @@ package ServidorAplicacao.Servico.sop;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
+import Dominio.IAula;
 import Dominio.ISala;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
@@ -46,12 +47,14 @@ public class RemoverAula implements IServico {
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      ISala room = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+      //ISala room = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
       		      
-	  ITurno shift = Cloner.copyInfoShift2Shift(infoShift);		      
-  
-      sp.getITurnoAulaPersistente().delete(shift, infoLesson.getDiaSemana(),
-                                           infoLesson.getInicio(), infoLesson.getFim(), room);
+	  //ITurno shift = Cloner.copyInfoShift2Shift(infoShift);		      
+  	  IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
+  	  
+  	  sp.getIAulaPersistente().delete(lesson);	
+//      sp.getITurnoAulaPersistente().delete(shift, infoLesson.getDiaSemana(),
+//                                           infoLesson.getInicio(), infoLesson.getFim(), room);
       result = true;
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();

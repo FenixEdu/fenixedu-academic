@@ -33,10 +33,11 @@ public class CreateExecutionPeriod implements IService
     {
     }
 
+	//SERVICO PARA SER REMOVIDO
     public Boolean run(InfoExecutionPeriod infoExecutionPeriodOfWorkingArea,
             InfoExecutionPeriod infoExecutionPeriodToExportDataFrom) throws FenixServiceException
     {
-
+/*
         Boolean result = new Boolean(false);
 
         try
@@ -102,7 +103,8 @@ public class CreateExecutionPeriod implements IService
             throw new FenixServiceException(ex.getMessage());
         }
 
-        return result;
+        return result;*/
+        return null;
     }
 
     public class InvalidExecutionPeriod extends FenixServiceException

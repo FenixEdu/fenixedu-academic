@@ -59,7 +59,8 @@ public interface ITurnoPersistente extends IPersistentObject
     /**
      * @return
      */
-    public List readByLesson(IAula lesson) throws ExcepcaoPersistencia;
+	public List readByLesson(IAula lesson) throws ExcepcaoPersistencia;
+	public ITurno readShiftByLesson(IAula lesson) throws ExcepcaoPersistencia;
 
     public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(IStudent student,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;

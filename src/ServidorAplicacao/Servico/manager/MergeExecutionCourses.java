@@ -326,18 +326,18 @@ public class MergeExecutionCourses implements IService {
             IExecutionCourse source, ISuportePersistente ps)
             throws ExcepcaoPersistencia {
         ITurnoPersistente persistentShift = ps.getITurnoPersistente();
-        IAulaPersistente persistentLesson = ps.getIAulaPersistente();
+//        IAulaPersistente persistentLesson = ps.getIAulaPersistente();
         List sourceShifts = persistentShift.readByExecutionCourse(source);
         Iterator iter = sourceShifts.iterator();
         while (iter.hasNext()) {
             ITurno shift = (ITurno) iter.next();
-            List sourceLessons = shift.getAssociatedLessons();
+			/*List sourceLessons = shift.getAssociatedLessons();
             Iterator iterator = sourceLessons.iterator();
             while (iterator.hasNext()) {
                 IAula lesson = (IAula) iterator.next();
                 persistentLesson.simpleLockWrite(lesson);
                 lesson.setDisciplinaExecucao(destination);
-            }
+            }*/
             persistentShift.simpleLockWrite(shift);
             shift.setDisciplinaExecucao(destination);
         }

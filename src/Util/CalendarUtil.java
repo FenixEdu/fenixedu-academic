@@ -32,6 +32,13 @@ public class CalendarUtil
 
 		return !doesNotIntersect;
 	}
+	
+	public static boolean equalDates(Calendar date1, Calendar date2) {
+		String date1String = date2string(date1);
+		String date2String = date2string(date2);
+		
+		return date1String.equals(date2String);
+	}
 
     private static String date2string(Calendar date) {
 		return DateFormatUtils.format(date.getTime(), "yyyyMMdd");

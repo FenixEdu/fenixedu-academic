@@ -71,6 +71,20 @@
     	    </td> 
 	 	</tr>
 	   <tr>
+	        <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.quinzenal"/>: </td>
+    	    <td nowrap="nowrap">
+        	 	<html:checkbox property="quinzenal" disabled="true"/>
+        	 	<html:hidden property="quinzenal"/>
+    	    </td> 
+	 	</tr>
+	 	<tr>
+	        <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.week"/>: </td>
+    	    <td nowrap="nowrap">
+        	 	<html:text property="week" size="1" disabled="true"/>
+        	 	<html:hidden property="week"/>
+    	    </td> 
+	 	</tr>
+	    <tr>
     		<td><bean:message key="property.aula.sala"/>: </td> 
        		<td>
      			<html:select property="nomeSala" size="1" >

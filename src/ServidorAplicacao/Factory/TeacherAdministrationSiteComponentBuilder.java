@@ -1496,8 +1496,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                                 shift.getTipo(), shift.getLotacao(),
                                 InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
-                        List lessons = sp.getITurnoAulaPersistente()
-                                .readByShift(shift);
+//                        List lessons = sp.getITurnoAulaPersistente()
+//                                .readByShift(shift);
+                        List lessons = shift.getAssociatedLessons();
+                            
                         List infoLessons = new ArrayList();
                         List classesShifts = sp.getITurmaTurnoPersistente()
                                 .readClassesWithShift(shift);

@@ -15,9 +15,11 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
 import DataBeans.InfoSiteClasses;
 import DataBeans.InfoSiteTimetable;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -29,7 +31,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -110,23 +111,28 @@ public class PublicSiteComponentBuilder {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ITurnoAulaPersistente shiftLessonDAO = sp
-                    .getITurnoAulaPersistente();
-            List shiftList = sp.getITurmaTurnoPersistente().readByClass(
-                    domainClass);
+           //ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
+            List shiftList = sp.getITurmaTurnoPersistente().readByClass(domainClass);
             Iterator iterator = shiftList.iterator();
             infoLessonList = new ArrayList();
 
             while (iterator.hasNext()) {
                 ITurno shift = (ITurno) iterator.next();
                 InfoShift infoShift = copyIShift2InfoShift(shift);
-                List lessonList = shiftLessonDAO.readByShift(shift);
+                InfoExecutionCourse infoExecutionCourse =
+                    copyIExecutionCourse2InfoExecutionCourse(shift.getDisciplinaExecucao());
+                infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+                
+				//List lessonList = shiftLessonDAO.readByShift(shift);
+                List lessonList = shift.getAssociatedLessons();
                 Iterator lessonIterator = lessonList.iterator();
                 while (lessonIterator.hasNext()) {
                     IAula elem = (IAula) lessonIterator.next();
                     InfoLesson infoLesson = copyILesson2InfoLesson(elem);
 
                     if (infoLesson != null) {
+                    	infoLesson.setInfoShift(infoShift);
+                    	
                         infoLesson.getInfoShiftList().add(infoShift);
                         infoLessonList.add(infoLesson);
                     }
@@ -150,11 +156,10 @@ public class PublicSiteComponentBuilder {
             infoLesson.setFim(lesson.getFim());
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
-            infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
-            infoLesson
-                    .setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(lesson
-                            .getDisciplinaExecucao()));
-
+            //infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));  
+            
+            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
         }
         return infoLesson;
     }

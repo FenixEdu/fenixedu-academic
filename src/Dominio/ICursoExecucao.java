@@ -25,4 +25,14 @@ public interface ICursoExecucao extends Serializable, IDomainObject {
 	void setCoordinatorsList(List coordinatorsList);
 	void setTemporaryExamMap(Boolean bool);
 	void setCampus(ICampus campus);
+	
+	// added by amsg 4 Jun 2004
+	IPeriod getPeriodLessonsFirstSemester();
+	IPeriod getPeriodExamsFirstSemester();
+	IPeriod getPeriodLessonsSecondSemester();
+	IPeriod getPeriodExamsSecondSemester();
+	void setPeriodLessonsFirstSemester(IPeriod p);
+	void setPeriodExamsFirstSemester(IPeriod p);
+	void setPeriodLessonsSecondSemester(IPeriod p);
+	void setPeriodExamsSecondSemester(IPeriod p);
 }

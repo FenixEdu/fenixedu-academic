@@ -240,6 +240,14 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
         return queryList(Sala.class, criteria);
     }
     
+	public List readByNormalCapacity(Integer capacity) throws ExcepcaoPersistencia
+	{
+		System.out.println(capacity);
+		Criteria criteria = new Criteria();
+		criteria.addGreaterOrEqualThan("capacidadeNormal", capacity);
+		return queryList(Sala.class, criteria);
+	}
+        
     /**
      * Returns a class list
      * 

@@ -58,7 +58,7 @@ public class TransformerMigrationLessonToIAula implements Transformer
                     new TransformerMigrationExecutionCourse2ExecutionCourse();
                 IExecutionCourse executionCourse =
                     (IExecutionCourse) transf.transform(migrationExecutionCourse);
-                lesson.setDisciplinaExecucao(executionCourse);
+//                lesson.setDisciplinaExecucao(executionCourse);
 
                 migrationLesson.setLesson(lesson);
             } else

@@ -41,6 +41,7 @@ import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.ITurno;
 import Dominio.ResponsibleFor;
+import Dominio.Turno;
 import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -514,8 +515,19 @@ public class ReadCoursesInformation implements IService {
      */
     private List getInfoLessons(IExecutionCourse executionCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-        List lessons = persistentLesson.readByExecutionCourse(executionCourse);
+        //IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+        ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        
+        List shifts = persistentShift.readByExecutionCourse(executionCourse);
+        
+        List lessons = new ArrayList();
+        
+        for(int i=0; i < shifts.size(); i++)
+        {
+            Turno shift = (Turno) shifts.get(i);
+            lessons.addAll(shift.getAssociatedLessons());
+        }
+                
         List infoLessons = new ArrayList();
         Iterator iter = lessons.iterator();
         while (iter.hasNext()) {

@@ -1,17 +1,21 @@
 package DataBeans;
 
+import java.util.Calendar;
+
 import Dominio.IEvaluation;
 import Dominio.IFinalEvaluation;
 import Dominio.IOnlineTest;
 import Dominio.IWrittenEvaluation;
+import Util.DiaSemana;
 import Util.EvaluationType;
+import Util.TipoAula;
 
 /**
  * @author Ângela
  * 
  * 25/6/2003
  */
-public class InfoEvaluation extends InfoObject implements ISiteComponent {
+public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent {
 
     private String publishmentMessage;
 
@@ -74,6 +78,15 @@ public class InfoEvaluation extends InfoObject implements ISiteComponent {
     public void setEvaluationType(EvaluationType type) {
         evaluationType = type;
     }
+
+	//Methods inherited from abstract InfoShowOccupations - not used
+    public InfoShift getInfoShift() { return null; }
+    public TipoAula getTipo() { return null; }
+    public InfoRoomOccupation getInfoRoomOccupation() { return null; }
+    public DiaSemana getDiaSemana() { return null; }
+    public Calendar getInicio() { return null; }
+    public Calendar getFim() { return null; }
+
 
     public void copyFromDomain(IEvaluation evaluation) {
         super.copyFromDomain(evaluation);

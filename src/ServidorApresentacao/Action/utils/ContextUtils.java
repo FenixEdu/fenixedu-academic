@@ -478,17 +478,21 @@ public class ContextUtils {
      * @param request
      */
     public static void setSelectedRoomIndexContext(HttpServletRequest request) {
-        String selectedRoomIndexString = (String) request
-                .getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
+        //        String selectedRoomIndexString =
+        //            (String) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
+        Integer selectedRoomIndex = (Integer) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
 
-        if (selectedRoomIndexString == null) {
-            selectedRoomIndexString = request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
-        }
+        //        if (selectedRoomIndexString == null)
+        //        {
+        String selectedRoomIndexString = request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
+        //        }
 
-        Integer selectedRoomIndex = null;
-        if (selectedRoomIndexString != null) {
-            selectedRoomIndex = new Integer(selectedRoomIndexString);
+        //        Integer selectedRoomIndex = null;
+        if (selectedRoomIndex != null) {
             // Place it in request
+            request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
+        } else if (selectedRoomIndexString != null) {
+            selectedRoomIndex = new Integer(selectedRoomIndexString);
             request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
         } else {
             System.out.println("ERROR: Missing selectedRoomIndex in request");
@@ -511,6 +515,7 @@ public class ContextUtils {
         try {
             executionDegreeList = (List) ServiceUtils.executeService(userView,
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+ 
         } catch (FenixServiceException e) {
 
             e.printStackTrace();

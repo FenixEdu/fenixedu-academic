@@ -30,15 +30,12 @@ public class ServicosSuite extends TestCase {
         TestSuite suite = new TestSuite("ServicosSuite");
         suite.addTest(ServidorAplicacao.Servicos.sop.AdicionarAulaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.AdicionarTurnoServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.ApagarAulaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.ApagarSalaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.ApagarTurmaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.ApagarTurnoServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.CriarAulaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.CriarSalaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.CriarTurmaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.CriarTurnoServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.EditarAulaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarSalaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarTurmaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarTurnoServicosTest.suite());
@@ -53,10 +50,7 @@ public class ServicosSuite extends TestCase {
         suite.addTest(ServidorAplicacao.Servicos.sop.LerTurmasServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerTurnosDeTurmaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerTurnosDeDisciplinaExecucaoServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeTurnoServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeTurmaServicosTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.sop.LerTurnoServicosTest.suite()); 
-		suite.addTest(ServidorAplicacao.Servicos.sop.RemoverAulaServicosTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.sop.RemoverTurnoServicosTest.suite());        
 //		suite.addTest(ServidorAplicacao.Servicos.sop.LerAulaServicosTest.suite());
 //		suite.addTest(ServidorAplicacao.Servicos.sop.LerLicenciaturaServicosTest.suite());

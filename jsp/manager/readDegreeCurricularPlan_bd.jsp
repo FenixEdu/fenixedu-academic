@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="DataBeans.InfoPeriod" %>
 <table>
 	<tr>
 		<logic:present name="infoDegreeCurricularPlan">
@@ -105,6 +107,14 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.temporaryExamMap" />
 					</td>
+					<td class="listClasses-header">Aulas 1º Semestre
+					</td>
+					<td class="listClasses-header">Exames 1º Semestre
+					</td>
+					<td class="listClasses-header">Aulas 2º Semestre
+					</td>
+					<td class="listClasses-header">Exames 2º Semestre
+					</td>
 					<td class="listClasses-header">
 					</td>
 				</tr>
@@ -161,6 +171,68 @@
 						<logic:notPresent name="tempExamMap">
 							---
 						</logic:notPresent>	
+					</td>
+
+					<%-- LESSONS FIRST SEMESTER --%>
+
+					<td class="listClasses">
+						<logic:present name="executionDegree" property="infoPeriodLessonsFirstSemester">
+							<bean:define id="startDate" name="executionDegree" property="infoPeriodLessonsFirstSemester.startDate"/>
+							<%= ((Calendar)startDate).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)startDate).get(Calendar.MONTH)+1 %>/<%= ((Calendar)startDate).get(Calendar.YEAR) %>
+							a
+							<bean:define id="endDatePeriod" name="executionDegree" property="infoPeriodLessonsFirstSemester"/>
+							<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.MONTH)+ 1 %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.YEAR) %>
+						</logic:present>
+						<logic:notPresent name="executionDegree" property="infoPeriodLessonsFirstSemester">
+							---
+						</logic:notPresent>
+					</td>
+
+					<%-- EXAMS FIRST SEMESTER --%>
+
+					<td class="listClasses">
+						<logic:present name="executionDegree" property="infoPeriodExamsFirstSemester">
+							<bean:define id="startDate" name="executionDegree" property="infoPeriodExamsFirstSemester.startDate"/>
+							<%= ((Calendar)startDate).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)startDate).get(Calendar.MONTH)+1 %>/<%= ((Calendar)startDate).get(Calendar.YEAR) %>
+							a
+							<bean:define id="endDatePeriod" name="executionDegree" property="infoPeriodExamsFirstSemester"/>
+							<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.MONTH)+ 1 %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.YEAR) %>
+						</logic:present>
+						<logic:notPresent name="executionDegree" property="infoPeriodExamsFirstSemester">
+							---
+						</logic:notPresent>
+					</td>
+
+					<%-- LESSONS SECOND SEMESTER --%>
+
+					<td class="listClasses">
+						<logic:present name="executionDegree" property="infoPeriodLessonsSecondSemester">
+							<bean:define id="startDate" name="executionDegree" property="infoPeriodLessonsSecondSemester.startDate"/>
+							<%= ((Calendar)startDate).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)startDate).get(Calendar.MONTH)+1 %>/<%= ((Calendar)startDate).get(Calendar.YEAR) %>
+							a
+							<bean:define id="endDatePeriod" name="executionDegree" property="infoPeriodLessonsSecondSemester"/>
+							<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.MONTH)+ 1 %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.YEAR) %>
+							
+						</logic:present>
+						<logic:notPresent name="executionDegree" property="infoPeriodLessonsSecondSemester">
+							---
+						</logic:notPresent>
+					</td>					
+
+					<%-- EXAMS SECOND SEMESTER --%>
+
+					<td class="listClasses">
+						<logic:present name="executionDegree" property="infoPeriodExamsSecondSemester">
+							<bean:define id="startDate" name="executionDegree" property="infoPeriodExamsSecondSemester.startDate"/>
+							<%= ((Calendar)startDate).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)startDate).get(Calendar.MONTH)+1 %>/<%= ((Calendar)startDate).get(Calendar.YEAR) %>
+							a
+							<bean:define id="endDatePeriod" name="executionDegree" property="infoPeriodExamsSecondSemester"/>
+							<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.DAY_OF_MONTH) %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.MONTH)+ 1 %>/<%= ((Calendar)((InfoPeriod) endDatePeriod).endDateOfComposite()).get(Calendar.YEAR) %>
+							
+						</logic:present>
+						<logic:notPresent name="executionDegree" property="infoPeriodExamsSecondSemester">
+							---
+						</logic:notPresent>
 					</td>
 					<td class="listClasses">
 						<html:link page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message key="label.edit"/></html:link>

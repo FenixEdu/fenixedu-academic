@@ -18,9 +18,11 @@ import java.util.List;
 import DataBeans.ExecutionCourseKeyAndLessonType;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
+import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -59,16 +61,34 @@ public class LerAulasDeDisciplinaExecucaoETipo implements IServico {
 			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			List aulas =
-				sp.getIAulaPersistente().readByExecutionCourseAndLessonType(
-					executionCourse,
-					tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
+//			List aulas =
+//				sp.getIAulaPersistente().readByExecutionCourseAndLessonType(
+//					executionCourse,
+//					tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
+			List aulas = new ArrayList();
+			
+			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+			for (int i=0; i < shifts.size(); i++)
+			{                
+				ITurno shift = (ITurno) shifts.get(i);
+				List aulasTemp = sp.getIAulaPersistente().
+								readLessonsByShiftAndLessonType(
+									shift,
+									tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
+             	
+				aulas.addAll(aulasTemp);  
+			}
+
 
 			Iterator iterator = aulas.iterator();
 			infoAulas = new ArrayList();
 			while (iterator.hasNext()) {
 				IAula lesson = (IAula) iterator.next();
 				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+				ITurno shift = lesson.getShift();
+				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+				infoLesson.setInfoShift(infoShift);
+				
 				infoAulas.add(infoLesson);
 			}
 		} catch (ExcepcaoPersistencia ex) {
