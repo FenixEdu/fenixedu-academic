@@ -22,8 +22,15 @@
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getAttribute("degreeCurricularPlanId").toString() %>" />
 			
 	<b><bean:message key="label.manager.periodToApplyRestriction" />:</b>&nbsp;
-	<html:select property="number" >	
-		<html:options collection="periodToApplyList" labelProperty="name" property="value"/>
+	<html:select property="number" >
+		<logic:iterate id="periodToApply" name="periodToApplyList">
+			<bean:define id="keyPeriod" name="periodToApply" property="name"/>
+			<bean:write name="keyPeriod" />
+			<bean:define id="valuePeriod" name="periodToApply" property="value"/>
+			<bean:write name="valuePeriod" />
+			
+			<html:option key="<%= keyPeriod.toString() %>" value="<%= valuePeriod.toString() %>"/>
+		</logic:iterate>
 	</html:select>
 	<p />
 	<table>

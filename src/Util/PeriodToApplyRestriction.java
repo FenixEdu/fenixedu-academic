@@ -22,7 +22,7 @@ public class PeriodToApplyRestriction extends FenixValuedEnum {
     public static final PeriodToApplyRestriction FIRST_SEMESTER = new PeriodToApplyRestriction("label.manager.first.semester",
             PeriodToApplyRestriction.FIRST_SEMESTER_INT);
 
-    public static final PeriodToApplyRestriction SECOND_SEMESTER = new PeriodToApplyRestriction("label.manager.second.semesters",
+    public static final PeriodToApplyRestriction SECOND_SEMESTER = new PeriodToApplyRestriction("label.manager.second.semester",
             PeriodToApplyRestriction.SECOND_SEMESTER_INT);
     
     /**

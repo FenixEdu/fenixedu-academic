@@ -83,7 +83,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 persistentRestriction.lockWrite(restrictionPeriodToApply);
                 
             } else if (className.equals(RestrictionDoneCurricularCourse.class.getName().substring(
-                    RestrictionDoneCurricularCourse.class.getName().lastIndexOf(".") + 1))) {
+                    RestrictionDoneCurricularCourse.class.getName().lastIndexOf(".") + 1)) && precedentCurricularCourse != null) {
                 IRestrictionByCurricularCourse restrictionByCurricularCourse = new RestrictionDoneCurricularCourse();
                 restrictionByCurricularCourse.setPrecedence(precedence);
                 restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
@@ -91,7 +91,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 persistentRestriction.lockWrite(restrictionByCurricularCourse);
                 
             } else if (className.equals(RestrictionNotDoneCurricularCourse.class.getName().substring(
-                    RestrictionNotDoneCurricularCourse.class.getName().lastIndexOf(".") + 1))) {
+                    RestrictionNotDoneCurricularCourse.class.getName().lastIndexOf(".") + 1)) && precedentCurricularCourse != null) {
                 IRestrictionByCurricularCourse restrictionByCurricularCourse = new RestrictionNotDoneCurricularCourse();
                 restrictionByCurricularCourse.setPrecedence(precedence);
                 restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
@@ -101,7 +101,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
              } else if (className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class
                             .getName().substring(
                                     RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class
-                                            .getName().lastIndexOf(".") + 1))) {
+                                            .getName().lastIndexOf(".") + 1)) && precedentCurricularCourse != null) {
                 IRestrictionByCurricularCourse restrictionByCurricularCourse = new RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
                 restrictionByCurricularCourse.setPrecedence(precedence);
                 restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
@@ -113,20 +113,22 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                                     .getName()
                                     .substring(
                                             RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class
-                                                    .getName().lastIndexOf(".") + 1))) {
+                                                    .getName().lastIndexOf(".") + 1)) && precedentCurricularCourse != null) {
                IRestrictionByCurricularCourse restrictionByCurricularCourse = new RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse();
                restrictionByCurricularCourse.setPrecedence(precedence);
                restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
                
                persistentRestriction.lockWrite(restrictionByCurricularCourse);
            } else if (className.equals(RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName().substring(
-                   RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName().lastIndexOf(".") + 1))) {
+                   RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName().lastIndexOf(".") + 1))  && precedentCurricularCourse != null) {
                IRestrictionByCurricularCourse restrictionByCurricularCourse = new RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse();
                restrictionByCurricularCourse.setPrecedence(precedence);
                restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
                
                persistentRestriction.lockWrite(restrictionByCurricularCourse);
                
+            } else {
+                throw new FenixServiceException("error.manager.impossible.insertPrecedence");
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
