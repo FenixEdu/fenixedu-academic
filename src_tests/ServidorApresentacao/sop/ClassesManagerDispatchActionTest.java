@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
@@ -24,6 +23,7 @@ import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
+import ServidorApresentacao.TestCasePresentation;
 import ServidorApresentacao.Action.sop.ClassesManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -32,7 +32,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author João Mota
  *
  */
-public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
+public class ClassesManagerDispatchActionTest extends TestCasePresentation {
 
 	/**
 	 * Constructor for ClassesManagerDispatchAction.

@@ -53,30 +53,26 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 			InfoClass classView = getInfoTurma(request);
 
-			
 			InfoShift infoShift = new InfoShift();
-			
-			
-			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY); 
-			
+
+			InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) session.getAttribute(
+					SessionConstants.EXECUTION_COURSE_KEY);
+
 			infoShift.setNome(shiftName);
 			infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-			
-			Object[] argsAdicionarTurno = { classView, infoShift};
 
-			
-			
+			Object[] argsAdicionarTurno = { classView, infoShift };
+
 			ServiceUtils.executeService(
 				userView,
 				"AdicionarTurno",
 				argsAdicionarTurno);
-			
+
 			setClassShiftListToRequest(request, userView, classView.getNome());
 
-			
-
-//			/* TO REMOVE */
-//			session.setAttribute(SessionConstants.CLASS_VIEW, classView);
+			//			/* TO REMOVE */
+			//			session.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
@@ -144,9 +140,9 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		setShiftAvailableListToRequest(request, userView);
-       
+
 		request.setAttribute(AVAILABLE_LIST, " ");
-        
+
 		return mapping.findForward("viewAvailableShiftList");
 
 	}
@@ -188,14 +184,17 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		String className)
 		throws Exception {
 
-
-		
 		HttpSession session = request.getSession();
-		
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-		
-		Object argsLerTurnosTurma[] = { className, infoExecutionDegree, infoExecutionPeriod};
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+
+		Object argsLerTurnosTurma[] =
+			{ className, infoExecutionDegree, infoExecutionPeriod };
 
 		setShiftListToRequest(
 			request,
@@ -211,13 +210,17 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		String className)
 		throws Exception {
 
-		
 		HttpSession session = request.getSession();
-		
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-		
-		Object argsLerTurnosTurma[] = { className, infoExecutionDegree, infoExecutionPeriod};
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+
+		Object argsLerTurnosTurma[] =
+			{ className, infoExecutionDegree, infoExecutionPeriod };
 
 		ArrayList list =
 			returnShiftList(
@@ -253,6 +256,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 				userView,
 				"LerTurnosDeDisciplinaExecucao",
 				argsLerTurnosDeDisciplinaExecucao);
+		System.out.println("=============executei o outro serviço===========");
 		if (listAvailable != null && listClassShift != null) {
 			listAvailable.removeAll(listClassShift);
 		}
@@ -260,23 +264,23 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		if (listAvailable != null && !listAvailable.isEmpty()) {
 			request.setAttribute(SHIFT_LIST_ATT, listAvailable);
 		}
-	
 
-}
+	}
 
-/**
- * Method getInfoTurma.
- * @param request
- * @return InfoClass
- */
-private InfoClass getInfoTurma(HttpServletRequest request) throws Exception {
-	HttpSession session = request.getSession();
+	/**
+	 * Method getInfoTurma.
+	 * @param request
+	 * @return InfoClass
+	 */
+	private InfoClass getInfoTurma(HttpServletRequest request)
+		throws Exception {
+		HttpSession session = request.getSession();
 
-	InfoClass classView =
-		(InfoClass) session.getAttribute(SessionConstants.CLASS_VIEW);
-	if (classView == null)
-		throw new Exception("Class is not in session!");
-	return classView;
-}
+		InfoClass classView =
+			(InfoClass) session.getAttribute(SessionConstants.CLASS_VIEW);
+		if (classView == null)
+			throw new Exception("Class is not in session!");
+		return classView;
+	}
 
 }

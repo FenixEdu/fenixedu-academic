@@ -4,20 +4,10 @@ import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import servletunit.struts.MockStrutsTestCase;
-
-import Dominio.IPessoa;
-import Dominio.Pessoa;
-import Dominio.Privilegio;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.TestCasePresentation;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoDocumentoIdentificacao;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 
 /**
@@ -45,9 +35,7 @@ public class AutenticacaoSOPFormActionTest extends TestCasePresentation {
     
   }
   
-  public void tearDown() throws Exception {
-    super.tearDown();
-  }
+  
   
   public AutenticacaoSOPFormActionTest(String testName) {
     super(testName);
@@ -58,7 +46,7 @@ public class AutenticacaoSOPFormActionTest extends TestCasePresentation {
     setRequestPathInfo("", "/autenticacaoSOPForm");
 
     // Preenche campos do formulário
-    addRequestParameter("utilizador","nome");
+    addRequestParameter("utilizador","user");
     addRequestParameter("password","pass");
 
     // coloca credenciais na sessão
@@ -76,9 +64,9 @@ public class AutenticacaoSOPFormActionTest extends TestCasePresentation {
     verifyNoActionErrors();
     
     //verifica UserView guardado na sessão
-    UserView newUserView = (UserView) getSession().getAttribute("UserView");
-    assertEquals("Verify UserView", newUserView.getUtilizador(), "nome");
-    assertTrue("", newUserView.getPrivilegios().contains("CriarSitio"));
+    UserView newUserView = (UserView) getSession().getAttribute(SessionConstants.U_VIEW);
+    assertEquals("Verify UserView", newUserView.getUtilizador(), "user");
+    assertTrue("Verify authorization", newUserView.getPrivilegios().contains("CriarSala"));
   }
   
 
@@ -110,23 +98,7 @@ public class AutenticacaoSOPFormActionTest extends TestCasePresentation {
     assertEquals("Verify UserView", newUserView.getUtilizador(), "athirduser");
   }
 
-  protected void ligarSuportePersistente() {
-    try {
-      _suportePersistente = SuportePersistenteOJB.getInstance();
-    } catch (ExcepcaoPersistencia excepcao) {
-      fail("Exception when opening database");
-    }
-    _pessoaPersistente = _suportePersistente.getIPessoaPersistente();
-  }
+  
     
-  protected void cleanData() {
-    try {
-      _suportePersistente.iniciarTransaccao();
-      //_pessoaPersistente.deleteAll();
-      _pessoaPersistente.apagarTodasAsPessoas();
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia excepcao) {
-      fail("Exception when cleaning data");
-    }
-  } 
+  
 }
