@@ -76,8 +76,9 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 													args);	
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
-				}		
-				Collections.sort(executionDegrees);
+				}
+				if(executionDegrees!=null)		
+					Collections.sort(executionDegrees);
 								
 				List curricularCourses = null;
 				try {		

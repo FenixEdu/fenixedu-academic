@@ -26,7 +26,15 @@
 	<li><html:link page="/insertCurricularCourse.do?method=prepareInsert" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>			
 </ul>
 
+<ul style="list-style-type: square;">
+	<li><html:link page="/insertExecutionDegree.do?method=prepareInsert" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
+</ul>
+
 <h3><bean:message key="label.manager.curricularCourses"/></h3>
+
+<logic:empty name="curricularCoursesList">
+<i><bean:message key="label.manager.curricularCourses.nonExisting"/></i>
+</logic:empty>
 
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
 
@@ -42,6 +50,8 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.name" />
 					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.code" />
+					</td>
 				</tr>
 				<logic:iterate id="curricularCourse" name="curricularCoursesList">
 				<tr>	 
@@ -52,15 +62,65 @@
 					</td>				
 					<td class="listClasses"><html:link page="/readCurricularCourse.do" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="name"/></html:link>
 					</td>
+					<td class="listClasses"><html:link page="/readCurricularCourse.do" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="code"/></html:link>
+					</td>
 	 			</tr>
 	 			</logic:iterate>				
 				<span class="error"><html:errors/></span>		
 			</table>
 			
-<br>
 <br>	
 
 		<html:submit><bean:message key="label.manager.delete.selected.curricularCourses"/></html:submit>
+	</html:form> 
+</logic:notEmpty>	 	
+</logic:present>
+
+<br>
+
+<logic:empty name="curricularCoursesList">
+<i><bean:message key="label.manager.executionDegrees.nonExisting"/></i>
+</logic:empty>
+
+<h3><bean:message key="label.manager.executionDegrees"/></h3>
+
+<logic:present name="executionDegreesList" scope="request">
+<logic:notEmpty name="executionDegreesList">
+	
+	<html:form action="/deleteDegreeCurricularPlans" method="get">
+		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+			<table width="50%" cellpadding="0" border="0">
+				<tr>
+					<td class="listClasses-header">
+			
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.executionYear" />
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.coordinator" />
+					</td>
+				</tr>
+				<logic:iterate id="executionDegree" name="executionDegreesList">
+				<tr>	 
+					<td class="listClasses">
+						<html:multibox property="internalIds">
+							<bean:write name="executionDegree" property="idInternal"/>
+						</html:multibox>
+					</td>
+					<bean:define id="executionYear" name="executionDegree" property="infoExecutionYear"/>				
+					<td class="listClasses"><html:link page="/readExecutionDegree.do" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:write name="executionYear" property="year"/></html:link>
+					</td>
+					<bean:define id="coordinator" name="executionDegree" property="infoCoordinator"/>
+					<bean:define id="person" name="coordinator" property="infoPerson"/>
+					<td class="listClasses"><html:link page="/readTeacher.do"><bean:write name="person" property="nome"/></html:link>
+					</td>
+	 			</tr>
+	 			</logic:iterate>				
+				<span class="error"><html:errors/></span>		
+			</table>
+			
+<br>	
+
+		<html:submit><bean:message key="label.manager.delete.selected.executionDegrees"/></html:submit>
 	</html:form> 
 </logic:notEmpty>	 	
 </logic:present>
