@@ -8,6 +8,7 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/exam_map.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 </head>
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>

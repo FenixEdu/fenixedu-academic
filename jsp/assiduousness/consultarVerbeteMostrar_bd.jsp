@@ -29,7 +29,7 @@
       </td>
     </tr>
     <tr>
-      <td  colspan="2">
+      <td colspan="2">
 		<bean:define id="headers" name="MostrarListaForm" property="headers" />      	
 		<bean:define id="body" name="MostrarListaForm" property="body" />	
 		<tiles:insert definition="definition.report" flush="true">
@@ -45,7 +45,7 @@
       </td>
     </tr>
     <tr>
-      <td  colspan='2'>
+      <td colspan='2'>
       	<bean:define id="headers" name="MostrarListaForm" property="headers2" />      	
 		<bean:define id="body" name="MostrarListaForm" property="body2" />	
 		<tiles:insert definition="definition.report" flush="true">
@@ -56,7 +56,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan='2' align="left"><br></td>
+      <td colspan="2" align="left"><br></td>
     </tr>
     <tr>
       <td colspan="2" align="center">

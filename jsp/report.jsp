@@ -20,7 +20,7 @@
 <table>	
 	<tr>
 		<logic:iterate id="header" name="headers">
-			<th style="text-align: center; background-color: #ccc; padding: 5px; border: 1px solid #999;"><bean:write name="header" /></th>	
+			<td class="listClasses-header"><bean:write name="header" /></th>	
 		</logic:iterate>
 	</tr>
 	<logic:iterate id="row" name="rows" indexId="rowIndex">
@@ -42,7 +42,7 @@
 			</logic:notEqual>
 		</logic:equal>
 		<bean:write name="startTr" filter="false"></bean:write>
-			<td class="verbete-td"><bean:write name="row" filter="false"/></td>
+			<td nowrap="nowrap" class="verbete-td"><bean:write name="row" filter="false"/></td>
 		<bean:write name="closeTr" filter="false"></bean:write>
 	</logic:iterate>
 </table> 
