@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<h2 style="text-align:center">
+<h2>
 	<bean:message key="title.student.shift.enrollment" />
 </h2>
 <span class="error"><html:errors/></span>
@@ -15,7 +15,7 @@
 	<bean:define id="studentId" name="infoShiftEnrollment" property="infoStudent.idInternal" />
 	<table>
 	<tr>
-		<td class="infoop" style="text-align:center">
+		<td class="infoop">
 			<bean:message key="message.shift.enrollment.help"/>
 		</td>
 	</tr>
@@ -29,7 +29,7 @@
 					</html:link>
 				</li>
 				<li>
-					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>">
+					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?keyMethodMap=proceedToShiftEnrolment&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>">
 						<bean:message key="link.shift.enrolement.edit" />
 					</html:link>
 				</li>
@@ -48,8 +48,8 @@
 			<logic:present name="elem">
 				<logic:notEqual name="elem" value="<%=infoShift.getInfoDisciplinaExecucao().getNome()%>">
 					<tr>
-						<td class="listClasses-header" style="text-align:left">
-							<b><bean:message key="label.course" />:</b>&nbsp;
+						<td class="listClasses-subheader" style="text-align:left">
+							<bean:message key="label.course" />:&nbsp;
 							<bean:write name="infoShift" property="infoDisciplinaExecucao.nome" />
 						</td>
 					</tr>	
@@ -99,5 +99,3 @@
 		</table>
 	</logic:present>
 </logic:present>
-
-
