@@ -57,47 +57,6 @@
 	</reference-descriptor>
 </class-descriptor>
 
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.EvaluationMethod -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.EvaluationMethod"
-                  table="EVALUATION_METHOD">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor id="2"
-        name="keyCurricularCourse"
-        column="KEY_CURRICULAR_COURSE"
-        jdbc-type="INTEGER"
-	/>
-         
-    <field-descriptor id="3"
-         name="evaluationElements"
-         column="EVALUATION_ELEMENTS"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
-        />
-    	 
-    <field-descriptor id="4"
-         name="evaluationElementsEn"
-         column="EVALUATION_ELEMENTS_EN"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
-        />
-        
-    <reference-descriptor
-         name="curricularCourse"
-         class-ref="Dominio.CurricularCourse"
-         proxy="true"
-    >
-	<foreignkey field-id-ref="2"/>
-	
-	</reference-descriptor>
-</class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for Dominio.Announcement -->
