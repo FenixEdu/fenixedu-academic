@@ -1,9 +1,9 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/fenixLayoutPub_2col.jsp" flush="true">
-  <tiles:put name="title" value=".Instituto Superior Técnico" />
-  <tiles:put name="serviceName" value="Instituto Superior Técnico" />
+<tiles:insert page="/publicGesDisLayout_2col.jsp" flush="true">
+  <tiles:put name="title" value=".Instituto Superior Tï¿½cnico" />
+  <tiles:put name="serviceName" value="Instituto Superior Tï¿½cnico" />
   <tiles:put name="navGeral" value="" />
-  <tiles:put name="navLocal" value="/publico/commonNavLocalPub.jsp" />
+  <tiles:put name="navbar" value="/publico/commonNavLocalPub.jsp" />
   <tiles:put name="body" value="/publico/index_bd.jsp" />
   <tiles:put name="footer" value="/publico/commonFooterPub.jsp" />
 </tiles:insert>

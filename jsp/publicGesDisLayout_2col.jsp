@@ -13,7 +13,7 @@
 <link href="<%= request.getContextPath()+ "/CSS/" + pageContext.findAttribute("style") %>" rel="stylesheet" type="text/css" />	
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.INFO_SITE %>" property="style">
-<link href="<%= request.getContextPath() %>/CSS/gesdis-alt.css" rel="stylesheet" type="text/css" />	
+<link href="<%= request.getContextPath() %>/CSS/gesdis-web.css" rel="stylesheet" type="text/css" />	
 </logic:notPresent>		
 
 

@@ -83,7 +83,7 @@
 </logic:present>
      <logic:present name="<%= SessionConstants.INFO_SITE %>" property="introduction">
 	<h2><bean:message key="message.introduction" /></h2>
-      <p><bean:write name="<%= SessionConstants.INFO_SITE %>" property="introduction" /></p>
+      <p><bean:write name="<%= SessionConstants.INFO_SITE %>" property="introduction" filter="false" /></p>
         	
       <br/>
       <br/>
