@@ -167,6 +167,9 @@ public class CurriculumDispatchAction extends DispatchAction
 				result = new ArrayList();
 			}
 		}
+		if(result == null) {
+			result = new ArrayList();
+		}
 		getExecutionDegree(request);
 
 		request.setAttribute("studentCPs", result);
