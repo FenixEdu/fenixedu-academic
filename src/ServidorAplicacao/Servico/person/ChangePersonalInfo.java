@@ -19,22 +19,11 @@
 package ServidorAplicacao.Servico.person;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 
-import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
-import DataBeans.util.Cloner;
-import Dominio.CandidateSituation;
-import Dominio.ICandidateSituation;
 import Dominio.ICountry;
-import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import ServidorAplicacao.ICandidateView;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.CandidateView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -42,7 +31,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.SituationName;
 
 public class ChangePersonalInfo implements IServico {
     
@@ -89,7 +77,12 @@ public class ChangePersonalInfo implements IServico {
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person !!");	
 
+
+
 		sp.getIPessoaPersistente().escreverPessoa(person);
+
+
+
 
 		// Get new Country
 		ICountry nationality = null;
@@ -146,52 +139,52 @@ public class ChangePersonalInfo implements IServico {
 		person.setNacionalidade(newInfoPerson.getNacionalidade());
 		
 		
-		//change the situation if the person is an candidate
-		List masterDegreeCandidates = new ArrayList();
-		try {
-		masterDegreeCandidates = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(person.getUsername());
-		
-
-	  	if (masterDegreeCandidates.size() != 0){
-	  
-		// Create a list with the active situations of the Candidate
-		   ICandidateView candidateView = null;
-		   Iterator iterator = masterDegreeCandidates.iterator();
-		   List result = new ArrayList();
-		   List situations = new ArrayList();
-		   while(iterator.hasNext()){
-			   IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next(); 
-			   InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
-			   Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
-			  
-			   while (situationIterator.hasNext()){ 
-				   ICandidateSituation candidateSituation = (ICandidateSituation) situationIterator.next(); 
-				   
-				   // Check if this is the Active Situation
-				   if 	(candidateSituation.getValidation().equals(new Util.State(Util.State.ACTIVE))){
-						sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
-						candidateSituation.setValidation(new Util.State(Util.State.INACTIVE));
-						
-								//Create the New Candidate Situation			
-								candidateSituation = new CandidateSituation();
-								Calendar calendar = Calendar.getInstance();
-								candidateSituation.setDate(calendar.getTime());
-								candidateSituation.setSituation(new SituationName(SituationName.PENDENT_COM_DADOS));
-								candidateSituation.setValidation(new Util.State(Util.State.ACTIVE));
-								candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
-								sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
-								situations.add(Cloner.copyICandidateSituation2InfoCandidateSituation(candidateSituation));	
-								candidateView = new CandidateView(situations);
-								userView.setCandidateView(candidateView);	
-				   }
-			   }			
-		   }
-		}
-		} catch (ExcepcaoPersistencia ex) {
-		   FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-		   newEx.fillInStackTrace();
-		   throw newEx;
-	   } 
+//		//change the situation if the person is an candidate
+//		List masterDegreeCandidates = new ArrayList();
+//		try {
+//			masterDegreeCandidates = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(person.getUsername());
+//			
+//	
+//		  	if (masterDegreeCandidates.size() != 0){
+//		  
+//			// Create a list with the active situations of the Candidate
+//			   ICandidateView candidateView = null;
+//			   Iterator iterator = masterDegreeCandidates.iterator();
+//			   List result = new ArrayList();
+//			   List situations = new ArrayList();
+//			   while(iterator.hasNext()){
+//				   IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next(); 
+//				   InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+//				   Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+//				  
+//				   while (situationIterator.hasNext()){ 
+//					   ICandidateSituation candidateSituation = (ICandidateSituation) situationIterator.next(); 
+//					   
+//					   // Check if this is the Active Situation
+//					   if 	(candidateSituation.getValidation().equals(new Util.State(Util.State.ACTIVE))){
+//							sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+//							candidateSituation.setValidation(new Util.State(Util.State.INACTIVE));
+//							
+//							//Create the New Candidate Situation			
+//							candidateSituation = new CandidateSituation();
+//							Calendar calendar = Calendar.getInstance();
+//							candidateSituation.setDate(calendar.getTime());
+//							candidateSituation.setSituation(new SituationName(SituationName.PENDENT_COM_DADOS));
+//							candidateSituation.setValidation(new Util.State(Util.State.ACTIVE));
+//							candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
+//							sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+//							situations.add(Cloner.copyICandidateSituation2InfoCandidateSituation(candidateSituation));	
+//							candidateView = new CandidateView(situations);
+//							userView.setCandidateView(candidateView);	
+//					   }
+//				   }			
+//			   }
+//			}
+//		} catch (ExcepcaoPersistencia ex) {
+//		   FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+//		   newEx.fillInStackTrace();
+//		   throw newEx;
+//	   } 
 
 	    return userView;
     }
