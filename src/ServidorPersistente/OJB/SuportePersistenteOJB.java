@@ -585,11 +585,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new DegreeCurricularPlanEnrolmentInfoOJB();
     }
 
-    public IPersistentPossibleCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse()
-    {
-        return new PossibleCurricularCourseForOptionalCurricularCourseOJB();
-    }
-
     public IPersistentStudentKind getIPersistentStudentKind()
     {
         return new StudentKindOJB();

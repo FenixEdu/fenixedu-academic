@@ -40,22 +40,6 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
-		<!-- ******************* Enrollment in optional courses **************** -->
-		<form-bean name="optionalCoursesEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="studentNumber" type="java.lang.String"/>			
-			<form-property name="executionYear" type="java.lang.String"/>
-			<form-property name="degreeType" type="java.lang.String"/>
-			<form-property name="executionDegreeID" type="java.lang.Integer"/>
-			<form-property name="studentCurricularPlanID" type="java.lang.Integer"/>
-			<form-property name="curricularCourseID" type="java.lang.Integer"/>
-			<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
-			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
-			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
-			<form-property name="curricularYears" type="java.lang.Integer[]"/>
-			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
-		</form-bean>
-		
 		<!-- =================== Change student areas =================== -->
 		<form-bean name="changeStudentAreasForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="studentNumber" type="java.lang.String"/>
@@ -170,21 +154,6 @@
 			<forward name="exit" path="/index.do"/>
 		</action>		
 
-
-		<!-- ******************* Enrollment in optional courses **************** -->
-		<action path="/optionalCoursesEnrolmentManagerDA"
-			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.OptionalCoursesEnrollmentManagerDispatchAction"
-			input="/optionalCoursesEnrolmentManagerDA.do?method=chooseStudentAndExecutionYear&amp;degreeType=1"
-			name="optionalCoursesEnrolmentForm"
-			scope="request"
-			parameter="method">
-				<forward name="chooseStudentAndExecutionYear" path="df.page.chooseStudentAndExecutionYear"/>			
-				<forward name="showAvailableOptionalCourses" path="df.page.showAvailableOptionalCourses"/>
-				<forward name="showAvailableExecutionDegrees" path="df.page.showAvailableExecutionDegrees"/>
-				<forward name="showChosenDegreeCourses" path="df.page.showChosenDegreeCourses"/>
-				<forward name="enrollmentConfirmation" path="df.page.optionalEnrollmentConfirmation"/>
-				<forward name="exit" path="/globalEnrolment.do"/>
-		</action>		
 
 		<!-- =================== Change student areas =================== -->
 		<action path="/changeStudentAreas"

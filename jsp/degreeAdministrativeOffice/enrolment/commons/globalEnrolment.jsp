@@ -10,9 +10,4 @@
 	<li>
 		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"><bean:message key="link.student.enrollment.without.rules"/></html:link>
 	</li>
-<%--
-	<li>
-		<html:link page="/optionalCoursesEnrolmentManagerDA.do?method=chooseStudentAndExecutionYear&amp;degreeType=1"><bean:message key="title.student.optional.enrollment"/></html:link>
-	</li>
---%>
 </ul>

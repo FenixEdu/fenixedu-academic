@@ -43,6 +43,7 @@
 <!ENTITY executionYear SYSTEM "repository_execution_year.xml">
 <!ENTITY schoolRegistrationInquiryAnswer SYSTEM "repository_school_registration_inquiry_answer.xml">
 <!ENTITY curricularCourseGroup SYSTEM "repository_curricular_course_group.xml">
+<!ENTITY enrollment SYSTEM "repository_enrollment.xml">
 ]>
 
 
@@ -91,4 +92,6 @@
     &executionYear;
 	&schoolRegistrationInquiryAnswer;
 	&curricularCourseGroup;
+	&enrollment;
+
 </descriptor-repository>

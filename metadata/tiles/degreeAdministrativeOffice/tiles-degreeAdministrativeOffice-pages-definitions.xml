@@ -57,27 +57,6 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/showCurricularCourseToEnroll.jsp"/>
 	</definition>	
 
-	<!-- ******************* Enrollment in optional courses **************** -->
-	<definition name="df.page.chooseStudentAndExecutionYear" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/chooseStudentAndExecutionYear.jsp"/>
-	</definition>
-	<definition name="df.page.showAvailableOptionalCourses" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/showAvailableOptionalCourses.jsp"/>
-	</definition>
-	<definition name="df.page.showAvailableExecutionDegrees" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/showAvailableExecutionDegrees.jsp"/>
-	</definition>	
-	<definition name="df.page.showChosenDegreeCourses" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/showChosenDegreeCourses.jsp"/>
-	</definition>	
-	<definition name="df.page.optionalEnrollmentConfirmation" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/optionalEnrollmentConfirmation.jsp"/>
-	</definition>	
-
 	<!-- =================== Change student areas =================== -->
 	<definition name="df.page.chooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/areas/chooseStudent.jsp"/>

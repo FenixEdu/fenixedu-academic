@@ -108,15 +108,19 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
      * @param curricularCourse2
      * @return
      */
-    private boolean containsScope(ICurricularCourseGroup curricularCourseGroup,
-            ICurricularCourse curricularCourse2) {
+    private boolean containsScope(ICurricularCourseGroup curricularCourseGroup, ICurricularCourse curricularCourse2) {
+
+        if (curricularCourseGroup.getCurricularCourses() == null || curricularCourseGroup.getCurricularCourses().isEmpty()) {
+            return true;
+        }
+
         Iterator iter = curricularCourseGroup.getCurricularCourses().iterator();
         boolean result = true;
         while (iter.hasNext() && result) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-            result = haveCommonCurricularSemester(curricularCourse2.getScopes(), curricularCourse
-                    .getScopes());
+            result = haveCommonCurricularSemester(curricularCourse2.getScopes(), curricularCourse.getScopes());
         }
+
         return result;
     }
 

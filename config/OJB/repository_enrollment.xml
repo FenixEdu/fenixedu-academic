@@ -1,0 +1,253 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.Enrolment -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.Enrolment" table="ENROLMENT">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="studentCurricularPlanKey"
+		column="KEY_STUDENT_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>    
+	<field-descriptor
+		name="enrollmentState"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
+	/>
+	<field-descriptor
+		name="condition"
+		column="FNL_TMP_STATE"
+		jdbc-type="VARCHAR"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
+	/>
+	<field-descriptor
+		name="enrolmentEvaluationType"
+		column="EVALUATION_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<field-descriptor
+		name="creationDate"
+		column="CREATION_DATE"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+	<reference-descriptor
+			name="studentCurricularPlan"
+			class-ref="Dominio.StudentCurricularPlan"
+			proxy="true">
+		<foreignkey field-ref="studentCurricularPlanKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="curricularCourseKey"/>
+	</reference-descriptor>      
+	<reference-descriptor 
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="true">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+	<collection-descriptor
+			name="evaluations"
+			proxy="true"
+			refresh="true"
+			element-class-ref="Dominio.EnrolmentEvaluation">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>    
+	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+	<extent-class class-ref="Dominio.EnrolmentInOptionalCurricularCourse"/>
+	<extent-class class-ref="Dominio.EnrolmentInExtraCurricularCourse"/>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.EnrolmentInOptionalCurricularCourse -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="studentCurricularPlanKey"
+		column="KEY_STUDENT_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>    
+	<field-descriptor
+		name="enrollmentState"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
+	/>
+	<field-descriptor
+		name="condition"
+		column="FNL_TMP_STATE"
+		jdbc-type="VARCHAR"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
+	/>
+	<field-descriptor
+		name="enrolmentEvaluationType"
+		column="EVALUATION_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<field-descriptor
+		name="creationDate"
+		column="CREATION_DATE"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+	<reference-descriptor
+			name="studentCurricularPlan"
+			class-ref="Dominio.StudentCurricularPlan"
+			proxy="true">
+		<foreignkey field-ref="studentCurricularPlanKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="curricularCourseKey"/>
+	</reference-descriptor>      
+	<reference-descriptor 
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="true">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+	<collection-descriptor
+			name="evaluations"
+			proxy="true"
+			refresh="true"
+			element-class-ref="Dominio.EnrolmentEvaluation">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>    
+	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.EnrolmentInExtraCurricularCourse -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.EnrolmentInExtraCurricularCourse" table="ENROLMENT">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="studentCurricularPlanKey"
+		column="KEY_STUDENT_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>    
+	<field-descriptor
+		name="enrollmentState"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
+	/>
+	<field-descriptor
+		name="condition"
+		column="FNL_TMP_STATE"
+		jdbc-type="VARCHAR"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
+	/>
+	<field-descriptor
+		name="enrolmentEvaluationType"
+		column="EVALUATION_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<field-descriptor
+		name="creationDate"
+		column="CREATION_DATE"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+	<reference-descriptor
+			name="studentCurricularPlan"
+			class-ref="Dominio.StudentCurricularPlan"
+			proxy="true">
+		<foreignkey field-ref="studentCurricularPlanKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="curricularCourseKey"/>
+	</reference-descriptor>      
+	<reference-descriptor 
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="true">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+	<collection-descriptor
+			name="evaluations"
+			proxy="true"
+			refresh="true"
+			element-class-ref="Dominio.EnrolmentEvaluation">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>    
+	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+</class-descriptor>
