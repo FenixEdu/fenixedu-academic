@@ -22,9 +22,7 @@ public class InfoBranch extends InfoObject {
 
     private Integer secondaryCredits;
 
-    //	private List associatedCurricularCourses;
-    //	private List associatedStudentCurricularPlans;
-    //	private List infoScopes;
+    
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
     private BranchType branchType;
@@ -35,9 +33,7 @@ public class InfoBranch extends InfoObject {
         setName(null);
         setCode(null);
         setInfoDegreeCurricularPlan(null);
-        //		setAssociatedCurricularCourses(null);
-        //		setAssociatedStudentCurricularPlans(null);
-        //		setInfoScopes(null);
+       
     }
 
     public InfoBranch(String name, String code) {
@@ -129,32 +125,7 @@ public class InfoBranch extends InfoObject {
         this.name = name;
     }
 
-    //	public List getAssociatedCurricularCourses() {
-    //		return associatedCurricularCourses;
-    //	}
-
-    //	public List getAssociatedStudentCurricularPlans() {
-    //		return associatedStudentCurricularPlans;
-    //	}
-
-    //	public void setAssociatedCurricularCourses(List
-    // associatedCurricularCourses) {
-    //		this.associatedCurricularCourses = associatedCurricularCourses;
-    //	}
-
-    //	public void setAssociatedStudentCurricularPlans(List
-    // associatedStudentCurricularPlans) {
-    //		this.associatedStudentCurricularPlans = associatedStudentCurricularPlans;
-    //	}
-
-    //	public List getInfoScopes() {
-    //		return infoScopes;
-    //	}
-    //
-    //	public void setInfoScopes(List infoScopes) {
-    //		this.infoScopes = infoScopes;
-    //	}
-
+   
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
         return infoDegreeCurricularPlan;
     }
