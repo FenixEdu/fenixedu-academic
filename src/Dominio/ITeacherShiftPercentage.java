@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author Fernanda & Tânia
  *
  */
-public interface ICreditsTeacher extends Serializable {
+public interface ITeacherShiftPercentage extends Serializable {
 	IProfessorship getProfessorShip();
 	void setProfessorShip(IProfessorship professorShip);
 	 

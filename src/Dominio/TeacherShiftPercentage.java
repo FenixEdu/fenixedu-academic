@@ -4,7 +4,7 @@ package Dominio;
  * @author Tânia & Alexandra
  *
  */
-public class CreditsTeacher extends DomainObject implements ICreditsTeacher {
+public class TeacherShiftPercentage extends DomainObject implements ITeacherShiftPercentage {
 	private IProfessorship professorShip = null;
 	private Integer keyProfessorShip = null;
 
@@ -14,13 +14,13 @@ public class CreditsTeacher extends DomainObject implements ICreditsTeacher {
 	private Double percentage = null;
 
 	/* construtor */
-	public CreditsTeacher() {
+	public TeacherShiftPercentage() {
 	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof ICreditsTeacher) {
-			ICreditsTeacher creditsTeacher = (ICreditsTeacher) obj;
+		if (obj instanceof ITeacherShiftPercentage) {
+			ITeacherShiftPercentage creditsTeacher = (ITeacherShiftPercentage) obj;
 
 			resultado = (getProfessorShip().equals(creditsTeacher.getProfessorShip())) 
 			&& (getShift().equals(creditsTeacher.getShift()));

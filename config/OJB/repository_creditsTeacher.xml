@@ -1,9 +1,9 @@
 <!-- Please keep user defined mappings in this file only
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
-<!-- Definitions for Dominio.CreditsTeacher -->
+<!-- Definitions for Dominio.TeacherShiftPercentage -->
    <class-descriptor
-   	  class="Dominio.CreditsTeacher"
+   	  class="Dominio.TeacherShiftPercentage"
    	  table="TEACHER_SHIFT_PERCENTAGE"
    >
       <field-descriptor
