@@ -108,6 +108,24 @@
       </action>
 
 
+ 	  <!-- Action for the Coordinator to List the Students -->
+	  <action path="/listStudentsForCoordinator"
+		      parameter="method"
+		      scope="session"
+              type="ServidorApresentacao.Action.masterDegree.coordinator.StudentListDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/> 
+	  </action>
+
+        <!-- List Student Curriculum -->
+        <action path="/studentCurriculum"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
+			  >
+	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
+	  </action>
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

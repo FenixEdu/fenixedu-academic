@@ -27,35 +27,9 @@ import Util.TipoCurso;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
+
 public class StudentListDispatchAction extends DispatchAction {
 	
-	
-	public ActionForward getDegreeCurricularPlan (ActionMapping mapping, ActionForm form,
-													HttpServletRequest request,
-													HttpServletResponse response)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-
-		if (session != null) {
-			
-			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
-
-System.out.println(infoExecutionDegree);
-
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-			infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan(); 
-
-System.out.println(infoDegreeCurricularPlan);
-
-			request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, infoDegreeCurricularPlan);
-
-			return mapping.findForward("MasterDegreeReady");
-		} else
-		  throw new Exception();   
-	  }
-
-
 	public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form,
 												HttpServletRequest request,
 												HttpServletResponse response)
@@ -68,10 +42,13 @@ System.out.println(infoDegreeCurricularPlan);
 			GestorServicos serviceManager = GestorServicos.manager();
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	
-			//Get the Selected Degree Curricular Plan
-			Integer degreeCurricularPlanID = new Integer((String) request.getParameter("curricularPlanID"));
-	
-			Object args[] = { degreeCurricularPlanID , TipoCurso.MESTRADO_OBJ };
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+			infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan(); 
+
+			Integer id = infoDegreeCurricularPlan.getIdInternal();
+			Object args[] = { id , TipoCurso.MESTRADO_OBJ };
 			List result = null;
 	
 			try {
@@ -82,12 +59,11 @@ System.out.println(infoDegreeCurricularPlan);
 				throw new NonExistingActionException("error.exception.noStudents", "");
 			}
 
-			BeanComparator numberComparator = new BeanComparator("number");
+			BeanComparator numberComparator = new BeanComparator("infoStudent.number");
 				Collections.sort(result, numberComparator);
 
 			request.setAttribute(SessionConstants.STUDENT_LIST, result);
-	
-			return mapping.findForward("CurricularPlanReady");
+			return mapping.findForward("PrepareSuccess");
 		} else
 		  throw new Exception();   
   }

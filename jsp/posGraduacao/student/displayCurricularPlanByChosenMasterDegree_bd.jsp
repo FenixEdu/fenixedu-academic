@@ -28,4 +28,3 @@
 			<br>
         </html:link>
 	</logic:iterate>
-

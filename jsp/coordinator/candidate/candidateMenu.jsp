@@ -8,7 +8,5 @@
 --%>
 	<br>
 	
-<%--	
 	<html:link page="/studentSection.do"><bean:message key="link.coordinator.student" />
     </html:link><br>
---%>

@@ -372,24 +372,63 @@
 	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
 	  </action>
 	  
-	  <!-- Action for the Coordinator to List the Students -->
-	  <action path="/listStudentsForCoordinator"
-		      parameter="method"
-		      scope="session"
-              type="ServidorApresentacao.Action.masterDegree.coordinator.StudentListDispatchAction"
-			  >
-	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
-	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
-	  </action>
-
-
-        <!-- List Student Curriculum -->
-        <action path="/studentCurriculum"
+      <!-- List Student Curriculum -->
+      <action path="/studentCurriculum"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
 			  >
 	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
+	  </action>
+
+
+	  <!-- Action to choose an Execution Year to List the students by course -->
+      <action attribute="chooseExecutionYearToListCourseStudents"
+			  input="/chooseExecutionYear.jsp"
+      	      name="chooseExecutionYearForm"
+		      path="/chooseExecutionYearToListCourseStudents"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+              validate="true">
+	         <forward name="PrepareSuccess" path="/student/chooseExecutionYearToCourseStudentList.jsp"/>  
+	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCourseStudentList.do?method=prepareChooseMasterDegree&amp;page=0"/>  
+      </action>
+
+      <!-- Choose Master Degree To List the students by course -->
+      <action path="/chooseMasterDegreeToCourseStudentList"
+	          input="/student/chooseMasterDegreeToDegreeStudentList.jsp"
+		      attribute="chooseMasterDegreeForm"
+		      name="chooseMasterDegreeForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/student/chooseMasterDegreeToCourseStudentList.jsp"/>  
+	         <forward name="ChooseSuccess" path="/chooseCurricularCourseToCourseStudentList.do?method=prepareChooseCurricularCourse"/>
+      </action>
+
+      <!-- Choose CurricularCourse To List the students by course -->
+      <action path="/chooseCurricularCourseToCourseStudentList"
+      		  input="/student/chooseCurricularCourseToCourseStudentList.jsp"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/student/chooseCurricularCourseToCourseStudentList.jsp"/>  
+	         <forward name="ChooseSuccess" path="/student/displayStudentListByCourse.jsp"/> 
+      </action>
+
+
+	  <!-- List Students from Course -->
+	  <action path="/listCourseStudents"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.CourseListingDispatchAction"
+			  >
+	   <!-- TO UPDATE -->
+	         <forward name="DisplayMasterDegreeList" path="/student/displayMasterDegrees.jsp"/>
+	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
+	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
 	  </action>
 
 <!-- ////////////////// CHECK UTILITY ON STUDENTS LISTINGS BEFORE DELETING ///////////////////// -->

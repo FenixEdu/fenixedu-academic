@@ -8,8 +8,8 @@
     <p><b><bean:message key="label.coordinator.student" /></b></p>
 <ul>
     
-    <li><html:link page="/listMasterDegrees.do?method=chooseDegreeFromList&page=0"><bean:message key="link.studentListByDegree" /></html:link></li>
-    </br>
+    <li><html:link page="/listMasterDegrees.do?method=chooseDegreeFromList&jspTitle=title.studentListByDegree&page=0"><bean:message key="link.studentListByDegree" /></html:link></li>
+	<li><html:link page="/chooseExecutionYearToListCourseStudents.do?method=prepareChooseExecutionYear&jspTitle=title.studentListByCourse&page=0"><bean:message key="link.studentListByCourse" /></html:link></li>
     <li><html:link page="/chooseCertificateInfoAction.do?method=prepare&page=0"><bean:message key="link.certificate" /></html:link></li>
     <li><html:link page="/chooseDeclarationInfoAction.do?method=prepare&page=0"><bean:message key="link.declarations" /></html:link></li>
     <li><html:link page="/chooseFinalResultInfoAction.do?method=prepare&page=0"><bean:message key="link.finalResult" /></html:link></li>

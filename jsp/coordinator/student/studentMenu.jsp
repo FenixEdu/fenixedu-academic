@@ -7,6 +7,6 @@
 	<br>
   
   	<bean:message key="label.coordinator.student" /><br>
-        &nbsp;&nbsp;- <html:link page="/studentListByDegree.do?method=getList&page=0"><bean:message key="link.coordinator.studentListByDegree" /></html:link><br>
+        &nbsp;&nbsp;- <html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0"><bean:message key="link.coordinator.studentListByDegree" /></html:link><br>
 	<br>
 	
