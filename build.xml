@@ -536,8 +536,6 @@
             </classpath>
         </junit>
     </target>
-
-    <target depends="compile-tests, create-tables"
   
     <target depends="compile-tests, create-tables"
             description="Executa todos os testes da camada de aplicacao"
