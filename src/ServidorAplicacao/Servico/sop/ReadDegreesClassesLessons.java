@@ -32,7 +32,9 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
+/**
+ * TODO Remove cloner deste serviço...
+ */
 public class ReadDegreesClassesLessons implements IService {
 
     public List run(List infoExecutionDegrees, InfoExecutionPeriod infoExecutionPeriod) {
