@@ -8,6 +8,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IExecutionCourse;
+import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -45,5 +46,11 @@ public interface IPersistentProfessorship extends IPersistentObject
      * @return List of  Dominio.IProfessorship
      */
     public List readByTeacherAndTypeOfDegree(ITeacher teacher, TipoCurso degreeType) throws ExcepcaoPersistencia;
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @return
+     */
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;;
 
 }

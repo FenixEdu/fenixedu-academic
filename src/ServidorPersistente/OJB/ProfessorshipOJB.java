@@ -11,6 +11,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.IExecutionCourse;
+import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.Professorship;
@@ -191,5 +192,16 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso",
                 degreeType);
         return queryList(Professorship.class, criteria, true);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
+     */
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+		criteria.addEqualTo("executionCourse.keyExecutionPeriod", executionPeriod.getIdInternal());
+        return queryList(Professorship.class, criteria);
     }
 }
