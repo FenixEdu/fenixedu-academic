@@ -35,6 +35,7 @@ import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentItem;
@@ -307,6 +308,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	 */
 	public IPersistentTeacher getIPersistentTeacher() {
 		return new TeacherOJB();
+	}
+
+	public IPersistentExam getIPersistentExam() {
+		return new ExamOJB();
 	}
 
 }

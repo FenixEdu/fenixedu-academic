@@ -355,7 +355,7 @@
    </class-descriptor>   
 
 <!-- Definitions for Dominio.Exam -->
-<!--   <class-descriptor
+   <class-descriptor
    	  class="Dominio.Exam"
    	  table="EXAM"
    >
@@ -369,8 +369,7 @@
       <field-descriptor
          name="day"
          column="DAY"
-         jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
+         jdbc-type="DATE"
       />
       <field-descriptor
          name="beginning"

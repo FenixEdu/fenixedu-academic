@@ -5,13 +5,14 @@
 package Dominio;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
 public class Exam extends DomainObject implements IExam {
 
-	protected Calendar day;
+	protected Date day;
 	protected Calendar beginning;
 	protected Calendar end;
 	protected IDisciplinaExecucao executionCourse;
@@ -23,9 +24,7 @@ public class Exam extends DomainObject implements IExam {
 	public boolean equals(Object obj) {
 		if (obj instanceof Exam) {
 			Exam examObj = (Exam) obj;
-			return this.getDay().get(Calendar.DAY_OF_MONTH) == examObj.getDay().get(Calendar.DAY_OF_MONTH)
-				   && this.getDay().get(Calendar.MONTH) == examObj.getDay().get(Calendar.MONTH)
-				   && this.getDay().get(Calendar.YEAR) == examObj.getDay().get(Calendar.YEAR)
+			return this.getDay().equals(examObj.getDay())
 				   && this.getBeginning().get(Calendar.HOUR_OF_DAY) == examObj.getBeginning().get(Calendar.HOUR_OF_DAY)
 				   && this.getBeginning().get(Calendar.MINUTE) == examObj.getBeginning().get(Calendar.MINUTE)
 			       && this.getBeginning().get(Calendar.SECOND) == examObj.getBeginning().get(Calendar.SECOND)
@@ -47,6 +46,15 @@ public class Exam extends DomainObject implements IExam {
 			+ "";
 	}
 
+
+	public Exam(Date day, Calendar beginning, Calendar end, IDisciplinaExecucao executionCourse) {
+		this.setDay(day);
+		this.setBeginning(beginning);
+		this.setEnd(end);
+		this.setExecutionCourse(executionCourse);
+	}
+
+
 	/**
 	 * @return Calendar
 	 */
@@ -57,7 +65,7 @@ public class Exam extends DomainObject implements IExam {
 	/**
 	 * @return Calendar
 	 */
-	public Calendar getDay() {
+	public Date getDay() {
 		return day;
 	}
 
@@ -87,7 +95,7 @@ public class Exam extends DomainObject implements IExam {
 	 * Sets the day.
 	 * @param day The day to set
 	 */
-	public void setDay(Calendar day) {
+	public void setDay(Date day) {
 		this.day = day;
 	}
 
