@@ -9,21 +9,7 @@
 
 <html:form action="/alternativeSite">
 
-<logic:present name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite">	
-	<bean:define id="alternativeSite" name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite"/>
-	<html:link href="<%=(String)pageContext.findAttribute("alternativeSite") %>" target="_blank">
-			<bean:write name="alternativeSite" />
-	</html:link>	
-</logic:present>
-<br/>
 
-<logic:present name="<%=SessionConstants.INFO_SITE%>" property="mail">	
-	<bean:define id="mail" name="<%=SessionConstants.INFO_SITE%>" property="mail"/>
-	<html:link href="<%= "mailto:" + pageContext.findAttribute("mail") %>">
-		<bean:write name="mail" />
-	</html:link>		
-</logic:present>
-<br/>
 
 <table>
 <tr>
