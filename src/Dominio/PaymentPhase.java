@@ -18,7 +18,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	private String description;
 
 	private IGratuityValues gratuityValues;
-	private Integer keyGratuity;
+	private Integer keyGratuityValues;
 	
 	
 	/**
@@ -106,15 +106,15 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	 */
 	public Integer getKeyGratuity()
 	{
-		return keyGratuity;
+		return keyGratuityValues;
 	}
 
 	/**
 	 * @param keyGratuity The keyGratuity to set.
 	 */
-	public void setKeyGratuity(Integer keyGratuity)
+	public void setKeyGratuity(Integer keyGratuityValues)
 	{
-		this.keyGratuity = keyGratuity;
+		this.keyGratuityValues = keyGratuityValues;
 	}
 
 	public String toString()

@@ -4,13 +4,13 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import DataBeans.InfoGratuitySituation;
 import DataBeans.util.Cloner;
 import Dominio.IGratuitySituation;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuitySituation;
 import ServidorPersistente.ISuportePersistente;
@@ -68,10 +68,12 @@ public class ReadGratuitySituationByStudentCurricularPlan implements IServico
     		e.printStackTrace();
 			throw new FenixServiceException("error.impossible.insertExemptionGratuity");			
 		}
-    	if(gratuitySituation == null){
-    		throw new NonExistingServiceException("error.impossible.insertExemptionGratuity");
+
+    	InfoGratuitySituation  infoGratuitySituation = null;
+    	if(gratuitySituation != null){
+    		infoGratuitySituation = Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
     	}
     	
-		return Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
+		return infoGratuitySituation;
     }
 }

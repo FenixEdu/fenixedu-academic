@@ -47,10 +47,14 @@ public class ReadStudentCurricularPlan implements IServico {
     
     
     public InfoStudentCurricularPlan run(Integer studentCurricularPlanID) throws ExcepcaoInexistente, FenixServiceException {
-        ISuportePersistente sp = null;
-        
-		IStudentCurricularPlan studentCurricularPlan = null;
-         
+        if(studentCurricularPlanID == null){
+        	FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+        	newEx.fillInStackTrace();
+        	throw newEx;
+        }
+    	
+    	ISuportePersistente sp = null;
+        IStudentCurricularPlan studentCurricularPlan = null;
         try {
             sp = SuportePersistenteOJB.getInstance();
             
@@ -62,6 +66,7 @@ public class ReadStudentCurricularPlan implements IServico {
             studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOId(studentCurricularPlanTemp, false);
           
         } catch (ExcepcaoPersistencia ex) {
+        	ex.printStackTrace();
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;

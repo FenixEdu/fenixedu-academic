@@ -35,9 +35,7 @@ public class ExemptionGratuityType extends ValuedEnum
 			"institutionGrantOwner",
 			ExemptionGratuityType.INSTITUTION_GRANT_OWNER_TYPE);
 	public static final ExemptionGratuityType OTHER_INSTITUTION =
-		new ExemptionGratuityType(
-			"otherInstitution",
-			ExemptionGratuityType.OTHER_INSTITUTION_TYPE);
+		new ExemptionGratuityType("otherInstitution", ExemptionGratuityType.OTHER_INSTITUTION_TYPE);
 	public static final ExemptionGratuityType UNIVERSITY_TEACHER =
 		new ExemptionGratuityType("universityTeacher", ExemptionGratuityType.UNIVERSITY_TEACHER_TYPE);
 	public static final ExemptionGratuityType POLYTECHNICAL_TEACHER =
@@ -45,17 +43,15 @@ public class ExemptionGratuityType extends ValuedEnum
 			"polytechnicalTeacher",
 			ExemptionGratuityType.POLYTECHNICAL_TEACHER_TYPE);
 	public static final ExemptionGratuityType PALOP_TEACHER =
-	new ExemptionGratuityType(
-			"PALOPTeacher",
-			ExemptionGratuityType.PALOP_TEACHER_TYPE);
-		public static final ExemptionGratuityType STUDENT_TEACHER =
-	new ExemptionGratuityType(
-			"StudentTeacher",
-			ExemptionGratuityType.STUDENT_TEACH_TYPE);
+		new ExemptionGratuityType("PALOPTeacher", ExemptionGratuityType.PALOP_TEACHER_TYPE);
+	public static final ExemptionGratuityType STUDENT_TEACHER =
+		new ExemptionGratuityType("StudentTeacher", ExemptionGratuityType.STUDENT_TEACH_TYPE);
 	public static final ExemptionGratuityType FCT_GRANT_OWNER =
 		new ExemptionGratuityType("FCTGrantOwner", ExemptionGratuityType.FCT_GRANT_OWNER_TYPE);
 	public static final ExemptionGratuityType MILITARY_SON =
 		new ExemptionGratuityType("MilitarySon", ExemptionGratuityType.MILITARY_SON_TYPE);
+	public static final ExemptionGratuityType OTHER =
+		new ExemptionGratuityType("Other", ExemptionGratuityType.OTHER_TYPE);
 
 	protected ExemptionGratuityType(String name, int value)
 	{
@@ -93,16 +89,16 @@ public class ExemptionGratuityType extends ValuedEnum
 		exemptionGratuityString += "\nExemption Gratuity String(value): " + this.getValue();
 		return exemptionGratuityString;
 	}
-	
-	public static List percentageOfExemption(){
+
+	public static List percentageOfExemption()
+	{
 		List percentage = new ArrayList();
-		
+
 		percentage.add(new Integer("25"));
 		percentage.add(new Integer("50"));
 		percentage.add(new Integer("75"));
 		percentage.add(new Integer("100"));
-		
+
 		return percentage;
 	}
 }
-

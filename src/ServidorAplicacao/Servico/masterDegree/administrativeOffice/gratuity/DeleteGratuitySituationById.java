@@ -63,7 +63,7 @@ public class DeleteGratuitySituationById implements IServico
 				return Boolean.TRUE;
 			}			
 			
-			persistentGratuitySituation.deleteByOID(IGratuitySituation.class, gratuitySituationID);			
+			persistentGratuitySituation.deleteByOID(GratuitySituation.class, gratuitySituationID);			
 			
 		}
 		catch (ExcepcaoPersistencia e)

@@ -586,16 +586,27 @@
 	  		<form-property name="name" type="java.lang.String" />
 	  </form-bean> 
 
-	<!-- Bean for Gratuity Section  -->
+	  <!-- Bean for Gratuity Section  -->
       <form-bean name="chooseStudentGratuityForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-
-            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="studentNumber" type="java.lang.Integer"/>
             <form-property name="executionYear" type="java.lang.String" />
-       </form-bean>
-       
+      </form-bean>
+      <form-bean name="exemptionGratuityForm" 
+      	type="org.apache.struts.validator.DynaValidatorForm"
+        dynamic="true">
+      		<form-property name="page" type="java.lang.Integer" initial="0" />
+      		<form-property name="valueExemptionGratuity" type="java.lang.String" />
+      		<form-property name="justificationExemptionGratuity" type="java.lang.String" />      		
+      		<form-property name="otherValueExemptionGratuity" type="java.lang.String" />      		
+      		<form-property name="otherJustificationExemptionGratuity" type="java.lang.String" />     
+      		<form-property name="studentCurricularPlanID" type="java.lang.String" />     
+      		<form-property name="executionYear" type="java.lang.String" />     
+      		<form-property name="gratuitySituationID" type="java.lang.String" />     
+      		<form-property name="gratuityValuesID" type="java.lang.String" />     
+      </form-bean> 
       <form-bean name="insertGratuityDataForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -626,7 +637,6 @@
             <form-property name="removedPhases" type="java.lang.String[]"/>
             <form-property name="paymentPhases" type="java.lang.String[]"/>
        </form-bean>
-       
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2084,25 +2094,32 @@
 		<forward name="Success" path="firstPageGratuitySection"/>
 	</action>
 	
-	<action path="/chooseStudent"
-	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
-	parameter="method"
-	input="/gratuitySection.do"
-	>
-		<forward name="chooseStudent" path="chooseStudent"/>
-	</action>
-	
-	<action path="/prepareInsertExemption"
+	<action path="/readStudent"
 	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
 	parameter="method"
 	name="chooseStudentGratuityForm"
-	input="/chooseStudent.do?method=chooseStudent"
+	validate="true"
+	scope="request"
+	input="/readStudent.do?method=prepareReadStudent&amp;page=0"
 	>
-		<forward name="insertExemptionGratuity" path="insertExemptionGratuity"/>
+		<forward name="chooseStudent" path="chooseStudent"/>
+		<forward name="readExemptionGratuity" path="/manageExemptionGratuity.do?method=readExemptionGratuity&amp;page=0"/>
 		<forward name="chooseStudentCurricularPlan" path="chooseStudentCurricularPlan" />
 	</action>
-      
-	<action path="/insertGratuityDataDA"
+
+	<action path="/manageExemptionGratuity"
+	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
+	parameter="method"
+	name="exemptionGratuityForm"
+	validate="true"
+	scope="request"
+	input="/manageExemptionGratuity.do?method=readExemptionGratuity&amp;page=0"
+	>
+		<forward name="manageExemptionGratuity" path="manageExemptionGratuity"/>
+		<forward name="chooseStudent" path="/readStudent.do?method=PrepareReadStudent"/>
+		<forward name="confirmationExemptionGratuity" path="confirmationExemptionGratuity"/>
+	</action>
+		<action path="/insertGratuityDataDA"
 		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataDispatchAction"
 		name="insertGratuityDataForm"	 	
 		parameter="method"
@@ -2123,8 +2140,6 @@
 	<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
 	<forward name="cancel" path="/insertGratuityDataDA.do?method=prepareInsertChooseExecutionPeriod&amp;page=0"/>  
 	</action>
-	
-	
     </action-mappings>
     
     

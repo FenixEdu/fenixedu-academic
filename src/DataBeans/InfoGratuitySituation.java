@@ -154,4 +154,18 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	{
 		this.transactionList = transactionList;
 	}
+	
+	public String toString()
+	{
+		String result = new String();
+		result +="[InfoGratuitySituation: exemptionPercentage" + this.exemptionPercentage;
+		result +="\nexemptionType: " + this.exemptionType;
+		result +="\nexemptionDescription: " + this.exemptionDescription;
+		result +="\npayedValue: " + this.payedValue;
+		result +="\nremainingValue: " + this.remainingValue;
+		result +="\ninfoGratuityValues: " + this.infoGratuityValues;
+		result +="\ninfoStudentCurricularPlan: " + this.infoStudentCurricularPlan;
+		return result;
+	}
+
 }

@@ -21,7 +21,7 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	private String exemptionDescription;
 
 	private IGratuityValues gratuityValues;
-	private Integer keyGratuity;
+	private Integer keyGratuityValues;
 	
 	private IStudentCurricularPlan studentCurricularPlan;
 	private Integer keyStudentCurricularPlan;
@@ -95,17 +95,17 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	/**
 	 * @return Returns the keyGratuity.
 	 */
-	public Integer getKeyGratuity()
+	public Integer getKeyGratuityValues()
 	{
-		return keyGratuity;
+		return keyGratuityValues;
 	}
 
 	/**
 	 * @param keyGratuity The keyGratuity to set.
 	 */
-	public void setKeyGratuity(Integer keyGratuity)
+	public void setKeyGratuityValues(Integer keyGratuityValues)
 	{
-		this.keyGratuity = keyGratuity;
+		this.keyGratuityValues = keyGratuityValues;
 	}
 
 	/**
