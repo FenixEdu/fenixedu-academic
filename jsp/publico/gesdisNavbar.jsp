@@ -7,9 +7,11 @@
 <html:link page="/viewSite.do">
 	<li><bean:message key="link.home"/></li>
 </html:link>
-<html:link page="/accessAlternativeSite.do">
-	<li>	<bean:message key="link.alternative"/></li>
-</html:link>
+<logic:present name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite" >
+	<html:link page="/accessAlternativeSite.do">
+		<li><bean:message key="link.alternative"/></li>
+	</html:link>
+</logic:present>
 <html:link  page="/accessAnnouncements.do">
 	<li><bean:message key="link.announcements"/></li>
 </html:link>
