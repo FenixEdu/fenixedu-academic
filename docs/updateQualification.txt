@@ -8,5 +8,6 @@ O intuito desta alteração é:
 Passos a seguir:
 
 	Correr o ficheiro updateQualificationBeforeScript.sql (dentro do mysql) - Adiciona campos e remove o unique
-	Correr o script updateQualification.sql (prompt>mysql -uroot fenix < updateQualification.sql | mysql fenix) - passa os dados do campo year para o campo date
-	Correr o ficheiro updateQualification.sql (dentro do mysql) - Remove o campo year e adiciona um unique
+	Correr o script updateQualificationScript1.sql (prompt>mysql -uroot fenix < updateQualificationScript1.sql | mysql fenix) - passa os dados do campo year para o campo date
+	Correr o script updateQualificationScript2.sql (prompt>mysql -uroot fenix < updateQualificationScript2.sql | mysql fenix) - passa os dados do campo year para o campo date
+	Correr o ficheiro updateQualification.AfterScript.sql (dentro do mysql) - Remove o campo year e a campo year e adiciona um unique

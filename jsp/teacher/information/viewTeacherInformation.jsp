@@ -30,7 +30,11 @@
 			</tr>
 			<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 			<tr>
-				<td class="listClasses"><bean:write name="infoQualification" property="year" /></td>
+				<td class="listClasses">
+					<dt:format pattern="dd-MM-yyyy">
+						<bean:write name="infoQualification" property="date.time" />
+					</dt:format>
+				</td>
 				<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
