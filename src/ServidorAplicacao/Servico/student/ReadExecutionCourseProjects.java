@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -59,12 +63,19 @@ public class ReadExecutionCourseProjects implements IServico {
 		IDisciplinaExecucao executionCourse = (IDisciplinaExecucao)sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode),false);
 				
 		List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
+		
+		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory =GroupEnrolmentStrategyFactory.getInstance();
+		IGroupEnrolmentStrategy strategy =null;
+		
 			
 		List infoGroupPropertiesList = new ArrayList();
 		Iterator iterator = executionCourseProjects.iterator();
-			
+		
 		while (iterator.hasNext()) {
-			infoGroupPropertiesList.add(Cloner.copyIGroupProperties2InfoGroupProperties((IGroupProperties)iterator.next()));
+			IGroupProperties groupProperties = (IGroupProperties)iterator.next();
+			strategy =enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+			if(strategy.checkEnrolmentDate(groupProperties,Calendar.getInstance()))
+				infoGroupPropertiesList.add(groupProperties);
 
 		}
 		infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);	
