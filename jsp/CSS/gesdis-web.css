@@ -68,23 +68,16 @@ h4	{
 /******************************************
 	links - geral
 *******************************************/
-a:link {
+a, a:link, a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: underline;
-	background-color: transparent;
 	}
-a:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #00427b;
-	text-decoration: underline;
-	background-color: transparent;
-	}
+
 a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: none;
-	background-color: transparent;
 	}
 /******************************************
  	elementos de estrutura e posicionamento
