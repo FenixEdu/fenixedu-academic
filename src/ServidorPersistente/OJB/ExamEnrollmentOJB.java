@@ -11,6 +11,7 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Exam;
@@ -41,16 +42,9 @@ public class ExamEnrollmentOJB extends ObjectFenixOJB implements IPersistentExam
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select all from " + ExamEnrollment.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		
+		return	queryList(ExamEnrollment.class,new Criteria());
+		
 	}
 
 	public void lockWrite(IExamEnrollment examEnrollmentToWrite)
