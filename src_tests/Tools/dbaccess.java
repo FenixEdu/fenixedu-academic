@@ -1,0 +1,117 @@
+/*
+ * dbacess.java
+ * 
+ * Created on 11 de Novembro de 2002, 18:14
+ */
+
+package Tools;
+
+/**
+ * @author tfc130
+ */
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
+
+public class dbaccess
+{
+	private IDatabaseConnection _connection = null;
+	private String dbName;
+	private String username;
+	private String password;
+
+	public dbaccess()
+	{}
+
+	public void openConnection() throws Exception
+	{
+		if (_connection == null)
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection jdbcConnection = DriverManager.getConnection(this.getDbName(), this.getUsername(), this.getPassword());
+			_connection = new DatabaseConnection(jdbcConnection);
+		}
+	}
+
+	public void closeConnection() throws Exception
+	{
+		_connection.close();
+		_connection = null;
+	}
+
+	public void backUpDataBaseContents(String filename) throws Exception
+	{
+		IDataSet fullDataSet = _connection.createDataSet();
+		FileWriter fileWriter = new FileWriter(new File(filename));
+		FlatXmlDataSet.write(fullDataSet, fileWriter, "ISO-8859-1");
+	}
+
+	public void loadDataBase(String filename) throws Exception
+	{
+		FileReader fileReader = new FileReader(new File(filename));
+		IDataSet dataSet = new FlatXmlDataSet(fileReader);
+		DatabaseOperation.CLEAN_INSERT.execute(_connection, dataSet);
+	}
+
+	public IDatabaseConnection getConnection()
+	{
+		return _connection;
+	}
+
+	public String getDbName()
+	{
+		if (this.dbName == null)
+		{
+			return "jdbc:mysql://localhost/ciapl";
+		} else
+		{
+			return "jdbc:mysql://localhost/" + this.dbName;
+		}
+	}
+
+	public void setDbName(String dbName)
+	{
+		this.dbName = dbName;
+	}
+
+	public String getPassword()
+	{
+		if (this.password == null)
+		{
+			return "";
+		} else
+		{
+			return this.password;
+		}
+	}
+
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	public String getUsername()
+	{
+		if (this.username == null)
+		{
+			return "root";
+		} else
+		{
+			return this.username;
+		}
+	}
+
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
+
+}
