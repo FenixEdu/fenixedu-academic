@@ -21,7 +21,7 @@ import Util.DiaSemana;
 
 
 public interface ITurnoAulaPersistente extends IPersistentObject{
-    public ITurnoAula readByTurnoAndAula(ITurno turno, IAula aula)
+    public ITurnoAula readByShiftAndLesson(ITurno shift, IAula lesson)
                throws ExcepcaoPersistencia;
     public void lockWrite(ITurnoAula turnoAula) throws ExcepcaoPersistencia;
     public void delete(ITurnoAula turnoAula) throws ExcepcaoPersistencia;
