@@ -9,7 +9,9 @@
         <br/>
         <html:errors />
         
-        <html:form action="/viewShifts">        
+        <html:form action="/viewExecutionCourse">
+       		<input type="hidden" name="method" value="executionCourseViewerSelectedFromForm">
+        
         	<html:hidden property="page" value="1"/>
             <table align="center" border="5" cellpadding='20' cellspacing='10'>
                 <tr align="center" valign='center'>

@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
@@ -83,6 +84,24 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 	}
 
 
+	public ActionForward executionCourseViewerSelectedFromForm(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		HttpSession sessao = request.getSession(false);
+		if (sessao != null) {
+			DynaActionForm courseForm = (DynaActionForm) form;
+
+			return executionCourseViewerSelectedByInitials(mapping, form, request, response, (String) courseForm.get("courseInitials"));
+		} else
+			throw new Exception();
+		// nao ocorre... pedido passa pelo filtro Autorizacao
+	}
+
+
 	public ActionForward executionCourseViewer(
 		ActionMapping mapping,
 		ActionForm form,
@@ -97,8 +116,28 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		String exeCourseCode = null;
 
 		if(session != null) {
-			infoExecPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 			exeCourseCode = (String) request.getParameter("exeCourseCode");
+		}
+
+		return executionCourseViewerSelectedByInitials(mapping, form, request, response, exeCourseCode);
+	}
+
+
+	public ActionForward executionCourseViewerSelectedByInitials(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response,
+		String exeCourseCode)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+		ActionErrors errors = new ActionErrors();
+		InfoExecutionPeriod infoExecPeriod = null;
+		InfoExecutionCourse infoExecCourse = null;
+
+		if(session != null) {
+			infoExecPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
@@ -162,4 +201,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			throw new Exception();
 		}
 	}
+
+
 }

@@ -113,6 +113,17 @@
         <forward name="formPage" path="/chooseContext.jsp"/>       
         <forward name="nextPage" path="/prepareSelectExecutionCourseAction.do"/>
       </action>
+
+	  <action input="/chooseExecutionCourseSearchContextDA.do?method=prepare&amp;page=0"
+              name="chooseSearchContextForm"
+              parameter="method"
+              path="/chooseExecutionCourseSearchContextDA"
+              scope="request"
+              validate="true"
+              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
+        <forward name="formPage" path="/chooseContext.jsp"/>       
+        <forward name="nextPage" path="/prepareSelectExecutionCourseAction.do"/>
+      </action>
 	<!-- Turmas -->	
 	
 	<action path="/viewClasses"
@@ -131,14 +142,6 @@
           <forward name="sucess" path="/prepareSelectExecutionCourse.jsp"/>
           
       </action>
-	<action 
-	name="chooseExecutionCourseForm"
-	path="/viewShifts"
-              type="ServidorApresentacao.Action.publico.ViewShiftsFormAction"
-              >
-          <forward name="Sucess" path="/viewShifts.jsp"/>
-      </action>
-	
 
 
 	  <!-- SALAS -->
@@ -203,8 +206,16 @@
 			<forward name="roomViewer" path="/viewRoom.jsp"/>
 			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
 		</action>
-
-
+	
+	<action name="chooseExecutionCourseForm"
+			path="/viewExecutionCourse"
+			parameter="method"
+            type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+            >
+          <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
+    </action>
+    
+    
      </action-mappings>     
 
     
