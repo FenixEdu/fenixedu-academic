@@ -1058,6 +1058,15 @@ public abstract class Cloner {
 			}
 		}
 		infoGuide.setInfoGuideEntries(infoGuideEntries);
+				
+		List infoGuideSituations = new ArrayList();
+		if (guide.getGuideSituations() != null) {
+			Iterator iterator = guide.getGuideSituations().iterator();
+			while (iterator.hasNext()) {
+				infoGuideSituations.add(Cloner.copyIGuideSituation2InfoGuideSituation((IGuideSituation) iterator.next()));
+			}
+		}
+		infoGuide.setInfoGuideSituations(infoGuideSituations);		
 		return infoGuide;
 	}
 
@@ -1093,7 +1102,7 @@ public abstract class Cloner {
 	public static InfoGuideSituation copyIGuideSituation2InfoGuideSituation(IGuideSituation guideSituation) {
 		InfoGuideSituation infoGuideSituation = new InfoGuideSituation();
 		copyObjectProperties(infoGuideSituation, guideSituation);
-		infoGuideSituation.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideSituation.getGuide()));
+//		infoGuideSituation.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideSituation.getGuide()));
 		return infoGuideSituation;
 	}
 

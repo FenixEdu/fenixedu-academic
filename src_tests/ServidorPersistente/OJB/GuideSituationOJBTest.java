@@ -62,7 +62,7 @@ public class GuideSituationOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			
-			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+			IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 
 			IGuideSituation guideSituation = persistentGuideSituation.readGuideActiveSituation(guide);
@@ -87,7 +87,7 @@ public class GuideSituationOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			
-			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+			IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 
 			List result = persistentGuideSituation.readByGuide(guide);
@@ -97,7 +97,7 @@ public class GuideSituationOJBTest extends TestCaseOJB {
 			assertEquals(result.size(), 2);
 			
 
-			guide = persistentGuide.readByNumberAndYear(new Integer(2), new Integer(2003));
+			guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(2), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 
 			result = persistentGuideSituation.readByGuide(guide);
@@ -119,7 +119,7 @@ public class GuideSituationOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 
-			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+			IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 
 			
@@ -145,7 +145,7 @@ public class GuideSituationOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 
-			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+			IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 
 			IGuideSituation guideSituation = new GuideSituation();
@@ -169,7 +169,7 @@ public class GuideSituationOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 
-			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+			IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 
 			IGuideSituation guideSituation = new GuideSituation();

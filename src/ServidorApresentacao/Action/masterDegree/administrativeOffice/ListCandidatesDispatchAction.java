@@ -22,6 +22,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoCountry;
+import DataBeans.InfoGuide;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.FenixServiceException;

@@ -54,7 +54,7 @@ public class ReadDisciplinesByStudentTest extends TestCaseReadServices {
   }
 
   protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-	  Object[] result = { new Integer(800), new TipoCurso(TipoCurso.DOUTORAMENTO) };
+	  Object[] result = { new Integer(800), new TipoCurso(TipoCurso.MESTRADO) };
 	  return result;
   }
 

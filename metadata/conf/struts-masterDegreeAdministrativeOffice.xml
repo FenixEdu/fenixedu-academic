@@ -55,6 +55,18 @@
          <form-property name="page" type="java.lang.Integer" />
          <form-property name="contributorNumber" type="java.lang.String" />
       </form-bean>
+      
+      
+	  <!-- Bean for The Choosing of a Guide -->
+      <form-bean name="chooseGuideForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="guideNumber" type="java.lang.String" />
+         <form-property name="guideYear" type="java.lang.String" />
+      </form-bean>
+      
 
 
 		<!-- Bean for The Creation of a Guide -->
@@ -331,6 +343,19 @@
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
       </action>
 
+
+      <!-- action to choose a guide -->
+      <action attribute="chooseGuideForm"
+      		  input="/guide/chooseGuide.jsp"
+      	      name="chooseGuideForm"
+		      path="/chooseGuideDispatchAction"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
+              validate="true">
+	         <forward name="PrepareReady" path="/guide/chooseGuide.jsp"/> 
+	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
+      </action>
 
       <!-- Create Guide -->
       <action attribute="guideCreateReadyForm"

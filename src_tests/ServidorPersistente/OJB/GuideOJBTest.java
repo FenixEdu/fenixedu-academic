@@ -2,6 +2,7 @@
 package ServidorPersistente.OJB;
 
 import java.util.Calendar;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -86,16 +87,15 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertNotNull(executionDegree);
 			
 			
-			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+			IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
-			
 			
 			assertEquals(guide.getNumber(), new Integer(1));
 			assertEquals(guide.getYear(), new Integer(2003));
 			assertEquals(guide.getPerson(), person);
 			assertEquals(guide.getContributor(), contributor);
 			assertEquals(guide.getRemarks(), "guia1");
-			assertEquals(guide.getTotal(), new Double(600.04));
+			assertEquals(guide.getTotal(), new Double(50.02));
 			assertEquals(guide.getGuideRequester(), GuideRequester.CANDIDATE_TYPE);
 			assertEquals(guide.getGuideSituations().size(), 2);
 			assertEquals(guide.getPaymentType(), PaymentType.CASH_TYPE);
@@ -103,7 +103,7 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getCreationDate().toString(), "2003-04-04");
 			assertEquals(guide.getVersion(), new Integer(1));
 			
-			guide = persistentGuide.readByNumberAndYear(new Integer(2), new Integer(2003));
+			guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(2), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 					
 			assertEquals(guide.getNumber(), new Integer(2));
@@ -122,7 +122,7 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getVersion(), new Integer(1));
 					
 
-			guide = persistentGuide.readByNumberAndYear(new Integer(5), new Integer(2003));
+			guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(5), new Integer(2003), new Integer(1));
 			assertNull(guide);
 
 
@@ -140,6 +140,29 @@ public class GuideOJBTest extends TestCaseOJB {
 			IGuide guide = new Guide();
 			guide.setNumber(new Integer(1));
 			guide.setYear(new Integer(2003));
+			
+			IContributor contributor = persistentContributor.readByContributorNumber(new Integer(123));
+			assertNotNull(contributor);
+			
+			guide.setContributor(contributor);
+			
+			IPessoa person = persistentPerson.lerPessoaPorUsername("nmsn");
+			assertNotNull(person);
+			
+			guide.setPerson(person);
+			
+			guide.setTotal(new Double(10));
+			guide.setGuideRequester(GuideRequester.CANDIDATE_TYPE);
+
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
+			assertNotNull(executionDegree);
+
+			guide.setExecutionDegree(executionDegree);
+			guide.setCreationDate(Calendar.getInstance().getTime());
+			guide.setVersion(new Integer(1));
+
 			
 			persistentGuide.write(guide);
 						
@@ -187,7 +210,7 @@ public class GuideOJBTest extends TestCaseOJB {
 				persistentSupport.confirmarTransaccao();
 				
 				persistentSupport.iniciarTransaccao();
-				IGuide guideBD = persistentGuide.readByNumberAndYear(new Integer(2), new Integer(2000));
+				IGuide guideBD = persistentGuide.readByNumberAndYearAndVersion(new Integer(2), new Integer(2000), new Integer(2));
 
 				assertNotNull(guideBD);
 
@@ -214,6 +237,23 @@ public class GuideOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			Integer guideNumber = persistentGuide.generateGuideNumber(new Integer(2003));
 			assertEquals(guideNumber, new Integer(3));
+									
+			persistentSupport.confirmarTransaccao();
+		} catch(ExistingPersistentException ex) {
+			// All is OK
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testGenerateGuideNumber: unexpected exception" + ex);
+		}
+	}
+
+
+	public void testReadByNumberAndYear() {
+		System.out.println("Test 5 - Read Guide By Number And Year");        
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			List listOfGuides = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2002));
+			assertEquals(listOfGuides.size(), 2);
 									
 			persistentSupport.confirmarTransaccao();
 		} catch(ExistingPersistentException ex) {

@@ -31,8 +31,10 @@ public class InfoGuide implements Serializable{
 	private PaymentType paymentType;
 	private Date creationDate;
 	private Integer version;
+	private List infoGuideSituations;
 
-	public InfoGuide() {} 
+	public InfoGuide() {}
+	 
 		
 	public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson, InfoContributor infoContributor, GuideRequester guideRequester,
 			InfoExecutionDegree infoExecutionDegree, PaymentType paymentType, Date creationDate, Integer version){	 		
@@ -249,6 +251,20 @@ public class InfoGuide implements Serializable{
 	 */
 	public void setVersion(Integer integer) {
 		version = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoGuideSituations() {
+		return infoGuideSituations;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoGuideSituations(List list) {
+		infoGuideSituations = list;
 	}
 
 }

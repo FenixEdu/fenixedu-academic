@@ -255,7 +255,8 @@
 	 <field-descriptor 
 	     name="creationDate"
 	     column="CREATION_DATE"
-	     jdbc-type="DATE"
+         refresh="true"
+         jdbc-type="DATE"
 	 />
 	
 	 <field-descriptor 
@@ -290,6 +291,7 @@
        
     <collection-descriptor
          name="guideEntries"
+         refresh="true"
          element-class-ref="Dominio.GuideEntry"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
@@ -297,6 +299,7 @@
 
     <collection-descriptor
          name="guideSituations"
+         refresh="true"
          element-class-ref="Dominio.GuideSituation"
        >
        <inverse-foreignkey field-ref="keyGuide"/>

@@ -1,6 +1,8 @@
 
 package ServidorPersistente;
 
+import java.util.List;
+
 import Dominio.IGuide;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -22,10 +24,20 @@ public interface IPersistentGuide extends IPersistentObject {
 	 * 
 	 * @param number
 	 * @param year
+	 * @return A List of the Guide Versions
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia;
+
+	/**
+	 * 
+	 * @param number
+	 * @param year
+	 * @param version
 	 * @return IGuide
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IGuide readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia;
+	public IGuide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version) throws ExcepcaoPersistencia;
 
 	/**
 	 * 

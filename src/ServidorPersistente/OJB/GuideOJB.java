@@ -29,7 +29,7 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 
 		// read Guide
 		
-		guideBD = this.readByNumberAndYear(guideToWrite.getNumber(), guideToWrite.getYear()); 
+		guideBD = this.readByNumberAndYearAndVersion(guideToWrite.getNumber(), guideToWrite.getYear(), guideToWrite.getVersion()); 
 						
 		// if (guide not in database) then write it
 		if (guideBD == null)
@@ -52,7 +52,7 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 			throw new ExistingPersistentException();
 	}
 
-	public IGuide readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
+	public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + Guide.class.getName();
 			oqlQuery += " where number = $1";
@@ -65,7 +65,7 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)
-				return (IGuide) result.get(0);
+				return result;
 			return null;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
@@ -90,9 +90,30 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
-		
-		
-		
+	}
+
+
+	public IGuide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + Guide.class.getName();
+			oqlQuery += " where number = $1";
+			oqlQuery += " and year = $2";
+			oqlQuery += " and version = $3";
+			
+			query.create(oqlQuery);
+
+			query.bind(number);
+			query.bind(year);
+			query.bind(version);
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				return (IGuide) result.get(0);
+			return null;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 		
 	

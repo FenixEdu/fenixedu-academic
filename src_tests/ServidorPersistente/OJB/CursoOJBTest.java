@@ -92,7 +92,7 @@ public class CursoOJBTest extends TestCaseOJB {
 
   // write new non-existing curso
   public void testCreateNonExistingCurso() {
-    ICurso degree = new Curso("Primeira Sigla","Primeiro Nome", new TipoCurso(TipoCurso.DOUTORAMENTO));
+    ICurso degree = new Curso("Primeira Sigla","Primeiro Nome", new TipoCurso(TipoCurso.MESTRADO));
     try {
       persistentSupport.iniciarTransaccao();
       persistentDegree.lockWrite(degree);

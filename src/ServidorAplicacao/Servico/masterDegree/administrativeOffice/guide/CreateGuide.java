@@ -27,6 +27,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.CalculateGuideTotal;
 import Util.DocumentType;
 import Util.GraduationType;
 import Util.PaymentType;
@@ -93,7 +94,7 @@ public class CreateGuide implements IServico {
 			
 		// Calculate the Guide Total Price
 		
-		infoGuide.setTotal(calculateGuideTotal(infoGuide.getInfoGuideEntries()));
+		infoGuide.setTotal(CalculateGuideTotal.calculate(infoGuide));
 		
 		// Get the Guide Number
 		
@@ -174,12 +175,4 @@ public class CreateGuide implements IServico {
 		return result;
 	}
 	
-	// FIXME : move to Util and add Quantity
-	private Double calculateGuideTotal(List guideEntries){
-		Iterator iterator = guideEntries.iterator();
-		Double total = new Double(0);
-		while (iterator.hasNext())
-			total = new Double(total.floatValue() + ((InfoGuideEntry) iterator.next()).getPrice().floatValue());	
-		return total;
-	}
 }

@@ -1,6 +1,7 @@
 
 package ServidorPersistente.OJB;
 
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
@@ -59,15 +60,22 @@ public class GuideEntryOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+			IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 			List result = persistentGuideEntry.readByGuide(guide);
 			assertTrue(!result.isEmpty());
 			assertEquals(result.size(), 3);
 			
+Iterator iterator = result.iterator();
+while(iterator.hasNext())
+	System.out.println(((IGuideEntry) iterator.next()));
+			
+			
 			IGuideEntry guideEntry = persistentGuideEntry.readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide, GraduationType.MAJOR_DEGREE_TYPE, 
 									 DocumentType.CERTIFICATE_OF_DEGREE_TYPE, "Conclusão");
+			
 			assertNotNull(guideEntry);
+			
 			assertEquals(guideEntry.getGuide(), guide);
 			assertEquals(guideEntry.getGraduationType(), GraduationType.MAJOR_DEGREE_TYPE);
 			assertEquals(guideEntry.getDocumentType(), DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
@@ -75,7 +83,8 @@ public class GuideEntryOJBTest extends TestCaseOJB {
 			assertEquals(guideEntry.getPrice(), new Double(10.02));
 			assertEquals(guideEntry.getQuantity(), new Integer(1));
 			
-			guide = persistentGuide.readByNumberAndYear(new Integer(2), new Integer(2003));
+			
+			guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(2), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 			result = persistentGuideEntry.readByGuide(guide);
 			assertTrue(!result.isEmpty());
@@ -95,11 +104,11 @@ public class GuideEntryOJBTest extends TestCaseOJB {
 
 			try {
 				persistentSupport.iniciarTransaccao();
-				IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+				IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 				assertNotNull(guide);
 			
 				IGuideEntry guideEntry = persistentGuideEntry.readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide, GraduationType.MAJOR_DEGREE_TYPE, 
-										 DocumentType.CERTIFICATE_OF_DEGREE_TYPE, "Conclusão");
+										 DocumentType.INSURANCE_TYPE, "de vida");
 				assertNotNull(guideEntry);
 				persistentGuideEntry.delete(guideEntry);
 								
@@ -107,7 +116,7 @@ public class GuideEntryOJBTest extends TestCaseOJB {
 				
 				persistentSupport.iniciarTransaccao();
 				guideEntry = persistentGuideEntry.readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide, GraduationType.MAJOR_DEGREE_TYPE, 
-														 DocumentType.CERTIFICATE_OF_DEGREE_TYPE, "Conclusão");
+														 DocumentType.INSURANCE_TYPE, "de vida");
 				assertNull(guideEntry);
 				persistentSupport.confirmarTransaccao();
 				
@@ -121,7 +130,7 @@ public class GuideEntryOJBTest extends TestCaseOJB {
 
 			try {
 				persistentSupport.iniciarTransaccao();
-				IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+				IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 				assertNotNull(guide);
 				
 				IGuideEntry guideEntry = new GuideEntry();
@@ -147,7 +156,7 @@ public class GuideEntryOJBTest extends TestCaseOJB {
 
 			try {
 				persistentSupport.iniciarTransaccao();
-				IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
+				IGuide guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(1), new Integer(2003), new Integer(1));
 				assertNotNull(guide);
 			
 				IGuideEntry guideEntry = new GuideEntry();
