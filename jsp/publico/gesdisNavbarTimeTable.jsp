@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <div id="nav">
+   <h3>Navega&ccedil;&atilde;o Local</h3>	
 <ul>	
 <li><html:link page="/viewSite.do">
 	<bean:message key="link.home"/>

@@ -36,9 +36,11 @@
     </td>	
     <td id="barranav" bgcolor="#EBEFFA" valign="top">
       <div class="blue-bckgr">
-        <h3>Navega&ccedil;&atilde;o</h3>
+        <h3>Navega&ccedil;&atilde;o Geral</h3>
       </div>
       <div id="nav">
+      <tiles:insert attribute="navbarGeral" ignore="true"/>	
+    
       <tiles:insert attribute="navbar" ignore="true"/>	
       </div>
     </td>
