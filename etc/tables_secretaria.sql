@@ -39,9 +39,9 @@ create table QUALIFICATION(
    MARK varchar(200),
    SCHOOL varchar(200) not null,
    TITLE varchar(200),
-   DEGREE varchar(200) not null,
+   DEGREE varchar(200),
    primary key (ID_INTERNAL),
-   unique U1 (YEAR,SCHOOL,DEGREE,KEY_PERSON))
+   unique U1 (YEAR,SCHOOL,KEY_PERSON))
    type=InnoDB;
 
 #------------------------------------------
