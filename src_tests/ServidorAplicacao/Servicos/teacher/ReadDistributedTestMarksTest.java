@@ -86,7 +86,7 @@ public class ReadDistributedTestMarksTest extends TestCaseReadServices {
 				Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(
 					studentTestQuestion);
 			DecimalFormat df = new DecimalFormat("#0.##");
-			infoStudentTestQuestion.setMark(
+			infoStudentTestQuestion.setTestQuestionMark(
 				new Double(0.33));
 			List infoStudentTestQuestionList = new ArrayList();
 			infoStudentTestQuestionList.add(infoStudentTestQuestion);
@@ -95,7 +95,7 @@ public class ReadDistributedTestMarksTest extends TestCaseReadServices {
 			infoDistributedTestMarks.setInfoStudentTestQuestionList(
 				infoStudentTestQuestionList);
 			infoDistributedTestMarks.setStudentTestMark(
-				new Double(df.format(infoStudentTestQuestion.getMark())));
+				new Double(df.format(infoStudentTestQuestion.getTestQuestionMark())));
 			List infoDistributedTestMarksList = new ArrayList();
 			infoDistributedTestMarksList.add(infoDistributedTestMarks);
 
