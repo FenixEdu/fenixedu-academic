@@ -135,7 +135,7 @@ public class ExamRoomDistribution implements IServico {
 			Iterator iter = rooms.iterator();
 			while (iter.hasNext()) {
 				ISala room = (ISala) iter.next();
-				int i = 0;
+				int i = 1;
 				while (i <= room.getCapacidadeExame().intValue()) {
 					if (students.size() > 0) {
 						IStudent student = (IStudent) getRandomObjectFromList(students);
@@ -147,7 +147,7 @@ public class ExamRoomDistribution implements IServico {
 							examStudentRoom.setRoom(room);
 							examStudentRoom.setStudent(student);
 						} else {
-							persistentExamStudentRoom.lockWrite(examStudentRoom);
+							persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
 							examStudentRoom.setRoom(room);
 						}
 
