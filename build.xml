@@ -109,7 +109,7 @@
 	    	propertyFile="build.properties">
 	    	<include name="**/**/*.xml"/>
 	    	<include name="**/**/ApplicationResources.properties"/>
-	    	
+	    	<include name="**/ServidorPersistenteConfig.properties"/>
 		  <replacefilter 
 		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
@@ -358,7 +358,7 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
              	<!--      <include name="**/*Test.java"/> -->
-				<include name="**/EvaluationOJBTest.java"/> 
+				<include name="**/AnnouncementOJBTest.java"/> 
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
                <!-- <exclude name="**/TeacherOJBTest.java"/>
                     <exclude name="**/BibliographicReferenceOJBTest.java"/>
