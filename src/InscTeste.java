@@ -31,7 +31,7 @@ public class InscTeste {
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
 
-		Object serviceArgs2[] = { infoEnrolmentContext };
+/*		Object serviceArgs2[] = { infoEnrolmentContext };
 		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
 		showAvailableDegreesForOption(infoEnrolmentContext);
 
@@ -74,7 +74,7 @@ public class InscTeste {
 		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
 
 		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
-
+*/
 		for(int i = 0; i < infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().size()-1; i++) {
 			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
