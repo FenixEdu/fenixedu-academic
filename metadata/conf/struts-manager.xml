@@ -82,6 +82,10 @@
               input="/readDegreesInput.do"
               scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
+      <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
       	  <forward name="viewDegree" path="df.page.read-degree"/>      	      
       </action>
          

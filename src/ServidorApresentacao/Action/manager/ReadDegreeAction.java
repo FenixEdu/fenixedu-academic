@@ -17,8 +17,10 @@ import DataBeans.InfoDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -47,14 +49,15 @@ public class ReadDegreeAction extends FenixAction  {
 				Object args[] = { internalId };
 						GestorServicos manager = GestorServicos.manager();
 		
-						try {
-							InfoDegree degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
-							request.setAttribute(SessionConstants.INFO_DEGREE,degree);
-							} 
-						catch (FenixServiceException e) {
-							throw new FenixActionException(e);
-							 }
-				
+				try {
+					InfoDegree degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
+					request.setAttribute(SessionConstants.INFO_DEGREE,degree);
+					 } catch (NonExistingServiceException e) {
+						throw new NonExistingActionException(e.getMessage());
+					} catch (FenixServiceException e) {
+						throw new FenixActionException(e);
+					}
+					 
 				return mapping.findForward("viewDegree");
 			}
 }
