@@ -166,7 +166,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		Integer studentIdNumber = new Integer(11);
 
 		Object args1[] = { studentIdNumber };
-
+		System.out.println("user->"+authenticateUser("julia", "pass", this.getApplication()));
 		try {
 			result =
 				(List) this.serviceManager.executar(
@@ -175,10 +175,10 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 					args1);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
-			fail("Reading the Curricular Plans of a PosGrad Student");
+			fail("Reading the Curricular Plans of a PosGrad Student-FenixServiceException");
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
-			fail("Reading the Curricular Plans of a PosGrad Student");
+			fail("Reading the Curricular Plans of a PosGrad Student-Exception");
 		}
 		assertEquals(result.size(), 1);
 		assertTrue(result.get(0) instanceof InfoStudentCurricularPlan);
@@ -231,7 +231,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		try {
 			result =
 				(List) this.serviceManager.executar(
-					authenticateUser("user", "pass", this.getApplication()),
+					authenticateUser("3", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args4);
 			fail("test case 4- exception not thrown");

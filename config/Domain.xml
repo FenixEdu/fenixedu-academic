@@ -34,13 +34,9 @@
           <parameter name="user">@db.slide.user@</parameter>
           <parameter name="password">@db.slide.pass@</parameter>
           <parameter name="rootpath" >files</parameter >
-          <parameter name="jdbcversion">2</parameter>
-          
-          
-           
+          <parameter name="jdbcversion">2</parameter>         
         </contentstore>
       </store >
-      
       <scope match="/" store="jdbc" />
      
     </definition >

@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <dataset>
   <ass_cargo chaveCargo='1' cargo='ALUNO'/>
   <ass_cargo chaveCargo='2' cargo='FUNCDOCENTE'/>
@@ -17,25 +18,25 @@
   <ass_feriado codigoInterno='3' tipoFeriado='FIXO' descricao='Dia do Trabalhador' data='2003-05-01'/>
   <ass_feriado codigoInterno='4' tipoFeriado='FIXO' descricao='Dia de Portugal' data='2003-06-10'/>
   <ass_feriado codigoInterno='5' tipoFeriado='LISBOA' descricao='Feriado de Lisboa' data='2003-06-13'/>
-  <ass_feriado codigoInterno='6' tipoFeriado='FIXO' descricao='Feriado de AssunÃ§Ã£o' data='2003-08-15'/>
-  <ass_feriado codigoInterno='7' tipoFeriado='FIXO' descricao='Feriado da ImplantaÃ§Ã£o da RepÃºblica' data='2003-10-05'/>
+  <ass_feriado codigoInterno='6' tipoFeriado='FIXO' descricao='Feriado de Assunção' data='2003-08-15'/>
+  <ass_feriado codigoInterno='7' tipoFeriado='FIXO' descricao='Feriado da Implantação da República' data='2003-10-05'/>
   <ass_feriado codigoInterno='8' tipoFeriado='FIXO' descricao='Feriado de Todos os Santos' data='2003-11-01'/>
-  <ass_feriado codigoInterno='9' tipoFeriado='FIXO' descricao='Feriado de RestauraÃ§Ã£o da IndependÃªncia' data='2003-12-01'/>
-  <ass_feriado codigoInterno='10' tipoFeriado='FIXO' descricao='Feriado de Imaculada ConceiÃ§Ã£o' data='2003-12-08'/>
+  <ass_feriado codigoInterno='9' tipoFeriado='FIXO' descricao='Feriado de Restauração da Independência' data='2003-12-01'/>
+  <ass_feriado codigoInterno='10' tipoFeriado='FIXO' descricao='Feriado de Imaculada Conceição' data='2003-12-08'/>
   <ass_feriado codigoInterno='11' tipoFeriado='FIXO' descricao='Dia de Natal' data='2003-12-25'/>
-  <ass_feriado codigoInterno='12' tipoFeriado='MOVEL' descricao='Dia de PÃ¡scoa' data='1999-04-04'/>
+  <ass_feriado codigoInterno='12' tipoFeriado='MOVEL' descricao='Dia de Páscoa' data='1999-04-04'/>
   <ass_feriado codigoInterno='13' tipoFeriado='MOVEL' descricao='Dia de Sexta-feira Santa' data='1999-04-02'/>
   <ass_feriado codigoInterno='15' tipoFeriado='MOVEL' descricao='Dia de Corpo de Deus' data='1999-06-03'/>
-  <ass_feriado codigoInterno='16' tipoFeriado='MOVEL' descricao='Dia de PÃ¡scoa' data='2000-04-23'/>
+  <ass_feriado codigoInterno='16' tipoFeriado='MOVEL' descricao='Dia de Páscoa' data='2000-04-23'/>
   <ass_feriado codigoInterno='17' tipoFeriado='MOVEL' descricao='Dia de Sexta-feira Santa' data='2000-04-21'/>
   <ass_feriado codigoInterno='19' tipoFeriado='MOVEL' descricao='Dia de Corpo de Deus' data='2000-06-22'/>
-  <ass_feriado codigoInterno='20' tipoFeriado='MOVEL' descricao='Dia de PÃ¡scoa' data='2001-04-15'/>
+  <ass_feriado codigoInterno='20' tipoFeriado='MOVEL' descricao='Dia de Páscoa' data='2001-04-15'/>
   <ass_feriado codigoInterno='21' tipoFeriado='MOVEL' descricao='Dia de Sexta-feira Santa' data='2001-04-13'/>
   <ass_feriado codigoInterno='23' tipoFeriado='MOVEL' descricao='Dia de Corpo de Deus' data='2001-06-14'/>
-  <ass_feriado codigoInterno='24' tipoFeriado='MOVEL' descricao='Dia de PÃ¡scoa' data='2002-03-31'/>
+  <ass_feriado codigoInterno='24' tipoFeriado='MOVEL' descricao='Dia de Páscoa' data='2002-03-31'/>
   <ass_feriado codigoInterno='25' tipoFeriado='MOVEL' descricao='Dia de Sexta-feira Santa' data='2002-03-29'/>
   <ass_feriado codigoInterno='27' tipoFeriado='MOVEL' descricao='Dia de Corpo de Deus' data='2002-05-30'/>
-  <ass_feriado codigoInterno='28' tipoFeriado='MOVEL' descricao='Dia de PÃ¡scoa' data='2003-04-20'/>
+  <ass_feriado codigoInterno='28' tipoFeriado='MOVEL' descricao='Dia de Páscoa' data='2003-04-20'/>
   <ass_feriado codigoInterno='29' tipoFeriado='MOVEL' descricao='Dia de Sexta-feira Santa' data='2003-04-18'/>
   <ass_feriado codigoInterno='31' tipoFeriado='MOVEL' descricao='Dia de Corpo de Deus' data='2003-06-19'/>
   <posgrad_pagamento_guia/>
@@ -52,10 +53,10 @@
   <ass_cargo_url chaveCargo='3' chaveUrl='1'/>
   <ass_cargo_url chaveCargo='3' chaveUrl='2'/>
   <ass_cargo_url chaveCargo='3' chaveUrl='3'/>
-  <ass_cargo_url chaveCargo='4' chaveUrl='3'/>
   <ass_cargo_url chaveCargo='3' chaveUrl='4'/>
   <ass_cargo_url chaveCargo='3' chaveUrl='5'/>
   <ass_cargo_url chaveCargo='3' chaveUrl='6'/>
+  <ass_cargo_url chaveCargo='4' chaveUrl='3'/>
   <ojb_dlist/>
   <tests/>
   <posgrad_guia_tabela/>
@@ -78,17 +79,17 @@
   <ojb_seq/>
   <posgrad_tabela_precos/>
   <paisexpansao/>
-  <ass_unidade_marcacao codigoInterno='1' sigla='TM_MEST' descricao='PavilhÃ£o de Mestrado' id='10001'/>
-  <ass_unidade_marcacao codigoInterno='2' sigla='TM_CENTR' descricao='PavilhÃ£o Central' id='10002'/>
-  <ass_unidade_marcacao codigoInterno='3' sigla='TM_CIVIL' descricao='PavilhÃ£o de Civil' id='10003'/>
-  <ass_unidade_marcacao codigoInterno='4' sigla='TM_GRAD' descricao='PavilhÃ£o de PÃ³s-GraduaÃ§Ã£o' id='10004'/>
-  <ass_unidade_marcacao codigoInterno='5' sigla='TM_TORRE' descricao='Torre de ElectrotÃ©cnica' id='10005'/>
+  <ass_unidade_marcacao codigoInterno='1' sigla='TM_MEST' descricao='Pavilhão de Mestrado' id='10001'/>
+  <ass_unidade_marcacao codigoInterno='2' sigla='TM_CENTR' descricao='Pavilhão Central' id='10002'/>
+  <ass_unidade_marcacao codigoInterno='3' sigla='TM_CIVIL' descricao='Pavilhão de Civil' id='10003'/>
+  <ass_unidade_marcacao codigoInterno='4' sigla='TM_GRAD' descricao='Pavilhão de Pós-Graduação' id='10004'/>
+  <ass_unidade_marcacao codigoInterno='5' sigla='TM_TORRE' descricao='Torre de Electrotécnica' id='10005'/>
   <ass_unidade_marcacao codigoInterno='6' sigla='TM_COMP' descricao='Complexo' id='10006'/>
-  <ass_unidade_marcacao codigoInterno='7' sigla='TM_MINAS' descricao='PavilhÃ£o de Minas' id='10007'/>
-  <ass_unidade_marcacao codigoInterno='8' sigla='TM_QUIM' descricao='PavilhÃ£o de Quimica' id='10008'/>
-  <ass_centro_custo codigoInterno='1' sigla='0321' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SEC. PESSOAL DOC. E INVESTIGADOR'/>
+  <ass_unidade_marcacao codigoInterno='7' sigla='TM_MINAS' descricao='Pavilhão de Minas' id='10007'/>
+  <ass_unidade_marcacao codigoInterno='8' sigla='TM_QUIM' descricao='Pavilhão de Quimica' id='10008'/>
+  <ass_centro_custo codigoInterno='1' sigla='0321' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SEC. PESSOAL DOC. E INVESTIGADOR'/>
   <ass_centro_custo codigoInterno='2' sigla='' departamento='' seccao1='' seccao2=''/>
-  <ass_centro_custo codigoInterno='3' sigla='0310' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2=''/>
+  <ass_centro_custo codigoInterno='3' sigla='0310' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2=''/>
   <ass_centro_custo codigoInterno='4' sigla='2003' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SEC.HIDRAULICA E REC.HID.AMBIENTAIS' seccao2=''/>
   <ass_centro_custo codigoInterno='5' sigla='2002' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SECCAO DE ESTRUTURAS E CONSTRUCAO' seccao2=''/>
   <ass_centro_custo codigoInterno='6' sigla='2202' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE PROJECTO MECANICO' seccao2=''/>
@@ -124,9 +125,9 @@
   <ass_centro_custo codigoInterno='36' sigla='2007' departamento='DEPARTAMENTO DE ENGENHARIA CIVIL' seccao1='SEC. ARQ.,CARTOG. E MODELACAO GEOM.' seccao2=''/>
   <ass_centro_custo codigoInterno='37' sigla='2101' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='DEEC - PRESIDENCIA' seccao2=''/>
   <ass_centro_custo codigoInterno='38' sigla='1107' departamento='' seccao1='CENTRO DE BIOTECNOLOGIA' seccao2=''/>
-  <ass_centro_custo codigoInterno='39' sigla='0211' departamento='SERVIÃ‡OS ACADEMICOS' seccao1='REPARTICAO ACADEMICA' seccao2='SECCAO DE GRADUACAO'/>
+  <ass_centro_custo codigoInterno='39' sigla='0211' departamento='SERVIÇOS ACADEMICOS' seccao1='REPARTICAO ACADEMICA' seccao2='SECCAO DE GRADUACAO'/>
   <ass_centro_custo codigoInterno='40' sigla='0107' departamento='' seccao1='GPS-GAB. PROTECCAO E SEGURANCA' seccao2=''/>
-  <ass_centro_custo codigoInterno='41' sigla='0324' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE VENCIMENTOS'/>
+  <ass_centro_custo codigoInterno='41' sigla='0324' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE VENCIMENTOS'/>
   <ass_centro_custo codigoInterno='42' sigla='1301' departamento='' seccao1='INESC' seccao2=''/>
   <ass_centro_custo codigoInterno='43' sigla='2307' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SECCAO DE QUIMICA INORGANICA' seccao2=''/>
   <ass_centro_custo codigoInterno='44' sigla='2302' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SEC. FENOMENOS TRANSF. APLICADA' seccao2=''/>
@@ -147,23 +148,23 @@
   <ass_centro_custo codigoInterno='59' sigla='1603' departamento='' seccao1='POLO IST - INST.TELECOMUNICACOES' seccao2=''/>
   <ass_centro_custo codigoInterno='60' sigla='2296' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SECCAO DE MECANICA AEROESPACIAL' seccao2=''/>
   <ass_centro_custo codigoInterno='61' sigla='0404' departamento='SERVICOS DE APOIO TECNICO' seccao1='MOTORISTAS' seccao2=''/>
-  <ass_centro_custo codigoInterno='62' sigla='0315' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO CONTABILIDADE DE PROJECTOS'/>
+  <ass_centro_custo codigoInterno='62' sigla='0315' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO CONTABILIDADE DE PROJECTOS'/>
   <ass_centro_custo codigoInterno='63' sigla='3001' departamento='' seccao1='SEC. AUTONOMA DE ECONOMIA E GESTAO' seccao2=''/>
   <ass_centro_custo codigoInterno='64' sigla='1112' departamento='' seccao1='CENTRO DE ELECTRODINAMICA' seccao2=''/>
   <ass_centro_custo codigoInterno='65' sigla='0911' departamento='' seccao1='TAGUS PARQUE - POLO OEIRAS' seccao2=''/>
   <ass_centro_custo codigoInterno='66' sigla='2105' departamento='DEP. ENG. ELECT. E COMPUTADORES' seccao1='SEC. MAQ. ELECT. E ELECT. POTENCIA' seccao2=''/>
-  <ass_centro_custo codigoInterno='67' sigla='0221' departamento='SERVIÃ‡OS ACADEMICOS' seccao1='REPARTICAO PEDAGOGICA' seccao2='SECCAO DE ORGANIZACAO PEDAGOGICA'/>
+  <ass_centro_custo codigoInterno='67' sigla='0221' departamento='SERVIÇOS ACADEMICOS' seccao1='REPARTICAO PEDAGOGICA' seccao2='SECCAO DE ORGANIZACAO PEDAGOGICA'/>
   <ass_centro_custo codigoInterno='68' sigla='1101' departamento='' seccao1='CENTRO DE FUSAO NUCLEAR' seccao2=''/>
   <ass_centro_custo codigoInterno='69' sigla='1601' departamento='' seccao1='POLO IST - ISR' seccao2=''/>
   <ass_centro_custo codigoInterno='70' sigla='0503' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - SERVICO DE EXPLORACAO' seccao2=''/>
   <ass_centro_custo codigoInterno='71' sigla='2505' departamento='DEPARTAMENTO DE MATEMATICA' seccao1='SECCAO CIENCIA DE COMPUTACAO' seccao2=''/>
   <ass_centro_custo codigoInterno='72' sigla='2305' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SECCAO QUIMICA ANALITICA' seccao2=''/>
   <ass_centro_custo codigoInterno='73' sigla='3002' departamento='' seccao1='SEC. AUTONOMA DE ENGENHARIA NAVAL' seccao2=''/>
-  <ass_centro_custo codigoInterno='74' sigla='0312' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE ECONOMATO'/>
-  <ass_centro_custo codigoInterno='75' sigla='0212' departamento='SERVIÃ‡OS ACADEMICOS' seccao1='REPARTICAO ACADEMICA' seccao2='SECCAO DE POS-GRADUACAO'/>
+  <ass_centro_custo codigoInterno='74' sigla='0312' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE ECONOMATO'/>
+  <ass_centro_custo codigoInterno='75' sigla='0212' departamento='SERVIÇOS ACADEMICOS' seccao1='REPARTICAO ACADEMICA' seccao2='SECCAO DE POS-GRADUACAO'/>
   <ass_centro_custo codigoInterno='76' sigla='0453' departamento='SERVICOS DE APOIO TECNICO' seccao1='GABINETE DE GESTAO DE ALOJAMENTOS' seccao2=''/>
-  <ass_centro_custo codigoInterno='77' sigla='0323' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE SERVICOS SOCIAIS'/>
-  <ass_centro_custo codigoInterno='78' sigla='0314' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE TESOURARIA'/>
+  <ass_centro_custo codigoInterno='77' sigla='0323' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE SERVICOS SOCIAIS'/>
+  <ass_centro_custo codigoInterno='78' sigla='0314' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE TESOURARIA'/>
   <ass_centro_custo codigoInterno='79' sigla='2601' departamento='DEPARTAMENTO DE ENGENHARIA MINAS' seccao1='DEP. MINAS - PRESIDENCIA' seccao2=''/>
   <ass_centro_custo codigoInterno='80' sigla='2605' departamento='DEPARTAMENTO DE ENGENHARIA MINAS' seccao1='LABORATORIO DE GEOLOGIA APLICADA' seccao2=''/>
   <ass_centro_custo codigoInterno='81' sigla='0609' departamento='BIBLIOTECA' seccao1='BIBLIOTECA DEP. ENG. FISICA E TEC.' seccao2=''/>
@@ -175,14 +176,14 @@
   <ass_centro_custo codigoInterno='87' sigla='0406' departamento='SERVICOS DE APOIO TECNICO' seccao1='EXPEDICAO E CORREIO' seccao2=''/>
   <ass_centro_custo codigoInterno='88' sigla='0403' departamento='SERVICOS DE APOIO TECNICO' seccao1='REPROGRAFIA' seccao2=''/>
   <ass_centro_custo codigoInterno='89' sigla='0700' departamento='OFICINAS' seccao1='' seccao2=''/>
-  <ass_centro_custo codigoInterno='90' sigla='0322' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE PESSOAL NAO DOCENTE'/>
+  <ass_centro_custo codigoInterno='90' sigla='0322' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2='SECCAO DE PESSOAL NAO DOCENTE'/>
   <ass_centro_custo codigoInterno='91' sigla='0508' departamento='CENTRO DE INFORMATICA' seccao1='CIIST-EQUIPAMENTO MICROINFORMATICO' seccao2=''/>
-  <ass_centro_custo codigoInterno='92' sigla='0316' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='NUCLEO DE VENCIMENTOS'/>
+  <ass_centro_custo codigoInterno='92' sigla='0316' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='NUCLEO DE VENCIMENTOS'/>
   <ass_centro_custo codigoInterno='93' sigla='0506' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - SERVICO DE APLICACOES' seccao2=''/>
   <ass_centro_custo codigoInterno='94' sigla='1611' departamento='' seccao1='LAB. HIDRAULICA REC. HIDRICOS' seccao2=''/>
   <ass_centro_custo codigoInterno='95' sigla='0111' departamento='' seccao1='GEP-GAB. ESTUDOS E PLANEAMENTO' seccao2=''/>
   <ass_centro_custo codigoInterno='96' sigla='0501' departamento='CENTRO DE INFORMATICA' seccao1='CIIST - CONSELHO DIRECTIVO' seccao2=''/>
-  <ass_centro_custo codigoInterno='97' sigla='0311' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE CONTABILIDADE CENTRAL'/>
+  <ass_centro_custo codigoInterno='97' sigla='0311' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE CONTABILIDADE CENTRAL'/>
   <ass_centro_custo codigoInterno='98' sigla='2297' departamento='DEP. DE ENGENHARIA MECANICA' seccao1='SEC.TERMODINAMICA APLICADA-OFICINAS' seccao2=''/>
   <ass_centro_custo codigoInterno='99' sigla='0114' departamento='' seccao1='NAPPI-NUCLEO APOIO PROT.PROP.INTEL.' seccao2=''/>
   <ass_centro_custo codigoInterno='100' sigla='0003' departamento='ORGAOS CENTRAIS' seccao1='CONSELHO DIRECTIVO' seccao2=''/>
@@ -193,7 +194,7 @@
   <ass_centro_custo codigoInterno='105' sigla='0004' departamento='ORGAOS CENTRAIS' seccao1='CONSELHO CIENTIFICO' seccao2=''/>
   <ass_centro_custo codigoInterno='106' sigla='0101' departamento='' seccao1='GABINETE JURIDICO' seccao2=''/>
   <ass_centro_custo codigoInterno='107' sigla='0414' departamento='SERVICOS DE APOIO TECNICO' seccao1='SERVICOS AUDIOVISUAIS' seccao2=''/>
-  <ass_centro_custo codigoInterno='108' sigla='0320' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2=''/>
+  <ass_centro_custo codigoInterno='108' sigla='0320' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS HUMANOS' seccao2=''/>
   <ass_centro_custo codigoInterno='109' sigla='2304' departamento='DEPARTAMENTO DE ENGENHARIA QUIMICA' seccao1='SEC. PROC. ENG. QUIMICA' seccao2=''/>
   <ass_centro_custo codigoInterno='110' sigla='1131' departamento='' seccao1='CENTRO FISICA INTERAC.FUNDAMENTAIS' seccao2=''/>
   <ass_centro_custo codigoInterno='111' sigla='0104' departamento='' seccao1='GIRE-GAB.REL.PUBLICAS E PROMOCAO' seccao2=''/>
@@ -226,8 +227,8 @@
   <ass_centro_custo codigoInterno='138' sigla='1613' departamento='' seccao1='LABORATORIO DE MECATRONICA' seccao2=''/>
   <ass_centro_custo codigoInterno='139' sigla='1111' departamento='' seccao1='SAID: SERV. APOIO I&amp;D-COMPLEXO' seccao2=''/>
   <ass_centro_custo codigoInterno='140' sigla='0106' departamento='' seccao1='GAIST-GAB. APOIO INFORMATICO' seccao2=''/>
-  <ass_centro_custo codigoInterno='141' sigla='0313' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE PATRIMONIO'/>
-  <ass_centro_custo codigoInterno='142' sigla='0317' departamento='SERVIÃ‡OS MATERIAIS E HUMANOS' seccao1='GABINETE DE GESTÃƒO DE PROJECTOS' seccao2=''/>
+  <ass_centro_custo codigoInterno='141' sigla='0313' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='REPARTICAO DE RECURSOS MATERIAIS' seccao2='SECCAO DE PATRIMONIO'/>
+  <ass_centro_custo codigoInterno='142' sigla='0317' departamento='SERVIÇOS MATERIAIS E HUMANOS' seccao1='GABINETE DE GESTÃO DE PROJECTOS' seccao2=''/>
   <ass_centro_custo codigoInterno='143' sigla='0721' departamento='OFICINAS' seccao1='OFICINAS CENTRAIS' seccao2=''/>
   <ass_centro_custo codigoInterno='144' sigla='1307' departamento='' seccao1='FUNDETEC' seccao2=''/>
   <ass_centro_custo codigoInterno='145' sigla='0451' departamento='SERVICOS DE APOIO TECNICO' seccao1='SERVICOS DE ACCAO SOCIAL' seccao2='CASIST-CENTRO ASSIST.SOCIAL I.S.T.'/>
@@ -286,100 +287,100 @@
   <curricular_course_scope ID_INTERNAL='17' KEY_CURRICULAR_SEMESTER='1' KEY_CURRICULAR_COURSE='26' KEY_BRANCH='1' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1'/>
   <curricular_course_scope ID_INTERNAL='18' KEY_CURRICULAR_SEMESTER='1' KEY_CURRICULAR_COURSE='27' KEY_BRANCH='1' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' MAX_INCREMENT_NAC='2' MIN_INCREMENT_NAC='1' WEIGTH='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='1' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='1' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='2' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='3' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='4' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='5' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='6' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='7' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='8' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='17' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='18' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='19' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='20' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='21' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='26' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='27' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='29' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='31' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='32' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='45' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='46' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='47' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='48' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='49' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='50' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='51' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='52' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='53' chaveRegime='1'/>
-  <ass_horariotipo_regime chaveHorarioTipo='35' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='41' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='42' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='43' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='54' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='55' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='56' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='57' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='58' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='59' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='60' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='61' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='62' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='63' chaveRegime='2'/>
-  <ass_horariotipo_regime chaveHorarioTipo='1' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='7' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='8' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='8' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='12' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='13' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='14' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='16' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='17' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='18' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='19' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='20' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='21' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='24' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='25' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='27' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='35' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='42' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='43' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='44' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='45' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='46' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='47' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='48' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='49' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='50' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='51' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='52' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='53' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='55' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='56' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='59' chaveRegime='3'/>
-  <ass_horariotipo_regime chaveHorarioTipo='61' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='9' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='10' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='11' chaveRegime='4'/>
+  <ass_horariotipo_regime chaveHorarioTipo='12' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='12' chaveRegime='4'/>
+  <ass_horariotipo_regime chaveHorarioTipo='13' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='13' chaveRegime='5'/>
+  <ass_horariotipo_regime chaveHorarioTipo='14' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='14' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='15' chaveRegime='4'/>
+  <ass_horariotipo_regime chaveHorarioTipo='16' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='16' chaveRegime='9'/>
+  <ass_horariotipo_regime chaveHorarioTipo='17' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='17' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='18' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='18' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='19' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='19' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='20' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='20' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='21' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='21' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='22' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='23' chaveRegime='4'/>
+  <ass_horariotipo_regime chaveHorarioTipo='24' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='24' chaveRegime='8'/>
+  <ass_horariotipo_regime chaveHorarioTipo='25' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='25' chaveRegime='4'/>
+  <ass_horariotipo_regime chaveHorarioTipo='26' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='27' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='27' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='28' chaveRegime='9'/>
+  <ass_horariotipo_regime chaveHorarioTipo='29' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='30' chaveRegime='4'/>
+  <ass_horariotipo_regime chaveHorarioTipo='31' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='32' chaveRegime='1'/>
   <ass_horariotipo_regime chaveHorarioTipo='33' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='34' chaveRegime='4'/>
+  <ass_horariotipo_regime chaveHorarioTipo='35' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='35' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='36' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='37' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='38' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='39' chaveRegime='4'/>
   <ass_horariotipo_regime chaveHorarioTipo='40' chaveRegime='4'/>
-  <ass_horariotipo_regime chaveHorarioTipo='13' chaveRegime='5'/>
-  <ass_horariotipo_regime chaveHorarioTipo='24' chaveRegime='8'/>
-  <ass_horariotipo_regime chaveHorarioTipo='16' chaveRegime='9'/>
-  <ass_horariotipo_regime chaveHorarioTipo='28' chaveRegime='9'/>
+  <ass_horariotipo_regime chaveHorarioTipo='41' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='42' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='42' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='43' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='43' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='44' chaveRegime='3'/>
   <ass_horariotipo_regime chaveHorarioTipo='44' chaveRegime='9'/>
+  <ass_horariotipo_regime chaveHorarioTipo='45' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='45' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='46' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='46' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='47' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='47' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='48' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='48' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='49' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='49' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='50' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='50' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='51' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='51' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='52' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='52' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='53' chaveRegime='1'/>
+  <ass_horariotipo_regime chaveHorarioTipo='53' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='54' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='55' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='55' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='56' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='56' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='57' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='58' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='59' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='59' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='60' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='61' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='61' chaveRegime='3'/>
+  <ass_horariotipo_regime chaveHorarioTipo='62' chaveRegime='2'/>
+  <ass_horariotipo_regime chaveHorarioTipo='63' chaveRegime='2'/>
   <department_course ID_INTERNAL='1' NAME='Engenharia da Programacao' CODE='ep' KEY_DEPARTMENT='1'/>
   <department_course ID_INTERNAL='2' NAME='Nao sei' CODE='mvt' KEY_DEPARTMENT='1'/>
   <ass_regularizacao_marcacao/>
@@ -526,8 +527,8 @@
   <curricular_course ID_INTERNAL='23' KEY_DEPARTMENT_COURSE='2' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Aprendizagem' CODE='APR' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
   <curricular_course ID_INTERNAL='24' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Cadeira a Equivaler' CODE='CAE' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
   <curricular_course ID_INTERNAL='25' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Cadeira Equivalente' CODE='CE' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
-  <curricular_course ID_INTERNAL='26' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Cadeira Que NÃ£o Tem Enrolment 1' CODE='CNE1' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
-  <curricular_course ID_INTERNAL='27' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Cadeira Que NÃ£o Tem Enrolment 2' CODE='CNE2' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
+  <curricular_course ID_INTERNAL='26' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Cadeira Que Não Tem Enrolment 1' CODE='CNE1' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
+  <curricular_course ID_INTERNAL='27' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Cadeira Que Não Tem Enrolment 2' CODE='CNE2' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
   <curricular_course ID_INTERNAL='28' KEY_DEGREE_CURRICULAR_PLAN='1' CREDITS='0.0' THEORETICAL_HOURS='0.0' PRATICAL_HOURS='0.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' NAME='Cadeira a apagar' CODE='APG' TYPE='1' EXECUTION_SCOPE='1' MANDATORY='0' BASIC='0'/>
   <freguesiaexpansao/>
   <ass_paises codigoInterno='1' codigoPais='1' nomePais='PORTUGAL' nacionalidade='PORTUGUESA' sigla='PT'/>
@@ -576,8 +577,8 @@
   <ass_paises codigoInterno='44' codigoPais='61' nomePais='MEXICO' nacionalidade='MEXICANA' sigla='MX'/>
   <ass_paises codigoInterno='45' codigoPais='62' nomePais='BULGARIA' nacionalidade='BULGARA' sigla='BG'/>
   <ass_paises codigoInterno='46' codigoPais='63' nomePais='COLOMBIA' nacionalidade='COLOMBIANA' sigla='CO'/>
-  <ass_paises codigoInterno='47' codigoPais='64' nomePais='ESLOVÃQUIA' nacionalidade='ESLOVACO' sigla='SK'/>
-  <ass_paises codigoInterno='48' codigoPais='65' nomePais='CHINA' nacionalidade='CHINÃŠS' sigla='CN'/>
+  <ass_paises codigoInterno='47' codigoPais='64' nomePais='ESLOVÁQUIA' nacionalidade='ESLOVACO' sigla='SK'/>
+  <ass_paises codigoInterno='48' codigoPais='65' nomePais='CHINA' nacionalidade='CHINÊS' sigla='CN'/>
   <person ID_INTERNAL='1' DOCUMENT_ID_NUMBER='123456789' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2002-10-12' NAME='Nome da Pessoa' DATE_OF_BIRTH='2002-10-12' NAME_OF_FATHER='Nome do Pai' NAME_OF_MOTHER='Nome da Mae' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho' DISTRICT_OF_BIRTH='Distrito' ADDRESS='Morada' AREA='localidade' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada' DISTRICT_OF_RESIDENCE='distrito morada' PHONE='214443523' MOBILE='96546321' EMAIL='s@h.c' WEB_ADRDRESS='http' SOCIAL_SECURITY_NUMBER='9876543210' PROFESSION='Profissao' USERNAME='user' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='9786453120' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
   <person ID_INTERNAL='2' DOCUMENT_ID_NUMBER='9876543210' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2002-10-12' NAME='Jorge' DATE_OF_BIRTH='2003-10-12' NAME_OF_FATHER='Nome do Pai' NAME_OF_MOTHER='Nome da Mae' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho' DISTRICT_OF_BIRTH='Distrito' ADDRESS='Morada' AREA='localidade' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada' DISTRICT_OF_RESIDENCE='distrito morada' PHONE='214443523' MOBILE='96546321' EMAIL='s@h.c' WEB_ADRDRESS='http' SOCIAL_SECURITY_NUMBER='9876543210' PROFESSION='Profissao' USERNAME='jorge' PASSWD='0cc175b9c0f1b6a831c399e269772661' KEY_COUNTRY='63' FISCAL_CODE='9876543210' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
   <person ID_INTERNAL='3' DOCUMENT_ID_NUMBER='1111111111' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2002-10-12' NAME='Nome da Pessoa' DATE_OF_BIRTH='2002-10-12' NAME_OF_FATHER='Nome do Pai' NAME_OF_MOTHER='Nome da Mae' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho' DISTRICT_OF_BIRTH='Distrito' ADDRESS='Morada' AREA='localidade' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada' DISTRICT_OF_RESIDENCE='distrito morada' PHONE='214443523' MOBILE='96546321' EMAIL='s@h.c' WEB_ADRDRESS='http' SOCIAL_SECURITY_NUMBER='1111111111' PROFESSION='Profissao' USERNAME='3' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='1111111111' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
@@ -586,9 +587,9 @@
   <person ID_INTERNAL='6' DOCUMENT_ID_NUMBER='4444444' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2005-11-01' NAME='Nuno' DATE_OF_BIRTH='1979-05-12' NAME_OF_FATHER='Manuel' NAME_OF_MOTHER='Maria' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia Nuno' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho Nuno' DISTRICT_OF_BIRTH='Distrito Nuno' ADDRESS='Morada Nuno' AREA='localidade Nuno' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada Nuno' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada Nuno' DISTRICT_OF_RESIDENCE='distrito morada Nuno' PHONE='214443523' MOBILE='96546321' EMAIL='s12@h.c' WEB_ADRDRESS='http123' SOCIAL_SECURITY_NUMBER='444444444' PROFESSION='Profissao' USERNAME='nmsn' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='444444444' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
   <person ID_INTERNAL='7' DOCUMENT_ID_NUMBER='7712345' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2005-11-01' NAME='Joana' DATE_OF_BIRTH='1979-05-12' NAME_OF_FATHER='Manuel joao' NAME_OF_MOTHER='Maria Joana' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia Joana' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho Joana' DISTRICT_OF_BIRTH='Distrito Joana' ADDRESS='Morada Joana' AREA='localidade Joana' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada Joana' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada Joana' DISTRICT_OF_RESIDENCE='distrito morada Joana' PHONE='214443523' MOBILE='96546321' EMAIL='joana@h.c' WEB_ADRDRESS='http1234' SOCIAL_SECURITY_NUMBER='217894432' PROFESSION='Profissao' USERNAME='jccm' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='968763320' TYPE_ID_DOCUMENT='1' SEX='2' MARITAL_STATUS='1'/>
   <person ID_INTERNAL='8' DOCUMENT_ID_NUMBER='8812345' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2005-11-01' NAME='Sousa' DATE_OF_BIRTH='1979-05-12' NAME_OF_FATHER='Manuel Sousa' NAME_OF_MOTHER='Maria Sousa' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia Sousa' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho Sousa' DISTRICT_OF_BIRTH='Distrito Sousa' ADDRESS='Morada Sousa' AREA='localidade Sousa' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada Sousa' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada Sousa' DISTRICT_OF_RESIDENCE='distrito morada Sousa' PHONE='214443523' MOBILE='965463215' EMAIL='sousa@ist.pt' WEB_ADRDRESS='www.sousa.pt' SOCIAL_SECURITY_NUMBER='218894432' PROFESSION='Profissao' USERNAME='sousa' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='918763320' TYPE_ID_DOCUMENT='2' SEX='1' MARITAL_STATUS='1'/>
-  <person ID_INTERNAL='9' DOCUMENT_ID_NUMBER='9912345' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2005-11-01' NAME='Fiado nao dÃ¯Â¿S' DATE_OF_BIRTH='1979-05-12' NAME_OF_FATHER='Manuel Fiado' NAME_OF_MOTHER='Maria Fiado' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia Fiado' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho Fiado' DISTRICT_OF_BIRTH='Distrito Fiado' ADDRESS='Morada Fiado' AREA='localidade Fiado' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada Sousa' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada Fiado' DISTRICT_OF_RESIDENCE='distrito morada Fiado' PHONE='214443524' MOBILE='965463210' EMAIL='fiado@ist.pt' WEB_ADRDRESS='www.fiado.pt' SOCIAL_SECURITY_NUMBER='218894433' PROFESSION='Profissao' USERNAME='fiado' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='918763321' TYPE_ID_DOCUMENT='2' SEX='1' MARITAL_STATUS='1'/>
-  <person ID_INTERNAL='10' DOCUMENT_ID_NUMBER='10' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2005-11-01' NAME='Ã¯Â¿Sngela' DATE_OF_BIRTH='1979-05-12' NAME_OF_FATHER='Manuel Fiado' NAME_OF_MOTHER='Maria Fiado' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Campo Grande' DISTRICT_SUBDIVISION_OF_BIRTH='Almada' DISTRICT_OF_BIRTH='Almada' ADDRESS='rua das flores' AREA='alameda' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada Sousa' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada Fiado' DISTRICT_OF_RESIDENCE='distrito morada Fiado' PHONE='10' MOBILE='965463210' EMAIL='fiado@ist.pt' WEB_ADRDRESS='www.fiado.pt' SOCIAL_SECURITY_NUMBER='218894433' PROFESSION='Profissao' USERNAME='stdnt' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='918763321' TYPE_ID_DOCUMENT='2' SEX='1' MARITAL_STATUS='1'/>
-  <person ID_INTERNAL='11' DOCUMENT_ID_NUMBER='11526317' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2003-05-01' EXPERATION_DATE_OF_DOCUMENT_ID='2003-05-01' NAME='Fernanda TÃ¯Â¿Snia Assiduidade' DATE_OF_BIRTH='2003-05-01' NAME_OF_FATHER='Nome do Pai' NAME_OF_MOTHER='Nome da MÃ¯Â¿Se' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho' DISTRICT_OF_BIRTH='Distrito' ADDRESS='Morada' AREA='localidade' AREA_CODE='0000-000' AREA_OF_AREA_CODE='0000' PARISH_OF_RESIDENCE='frequesia morada' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada' DISTRICT_OF_RESIDENCE='distrito morada' PHONE='000000000' MOBILE='' EMAIL='' WEB_ADRDRESS='' SOCIAL_SECURITY_NUMBER='9876543212' PROFESSION='Alunas LEIC' USERNAME='5592' PASSWD='76a2173be6393254e72ffa4d6df1030a' KEY_COUNTRY='63' FISCAL_CODE='9876543210' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
+  <person ID_INTERNAL='9' DOCUMENT_ID_NUMBER='9912345' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2005-11-01' NAME='Fiado nao dï¿S' DATE_OF_BIRTH='1979-05-12' NAME_OF_FATHER='Manuel Fiado' NAME_OF_MOTHER='Maria Fiado' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia Fiado' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho Fiado' DISTRICT_OF_BIRTH='Distrito Fiado' ADDRESS='Morada Fiado' AREA='localidade Fiado' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada Sousa' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada Fiado' DISTRICT_OF_RESIDENCE='distrito morada Fiado' PHONE='214443524' MOBILE='965463210' EMAIL='fiado@ist.pt' WEB_ADRDRESS='www.fiado.pt' SOCIAL_SECURITY_NUMBER='218894433' PROFESSION='Profissao' USERNAME='fiado' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='918763321' TYPE_ID_DOCUMENT='2' SEX='1' MARITAL_STATUS='1'/>
+  <person ID_INTERNAL='10' DOCUMENT_ID_NUMBER='10' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2005-11-01' NAME='ï¿Sngela' DATE_OF_BIRTH='1979-05-12' NAME_OF_FATHER='Manuel Fiado' NAME_OF_MOTHER='Maria Fiado' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Campo Grande' DISTRICT_SUBDIVISION_OF_BIRTH='Almada' DISTRICT_OF_BIRTH='Almada' ADDRESS='rua das flores' AREA='alameda' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada Sousa' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada Fiado' DISTRICT_OF_RESIDENCE='distrito morada Fiado' PHONE='10' MOBILE='965463210' EMAIL='fiado@ist.pt' WEB_ADRDRESS='www.fiado.pt' SOCIAL_SECURITY_NUMBER='218894433' PROFESSION='Profissao' USERNAME='stdnt' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='918763321' TYPE_ID_DOCUMENT='2' SEX='1' MARITAL_STATUS='1'/>
+  <person ID_INTERNAL='11' DOCUMENT_ID_NUMBER='11526317' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2003-05-01' EXPERATION_DATE_OF_DOCUMENT_ID='2003-05-01' NAME='Fernanda Tï¿Snia Assiduidade' DATE_OF_BIRTH='2003-05-01' NAME_OF_FATHER='Nome do Pai' NAME_OF_MOTHER='Nome da Mï¿Se' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho' DISTRICT_OF_BIRTH='Distrito' ADDRESS='Morada' AREA='localidade' AREA_CODE='0000-000' AREA_OF_AREA_CODE='0000' PARISH_OF_RESIDENCE='frequesia morada' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada' DISTRICT_OF_RESIDENCE='distrito morada' PHONE='000000000' MOBILE='' EMAIL='' WEB_ADRDRESS='' SOCIAL_SECURITY_NUMBER='9876543212' PROFESSION='Alunas LEIC' USERNAME='5592' PASSWD='76a2173be6393254e72ffa4d6df1030a' KEY_COUNTRY='63' FISCAL_CODE='9876543210' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
   <person ID_INTERNAL='12' DOCUMENT_ID_NUMBER='10101010' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2003-05-05' EXPERATION_DATE_OF_DOCUMENT_ID='2005-05-05' NAME='NomeDoManager' DATE_OF_BIRTH='1975-04-05' NAME_OF_FATHER='NomeDoPaiDoManager' NAME_OF_MOTHER='NomeDaMaeDoManager' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='FreguesiaOndeNasceu' DISTRICT_SUBDIVISION_OF_BIRTH='ConcelhoOndeNasceu' DISTRICT_OF_BIRTH='DistritoOndeNasceu' ADDRESS='MoradaDoManager' AREA='LocalidadeDoManager' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='FreguesiaDoManager' DISTRICT_SUBDIVISION_OF_RESIDENCE='ConcelhoDoManager' DISTRICT_OF_RESIDENCE='DistritoDoManager' PHONE='214444444' MOBILE='965463217' EMAIL='manager@clix.pt' WEB_ADRDRESS='http://www.manager.pt' SOCIAL_SECURITY_NUMBER='9876547491' PROFESSION='ProfissaoDoManager' USERNAME='manager' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='9738501637' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
   <person ID_INTERNAL='13' DOCUMENT_ID_NUMBER='1515151515' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2002-10-12' NAME='Nome da Pessoa' DATE_OF_BIRTH='2002-10-12' NAME_OF_FATHER='Nome do Pai' NAME_OF_MOTHER='Nome da Mae' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho' DISTRICT_OF_BIRTH='Distrito' ADDRESS='Morada' AREA='localidade' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada' DISTRICT_OF_RESIDENCE='distrito morada' PHONE='214443523' MOBILE='96546321' EMAIL='s@h.c' WEB_ADRDRESS='http' SOCIAL_SECURITY_NUMBER='1111111111' PROFESSION='Profissao' USERNAME='13' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='1111111111' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
   <person ID_INTERNAL='14' DOCUMENT_ID_NUMBER='161616161' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='2002-10-12' EXPERATION_DATE_OF_DOCUMENT_ID='2002-10-12' NAME='Nome da Pessoa' DATE_OF_BIRTH='2002-10-12' NAME_OF_FATHER='Nome do Pai' NAME_OF_MOTHER='Nome da Mae' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Freguesia' DISTRICT_SUBDIVISION_OF_BIRTH='Concelho' DISTRICT_OF_BIRTH='Distrito' ADDRESS='Morada' AREA='localidade' AREA_CODE='1700-200' AREA_OF_AREA_CODE='l200' PARISH_OF_RESIDENCE='frequesia morada' DISTRICT_SUBDIVISION_OF_RESIDENCE='concelho morada' DISTRICT_OF_RESIDENCE='distrito morada' PHONE='214443523' MOBILE='96546321' EMAIL='s@h.c' WEB_ADRDRESS='http' SOCIAL_SECURITY_NUMBER='1111111111' PROFESSION='Profissao' USERNAME='14' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='63' FISCAL_CODE='1111111111' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1'/>
@@ -672,30 +673,30 @@
   <person_role ID_INTERNAL='32' KEY_ROLE='17' KEY_PERSON='1'/>
   <person_role ID_INTERNAL='33' KEY_ROLE='16' KEY_PERSON='1'/>
   <concelho/>
-  <execution_period ID_INTERNAL='1' NAME='2Âº Semestre' KEY_EXECUTION_YEAR='1' STATE='C' SEMESTER='2'/>
-  <execution_period ID_INTERNAL='2' NAME='3Âº Semestre' KEY_EXECUTION_YEAR='1' STATE='NO' SEMESTER='3'/>
-  <execution_period ID_INTERNAL='3' NAME='1Âº Semestre' KEY_EXECUTION_YEAR='2' STATE='NO' SEMESTER='1'/>
-  <execution_period ID_INTERNAL='4' NAME='2Âº Semestre' KEY_EXECUTION_YEAR='2' STATE='NO' SEMESTER='2'/>
-  <execution_period ID_INTERNAL='5' NAME='1Âº Semestre' KEY_EXECUTION_YEAR='3' STATE='NO' SEMESTER='1'/>
-  <execution_period ID_INTERNAL='6' NAME='2Âº Semestre' KEY_EXECUTION_YEAR='3' STATE='NO' SEMESTER='2'/>
-  <execution_period ID_INTERNAL='7' NAME='1Âº Semestre' KEY_EXECUTION_YEAR='4' STATE='NO' SEMESTER='1'/>
-  <execution_period ID_INTERNAL='8' NAME='2Âº Semestre' KEY_EXECUTION_YEAR='4' STATE='NO' SEMESTER='2'/>
+  <execution_period ID_INTERNAL='1' NAME='2º Semestre' KEY_EXECUTION_YEAR='1' STATE='C' SEMESTER='2'/>
+  <execution_period ID_INTERNAL='2' NAME='3º Semestre' KEY_EXECUTION_YEAR='1' STATE='NO' SEMESTER='3'/>
+  <execution_period ID_INTERNAL='3' NAME='1º Semestre' KEY_EXECUTION_YEAR='2' STATE='NO' SEMESTER='1'/>
+  <execution_period ID_INTERNAL='4' NAME='2º Semestre' KEY_EXECUTION_YEAR='2' STATE='NO' SEMESTER='2'/>
+  <execution_period ID_INTERNAL='5' NAME='1º Semestre' KEY_EXECUTION_YEAR='3' STATE='NO' SEMESTER='1'/>
+  <execution_period ID_INTERNAL='6' NAME='2º Semestre' KEY_EXECUTION_YEAR='3' STATE='NO' SEMESTER='2'/>
+  <execution_period ID_INTERNAL='7' NAME='1º Semestre' KEY_EXECUTION_YEAR='4' STATE='NO' SEMESTER='1'/>
+  <execution_period ID_INTERNAL='8' NAME='2º Semestre' KEY_EXECUTION_YEAR='4' STATE='NO' SEMESTER='2'/>
   <seminary_curricularcourse/>
   <ass_status codigoInterno='1' sigla='CONTRATADO' designacao='Contratado' estado='activo' assiduidade='true'/>
   <ass_status codigoInterno='2' sigla='APOSENTAD0' designacao='Aposentado' estado='inactivo' assiduidade='false'/>
   <ass_status codigoInterno='3' sigla='REQUI-P/' designacao='Requisitado para' estado='pendente' assiduidade='false'/>
   <ass_status codigoInterno='4' sigla='FIMCONTTER' designacao='Fim de Contrato a Termo' estado='inactivo' assiduidade='false'/>
   <ass_status codigoInterno='5' sigla='FALECIMENT' designacao='Falecimento' estado='inactivo' assiduidade='false'/>
-  <ass_status codigoInterno='6' sigla='EXONORAÃ‡AO' designacao='ExonoraÃ§Ã£o' estado='inactivo' assiduidade='false'/>
+  <ass_status codigoInterno='6' sigla='EXONORAÇAO' designacao='Exonoração' estado='inactivo' assiduidade='false'/>
   <ass_status codigoInterno='7' sigla='CONTRADIST' designacao='Contrato pela ADIST' estado='activo' assiduidade='true'/>
-  <ass_status codigoInterno='8' sigla='COMSERVP' designacao='ComissÃ£o de ServiÃ§o para' estado='pendente' assiduidade='false'/>
+  <ass_status codigoInterno='8' sigla='COMSERVP' designacao='Comissão de Serviço para' estado='pendente' assiduidade='false'/>
   <ass_status codigoInterno='9' sigla='CONTTERCER' designacao='Contrato a Termo Certo' estado='activo' assiduidade='true'/>
-  <ass_status codigoInterno='10' sigla='DEMISSAO' designacao='DemissÃ£o' estado='inactivo' assiduidade='false'/>
+  <ass_status codigoInterno='10' sigla='DEMISSAO' designacao='Demissão' estado='inactivo' assiduidade='false'/>
   <ass_status codigoInterno='11' sigla='DESTACIST' designacao='Destacado no IST' estado='activo' assiduidade='true'/>
-  <ass_status codigoInterno='12' sigla='LS/V-LDU' designacao='LicenÃ§a sem Vencimento-Longa DuraÃ§Ã£o' estado='pendente' assiduidade='false'/>
-  <ass_status codigoInterno='13' sigla='TRANSFPA' designacao='TransferÃªncia para' estado='inactivo' assiduidade='false'/>
-  <ass_status codigoInterno='14' sigla='RESCOTECER' designacao='RescisÃ£o de Contrato a Termo Certo' estado='inactivo' assiduidade='false'/>
-  <ass_status codigoInterno='15' sigla='MUDREGIM' designacao='MudanÃ§a de Regime' estado='pendente' assiduidade='false'/>
+  <ass_status codigoInterno='12' sigla='LS/V-LDU' designacao='Licença sem Vencimento-Longa Duração' estado='pendente' assiduidade='false'/>
+  <ass_status codigoInterno='13' sigla='TRANSFPA' designacao='Transferência para' estado='inactivo' assiduidade='false'/>
+  <ass_status codigoInterno='14' sigla='RESCOTECER' designacao='Rescisão de Contrato a Termo Certo' estado='inactivo' assiduidade='false'/>
+  <ass_status codigoInterno='15' sigla='MUDREGIM' designacao='Mudança de Regime' estado='pendente' assiduidade='false'/>
   <student_curricular_plan ID_INTERNAL='1' KEY_STUDENT='1' KEY_DEGREE_CURRICULAR_PLAN='2' CURRENT_STATE='2' START_DATE='2002-10-21' KEY_BRANCH='2' SPECIALIZATION='1' GIVEN_CREDITS='0.0' COMPLETED_COURSES='0' ENROLLED_COURSES='0' CLASSIFICATION='0.0'/>
   <student_curricular_plan ID_INTERNAL='2' KEY_STUDENT='1' KEY_DEGREE_CURRICULAR_PLAN='1' CURRENT_STATE='1' START_DATE='2002-12-21' KEY_BRANCH='1' SPECIALIZATION='1' GIVEN_CREDITS='0.0' COMPLETED_COURSES='0' ENROLLED_COURSES='0' CLASSIFICATION='0.0'/>
   <student_curricular_plan ID_INTERNAL='3' KEY_STUDENT='5' KEY_DEGREE_CURRICULAR_PLAN='2' CURRENT_STATE='1' START_DATE='2002-10-21' KEY_BRANCH='1' SPECIALIZATION='1' GIVEN_CREDITS='0.0' COMPLETED_COURSES='0' ENROLLED_COURSES='0' CLASSIFICATION='0.0'/>
@@ -765,17 +766,17 @@
   <posgrad_disc_area_aluno/>
   <ass_periodo_ferias/>
   <seminary_casestudy/>
-  <ass_param_ferias codigoInterno='1' sigla='FER' designacao='fÃ©rias normais (artigo 2 DL 100/99)'/>
-  <ass_param_ferias codigoInterno='2' sigla='FEB' designacao='fÃ©rias por Ã©poca baixa (artigo 7 DL 100/99)'/>
-  <ass_param_ferias codigoInterno='3' sigla='FHE' designacao='fÃ©rias por acrÃ©scimo de horas extraordinÃ¡rias'/>
-  <ass_param_ferias codigoInterno='4' sigla='FA42' designacao='fÃ©rias por antiguidade (artigo 2/3 DL 100/99)'/>
-  <ass_param_ferias codigoInterno='5' sigla='FA17' designacao='fÃ©rias por dispensa de serviÃ§o (artigo 17 da assiduidade do IST)'/>
-  <ass_param_ferias codigoInterno='6' sigla='FTRANS' designacao='fÃ©rias transferidas do ano anterior'/>
-  <ass_param_ferias codigoInterno='7' sigla='FA42T' designacao='fÃ©rias de antiguidade transferidas do ano anterior'/>
-  <ass_param_ferias codigoInterno='8' sigla='FHET' designacao='fÃ©rias por acrÃ©scimo de horas extraordinÃ¡rias transferidas do ano anterior'/>
+  <ass_param_ferias codigoInterno='1' sigla='FER' designacao='férias normais (artigo 2 DL 100/99)'/>
+  <ass_param_ferias codigoInterno='2' sigla='FEB' designacao='férias por época baixa (artigo 7 DL 100/99)'/>
+  <ass_param_ferias codigoInterno='3' sigla='FHE' designacao='férias por acréscimo de horas extraordinárias'/>
+  <ass_param_ferias codigoInterno='4' sigla='FA42' designacao='férias por antiguidade (artigo 2/3 DL 100/99)'/>
+  <ass_param_ferias codigoInterno='5' sigla='FA17' designacao='férias por dispensa de serviço (artigo 17 da assiduidade do IST)'/>
+  <ass_param_ferias codigoInterno='6' sigla='FTRANS' designacao='férias transferidas do ano anterior'/>
+  <ass_param_ferias codigoInterno='7' sigla='FA42T' designacao='férias de antiguidade transferidas do ano anterior'/>
+  <ass_param_ferias codigoInterno='8' sigla='FHET' designacao='férias por acréscimo de horas extraordinárias transferidas do ano anterior'/>
   <student_test_question/>
   <restriction/>
-  <ass_pessoa codigoInterno='3' numeroDocumentoIdentificacao='11526317' tipoDocumentoIdentificacao='1' localEmissaoDocumentoIdentificacao='LISBOA' dataEmissaoDocumentoIdentificacao='2003-05-01' dataValidadeDocumentoIdentificacao='2003-05-01' nome='FERNANDA TÃ‚NIA ASSIDUIDADE' sexo='8' estadoCivil='10' nascimento='2003-05-01' nomePai='NOME DO PAI' nomeMae='NOME DA MAE' nacionalidade='Portuguesa' freguesiaNaturalidade='Freguesia' concelhoNaturalidade='Concelho' distritoNaturalidade='Distrito' morada='Morada' localidade='localidade' codigoPostal='0000-000' localidadeCodigoPostal='Localidade Codigo Postal' freguesiaMorada='Frequesia morada' concelhoMorada='Concelho morada' distritoMorada='Distrito morada' telefone='4544645592' telemovel='4544645592' email='ciapl-fernanda@rnl.ist.utl.pt' enderecoWeb='' numContribuinte='4544645592' profissao='ALUNAS LEIC' username='5592' password='11526317' nacionalidadeCompleta='1' codigoFiscal=''/>
+  <ass_pessoa codigoInterno='3' numeroDocumentoIdentificacao='11526317' tipoDocumentoIdentificacao='1' localEmissaoDocumentoIdentificacao='LISBOA' dataEmissaoDocumentoIdentificacao='2003-05-01' dataValidadeDocumentoIdentificacao='2003-05-01' nome='FERNANDA TÂNIA ASSIDUIDADE' sexo='8' estadoCivil='10' nascimento='2003-05-01' nomePai='NOME DO PAI' nomeMae='NOME DA MAE' nacionalidade='Portuguesa' freguesiaNaturalidade='Freguesia' concelhoNaturalidade='Concelho' distritoNaturalidade='Distrito' morada='Morada' localidade='localidade' codigoPostal='0000-000' localidadeCodigoPostal='Localidade Codigo Postal' freguesiaMorada='Frequesia morada' concelhoMorada='Concelho morada' distritoMorada='Distrito morada' telefone='4544645592' telemovel='4544645592' email='ciapl-fernanda@rnl.ist.utl.pt' enderecoWeb='' numContribuinte='4544645592' profissao='ALUNAS LEIC' username='5592' password='11526317' nacionalidadeCompleta='1' codigoFiscal=''/>
   <curricular_course_equivalence/>
   <gratuity/>
   <student_group ID_INTERNAL='1' GROUP_NUMBER='1' KEY_SHIFT='21' KEY_GROUP_PROPERTIES='4'/>
@@ -829,21 +830,21 @@
   <student_group_attend ID_INTERNAL='6' KEY_ATTEND='2' KEY_STUDENT_GROUP='11'/>
   <student_group_attend ID_INTERNAL='7' KEY_ATTEND='7' KEY_STUDENT_GROUP='11'/>
   <conversaocidadepais/>
-  <price ID_INTERNAL='1' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='DuraÃ§Ã£o do Curso' PRICE='11.47'/>
+  <price ID_INTERNAL='1' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Duração do Curso' PRICE='11.47'/>
   <price ID_INTERNAL='2' GRADUATION_TYPE='1' DOCUMENT_TYPE='2' DESCRIPTION='Doc2' PRICE='12.45'/>
   <price ID_INTERNAL='3' GRADUATION_TYPE='1' DOCUMENT_TYPE='3' DESCRIPTION='Doc3' PRICE='13.47'/>
-  <price ID_INTERNAL='4' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='MatrÃ­cula' PRICE='75.0'/>
-  <price ID_INTERNAL='5' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='InscriÃ§Ã£o' PRICE='75.0'/>
-  <price ID_INTERNAL='6' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='MatrÃ­cula e InscriÃ§Ã£o' PRICE='75.0'/>
+  <price ID_INTERNAL='4' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Matrícula' PRICE='75.0'/>
+  <price ID_INTERNAL='5' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Inscrição' PRICE='75.0'/>
+  <price ID_INTERNAL='6' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Matrícula e Inscrição' PRICE='75.0'/>
   <price ID_INTERNAL='7' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Aproveitamento' PRICE='75.0'/>
   <price ID_INTERNAL='8' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Aproveitamento de Disciplinas Extra Curricular' PRICE='75.0'/>
   <price ID_INTERNAL='9' GRADUATION_TYPE='2' DOCUMENT_TYPE='4' DESCRIPTION='Emolumentos de Candidatura' PRICE='100.0'/>
   <price ID_INTERNAL='10' GRADUATION_TYPE='2' DOCUMENT_TYPE='4' DESCRIPTION='Mestrado' PRICE='100.0'/>
-  <price ID_INTERNAL='11' GRADUATION_TYPE='2' DOCUMENT_TYPE='4' DESCRIPTION='EspecializaÃ§Ã£o' PRICE='100.0'/>
+  <price ID_INTERNAL='11' GRADUATION_TYPE='2' DOCUMENT_TYPE='4' DESCRIPTION='Especialização' PRICE='100.0'/>
   <price ID_INTERNAL='12' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Fim parte escolar simples' PRICE='100.0'/>
-  <price ID_INTERNAL='13' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Fim parte escolar discriminada sem mÃ©dia' PRICE='100.0'/>
-  <price ID_INTERNAL='14' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Fim parte escolar discriminada com mÃ©dia' PRICE='100.0'/>
-  <price ID_INTERNAL='15' GRADUATION_TYPE='2' DOCUMENT_TYPE='5' DESCRIPTION='InscriÃ§Ãµes' PRICE='80.0'/>
+  <price ID_INTERNAL='13' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Fim parte escolar discriminada sem média' PRICE='100.0'/>
+  <price ID_INTERNAL='14' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Fim parte escolar discriminada com média' PRICE='100.0'/>
+  <price ID_INTERNAL='15' GRADUATION_TYPE='2' DOCUMENT_TYPE='5' DESCRIPTION='Inscrições' PRICE='80.0'/>
   <price ID_INTERNAL='16' GRADUATION_TYPE='2' DOCUMENT_TYPE='6' DESCRIPTION='Multas' PRICE='45.0'/>
   <price ID_INTERNAL='17' GRADUATION_TYPE='2' DOCUMENT_TYPE='7' DESCRIPTION='Seguros' PRICE='100.0'/>
   <price ID_INTERNAL='18' GRADUATION_TYPE='2' DOCUMENT_TYPE='1' DESCRIPTION='Diploma' PRICE='100.0'/>
@@ -864,78 +865,78 @@
   <shift_student ID_INTERNAL='8' KEY_SHIFT='12' KEY_STUDENT='6'/>
   <shift_student ID_INTERNAL='9' KEY_SHIFT='14' KEY_STUDENT='6'/>
   <ojb_dset_entries/>
-  <ass_param_justificacao codigoInterno='1' sigla='1/2 FÃ‰R' descricao='1/2 dia de FÃ©rias (gozo de fÃ©rias do p. ano)' tipo='JH' tipoDias='U' grupo='FER COR' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='2' sigla='1/2A66' descricao='1/2 dia de ArtÂº66' tipo='JH' tipoDias='U' grupo='FER COR' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='3' sigla='A.SINDIC' descricao='Actividade Sindical' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='4' sigla='A1306' descricao='ServiÃ§o no Exterior' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='5' sigla='A17' descricao='ArtÂº 17' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='6' sigla='A42' descricao='FÃ©rias Antiguidade' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='7' sigla='A62' descricao='ArtÂº 62' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='8' sigla='A66' descricao='ArtÂº 66' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='9' sigla='A68' descricao='ArtÂº 68' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='10' sigla='ACCRED' descricao='Acidente em ServiÃ§o (crÃ©dito em tempo)' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='11' sigla='ACINLO' descricao='Acidente em ServiÃ§o no local' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='12' sigla='ACINTE' descricao='Acidente em ServiÃ§o no ItinerÃ¡rio' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='13' sigla='ACS' descricao='Acidente em ServiÃ§o' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='14' sigla='AFCT' descricao='Assist. Func. Civis Tuberculosos' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='15' sigla='AMD' descricao='Atestado MÃ©dico Deficiente' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='16' sigla='AMF' descricao='Atestado MÃ©dico por Familiar' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='17' sigla='AMFM' descricao='Atestado MÃ©dico por Filho Menor' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='18' sigla='AMI' descricao='Atestado MÃ©dico Internamento' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='19' sigla='ATTR' descricao='Atraso nos Transportes' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='20' sigla='BOLSEIRO' descricao='EquiparaÃ§Ã£o a Bolseiro' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='21' sigla='COMP' descricao='CompensaÃ§Ã£o' tipo='SALD' tipoDias='U' quem='1' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='22' sigla='CURCD' descricao='Curso de FormaÃ§Ã£o aut. pelo C.D.' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='23' sigla='CURSO' descricao='Curso de FormaÃ§Ã£o' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='24' sigla='CURSO CD' descricao='Curso de FormaÃ§Ã£o aut. pelo C.D.' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='25' sigla='CURSOS' descricao='Cursos de FormaÃ§Ã£o crÃ©dito em horas' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='26' sigla='DEH' descricao='Dispensa por Horas Extra' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='27' sigla='DISSER' descricao='Dispensa de ServiÃ§o' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='28' sigla='DSANG' descricao='DÃ¡diva de Sangue' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='29' sigla='DSANG CR' descricao='CrÃ©dito para dÃ¡diva de sangue' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='30' sigla='F1306' descricao='ServiÃ§o no Exterior' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='31' sigla='FA1306' descricao='ServiÃ§o no Exterior' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='32' sigla='FA17' descricao='FÃ©rias por ArtÂº 17' tipo='OC' tipoDias='U' grupo='FER COR' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='33' sigla='FA42' descricao='FÃ©rias do ArtÂº 42 D.L. 100/99' tipo='OC' tipoDias='U' grupo='FER COR' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='34' sigla='FA42T' descricao='FÃ©rias do ArtÂº 42 Ano Anterior' tipo='OC' tipoDias='U' grupo='FER ANT' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='35' sigla='FAM' descricao='Falta por Atestado MÃ©dico PrÃ³prio' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='36' sigla='FEB' descricao='FÃ©rias por Ã‰poca Baixa' tipo='OC' tipoDias='U' grupo='FER COR' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='37' sigla='FER' descricao='FÃ©rias do Corrente Ano' tipo='OC' tipoDias='U' grupo='FER COR' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='38' sigla='FH1306' descricao='ServiÃ§o no Exterior' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='39' sigla='FHE' descricao='FÃ©rias Horas Extra do Corrente Ano' tipo='OC' tipoDias='U' grupo='FER COR' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='40' sigla='FHEA' descricao='FÃ©rias Horas Extra do Ano Anterior' tipo='OC' tipoDias='U' grupo='FER ANT' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='41' sigla='FINJUST' descricao='Falta Injustificada' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='42' sigla='FT1306' descricao='ServiÃ§o no Exterior' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='43' sigla='FTRANS' descricao='FÃ©rias Transferidas Ano Anterior' tipo='OC' tipoDias='U' grupo='FER ANT' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='44' sigla='GREVE' descricao='Greve' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='45' sigla='IDMED' descricao='Ida ao MÃ©dico (exames)' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='46' sigla='IFC' descricao='Infecto-contagiosa' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='47' sigla='INATIV' descricao='Pena de Inatividade' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='48' sigla='J.MEDICA' descricao='Junta MÃ©dica' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='49' sigla='JMAC' descricao='Junta MÃ©dica de Acidente em ServiÃ§o' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='50' sigla='LP' descricao='LicenÃ§a de Parto' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='51' sigla='LPC' descricao='LicenÃ§a para Casamento' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='52' sigla='LS/V' descricao='LicenÃ§a sem Vencimento' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='53' sigla='NOJO' descricao='Nojo' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='54' sigla='PATERNID' descricao='Paternidade' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='55' sigla='PRISÃƒO' descricao='PrisÃ£o' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='56' sigla='SAIU' descricao='Saiu em ServiÃ§o' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='57' sigla='SPONTO' descricao='Sem Ponto' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='58' sigla='SUSPENÃ‡A' descricao='SuspensÃ£o' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='59' sigla='SUSPRE' descricao='SuspensÃ£o Preventiva' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='60' sigla='T.AMB' descricao='Tratamento AmbulatÃ³rio' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='61' sigla='T1306' descricao='ServiÃ§o no Exterior' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='62' sigla='TAMBF' descricao='Tratam. Amb. Familiar ArtÂº 53 D.L. 100/99' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='63' sigla='TAMBFM' descricao='Trat. Amb. Filho Menor ArtÂº 53 D.L. 100/99' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='64' sigla='TE CRED' descricao='T. E. CrÃ©dito' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='65' sigla='TEVESP' descricao='Trabalhador Estudante vÃ©spera exame' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='66' sigla='TOL' descricao='TolerÃ¢ncia de Ponto' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='67' sigla='TRAEST' descricao='Trabalhador Estudante' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='68' sigla='TRIB' descricao='Tribunal' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='69' sigla='TROPA' descricao='Serv. Militar artÂº 63' tipo='OC' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='70' sigla='LMAR' descricao='LicenÃ§a de Maternidade Alto Risco' tipo='OC' tipoDias='T' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='71' sigla='L.PAT' descricao='LicenÃ§a  Parental por 15 dias' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_justificacao codigoInterno='72' sigla='1/2GREVE' descricao='1/2 dia de Greve' tipo='JH' tipoDias='U' quem='0' quando='0002-11-30 00:00:00.0'/>
+  <ass_param_justificacao codigoInterno='1' sigla='1/2 FÉR' descricao='1/2 dia de Férias (gozo de férias do p. ano)' tipo='JH' tipoDias='U' grupo='FER COR' quem='0'/>
+  <ass_param_justificacao codigoInterno='2' sigla='1/2A66' descricao='1/2 dia de Artº66' tipo='JH' tipoDias='U' grupo='FER COR' quem='0'/>
+  <ass_param_justificacao codigoInterno='3' sigla='A.SINDIC' descricao='Actividade Sindical' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='4' sigla='A1306' descricao='Serviço no Exterior' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='5' sigla='A17' descricao='Artº 17' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='6' sigla='A42' descricao='Férias Antiguidade' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='7' sigla='A62' descricao='Artº 62' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='8' sigla='A66' descricao='Artº 66' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='9' sigla='A68' descricao='Artº 68' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='10' sigla='ACCRED' descricao='Acidente em Serviço (crédito em tempo)' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='11' sigla='ACINLO' descricao='Acidente em Serviço no local' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='12' sigla='ACINTE' descricao='Acidente em Serviço no Itinerário' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='13' sigla='ACS' descricao='Acidente em Serviço' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='14' sigla='AFCT' descricao='Assist. Func. Civis Tuberculosos' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='15' sigla='AMD' descricao='Atestado Médico Deficiente' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='16' sigla='AMF' descricao='Atestado Médico por Familiar' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='17' sigla='AMFM' descricao='Atestado Médico por Filho Menor' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='18' sigla='AMI' descricao='Atestado Médico Internamento' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='19' sigla='ATTR' descricao='Atraso nos Transportes' tipo='JH' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='20' sigla='BOLSEIRO' descricao='Equiparação a Bolseiro' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='21' sigla='COMP' descricao='Compensação' tipo='SALD' tipoDias='U' quem='1'/>
+  <ass_param_justificacao codigoInterno='22' sigla='CURCD' descricao='Curso de Formação aut. pelo C.D.' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='23' sigla='CURSO' descricao='Curso de Formação' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='24' sigla='CURSO CD' descricao='Curso de Formação aut. pelo C.D.' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='25' sigla='CURSOS' descricao='Cursos de Formação crédito em horas' tipo='JH' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='26' sigla='DEH' descricao='Dispensa por Horas Extra' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='27' sigla='DISSER' descricao='Dispensa de Serviço' tipo='JH' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='28' sigla='DSANG' descricao='Dádiva de Sangue' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='29' sigla='DSANG CR' descricao='Crédito para dádiva de sangue' tipo='JH' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='30' sigla='F1306' descricao='Serviço no Exterior' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='31' sigla='FA1306' descricao='Serviço no Exterior' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='32' sigla='FA17' descricao='Férias por Artº 17' tipo='OC' tipoDias='U' grupo='FER COR' quem='0'/>
+  <ass_param_justificacao codigoInterno='33' sigla='FA42' descricao='Férias do Artº 42 D.L. 100/99' tipo='OC' tipoDias='U' grupo='FER COR' quem='0'/>
+  <ass_param_justificacao codigoInterno='34' sigla='FA42T' descricao='Férias do Artº 42 Ano Anterior' tipo='OC' tipoDias='U' grupo='FER ANT' quem='0'/>
+  <ass_param_justificacao codigoInterno='35' sigla='FAM' descricao='Falta por Atestado Médico Próprio' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='36' sigla='FEB' descricao='Férias por Época Baixa' tipo='OC' tipoDias='U' grupo='FER COR' quem='0'/>
+  <ass_param_justificacao codigoInterno='37' sigla='FER' descricao='Férias do Corrente Ano' tipo='OC' tipoDias='U' grupo='FER COR' quem='0'/>
+  <ass_param_justificacao codigoInterno='38' sigla='FH1306' descricao='Serviço no Exterior' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='39' sigla='FHE' descricao='Férias Horas Extra do Corrente Ano' tipo='OC' tipoDias='U' grupo='FER COR' quem='0'/>
+  <ass_param_justificacao codigoInterno='40' sigla='FHEA' descricao='Férias Horas Extra do Ano Anterior' tipo='OC' tipoDias='U' grupo='FER ANT' quem='0'/>
+  <ass_param_justificacao codigoInterno='41' sigla='FINJUST' descricao='Falta Injustificada' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='42' sigla='FT1306' descricao='Serviço no Exterior' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='43' sigla='FTRANS' descricao='Férias Transferidas Ano Anterior' tipo='OC' tipoDias='U' grupo='FER ANT' quem='0'/>
+  <ass_param_justificacao codigoInterno='44' sigla='GREVE' descricao='Greve' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='45' sigla='IDMED' descricao='Ida ao Médico (exames)' tipo='JH' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='46' sigla='IFC' descricao='Infecto-contagiosa' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='47' sigla='INATIV' descricao='Pena de Inatividade' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='48' sigla='J.MEDICA' descricao='Junta Médica' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='49' sigla='JMAC' descricao='Junta Médica de Acidente em Serviço' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='50' sigla='LP' descricao='Licença de Parto' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='51' sigla='LPC' descricao='Licença para Casamento' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='52' sigla='LS/V' descricao='Licença sem Vencimento' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='53' sigla='NOJO' descricao='Nojo' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='54' sigla='PATERNID' descricao='Paternidade' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='55' sigla='PRISÃO' descricao='Prisão' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='56' sigla='SAIU' descricao='Saiu em Serviço' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='57' sigla='SPONTO' descricao='Sem Ponto' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='58' sigla='SUSPENÇA' descricao='Suspensão' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='59' sigla='SUSPRE' descricao='Suspensão Preventiva' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='60' sigla='T.AMB' descricao='Tratamento Ambulatório' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='61' sigla='T1306' descricao='Serviço no Exterior' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='62' sigla='TAMBF' descricao='Tratam. Amb. Familiar Artº 53 D.L. 100/99' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='63' sigla='TAMBFM' descricao='Trat. Amb. Filho Menor Artº 53 D.L. 100/99' tipo='JH' tipoDias='U' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='64' sigla='TE CRED' descricao='T. E. Crédito' tipo='JH' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='65' sigla='TEVESP' descricao='Trabalhador Estudante véspera exame' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='66' sigla='TOL' descricao='Tolerância de Ponto' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='67' sigla='TRAEST' descricao='Trabalhador Estudante' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='68' sigla='TRIB' descricao='Tribunal' tipo='JH' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='69' sigla='TROPA' descricao='Serv. Militar artº 63' tipo='OC' tipoDias='U' quem='0'/>
+  <ass_param_justificacao codigoInterno='70' sigla='LMAR' descricao='Licença de Maternidade Alto Risco' tipo='OC' tipoDias='T' quem='0'/>
+  <ass_param_justificacao codigoInterno='71' sigla='L.PAT' descricao='Licença  Parental por 15 dias' tipo='OC' tipoDias='T' grupo='DOENCAS' quem='0'/>
+  <ass_param_justificacao codigoInterno='72' sigla='1/2GREVE' descricao='1/2 dia de Greve' tipo='JH' tipoDias='U' quem='0'/>
   <paisnaturalidade/>
   <ass_cartao codigoInterno='1' numCartao='5592' chaveFuncionario='1' dataInicio='2003-01-01 00:00:00.0' dataFim='2036-01-01 00:00:00.0' quem='2036' quando='2003-02-13 11:34:56.0' estado='invalido'/>
   <ass_cartao codigoInterno='2' numCartao='900889' chaveFuncionario='1' dataInicio='2003-02-13 09:00:00.0' dataFim='2003-12-31 23:59:00.0' quem='2036' quando='2003-02-13 18:28:26.0' estado='atribuido'/>
@@ -974,7 +975,7 @@
   <university/>
   <ojb_dset/>
   <degree_objectives/>
-  <guide_entry ID_INTERNAL='1' KEY_GUIDE='1' GRADUATION_TYPE='1' DOCUMENT_TYPE='2' DESCRIPTION='ConclusÃ£o' PRICE='10.02' QUANTITY='1'/>
+  <guide_entry ID_INTERNAL='1' KEY_GUIDE='1' GRADUATION_TYPE='1' DOCUMENT_TYPE='2' DESCRIPTION='Conclusão' PRICE='10.02' QUANTITY='1'/>
   <guide_entry ID_INTERNAL='2' KEY_GUIDE='1' GRADUATION_TYPE='1' DOCUMENT_TYPE='6' DESCRIPTION='Atraso no Pagamento' PRICE='15.0' QUANTITY='2'/>
   <guide_entry ID_INTERNAL='3' KEY_GUIDE='1' GRADUATION_TYPE='1' DOCUMENT_TYPE='7' DESCRIPTION='de vida' PRICE='10.0' QUANTITY='1'/>
   <guide_entry ID_INTERNAL='4' KEY_GUIDE='2' GRADUATION_TYPE='1' DOCUMENT_TYPE='1' DESCRIPTION='desc1' PRICE='1.0' QUANTITY='1'/>
@@ -1032,13 +1033,13 @@
   <posgrad_aluno_mestrado/>
   <mark/>
   <ass_horario_excepcao/>
-  <ass_param_regularizacao codigoInterno='1' sigla='CR' descricao='CartÃ£o Rejeitado' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_regularizacao codigoInterno='2' sigla='CURSO' descricao='Curso de FormaÃ§Ã£o' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_regularizacao codigoInterno='3' sigla='EXTC' descricao='Extravio de CartÃ£o' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_regularizacao codigoInterno='4' sigla='FMAT' descricao='Avaria de Teleponto' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_regularizacao codigoInterno='5' sigla='FME' descricao='Falta por Esquecimento' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_regularizacao codigoInterno='6' sigla='MA' descricao='MarcaÃ§Ã£o a anular' quem='0' quando='0002-11-30 00:00:00.0'/>
-  <ass_param_regularizacao codigoInterno='7' sigla='SE' descricao='ServiÃ§o Externo' quem='0' quando='0002-11-30 00:00:00.0'/>
+  <ass_param_regularizacao codigoInterno='1' sigla='CR' descricao='Cartão Rejeitado' quem='0'/>
+  <ass_param_regularizacao codigoInterno='2' sigla='CURSO' descricao='Curso de Formação' quem='0'/>
+  <ass_param_regularizacao codigoInterno='3' sigla='EXTC' descricao='Extravio de Cartão' quem='0'/>
+  <ass_param_regularizacao codigoInterno='4' sigla='FMAT' descricao='Avaria de Teleponto' quem='0'/>
+  <ass_param_regularizacao codigoInterno='5' sigla='FME' descricao='Falta por Esquecimento' quem='0'/>
+  <ass_param_regularizacao codigoInterno='6' sigla='MA' descricao='Marcação a anular' quem='0'/>
+  <ass_param_regularizacao codigoInterno='7' sigla='SE' descricao='Serviço Externo' quem='0'/>
   <group_properties ID_INTERNAL='1' MAXIMUM_CAPACITY='8' MINIMUM_CAPACITY='4' IDEAL_CAPACITY='6' ENROLMENT_POLICY='2' GROUP_MAXIMUM_NUMBER='4' NAME='nameA' SHIFT_TYPE='3' ENROLMENT_BEGIN_DAY='2001-01-11' ENROLMENT_END_DAY='2001-10-10' PROJECT_DESCRIPTION='descricao do projecto nameA' KEY_EXECUTION_COURSE='26'/>
   <group_properties ID_INTERNAL='2' MAXIMUM_CAPACITY='4' MINIMUM_CAPACITY='2' IDEAL_CAPACITY='4' ENROLMENT_POLICY='2' GROUP_MAXIMUM_NUMBER='6' NAME='nameB' SHIFT_TYPE='2' ENROLMENT_BEGIN_DAY='2002-02-22' ENROLMENT_END_DAY='2003-10-02' PROJECT_DESCRIPTION='descricao do projecto nameB' KEY_EXECUTION_COURSE='27'/>
   <group_properties ID_INTERNAL='3' MAXIMUM_CAPACITY='4' MINIMUM_CAPACITY='3' IDEAL_CAPACITY='4' ENROLMENT_POLICY='1' GROUP_MAXIMUM_NUMBER='2' NAME='projecto A' SHIFT_TYPE='2' ENROLMENT_BEGIN_DAY='2003-03-23' ENROLMENT_END_DAY='2003-11-03' PROJECT_DESCRIPTION='descricao do projecto A' KEY_EXECUTION_COURSE='25'/>
@@ -1052,7 +1053,7 @@
   <person_advisory/>
   <ojb_dlist_entries/>
   <credits/>
-  <branch ID_INTERNAL='1' BRANCH_CODE='C' BRANCH_NAME='ComputaÃ§Ã£o' KEY_DEGREE_CURRICULAR_PLAN='1'/>
+  <branch ID_INTERNAL='1' BRANCH_CODE='C' BRANCH_NAME='Computação' KEY_DEGREE_CURRICULAR_PLAN='1'/>
   <branch ID_INTERNAL='2' BRANCH_CODE='IA' BRANCH_NAME='Inteligencia Artificial' KEY_DEGREE_CURRICULAR_PLAN='1'/>
   <branch ID_INTERNAL='3' BRANCH_CODE='II' BRANCH_NAME='Informatica Industrial' KEY_DEGREE_CURRICULAR_PLAN='1'/>
   <posgrad_pessoa/>
