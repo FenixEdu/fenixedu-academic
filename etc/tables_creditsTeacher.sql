@@ -82,9 +82,9 @@ create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
    PERCENTAGE float not null default '100.0',
    KEY_STUDENT int(11) not null,
    KEY_TEACHER int(11) not null,   
-   KEY_EXECUTION_YEAR int(11) not null,
+   KEY_EXECUTION_PERIOD int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT, KEY_TEACHER, KEY_EXECUTION_YEAR)
+   unique U1 (KEY_STUDENT, KEY_TEACHER, KEY_EXECUTION_PERIOD)
 )type=InnoDB;
 
 
