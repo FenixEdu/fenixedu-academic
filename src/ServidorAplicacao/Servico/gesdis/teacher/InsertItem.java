@@ -11,7 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.gesdis.InfoItem;
+import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -97,20 +101,52 @@ public class InsertItem implements IServico {
 
 		try {
 
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentItem persistentItem =
-				persistentSuport.getIPersistentItem();
+			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
 
-			section =
-				Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
+			InfoSection infoSection = infoItem.getInfoSection();
+			section = Cloner.copyInfoSection2ISection(infoSection);
+
+			IExecutionYear executionYear =
+				persistentSuport
+					.getIPersistentExecutionYear()
+					.readExecutionYearByName(
+					infoSection
+						.getInfoSite()
+						.getInfoExecutionCourse()
+						.getInfoExecutionPeriod()
+						.getInfoExecutionYear()
+						.getYear());
+			IExecutionPeriod executionPeriod =
+				persistentSuport
+					.getIPersistentExecutionPeriod()
+					.readByNameAndExecutionYear(
+					infoSection
+						.getInfoSite()
+						.getInfoExecutionCourse()
+						.getInfoExecutionPeriod()
+						.getName(),
+					executionYear);
+			IDisciplinaExecucao executionCourse =
+				persistentSuport
+					.getIDisciplinaExecucaoPersistente()
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+						infoSection
+							.getInfoSite()
+							.getInfoExecutionCourse()
+							.getSigla(),
+						executionPeriod);
+				
 			ISite site = section.getSite();
 			site =
 				persistentSuport.getIPersistentSite().readByExecutionCourse(
-					site.getExecutionCourse());
+					executionCourse);
+			
+//			site =
+//				persistentSuport.getIPersistentSite().readByExecutionCourse(
+//					site.getExecutionCourse());
 			section.setSite(site);
-
 		
 			item =
 				new Item(
