@@ -5347,6 +5347,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<idInternal>4839601</idInternal>
+		<name>InsertExternalPerson</name>
+		<implementationClass>ServidorAplicacao.Servico.commons.externalPerson.InsertExternalPerson</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="483191"/>
+		</filterChains>
+	</service>
+	<service>
 		<idInternal>454461</idInternal>
 		<name>ReadInfoTeacherByTeacherNumber</name>
 		<implementationClass>ServidorAplicacao.Servico.manager.teachersManagement.ReadInfoTeacherByTeacherNumber</implementationClass>
