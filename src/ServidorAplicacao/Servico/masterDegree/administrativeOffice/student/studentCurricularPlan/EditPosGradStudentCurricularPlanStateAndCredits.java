@@ -106,6 +106,8 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                             persistentEnrolment.simpleLockWrite(auxEnrolment);
 
                             copyEnrollment(enrolment, auxEnrolment);
+                            setEnrolmentCreationInformation(userView, auxEnrolment);
+                            
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment,
                                     auxEnrolment);
                         } else {
@@ -119,6 +121,8 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                             persistentEnrolment.simpleLockWrite(auxEnrolment);
 
                             copyEnrollment(enrolment, auxEnrolment);
+                            setEnrolmentCreationInformation(userView, auxEnrolment);
+                            
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment,
                                     auxEnrolment);
                         } else {
@@ -133,6 +137,11 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 
     }
 
+    private void setEnrolmentCreationInformation(IUserView userView, IEnrollment auxEnrolment) {
+        auxEnrolment.setCreationDate(Calendar.getInstance().getTime());
+        auxEnrolment.setCreatedBy(userView.getUtilizador());
+    }
+
     /**
      * @param enrolment
      * @param auxEnrolment
@@ -144,12 +153,12 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 
         auxEnrolment.setCurricularCourse(enrolment.getCurricularCourse());
         auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
-        auxEnrolment.setStudentCurricularPlan(enrolment.getStudentCurricularPlan());
+        auxEnrolment.setStudentCurricularPlan(enrolment.getStudentCurricularPlan());     
         try {
             auxEnrolment.setCondition(enrolment.getCondition());
             auxEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
             auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
-            auxEnrolment.setEvaluations(enrolment.getEvaluations());
+            auxEnrolment.setEvaluations(enrolment.getEvaluations());            
         } catch (Exception e1) {
             throw new FenixServiceException(e1);
         }
