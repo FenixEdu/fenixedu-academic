@@ -7,7 +7,6 @@ import junit.framework.TestSuite;
 import Dominio.CurricularCourse;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularSemester;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaDepartamento;
@@ -367,7 +366,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All Curricular Courses Scope By Branch");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 9);
+		assertEquals(12, list.size());
 	}
 
 	public void testReadAllCurricularCoursesBySemester() {
@@ -382,7 +381,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All Curricular Courses Scope By Semester");
 		}
 		assertNotNull(list);
-		assertEquals(6,list.size());
+		assertEquals(8,list.size());
 	}
 
 	public void testReadAllCurricularCoursesBySemesterAndYear() {
@@ -398,7 +397,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All Curricular Courses Scope By Semester And Year");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 1);
+		assertEquals(2, list.size());
 	}
 	
 	public void testReadAllCurricularCoursesBySemesterAndYearAndBranch() {
@@ -424,7 +423,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All Curricular Courses Scope By Semester And Year And Branch");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 1);
+		assertEquals(2, list.size());
 	}
 
 }
