@@ -52,8 +52,14 @@ public class EditarAulasDeTurnoFormActionTest extends TestCasePresentationSopPor
 		setRequestPathInfo("/sop", "/editarAulasDeTurnoForm");
 		addRequestParameter("operation", operation);
 		setAuthorizedUser();
+
+		// Fill out form
+		addRequestParameter("indexAula", "0");
+
 		//action perform
 		actionPerform();
+
+		verifyNoActionErrors();
 
 		//verify action forward
 		verifyForward(operation);
@@ -100,7 +106,7 @@ public class EditarAulasDeTurnoFormActionTest extends TestCasePresentationSopPor
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		// 
+		//
 		return null;
 	}
 
