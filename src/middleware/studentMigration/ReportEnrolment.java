@@ -147,16 +147,16 @@ public class ReportEnrolment
 
 	public static void report(PrintWriter out)
 	{
-		out.println("\nCASOS DE ERRO --------------------------------------------------------------------------");
+		out.println("\n------------------------------ CASOS DE ERRO ------------------------------");
 //		out.println("\tCaso 1 - Disciplinas não encontradas no curso do aluno mas encontradas em varios outros cursos");
-		out.println("\tCASO 1 - Disciplinas encontradas num curso diferente do curso do aluno mas nas quais o aluno não tem Attend");
+		out.println("\tCASO 1 - DISCIPLINAS ENCONTRADAS NUM CURSO DIFERENTE DO CURSO DO ALUNO MAS NAS QUAIS O ALUNO NÃO TEM ATTEND");
 		Iterator iterator = curricularCoursesFoundInOtherDegree.entrySet().iterator();
 		while (iterator.hasNext())
 		{
 			Map.Entry mapEntry = (Map.Entry) iterator.next();
 			String key = (String) mapEntry.getKey();
 
-			out.print("\t\tCadeira - Curso = " + key);
+			out.print("\t\t Cadeira - Curso = " + key);
 			out.println(" Aconteceu " + curricularCoursesFoundInOtherDegreeCardinality.get(key) + " veze(s)...");
 			List foundHere = (List) mapEntry.getValue();
 			// TODO [DAVID] print list here
@@ -164,7 +164,7 @@ public class ReportEnrolment
 		}
 		
 		
-		out.println("\n\tCASO 2 - Execuções não encontradas");
+		out.println("\n\tCASO 2 - EXECUÇÕES NÃO ENCONTRADAS");
 		Iterator iterator2 = notFoundExecutionCourse.entrySet().iterator();
 		while (iterator2.hasNext())
 		{
@@ -177,7 +177,7 @@ public class ReportEnrolment
 		}
 		
 
-		out.println("\n\tCASO 3 - Scopes não encontrados");
+		out.println("\n\tCASO 3 - SCOPES NÃO ENCONTRADOS");
 		Iterator iterator3 = notFoundCurricularCourseScopes.entrySet().iterator();
 		while (iterator3.hasNext())
 		{
@@ -190,7 +190,7 @@ public class ReportEnrolment
 		}
 		
 
-		out.println("\n\tCASO 4 - Curriculares não encontradas");
+		out.println("\n\tCASO 4 - CURRICULARES NÃO ENCONTRADAS");
 		Iterator iterator4 = notFoundCurricularCourses.entrySet().iterator();
 		while (iterator4.hasNext())
 		{
