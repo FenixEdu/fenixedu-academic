@@ -6196,6 +6196,15 @@
         </filterChains>
     </service>
     <service>
+        <name>DefineFinalDegreeWorkCandidacySubmisionPeriod</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.DefineFinalDegreeWorkCandidacySubmisionPeriod</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>ReadFinalDegreeWorkProposalSubmisionPeriod</name>
         <implementationClass>ServidorAplicacao.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod</implementationClass>
         <description/>
