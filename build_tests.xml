@@ -176,7 +176,7 @@
                memoryInitialSize="512m"
                memoryMaximumSize="512m"
                fork="yes">
-			<src path="${src}"/>
+			<src path="${src};${src.tests}"/>
         </javac>
 		<replace dir="${webapp.metadata}" propertyFile="build.properties">
 	    	<include name="**/**/*.xml"/>
@@ -208,7 +208,7 @@
 	
 	
 	
-	<target name="generate-leec-dataset" depends="compile-proj" >
+	<target name="generate-leec-dataset"  >
 		
 		<java classname="Util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
 			<classpath>
@@ -244,6 +244,30 @@
 		  var param2 = callTask.createParam();
           param2.setName("file");
 		  param2.setValue("input");
+		  leec_test_battery.addTask(callTask); 
+         
+         }
+
+			  ]]>
+		 </script>
+		
+	</target>
+	
+	<target name="leec-test-execution-loop" >
+		<property file="etc/LEEC_Enrollment_Tests_Arguments/LEEC_Test_Battery.properties"/>
+		
+		<script language="javascript">
+		  <![CDATA[
+      
+        
+         for (i= project.getProperty("start");i<=project.getProperty("end");i++)
+         {
+         	  
+		  var callTask = project.createTask("antcall");	
+		  callTask.setTarget("run-leec-enrollment-test");	
+		  var param3 = callTask.createParam();
+	      param3.setName("number");
+          param3.setValue(i);
 		  leec_test_battery.addTask(callTask);          
          
          }
@@ -253,12 +277,31 @@
 		
 	</target>
 	
-	<target name="leec_test_battery" depends="leec-test-battery-loop">
+	<target name="leec_test_battery" depends="compile-proj,leec-test-battery-loop,leec-test-execution-loop">
 		<property file="etc/LEEC_Enrollment_Tests_Arguments/LEEC_Test_Battery.properties"/>
 	</target>
 	
 	
-	
+	<target 
+            description="Executa todos os testes"
+            name="run-leec-enrollment-test">
+		<java 
+			classname="ServidorAplicacao.Servicos.enrolment.degree.LeecEnrollmentTestSuite" 
+			fork="yes" failonerror="true" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<pathelement path="${src.tests}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="${number}" />
+		</java>
+       
+    </target>
 	
 	
 	

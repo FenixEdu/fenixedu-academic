@@ -69,6 +69,8 @@ public class GeraXml
 
     private static final String PROPERTIES_FILE_PATH = "config/gera.properties";
 
+    private static final String TEST_FILE_PATH = "test.properties";
+
     private static final String DELIMITADOR = "\t";
 
     public static void main(String[] args)
@@ -76,15 +78,37 @@ public class GeraXml
         Hashtable dadosConfiguracao = leFicheiroPropriedades();
         String number = args[0];
         String file = args[1];
-        System.out.println(number+"-"+file);
+        
+        System.out.println(number + "-" + file);
         String filePath = (String) dadosConfiguracao.get(CC_FILE_PATH);
+
         String backupDataSetFilePath = (String) dadosConfiguracao
-        .get(BACKUP_DATASET_PROPERTY);
-        backupDataSetFilePath = filePath + "/" + number + "/" +backupDataSetFilePath;
+                .get(BACKUP_DATASET_PROPERTY);
+        backupDataSetFilePath = filePath + "/" + number + "/"
+                + backupDataSetFilePath;
+        String testFileFullPath = filePath + "/" + number + "/"
+                + TEST_FILE_PATH;
+        Integer studentNumber = null;
+        try
+        {
+            ResourceBundle testProperties = new PropertyResourceBundle(
+                    new FileInputStream(testFileFullPath));
+            studentNumber = new Integer(testProperties
+                    .getString(STUDENT_NUMBER_PROPERTY));
+            dadosConfiguracao.put(STUDENT_NUMBER_PROPERTY, studentNumber);
+
+        }
+        catch (FileNotFoundException e1)
+        {
+           
+        }
+        catch (IOException e1)
+        {
+           
+        }
+
         filePath = filePath + "/" + number + "/" + file + ".txt";
-       
-        Integer studentNumber = new Integer((String) dadosConfiguracao
-                .get(STUDENT_NUMBER_PROPERTY));
+
         Integer degreeCurricularPlanID = new Integer((String) dadosConfiguracao
                 .get(DCP_ID_PROPERTY));
 
@@ -328,8 +352,6 @@ public class GeraXml
             dadosConfiguracao.put(CC_FILE_PATH, bundle.getString(CC_FILE_PATH));
             dadosConfiguracao.put(BACKUP_DATASET_PROPERTY, bundle
                     .getString(BACKUP_DATASET_PROPERTY));
-            dadosConfiguracao.put(STUDENT_NUMBER_PROPERTY, bundle
-                    .getString(STUDENT_NUMBER_PROPERTY));
             dadosConfiguracao.put(DCP_ID_PROPERTY, bundle
                     .getString(DCP_ID_PROPERTY));
         }

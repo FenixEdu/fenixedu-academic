@@ -1,6 +1,5 @@
 /*
  * Created on Dec 30, 2003
- *  
  */
 package DataBeans.util;
 
@@ -17,111 +16,105 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz
- *  
  */
 public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
 {
 
-	private static SuportePersistenteOJB persistentSupport;
-	private static ClonerInfoObjectCachePerformanceTest cacheTest;
+    private static SuportePersistenteOJB persistentSupport;
 
-	private static Calendar startTime;
-	private static Calendar endTime;
+    private static ClonerInfoObjectCachePerformanceTest cacheTest;
 
-	private static Class classToRead = ExecutionCourse.class;
+    private static Calendar startTime;
 
-	static {
-		try
-		{
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			cacheTest = new ClonerInfoObjectCachePerformanceTest();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+    private static Calendar endTime;
 
-	public ClonerInfoObjectCachePerformanceTest()
-	{
-		super();
-	}
+    private static Class classToRead = ExecutionCourse.class;
 
-	public static void main(String[] args)
-	{
-		System.out.println("   ### Testing cache performance ###");
-		try
-		{
-			doTheTest();
-			doTheTest();
-			doTheTest();
-			clearCache();
-			doTheTest();
-			doTheTest();
-			doTheTest();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+    static
+    {
+        try
+        {
+            persistentSupport = SuportePersistenteOJB.getInstance();
+            cacheTest = new ClonerInfoObjectCachePerformanceTest();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-	private static void doTheTest() throws ExcepcaoPersistencia
-	{
-		persistentSupport.iniciarTransaccao();
-		List infoExecutionCourses = readInfoExecutionCourses();
+    public ClonerInfoObjectCachePerformanceTest()
+    {
+        super();
+    }
 
-		startTime = Calendar.getInstance();
-		for (int i = 0; i < infoExecutionCourses.size(); i++)
-		{
-			Cloner.get((IExecutionCourse) infoExecutionCourses.get(i));
-		}
-		endTime = Calendar.getInstance();
-		System.out.println(
-			"Cloning of "
-				+ infoExecutionCourses.size()
-				+ " objects took "
-				+ cacheTest.calculateExecutionTime(startTime, endTime)
-				+ " ms");
+    public static void main(String[] args)
+    {
+        System.out.println("   ### Testing cache performance ###");
+        try
+        {
+            doTheTest();
+            doTheTest();
+            doTheTest();
+            clearCache();
+            doTheTest();
+            doTheTest();
+            doTheTest();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-		persistentSupport.confirmarTransaccao();
-	}
+    private static void doTheTest() throws ExcepcaoPersistencia
+    {
+        persistentSupport.iniciarTransaccao();
+        List infoExecutionCourses = readInfoExecutionCourses();
 
-	private static List readInfoExecutionCourses() throws ExcepcaoPersistencia
-	{
-		startTime = Calendar.getInstance();
-		List objects = cacheTest.doTheRead();
-		endTime = Calendar.getInstance();
-		System.out.println(
-			"Read a total of "
-				+ objects.size()
-				+ " "
-				+ classToRead.getName()
-				+ " in "
-				+ cacheTest.calculateExecutionTime(startTime, endTime)
-				+ " ms");
-		return objects;
-	}
+        startTime = Calendar.getInstance();
+        for (int i = 0; i < infoExecutionCourses.size(); i++)
+        {
+            Cloner.get((IExecutionCourse) infoExecutionCourses.get(i));
+        }
+        endTime = Calendar.getInstance();
+        System.out.println("Cloning of " + infoExecutionCourses.size()
+                + " objects took "
+                + cacheTest.calculateExecutionTime(startTime, endTime) + " ms");
 
-	private List doTheRead() throws ExcepcaoPersistencia
-	{
-		return queryList(classToRead, new Criteria());
-	}
+        persistentSupport.confirmarTransaccao();
+    }
 
-	private long calculateExecutionTime(Calendar startTime, Calendar endTime)
-	{
-		return endTime.getTimeInMillis() - startTime.getTimeInMillis();
-	}
+    private static List readInfoExecutionCourses() throws ExcepcaoPersistencia
+    {
+        startTime = Calendar.getInstance();
+        List objects = cacheTest.doTheRead();
+        endTime = Calendar.getInstance();
+        System.out.println("Read a total of " + objects.size() + " "
+                + classToRead.getName() + " in "
+                + cacheTest.calculateExecutionTime(startTime, endTime) + " ms");
+        return objects;
+    }
 
-	/**
-	 * 
-	 */
-	private static void clearCache() throws ExcepcaoPersistencia
-	{
-		persistentSupport.iniciarTransaccao();
-		persistentSupport.clearCache();
-		System.out.println("Cache cleared.");
-		persistentSupport.confirmarTransaccao();
-	}
+    private List doTheRead() throws ExcepcaoPersistencia
+    {
+        return queryList(classToRead, new Criteria());
+    }
+
+    private long calculateExecutionTime(Calendar startTime, Calendar endTime)
+    {
+        return endTime.getTimeInMillis() - startTime.getTimeInMillis();
+    }
+
+    /**
+     * 
+     */
+    private static void clearCache() throws ExcepcaoPersistencia
+    {
+        persistentSupport.iniciarTransaccao();
+        persistentSupport.clearCache();
+        System.out.println("Cache cleared.");
+        persistentSupport.confirmarTransaccao();
+    }
 
 }
