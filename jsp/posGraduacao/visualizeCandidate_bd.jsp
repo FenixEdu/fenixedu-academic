@@ -8,13 +8,10 @@
 <%@ page import="Util.Data" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="DataBeans.InfoCandidateSituation" %>
-
-
-     <bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" property="infoPerson"/>
-     <bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
-
-     <table>
-
+<bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" property="infoPerson"/>
+<bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
+<br />
+<table>
         <logic:present name="personalInfo">
           <!-- Nome -->
           <tr>
@@ -28,20 +25,13 @@
           </tr>
 		  <!-- Application Number -->
           <tr>
-            <td><bean:message key="label.candidate.candidateNumber" /></td>
+            <td><bean:message key="label.candidate.candidateNumber" />:</td>
             <td><bean:write name="masterDegreeCandidate" property="candidateNumber"/></td>
           </tr>
-
-          <tr></tr>
-          <tr></tr>      
-          <tr></tr>
-          <tr></tr>      
-
           <!-- Dados Pessoais -->
           <tr>
-            <td><h2><bean:message key="label.person.title.personal.info" /><h2></td>
-          </tr>
-          
+            <td class="infoop"><b><bean:message key="label.person.title.personal.info" /></b></td>
+          </tr>  
           <!-- Sexo -->
           <tr>
             <td><bean:message key="label.person.sex" /></td>

@@ -6,14 +6,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-
 <logic:present name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
 	<logic:iterate id="infoViewAllExams" name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
 		<h2><bean:message key="title.exams.list"/></h2>
 	 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
         		<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
-					<strong>
+					<b>
 						<bean:define id="infoDegree" name="infoViewAllExams" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree" />
 				  		<jsp:getProperty name="infoDegree" property="tipoCurso" /> em 
 						<jsp:getProperty name="infoDegree" property="nome" />
@@ -22,25 +21,25 @@
 						<bean:message key="label.year" arg0="<%= curricularYear.toString() %>" /> -	
 						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="name" scope="session"/> -
 						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="infoExecutionYear.year" scope="session"/>
-				</strong>
+				</b>
 				</td>
 			</tr>
 		</table>
-	    <br /><br />
+	    <br />
+	    <br />
 	    <span class="error"><html:errors/></span>
 		<logic:notPresent name="infoViewAllExams" property="infoExecutionCourseAndExamsList">
 			<table align="center"  cellpadding='0' cellspacing='0'>
 				<tr align="center">
 					<td>
-						<font color='red'> <bean:message key="message.exams.none.for.executionDegree.CurricularYear.ExecutionPeriod"/> </font>
+						<span class="error"><bean:message key="message.exams.none.for.executionDegree.CurricularYear.ExecutionPeriod"/></span>
 					</td>
 				</tr>
 			</table>
 		</logic:notPresent>
-
 		<logic:present name="infoViewAllExams" property="infoExecutionCourseAndExamsList">		
-			<table align="center" border='1' cellpadding='10'>
-				<tr align="center">
+			<table>
+				<tr>
 					<td>
 						<bean:message key="property.course"/>
 					</td>
@@ -77,8 +76,7 @@
 								</logic:notEmpty>
 								<logic:empty name="infoExecutionCourseAndExams" property="infoExam1.day">
 									<bean:message key="message.exam.not.scheduled"/>
-								</logic:empty>
-								
+								</logic:empty>	
 								<logic:notEmpty name="infoExecutionCourseAndExams" property ="infoExam1.associatedRooms">
 									<br />
 									<logic:iterate id="room" name="infoExecutionCourseAndExams" property ="infoExam1.associatedRooms">
