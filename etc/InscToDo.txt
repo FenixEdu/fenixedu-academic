@@ -5,6 +5,9 @@ COISAS MESMO PARA FAZER:
 2. Parametrizar valores para MAX_INCREMENT_NAC e MIN_INCREMENT_NAC.
 3. Testar situações em que o aluno muda de plano curricular por: mudar de curso, mudar de escola, erasmus, restruturação do curso, etc...
 4. Fazer os testes que faltam.
+5. Interface de equivalencias.
+6. Interface de secretaria.
+7. Migração dos dados.
 
 DÚVIDAS:
 ========

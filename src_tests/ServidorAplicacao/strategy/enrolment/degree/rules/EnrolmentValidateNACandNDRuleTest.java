@@ -31,12 +31,12 @@ public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase
 	public void testApplyEnrolmentValidateNACandNDRule() {
 
 		autentication();
-		Object serviceArgs[] = { userView, new Integer(1)};
+		Object serviceArgs[] = { userView };
 		EnrolmentContext enrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs);
 
 		// tudo ok
 		enrolmentContext.getActualEnrolment().clear();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
 		}
@@ -58,11 +58,11 @@ public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase
 
 		// mais que 7
 		enrolmentContext.getActualEnrolment().clear();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
 		}
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().get(i);
 			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
 		}
@@ -73,11 +73,11 @@ public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase
 
 		// mais que 10 acumuladas
 		enrolmentContext.getActualEnrolment().clear();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().get(i);
 			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
 		}
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
 		}

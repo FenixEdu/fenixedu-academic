@@ -421,4 +421,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new DegreeEnrolmentInfoOJB();
 	}
 
+	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse() {
+		return new ChosenCurricularCourseForOptionalCurricularCourseOJB();
+	}
+
 }

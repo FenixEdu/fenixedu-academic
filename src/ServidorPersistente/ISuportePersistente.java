@@ -6,6 +6,7 @@
 
 package ServidorPersistente;
 
+import ServidorPersistente.OJB.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.OJB.IPersistentEnrolmentPeriod;
 
 
@@ -91,4 +92,5 @@ public interface ISuportePersistente {
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
+	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
 }

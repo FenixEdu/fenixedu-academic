@@ -1,12 +1,11 @@
-#------------------------------------------------------------------------------------------------------------------
-# DADOS ESPECIFICOS LERCI:
-#------------------------------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------------------------------
+-- DADOS ESPECIFICOS LERCI:
+-- ------------------------------------------------------------------------------------------------------------------
 
-#-----------------------------
-# Data for table 'CURRICULAR_YEAR'
-#-----------------------------
-# (ID_INTERNAL, YEAR)
-;
+-- -----------------------------
+-- Data for table 'CURRICULAR_YEAR'
+-- -----------------------------
+-- (ID_INTERNAL, YEAR)
 delete from CURRICULAR_YEAR;
 insert into CURRICULAR_YEAR values (1, 1);
 insert into CURRICULAR_YEAR values (2, 2);
@@ -14,11 +13,10 @@ insert into CURRICULAR_YEAR values (3, 3);
 insert into CURRICULAR_YEAR values (4, 4);
 insert into CURRICULAR_YEAR values (5, 5);
 
-#-----------------------------
-# Data for table 'CURRICULAR_SEMESTER'
-#-----------------------------
-# (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
-;
+-- -----------------------------
+-- Data for table 'CURRICULAR_SEMESTER'
+-- -----------------------------
+-- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
 delete from CURRICULAR_SEMESTER;
 insert into CURRICULAR_SEMESTER values (1, 1, 1);
 insert into CURRICULAR_SEMESTER values (2, 1, 2);
@@ -31,111 +29,99 @@ insert into CURRICULAR_SEMESTER values (8, 4, 2);
 insert into CURRICULAR_SEMESTER values (9, 5, 1);
 insert into CURRICULAR_SEMESTER values (10, 5, 2);
 
-#-----------------------------
-# Data for table 'DEPARTMENT'
-#-----------------------------
-# (ID_INTERNAL, NAME, CODE)
-;
+-- -----------------------------
+-- Data for table 'DEPARTMENT'
+-- -----------------------------
+-- (ID_INTERNAL, NAME, CODE)
 delete from DEPARTMENT;
 insert into DEPARTMENT values (1, 'Departamento de Engenharia Informática', 'DEI');
 
-#-----------------------------
-# Data for table 'DEPARTMENT_COURSE'
-#-----------------------------
-# NOTAS:
-# FALTA COLOCAR A INFORMAÇÃO DAS DISCIPLINAS DEPARTAMENTAIS CORESPONDENTES ÁS DISCIPLINAS CURRICULARES ABAIXO.
-# (ID_INTERNAL, CODE, NAME, KEY_DEPARTMENT)
-;
+-- -----------------------------
+-- Data for table 'DEPARTMENT_COURSE'
+-- -----------------------------
+-- NOTAS:
+-- FALTA COLOCAR A INFORMAÇÃO DAS DISCIPLINAS DEPARTAMENTAIS CORESPONDENTES ÁS DISCIPLINAS CURRICULARES ABAIXO.
+-- (ID_INTERNAL, CODE, NAME, KEY_DEPARTMENT)
 delete from DEPARTMENT_COURSE;
 insert into DEPARTMENT_COURSE values (1, 'Disciplina Departamento', 'DD', 1);
 
-#-----------------------------
-# Data for table 'BRANCH'
-#-----------------------------
-# (ID_INTERNAL, BRANCH_CODE, BRANCH_NAME)
-;
+-- -----------------------------
+-- Data for table 'BRANCH'
+-- -----------------------------
+-- (ID_INTERNAL, BRANCH_CODE, BRANCH_NAME)
 delete from BRANCH;
 insert into BRANCH values (1, '', '');
 insert into BRANCH values (2, 'AAGR', 'ÁREA DE ARQUITECTURA E GESTÃO DE REDES');
 insert into BRANCH values (3, 'AAS', 'ÁREA DE APLICAÇÕES E SERVIÇOS');
 
-#-----------------------------
-# Data for table 'DEGREE'
-#-----------------------------
-# (ID_INTERNAL, CODE, NAME, TYPE_DEGREE)
-;
+-- -----------------------------
+-- Data for table 'DEGREE'
+-- -----------------------------
+-- (ID_INTERNAL, CODE, NAME, TYPE_DEGREE)
 delete from DEGREE;
 insert into DEGREE values (1, 'LERCI', 'Licenciatura em Engenharia de Redes de Comunicação e de Informação', 1);
 
-#-----------------------------
-# Data for table 'DEGREE_CURRICULAR_PLAN'
-#-----------------------------
-# NOTAS:
-# VERIFICAR OS VALORES DAS DATAS PARA OS CAMPOS 'INITIAL_YEAR' E 'END_YEAR'.
-# (ID_INTERNAL, NAME, KEY_DEGREE, STATE, INITIAL_DATE, END_DATE)
-;
+-- -----------------------------
+-- Data for table 'DEGREE_CURRICULAR_PLAN'
+-- -----------------------------
+-- NOTAS:
+-- VERIFICAR OS VALORES DAS DATAS PARA OS CAMPOS 'INITIAL_YEAR' E 'END_YEAR'.
+-- (ID_INTERNAL, NAME, KEY_DEGREE, STATE, INITIAL_DATE, END_DATE)
 delete from DEGREE_CURRICULAR_PLAN;
-insert into DEGREE_CURRICULAR_PLAN values (1, 'Licenciatura em Engenharia de Redes de Comunicação e de Informação', 1, 1, '0000-00-00', '0000-00-00');
+insert into DEGREE_CURRICULAR_PLAN values (1, 'LERCI-2003', 1, 1, '0000-00-00', '0000-00-00');
 
-#-----------------------------
-# Data for table 'STUDENT_CURRICULAR_PLAN'
-#-----------------------------
-# NOTAS:
-# VERIFICAR O VALOR DA DATA PARA O CAMPO 'START_DATE'.
-# VERIFICAR O VALOR DA CHAVE PARA ALUNO.
-# (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH)
-;
+-- -----------------------------
+-- Data for table 'STUDENT_CURRICULAR_PLAN'
+-- -----------------------------
+-- NOTAS:
+-- VERIFICAR O VALOR DA DATA PARA O CAMPO 'START_DATE'.
+-- VERIFICAR O VALOR DA CHAVE PARA ALUNO.
+-- (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH)
 delete from STUDENT_CURRICULAR_PLAN;
 insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 2);
-#insert into STUDENT_CURRICULAR_PLAN values (2, 6, 1, 1, '0000-00-00', 2);
+-- insert into STUDENT_CURRICULAR_PLAN values (2, 6, 1, 1, '0000-00-00', 2);
 
-#-----------------------------
-# Data for table 'CURRICULAR_COURSE'
-#-----------------------------
-# NOTAS:
-# VERIFICAR O VALOR DA CHAVE PARA DICIPLINA DEPARTAMENTO.
-# VERIFICAR O VALOR DOS CAMPOS 'CREDITS' E 'CODE' PARA AS DISCIPLINAS DO SEGUNDO ANO PARA A FRENTE.
-# (ID_INTERNAL, KEY_DEPARTMENT_COURSE, KEY_DEGREE_CURRICULAR_PLAN, CREDITS, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS, NAME, CODE, TYPE)
+-- -----------------------------
+-- Data for table 'CURRICULAR_COURSE'
+-- -----------------------------
+-- NOTAS:
+-- VERIFICAR O VALOR DA CHAVE PARA DICIPLINA DEPARTAMENTO.
+-- VERIFICAR O VALOR DOS CAMPOS 'CREDITS' E 'CODE' PARA AS DISCIPLINAS DO SEGUNDO ANO PARA A FRENTE.
+-- (ID_INTERNAL, KEY_DEPARTMENT_COURSE, KEY_DEGREE_CURRICULAR_PLAN, CREDITS, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS, NAME, CODE, TYPE)
 
-# PRIMEIRO ANO, PRIMEIRO SEMESTRE:
-;
+-- PRIMEIRO ANO, PRIMEIRO SEMESTRE:
 delete from CURRICULAR_COURSE;
 insert into CURRICULAR_COURSE values (1, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À PROGRAMAÇÃO", "IK", 1);
 insert into CURRICULAR_COURSE values (2, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1);
 insert into CURRICULAR_COURSE values (3, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1);
 insert into CURRICULAR_COURSE values (4, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DIGITAIS", "TU", 1);
 insert into CURRICULAR_COURSE values (5, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "TEORIA DA COMPUTAÇÃO", "VI", 1);
-# PRIMEIRO ANO, SEGUNDO SEMESTRE:
-;
+-- PRIMEIRO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ALGORITMOS E ESTRUTURA DE DADOS", "01", 1);
 insert into CURRICULAR_COURSE values (7, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ARQUITECTURA DE COMPUTADORES", "02", 1);
 insert into CURRICULAR_COURSE values (8, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA II", "P5", 1);
 insert into CURRICULAR_COURSE values (9, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA I - CURSO INFORMÁTICA", "A37", 1);
 insert into CURRICULAR_COURSE values (10, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MATEMÁTICA COMPUTACIONAL", "AG7", 1);
-# SEGUNDO ANO, PRIMEIRO SEMESTRE:
-;
+-- SEGUNDO ANO, PRIMEIRO SEMESTRE:
 insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "", 1);
 insert into CURRICULAR_COURSE values (12, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA II", "", 1);
 insert into CURRICULAR_COURSE values (13, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS OPERATIVOS", "", 1);
 insert into CURRICULAR_COURSE values (14, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROGRAMAÇÃO COM OBJECTOS", "", 1);
 insert into CURRICULAR_COURSE values (15, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES I", "", 1);
-# SEGUNDO ANO, SEGUNDO SEMESTRE:
-;
+-- SEGUNDO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA IV", "", 1);
 insert into CURRICULAR_COURSE values (17, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROBABILIDADES E ESTATÍSTICA", "", 1);
 insert into CURRICULAR_COURSE values (18, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO GRÁFICA", "", 1);
 insert into CURRICULAR_COURSE values (19, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SINAIS E SISTEMAS", "", 1);
 insert into CURRICULAR_COURSE values (20, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "BASES DE DADOS", "", 1);
-# TERCEIRO ANO, PRIMEIRO SEMESTRE:
-;
+-- TERCEIRO ANO, PRIMEIRO SEMESTRE:
 insert into CURRICULAR_COURSE values (21, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA I", "", 1);
 insert into CURRICULAR_COURSE values (22, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "FUNDAMENTOS DAS TELECOMUNICAÇÕES", "", 1);
 insert into CURRICULAR_COURSE values (23, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DISTRIBUÍDOS", "", 1);
 insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES II", "", 1);
 insert into CURRICULAR_COURSE values (25, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "INTERFACES PESSOA-MÁQUINA", "", 1);
 insert into CURRICULAR_COURSE values (26, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1);
-# TERCEIRO ANO, SEGUNDO SEMESTRE:
-;
+-- TERCEIRO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (27, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA II", "", 1);
 insert into CURRICULAR_COURSE values (28, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS EMBEBIDOS", "", 1);
 insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROPAGAÇÃO E ANTENAS", "", 1);
@@ -144,18 +130,15 @@ insert into CURRICULAR_COURSE values (31, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTELI
 insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES EM REDES DE GRANDE ESCALA", "", 1);
 insert into CURRICULAR_COURSE values (33, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "COMPILADORES", "", 1);
 insert into CURRICULAR_COURSE values (34, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MODELAÇÃO DE SISTEMAS DE INFORMAÇÃO", "", 1);
-# QUARTO ANO, PRIMEIRO SEMESTRE:
-;
+-- QUARTO ANO, PRIMEIRO SEMESTRE:
 insert into CURRICULAR_COURSE values (35, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "SOFTWARE DE TELECOMUNICAÇÕES", "", 1);
-#insert into CURRICULAR_COURSE values (36, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1);
-;
+-- insert into CURRICULAR_COURSE values (36, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1);
 insert into CURRICULAR_COURSE values (37, 1, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "SEGURANÇA EM REDES", "", 1);
 insert into CURRICULAR_COURSE values (38, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "SISTEMAS DE TELECOMUNICAÇÕES", "", 1);
 insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES PARA SISTEMAS EMBEBIDOS", "", 1);
 insert into CURRICULAR_COURSE values (40, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DE SOFTWARE", "", 1);
 insert into CURRICULAR_COURSE values (41, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "GESTÃO DE PROJECTOS INFORMÁTICOS", "", 1);
-# QUARTO ANO, SEGUNDO SEMESTRE:
-;
+-- QUARTO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (42, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "REDES MÓVEIS E SEM FIOS", "", 1);
 insert into CURRICULAR_COURSE values (43, 1, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "REDES DE ACESSO", "", 1);
 insert into CURRICULAR_COURSE values (44, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1);
@@ -163,27 +146,22 @@ insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PLANEA
 insert into CURRICULAR_COURSE values (46, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "COMPUTAÇÃO MÓVEL", "", 1);
 insert into CURRICULAR_COURSE values (47, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PRODUÇÃO DE CONTEÚDOS MULTIMÉDIA", "", 1);
 insert into CURRICULAR_COURSE values (48, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PROJECTO DE APLICAÇÕES E SERVIÇOS", "", 1);
-#insert into CURRICULAR_COURSE values (49, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1);
-;
+-- insert into CURRICULAR_COURSE values (49, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1);
 insert into CURRICULAR_COURSE values (50, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CARTEIRA PESSOAL", "", 1);
-# QUINTO ANO, PRIMEIRO SEMESTRE:
-;
+-- QUINTO ANO, PRIMEIRO SEMESTRE:
 insert into CURRICULAR_COURSE values (51, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO I", "", 2);
 insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO II", "", 2);
 insert into CURRICULAR_COURSE values (53, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO", "", 4);
-# QUINTO ANO, SEGUNDO SEMESTRE:
-;
+-- QUINTO ANO, SEGUNDO SEMESTRE:
 insert into CURRICULAR_COURSE values (54, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ORGANIZAÇÃO E GESTÃO DE EMPRESAS", "", 1);
 insert into CURRICULAR_COURSE values (55, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO III", "", 2);
-#insert into CURRICULAR_COURSE values (56, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO II", "", 4);
+-- insert into CURRICULAR_COURSE values (56, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO II", "", 4);
 
-#-----------------------------
-# Data for table 'CURRICULAR_COURSE_SCOPE'
-#-----------------------------
-;
+-- -----------------------------
+-- Data for table 'CURRICULAR_COURSE_SCOPE'
+-- -----------------------------
+-- (ID_INTERNAL, KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 delete from CURRICULAR_COURSE_SCOPE;
-#(ID_INTERNAL, KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
-;
 insert into CURRICULAR_COURSE_SCOPE  values (1, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (2, 1, 2, 1, 0.0, 0.0, 0.0, 0.0, 2);
 insert into CURRICULAR_COURSE_SCOPE  values (3, 1, 3, 1, 0.0, 0.0, 0.0, 0.0, 2);
@@ -249,7 +227,7 @@ insert into CURRICULAR_COURSE_SCOPE  values (62, 9, 52, 1, 0.0, 0.0, 0.0, 0.0, 0
 insert into CURRICULAR_COURSE_SCOPE  values (63, 9, 53, 1, 0.0, 0.0, 0.0, 0.0, 1);
 insert into CURRICULAR_COURSE_SCOPE  values (64, 10, 54, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (65, 10, 55, 1, 0.0, 0.0, 0.0, 0.0, 0);
-#insert into CURRICULAR_COURSE_SCOPE  values (66, 10, 56, 1, 0.0, 0.0, 0.0, 0.0, 0);
+-- insert into CURRICULAR_COURSE_SCOPE  values (66, 10, 56, 1, 0.0, 0.0, 0.0, 0.0, 0);
 
 insert into CURRICULAR_COURSE_SCOPE  values (67, 2, 2, 1, 0.0, 0.0, 0.0, 0.0, 2);
 insert into CURRICULAR_COURSE_SCOPE  values (68, 2, 3, 1, 0.0, 0.0, 0.0, 0.0, 2);
@@ -262,11 +240,10 @@ insert into CURRICULAR_COURSE_SCOPE  values (73, 10, 50, 1, 0.0, 0.0, 0.0, 0.0, 
 
 insert into CURRICULAR_COURSE_SCOPE  values (74, 10, 53, 1, 0.0, 0.0, 0.0, 0.0, 1);
 
-#-----------------------------
-# Data for table 'ENROLMENT'
-#-----------------------------
-# (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
-;
+-- -----------------------------
+-- Data for table 'ENROLMENT'
+-- -----------------------------
+-- (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
 delete from ENROLMENT;
 insert into ENROLMENT values (1, 1, 1, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (2, 1, 2, 1, 1, 'Dominio.Enrolment', null);
@@ -313,20 +290,18 @@ insert into ENROLMENT values (35, 1, 43, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (36, 1, 44, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (37, 1, 45, 1, 1, 'Dominio.Enrolment', null);
 
-insert into ENROLMENT values (38, 1, 51, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 25);
-insert into ENROLMENT values (39, 1, 52, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 26);
-insert into ENROLMENT values (40, 1, 53, 1, 3, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (38, 1, 51, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 25);
+-- insert into ENROLMENT values (39, 1, 52, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 26);
+-- insert into ENROLMENT values (40, 1, 53, 1, 3, 'Dominio.Enrolment', null);
 
-#insert into ENROLMENT values (41, 1, 54, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (42, 1, 55, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 39);
+-- insert into ENROLMENT values (41, 1, 54, 1, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (42, 1, 55, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 39);
 
 
-#-----------------------------
-# Data for table 'PRECEDENCE'
-#-----------------------------
-# (ID_INTERNAL, KEY_CURRICULAR_COURSE, ENROLMENT_STEP)
-;
-
+-- -----------------------------
+-- Data for table 'PRECEDENCE'
+-- -----------------------------
+-- (ID_INTERNAL, KEY_CURRICULAR_COURSE, ENROLMENT_STEP)
 delete from PRECEDENCE;
 insert into PRECEDENCE values (1, 29, 'offline');
 insert into PRECEDENCE values (2, 8, 'offline');
@@ -368,12 +343,10 @@ insert into PRECEDENCE values (37, 48, 'offline');
 insert into PRECEDENCE values (38, 46, 'offline');
 insert into PRECEDENCE values (39, 47, 'offline');
 
-#-----------------------------
-# Data for table 'RESTRICTION'
-#-----------------------------
-# (ID_INTERNAL, CLASS_NAME, KEY_PRECEDENCE, KEY_CURRICULAR_COURSE, NUMBER_OF_CURRICULAR_COURSE_DONE)
-;
-
+-- -----------------------------
+-- Data for table 'RESTRICTION'
+-- -----------------------------
+-- (ID_INTERNAL, CLASS_NAME, KEY_PRECEDENCE, KEY_CURRICULAR_COURSE, NUMBER_OF_CURRICULAR_COURSE_DONE)
 delete from RESTRICTION;
 insert into RESTRICTION values (1, 'Dominio.CurricularCourseDoneRestriction', 1, 12, 0);
 insert into RESTRICTION values (2, 'Dominio.CurricularCourseDoneRestriction', 1, 11, 0);
@@ -427,16 +400,29 @@ insert into RESTRICTION values (49, 'Dominio.CurricularCourseDoneRestriction', 3
 insert into RESTRICTION values (50, 'Dominio.CurricularCourseDoneRestriction', 38, 32, 0);
 insert into RESTRICTION values (51, 'Dominio.CurricularCourseDoneRestriction', 39, 25, 0);
 
-#-----------------------------
-# Data for table 'ENROLMENT_PERIOD'
-# (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD, START_DATE, END_DATE) 
-#-----------------------------
-;
-delete from ENROLMENT_PERIOD;
-insert into ENROLMENT_PERIOD values (1, 1, 2, SYSDATE(), '2010-01-10');
+-- -----------------------------
+-- Data for table 'DEGREE_ENROLMENT_INFO'
+-- -----------------------------
+-- (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, DEGREE_DURATION, MINIMAL_YEAR_FOR_OPTIONAL_COURSES) 
+delete from DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
+insert into DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO values (1, 1, 5, 3);
 
-# Isto e para sair
-;
+-- -----------------------------
+-- Data for table 'STUDENT_GROUP_INFO'
+-- -----------------------------
+-- (ID_INTERNAL, STUDENT_TYPE, MIN_COURSES_TO_ENROL, MAX_COURSES_TO_ENROL, MAX_NAC_TO_ENROL) 
+delete from STUDENT_GROUP_INFO;
+insert into STUDENT_GROUP_INFO values (1, 1, 3, 7, 10);
+insert into STUDENT_GROUP_INFO values (2, 2, 0, 7, 10);
+
+-- -----------------------------
+-- Data for table 'ENROLMENT_PERIOD'
+-- -----------------------------
+-- (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD, START_DATE, END_DATE) 
+delete from ENROLMENT_PERIOD;
+insert into ENROLMENT_PERIOD values (1, 1, 1, SYSDATE(), '2010-01-10');
+
+-- Isto e para sair
 delete from EXECUTION_PERIOD;
 insert into EXECUTION_PERIOD values (1, '1º Semestre', 1, 'A', 1);
 insert into EXECUTION_PERIOD values (2, '2º Semestre', 1, 'NO', 2);
@@ -464,23 +450,4 @@ insert into EXECUTION_YEAR values (5, '2007/2008','NO');
 insert into EXECUTION_YEAR values (6, '2008/2009','NO');
 insert into EXECUTION_YEAR values (7, '2009/2010','NO');
 insert into EXECUTION_YEAR values (8, '2010/2011','NO');
-
-# para sair até aqui
-
-#-----------------------------
-# Data for table 'DEGREE_ENROLMENT_INFO'
-# (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, DEGREE_DURATION, MINIMAL_YEAR_FOR_OPTIONAL_COURSES, END_DATE) 
-#-----------------------------
-;
-delete from DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
-insert into DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO values (1, 1, 5, 3);
-
-#-----------------------------
-# Data for table 'STUDENT_GROUP_INFO'
-# (ID_INTERNAL, STUDENT_TYPE, MIN_COURSES_TO_ENROL, MAX_COURSES_TO_ENROL, MAX_NAC_TO_ENROL) 
-#-----------------------------
-;
-delete from STUDENT_GROUP_INFO;
-insert into STUDENT_GROUP_INFO values (1, 1, 3, 7, 10);
-insert into STUDENT_GROUP_INFO values (2, 2, 0, 7, 10);
-
+-- para sair até aqui

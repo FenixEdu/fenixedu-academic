@@ -1,10 +1,10 @@
-#==================================================================================
-# ZONA DEPARTAMENTAL
-#==================================================================================
+-- ==================================================================================
+--  ZONA DEPARTAMENTAL
+-- ==================================================================================
 
-#----------------------------
-# Table structure for DEPARTMENT
-#----------------------------
+-- ----------------------------
+--  Table structure for DEPARTMENT
+-- ----------------------------
 drop table if exists DEPARTMENT;
 create table DEPARTMENT (
    ID_INTERNAL int(11) not null auto_increment,
@@ -15,9 +15,9 @@ create table DEPARTMENT (
    unique U2 (CODE)
 ) type=InnoDB;
 
-#----------------------------
-# Table structure for DEPARTMENT_COURSE
-#----------------------------
+-- ----------------------------
+--  Table structure for DEPARTMENT_COURSE
+-- ----------------------------
 drop table if exists DEPARTMENT_COURSE;
 create table DEPARTMENT_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -29,13 +29,13 @@ create table DEPARTMENT_COURSE (
 )type=InnoDB;
 
 
-#==================================================================================
-# ZONA CURRICULAR
-#==================================================================================
+-- ==================================================================================
+--  ZONA CURRICULAR
+-- ==================================================================================
 
-#----------------------------
-# Table structure for DEGREE
-#----------------------------
+-- ----------------------------
+--  Table structure for DEGREE
+-- ----------------------------
 drop table if exists DEGREE;
 create table DEGREE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -47,9 +47,9 @@ create table DEGREE (
    unique U2 (NAME)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for DEGREE_CURRICULAR_PLAN
-#----------------------------
+-- ----------------------------
+--  Table structure for DEGREE_CURRICULAR_PLAN
+-- ----------------------------
 drop table if exists DEGREE_CURRICULAR_PLAN;
 create table DEGREE_CURRICULAR_PLAN (
    ID_INTERNAL int(11) not null auto_increment,
@@ -76,9 +76,9 @@ create table ENROLMENT_PERIOD (
 	unique U1 (KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for CURRICULAR_COURSE
-#----------------------------
+-- ----------------------------
+--  Table structure for CURRICULAR_COURSE
+-- ----------------------------
 drop table if exists CURRICULAR_COURSE;
 create table CURRICULAR_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -96,9 +96,9 @@ create table CURRICULAR_COURSE (
    UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for STUDENT_CURRICULAR_PLAN
-#----------------------------
+-- ----------------------------
+--  Table structure for STUDENT_CURRICULAR_PLAN
+-- ----------------------------
 drop table if exists STUDENT_CURRICULAR_PLAN;
 create table STUDENT_CURRICULAR_PLAN (
    ID_INTERNAL int(11) not null auto_increment,
@@ -111,13 +111,13 @@ create table STUDENT_CURRICULAR_PLAN (
    unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE)
 )type=InnoDB;
 
-#==================================================================================
-# ZONA INSCRICAO
-#==================================================================================
+-- ==================================================================================
+--  ZONA INSCRICAO
+-- ==================================================================================
 
-#----------------------------
-# Table structure for ENROLMENT
-#----------------------------
+-- ----------------------------
+--  Table structure for ENROLMENT
+-- ----------------------------
 drop table if exists ENROLMENT;
 create table ENROLMENT (
    ID_INTERNAL int(11) not null auto_increment,
@@ -131,13 +131,13 @@ create table ENROLMENT (
    unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD)
 )type=InnoDB;
 
-#==================================================================================
-# ZONA TABELAS NOVAS
-#==================================================================================
+-- ==================================================================================
+--  ZONA TABELAS NOVAS
+-- ==================================================================================
 
-#----------------------------
-# Table structure for CURRICULAR_YEAR
-#----------------------------
+-- ----------------------------
+--  Table structure for CURRICULAR_YEAR
+-- ----------------------------
 drop table if exists CURRICULAR_YEAR;
 create table CURRICULAR_YEAR (
    ID_INTERNAL int(11) not null auto_increment,
@@ -146,9 +146,9 @@ create table CURRICULAR_YEAR (
    unique U1 (YEAR)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for CURRICULAR_SEMESTER
-#----------------------------
+-- ----------------------------
+--  Table structure for CURRICULAR_SEMESTER
+-- ----------------------------
 drop table if exists CURRICULAR_SEMESTER;
 create table CURRICULAR_SEMESTER (
    ID_INTERNAL int(11) not null auto_increment,
@@ -158,9 +158,9 @@ create table CURRICULAR_SEMESTER (
    unique U1 (SEMESTER, KEY_CURRICULAR_YEAR)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for BRANCH
-#----------------------------
+-- ----------------------------
+--  Table structure for BRANCH
+-- ----------------------------
 drop table if exists BRANCH;
 create table BRANCH (
    ID_INTERNAL int(11) not null auto_increment,
@@ -170,13 +170,13 @@ create table BRANCH (
    unique U1 (BRANCH_NAME, BRANCH_CODE)
 )type=InnoDB;
 
-#==================================================================================
-# ZONA TABELAS DE RELACAO MUITOS PARA MUITOS
-#==================================================================================
+-- ==================================================================================
+--  ZONA TABELAS DE RELACAO MUITOS PARA MUITOS
+-- ==================================================================================
 
-#----------------------------
-# Table structure for CURRICULAR_COURSE_SCOPE
-#----------------------------
+-- ----------------------------
+--  Table structure for CURRICULAR_COURSE_SCOPE
+-- ----------------------------
 drop table if exists CURRICULAR_COURSE_SCOPE;
 create table CURRICULAR_COURSE_SCOPE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -193,9 +193,9 @@ create table CURRICULAR_COURSE_SCOPE (
 )type=InnoDB;
 
 
-#----------------------------
-# Table structure for EQUIVALENCE
-#----------------------------
+-- ----------------------------
+--  Table structure for EQUIVALENCE
+-- ----------------------------
 drop table if exists EQUIVALENCE;
 create table EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -206,21 +206,21 @@ create table EQUIVALENCE (
    unique U1 (KEY_EQUIVALENT_ENROLMENT, KEY_ENROLMENT)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE
-#----------------------------
-drop table if exists CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE;
-create table CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE (
+-- ----------------------------
+--  Table structure for POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE
+-- ----------------------------
+drop table if exists POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE;
+create table POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_CURRICULAR_COURSE int(11) not null,
-   KEY_CURRICULAR_COURSE_OPTION int(11) not null,
+   KEY_POSSIBLE_CURRICULAR_COURSE int(11) not null,
+   KEY_OPTIONAL_CURRICULAR_COURSE int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_CURRICULAR_COURSE, KEY_CURRICULAR_COURSE_OPTION)
+   unique U1 (KEY_POSSIBLE_CURRICULAR_COURSE, KEY_OPTIONAL_CURRICULAR_COURSE)
 )type=InnoDB;
 
-#--------------------------------------------
-# Table structure for DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO
-#--------------------------------------------
+-- --------------------------------------------
+--  Table structure for DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO
+-- --------------------------------------------
 drop table if exists DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
 create table DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO (
    ID_INTERNAL int(11) not null auto_increment,
@@ -231,9 +231,9 @@ create table DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO (
    unique U1 (KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
-#--------------------------------------------
-# Table structure for STUDENT_GROUP_INFO
-#--------------------------------------------
+-- --------------------------------------------
+--  Table structure for STUDENT_GROUP_INFO
+-- --------------------------------------------
 drop table if exists STUDENT_GROUP_INFO;
 create table STUDENT_GROUP_INFO (
    ID_INTERNAL int(11) not null auto_increment,
@@ -245,37 +245,13 @@ create table STUDENT_GROUP_INFO (
    unique U1 (STUDENT_TYPE)
 )type=InnoDB;
 
+-- ==================================================================================
+--  ZONA TABELAS REPETIDAS
+-- ==================================================================================
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#----------------------------
-# Table structure for PRECEDENCE
-#----------------------------
+-- ----------------------------
+--  Table structure for PRECEDENCE
+-- ----------------------------
 drop table if exists PRECEDENCE;
 create table PRECEDENCE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -284,9 +260,9 @@ create table PRECEDENCE (
    primary key (ID_INTERNAL))
    type=InnoDB;
 
-#----------------------------
-# Table structure for RESTRICTION
-#----------------------------
+-- ----------------------------
+--  Table structure for RESTRICTION
+-- ----------------------------
 DROP TABLE IF EXISTS RESTRICTION;
 CREATE TABLE RESTRICTION (
   ID_INTERNAL int(11) NOT NULL auto_increment,

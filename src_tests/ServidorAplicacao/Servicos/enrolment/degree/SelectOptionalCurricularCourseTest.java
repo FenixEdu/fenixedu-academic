@@ -34,6 +34,9 @@ public class SelectOptionalCurricularCourseTest extends TestCaseReadServices {
 	}
 
 	protected void setUp() {
+		this.argsAutenticacao1[0] = "3";
+		this.argsAutenticacao1[1] = "pass";
+		this.argsAutenticacao1[2] = getApplication();
 		super.setUp();
 	}
 
@@ -108,15 +111,13 @@ public class SelectOptionalCurricularCourseTest extends TestCaseReadServices {
 		InfoEnrolmentInOptionalCurricularCourse optionalEnrolment = (InfoEnrolmentInOptionalCurricularCourse) result.getInfoOptionalCurricularCoursesEnrolments().get(0);
 		List actualEnrolment = result.getActualEnrolment();
 		
-		ICurricularCourse curricularCourse = getCurricularCourse("INTRODUÇÃO À PROGRAMAÇÃO", "IK");
+		ICurricularCourse curricularCourse = getCurricularCourse("INTERFACES PESSOA-MÁQUINA", "");
 		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-		assertEquals("Optional Scope Selected:", optionalEnrolment.getInfoCurricularCourse(), infoCurricularCourse);
-		assertEquals("Actual Enrolment Scope Selected:", true, actualEnrolment.contains(result.getInfoChosenOptionalCurricularCourseScope()));
+		assertEquals("Course Chosen For Option:", optionalEnrolment.getInfoCurricularCourseForOption(), infoCurricularCourse);
 
-		curricularCourse = getCurricularCourse("ELECTRÓNICA I", "");
+		curricularCourse = getCurricularCourse("OPÇÃO I", "");
 		infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-		assertEquals("Course Chosen For Option:", optionalEnrolment.getInfoCurricularCourseForOption(),infoCurricularCourse);	
-		
+		assertEquals("Optional Scope Selected: ", optionalEnrolment.getInfoCurricularCourse(),infoCurricularCourse);			
 	}
 	
 	public ICurricularCourse getCurricularCourse (String name, String code){

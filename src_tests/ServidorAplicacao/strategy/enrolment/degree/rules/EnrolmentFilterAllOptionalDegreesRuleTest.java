@@ -34,7 +34,7 @@ public class EnrolmentFilterAllOptionalDegreesRuleTest extends BaseEnrolmentRule
 		EnrolmentContext enrolmentContext = null;
 
 		autentication();
-		Object serviceArgs1[] = { userView, new Integer(1)};
+		Object serviceArgs1[] = { userView };
 		enrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 
 		doApplyRule(new EnrolmentFilterAllOptionalDegreesRule(), enrolmentContext);

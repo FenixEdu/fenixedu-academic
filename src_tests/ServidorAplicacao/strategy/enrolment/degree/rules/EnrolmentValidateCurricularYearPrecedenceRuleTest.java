@@ -31,12 +31,12 @@ public class EnrolmentValidateCurricularYearPrecedenceRuleTest extends BaseEnrol
 	public void testApplyEnrolmentValidateCurricularYearPrecedenceRule() {
 
 		autentication();
-		Object serviceArgs[] = { userView, new Integer(1)};
+		Object serviceArgs[] = { userView };
 		EnrolmentContext enrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs);
 
 		// tudo ok
 		enrolmentContext.getActualEnrolment().clear();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope =
 				(ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
@@ -48,7 +48,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRuleTest extends BaseEnrol
 
 		// falha
 		enrolmentContext.getActualEnrolment().clear();
-		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
+		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
 		enrolmentContext.getActualEnrolment().add(curricularCourseScope);
 
 		doApplyRule(new EnrolmentValidateCurricularYearPrecedenceRule(), enrolmentContext);
