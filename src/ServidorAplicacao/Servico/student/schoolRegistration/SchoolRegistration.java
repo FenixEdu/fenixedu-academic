@@ -117,7 +117,9 @@ public class SchoolRegistration implements IService {
         pessoa.setDistritoMorada(infoPerson.getDistritoMorada());
         pessoa.setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
         pessoa.setEmail(infoPerson.getEmail());
+        pessoa.setAvailableEmail(infoPerson.getAvailableEmail());
         pessoa.setEnderecoWeb(infoPerson.getEnderecoWeb());
+        pessoa.setAvailableWebSite(infoPerson.getAvailableWebSite());
         pessoa.setEstadoCivil(infoPerson.getEstadoCivil());
         pessoa.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
         pessoa.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
