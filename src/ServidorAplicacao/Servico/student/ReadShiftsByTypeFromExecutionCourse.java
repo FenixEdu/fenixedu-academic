@@ -36,6 +36,7 @@ public class ReadShiftsByTypeFromExecutionCourse implements IServico {
 	}
 
 	/**
+	 * 
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
