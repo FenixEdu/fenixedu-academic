@@ -20,6 +20,8 @@
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 	</br>
 	</br>
+	<bean:define id="exePeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>"/>
+	<bean:define id="exeYear" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="infoExecutionYear"/>	
 	<logic:present name="publico.infoShifts" scope="session">
 			<table align="center" cellspacing='0' cellpadding='10'>
 					<tr class="timeTable_line" align="center">
@@ -68,8 +70,9 @@
 							<td class="degreetablestd">
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>								
 							</td>
+							
 							<td class="degreetablestd">
-								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>'>
+								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;ePName=<bean:write name="exePeriod" property="name"/>&amp;eYName=<bean:write name="exeYear" property="year"/>'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td>
@@ -80,7 +83,7 @@
 										<bean:define id="className" name="infoClass" property="nome" toScope="request"/>
 										<bean:define id="degreeInitials" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" toScope="request"/>
 										<bean:define id="nameDegreeCurricularPlan" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.name" toScope="request"/>
-										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?className=<%= request.getAttribute("className").toString() %>&amp;degreeInitials=<%= request.getAttribute("degreeInitials").toString() %>&amp;nameDegreeCurricularPlan=<%= request.getAttribute("nameDegreeCurricularPlan").toString() %>">
+										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?className=<%= request.getAttribute("className").toString() %>&amp;ePName=<bean:write name="exePeriod" property="name"/>&amp;eYName=<bean:write name="exeYear" property="year"/>&amp;degreeInitials=<%= request.getAttribute("degreeInitials").toString() %>&amp;nameDegreeCurricularPlan=<%= request.getAttribute("nameDegreeCurricularPlan").toString() %>">
 											<bean:write name="infoClass" property="nome" /> <br/>
 										</a>
 								</logic:iterate>
@@ -105,7 +108,7 @@
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="degreetablestd">
-								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>'>
+								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;ePName=<bean:write name="exePeriod" property="name"/>&amp;eYName=<bean:write name="exeYear" property="year"/>'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td class="degreetablestd">
