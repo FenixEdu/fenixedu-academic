@@ -34,6 +34,7 @@
 <!ENTITY coordinator SYSTEM "repository_coordinator.xml">
 <!ENTITY places SYSTEM "repository_places.xml">
 <!ENTITY grant_owner_management SYSTEM "repository_grant_owner_management.xml">
+<!ENTITY teacher SYSTEM "repository_teacher.xml">
 ]>
 
 

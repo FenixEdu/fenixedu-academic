@@ -1,0 +1,33 @@
+<class-descriptor class="Dominio.teacher.Career">
+    <extent-class class-ref="Dominio.teacher.ProfessionalCareer"/>
+    <extent-class class-ref="Dominio.teacher.TeachingCareer"/>
+</class-descriptor>
+
+<class-descriptor class="Dominio.teacher.ProfessionalCareer" table="CAREER">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+    <field-descriptor name="beginYear" column="BEGIN_YEAR" jdbc-type="INTEGER" nullable="true"/>
+    <field-descriptor name="endYear" column="END_YEAR" jdbc-type="INTEGER" nullable="true"/>
+	<field-descriptor name="entity" column="ENTITY" jdbc-type="VARCHAR" nullable="true"/>
+	<field-descriptor name="function" column="FUNCTION" jdbc-type="VARCHAR" nullable="true"/>
+	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
+		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<class-descriptor class="Dominio.teacher.TeachingCareer" table="CAREER">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+    <field-descriptor name="beginYear" column="BEGIN_YEAR" jdbc-type="INTEGER" nullable="true"/>
+    <field-descriptor name="endYear" column="END_YEAR" jdbc-type="INTEGER" nullable="true"/>
+	<field-descriptor name="courseOrPosition" column="COURSE_OR_POSITION" jdbc-type="VARCHAR" nullable="true"/>
+    <field-descriptor name="keyCategory" column="KEY_CATEGORY" jdbc-type="INTEGER" nullable="true"/>
+    <reference-descriptor name="category" class-ref="Dominio.teacher.Category" proxy="false">
+	    <foreignkey field-ref="keyCategory"/>
+    </reference-descriptor>
+    <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
+		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>
+</class-descriptor>
