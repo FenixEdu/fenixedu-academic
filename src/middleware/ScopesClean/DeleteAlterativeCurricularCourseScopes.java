@@ -29,7 +29,7 @@ public class DeleteAlterativeCurricularCourseScopes {
 
 	public static void main(String[] args) {
 
-		System.out.println("Running Script");
+		System.out.println("Running DeleteAlterativeCurricularCourseScopes script");
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		ICurricularCourseScope ccs = null;
 
@@ -39,7 +39,7 @@ public class DeleteAlterativeCurricularCourseScopes {
 		Criteria criteria = new Criteria();
 		long inicio = System.currentTimeMillis();
 		Query query = new QueryByCriteria(CurricularCourseScope.class, criteria);
-		List curricularCourseScopeList1 = (List) broker.getCollectionByQuery(query);
+		List curricularCourseScopeList = (List) broker.getCollectionByQuery(query);
 
 		long fim = System.currentTimeMillis();
 
@@ -49,7 +49,7 @@ public class DeleteAlterativeCurricularCourseScopes {
 		broker.clearCache();
 		broker.beginTransaction();
 
-		Iterator iterator = curricularCourseScopeList1.iterator();
+		Iterator iterator = curricularCourseScopeList.iterator();
 		int curricularSemesterKey = 0;
 		int changedEnrolments = 0;
 		int ccScopes = 0;
