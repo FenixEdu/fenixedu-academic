@@ -13,9 +13,11 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
+import ServidorAplicacao.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author tfc130
@@ -27,39 +29,62 @@ public class ViewRoomFormAction extends FenixAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 		
 		
 		
 		DynaActionForm indexForm = (DynaActionForm) form;
+		
+		HttpSession session = request.getSession(true);
+		
+			
+			
+			List infoRooms = (List) request.getAttribute("publico.infoRooms");
+			String roomName = (String) indexForm.get("nome");
+			
+			InfoRoom argRoom = new InfoRoom();
+			argRoom.setNome(roomName);
+			Object[] args = {argRoom};
+			
+			
+			InfoRoom infoRoom= null;
+			List roomList;
+			try {
+				roomList =
+					(List) ServiceUtils.executeService(
+						null,
+						"SelectRooms",
+						args);
+			} catch (FenixServiceException e1) {
+				throw new FenixActionException(e1);
+			}
+			
+			if (roomList!=null && !roomList.isEmpty()){
+				System.out.println(roomList.size());
+				infoRoom = (InfoRoom) roomList.get(0);
+			}
+			
+			request.setAttribute("publico.infoRoom", infoRoom);
 
-		HttpSession session = request.getSession();
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		if (session != null) {
-			List infoRooms = (List) session.getAttribute("publico.infoRooms");
-			InfoRoom infoRoom =	(InfoRoom) infoRooms.get(((Integer) indexForm.get("index")).intValue());
-			session.removeAttribute("publico.infoRoom");
-			session.setAttribute("publico.infoRoom", infoRoom);
 
-
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-
+			InfoExecutionPeriod infoExecutionPeriod =RequestUtils.getExecutionPeriodFromRequest(request);
 			Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
 
-			List lessons =
-				(List) ServiceUtils.executeService(
-					null,
-					"LerAulasDeSalaEmSemestre",
-					argsReadLessons);
+			List lessons;
+			try {
+				lessons =
+					(List) ServiceUtils.executeService(
+						null,
+						"LerAulasDeSalaEmSemestre",
+						argsReadLessons);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
 			
 			if (lessons != null) {
-				session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
+				request.setAttribute("lessonList", lessons);
 			}
 			  
 			return mapping.findForward("Sucess");
-		} else
-			throw new Exception(); 
-		}
-}
+		
+}}

@@ -8,6 +8,7 @@ package ServidorApresentacao.Action.publico;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -36,6 +38,7 @@ public class ViewEvaluationAction extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
+			HttpSession session = request.getSession(true);
 		//get executionCourse from request
 		InfoExecutionCourse infoExecutionCourse =
 			RequestUtils.getExecutionCourseFromRequest(request);
@@ -58,6 +61,11 @@ public class ViewEvaluationAction extends FenixAction {
 		if (infoEvaluation!=null){				
 		request.setAttribute("evaluationElements",infoEvaluation.getEvaluationElements());
 		}	
+		InfoSite infoSite = RequestUtils.getSiteFromRequest(request);
+		RequestUtils.setSiteToRequest(request,infoSite);
+		RequestUtils.setExecutionCourseToRequest(request,infoExecutionCourse);
+		RequestUtils.setSectionsToRequest(request,infoSite);
+		RequestUtils.setSectionToRequest(request);
 		//find forward			
 		return mapping.findForward("Sucess");
 	}

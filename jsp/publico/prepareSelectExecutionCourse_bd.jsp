@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
     <br/>
         <h2><bean:message key="title.choose.discipline" /></h2>
         <br/>
@@ -26,7 +26,7 @@
 	                <td>    
      					<html:select property="courseInitials" size="1">
   	 						<option value=""><bean:message key="label.choose.executionCourse"/></option>
-     						<html:options	property="sigla" labelProperty="nome" collection="<%= SessionConstants.EXECUTION_COURSE_LIST_KEY %>" />
+     						<html:options	property="sigla" labelProperty="nome" collection="exeCourseList" />
   	 					</html:select>             
                     </td>
                 </tr>

@@ -65,6 +65,7 @@
                     </td>
                 </tr>
             </table>
+           
             <br/>
                         <html:submit styleClass="inputbutton">
                             <bean:message key="label.submit"/>

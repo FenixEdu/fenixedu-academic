@@ -18,15 +18,19 @@ public class ClassTimeTableLessonContentRenderer
 		StringBuffer strBuffer = new StringBuffer();
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 		InfoExecutionCourse infoExecutionCourse = lesson.getInfoDisciplinaExecucao();
-		strBuffer.append("<a class='timetable' href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode=");
+		strBuffer.append("<a class='timetable' href='siteViewer.do?method=executionCourseViewer&amp;exeCode=");
 		strBuffer.append(infoExecutionCourse.getSigla());
-		strBuffer.append("&amp;executionPeriod=").append(infoExecutionCourse.getInfoExecutionPeriod().getName());
-		strBuffer.append("&amp;executionYear=").append(infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
+		strBuffer.append("&amp;ePName=").append(infoExecutionCourse.getInfoExecutionPeriod().getName());
+		strBuffer.append("&amp;eYName=").append(infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
 		strBuffer.append("'>").append(lesson.getInfoDisciplinaExecucao().getSigla()).append("</a>");
 		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
 		strBuffer
 			.append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
 			.append(lesson.getInfoSala().getNome())
+			.append("&amp;ePName=")
+			.append(infoExecutionCourse.getInfoExecutionPeriod().getName())
+			.append("&amp;eYName=")
+			.append(infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear())
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())
 			.append("</a>");

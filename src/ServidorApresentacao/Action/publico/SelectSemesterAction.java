@@ -27,7 +27,7 @@ public class SelectSemesterAction extends FenixAction {
 			
 					
 
-		HttpSession session = request.getSession();
+			HttpSession session = request.getSession(true);
 //	TODO: No futuro os periodos (semestres) devem ser lidos da base de dados.
 		if (session != null) {
 // TODO:			 No futuro, os tipos de salas devem ser lidos da BD 
@@ -35,7 +35,7 @@ public class SelectSemesterAction extends FenixAction {
 			types.add(new LabelValueBean("Escolher", null));
 			types.add(new LabelValueBean("1º semestre", "1"));
 			types.add(new LabelValueBean("2º semestre", "2"));
-			session.setAttribute("publico.semester", types);
+			request.setAttribute("publico.semester", types);
 			
 			return mapping.findForward("Sucess");
 		} else

@@ -1,14 +1,14 @@
 <%@ page language="java" %>
 <%@ page import="DataBeans.gesdis.InfoAnnouncement" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
 <%@ page import="java.lang.String" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<logic:present name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>">
+<logic:present name="announcementList">
 <table border="0" style="text-align: left;">
         <tbody>
-            <logic:iterate id="announcement" name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>" scope="session" >
+            <logic:iterate id="announcement" name="announcementList" >
                 <tr>
                     <td>
                         <br>
@@ -31,7 +31,7 @@
         </tbody>
 </table>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>">
+<logic:notPresent name="announcementList">
 <h4>
 <bean:message key="message.announcements.not.available" />
 </h4>

@@ -13,7 +13,7 @@
       <form-bean name="indexForm"
                 type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
-        <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="nome" type="java.lang.String"/>
       </form-bean>
 	
 	  <!-- CONTEXTO -->
@@ -254,7 +254,7 @@
 	<!-- Start of Gesdis-->
 	
 	<action path="/curricularCourses" 
-    		type="ServidorApresentacao.Action.publico.SectionRemoverAction">
+    		type="ServidorApresentacao.Action.publico.ViewCurricularCoursesAction">
     		<forward name="sucess" path="/curricularCourses.jsp"/>
  		</action>
 	
@@ -266,21 +266,19 @@
  		</action>
  		
 	<action     
-		path="/accessBibliographicReferences"
-		parameter="method"      			
+		path="/accessBibliographicReferences"		   			
 		scope="session"
-        type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction">	           
-		<forward name="bibliographyManagement" path="/bibliographicReferences.jsp"/>
-		<forward name="editBibliographicReference" path="/bibliographicReferences.jsp"/>
+        type="ServidorApresentacao.Action.publico.AccessBibliographyAction">	           
+		<forward name="Sucess" path="/bibliographicReferences.jsp"/>
+		
 	</action>             
 
 	<!-- access to announcements -->
 	<action 
-		type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
+		type="ServidorApresentacao.Action.publico.AccessAnnouncementManagementAction" 
 		path="/accessAnnouncements">
-        <forward name="AnnouncementManagement" path="/announcements.jsp" />  
-         <forward name="EditAnnouncement" path="/announcements.jsp" /> 
-             
+        <forward name="Sucess" path="/announcements.jsp" />  
+                      
 	</action>
 
 	<!-- access to objectives -->

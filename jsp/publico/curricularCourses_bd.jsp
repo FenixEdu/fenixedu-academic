@@ -9,7 +9,7 @@
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
  
-<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
+<logic:notPresent name="exeCode" >
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
 				<td>
@@ -19,10 +19,10 @@
 		</table>
 </logic:notPresent>
 
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
+<logic:present name="exeCode" >
 
 	<h2><bean:message key="property.executionCourse.associatedCurricularCourses"/></h2>
-	<logic:present name="publico.infoCurricularCourses" scope="session">
+	<logic:present name="publico.infoCurricularCourses" >
 		<table align="center" cellspacing="0" cellpadding="5" >
 			<tr class="timeTable_line" align="center">
 				<td class="degreetablestd">
@@ -41,7 +41,7 @@
 					<bean:message key="property.curricularCourse.semester"/>
 				</td>
 			</tr>
-			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
+			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" >
 				<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
 					<%-- FIXME: hardcoded semester 2 --%>
 					<logic:equal name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="2">
@@ -68,7 +68,7 @@
 		</table>
 	</logic:present>
 	
-<logic:notPresent name="publico.infoCurricularCourses" scope="session">
+<logic:notPresent name="publico.infoCurricularCourses" >
 		<bean:message key="message.public.notfound.curricularCourses"/>
 </logic:notPresent>
 </logic:present>		

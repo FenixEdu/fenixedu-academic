@@ -8,5 +8,5 @@
 	<bean:define id="shiftview" name="<%= SessionConstants.SHIFT_VIEW %>" scope="session"/>
    		<br/>
 		<h2>Horário do Turno:  <jsp:getProperty name="shiftview" property="nome"/></h2>
-		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"/>		
+		<app:gerarHorario name="lessonList"/>		
 		<br />

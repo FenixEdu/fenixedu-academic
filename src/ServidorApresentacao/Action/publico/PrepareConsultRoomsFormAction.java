@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
 import Util.TipoSala;
 
@@ -29,12 +28,11 @@ public class PrepareConsultRoomsFormAction extends Action {
       	
 	
     
-    HttpSession sessao = request.getSession();
-	sessao.removeAttribute(SessionConstants.INFO_SECTION);
-    if (sessao != null) {
+		HttpSession session = request.getSession(true);
+    if (session != null) {
     	//TODO: No futuro, os edificios devem ser lidos da BD 
         List buildings = Util.readExistingBuldings("*",null);
-        sessao.setAttribute("publico.buildings", buildings);
+        request.setAttribute("publico.buildings", buildings);
 
         //TODO: No futuro, os tipos de salas devem ser lidos da BD 
         ArrayList types = new ArrayList();
@@ -42,7 +40,7 @@ public class PrepareConsultRoomsFormAction extends Action {
         types.add(new LabelValueBean("Anfiteatro", (new Integer(TipoSala.ANFITEATRO)).toString()));
         types.add(new LabelValueBean("Laboratório", (new Integer(TipoSala.LABORATORIO)).toString()));
         types.add(new LabelValueBean("Plana", (new Integer(TipoSala.PLANA)).toString()));
-        sessao.setAttribute("publico.types", types);
+        request.setAttribute("publico.types", types);
         
       return mapping.findForward("Sucess");
     } else

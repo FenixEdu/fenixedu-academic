@@ -6,7 +6,7 @@
 
 
    
-<logic:iterate id="item" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>">
+<logic:iterate id="item" name="itemList">
   <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal>
 	  <h3><bean:write name="item" property="name"/></h3>
   	  <bean:write name="item" property="information" filter="false"/><br/>

@@ -1,6 +1,5 @@
 package ServidorApresentacao.Action.publico;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,10 +36,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		
-
-		HttpSession session = request.getSession();
-		session.removeAttribute(SessionConstants.INFO_SECTION);
+			HttpSession session = request.getSession(true);
 		String roomName = (String) request.getParameter("roomName");
 		ActionErrors errors = new ActionErrors();
 		RoomKey roomKey = null;
@@ -50,15 +46,13 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		if (roomName != null) {
 			roomKey = new RoomKey(roomName);
 
-			
 			GestorServicos gestor = GestorServicos.manager();
 
 			Object args[] = new Object[1];
 			args[0] = roomKey;
 
 			try {
-				infoRoom =
-					(InfoRoom) gestor.executar(null, "LerSala", args);
+				infoRoom = (InfoRoom) gestor.executar(null, "LerSala", args);
 			} catch (FenixServiceException nee) {
 				errors.add(
 					ActionErrors.GLOBAL_ERROR,
@@ -71,9 +65,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if (infoRoom != null) {
-				InfoExecutionPeriod infoExecutionPeriod =
-					(InfoExecutionPeriod) session.getAttribute(
-						SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+				InfoExecutionPeriod infoExecutionPeriod = 
+					(InfoExecutionPeriod) RequestUtils.getExecutionPeriodFromRequest(request);
 
 				Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
 
@@ -85,9 +78,9 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if ((infoRoom != null) && (lessons != null)) {
-				session.removeAttribute(SessionConstants.LESSON_LIST_ATT);
-				session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
-				session.setAttribute("publico.infoRoom", infoRoom);
+				
+				request.setAttribute("lessonList", lessons);
+				request.setAttribute("publico.infoRoom", infoRoom);
 			}
 			return mapping.findForward("roomViewer");
 		} else {
@@ -102,20 +95,17 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		
+			HttpSession session = request.getSession(true);
 
-		HttpSession sessao = request.getSession();
-		sessao.removeAttribute(SessionConstants.INFO_SECTION);
-		
-			DynaActionForm courseForm = (DynaActionForm) form;
+		DynaActionForm courseForm = (DynaActionForm) form;
 
-			return executionCourseViewerSelectedByInitials(
-				mapping,
-				form,
-				request,
-				response,
-				(String) courseForm.get("courseInitials"));
-		
+		return executionCourseViewerSelectedByInitials(
+			mapping,
+			form,
+			request,
+			response,
+			(String) courseForm.get("courseInitials"));
+
 	}
 
 	public ActionForward executionCourseViewer(
@@ -125,15 +115,11 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		
-
-		HttpSession session = request.getSession();
-		session.removeAttribute(SessionConstants.INFO_SECTION);
+			HttpSession session = request.getSession(true);
 		String exeCourseCode = null;
 
-		
 		exeCourseCode = (String) request.getParameter("exeCourseCode");
-		if (exeCourseCode== null){
+		if (exeCourseCode == null) {
 			exeCourseCode = (String) request.getParameter("exeCode");
 		}
 
@@ -153,10 +139,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		String exeCourseCode)
 		throws Exception {
 
+		HttpSession session = request.getSession(true);
 		
-
-		HttpSession session = request.getSession();
-		session.removeAttribute(SessionConstants.INFO_SECTION);
 		ActionErrors errors = new ActionErrors();
 		InfoExecutionPeriod infoExecPeriod = null;
 		InfoExecutionCourse infoExecCourse = null;
@@ -165,11 +149,11 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			infoExecPeriod =
 				(InfoExecutionPeriod) session.getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-					
-			if (infoExecPeriod == null) {
-				infoExecPeriod =RequestUtils.getExecutionPeriodFromRequest(request);		
-			}
 
+			if (infoExecPeriod == null) {
+				infoExecPeriod =
+					RequestUtils.getExecutionPeriodFromRequest(request);
+			}
 
 			GestorServicos gestor = GestorServicos.manager();
 
@@ -193,10 +177,10 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if (infoExecCourse != null) {
+
+				RequestUtils.setExecutionCourseToRequest(request,infoExecCourse);
 				
-				session.setAttribute(
-					SessionConstants.EXECUTION_COURSE_KEY,
-					infoExecCourse);
+				
 			}
 
 			// Read associated curricular courses to display curricular course information.
@@ -210,12 +194,10 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 			if (infoCurricularCourses != null
 				&& !infoCurricularCourses.isEmpty()) {
-				session.setAttribute(
+				request.setAttribute(
 					"publico.infoCurricularCourses",
 					infoCurricularCourses);
 			}
-		
-	
 
 			//start reading Gesdis related info
 			//read site
@@ -223,21 +205,11 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			InfoSite site = null;
 			Object[] args2 = { infoExecCourse };
 			site = (InfoSite) manager.executar(null, "ReadSite", args2);
-			session.setAttribute(SessionConstants.INFO_SITE, site);
+			RequestUtils.setSiteToRequest(request,site);
+			
 			//read Sections			
-			Object argsReadSections[] = { site };
+			RequestUtils.setSectionsToRequest(request,site);
 
-			List infoSections = null;
-
-			infoSections =
-				(List) gestor.executar(null, "ReadSections", argsReadSections);
-			
-			
-			if (infoSections!=null){	Collections.sort(infoSections);	}
-			
-			
-			session.setAttribute(SessionConstants.SECTIONS, infoSections);
-			
 			//read responsible
 
 			Object[] args3 = { infoExecCourse };
@@ -247,28 +219,30 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					null,
 					"ReadTeachersByExecutionCourseResponsibility",
 					args3);
-			
-			if (teacherList!=null){		
-			
-			session.setAttribute(
-				SessionConstants.RESPONSIBLE_TEACHERS_LIST,
-				teacherList);}
-				
+
+			if (teacherList != null) {
+
+				request.setAttribute(
+					"resTeacherList",
+					teacherList);
+			}
+
 			//read	lecturing teachers
 			Object[] args4 = { infoExecCourse };
-						List lecturingTeacherList = null;
+			List lecturingTeacherList = null;
 			lecturingTeacherList =
-							(List) manager.executar(
-								null,
-								"ReadTeachersByExecutionCourseProfessorship",
-								args4);
-			
-						if (lecturingTeacherList!=null){		
-							lecturingTeacherList.removeAll(teacherList);
-						session.setAttribute(
-							SessionConstants.TEACHERS_LIST,
-							lecturingTeacherList);}
-				
+				(List) manager.executar(
+					null,
+					"ReadTeachersByExecutionCourseProfessorship",
+					args4);
+
+			if (lecturingTeacherList != null) {
+				lecturingTeacherList.removeAll(teacherList);
+				request.setAttribute(
+					"lecTeacherList",
+					lecturingTeacherList);
+			}
+
 			//			Read last Anouncement
 			Object args1[] = new Object[1];
 			args1[0] = site;
@@ -281,8 +255,9 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 						null,
 						"ReadLastAnnouncement",
 						args1);
-				session.setAttribute(
-					SessionConstants.LAST_ANNOUNCEMENT,
+						
+				request.setAttribute(
+					"lastAnnouncement",
 					lastAnnouncement);
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(

@@ -21,7 +21,6 @@ import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author jmota
@@ -39,7 +38,7 @@ public class ViewExecutionCourseTimeTableAction extends FenixAction {
 		throws Exception {
 
 //get the required data from session/request
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 
 		InfoSite infoSite = RequestUtils.getSiteFromAnyScope(request);
 		
@@ -61,17 +60,17 @@ public class ViewExecutionCourseTimeTableAction extends FenixAction {
 		}
 		
 		
-//		exeCourse.theo -> executionCourse theoretical hours
-//		exeCourse.prat -> executionCourse pratical hours
-//		exeCourse.theoPrat -> executionCourse theoretical-pratical hours
-//		exeCourse.lab -> executionCourse lab hours
+
 		request.setAttribute("exeCourse.theo",infoExecCourse.getTheoreticalHours());
 		request.setAttribute("exeCourse.prat",infoExecCourse.getPraticalHours());
 		request.setAttribute("exeCourse.theoPrat",infoExecCourse.getTheoPratHours());
 		request.setAttribute("exeCourse.lab",infoExecCourse.getLabHours());
 
-//TODO: JM: change this to request - do not forget to change the jsps (navbars and others)
-		session.setAttribute(SessionConstants.INFO_SITE,infoSite);		
+
+		RequestUtils.setExecutionCourseToRequest(request,infoExecCourse);
+		RequestUtils.setSiteToRequest(request,infoSite);
+		RequestUtils.setSectionsToRequest(request,infoSite);
+		RequestUtils.setSectionToRequest(request);	
 		
 		return mapping.findForward("Sucess");
 	}

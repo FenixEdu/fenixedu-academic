@@ -4,11 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 	<h2><bean:message key="title.info.room"/></h2>
 	<br/>
-	<logic:present name="publico.infoRoom" scope="session">
+	<logic:present name="publico.infoRoom" >
             <table cellspacing="0" cellpadding="0" width="90%">
                 <tr>
                     <td class="listClasses">
@@ -37,11 +36,11 @@
 		<br/>
 		<br/>
 
-	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
+	   	<app:gerarHorario name="lessonList" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
 
 	</logic:present>
 
-	<logic:notPresent name="publico.infoRoom" scope="session">
+	<logic:notPresent name="publico.infoRoom" >
 		<table align="center" border='1' cellpadding='10'>
 			<tr align="center">
 				<td>

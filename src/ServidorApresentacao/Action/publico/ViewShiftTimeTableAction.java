@@ -20,8 +20,9 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
+import DataBeans.gesdis.InfoSite;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
@@ -46,9 +47,8 @@ public class ViewShiftTimeTableAction extends Action {
 
 		if (shiftName == null)
 			return mapping.getInputForward();
-		HttpSession session = request.getSession();		
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+			HttpSession session = request.getSession(true);
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) RequestUtils.getExecutionCourseFromRequest(request);
 
 		Object[] args = { new ShiftKey(shiftName, infoExecutionCourse)};
 		List lessons =
@@ -56,8 +56,12 @@ public class ViewShiftTimeTableAction extends Action {
 
 		InfoShift shiftView = new InfoShift();
 		shiftView.setNome(shiftName);
-		session.setAttribute(SessionConstants.SHIFT_VIEW,shiftView);
-		session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
+		request.setAttribute("shift",shiftView);
+		request.setAttribute("lessonList", lessons);
+		InfoSite site =RequestUtils.getSiteFromRequest(request);
+		RequestUtils.setExecutionCourseToRequest(request,infoExecutionCourse);
+		RequestUtils.setSectionsToRequest(request,site);
+		RequestUtils.setSectionToRequest(request);
 
 		return mapping.findForward("Sucess");
 	}

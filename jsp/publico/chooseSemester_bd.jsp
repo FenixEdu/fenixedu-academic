@@ -11,11 +11,9 @@
 	<center><font color='#034D7A' size='5'> <b> <bean:message key="title.room.occupation"/> </b> </font></center>
 	<br/>
 
-	<logic:present name="publico.semester" scope="session">
+	<logic:present name="publico.semester" >
 	<html:form action="/viewRoomOcupation.do">
-<bean:define id="exePeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="name"/>
-<bean:define id="exeYear" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="infoExecutionYear"/>	
-<bean:define id="exeYearName" name="exeYear" property="year"/>	
+
 		<table align="center" border="5" cellpadding='20' cellspacing='10'>
 			<bean:define id="i" value="i_index" />
                 <tr>
@@ -31,8 +29,8 @@
 
 		<br/>
 		<center>
-	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("exePeriod").toString() %>" />
-	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("exeYearName").toString() %>" /> 
+	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
+	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
 		
 		<html:submit>
 			<bean:message key="label.choose"/>
@@ -42,7 +40,7 @@
 	</html:form>
 	</logic:present>
 
-	<logic:notPresent name="publico.semester" scope="session">
+	<logic:notPresent name="publico.semester" >
 		<table align="center" border='1' cellpadding='10'>
 			<tr align="center">
 				<td>

@@ -6,6 +6,10 @@
 	<h2><bean:message key="message.bibliography.not.available"/></h2>
 </logic:notPresent>
 <logic:present name="BibliographicReferences" >
+<logic:empty name="BibliographicReferences">
+	<h2><bean:message key="message.bibliography.not.available"/></h2>
+</logic:empty>	
+<logic:notEmpty name="BibliographicReferences" >
 <table border="0" style="text-align: left;">
 	<tbody>
 		<tr>
@@ -75,4 +79,5 @@
             </logic:iterate>
         </tbody>
 </table>
+</logic:notEmpty>
 </logic:present>

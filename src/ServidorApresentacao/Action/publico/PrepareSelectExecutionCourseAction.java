@@ -31,25 +31,24 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 
 		
 
-		HttpSession sessao = request.getSession();
-		sessao.removeAttribute(SessionConstants.INFO_SECTION);
-		if (sessao != null) {
+			HttpSession session = request.getSession(true);
+		if (session != null) {
 			
 			GestorServicos gestor = GestorServicos.manager();
 
 			InfoExecutionCourse executionCourse = new InfoExecutionCourse();
 			
-			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) sessao.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) sessao.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);							
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);							
 			executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-			Integer curricularYear = (Integer) sessao.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);			
+			Integer curricularYear = (Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);			
 			Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear};
 			
 			List infoExecutionCourses =
 				(List) gestor.executar(null, "SelectExecutionCourse", argsSelectExecutionCourse);
 		
-			request.getSession(false).setAttribute(
-				SessionConstants.EXECUTION_COURSE_LIST_KEY,
+			request.setAttribute(
+				"exeCourseList",
 				infoExecutionCourses);
 			return mapping.findForward("sucess");
 		}

@@ -12,10 +12,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import Util.TipoSala;
 
 /**
@@ -28,14 +31,11 @@ public class SelectRoomsFormAction extends FenixAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
-		
-					
+		throws FenixActionException {
 
 		DynaActionForm roomForm = (DynaActionForm) form;
 
-		HttpSession sessao = request.getSession();
-		sessao.removeAttribute(SessionConstants.INFO_SECTION);
+		HttpSession sessao = request.getSession(true);
 		if (sessao != null) {
 			GestorServicos gestor = GestorServicos.manager();
 
@@ -49,17 +49,52 @@ public class SelectRoomsFormAction extends FenixAction {
 						readIntegerFormValue(roomForm, "capacityNormal"),
 						readIntegerFormValue(roomForm, "capacityExame"))};
 
-			List infoRooms =
-				(List) gestor.executar(null, "SelectRooms", argsSelectRooms);
-			
-			sessao.removeAttribute("publico.infoRooms");
+			List infoRooms;
+			try {
+				infoRooms =
+					(List) gestor.executar(
+						null,
+						"SelectRooms",
+						argsSelectRooms);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+
 			if (infoRooms != null && !infoRooms.isEmpty()) {
 				Collections.sort(infoRooms);
-				sessao.setAttribute("publico.infoRooms", infoRooms);
+				request.setAttribute("publico.infoRooms", infoRooms);
+				request.setAttribute("name", readFormValue(roomForm, "name"));
+				request.setAttribute(
+					"building",
+					readFormValue(roomForm, "building"));
+				request.setAttribute("floor", readFormValue(roomForm, "floor"));
+				request.setAttribute("type", readFormValue(roomForm, "type"));
+				request.setAttribute(
+					"capacityNormal",
+					readFormValue(roomForm, "capacityNormal"));
+				request.setAttribute(
+					"capacityExame",
+					readFormValue(roomForm, "capacityExame"));
+
 			}
+
+			InfoExecutionPeriod executionPeriod;
+			Object args[] = {
+			};
+			try {
+				executionPeriod =
+					(InfoExecutionPeriod) gestor.executar(
+						null,
+						"ReadActualExecutionPeriod",
+						args);
+			} catch (FenixServiceException e1) {
+				throw new FenixActionException(e1);
+			}
+
+			RequestUtils.setExecutionPeriodToRequest(request, executionPeriod);
 			return mapping.findForward("Sucess");
 		} else
-			throw new Exception();
+			throw new FenixActionException();
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
 

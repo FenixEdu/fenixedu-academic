@@ -21,7 +21,6 @@ import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author jmota
@@ -38,8 +37,7 @@ public class ViewObjectives extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession();
-		session.removeAttribute(SessionConstants.INFO_SECTION);
+			HttpSession session = request.getSession(true);
 		try {
 
 			InfoSite infoSite = RequestUtils.getSiteFromAnyScope(request);
@@ -57,6 +55,10 @@ public class ViewObjectives extends FenixAction {
 			request.setAttribute("genObjectives",curriculumView.getGeneralObjectives());
 			request.setAttribute("opObjectives",curriculumView.getOperacionalObjectives());
 			}
+			RequestUtils.setExecutionCourseToRequest(request,infoSite.getInfoExecutionCourse());
+			RequestUtils.setSectionsToRequest(request,infoSite);
+			RequestUtils.setSectionToRequest(request);
+
 			return mapping.findForward("viewObjectives");
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);

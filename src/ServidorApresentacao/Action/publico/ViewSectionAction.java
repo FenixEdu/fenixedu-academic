@@ -6,6 +6,7 @@
  */
 package ServidorApresentacao.Action.publico;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +18,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoSite;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
 /**
  * @author lmac2
@@ -44,17 +49,30 @@ public class ViewSectionAction extends FenixAction {
 		  
 			
 			
-			HttpSession session = request.getSession();
+				HttpSession session = request.getSession(true);
 			
 		    String indexString = (String) request.getParameter("index");
 		    Integer index = new Integer(indexString);
 		    
-		    List sectionsList = (List) session.getAttribute(SessionConstants.SECTIONS);
+		    InfoSite infoSite = RequestUtils.getSiteFromRequest(request);
 		    
-		    InfoSection infoSection = (InfoSection) sectionsList.get(index.intValue());
+			List sections = null;
+		 try {
+			 
+			 Object[] args = { infoSite };
+			 sections =
+				 (List) ServiceUtils.executeService(null, "ReadSections", args);
+		
+			Collections.sort(sections);	
+		 } catch (FenixServiceException e) {
+			 throw new FenixActionException(e);
+		 }
+		    
+		    
+		    InfoSection infoSection = (InfoSection) sections.get(index.intValue());
 			
-			session.setAttribute(SessionConstants.INFO_SECTION, infoSection);
-			
+			request.setAttribute("infoSection", infoSection);
+			request.setAttribute("sections",sections);
 		    
 			GestorServicos gestor = GestorServicos.manager();
 			
@@ -62,9 +80,9 @@ public class ViewSectionAction extends FenixAction {
 	
 			List infoItems = (List) gestor.executar(null, "ReadItems", argsViewSection);
 			
-			session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST,infoItems);
+			request.setAttribute("itemList",infoItems);
 			
-			
+			RequestUtils.setExecutionCourseToRequest(request,infoSite.getInfoExecutionCourse());
 			return mapping.findForward("Sucess");
 		
 			}
