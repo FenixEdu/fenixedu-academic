@@ -34,30 +34,10 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 	public List readBy(Calendar day, Calendar beginning)
 		throws ExcepcaoPersistencia {
-
-			PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker(); 
-
 			Criteria criteria = new Criteria();
 			criteria.addEqualTo("day",day);
-			criteria.addEqualTo("beginning",beginning);				
-			Query queryPB = new QueryByCriteria(Exam.class, criteria);
-			return (List) broker.getCollectionByQuery(queryPB);			
-			
-/* 		try {
- 			String oqlQuery = "select exams from " + Exam.class.getName();
-			oqlQuery += " where day = $1";
-			oqlQuery += " and beginning = $2";
-			query.create(oqlQuery);
-			query.bind(day);
-			query.bind(beginning);
-			List result = (List) query.execute();
-			lockRead(result);
-
-			return result;
-			
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}*/
+			criteria.addEqualTo("beginning",beginning);
+			return queryList(Exam.class, criteria);
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
