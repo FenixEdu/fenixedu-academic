@@ -1,5 +1,7 @@
 package DataBeans;
 
+import Dominio.ICampus;
+
 
 /**
  * @author Tânia Pousão Create on 10/Nov/2003
@@ -55,5 +57,21 @@ public class InfoCampus extends InfoObject
         result += " name= " + getName();
         result += "]";
         return result;
+    }
+    
+    public void copyFromDomain(ICampus campus) {
+        super.copyFromDomain(campus);
+        if (campus!=null) {
+            setName(campus.getName());
+        }
+    }
+    
+    public static InfoCampus newInfoFromDomain(ICampus campus) {
+        InfoCampus infoCampus = null;
+        if (campus!=null) {
+            infoCampus = new InfoCampus();
+            infoCampus.copyFromDomain(campus);
+        }
+        return infoCampus;
     }
 }

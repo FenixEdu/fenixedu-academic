@@ -9,100 +9,99 @@ import Dominio.IProfessorship;
 /**
  * @author jpvl
  */
-public class InfoProfessorship extends InfoObject
-{
+public class InfoProfessorship extends InfoObject {
+
     protected InfoTeacher infoTeacher;
+
     protected InfoExecutionCourse infoExecutionCourse;
+
     private Double credits;
-    
+
     private String toDelete;
 
-    public InfoProfessorship()
-    {
+    public InfoProfessorship() {
     }
 
     /**
-	 * @param object
-	 */
-    public InfoProfessorship(Integer idInternal)
-    {
+     * @param object
+     */
+    public InfoProfessorship(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
     /**
-	 * @return
-	 */
-    public InfoExecutionCourse getInfoExecutionCourse()
-    {
+     * @return
+     */
+    public InfoExecutionCourse getInfoExecutionCourse() {
         return infoExecutionCourse;
     }
 
     /**
-	 * @return
-	 */
-    public InfoTeacher getInfoTeacher()
-    {
+     * @return
+     */
+    public InfoTeacher getInfoTeacher() {
         return infoTeacher;
     }
 
     /**
-	 * @param course
-	 */
-    public void setInfoExecutionCourse(InfoExecutionCourse course)
-    {
+     * @param course
+     */
+    public void setInfoExecutionCourse(InfoExecutionCourse course) {
         infoExecutionCourse = course;
     }
 
     /**
-	 * @param teacher
-	 */
-    public void setInfoTeacher(InfoTeacher teacher)
-    {
+     * @param teacher
+     */
+    public void setInfoTeacher(InfoTeacher teacher) {
         infoTeacher = teacher;
     }
 
     /**
-	 * @return Returns the credits.
-	 */
-    public Double getCredits()
-    {
+     * @return Returns the credits.
+     */
+    public Double getCredits() {
         return this.credits;
     }
 
     /**
-	 * @param credits
-	 *                   The credits to set.
-	 */
-    public void setCredits(Double credits)
-    {
+     * @param credits
+     *            The credits to set.
+     */
+    public void setCredits(Double credits) {
         this.credits = credits;
     }
 
-	/**
-	 * @return Returns the toDelete.
-	 */
-	public String getToDelete()
-	{
-		return toDelete;
-	}
+    /**
+     * @return Returns the toDelete.
+     */
+    public String getToDelete() {
+        return toDelete;
+    }
 
-	/**
-	 * @param toDelete The toDelete to set.
-	 */
-	public void setToDelete(String toDelete)
-	{
-		this.toDelete = toDelete;
-	}
+    /**
+     * @param toDelete
+     *            The toDelete to set.
+     */
+    public void setToDelete(String toDelete) {
+        this.toDelete = toDelete;
+    }
 
-    public static InfoProfessorship copyFromDomain(
+    public void copyFromDomain(IProfessorship professorship) {
+        super.copyFromDomain(professorship);
+        if (professorship != null) {
+            setCredits(professorship.getCredits());
+        }
+    }
+
+    public static InfoProfessorship newInfoFromDomain(
             IProfessorship professorship) {
         InfoProfessorship infoProfessorship = null;
         if (professorship != null) {
             infoProfessorship = new InfoProfessorship();
-            infoProfessorship.setIdInternal(professorship.getIdInternal());
-            infoProfessorship.setCredits(professorship.getCredits());
+            infoProfessorship.copyFromDomain(professorship);
         }
         return infoProfessorship;
     }
-    
+
 }

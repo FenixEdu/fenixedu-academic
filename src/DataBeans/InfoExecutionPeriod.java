@@ -187,20 +187,26 @@ public class InfoExecutionPeriod extends InfoObject {
         return buffer.toString();
     }
 
+    public void copyFromDomain(IExecutionPeriod period) {
+        super.copyFromDomain(period);
+        if (period != null) {
+            setName(period.getName());
+            setState(period.getState());
+            setBeginDate(period.getBeginDate());
+            setEndDate(period.getEndDate());
+            setSemester(period.getSemester());
+        }
+    }
+
     /**
      * @param period
      * @return
      */
-    public static InfoExecutionPeriod copyFromDomain(IExecutionPeriod period) {
+    public static InfoExecutionPeriod newInfoFromDomain(IExecutionPeriod period) {
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (period != null) {
             infoExecutionPeriod = new InfoExecutionPeriod();
-            infoExecutionPeriod.setIdInternal(period.getIdInternal());
-            infoExecutionPeriod.setName(period.getName());
-            infoExecutionPeriod.setState(period.getState());
-            infoExecutionPeriod.setBeginDate(period.getBeginDate());
-            infoExecutionPeriod.setEndDate(period.getEndDate());
-            infoExecutionPeriod.setSemester(period.getSemester());
+            infoExecutionPeriod.copyFromDomain(period);
         }
         return infoExecutionPeriod;
     }

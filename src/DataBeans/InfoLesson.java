@@ -221,15 +221,21 @@ public class InfoLesson extends InfoObject
         return result;
     }
     
-    public static InfoLesson copyFromDomain(IAula lesson) {
+    public void copyFromDomain(IAula lesson) {
+        super.copyFromDomain(lesson);
+        if (lesson!=null) {
+            setDiaSemana(lesson.getDiaSemana());
+            setFim(lesson.getFim());
+            setInicio(lesson.getInicio());
+            setTipo(lesson.getTipo());
+        }
+    }
+    
+    public static InfoLesson newInfoFromDomain(IAula lesson) {
         InfoLesson infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLesson();
-            infoLesson.setIdInternal(lesson.getIdInternal());
-            infoLesson.setDiaSemana(lesson.getDiaSemana());
-            infoLesson.setFim(lesson.getFim());
-            infoLesson.setInicio(lesson.getInicio());
-            infoLesson.setTipo(lesson.getTipo());
+            infoLesson.copyFromDomain(lesson);           
            }
         return infoLesson;
     }

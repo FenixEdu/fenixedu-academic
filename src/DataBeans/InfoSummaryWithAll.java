@@ -12,20 +12,26 @@ import Dominio.ISummary;
  */
 public class InfoSummaryWithAll extends InfoSummary {
 
-    public static InfoSummary copyFromDomain(ISummary summary) {
-        InfoSummary infoSummary = InfoSummary.copyFromDomain(summary);
-        if (infoSummary != null) {
-            infoSummary
-                    .setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-                            .copyFromDomain(summary.getExecutionCourse()));
-            infoSummary
-                    .setInfoShift(InfoShiftWithInfoExecutionCourseAndCollections
-                            .copyFromDomain(summary.getShift()));
-            infoSummary.setInfoProfessorship(InfoProfessorshipWithAll
-                    .copyFromDomain(summary.getProfessorship()));
-            infoSummary.setInfoTeacher(InfoTeacherWithPerson
-                    .copyFromDomain(summary.getTeacher()));
-            infoSummary.setInfoRoom(InfoRoom.copyFromDomain(summary.getRoom()));
+    public void copyFromDomain(ISummary summary) {
+        super.copyFromDomain(summary);
+        if (summary != null) {
+            setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(summary.getExecutionCourse()));
+            setInfoShift(InfoShiftWithInfoExecutionCourseAndCollections
+                    .newInfoFromDomain(summary.getShift()));
+            setInfoProfessorship(InfoProfessorshipWithAll
+                    .newInfoFromDomain(summary.getProfessorship()));
+            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(summary
+                    .getTeacher()));
+            setInfoRoom(InfoRoom.newInfoFromDomain(summary.getRoom()));
+        }
+    }
+
+    public static InfoSummary newInfoFromDomain(ISummary summary) {
+        InfoSummaryWithAll infoSummary = null;
+        if (summary != null) {
+            infoSummary = new InfoSummaryWithAll();
+            infoSummary.copyFromDomain(summary);
         }
         return infoSummary;
     }

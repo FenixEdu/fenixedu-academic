@@ -220,16 +220,21 @@ public class InfoShift extends InfoObject {
         this.percentage = percentage;
     }
 
-    public static InfoShift copyFromDomain(ITurno shift) {
+    public void copyFromDomain(ITurno shift) {
+        super.copyFromDomain(shift);
+        if (shift!=null) {
+            setNome(shift.getNome());
+            setTipo(shift.getTipo());
+            setLotacao(shift.getLotacao());
+            setOcupation(shift.getOcupation());
+            setPercentage(shift.getPercentage());
+        }
+    }
+    public static InfoShift newInfoFromDomain(ITurno shift) {
         InfoShift infoShift = null;
         if (shift != null) {
             infoShift = new InfoShift();
-            infoShift.setIdInternal(shift.getIdInternal());
-            infoShift.setNome(shift.getNome());
-            infoShift.setTipo(shift.getTipo());
-            infoShift.setLotacao(shift.getLotacao());
-            infoShift.setOcupation(shift.getOcupation());
-            infoShift.setPercentage(shift.getPercentage());
+            infoShift.copyFromDomain(shift);            
         }
         return infoShift;
     }

@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import Dominio.IDomainObject;
+
 
 /**
  * @author jpvl
@@ -49,4 +51,12 @@ public abstract class InfoObject extends DataTranferObject
         else
             return super.hashCode();
     }
+    
+    public void copyFromDomain(IDomainObject domainObject) {
+        if (domainObject!=null) {
+            setIdInternal(domainObject.getIdInternal());
+        }
+    }
+    
+    
 }

@@ -13,16 +13,24 @@ import Dominio.IExecutionPeriod;
 public class InfoExecutionPeriodWithInfoExecutionYear extends
         InfoExecutionPeriod {
 
+    public void copyFromDomain(IExecutionPeriod executionPeriod) {
+        super.copyFromDomain(executionPeriod);
+        if (executionPeriod != null) {
+            setInfoExecutionYear(InfoExecutionYear
+                    .newInfoFromDomain(executionPeriod.getExecutionYear()));
+        }
+    }
+
     /**
      * @param period
      * @return
      */
-    public static InfoExecutionPeriod copyFromDomain(IExecutionPeriod period) {
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod
-                .copyFromDomain(period);
-        if (infoExecutionPeriod != null) {
-            infoExecutionPeriod.setInfoExecutionYear(InfoExecutionYear
-                    .copyFromDomain(period.getExecutionYear()));
+    public static InfoExecutionPeriod newInfoFromDomain(IExecutionPeriod period) {
+        InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = null;
+
+        if (period != null) {
+            infoExecutionPeriod = new InfoExecutionPeriodWithInfoExecutionYear();
+            infoExecutionPeriod.copyFromDomain(period);
         }
         return infoExecutionPeriod;
     }

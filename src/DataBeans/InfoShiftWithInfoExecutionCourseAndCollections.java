@@ -20,14 +20,21 @@ import Dominio.ITurno;
 public class InfoShiftWithInfoExecutionCourseAndCollections extends
         InfoShiftWithInfoExecutionCourse {
 
-    public static InfoShift copyFromDomain(ITurno shift) {
-        InfoShift infoShift = InfoShiftWithInfoExecutionCourse
-                .copyFromDomain(shift);
-        if (infoShift != null) {
-            infoShift.setInfoLessons(copyILessons2InfoLessons(shift
+    public void copyFromDomain(ITurno shift) {
+        super.copyFromDomain(shift);
+        if (shift != null) {
+            setInfoLessons(copyILessons2InfoLessons(shift
                     .getAssociatedLessons()));
-            infoShift.setInfoClasses(copyIClasses2InfoClasses(shift
+            setInfoClasses(copyIClasses2InfoClasses(shift
                     .getAssociatedClasses()));
+        }
+    }
+
+    public static InfoShift newInfoFromDomain(ITurno shift) {
+        InfoShiftWithInfoExecutionCourseAndCollections infoShift = null;
+        if (shift != null) {
+            infoShift = new InfoShiftWithInfoExecutionCourseAndCollections();
+            infoShift.copyFromDomain(shift);
         }
         return infoShift;
     }
@@ -45,7 +52,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends
                         public Object transform(Object arg0) {
 
                             return InfoLessonWithInfoRoomAndInfoExecutionCourse
-                                    .copyFromDomain((IAula) arg0);
+                                    .newInfoFromDomain((IAula) arg0);
                         }
 
                     });
@@ -66,7 +73,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends
                         public Object transform(Object arg0) {
 
                             return InfoClassWithInfoExecutionDegree
-                                    .copyFromDomain((ITurma) arg0);
+                                    .newInfoFromDomain((ITurma) arg0);
                         }
 
                     });

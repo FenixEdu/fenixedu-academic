@@ -12,16 +12,20 @@ import Dominio.IExecutionCourse;
  */
 public class InfoExecutionCourseWithExecutionPeriod extends InfoExecutionCourse {
 
-    public static InfoExecutionCourse copyFromDomain(
+    public void copyFromDomain(IExecutionCourse executionCourse) {
+        super.copyFromDomain(executionCourse);
+        if (executionCourse != null) {
+            setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+                    .newInfoFromDomain(executionCourse.getExecutionPeriod()));
+        }
+    }
+
+    public static InfoExecutionCourse newInfoFromDomain(
             IExecutionCourse executionCourse) {
-        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.copyFromDomain(executionCourse);
-        if (infoExecutionCourse != null) {            
-            infoExecutionCourse
-                    .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                            .copyFromDomain(executionCourse
-                                    .getExecutionPeriod()));
+        InfoExecutionCourseWithExecutionPeriod infoExecutionCourse = null;
+        if (executionCourse != null) {
+            infoExecutionCourse.copyFromDomain(executionCourse);
         }
         return infoExecutionCourse;
     }
-
 }

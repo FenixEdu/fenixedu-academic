@@ -173,7 +173,7 @@ public class ExecutionCourseSiteComponentBuilder {
                             public Object transform(Object arg0) {
                                 ITurno turno = (ITurno) arg0;
                                 return InfoShiftWithInfoExecutionCourseAndCollections
-                                        .copyFromDomain(turno);
+                                        .newInfoFromDomain(turno);
                             }
                         });
             }
@@ -191,7 +191,7 @@ public class ExecutionCourseSiteComponentBuilder {
                             public Object transform(Object arg0) {
                                 IProfessorship professorship = (IProfessorship) arg0;
                                 return InfoProfessorshipWithAll
-                                        .copyFromDomain(professorship);
+                                        .newInfoFromDomain(professorship);
                             }
 
                         });
@@ -297,14 +297,14 @@ public class ExecutionCourseSiteComponentBuilder {
             while (iter.hasNext()) {
                 ISummary summary = (ISummary) iter.next();
                 InfoSummary infoSummary = InfoSummaryWithAll
-                        .copyFromDomain(summary);
+                        .newInfoFromDomain(summary);
                 result.add(infoSummary);
             }
 
             component.setInfoSummaries(result);
             component.setInfoSite(copyISite2InfoSite(site));
             component.setExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-                    .copyFromDomain(executionCourse));
+                    .newInfoFromDomain(executionCourse));
 
             component.setLessonTypes(lessonTypes);
             List infoShiftsOnlyType = infoShifts;
@@ -477,7 +477,7 @@ public class ExecutionCourseSiteComponentBuilder {
         Iterator iter = evaluations.iterator();
         while (iter.hasNext()) {
             IEvaluation evaluation = (IEvaluation) iter.next();
-            infoEvaluations.add(InfoEvaluation.copyFromDomain(evaluation));
+            infoEvaluations.add(InfoEvaluation.newInfoFromDomain(evaluation));
         }
 
         component.setInfoEvaluations(infoEvaluations);
@@ -529,7 +529,7 @@ public class ExecutionCourseSiteComponentBuilder {
         component.setSections(infoSectionsList);
         InfoExecutionCourse executionCourse;
         executionCourse = InfoExecutionCourseWithExecutionPeriod
-                .copyFromDomain(site.getExecutionCourse());
+                .newInfoFromDomain(site.getExecutionCourse());
         component.setExecutionCourse(executionCourse);
         return component;
     }
@@ -561,7 +561,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         while (iter.hasNext()) {
             IItem item = (IItem) iter.next();
-            InfoItem infoItem = InfoItem.copyFromDomain(item);
+            InfoItem infoItem = InfoItem.newInfoFromDomain(item);
             try {
                 infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item
                         .getSlideName()));
@@ -599,7 +599,7 @@ public class ExecutionCourseSiteComponentBuilder {
                     ITurno shift = (ITurno) shifts.get(i);
                     InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
                             InfoShiftWithInfoExecutionCourseAndCollections
-                                    .copyFromDomain(shift), null, null);
+                                    .newInfoFromDomain(shift), null, null);
 
                     List lessons = sp.getITurnoAulaPersistente().readByShift(
                             shift);
@@ -611,14 +611,14 @@ public class ExecutionCourseSiteComponentBuilder {
                     for (int j = 0; j < lessons.size(); j++)
                         infoLessons
                                 .add(InfoLessonWithInfoRoomAndInfoExecutionCourse
-                                        .copyFromDomain((IAula) lessons.get(j)));
+                                        .newInfoFromDomain((IAula) lessons.get(j)));
 
                     shiftWithAssociatedClassesAndLessons
                             .setInfoLessons(infoLessons);
 
                     for (int j = 0; j < classesShifts.size(); j++)
                         infoClasses.add(InfoClassWithInfoExecutionDegree
-                                .copyFromDomain(((ITurmaTurno) classesShifts
+                                .newInfoFromDomain(((ITurmaTurno) classesShifts
                                         .get(j)).getTurma()));
 
                     shiftWithAssociatedClassesAndLessons
@@ -662,7 +662,7 @@ public class ExecutionCourseSiteComponentBuilder {
             while (iterator.hasNext()) {
                 IAula elem = (IAula) iterator.next();
                 InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoExecutionCourse
-                        .copyFromDomain(elem);
+                        .newInfoFromDomain(elem);
                 infoLessonList.add(infoLesson);
             }
         } catch (ExcepcaoPersistencia ex) {
@@ -846,7 +846,7 @@ public class ExecutionCourseSiteComponentBuilder {
                 IProfessorship professorship = (IProfessorship) iter.next();
                 ITeacher teacher = professorship.getTeacher();
                 InfoTeacher infoTeacher = InfoTeacherWithPerson
-                        .copyFromDomain(teacher);
+                        .newInfoFromDomain(teacher);
                 lecturingInfoTeachersList.add(infoTeacher);
             }
         }
@@ -869,7 +869,7 @@ public class ExecutionCourseSiteComponentBuilder {
                 IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
                 ITeacher teacher = responsibleFor.getTeacher();
                 InfoTeacher infoTeacher = InfoTeacherWithPerson
-                        .copyFromDomain(teacher);
+                        .newInfoFromDomain(teacher);
                 responsibleInfoTeachersList.add(infoTeacher);
             }
 
@@ -951,7 +951,7 @@ public class ExecutionCourseSiteComponentBuilder {
             infoSite.setStyle(site.getStyle());
             infoSite
                     .setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-                            .copyFromDomain(site.getExecutionCourse()));
+                            .newInfoFromDomain(site.getExecutionCourse()));
         }
         return infoSite;
     }
@@ -1072,7 +1072,7 @@ public class ExecutionCourseSiteComponentBuilder {
             infoCurricularCourse.setWeigth(curricularCourse.getWeigth());
             infoCurricularCourse
                     .setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
-                            .copyFromDomain(curricularCourse
+                            .newInfoFromDomain(curricularCourse
                                     .getDegreeCurricularPlan()));
         }
         return infoCurricularCourse;

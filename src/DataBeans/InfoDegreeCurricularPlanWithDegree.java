@@ -13,17 +13,23 @@ import Dominio.IDegreeCurricularPlan;
 public class InfoDegreeCurricularPlanWithDegree extends
         InfoDegreeCurricularPlan {
 
+    public void copyFromDomain(IDegreeCurricularPlan plan) {
+        super.copyFromDomain(plan);
+        if (plan != null) {
+            setInfoDegree(InfoDegree.newInfoFromDomain(plan.getDegree()));
+        }
+    }
+
     /**
      * @param plan
      * @return
      */
-    public static InfoDegreeCurricularPlan copyFromDomain(
+    public static InfoDegreeCurricularPlan newInfoFromDomain(
             IDegreeCurricularPlan plan) {
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-                .copyFromDomain(plan);
-        if (infoDegreeCurricularPlan != null) {
-            infoDegreeCurricularPlan.setInfoDegree(InfoDegree.copyFromDomain(plan
-                    .getDegree()));
+        InfoDegreeCurricularPlanWithDegree infoDegreeCurricularPlan = null;
+        if (plan != null) {
+            infoDegreeCurricularPlan = new InfoDegreeCurricularPlanWithDegree();
+            infoDegreeCurricularPlan.copyFromDomain(plan);
         }
         return infoDegreeCurricularPlan;
     }

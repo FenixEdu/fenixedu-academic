@@ -7,6 +7,8 @@ package DataBeans;
 import java.util.Calendar;
 import java.util.List;
 
+import Dominio.IWrittenEvaluation;
+
 /**
  * @author Ana e Ricardo
  *
@@ -164,6 +166,19 @@ public class InfoWrittenEvaluation extends InfoEvaluation{
     public void setAssociatedExecutionCourse(List list)
     {
         associatedExecutionCourse = list;
+    }
+    
+    public void copyFromDomain(IWrittenEvaluation writtenEvaluation) {
+        super.copyFromDomain(writtenEvaluation);
+        if (writtenEvaluation!=null) {
+            setBeginning(writtenEvaluation.getBeginning());
+            setDay(writtenEvaluation.getDay());
+            setEnd(writtenEvaluation.getEnd());
+            setEnrollmentBeginDay(writtenEvaluation.getEnrollmentBeginDay());
+            setEnrollmentBeginTime(writtenEvaluation.getEnrollmentBeginTime());
+            setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
+            setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());            
+        }
     }
 
 }

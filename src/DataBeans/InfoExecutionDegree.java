@@ -3,19 +3,18 @@
  * 
  * Created on 24 de Novembro de 2002, 23:05
  */
-
 package DataBeans;
 
 import java.util.List;
-
 import Dominio.ICursoExecucao;
 
 /**
  * @author tfc130
  */
-public class InfoExecutionDegree extends InfoObject 
-{
+public class InfoExecutionDegree extends InfoObject {
+
     private InfoExecutionYear infoExecutionYear;
+
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
     //added by Tânia Pousão
@@ -26,45 +25,40 @@ public class InfoExecutionDegree extends InfoObject
     //added by Tânia Pousão
     private InfoCampus infoCampus;
 
-    public InfoExecutionDegree()
-    {
+    public InfoExecutionDegree() {
     }
 
     /**
-	 * @param infoDegreeCurricularPlan
-	 * @param infoExecutionYear
-	 */
+     * @param infoDegreeCurricularPlan
+     * @param infoExecutionYear
+     */
     public InfoExecutionDegree(
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan,
-        InfoExecutionYear infoExecutionYear)
-    {
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan,
+            InfoExecutionYear infoExecutionYear) {
         setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         setInfoExecutionYear(infoExecutionYear);
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean result = false;
-        if (obj instanceof InfoExecutionDegree)
-        {
+        if (obj instanceof InfoExecutionDegree) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) obj;
-            result =
-                getInfoExecutionYear().equals(infoExecutionDegree.getInfoExecutionYear())
+            result = getInfoExecutionYear().equals(
+                    infoExecutionDegree.getInfoExecutionYear())
                     && getInfoDegreeCurricularPlan().equals(
-                        infoExecutionDegree.getInfoDegreeCurricularPlan());
+                            infoExecutionDegree.getInfoDegreeCurricularPlan());
         }
         return result;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[INFOEXECUTIONDEGREE";
         result += ", infoExecutionYear=" + infoExecutionYear;
         result += ", infoDegreeCurricularPlan=" + infoDegreeCurricularPlan;
-        if(coordinatorsList != null) {
-        	result += ", coordinatorsList=" + coordinatorsList.size();
+        if (coordinatorsList != null) {
+            result += ", coordinatorsList=" + coordinatorsList.size();
         } else {
-        	result += ", coordinatorsList is NULL";
+            result += ", coordinatorsList is NULL";
         }
         result += ", infoCampus= " + infoCampus;
         result += "]";
@@ -72,106 +66,106 @@ public class InfoExecutionDegree extends InfoObject
     }
 
     /**
-	 * Returns the infoExecutionYear.
-	 * 
-	 * @return InfoExecutionYear
-	 */
-    public InfoExecutionYear getInfoExecutionYear()
-    {
+     * Returns the infoExecutionYear.
+     * 
+     * @return InfoExecutionYear
+     */
+    public InfoExecutionYear getInfoExecutionYear() {
         return infoExecutionYear;
     }
 
     /**
-	 * Sets the infoExecutionYear.
-	 * 
-	 * @param infoExecutionYear
-	 *            The infoExecutionYear to set
-	 */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear)
-    {
+     * Sets the infoExecutionYear.
+     * 
+     * @param infoExecutionYear
+     *            The infoExecutionYear to set
+     */
+    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
         this.infoExecutionYear = infoExecutionYear;
     }
 
     /**
-	 * Returns the infoDegreeCurricularPlan.
-	 * 
-	 * @return InfoDegreeCurricularPlan
-	 */
-    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan()
-    {
+     * Returns the infoDegreeCurricularPlan.
+     * 
+     * @return InfoDegreeCurricularPlan
+     */
+    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
         return infoDegreeCurricularPlan;
     }
 
     /**
-	 * Sets the infoDegreeCurricularPlan.
-	 * 
-	 * @param infoDegreeCurricularPlan
-	 *            The infoDegreeCurricularPlan to set
-	 */
-    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan)
-    {
+     * Sets the infoDegreeCurricularPlan.
+     * 
+     * @param infoDegreeCurricularPlan
+     *            The infoDegreeCurricularPlan to set
+     */
+    public void setInfoDegreeCurricularPlan(
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
         this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
     }
 
     /**
-	 * @return
-	 */
-    public Boolean getTemporaryExamMap()
-    {
+     * @return
+     */
+    public Boolean getTemporaryExamMap() {
         return temporaryExamMap;
     }
 
     /**
-	 * @param boolean1
-	 */
-    public void setTemporaryExamMap(Boolean temporary)
-    {
+     * @param boolean1
+     */
+    public void setTemporaryExamMap(Boolean temporary) {
         temporaryExamMap = temporary;
     }
 
     /**
-	 * @return Returns the infoCampus.
-	 */
-    public InfoCampus getInfoCampus()
-    {
+     * @return Returns the infoCampus.
+     */
+    public InfoCampus getInfoCampus() {
         return infoCampus;
     }
 
     /**
-	 * @param infoCampus
-	 *            The infoCampus to set.
-	 */
-    public void setInfoCampus(InfoCampus infoCampus)
-    {
+     * @param infoCampus
+     *            The infoCampus to set.
+     */
+    public void setInfoCampus(InfoCampus infoCampus) {
         this.infoCampus = infoCampus;
     }
 
     /**
      * @return Returns the coordinatorList.
      */
-    public List getCoordinatorsList()
-    {
+    public List getCoordinatorsList() {
         return coordinatorsList;
     }
 
     /**
-     * @param coordinatorList The coordinatorList to set.
+     * @param coordinatorList
+     *            The coordinatorList to set.
      */
-    public void setCoordinatorsList(List coordinatorsList)
-    {
+    public void setCoordinatorsList(List coordinatorsList) {
         this.coordinatorsList = coordinatorsList;
+    }
+
+    public void copyFromDomain(ICursoExecucao executionDegree) {
+        super.copyFromDomain(executionDegree);
+        if (executionDegree != null) {
+            setTemporaryExamMap(executionDegree.getTemporaryExamMap());
+        }
     }
 
     /**
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree copyFromDomain(ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(
+            ICursoExecucao executionDegree) {
         InfoExecutionDegree infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegree();
-            infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
-            }
+            infoExecutionDegree.copyFromDomain(executionDegree);
+        }
         return infoExecutionDegree;
     }
 }

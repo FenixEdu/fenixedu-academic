@@ -7,6 +7,7 @@ package DataBeans;
 import java.util.List;
 
 import Dominio.IOnlineTest;
+import Util.EvaluationType;
 
 /**
  * @author Susana Fernandes
@@ -66,17 +67,22 @@ public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
         return result;
     }
 
+    public void copyFromDomain(IOnlineTest onlineTest) {
+     super.copyFromDomain(onlineTest);
+     if (onlineTest!=null) {
+        setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
+     }
+    }
+    
     /**
      * @param onlineTest
      * @return
      */
-    public static InfoOnlineTest copyFromDomain(IOnlineTest onlineTest) {
+    public static InfoOnlineTest newInfoFromDomain(IOnlineTest onlineTest) {
         InfoOnlineTest infoOnlineTest = null;
         if (onlineTest != null) {
             infoOnlineTest = new InfoOnlineTest();
-            infoOnlineTest.setIdInternal(onlineTest.getIdInternal());
-            infoOnlineTest.setPublishmentMessage(onlineTest
-                    .getPublishmentMessage());
+            infoOnlineTest.copyFromDomain(onlineTest);
         }
         return infoOnlineTest;
     }

@@ -1,123 +1,125 @@
 /*
  * InfoClass.java
- *
+ * 
  * Created on 31 de Outubro de 2002, 12:27
  */
-
 package DataBeans;
 
 import Dominio.ITurma;
 
-
 /**
- *
- * @author  Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz & Sara Ribeiro
  */
-
 public class InfoClass extends InfoObject {
-	protected String _name;
-	
-	protected Integer _anoCurricular;
-	
 
-	private InfoExecutionDegree infoExecutionDegree;
-	private InfoExecutionPeriod infoExecutionPeriod;
+    protected String _name;
 
-	public InfoClass() {
-	}
+    protected Integer _anoCurricular;
 
-	public InfoClass(
-		String name,
-		Integer anoCurricular,
-		InfoExecutionDegree infoExecutionDegree,
-		InfoExecutionPeriod infoExecutionPeriod) {
-		setNome(name);
-		setAnoCurricular(anoCurricular);
-		setInfoExecutionDegree(infoExecutionDegree);
-		setInfoExecutionPeriod(infoExecutionPeriod);
-	}
+    private InfoExecutionDegree infoExecutionDegree;
 
-	
+    private InfoExecutionPeriod infoExecutionPeriod;
 
-	public String getNome() {
-		return _name;
-	}
+    public InfoClass() {
+    }
 
-	public void setNome(String nome) {
-		_name = nome;
-	}
+    public InfoClass(String name, Integer anoCurricular,
+            InfoExecutionDegree infoExecutionDegree,
+            InfoExecutionPeriod infoExecutionPeriod) {
+        setNome(name);
+        setAnoCurricular(anoCurricular);
+        setInfoExecutionDegree(infoExecutionDegree);
+        setInfoExecutionPeriod(infoExecutionPeriod);
+    }
 
-	
+    public String getNome() {
+        return _name;
+    }
 
-	public Integer getAnoCurricular() {
-		return _anoCurricular;
-	}
+    public void setNome(String nome) {
+        _name = nome;
+    }
 
-	public void setAnoCurricular(Integer anoCurricular) {
-		_anoCurricular = anoCurricular;
-	}
+    public Integer getAnoCurricular() {
+        return _anoCurricular;
+    }
 
-	
+    public void setAnoCurricular(Integer anoCurricular) {
+        _anoCurricular = anoCurricular;
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoClass) {
-			InfoClass infoTurma = (InfoClass) obj;
-			resultado =
-				getNome().equals(infoTurma.getNome())
-					&& getInfoExecutionPeriod().equals(infoTurma.getInfoExecutionPeriod())
-					&& getInfoExecutionDegree().equals(infoTurma.getInfoExecutionDegree());
-		}
-		return resultado;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoClass) {
+            InfoClass infoTurma = (InfoClass) obj;
+            resultado = getNome().equals(infoTurma.getNome())
+                    && getInfoExecutionPeriod().equals(
+                            infoTurma.getInfoExecutionPeriod())
+                    && getInfoExecutionDegree().equals(
+                            infoTurma.getInfoExecutionDegree());
+        }
+        return resultado;
+    }
 
-	public String toString() {
-		String result = "[INFOTURMA";
-		result += ", nome=" + _name;
-		result += ", infoExecutionPeriod=" + infoExecutionPeriod;
-		result += ", infoExecutionDegree=" + infoExecutionDegree;
-		result += "]";
-		return result;
-	}
+    public String toString() {
+        String result = "[INFOTURMA";
+        result += ", nome=" + _name;
+        result += ", infoExecutionPeriod=" + infoExecutionPeriod;
+        result += ", infoExecutionDegree=" + infoExecutionDegree;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * Returns the infoExecutionDegree.
-	 * @return InfoExecutionDegree
-	 */
-	public InfoExecutionDegree getInfoExecutionDegree() {
-		return infoExecutionDegree;
-	}
+    /**
+     * Returns the infoExecutionDegree.
+     * 
+     * @return InfoExecutionDegree
+     */
+    public InfoExecutionDegree getInfoExecutionDegree() {
+        return infoExecutionDegree;
+    }
 
-	/**
-	 * Sets the infoExecutionDegree.
-	 * @param infoExecutionDegree The infoExecutionDegree to set
-	 */
-	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-		this.infoExecutionDegree = infoExecutionDegree;
-	}
+    /**
+     * Sets the infoExecutionDegree.
+     * 
+     * @param infoExecutionDegree
+     *            The infoExecutionDegree to set
+     */
+    public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
+        this.infoExecutionDegree = infoExecutionDegree;
+    }
 
-	/**
-	 * Returns the infoExecutionPeriod.
-	 * @return InfoExecutionPeriod
-	 */
-	public InfoExecutionPeriod getInfoExecutionPeriod() {
-		return infoExecutionPeriod;
-	}
+    /**
+     * Returns the infoExecutionPeriod.
+     * 
+     * @return InfoExecutionPeriod
+     */
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+        return infoExecutionPeriod;
+    }
 
-	/**
-	 * Sets the infoExecutionPeriod.
-	 * @param infoExecutionPeriod The infoExecutionPeriod to set
-	 */
-	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-		this.infoExecutionPeriod = infoExecutionPeriod;
-	}
+    /**
+     * Sets the infoExecutionPeriod.
+     * 
+     * @param infoExecutionPeriod
+     *            The infoExecutionPeriod to set
+     */
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
 
-    public static InfoClass copyFromDomain(ITurma turma) {
+    public void copyFromDomain(ITurma turma) {
+        super.copyFromDomain(turma);
+        if (turma != null) {
+            setNome(turma.getNome());
+        }
+    }
+
+    public static InfoClass newInfoFromDomain(ITurma turma) {
         InfoClass infoClass = null;
         if (turma != null) {
             infoClass = new InfoClass();
-            infoClass.setIdInternal(turma.getIdInternal());
-            infoClass.setNome(turma.getNome());
+            infoClass.copyFromDomain(turma);
         }
         return infoClass;
     }

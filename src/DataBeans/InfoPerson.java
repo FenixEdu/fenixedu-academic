@@ -752,20 +752,26 @@ public class InfoPerson extends InfoObject {
         infoAdvisories = list;
     }
 
+    
+    public void copyFromDomain(IPessoa person) {
+        super.copyFromDomain(person);
+        if (person!=null) {
+            setNome(person.getNome());
+            setNumeroDocumentoIdentificacao(person
+                    .getNumeroDocumentoIdentificacao());
+            setTipoDocumentoIdentificacao(person
+                    .getTipoDocumentoIdentificacao());
+        }
+    }
     /**
      * @param pessoa
      * @return
      */
-    public static InfoPerson copyFromDomain(IPessoa person) {
+    public static InfoPerson newInfoFromDomain(IPessoa person) {
         InfoPerson infoPerson = null;
         if (person != null) {
             infoPerson = new InfoPerson();
-            infoPerson.setIdInternal(person.getIdInternal());
-            infoPerson.setNome(person.getNome());
-            infoPerson.setNumeroDocumentoIdentificacao(person
-                    .getNumeroDocumentoIdentificacao());
-            infoPerson.setTipoDocumentoIdentificacao(person
-                    .getTipoDocumentoIdentificacao());
+           infoPerson.copyFromDomain(person);
         }
         return infoPerson;
     }

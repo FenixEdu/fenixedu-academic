@@ -13,12 +13,19 @@ import Dominio.IAula;
 public class InfoLessonWithInfoRoomAndInfoExecutionCourse extends
         InfoLessonWithInfoRoom {
 
-    public static InfoLesson copyFromDomain(IAula lesson) {
-        InfoLesson infoLesson = InfoLessonWithInfoRoom.copyFromDomain(lesson);
+    public void copyFromDomain(IAula lesson) {
+        super.copyFromDomain(lesson);
+        if (lesson != null) {
+            setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(lesson.getDisciplinaExecucao()));
+        }
+    }
+
+    public static InfoLesson newInfoFromDomain(IAula lesson) {
+        InfoLessonWithInfoRoomAndInfoExecutionCourse infoLesson = null;
         if (infoLesson != null) {
-            infoLesson
-                    .setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod
-                            .copyFromDomain(lesson.getDisciplinaExecucao()));
+            infoLesson = new InfoLessonWithInfoRoomAndInfoExecutionCourse();
+            infoLesson.copyFromDomain(lesson);
         }
         return infoLesson;
     }

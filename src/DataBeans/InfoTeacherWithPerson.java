@@ -12,11 +12,18 @@ import Dominio.ITeacher;
  */
 public class InfoTeacherWithPerson extends InfoTeacher {
 
-    public static InfoTeacher copyFromDomain(ITeacher teacher) {
-        InfoTeacher infoTeacher = InfoTeacher.copyFromDomain(teacher);
-        if (infoTeacher != null) {
-            infoTeacher.setInfoPerson(InfoPerson.copyFromDomain(teacher
-                    .getPerson()));
+    public void copyFromDomain(ITeacher teacher) {
+        super.copyFromDomain(teacher);
+        if (teacher != null) {
+            setInfoPerson(InfoPerson.newInfoFromDomain(teacher.getPerson()));
+        }
+    }
+
+    public static InfoTeacher newInfoFromDomain(ITeacher teacher) {
+        InfoTeacherWithPerson infoTeacher = null;
+        if (teacher != null) {
+            infoTeacher = new InfoTeacherWithPerson();
+            infoTeacher.copyFromDomain(teacher);
         }
         return infoTeacher;
     }

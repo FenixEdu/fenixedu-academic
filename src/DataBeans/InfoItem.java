@@ -1,187 +1,202 @@
 /*
- * InfoItem.java
- * Mar 11, 2003
+ * InfoItem.java Mar 11, 2003
  */
 package DataBeans;
 
 import java.util.List;
- 
+
 import Dominio.IItem;
-
-
 
 /**
  * @author Ivo Brandão
  */
 public class InfoItem extends InfoObject implements Comparable {
-//Serializable
-	private String information;
-	private String name;
-	private Integer itemOrder;
-	private InfoSection infoSection;
-	private Boolean urgent;
-	private List links;
 
-	/**
-	 * Constructor
-	 */
-	public InfoItem() {
-	}
+    //Serializable
+    private String information;
 
-	/**
-	 * Constructor
-	 */
-	public InfoItem(String information, String name, Integer itemOrder, 
-		InfoSection infoSection, Boolean urgent) {
+    private String name;
 
-		this.information = information;
-		this.name = name;
-		this.itemOrder = itemOrder;
-		this.infoSection = infoSection;
-		this.urgent = urgent;
-	}
+    private Integer itemOrder;
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoItem) {
-			InfoItem infoItem = (InfoItem) obj;
-			resultado =  getInformation().equals(infoItem.getInformation())
-				&& getName().equals(infoItem.getName())
-				&& getItemOrder().equals(infoItem.getItemOrder())
-				&& getInfoSection().equals(infoItem.getInfoSection())
-				&& getUrgent().equals(infoItem.getUrgent());
-		}
-		return resultado;
-	}
+    private InfoSection infoSection;
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		String result = "[INFOITEM";
-		result += ", name=" + name;
-		result += ", itemOrder=" + itemOrder;
-		result += ", infoSection=" + infoSection;
-		result += ", urgent=" + urgent;		
-		result += "]";
-		return result;
-	}
+    private Boolean urgent;
 
-	/**
-	 * @return String
-	 */
-	public String getInformation() {
-		return information;
-	}
+    private List links;
 
-	/**
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * Constructor
+     */
+    public InfoItem() {
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getItemOrder() {
-		return itemOrder;
-	}
+    /**
+     * Constructor
+     */
+    public InfoItem(String information, String name, Integer itemOrder,
+            InfoSection infoSection, Boolean urgent) {
 
-	/**
-	 * @return InfoSection
-	 */
-	public InfoSection getInfoSection() {
-		return infoSection;
-	}
+        this.information = information;
+        this.name = name;
+        this.itemOrder = itemOrder;
+        this.infoSection = infoSection;
+        this.urgent = urgent;
+    }
 
-	/**
-	 * @return Boolean
-	 */
-	public Boolean getUrgent() {
-		return urgent;
-	}
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoItem) {
+            InfoItem infoItem = (InfoItem) obj;
+            resultado = getInformation().equals(infoItem.getInformation())
+                    && getName().equals(infoItem.getName())
+                    && getItemOrder().equals(infoItem.getItemOrder())
+                    && getInfoSection().equals(infoItem.getInfoSection())
+                    && getUrgent().equals(infoItem.getUrgent());
+        }
+        return resultado;
+    }
 
-	/**
-	 * Sets the information.
-	 * @param information The information to set
-	 */
-	public void setInformation(String information) {
-		this.information = information;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[INFOITEM";
+        result += ", name=" + name;
+        result += ", itemOrder=" + itemOrder;
+        result += ", infoSection=" + infoSection;
+        result += ", urgent=" + urgent;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * Sets the name.
-	 * @param name The name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @return String
+     */
+    public String getInformation() {
+        return information;
+    }
 
-	/**
-	 * Sets the itemOrder.
-	 * @param itemOrder The itemOrder to set
-	 */
-	public void setItemOrder(Integer itemOrder) {
-		this.itemOrder = itemOrder;
-	}
+    /**
+     * @return String
+     */
+    public String getName() {
+        return name;
+    }
 
+    /**
+     * @return Integer
+     */
+    public Integer getItemOrder() {
+        return itemOrder;
+    }
 
+    /**
+     * @return InfoSection
+     */
+    public InfoSection getInfoSection() {
+        return infoSection;
+    }
 
-	/**
-	 * Sets the urgent.
-	 * @param urgent The urgent to set
-	 */
-	public void setUrgent(Boolean urgent) {
-		this.urgent = urgent;
-	}
+    /**
+     * @return Boolean
+     */
+    public Boolean getUrgent() {
+        return urgent;
+    }
 
+    /**
+     * Sets the information.
+     * 
+     * @param information
+     *            The information to set
+     */
+    public void setInformation(String information) {
+        this.information = information;
+    }
 
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            The name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Sets the infoSection.
-	 * @param infoSection The infoSection to set
-	 */
-	public void setInfoSection(InfoSection infoSection) {
-		this.infoSection = infoSection;
-	}
-	
-	public int compareTo(Object arg0) { 
-		
-			
-		return this.getItemOrder().intValue()-((InfoItem)arg0).getItemOrder().intValue();}	
-	
-	/**
-	 * @return
-	 */
-	public List getLinks() {
-		return links;
-	}
+    /**
+     * Sets the itemOrder.
+     * 
+     * @param itemOrder
+     *            The itemOrder to set
+     */
+    public void setItemOrder(Integer itemOrder) {
+        this.itemOrder = itemOrder;
+    }
 
-	/**
-	 * @param links
-	 */
-	public void setLinks(List links) {
-		this.links = links;
-	}
+    /**
+     * Sets the urgent.
+     * 
+     * @param urgent
+     *            The urgent to set
+     */
+    public void setUrgent(Boolean urgent) {
+        this.urgent = urgent;
+    }
 
-    
-     /**
+    /**
+     * Sets the infoSection.
+     * 
+     * @param infoSection
+     *            The infoSection to set
+     */
+    public void setInfoSection(InfoSection infoSection) {
+        this.infoSection = infoSection;
+    }
+
+    public int compareTo(Object arg0) {
+
+        return this.getItemOrder().intValue()
+                - ((InfoItem) arg0).getItemOrder().intValue();
+    }
+
+    /**
+     * @return
+     */
+    public List getLinks() {
+        return links;
+    }
+
+    /**
+     * @param links
+     */
+    public void setLinks(List links) {
+        this.links = links;
+    }
+
+    public void copyFromDomain(IItem item) {
+        super.copyFromDomain(item);
+        if (item != null) {
+            setInformation(item.getInformation());
+            setItemOrder(item.getItemOrder());
+            setName(item.getName());
+            setUrgent(item.getUrgent());
+        }
+    }
+
+    /**
      * @param item
      * @return
      */
-    public static InfoItem copyFromDomain(IItem item) {
+    public static InfoItem newInfoFromDomain(IItem item) {
         InfoItem infoItem = null;
         if (item != null) {
             infoItem = new InfoItem();
-            infoItem.setIdInternal(item.getIdInternal());
-            infoItem.setInformation(item.getInformation());
-            infoItem.setItemOrder(item.getItemOrder());
-            infoItem.setName(item.getName());
-            infoItem.setUrgent(item.getUrgent());
+            infoItem.copyFromDomain(item);
         }
         return infoItem;
     }

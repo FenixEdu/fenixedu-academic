@@ -2,7 +2,6 @@ package DataBeans;
 
 import java.util.Date;
 import java.util.List;
-
 import Dominio.IDegreeCurricularPlan;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
@@ -12,7 +11,6 @@ import Util.MarkType;
  * 
  * 19/Mar/2003
  */
-
 public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
     private InfoDegree infoDegree;
@@ -255,18 +253,24 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         this.descriptionEn = descriptionEn;
     }
 
+    public void copyFromDomain(IDegreeCurricularPlan plan) {
+        super.copyFromDomain(plan);
+        if (plan != null) {
+            setName(plan.getName());
+            setState(plan.getState());
+        }
+    }
+
     /**
      * @param plan
      * @return
      */
-    public static InfoDegreeCurricularPlan copyFromDomain(
+    public static InfoDegreeCurricularPlan newInfoFromDomain(
             IDegreeCurricularPlan plan) {
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         if (plan != null) {
             infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.setIdInternal(plan.getIdInternal());
-            infoDegreeCurricularPlan.setName(plan.getName());
-            infoDegreeCurricularPlan.setState(plan.getState());
+            infoDegreeCurricularPlan.copyFromDomain(plan);
         }
         return infoDegreeCurricularPlan;
     }

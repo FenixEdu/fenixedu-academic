@@ -12,13 +12,20 @@ import Dominio.ITurma;
  */
 public class InfoClassWithInfoExecutionDegree extends InfoClass {
 
-    public static InfoClass copyFromDomain(ITurma turma) {
-        InfoClass infoClass = InfoClass.copyFromDomain(turma);
-        if (infoClass != null) {
-            infoClass.setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
-                    .copyFromDomain(turma.getExecutionDegree()));
+    public void copyFromDomain(ITurma turma) {
+        super.copyFromDomain(turma);
+        if (turma != null) {
+            setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+                    .newInfoFromDomain(turma.getExecutionDegree()));
+        }
+    }
+
+    public static InfoClass newInfoFromDomain(ITurma turma) {
+        InfoClassWithInfoExecutionDegree infoClass = null;
+        if (turma != null) {
+            infoClass = new InfoClassWithInfoExecutionDegree();
+            infoClass.copyFromDomain(turma);
         }
         return infoClass;
     }
-
 }

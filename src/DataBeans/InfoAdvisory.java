@@ -2,121 +2,152 @@ package DataBeans;
 
 import java.util.Date;
 
+import Dominio.Advisory;
+import Dominio.IAdvisory;
 
 /**
  * @author Nuno Nunes & Luis Cruz
- *
+ * 
  * /2003/08/26
  */
 
 public class InfoAdvisory extends InfoObject {
 
-	private String sender;
-	private String subject;
-	private String message;
-	private Date created;
-	private Date expires;
-	private Boolean onlyShowOnce;
+    private String sender;
 
-	public InfoAdvisory() {
-	}
+    private String subject;
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + getIdInternal() + "; ";
-		result += "subject = " + this.subject + "; ";
-		result += "sender = " + this.sender + "\n";
-		result += "message = " + this.message + "\n";
-		result += "created = " + this.created + "\n";
-		result += "expires = " + this.expires + "\n";
-		result += "onlyShowOnce = " + this.onlyShowOnce + "]\n";
-		
-		return result;
-	}
+    private String message;
 
+    private Date created;
 
-	/**
-	 * @return
-	 */
-	public Date getCreated() {
-		return created;
-	}
+    private Date expires;
 
-	/**
-	 * @return
-	 */
-	public Date getExpires() {
-		return expires;
-	}
+    private Boolean onlyShowOnce;
 
-	/**
-	 * @return
-	 */
-	public String getMessage() {
-		return message;
-	}
+    public InfoAdvisory() {
+    }
 
-	/**
-	 * @return
-	 */
-	public Boolean getOnlyShowOnce() {
-		return onlyShowOnce;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + getIdInternal() + "; ";
+        result += "subject = " + this.subject + "; ";
+        result += "sender = " + this.sender + "\n";
+        result += "message = " + this.message + "\n";
+        result += "created = " + this.created + "\n";
+        result += "expires = " + this.expires + "\n";
+        result += "onlyShowOnce = " + this.onlyShowOnce + "]\n";
 
-	/**
-	 * @return
-	 */
-	public String getSubject() {
-		return subject;
-	}
+        return result;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setCreated(Date date) {
-		created = date;
-	}
+    /**
+     * @return
+     */
+    public Date getCreated() {
+        return created;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setExpires(Date date) {
-		expires = date;
-	}
+    /**
+     * @return
+     */
+    public Date getExpires() {
+        return expires;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setMessage(String string) {
-		message = string;
-	}
+    /**
+     * @return
+     */
+    public String getMessage() {
+        return message;
+    }
 
-	/**
-	 * @param boolean1
-	 */
-	public void setOnlyShowOnce(Boolean boolean1) {
-		onlyShowOnce = boolean1;
-	}
+    /**
+     * @return
+     */
+    public Boolean getOnlyShowOnce() {
+        return onlyShowOnce;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setSubject(String string) {
-		subject = string;
-	}
+    /**
+     * @return
+     */
+    public String getSubject() {
+        return subject;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getSender() {
-		return sender;
-	}
+    /**
+     * @param date
+     */
+    public void setCreated(Date date) {
+        created = date;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setSender(String string) {
-		sender = string;
-	}
+    /**
+     * @param date
+     */
+    public void setExpires(Date date) {
+        expires = date;
+    }
 
+    /**
+     * @param string
+     */
+    public void setMessage(String string) {
+        message = string;
+    }
+
+    /**
+     * @param boolean1
+     */
+    public void setOnlyShowOnce(Boolean boolean1) {
+        onlyShowOnce = boolean1;
+    }
+
+    /**
+     * @param string
+     */
+    public void setSubject(String string) {
+        subject = string;
+    }
+
+    /**
+     * @return
+     */
+    public String getSender() {
+        return sender;
+    }
+
+    /**
+     * @param string
+     */
+    public void setSender(String string) {
+        sender = string;
+    }
+
+    public void copyFromDomain(IAdvisory advisory) {
+        super.copyFromDomain(advisory);
+        if (advisory != null) {
+            setCreated(advisory.getCreated());
+            setExpires(advisory.getExpires());
+            setMessage(advisory.getMessage());
+            setOnlyShowOnce(advisory.getOnlyShowOnce());
+            setSender(advisory.getSender());
+            setSubject(advisory.getSubject());
+        }
+    }
+
+    public static InfoAdvisory newInfoFromDomain(IAdvisory advisory) {
+        InfoAdvisory infoAdvisory = null;
+        if (advisory != null) {
+            infoAdvisory = new InfoAdvisory();
+            infoAdvisory.copyFromDomain(advisory);
+        }
+        return infoAdvisory;
+    }
+    
+    public IAdvisory newDomainFromInfo() {
+        IAdvisory advisory = new Advisory();
+        return null;
+    }
 }

@@ -13,17 +13,23 @@ import Dominio.ICursoExecucao;
 public class InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
         extends InfoExecutionDegreeWithInfoDegreeCurricularPlan {
 
+    public void copyFromDomain(ICursoExecucao executionDegree) {
+        super.copyFromDomain(executionDegree);
+        if (executionDegree != null) {
+            setInfoExecutionYear(InfoExecutionYear
+                    .newInfoFromDomain(executionDegree.getExecutionYear()));
+        }
+    }
+
     /**
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree copyFromDomain(
+    public static InfoExecutionDegree newInfoFromDomain(
             ICursoExecucao executionDegree) {
-        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan
-                .copyFromDomain(executionDegree);
+        InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegree = null;
         if (infoExecutionDegree != null) {
-            infoExecutionDegree.setInfoExecutionYear(InfoExecutionYear
-                    .copyFromDomain(executionDegree.getExecutionYear()));
+            infoExecutionDegree.copyFromDomain(executionDegree);
         }
         return infoExecutionDegree;
     }

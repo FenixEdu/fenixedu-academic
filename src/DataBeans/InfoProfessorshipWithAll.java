@@ -12,15 +12,22 @@ import Dominio.IProfessorship;
  */
 public class InfoProfessorshipWithAll extends InfoProfessorship {
 
-    public static InfoProfessorship copyFromDomain(IProfessorship professorship) {
-        InfoProfessorship infoProfessorship = InfoProfessorship
-                .copyFromDomain(professorship);
-        if (infoProfessorship != null) {
-            infoProfessorship
-                    .setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-                            .copyFromDomain(professorship.getExecutionCourse()));
-            infoProfessorship.setInfoTeacher(InfoTeacherWithPerson
-                    .copyFromDomain(professorship.getTeacher()));
+    public void copyFromDomain(IProfessorship professorship) {
+        super.copyFromDomain(professorship);
+        if (professorship != null) {
+            setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(professorship.getExecutionCourse()));
+            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(professorship
+                    .getTeacher()));
+        }
+    }
+
+    public static InfoProfessorship newInfoFromDomain(
+            IProfessorship professorship) {
+        InfoProfessorshipWithAll infoProfessorship = null;
+        if (professorship != null) {
+            infoProfessorship = new InfoProfessorshipWithAll();
+            infoProfessorship.copyFromDomain(professorship);
         }
         return infoProfessorship;
     }

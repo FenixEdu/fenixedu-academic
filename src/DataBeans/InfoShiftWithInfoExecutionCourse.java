@@ -12,14 +12,21 @@ import Dominio.ITurno;
  */
 public class InfoShiftWithInfoExecutionCourse extends InfoShift {
 
-    public static InfoShift copyFromDomain(ITurno shift) {
-        InfoShift infoShift = InfoShift.copyFromDomain(shift);
-        if (infoShift!=null) {
-        infoShift
-                .setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod
-                        .copyFromDomain(shift.getDisciplinaExecucao()));
+    public void copyFromDomain(ITurno shift) {
+        super.copyFromDomain(shift);
+        if (shift != null) {
+            setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(shift.getDisciplinaExecucao()));
         }
-       return infoShift;
+    }
+
+    public static InfoShift newInfoFromDomain(ITurno shift) {
+        InfoShiftWithInfoExecutionCourse infoShift = null;
+        if (shift != null) {
+            infoShift = new InfoShiftWithInfoExecutionCourse();
+            infoShift.copyFromDomain(shift);
+        }
+        return infoShift;
     }
 
 }
