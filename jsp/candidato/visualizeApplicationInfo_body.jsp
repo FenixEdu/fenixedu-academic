@@ -47,7 +47,7 @@
 
           <!-- Situacao da Candidatura -->
     	  <tr>
-            <td><h2><bean:message key="label.candidate.applicationInfoSituation" /></h2></td>
+            <td><h2><bean:message key="label.candidate.applicationSituation" /></h2></td>
           </tr>
 
           <!-- Situacao -->

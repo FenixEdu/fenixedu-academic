@@ -116,7 +116,6 @@ public class CreateGuide implements IServico {
 		
 		Calendar calendar = Calendar.getInstance();
 		infoGuideSituation.setDate(calendar.getTime());
-		System.out.println("guideSituation" + situationOfGuide);
 		infoGuideSituation.setSituation(situationOfGuide);
 		
 		guide = Cloner.copyInfoGuide2IGuide(infoGuide);

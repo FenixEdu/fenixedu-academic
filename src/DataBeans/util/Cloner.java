@@ -355,9 +355,6 @@ public abstract class Cloner {
 	public static InfoDegree copyIDegree2InfoDegree(ICurso degree) {
 		InfoDegree infoDegree = new InfoDegree();
 		try {
-			System.out.println("nome " + degree.getNome());
-			System.out.println("sigla " + degree.getSigla());
-			System.out.println("curso " + degree.getTipoCurso());
 			BeanUtils.copyProperties(infoDegree, degree);
 			infoDegree.setDegreeType(degree.getTipoCurso().toString());
 		} catch (Exception e) {

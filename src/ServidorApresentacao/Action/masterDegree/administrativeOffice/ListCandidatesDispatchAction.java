@@ -46,6 +46,11 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			DynaActionForm createCandidateForm = (DynaActionForm) form;
 			String action = request.getParameter("action");
 			
+			createCandidateForm.set("degree", null);			
+			createCandidateForm.set("specialization", null);			
+			createCandidateForm.set("candidateSituation", null);			
+			createCandidateForm.set("candidateNumber", null);			
+			
 			if (action.equals("visualize")) {
 				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");

@@ -51,7 +51,11 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			DynaActionForm createCandidateForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			
-			
+			createCandidateForm.set("specialization", null);
+			createCandidateForm.set("degree", null);
+			createCandidateForm.set("name", null);
+			createCandidateForm.set("identificationDocumentNumber", null);
+			createCandidateForm.set("identificationDocumentType", null);
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			

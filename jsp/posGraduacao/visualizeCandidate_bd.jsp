@@ -202,6 +202,37 @@
           <tr></tr>      
           <tr></tr>
           <tr></tr>      
+
+   	      <!-- Informacao de Licenciatura -->
+          <tr>
+            <td><h2><bean:message key="label.candidate.majorDegreeInfo" /><h2></td>
+          </tr>
+          <!-- Licenciatura -->
+          <tr>
+            <td><bean:message key="label.candidate.majorDegree" /></td>
+            <td><bean:write name="masterDegreeCandidate" property="majorDegree"/></td>
+          </tr>
+          <!-- Ano de Licenciatura -->
+          <tr>
+            <td><bean:message key="label.candidate.majorDegreeYear" /></td>
+            <td><bean:write name="masterDegreeCandidate" property="majorDegreeYear"/></td>
+          </tr>
+          <!-- Escola de Licenciatura -->
+          <tr>
+            <td><bean:message key="label.candidate.majorDegreeSchool" /></td>
+            <td><bean:write name="masterDegreeCandidate" property="majorDegreeSchool"/></td>
+          </tr>
+          <!-- Media -->
+          <tr>
+            <td><bean:message key="label.candidate.average" /></td>
+            <td><bean:write name="masterDegreeCandidate" property="average"/> <bean:message key="label.candidate.values"/></td>
+          </tr>
+
+          <tr></tr>
+          <tr></tr>      
+          <tr></tr>
+          <tr></tr>      
+
           <tr>
             <td><h2><bean:message key="label.masterDegree.administrativeOffice.situationHistory" /><h2></td>
           </tr>

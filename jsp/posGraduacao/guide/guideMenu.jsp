@@ -16,7 +16,7 @@
 	<br>
   
   	<bean:message key="label.masterDegree.administrativeOffice.guide" /><br>
-        &nbsp;&nbsp;- <html:link page="/createGuideDispatchAction.do?page=0&method=prepare"><bean:message key="link.masterDegree.administrativeOffice.createGuide" /></html:link><br>
+        &nbsp;&nbsp;- <html:link page="/createGuideDispatchAction.do?method=prepare&page=0"><bean:message key="link.masterDegree.administrativeOffice.createGuide" /></html:link><br>
         &nbsp;&nbsp;- <bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /><br>
         &nbsp;&nbsp;- <bean:message key="link.masterDegree.administrativeOffice.editGuide" /><br>
 	<br>

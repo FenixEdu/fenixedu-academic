@@ -58,15 +58,25 @@ public class CreateGuideDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
+			DynaActionForm createGuideForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
-			
+
+			// Clean The Form
+			createGuideForm.set("degree", null);
+			createGuideForm.set("number", null);
+			createGuideForm.set("requester", null);
+			createGuideForm.set("graduationType", null);
+			createGuideForm.set("contributorNumber", null);
+			createGuideForm.set("contributorName", null);
+			createGuideForm.set("contributorAddress", null);
+			createGuideForm.set("contributorList", null);			
+		
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Create the Degree Type List
 			ArrayList specializations = Specialization.toArrayList();
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
-			
+
 			// Get the Degree List
 			
 			ArrayList degreeList = null; 			
@@ -77,15 +87,14 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			}
 
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
-						
-						
+
 			List result = null; 			
 			try {
 				result = (List) serviceManager.executar(userView, "ReadAllContributors", null);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
-			
+
 			ArrayList contributorList = new ArrayList();
 			Iterator iterator = result.iterator();
 			while (iterator.hasNext()) {
