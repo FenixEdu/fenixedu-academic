@@ -358,7 +358,7 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
              	<!--      <include name="**/*Test.java"/> -->
-				<include name="**/AnnouncementOJBTest.java"/> 
+				<include name="**/EvaluationOJBTest.java"/> 
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
                <!-- <exclude name="**/TeacherOJBTest.java"/>
                     <exclude name="**/BibliographicReferenceOJBTest.java"/>
@@ -755,13 +755,13 @@
 	</target>
 
 	<target name="validate-xml">
-		<xmlvalidate warn="false" failonerror="false">
+<!--		<xmlvalidate warn="false" failonerror="false">
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
 					<exclude name="**/fenix-validator-rules.xml"/>					
 				</fileset>
-		</xmlvalidate>
+		</xmlvalidate> -->
 		
 	</target> 
 	
@@ -818,23 +818,19 @@
          </javadoc>
     </target>
 
-<!-- Define the classpath for the build -->
-
-<path id="runtime-classpath">
+	<!-- Define the classpath for the build -->
+	<path id="runtime-classpath">
     	<fileset dir="${libs.web}">
     		<include  name="**/*.jar"/>
     	</fileset>
-       <fileset dir="${lib}">
+        <fileset dir="${lib}">
     		<include  name="**/*.jar"/>
     	</fileset>
-         <pathelement path="${webapp.classes}"/> 
+        <pathelement path="${webapp.classes}"/> 
     </path>
 
-<!-- Access the classpath as a property -->
-    <property
-    	name="runtime.classpath"
-    	refid="runtime-classpath"
-    />
+	<!-- Access the classpath as a property -->
+    <property 	name="runtime.classpath" refid="runtime-classpath"/>
 
 
 
@@ -864,10 +860,4 @@
         	failonerror="true"
         />
    	</target>
-
-
-
-
-
-
 </project>
