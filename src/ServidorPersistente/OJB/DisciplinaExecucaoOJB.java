@@ -355,5 +355,13 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
         return (IDisciplinaExecucao) queryObject(DisciplinaExecucao.class, criteria);
 
     }
+	public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
+		criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
+		
+		return (List) queryList(DisciplinaExecucao.class, criteria);
+
+	}
 }
