@@ -172,6 +172,8 @@ public interface ISuportePersistente {
 	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
 	
 	public IPersistentExternalPerson getIPersistentExternalPerson();
+	
+	public IPersistentCoordinator getIPersistentCoordinator();
 }
 
 
