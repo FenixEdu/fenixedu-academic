@@ -18,17 +18,12 @@ import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.ITest;
-import Dominio.ITestQuestion;
 import Dominio.Test;
-import Dominio.TestQuestion;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentMetadata;
-import ServidorPersistente.IPersistentTest;
-import ServidorPersistente.IPersistentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -40,7 +35,6 @@ public class ReadMetadatasByTest implements IServico
 {
 
 	private static ReadMetadatasByTest service = new ReadMetadatasByTest();
-	private String path = new String();
 	public static ReadMetadatasByTest getService()
 	{
 		return service;
@@ -54,83 +48,48 @@ public class ReadMetadatasByTest implements IServico
 		Integer executionCourseId,
 		Integer testId,
 		String order,
-		String asc,
-		String path)
+		String asc)
 		throws FenixServiceException
 	{
-		this.path = path.replace('\\', '/');
+		List result = new ArrayList();
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-			executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+
+			IExecutionCourse executionCourse =
+				(IExecutionCourse) persistentExecutionCourse.readByOId(
+					new ExecutionCourse(executionCourseId),
+					false);
 			if (executionCourse == null)
+				throw new InvalidArgumentsServiceException();
+
+			ITest test =
+				(ITest) persistentSuport.getIPersistentTest().readByOId(new Test(testId), false);
+
+			if (test == null)
 			{
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-			List metadatas = new ArrayList();
-			if (order != null
-				&& (order.equals("description")
+
+			if (order == null
+				|| !(order.equals("description")
 					|| order.equals("mainSubject")
 					|| order.equals("difficulty")
 					|| order.equals("numberOfMembers")))
-				metadatas =
-					persistentMetadata.readByExecutionCourseAndVisibilityAndOrder(
-						executionCourse,
-						order,
-						asc);
-			else
-				metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
+				order = new String("description");
 
-			List result = new ArrayList();
-			IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-
-			List questions = new ArrayList();
-			if (testId != null)
-			{
-				ITest test = new Test(testId);
-				test = (ITest) persistentTest.readByOId(test, false);
-
-				if (test == null)
-				{
-					throw new InvalidArgumentsServiceException();
-				}
-
-				IPersistentTestQuestion persistentTestQuestion =
-					persistentSuport.getIPersistentTestQuestion();
-				questions = persistentTestQuestion.readByTest(test);
-			}
-
-			Iterator iter = metadatas.iterator();
+			List metadatasList =
+				persistentSuport.getIPersistentMetadata().readByExecutionCourseAndNotTest(
+					executionCourse,
+					test,
+					order,
+					asc);
+			Iterator iter = metadatasList.iterator();
 			while (iter.hasNext())
-			{
-				IMetadata metadata = (IMetadata) iter.next();
-				if (metadata.getVisibility().equals(new Boolean("true")))
-				{
+				result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter.next()));
 
-					boolean contains = false;
-
-					Iterator iterQuestion = questions.iterator();
-					while (iterQuestion.hasNext())
-					{
-						ITestQuestion testQuestion = (TestQuestion) iterQuestion.next();
-						if (testQuestion
-							.getQuestion()
-							.getKeyMetadata()
-							.equals(metadata.getIdInternal()))
-						{
-							contains = true;
-							break;
-						}
-					}
-					if (contains == false)
-						result.add(Cloner.copyIMetadata2InfoMetadata(metadata));
-				}
-			}
 			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
 			bodyComponent.setInfoMetadatas(result);
 			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));

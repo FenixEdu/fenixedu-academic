@@ -21,9 +21,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.util.Base64;
 
-import DataBeans.InfoSiteDistributedTests;
+import DataBeans.InfoSiteStudentDistributedTests;
 import DataBeans.InfoStudentTestQuestion;
-
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -35,83 +34,64 @@ import Util.CorrectionAvailability;
 /**
  * @author Susana Fernandes
  */
-public class StudentTestsAction extends FenixDispatchAction {
+public class StudentTestsAction extends FenixDispatchAction
+{
+
+	public ActionForward viewStudentExecutionCoursesWithTests(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		HttpSession session = request.getSession();
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		List studentExecutionCoursesList = null;
+		try
+		{
+			studentExecutionCoursesList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionCoursesByStudentTests",
+					new Object[] { userView.getUtilizador()});
+		}
+		catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		request.setAttribute("studentExecutionCoursesList", studentExecutionCoursesList);
+		return mapping.findForward("viewStudentExecutionCoursesWithTests");
+	}
 
 	public ActionForward testsFirstPage(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
-		request.setAttribute("objectCode", request.getParameter("objectCode"));
+		throws FenixActionException
+	{
+
+		HttpSession session = request.getSession();
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		InfoSiteStudentDistributedTests infoSiteStudentDistributedTests = null;
+		String objectCode = request.getParameter("objectCode");
+		try
+		{
+			infoSiteStudentDistributedTests =
+				(InfoSiteStudentDistributedTests) ServiceUtils.executeService(
+					userView,
+					"ReadStudentTests",
+					new Object[] { userView.getUtilizador(), new Integer(objectCode)});
+		}
+		catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		request.setAttribute("infoSiteStudentDistributedTests", infoSiteStudentDistributedTests);
+		request.setAttribute("objectCode", objectCode);
 		return mapping.findForward("testsFirstPage");
-	}
-
-	public ActionForward viewDoneTests(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-
-		HttpSession session = request.getSession();
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-		InfoSiteDistributedTests infoSiteDistributedTests = null;
-		String objectCode = request.getParameter("objectCode");
-
-		try {
-			infoSiteDistributedTests =
-				(InfoSiteDistributedTests) ServiceUtils.executeService(
-					userView,
-					"ReadStudentDoneTests",
-					new Object[] {
-						userView.getUtilizador(),
-						new Integer(objectCode)});
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute(
-			"infoSiteDistributedTests",
-			infoSiteDistributedTests);
-
-		request.setAttribute("objectCode", objectCode);
-		return mapping.findForward("viewDoneTests");
-	}
-
-	public ActionForward viewTestsToDo(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-
-		HttpSession session = request.getSession();
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-		InfoSiteDistributedTests infoSiteDistributedTests = null;
-		String objectCode = request.getParameter("objectCode");
-
-		try {
-			infoSiteDistributedTests =
-				(InfoSiteDistributedTests) ServiceUtils.executeService(
-					userView,
-					"ReadStudentTestsToDo",
-					new Object[] {
-						userView.getUtilizador(),
-						new Integer(objectCode)});
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute(
-			"infoSiteDistributedTests",
-			infoSiteDistributedTests);
-
-		request.setAttribute("objectCode", objectCode);
-
-		return mapping.findForward("viewTestsToDo");
 	}
 
 	public ActionForward prepareToDoTest(
@@ -119,16 +99,17 @@ public class StudentTestsAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException
+	{
 
 		HttpSession session = request.getSession();
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String testCode = request.getParameter("testCode");
 		List infoStudentTestQuestionList = null;
 		String path = getServlet().getServletContext().getRealPath("/");
-		try {
+		try
+		{
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
 					userView,
@@ -138,14 +119,14 @@ public class StudentTestsAction extends FenixDispatchAction {
 						new Integer(testCode),
 						new Boolean(true),
 						path });
-		} catch (FenixServiceException e) {
+		}
+		catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
 		Collections.sort(infoStudentTestQuestionList);
-		request.setAttribute(
-			"infoStudentTestQuestionList",
-			infoStudentTestQuestionList);
+		request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
 		int numQuestions =
 			((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
 				.getDistributedTest()
@@ -154,11 +135,10 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 		Iterator it = infoStudentTestQuestionList.iterator();
 		String[] option = new String[numQuestions];
-		while (it.hasNext()) {
-			InfoStudentTestQuestion infoStudentTestQuestion =
-				(InfoStudentTestQuestion) it.next();
-			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
-				- 1] =
+		while (it.hasNext())
+		{
+			InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) it.next();
+			option[infoStudentTestQuestion.getTestQuestionOrder().intValue() - 1] =
 				infoStudentTestQuestion.getResponse().toString();
 		}
 
@@ -172,44 +152,56 @@ public class StudentTestsAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException
+	{
 
 		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String testCode = request.getParameter("testCode");
-		String exerciceIdString = request.getParameter("exerciceCode");
+		String exerciseIdString = request.getParameter("exerciseCode");
 		String imgCodeString = request.getParameter("imgCode");
 		String imgTypeString = request.getParameter("imgType");
 		String path = getServlet().getServletContext().getRealPath("/");
 		String img = null;
-		try {
+		try
+		{
 			Object[] args =
 				{
 					userView.getUtilizador(),
 					new Integer(testCode),
-					new Integer(exerciceIdString),
+					new Integer(exerciseIdString),
 					new Integer(imgCodeString),
 					path };
-			img =
-				(String) ServiceUtils.executeService(
-					userView,
-					"ReadStudentTestQuestionImage",
-					args);
-		} catch (FenixServiceException e) {
+			img = (String) ServiceUtils.executeService(userView, "ReadStudentTestQuestionImage", args);
+		}
+		catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 		byte[] imageData = Base64.decode(img.getBytes());
-		try {
+		try
+		{
 			response.reset();
 			response.setContentType(imgTypeString);
 			response.setContentLength(imageData.length);
 			response.setBufferSize(imageData.length);
+			String imageName =
+				new String(
+					"image"
+						+ exerciseIdString
+						+ imgCodeString
+						+ "."
+						+ imgTypeString.substring(
+							imgTypeString.lastIndexOf("/") + 1,
+							imgTypeString.length()));
+			response.setHeader("Content-disposition", "attachment; filename=" + imageName);
 			OutputStream os = response.getOutputStream();
 			os.write(imageData, 0, imageData.length);
 			response.flushBuffer();
-		} catch (java.io.IOException e) {
+		}
+		catch (java.io.IOException e)
+		{
 			throw new FenixActionException(e);
 		}
 		return null;
@@ -220,11 +212,11 @@ public class StudentTestsAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException
+	{
 
 		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String[] options = (String[]) ((DynaActionForm) form).get("option");
 		String testCode = request.getParameter("testCode");
@@ -232,16 +224,13 @@ public class StudentTestsAction extends FenixDispatchAction {
 		String path = getServlet().getServletContext().getRealPath("/");
 		List infoStudentTestQuestionList;
 		Boolean sent = new Boolean(false);
-		try {
+		try
+		{
 			sent =
 				(Boolean) ServiceUtils.executeService(
 					userView,
 					"InsertStudentTestResponses",
-					new Object[] {
-						userView.getUtilizador(),
-						new Integer(testCode),
-						options,
-						path });
+					new Object[] { userView.getUtilizador(), new Integer(testCode), options, path });
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
 					userView,
@@ -251,7 +240,9 @@ public class StudentTestsAction extends FenixDispatchAction {
 						new Integer(testCode),
 						new Boolean(false),
 						path });
-		} catch (FenixServiceException e) {
+		}
+		catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 		Collections.sort(infoStudentTestQuestionList);
@@ -259,7 +250,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 		request.setAttribute("testCode", testCode);
 		request.setAttribute("sent", sent);
 
-		if (sent.booleanValue()) {
+		if (sent.booleanValue())
+		{
 			Iterator it = infoStudentTestQuestionList.iterator();
 			int numQuestions =
 				((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
@@ -274,65 +266,50 @@ public class StudentTestsAction extends FenixDispatchAction {
 			Boolean studentFeedback = new Boolean(false);
 			CorrectionAvailability correction = null;
 
-			while (it.hasNext()) {
-				InfoStudentTestQuestion infoStudentTestQuestion =
-					(InfoStudentTestQuestion) it.next();
-				option[infoStudentTestQuestion
-					.getTestQuestionOrder()
-					.intValue()
-					- 1] =
+			while (it.hasNext())
+			{
+				InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) it.next();
+				option[infoStudentTestQuestion.getTestQuestionOrder().intValue() - 1] =
 					infoStudentTestQuestion.getResponse().toString();
-				correction =
-					infoStudentTestQuestion
-						.getDistributedTest()
-						.getCorrectionAvailability();
-				studentFeedback =
-					infoStudentTestQuestion
-						.getDistributedTest()
-						.getStudentFeedback();
-				if (studentFeedback.booleanValue()) {
+				correction = infoStudentTestQuestion.getDistributedTest().getCorrectionAvailability();
+				studentFeedback = infoStudentTestQuestion.getDistributedTest().getStudentFeedback();
+				if (studentFeedback.booleanValue())
+				{
 					numberOfQuestions =
-						infoStudentTestQuestion
-							.getDistributedTest()
-							.getNumberOfQuestions();
-					studentFeedback =
-						infoStudentTestQuestion
-							.getDistributedTest()
-							.getStudentFeedback();
-					if (infoStudentTestQuestion.getResponse().intValue()
-						!= 0) {
+						infoStudentTestQuestion.getDistributedTest().getNumberOfQuestions();
+					studentFeedback = infoStudentTestQuestion.getDistributedTest().getStudentFeedback();
+					if (infoStudentTestQuestion.getResponse().intValue() != 0)
+					{
 						responseNumber++;
-						if (infoStudentTestQuestion
-							.getQuestion()
-							.getCorrectResponse()
-							.contains(infoStudentTestQuestion.getResponse()))
-							correctResponseNumber++;
-						else
-							incorrectResponseNumber++;
+						if (infoStudentTestQuestion.getQuestion().getCorrectResponse().size() != 0)
+						{
+
+							if (infoStudentTestQuestion
+								.getQuestion()
+								.getCorrectResponse()
+								.contains(infoStudentTestQuestion.getResponse()))
+								correctResponseNumber++;
+							else
+								incorrectResponseNumber++;
+						}
 					}
-				} else
+				}
+				else
 					break;
 			}
 			((DynaActionForm) form).set("option", option);
 			request.setAttribute("studentFeedback", studentFeedback);
-			if (studentFeedback.booleanValue()) {
-				request.setAttribute(
-					"correctResponseNumber",
-					new Integer(correctResponseNumber));
-				request.setAttribute(
-					"incorrectResponseNumber",
-					new Integer(incorrectResponseNumber));
-				request.setAttribute(
-					"responseNumber",
-					new Integer(responseNumber));
+			if (studentFeedback.booleanValue())
+			{
+				request.setAttribute("correctResponseNumber", new Integer(correctResponseNumber));
+				request.setAttribute("incorrectResponseNumber", new Integer(incorrectResponseNumber));
+				request.setAttribute("responseNumber", new Integer(responseNumber));
 				request.setAttribute(
 					"notResponseNumber",
 					new Integer(numberOfQuestions.intValue() - responseNumber));
 			}
 			if (correction.getTypeString().equals("Sempre"))
-				request.setAttribute(
-					"infoStudentTestQuestionList",
-					infoStudentTestQuestionList);
+				request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
 		}
 
 		return mapping.findForward("studentFeedback");
@@ -343,16 +320,17 @@ public class StudentTestsAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException
+	{
 
 		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String testCode = request.getParameter("testCode");
 		String path = getServlet().getServletContext().getRealPath("/");
 		List infoStudentTestQuestionList = null;
-		try {
+		try
+		{
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
 					userView,
@@ -362,14 +340,14 @@ public class StudentTestsAction extends FenixDispatchAction {
 						new Integer(testCode),
 						new Boolean(false),
 						path });
-		} catch (FenixServiceException e) {
+		}
+		catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
 		Collections.sort(infoStudentTestQuestionList);
-		request.setAttribute(
-			"infoStudentTestQuestionList",
-			infoStudentTestQuestionList);
+		request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
 
 		int numQuestions =
 			((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
@@ -380,19 +358,16 @@ public class StudentTestsAction extends FenixDispatchAction {
 		Iterator it = infoStudentTestQuestionList.iterator();
 		String[] option = new String[numQuestions];
 		Double classification = new Double(0);
-		while (it.hasNext()) {
-			InfoStudentTestQuestion infoStudentTestQuestion =
-				(InfoStudentTestQuestion) it.next();
-			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
-				- 1] =
+		while (it.hasNext())
+		{
+			InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) it.next();
+			option[infoStudentTestQuestion.getTestQuestionOrder().intValue() - 1] =
 				infoStudentTestQuestion.getResponse().toString();
 			if (infoStudentTestQuestion.getTestQuestionMark() != null)
 				classification =
 					new Double(
 						classification.doubleValue()
-							+ infoStudentTestQuestion
-								.getTestQuestionMark()
-								.doubleValue());
+							+ infoStudentTestQuestion.getTestQuestionMark().doubleValue());
 		}
 		DecimalFormat df = new DecimalFormat("#0.##");
 		if (classification.doubleValue() < 0)
@@ -402,7 +377,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 		return mapping.findForward("showTestCorrection");
 	}
 
-	private String getDate() {
+	private String getDate()
+	{
 		String result = new String();
 		Calendar calendar = Calendar.getInstance();
 		result += calendar.get(Calendar.DAY_OF_MONTH);

@@ -13,14 +13,18 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.IStudentTestQuestion;
+import Dominio.Metadata;
 import Dominio.Question;
 import Dominio.StudentTestQuestion;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TestQuestionChangesType;
 import Util.TestQuestionStudentsChangesType;
 import framework.factory.ServiceManagerServiceFactory;
@@ -40,11 +44,6 @@ public class ChangeStudentTestQuestionTest extends ServiceNeedsAuthenticationTes
 	protected String getDataSetFilePath()
 	{
 		return "etc/datasets/servicos/teacher/testEditDistributedTestDataSet.xml";
-	}
-
-	protected String getExpectedDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testExpectedChangeStudentTestQuestionTestDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested()
@@ -76,15 +75,15 @@ public class ChangeStudentTestQuestionTest extends ServiceNeedsAuthenticationTes
 	protected Object[] getAuthorizeArguments()
 	{
 		Integer executionCourseId = new Integer(34882);
-		Integer distributedTestId = new Integer(207);
-		Integer oldQuestionId = new Integer(9343);
+		Integer distributedTestId = new Integer(1);
+		Integer oldQuestionId = new Integer(361);
 		Integer newMetadataId = null;
-		Integer studentId = new Integer(3701);
+		Integer studentId = new Integer(7676);
 		TestQuestionChangesType testQuestionChangesType = new TestQuestionChangesType(1);
-		Boolean delete = new Boolean(true);
+		Boolean delete = new Boolean(false);
 		TestQuestionStudentsChangesType testQuestionStudentsChangesType =
 			new TestQuestionStudentsChangesType(1);
-		String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
+		String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
 
 		Object[] args =
 			{
@@ -112,22 +111,47 @@ public class ChangeStudentTestQuestionTest extends ServiceNeedsAuthenticationTes
 		{
 			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
 			Object[] args = getAuthorizeArguments();
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			Criteria criteria = new Criteria();
+			Criteria criteria = null;
+			Query queryCriteria = null;
+			IMetadata metadata = null;
+			if (args[3] == null)
+			{
+				criteria = new Criteria();
+				criteria.addEqualTo("idInternal", args[2]);
+				queryCriteria = new QueryByCriteria(Question.class, criteria);
+				metadata = ((IQuestion) broker.getObjectByQuery(queryCriteria)).getMetadata();
+			}
+			else
+			{
+				metadata = new Metadata((Integer) args[3]);
+				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+				metadata = (IMetadata) sp.getIPersistentMetadata().readByOId(metadata, false);
+			}
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+
+			criteria = new Criteria();
 			criteria.addEqualTo("keyDistributedTest", args[1]);
-			Query queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
+			criteria.addEqualTo("keyStudent", args[4]);
+			queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
 			List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
 			broker.close();
 
-			assertEquals(studentTestQuestionList.size(), 1);
+			assertEquals(studentTestQuestionList.size(), 6);
 			Iterator it = studentTestQuestionList.iterator();
+			boolean exist = false;
 			while (it.hasNext())
 			{
 				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
-				assertEquals(studentTestQuestion.getKeyStudent(), args[4]);
-				assertEquals(studentTestQuestion.getKeyQuestion(), new Integer(9342));
+				if (studentTestQuestion
+					.getQuestion()
+					.getMetadata()
+					.getIdInternal()
+					.equals(metadata.getIdInternal()))
+					exist = true;
 			}
+			if (exist == false)
+				fail("ChangeStudentTestQuestionTest " + "Não tem pergunta nova");
 			if (((Boolean) args[6]).booleanValue() == true)
 			{
 				broker = PersistenceBrokerFactory.defaultPersistenceBroker();

@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoMetadata;
+
 import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
@@ -21,8 +21,8 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentMetadata;
+
+
 import ServidorPersistente.IPersistentQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -53,27 +53,28 @@ public class ReadQuestion implements IServico
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSuport.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
 			executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+				(IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
+					executionCourse,
+					false);
 			if (executionCourse == null)
 			{
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-			IMetadata metadata = new Metadata(metadataId);
-			metadata = (IMetadata) persistentMetadata.readByOId(metadata, false);
-			if (metadata == null)
-			{
-				throw new InvalidArgumentsServiceException();
-			}
-			InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
+
 			IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 			IQuestion question = null;
-			if (questionId.equals(new Integer(-1)))
+			if (questionId == null || questionId.equals(new Integer(-1)))
 			{
+				if (metadataId == null)
+					throw new InvalidArgumentsServiceException();
+				IMetadata metadata = new Metadata(metadataId);
+				metadata =
+					(IMetadata) persistentSuport.getIPersistentMetadata().readByOId(metadata, false);
+				if (metadata == null)
+					throw new InvalidArgumentsServiceException();
+
 				question =
 					(IQuestion) persistentSuport.getIPersistentQuestion().readExampleQuestionByMetadata(
 						metadata);
@@ -88,7 +89,6 @@ public class ReadQuestion implements IServico
 				throw new InvalidArgumentsServiceException();
 			}
 			InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
-			infoQuestion.setInfoMetadata(infoMetadata);
 			ParseQuestion parse = new ParseQuestion();
 			try
 			{

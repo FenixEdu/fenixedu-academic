@@ -33,4 +33,4 @@ public interface ISalaPersistente extends IPersistentObject
     public List readAvailableRooms(IExam exam) throws ExcepcaoPersistencia;
     public List readForRoomReservation() throws ExcepcaoPersistencia;
     public List readByPavillion(String string) throws ExcepcaoPersistencia;
-}
+	public List readAllBuildings() throws ExcepcaoPersistencia;}

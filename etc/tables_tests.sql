@@ -10,7 +10,7 @@ CREATE TABLE METADATA (
   METADATA_FILE blob not null,
   DESCRIPTION text,
   DIFFICULTY text,
-  LEARNINGTIME varchar(10),
+  LEARNINGTIME time,
   LEVEL text,
   MAIN_SUBJECT text,
   SECONDARY_SUBJECT text,
@@ -50,7 +50,7 @@ CREATE TABLE TESTS (
   NUMBER_OF_QUESTIONS int(2) not null default '0',
   CREATION_DATE timestamp not null default 'NOW()',
   LAST_MODIFICATION_DATE timestamp not null default 'NOW()',
-  KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
+  KEY_TEST_SCOPE int(11) unsigned not null default '0',
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;
 
@@ -88,7 +88,7 @@ CREATE TABLE DISTRIBUTED_TESTS(
   CORRECTION_AVAILABILITY int(1) not null default '0',
   STUDENT_FEEDBACK int(1) not null default '0',
   NUMBER_OF_QUESTIONS int(2) not null default '0',
-  KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
+  KEY_TEST_SCOPE int(11) unsigned not null default '0',
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;
 
@@ -124,4 +124,15 @@ CREATE TABLE STUDENT_TEST_LOG(
   EVENT text,
   PRIMARY KEY  (ID_INTERNAL),
   index INDEX1 (KEY_STUDENT, KEY_DISTRIBUTED_TEST, DATE)
+) TYPE=InnoDB;
+
+#-------------------------------
+# Table structure for TEST_SCOPE
+#-------------------------------
+drop table if exists TEST_SCOPE;
+CREATE TABLE TEST_SCOPE(
+  ID_INTERNAL int(11) unsigned not null auto_increment,
+  CLASS_NAME varchar(250) NOT NULL,
+  KEY_CLASS int(11) unsigned,
+  PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;

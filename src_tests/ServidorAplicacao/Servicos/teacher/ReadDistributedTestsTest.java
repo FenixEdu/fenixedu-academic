@@ -4,116 +4,150 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.ExecutionCourseSiteView;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+
 import DataBeans.InfoDistributedTest;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTests;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
+import DataBeans.util.CopyUtils;
 import Dominio.DistributedTest;
-import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentDistributedTest;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadDistributedTestsTest extends TestCaseReadServices
+public class ReadDistributedTestsTest extends ServiceNeedsAuthenticationTestCase
 {
 
-    public ReadDistributedTestsTest(String testName)
-    {
-        super(testName);
+	public ReadDistributedTestsTest(String testName)
+	{
+		super(testName);
+	}
 
-    }
+	protected String getDataSetFilePath()
+	{
+		return "etc/datasets/servicos/teacher/testReadDistributedTestsDataSet.xml";
+	}
 
-    protected String getNameOfServiceToBeTested()
-    {
-        return "ReadDistributedTests";
-    }
+	protected String getNameOfServiceToBeTested()
+	{
+		return "ReadDistributedTests";
+	}
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
-        return null;
-    }
+	protected String[] getAuthenticatedAndAuthorizedUser()
+	{
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
-        Object[] args = { new Integer(26)};
-        return args;
-    }
+		String[] args = { "D2543", "pass", getApplication()};
+		return args;
+	}
 
-    protected int getNumberOfItemsToRetrieve()
-    {
-        return 0;
-    }
+	protected String[] getAuthenticatedAndUnauthorizedUser()
+	{
 
-    protected Object getObjectToCompare()
-    {
-        InfoSiteDistributedTests infoSiteDistributedTests = new InfoSiteDistributedTests();
-        InfoExecutionCourse infoExecutionCourse = null;
-        List infoDistributedTestList = new ArrayList();
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            sp.iniciarTransaccao();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-            assertNotNull("executionCourse null", executionCourse);
-            IPersistentDistributedTest persistentDistributedTest = sp.getIPersistentDistributedTest();
-            IDistributedTest distributedTest23 = new DistributedTest(new Integer(23));
-            distributedTest23 =
-                (IDistributedTest) persistentDistributedTest.readByOId(distributedTest23, false);
-            assertNotNull("distributedTest null", distributedTest23);
+		String[] args = { "L48283", "pass", getApplication()};
+		return args;
+	}
 
-            IDistributedTest distributedTest24 = new DistributedTest(new Integer(24));
-            distributedTest24 =
-                (IDistributedTest) persistentDistributedTest.readByOId(distributedTest24, false);
-            assertNotNull("distributedTest null", distributedTest24);
+	protected String[] getNotAuthenticatedUser()
+	{
 
-            IDistributedTest distributedTest25 = new DistributedTest(new Integer(25));
-            distributedTest25 =
-                (IDistributedTest) persistentDistributedTest.readByOId(distributedTest25, false);
-            assertNotNull("distributedTest null", distributedTest25);
-            sp.confirmarTransaccao();
+		String[] args = { "L48283", "pass", getApplication()};
+		return args;
+	}
 
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-            InfoDistributedTest infoDistributedTest23 =
-                Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest23);
-            InfoDistributedTest infoDistributedTest24 =
-                Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest24);
-            InfoDistributedTest infoDistributedTest25 =
-                Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest25);
+	protected Object[] getAuthorizeArguments()
+	{
+		//Object[] args = { new Integer(36349)};
+		Object[] args = { new Integer(34882)};
 
-            infoDistributedTestList.add(infoDistributedTest23);
-            infoDistributedTestList.add(infoDistributedTest24);
-            infoDistributedTestList.add(infoDistributedTest25);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            fail("exception: ExcepcaoPersistencia ");
-        }
+		return args;
+	}
 
-        infoSiteDistributedTests.setExecutionCourse(infoExecutionCourse);
-        infoSiteDistributedTests.setInfoDistributedTests(infoDistributedTestList);
-        SiteView siteView =
-            new ExecutionCourseSiteView(infoSiteDistributedTests, infoSiteDistributedTests);
-        return siteView;
-    }
+	protected String getApplication()
+	{
+		return Autenticacao.EXTRANET;
+	}
 
-    protected boolean needsAuthorization()
-    {
-        return true;
-    }
+	public void testSuccessfull()
+	{
+		try
+		{
+			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+			Object[] args = getAuthorizeArguments();
+
+			SiteView siteView =
+				(SiteView) ServiceManagerServiceFactory.executeService(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+
+			Criteria criteria = new Criteria();
+
+			criteria = new Criteria();
+			//criteria.addEqualTo("keyTestScope", new Integer(2));
+			criteria.addEqualTo("keyTestScope", new Integer(1));
+			Query queryCriteria = new QueryByCriteria(DistributedTest.class, criteria);
+			List distributedTestList = (List) broker.getCollectionByQuery(queryCriteria);
+			broker.close();
+
+			//assertEquals(distributedTestList.size(), 1);
+			assertEquals(distributedTestList.size(), 19);
+
+			InfoSiteDistributedTests infoSiteDistributedTests =
+				(InfoSiteDistributedTests) siteView.getComponent();
+
+			List serviceInfoDistributedTestList = infoSiteDistributedTests.getInfoDistributedTests();
+			InfoExecutionCourse infoExecutionCourse = infoSiteDistributedTests.getExecutionCourse();
+			assertEquals(infoExecutionCourse.getIdInternal(), args[0]);
+			int i = 0;
+			Iterator it = serviceInfoDistributedTestList.iterator();
+			while (it.hasNext())
+			{
+				InfoDistributedTest infoServiceDistributedTest = (InfoDistributedTest) it.next();
+				InfoDistributedTest infoDistributedTest =
+					copyIDistributedTest2InfoDistributedTest(
+						(IDistributedTest) distributedTestList.get(i));
+				assertEquals(infoServiceDistributedTest, infoDistributedTest);
+				i++;
+			}
+
+		}
+		catch (FenixServiceException ex)
+		{
+			fail("ReadDistributedTestsTest " + ex);
+		}
+		catch (Exception ex)
+		{
+			fail("ReadDistributedTestsTest " + ex);
+		}
+	}
+
+	private static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
+	{
+		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
+		try
+		{
+			CopyUtils.copyProperties(infoDistributedTest, distributedTest);
+		}
+		catch (Exception e)
+		{
+			fail("ReadDistributedTestsTest " + "cloner");
+		}
+		return infoDistributedTest;
+	}
 }

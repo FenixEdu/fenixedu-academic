@@ -52,6 +52,27 @@
 			<%-- tests --%>
 			<%-- repeat logic:equal and change evaluation type --%>
 			
+			<%-- onlineTests --%>
+			<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.ONLINE_TEST_STRING %>">
+			<br />
+				<table width="90%" class="infotable"> 	
+				<table  width="90%" class="infotable"> 	
+					<tr>
+						<td class="bottomborder" colspan="3">
+							<%-- <b><bean:message key="label.finalEvaluation"/></b><br /> --%>
+							<bean:define id="distributedTest" name="evaluation" property="infoDistributedTest"/>
+							<b><bean:message key="lable.test"/>: </b><bean:write name="distributedTest" property="title"/>
+						</td>							
+					</tr>
+					<tr>
+						<td colspan="3">
+							<html:link page="<%= "/showMarksListOptions.do?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;evaluationCode=" +pageContext.findAttribute("evaluationCode") %>" >
+								<b><bean:message key="label.students.listMarks"/></b>
+							</html:link><br />
+						</td>
+					</tr> 
+				</table>
+			</logic:equal>
 			<%-- finalEvaluation --%>
 			<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">
 				<br />

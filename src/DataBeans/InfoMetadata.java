@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class InfoMetadata extends InfoObject
 
 	private String description;
 	private String difficulty;
-	private String learningTime;
+	private Calendar learningTime;
 	private String level;
 	private String mainSubject;
 	private String secondarySubject;
@@ -50,7 +51,7 @@ public class InfoMetadata extends InfoObject
 		return infoExecutionCourse;
 	}
 
-	public String getLearningTime()
+	public Calendar getLearningTime()
 	{
 		return learningTime;
 	}
@@ -85,11 +86,6 @@ public class InfoMetadata extends InfoObject
 		return visibility;
 	}
 
-	public List getVisibleQuestions()
-	{
-		return visibleQuestions;
-	}
-
 	public void setAuthor(String string)
 	{
 		author = string;
@@ -110,9 +106,9 @@ public class InfoMetadata extends InfoObject
 		infoExecutionCourse = course;
 	}
 
-	public void setLearningTime(String string)
+	public void setLearningTime(Calendar calendar)
 	{
-		learningTime = string;
+		learningTime = calendar;
 	}
 
 	public void setLevel(String string)
@@ -145,9 +141,18 @@ public class InfoMetadata extends InfoObject
 		visibility = boolean1;
 	}
 
-	public void setVisibleQuestions(List list)
+	public String getLearningTimeFormatted()
 	{
-		visibleQuestions = list;
+		String result = "";
+		Calendar date = getLearningTime();
+		if (date == null)
+			return result;
+		result += date.get(Calendar.HOUR_OF_DAY);
+		result += ":";
+		if (date.get(Calendar.MINUTE) < 10)
+			result += "0";
+		result += date.get(Calendar.MINUTE);
+		return result;
 	}
 
 	public boolean equals(Object obj)
@@ -156,24 +161,39 @@ public class InfoMetadata extends InfoObject
 		if (obj instanceof InfoMetadata)
 		{
 			InfoMetadata infoMetadata = (InfoMetadata) obj;
-			result = getIdInternal().equals(infoMetadata.getIdInternal());
 			result =
-				result
-					|| (getInfoExecutionCourse().equals(infoMetadata.getInfoExecutionCourse())
-						&& (getMetadataFile().equals(infoMetadata.getMetadataFile()))
-						&& (getDescription().equals(infoMetadata.getDescription()))
-						&& (getDifficulty().equals(infoMetadata.getDifficulty()))
-						&& (getLearningTime().equals(infoMetadata.getLearningTime()))
-						&& (getLevel().equals(infoMetadata.getLevel()))
-						&& (getMainSubject().equals(infoMetadata.getMainSubject()))
-						&& (getSecondarySubject().equals(infoMetadata.getSecondarySubject()))
-						&& (getAuthor().equals(infoMetadata.getAuthor()))
-						&& (getNumberOfMembers().equals(infoMetadata.getNumberOfMembers()))
-						&& (getVisibility().equals(infoMetadata.getVisibility()))
-						&& (getVisibleQuestions().containsAll(infoMetadata.getVisibleQuestions()))
-						&& (infoMetadata.getVisibleQuestions().containsAll(getVisibleQuestions())));
+				(getIdInternal().equals(infoMetadata.getIdInternal()))
+					&& (getInfoExecutionCourse().equals(infoMetadata.getInfoExecutionCourse()))
+					&& (equals(getMetadataFile(), infoMetadata.getMetadataFile()))
+					&& (equals(getDescription(), infoMetadata.getDescription()))
+					&& (equals(getDifficulty(), infoMetadata.getDifficulty()))
+					&& (getLearningTime().equals(infoMetadata.getLearningTime()))
+					&& (equals(getLevel(), infoMetadata.getLevel()))
+					&& (equals(getMainSubject(), infoMetadata.getMainSubject()))
+					&& (equals(getSecondarySubject(), infoMetadata.getSecondarySubject()))
+					&& (equals(getAuthor(), infoMetadata.getAuthor()))
+					&& (getNumberOfMembers().equals(infoMetadata.getNumberOfMembers()))
+					&& (getVisibility().equals(infoMetadata.getVisibility()))
+					&& (getVisibleQuestions().equals(infoMetadata.getVisibleQuestions()));
 		}
 		return result;
+	}
+
+	public List getVisibleQuestions()
+	{
+		return visibleQuestions;
+	}
+
+	public void setVisibleQuestions(List list)
+	{
+		visibleQuestions = list;
+	}
+
+	private boolean equals(String str1, String str2)
+	{
+		if (str1 == null ? str2 == null : str1.equals(str2))
+			return true;
+		return false;
 	}
 
 }

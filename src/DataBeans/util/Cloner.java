@@ -68,7 +68,9 @@ import DataBeans.InfoMasterDegreeThesis;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoObject;
+import DataBeans.InfoOnlineTest;
 import DataBeans.InfoPaymentPhase;
+import DataBeans.InfoPeriod;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
 import DataBeans.InfoProfessorship;
@@ -76,6 +78,7 @@ import DataBeans.InfoQuestion;
 import DataBeans.InfoResponsibleFor;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
+import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoScientificArea;
 import DataBeans.InfoSection;
 import DataBeans.InfoShift;
@@ -88,16 +91,19 @@ import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoStudentTestLog;
 import DataBeans.InfoStudentTestQuestion;
+import DataBeans.InfoStudentTestQuestionMark;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.InfoTest;
 import DataBeans.InfoTestQuestion;
+import DataBeans.InfoTestScope;
 import DataBeans.InfoTutor;
 import DataBeans.InfoUniversity;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
 import DataBeans.InfoWorkLocation;
+import DataBeans.InfoWrittenTest;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCaseStudy;
 import DataBeans.Seminaries.InfoCaseStudyChoice;
@@ -414,8 +420,25 @@ public abstract class Cloner
 		return null;
 	}
 
+	
 	/**
-	 * Method copyInfoLesson2Lesson.
+	 * Method copyRoomOccupation2InfoRoomOccupation.
+	 * @param roomOccupation
+	 */
+	public static InfoRoomOccupation copyRoomOccupation2InfoRoomOccupation(IRoomOccupation roomOccupation)
+	{
+
+		if (roomOccupation != null)
+		{
+			InfoRoomOccupation infoRoomOccupation = new InfoRoomOccupation();
+
+			copyObjectProperties(infoRoomOccupation, roomOccupation);
+			return infoRoomOccupation;
+		}
+		return null;
+	}	
+    
+    /** Method copyInfoLesson2Lesson.
 	 * 
 	 * @param lessonExample
 	 * @return IAula
@@ -426,23 +449,6 @@ public abstract class Cloner
 		{
 			return null;
 		}
-
-		try {
-			// Temporary bug fix.
-			// Try to materialize the proxy... if it fails return null.
-			// Should look into this further... but I don't have the time
-			// at the moment. This situation occores constantly when
-			// viewing Class 05102 of the execution period 80.
-			//System.out.println("lesson= " + lesson);
-			//System.out.println("lesson.id= " + lesson.getIdInternal() + "\n\n");
-			lesson.getIdInternal();
-		} catch (Throwable nex)
-		{
-			//nex.printStackTrace();
-			//System.out.println("Returning null in the lessons place\n\n\n\n");
-			return null;
-		}
-		
 		InfoLesson infoLesson = new InfoLesson();
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) Cloner.get(lesson.getDisciplinaExecucao());
@@ -1868,6 +1874,10 @@ public abstract class Cloner
 
 		copyObjectProperties(infoExam, exam);
 		List infoRooms = new ArrayList();
+		List infoCurricularCourseScope = new ArrayList();
+		List infoRoomOccupation = new ArrayList();
+		List infoExecutionCourse = new ArrayList();
+
 		if (exam != null && exam.getAssociatedRooms() != null && exam.getAssociatedRooms().size() > 0)
 		{
 
@@ -1877,6 +1887,49 @@ public abstract class Cloner
 			}
 		}
 		infoExam.setAssociatedRooms(infoRooms);
+		//associate curricularCourseScopes
+		if (exam != null
+			&& exam.getAssociatedCurricularCourseScope() != null
+			&& exam.getAssociatedCurricularCourseScope().size() > 0)
+		{
+
+			for (int i = 0; i < exam.getAssociatedCurricularCourseScope().size(); i++)
+			{
+				infoCurricularCourseScope.add(
+					copyICurricularCourseScope2InfoCurricularCourseScope(
+						(ICurricularCourseScope) exam.getAssociatedCurricularCourseScope().get(i)));
+			}
+		}
+		infoExam.setAssociatedCurricularCourseScope(infoCurricularCourseScope);
+
+		//associate room occupation (new version)
+		if (exam != null
+			&& exam.getAssociatedRoomOccupation() != null
+			&& exam.getAssociatedRoomOccupation().size() > 0)
+		{
+
+			for (int i = 0; i < exam.getAssociatedRoomOccupation().size(); i++)
+			{
+				infoRoomOccupation.add(
+					copyIRoomOccupation2InfoRoomOccupation(
+						(IRoomOccupation) exam.getAssociatedRoomOccupation().get(i)));
+			}
+		}
+		infoExam.setAssociatedRoomOccupation(infoRoomOccupation);
+
+		//associate execution course (new version)
+		if (exam != null
+			&& exam.getAssociatedExecutionCourses() != null
+			&& exam.getAssociatedExecutionCourses().size() > 0)
+		{
+
+			for (int i = 0; i < exam.getAssociatedExecutionCourses().size(); i++)
+			{
+				infoExecutionCourse.add(
+					get((IExecutionCourse) exam.getAssociatedExecutionCourses().get(i)));
+			}
+		}
+		infoExam.setAssociatedExecutionCourse(infoExecutionCourse);
 
 		return infoExam;
 	}
@@ -1903,10 +1956,101 @@ public abstract class Cloner
 			exam.setAssociatedRooms(rooms);
 		}
 
+		if (infoExam != null
+			&& infoExam.getAssociatedCurricularCourseScope() != null
+			&& infoExam.getAssociatedCurricularCourseScope().size() > 0)
+		{
+			List curricularCourseScopes = new ArrayList();
+			for (int i = 0; i < infoExam.getAssociatedCurricularCourseScope().size(); i++)
+			{
+				curricularCourseScopes.add(
+					copyInfoCurricularCourseScope2ICurricularCourseScope(
+						(InfoCurricularCourseScope) infoExam.getAssociatedCurricularCourseScope().get(
+							i)));
+			}
+			exam.setAssociatedCurricularCourseScope(curricularCourseScopes);
+		}
+
+		if (infoExam != null
+			&& infoExam.getAssociatedRoomOccupation() != null
+			&& infoExam.getAssociatedRoomOccupation().size() > 0)
+		{
+			List roomOccupation = new ArrayList();
+			for (int i = 0; i < infoExam.getAssociatedRoomOccupation().size(); i++)
+			{
+				roomOccupation.add(
+					copyInfoRoomOccupation2IRoomOccupation(
+						(InfoRoomOccupation) infoExam.getAssociatedRoomOccupation().get(i)));
+			}
+			exam.setAssociatedRoomOccupation(roomOccupation);
+		}
+
 		return exam;
 	}
+	// Ana e Ricardo
+	//-----------------------------------------
+
 	/**
-	 * @param teacher
+	 * @param InfoRoomOccupation
+	 * @return IRoomOcupation
+	 */
+	public static IRoomOccupation copyInfoRoomOccupation2IRoomOccupation(InfoRoomOccupation infoRoomOccupation)
+	{
+		IRoomOccupation roomOccupation = new RoomOccupation();
+
+		IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoRoomOccupation.getInfoPeriod());
+		ISala room = Cloner.copyInfoRoom2Room(infoRoomOccupation.getInfoRoom());
+
+		copyObjectProperties(roomOccupation, infoRoomOccupation);
+
+		roomOccupation.setPeriod(period);
+		roomOccupation.setRoom(room);
+
+		return roomOccupation;
+	}	/**
+	/**
+	 * @param IRoomOccupation
+	 * @return InfoRoomOccupation
+	 */
+	public static InfoRoomOccupation copyIRoomOccupation2InfoRoomOccupation(IRoomOccupation roomOccupation)
+	{
+
+		InfoRoomOccupation infoRoomOccupation = new InfoRoomOccupation();
+
+		InfoPeriod infoPeriod = Cloner.copyIPeriod2InfoPeriod(roomOccupation.getPeriod());
+		InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(roomOccupation.getRoom());
+
+		copyObjectProperties(infoRoomOccupation, roomOccupation);
+
+		infoRoomOccupation.setInfoPeriod(infoPeriod);
+		infoRoomOccupation.setInfoRoom(infoRoom);
+
+		return infoRoomOccupation;
+	}	/**
+	 * @param InfoPeriod
+	 * @return IPeriod
+	 */
+	public static IPeriod copyInfoPeriod2IPeriod(InfoPeriod infoPeriod)
+	{
+		IPeriod period = new Period();
+
+		copyObjectProperties(period, infoPeriod);
+
+		return period;}
+	/**
+	 * @param IPeriod
+	 * @return InfoPeriod
+	 */
+	public static InfoPeriod copyIPeriod2InfoPeriod(IPeriod period)
+	{
+		InfoPeriod infoPeriod = new InfoPeriod();
+
+		copyObjectProperties(infoPeriod, period);
+
+		return infoPeriod;
+	}		
+    
+    /** @param teacher
 	 * @return
 	 */
 	public static InfoTeacher copyITeacher2InfoTeacher(ITeacher teacher)
@@ -2219,7 +2363,32 @@ public abstract class Cloner
 		return branch;
 	}
 
-	/**
+	public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourseWithCurricularCourseScopes(ICurricularCourse curricularCourse)
+	{
+
+		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
+				curricularCourse.getDegreeCurricularPlan());
+
+		copyObjectProperties(infoCurricularCourse, curricularCourse);
+
+		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+		List infoCurricularCourseScopes = new ArrayList();
+		Iterator iter = curricularCourse.getScopes().iterator();
+		while (iter.hasNext())
+		{
+			infoCurricularCourseScopes.add(
+				copyICurricularCourseScope2InfoCurricularCourseScope(
+					(ICurricularCourseScope) iter.next()));
+
+		}
+		infoCurricularCourse.setInfoScopes(infoCurricularCourseScopes);
+
+		return infoCurricularCourse;
+	}	/**
 	 * @author dcs-rjao
 	 * @param IBranch
 	 * @return InfoBranch
@@ -2782,6 +2951,10 @@ public abstract class Cloner
 		{
 			evaluation = new FinalEvaluation();
 		}
+		else if (infoEvaluation instanceof InfoOnlineTest)
+		{
+			evaluation = new OnlineTest();
+		}
 
 		copyObjectProperties(evaluation, infoEvaluation);
 
@@ -2802,7 +2975,11 @@ public abstract class Cloner
 			infoEvaluation = new InfoFinalEvaluation();
 			infoEvaluation.setEvaluationType(EvaluationType.FINAL_TYPE);
 		}
-
+		else if (evaluation instanceof IOnlineTest)
+		{
+			infoEvaluation = copyIOnlineTest2InfoOnlineTest((IOnlineTest) evaluation);
+			infoEvaluation.setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
+		}
 		copyObjectProperties(infoEvaluation, evaluation);
 
 		return infoEvaluation;
@@ -3521,7 +3698,19 @@ public abstract class Cloner
 	public static InfoMetadata copyIMetadata2InfoMetadata(IMetadata metadata)
 	{
 		InfoMetadata infoMetadata = new InfoMetadata();
-		copyObjectProperties(infoMetadata, metadata);
+		//		copyObjectProperties(infoMetadata, metadata);
+		infoMetadata.setMetadataFile(metadata.getMetadataFile());
+		infoMetadata.setDescription(metadata.getDescription());
+		infoMetadata.setAuthor(metadata.getAuthor());
+		infoMetadata.setDifficulty(metadata.getDifficulty());
+		infoMetadata.setIdInternal(metadata.getIdInternal());
+		infoMetadata.setLearningTime(metadata.getLearningTime());
+		infoMetadata.setLevel(metadata.getLevel());
+		infoMetadata.setMainSubject(metadata.getMainSubject());
+		infoMetadata.setNumberOfMembers(metadata.getNumberOfMembers());
+		infoMetadata.setSecondarySubject(metadata.getSecondarySubject());
+		infoMetadata.setVisibility(metadata.getVisibility());
+
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) get(metadata.getExecutionCourse());
 		infoMetadata.setInfoExecutionCourse(infoExecutionCourse);
@@ -3540,8 +3729,7 @@ public abstract class Cloner
 	{
 		InfoTest infoTest = new InfoTest();
 		copyObjectProperties(infoTest, test);
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) get(test.getExecutionCourse());
-		infoTest.setInfoExecutionCourse(infoExecutionCourse);
+		infoTest.setInfoTestScope(copyITestScope2InfoTestScope(test.getTestScope()));
 		return infoTest;
 	}
 
@@ -3563,13 +3751,21 @@ public abstract class Cloner
 	{
 		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
 		copyObjectProperties(infoDistributedTest, distributedTest);
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) get(distributedTest.getExecutionCourse());
-		infoDistributedTest.setInfoExecutionCourse(infoExecutionCourse);
+		infoDistributedTest.setInfoTestScope(
+			copyITestScope2InfoTestScope(distributedTest.getTestScope()));
 		return infoDistributedTest;
 	}
 
-	public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion studentTestQuestion)
+	public static InfoTestScope copyITestScope2InfoTestScope(ITestScope testScope)
+	{
+		InfoTestScope infoTestScope = new InfoTestScope();
+		if (testScope.getDomainObject() instanceof IExecutionCourse)
+			infoTestScope.setInfoObject((InfoExecutionCourse) get(testScope.getDomainObject()));
+		return infoTestScope;
+	}	
+    
+    
+    public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion studentTestQuestion)
 	{
 		InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
 		//copyObjectProperties(infoStudentTestQuestion, studentTestQuestion);
@@ -3590,7 +3786,23 @@ public abstract class Cloner
 		return infoStudentTestQuestion;
 	}
 
-	public static InfoStudentTestLog copyIStudentTestLog2InfoStudentTestLog(IStudentTestLog studentTestLog)
+	public static InfoStudentTestQuestionMark copyIStudentTestQuestion2InfoStudentTestQuestionMark(IStudentTestQuestion studentTestQuestion)
+	{
+		InfoStudentTestQuestionMark infoStudentTestQuestionMark = new InfoStudentTestQuestionMark();
+		infoStudentTestQuestionMark.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
+
+		if (studentTestQuestion.getStudent() != null)
+		{
+			infoStudentTestQuestionMark.setStudentIdInternal(
+				studentTestQuestion.getStudent().getIdInternal());
+			infoStudentTestQuestionMark.setStudentNumber(studentTestQuestion.getStudent().getNumber());
+			if (studentTestQuestion.getStudent().getPerson() != null)
+				infoStudentTestQuestionMark.setStudentName(
+					studentTestQuestion.getStudent().getPerson().getNome());
+
+		}
+		return infoStudentTestQuestionMark;
+	}	public static InfoStudentTestLog copyIStudentTestLog2InfoStudentTestLog(IStudentTestLog studentTestLog)
 	{
 		InfoStudentTestLog infoStudentTestLog = new InfoStudentTestLog();
 		copyObjectProperties(infoStudentTestLog, studentTestLog);
@@ -3600,7 +3812,21 @@ public abstract class Cloner
 		return infoStudentTestLog;
 	}
 
-	public static IWebSite copyInfoWebSite2IWebSite(InfoWebSite infoWebSite)
+	public static InfoOnlineTest copyIOnlineTest2InfoOnlineTest(IOnlineTest onlineTest)
+	{
+		InfoOnlineTest infoOnlineTest = new InfoOnlineTest();
+		copyObjectProperties(infoOnlineTest, onlineTest);
+		infoOnlineTest.setInfoDistributedTest(
+			copyIDistributedTest2InfoDistributedTest(onlineTest.getDistributedTest()));
+		return infoOnlineTest;
+	}	public static IWrittenTest copyInfoWrittenTest2IWrittenTest(InfoWrittenTest infoWrittenTest)
+	{
+		IWrittenTest writtenTest = null;
+		
+		copyObjectProperties(writtenTest,infoWrittenTest);
+		
+		return writtenTest;
+	}	public static IWebSite copyInfoWebSite2IWebSite(InfoWebSite infoWebSite)
 	{
 
 		IWebSite webSite = null;
@@ -4976,6 +5202,16 @@ public abstract class Cloner
         
         infoCreditLine.setInfoTeacher(infoTeacher);
         return infoCreditLine;
+    }
+    /**
+     * Method copyInfoRoomOccupation2RoomOccupation.
+     * @param infoRoomOccupation
+     */
+    public static IRoomOccupation copyInfoRoomOccupation2RoomOccupation(InfoRoomOccupation infoRoomOccupation)
+    {
+        IRoomOccupation roomOccupation = new RoomOccupation();
+        copyObjectProperties(roomOccupation, infoRoomOccupation);
+        return roomOccupation;
     }
     
 }

@@ -58,8 +58,8 @@ public class InsertTestAsNewTest implements IServico {
 			test.setNumberOfQuestions(oldTest.getNumberOfQuestions());
 			test.setCreationDate(null);
 			test.setLastModifiedDate(null);
-			test.setKeyExecutionCourse(oldTest.getKeyExecutionCourse());
-			test.setExecutionCourse(oldTest.getExecutionCourse());
+			test.setKeyTestScope(oldTest.getKeyTestScope());
+			test.setTestScope(oldTest.getTestScope());
 			persistentTest.simpleLockWrite(test);
 
 			IPersistentTestQuestion persistentTestQuestion =

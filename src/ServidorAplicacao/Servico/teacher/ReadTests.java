@@ -61,7 +61,7 @@ public class ReadTests implements IServico
                 throw new InvalidArgumentsServiceException();
             }
             IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-            List tests = persistentTest.readByExecutionCourse(executionCourse);
+            List tests = persistentTest.readByTestScopeObject(executionCourse);
             List result = new ArrayList();
             Iterator iter = tests.iterator();
             while (iter.hasNext())

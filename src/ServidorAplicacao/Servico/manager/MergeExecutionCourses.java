@@ -140,7 +140,7 @@ public class MergeExecutionCourses implements IServico
         try
         {
             List metadatas = persistentMetadata.readByExecutionCourse(source);
-            List distributedTests = persistentDistributedTest.readByExecutionCourse(source);
+            List distributedTests = persistentDistributedTest.readByTestScopeObject(source);
             distributedTestAuthorization =
                 (metadatas == null || metadatas.isEmpty())
                     && (distributedTests == null || distributedTests.isEmpty());

@@ -10,12 +10,12 @@ import java.util.Date;
  * @author Susana Fernandes
  */
 public interface ITest extends IDomainObject {
-	public abstract IExecutionCourse getExecutionCourse();
-	public abstract Integer getKeyExecutionCourse();
+	public abstract ITestScope getTestScope();
+	public abstract Integer getKeyTestScope();
 	public abstract Integer getNumberOfQuestions();
 	public abstract String getTitle();
-	public abstract void setExecutionCourse(IExecutionCourse execucao);
-	public abstract void setKeyExecutionCourse(Integer integer);
+	public abstract void setTestScope(ITestScope TestScope);
+	public abstract void setKeyTestScope(Integer integer);
 	public abstract void setNumberOfQuestions(Integer integer);
 	public abstract void setTitle(String string);
 	public abstract Date getCreationDate();

@@ -19,15 +19,19 @@ import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IMetadata;
+import Dominio.IOnlineTest;
 import Dominio.IQuestion;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
 import Dominio.ITest;
 import Dominio.ITestQuestion;
+import Dominio.ITestScope;
 import Dominio.ITurno;
+import Dominio.OnlineTest;
 import Dominio.Student;
 import Dominio.StudentTestQuestion;
 import Dominio.Test;
+import Dominio.TestScope;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -115,8 +119,16 @@ public class InsertDistributedTest implements IServico
 			distributedTest.setCorrectionAvailability(correctionAvaiability);
 			distributedTest.setStudentFeedback(feedback);
 			distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
-			distributedTest.setExecutionCourse(test.getExecutionCourse());
-			distributedTest.setKeyExecutionCourse(test.getKeyExecutionCourse());
+
+			ITestScope testScope =
+				(ITestScope) persistentSuport.getIPersistentTestScope().readByDomainObject(
+					executionCourse);
+			if (testScope == null)
+			{
+				testScope = new TestScope(executionCourse);
+				persistentSuport.getIPersistentTestScope().simpleLockWrite(testScope);
+			}
+			distributedTest.setTestScope(testScope);
 			persistentDistributedTest.simpleLockWrite(distributedTest);
 
 			List studentList = null;
@@ -160,6 +172,17 @@ public class InsertDistributedTest implements IServico
 					studentTestQuestion.setQuestion(question);
 				}
 			}
+			//Create Evaluation - OnlineTest and Marks
+			if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION)))
+			{
+				IOnlineTest onlineTest = new OnlineTest();
+				onlineTest.setDistributedTest(distributedTest);
+				List executionCourseList = new ArrayList();
+				executionCourseList.add(executionCourse);
+				onlineTest.setAssociatedExecutionCourses(executionCourseList);
+				persistentSuport.getIPersistentEvaluation().simpleLockWrite(onlineTest);
+			}
+
 			//Create Advisory
 			Iterator studentIt = studentList.iterator();
 			List group = new ArrayList();
@@ -174,16 +197,21 @@ public class InsertDistributedTest implements IServico
 			advisory.setExpires(endDate.getTime());
 			advisory.setSender("Docente da disciplina " + executionCourse.getNome());
 			advisory.setSubject(distributedTest.getTitle());
+			String msgBeginning;
+			if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
+				msgBeginning = new String("Tem um questionário para responder entre ");
+			else
+				msgBeginning = new String("Tem uma Ficha de Trabalho a realizar entre ");
 			advisory.setMessage(
-				"Tem uma Ficha de Trabalho a realizar entre "
-					+ getDateFormatted(beginDate)
-					+ " às "
+				msgBeginning
+					+ " as "
 					+ getHourFormatted(beginHour)
-					+ " até "
-					+ getDateFormatted(endDate)
-					+ " às "
-					+ getHourFormatted(endHour));
-
+					+ " de "
+					+ getDateFormatted(beginDate)
+					+ " e as "
+					+ getHourFormatted(endHour)
+					+ " de "
+					+ getDateFormatted(endDate));
 			advisory.setOnlyShowOnce(new Boolean(false));
 			persistentSuport.getIPersistentAdvisory().write(advisory, group);
 

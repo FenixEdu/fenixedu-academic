@@ -19,7 +19,6 @@ import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IStudentTestQuestion;
-import Dominio.StudentTestQuestion;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -66,7 +65,10 @@ public class ReadMetadatasByDistributedTest implements IServico
 				throw new InvalidArgumentsServiceException();
 			}
 			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-			List metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
+			List metadatas = new ArrayList();
+
+			metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
+
 			List result = new ArrayList();
 			IPersistentDistributedTest persistentDistributedTest =
 				persistentSuport.getIPersistentDistributedTest();
@@ -100,7 +102,7 @@ public class ReadMetadatasByDistributedTest implements IServico
 					while (studentTestQuestionIt.hasNext())
 					{
 						IStudentTestQuestion studentTestQuestion =
-							(StudentTestQuestion) studentTestQuestionIt.next();
+							(IStudentTestQuestion) studentTestQuestionIt.next();
 						if (studentTestQuestion
 							.getQuestion()
 							.getKeyMetadata()

@@ -15,11 +15,11 @@ public class TestQuestionChangesType extends FenixUtil
 {
     public static final int CHANGE_VARIATION = 1;
 
-    public static final int CHANGE_EXERCICE = 2;
+    public static final int CHANGE_EXERCISE = 2;
 
     public static final String CHANGE_VARIATION_STRING = "Outra variação do mesmo exercício";
 
-    public static final String CHANGE_EXERCICE_STRING = "Outro exercício";
+    public static final String CHANGE_EXERCISE_STRING = "Outro exercício";
 
     private Integer type;
 
@@ -64,8 +64,8 @@ public class TestQuestionChangesType extends FenixUtil
         List result = new ArrayList();
         result.add(new LabelValueBean(CHANGE_VARIATION_STRING, new Integer(
                 CHANGE_VARIATION).toString()));
-        result.add(new LabelValueBean(CHANGE_EXERCICE_STRING, new Integer(
-                CHANGE_EXERCICE).toString()));
+        result.add(new LabelValueBean(CHANGE_EXERCISE_STRING, new Integer(
+                CHANGE_EXERCISE).toString()));
         return result;
     }
 
@@ -73,8 +73,8 @@ public class TestQuestionChangesType extends FenixUtil
     {
         if (typeName.equals(CHANGE_VARIATION_STRING)) return new Integer(
                 CHANGE_VARIATION);
-        else if (typeName.equals(CHANGE_EXERCICE_STRING))
-                return new Integer(CHANGE_EXERCICE);
+        else if (typeName.equals(CHANGE_EXERCISE_STRING))
+                return new Integer(CHANGE_EXERCISE);
         return null;
     }
 
@@ -82,8 +82,8 @@ public class TestQuestionChangesType extends FenixUtil
     {
         if (type.intValue() == CHANGE_VARIATION) return new String(
                 CHANGE_VARIATION_STRING);
-        else if (type.intValue() == CHANGE_EXERCICE)
-                return new String(CHANGE_EXERCICE_STRING);
+        else if (type.intValue() == CHANGE_EXERCISE)
+                return new String(CHANGE_EXERCISE_STRING);
         return null;
     }
 

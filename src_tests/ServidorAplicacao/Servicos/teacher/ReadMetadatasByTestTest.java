@@ -61,9 +61,9 @@ public class ReadMetadatasByTestTest extends ServiceNeedsAuthenticationTestCase
 	{
 		Integer executionCourseId = new Integer(34882);
 		Integer testId = new Integer(109);
-		String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
-
-		Object[] args = { executionCourseId, testId, path };
+		String order = new String("blá");
+		String asc = null; //new String("false");
+		Object[] args = { executionCourseId, testId, order, asc };
 		return args;
 
 	}
@@ -91,9 +91,7 @@ public class ReadMetadatasByTestTest extends ServiceNeedsAuthenticationTestCase
 			InfoExecutionCourse infoExecutionCourse = bodyComponent.getExecutionCourse();
 			assertEquals(infoExecutionCourse.getIdInternal(), args[0]);
 			List infoMetadatasList = bodyComponent.getInfoMetadatas();
-			assertEquals(infoMetadatasList.size(), 57);
-
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+			assertEquals(infoMetadatasList.size(), 1);
 		}
 		catch (FenixServiceException ex)
 		{

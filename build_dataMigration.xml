@@ -1239,8 +1239,21 @@
 		</java>
 	</target>
 	
-	<target name="update-metadata-fields" depends="compile-proj" description="Update the new metadata fields">
-		<java classname="ServidorAplicacao.UpdateMetadataFields" fork="yes" failonerror="false" maxmemory="512m">
+	<target name="update-online-tests" depends="compile-proj" description="">
+		<java classname="ServidorAplicacao.UpdateOnlineTests" fork="yes" failonerror="false" maxmemory="256m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	<target name="update-tests-filds" depends="compile-proj,update-online-tests" description="">
+		<java classname="ServidorAplicacao.UpdateTestsFields" fork="yes" failonerror="false" maxmemory="256m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -1253,7 +1266,6 @@
 		</java>
 	</target>
 	<!-- ********************************************************************* -->
-
 	<!-- ************************************************************************************************************************ -->
 	<target name="credits-initialize" depends="compile-proj" description="inicializa a base de dados ao nível da tabela creditos para o semestre currente">
 		<java classname="middleware.credits.CreditsInitializer" fork="yes" failonerror="false" maxmemory="512m">
@@ -1268,7 +1280,6 @@
 			</classpath>
 		</java>
 	</target>
-	
 	<target name="fix-curriculum" depends="compile-proj" description="cixes the curricular course information">
 		<java classname="middleware.degreeCurricularPlan.FixCurriculum" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>

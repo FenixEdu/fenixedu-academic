@@ -22,6 +22,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentTestLog;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TestType;
 import UtilTests.ParseQuestion;
 
 /**
@@ -82,9 +83,14 @@ public class ReadStudentTest implements IServico
 					{
 						persistentSuport.getIPersistentStudentTestQuestion().simpleLockWrite(
 							studentTestQuestion);
+						boolean shuffle = true;
+						if (distributedTest.getTestType().equals(new TestType(3))) //INQUIRY
+							shuffle = false;
+
 						studentTestQuestion.setOptionShuffle(
 							parse.shuffleQuestionOptions(
 								studentTestQuestion.getQuestion().getXmlFile(),
+								shuffle,
 								this.path));
 					}
 					infoStudentTestQuestion =

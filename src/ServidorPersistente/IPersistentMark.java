@@ -28,4 +28,4 @@ public interface IPersistentMark extends IPersistentObject {
 	public List readBy(IEvaluation evaluation, boolean published)
 		throws ExcepcaoPersistencia;
 	public void delete(IMark mark)throws ExcepcaoPersistencia;
-}
+	public void deleteByEvaluation(IEvaluation evaluation)throws ExcepcaoPersistencia;}

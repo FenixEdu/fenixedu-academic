@@ -22,7 +22,7 @@ response.setDateHeader ("Expires", 0);
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
-	<bean:define id="objectCode" name="distributedTest" property="infoExecutionCourse.idInternal"/>
+	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.idInternal"/>
 	
 	<html:form action="/studentTests">
 	<html:hidden property="method" value="doTest"/>
@@ -58,7 +58,7 @@ response.setDateHeader ("Expires", 0);
 				
 				<% if (((String)questionLabel).startsWith("image/")){%>
 					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
+					<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
 					
 					<logic:equal name="imageLabel" value="true">
 						</td><td>
@@ -91,14 +91,13 @@ response.setDateHeader ("Expires", 0);
 				<td>
 					<bean:define id="cardinality" name="question" property="questionCardinality"/>
 			<table><td>
-				<bean:define id="index" value="0"/>
 				<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 				<bean:define id="indexOption" value="0"/>
 				<logic:iterate id="optionBody" name="question" property="options">
 					<bean:define id="optionLabel" name="optionBody" property="label"/>
 					<% if (((String)optionLabel).startsWith("image/")){ %>
 						<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-						<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+						<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
 					<% } else if (((String)optionLabel).equals("image_label")){%>
 						<bean:write name="optionBody" property="value"/>
 						<br/>
@@ -139,7 +138,7 @@ response.setDateHeader ("Expires", 0);
 		<td><html:submit styleClass="inputbutton" property="submit"><bean:message key="button.submitTest"/></html:submit></td>
 		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td></html:form>
 		<html:form action="/studentTests">
-		<html:hidden property="method" value="viewTestsToDo"/>
+		<html:hidden property="method" value="testsFirstPage"/>
 		<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
 		<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
 		<td><html:submit styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit></td></html:form>

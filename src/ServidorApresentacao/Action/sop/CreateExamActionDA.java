@@ -56,6 +56,7 @@ public class CreateExamActionDA extends FenixCurricularYearsAndExecutionCourseAn
 			chooseDayAndShiftForm.set("month", null);
 			chooseDayAndShiftForm.set("day", null);
 			chooseDayAndShiftForm.set("beginning", null);
+			chooseDayAndShiftForm.set("end", null);
 			chooseDayAndShiftForm.set("season", null);
 
 			return mapping.findForward("showCreateForm");

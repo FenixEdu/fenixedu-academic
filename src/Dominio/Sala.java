@@ -1,127 +1,154 @@
 /*
- * Sala.java
- *
- * Created on 17 de Outubro de 2002, 22:56
+ * Sala.java Created on 17 de Outubro de 2002, 22:56
  */
 
 package Dominio;
 
 /**
- *
- * @author  tfc130
+ * @author tfc130
  */
+import java.util.List;
 import Util.TipoSala;
 
-public class Sala extends DomainObject implements ISala {
-	protected String _nome;
-	protected String _edificio;
-	protected Integer _piso;
-	protected Integer _capacidadeNormal;
-	protected Integer _capacidadeExame;
-	protected TipoSala _tipo;
+public class Sala extends DomainObject implements ISala
+{
+    protected String _nome;
 
-	
-	
+    protected String _edificio;
 
-	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-	public Sala() {
-	}
+    protected Integer _piso;
 
-	public Sala(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
-	
-	public Sala(
-		String nome,
-		String edificio,
-		Integer piso,
-		TipoSala tipo,
-		Integer capacidadeNormal,
-		Integer capacidadeExame) {
-		setNome(nome);
-		setEdificio(edificio);
-		setPiso(piso);
-		setTipo(tipo);
-		setCapacidadeNormal(capacidadeNormal);
-		setCapacidadeExame(capacidadeExame);
-	}
+    protected Integer _capacidadeNormal;
 
+    protected Integer _capacidadeExame;
 
+    protected TipoSala _tipo;
 
-	public String getNome() {
-		return _nome;
-	}
+    private List roomOccupations;
 
-	public void setNome(String nome) {
-		_nome = nome;
-	}
+    /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
+    public Sala()
+    {
+    }
 
-	public String getEdificio() {
-		return _edificio;
-	}
+    public Sala(Integer idInternal)
+    {
+        setIdInternal(idInternal);
+    }
 
-	public void setEdificio(String edificio) {
-		_edificio = edificio;
-	}
+    public Sala(String nome, String edificio, Integer piso, TipoSala tipo, Integer capacidadeNormal,
+            Integer capacidadeExame)
+    {
+        setNome(nome);
+        setEdificio(edificio);
+        setPiso(piso);
+        setTipo(tipo);
+        setCapacidadeNormal(capacidadeNormal);
+        setCapacidadeExame(capacidadeExame);
+    }
 
-	public Integer getPiso() {
-		return _piso;
-	}
+    public String getNome()
+    {
+        return _nome;
+    }
 
-	public void setPiso(Integer piso) {
-		_piso = piso;
-	}
+    public void setNome(String nome)
+    {
+        _nome = nome;
+    }
 
-	public TipoSala getTipo() {
-		return _tipo;
-	}
+    public String getEdificio()
+    {
+        return _edificio;
+    }
 
-	public void setTipo(TipoSala tipo) {
-		_tipo = tipo;
-	}
+    public void setEdificio(String edificio)
+    {
+        _edificio = edificio;
+    }
 
-	public Integer getCapacidadeNormal() {
-		return _capacidadeNormal;
-	}
+    public Integer getPiso()
+    {
+        return _piso;
+    }
 
-	public void setCapacidadeNormal(Integer capacidadeNormal) {
-		_capacidadeNormal = capacidadeNormal;
-	}
+    public void setPiso(Integer piso)
+    {
+        _piso = piso;
+    }
 
-	public Integer getCapacidadeExame() {
-		return _capacidadeExame;
-	}
+    public TipoSala getTipo()
+    {
+        return _tipo;
+    }
 
-	public void setCapacidadeExame(Integer capacidadeExame) {
-		_capacidadeExame = capacidadeExame;
-	}
+    public void setTipo(TipoSala tipo)
+    {
+        _tipo = tipo;
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof ISala) {
-			ISala sala = (ISala) obj;
-			resultado =
-				(getNome().equals(sala.getNome()))
-					&& (getEdificio().equals(sala.getEdificio()))
-					&& (getPiso().equals(sala.getPiso()))
-					&& (getTipo().equals(sala.getTipo()))
-					&& (getCapacidadeNormal().equals(sala.getCapacidadeNormal()))
-					&& (getCapacidadeExame().equals(sala.getCapacidadeExame()));
-		}
-		return resultado;
-	}
+    public Integer getCapacidadeNormal()
+    {
+        return _capacidadeNormal;
+    }
 
-	public String toString() {
-		String result = "[SALA";
-		result += ", codInt=" + getIdInternal();
-		result += ", nome=" + _nome;
-		result += ", edificio=" + _edificio;
-		result += ", piso=" + _piso;
-		result += ", tipo=" + _tipo;
-		result += ", capacidadeNormal=" + _capacidadeNormal;
-		result += ", capacidadeExame=" + _capacidadeExame;
-		result += "]";
-		return result;
-	}
+    public void setCapacidadeNormal(Integer capacidadeNormal)
+    {
+        _capacidadeNormal = capacidadeNormal;
+    }
 
+    public Integer getCapacidadeExame()
+    {
+        return _capacidadeExame;
+    }
+
+    public void setCapacidadeExame(Integer capacidadeExame)
+    {
+        _capacidadeExame = capacidadeExame;
+    }
+
+    public boolean equals(Object obj)
+    {
+        boolean resultado = false;
+        if (obj instanceof ISala)
+        {
+            ISala sala = (ISala) obj;
+            resultado = (getNome().equals(sala.getNome())) && (getEdificio().equals(sala.getEdificio()))
+                    && (getPiso().equals(sala.getPiso())) && (getTipo().equals(sala.getTipo()))
+                    && (getCapacidadeNormal().equals(sala.getCapacidadeNormal()))
+                    && (getCapacidadeExame().equals(sala.getCapacidadeExame()));
+        }
+        return resultado;
+    }
+
+    public String toString()
+    {
+        String result = "[SALA";
+        result += ", codInt=" + getIdInternal();
+        result += ", nome=" + _nome;
+        result += ", edificio=" + _edificio;
+        result += ", piso=" + _piso;
+        result += ", tipo=" + _tipo;
+        result += ", capacidadeNormal=" + _capacidadeNormal;
+        result += ", capacidadeExame=" + _capacidadeExame;
+        result += "]";
+        return result;
+    }
+
+    /**
+     * @return Returns the roomOccupations.
+     */
+    public List getRoomOccupations()
+    {
+        return roomOccupations;
+    }
+
+    /**
+     * @param roomOccupations
+     *            The roomOccupations to set.
+     */
+    public void setRoomOccupations(List roomOccupations)
+    {
+        this.roomOccupations = roomOccupations;
+    }
 }

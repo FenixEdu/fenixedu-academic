@@ -13,7 +13,9 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 
+import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
+import Dominio.IExecutionCourse;
 import Dominio.IQuestion;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
@@ -42,9 +44,14 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements IPersisten
 
 	public List readByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia
 	{
+		//Calendar start = Calendar.getInstance();
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-		return queryList(StudentTestQuestion.class, criteria);
+		criteria.addOrderBy("keyStudent", true);
+		criteria.addOrderBy("testQuestionOrder", true);
+		List result = queryList(StudentTestQuestion.class, criteria);
+		//System.out.println("readByDistributedTest took [" + (Calendar.getInstance().getTimeInMillis() - start.getTimeInMillis()) +"] ms");
+		return result;
 	}
 
 	public List readByStudent(IStudent student) throws ExcepcaoPersistencia
@@ -70,7 +77,7 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements IPersisten
 		return queryList(StudentTestQuestion.class, criteria);
 	}
 
-	public StudentTestQuestion readByQuestionAndStudentAndDistributedTest(
+	public IStudentTestQuestion readByQuestionAndStudentAndDistributedTest(
 		IQuestion question,
 		IStudent student,
 		IDistributedTest distributedTest)
@@ -80,7 +87,7 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements IPersisten
 		criteria.addEqualTo("keyQuestion", question.getIdInternal());
 		criteria.addEqualTo("keyStudent", student.getIdInternal());
 		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-		return (StudentTestQuestion) queryObject(StudentTestQuestion.class, criteria);
+		return (IStudentTestQuestion) queryObject(StudentTestQuestion.class, criteria);
 	}
 
 	public List readStudentsByDistributedTest(IDistributedTest distributedTest)
@@ -94,7 +101,6 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements IPersisten
 		QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
 		queryCriteria.addGroupBy("keyStudent");
 		List result = (List) pb.getCollectionByQuery(queryCriteria);
-
 		lockRead(result);
 
 		List studentList = new ArrayList();
@@ -112,16 +118,99 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements IPersisten
 	public List readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia
 	{
-		List result = null;
-		IStudentTestQuestion studentTestQuestion = null;
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+		criteria.addOrderBy("keyStudent", true);
+		criteria.addOrderBy("testQuestionOrder", true);
 
-		List studentTestQuestions = readByDistributedTest(distributedTest);
-		if (studentTestQuestions != null && studentTestQuestions.size() != 0)
+		return readSpan(
+			StudentTestQuestion.class,
+			criteria,
+			distributedTest.getNumberOfQuestions(),
+			new Integer(0));
+	}
+
+	public int countByQuestionOrderAndOptionAndDistributedTest(
+		Integer order,
+		Integer option,
+		IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("testQuestionOrder", order);
+		criteria.addEqualTo("response", option);
+		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+		QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
+		return pb.getCount(queryCriteria);
+	}
+
+	public int countResponsedOrNotResponsed(
+		Integer order,
+		boolean responsed,
+		IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("testQuestionOrder", order);
+		if (responsed)
+			criteria.addNotEqualTo("response", new Integer(0));
+		else
+			criteria.addEqualTo("response", new Integer(0));
+
+		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+		QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
+		return pb.getCount(queryCriteria);
+	}
+
+	public int countCorrectOrIncorrectAnswers(
+		Integer order,
+		Integer mark,
+		boolean correct,
+		IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("testQuestionOrder", order);
+		if (correct)
+			criteria.addEqualTo("testQuestionMark", mark);
+		else
 		{
-			studentTestQuestion = (StudentTestQuestion) readByDistributedTest(distributedTest).get(0);
-			result = readByStudentAndDistributedTest(studentTestQuestion.getStudent(), distributedTest);
+			criteria.addNotEqualTo("testQuestionMark", mark);
+			criteria.addNotEqualTo("testQuestionMark", new Integer(0));
 		}
-		return result;
+
+		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+		QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
+		return pb.getCount(queryCriteria);
+	}
+
+	public int countNumberOfStudents(IDistributedTest distributedTest) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+		QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
+		return pb.getCount(queryCriteria) / distributedTest.getNumberOfQuestions().intValue();
+
+	}
+
+	public int countStudentTestByStudentAndExecutionCourse(
+		IExecutionCourse executionCourse,
+		IStudent student)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyStudent", student.getIdInternal());
+		criteria.addEqualTo("distributedTest.testScope.className", ExecutionCourse.class.getName());
+		criteria.addEqualTo("distributedTest.testScope.keyClass", executionCourse.getIdInternal());
+		criteria.addEqualTo("testQuestionOrder", new Integer(1));
+		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+		QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
+		return pb.getCount(queryCriteria);
+
 	}
 
 	public void deleteByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia

@@ -54,10 +54,46 @@ public class ReadCurricularYearByOID implements IServico {
 				result = Cloner.copyICurricularYear2InfoCurricularYear(
 						curricularYear);
 			}
+			else {
+				throw new UnexistingCurricularYearException();
+			}
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
 
 		return result;
 	}
+	
+	public class UnexistingCurricularYearException extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private UnexistingCurricularYearException() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private UnexistingCurricularYearException(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private UnexistingCurricularYearException(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private UnexistingCurricularYearException(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
 }
