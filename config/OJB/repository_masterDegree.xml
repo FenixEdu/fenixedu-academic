@@ -1364,7 +1364,7 @@
 		auto-update="false"
 		auto-delete="false"
 		proxy="false">
-		<inverse-foreignkey field-ref="keyGratuity"/>
+		<inverse-foreignkey field-ref="keyGratuityValues"/>
 	 </collection-descriptor>   
 </class-descriptor>  
 <!-- End of definitions for class GratuityValues -->

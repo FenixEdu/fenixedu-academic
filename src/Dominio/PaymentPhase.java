@@ -107,7 +107,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	/**
 	 * @return Returns the keyGratuity.
 	 */
-	public Integer getKeyGratuity()
+	public Integer getKeyGratuityValues()
 	{
 		return keyGratuityValues;
 	}
@@ -115,7 +115,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	/**
 	 * @param keyGratuity The keyGratuity to set.
 	 */
-	public void setKeyGratuity(Integer keyGratuityValues)
+	public void setKeyGratuityValues(Integer keyGratuityValues)
 	{
 		this.keyGratuityValues = keyGratuityValues;
 	}
