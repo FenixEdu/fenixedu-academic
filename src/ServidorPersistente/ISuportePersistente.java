@@ -180,6 +180,6 @@ public interface ISuportePersistente {
 	public IPersistentExternalPerson getIPersistentExternalPerson();
 	
 	public IPersistentCoordinator getIPersistentCoordinator();
+
+	public IPersistentUniversity getIPersistentUniversity();
 }
-
-

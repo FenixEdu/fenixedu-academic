@@ -24,6 +24,4 @@ public interface IPersistentMWEnrolment  {
     
     public List readByStudentNumber(Integer number) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
     
-    
-	
 }

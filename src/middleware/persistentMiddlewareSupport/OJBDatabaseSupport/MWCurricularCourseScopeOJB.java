@@ -29,4 +29,21 @@ public class MWCurricularCourseScopeOJB extends ObjectFenixOJB implements IPersi
 		return queryList(MWCurricularCourseScope.class, criteria);
 	}
     
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#readAllBySpan(java.lang.Integer, java.lang.Integer)
+	 */
+	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		return readSpan(MWCurricularCourseScope.class, criteria, numberOfElementsInSpan, spanNumber);
+	}
+	
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#countAll()
+	 */
+	public Integer countAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	{
+		return new Integer(count(MWCurricularCourseScope.class, new Criteria()));
+	}
+
 }

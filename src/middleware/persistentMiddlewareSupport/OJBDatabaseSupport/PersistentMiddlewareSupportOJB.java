@@ -8,6 +8,7 @@ import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseScope
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMWStudentClass;
+import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
@@ -82,6 +83,11 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	public IPersistentMWCurricularCourseOutsideStudentDegree getIPersistentMWCurricularCourseOutsideStudentDegree()
 	{
 		return new MWCurricularCourseOutsideStudentDegreeOJB();
+	}
+
+	public IPersistentMWUniversity getIPersistentMWUniversity()
+	{
+		return new MWUniversityOJB();
 	}
 
 }

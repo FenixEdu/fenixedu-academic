@@ -41,6 +41,10 @@ public class ReportEnrolment
 	// For control:
 	private static boolean smallReport = true;
 
+//	------------------------------------------------------------------------------------------------------------------------------
+//	------------------------------------------------------------------------------------------------------------------------------
+//	------------------------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * @param courseCode
 	 * @param degreeCode
@@ -244,7 +248,7 @@ public class ReportEnrolment
 	/**
 	 * @param courseCode
 	 */
-	public static void addCurricularCourseName(String courseCode)
+	private static void addCurricularCourseName(String courseCode)
 	{
 		String key = courseCode;
 		String courseName = findCurricularCourseName(courseCode);
@@ -258,7 +262,7 @@ public class ReportEnrolment
 	/**
 	 * @param degreeCode
 	 */
-	public static void addDegreeName(String degreeCode)
+	private static void addDegreeName(String degreeCode)
 	{
 		String key = degreeCode;
 		String degreeName = findDegreeName(degreeCode);

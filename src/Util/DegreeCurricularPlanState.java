@@ -14,10 +14,14 @@ public class DegreeCurricularPlanState implements Serializable{
 	public static final int ACTIVE = 1;
 	public static final int NOT_ACTIVE = 2;
 	public static final int CONCLUDED = 3;
+	// For use in migration process only
+	public static final int PAST = 4;
 
 	public static final DegreeCurricularPlanState ACTIVE_OBJ = new DegreeCurricularPlanState(DegreeCurricularPlanState.ACTIVE); 
 	public static final DegreeCurricularPlanState NOT_ACTIVE_OBJ = new DegreeCurricularPlanState(DegreeCurricularPlanState.NOT_ACTIVE);
 	public static final DegreeCurricularPlanState CONCLUDED_OBJ = new DegreeCurricularPlanState(DegreeCurricularPlanState.CONCLUDED);
+	public static final DegreeCurricularPlanState PAST_OBJ = new DegreeCurricularPlanState(DegreeCurricularPlanState.PAST);
+
 	private Integer state;
 
 	public DegreeCurricularPlanState() {

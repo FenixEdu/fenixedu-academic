@@ -66,7 +66,7 @@ public class UpdateStudentEnrolments
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWAluno persistentMWAluno = mws.getIPersistentMWAluno();
 		IPersistentMWEnrolment persistentEnrolment = mws.getIPersistentMWEnrolment();
-		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 //		System.out.println("[INFO] Reading all MWStudents...");
 
@@ -121,7 +121,7 @@ public class UpdateStudentEnrolments
 	 * @param sp
 	 * @throws Exception
 	 */
-	public static void updateStudentEnrolment(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception
+	private static void updateStudentEnrolment(MWAluno oldStudent, ISuportePersistente sp) throws Exception
 	{
 		try
 		{
@@ -132,7 +132,7 @@ public class UpdateStudentEnrolments
 
 			if (student == null)
 			{
-				System.out.println("[ERROR] Cannot find Fenix student with number [" + oldStudent.getNumber() + "]!");
+				System.out.println("[ERROR 01] Cannot find Fenix student with number [" + oldStudent.getNumber() + "]!");
 				return;
 			}
 
@@ -140,7 +140,7 @@ public class UpdateStudentEnrolments
 
 			if (studentCurricularPlan == null)
 			{
-				System.out.println("[ERROR] Cannot find Fenix StudentCurricularPlan for student number [" + oldStudent.getNumber() + "]!");
+				System.out.println("[ERROR 02] Cannot find Fenix StudentCurricularPlan for student number [" + oldStudent.getNumber() + "]!");
 				return;
 			}
 
@@ -160,10 +160,10 @@ public class UpdateStudentEnrolments
 
 		} catch (Exception e)
 		{
-			System.out.println("[ERROR] Exception migrating student [" + oldStudent.getNumber() + "] enrolments!");
-			System.out.println("Aluno " + oldStudent.getNumber());
-			System.out.println("Degree " + oldStudent.getDegreecode());
-			System.out.println("Branch " + oldStudent.getBranchcode());
+			System.out.println("[ERROR 10] Exception migrating student [" + oldStudent.getNumber() + "] enrolments!");
+			System.out.println("[ERROR 10] Number: [" + oldStudent.getNumber() + "]");
+			System.out.println("[ERROR 10] Degree: [" + oldStudent.getDegreecode() + "]");
+			System.out.println("[ERROR 10] Branch: [" + oldStudent.getBranchcode() + "]");
 			e.printStackTrace(System.out);
 			throw new Exception(e);
 		}
@@ -181,7 +181,7 @@ public class UpdateStudentEnrolments
 		List enrolments2Write,
 		IStudentCurricularPlan studentCurricularPlan,
 		MWAluno oldStudent,
-		SuportePersistenteOJB sp)
+		ISuportePersistente sp)
 		throws Exception
 	{
 		Iterator iterator = enrolments2Write.iterator();
@@ -194,7 +194,7 @@ public class UpdateStudentEnrolments
 
 			if (degreeCurricularPlan == null)
 			{
-				System.out.println("[ERROR] Degree Curricular Plan Not Found!");
+				System.out.println("[ERROR 03.1] Degree Curricular Plan Not Found!");
 				continue;
 			}
 
@@ -203,60 +203,69 @@ public class UpdateStudentEnrolments
 
 			if (branch == null)
 			{
-				System.out.println("[ERROR] Branch Not Found!");
+				System.out.println("[ERROR 04.1] Branch Not Found!");
 				continue;
 			}
 
-			// Get the list of Fenix CurricularCourses with that code for the selected DegreeCurricularPlan.
-			List curricularCourses =
-				sp.getIPersistentCurricularCourse().readbyCourseCodeAndDegreeCurricularPlan(
-					StringUtils.trim(mwEnrolment.getCoursecode()),
-					degreeCurricularPlan);
+//			// Get the list of Fenix CurricularCourses with that code for the selected DegreeCurricularPlan.
+//			List curricularCourses =
+//				sp.getIPersistentCurricularCourse().readbyCourseCodeAndDegreeCurricularPlan(
+//					StringUtils.trim(mwEnrolment.getCoursecode()),
+//					degreeCurricularPlan);
+//
+//			ICurricularCourse curricularCourse = null;
+//
+//			// Ideally we find only one CurricularCourse but we never know, we may find more or even less.
+//			if (curricularCourses.size() != 1)
+//			{
+//				if (curricularCourses.size() > 1)
+//				{
+//					System.out.println("[ERROR 05] Several Fenix CurricularCourses with code [" + mwEnrolment.getCoursecode() + "] were found for Degree [" + mwEnrolment.getDegreecode() + "]!");
+//					continue;
+//				} else // size == 0
+//				{
+//					// We did not find any CurricularCourse with that code in that DegreeCurricularPlan.
+//					// Now we try to read by the CurricularCourse code only.
+//					IPersistentCurricularCourse curricularCourseDAO = sp.getIPersistentCurricularCourse();
+//					curricularCourses = curricularCourseDAO.readbyCourseCode(StringUtils.trim(mwEnrolment.getCoursecode()));
+//
+//					if (curricularCourses.size() == 1)
+//					{
+//						curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+//					} else if (curricularCourses.size() > 1)
+//					{
+//						if (hasDiferentDegrees(curricularCourses))
+//						{
+//							curricularCourse = getCurricularCourseFromAnotherDegree(mwEnrolment, sp);
+//							if (curricularCourse == null)
+//							{
+//								// NOTE [DAVID]: This is for information only.
+//								ReportEnrolment.addReplicatedCurricularCourses(mwEnrolment.getCoursecode(), curricularCourses);
+//								continue;
+//							}
+//						} else
+//						{
+//							curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+//						}
+//					} else
+//					{
+//						ReportEnrolment.addCurricularCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
+//						continue;
+//					}
+//				}
+//			} else // curricularCourses.size() == 1
+//			{
+//				curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+//			}
 
-			ICurricularCourse curricularCourse = null;
 
-			// Ideally we find only one CurricularCourse but we never know, we may find more or even less.
-			if (curricularCourses.size() != 1)
+			ICurricularCourse curricularCourse = getCurricularCourse(mwEnrolment, degreeCurricularPlan, sp);
+
+			if (curricularCourse == null)
 			{
-				if (curricularCourses.size() > 1)
-				{
-					System.out.println("[ERROR] Several Fenix CurricularCourses with code [" + mwEnrolment.getCoursecode() + "] were found for Degree [" + mwEnrolment.getDegreecode() + "]!");
-					continue;
-				} else // size == 0
-				{
-					// We did not find any CurricularCourse with that code in that DegreeCurricularPlan.
-					// Now we try to read by the CurricularCourse code only.
-					IPersistentCurricularCourse curricularCourseDAO = sp.getIPersistentCurricularCourse();
-					curricularCourses = curricularCourseDAO.readbyCourseCode(StringUtils.trim(mwEnrolment.getCoursecode()));
-
-					if (curricularCourses.size() == 1)
-					{
-						curricularCourse = (ICurricularCourse) curricularCourses.get(0);
-					} else if (curricularCourses.size() > 1)
-					{
-						if (hasDiferentDegrees(curricularCourses))
-						{
-							curricularCourse = getCurricularCourseFromAnotherDegree(mwEnrolment, sp);
-							if (curricularCourse == null)
-							{
-								// NOTE [DAVID]: This is for information only.
-								ReportEnrolment.addReplicatedCurricularCourses(mwEnrolment.getCoursecode(), curricularCourses);
-								continue;
-							}
-						} else
-						{
-							curricularCourse = (ICurricularCourse) curricularCourses.get(0);
-						}
-					} else
-					{
-						ReportEnrolment.addCurricularCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
-						continue;
-					}
-				}
-			} else // curricularCourses.size() == 1
-			{
-				curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+				continue;
 			}
+
 
 			// If we get to this point of the code we did find a CurricularCourse.
 			// Now we will try to get the CurricularCourseScope by the CurricularCourse previously found and the semester an year from MWEnrolment.
@@ -310,7 +319,7 @@ public class UpdateStudentEnrolments
 		ICurricularCourse curricularCourse,
 		IEnrolment enrolment,
 		MWEnrolment mwEnrolment,
-		SuportePersistenteOJB sp)
+		ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
 		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
@@ -348,7 +357,7 @@ public class UpdateStudentEnrolments
 	 */
 	private static IEnrolment createEnrolment(
 		IStudentCurricularPlan studentCurricularPlan,
-		SuportePersistenteOJB sp,
+		ISuportePersistente sp,
 		ICurricularCourseScope curricularCourseScope)
 		throws ExcepcaoPersistencia
 	{
@@ -388,7 +397,7 @@ public class UpdateStudentEnrolments
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	private static ICurricularCourse getCurricularCourseFromAnotherDegree(final MWEnrolment mwEnrolment, SuportePersistenteOJB sp)
+	private static ICurricularCourse getCurricularCourseFromAnotherDegree(final MWEnrolment mwEnrolment, ISuportePersistente sp)
 		throws ExcepcaoPersistencia, PersistentMiddlewareSupportException
 	{
 		ICurricularCourse curricularCourse = null;
@@ -480,12 +489,12 @@ public class UpdateStudentEnrolments
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	private static ICurricularCourseScope getCurricularCourseScopeToEnrollIn(
+	public static ICurricularCourseScope getCurricularCourseScopeToEnrollIn(
 		IStudentCurricularPlan studentCurricularPlan,
 		MWEnrolment mwEnrolment,
 		ICurricularCourse curricularCourse,
 		IBranch branch,
-		SuportePersistenteOJB sp)
+		ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
 		IPersistentCurricularCourseScope curricularCourseScopeDAO = sp.getIPersistentCurricularCourseScope();
@@ -634,7 +643,7 @@ public class UpdateStudentEnrolments
 		List studentEnrolments,
 		List oldEnrolments,
 		IStudentCurricularPlan studentCurricularPlan,
-		SuportePersistenteOJB sp)
+		ISuportePersistente sp)
 		throws Exception
 	{
 		List result = new ArrayList();
@@ -650,7 +659,7 @@ public class UpdateStudentEnrolments
 
 			if (degreeCurricularPlan == null)
 			{
-				System.out.println("[ERROR] Degree Curricular Plan Not Found (getEnrolments2Write)!");
+				System.out.println("[ERROR 03.2] Degree Curricular Plan Not Found (getEnrolments2Write)!");
 				throw new Exception();
 			}
 
@@ -659,7 +668,7 @@ public class UpdateStudentEnrolments
 
 			if (branch == null)
 			{
-				System.out.println("[ERROR] Branch Not Found (getEnrolments2Write)!");
+				System.out.println("[ERROR 04.2] Branch Not Found (getEnrolments2Write)!");
 				throw new Exception();
 			}
 
@@ -686,7 +695,7 @@ public class UpdateStudentEnrolments
 		IDegreeCurricularPlan degreeCurricularPlan,
 		IBranch branch,
 		List studentEnrolments,
-		SuportePersistenteOJB sp)
+		ISuportePersistente sp)
 	{
 
 		Iterator iterator = studentEnrolments.iterator();
@@ -715,7 +724,7 @@ public class UpdateStudentEnrolments
 	 * @param sp
 	 * @throws ExcepcaoPersistencia
 	 */
-	private static void annulEnrolments(List enrolments2Annul, SuportePersistenteOJB sp) throws ExcepcaoPersistencia
+	private static void annulEnrolments(List enrolments2Annul, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
 		Iterator iterator = enrolments2Annul.iterator();
 		while (iterator.hasNext())
@@ -761,7 +770,7 @@ public class UpdateStudentEnrolments
 	 * @return
 	 * @throws Exception
 	 */
-	private static List getEnrolments2Annul(MWAluno oldStudent, List studentEnrolments, List oldEnrolments, SuportePersistenteOJB sp)
+	private static List getEnrolments2Annul(MWAluno oldStudent, List studentEnrolments, List oldEnrolments, ISuportePersistente sp)
 		throws Exception
 	{
 		List result = new ArrayList();
@@ -788,7 +797,7 @@ public class UpdateStudentEnrolments
 	 * @param sp
 	 * @return
 	 */
-	private static boolean enrolmentExistsOnAlmeidaServer(IEnrolment enrolment, List oldEnrolments, SuportePersistenteOJB sp)
+	private static boolean enrolmentExistsOnAlmeidaServer(IEnrolment enrolment, List oldEnrolments, ISuportePersistente sp)
 	{
 		Iterator iterator = oldEnrolments.iterator();
 		while (iterator.hasNext())
@@ -840,13 +849,13 @@ public class UpdateStudentEnrolments
 
 		if (executionDegree == null)
 		{
-			System.out.println("[ERROR] the degree has no execution in [" + executionPeriod.getExecutionYear().getYear() + "]!");
+			System.out.println("[ERROR 06] the degree has no execution in [" + executionPeriod.getExecutionYear().getYear() + "]!");
 			return null;
 		} else
 		{
 			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
 			{
-				System.out.println("[ERROR] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
+				System.out.println("[ERROR 07] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
 				return null;
 			} else
 			{
@@ -878,7 +887,7 @@ public class UpdateStudentEnrolments
 		// Get the Fenix Branch.
 		if (mwbranch == null)
 		{
-			System.out.println("[ERROR] the middleware Branch [" + branchCode + "] from degree [" + degreeCode + "] cannot be found!");
+			System.out.println("[ERROR 08] the middleware Branch [" + branchCode + "] from degree [" + degreeCode + "] cannot be found!");
 		}
 
 		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
@@ -896,7 +905,7 @@ public class UpdateStudentEnrolments
 
 		if (branch == null)
 		{
-			System.out.println("[ERROR] the Fenix Branch [" + mwbranch.getDescription() + "] from degree [" + degreeCurricularPlan.getName() + "] cannot be found!");
+			System.out.println("[ERROR 09] the Fenix Branch [" + mwbranch.getDescription() + "] from degree [" + degreeCurricularPlan.getName() + "] cannot be found!");
 		}
 
 		return branch;
@@ -909,7 +918,7 @@ public class UpdateStudentEnrolments
 	 * @param sp
 	 * @throws ExcepcaoPersistencia
 	 */
-	private static void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, SuportePersistenteOJB sp) throws ExcepcaoPersistencia
+	private static void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
 		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 
@@ -940,7 +949,7 @@ public class UpdateStudentEnrolments
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, SuportePersistenteOJB sp) throws ExcepcaoPersistencia
+	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
 		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		if (executionCourse == null) {
@@ -957,7 +966,7 @@ public class UpdateStudentEnrolments
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	private static boolean curricularCourseHasOnlyOneExecutionInGivenPeriod(IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, SuportePersistenteOJB sp) throws ExcepcaoPersistencia
+	private static boolean curricularCourseHasOnlyOneExecutionInGivenPeriod(IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
 		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 		List curricularCourses = persistentCurricularCourse.readbyCourseCode(mwEnrolment.getCoursecode());
@@ -985,4 +994,58 @@ public class UpdateStudentEnrolments
 		}
 	}
 
+	public static ICurricularCourse getCurricularCourse(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws Exception
+	{
+		// Get the list of Fenix CurricularCourses with that code for the selected DegreeCurricularPlan.
+		List curricularCourses =
+			sp.getIPersistentCurricularCourse().readbyCourseCodeAndDegreeCurricularPlan(
+				StringUtils.trim(mwEnrolment.getCoursecode()),
+				degreeCurricularPlan);
+
+		ICurricularCourse curricularCourse = null;
+
+		// Ideally we find only one CurricularCourse but we never know, we may find more or even less.
+		if (curricularCourses.size() != 1)
+		{
+			if (curricularCourses.size() > 1)
+			{
+				System.out.println("[ERROR 05] Several Fenix CurricularCourses with code [" + mwEnrolment.getCoursecode() + "] were found for Degree [" + mwEnrolment.getDegreecode() + "]!");
+				return null;
+			} else // size == 0
+			{
+				// We did not find any CurricularCourse with that code in that DegreeCurricularPlan.
+				// Now we try to read by the CurricularCourse code only.
+				IPersistentCurricularCourse curricularCourseDAO = sp.getIPersistentCurricularCourse();
+				curricularCourses = curricularCourseDAO.readbyCourseCode(StringUtils.trim(mwEnrolment.getCoursecode()));
+
+				if (curricularCourses.size() == 1)
+				{
+					curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+				} else if (curricularCourses.size() > 1)
+				{
+					if (hasDiferentDegrees(curricularCourses))
+					{
+						curricularCourse = getCurricularCourseFromAnotherDegree(mwEnrolment, sp);
+						if (curricularCourse == null)
+						{
+							// NOTE [DAVID]: This is for information only.
+							ReportEnrolment.addReplicatedCurricularCourses(mwEnrolment.getCoursecode(), curricularCourses);
+							return null;
+						}
+					} else
+					{
+						curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+					}
+				} else
+				{
+					ReportEnrolment.addCurricularCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
+					return null;
+				}
+			}
+		} else // curricularCourses.size() == 1
+		{
+			curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+		}
+		return curricularCourse;
+	}
 }

@@ -99,7 +99,9 @@ create table mw_ENROLMENT_temp(
 	universityCode varchar(10),
 	remarks varchar(255),
 	idinternal integer(11) not null auto_increment,
-	primary key (idInternal)
+	primary key (idInternal),
+	index I1 (enrolmentYear),
+	index I2 (enrolmentYear, degreeCode)
 )type= InnoDB;
 
 
@@ -148,9 +150,16 @@ create table mw_STUDENT_CLASS(
 	CLASS_NAME varchar(20)
 )type=InnoDB;
 
-drop table if exists mw_COURSE;
-CREATE TABLE mw_COURSE (
-  courseCode varchar(10) NOT NULL default '',
-  courseName varchar(250) default NULL,
-  universityCode varchar(10) default NULL
-) TYPE=InnoDB;
+-- drop table if exists mw_COURSE;
+-- CREATE TABLE mw_COURSE (
+--   courseCode varchar(10) NOT NULL default '',
+--   courseName varchar(250) default NULL,
+--   universityCode varchar(10) default NULL
+-- ) TYPE=InnoDB;
+
+drop table if exists mw_UNIVERSITY;
+create table mw_UNIVERSITY(
+	universityCode varchar(10),
+	universityName varchar(255)
+)type=InnoDB;
+

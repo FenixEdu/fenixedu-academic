@@ -539,3 +539,9 @@
 	<foreignkey field-ref="keyCurricularCourse"/>
   </reference-descriptor>
 </class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWUniversity" table="mw_UNIVERSITY">
+	<field-descriptor name="universityCode" column="universityCode" jdbc-type="VARCHAR" primarykey="true"/>
+	<field-descriptor name="universityName" column="universityName" jdbc-type="VARCHAR"/>
+</class-descriptor>
+

@@ -101,6 +101,7 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTeacherShiftPercentage;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
+import ServidorPersistente.IPersistentUniversity;
 import ServidorPersistente.IPersistentWebSite;
 import ServidorPersistente.IPersistentWebSiteItem;
 import ServidorPersistente.IPersistentWebSiteSection;
@@ -704,6 +705,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	
 	public IPersistentExternalPerson getIPersistentExternalPerson() {
 		return new ExternalPersonOJB();
+	}
+	
+	public IPersistentUniversity getIPersistentUniversity() {
+		return new UniversityOJB();
 	}
 
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {

@@ -33,7 +33,12 @@ public interface IPersistentEnrolment extends IPersistentObject {
 
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 	public List readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeList(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
+
+	/**
+	 * @deprecated
+	 */
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse , String year) throws ExcepcaoPersistencia;
 	/**
 	 * 
@@ -51,4 +56,8 @@ public interface IPersistentEnrolment extends IPersistentObject {
 	 */
 	public List readByCurricularCourse(ICurricularCourse curricularCourse, String year) throws ExcepcaoPersistencia ;
 	public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(StudentCurricularPlanState state, EnrolmentState state2, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;  
+
+
+	public IEnrolment readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
 }

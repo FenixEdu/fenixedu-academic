@@ -21,6 +21,8 @@ public class StudentCurricularPlanState {
 	public static final int INCOMPLETE = 3;
 	public static final int SCHOOLPARTCONCLUDED = 4;
 	public static final int INACTIVE = 5;
+	// For use in migration process only
+	public static final int PAST = 6;
 
 	public static final StudentCurricularPlanState ACTIVE_OBJ =
 		new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE);
@@ -33,6 +35,10 @@ public class StudentCurricularPlanState {
 			StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
 	public static final StudentCurricularPlanState INACTIVE_OBJ =
 		new StudentCurricularPlanState(StudentCurricularPlanState.INACTIVE);
+
+	public static final StudentCurricularPlanState PAST_OBJ = new StudentCurricularPlanState(StudentCurricularPlanState.PAST);
+
+
 	public static final String ACTIVE_STRING = "Activo";
 	public static final String CONCLUDED_STRING = "Concluido";
 	public static final String INCOMPLETE_STRING = "Incompleto";

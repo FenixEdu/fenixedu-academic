@@ -333,6 +333,9 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 	//		}
 	//	}
 
+	/**
+	 * @deprecated
+	 */
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
 		IStudentCurricularPlan studentCurricularPlan,
 		ICurricularCourseScope curricularCourseScope,
@@ -452,6 +455,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		return (IEnrolment) queryObject(Enrolment.class, criteria);
 
 	}
+
 	public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(
 		StudentCurricularPlanState state,
 		EnrolmentState state2,
@@ -465,4 +469,19 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 
 		return queryList(Enrolment.class, criteria);
 	}
+
+	public IEnrolment readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
+		IStudentCurricularPlan studentCurricularPlan,
+		ICurricularCourseScope curricularCourseScope,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("studentCurricularPlanKey", studentCurricularPlan.getIdInternal());
+			criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
+			criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
+
+			return (IEnrolment) queryObject(Enrolment.class, criteria);
+	}
+
 }

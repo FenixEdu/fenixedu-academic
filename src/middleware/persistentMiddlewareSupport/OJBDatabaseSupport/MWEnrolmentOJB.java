@@ -29,5 +29,4 @@ public class MWEnrolmentOJB extends ObjectFenixOJB implements IPersistentMWEnrol
 		criteria.addEqualTo("number", number);
 		return queryList(MWEnrolment.class, criteria);
 	}
-    
 }
