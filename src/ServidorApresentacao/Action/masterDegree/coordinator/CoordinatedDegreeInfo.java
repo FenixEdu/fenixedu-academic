@@ -43,7 +43,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 			
 	  // Put the selected Degree in Session
 	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) degreeList.get(choosenDegreePosition.intValue());
-		
+	  request.setAttribute("infoExecutionDegree",infoExecutionDegree);	
 	  session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
 	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, candidates.get(choosenDegreePosition.intValue()));
 	  return mapping.findForward("Success");

@@ -70,7 +70,6 @@ public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.ba
 			throw new FenixActionException(e);
 		}
 	  }
-
 	  if (degrees.size() == 1) {
 	  	session.setAttribute(SessionConstants.MASTER_DEGREE, (InfoExecutionDegree) degrees.get(0));
 		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, candidates.get(0));

@@ -49,8 +49,12 @@
 		</html:link> 
 		<br/>
 	<br/>
-	<html:link page="/executionCoursesInformation.do?method=prepareChoice">
-		<%-- <bean:message key="link.coordinator.executionCoursesInformation"/>--%>
+
+	<html:link page="/viewCoordinationTeam.do?method=viewTeam" 
+		paramId="infoExecutionDegreeId"
+		paramName="infoExecutionDegree"
+		paramProperty="idInternal"
+		>
 		Equipa de Coordenação
 		</html:link> 
 	<br/>

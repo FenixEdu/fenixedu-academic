@@ -37,6 +37,13 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 		setCurricularPlan(curricularPlan);
 	}
 
+	/**
+	 * @param executionDegreeId
+	 */
+	public CursoExecucao(Integer executionDegreeId) {
+		setIdInternal(executionDegreeId);
+	}
+
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof ICursoExecucao) {
