@@ -401,10 +401,9 @@ public class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlansOld ext
 			enrolmentEvaluation.setObservation(null);
 			enrolmentEvaluation.setPersonResponsibleForGrade(null);
 			enrolmentEvaluation.setWhen(null);
-
+			enrolmentEvaluation.setAckOptLock(new Integer(1));
+			
 			ReportEnrolment.addEnrolmentEvaluationMigrated();
-
-this.out.println("FOI AQUI 1");
 
 			super.writeTreatedMWEnrollment(mwEnrolment);
 
@@ -450,8 +449,6 @@ this.out.println("FOI AQUI 1");
 
 					ReportEnrolment.addEnrolmentEvaluationMigrated();
 
-this.out.println("FOI AQUI 2");
-					
 					super.writeTreatedMWEnrollment(mwEnrolment);
 
 				} else
@@ -559,6 +556,7 @@ this.out.println("FOI AQUI 2");
 		enrolmentEvaluation.setWhen(newDate);
 		enrolmentEvaluation.setEmployee(super.getEmployee(mwEnrolment));
 		enrolmentEvaluation.setCheckSum(null);
+		enrolmentEvaluation.setAckOptLock(new Integer(1));
 	}
 
 	/**

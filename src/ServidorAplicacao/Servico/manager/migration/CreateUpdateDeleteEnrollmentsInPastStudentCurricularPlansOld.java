@@ -582,7 +582,8 @@ public class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlansOld extend
 				enrolmentEvaluation.setWhen(newDate);
 				enrolmentEvaluation.setEmployee(super.getEmployee(mwEnrolment));
 				enrolmentEvaluation.setCheckSum(null);
-
+				enrolmentEvaluation.setAckOptLock(new Integer(1));
+				
 				this.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
 
 				super.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
@@ -601,6 +602,7 @@ public class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlansOld extend
 					enrolmentEvaluation.setWhen(newDate);
 					enrolmentEvaluation.setEmployee(super.getEmployee(mwEnrolment));
 					enrolmentEvaluation.setCheckSum(null);
+					enrolmentEvaluation.setAckOptLock(new Integer(1));
 					super.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
 
 					super.writeTreatedMWEnrollment(mwEnrolment);
@@ -619,6 +621,7 @@ public class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlansOld extend
 				enrolmentEvaluation.setWhen(newDate);
 				enrolmentEvaluation.setEmployee(super.getEmployee(mwEnrolment));
 				enrolmentEvaluation.setCheckSum(null);
+				enrolmentEvaluation.setAckOptLock(new Integer(1));
 				super.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
 
 				super.writeTreatedMWEnrollment(mwEnrolment);

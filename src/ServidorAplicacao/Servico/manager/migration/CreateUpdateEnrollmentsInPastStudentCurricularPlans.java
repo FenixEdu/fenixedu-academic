@@ -388,6 +388,7 @@ public class CreateUpdateEnrollmentsInPastStudentCurricularPlans
 		enrolmentEvaluation.setWhen(newDate);
 		enrolmentEvaluation.setEmployee(super.getEmployee(mwEnrolment));
 		enrolmentEvaluation.setCheckSum(null);
+		enrolmentEvaluation.setAckOptLock(new Integer(1));
 	}
 
 }

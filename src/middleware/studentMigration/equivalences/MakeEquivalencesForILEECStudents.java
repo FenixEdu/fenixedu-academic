@@ -923,7 +923,8 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 				enrolmentEvaluationToWrite.setGradeAvailableDate(enrolmentEvaluation.getGradeAvailableDate());
 				enrolmentEvaluationToWrite.setWhen(enrolmentEvaluation.getWhen());
 				enrolmentEvaluationToWrite.setEmployee(enrolmentEvaluation.getEmployee());
-
+				enrolmentEvaluationToWrite.setAckOptLock(new Integer(1));
+				
 				enrolmentEvaluation.setCheckSum(null);
 
 				MakeEquivalencesForILEECStudents.enrollmentEvaluationsCreated.put(key, enrolmentEvaluationToWrite);
@@ -1035,7 +1036,8 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 
 			IEnrolmentEvaluation enrolmentEvaluation = MakeEquivalencesForILEECStudents.getLatestEvaluation(enrolment);
 
-			if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+			if (enrolmentEvaluation.getEnrolmentEvaluationType() != null
+				&& enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
 			{
 				List enrolmentsInSameCourse =
 					enrolmentDAO.readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(

@@ -344,21 +344,31 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 		if (((mwEnrolment.getGrade() == null) || (mwEnrolment.getGrade().equals("")))
 			&& super.executionPeriod.equals(currentExecutionPeriod))
 		{
-			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-			enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
-			enrolmentEvaluation.setCheckSum(null);
-			enrolmentEvaluation.setEmployee(null);
-			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-			enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-			enrolmentEvaluation.setExamDate(null);
-			enrolmentEvaluation.setGrade(null);
-			enrolmentEvaluation.setGradeAvailableDate(null);
-			enrolmentEvaluation.setObservation(null);
-			enrolmentEvaluation.setPersonResponsibleForGrade(null);
-			enrolmentEvaluation.setWhen(null);
+			IEnrolmentEvaluation enrolmentEvaluation =
+				enrollmentEvaluationDAO.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
+					enrolment,
+					EnrolmentEvaluationType.NORMAL_OBJ,
+					null);
 
-			ReportEnrolment.addEnrolmentEvaluationMigrated();
+			if (enrolmentEvaluation == null)
+			{
+				enrolmentEvaluation = new EnrolmentEvaluation();
+				enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
+				enrolmentEvaluation.setCheckSum(null);
+				enrolmentEvaluation.setEmployee(null);
+				enrolmentEvaluation.setEnrolment(enrolment);
+				enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+				enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				enrolmentEvaluation.setExamDate(null);
+				enrolmentEvaluation.setGrade(null);
+				enrolmentEvaluation.setGradeAvailableDate(null);
+				enrolmentEvaluation.setObservation(null);
+				enrolmentEvaluation.setPersonResponsibleForGrade(null);
+				enrolmentEvaluation.setWhen(null);
+				enrolmentEvaluation.setAckOptLock(new Integer(1));
+
+				ReportEnrolment.addEnrolmentEvaluationMigrated();
+			}
 			super.writeTreatedMWEnrollment(mwEnrolment);
 		} else
 		{
@@ -469,6 +479,7 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 		enrolmentEvaluation.setWhen(newDate);
 		enrolmentEvaluation.setEmployee(super.getEmployee(mwEnrolment));
 		enrolmentEvaluation.setCheckSum(null);
+		enrolmentEvaluation.setAckOptLock(new Integer(1));
 	}
 
 	/**

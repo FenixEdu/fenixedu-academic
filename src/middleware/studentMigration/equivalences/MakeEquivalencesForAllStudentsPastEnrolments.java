@@ -321,7 +321,8 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				enrolmentToWrite.setEnrolmentState(enrolment.getEnrolmentState());
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(currentStudentCurricularPlan);
-
+				enrolmentToWrite.setAckOptLock(new Integer(1));
+				
 				MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.put(key, enrolmentToWrite);
 				MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentsCreated++;
 			}
@@ -426,6 +427,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				enrolmentEvaluationToWrite.setGradeAvailableDate(enrolmentEvaluation.getGradeAvailableDate());
 				enrolmentEvaluationToWrite.setWhen(enrolmentEvaluation.getWhen());
 				enrolmentEvaluationToWrite.setEmployee(enrolmentEvaluation.getEmployee());
+				enrolmentEvaluationToWrite.setAckOptLock(new Integer(1));
 
 				enrolmentEvaluation.setCheckSum(null);
 
