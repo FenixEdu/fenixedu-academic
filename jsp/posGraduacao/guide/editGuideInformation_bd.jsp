@@ -11,7 +11,7 @@
 <%@ page import="Util.SituationOfGuide" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
 
-   	  <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session"/>  		
+   	  <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session" type="DataBeans.InfoGuide"/>  		
       <bean:define id="number" name="infoGuide" property="number" />
       <bean:define id="year" name="infoGuide" property="year" />
       <bean:define id="version" name="infoGuide" property="version" />
@@ -92,31 +92,61 @@
 			<td><bean:message key="label.masterDegree.administrativeOffice.quantity" /></td>
 			<td><bean:message key="label.masterDegree.administrativeOffice.price" /></td>
 		</tr>
-
-        <logic:iterate id="guideEntry" name="infoGuide" property="infoGuideEntries" indexId="position">
-           	  <bean:define id="entryQuantity" name="guideEntry" property="quantity" />  		
+		
+		<%
+			if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE))
+			{
+		%>
+				<logic:iterate id="guideEntry" name="infoGuide" property="infoGuideEntries" indexId="position">
+           	  		<bean:define id="entryQuantity" name="guideEntry" property="quantity" />  		
         
-           <tr>
-            <td><bean:write name="guideEntry" property="documentType"/></td>
-            <td><bean:write name="guideEntry" property="description"/></td>
-            <td><input type="text" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' ></td>
-            <td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>
-		   </tr>
-        </logic:iterate>
+           			<tr>
+            			<td><bean:write name="guideEntry" property="documentType"/></td>
+            			<td><bean:write name="guideEntry" property="description"/></td>
+            			<input type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
+            			<td><bean:write name="entryQuantity" /></td>
+            			<td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>
+		   			</tr>
+        		</logic:iterate>
 
-		<tr>
-			<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
-			<td><html:textarea property="othersRemarks"/></td>
-			<td><html:text property="othersQuantity"/></td>
-			<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
-		</tr>
+				<tr>
+					<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
+					<td><html:textarea property="othersRemarks"/></td>
+					<td><html:text property="othersQuantity"/></td>
+					<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
+				</tr>
+		
+		<%
+			}
+			else
+			{
+		%>
+        		<logic:iterate id="guideEntry" name="infoGuide" property="infoGuideEntries" indexId="position">
+           	  		<bean:define id="entryQuantity" name="guideEntry" property="quantity" />  		
+        
+           			<tr>
+            			<td><bean:write name="guideEntry" property="documentType"/></td>
+            			<td><bean:write name="guideEntry" property="description"/></td>
+            			<td><input type="text" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' ></td>
+            			<td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>
+		   			</tr>
+        		</logic:iterate>
 
-         <tr>
-         	<td></td>
-         	<td></td>
-         	<td><bean:message key="label.masterDegree.administrativeOffice.guideTotal" />:</td>
-         	<td align="right"><bean:write name="infoGuide" property="total"/> <bean:message key="label.currencySymbol" /></td>
-         </tr>
+				<tr>
+					<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
+					<td><html:textarea property="othersRemarks"/></td>
+					<td><html:text property="othersQuantity"/></td>
+					<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
+				</tr>
+         <%
+         	}
+         %>
+            <tr>
+         		<td></td>
+         		<td></td>
+         		<td><bean:message key="label.masterDegree.administrativeOffice.guideTotal" />:</td>
+         		<td align="right"><bean:write name="infoGuide" property="total"/> <bean:message key="label.currencySymbol" /></td>
+         	</tr>
      </table>
      
      <html:submit property="Alterar">Alterar Informação</html:submit>

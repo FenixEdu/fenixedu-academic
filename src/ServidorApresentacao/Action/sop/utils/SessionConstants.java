@@ -60,6 +60,7 @@ public abstract class SessionConstants {
 	public static final String EXECUTION_DEGREE_OID = "execution_degree_oid";
 	public static final String EXECUTION_PERIOD = "execution_period";
 	public static final String EXECUTION_PERIOD_OID = "executionPeriodOID";
+	public static final String STUDENT_CURRICULAR_PLAN_OID = "student_curricular_plan_oid";
 	public static final String LESSON = "lesson_";
 	public static final String LESSON_OID = "lessonOID";
 	public static final String SHIFT = "shift";
@@ -151,6 +152,7 @@ public abstract class SessionConstants {
 	public static final String MASTER_DEGREE_CANDIDATE_AMMOUNT = "master_degree_candidate_ammount";
 	public static final String DECLARATION_LIST = "declaration_list";
 	public static final String INFO_STUDENT_CURRICULAR_PLAN = "info_student_curricular_plan";
+	public static final String INFO_STUDENT_CURRICULAR_PLAN_LIST = "info_student_curricular_plan_list";
 	public static final String DOCUMENT_REASON = "document_Reason"; 
 	public static final String DEGREE_TYPE = "degree_type"; 
 	public static final String DOCUMENT_REASON_LIST = "document_Reason_list"; 

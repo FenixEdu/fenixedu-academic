@@ -44,7 +44,7 @@
    <strong><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></strong>
    <br>
    <br>
-   <table>
+   <table border="0">
   	   
        <tr>
 		<td><bean:message key="label.masterDegree.administrativeOffice.remarks" /></td>
@@ -61,67 +61,125 @@
 			<td><%= Data.format2DayMonthYear((Date) date) %></td>   
 		</logic:present>
        </tr>
-       <% if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) { %>
-       		<tr>
-    			<td><bean:message key="label.masterDegree.administrativeOffice.payment" /></td>
-    			<td><bean:write name="infoGuide" property="paymentType"/></td>
-    		</tr>
-     	<% } %>
+       <% 
+       		if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) 
+       		{ 
+       %>
+       			<tr>
+    				<td><bean:message key="label.masterDegree.administrativeOffice.payment" /></td>
+    				<td><bean:write name="infoGuide" property="paymentType"/></td>
+    			</tr>
+    			
+    			<tr>
+					<td> &nbsp;	</td>
+				</tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+			
+				<tr>
+					<td>
+						<b><bean:message key="label.masterDegree.administrativeOffice.nonChangeableGuideSituation" /></b>
+					</td>
+				</tr>
 
-	</table>
+     	<% 
+     		}
+     		else
+     		{
+     	%>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+
+	   			<!-- Guide Situation -->
+       			<tr>
+        			<td><bean:message key="label.masterDegree.administrativeOffice.remarks"/> </td>
+       				<td><html:textarea property="remarks"/></td>
+       			</tr>
+       			<tr>
+       				<td>&nbsp;</td>
+       			</tr>
+       			<tr>
+        			<td>
+        				<bean:message key="label.masterDegree.administrativeOffice.newGuideSituation" />
+        			</td>
+        			<td>
+            			<html:select property="guideSituation">
+           					<html:options collection="<%= SessionConstants.GUIDE_SITUATION_LIST %>" property="value" labelProperty="label" />
+            			</html:select>          
+       				</td>
+       			</tr>
+
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+		
+				<!-- Payment Date -->
+        		<tr>
+         			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
+          			<td>
+          				<html:select property="paymentDateYear">
+                			<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+	             		</html:select>
+    	         		<html:select property="paymentDateMonth">
+        	        		<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+            	 		</html:select>
+             			<html:select property="paymentDateDay">
+                			<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+             			</html:select>
+	          		</td>          
+        		</tr>
 	
-	<br>
-	<br>
-	
-	<table>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
 
-	   <!-- Guide Situation -->
-       <tr>
-        <td><bean:message key="label.masterDegree.administrativeOffice.remarks"/> </td>
-       	<td><html:textarea property="remarks"/></td>
-        <td><bean:message key="label.masterDegree.administrativeOffice.newGuideSituation" />
-            <html:select property="guideSituation">
-           		<html:options collection="<%= SessionConstants.GUIDE_SITUATION_LIST %>" property="value" labelProperty="label" />
-            </html:select>          
-       	</td>
-       </tr>
+    			<tr>
+    				<td>
+    					<bean:message key="label.masterDegree.administrativeOffice.payment" />
+    				</td>
+    				<td>
+    					<html:select property="paymentType">
+    						<html:options collection="<%= SessionConstants.PAYMENT_TYPE %>" property="value" labelProperty="label" />
+    					</html:select>     
+    				</td>
+    			</tr>
 
-	</table>
-
-	<br>
-	<br>
-	
-	<table>
-	    <!-- Payment Date -->
-        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
-          <td><html:select property="paymentDateYear">
-                <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
-             </html:select>
-             <html:select property="paymentDateMonth">
-                <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
-             </html:select>
-             <html:select property="paymentDateDay">
-                <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
-             </html:select>
-          </td>          
-        </tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+				<tr>
+					<td> &nbsp;	</td>
+				</tr>
+   				<tr>
+   					<td>
+   						<html:submit property="Alterar">Alterar Situação</html:submit>
+   						<html:reset property="Reset">Dados Originais</html:reset>
+   					</td>
+   				</tr>
+        		
+        <%
+     		}
+        %>
         
    </table>
 
-	<br>
-	<br>
-
-    <bean:message key="label.masterDegree.administrativeOffice.payment" />
-    <html:select property="paymentType">
-    	<html:options collection="<%= SessionConstants.PAYMENT_TYPE %>" property="value" labelProperty="label" />
-    </html:select>     
-
-	<br>
-	<br>
-
-   <html:submit property="Alterar">Alterar Situação</html:submit>
-   <html:reset property="Reset">Dados Originais</html:reset>
    
 </html:form>     
 

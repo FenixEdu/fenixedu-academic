@@ -105,38 +105,38 @@ public class CreateGuideDispatchAction extends DispatchAction
                 throw new FenixActionException(e);
 
             }
-            
+
             if (infoExecutionDegree != null)
             {
                 request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
             }
 
-//            // Get the Degree List
-//
-//            Object args[] = { executionYear };
-//
-//            ArrayList degreeList = null;
-//            try
-//            {
-//                degreeList =
-//                    (ArrayList) ServiceManagerServiceFactory.executeService(
-//                        userView,
-//                        "ReadMasterDegrees",
-//                        args);
-//            }
-//            catch (ExistingServiceException e)
-//            {
-//                throw new ExistingActionException(e);
-//            }
-//
-//            //BeanComparator nameComparator = new
-//            // BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
-//            //Collections.sort(degreeList, nameComparator);
-//            Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
-//            List newDegreeList = degreeList;
-//            List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
-//
-//            session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
+            //            // Get the Degree List
+            //
+            //            Object args[] = { executionYear };
+            //
+            //            ArrayList degreeList = null;
+            //            try
+            //            {
+            //                degreeList =
+            //                    (ArrayList) ServiceManagerServiceFactory.executeService(
+            //                        userView,
+            //                        "ReadMasterDegrees",
+            //                        args);
+            //            }
+            //            catch (ExistingServiceException e)
+            //            {
+            //                throw new ExistingActionException(e);
+            //            }
+            //
+            //            //BeanComparator nameComparator = new
+            //            // BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+            //            //Collections.sort(degreeList, nameComparator);
+            //            Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
+            //            List newDegreeList = degreeList;
+            //            List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
+            //
+            //            session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
             session.removeAttribute(SessionConstants.PRINT_PASSWORD);
             session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
@@ -246,25 +246,6 @@ public class CreateGuideDispatchAction extends DispatchAction
                 throw new FenixActionException(e);
             }
 
-            //            try
-            //            {
-            //                Object args[] = { executionYear, degree };
-            //                infoExecutionDegree =
-            //                    (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-            //                        userView,
-            //                        "ReadDegreeByYearAndCode",
-            //                        args);
-            //
-            //            }
-            //            catch (NonExistingServiceException e)
-            //            {
-            //                throw new NonExistingActionException("A lista de guias para estudantes", e);
-            //            }
-            //            catch (FenixServiceException e)
-            //            {
-            //                throw new FenixActionException(e);
-            //            }
-
             Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
 
             List studentGuideList = null;
@@ -289,20 +270,6 @@ public class CreateGuideDispatchAction extends DispatchAction
 
             session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
 
-            // Verify the chosen degree
-            //            Iterator iterator = degrees.iterator();
-            //            InfoExecutionDegree infoExecutionDegree = null;
-            //            while (iterator.hasNext())
-            //            {
-            //			
-            //                InfoExecutionDegree infoExecutionDegreeTemp = (InfoExecutionDegree) iterator.next();
-            //                if (infoExecutionDegreeTemp
-            //                    .getInfoDegreeCurricularPlan()
-            //                    .getInfoDegree()
-            //                    .getNome()
-            //                    .equals(degree))
-            //                    infoExecutionDegree = infoExecutionDegreeTemp;
-            //            }
             String contributorName = (String) createGuideForm.get("contributorName");
             String contributorAddress = (String) createGuideForm.get("contributorAddress");
 
@@ -325,6 +292,7 @@ public class CreateGuideDispatchAction extends DispatchAction
                         contributorNumberToRead,
                         contributorName,
                         contributorAddress };
+
                 infoGuide =
                     (InfoGuide) ServiceManagerServiceFactory.executeService(
                         userView,
@@ -342,6 +310,11 @@ public class CreateGuideDispatchAction extends DispatchAction
             catch (NonExistingContributorServiceException e)
             {
                 session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
+                ActionError actionError =
+                    new ActionError("error.masterDegree.administrativeOffice.nonExistingContributor");
+                ActionErrors actionErrors = new ActionErrors();
+                actionErrors.add("Unknown", actionError);
+                saveErrors(request, actionErrors);
                 return mapping.getInputForward();
             }
             catch (NonExistingServiceException e)
@@ -387,6 +360,7 @@ public class CreateGuideDispatchAction extends DispatchAction
 
             if (requesterType.equals(GuideRequester.STUDENT_STRING))
             {
+
                 session.removeAttribute(SessionConstants.REQUESTER_TYPE);
                 session.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
                 return mapping.findForward("CreateStudentGuide");

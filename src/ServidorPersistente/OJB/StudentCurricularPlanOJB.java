@@ -51,16 +51,14 @@ public class StudentCurricularPlanOJB
 
     }
 
-	public List readAllActiveStudentCurricularPlan(
-		Integer studentNumber)
-		throws ExcepcaoPersistencia
-	{
-		Criteria crit = new Criteria();
-		crit.addEqualTo("student.number", studentNumber);
-		crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
-		return queryList(StudentCurricularPlan.class, crit);
+    public List readAllActiveStudentCurricularPlan(Integer studentNumber) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("student.number", studentNumber);
+        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        return queryList(StudentCurricularPlan.class, crit);
 
-	}
+    }
 
     public List readAllByDegreeCurricularPlanAndState(
         IDegreeCurricularPlan degreeCurricularPlan,
@@ -180,27 +178,27 @@ public class StudentCurricularPlanOJB
         return queryList(StudentCurricularPlan.class, criteria);
     }
 
-//    public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope)
-//        throws ExcepcaoPersistencia
-//    {
-//        Criteria criteria = new Criteria();
-//        criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
-//        List enrolments = queryList(Enrolment.class, criteria);
-//        List studentCurricularPlans = new ArrayList();
-//        Integer studentCurricularPlanId;
-//        IStudentCurricularPlan helpStudentCurricularPlan = new StudentCurricularPlan();
-//        Iterator iter = enrolments.iterator();
-//        while (iter.hasNext())
-//        {
-//            studentCurricularPlanId =
-//                ((IEnrolment) iter.next()).getStudentCurricularPlan().getIdInternal();
-//            helpStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
-//            IStudentCurricularPlan studentCurricularPlan =
-//                (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan, false);
-//            studentCurricularPlans.add(studentCurricularPlan);
-//        }
-//        return studentCurricularPlans;
-//    }
+    //    public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope)
+    //        throws ExcepcaoPersistencia
+    //    {
+    //        Criteria criteria = new Criteria();
+    //        criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
+    //        List enrolments = queryList(Enrolment.class, criteria);
+    //        List studentCurricularPlans = new ArrayList();
+    //        Integer studentCurricularPlanId;
+    //        IStudentCurricularPlan helpStudentCurricularPlan = new StudentCurricularPlan();
+    //        Iterator iter = enrolments.iterator();
+    //        while (iter.hasNext())
+    //        {
+    //            studentCurricularPlanId =
+    //                ((IEnrolment) iter.next()).getStudentCurricularPlan().getIdInternal();
+    //            helpStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
+    //            IStudentCurricularPlan studentCurricularPlan =
+    //                (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan, false);
+    //            studentCurricularPlans.add(studentCurricularPlan);
+    //        }
+    //        return studentCurricularPlans;
+    //    }
 
     public List readByUsername(String username) throws ExcepcaoPersistencia
     {
@@ -222,9 +220,9 @@ public class StudentCurricularPlanOJB
     //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 24/Set/2003
     /**
 	 * 
-	 * Service rewritten by Naat & Sana to correct bug that cause the returning
-	 * of an empty StudentCurricular when a student does not have an active
-	 * version. The new version now uses Persistence Broker criteria API
+	 * Service rewritten by Naat & Sana to correct bug that cause the returning of an empty
+	 * StudentCurricular when a student does not have an active version. The new version now uses
+	 * Persistence Broker criteria API
 	 */
     public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(
         Integer number,
@@ -232,12 +230,12 @@ public class StudentCurricularPlanOJB
         throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-		List studentPlanState = new ArrayList();
-		studentPlanState.add(StudentCurricularPlanState.ACTIVE_OBJ);
-		studentPlanState.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
-		
-		criteria.addIn("currentState",studentPlanState);
-     //   criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
+        List studentPlanState = new ArrayList();
+        studentPlanState.add(StudentCurricularPlanState.ACTIVE_OBJ);
+        studentPlanState.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
+
+        criteria.addIn("currentState", studentPlanState);
+        //   criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
         criteria.addEqualTo("student.number", number);
         criteria.addEqualTo("student.degreeType", degreeType);
 
@@ -267,6 +265,18 @@ public class StudentCurricularPlanOJB
         criteria.addEqualTo("studentKey", student.getIdInternal());
         criteria.addEqualTo("currentState", state);
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
+    }
+
+    public List readAllByStudentAndDegreeCurricularPlan(
+        IStudent student,
+        IDegreeCurricularPlan degreeCurricularPlan)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+        criteria.addEqualTo("studentKey", student.getIdInternal());
+
+        return queryList(StudentCurricularPlan.class, criteria);
     }
 
 }

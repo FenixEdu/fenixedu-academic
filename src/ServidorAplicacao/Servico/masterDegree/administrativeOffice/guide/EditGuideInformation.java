@@ -242,6 +242,9 @@ public class EditGuideInformation implements IServico {
 					while(guideEntryIterator.hasNext()) {
 				
 						IGuideEntry guideEntry = Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) guideEntryIterator.next());
+						
+						// Reset id internal to allow persistence to write a new version
+						guideEntry.setIdInternal(null);
 	
 						guideEntry.setGuide(newGuideVersion);
 						sp.getIPersistentGuideEntry().write(guideEntry);

@@ -25,7 +25,6 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NoActiveStudentCurricularPlanServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -249,6 +248,7 @@ public class PrepareCreateGuide implements IServico
         if (requesterType.equals(GuideRequester.STUDENT_STRING))
         {
             IStudent student = null;
+
             IStudentCurricularPlan studentCurricularPlan = null;
             try
             {
@@ -256,54 +256,44 @@ public class PrepareCreateGuide implements IServico
                     sp.getIPersistentStudent().readStudentByNumberAndDegreeType(
                         number,
                         TipoCurso.MESTRADO_OBJ);
+
                 if (student == null)
                     throw new NonExistingServiceException("O Aluno", null);
 
-                studentCurricularPlan =
-                    sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-                        student.getNumber(),
-                        TipoCurso.MESTRADO_OBJ);
+                List studentCurricularPlanList =
+                    sp.getIStudentCurricularPlanPersistente().readAllByStudentAndDegreeCurricularPlan(
+                        student,
+                        executionDegree.getCurricularPlan());
 
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
-
-                FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-                newEx.fillInStackTrace();
-                throw newEx;
-            }
-
-            if (studentCurricularPlan == null)
-            {
-                throw new NoActiveStudentCurricularPlanServiceException();
-            }
-
-            // Check if Degree Curricular Plan of Student Curricular Plan contains selected Execution
-            // Degree
-            try
-            {
-                List executionDegreeList =
-                    sp.getICursoExecucaoPersistente().readByDegreeCurricularPlan(
-                        studentCurricularPlan.getDegreeCurricularPlan());
-                if (!executionDegreeList.contains(executionDegree))
+                // check if student curricular plan contains selected execution degree
+                if (studentCurricularPlanList.isEmpty())
                 {
                     throw new NonExistingServiceException("O Aluno", null);
                 }
+
+                studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanList.get(0);
             }
+
             catch (ExcepcaoPersistencia ex)
             {
+
                 FenixServiceException newEx = new FenixServiceException("Persistence layer error");
                 newEx.fillInStackTrace();
                 throw newEx;
             }
 
+            // Check if Degree Curricular Plan of Student Curricular Plan contains selected
+            // Execution
+            // Degree
             //            try
             //            {
-            //                executionDegree =
-            //                    sp.getICursoExecucaoPersistente().readByDegreeCodeAndDegreeCurricularPlanName(
-            //                        studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
-            //                        studentCurricularPlan.getDegreeCurricularPlan().getName());
-            //
+            //                List executionDegreeList =
+            //                    sp.getICursoExecucaoPersistente().readByDegreeCurricularPlan(
+            //                        studentCurricularPlan.getDegreeCurricularPlan());
+            //                if (!executionDegreeList.contains(executionDegree))
+            //                {
+            //                    throw new NonExistingServiceException("O Aluno", null);
+            //                }
             //            }
             //            catch (ExcepcaoPersistencia ex)
             //            {
