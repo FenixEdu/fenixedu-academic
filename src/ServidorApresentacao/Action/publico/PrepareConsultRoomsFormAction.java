@@ -42,6 +42,10 @@ public class PrepareConsultRoomsFormAction extends Action {
         types.add(new LabelValueBean("Plana", (new Integer(TipoSala.PLANA)).toString()));
         request.setAttribute("publico.types", types);
         
+        // keep selected executionPeriod in request
+        request.setAttribute("ePName",request.getParameter("ePName"));
+		request.setAttribute("eYName",request.getParameter("eYName"));
+        
       return mapping.findForward("Sucess");
     } else
       throw new Exception(); 

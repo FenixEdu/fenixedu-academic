@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.search.rooms"/></h2>
 <span class="error"><html:errors/></span>
 <br />
@@ -11,6 +12,10 @@
 	</tr>
 </table>
 <html:form action="/chooseRoomsForm" method="GET">
+<!-------------------------------------------------------------------->
+	<html:hidden  property="ePName" value="<%= ""+request.getAttribute("ePName")%>" /> 			
+	<html:hidden  property="eYName" value="<%=""+request.getAttribute("eYName")%>" /> 			
+<!-------------------------------------------------------------------->
     <table border="0" cellpadding="0" cellspacing="0">
         <tr>
             <td class="tall-td"><bean:message key="property.room.name"/>:</td>

@@ -19,11 +19,15 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Nuno Nunes & David Santos
@@ -60,7 +64,6 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
 		}
-
 		ArrayList executionPeriodsLabelValueList = new ArrayList();
 		for (int i = 0; i < executionPeriods.size(); i++) {
 			InfoExecutionPeriod infoExecutionPeriod =
@@ -72,7 +75,6 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 						+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
 					"" + i));
 		}
-
 		if (executionPeriodsLabelValueList.size() > 1) {
 			request.setAttribute(
 				SessionConstants.LABELLIST_EXECUTIONPERIOD,
@@ -80,42 +82,19 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 		} else {
 			request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
 		}
-
 		/*------------------------------------*/
 
-		// if executionPeriod was previously selected,form has that
-		// value as default
-		// keep (selected or current) executionPeriod in request
-
+		// Keep (selected or current) executionPeriod in request.
+		// If executionPeriod was previously selected,form has that value as default
 		InfoExecutionPeriod selectedExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			setExecutionContext(request);
 
 		if (selectedExecutionPeriod != null) {
 			DynaActionForm indexForm = (DynaActionForm) form;
 			indexForm.set(
 				"index",
-				new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
-			request.setAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				selectedExecutionPeriod);
-
-		} else {
-			Object argsReadCurrentExecutionPeriod[] = {
-			};
-			InfoExecutionPeriod currentExecutionPeriod = null;
-			try {
-				currentExecutionPeriod =
-					(InfoExecutionPeriod) ServiceUtils.executeService(
-						null,
-						"ReadCurrentExecutionPeriod",
-						argsReadExecutionPeriods);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException();
-			}
-			request.setAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				currentExecutionPeriod);
+				new Integer(
+					executionPeriods.indexOf((selectedExecutionPeriod))));
 		}
 		//----------------------------------------------------------		
 
@@ -145,17 +124,65 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 		}
 
 		Integer index = (Integer) indexForm.get("index");
-
 		if (infoExecutionPeriods != null && index != null) {
+			InfoExecutionPeriod selectedExecutionPeriod =
+				(InfoExecutionPeriod) infoExecutionPeriods.get(
+					index.intValue());
+
+			// Set selected executionPeriod in request
+			request.setAttribute("ePName", selectedExecutionPeriod.getName());
 			request.setAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				infoExecutionPeriods.get(index.intValue()));
-			//			session.setAttribute(
-			//				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-			//				infoExecutionPeriods.get(index.intValue()));
+				"eYName",
+				selectedExecutionPeriod.getInfoExecutionYear().getYear());
+
 		}
 
 		return mapping.findForward("choose");
 	}
 
+	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+
+		String ePName = (String) request.getAttribute("ePName");
+		String eYName = (String) request.getAttribute("eYName");
+		if (ePName == null | eYName == null) {
+			ePName = request.getParameter("ePName");
+			eYName = request.getParameter("eYName");
+		}
+
+		InfoExecutionPeriod infoExecutionPeriod = null;
+
+		// If selected executionPeriod in request, read it from DB
+		if (ePName != null & eYName != null) {
+			Object argsReadSelectExecutionPeriod[] =
+				{ ePName, new InfoExecutionYear(eYName)};
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionPeriod",
+					argsReadSelectExecutionPeriod);
+		}
+
+		// If executionPeriod not in request nor in DB, read current
+		if (infoExecutionPeriod == null) {
+			userView = SessionUtils.getUserView(request);
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					userView,
+					"ReadCurrentExecutionPeriod",
+					new Object[0]);
+		}
+		
+//		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+		request.setAttribute("ePName", infoExecutionPeriod.getName());
+		request.setAttribute(
+			"eYName",
+			infoExecutionPeriod.getInfoExecutionYear().getYear());
+
+		return infoExecutionPeriod;
+
+	}
 }

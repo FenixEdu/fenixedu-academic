@@ -10,6 +10,10 @@
   <br/>
   <span class="error"><html:errors/></span>	
 		<html:form action="/viewRoom.do" method="GET">
+		<!-------------------------------------------------------------------->
+			<html:hidden  property="ePName" value="<%= ""+request.getAttribute("ePName")%>" />
+			<html:hidden  property="eYName" value="<%=""+request.getAttribute("eYName")%>" />
+		<!-------------------------------------------------------------------->
 
 			<html:hidden name="roomForm" property="name"/>
 			<html:hidden name="roomForm" property="building"/>

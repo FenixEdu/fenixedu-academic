@@ -305,6 +305,10 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 				request.setAttribute("objectCode", objectCode);
 				request.setAttribute("siteView", siteView);
+				
+				// Keep selected executionPeriod in request
+				request.setAttribute("ePName",request.getParameter("ePName"));
+				request.setAttribute("eYName",request.getParameter("eYName"));
 
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException(e);

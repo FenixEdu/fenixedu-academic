@@ -80,7 +80,10 @@ public abstract class RequestUtils {
 		throws FenixActionException {
 		InfoExecutionYear infoExecutionYear = null;
 		try {
-			String year = request.getParameter("eYName");
+			String year = (String) request.getAttribute("eYName");
+			if (year == null) {
+				year = request.getParameter("eYName");
+			}			
 			Object[] args = { year };
 			infoExecutionYear =
 				(InfoExecutionYear) ServiceUtils.executeService(
@@ -103,7 +106,10 @@ public abstract class RequestUtils {
 		try {
 			InfoExecutionYear infoExecutionYear =
 				getExecutionYearFromRequest(request);
-			String name = request.getParameter("ePName");
+			String name = (String) request.getAttribute("ePName");
+			if (name == null) {
+				name = request.getParameter("ePName");
+			}
 			Object[] args = { name, infoExecutionYear };
 			infoExecutionPeriod =
 				(InfoExecutionPeriod) ServiceUtils.executeService(

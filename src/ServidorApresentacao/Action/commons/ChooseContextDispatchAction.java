@@ -28,6 +28,7 @@ import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -175,13 +176,11 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		if (nextPage != null)
 			session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
-		InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
-		//		InfoExecutionPeriod infoExecutionPeriod =
-		//			(InfoExecutionPeriod) ServiceUtils.executeService(
-		//				null,
-		//				"ReadCurrentExecutionPeriod",
-		//				null);
-		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+		InfoExecutionPeriod infoExecutionPeriod =
+			setExecutionContextPublic(request);
+		System.out.println("### ChooseContextDispatchAction.preparePublic-" +infoExecutionPeriod);
+		//RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+
 		//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
 		/* Criar o bean de semestres */
 		ArrayList semestres = new ArrayList();
@@ -316,8 +315,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				(String) session.getAttribute(SessionConstants.NEXT_PAGE);
 			if (nextPage != null) {
 				return mapping.findForward(nextPage);
-			}				
-			else
+			} else
 				// TODO : throw a proper exception
 				throw new Exception("SomeOne is messing around with the links");
 		} else
@@ -340,10 +338,19 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
-			Integer semestre =
-				((InfoExecutionPeriod) session
-					.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY))
-					.getSemester();
+			InfoExecutionPeriod infoExecutionPeriod = null;
+			try {
+				infoExecutionPeriod = setExecutionContextPublic(request);
+				System.out.println("### ChooseContextDispatchAction.nextPagePublic-" +infoExecutionPeriod);				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			Integer semestre = infoExecutionPeriod.getSemester();
+			//				((InfoExecutionPeriod) session
+			//					.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY))
+			//					.getSemester();
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("curYear");
 
@@ -352,12 +359,12 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 			request.setAttribute("curYear", anoCurricular);
 			request.setAttribute("semester", semestre);
-			InfoExecutionPeriod infoExecutionPeriod =
-				RequestUtils.getExecutionPeriodFromRequest(request);
+			//			InfoExecutionPeriod infoExecutionPeriod =
+			//				RequestUtils.getExecutionPeriodFromRequest(request);
 
-			RequestUtils.setExecutionPeriodToRequest(
-				request,
-				infoExecutionPeriod);
+			//			RequestUtils.setExecutionPeriodToRequest(
+			//				request,
+			//				infoExecutionPeriod);
 
 			Object argsLerLicenciaturas[] =
 				{ infoExecutionPeriod.getInfoExecutionYear()};
@@ -457,31 +464,32 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		}
 		return semesterList;
 	}
-	/**
-	 * Method setInfoDegreeList.
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 */
-	private List setInfoDegreeList(HttpServletRequest request)
-		throws Exception {
 
-		List infoExecutionDegreeList = null;
-		InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
-		Object args[] = { infoExecutionPeriod.getInfoExecutionYear()};
-		infoExecutionDegreeList =
-			(List) ServiceUtils.executeService(
-				null,
-				"ReadExecutionDegreesByExecutionYear",
-				args);
-
-		request.getSession(false).setAttribute(
-			SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
-			infoExecutionDegreeList);
-
-		return infoExecutionDegreeList;
-	}
+	//	/**
+	//	 * Method setInfoDegreeList.
+	//	 * @param mapping
+	//	 * @param form
+	//	 * @param request
+	//	 * @param response
+	//	 */
+	//	private List setInfoDegreeList(HttpServletRequest request)
+	//		throws Exception {
+	//
+	//		List infoExecutionDegreeList = null;
+	//		InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+	//		Object args[] = { infoExecutionPeriod.getInfoExecutionYear()};
+	//		infoExecutionDegreeList =
+	//			(List) ServiceUtils.executeService(
+	//				null,
+	//				"ReadExecutionDegreesByExecutionYear",
+	//				args);
+	//
+	//		request.getSession(false).setAttribute(
+	//			SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
+	//			infoExecutionDegreeList);
+	//
+	//		return infoExecutionDegreeList;
+	//	}
 
 	/**
 	 * Method existencesOfInfoDegree.
@@ -535,4 +543,31 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		}
 		return infoExecutionPeriod;
 	}
+
+	private InfoExecutionPeriod setExecutionContextPublic(HttpServletRequest request)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+
+		// Read executionPeriod from request
+		InfoExecutionPeriod infoExecutionPeriod =
+			RequestUtils.getExecutionPeriodFromRequest(request);
+
+		// If executionPeriod not in request nor in DB, read current
+		if (infoExecutionPeriod == null) {
+			userView = SessionUtils.getUserView(request);
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					userView,
+					"ReadCurrentExecutionPeriod",
+					new Object[0]);
+		}
+
+		// Keep executionPeriod in request
+		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+
+		return infoExecutionPeriod;
+	}
+
 }
