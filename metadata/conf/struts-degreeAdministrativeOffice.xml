@@ -17,6 +17,12 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
 
+		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="infoExecutionDegreeName" type="java.lang.String"/>
+			<form-property name="semester" type="java.lang.String"/>
+			<form-property name="year" type="java.lang.String"/>
+		</form-bean>
+
 		<form-bean name="curricularCourseEnrolmentWithRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
@@ -24,10 +30,11 @@
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
 			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
 		</form-bean>
-
+<!--
 		<form-bean name="curricularCourseEnrolmentWithoutRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
+-->
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================ -->
@@ -85,14 +92,23 @@
 		</action>
 
 		<action	name="getStudentByNumberAndDegreeTypeForm"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.GetStudentByNumberAndDegreeTypeDispatchAction"
-				path="/getStudentByNumberAndDegreeType"
-				input="/getStudentByNumberAndDegreeType.do"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareStudentEnrolmentDispatchAction"
+				path="/prepareStudentEnrolment"
+				input="/prepareStudentEnrolment.do"
 				parameter="method"
 				scope="session"
 				validate="true">
 			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
-			<forward name="startCurricularCourseEnrolmentWithoutRules" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
+			<forward name="startCurricularCourseEnrolmentWithoutRules" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
+		</action>
+
+		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
+				type="ServidorApresentacao.Action.commons.VoidAction"
+				path="/prepareEnrolmentContext"
+				input="/prepareEnrolmentContext.do"
+				scope="session"
+				validate="false">
+			<forward name="Success" path="df.page.main"/>
 		</action>
 
 		<action	name="curricularCourseEnrolmentWithRulesForm"
@@ -115,7 +131,7 @@
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
 		</action>
-
+<!--
 		<action	name="curricularCourseEnrolmentWithoutRulesForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
 				path="/curricularCourseEnrolmentWithoutRulesManager"
@@ -136,13 +152,15 @@
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
 		</action>
+-->
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions =========================== -->
-	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources"/>
+	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADMIN_OFFICE_RESOURCES" null="false"/>
+	<message-resources parameter="ServidorApresentacao.StudentResources"/>
 <!--
 	<message-resources parameter="ServidorApresentacao.ApplicationResources"/>
 	<message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>

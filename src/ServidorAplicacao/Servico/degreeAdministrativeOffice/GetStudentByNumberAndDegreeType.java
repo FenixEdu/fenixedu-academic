@@ -1,9 +1,9 @@
 package ServidorAplicacao.Servico.degreeAdministrativeOffice;
 
+import DataBeans.InfoStudent;
+import DataBeans.util.Cloner;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
@@ -11,41 +11,40 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
-
 /**
  * @author David Santos
  * 10/Jun/2003
  */
 
-public class GetUserViewFromStudentNumberAndDegreeType implements IServico {
+public class GetStudentByNumberAndDegreeType implements IServico {
 
-	private static GetUserViewFromStudentNumberAndDegreeType _servico = new GetUserViewFromStudentNumberAndDegreeType();
+	private static GetStudentByNumberAndDegreeType _servico = new GetStudentByNumberAndDegreeType();
 
-	public static GetUserViewFromStudentNumberAndDegreeType getService() {
+	public static GetStudentByNumberAndDegreeType getService() {
 		return _servico;
 	}
 
-	private GetUserViewFromStudentNumberAndDegreeType() {
+	private GetStudentByNumberAndDegreeType() {
 	}
 
 	public final String getNome() {
-		return "GetUserViewFromStudentNumberAndDegreeType";
+		return "GetStudentByNumberAndDegreeType";
 	}
 
-	public IUserView run(Integer degreeTypeInt, Integer studentNumber) throws FenixServiceException {
+	public InfoStudent run(Integer degreeTypeInt, Integer studentNumber) throws FenixServiceException {
 
-		IUserView userView = null;
+		InfoStudent student = null;
 		try {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
 			TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-			IStudent student = studentDAO.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-			if(student != null) {
-				userView = new UserView(student.getPerson().getUsername(), student.getPerson().getPersonRoles());
+			IStudent student2 = studentDAO.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+			if(student2 != null) {
+				student = Cloner.copyIStudent2InfoStudent(student2);
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		return userView;
+		return student;
 	}
 }

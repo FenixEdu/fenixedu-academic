@@ -6,13 +6,13 @@
 <bean:define id="degreeTypeList" name="<%= SessionConstants.DEGREE_TYPE %>"/>
 
 <center>
-<h2><bean:message key="title.student.enrolment.without.rules"/></h2>
-<html:form action="/getStudentByNumberAndDegreeType.do?method=withoutRules">
+<h2><bean:message bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="title.student.enrolment.without.rules"/></h2>
+<html:form action="/prepareStudentEnrolment.do?method=withoutRules">
 	<%--<html:hidden property="page" value="1"/>--%>
 	<html:hidden property="method" value="start"/>
 	<table border="0">
 		<tr>
-			<td align="left"><bean:message key="label.choose.degree.type"/>:&nbsp;</td>
+			<td align="left"><bean:message bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.choose.degree.type"/>:&nbsp;</td>
 			<td align="left">
 				<html:select property="degreeType" size="1">
 					<html:options collection="degreeTypeList" property="value" labelProperty="label"/>
@@ -20,7 +20,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left"><bean:message key="label.choose.student"/>:&nbsp;</td>
+			<td align="left"><bean:message bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.choose.student"/>:&nbsp;</td>
 			<td align="left">
 				<input type="text" name="studentNumber" size="5" value=""/>
 				<%--<html:text property="studentNumber" size="5" value=""/>--%>
@@ -29,7 +29,7 @@
 	</table>
 	<p>&nbsp;</p>
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.submit.degree.type.and.student"/>
+		<bean:message bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="button.submit.degree.type.and.student"/>
 	</html:submit>
 </html:form>
 </center>
