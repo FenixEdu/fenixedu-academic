@@ -61,9 +61,8 @@ public class LoadCourses extends DataFileLoader {
 			}
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
-			System.out.println("LoadCourses: " + e.toString());
 		}
-		System.out.println("BRONCAS = "+i);
+
 	}
 
 	private static void carregarDisciplinaCurricular(String line)
@@ -134,7 +133,6 @@ public class LoadCourses extends DataFileLoader {
 				planoCurricularCursoTemp);
 
 		if (planoCurricularCurso == null) {
-			System.out.println("------------- BRONCA --------");
 			planoCurricularCurso = planoCurricularCursoTemp;
 		}
 
@@ -151,8 +149,8 @@ public class LoadCourses extends DataFileLoader {
 		if (criteriaCurricularCourse == null ){
 			iDisciplinaCurricularPersistente.lockWrite(disciplinaCurricular);
 		}else{
-			System.out.println("Course already in database:");
-			System.out.println("\t"+line);
+//			System.out.println("Course already in database:");
+//			System.out.println("\t"+line);
 			i++;
 		}
 			

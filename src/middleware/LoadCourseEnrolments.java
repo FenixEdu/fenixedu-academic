@@ -90,16 +90,11 @@ public class LoadCourseEnrolments extends DataFileLoader {
 			// Percorrer a lista que vem da secretaria.
 			// Vamos inscrever todos os alunos.
 			listaInscricoesFinal = new ArrayList();
-			System.out.println(
-				"Vai percorrer a lista vinda da secretaria size = "
-					+ listaInscricoes.size());
 			for (int i = 0; i < listaInscricoes.size(); i++) {
-				System.out.println("1");
 				// Para cada inscricao na secretaria
 				AlunoDisciplinaCurricular alunoDisciplinaCurricular =
 					(AlunoDisciplinaCurricular) listaInscricoes.get(i);
 
-				System.out.println("2");
 				// Ler o aluno
 				IStudent studentCriteria = new Student();
 				studentCriteria.setNumber(
@@ -109,9 +104,6 @@ public class LoadCourseEnrolments extends DataFileLoader {
 				IStudent student =
 					(IStudent) iAlunoPersistente.readDomainObjectByCriteria(
 						studentCriteria);
-				System.out.println("student = " + student.getNumber());
-
-				System.out.println("3");
 				// Ler o plano curricular do aluno
 				IStudentCurricularPlan studentCurricularPlanCriteria =
 					new StudentCurricularPlan();
@@ -125,7 +117,6 @@ public class LoadCourseEnrolments extends DataFileLoader {
 							.readDomainObjectByCriteria(
 						studentCurricularPlanCriteria);
 
-				System.out.println("4");
 				// Ler a disciplina em que o aluno se está a inscreveer
 				ICurricularCourse curricularCourseCriteria =
 					new CurricularCourse();
@@ -137,16 +128,7 @@ public class LoadCourseEnrolments extends DataFileLoader {
 						ICurricularCourse) iDisciplinaCurricularPersistente
 							.readDomainObjectByCriteria(
 						curricularCourseCriteria);
-				System.out.println(
-					"disciplinaCurricular nome esperado = "
-						+ curricularCourseCriteria.getName());
-				System.out.println(
-					"disciplinaCurricular sigla esperada = "
-						+ curricularCourseCriteria.getCode());
-				System.out.println(
-					"disciplinaCurricular = " + curricularCourse.getName());
 
-				System.out.println("5");
 				// Ver se a inscricao do aluno na disciplina está na base de dados do CIAPL
 				IEnrolment enrolmentCriteria = new Enrolment();
 				enrolmentCriteria.setCurricularCourse(curricularCourseCriteria);
@@ -157,11 +139,7 @@ public class LoadCourseEnrolments extends DataFileLoader {
 						IEnrolment) persistentEnrolment
 							.readDomainObjectByCriteria(
 						enrolmentCriteria);
-				System.out.println("enrolment == null? " + (enrolment == null));
-
-				System.out.println("6");
 				if (enrolment == null) {
-					System.out.println("7");
 					// A inscricao nao esta na base de dados do CIAPL
 					// Adicionar a inscricao do aluno a base de dados CIAPL
 					enrolment = new Enrolment();
@@ -198,20 +176,18 @@ public class LoadCourseEnrolments extends DataFileLoader {
 							frequenta.setAluno(student);
 							frequentaPersistente.lockWrite(frequenta);
 						} else {
-							System.out.println(
-								"Nao foi encontrado a disciplina execucao equivalente da disciplina curricular: "
-									+ alunoDisciplinaCurricular
-										.getNomeDisciplinaCurricular());
+//							System.out.println(
+//								"Nao foi encontrado a disciplina execucao equivalente da disciplina curricular: "
+//									+ alunoDisciplinaCurricular
+//										.getNomeDisciplinaCurricular());
 						}
 					}
 
 				} else {
-					System.out.println("8");
 					// A inscricao ja esta na base de dados do CIAPL
 					// Nao se faz nada
 				}
 
-				System.out.println("9");
 				// Construcao da lista de inscricoes com objectos do dominio
 				listaInscricoesFinal.add(enrolment);
 
@@ -231,8 +207,6 @@ public class LoadCourseEnrolments extends DataFileLoader {
 			sp.iniciarTransaccao();
 
 			// Percorrer a lista
-			System.out.println(
-				"Vai percorrer a lista vinda da base	de dados");
 			for (int j = 0; j < listEnrolmentsCiapl.size(); j++) {
 				// Para cada inscricao
 				IEnrolment enrolment = (IEnrolment) listEnrolmentsCiapl.get(j);
@@ -286,17 +260,17 @@ public class LoadCourseEnrolments extends DataFileLoader {
 						// Apagar a Inscricao
 						persistentEnrolment.delete(enrolment);
 					} else {
-						System.out.println(
-							"A disciplina "
-								+ curricularCourse.getCode()
-								+ "-"
-								+ curricularCourse.getName()
-								+ " na licenciatura "
-								+ curricularCourse
-									.getDegreeCurricularPlan()
-									.getCurso()
-									.getSigla()
-								+ " não tem execução!");
+//						System.out.println(
+//							"A disciplina "
+//								+ curricularCourse.getCode()
+//								+ "-"
+//								+ curricularCourse.getName()
+//								+ " na licenciatura "
+//								+ curricularCourse
+//									.getDegreeCurricularPlan()
+//									.getCurso()
+//									.getSigla()
+//								+ " não tem execução!");
 
 					}
 				}

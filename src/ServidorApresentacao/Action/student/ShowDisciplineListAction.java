@@ -64,16 +64,16 @@ public class ShowDisciplineListAction extends Action {
 						"ReadCourseByStudent",
 						argsReadCourseByStudent);
 			if (degree!=null) {
-				System.out.println(degree);
+//				System.out.println(degree);
 				
 				// TODO : This session attribute name should be infoDegree
 				session.setAttribute("infoCourse", degree);
 			} else {
-				System.out.println("course esta a chegar null a Action");
+//				System.out.println("course esta a chegar null a Action");
 			}
-					System.out.println("acabeiServico");
+//					System.out.println("acabeiServico");
 				} catch (Exception e) {
-					System.out.println("entrei" + e);
+//					System.out.println("entrei" + e);
 					return mapping.getInputForward();
 				}
 
@@ -88,7 +88,7 @@ public class ShowDisciplineListAction extends Action {
 			DataView data = (DataView) gestor.executar(null, "ObterData", argumentos);
 			//request.setAttribute("Data", data);
 			session.setAttribute("Data", data);
-			System.out.println("Acabei de fazer request da data");
+//			System.out.println("Acabei de fazer request da data");
 
 
 		return mapping.findForward("viewDisciplinesList");

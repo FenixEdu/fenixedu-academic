@@ -73,14 +73,14 @@ public class LoadStudents extends DataFileLoader {
 
 			SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		} catch (Exception e) {
-			System.out.println("ATENCAO: LoadStudents: " + e.toString());
+//			System.out.println("ATENCAO: LoadStudents: " + e.toString());
 
 			try {
 				SuportePersistenteOJB.getInstance().cancelarTransaccao();
 			} catch (Exception x) {
-				System.out.println(
-					"ATENCAO: LoadStudents: cancelarTransaccao: "
-						+ e.toString());
+//				System.out.println(
+//					"ATENCAO: LoadStudents: cancelarTransaccao: "
+//						+ e.toString());
 			}
 		}
 	}

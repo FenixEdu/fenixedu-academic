@@ -22,22 +22,22 @@ public abstract class DataFileLoader {
 	
 	public DataFileLoader() throws IOException{
 		Properties properties = new Properties();
-		System.out.println(DataFileLoader.CONFIG_FILE);
+//		System.out.println(DataFileLoader.CONFIG_FILE);
 		
 		InputStream input =getClass().getResourceAsStream(DataFileLoader.CONFIG_FILE); 
 		properties.load(input);
 		String className = getClass().getName();
 		fieldSeparator = properties.getProperty(className+".fieldSeparator");
 		dataFilePath = properties.getProperty(className+".dataFilePath");
-		System.out.println(getClass().getName());
-		System.out.println("Field Separator:("+fieldSeparator+")");
-		
-		System.out.print("Data File Path:("+dataFilePath+")");
+//		System.out.println(getClass().getName());
+//		System.out.println("Field Separator:("+fieldSeparator+")");
+//		
+//		System.out.print("Data File Path:("+dataFilePath+")");
 		if (dataFilePath != null && dataFilePath.startsWith("\\")) {
 			System.out.print("(\\"+dataFilePath+")");
 		}
 		else{
-			System.out.print("("+dataFilePath+")");			
+//			System.out.print("("+dataFilePath+")");			
 		}
 	}
 	/**

@@ -172,10 +172,10 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 				List infoShifts = (List) gestor.executar(null, "SelectExecutionShiftsWithAssociatedLessonsAndClasses", argsSelectShifts);
 
 				if(infoShifts != null && !infoShifts.isEmpty()) {
-					System.out.println("publico.infoShifts não é vazio... :)");
+//					System.out.println("publico.infoShifts não é vazio... :)");
 					session.setAttribute("publico.infoShifts", infoShifts);
 				} else {
-					System.out.println("publico.infoShifts é vazio... :(");
+//					System.out.println("publico.infoShifts é vazio... :(");
 				}
 				
 				session.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExecCourse);
