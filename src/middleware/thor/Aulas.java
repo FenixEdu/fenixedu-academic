@@ -5,122 +5,111 @@
 package middleware.thor;
 
 
-public class Aulas 
-{
+public class Aulas {
 	private long id;
-	
-  private long dia;
 
-  private String disciplina;
+	private long dia;
 
-  private long fixa;
+	private String disciplina;
 
-  private long hora;
+	private long fixa;
 
-  private long numepoca;
+	private long hora;
 
-  private long numturno;
+	private long numepoca;
 
-  private String sala;
+	private long numturno;
 
-  private String tipoaula;
+	private String sala;
 
-  private String turma;
+	private String tipoaula;
 
-  public long getDia()
-  {
-     return this.dia;
-  }
-  public void setDia(long param)
-  {
-    this.dia = param;
-  }
+	private String turma;
 
+	public long getDia() {
+		return this.dia;
+	}
+	public void setDia(long param) {
+		this.dia = param;
+	}
 
-  public String getDisciplina()
-  {
-     return this.disciplina;
-  }
-  public void setDisciplina(String param)
-  {
-    this.disciplina = param;
-  }
+	public String getDisciplina() {
+		return this.disciplina;
+	}
+	public void setDisciplina(String param) {
+		this.disciplina = param;
+	}
 
+	public long getFixa() {
+		return this.fixa;
+	}
+	public void setFixa(long param) {
+		this.fixa = param;
+	}
 
-  public long getFixa()
-  {
-     return this.fixa;
-  }
-  public void setFixa(long param)
-  {
-    this.fixa = param;
-  }
+	public long getHora() {
+		return this.hora;
+	}
+	public void setHora(long param) {
+		this.hora = param;
+	}
 
+	public long getNumepoca() {
+		return this.numepoca;
+	}
+	public void setNumepoca(long param) {
+		this.numepoca = param;
+	}
 
-  public long getHora()
-  {
-     return this.hora;
-  }
-  public void setHora(long param)
-  {
-    this.hora = param;
-  }
+	public long getNumturno() {
+		return this.numturno;
+	}
+	public void setNumturno(long param) {
+		this.numturno = param;
+	}
 
+	public String getSala() {
+		return this.sala;
+	}
+	public void setSala(String param) {
+		this.sala = param;
+	}
 
-  public long getNumepoca()
-  {
-     return this.numepoca;
-  }
-  public void setNumepoca(long param)
-  {
-    this.numepoca = param;
-  }
+	public String getTipoaula() {
+		return this.tipoaula;
+	}
+	public void setTipoaula(String param) {
+		this.tipoaula = param;
+	}
 
+	public String getTurma() {
+		return this.turma;
+	}
+	public void setTurma(String param) {
+		this.turma = param;
+	}
 
-  public long getNumturno()
-  {
-     return this.numturno;
-  }
-  public void setNumturno(long param)
-  {
-    this.numturno = param;
-  }
+	public String toString() {
+		return " [Dia] "
+			+ dia
+			+ " [Disciplina] "
+			+ disciplina
+			+ " [Fixa] "
+			+ fixa
+			+ " [Hora] "
+			+ hora
+			+ " [NumEpoca] "
+			+ numepoca
+			+ " [NumTurno] "
+			+ numturno
+			+ " [Sala] "
+			+ sala
+			+ " [TipoAula] "
+			+ tipoaula
+			+ " [Turma] "
+			+ turma;
 
-
-  public String getSala()
-  {
-     return this.sala;
-  }
-  public void setSala(String param)
-  {
-    this.sala = param;
-  }
-
-
-  public String getTipoaula()
-  {
-     return this.tipoaula;
-  }
-  public void setTipoaula(String param)
-  {
-    this.tipoaula = param;
-  }
-
-
-  public String getTurma()
-  {
-     return this.turma;
-  }
-  public void setTurma(String param)
-  {
-    this.turma = param;
-  }
-
-
-  public String toString(){
-    return  " [Dia] " + dia + " [Disciplina] " + disciplina + " [Fixa] " + fixa + " [Hora] " + hora + " [NumEpoca] " + numepoca + " [NumTurno] " + numturno + " [Sala] " + sala + " [TipoAula] " + tipoaula + " [Turma] " + turma;
-
-  }
+	}
 	/**
 	 * @return
 	 */
@@ -135,5 +124,22 @@ public class Aulas
 		this.id = id;
 	}
 
-}
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof Aulas) {
+			Aulas aula = (Aulas) obj;
 
+			resultado =
+				this.dia == aula.dia
+					&& this.hora == aula.hora
+					&& this.sala.equals(aula.sala);
+		}
+
+		return resultado;
+	}
+	
+	public String getHashKey() {
+		return "" + hora + dia + sala;
+	}
+
+}

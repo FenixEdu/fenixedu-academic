@@ -45,7 +45,7 @@ public class LoadNomeDisciplinas extends LoadDataFile {
 	}
 
 	protected String getFilename() {
-		return "etc/migrationNextSemester/NOMEDIS_2003.TXT";
+		return "etc/migrationNextSemester/NOMEDIS.TXT";
 	}
 
 	protected String getFieldSeparator() {

@@ -30,6 +30,10 @@ public class Almeida_disc
   private double teopra;
 
   private long tipo;
+  
+  private double credits;
+  
+  private long orientation;
 
   public long getAnodis()
   {
@@ -155,5 +159,33 @@ public class Almeida_disc
     return  " [anoDis] " + anodis + " [codCur] " + codcur + " [codDis] " + coddis + " [codInt] " + codint + " [codRam] " + codram + " [lab] " + lab + " [nomeDis] " + nomedis + " [pra] " + pra + " [semDis] " + semdis + " [teo] " + teo + " [teoPra] " + teopra + " [tipo] " + tipo;
 
   }
+/**
+ * @return
+ */
+public double getCredits() {
+	return credits;
+}
+
+/**
+ * @return
+ */
+public long getOrientation() {
+	return orientation;
+}
+
+/**
+ * @param credits
+ */
+public void setCredits(double credits) {
+	this.credits = credits;
+}
+
+/**
+ * @param orientation
+ */
+public void setOrientation(long orientation) {
+	this.orientation = orientation;
+}
+
 }
 

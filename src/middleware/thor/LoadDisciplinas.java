@@ -54,38 +54,53 @@ public class LoadDisciplinas extends LoadDataFile {
 		StringTokenizer stringTokenizer =
 			new StringTokenizer(line, getFieldSeparator());
 
-		String codigoDisciplina = stringTokenizer.nextToken();
-		String codigoCurso = stringTokenizer.nextToken();
-		String codigoRamo = stringTokenizer.nextToken();
-		String ano = stringTokenizer.nextToken();
-		String semestre = stringTokenizer.nextToken();
-		String tipoDisciplina = stringTokenizer.nextToken(); // (opção ou não)
-		String teorica = stringTokenizer.nextToken().replace(',', '.');
-		String pratica = stringTokenizer.nextToken().replace(',', '.');
-		String laboratorio = stringTokenizer.nextToken().replace(',', '.');
-		String teoricopratica = stringTokenizer.nextToken().replace(',', '.');
+		String anoLectivo = stringTokenizer.nextToken(); // New
 
-		Almeida_disc almeida_disc = new Almeida_disc();
-		almeida_disc.setCodint(loader.numberElementsWritten + 1);
-		if (codigoCurso.charAt(0) == '0')
-			codigoCurso.substring(1);
-		almeida_disc.setCodcur((new Integer(codigoCurso)).longValue());
-		almeida_disc.setCodram((new Integer(codigoRamo)).longValue());
-		almeida_disc.setAnodis((new Integer(ano)).longValue());
-		almeida_disc.setSemdis((new Integer(semestre)).longValue());
-		almeida_disc.setCoddis(codigoDisciplina);
-		almeida_disc.setTipo((new Integer(tipoDisciplina)).longValue());
-		almeida_disc.setTeo((new Double(teorica)).doubleValue());
-		almeida_disc.setTeopra((new Double(teoricopratica)).doubleValue());
-		almeida_disc.setPra((new Double(pratica)).doubleValue());
-		almeida_disc.setLab((new Double(laboratorio)).doubleValue());
+		if (anoLectivo.equals("2003")) {
 
-		Almeida_coddisc almeida_coddisc =
-			persistentObjectOJB.readAlmeidaCoddisc(codigoDisciplina);
-		almeida_disc.setNomedis(almeida_coddisc.getNomedis());
+			String codigoDisciplina = stringTokenizer.nextToken();
+			String codigoCurso = stringTokenizer.nextToken();
+			String codigoRamo = stringTokenizer.nextToken();
+			String ano = stringTokenizer.nextToken();
+			String semestre = stringTokenizer.nextToken();
+			String tipoDisciplina = stringTokenizer.nextToken();
+			// (opção ou não)
+			String teorica = stringTokenizer.nextToken().replace(',', '.');
+			String pratica = stringTokenizer.nextToken().replace(',', '.');
+			String laboratorio = stringTokenizer.nextToken().replace(',', '.');
+			String teoricopratica =
+				stringTokenizer.nextToken().replace(',', '.');
+			String creditos = stringTokenizer.nextToken().replace(',', '.');   // New
+			String orientacao = stringTokenizer.nextToken();   // New
 
-		//writeElement(almeida_disc);
-		processCurricularCourse(almeida_disc);
+			Almeida_disc almeida_disc = new Almeida_disc();
+			almeida_disc.setCodint(loader.numberElementsWritten + 1);
+			if (codigoCurso.charAt(0) == '0')
+				codigoCurso.substring(1);
+			almeida_disc.setCodcur((new Integer(codigoCurso)).longValue());
+			almeida_disc.setCodram((new Integer(codigoRamo)).longValue());
+			almeida_disc.setAnodis((new Integer(ano)).longValue());
+			almeida_disc.setSemdis((new Integer(semestre)).longValue());
+			almeida_disc.setCoddis(codigoDisciplina);
+			almeida_disc.setTipo((new Integer(tipoDisciplina)).longValue());
+			almeida_disc.setTeo((new Double(teorica)).doubleValue());
+			almeida_disc.setTeopra((new Double(teoricopratica)).doubleValue());
+			almeida_disc.setPra((new Double(pratica)).doubleValue());
+			almeida_disc.setLab((new Double(laboratorio)).doubleValue());
+			almeida_disc.setCredits((new Double(creditos)).doubleValue());
+			try {
+				almeida_disc.setOrientation((new Integer(orientacao)).longValue());
+			} catch (NumberFormatException ex) {
+				almeida_disc.setOrientation(0);
+			}
+
+			Almeida_coddisc almeida_coddisc =
+				persistentObjectOJB.readAlmeidaCoddisc(codigoDisciplina);
+			almeida_disc.setNomedis(almeida_coddisc.getNomedis());
+
+			//writeElement(almeida_disc);
+			processCurricularCourse(almeida_disc);
+		}
 	}
 
 	private void processCurricularCourse(Almeida_disc almeida_disc) {
@@ -115,6 +130,7 @@ public class LoadDisciplinas extends LoadDataFile {
 						new CurricularCourseType(
 							CurricularCourseType.OPTIONAL_COURSE));
 				}
+				curricularCourse.setCredits(new Double(almeida_disc.getCredits()));
 
 				processCurricularCourseScope(curricularCourse, almeida_disc);
 				// Deprecated fields ------------------
@@ -123,7 +139,6 @@ public class LoadDisciplinas extends LoadDataFile {
 				curricularCourse.setLabHours(null);
 				curricularCourse.setTheoPratHours(null);
 				//-------------------------------------
-				curricularCourse.setCredits(null); // not available
 				curricularCourse.setMandatory(null); //	not available
 				writeElement(curricularCourse);
 				numberElementsWritten++;
@@ -202,6 +217,13 @@ public class LoadDisciplinas extends LoadDataFile {
 		curricularCourseScope.setMaxIncrementNac(null);
 		curricularCourseScope.setMinIncrementNac(null);
 		curricularCourseScope.setWeigth(null);
+		curricularCourseScope.setTheoreticalHours(
+			new Double(almeida_disc.getTeo()));
+		curricularCourseScope.setTheoPratHours(
+			new Double(almeida_disc.getTeopra()));
+		curricularCourseScope.setPraticalHours(
+			new Double(almeida_disc.getPra()));
+		curricularCourseScope.setLabHours(new Double(almeida_disc.getLab()));
 
 		// Write this elemente
 		writeElement(curricularCourseScope);
@@ -266,7 +288,7 @@ public class LoadDisciplinas extends LoadDataFile {
 	}
 
 	protected String getFilename() {
-		return "etc/migrationNextSemester/DISCIPLINAS_2003.TXT";
+		return "etc/migrationNextSemester/DISCIPLINAS.TXT";
 	}
 
 	protected String getFieldSeparator() {
@@ -278,7 +300,7 @@ public class LoadDisciplinas extends LoadDataFile {
 	 */
 	protected String getFilenameOutput() {
 
-		return "etc/migrationNextSemester/DISCIPLINAS_2003_PROBLEM.TXT";
+		return "etc/migrationNextSemester/DISCIPLINAS_PROBLEM.TXT";
 	}
 
 }
