@@ -238,6 +238,7 @@ public class InfoSection {
 	 */
 	public String toString() {
 		String result = "[INFOSECTION";
+		result += ", internalCode=" + internalCode;
 		result += ", name=" + name;
 		result += ", sectionOrder=" + sectionOrder;
 		result += ", infoSite=" + getInfoSite();
