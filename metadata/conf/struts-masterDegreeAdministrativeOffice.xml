@@ -181,6 +181,10 @@
             <form-property name="page" type="java.lang.Integer" />
         	<form-property name="quantityList" type="java.lang.String" />
 			<form-property name="contributor" type="java.lang.String" />
+			<form-property name="othersRemarks" type="java.lang.String" />
+			<form-property name="othersPrice" type="java.lang.String" />
+			<form-property name="othersQuantity" type="java.lang.String" />
+			
       </form-bean>
 
 
@@ -428,6 +432,12 @@
               validate="true">
        		 <exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       		 <exception type="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+		                key="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
          <forward name="PrepareReady" path="/guide/editGuideInformation.jsp"/> 
          <forward name="EditInformationSuccess" path="/guide/visualizeGuide.jsp"/> 

@@ -13,6 +13,7 @@ import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.util.Cloner;
 import Dominio.Guide;
+import Dominio.GuideEntry;
 import Dominio.GuideSituation;
 import Dominio.IContributor;
 import Dominio.ICursoExecucao;
@@ -24,10 +25,13 @@ import Dominio.IPessoa;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
+import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CalculateGuideTotal;
+import Util.DocumentType;
+import Util.GraduationType;
 import Util.SituationOfGuide;
 import Util.State;
 
@@ -61,14 +65,18 @@ public class EditGuideInformation implements IServico {
 		return "EditGuideInformation";
 	}
 
-	public InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber) throws Exception {
+	public InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber, String othersRemarks,
+						 Integer othersQuantity, Double othersPrice) throws Exception {
 
 		ISuportePersistente sp = null;
+		
+		// This will be the flag that indicates if a change has been made to the Guide
+		// No need to anything if there's no change ...
+		boolean change = false;
 
-		// check if it's needed to change the Contributor
 		IContributor contributor = null;
 		IGuide guide = null;
-		
+		IGuideEntry othersGuideEntry = null;
 		
 		// Safety check to see if the Guide can be changed
 		this.chekIfChangeable(infoGuide);
@@ -84,16 +92,17 @@ public class EditGuideInformation implements IServico {
 			throw newEx;
 		}
 		
-		
+		// check if it's needed to change the Contributor		
 		if ((contributorNumber != null) && (!infoGuide.getInfoContributor().getContributorNumber().equals(contributorNumber))){
 			// Read the new Contributor
+			change = true;
 			try {
 				sp = SuportePersistenteOJB.getInstance();
 				
 				contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
 				guide.setContributor(contributor);
 				
-				// Make sure that vaerithing is written before reading ...
+				// Make sure that everything is written before reading ...
 				sp.confirmarTransaccao();
 				sp.iniciarTransaccao();
 
@@ -123,98 +132,143 @@ public class EditGuideInformation implements IServico {
 				(quantityList[quantityListIndex].equals("0"))) {
 				// Add to items to remove
 				guideEntriesToRemove.add(infoGuideEntry);
+				change = true;
 			} else {
+				if (!infoGuideEntry.getQuantity().equals(new Integer(quantityList[quantityListIndex])))
+					change = true;
 				infoGuideEntry.setQuantity(new Integer(quantityList[quantityListIndex]));
 				newInfoGuideEntries.add(infoGuideEntry);
 			}
 			quantityListIndex++;
 		}
 
+		// Check if a Others Guide Entry will be Added
+		if ((othersPrice != null) && (othersQuantity != null) &&
+		    (!othersPrice.equals(new Double(0))) && (!othersQuantity.equals(new Integer(0)))) {
+		    	change = true;
+		    	othersGuideEntry = new GuideEntry();
+		    	othersGuideEntry.setDescription(othersRemarks);
+		    	othersGuideEntry.setDocumentType(DocumentType.OTHERS_TYPE);
+		    	// TODO : In the future it's possible to be a Major Degree
+		    	othersGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+				othersGuideEntry.setPrice(othersPrice);
+				othersGuideEntry.setQuantity(othersQuantity);
+	    }
+
+
 		
 		if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.NON_PAYED_TYPE)){
-			// Remove the Guide entries wich have been deleted
-			Iterator entryIterator = guideEntriesToRemove.iterator();
-			while(entryIterator.hasNext()){
-				InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
-				try {
-					sp = SuportePersistenteOJB.getInstance();
-					IGuideEntry guideEntry = sp.getIPersistentGuideEntry().readByGuideAndGraduationTypeAndDocumentTypeAndDescription(
-									guide, infoGuideEntry.getGraduationType(), infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
-					sp.getIPersistentGuideEntry().delete(guideEntry);
-				} catch (ExcepcaoPersistencia ex) {
-					FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-					newEx.fillInStackTrace();
-					throw newEx;
+			// If there's a change ...
+			if (change){
+
+				// fill in the last field in the Others Guide Entry if necessary
+				if (othersGuideEntry != null)
+					othersGuideEntry.setGuide(guide);
+
+				// Remove the Guide entries wich have been deleted
+				Iterator entryIterator = guideEntriesToRemove.iterator();
+				while(entryIterator.hasNext()){
+					InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
+					try {
+						sp = SuportePersistenteOJB.getInstance();
+						IGuideEntry guideEntry = sp.getIPersistentGuideEntry().readByGuideAndGraduationTypeAndDocumentTypeAndDescription(
+										guide, infoGuideEntry.getGraduationType(), infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
+						sp.getIPersistentGuideEntry().delete(guideEntry);
+					} catch (ExcepcaoPersistencia ex) {
+						FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+						newEx.fillInStackTrace();
+						throw newEx;
+					}
 				}
-			}
-			
-			// Update the remaing guide entries
-			entryIterator = newInfoGuideEntries.iterator();
-			while(entryIterator.hasNext()){
-				InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
-				try {
-					sp = SuportePersistenteOJB.getInstance();
-					IGuideEntry guideEntry = sp.getIPersistentGuideEntry().readByGuideAndGraduationTypeAndDocumentTypeAndDescription(
-									guide, infoGuideEntry.getGraduationType(), infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
-					guideEntry.setQuantity(infoGuideEntry.getQuantity());
-					
-				} catch (ExcepcaoPersistencia ex) {
-					FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-					newEx.fillInStackTrace();
-					throw newEx;
+				
+				// Update the remaing guide entries
+				entryIterator = newInfoGuideEntries.iterator();
+				while(entryIterator.hasNext()){
+					InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
+					try {
+						sp = SuportePersistenteOJB.getInstance();
+						IGuideEntry guideEntry = sp.getIPersistentGuideEntry().readByGuideAndGraduationTypeAndDocumentTypeAndDescription(
+										guide, infoGuideEntry.getGraduationType(), infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
+						guideEntry.setQuantity(infoGuideEntry.getQuantity());
+						
+					} catch (ExcepcaoPersistencia ex) {
+						FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+						newEx.fillInStackTrace();
+						throw newEx;
+					}
 				}
 			}
 						
 		} else if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
-			// Create a new Guide Version
-			IGuide newGuideVersion = null;
-			newGuideVersion = this.createNewGuideVersion(infoGuide);
+			// If there's a change ...
+			if (change){
 			
-			// Create The new Situation			
-			IGuideSituation guideSituation = new GuideSituation();
-			guideSituation.setDate(infoGuide.getInfoGuideSituation().getDate());
-			guideSituation.setGuide(newGuideVersion);
-			guideSituation.setRemarks(infoGuide.getRemarks());
-			guideSituation.setSituation(infoGuide.getInfoGuideSituation().getSituation());
-			guideSituation.setState(new State(State.ACTIVE));
-			
-
-
-			// Write the new Guide Version			
-			try {
-				sp = SuportePersistenteOJB.getInstance();
-
-				sp.getIPersistentGuide().write(newGuideVersion);
-				sp.getIPersistentGuideSituation().write(guideSituation);
-				// Make sure that everything is written before reading ...
-				sp.confirmarTransaccao();
-				sp.iniciarTransaccao();
+				// Create a new Guide Version
+				IGuide newGuideVersion = null;
+				newGuideVersion = this.createNewGuideVersion(infoGuide);
 				
-				// Write the Guide Entries
-				Iterator guideEntryIterator = newInfoGuideEntries.iterator();
-				while(guideEntryIterator.hasNext()) {
-			
-					IGuideEntry guideEntry = Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) guideEntryIterator.next());
-
-					guideEntry.setGuide(newGuideVersion);
-					sp.getIPersistentGuideEntry().write(guideEntry);
+				// fill in the last field in the Others Guide Entry if necessary
+				if (othersGuideEntry != null)
+					othersGuideEntry.setGuide(newGuideVersion);
+	
+				
+				// Create The new Situation			
+				IGuideSituation guideSituation = new GuideSituation();
+				guideSituation.setDate(infoGuide.getInfoGuideSituation().getDate());
+				guideSituation.setGuide(newGuideVersion);
+				guideSituation.setRemarks(infoGuide.getRemarks());
+				guideSituation.setSituation(infoGuide.getInfoGuideSituation().getSituation());
+				guideSituation.setState(new State(State.ACTIVE));
+				
+	
+	
+				// Write the new Guide Version			
+				try {
+					sp = SuportePersistenteOJB.getInstance();
+	
+					sp.getIPersistentGuide().write(newGuideVersion);
+					sp.getIPersistentGuideSituation().write(guideSituation);
+					// Make sure that everything is written before reading ...
+					sp.confirmarTransaccao();
+					sp.iniciarTransaccao();
+					
+					// Write the Guide Entries
+					Iterator guideEntryIterator = newInfoGuideEntries.iterator();
+					while(guideEntryIterator.hasNext()) {
+				
+						IGuideEntry guideEntry = Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) guideEntryIterator.next());
+	
+						guideEntry.setGuide(newGuideVersion);
+						sp.getIPersistentGuideEntry().write(guideEntry);
+					}
+	
+					// Update the version number for the next Database Access
+					infoGuide.setVersion(newGuideVersion.getVersion());
+				} catch (ExcepcaoPersistencia ex) {
+					FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+					newEx.fillInStackTrace();
+					throw newEx;
 				}
-
-				// Update the version number for the next Database Access
-				infoGuide.setVersion(newGuideVersion.getVersion());
-			} catch (ExcepcaoPersistencia ex) {
-				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-				newEx.fillInStackTrace();
-				throw newEx;
 			}
 			
 		}
+		
+		
+		// If there's no change
+		
+		if (!change)
+			throw new NoChangeMadeServiceException();
 		
 		InfoGuide newInfoGuide = null;
 		IGuide newGuide = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
-			// Make sure that vaerithing is written before reading ...
+			
+			// write the Others Guide Entry if necessary
+			if (othersGuideEntry != null)
+				sp.getIPersistentGuideEntry().write(othersGuideEntry);
+			
+			// Make sure that everything is written before reading ...
 			sp.confirmarTransaccao();
 			sp.iniciarTransaccao();
 
@@ -232,7 +286,8 @@ public class EditGuideInformation implements IServico {
 		infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
 
 		InfoGuide result = Cloner.copyIGuide2InfoGuide(newGuide); 
-		result.setTotal(CalculateGuideTotal.calculate(infoGuideTemp));
+
+		result.setTotal(CalculateGuideTotal.calculate(result));
 
 		newGuide.setTotal(result.getTotal());
 		

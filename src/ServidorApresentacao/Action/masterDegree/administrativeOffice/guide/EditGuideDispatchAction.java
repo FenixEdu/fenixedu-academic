@@ -26,10 +26,13 @@ import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
+import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidChangeActionException;
+import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException;
+import ServidorApresentacao.Action.exceptions.NoChangeMadeActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.exceptions.NonValidChangeActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -172,9 +175,6 @@ public class EditGuideDispatchAction extends DispatchAction {
 			DynaActionForm editGuideForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 
-
-System.out.println("Acyion de Prepare");
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			Integer guideYear = new Integer((String) request.getParameter("year"));
 			Integer guideNumber = new Integer((String) request.getParameter("number"));
@@ -204,6 +204,9 @@ System.out.println("Acyion de Prepare");
 			session.setAttribute(SessionConstants.GUIDE, infoGuide);
 			session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
 			
+			request.setAttribute("othersQuantity", new Integer(0));
+			request.setAttribute("othersPrice", new Double(0));
+			
 			return mapping.findForward("PrepareReady");			
 
 		} else
@@ -228,6 +231,17 @@ System.out.println("Acyion de Prepare");
 			Integer guideNumber = new Integer((String) request.getParameter("number"));
 			Integer guideVersion = new Integer((String) request.getParameter("version"));
 			
+			String othersQuantityString = (String) request.getParameter("othersQuantity");
+			String othersPriceString = (String) request.getParameter("othersPrice");
+			
+			Integer othersQuantity = null;
+			Double othersPrice = null;
+			
+
+
+ 
+ 
+			String othersRemarks = (String) request.getParameter("othersRemarks");
 			
 			Object args[] = { guideNumber, guideYear, guideVersion };
 			
@@ -252,16 +266,34 @@ System.out.println("Acyion de Prepare");
 			Enumeration arguments = request.getParameterNames();
 			
 			String[] quantityList = new String[infoGuide.getInfoGuideEntries().size()];
-			while(arguments.hasMoreElements()){
-				String parameter = (String) arguments.nextElement();
-				if (parameter.startsWith("quantityList")){
-					int arrayPosition = "quantityList".length();
-					String position = parameter.substring(arrayPosition);
-					quantityList[new Integer(position).intValue()] = request.getParameter(parameter);
+
+
+			try {
+				if ((othersPriceString != null) && (othersPriceString.length() != 0))
+					othersPrice = new Double(othersPriceString);
+				
+				if ((othersQuantityString != null) && (othersQuantityString.length() != 0))
+					othersQuantity = new Integer(othersQuantityString);
+
+
+				while(arguments.hasMoreElements()){
+					String parameter = (String) arguments.nextElement();
+					if (parameter.startsWith("quantityList")){
+						int arrayPosition = "quantityList".length();
+						String position = parameter.substring(arrayPosition);
+						
+						// This is made to verify if the argument is a valid one. If it's not
+						// iot will give a NumberFormatException 
+						Integer value = new Integer(request.getParameter(parameter));
+						quantityList[new Integer(position).intValue()] = String.valueOf(value);
+					}
 				}
+			} catch(NumberFormatException e) {
+				 throw new InvalidInformationInFormActionException(e);
 			}
+
 			
-			Object args2[] = {infoGuide, quantityList, contributorNumber };
+			Object args2[] = {infoGuide, quantityList, contributorNumber , othersRemarks, othersQuantity, othersPrice};
 			Integer oldGuideVersion = new Integer(infoGuide.getVersion().intValue());
 
 			InfoGuide result = null;
@@ -269,6 +301,8 @@ System.out.println("Acyion de Prepare");
 				result = (InfoGuide) serviceManager.executar(userView, "EditGuideInformation", args2);
 			} catch (InvalidChangeServiceException e) {
 				throw new InvalidChangeActionException(e);
+			} catch (NoChangeMadeServiceException e) {
+				throw new NoChangeMadeActionException(e);
 			}
 
 			// Add the new Version to the Guide List

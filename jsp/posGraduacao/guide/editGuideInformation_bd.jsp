@@ -69,7 +69,7 @@
     </bean:define>
 
     <html:form action='<%= pageContext.findAttribute("link").toString() %>'>
-
+   	<html:hidden property="page" value="1"/> 
 	<table>
       <tr> 
         <td><bean:message key="label.masterDegree.administrativeOffice.newContributor"/></td>
@@ -103,7 +103,14 @@
             <td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>
 		   </tr>
         </logic:iterate>
-         
+
+		<tr>
+			<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
+			<td><html:textarea property="othersRemarks"/></td>
+			<td><html:text property="othersQuantity"/></td>
+			<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
+		</tr>
+
          <tr>
          	<td></td>
          	<td></td>
