@@ -184,3 +184,99 @@ a:visited {
 .invisible {
 	display: none;
 	}
+	
+/*****************************************************************
+	final results table
+******************************************************************/	
+
+.header-first{
+	font: 9pt Georgia, sans-serif;
+	text-align: center;
+	color: #333;
+	background: #ccc; 
+	padding: 5px;
+	border: 1px solid #333;
+	}
+	
+.header {
+	font: 9pt Georgia, sans-serif;
+	text-align: center;
+	color: #333;
+	background: #ccc;
+	padding: 5px;
+	border-top:1px solid #333;
+	border-bottom: 1px solid #333;
+	}
+	
+.header-last {
+	font: 9pt Georgia, sans-serif;
+	text-align: center;
+	color: #333;
+	padding: 5px;
+	background: #ccc;
+	border: 1px solid #333;
+	}
+	
+.cell-first {
+	font: 9pt Georgia, sans-serif;
+	color: #333;
+	padding: 5px;
+	border-top: 1px solid #333;
+	border-right: 1px solid #333;
+	border-left: 1px solid #333;
+	}
+	
+.cell-middle {
+	font: 9pt Georgia, sans-serif;
+	text-align: center;
+	border-top: 1px solid #333;
+	color: #333;
+	padding: 5px;
+	}
+	
+.cell-last{
+	font: 9pt Georgia, sans-serif;
+	text-align: center;
+	color: #333;
+	padding: 5px;
+	border-top: 1px solid #333;
+	border-right: 1px solid #333;
+	border-left: 1px solid #333;
+	}
+
+.results {
+	font: 9pt Georgia, sans-serif;
+	color: #333;
+	padding: 5px;
+	border-top: 1px solid #333;
+	}
+		
+.apura-final {
+	font: 9pt Georgia, sans-serif;
+	color: #333;
+	border: 1px solid #333;
+	padding: 5px;
+	}
+	
+.apura-pt9	{
+	font: 9pt Georgia, sans-serif;
+	color: #333;
+	}
+	
+.homologo	{
+	float: left;
+	display: inline;
+	width: 30%;
+	margin-left: 100px;
+	padding-bottom: 4em;
+	border-bottom: 1px solid #333;
+	}
+	
+.consid	{	
+	float: right;
+	display: inline;
+	width: 30%;
+	margin-right: 100px;
+	padding-bottom: 4em;
+	border-bottom: 1px solid #333;
+	}
