@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.util.Date;
 import java.util.List;
 
 /*
@@ -45,24 +44,6 @@ public class InfoMasterDegreeCandidate {
 		situationList = null;
     } // Fim do Construtor Sem Argumentos
     
-    /**
-     * @deprecated
-     */
-    public InfoMasterDegreeCandidate(String name, String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
-    		String fatherName, String motherName, String birthPlaceParish, 
-    		String birthPlaceMunicipality, String birthPlaceDistrict, 
-    		String identificationDocumentNumber, String identificationDocumentIssuePlace, 
-    		String address, String place, String postCode, 
-    		String addressParish, String addressMunicipality, String addressDistrict, 
-    		String telephone, String mobilePhone, String email, String webSite, 
-    		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
-			String maritalStatus, InfoCountry country, InfoCountry nationality, String specialization, 
-			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate, 
-			Date identificationDocumentExpirationDate
-    		) {
-	    
-    }
-        
 	public InfoMasterDegreeCandidate(InfoPerson person, InfoExecutionDegree executionDegree, Integer candidateNumber, String specialization, 
 			   String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, Double average){
 				this.infoPerson = person;
