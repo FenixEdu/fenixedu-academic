@@ -1,0 +1,15 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.page.viewProfessorships" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
+	</definition>
+	<definition name="df.page.initial.management.execution_course" extends="df.teacher.execution-course-management">
+		<put name="body" value="" />
+	</definition>
+	<definition name="df.teacher.showShiftsPercentageTable" extends="df.teacher.execution-course-management">
+		<put name="body" value="/teacher/credits/showShiftsPercentageTable_bd.jsp" />
+	</definition>
+	
+</tiles-definitions>
