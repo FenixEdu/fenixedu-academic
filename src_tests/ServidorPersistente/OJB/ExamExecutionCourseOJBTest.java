@@ -16,12 +16,14 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import Dominio.ExamExecutionCourse;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Season;
 
 public class ExamExecutionCourseOJBTest extends TestCaseOJB {
@@ -142,11 +144,46 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 	public void testLockWrite(){
 
 		try {
+			Calendar beginning = Calendar.getInstance();
+			beginning.set(Calendar.YEAR, 2003);
+			beginning.set(Calendar.MONTH, Calendar.MARCH);
+			beginning.set(Calendar.DAY_OF_MONTH, 19);
+			beginning.set(Calendar.HOUR_OF_DAY, 13);
+			beginning.set(Calendar.MINUTE, 0);
+			beginning.set(Calendar.SECOND, 0);
+			
 			ps.iniciarTransaccao();
-			//List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			IExecutionYear executionYear =	ps.getIPersistentExecutionYear().readExecutionYearByName("2002/2003");
+			IExecutionPeriod executionPeriod =ps.getIPersistentExecutionPeriod().readByNameAndExecutionYear("2º Semestre", executionYear);
+			IDisciplinaExecucao executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("RCI", executionPeriod);
+			IExam exam = (IExam) executionCourse.getAssociatedExams().get(0);
+			IExamExecutionCourse examExecutionCourseUnmapped = new ExamExecutionCourse(exam, executionCourse);
+	
+			// write existing unmapped
+			try {
+				ps.getIPersistentExamExecutionCourse().lockWrite(examExecutionCourseUnmapped);
+				fail("Expected exception");
+			} catch (ExistingPersistentException e) {
+				//All is ok
+			}
 			ps.confirmarTransaccao();
-			//assertNotNull("result list is null", result);
-			//assertEquals("result list size not expected", 7, result.size());
+
+			beginning.set(Calendar.MONTH, Calendar.JULY);
+
+			ps.iniciarTransaccao();
+			executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("RCI", executionPeriod);
+			exam = (IExam) executionCourse.getAssociatedExams().get(1);
+			IDisciplinaExecucao executionCourse2 = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("APR", executionPeriod);
+			
+			IExamExecutionCourse unexistingExamExecutionCourse = new ExamExecutionCourse(exam, executionCourse2);
+			//write unexisting			
+			assertEquals("Total examsExecutionCourse before lockwrite", 13, ps.getIPersistentExamExecutionCourse().readAll().size());
+			ps.getIPersistentExamExecutionCourse().lockWrite(unexistingExamExecutionCourse);
+			ps.confirmarTransaccao();
+			ps.iniciarTransaccao();
+			assertEquals("Total examsExecutionCourse after lockwrite", 14, ps.getIPersistentExamExecutionCourse().readAll().size());
+			ps.confirmarTransaccao();
+
 		} catch (ExcepcaoPersistencia e) {
 			fail("unexpected exception" + e);
 		}
@@ -157,10 +194,27 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 
 		try {
 			ps.iniciarTransaccao();
-			//List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			IExecutionYear executionYear =	ps.getIPersistentExecutionYear().readExecutionYearByName("2002/2003");
+			IExecutionPeriod executionPeriod =ps.getIPersistentExecutionPeriod().readByNameAndExecutionYear("2º Semestre", executionYear);
+			IDisciplinaExecucao executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("RCI", executionPeriod);
+			IExam exam = (IExam) executionCourse.getAssociatedExams().get(0);
+			IExamExecutionCourse examExecutionCourse = ps.getIPersistentExamExecutionCourse().readBy(exam, executionCourse);
+	
+			assertEquals("Total examsExecutionCourse before delete", 13, ps.getIPersistentExamExecutionCourse().readAll().size());
+			ps.getIPersistentExamExecutionCourse().delete(examExecutionCourse);
 			ps.confirmarTransaccao();
-			//assertNotNull("result list is null", result);
-			//assertEquals("result list size not expected", 7, result.size());
+			
+			ps.iniciarTransaccao();
+			assertEquals("Total examsExecutionCourse after delete", 12, ps.getIPersistentExamExecutionCourse().readAll().size());
+			ps.confirmarTransaccao();
+
+			ps.iniciarTransaccao();
+			ps.getIPersistentExamExecutionCourse().delete(examExecutionCourse);
+			ps.confirmarTransaccao();
+			
+			ps.iniciarTransaccao();
+			assertEquals("Total examsExecutionCourse after delete", 12, ps.getIPersistentExamExecutionCourse().readAll().size());
+			ps.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			fail("unexpected exception" + e);
 		}
@@ -171,10 +225,13 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 
 		try {
 			ps.iniciarTransaccao();
-			//List result = ps.getIPersistentExamExecutionCourse().readBy(beginning.getTime(), beginning);
+			assertEquals("Total examsExecutionCourse before deleteAll", 13, ps.getIPersistentExamExecutionCourse().readAll().size());
+			ps.getIPersistentExamExecutionCourse().deleteAll();
 			ps.confirmarTransaccao();
-			//assertNotNull("result list is null", result);
-			//assertEquals("result list size not expected", 7, result.size());
+			
+			ps.iniciarTransaccao();
+			assertEquals("Total examsExecutionCourse after deleteAll", 0, ps.getIPersistentExamExecutionCourse().readAll().size());
+			ps.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			fail("unexpected exception" + e);
 		}
