@@ -17,6 +17,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoTeacher;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantContractRegime;
+import DataBeans.grant.contract.InfoGrantCostCenter;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -75,6 +76,11 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                         request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
                     }
                     grantContractRegimeForm.set("state", new Integer(-1));
+                   
+                            
+                    grantContractRegimeForm.set("grantCostCenterId",infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+                    grantContractRegimeForm.set ("keyCostCenterNumber",infoGrantContract.getGrantCostCenterInfo().getNumber());
+                    grantContractRegimeForm.set ("designation",infoGrantContract.getGrantCostCenterInfo().getDesignation());
                 } else {
                     //Read the subsidy
                     Object[] args = { idGrantContractRegime };
@@ -82,7 +88,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                             .executeService(userView, "ReadGrantContractRegime", args);
 
                     idContract = infoGrantContractRegime.getInfoGrantContract().getIdInternal();
-
+ 
                     //Populate the form
                     if (infoGrantContractRegime != null) {
                         setFormGrantContractRegime(grantContractRegimeForm, infoGrantContractRegime);
@@ -143,7 +149,24 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                 //If is a new Regime
                 infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); //Active
             }
-            //Save the regime
+            //Verify the cost center
+            if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {
+                InfoGrantCostCenter infoGrantCostCenter = null;
+                Object[] argsCostCenter = { infoGrantContractRegime.getGrantCostCenterInfo().getNumber() };
+                infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(userView, "ReadCostCenterByNumber",
+                		argsCostCenter);
+                if (infoGrantCostCenter == null) {
+                    return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher",
+                            null, infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+                }
+                infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
+            }
+
+            if (infoGrantContractRegime.getState().equals(new Integer(-1))) {
+                //If is a new Regime
+                infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); //Active
+            }
+            
             Object[] args = { infoGrantContractRegime };
             ServiceUtils.executeService(userView, "EditGrantContractRegime", args);
             return mapping.findForward("manage-grant-contract-regime");
@@ -161,6 +184,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
     private void setFormGrantContractRegime(DynaValidatorForm form,
             InfoGrantContractRegime infoGrantContractRegime) throws Exception {
         //Grant Contract Regime
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         form.set("grantContractRegimeId", infoGrantContractRegime.getIdInternal());
         if (infoGrantContractRegime.getDateBeginContract() != null)
@@ -178,12 +202,21 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
         if (infoGrantContractRegime.getInfoTeacher() != null)
             form.set("grantContractRegimeTeacherNumber", infoGrantContractRegime.getInfoTeacher()
                     .getTeacherNumber().toString());
+        if (infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo()!=null){
+	        form.set("grantCostCenterId", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getIdInternal());
+	        form.set("keyCostCenterNumber", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getNumber()
+	                .toString());
+	        form.set("designation", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getDesignation()
+	                .toString());
+       }
+        
         if (infoGrantContractRegime.getState() != null)
             form.set("state", infoGrantContractRegime.getState());
         else
             form.set("state", new Integer(-1));
         form.set("contractNumber", infoGrantContractRegime.getInfoGrantContract().getContractNumber()
                 .toString());
+      
     }
 
     /*
@@ -217,10 +250,14 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
         if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateDispatchCD"))
             infoGrantContractRegime.setDateDispatchCD(sdf.parse((String) editGrantContractRegimeForm
                     .get("dateDispatchCD")));
+        InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
+        infoGrantCostCenter.setNumber((String) editGrantContractRegimeForm.get("keyCostCenterNumber"));
+        infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
 
         InfoGrantContract infoGrantContract = new InfoGrantContract();
         infoGrantContract.setIdInternal((Integer) editGrantContractRegimeForm.get("idContract"));
         infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
+       
 
         if (verifyStringParameterInForm(editGrantContractRegimeForm, "grantContractRegimeTeacherNumber")) {
             InfoTeacher infoTeacher = new InfoTeacher();

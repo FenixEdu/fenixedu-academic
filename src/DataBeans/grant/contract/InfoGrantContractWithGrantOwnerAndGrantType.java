@@ -15,11 +15,14 @@ import Dominio.grant.contract.IGrantContract;
 public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContract {
 
     public void copyFromDomain(IGrantContract grantContract) {
+    	
         super.copyFromDomain(grantContract);
         if (grantContract != null) {
 
             setGrantOwnerInfo(InfoGrantOwnerWithPerson.newInfoFromDomain(grantContract.getGrantOwner()));
             setGrantTypeInfo(InfoGrantType.newInfoFromDomain(grantContract.getGrantType()));
+            setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
+            
         }
     }
 
@@ -38,6 +41,7 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContra
                 .getGrantOwnerInfo()));
         grantContract
                 .setGrantType(InfoGrantType.newDomainFromInfo(infoGrantContract.getGrantTypeInfo()));
+         grantContract.setGrantCostCenter(InfoGrantCostCenter.newDomainFromInfo(infoGrantContract.getGrantCostCenterInfo()));
     }
 
     public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) {

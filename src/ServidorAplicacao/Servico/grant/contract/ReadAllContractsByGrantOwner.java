@@ -12,10 +12,14 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
+import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
 import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
+import Dominio.IDomainObject;
+import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
+import Dominio.grant.contract.IGrantCostCenter;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -23,6 +27,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantContract;
 import ServidorPersistente.grant.IPersistentGrantContractRegime;
+import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 
 /**
@@ -38,6 +43,7 @@ public class ReadAllContractsByGrantOwner implements IService {
         List contracts = null;
         IPersistentGrantOrientationTeacher pgot = null;
         IPersistentGrantContractRegime persistentGrantContractRegime = null;
+        IPersistentGrantCostCenter persistentGrantCostCenter = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
@@ -68,7 +74,17 @@ public class ReadAllContractsByGrantOwner implements IService {
                 InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
                         .newInfoFromDomain(orientationTeacher);
                 infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
-
+                
+                
+//              get the GrantCostCenter for each contract
+     
+                if (grantContract.getGrantCostCenter()!= null){
+   
+                InfoGrantCostCenter infoGrantCostCenter = InfoGrantCostCenter
+                        .newInfoFromDomain((IGrantCostCenter) grantContract.getGrantCostCenter());
+                infoGrantContract.setGrantCostCenterInfo(infoGrantCostCenter);
+                }
+ 
                 /*
                  * Verify if the contract is active or not. The contract is
                  * active if: 1- The end contract motive is not filled 2 - The

@@ -16,8 +16,10 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
     public void copyFromDomain(IGrantContractRegime grantContractRegime) {
         super.copyFromDomain(grantContractRegime);
         if (grantContractRegime != null) {
+        	
             setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantContractRegime.getTeacher()));
-
+            setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime.getGrantContract().getGrantCostCenter()));
+           
             if (grantContractRegime.getGrantContract() != null) {
                 setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
                         .newInfoFromDomain(grantContractRegime.getGrantContract()));
@@ -27,10 +29,10 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
 
     public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime) {
         InfoGrantContractRegimeWithTeacherAndContract infoGrantContractRegime = null;
-        if (grantContractRegime != null) {
+        if (grantContractRegime != null) {	
             infoGrantContractRegime = new InfoGrantContractRegimeWithTeacherAndContract();
             infoGrantContractRegime.copyFromDomain(grantContractRegime);
-        }
+        }  
         return infoGrantContractRegime;
     }
 

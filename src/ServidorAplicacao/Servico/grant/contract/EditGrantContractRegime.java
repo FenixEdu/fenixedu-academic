@@ -14,8 +14,10 @@ import DataBeans.grant.contract.InfoGrantInsurance;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantContractRegime;
+import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
+import Dominio.grant.contract.IGrantCostCenter;
 import Dominio.grant.contract.IGrantInsurance;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -55,7 +57,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     public void run(InfoGrantContractRegime infoGrantContractRegime) throws FenixServiceException {
-        super.run(new Integer(0), infoGrantContractRegime);
+    	super.run(new Integer(0), infoGrantContractRegime);
     }
 
     /*
@@ -77,8 +79,16 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = sp
                         .getIPersistentGrantOrientationTeacher();
                 IGrantContract grantContract = new GrantContract();
+               
+                
+                IGrantCostCenter grantCostCenter = new GrantCostCenter();
                 grantContract.setIdInternal(infoGrantContractRegime.getInfoGrantContract()
                         .getIdInternal());
+               
+                
+                grantCostCenter.setIdInternal(infoGrantContractRegime.getGrantCostCenterInfo().getIdInternal());
+                grantContractRegime.setGrantCostCenter(grantCostCenter);
+
                 IGrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
                         .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
                 persistentGrantOrientationTeacher.simpleLockWrite(grantOrientationTeacher);

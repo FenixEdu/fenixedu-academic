@@ -41,6 +41,7 @@ public class ReadGrantContractRegimeByContractAndState implements IService {
                     .getIPersistentGrantContractRegime();
             contractRegimes = persistentGrantContractRegime
                     .readGrantContractRegimeByGrantContractAndState(grantContractId, state);
+      
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
         }

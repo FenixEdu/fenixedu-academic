@@ -20,6 +20,7 @@
 	<html:hidden property="idGrantContract"/>
 	<html:hidden property="contractNumber"/>
 	<html:hidden property="grantContractOrientationTeacherId"/>
+	<html:hidden property="grantCostCenterId"/>
 
 	<%-- grant owner --%>
 	<html:hidden property="idInternal"/>
@@ -68,6 +69,21 @@
 			</td>
 			<td>
 				<html:text property="endContractMotive" size="40"/>
+			</td>
+		</tr>	
+		
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.work.place"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="keyCostCenterNumber" size="10"/>
+			
+	<%--		 Create a new Grant CostCenter 
+			
+			<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
+				<bean:message key="link.create.grant.costcenter"/>
+			</html:link><br><br>--%>
 			</td>
 		</tr>	
 	</table>

@@ -19,6 +19,9 @@
 	<%-- contract --%>
 	<html:hidden property="idContract"/>
 	<html:hidden property="contractNumber"/>
+	<html:hidden property="grantCostCenterId"/>
+	<html:hidden property="keyCostCenterNumber"/>
+	
 
 	<%-- contract regime --%>
 	<html:hidden property="grantContractRegimeId"/>
@@ -36,6 +39,7 @@
 				</html:link>
 			</td>
 		</tr>
+	
 		<tr>
 			<td align="left">
 				<bean:message key="label.grant.contract.regime.beginDate"/>:&nbsp;
@@ -96,6 +100,21 @@
 				<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
+		<tr>
+		<td align="left">
+			<bean:message key="label.grant.contract.work.place"/>:&nbsp;
+		</td>
+		<td>
+			<bean:write name ="editGrantContractRegimeForm" property="keyCostCenterNumber" /> -- <bean:write name ="editGrantContractRegimeForm" property="designation" />
+		
+		<%-- Create a new Grant CostCenter 
+		
+		<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
+			<bean:message key="link.create.grant.costcenter"/>
+		</html:link><br><br>--%>
+		</td>
+		</tr>	
+		
 	</table>
 
 	<br/>

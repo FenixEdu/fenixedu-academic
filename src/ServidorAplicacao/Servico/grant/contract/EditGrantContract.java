@@ -11,14 +11,17 @@ import DataBeans.InfoTeacher;
 import DataBeans.InfoTeacherWithPerson;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
+import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import DataBeans.grant.contract.InfoGrantType;
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
 import Dominio.Teacher;
+import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.GrantOrientationTeacher;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantContract;
+import Dominio.grant.contract.IGrantCostCenter;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -31,8 +34,10 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 import ServidorPersistente.grant.IPersistentGrantType;
+import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
 
 /**
  * @author Barbosa
@@ -59,21 +64,26 @@ public class EditGrantContract extends EditDomainObjectService {
 
     protected void checkIfGrantTeacherRelationExists(IDomainObject newDomainObject,
             InfoObject infoObject, ISuportePersistente sp) throws FenixServiceException {
-        try {
+
+    	try {
             IPersistentGrantOrientationTeacher ot = sp.getIPersistentGrantOrientationTeacher();
             InfoGrantContract infoGrantContract = (InfoGrantContract) infoObject;
             IGrantOrientationTeacher oldGrantOrientationTeacher = null;
             IGrantOrientationTeacher newGrantOrientationTeacher = null;
-
+ 
+     
             //check if the GrantOrientation relation exists
             Integer orientationId = infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal();
             if ((orientationId != null) && !(orientationId.equals(new Integer(0)))) {
                 //lock the existent object to write (EDIT)
-                newGrantOrientationTeacher = (IGrantOrientationTeacher) ot.readByOID(
+           	
+            	newGrantOrientationTeacher = (IGrantOrientationTeacher) ot.readByOID(
                         GrantOrientationTeacher.class, infoGrantContract
                                 .getGrantOrientationTeacherInfo().getIdInternal(), true);
             } else {
+            	 
                 newGrantOrientationTeacher = new GrantOrientationTeacher();
+                newGrantOrientationTeacher.setIdInternal(new Integer(0));
                 ot.simpleLockWrite(newGrantOrientationTeacher);
             }
             oldGrantOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
@@ -87,6 +97,7 @@ public class EditGrantContract extends EditDomainObjectService {
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }
+   
     }
 
     protected InfoGrantType checkIfGrantTypeExists(String sigla, IPersistentGrantType pt)
@@ -120,6 +131,24 @@ public class EditGrantContract extends EditDomainObjectService {
         }
         return infoTeacher;
     }
+    
+    
+    private InfoGrantCostCenter checkIfGrantCostContractExists(String costContractNumber, IPersistentGrantCostCenter pt)
+    throws FenixServiceException {
+		//When creating a New Contract its needed to verify if the costContract exists
+		//chosen for orientator really exists
+		InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
+		IGrantCostCenter costCenter = new GrantCostCenter();
+		try {  
+			costCenter = pt.readGrantCostCenterByNumber(costContractNumber);
+		    if (costCenter == null)
+		        throw new GrantOrientationTeacherNotFoundException();
+		    infoGrantCostCenter = InfoGrantCostCenter.newInfoFromDomain(costCenter);
+		} catch (ExcepcaoPersistencia persistentException) {
+		    throw new FenixServiceException(persistentException.getMessage());
+		}
+		return infoGrantCostCenter;
+	}
 
     /**
      * Executes the service.
@@ -131,6 +160,7 @@ public class EditGrantContract extends EditDomainObjectService {
             IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
             IPersistentGrantType pGrantType = sp.getIPersistentGrantType();
             IPersistentGrantContract pGrantContract = sp.getIPersistentGrantContract();
+            IPersistentGrantCostCenter pCostContract = sp.getIPersistentGrantCostCenter();
 
             infoGrantContract.setGrantTypeInfo(checkIfGrantTypeExists(infoGrantContract
                     .getGrantTypeInfo().getSigla(), pGrantType));
@@ -139,6 +169,10 @@ public class EditGrantContract extends EditDomainObjectService {
                     checkIfGrantOrientationTeacherExists(infoGrantContract
                             .getGrantOrientationTeacherInfo().getOrientationTeacherInfo()
                             .getTeacherNumber(), pTeacher));
+            
+            infoGrantContract.setGrantCostCenterInfo(
+            		checkIfGrantCostContractExists(infoGrantContract.getGrantCostCenterInfo().getNumber()
+                            , pCostContract));
 
             if (infoGrantContract.getContractNumber() == null) {
                 // set the contract number!
@@ -149,7 +183,7 @@ public class EditGrantContract extends EditDomainObjectService {
                 Integer newContractNumber = new Integer(aux);
                 infoGrantContract.setContractNumber(newContractNumber);
             }
-
+       
             super.run(infoGrantContract.getIdInternal(), infoGrantContract);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

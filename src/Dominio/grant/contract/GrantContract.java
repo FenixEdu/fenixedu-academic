@@ -30,8 +30,12 @@ public class GrantContract extends DomainObject implements IGrantContract {
     private Integer keyGrantOwner;
 
     private Integer keyGrantType;
+    
+    private Integer costCenterKey;
 
     private List contractRegimes; //Used for querys (See GrantOwnerOJB or
+   
+    private IGrantCostCenter grantCostCenter;
 
     // GrantContractOJB class)
 
@@ -167,4 +171,31 @@ public class GrantContract extends DomainObject implements IGrantContract {
     public void setContractRegimes(List contractRegimes) {
         this.contractRegimes = contractRegimes;
     }
+	
+
+	
+	/**
+	 * @return Returns the costCenterKey.
+	 */
+	public Integer getCostCenterKey() {
+		return costCenterKey;
+	}
+	/**
+	 * @param costCenterKey The costCenterKey to set.
+	 */
+	public void setCostCenterKey(Integer costCenterKey) {
+		this.costCenterKey = costCenterKey;
+	}
+	/**
+	 * @return Returns the grantCostCenter.
+	 */
+	public IGrantCostCenter getGrantCostCenter() {
+		return grantCostCenter;
+	}
+	/**
+	 * @param grantCostCenter The grantCostCenter to set.
+	 */
+	public void setGrantCostCenter(IGrantCostCenter grantCostCenter) {
+		this.grantCostCenter = grantCostCenter;
+	}
 }

@@ -35,6 +35,10 @@ public interface IGrantContractRegime extends IDomainObject {
     public ITeacher getTeacher();
 
     public boolean getContractRegimeActive();
+    
+    public Integer getCostCenterKey();
+    
+    public IGrantCostCenter getGrantCostCenter();
 
     public void setState(Integer state);
 
@@ -53,4 +57,8 @@ public interface IGrantContractRegime extends IDomainObject {
     public void setGrantContract(IGrantContract grantContract);
 
     public void setTeacher(ITeacher teacher);
+    
+    public void setCostCenterKey(Integer costCenterkey);
+    
+    public void setGrantCostCenter(IGrantCostCenter grantCostCenter);
 }

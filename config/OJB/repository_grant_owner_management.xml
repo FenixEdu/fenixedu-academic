@@ -104,6 +104,11 @@
 		column="KEY_GRANT_TYPE"
 		jdbc-type="INTEGER"
 	/>
+ 	<field-descriptor
+		name="costCenterKey"
+		column="KEY_COST_CENTER"
+		jdbc-type="INTEGER"
+	/>
 	<reference-descriptor
 		name="grantOwner"
 		class-ref="Dominio.grant.owner.GrantOwner"
@@ -116,6 +121,12 @@
 		proxy="true">
 		<foreignkey field-ref="keyGrantType"/>
 	</reference-descriptor> 
+	<reference-descriptor
+		name="grantCostCenter"
+		class-ref="Dominio.grant.contract.GrantCostCenter"
+		proxy="true">
+		<foreignkey field-ref="costCenterKey"/>
+	</reference-descriptor> 		
 	<collection-descriptor
 			name="contractRegimes"
 			element-class-ref="Dominio.grant.contract.GrantContractRegime"
@@ -245,6 +256,12 @@
 		column="KEY_GRANT_CONTRACT"
 		jdbc-type="INTEGER"
 	/>
+
+	<field-descriptor
+			name="costCenterKey"
+			column="KEY_COST_CENTER"
+			jdbc-type="INTEGER"
+		/>
 	<reference-descriptor
 		name="teacher"
 		class-ref="Dominio.Teacher"
@@ -257,6 +274,12 @@
 		proxy="true">
 		<foreignkey field-ref="keyGrantContract"/>
 	</reference-descriptor> 
+	<reference-descriptor
+		name="grantCostCenter"
+		class-ref="Dominio.grant.contract.GrantCostCenter"
+		proxy="true">
+		<foreignkey field-ref="costCenterKey"/>
+	</reference-descriptor> 		
    </class-descriptor>
 
    

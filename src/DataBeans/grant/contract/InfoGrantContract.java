@@ -21,8 +21,12 @@ public class InfoGrantContract extends InfoObject {
     private Integer contractNumber;
 
     private String endContractMotive;
+    
+    private Integer costCenterKey;
 
     private InfoGrantOwner grantOwnerInfo;
+    
+    private InfoGrantCostCenter grantCostCenterInfo;
 
     private InfoGrantOrientationTeacher grantOrientationTeacherInfo;
 
@@ -160,7 +164,12 @@ public class InfoGrantContract extends InfoObject {
         if (grantContract != null) {
             setContractNumber(grantContract.getContractNumber());
             setEndContractMotive(grantContract.getEndContractMotive());
-            setDateAcceptTerm(grantContract.getDateAcceptTerm());
+            if (grantContract.getGrantCostCenter()!=null) {    
+            	setCostCenterKey(grantContract.getGrantCostCenter().getIdInternal());
+            	setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
+            }
+            setDateAcceptTerm(grantContract.getDateAcceptTerm());      
+    
         }
     }
 
@@ -179,10 +188,15 @@ public class InfoGrantContract extends InfoObject {
 
     public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract) {
         super.copyToDomain(infoGrantContract, grantContract);
-
+       
         grantContract.setContractNumber(infoGrantContract.getContractNumber());
         grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
+        if (infoGrantContract.getGrantCostCenterInfo()!=null){
+         grantContract.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal() );
+       
+        }
+
     }
 
     public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) {
@@ -194,4 +208,29 @@ public class InfoGrantContract extends InfoObject {
         return grantContract;
     }
 
+
+	/**
+	 * @return Returns the costCenterKey.
+	 */
+	public Integer getCostCenterKey() {
+		return costCenterKey;
+	}
+	/**
+	 * @param costCenterKey The costCenterKey to set.
+	 */
+	public void setCostCenterKey(Integer costCenterKey) {
+		this.costCenterKey = costCenterKey;
+	}
+	/**
+	 * @return Returns the grantCostCenterInfo.
+	 */
+	public InfoGrantCostCenter getGrantCostCenterInfo() {
+		return grantCostCenterInfo;
+	}
+	/**
+	 * @param grantCostCenterInfo The grantCostCenterInfo to set.
+	 */
+	public void setGrantCostCenterInfo(InfoGrantCostCenter grantCostCenterInfo) {
+		this.grantCostCenterInfo = grantCostCenterInfo;
+	}
 }

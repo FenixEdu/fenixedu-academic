@@ -36,7 +36,13 @@ public class GrantContractRegime extends DomainObject implements IGrantContractR
     private IGrantContract grantContract;
 
     private Integer keyGrantContract;
+    
+    private Integer costCenterKey;
+    
+    private IGrantCostCenter grantCostCenter;
+    
 
+	
     /**
      * Constructor
      */
@@ -214,4 +220,28 @@ public class GrantContractRegime extends DomainObject implements IGrantContractR
         }
         return false;
     }
+		/**
+	 * @return Returns the costCenterkey.
+	 */
+	public Integer getCostCenterKey() {
+		return costCenterKey;
+	}
+	/**
+	 * @param costCenterkey The costCenterkey to set.
+	 */
+	public void setCostCenterKey(Integer costCenterKey) {
+		this.costCenterKey = costCenterKey;
+	}
+	/**
+	 * @return Returns the grantCostCenter.
+	 */
+	public IGrantCostCenter getGrantCostCenter() {
+		return grantCostCenter;
+	}
+	/**
+	 * @param grantCostCenter The grantCostCenter to set.
+	 */
+	public void setGrantCostCenter(IGrantCostCenter grantCostCenter) {
+		this.grantCostCenter = grantCostCenter;
+	}
 }
