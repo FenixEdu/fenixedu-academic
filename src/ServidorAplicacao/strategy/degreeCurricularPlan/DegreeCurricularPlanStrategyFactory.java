@@ -42,12 +42,10 @@ public class DegreeCurricularPlanStrategyFactory implements IDegreeCurricularPla
 
 
 		if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)){
-			strategyInstance = new DegreeCurricularPlanStrategy();
+			strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
 		} else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)){
-			strategyInstance = new MasterDegreeCurricularPlanStrategy(); 
+			strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan); 
 		}  
-
-		strategyInstance.setDegreeCurricularPlan(degreeCurricularPlan);
 		return strategyInstance;
 	}
 

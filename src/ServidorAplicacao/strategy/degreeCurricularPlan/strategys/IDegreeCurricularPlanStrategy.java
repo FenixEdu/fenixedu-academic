@@ -18,12 +18,6 @@ public interface IDegreeCurricularPlanStrategy {
 	 */
 	public IDegreeCurricularPlan getDegreeCurricularPlan();
 	
-	/**
-	 * Sets the Degree Curricular Plan
-	 * @param degreeCurricularPlan
-	 */
-	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
-
 
 	/**
 	 * Checks if the mark is Valid for this Degree Curricular Plan

@@ -23,7 +23,8 @@ import Util.TipoCurso;
  
 public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStrategy implements IMasterDegreeCurricularPlanStrategy {
 
-	public MasterDegreeCurricularPlanStrategy() {
+	public MasterDegreeCurricularPlanStrategy(IDegreeCurricularPlan degreeCurricularPlan) {
+		super(degreeCurricularPlan);
 	}
 
 

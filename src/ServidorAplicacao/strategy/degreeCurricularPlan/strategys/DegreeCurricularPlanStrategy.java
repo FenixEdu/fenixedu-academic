@@ -20,7 +20,9 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	private IDegreeCurricularPlan degreeCurricularPlan = null;
 
 
-	public DegreeCurricularPlanStrategy(){}
+	public DegreeCurricularPlanStrategy(IDegreeCurricularPlan degreeCurricularPlan){
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
 
 	public IDegreeCurricularPlan getDegreeCurricularPlan() {
 		return degreeCurricularPlan;
@@ -56,16 +58,13 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 //		
 //		
 //		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-//		DegreeCurricularPlanStrategy degreeCurricularPlanStrategy = new DegreeCurricularPlanStrategy();
-//		degreeCurricularPlanStrategy.setDegreeCurricularPlan(degreeCurricularPlan);
+//		DegreeCurricularPlanStrategy degreeCurricularPlanStrategy = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
 //		degreeCurricularPlan.setMarkType(MarkType.TYPE20_OBJ);
 //		
 //		System.out.println(degreeCurricularPlanStrategy.checkMark("RE"));
 //		
-//		
-//		
 //	}
-//
-//
-//
+
+
+
 }
