@@ -42,7 +42,7 @@ public class FenixCacheFilter implements Filter {
         	time = Integer.parseInt(filterConfig.getInitParameter("time"));
         } catch (Exception e) {
         	System.out.println("Could not get init paramter 'time', defaulting to 5min.");
-          }
+        }
 
         ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(time);
     }
@@ -106,21 +106,24 @@ public class FenixCacheFilter implements Filter {
 		if (parameterNames != null) {
 			while(parameterNames.hasMoreElements()) {
 				String parameterName = (String) parameterNames.nextElement();
-				String parameterValue = request.getParameter(parameterName);
-				if (queryString.length() != 0) {
-					queryString.append("&");
+				String[] parameterValues = request.getParameterValues(parameterName);
+				for (int i = 0; i < parameterValues.length; i++) {
+					String parameterValue = parameterValues[i];
+					if (queryString.length() != 0) {
+						queryString.append("&");
+					}
+					queryString.append(parameterName);
+					queryString.append("=");
+					queryString.append(parameterValue);					
 				}
-				queryString.append(parameterName);
-				queryString.append("=");
-				queryString.append(parameterValue);
 			}
 		}
 
 		if (queryString.length() != 0) {
 			return queryString.toString();
-		} 
+		} else { 
 			return null;
-		
+		}
 	}
 
 }
