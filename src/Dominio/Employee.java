@@ -22,6 +22,8 @@ public class Employee extends DomainObject implements IEmployee {
 
 	private EmployeeHistoric employeeHistoric = null;
 	private List historicList = null;
+	
+	private Boolean active;
 
 	public Employee() {
 	}
@@ -139,4 +141,18 @@ public class Employee extends DomainObject implements IEmployee {
 			}
 		}
 	}
+    /**
+     * @return Returns the active.
+     */
+    public Boolean getActive()
+    {
+        return this.active;
+    }
+    /**
+     * @param active The active to set.
+     */
+    public void setActive(Boolean active)
+    {
+        this.active = active;
+    }
 }

@@ -23,6 +23,8 @@ public interface IEmployee extends IDomainObject{
 	public void setPerson(IPessoa person);
 	public void setEmployeeHistoric(EmployeeHistoric employeeHistoric);
 	public void setHistoricList(List historicList);
+	public Boolean getActive();
+	public void setActive(Boolean active);
 	
 	public void fillEmployeeHistoric();
 }
