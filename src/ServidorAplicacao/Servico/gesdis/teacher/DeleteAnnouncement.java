@@ -48,7 +48,7 @@ public class DeleteAnnouncement implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			ISite site = new Site();
-//			BeanUtils.copyProperties(site, infoSite);
+
 			site = Cloner.copyInfoSite2ISite(infoSite);
 			
 			IPersistentAnnouncement persistentAnnouncement = sp.getIPersistentAnnouncement();

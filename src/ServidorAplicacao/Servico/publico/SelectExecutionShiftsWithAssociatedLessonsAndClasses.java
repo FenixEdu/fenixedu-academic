@@ -62,9 +62,9 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses
 					disciplinaExecucao);
 
 			if (shifts == null || shifts.isEmpty()) {
-				//System.out.println("shift list is null or empty");
+				
 			} else {
-				//System.out.println("shift list is not null and is not empty");
+				
 
 				for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);

@@ -57,7 +57,7 @@ public class ReadTeacherSite implements IServico {
 	public InfoSite run(InfoExecutionCourse infoExecutionCourse)
 		throws FenixServiceException {
 
-		//   List allSitios = ((UserViewDocente) user).getSitios();
+	
 
 		try {
 			ISite site = null;

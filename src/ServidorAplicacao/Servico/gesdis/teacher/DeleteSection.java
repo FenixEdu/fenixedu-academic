@@ -34,12 +34,7 @@ public class DeleteSection implements IServico {
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			site =
 				persistentSite.readByExecutionCourse(site.getExecutionCourse());
-			/* we may only delete non-initial sections */
-			//			ISite completeSite = sp.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
-			//			InfoSection initialSection = Cloner.copyISection2InfoSection(completeSite.getInitialSection());
-			//			if (initialSection.equals(infoSection)){
-			//				throw new FenixServiceException("Initial Section");
-			//			}
+		
 
 			ISection superiorSection = null;
 			if (infoSection.getSuperiorInfoSection() != null) {
