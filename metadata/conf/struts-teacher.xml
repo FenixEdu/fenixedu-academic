@@ -1113,7 +1113,7 @@
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"    
        	validate="true">                      
        	<forward name="editGroupProperties" path="/editGroupProperties.jsp"/>
-		<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+		<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
 	</action>
 	
 	<action 
