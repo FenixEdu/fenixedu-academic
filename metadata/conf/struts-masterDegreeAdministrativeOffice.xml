@@ -242,6 +242,9 @@
 
          <form-property name="page" type="java.lang.Integer" />
          <form-property name="studentNumber" type="java.lang.String" />
+         <form-property name="studentName" type="java.lang.String" /> 
+       	 <form-property name="grade" type="java.lang.String" />
+         <form-property name="teacherNumber" type="java.lang.String" />
 	  </form-bean>
 	  
 	  <!-- Bean to submit final evaluation -->
@@ -330,6 +333,15 @@
 	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
       </action>    
  
+ 	  <action path="/marksSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/marksManagement/indexMarksManagement.jsp"/> 
+      </action>
+      
+    
+      
       <!-- action definition -->
       
 
@@ -714,10 +726,6 @@
   	          scope="request"
               type="ServidorApresentacao.Action.certificate.PrintCertificateDispatchAction"
 			  >
-			  
-     		 <exception type="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
-	            key="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
-	            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
       </action>
       
@@ -810,7 +818,7 @@
       </action>
       
       <action path="/changeMarkDispatchAction"
-      		  input="/marksManagement/showMarksManagementMenu.jsp"
+      		  input="/marksManagement/editMarkStudent.jsp"
       	      name="studentNumberForm"
 		      parameter="method"
 		      scope="request"
@@ -820,7 +828,9 @@
 		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="editStudentNumber" path="/marksManagement/editMarkStudent.jsp"/> 
-	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/> 
+	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/>
+			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 
+			 <forward name="editStudentMark" path="/marksManagement/editStudentMark.jsp"/> 
       </action>
       
       <action path="/marksSubmission"

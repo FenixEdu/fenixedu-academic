@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoPerson;
 import DataBeans.InfoSiteEnrolmentEvaluation;
@@ -59,6 +60,7 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 
 		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 		InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+		InfoEnrolment infoEnrolment = new InfoEnrolment();
 		InfoTeacher infoTeacher = new InfoTeacher();
 		List infoEnrolmentEvaluations = new ArrayList();
 		try {
@@ -83,16 +85,19 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 				Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
 //			ICurricularCourseScope curricularCourseScopeForCriteria =
 //				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
-
+			infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment());
 	
 			IPessoa person = (IPessoa) enrolmentEvaluation.getPersonResponsibleForGrade();
 			InfoPerson person2 = Cloner.copyIPerson2InfoPerson(person);
 			ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+			
 			infoEnrolmentEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
+			infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
+			infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 			infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 
-//			enrolmenEvaluation.setEnrol
+//			enrolmenEvaluation.setEnrolment
 		}catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
@@ -102,7 +107,6 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 			infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
 			infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
 		
-		System.out.println("sai do servico");
 		return infoSiteEnrolmentEvaluation;
 		
 	}

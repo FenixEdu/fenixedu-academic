@@ -1,6 +1,5 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 
@@ -23,6 +21,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.EnrolmentEvaluationType;
 
 /**
  * 
@@ -41,6 +40,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
+		if (session != null){
 	
 		String executionYear = getFromRequest("executionYear", request);
 		String degree = getFromRequest("degree", request);
@@ -50,7 +50,8 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		request.setAttribute("scopeCode",scopeCode);
 		request.setAttribute("curricularCourse", curricularCourse);
 		request.setAttribute("degree", degree);
-
+		} else
+		throw new Exception();
 
 		return mapping.findForward("editStudentNumber");
 	}
@@ -113,8 +114,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		request.setAttribute("name",((InfoEnrolmentEvaluation)(((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations()).get(0)).getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getInfoPerson().getNome());
 		request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluations);
-		InfoSiteEnrolmentEvaluation SiteEnrolmentEvaluation = (InfoSiteEnrolmentEvaluation)infoSiteEnrolmentEvaluations.get(0);
-		InfoEnrolmentEvaluation EnrolmentEvaluation = (InfoEnrolmentEvaluation) SiteEnrolmentEvaluation.getEnrolmentEvaluations().get(0);
+	
 		return mapping.findForward("studentMarks");
 	}
 
@@ -125,7 +125,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
+			HttpSession session = request.getSession(false);
 			Integer studentEvaluationCode = Integer.valueOf(request.getParameter("studentPosition"));
 			String executionYear = (String) request.getParameter("executionYear");
 			String degree = request.getParameter("degree");
@@ -146,12 +146,13 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			request.setAttribute("degree", degree);
 			request.setAttribute("curricularCourse", curricularCourse);
 			request.setAttribute("curricularCourseCode", curricularCourseCode);
-System.out.println("--------------" + infoSiteEnrolmentEvaluation.getEnrolmentEvaluations().get(0));
-			return mapping.findForward("changeStudentMark");
+			request.setAttribute(SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST, new EnrolmentEvaluationType().toArrayList());
+			request.setAttribute("infoSiteEnrolmentEvaluation",infoSiteEnrolmentEvaluation);
+			return mapping.findForward("editStudentMark");
 		
 	}
 
-	public ActionForward getStudentsAndMarksByCurricularCourse(
+	public ActionForward studentMarkChanged(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -161,28 +162,21 @@ System.out.println("--------------" + infoSiteEnrolmentEvaluation.getEnrolmentEv
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
+		
 
-			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+			String executionYear = getFromRequest("executionYear", request);
+			String degree = getFromRequest("degree", request);
+			String curricularCourse = getFromRequest("curricularCourse", request);
+			Integer scopeCode = new Integer(getFromRequest("curricularCourseCode", request));	
+			Integer enrolmentEvaluation = Integer.valueOf(getFromRequest("idInternal",request));
 
-			DynaActionForm chooseExecutionCourseForm = (DynaActionForm) form;
-			String executionCourse = (String) chooseExecutionCourseForm.get("executionCourse");
-
-			// Get 			
-			Object args[] = { executionCourse };
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();
-			ArrayList executionCourseList = null;
-			try {
-				executionCourseList = (ArrayList) serviceManager.executar(userView, "ReadExecutionCoursesByMasterDegree", args);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-			request.setAttribute("useCase", request.getAttribute("useCase"));
-			request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, executionCourseList);
-
-			return mapping.findForward("ChooseExecutionCourse");
-		} else
-			throw new Exception();
+			request.setAttribute("executionYear", executionYear);
+			request.setAttribute("degree", degree);
+			request.setAttribute("curricularCourse", curricularCourse);
+			request.setAttribute("curricularCourseCode", scopeCode);
+		}
+			return mapping.findForward("studentMarks");
+		
 	}
 	private String getFromRequest(String parameter, HttpServletRequest request) {
 		String parameterString = request.getParameter(parameter);

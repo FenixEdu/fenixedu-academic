@@ -283,6 +283,14 @@
         <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
       </field>
     </form>
-
+	<!-- validation for marks Submission -->
+    <form name="studentNumberForm">
+	  <field property="studentNumber" depends="required, integer" page="1">
+        <arg0 key="label.number" />
+      </field>
+      <field property="teacherNumber" depends="required, integer" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
+      </field>
+    </form>
   </formset>
 </form-validation>

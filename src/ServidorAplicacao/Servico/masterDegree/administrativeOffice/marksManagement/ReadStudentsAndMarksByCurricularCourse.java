@@ -33,7 +33,6 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
-import Util.EnrolmentState;
 import Util.TipoCurso;
 
 /**
@@ -151,6 +150,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			InfoStudent infoStudent = null;
 			List infoSiteEnrolmentEvaluations = new ArrayList();
 			try {
+
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 				IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
@@ -178,13 +178,13 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 				
 				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 	
-				List enrolments = (List) sp.getIPersistentEnrolment().readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan,new EnrolmentState(EnrolmentState.ENROLED));
+				 enrolment = (IEnrolment) sp.getIPersistentEnrolment().readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(studentCurricularPlan,curricularCourseScope);
 
-				if (enrolments != null && enrolments.size() > 0){ 
+				if (enrolment != null ){ 
 				
-						ListIterator iter1 = enrolments.listIterator();
-						while (iter1.hasNext()) {
-							enrolment = (IEnrolment) iter1.next();
+//						ListIterator iter1 = enrolments.listIterator();
+//						while (iter1.hasNext()) {
+//							enrolment = (IEnrolment) iter1.next();
 
 							EnrolmentEvaluationState enrolmentEvaluationState = new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL);
 							enrolmentEvaluations = (List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationState(enrolment,enrolmentEvaluationState);
@@ -213,9 +213,9 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 							infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
 							infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
 							infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
-				}
+//				}
 				
-			}
+				}
 			} catch (ExcepcaoPersistencia ex) {
 				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 				newEx.fillInStackTrace();
