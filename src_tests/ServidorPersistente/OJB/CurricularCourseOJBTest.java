@@ -67,7 +67,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		IDisciplinaDepartamento departmentCourse = null;
 		IDegreeCurricularPlan degreeCurricularPlan = null;
 
-		System.out.println("\n- Test 1.1 : Write Existing CurricularCourse\n");
+		System.out.println("- Test 1.1 : Write Existing CurricularCourse\n");
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -131,7 +131,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 				departmentCourse,
 				degreeCurricularPlan);
 
-		System.out.println("\n- Test 1.2 : Write Non Existing CurricularCourse\n");
+		System.out.println("- Test 1.2 : Write Non Existing CurricularCourse\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourse.lockWrite(curricularCourse);
@@ -160,7 +160,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 	// -------------------------------------------------------------------------------------------------------------------------------------------
 	public void testDeleteAllCurricularCourses() {
 
-		System.out.println("\n- Test 2 : Delete All CurricularCourses");
+		System.out.println("- Test 2 : Delete All CurricularCourses");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourse.deleteAll();
@@ -189,7 +189,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		ICurricularCourse curricularCourse = null;
 
 		//		CurricularCourse existente
-		System.out.println("\n- Test 3.1 : Read Existing CurricularCourse\n");
+		System.out.println("- Test 3.1 : Read Existing CurricularCourse\n");
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -202,7 +202,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
 		// CurricularCourse inexistente
 
-		System.out.println("\n- Test 3.2 : Read Not Existing CurricularCourse\n");
+		System.out.println("- Test 3.2 : Read Not Existing CurricularCourse\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Unknown", "unk");
@@ -218,7 +218,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		ICurricularCourse curricularCourse = null;
 
 		//		CurricularCourse existente
-		System.out.println("\n- Test 4.1 : Delete Existing CurricularCourse\n");
+		System.out.println("- Test 4.1 : Delete Existing CurricularCourse\n");
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -247,7 +247,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		assertNull(curricularCourse);
 
 		// CurricularCourse inexistente
-		System.out.println("\n- Test 4.2 : Delete Non Existing CurricularCourse\n");
+		System.out.println("- Test 4.2 : Delete Non Existing CurricularCourse\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourse.delete(new CurricularCourse());
@@ -262,7 +262,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 	public void testReadAllCurricularCourses() {
 		ArrayList list = null;
 
-		System.out.println("\n- Test 5 : Read All Existing CurricularCourses\n");
+		System.out.println("- Test 5 : Read All Existing CurricularCourses\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			list = persistentCurricularCourse.readAll();
@@ -279,7 +279,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 	public void testReadCurricularCoursesByCurricularYear() {
 
 		// CurricularCourses existentes
-		System.out.println("\n- Test 6.1 : Read Existing CurricularCourses\n");
+		System.out.println("- Test 6 : Read Existing CurricularCourses\n");
 
 		ArrayList list = null;
 		try {
@@ -290,5 +290,40 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read Existing CurricularCourse");
 		}
 		assertNotNull(list);
+		assertEquals(list.size(), 2);
 	}
+
+	public void testReadCurricularCoursesByCurricularSemester() {
+
+		// CurricularCourses existentes
+		System.out.println("- Test 7 : Read Existing CurricularCourses\n");
+
+		ArrayList list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readCurricularCoursesByCurricularSemester(new Integer(1));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read Existing CurricularCourse");
+		}
+		assertNotNull(list);
+		assertEquals(list.size(), 5);
+	}
+/*
+	public void testReadCurricularCoursesByCurricularSemesterAndCurricularYear() {
+
+		// CurricularCourses existentes
+		System.out.println("- Test 8 : Read Existing CurricularCourses\n");
+
+		ArrayList list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readCurricularCoursesByCurricularSemesterAndCurricularYear(new Integer(1), new Integer(1));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read Existing CurricularCourse");
+		}
+		assertNotNull(list);
+	}
+*/
 }
