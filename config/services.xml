@@ -2323,6 +2323,15 @@
             <chain name="ReadCourseInformationAuthorization"/>
         </filterChains>
     </service>
+     <service>
+        <name>ReadCourseHistoric</name>
+        <implementationClass>ServidorAplicacao.Servico.gesdis.ReadCourseHistoric</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ReadCourseInformationAuthorization"/>
+        </filterChains>
+    </service>
     <service>
         <name>ChangePasswordService</name>
         <implementationClass>ServidorAplicacao.Servico.person.ChangePasswordService</implementationClass>
@@ -5811,5 +5820,23 @@
         <filterChains>
             <chain name="DegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
-    </service>    
+    </service>
+    <service>
+    	<name>EditStudentCourseReport</name>
+    	<description>Edits or creates the student course report of a curricular course</description>
+    	<implementationClass>ServidorAplicacao.Servico.gesdis.student.EditStudentCourseReport</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EditStudentCourseReportAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>ReadStudentCourseReport</name>
+    	<description>Reads the student course report of a curricular course</description>
+    	<implementationClass>ServidorAplicacao.Servico.gesdis.student.ReadStudentCourseReport</implementationClass>
+    	<isTransactional>True</isTransactional>
+    	<filterChains>
+    	    <chain name="StudentCourseReportAuthorization"/>
+    	</filterChains>
+    </service>      
 </serviceDefinitions>

@@ -108,6 +108,28 @@
 					<td class="listClasses"><%= ap_ev_h %>%</td>
 				</tr>
 			</logic:iterate>
+			<logic:present name="infoCoursesHistoric">
+				<bean:define id="curricularCourse" name="siteEvaluationInformation" property="infoCurricularCourse"/>
+				<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
+					<logic:iterate id="courseHistoric" name="siteCourseHistoric" property="infoCourseHistorics">
+						<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.idInternal"/>
+						<logic:equal name="curricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
+							<bean:define id="evaluated" name="courseHistoric" property="evaluated" type="java.lang.Integer"/>
+							<bean:define id="enrolled" name="courseHistoric" property="enrolled" type="java.lang.Integer"/>
+							<bean:define id="approved" name="courseHistoric" property="approved" type="java.lang.Integer"/>
+							<tr>
+								<td class="listClasses">
+									<bean:write name="courseHistoric" property="curricularYear"/>
+								</td>
+								<% int ap_en_ch = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
+								<td class="listClasses"><%= ap_en_ch %>%</td>
+								<% int ap_ev_ch = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
+								<td class="listClasses"><%= ap_ev_ch %>%</td>
+							</tr>
+						</logic:equal>
+					</logic:iterate>
+				</logic:iterate>
+			</logic:present>		
 		</table>
 		<br/>
 		<br/>

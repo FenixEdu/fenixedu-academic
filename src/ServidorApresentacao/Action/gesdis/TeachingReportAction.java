@@ -1,8 +1,12 @@
 /*
- * Created on Nov 15, 2003
+ * Created on Fev 10, 2004
  *  
  */
 package ServidorApresentacao.Action.gesdis;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +24,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.SiteView;
 import DataBeans.gesdis.InfoCourseReport;
+import DataBeans.gesdis.InfoSiteCourseHistoric;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -36,6 +41,11 @@ public class TeachingReportAction extends DispatchAction
     private String getReadService()
     {
         return "ReadCourseInformation";
+    }
+
+    private String getReadHistoricService()
+    {
+        return "ReadCourseHistoric";
     }
 
     private String getEditService()
@@ -159,6 +169,7 @@ public class TeachingReportAction extends DispatchAction
         throws Exception
     {
         SiteView siteView = readSiteView(mapping, form, request);
+        List infoCoursesHistoric  = readCoursesHistoric(mapping, form, request); 
         if (!hasErrors(request) && siteView != null)
         {
             InfoSiteCourseInformation infoSiteCourseInformation =
@@ -170,6 +181,7 @@ public class TeachingReportAction extends DispatchAction
                 request);
         }
         setSiteViewToRequest(request, siteView, mapping);
+        setInfoCoursesHistoric(request, infoCoursesHistoric, mapping);
         return mapping.findForward("show-form");
     }
 
@@ -190,7 +202,39 @@ public class TeachingReportAction extends DispatchAction
     {
         SiteView siteView = readSiteView(mapping, form, request);
         setSiteViewToRequest(request, siteView, mapping);
+        List infoCoursesHistoric = readCoursesHistoric(mapping, form, request);
+        setInfoCoursesHistoric(request, infoCoursesHistoric, mapping);
         return mapping.findForward("successfull-read");
+    }
+
+    /**
+	 * @param request
+	 * @param infoCoursesHistoric
+	 * @param mapping
+	 */
+    private void setInfoCoursesHistoric(HttpServletRequest request, List list, ActionMapping mapping)
+        throws Exception
+    {
+        if (list != null)
+        {
+            request.setAttribute("infoCoursesHistoric", list);
+        }
+    }
+
+    /**
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @return
+	 */
+    private List readCoursesHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request)
+        throws Exception
+    {
+        IUserView userView = SessionUtils.getUserView(request);
+        String executionCourseId = request.getParameter("executionCourseId");
+
+        Object[] args = { new Integer(executionCourseId)};
+        return (List) ServiceUtils.executeService(userView, getReadHistoricService(), args);
     }
 
     /**

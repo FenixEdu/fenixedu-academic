@@ -1,6 +1,6 @@
 /*
  * Created on 7/Nov/2003
- *
+ *  
  */
 package DataBeans.gesdis;
 
@@ -9,48 +9,53 @@ import java.util.Date;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoObject;
 
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class InfoCourseReport extends InfoObject {
+public class InfoCourseReport extends InfoObject
+{
 
-	private String report;
+    private String report;
     private Date lastModificationDate;
-	private InfoExecutionCourse  infoExecutionCourse;
+    private InfoExecutionCourse infoExecutionCourse;
 
-	public InfoCourseReport() {
-	}
+    public InfoCourseReport()
+    {}
 
-	public String getReport() {
-		return report;
-	}
-	
-	public InfoExecutionCourse getInfoExecutionCourse(){
-		return infoExecutionCourse;
-	}
+    public String getReport()
+    {
+        return report;
+    }
 
-	public void setReport(String report) {
-		this.report = report;
-	}
-	
-	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse){
-		this.infoExecutionCourse = infoExecutionCourse;
-	}
+    public InfoExecutionCourse getInfoExecutionCourse()
+    {
+        return infoExecutionCourse;
+    }
+
+    public void setReport(String report)
+    {
+        this.report = report;
+    }
+
+    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse)
+    {
+        this.infoExecutionCourse = infoExecutionCourse;
+    }
 
     /**
-     * @return Returns the lastModificationDate.
-     */
+	 * @return Returns the lastModificationDate.
+	 */
     public Date getLastModificationDate()
     {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
-     */
+	 * @param lastModificationDate
+	 *            The lastModificationDate to set.
+	 */
     public void setLastModificationDate(Date lastModificationDate)
     {
         this.lastModificationDate = lastModificationDate;

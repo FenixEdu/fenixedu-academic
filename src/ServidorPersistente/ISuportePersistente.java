@@ -16,7 +16,9 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
+import ServidorPersistente.gesdis.IPersistentCourseHistoric;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
+import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
 import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
@@ -29,6 +31,7 @@ import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.places.campus.IPersistentCampus;
+import ServidorPersistente.student.IPersistentDelegate;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
@@ -232,26 +235,29 @@ public interface ISuportePersistente
     public IPersistentSupportLesson getIPersistentSupportLesson();
 
     public IPersistentTeacherDegreeFinalProjectStudent getIPersistentTeacherDegreeFinalProjectStudent();
-	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
+    public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
     /**
-     * @return
-     */
+	 * @return
+	 */
     public IPersistentCampus getIPersistentCampus();
-    
+
     public IPersistentWorkLocation getIPersistentWorkLocation();
-    
-	//Nuno Correia & Ricardo Rodrigues
-	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
-	public IPersistentScientificArea getIPersistentScientificArea();
-	
-	public IPersistentCredits getIPersistentCredits();
-	
-	public IPersistentGratuityValues getIPersistentGratuityValues();
-	public IPersistentGratuitySituation getIPersistentGratuitySituation();
-	public IPersistentPaymentPhase getIPersistentPaymentPhase();
-	
-	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea();
-	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea();
-	
-	public IPersistentTutor getIPersistentTutor();
+
+    //Nuno Correia & Ricardo Rodrigues
+    public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
+    public IPersistentScientificArea getIPersistentScientificArea();
+
+    public IPersistentCredits getIPersistentCredits();
+
+    public IPersistentGratuityValues getIPersistentGratuityValues();
+    public IPersistentGratuitySituation getIPersistentGratuitySituation();
+    public IPersistentPaymentPhase getIPersistentPaymentPhase();
+
+    public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea();
+    public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea();
+
+    public IPersistentTutor getIPersistentTutor();
+    public IPersistentCourseHistoric getIPersistentCourseHistoric();
+    public IPersistentStudentCourseReport getIPersistentStudentCourseReport();
+    public IPersistentDelegate getIPersistentDelegate();
 }

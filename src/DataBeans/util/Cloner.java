@@ -107,7 +107,9 @@ import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
+import DataBeans.gesdis.InfoCourseHistoric;
 import DataBeans.gesdis.InfoCourseReport;
+import DataBeans.gesdis.InfoStudentCourseReport;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
@@ -120,6 +122,7 @@ import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import DataBeans.person.InfoQualification;
+import DataBeans.student.InfoDelegate;
 import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
 import DataBeans.teacher.InfoExternalActivity;
@@ -146,8 +149,12 @@ import Dominio.Seminaries.ITheme;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import Dominio.gaugingTests.physics.IGaugingTestResult;
+import Dominio.gesdis.CourseHistoric;
 import Dominio.gesdis.CourseReport;
+import Dominio.gesdis.ICourseHistoric;
 import Dominio.gesdis.ICourseReport;
+import Dominio.gesdis.IStudentCourseReport;
+import Dominio.gesdis.StudentCourseReport;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.GrantOrientationTeacher;
@@ -167,6 +174,8 @@ import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import Dominio.reimbursementGuide.IReimbursementGuide;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
+import Dominio.student.Delegate;
+import Dominio.student.IDelegate;
 import Dominio.teacher.Category;
 import Dominio.teacher.ExternalActivity;
 import Dominio.teacher.ICareer;
@@ -4780,7 +4789,7 @@ public abstract class Cloner
 		return infoTutor;
 	}
 
-	public ITutor copyInfoTutor2ITutor(InfoTutor infoTutor)
+	public static ITutor copyInfoTutor2ITutor(InfoTutor infoTutor)
 	{
 		ITutor tutor = new Tutor();
 		copyObjectProperties(tutor, infoTutor);
@@ -4792,4 +4801,79 @@ public abstract class Cloner
 
 		return tutor;
 	}
+    
+    public static InfoCourseHistoric copyICourseHistoric2InfoCourseHistoric(ICourseHistoric courseHistoric)
+    {
+        InfoCourseHistoric infoCourseHistoric = new InfoCourseHistoric();
+        copyObjectProperties(infoCourseHistoric, courseHistoric);
+        InfoCurricularCourse infoCurricularCourse =
+            Cloner.copyCurricularCourse2InfoCurricularCourse(courseHistoric.getCurricularCourse());
+        infoCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
+
+        return infoCourseHistoric;
+    }
+
+    public static ICourseHistoric copyInfoCourseHistoric2ICourseHistoric(InfoCourseHistoric infoCourseHistoric)
+    {
+        ICourseHistoric courseHistoric = new CourseHistoric();
+        copyObjectProperties(courseHistoric, infoCourseHistoric);
+        ICurricularCourse curricularCourse =
+            Cloner.copyInfoCurricularCourse2CurricularCourse(infoCourseHistoric.getInfoCurricularCourse());
+        courseHistoric.setCurricularCourse(curricularCourse);
+
+        return courseHistoric;
+    }
+    
+    public static InfoDelegate copyIDelegate2InfoDelegate(IDelegate delegate)
+    {
+        InfoDelegate infoDelegate = new InfoDelegate();
+        copyObjectProperties(infoDelegate, delegate);
+        InfoDegree infoDegree =
+        Cloner.copyIDegree2InfoDegree(delegate.getDegree());
+        InfoStudent infoStudent=
+        Cloner.copyIStudent2InfoStudent(delegate.getStudent());
+        InfoExecutionYear infoExecutionYear=
+        (InfoExecutionYear) Cloner.get(delegate.getExecutionYear());
+        infoDelegate.setInfoDegree(infoDegree);
+        infoDelegate.setInfoStudent(infoStudent);
+        infoDelegate.setInfoExecutionYear(infoExecutionYear);
+        
+        return infoDelegate;
+    }
+
+    public static IDelegate copyInfoDelegate2IDelegate(InfoDelegate infoDelegate)
+    {
+        IDelegate delegate = (IDelegate) new Delegate();
+        copyObjectProperties(delegate, infoDelegate);
+        ICurso degree = Cloner.copyInfoDegree2IDegree(infoDelegate.getInfoDegree());
+        IStudent student = Cloner.copyInfoStudent2IStudent(infoDelegate.getInfoStudent());
+        IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoDelegate.getInfoExecutionYear());
+        delegate.setDegree(degree);
+        delegate.setStudent(student);
+        delegate.setExecutionYear(executionYear);
+        
+        return delegate;
+    }
+    
+    public static InfoStudentCourseReport copyIStudentCourseReport2InfoStudentCourseReport(IStudentCourseReport studentCourseReport)
+    {
+        InfoStudentCourseReport infoStudentCourseReport = new InfoStudentCourseReport();
+        copyObjectProperties(infoStudentCourseReport, studentCourseReport);
+        InfoCurricularCourse infoCurricularCourse =
+        Cloner.copyCurricularCourse2InfoCurricularCourse(studentCourseReport.getCurricularCourse());
+        infoStudentCourseReport.setInfoCurricularCourse(infoCurricularCourse);
+        
+        return infoStudentCourseReport;
+    }
+
+    public static IStudentCourseReport copyInfoStudentCourseReport2IStudentCourseReport(InfoStudentCourseReport infoStudentCourseReport)
+    {
+        IStudentCourseReport studentCourseReport = new StudentCourseReport();
+        copyObjectProperties(studentCourseReport, infoStudentCourseReport);
+        ICurricularCourse curricularCourse =
+        Cloner.copyInfoCurricularCourse2CurricularCourse(infoStudentCourseReport.getInfoCurricularCourse());
+        studentCourseReport.setCurricularCourse(curricularCourse);
+        
+        return studentCourseReport;
+    }
 }

@@ -1,0 +1,60 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+<!-- Definitions for Dominio.student.Delegate -->
+   <class-descriptor
+   	  class="Dominio.student.Delegate"
+   	  table="DELEGATE"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+     <field-descriptor
+		name="keyStudent"
+		column="KEY_STUDENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyDegree"
+		column="KEY_DEGREE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyExecutionYear"
+		column="KEY_EXECUTION_YEAR"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor 
+	    name="type" 
+    	column="TYPE" 
+    	jdbc-type="INTEGER"
+    	conversion="ServidorPersistente.Conversores.DelegateTypeFieldConversion"/>
+    <reference-descriptor
+			name="degree"
+			class-ref="Dominio.Curso"
+			proxy="false">
+		<foreignkey field-ref="keyDegree"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="executionYear"
+			class-ref="Dominio.ExecutionYear"
+			proxy="false">
+		<foreignkey field-ref="keyExecutionYear"/>
+	</reference-descriptor>    
+	 <reference-descriptor
+			name="student"
+			class-ref="Dominio.Student"
+			proxy="false">
+		<foreignkey field-ref="keyStudent"/>
+	</reference-descriptor>   
+   </class-descriptor>

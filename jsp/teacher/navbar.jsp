@@ -41,7 +41,9 @@
 	<p>
 	<ul>
 		<li><html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.courseInformationManagement"/></html:link></li>
-		<li><html:link page="/teachingReport.do?method=prepareEdit&amp;page=0" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.teachingReportManagement"/></html:link></li>
+		<logic:notEqual name="executionCourse" property="infoExecutionPeriod.state.stateCode" value="C">
+			<li><html:link page="/teachingReport.do?method=prepareEdit&amp;page=0" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.teachingReportManagement"/></html:link></li>
+		</logic:notEqual>
 	</ul>
 	<p>	
 	<ul>

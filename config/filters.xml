@@ -590,5 +590,19 @@
             ServidorAplicacao.Filtro.student.StudentIsUserFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter>      
+    </filter>
+    <filter>
+        <name>EditStudentCourseReportAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.student.EditStudentCourseReportAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>
+    <filter>
+        <name>StudentCourseReportAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.student.StudentCourseReportAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>           
 </filterDefinitions>

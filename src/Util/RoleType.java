@@ -43,6 +43,7 @@ public final class RoleType extends ValuedEnum implements Serializable
 	public static final int DEPARTMENT_MEMBER_TYPE = 24;
 	public static final int GEP_TYPE = 25;
 	public static final int DIRECTIVE_COUNCIL_TYPE = 26;
+    public static final int DELEGATE_TYPE = 27;
 
 	public static final RoleType PERSON = new RoleType("person", RoleType.PERSON_TYPE);
 	public static final RoleType STUDENT = new RoleType("student", RoleType.STUDENT_TYPE);
@@ -88,6 +89,8 @@ public final class RoleType extends ValuedEnum implements Serializable
 	public static final RoleType GEP = new RoleType("role.gep", RoleType.GEP_TYPE);
 	public static final RoleType DIRECTIVE_COUNCIL =
 		new RoleType("role.directiveCouncil", RoleType.DIRECTIVE_COUNCIL_TYPE);
+    public static final RoleType DELEGATE =
+            new RoleType("role.delegate", RoleType.DELEGATE_TYPE);
 
 	/**
 	 * @param name
