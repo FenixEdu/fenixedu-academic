@@ -377,34 +377,3 @@
       </reference-descriptor>       
     
    </class-descriptor>
-
-<!-- Definitions for Dominio.Privilegio -->
-   <class-descriptor
-   	  class="Dominio.Privilegio"
-   	  table="PRIVILEGIO"
-   >
-      <field-descriptor id="1"
-         name="codigoInterno"
-         column="CODIGO_INTERNO"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="chavePessoa"
-         column="CHAVE_PESSOA"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="servico"
-         column="SERVICO"
-         jdbc-type="VARCHAR"
-      />
-      <reference-descriptor
-         name="pessoa"
-         class-ref="Dominio.Pessoa"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="2"/>
-      </reference-descriptor>
-   </class-descriptor>	
