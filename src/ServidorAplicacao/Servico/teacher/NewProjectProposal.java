@@ -134,7 +134,7 @@ public class NewProjectProposal implements IService
 				IProfessorship professorship = (IProfessorship)iterProfessorship.next();
 				ITeacher teacher = professorship.getTeacher();
 				if(!(teacher.getPerson()).equals(senderPerson)){
-					System.out.println("Docentes da disciplina à qual se fez a proposta:" + teacher.getPerson().getUsername());
+					
 					group.add(teacher.getPerson());
 				}
 				else{
@@ -164,7 +164,7 @@ public class NewProjectProposal implements IService
 				if(!(pessoa.equals(senderPerson))){
 					groupAux.add(pessoa);
 					if(!allOtherProfessors.contains(pessoa)){
-						System.out.println("Docentes da disciplina que fez a proposta:" + pessoa.getUsername());
+						
 						allOtherProfessors.add(pessoa);
 					}
 				}

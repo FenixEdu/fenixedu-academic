@@ -57,8 +57,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
             if (numberOfGroups < groupProperties.getGroupMaximumNumber().intValue())
             {
                 result = true;
-                System.out.println("numberOfGroups"+ numberOfGroups);
-                System.out.println("groupProperties.getGroupMaximumNumber().intValue()"+ groupProperties.getGroupMaximumNumber().intValue());
             }
         } catch (ExcepcaoPersistencia e)
         {

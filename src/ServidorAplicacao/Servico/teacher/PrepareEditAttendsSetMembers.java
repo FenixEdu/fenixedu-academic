@@ -98,7 +98,7 @@ public class PrepareEditAttendsSetMembers implements IServico{
             Iterator iteratorFR = frequentasPossiveis.iterator();
             while (iteratorFR.hasNext()) {
             	IFrequenta frequentaA=(IFrequenta)iteratorFR.next();
-            	System.out.println("TODOS-"+frequentaA.getAluno().getNumber());
+            	
             }
             
             Iterator iterator2 = frequentasAttendsSet.iterator();
@@ -106,7 +106,7 @@ public class PrepareEditAttendsSetMembers implements IServico{
             while (iterator2.hasNext()) {
             	frequenta = (IFrequenta)iterator2.next();
             	frequentasStudentNumbersInsert.add(frequenta.getAluno().getNumber());
-            	System.out.println("attendSet-"+frequenta.getAluno().getNumber());
+            	
             	if (frequentasPossiveis.contains(frequenta)) {
             		frequentasPossiveis.remove(frequenta);
             	}
@@ -119,7 +119,7 @@ public class PrepareEditAttendsSetMembers implements IServico{
             while (iteratorFreqPoss.hasNext()) {
             	frequenta = (IFrequenta)iteratorFreqPoss.next();
             	if(!frequentasStudentNumbersInsert.contains(frequenta.getAluno().getNumber())){
-            		System.out.println(frequenta.getAluno().getNumber());
+            		
             		frequentasStudentNumbersInsert.add(frequenta.getAluno().getNumber());
                     frequentasInsert.add(frequenta);
             	}

@@ -131,7 +131,6 @@ public class CreateStudentGroupWithoutShift implements IService {
 		            IFrequenta attend = null;
 		            while(iterAttends.hasNext() && !found){
 		            	attend = (IFrequenta)iterAttends.next();
-		            	System.out.println("1-" + attend.getAluno().getNumber());
 		            	if (attend.getAluno().equals(student)) {
 		            		found=true;
 		            		}
@@ -170,7 +169,6 @@ public class CreateStudentGroupWithoutShift implements IService {
 	            IFrequenta attend = null;
 	            while(iterAttends.hasNext() && !found){
 	            	attend = (IFrequenta)iterAttends.next();
-	            	System.out.println("2-" + attend.getAluno().getNumber());
 	            	if (attend.getAluno().equals(student)) {
 	            		found=true;
 	            		}

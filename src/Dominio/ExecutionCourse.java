@@ -392,13 +392,13 @@ private List responsibleTeachers;
 		List groupPropertiesExecutionCourseList = this.groupPropertiesExecutionCourse;
 		Iterator iter = groupPropertiesExecutionCourseList.iterator();
 		while(iter.hasNext() && !found){
-			System.out.println("Inicio - hasProposals" + result);
+			
 			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourseAux =(IGroupPropertiesExecutionCourse)iter.next();
 			if(groupPropertiesExecutionCourseAux.getProposalState().getState().intValue()==3){
 				result=true;
 				found = true;
 			}
-			System.out.println("Fim - hasProposals" + result);
+			
 		}
 		return result;
 	}
