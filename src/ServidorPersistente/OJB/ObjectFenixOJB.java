@@ -112,7 +112,9 @@ public abstract class ObjectFenixOJB implements IPersistentObject
                     if (newObject != null)
                     {
                         obj = newObject;
-                        list.set(i, obj);
+
+                        list.add(i, obj);
+                        list.remove(i + 1);
                     }
                     tx.lock(obj, Transaction.READ);
                 }
@@ -604,7 +606,12 @@ public abstract class ObjectFenixOJB implements IPersistentObject
 
         Query queryCriteria = new QueryByCriteria(classToQuery, criteria, distinct);
         List list = (List) pb.getCollectionByQuery(queryCriteria);
-
+        if (list != null)
+        {
+            List aux = new ArrayList();
+            aux.addAll(list);
+            list = aux;
+        }
         lockRead(list);
         return list;
     }
