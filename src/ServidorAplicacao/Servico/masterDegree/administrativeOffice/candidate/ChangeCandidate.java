@@ -25,10 +25,12 @@ import Dominio.ICountry;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.SituationName;
 import Util.Specialization;
 import Util.State;
@@ -72,15 +74,19 @@ public class ChangeCandidate implements IServico {
 				oldCandidate.getInfoExecutionDegree().getInfoExecutionYear().getYear(),
 				oldCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
 				new Specialization(oldCandidate.getSpecialization()));
+			masterDegreeCandidate.getPerson().setTipoDocumentoIdentificacao(newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+			masterDegreeCandidate.getPerson().setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());			
+
 			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx; 
+		
+        } catch (ExistingPersistentException ex) {
+			throw new ExistingServiceException(ex);        	
         } 
 
-		if (masterDegreeCandidate == null)
-			throw new ExcepcaoInexistente("Unknown Candidate !!");	
+		if (masterDegreeCandidate == null) {
+			throw new ExcepcaoInexistente("Unknown Candidate !!");
+		}
+	
 
 		// Get new Country
 		ICountry nationality = null;
@@ -102,8 +108,6 @@ public class ChangeCandidate implements IServico {
 		masterDegreeCandidate.getPerson().setNascimento(newCandidate.getInfoPerson().getNascimento());
 		masterDegreeCandidate.getPerson().setDataEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson().getDataEmissaoDocumentoIdentificacao());		
 		masterDegreeCandidate.getPerson().setDataValidadeDocumentoIdentificacao(newCandidate.getInfoPerson().getDataValidadeDocumentoIdentificacao());
-		masterDegreeCandidate.getPerson().setTipoDocumentoIdentificacao(newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
-		masterDegreeCandidate.getPerson().setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());			
 		masterDegreeCandidate.getPerson().setLocalEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson().getLocalEmissaoDocumentoIdentificacao());
 		masterDegreeCandidate.getPerson().setNome(newCandidate.getInfoPerson().getNome());
 		masterDegreeCandidate.getPerson().setSexo(newCandidate.getInfoPerson().getSexo());
