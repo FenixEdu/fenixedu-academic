@@ -98,7 +98,8 @@
         <form-property name="information" type="java.lang.String"/>  
         <form-property name="itemOrder" type="java.lang.String" />   
         <form-property name="name" type="java.lang.String" />   
-        <form-property name="urgent" type="java.lang.String"/>           
+        <form-property name="urgent" type="java.lang.String"/>   
+       <form-property name="page" type="java.lang.Integer" initial="0" />      
 		          
 	
 	</form-bean> 
@@ -346,7 +347,11 @@
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.EditItemDispatchAction"
-        validate="false" >
+        validate="true" >
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
        <forward name="editItem" path="/editItem.jsp"/>
        <forward name="viewSection" path="/viewSection.do"/>
 	</action>
@@ -359,7 +364,11 @@
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.InsertItemDispatchAction"
-        validate="false" >
+        validate="true" >
+         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
        <forward name="insertItem" path="/insertItem.jsp"/>
        <forward name="viewSection" path="/viewSection.do"/>
 	</action>
