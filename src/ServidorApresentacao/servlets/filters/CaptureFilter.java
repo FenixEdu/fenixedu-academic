@@ -123,13 +123,16 @@ public class CaptureFilter implements Filter {
 	}
 
 	private void storeRequest(String username, StringBuffer requestString) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(username);
+		buffer.append(' ');
+		buffer.append(requestString);
+		buffer.append('\n');
+
 		try {
 	        synchronized (fileWriterSynch) {
 	            FileWriter fileWriter = new FileWriter(filename, true);
-	            fileWriter.write(username);
-	            fileWriter.write(' ');
-	            fileWriter.write(requestString.toString());
-	            fileWriter.write('\n');
+	            fileWriter.write(buffer.toString());
 	            fileWriter.close();
 	        }
 		} catch (IOException e) {
