@@ -21,8 +21,7 @@
 		<td class="listClasses-header"><bean:message key="label.manager.degree.name" />
 		</td>
 	</tr>
-	<tr>
-		<% int index = 0; %>	 
+	<tr>	 
 		<logic:iterate id="degree" name="<%= SessionConstants.INFO_DEGREES_LIST %>">			
 		<td class="listClasses">
 		<html:multibox property="internalIds">
@@ -33,7 +32,6 @@
 		</td>			
 		<td class="listClasses"><html:link page="/readDegree.do" paramId="idInternal" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
 		</td>
-		<% index++; %>
 	 </tr>	
 </logic:iterate>				
 <span class="error"><html:errors/></span>		
