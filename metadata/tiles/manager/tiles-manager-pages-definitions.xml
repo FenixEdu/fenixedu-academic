@@ -295,6 +295,15 @@
 		<put name="body" value="/manager/precedences/managePrecedences.jsp"/>
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
 	</definition>
+	<definition name="df.page.manage.precedenceConjunctionFirstPage" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/precedences/mergePrecedencesPage1.jsp"/>
+		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
+	</definition>
+	<definition name="df.page.manage.precedenceConjunctionSecondPage" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/precedences/mergePrecedencesPage2.jsp"/>
+		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
+	</definition>
+
 	<definition name="df.page.manage.precedences.showAllRestrictions" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/precedences/manageRestriction.jsp"/>
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>

@@ -322,6 +322,15 @@
 			<form-property name="curricularCourseToAddPrecedenceID" type="java.lang.Integer"/> 			
 			<form-property name="precedentCurricularCourseID" type="java.lang.Integer"/>
 		</form-bean>
+
+		<form-bean name="mergePrecedencesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="firstPrecedence" type="java.lang.Integer"/>
+			<form-property name="secondPrecedence" type="java.lang.Integer"/>
+			<form-property name="degreeId" type="java.lang.Integer"/>
+			<form-property name="degreeCurricularPlanId" type="java.lang.Integer"/>
+		</form-bean>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1284,6 +1293,18 @@
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
 	
+	<action
+			path="/makePrecedenceConjunction"
+			input="/makePrecedenceConjunction.do?method=showFirstPage"
+			parameter="method"
+			scope="request"
+			name="mergePrecedencesForm"
+			type="ServidorApresentacao.Action.manager.precedences.MakePrecedenceConjunctionForDegreeCurricularPlanDA">
+       <forward name="showFirstPage" path="df.page.manage.precedenceConjunctionFirstPage"/>
+       <forward name="showSecondPage" path="df.page.manage.precedenceConjunctionSecondPage"/>
+       <forward name="backToBeginig" path="df.page.manage.precedences"/>
+	</action>
+	
 	<action path="/makeSimplePrecedence" 
 		input="/managePrecedences.do"
 		type="ServidorApresentacao.Action.manager.precedences.MakeSimplePrecedenceAction"
@@ -1297,8 +1318,6 @@
 		<forward name="insertRestrictionByPeriodToApply" path="df.page.manage.precedences.insertRestrictionByPeriodToApply"/>
 		<forward name="insertRestrictionConfirmation" path="df.page.manage.precedences.insertRestrictionConfirmation" />
 	</action>	
-	
-	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>
 
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"

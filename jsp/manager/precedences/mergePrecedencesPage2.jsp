@@ -6,13 +6,21 @@
 
 <h3><bean:message key="label.manager.precedences.management"/></h3>
 
-<ul style="list-style-type: square;">
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=showAllRestrictions&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>'><bean:message key="label.manager.insert.simple.precedence"/></html:link></li>
-	<li><html:link page='<%="/makePrecedenceConjunction.do?method=showFirstPage&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>'><bean:message key="label.manager.insert.conjunction.precedence"/></html:link></li>
-</ul>
+<span class="error"><html:errors/></span>
 
 <logic:present name="precedences" scope="request">
 <logic:notEmpty name="precedences" scope="request">
+
+<h4><bean:message key="label.manager.precedences.conjunction.selectSecondPrecedence"/></h4>
+
+<html:form action="/makePrecedenceConjunction.do">
+
+	<html:hidden property="page" value="2"/>
+	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+	<html:hidden property="method" value="merge"/>
+	<html:hidden property="firstPrecedence"/>
+
 	<logic:iterate id="element" name="precedences">
 		<bean:define id="infoCurricularCourse" name="element" property="key"/>
 		<bean:define id="infoPrecedences" name="element" property="value"/>
@@ -21,7 +29,7 @@
 			<tr>
 				<td class="listClasses-header" colspan="2">
 					<bean:message key="message.manager.this.course"/>
-					<bean:write name="infoCurricularCourse" property="name"/>
+						<bean:write name="infoCurricularCourse" property="name"/>
 					<bean:message key="message.manager.has.precedence"/>
 				</td>
 			</tr>
@@ -39,23 +47,13 @@
 											<bean:message key="message.manager.and"/>
 										<% } %>
 									</td>
-									<logic:greaterThan name="infoRestrictionsSize" value="1">
-										<td class="listClasses">
-											<bean:define id="restrictionID" name="restriction" property="idInternal"/>
-											<html:link page='<%="/deleteRestriction.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;restrictionId=" + restrictionID.toString()%>'>
-												<bean:message key="message.manager.delete"/>
-											</html:link>
-										</td>
-									</logic:greaterThan>
 								</tr>
 							</logic:iterate>
 						</table>
 					</td>
 					<td class="listClasses">
 						<bean:define id="precedenceID" name="precedence" property="idInternal"/>
-						<html:link page='<%="/deletePrecedence.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;precedenceId=" + precedenceID.toString()%>'>
-							<bean:message key="message.manager.delete"/>
-						</html:link>
+						<html:radio property="secondPrecedence" value="<%= precedenceID.toString() %>" onclick="form.submit()"/>
 					</td>
 				</tr>
 				<% if ((precedencesLength.intValue() + 1 ) < infoPrecedencesSize.intValue()) { %>
@@ -68,5 +66,8 @@
 		<br/>
 		<br/>
 	</logic:iterate>
+
+</html:form>
+
 </logic:notEmpty>
 </logic:present>

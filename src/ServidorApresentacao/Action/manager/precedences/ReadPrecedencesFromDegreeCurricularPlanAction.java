@@ -13,8 +13,8 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author David Santos in Jul 28, 2004
@@ -33,7 +33,7 @@ public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
         Object args[] = {degreeCurricularPlanID};
         
         try {
-			Map result = (Map) ServiceUtils.executeService(userView, "ReadPrecedencesFromDegreeCurricularPlan", args);
+			Map result = (Map) ServiceManagerServiceFactory.executeService(userView, "ReadPrecedencesFromDegreeCurricularPlan", args);
 			request.setAttribute("precedences", result);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
