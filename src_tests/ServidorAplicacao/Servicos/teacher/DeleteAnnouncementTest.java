@@ -29,9 +29,14 @@ public class DeleteAnnouncementTest
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testDeleteAnnouncementDataSet.xml";
+		return "etc/datasets/testDeleteAnnouncementDataSet.xml";
 	}
-
+	protected String getExpectedDataSetFilePath() {
+		return "etc/datasets/testExpectedDeleteAnnouncementDataSet.xml";
+	}
+	protected String getExpectedUnsuccefullDataSetFilePath() {
+		return "etc/datasets/testExpectedDeleteAnnouncementUnsuccefullDataSet.xml";
+	}
 	/*
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
@@ -141,7 +146,7 @@ public class DeleteAnnouncementTest
 			}
 
 			//Verificar se a base de dados foi alterada
-			//compareDataSet("testDeleteAnnouncementSuccefull.xml");
+			compareDataSet(getExpectedDataSetFilePath());
 		} catch (NotAuthorizedException ex) {
 			fail("Deleting an announcement of a Site " + ex);
 		} catch (FenixServiceException ex) {
@@ -150,35 +155,35 @@ public class DeleteAnnouncementTest
 			fail("Deleting an announcument of a Site " + ex);
 		}
 	}
-	
+
 	/*
 		 * Teste: Anúncio a apagar não existe
 		 */
-		public void testDeleteAnnouncementUnsuccefull() {
-			try {
-				//Criar a lista de argumentos que o servico recebe
-				Integer infoExecutionCourseCode = new Integer(24);
-				Integer announcementCode = new Integer(12121212);
-				Object[] argserv = {infoExecutionCourseCode,announcementCode};
+	public void testDeleteAnnouncementUnsuccefull() {
+		try {
+			//Criar a lista de argumentos que o servico recebe
+			Integer infoExecutionCourseCode = new Integer(24);
+			Integer announcementCode = new Integer(12121212);
+			Object[] argserv = { infoExecutionCourseCode, announcementCode };
 
-				//Criar o utilizador
-				IUserView arguser = authenticateUser(getAuthorizedUser());
+			//Criar o utilizador
+			IUserView arguser = authenticateUser(getAuthorizedUser());
 
-				//Executar o serviço	
-				gestor.executar(arguser, getNameOfServiceToBeTested(), argserv);
+			//Executar o serviço	
+			gestor.executar(arguser, getNameOfServiceToBeTested(), argserv);
 
-			} catch (NotAuthorizedException ex) {
-				/*
-				 * O anúncio não pertence à disciplina (pois não existe).
-				 * Os pré-filtros lançam uma excepcao NotAuthorizedException,
-				 * o serviço nem sequer chega a ser invocado
-				 */
-				//Comparacao do dataset
-				//compareDataSet(getDataSetFilePath());
-			} catch (FenixServiceException ex) {
-				fail("Deleting an announcement of a Site " + ex);
-			} catch (Exception ex) {
-				fail("Deleting an announcument of a Site " + ex);
-			}
+		} catch (NotAuthorizedException ex) {
+			/*
+			 * O anúncio não pertence à disciplina (pois não existe).
+			 * Os pré-filtros lançam uma excepcao NotAuthorizedException,
+			 * o serviço nem sequer chega a ser invocado
+			 */
+			//Comparacao do dataset
+			compareDataSet(getExpectedUnsuccefullDataSetFilePath());
+		} catch (FenixServiceException ex) {
+			fail("Deleting an announcement of a Site " + ex);
+		} catch (Exception ex) {
+			fail("Deleting an announcument of a Site " + ex);
 		}
+	}
 }
