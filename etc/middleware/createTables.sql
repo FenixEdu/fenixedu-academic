@@ -128,4 +128,18 @@ create table mw_CURRICULAR_COURSE_SCOPE(
 	primary key(executionYear, courseCode, degreeCode, branchCode)
 )type= InnoDB;
 
+drop table if exists mw_DEGREE_TRANSLATION;
+create table mw_DEGREE_TRANSLATION(
+	ADM_DEGREE_CODE int(11),
+	KEY_DEGREE int(11)
+)type=InnoDB;
+
+drop table if exists mw_STUDENT_CLASS;
+create table mw_STUDENT_CLASS(
+	STUDENT_NUMBER varchar(20),
+	STUDENT_NAME varchar(255),
+	DEGREE_CODE int(11),
+	AVERAGE float(10,2),
+	CLASS_NAME varchar(20)
+)type=InnoDB;
 
