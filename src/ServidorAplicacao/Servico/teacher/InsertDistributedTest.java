@@ -147,6 +147,7 @@ public class InsertDistributedTest implements IServico {
 						testQuestion.getTestQuestionOrder());
 					studentTestQuestion.setTestQuestionValue(
 						testQuestion.getTestQuestionValue());
+					studentTestQuestion.setTestQuestionMark(new Double(0));
 					studentTestQuestion.setResponse(new Integer(0));
 
 					IQuestion question =

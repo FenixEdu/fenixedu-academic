@@ -83,34 +83,37 @@ public class UpdateStudentTestQuestionMark implements IServico {
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}
+				if (infoStudentTestQuestion.getResponse().intValue() != 0) {
 
-				if (infoStudentTestQuestion
-					.getQuestion()
-					.getCorrectResponse()
-					.contains(studentTestQuestion.getResponse()))
-					studentTestQuestion.setTestQuestionMark(
-						new Double(
-							studentTestQuestion
-								.getTestQuestionValue()
-								.doubleValue()));
-				else
-					studentTestQuestion.setTestQuestionMark(
-						new Double(
-							- (
-								infoStudentTestQuestion
+					if (infoStudentTestQuestion
+						.getQuestion()
+						.getCorrectResponse()
+						.contains(studentTestQuestion.getResponse()))
+						studentTestQuestion.setTestQuestionMark(
+							new Double(
+								studentTestQuestion
 									.getTestQuestionValue()
-									.intValue()
-									* (java
-										.lang
-										.Math
-										.pow(
-											infoStudentTestQuestion
-												.getQuestion()
-												.getOptionNumber()
-												.intValue()
-												- 1,
-											-1)))));
-				persistentStudentTestQuestion.lockWrite(studentTestQuestion);
+									.doubleValue()));
+					else
+						studentTestQuestion.setTestQuestionMark(
+							new Double(
+								- (
+									infoStudentTestQuestion
+										.getTestQuestionValue()
+										.intValue()
+										* (java
+											.lang
+											.Math
+											.pow(
+												infoStudentTestQuestion
+													.getQuestion()
+													.getOptionNumber()
+													.intValue()
+													- 1,
+												-1)))));
+					persistentStudentTestQuestion.lockWrite(
+						studentTestQuestion);
+				}
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

@@ -156,6 +156,8 @@ public class EditDistributedTest implements IServico {
 								studentTestQuestionExample
 									.getTestQuestionValue());
 							studentTestQuestion.setResponse(new Integer(0));
+							studentTestQuestion.setTestQuestionMark(
+								new Double(0));
 							IQuestion question =
 								getStudentQuestion(
 									persistentSuport.getIPersistentQuestion(),

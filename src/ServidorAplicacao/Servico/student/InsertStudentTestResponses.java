@@ -108,7 +108,9 @@ public class InsertStudentTestResponses implements IServico {
 										.getQuestion()
 										.getXmlFile(),
 									infoStudentTestQuestion.getQuestion()));
-							infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
+							infoStudentTestQuestion =
+								parse.getOptionsShuffle(
+									infoStudentTestQuestion);
 						} catch (Exception e) {
 							throw new FenixServiceException(e);
 						}
@@ -118,32 +120,36 @@ public class InsertStudentTestResponses implements IServico {
 									.getTestQuestionOrder()
 									.intValue()
 									- 1]));
-						
-						if (infoStudentTestQuestion
-							.getQuestion()
-							.getCorrectResponse()
-							.contains(studentTestQuestion.getResponse()))
-							studentTestQuestion.setTestQuestionMark(
-								new Double(
-									studentTestQuestion
-										.getTestQuestionValue()
-										.doubleValue()));
-						else
-							studentTestQuestion.setTestQuestionMark(
-								new Double(-
-									(infoStudentTestQuestion
-										.getTestQuestionValue()
-										.intValue()
-										* (java
-											.lang
-											.Math
-											.pow(
-												infoStudentTestQuestion
-													.getQuestion()
-													.getOptionNumber()
-													.intValue()
-													- 1,
-												-1)))));
+						if (studentTestQuestion.getResponse().intValue()
+							!= 0) {
+
+							if (infoStudentTestQuestion
+								.getQuestion()
+								.getCorrectResponse()
+								.contains(studentTestQuestion.getResponse()))
+								studentTestQuestion.setTestQuestionMark(
+									new Double(
+										studentTestQuestion
+											.getTestQuestionValue()
+											.doubleValue()));
+							else
+								studentTestQuestion.setTestQuestionMark(
+									new Double(
+										- (
+											infoStudentTestQuestion
+												.getTestQuestionValue()
+												.intValue()
+												* (java
+													.lang
+													.Math
+													.pow(
+														infoStudentTestQuestion
+															.getQuestion()
+															.getOptionNumber()
+															.intValue()
+															- 1,
+														-1)))));
+						}
 						persistentStudentTestQuestion.lockWrite(
 							studentTestQuestion);
 					}
