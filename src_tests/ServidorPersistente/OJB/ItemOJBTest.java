@@ -168,7 +168,7 @@ public class ItemOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			ISection nonExistingSection= new Section("nonExistingSection",site,null);
 			List nonExistingItems= persistentItem.readAllItemsBySection(nonExistingSection);
-			nonExistingItems.isEmpty();
+			assertTrue(nonExistingItems.isEmpty());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadAllItemsBySection:fail read unexisting itemsList");
