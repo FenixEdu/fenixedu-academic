@@ -5,6 +5,7 @@
  */
 package fileSuport;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -15,7 +16,7 @@ import java.io.UnsupportedEncodingException;
  * fileSuport
  * 
  */
-public class FileSuportObject {
+public class FileSuportObject implements Serializable{
 
 	private String uri;
 	private String fileName;

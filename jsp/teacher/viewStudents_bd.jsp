@@ -10,9 +10,10 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="DataBeans.InfoLesson" %>
 
-<logic:present name="attendacies">
+<logic:present name="attendsSummary">
 <logic:present name="siteView">
 <logic:present name="shifts">
+<bean:define id="attendacies" name="attendsSummary" property="attends" />	
 <bean:define id="shifts" name="shifts" property="infoShifts" type="java.util.List"/>
 <bean:define id="studentsComponent" name="siteView" property="component" type="DataBeans.InfoSiteStudents"/>
 <bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
@@ -150,7 +151,7 @@
 				<bean:message key="label.number" /> 
 		   </td>
 			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
-				<bean:message key="label.enrollmentStatus" /> 
+				Número de Inscrições <%--<bean:message key="label.enrollmentStatus" /> --%>
 		   </td>
 			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.Degree" /> 
@@ -184,19 +185,20 @@
 		
 		<bean:define id="mailingList" value=""/>
 
-    	<logic:iterate id="attendacy" type="DataBeans.InfoFrequenta" name="attendacies"> 
+    	<logic:iterate id="attendacy" type="DataBeans.InfoAttendWithEnrollment" name="attendacies"> 
 			
 			<tr>
 				<td class="listClasses">
 					<bean:write name="attendacy" property="aluno.number"/>&nbsp;
 				</td>
 				<td class="listClasses">
-					<logic:present name="attendacy" property="infoEnrolment">
+					<bean:write name="attendacy" property="enrollments"/>
+					<%--<logic:present name="attendacy" property="infoEnrolment">
 						<bean:message key="message.yes"/>
 					</logic:present>
 					<logic:notPresent name="attendacy" property="infoEnrolment">
 						<bean:message key="message.no"/>
-					</logic:notPresent>
+					</logic:notPresent> --%>
 				</td>
 				<td class="listClasses">
 					<logic:present name="attendacy" property="infoEnrolment">
@@ -284,11 +286,25 @@
     	</logic:iterate>
 		
 </table>
+<br/>
+<br/>
+ <strong>Resumo:</strong>
+<table>
+	<tr>
+		<td class="listClasses-header">Número de inscrições</td>
+		<td class="listClasses-header">Número de Alunos</td>
+	</tr>
+	<logic:iterate id="enrollmentNumber" name="attendsSummary" property="numberOfEnrollments">
+	<tr>
+		<td class="listClasses"><bean:write name="enrollmentNumber"/></td>
+		<td class="listClasses"><%= ((DataBeans.InfoAttendsSummary)pageContext.findAttribute("attendsSummary")).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
+	</tr>
+	</logic:iterate> 
+</table>
 </html:form>
 <br/>
 <br/> 
-<%-- TODO: See if works in IE --%>
-<%--	<html:link href="<%= "mailto:" + mailingList %>"><bean:message key="message.emailStudents"/></html:link> --%>
+
     
 </logic:present>
 </logic:present>

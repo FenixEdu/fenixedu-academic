@@ -1,6 +1,5 @@
 /*
  * Created on 24/Nov/2003
- *  
  */
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
@@ -30,21 +29,18 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 24/Nov/2003
- *  
  */
 public class ReimbursementGuideDispatchAction extends FenixDispatchAction
 {
 
-    public ActionForward prepareCreate(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session
+                .getAttribute(SessionConstants.U_VIEW);
         String guideIdString = request.getParameter("guideId");
         Integer guideId = null;
         if (guideIdString != null)
@@ -55,10 +51,11 @@ public class ReimbursementGuideDispatchAction extends FenixDispatchAction
         {
             guideId = (Integer) request.getAttribute("guideId");
         }
-        Object[] args = { guideId };
+        Object[] args = {guideId};
         try
         {
-            InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "ReadGuide", args);
+            InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService(
+                    userView, "ReadGuide", args);
             request.setAttribute("infoGuide", infoGuide);
         }
         catch (FenixServiceException e)
@@ -69,32 +66,33 @@ public class ReimbursementGuideDispatchAction extends FenixDispatchAction
         return mapping.findForward("createReimbursementGuide");
     }
 
-    public ActionForward create(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward create(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session
+                .getAttribute(SessionConstants.U_VIEW);
         DynaActionForm reimbursementGuideForm = (DynaActionForm) form;
         Integer guideId = (Integer) reimbursementGuideForm.get("guideId");
-        String justification = (String) reimbursementGuideForm.get("justification");
+        String justification = (String) reimbursementGuideForm
+                .get("justification");
         Double value = (Double) reimbursementGuideForm.get("value");
-        Object[] args = { guideId, justification, value, userView };
-        Object[] args1 = { guideId };
+        Object[] args = {guideId, justification, value, userView};
+        Object[] args1 = {guideId};
         InfoGuide infoGuide;
         ActionForward viewGuideForward = null;
         try
         {
-            infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "ReadGuide", args1);
+            infoGuide = (InfoGuide) ServiceUtils.executeService(userView,
+                    "ReadGuide", args1);
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
             request.setAttribute("guideNumber", infoGuide.getNumber());
             request.setAttribute("guideYear", infoGuide.getYear());
             request.setAttribute("guideId", infoGuide.getIdInternal());
-            viewGuideForward = buildViewGuideForward(infoGuide, mapping.findForward("viewGuide"));
+            viewGuideForward = buildViewGuideForward(infoGuide, mapping
+                    .findForward("viewGuide"));
         }
         catch (FenixServiceException e1)
         {
@@ -103,16 +101,19 @@ public class ReimbursementGuideDispatchAction extends FenixDispatchAction
 
         try
         {
-            ServiceUtils.executeService(userView, "CreateReimbursementGuide", args);
+            ServiceUtils.executeService(userView, "CreateReimbursementGuide",
+                    args);
 
             return viewGuideForward;
         }
         catch (InvalidReimbursementValueServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add(
-                "InvalidReimbursementValueServiceException",
-                new ActionError("errors.InvalidReimbursementValueServiceException"));
+            actionErrors
+                    .add(
+                            "InvalidReimbursementValueServiceException",
+                            new ActionError(
+                                    "errors.InvalidReimbursementValueServiceException"));
             saveErrors(request, actionErrors);
 
             return prepareCreate(mapping, form, request, response);
@@ -120,18 +121,20 @@ public class ReimbursementGuideDispatchAction extends FenixDispatchAction
         catch (InvalidReimbursementValueSumServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add(
-                "InvalidReimbursementValueSumServiceException",
-                new ActionError("errors.InvalidReimbursementValueSumServiceException"));
+            actionErrors
+                    .add(
+                            "InvalidReimbursementValueSumServiceException",
+                            new ActionError(
+                                    "errors.InvalidReimbursementValueSumServiceException"));
             saveErrors(request, actionErrors);
             return prepareCreate(mapping, form, request, response);
         }
         catch (InvalidGuideSituationServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add(
-                "InvalidGuideSituationServiceException",
-                new ActionError("errors.InvalidGuideSituationServiceException"));
+            actionErrors.add("InvalidGuideSituationServiceException",
+                    new ActionError(
+                            "errors.InvalidGuideSituationServiceException"));
             saveErrors(request, actionErrors);
             return prepareCreate(mapping, form, request, response);
         }
@@ -142,19 +145,20 @@ public class ReimbursementGuideDispatchAction extends FenixDispatchAction
     }
 
     /**
-	 * @param infoGuide
-	 * @param forward
-	 * @return
-	 */
-    private ActionForward buildViewGuideForward(InfoGuide infoGuide, ActionForward forward)
+     * @param infoGuide
+     * @param forward
+     * @return
+     */
+    private ActionForward buildViewGuideForward(InfoGuide infoGuide,
+            ActionForward forward)
     {
         ActionForward viewGuideForward = new ActionForward();
         try
         {
             PropertyUtils.copyProperties(viewGuideForward, forward);
             StringBuffer path = new StringBuffer(viewGuideForward.getPath());
-            path.append("&guideNumber=").append(infoGuide.getNumber()).append("&guideYear=").append(
-                infoGuide.getYear());
+            path.append("&guideNumber=").append(infoGuide.getNumber()).append(
+                    "&guideYear=").append(infoGuide.getYear());
             viewGuideForward.setPath(path.toString());
 
         }
@@ -166,30 +170,28 @@ public class ReimbursementGuideDispatchAction extends FenixDispatchAction
         return viewGuideForward;
     }
 
-    public ActionForward view(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward view(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException
     {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session
+                .getAttribute(SessionConstants.U_VIEW);
 
-        String reimbursementGuideIdString = request.getParameter("reimbursementGuideId");
+        String reimbursementGuideIdString = request
+                .getParameter("reimbursementGuideId");
         Integer reimbursementGuideId = new Integer(reimbursementGuideIdString);
 
-        Object[] args = { reimbursementGuideId };
+        Object[] args = {reimbursementGuideId};
         try
         {
-            InfoReimbursementGuide infoReimbursementGuide =
-                (InfoReimbursementGuide) ServiceUtils.executeService(
-                    userView,
-                    "ViewReimbursementGuide",
-                    args);
-            request.setAttribute("infoGuide", infoReimbursementGuide.getInfoGuide());
-            request.setAttribute("infoReimbursementGuide", infoReimbursementGuide);
+            InfoReimbursementGuide infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils
+                    .executeService(userView, "ViewReimbursementGuide", args);
+            request.setAttribute("infoGuide", infoReimbursementGuide
+                    .getInfoGuide());
+            request.setAttribute("infoReimbursementGuide",
+                    infoReimbursementGuide);
         }
         catch (FenixServiceException e)
         {

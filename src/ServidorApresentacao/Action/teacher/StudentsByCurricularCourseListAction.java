@@ -15,6 +15,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import framework.factory.ServiceManagerServiceFactory;
 
+import DataBeans.InfoAttendsSummary;
 import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteStudents;
@@ -73,7 +74,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
         TeacherAdministrationSiteView siteView = null;
         InfoSiteProjects projects = null;
         List infosGroups = null;
-        List attendacies = null;
+        InfoAttendsSummary attendsSummary = null;
         List shiftStudents = null;
         InfoExecutionCourseOccupancy shifts = null;
         try
@@ -116,8 +117,8 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
             }
             Collections.sort(infoSiteStudents.getStudents(), new BeanComparator("number"));
             Object[] argsAttendacies = { objectCode, infoSiteStudents.getStudents()};
-            attendacies =
-                (List) ServiceManagerServiceFactory.executeService(
+            attendsSummary =
+                 (InfoAttendsSummary) ServiceManagerServiceFactory.executeService(
                     userView,
                     "teacher.GetAttendaciesByStudentList",
                     argsAttendacies);
@@ -139,7 +140,8 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
         {
             request.setAttribute("projects", projects.getInfoGroupPropertiesList());
         }
-        request.setAttribute("attendacies", attendacies);
+       
+        request.setAttribute("attendsSummary",attendsSummary);
         return mapping.findForward("success");
     }
 }
