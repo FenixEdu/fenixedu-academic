@@ -3,10 +3,8 @@
  */
 package net.sourceforge.fenixedu.utilTests;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -61,23 +59,15 @@ public class ParseQuestion extends DefaultHandler {
 
     public InfoQuestion parseQuestion(String file, InfoQuestion infoQuestion, String path)
             throws Exception, ParseQuestionException {
-        try {
             parseFile(file, path);
             infoQuestion = list2Question(infoQuestion);
-        } catch (Exception e) {
-            throw e;
-        }
         return infoQuestion;
     }
 
     public InfoStudentTestQuestion parseStudentTestQuestion(
             InfoStudentTestQuestion infoStudentTestQuestion, String path) throws Exception,
             ParseQuestionException {
-        try {
             parseFile(infoStudentTestQuestion.getQuestion().getXmlFile(), path);
-        } catch (Exception e) {
-            throw e;
-        }
         infoStudentTestQuestion.setQuestion(list2Question(infoStudentTestQuestion.getQuestion()));
 
         Response response = null;
@@ -102,22 +92,14 @@ public class ParseQuestion extends DefaultHandler {
     }
 
     public String parseQuestionImage(String file, int imageId, String path) throws Exception {
-        try {
             parseFile(file, path);
-        } catch (Exception e) {
-            throw e;
-        }
 
         return imageById(imageId);
 
     }
 
     public String shuffleQuestionOptions(String file, boolean shuffle, String path) throws Exception {
-        try {
             parseFile(file, path);
-        } catch (Exception e) {
-            throw e;
-        }
         return shuffleOptions(shuffle);
     }
 
@@ -127,7 +109,6 @@ public class ParseQuestion extends DefaultHandler {
         listOptions = new ArrayList();
         listResponse = new ArrayList();
         listFeedback = new ArrayList();
-        try {
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setValidating(true);
             SAXParser saxParser = spf.newSAXParser();
@@ -139,17 +120,6 @@ public class ParseQuestion extends DefaultHandler {
             QuestionResolver resolver = new QuestionResolver(path);
             reader.setEntityResolver(resolver);
             reader.parse(input);
-        } catch (MalformedURLException e) {
-            throw e;
-        } catch (FileNotFoundException e) {
-            throw e;
-        } catch (IOException e) {
-            throw e;
-        } catch (SAXParseException e) {
-            throw e;
-        } catch (SAXException e) {
-            throw e;
-        }
     }
 
     public void error(SAXParseException e) throws SAXParseException {
