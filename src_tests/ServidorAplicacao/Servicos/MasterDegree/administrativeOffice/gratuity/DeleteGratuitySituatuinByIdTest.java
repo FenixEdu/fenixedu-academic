@@ -27,14 +27,14 @@ public class DeleteGratuitySituatuinByIdTest extends AdministrativeOfficeBaseTes
 		return "DeleteGratuitySituationById";
 	}
 
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser()
 	{
 		Object[] args = { new Integer(1)};
 
 		return args;
 	}
 
-	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
+	protected Object[] getServiceArgumentsForNotAuthorizedUser()
 	{
 		Object[] argsEditGratuitySituationById = { new Integer(1)};
 

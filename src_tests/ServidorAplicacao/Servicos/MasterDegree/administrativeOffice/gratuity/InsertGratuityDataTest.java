@@ -15,17 +15,14 @@ import DataBeans.InfoPaymentPhase;
 import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
-import Dominio.GratuitySituation;
 import Dominio.GratuityValues;
 import Dominio.ICursoExecucao;
-import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
 import Dominio.IPaymentPhase;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
-import ServidorPersistente.IPersistentGratuitySituation;
 import ServidorPersistente.IPersistentGratuityValues;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import framework.factory.ServiceManagerServiceFactory;
@@ -61,7 +58,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest#getServiceArgumentsForNotAuthenticatedUser()
 	 */
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser()
 	{
 		Calendar now = Calendar.getInstance();
 		
@@ -90,7 +87,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest#getServiceArgumentsForNotAuthorizedUser()
 	 */
-	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
+	protected Object[] getServiceArgumentsForNotAuthorizedUser()
 	{
 		Calendar now = Calendar.getInstance();
 		
@@ -120,7 +117,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest#getServiceArgumentsForNotAuthorizedUser()
 	 */
-	protected Object[] getServiceArgumentForInsertSuccess() throws FenixServiceException
+	protected Object[] getServiceArgumentForInsertSuccess()
 	{
 		Calendar now = Calendar.getInstance();
 		
@@ -174,7 +171,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 		return args;
 	}
 	
-	protected Object[] getServiceArgumentForEditSuccess() throws FenixServiceException
+	protected Object[] getServiceArgumentForEditSuccess()
 	{
 		Calendar now = Calendar.getInstance();
 		
@@ -245,7 +242,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(new Integer(30));
 			
-			IGratuityValues gratuityValues = (IGratuityValues) persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
+			IGratuityValues gratuityValues = persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
 
 			InfoGratuityValues infoGratuityValuesDB = cloneGratuityValues(gratuityValues);
 			
@@ -267,8 +264,8 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 			assertEquals(infoGratuityValues.getWhen(), infoGratuityValuesDB.getWhen());
 			
 			
-			IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
-			IGratuitySituation gratuitySituation = new GratuitySituation();
+//			IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
+//			IGratuitySituation gratuitySituation = new GratuitySituation();
 			System.out.println(
 					"testInsertGratuityDataInsertSuccessfull was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
 

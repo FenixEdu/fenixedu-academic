@@ -41,6 +41,9 @@
 						<html:option value="" key="label.manager.executionCourseManagement.select">
 							<bean:message key="label.manager.executionCourseManagement.select"/>
 						</html:option>
+						<html:option value="all" key="label.masterDegree.gratuity.all">
+							<bean:message key="label.masterDegree.gratuity.all"/>
+						</html:option>
 						<html:optionsCollection name="<%=SessionConstants.DEGREES%>"/>
 					</html:select>
 				</td>

@@ -7,17 +7,22 @@
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
 <span class="error"><html:errors/></span>
-
+<p />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">
 			<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>	
 			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="executionYearLabel"/><br>
-	
+
 			<bean:define id="degreeString"><%=pageContext.findAttribute("degree").toString()%></bean:define>	
-			<bean:define id="degreeId"><%= pageContext.findAttribute("degree").toString().substring(pageContext.findAttribute("degree").toString().indexOf("#")+1)%></bean:define>
-			<bean:define id="degreeLabel"><%= degreeString.toString().substring(0, degreeString.toString().indexOf(">"))%></bean:define>	
-			<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degreeLabel"/><br>
+			<logic:notEqual name="degreeString" value="all">
+				<bean:define id="degreeId"><%= pageContext.findAttribute("degree").toString().substring(pageContext.findAttribute("degree").toString().indexOf("#")+1)%></bean:define>
+				<bean:define id="degreeLabel"><%= degreeString.toString().substring(0, degreeString.toString().indexOf(">"))%></bean:define>	
+				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degreeLabel"/><br>
+			</logic:notEqual>
+			<logic:equal name="degreeString" value="all">
+				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:message key="label.masterDegree.gratuity.all"/><br>
+			</logic:equal>
 	
 			<bean:define id="specializationLabel"><%=pageContext.findAttribute("specialization")%></bean:define>	
 			<logic:equal name="specializationLabel" value="all">
@@ -36,12 +41,12 @@
 <p />
 
 <logic:notPresent name="infoGratuitySituationList">
-	<span class="error"><bean:message key="error.masterDegree.gatuyiuty.impossible.studentsGratuityList" /></span>
+	<span class="error"><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList" /></span>
 </logic:notPresent>
 
 <logic:present name="infoGratuitySituationList">
 	<logic:empty name="infoGratuitySituationList">
-		<span class="error"><bean:message key="error.masterDegree.gatuyiuty.impossible.studentsGratuityList.empty" /></span>
+		<span class="error"><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList.empty" /></span>
 	</logic:empty>
 	<logic:notEmpty name="infoGratuitySituationList">
 		<bean:size id="sizeList" name="infoGratuitySituationList"/>
@@ -78,16 +83,8 @@
 				<logic:equal name="isEven" value="0"> <!-- Linhas pares -->
 					<tr>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
-						<td bgcolor='#C0C0C0'><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/></td>
-						<logic:greaterThan  name="infoGratuitySituation" property="remainingValue" value="0">
-							<td bgcolor='#C0C0C0'><center><bean:message key="label.gratuitySituationType.debtor"/></center></td>
-						</logic:greaterThan>
-						<logic:lessThan  name="infoGratuitySituation" property="remainingValue" value="0">
-							<td bgcolor='#C0C0C0'><center><bean:message key="label.gratuitySituationType.creditor"/></center></td>
-						</logic:lessThan>
-						<logic:equal name="infoGratuitySituation" property="remainingValue" value="0">
-							<td bgcolor='#C0C0C0'><center><bean:message key="label.gratuitySituationType.regularized"/></center></td>
-						</logic:equal>						
+						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/></center></td>
+						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="situationType"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>						
 					</tr>

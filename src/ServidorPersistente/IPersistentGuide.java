@@ -83,6 +83,13 @@ public interface IPersistentGuide extends IPersistentObject {
 	 */
 	public List readByYearAndState(Integer guideYear, SituationOfGuide situationOfGuide) throws ExcepcaoPersistencia; 
 
-
+	/**
+	 * @param personID
+	 * @param guideYear
+	 * @param situationOfGuide
+	 * @return
+	 */
+	public List readNotAnnulledAndPayedByPersonAndExecutionDegree(Integer person, Integer executionDegree)
+	throws ExcepcaoPersistencia;
 		
 }

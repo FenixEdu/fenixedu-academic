@@ -47,5 +47,5 @@ public interface IPersistentGuideEntry extends IPersistentObject {
 	 */
 	public IGuideEntry readByGuideAndGraduationTypeAndDocumentTypeAndDescription(IGuide guide,GraduationType graduationType,
 					DocumentType documentType, String description) throws ExcepcaoPersistencia;
-	
+		
 }

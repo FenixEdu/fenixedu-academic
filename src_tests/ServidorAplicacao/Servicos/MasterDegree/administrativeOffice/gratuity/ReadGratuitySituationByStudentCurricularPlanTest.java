@@ -32,7 +32,7 @@ public class ReadGratuitySituationByStudentCurricularPlanTest extends Administra
 		return "ReadGratuitySituationByStudentCurricularPlan";
 	}
 
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser()
 	{
 		Object[] args = { new Integer(142), TipoCurso.MESTRADO_OBJ };
 
@@ -138,8 +138,7 @@ public class ReadGratuitySituationByStudentCurricularPlanTest extends Administra
 		{
 			Object[] argsReadGratuitySituationByStudentCurricularPlan = { new Integer(111) };
 
-			InfoGratuitySituation infoGratuitySituation =
-				(InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
+			ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadGratuitySituationByStudentCurricularPlan",
 					argsReadGratuitySituationByStudentCurricularPlan);

@@ -238,7 +238,7 @@ public class StudentsGratuityListAction extends DispatchAction
 			situation = request.getParameter("situation");
 			degree = request.getParameter("degree");
 		}
-	
+
 		Integer executionDegreeId = null;
 		try
 		{
@@ -247,8 +247,8 @@ public class StudentsGratuityListAction extends DispatchAction
 		catch (NumberFormatException exception)
 		{
 			errors.add(
-					"noList",
-					new ActionError("error.masterDegree.gatuyiuty.impossible.studentsGratuityList"));
+				"noList",
+				new ActionError("error.masterDegree.gatuyiuty.impossible.studentsGratuityList"));
 			if (!errors.isEmpty())
 			{
 				saveErrors(request, errors);
@@ -285,7 +285,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		{
 			errors.add(
 				"noList",
-				new ActionError("error.masterDegree.gatuyiuty.impossible.studentsGratuityList"));
+				new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
 			if (!errors.isEmpty())
 			{
 				saveErrors(request, errors);
@@ -293,7 +293,7 @@ public class StudentsGratuityListAction extends DispatchAction
 			return mapping.getInputForward();
 		}
 
-		//order list		
+		//order list
 		List infoGratuitySituationList = (List) result.get(new Integer(0));
 		orderList(infoGratuitySituationList, orderingType);
 		request.setAttribute("infoGratuitySituationList", infoGratuitySituationList);
@@ -332,7 +332,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		else if (orderingType.equals(new String("gratuitySituation")))
 		{
 			//order list by gratuity's state
-			Collections.sort(infoGratuitySituationList, new BeanComparator("situationType")); 
+			Collections.sort(infoGratuitySituationList, new BeanComparator("situationType"));
 		}
 		else if (orderingType.equals(new String("payedValue")))
 		{
@@ -354,16 +354,20 @@ public class StudentsGratuityListAction extends DispatchAction
 	 */
 	private Integer findExecutionDegreeId(String degree)
 	{
-		String idInString = degree.substring(degree.indexOf(">") + 1, degree.length());
 		Integer idInternal = null;
-		try
+		//if degree is the string "all", then all degrees are desirable
+		if (!degree.equals(new String("all")))
 		{
-			idInternal = Integer.valueOf(idInString);
-		}
-		catch (NumberFormatException numberFormatException)
-		{
-			numberFormatException.printStackTrace();
-			throw new NumberFormatException();
+			String idInString = degree.substring(degree.indexOf(">") + 1, degree.length());
+			try
+			{
+				idInternal = Integer.valueOf(idInString);
+			}
+			catch (NumberFormatException numberFormatException)
+			{
+				numberFormatException.printStackTrace();
+				throw new NumberFormatException();
+			}
 		}
 		return idInternal;
 	}

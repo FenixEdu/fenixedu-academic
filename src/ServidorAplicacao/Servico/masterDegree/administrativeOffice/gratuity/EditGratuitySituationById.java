@@ -128,10 +128,7 @@ public class EditGratuitySituationById implements IServico
 			gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
 			gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
 			gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
-
-			//gratuitySituation.setPayedValue(infoGratuitySituation.getPayedValue());
-			//gratuitySituation.setRemainingValue(infoGratuitySituation.getRemainingValue());
-
+		
 			infoGratuitySituation =
 				Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
 		}

@@ -17,8 +17,6 @@ import Util.GratuitySituationType;
  */
 public class InfoGratuitySituation extends InfoObject implements Serializable
 {
-	private Double payedValue;
-	private Double remainingValue;
 	private Integer exemptionPercentage;
 	private ExemptionGratuityType exemptionType;
 	private String exemptionDescription;
@@ -31,9 +29,28 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	private Date when;
 	
 	private List transactionList;
-	
+
+	private Double payedValue;//attributes auxiliaries for calculations
+	private Double remainingValue;//attributes auxiliaries for calculations
 	private GratuitySituationType situationType; //attributes auxiliaries for calculations 
+	private Boolean insurancePayed; //attributes auxiliaries for calculations
 		
+	/**
+	 * @return Returns the insurancePayed.
+	 */
+	public Boolean getInsurancePayed()
+	{
+		return insurancePayed;
+	}
+
+	/**
+	 * @param insurancePayed The insurancePayed to set.
+	 */
+	public void setInsurancePayed(Boolean insurancePayed)
+	{
+		this.insurancePayed = insurancePayed;
+	}
+
 	/**
 	 * @return Returns the situationType.
 	 */

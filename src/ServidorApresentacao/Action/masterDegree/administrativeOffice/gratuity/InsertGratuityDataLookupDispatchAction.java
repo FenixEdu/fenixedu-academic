@@ -28,7 +28,6 @@ import DataBeans.InfoPaymentPhase;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
@@ -45,9 +44,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
-		IUserView userView = SessionUtils.getUserView(request);
 		ActionErrors errors = new ActionErrors();
 
 		DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
@@ -126,7 +123,6 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 		DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
 		maintainState(request, gratuityForm);
@@ -175,7 +171,6 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 		return mapping.findForward("cancel");
 	}
@@ -185,7 +180,6 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 		IUserView userView = SessionUtils.getUserView(request);
 		ActionErrors errors = new ActionErrors();

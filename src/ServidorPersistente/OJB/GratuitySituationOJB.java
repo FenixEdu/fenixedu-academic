@@ -51,22 +51,35 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
-		if (specialization != null)
+		if (executionDegree != null)
+		{
+			if (executionDegree.getIdInternal() != null)
+			{
+				criteria.addEqualTo(
+						"gratuityValues.executionDegree.idInternal",
+						executionDegree.getIdInternal());
+			}
+			else if (
+					executionDegree.getExecutionYear() != null
+					&& executionDegree.getExecutionYear().getYear() != null)
+			{
+				criteria.addEqualTo(
+						"gratuityValues.executionDegree.executionYear.year",
+						executionDegree.getExecutionYear().getYear());
+			}
+		}
+
+		if (specialization != null && specialization.getSpecialization() != null)
 		{
 			criteria.addEqualTo(
-				"studentCurricularPlan.Specialization.specialization",
-				specialization.getSpecialization());
-}
-		else
+					"studentCurricularPlan.Specialization.specialization",
+					specialization.getSpecialization());
+		}
+		else //all specialization required, but not records with  specialization null
 		{
 			criteria.addNotNull("studentCurricularPlan.Specialization.specialization");
 		}
-		if (executionDegree != null)
-		{
-			criteria.addEqualTo(
-				"gratuityValues.executionDegree.idInternal",
-				executionDegree.getIdInternal());
-		}
+		
 		return queryList(GratuitySituation.class, criteria);
 	}
 
@@ -106,7 +119,7 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 			criteria.addNotNull("studentCurricularPlan.Specialization.specialization");
 		}
 
-		if (situation != null)
+ 		if (situation != null)
 		{
 			switch (situation.getValue())
 			{
