@@ -14,12 +14,11 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.beanutils.BeanUtils;
-import servletunit.struts.MockStrutsTestCase;
 
-import DataBeans.InfoStudent;
+import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoPerson;
+import DataBeans.InfoStudent;
 import Dominio.Curso;
-import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
@@ -33,7 +32,6 @@ import Dominio.ITurno;
 import Dominio.Pessoa;
 import Dominio.Privilegio;
 import Dominio.Student;
-import Dominio.Turma;
 import Dominio.Turno;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -140,10 +138,10 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 				"Curso de Engenharia Informatica e de Computadores",
 				new TipoCurso(TipoCurso.LICENCIATURA));
 
-		_executionDegree = new CursoExecucao("2002/2003", _degree);
+//		_executionDegree = new CursoExecucao("2002/2003", _degree);
 		_executionDegreeDAO.lockWrite(_executionDegree);
 
-		_class = new Turma("class1", new Integer(1),new Integer(1), _degree);
+//		_class = new Turma("class1", new Integer(1),new Integer(1), _degree);
 		_classDAO.lockWrite(_class);
 
 		_executionCourse = new DisciplinaExecucao();

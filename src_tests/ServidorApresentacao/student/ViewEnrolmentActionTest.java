@@ -10,7 +10,6 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import Dominio.Curso;
-import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -91,7 +90,7 @@ public class ViewEnrolmentActionTest extends MockStrutsTestCase {
 
 	ICurso _curso1 = new Curso("LEIC", "Informatica", new TipoCurso(TipoCurso.LICENCIATURA));
 
-	ICursoExecucao _cursoExecucao1 = new CursoExecucao("2002/03", _curso1);
+	ICursoExecucao _cursoExecucao1 = null; //new CursoExecucao("2002/03", _curso1);
 
 	IPessoa person = new Pessoa();
 	Set privileges = new HashSet();	

@@ -12,8 +12,6 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import Dominio.Aula;
 import Dominio.Curso;
-import Dominio.CursoExecucao;
-import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
 import Dominio.IAula;
 import Dominio.ICurso;
@@ -101,7 +99,7 @@ public class ViewShiftScheduleActionTest extends MockStrutsTestCase {
 
 	ICurso _curso1 = new Curso("LEIC", "Informatica", new TipoCurso(TipoCurso.LICENCIATURA));
 
-	ICursoExecucao _cursoExecucao1 = new CursoExecucao("2002/03", _curso1);
+	ICursoExecucao _cursoExecucao1 = null; // new CursoExecucao("2002/03", _curso1);
 
 	IPessoa person = new Pessoa();
 	Set privileges = new HashSet();	
@@ -116,46 +114,46 @@ public class ViewShiftScheduleActionTest extends MockStrutsTestCase {
 	person.setPrivilegios(privileges);
 	IStudent student = new Student(new Integer(45498), new Integer(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
 
-	IDisciplinaExecucao discipline1 =
-		new DisciplinaExecucao(
-			"Trabalho Final de Curso I",
-			"TFCI",
-			"Program1",
-			_cursoExecucao1,
-			new Double(1),
-			new Double(1),
-			new Double(1),
-			new Double(1));
-	IDisciplinaExecucao discipline2 =
-		new DisciplinaExecucao(
-			"Trabalho Final de Curso II",
-			"TFCII",
-			"Program2",
-			_cursoExecucao1,
-			new Double(1),
-			new Double(1),
-			new Double(1),
-			new Double(1));
-	IDisciplinaExecucao discipline3 =
-		new DisciplinaExecucao(
-			"Engenharia da Programação",
-			"EP",
-			"Program3",
-			_cursoExecucao1,
-			new Double(1),
-			new Double(1),
-			new Double(1),
-			new Double(1));
-	IDisciplinaExecucao discipline4 =
-		new DisciplinaExecucao(
-			"Aprendizagem",
-			"APR",
-			"Program4",
-			_cursoExecucao1,
-			new Double(1),
-			new Double(1),
-			new Double(1),
-			new Double(1));
+	IDisciplinaExecucao discipline1 = null;
+//		new DisciplinaExecucao(
+//			"Trabalho Final de Curso I",
+//			"TFCI",
+//			"Program1",
+//			_cursoExecucao1,
+//			new Double(1),
+//			new Double(1),
+//			new Double(1),
+//			new Double(1));
+	IDisciplinaExecucao discipline2 = null;
+//		new DisciplinaExecucao(
+//			"Trabalho Final de Curso II",
+//			"TFCII",
+//			"Program2",
+//			_cursoExecucao1,
+//			new Double(1),
+//			new Double(1),
+//			new Double(1),
+//			new Double(1));
+	IDisciplinaExecucao discipline3 = null;
+//		new DisciplinaExecucao(
+//			"Engenharia da Programação",
+//			"EP",
+//			"Program3",
+//			_cursoExecucao1,
+//			new Double(1),
+//			new Double(1),
+//			new Double(1),
+//			new Double(1));
+	IDisciplinaExecucao discipline4 = null;
+//		new DisciplinaExecucao(
+//			"Aprendizagem",
+//			"APR",
+//			"Program4",
+//			_cursoExecucao1,
+//			new Double(1),
+//			new Double(1),
+//			new Double(1),
+//			new Double(1));
 
 	IFrequenta attend1 = new Frequenta(student, discipline1);
 	IFrequenta attend2 = new Frequenta(student, discipline2);
