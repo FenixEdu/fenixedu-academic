@@ -20,8 +20,10 @@
 
 		<table width="100%" border="1" cellpadding="0" cellspacing="0">
 			<tr>
-				<td>
+				<td colspan="2">
+					<bean:message key="message.manager.this.course"/>
 					<bean:write name="infoCurricularCourse" property="name"/>
+					<bean:message key="message.manager.has.precedence"/>
 				</td>
 			</tr>
 		</table>
