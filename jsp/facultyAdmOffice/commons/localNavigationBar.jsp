@@ -110,6 +110,11 @@
 	<strong>&raquo; <bean:message key="link.group.creditsManagement.title"/></strong>
 	<ul>
 		<li>
+			<html:link page="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0" >
+				<bean:message key="link.professorships.management"/>
+			</html:link>
+		</li>	
+		<li>
 			<html:link page="/prepareManagementPositionsManagement.do?method=searchForm&amp;page=0" >
 				<bean:message key="link.managementPositions.management"/>
 			</html:link>
