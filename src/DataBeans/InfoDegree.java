@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class InfoDegree implements Serializable{
   protected String sigla;
   protected String nome;
+  protected String degreeType;
     
 
   public InfoDegree() { }
@@ -23,6 +24,12 @@ public class InfoDegree implements Serializable{
     setSigla(sigla);
     setNome(nome);
   }
+
+  public InfoDegree(String sigla, String nome, String degreeType) {
+	  setSigla(sigla);
+	  setNome(nome);
+	  setDegreeType(degreeType);
+	}
 
   public String getSigla() {
     return this.sigla;
@@ -49,12 +56,30 @@ public class InfoDegree implements Serializable{
     return resultado;
   }
   
+  
+  
   public String toString() {
     String result = "[INFOLICENCIATURA";
     result += ", sigla=" + this.sigla;
-    result += ", nome=" + this.nome;
+	result += ", nome=" + this.nome;
+	result += ", degreeType=" + this.degreeType;
     result += "]";
     return result;
   }
+
+	/**
+	 * @return String
+	 */
+	public String getDegreeType() {
+		return degreeType;
+	}
+	
+	/**
+	 * Sets the degreeType.
+	 * @param degreeType The degreeType to set
+	 */
+	public void setDegreeType(String degreeType) {
+		this.degreeType = degreeType;
+	}
 
 }

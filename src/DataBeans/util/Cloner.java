@@ -2,6 +2,9 @@ package DataBeans.util;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import Util.TipoCurso;
+import Util.TipoDocumentoIdentificacao;
+
 import DataBeans.InfoClass;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
@@ -418,6 +421,7 @@ public abstract class Cloner {
 		InfoDegree infoDegree = new InfoDegree();
 		try {
 			BeanUtils.copyProperties(infoDegree, degree);
+			infoDegree.setDegreeType(degree.getTipoCurso().toString());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -432,6 +436,7 @@ public abstract class Cloner {
 		ICurso degree = new Curso();
 		try {
 			BeanUtils.copyProperties(degree, infoDegree);
+			degree.setTipoCurso(new TipoCurso(infoDegree.getDegreeType()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -550,19 +555,17 @@ public abstract class Cloner {
 	public static IMasterDegreeCandidate copyInfoMasterDegreeCandidate2IMasterDegreCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
 		IMasterDegreeCandidate masterDegreeCandidate =
 			new MasterDegreeCandidate();
-		ICountry country =
-			Cloner.copyInfoCountry2ICountry(
-				infoMasterDegreeCandidate.getInfoCountry());
-		ICountry nationality =
-			Cloner.copyInfoCountry2ICountry(
-				infoMasterDegreeCandidate.getInfoNationality());
-		IExecutionYear executionYear =
-			Cloner.copyInfoExecutionYear2IExecutionYear(
-				infoMasterDegreeCandidate.getInfoExecutionYear());
+		ICountry country = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoCountry());
+		ICountry nationality = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoNationality());
+		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoMasterDegreeCandidate.getInfoExecutionYear());
+		// FIXME
+		ICurso degree = Cloner.copyInfoDegree2IDegree(infoMasterDegreeCandidate.getInfoDegree());
 		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
+		masterDegreeCandidate.setIdentificationDocumentType(new TipoDocumentoIdentificacao(infoMasterDegreeCandidate.getInfoIdentificationDocumentType()));
 		masterDegreeCandidate.setCountry(country);
 		masterDegreeCandidate.setNationality(nationality);
 		masterDegreeCandidate.setExecutionYear(executionYear);
+		masterDegreeCandidate.setDegree(degree);
 		return masterDegreeCandidate;
 	}
 
@@ -588,7 +591,7 @@ public abstract class Cloner {
 		infoMasterDegreeCandidate.setInfoDegree(infoDegree);
 		infoMasterDegreeCandidate.setInfoCountry(infoCountry);
 		infoMasterDegreeCandidate.setInfoNationality(infoNationality);
-		infoMasterDegreeCandidate.setIdentificationDocumentType(
+		infoMasterDegreeCandidate.setInfoIdentificationDocumentType(
 			masterDegreeCandidate.getIdentificationDocumentType().toString());
 		infoMasterDegreeCandidate.setInfoExecutionYear(infoExecutionYear);
 		return infoMasterDegreeCandidate;

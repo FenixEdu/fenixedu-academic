@@ -75,7 +75,7 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		 }
 
 		  changePersonalInfoForm.set("identificationDocumentNumber", masterDegreeCandidate.getIdentificationDocumentNumber());
-		  changePersonalInfoForm.set("identificationDocumentType", masterDegreeCandidate.getIdentificationDocumentType());
+		  changePersonalInfoForm.set("identificationDocumentType", masterDegreeCandidate.getInfoIdentificationDocumentType());
 		  changePersonalInfoForm.set("identificationDocumentIssuePlace", masterDegreeCandidate.getIdentificationDocumentIssuePlace());
 		  changePersonalInfoForm.set("name", masterDegreeCandidate.getName());
 		  changePersonalInfoForm.set("maritalStatus", masterDegreeCandidate.getMaritalStatus());
@@ -167,7 +167,7 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		  session.setAttribute("countryList", countryList);
 		  session.setAttribute("nationalityList", nationalityList);
 		  session.setAttribute("maritalStatusList", new EstadoCivil().toArrayList());
-		  session.setAttribute("identificationDocumentTypeList", new TipoDocumentoIdentificacao().toArrayList());
+		  session.setAttribute("identificationDocumentTypeList", TipoDocumentoIdentificacao.toArrayList());
 		  session.setAttribute("sexList", new Sexo().toArrayList());   		 
 		  session.setAttribute("candidateInformation", masterDegreeCandidate);   
 		  session.setAttribute("monthDays", Data.getMonthDays());

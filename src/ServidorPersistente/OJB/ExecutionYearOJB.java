@@ -53,6 +53,7 @@ public class ExecutionYearOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+		
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionYear#readAllExecutionYear()
 	 */
@@ -143,6 +144,28 @@ public class ExecutionYearOJB
 			return true;
 		} catch (Exception e) {
 			return false;
+		}
+	}
+	
+	
+	
+	public IExecutionYear readActualExecutionYear() throws ExcepcaoPersistencia {
+		try {
+			IExecutionYear executionYear = null;
+			ExecutionYearOJB executionYearOJB = new ExecutionYearOJB();
+			String oqlQuery = "select all from " + ExecutionYear.class.getName()
+							+ " order by year desc";
+			query.create(oqlQuery);
+
+			List result = (List) query.execute();
+
+			lockRead(result);
+			
+			if (result.size() != 0)
+				executionYear = (IExecutionYear) result.get(0);
+			return executionYear;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
 }

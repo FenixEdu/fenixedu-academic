@@ -117,7 +117,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
 								newMasterDegreeCandidate.getContributorNumber(), 
 								newMasterDegreeCandidate.getOccupation(), 
 								newMasterDegreeCandidate.getSex(), 
-								newMasterDegreeCandidate.getIdentificationDocumentType(),
+								newMasterDegreeCandidate.getInfoIdentificationDocumentType(),
 								newMasterDegreeCandidate.getMaritalStatus(),
 								country,
 								nationality, 

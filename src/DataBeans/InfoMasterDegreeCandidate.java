@@ -60,7 +60,7 @@ public class InfoMasterDegreeCandidate {
 	private InfoCountry infoNationality = null;
 	private InfoExecutionYear infoExecutionYear = null;
 
-    private String identificationDocumentType = null;
+    private String infoIdentificationDocumentType = null;
     private String specialization = null;
 	private String maritalStatus = null;
 	private InfoCandidateSituation infoCandidateSituation = null;
@@ -69,7 +69,7 @@ public class InfoMasterDegreeCandidate {
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public InfoMasterDegreeCandidate() {
         identificationDocumentNumber = null;
-	    identificationDocumentType = null;
+	    infoIdentificationDocumentType = null;
         identificationDocumentIssuePlace = null;
 		identificationDocumentIssueDate = null;
 		identificationDocumentExpirationDate = null;
@@ -124,7 +124,7 @@ public class InfoMasterDegreeCandidate {
     		) {
 	    
         setIdentificationDocumentNumber(identificationDocumentNumber);
-        setIdentificationDocumentType(identificationDocumentType);
+        setInfoIdentificationDocumentType(identificationDocumentType);
         setIdentificationDocumentIssuePlace(identificationDocumentIssuePlace);
 		setIdentificationDocumentIssueDate(identificationDocumentIssueDate);
 		setIdentificationDocumentExpirationDate(identificationDocumentExpirationDate);
@@ -169,7 +169,7 @@ public class InfoMasterDegreeCandidate {
     public String toString() {
         String result = "DataBean do Candidato Mestrado :\n";
         result += "\n  - Numero do Documento de Identificacao : " + identificationDocumentNumber;
-        result += "\n  - Tipo do Documento de Identificacao : " + identificationDocumentType;
+        result += "\n  - Tipo do Documento de Identificacao : " + infoIdentificationDocumentType;
         result += "\n  - Local de Emissao do Documento de Identificacao : " + identificationDocumentIssuePlace;
 		result += "\n  - Data de Emissao do Documento de Identificacao : " + identificationDocumentIssueDate;
 		result += "\n  - Data de Validade do Documento de Identificacao : " + identificationDocumentExpirationDate;
@@ -325,8 +325,8 @@ public class InfoMasterDegreeCandidate {
 	/**
 	 * @return String
 	 */
-	public String getIdentificationDocumentType() {
-		return identificationDocumentType;
+	public String getInfoIdentificationDocumentType() {
+		return infoIdentificationDocumentType;
 	}
 
 	/**
@@ -606,11 +606,11 @@ public InfoCountry getInfoCountry() {
 	}
 
 	/**
-	 * Sets the identificationDocumentType.
-	 * @param identificationDocumentType The identificationDocumentType to set
+	 * Sets the infoIdentificationDocumentType.
+	 * @param infoIdentificationDocumentType The infoIdentificationDocumentType to set
 	 */
-	public void setIdentificationDocumentType(String identificationDocumentType) {
-		this.identificationDocumentType = identificationDocumentType;
+	public void setInfoIdentificationDocumentType(String identificationDocumentType) {
+		this.infoIdentificationDocumentType = identificationDocumentType;
 	}
 
 	/**

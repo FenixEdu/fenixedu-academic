@@ -6,6 +6,10 @@
 
 package Util;
 
+import java.util.ArrayList;
+
+import org.apache.struts.util.LabelValueBean;
+
 /**
  *
  * @author  Nuno Nunes & Joana Mota
@@ -35,6 +39,27 @@ public class TipoCurso {
 
     public TipoCurso(Integer tipoCurso) {
         this.tipoCurso = tipoCurso;
+    }
+
+	public TipoCurso(String tipoCurso) {
+		if (tipoCurso.equals(TipoCurso.LICENCIATURA_STRING)) this.tipoCurso = new Integer(TipoCurso.LICENCIATURA);
+		if (tipoCurso.equals(TipoCurso.MESTRADO_STRING)) this.tipoCurso = new Integer(TipoCurso.MESTRADO);
+		if (tipoCurso.equals(TipoCurso.MESTRADO_INTEGRADO_STRING)) this.tipoCurso = new Integer(TipoCurso.MESTRADO_INTEGRADO);
+		if (tipoCurso.equals(TipoCurso.ESPECIALIZACAO_STRING)) this.tipoCurso = new Integer(TipoCurso.ESPECIALIZACAO);
+		if (tipoCurso.equals(TipoCurso.DOUTORAMENTO_STRING)) this.tipoCurso = new Integer(TipoCurso.DOUTORAMENTO);
+	}
+    
+    public static ArrayList toArrayList(boolean masterDegrees) {
+		ArrayList result = new ArrayList();
+		if (!masterDegrees) {
+			result.add(new LabelValueBean(TipoCurso.LICENCIATURA_STRING, TipoCurso.LICENCIATURA_STRING));
+			result.add(new LabelValueBean(TipoCurso.DOUTORAMENTO_STRING, TipoCurso.DOUTORAMENTO_STRING));
+		}
+		result.add(new LabelValueBean(TipoCurso.MESTRADO_STRING, TipoCurso.MESTRADO_STRING));
+		result.add(new LabelValueBean(TipoCurso.MESTRADO_INTEGRADO_STRING, TipoCurso.MESTRADO_INTEGRADO_STRING));
+		result.add(new LabelValueBean(TipoCurso.ESPECIALIZACAO_STRING, TipoCurso.ESPECIALIZACAO_STRING));
+
+		return result;	
     }
     
     public Integer getTipoCurso() {

@@ -308,5 +308,22 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 			fail("testDeleteItem");
 		}
 	}
+	
+	public void testReadAllMasterDegrees(){
+		try {
+			persistentSupport.iniciarTransaccao();
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear);
+			List result = persistentExecutionDegree.readMasterDegrees(executionYear.getYear());
+			persistentSupport.confirmarTransaccao();
+			assertNotNull(result);
+			assertEquals(result.isEmpty(), false);
+			assertEquals(result.size(), 1);
+
+			
+		} catch (ExcepcaoPersistencia ex) {
+			fail("ReadMasterDegrees");
+		}
+	}
 
 }

@@ -96,6 +96,34 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
         
     }
     
+    
+	public Integer generateCandidateNumber(String executionYear, String degreeName) throws ExcepcaoPersistencia {
+		try {
+			int number = 0;
+            
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+							+ "where executionYear.year = $1"
+							+ " and degree.nome = $2"
+							+ " order by candidateNumber desc";
+            
+			query.bind(executionYear);
+			query.bind(degreeName);
+            
+			query.create(oqlQuery);
+            
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				number = ((IMasterDegreeCandidate) result.get(0)).getCandidateNumber().intValue();
+    
+			return new Integer(number + 1);
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+    
+    
+    
     public void delete(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
         super.delete(masterDegreeCandidate);
     }

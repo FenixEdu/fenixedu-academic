@@ -192,5 +192,23 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item" + ex);
 	   }
 	}
+	
+	
+	public void testReadActualExecutionYear(){
+		try {
+
+			persistentSupport.iniciarTransaccao();
+			
+			IExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readActualExecutionYear();
+			assertNotNull(executionYear);
+			assertEquals(executionYear.getYear(), "2003/2004");
+			persistentSupport.confirmarTransaccao();
+		
+		} catch (ExcepcaoPersistencia ex) {
+			 fail("testReadActualExecutionYear:fail read existing item" + ex);
+		}
+		
+		
+	}
 		
 }

@@ -59,7 +59,7 @@ public class TipoDocumentoIdentificacao {
 		if (tipo.equals(TipoDocumentoIdentificacao.OUTRO_STRING)) this.tipo = new Integer(TipoDocumentoIdentificacao.OUTRO);
     }
     
-    public ArrayList toArrayList() {
+    public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
 	    result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING, TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING));
 	    result.add(new LabelValueBean(TipoDocumentoIdentificacao.PASSAPORTE_STRING, TipoDocumentoIdentificacao.PASSAPORTE_STRING));

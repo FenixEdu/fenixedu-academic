@@ -71,7 +71,7 @@ public class ReadMasterDegreeCandidateByUsernameTest extends TestCaseServicosCan
         assertNotNull(candidateTemp);
         // Test the candidate
         assertTrue(candidateTemp.getIdentificationDocumentNumber().equals("112233"));
-        assertTrue(candidateTemp.getIdentificationDocumentType().equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING));
+        assertTrue(candidateTemp.getInfoIdentificationDocumentType().equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING));
         assertTrue(candidateTemp.getIdentificationDocumentIssuePlace().equals("Lisboa"));
         assertTrue(candidateTemp.getIdentificationDocumentIssueDate().toString().equals("2002-11-17"));
 

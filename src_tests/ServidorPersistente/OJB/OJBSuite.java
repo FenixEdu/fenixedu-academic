@@ -34,6 +34,7 @@ public class OJBSuite extends TestCase {
         //suite.addTest(ServidorPersistente.OJB.ItemOJBTest.suite());
 
 		suite.addTest(ServidorPersistente.OJB.AulaOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.CandidateSituationOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.CountryOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.CurricularCourseOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.CursoExecucaoOJBTest.suite());
@@ -46,8 +47,11 @@ public class OJBSuite extends TestCase {
 		suite.addTest(ServidorPersistente.OJB.ExecutionYearOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.FrequentaOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.ItemOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.MasterDegreeCandidateOJBTest.suite());
+
 		suite.addTest(ServidorPersistente.OJB.PessoaOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.PlanoCurricularCursoOJBTest.suite());
+		
 		suite.addTest(ServidorPersistente.OJB.SalaOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.StudentCurricularPlanOJBTest.suite());
 		suite.addTest(ServidorPersistente.OJB.StudentOJBTest.suite());
