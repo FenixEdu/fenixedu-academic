@@ -157,9 +157,6 @@ public class ManageLessonDA extends
             infoLesson.setInicio(inicio);
             infoLesson.setFim(fim);
 
-            //			Calendar start = Calendar.getInstance();
-            //			Calendar end = Calendar.getInstance();
-
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
@@ -168,16 +165,8 @@ public class ManageLessonDA extends
             InfoPeriod infoPeriod = null;
             if (infoExecutionPeriod.getSemester().equals(new Integer(1))) {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-                //				start =
-                // infoExecutionDegree.getInfoPeriodLessonsFirstSemester().getStartDate();
-                //				end =
-                // infoExecutionDegree.getInfoPeriodLessonsFirstSemester().getEndDate();
             } else {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
-                //				start =
-                // infoExecutionDegree.getInfoPeriodLessonsSecondSemester().getStartDate();
-                //				end =
-                // infoExecutionDegree.getInfoPeriodLessonsSecondSemester().getEndDate();
             }
 
             String action = request.getParameter("action");
