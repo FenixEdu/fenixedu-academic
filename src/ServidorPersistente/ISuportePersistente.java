@@ -230,5 +230,7 @@ public interface ISuportePersistente
      * @return
      */
     public IPersistentCampus getIPersistentCampus();
+    
+    public IPersistentWorkLocation getIPersistentWorkLocation();
   
 }

@@ -108,6 +108,7 @@ import ServidorPersistente.IPersistentUniversity;
 import ServidorPersistente.IPersistentWebSite;
 import ServidorPersistente.IPersistentWebSiteItem;
 import ServidorPersistente.IPersistentWebSiteSection;
+import ServidorPersistente.IPersistentWorkLocation;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -1031,6 +1032,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	}
 	public IPersistentWebSiteItem getIPersistentWebSiteItem() {
 		return new WebSiteItemOJB();
+	}
+	public IPersistentWorkLocation getIPersistentWorkLocation()
+	{
+	    return new WorkLocationOJB();
 	}
 
 	public void beginTransaction() throws StorageException
