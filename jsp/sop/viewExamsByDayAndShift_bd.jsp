@@ -58,7 +58,7 @@
 				</td>
 				<td>
 					link.editar ;
-					<html:link page="/viewExamsDayAndShiftForm.do?method=delete&amp;indexExam=<%= index %>">
+					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=delete">
 						<bean:message key="label.delete"/>
 					</html:link>
 				</td>

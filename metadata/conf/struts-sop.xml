@@ -743,13 +743,14 @@
          <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
          <forward name="View Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	</action>
-	
+
 	<action path="/viewExamsDayAndShiftForm"
 			input="/viewExamsDayAndShift.jsp"
             type="ServidorApresentacao.Action.sop.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
             >
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
+         <forward name="Deleted Exam" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	</action>
 	
     <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext"

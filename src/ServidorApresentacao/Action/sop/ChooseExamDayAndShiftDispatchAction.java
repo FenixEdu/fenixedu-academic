@@ -102,7 +102,7 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 			""
 				+ year
 				+ "/"
-				+ month
+				+ (month.intValue() + 1)
 				+ "/"
 				+ day
 				+ "  às  "
