@@ -1,292 +1,281 @@
 <!ELEMENT dataset (
-    mw_curricular_course_outside_student_degree*,
-    weekly_ocupation*,
-    turmas*,
-    ass_cargo*,
-    campus*,
-    conversaolocalconcelho*,
-    ass_horarioexcepcao_regime*,
-    posgrad_area_cientifica*,
+    OJB_LOCKENTRY*,
+    SUMMARY*,
+    ass_CARGO_URL*,
+    CONTRIBUTOR*,
+    SHIFT_STUDENT*,
+    STUDENT_GROUP_ATTEND*,
+    DEGREE_INFO*,
     posgrad_pagamento_guia*,
-    seminary*,
-    section*,
-    mw_pessoa*,
-    ojb_dlist*,
-    curricular_course_execution_course*,
+    posgrad_area_cientifica*,
+    ADVISORY*,
+    ass_PARAM_JUSTIFICACAO*,
+    MASTER_DEGREE_THESIS*,
+    conversaoLocalDistrito*,
+    GRANT_CONTRACT*,
     almeida_nacionalidade*,
-    mw_course*,
-    ojb_dmap_entries*,
-    responsavel*,
-    paisexpansao*,
+    ass_HORARIO*,
     posgrad_tabela_precos*,
-    ass_unidade_marcacao*,
-    degree_curricular_plan_enrolment_info*,
-    exam_execution_course*,
-    aux_smn_students*,
+    CREDITS*,
     posgrad_cargo*,
-    possible_curricular_course_for_optional_curricular_course*,
-    ass_funcionario*,
-    curricular_course_scope*,
-    execution_year*,
-    ass_marcacao_ponto*,
-    student*,
-    enrolment_equivalence*,
-    ass_func_nao_docente*,
-    room*,
-    branch_20032004*,
-    person*,
-    mw_curricular_course_scope*,
-    master_degree_proof_version_jury*,
-    seminarycandidacy_seminarycasestudy*,
-    curricular_year*,
-    ass_ferias*,
-    degree*,
-    role*,
-    aulas*,
-    curricular_semester*,
-    teacher_shift_percentage*,
-    mw_aluno_temp*,
+    ass_REGIME*,
+    ass_CARGO*,
+    ass_MODALIDADE*,
+    PERSON_ROLE*,
+    DEGREE_FINAL_PROJECT*,
+    BIBLIOGRAPHIC_REFERENCE*,
+    EXAM_STUDENT*,
+    TESTS*,
+    OJB_SEQ*,
+    MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER*,
+    PUBLICATION*,
+    QUALIFICATION*,
+    SITE*,
+    CLASS_SHIFT*,
+    ass_CARTAO*,
+    CURRICULAR_SEMESTER*,
+    MASTER_DEGREE_CANDIDATE*,
+    CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION*,
     posgrad_candidato_mestrado*,
-    person_role*,
-    degree_info*,
-    execution_period*,
-    ass_status*,
-    lessons_update*,
-    seminary_curricularcourse*,
-    zzzz*,
+    EXECUTION_PERIOD*,
+    GRANT_ORIENTATION_TEACHER*,
+    PRECEDENCE*,
+    ass_FERIADO*,
+    OJB_DLIST_ENTRIES*,
+    STUDENT_TEST_QUESTION*,
     posgrad_disc_area*,
-    exam_student_room*,
-    support_lessons_timetable*,
-    country*,
-    candidate_situation*,
-    mw_average*,
-    equivalence*,
-    credits_manager_department*,
-    guide*,
-    website*,
-    xpto*,
-    ass_url*,
-    website_section*,
-    ass_periodo_ferias*,
-    seminary_casestudy*,
-    student_test_question*,
-    mw_enrolment*,
-    restriction*,
-    curricular_course_equivalence*,
-    shift_lesson*,
-    student_group_attend*,
-    conversaocidadepais*,
-    price*,
-    ass_param_justificacao*,
-    paisnaturalidade*,
-    evaluation*,
-    advisory*,
-    class*,
-    student_test_log*,
-    orientation*,
-    curricular_course_enrolment_info*,
-    mw_university*,
-    plano_curricular_2003final*,
-    ojb_dset*,
-    degree_objectives*,
-    guide_entry*,
-    disciplinas*,
-    ass_regime*,
-    concelhoexpansao*,
-    guide_situation*,
-    item*,
+    paisExpansao*,
+    OJB_DSET*,
+    CURRICULAR_COURSE_EQUIVALENCE*,
+    EQUIVALENCY_THEME*,
+    PERSON*,
+    ATTEND*,
+    DEGREE_OBJECTIVES*,
+    MASTER_DEGREE_PROOF_VERSION*,
+    CANDIDATE_ENROLMENT*,
+    CURRICULAR_COURSE_EXECUTION_COURSE*,
+    SERVICE_PROVIDER_REGIME*,
+    XML_DOCUMENTS*,
+    SEMINARY_CURRICULARCOURSE*,
+    GRATUITY*,
+    ass_PERIODO_FERIAS*,
+    CAREER*,
+    EXECUTION_COURSE*,
+    ENROLMENT_PERIOD*,
+    WEBSITE_ITEM*,
+    EXAM_EXECUTION_COURSE*,
+    ass_HORARIO_EXCEPCAO*,
+    ass_MARCACAO_PONTO*,
+    ass_HORARIOEXCEPCAO_REGIME*,
+    EXTERNAL_PERSON*,
+    PERSON_ADVISORY*,
+    STUDENT_KIND*,
+    ass_URL*,
+    MASTER_DEGREE_PROOF_VERSION_JURY*,
+    MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY*,
     posgrad_aluno_mestrado*,
-    ass_horario_excepcao*,
-    atribuicaodisciplinas*,
-    metadata*,
-    master_degree_thesis_data_version_guider*,
-    department*,
-    mw_degree_translation*,
-    branch*,
-    teacher*,
-    seminary_candidacy*,
+    DEGREE_CURRICULAR_PLAN*,
+    WEBSITE*,
+    ass_FUNC_NAO_DOCENTE*,
+    SEMINARY_CASESTUDY*,
+    GUIDE_ENTRY*,
+    DEPARTMENT_COURSE*,
+    STUDENT_CURRICULAR_PLAN*,
+    TEST_QUESTION*,
+    DEGREE_FINAL_PROJECT_ORIENTATION*,
+    STUDENT*,
+    ROOM*,
     posgrad_candidato_situacao*,
-    equivalency_theme*,
-    equivalent_enrolment_for_enrolment_equivalence*,
-    class_shift*,
-    master_degree_proof_version*,
+    freguesiaExpansao*,
+    TopWords*,
     posgrad_disciplina*,
-    xml_documents*,
-    mw_student_class*,
-    category*,
-    student_kind*,
-    ojb_nrm*,
-    exam_student*,
-    candidate_enrolment*,
-    mw_students_with_various_numbers*,
-    site*,
-    abreviaturas*,
-    external_person*,
-    mw_curricular_course*,
-    curriculum*,
+    OJB_DLIST*,
+    conversaoLocalConcelho*,
+    STUDENT_CURRICULAR_PLAN_DEGREE_FINAL_PROJECT*,
+    WEBSITE_SECTION*,
+    GROUP_PROPERTIES*,
+    EXECUTION_DEGREE*,
+    SEMINARYCANDIDACY_SEMINARYCASESTUDY*,
+    ass_HORARIO_TIPO*,
+    SEMINARY*,
+    OJB_NRM*,
+    RESPONSIBLEFOR*,
+    ass_PARAM_FERIAS*,
     almeida_aluno*,
-    freguesia*,
     posgrad_situacao*,
-    mw_curricular_course_scope_temp*,
-    ass_feriado*,
+    CAMPUS*,
     almeida_disc*,
-    ass_cargo_url*,
-    tests*,
+    ANNOUNCEMENT*,
+    COURSE_REPORT*,
+    DISTRIBUTED_TESTS*,
+    EXAM_ROOM*,
     posgrad_guia_tabela*,
-    contributor*,
-    master_degree_thesis_data_version_assistent_guider*,
-    summary*,
-    distributed_tests*,
-    ojb_seq*,
-    ass_centro_custo*,
-    degree_final_project*,
-    master_degree_thesis_data_version*,
-    enrolment_evaluation*,
-    seminary_modality*,
-    external_activity*,
-    ass_horariotipo_regime*,
-    student_curricular_plan_degree_final_project*,
-    department_course*,
-    enrolment_period*,
-    ass_regularizacao_marcacao*,
-    xpto4*,
-    shift*,
-    ass_horario_tipo*,
-    ass_horario*,
+    GRANT_RESPONSIBLE_TEACHER*,
+    EXECUTION_YEAR*,
+    Concelho*,
+    SEMINARY_CANDIDACY*,
+    ass_CENTRO_CUSTO*,
+    MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER*,
+    EXTERNAL_ACTIVITY*,
+    ORIENTATION*,
+    ass_FERIAS*,
+    MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER*,
+    ass_HORARIO_REGIME*,
+    EVALUATION_METHOD*,
+    SEMINARY_MODALITY*,
+    TEACHER_SHIFT_PERCENTAGE*,
+    TEACHER*,
+    Distrito*,
+    SUPPORT_LESSONS_TIMETABLE*,
     posgrad_guia*,
-    evaluation_method*,
+    OJB_HL_SEQ*,
     almeida_curram*,
-    topwords*,
-    master_degree_candidate*,
-    master_degree_thesis_data_version_external_assistent_guider*,
-    curricular_course*,
-    freguesiaexpansao*,
-    almeida_coddisc*,
-    ojb_hl_seq*,
+    DEPARTMENT*,
+    PUBLICATIONS_NUMBER*,
+    Freguesia*,
+    CANDIDATE_SITUATION*,
+    SHIFT*,
+    BRANCH*,
+    SHIFT_LESSON*,
     almeida_inscricoes*,
-    student_group_info*,
-    course_report*,
-    seminary_theme*,
-    responsiblefor*,
-    test_question*,
-    concelho*,
-    student_curricular_plan*,
-    lesson*,
-    professorships*,
-    distrito*,
-    exam_room*,
-    publications_number*,
-    degree_final_project_orientation*,
-    mw_aluno*,
-    posgrad_disc_area_aluno*,
-    ass_param_ferias*,
-    gratuity*,
-    student_group*,
-    ass_pessoa_cargo*,
-    ass_modalidade*,
-    career*,
-    service_provider_regime*,
-    shift_student*,
-    ojb_dset_entries*,
-    coordinator*,
-    ass_cartao*,
-    ojb_dmap*,
-    execution_course*,
-    precedence*,
-    university*,
-    enrolment*,
-    ojb_lockentry*,
-    degree_curricular_plan*,
-    qualification*,
-    mark*,
-    ass_param_regularizacao*,
-    group_properties*,
-    posgrad_docente*,
-    mw_branch*,
-    person_advisory*,
-    master_degree_thesis*,
-    ojb_dlist_entries*,
-    credits*,
-    mw_person_with_duplicate_id*,
-    posgrad_pessoa*,
-    ass_justificacao*,
-    posgrad_curso_mestrado*,
-    posgrad_pessoa_cargo*,
-    ass_funcionario_historico*,
-    mw_enrolment_temp*,
-    ass_horario_regime*,
-    announcement*,
-    publication*,
-    attend*,
-    grant_owner*,
-    curricular_course_equivalence_restriction*,
-    bibliographic_reference*,
-    execution_degree*,
-    website_item*,
-    conversaolocaldistrito*,
+    REIMBURSEMENT_GUIDE*,
+    CURRICULAR_COURSE_SCOPE*,
+    PRICE*,
+    ass_FUNCIONARIO_HISTORICO*,
     REIMBURSEMENT_GUIDE_SITUATION*,
-    REIMBURSEMENT_GUIDE*)>
+    ass_PARAM_REGULARIZACAO*,
+    OJB_DSET_ENTRIES*,
+    Abreviaturas*,
+    SECTION*,
+    WEEKLY_OCUPATION*,
+    MARK*,
+    STUDENT_TEST_LOG*,
+    EXAM_STUDENT_ROOM*,
+    GRANT_TYPE*,
+    OJB_DMAP_ENTRIES*,
+    ENROLMENT_EVALUATION*,
+    ass_FUNCIONARIO*,
+    PaisNaturalidade*,
+    DEGREE*,
+    PROFESSORSHIPS*,
+    posgrad_disc_area_aluno*,
+    LESSON*,
+    GUIDE_SITUATION*,
+    ass_JUSTIFICACAO*,
+    ass_UNIDADE_MARCACAO*,
+    ENROLMENT_EQUIVALENCE*,
+    RESTRICTION*,
+    conversaoCidadePais*,
+    SEMINARY_THEME*,
+    ENROLMENT*,
+    COORDINATOR*,
+    concelhoExpansao*,
+    GUIDE*,
+    METADATA*,
+    CREDITS_MANAGER_DEPARTMENT*,
+    ass_HORARIOTIPO_REGIME*,
+    EVALUATION*,
+    STUDENT_GROUP*,
+    GRANT_OWNER*,
+    ass_PESSOA_CARGO*,
+    ass_STATUS*,
+    MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER*,
+    posgrad_docente*,
+    CURRICULUM*,
+    CURRICULAR_YEAR*,
+    posgrad_pessoa*,
+    UNIVERSITY*,
+    posgrad_curso_mestrado*,
+    CATEGORY*,
+    posgrad_pessoa_cargo*,
+    ITEM*,
+    OLD_PUBLICATION*,
+    CURRICULAR_COURSE*,
+    MASTER_DEGREE_THESIS_DATA_VERSION*,
+    CLASS*,
+    COUNTRY*,
+    EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE*,
+    POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE*,
+    OJB_DMAP*,
+    ass_REGULARIZACAO_MARCACAO*,
+    ROLE*)>
 
-<!ELEMENT mw_curricular_course_outside_student_degree EMPTY>
-<!ATTLIST mw_curricular_course_outside_student_degree
-    courseCode CDATA #REQUIRED
-    degreeCode CDATA #REQUIRED
-    keyCurricularCourse CDATA #REQUIRED
-    idInternal CDATA #REQUIRED
+<!ELEMENT OJB_LOCKENTRY EMPTY>
+<!ATTLIST OJB_LOCKENTRY
+    OID_ CDATA #REQUIRED
+    TX_ID CDATA #REQUIRED
+    TIMESTAMP_ CDATA #IMPLIED
+    ISOLATIONLEVEL CDATA #IMPLIED
+    LOCKTYPE CDATA #IMPLIED
 >
 
-<!ELEMENT weekly_ocupation EMPTY>
-<!ATTLIST weekly_ocupation
+<!ELEMENT SUMMARY EMPTY>
+<!ATTLIST SUMMARY
     ID_INTERNAL CDATA #REQUIRED
-    RESEARCH CDATA #IMPLIED
-    MANAGEMENT CDATA #IMPLIED
-    LECTURE CDATA #IMPLIED
-    SUPPORT CDATA #IMPLIED
-    OTHER CDATA #IMPLIED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    TITLE CDATA #IMPLIED
+    SUMMARY_DATE CDATA #IMPLIED
+    SUMMARY_HOUR CDATA #IMPLIED
     LAST_MODIFICATION_DATE CDATA #IMPLIED
-    KEY_TEACHER CDATA #REQUIRED
+    SUMMARY_TEXT CDATA #IMPLIED
+    SUMMARY_TYPE CDATA #IMPLIED
 >
 
-<!ELEMENT turmas EMPTY>
-<!ATTLIST turmas
-    Sigla CDATA #IMPLIED
-    Titulo CDATA #IMPLIED
-    Epoca_Inicio CDATA #IMPLIED
-    Epoca_Fim CDATA #IMPLIED
->
-
-<!ELEMENT ass_cargo EMPTY>
-<!ATTLIST ass_cargo
+<!ELEMENT ass_CARGO_URL EMPTY>
+<!ATTLIST ass_CARGO_URL
     chaveCargo CDATA #REQUIRED
-    cargo CDATA #REQUIRED
+    chaveUrl CDATA #REQUIRED
 >
 
-<!ELEMENT campus EMPTY>
-<!ATTLIST campus
+<!ELEMENT CONTRIBUTOR EMPTY>
+<!ATTLIST CONTRIBUTOR
+    ID_INTERNAL CDATA #REQUIRED
+    CONTRIBUTOR_NUMBER CDATA #REQUIRED
+    CONTRIBUTOR_NAME CDATA #REQUIRED
+    CONTRIBUTOR_ADDRESS CDATA #REQUIRED
+>
+
+<!ELEMENT SHIFT_STUDENT EMPTY>
+<!ATTLIST SHIFT_STUDENT
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_SHIFT CDATA #REQUIRED
+    KEY_STUDENT CDATA #REQUIRED
+>
+
+<!ELEMENT STUDENT_GROUP_ATTEND EMPTY>
+<!ATTLIST STUDENT_GROUP_ATTEND
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_ATTEND CDATA #REQUIRED
+    KEY_STUDENT_GROUP CDATA #REQUIRED
+>
+
+<!ELEMENT DEGREE_INFO EMPTY>
+<!ATTLIST DEGREE_INFO
     ID_INTERNAL CDATA #REQUIRED
     KEY_DEGREE CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT conversaolocalconcelho EMPTY>
-<!ATTLIST conversaolocalconcelho
-    localidade CDATA #IMPLIED
-    concelho CDATA #IMPLIED
->
-
-<!ELEMENT ass_horarioexcepcao_regime EMPTY>
-<!ATTLIST ass_horarioexcepcao_regime
-    chaveHorario CDATA #REQUIRED
-    chaveRegime CDATA #REQUIRED
->
-
-<!ELEMENT posgrad_area_cientifica EMPTY>
-<!ATTLIST posgrad_area_cientifica
-    codigoInterno CDATA #REQUIRED
-    nome CDATA #REQUIRED
-    codigoCursoMestrado CDATA #REQUIRED
-    anoLectivo CDATA #REQUIRED
-    codigoInternoRamo CDATA #IMPLIED
+    DESCRIPTION CDATA #IMPLIED
+    OBJECTIVES CDATA #IMPLIED
+    HISTORY CDATA #IMPLIED
+    PROFESSIONAL_EXITS CDATA #IMPLIED
+    ADDITIONAL_INFO CDATA #IMPLIED
+    LINKS CDATA #IMPLIED
+    TEST_INGRESSION CDATA #IMPLIED
+    DRIFTS_INITIAL CDATA #IMPLIED
+    DRIFTS_FIRST CDATA #IMPLIED
+    DRIFTS_SECOND CDATA #IMPLIED
+    CLASSIFICATIONS CDATA #IMPLIED
+    MARK_MIN CDATA #IMPLIED
+    MARK_MAX CDATA #IMPLIED
+    MARK_AVERAGE CDATA #IMPLIED
+    DESCRIPTION_EN CDATA #IMPLIED
+    OBJECTIVES_EN CDATA #IMPLIED
+    HISTORY_EN CDATA #IMPLIED
+    PROFESSIONAL_EXITS_EN CDATA #IMPLIED
+    ADDITIONAL_INFO_EN CDATA #IMPLIED
+    LINKS_EN CDATA #IMPLIED
+    TEST_INGRESSION_EN CDATA #IMPLIED
+    CLASSIFICATIONS_EN CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
 >
 
 <!ELEMENT posgrad_pagamento_guia EMPTY>
@@ -298,72 +287,58 @@
     numeroPrestacao CDATA #REQUIRED
 >
 
-<!ELEMENT seminary EMPTY>
-<!ATTLIST seminary
-    id_internal CDATA #REQUIRED
-    name CDATA #REQUIRED
-    description CDATA #IMPLIED
-    allowed_candidacies_per_student CDATA #IMPLIED
+<!ELEMENT posgrad_area_cientifica EMPTY>
+<!ATTLIST posgrad_area_cientifica
+    codigoInterno CDATA #REQUIRED
+    nome CDATA #REQUIRED
+    codigoCursoMestrado CDATA #REQUIRED
+    anoLectivo CDATA #REQUIRED
 >
 
-<!ELEMENT section EMPTY>
-<!ATTLIST section
+<!ELEMENT ADVISORY EMPTY>
+<!ATTLIST ADVISORY
     ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #IMPLIED
-    SECTION_ORDER CDATA #IMPLIED
-    KEY_SITE CDATA #REQUIRED
-    KEY_SUPERIOR_SECTION CDATA #IMPLIED
-    LAST_MODIFIED_DATE CDATA #IMPLIED
+    SENDER CDATA #REQUIRED
+    CREATED CDATA #IMPLIED
+    SUBJECT CDATA #REQUIRED
+    MESSAGE CDATA #REQUIRED
+    EXPIRES CDATA #REQUIRED
+    ONLY_SHOW_ONCE CDATA #REQUIRED
 >
 
-<!ELEMENT mw_pessoa EMPTY>
-<!ATTLIST mw_pessoa
-    documentIdNumber CDATA #REQUIRED
-    documentIdType CDATA #IMPLIED
-    documentIdPlace CDATA #IMPLIED
-    documentIdDate CDATA #IMPLIED
-    name CDATA #IMPLIED
-    sex CDATA #IMPLIED
-    maritalStatus CDATA #IMPLIED
-    dateOfBirth CDATA #IMPLIED
-    fatherName CDATA #IMPLIED
-    motherName CDATA #IMPLIED
-    countryCode CDATA #IMPLIED
-    parishOfBirth CDATA #IMPLIED
-    municipalityOfBirth CDATA #IMPLIED
-    districtOfBirth CDATA #IMPLIED
-    address CDATA #IMPLIED
-    addressAreaCode CDATA #IMPLIED
-    zipCode CDATA #IMPLIED
-    zipAreaCode CDATA #IMPLIED
-    parishOfAddress CDATA #IMPLIED
-    municipalityOfAddress CDATA #IMPLIED
-    districtOfAddress CDATA #IMPLIED
-    phone CDATA #IMPLIED
-    mobilePhone CDATA #IMPLIED
-    email CDATA #IMPLIED
-    homePage CDATA #IMPLIED
-    contributorNumber CDATA #IMPLIED
-    job CDATA #IMPLIED
-    username CDATA #IMPLIED
-    password CDATA #IMPLIED
-    fiscalCode CDATA #IMPLIED
-    documentIdValidation CDATA #IMPLIED
-    financialRepCode CDATA #IMPLIED
-    idInternal CDATA #REQUIRED
+<!ELEMENT ass_PARAM_JUSTIFICACAO EMPTY>
+<!ATTLIST ass_PARAM_JUSTIFICACAO
+    codigoInterno CDATA #REQUIRED
+    sigla CDATA #REQUIRED
+    descricao CDATA #REQUIRED
+    tipo CDATA #REQUIRED
+    tipoDias CDATA #REQUIRED
+    grupo CDATA #IMPLIED
+    quem CDATA #REQUIRED
+    quando CDATA #REQUIRED
 >
 
-<!ELEMENT ojb_dlist EMPTY>
-<!ATTLIST ojb_dlist
-    ID CDATA #REQUIRED
-    SIZE_ CDATA #IMPLIED
+<!ELEMENT MASTER_DEGREE_THESIS EMPTY>
+<!ATTLIST MASTER_DEGREE_THESIS
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_STUDENT_CURRICULAR_PLAN CDATA #REQUIRED
 >
 
-<!ELEMENT curricular_course_execution_course EMPTY>
-<!ATTLIST curricular_course_execution_course
-    INTERNAL_CODE CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
+<!ELEMENT conversaoLocalDistrito EMPTY>
+<!ATTLIST conversaoLocalDistrito
+    localidade CDATA #IMPLIED
+    distrito CDATA #IMPLIED
+>
+
+<!ELEMENT GRANT_CONTRACT EMPTY>
+<!ATTLIST GRANT_CONTRACT
+    ID_INTERNAL CDATA #REQUIRED
+    NUMBER CDATA #REQUIRED
+    DATE_BEGIN_CONTRACT CDATA #IMPLIED
+    DATE_END_CONTRACT CDATA #IMPLIED
+    END_CONTRACT_MOTIVE CDATA #IMPLIED
+    KEY_GRANT_OWNER CDATA #REQUIRED
+    KEY_GRANT_TYPE CDATA #REQUIRED
 >
 
 <!ELEMENT almeida_nacionalidade EMPTY>
@@ -372,40 +347,35 @@
     nome CDATA #IMPLIED
 >
 
-<!ELEMENT mw_course EMPTY>
-<!ATTLIST mw_course
-    courseCode CDATA #REQUIRED
-    courseName CDATA #IMPLIED
-    universityCode CDATA #IMPLIED
->
-
-<!ELEMENT ojb_dmap_entries EMPTY>
-<!ATTLIST ojb_dmap_entries
-    ID CDATA #REQUIRED
-    DMAP_ID CDATA #REQUIRED
-    KEY_OID CDATA #IMPLIED
-    VALUE_OID CDATA #IMPLIED
->
-
-<!ELEMENT responsavel EMPTY>
-<!ATTLIST responsavel
-    Id_Internal CDATA #REQUIRED
-    Ano_Lectivo CDATA #IMPLIED
-    Cod_Curso CDATA #IMPLIED
-    Ano_Curr CDATA #IMPLIED
-    Semestre CDATA #IMPLIED
-    Cod_Ramo CDATA #IMPLIED
-    Cod_Disc CDATA #IMPLIED
-    No_Mec CDATA #IMPLIED
-    Data_act CDATA #IMPLIED
-    Observacoes CDATA #IMPLIED
-    depto CDATA #IMPLIED
->
-
-<!ELEMENT paisexpansao EMPTY>
-<!ATTLIST paisexpansao
-    descr1 CDATA #REQUIRED
-    descr2 CDATA #REQUIRED
+<!ELEMENT ass_HORARIO EMPTY>
+<!ATTLIST ass_HORARIO
+    codigoInterno CDATA #REQUIRED
+    chaveHorarioTipo CDATA #REQUIRED
+    chaveFuncionario CDATA #REQUIRED
+    sigla CDATA #IMPLIED
+    modalidade CDATA #IMPLIED
+    duracaoSemanal CDATA #IMPLIED
+    inicioPF1 CDATA #IMPLIED
+    fimPF1 CDATA #IMPLIED
+    inicioPF2 CDATA #IMPLIED
+    fimPF2 CDATA #IMPLIED
+    inicioHN1 CDATA #IMPLIED
+    fimHN1 CDATA #IMPLIED
+    inicioHN2 CDATA #IMPLIED
+    fimHN2 CDATA #IMPLIED
+    inicioRefeicao CDATA #IMPLIED
+    fimRefeicao CDATA #IMPLIED
+    descontoObrigatorio CDATA #IMPLIED
+    descontoMinimo CDATA #IMPLIED
+    inicioExpediente CDATA #IMPLIED
+    fimExpediente CDATA #IMPLIED
+    dataInicio CDATA #REQUIRED
+    dataFim CDATA #IMPLIED
+    numDias CDATA #IMPLIED
+    posicao CDATA #IMPLIED
+    trabalhoConsecutivo CDATA #IMPLIED
+    quem CDATA #REQUIRED
+    quando CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_tabela_precos EMPTY>
@@ -417,35 +387,15 @@
     valido CDATA #REQUIRED
 >
 
-<!ELEMENT ass_unidade_marcacao EMPTY>
-<!ATTLIST ass_unidade_marcacao
-    codigoInterno CDATA #REQUIRED
-    sigla CDATA #REQUIRED
-    descricao CDATA #REQUIRED
-    id CDATA #REQUIRED
->
-
-<!ELEMENT degree_curricular_plan_enrolment_info EMPTY>
-<!ATTLIST degree_curricular_plan_enrolment_info
+<!ELEMENT CREDITS EMPTY>
+<!ATTLIST CREDITS
     ID_INTERNAL CDATA #REQUIRED
-    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
-    DEGREE_DURATION CDATA #REQUIRED
-    MINIMAL_YEAR_FOR_OPTIONAL_COURSES CDATA #REQUIRED
->
-
-<!ELEMENT exam_execution_course EMPTY>
-<!ATTLIST exam_execution_course
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EVALUATION CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
->
-
-<!ELEMENT aux_smn_students EMPTY>
-<!ATTLIST aux_smn_students
-    number CDATA #IMPLIED
-    degree CDATA #IMPLIED
-    key_modality CDATA #IMPLIED
-    key_theme CDATA #IMPLIED
+    KEY_EXECUTION_PERIOD CDATA #REQUIRED
+    KEY_TEACHER CDATA #REQUIRED
+    TFC_STUDENTS_NUMBER CDATA #REQUIRED
+    CREDITS CDATA #IMPLIED
+    ADDITIONAL_CREDITS CDATA #IMPLIED
+    ADDITIONAL_CREDITS_JUSTIFICATION CDATA #IMPLIED
 >
 
 <!ELEMENT posgrad_cargo EMPTY>
@@ -454,259 +404,172 @@
     cargoNome CDATA #REQUIRED
 >
 
-<!ELEMENT possible_curricular_course_for_optional_curricular_course EMPTY>
-<!ATTLIST possible_curricular_course_for_optional_curricular_course
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_POSSIBLE_CURRICULAR_COURSE CDATA #REQUIRED
-    KEY_OPTIONAL_CURRICULAR_COURSE CDATA #REQUIRED
->
-
-<!ELEMENT ass_funcionario EMPTY>
-<!ATTLIST ass_funcionario
+<!ELEMENT ass_REGIME EMPTY>
+<!ATTLIST ass_REGIME
     codigoInterno CDATA #REQUIRED
-    chavePessoa CDATA #REQUIRED
-    numeroMecanografico CDATA #REQUIRED
-    chaveHorarioActual CDATA #REQUIRED
-    antiguidade CDATA #REQUIRED
+    designacao CDATA #REQUIRED
 >
 
-<!ELEMENT curricular_course_scope EMPTY>
-<!ATTLIST curricular_course_scope
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_CURRICULAR_SEMESTER CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE CDATA #REQUIRED
-    KEY_BRANCH CDATA #REQUIRED
-    THEORETICAL_HOURS CDATA #IMPLIED
-    PRATICAL_HOURS CDATA #IMPLIED
-    THEO_PRAT_HOURS CDATA #IMPLIED
-    LAB_HOURS CDATA #IMPLIED
-    SCOPE_TYPE CDATA #REQUIRED
-    MAX_INCREMENT_NAC CDATA #IMPLIED
-    MIN_INCREMENT_NAC CDATA #IMPLIED
-    WEIGTH CDATA #IMPLIED
-    CREDITS CDATA #IMPLIED
-    ECTS_CREDITS CDATA #IMPLIED
-    BEGIN_DATE CDATA #REQUIRED
-    END_DATE CDATA #IMPLIED
+<!ELEMENT ass_CARGO EMPTY>
+<!ATTLIST ass_CARGO
+    chaveCargo CDATA #REQUIRED
+    cargo CDATA #REQUIRED
 >
 
-<!ELEMENT execution_year EMPTY>
-<!ATTLIST execution_year
-    ID_INTERNAL CDATA #REQUIRED
-    YEAR CDATA #REQUIRED
-    STATE CDATA #REQUIRED
-    BEGIN_DATE CDATA #REQUIRED
-    END_DATE CDATA #REQUIRED
->
-
-<!ELEMENT ass_marcacao_ponto EMPTY>
-<!ATTLIST ass_marcacao_ponto
+<!ELEMENT ass_MODALIDADE EMPTY>
+<!ATTLIST ass_MODALIDADE
     codigoInterno CDATA #REQUIRED
-    unidade CDATA #IMPLIED
-    siglaUnidade CDATA #IMPLIED
-    dataMarcacao CDATA #IMPLIED
-    numCartao CDATA #IMPLIED
-    numFuncionario CDATA #IMPLIED
-    estado CDATA #IMPLIED
+    designacao CDATA #REQUIRED
 >
 
-<!ELEMENT student EMPTY>
-<!ATTLIST student
+<!ELEMENT PERSON_ROLE EMPTY>
+<!ATTLIST PERSON_ROLE
     ID_INTERNAL CDATA #REQUIRED
-    NUMBER CDATA #REQUIRED
+    KEY_ROLE CDATA #REQUIRED
     KEY_PERSON CDATA #REQUIRED
-    STATE CDATA #REQUIRED
-    DEGREE_TYPE CDATA #REQUIRED
-    KEY_STUDENT_KIND CDATA #REQUIRED
 >
 
-<!ELEMENT enrolment_equivalence EMPTY>
-<!ATTLIST enrolment_equivalence
+<!ELEMENT DEGREE_FINAL_PROJECT EMPTY>
+<!ATTLIST DEGREE_FINAL_PROJECT
     ID_INTERNAL CDATA #REQUIRED
-    KEY_ENROLMENT CDATA #REQUIRED
+    KEY_EXECUTION_YEAR CDATA #REQUIRED
+    TITLE CDATA #IMPLIED
 >
 
-<!ELEMENT ass_func_nao_docente EMPTY>
-<!ATTLIST ass_func_nao_docente
-    codigoInterno CDATA #REQUIRED
-    chaveFuncionario CDATA #REQUIRED
->
-
-<!ELEMENT room EMPTY>
-<!ATTLIST room
+<!ELEMENT BIBLIOGRAPHIC_REFERENCE EMPTY>
+<!ATTLIST BIBLIOGRAPHIC_REFERENCE
     ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    BUILDING CDATA #REQUIRED
-    FLOOR CDATA #REQUIRED
-    TYPE CDATA #REQUIRED
-    NORMAL_CAPACITY CDATA #REQUIRED
-    EXAM_CAPACITY CDATA #REQUIRED
+    TITLE CDATA #REQUIRED
+    AUTHORS CDATA #REQUIRED
+    REFERENCE CDATA #REQUIRED
+    YEAR CDATA #REQUIRED
+    OPTIONAL CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
 >
 
-<!ELEMENT branch_20032004 EMPTY>
-<!ATTLIST branch_20032004
+<!ELEMENT EXAM_STUDENT EMPTY>
+<!ATTLIST EXAM_STUDENT
     ID_INTERNAL CDATA #REQUIRED
-    BRANCH_CODE CDATA #REQUIRED
-    BRANCH_NAME CDATA #REQUIRED
-    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
+    KEY_EVALUATION CDATA #REQUIRED
+    KEY_STUDENT CDATA #REQUIRED
 >
 
-<!ELEMENT person EMPTY>
-<!ATTLIST person
+<!ELEMENT TESTS EMPTY>
+<!ATTLIST TESTS
     ID_INTERNAL CDATA #REQUIRED
-    DOCUMENT_ID_NUMBER CDATA #REQUIRED
-    EMISSION_LOCATION_OF_DOCUMENT_ID CDATA #IMPLIED
-    EMISSION_DATE_OF_DOCUMENT_ID CDATA #IMPLIED
-    EXPERATION_DATE_OF_DOCUMENT_ID CDATA #IMPLIED
-    NAME CDATA #IMPLIED
-    DATE_OF_BIRTH CDATA #IMPLIED
-    NAME_OF_FATHER CDATA #IMPLIED
-    NAME_OF_MOTHER CDATA #IMPLIED
-    NATIONALITY CDATA #IMPLIED
-    PARISH_OF_BIRTH CDATA #IMPLIED
-    DISTRICT_SUBDIVISION_OF_BIRTH CDATA #IMPLIED
-    DISTRICT_OF_BIRTH CDATA #IMPLIED
-    ADDRESS CDATA #IMPLIED
-    AREA CDATA #IMPLIED
-    AREA_CODE CDATA #IMPLIED
-    AREA_OF_AREA_CODE CDATA #IMPLIED
-    PARISH_OF_RESIDENCE CDATA #IMPLIED
-    DISTRICT_SUBDIVISION_OF_RESIDENCE CDATA #IMPLIED
-    DISTRICT_OF_RESIDENCE CDATA #IMPLIED
-    PHONE CDATA #IMPLIED
-    MOBILE CDATA #IMPLIED
-    EMAIL CDATA #IMPLIED
-    WEB_ADRDRESS CDATA #IMPLIED
-    SOCIAL_SECURITY_NUMBER CDATA #IMPLIED
-    PROFESSION CDATA #IMPLIED
-    USERNAME CDATA #REQUIRED
-    PASSWD CDATA #IMPLIED
-    KEY_COUNTRY CDATA #IMPLIED
-    FISCAL_CODE CDATA #IMPLIED
-    TYPE_ID_DOCUMENT CDATA #REQUIRED
-    SEX CDATA #IMPLIED
-    MARITAL_STATUS CDATA #IMPLIED
+    TITLE CDATA #REQUIRED
+    INFORMATION CDATA #IMPLIED
+    NUMBER_OF_QUESTIONS CDATA #REQUIRED
+    CREATION_DATE CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
 >
 
-<!ELEMENT mw_curricular_course_scope EMPTY>
-<!ATTLIST mw_curricular_course_scope
-    executionYear CDATA #REQUIRED
-    courseCode CDATA #REQUIRED
-    degreeCode CDATA #REQUIRED
-    branchCode CDATA #REQUIRED
-    curricularYear CDATA #IMPLIED
-    curricularSemester CDATA #IMPLIED
-    courseType CDATA #IMPLIED
-    theoreticalHours CDATA #IMPLIED
-    praticaHours CDATA #IMPLIED
-    labHours CDATA #IMPLIED
-    theoPratHours CDATA #IMPLIED
-    credits CDATA #IMPLIED
-    orientation CDATA #IMPLIED
+<!ELEMENT OJB_SEQ EMPTY>
+<!ATTLIST OJB_SEQ
+    TABLENAME CDATA #REQUIRED
+    FIELDNAME CDATA #REQUIRED
+    LAST_NUM CDATA #IMPLIED
 >
 
-<!ELEMENT master_degree_proof_version_jury EMPTY>
-<!ATTLIST master_degree_proof_version_jury
+<!ELEMENT MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER EMPTY>
+<!ATTLIST MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER
     ID_INTERNAL CDATA #REQUIRED
-    KEY_MASTER_DEGREE_PROOF_VERSION CDATA #REQUIRED
+    KEY_MASTER_DEGREE_THESIS_DATA_VERSION CDATA #REQUIRED
     KEY_TEACHER CDATA #REQUIRED
 >
 
-<!ELEMENT seminarycandidacy_seminarycasestudy EMPTY>
-<!ATTLIST seminarycandidacy_seminarycasestudy
-    candidacy_id_internal CDATA #REQUIRED
-    casestudy_id_internal CDATA #REQUIRED
-    preference_order CDATA #REQUIRED
->
-
-<!ELEMENT curricular_year EMPTY>
-<!ATTLIST curricular_year
+<!ELEMENT PUBLICATION EMPTY>
+<!ATTLIST PUBLICATION
     ID_INTERNAL CDATA #REQUIRED
+    CLASS_NAME CDATA #REQUIRED
+    CONFERENCE CDATA #REQUIRED
+    JOURNAL CDATA #REQUIRED
+    LOCATION CDATA #REQUIRED
+    MONTH CDATA #REQUIRED
+    NUMBER CDATA #REQUIRED
+    PAGES CDATA #REQUIRED
+    PUBLISHER CDATA #REQUIRED
+    SERIES CDATA #REQUIRED
+    TITLE CDATA #REQUIRED
+    TRNUMBER CDATA #REQUIRED
+    UNIVERSITY CDATA #REQUIRED
+    VOLUME CDATA #REQUIRED
     YEAR CDATA #REQUIRED
 >
 
-<!ELEMENT ass_ferias EMPTY>
-<!ATTLIST ass_ferias
+<!ELEMENT QUALIFICATION EMPTY>
+<!ATTLIST QUALIFICATION
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_PERSON CDATA #REQUIRED
+    YEAR CDATA #REQUIRED
+    MARK CDATA #IMPLIED
+    SCHOOL CDATA #REQUIRED
+    TITLE CDATA #IMPLIED
+    DEGREE CDATA #REQUIRED
+>
+
+<!ELEMENT SITE EMPTY>
+<!ATTLIST SITE
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    KEY_INITIAL_SECTION CDATA #IMPLIED
+    ALTERNATIVE_SITE CDATA #IMPLIED
+    MAIL CDATA #IMPLIED
+    INITIAL_STATEMENT CDATA #IMPLIED
+    INTRODUCTION CDATA #IMPLIED
+    STYLE CDATA #IMPLIED
+>
+
+<!ELEMENT CLASS_SHIFT EMPTY>
+<!ATTLIST CLASS_SHIFT
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_CLASS CDATA #REQUIRED
+    KEY_SHIFT CDATA #REQUIRED
+>
+
+<!ELEMENT ass_CARTAO EMPTY>
+<!ATTLIST ass_CARTAO
     codigoInterno CDATA #REQUIRED
+    numCartao CDATA #REQUIRED
     chaveFuncionario CDATA #REQUIRED
-    anoCorrente CDATA #REQUIRED
-    diasNormais CDATA #REQUIRED
-    diasEpocaBaixa CDATA #REQUIRED
-    diasHorasExtras CDATA #REQUIRED
-    diasAntiguidade CDATA #REQUIRED
-    diasMeioDia CDATA #REQUIRED
-    diasDispensaServico CDATA #REQUIRED
-    diasTolerancia CDATA #REQUIRED
-    diasTransferidos CDATA #REQUIRED
-    diasTransHorasExtras CDATA #REQUIRED
-    diasTransAntiguidade CDATA #REQUIRED
+    dataInicio CDATA #REQUIRED
+    dataFim CDATA #IMPLIED
+    quem CDATA #REQUIRED
+    quando CDATA #REQUIRED
+    estado CDATA #REQUIRED
 >
 
-<!ELEMENT degree EMPTY>
-<!ATTLIST degree
-    ID_INTERNAL CDATA #REQUIRED
-    CODE CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    TYPE_DEGREE CDATA #REQUIRED
->
-
-<!ELEMENT role EMPTY>
-<!ATTLIST role
-    ID_INTERNAL CDATA #REQUIRED
-    ROLE_TYPE CDATA #REQUIRED
-    PORTAL_SUB_APPLICATION CDATA #IMPLIED
-    PAGE CDATA #IMPLIED
-    PAGE_NAME_PROPERTY CDATA #IMPLIED
->
-
-<!ELEMENT aulas EMPTY>
-<!ATTLIST aulas
-    id CDATA #REQUIRED
-    NumEpoca CDATA #IMPLIED
-    Turma CDATA #IMPLIED
-    Dia CDATA #IMPLIED
-    Hora CDATA #IMPLIED
-    Disciplina CDATA #IMPLIED
-    TipoAula CDATA #IMPLIED
-    NumTurno CDATA #IMPLIED
-    Sala CDATA #IMPLIED
-    Fixa CDATA #IMPLIED
->
-
-<!ELEMENT curricular_semester EMPTY>
-<!ATTLIST curricular_semester
+<!ELEMENT CURRICULAR_SEMESTER EMPTY>
+<!ATTLIST CURRICULAR_SEMESTER
     ID_INTERNAL CDATA #REQUIRED
     KEY_CURRICULAR_YEAR CDATA #REQUIRED
     SEMESTER CDATA #REQUIRED
 >
 
-<!ELEMENT teacher_shift_percentage EMPTY>
-<!ATTLIST teacher_shift_percentage
+<!ELEMENT MASTER_DEGREE_CANDIDATE EMPTY>
+<!ATTLIST MASTER_DEGREE_CANDIDATE
     ID_INTERNAL CDATA #REQUIRED
-    KEY_PROFESSOR_SHIP CDATA #REQUIRED
-    KEY_SHIFT CDATA #REQUIRED
-    PERCENTAGE CDATA #REQUIRED
+    PERSON_KEY CDATA #REQUIRED
+    EXECUTION_DEGREE_KEY CDATA #REQUIRED
+    CANDIDATE_NUMBER CDATA #IMPLIED
+    SPECIALIZATION CDATA #REQUIRED
+    MAJOR_DEGREE CDATA #IMPLIED
+    MAJOR_DEGREE_SCHOOL CDATA #IMPLIED
+    MAJOR_DEGREE_YEAR CDATA #IMPLIED
+    AVERAGE CDATA #IMPLIED
+    SPECIALIZATION_AREA CDATA #IMPLIED
+    SUBSTITUTE_ORDER CDATA #IMPLIED
+    GIVEN_CREDITS CDATA #IMPLIED
+    GIVEN_CREDITS_REMARKS CDATA #IMPLIED
 >
 
-<!ELEMENT mw_aluno_temp EMPTY>
-<!ATTLIST mw_aluno_temp
-    documentIdNumber CDATA #REQUIRED
-    number CDATA #IMPLIED
-    degreeCode CDATA #IMPLIED
-    branchCode CDATA #IMPLIED
-    year CDATA #IMPLIED
-    ISTUniversity CDATA #IMPLIED
-    worker CDATA #IMPLIED
-    gratuitySituation CDATA #IMPLIED
-    trash CDATA #IMPLIED
-    answer1 CDATA #IMPLIED
-    answer2 CDATA #IMPLIED
-    answer3 CDATA #IMPLIED
-    answer4 CDATA #IMPLIED
-    answer5 CDATA #IMPLIED
-    answer6 CDATA #IMPLIED
-    answer7 CDATA #IMPLIED
-    idInternal CDATA #REQUIRED
+<!ELEMENT CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION EMPTY>
+<!ATTLIST CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE_EQUIVALENCE CDATA #REQUIRED
+    KEY_EQUIVALENT_CURRICULAR_COURSE CDATA #REQUIRED
+    YEAR_OF_EQUIVALENCE CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_candidato_mestrado EMPTY>
@@ -750,44 +613,8 @@
     media CDATA #IMPLIED
 >
 
-<!ELEMENT person_role EMPTY>
-<!ATTLIST person_role
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_ROLE CDATA #REQUIRED
-    KEY_PERSON CDATA #REQUIRED
->
-
-<!ELEMENT degree_info EMPTY>
-<!ATTLIST degree_info
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_DEGREE CDATA #REQUIRED
-    DESCRIPTION CDATA #IMPLIED
-    OBJECTIVES CDATA #IMPLIED
-    HISTORY CDATA #IMPLIED
-    PROFESSIONAL_EXITS CDATA #IMPLIED
-    ADDITIONAL_INFO CDATA #IMPLIED
-    LINKS CDATA #IMPLIED
-    TEST_INGRESSION CDATA #IMPLIED
-    DRIFTS_INITIAL CDATA #IMPLIED
-    DRIFTS_FIRST CDATA #IMPLIED
-    DRIFTS_SECOND CDATA #IMPLIED
-    CLASSIFICATIONS CDATA #IMPLIED
-    MARK_MIN CDATA #IMPLIED
-    MARK_MAX CDATA #IMPLIED
-    MARK_AVERAGE CDATA #IMPLIED
-    DESCRIPTION_EN CDATA #IMPLIED
-    OBJECTIVES_EN CDATA #IMPLIED
-    HISTORY_EN CDATA #IMPLIED
-    PROFESSIONAL_EXITS_EN CDATA #IMPLIED
-    ADDITIONAL_INFO_EN CDATA #IMPLIED
-    LINKS_EN CDATA #IMPLIED
-    TEST_INGRESSION_EN CDATA #IMPLIED
-    CLASSIFICATIONS_EN CDATA #IMPLIED
-    LAST_MODIFICATION_DATE CDATA #IMPLIED
->
-
-<!ELEMENT execution_period EMPTY>
-<!ATTLIST execution_period
+<!ELEMENT EXECUTION_PERIOD EMPTY>
+<!ATTLIST EXECUTION_PERIOD
     ID_INTERNAL CDATA #REQUIRED
     NAME CDATA #REQUIRED
     KEY_EXECUTION_YEAR CDATA #REQUIRED
@@ -797,185 +624,40 @@
     END_DATE CDATA #REQUIRED
 >
 
-<!ELEMENT ass_status EMPTY>
-<!ATTLIST ass_status
+<!ELEMENT GRANT_ORIENTATION_TEACHER EMPTY>
+<!ATTLIST GRANT_ORIENTATION_TEACHER
+    ID_INTERNAL CDATA #REQUIRED
+    DATE_BEGIN CDATA #REQUIRED
+    DATE_END CDATA #IMPLIED
+    KEY_GRANT_CONTRACT CDATA #REQUIRED
+    KEY_GRANT_TEACHER CDATA #REQUIRED
+>
+
+<!ELEMENT PRECEDENCE EMPTY>
+<!ATTLIST PRECEDENCE
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE CDATA #REQUIRED
+    SCOPE_TO_APPLY CDATA #REQUIRED
+>
+
+<!ELEMENT ass_FERIADO EMPTY>
+<!ATTLIST ass_FERIADO
     codigoInterno CDATA #REQUIRED
-    sigla CDATA #REQUIRED
-    designacao CDATA #REQUIRED
-    estado CDATA #REQUIRED
-    assiduidade CDATA #REQUIRED
-    quem CDATA #REQUIRED
-    quando CDATA #REQUIRED
+    tipoFeriado CDATA #REQUIRED
+    descricao CDATA #IMPLIED
+    data CDATA #IMPLIED
 >
 
-<!ELEMENT lessons_update EMPTY>
-<!ATTLIST lessons_update
-    ID_INTERNAL CDATA #REQUIRED
-    WEEKDAY CDATA #REQUIRED
-    START_TIME CDATA #REQUIRED
-    END_TIME CDATA #REQUIRED
-    KEY_ROOM CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
-    TYPE CDATA #REQUIRED
-    KEY_EXECUTION_PERIOD CDATA #REQUIRED
+<!ELEMENT OJB_DLIST_ENTRIES EMPTY>
+<!ATTLIST OJB_DLIST_ENTRIES
+    ID CDATA #REQUIRED
+    DLIST_ID CDATA #REQUIRED
+    POSITION_ CDATA #IMPLIED
+    OID_ CDATA #IMPLIED
 >
 
-<!ELEMENT seminary_curricularcourse EMPTY>
-<!ATTLIST seminary_curricularcourse
-    id_internal CDATA #REQUIRED
-    seminary_id_internal CDATA #REQUIRED
-    curricular_course_id_internal CDATA #REQUIRED
-    modality_id_internal CDATA #REQUIRED
->
-
-<!ELEMENT zzzz EMPTY>
-<!ATTLIST zzzz
-    number CDATA #IMPLIED
->
-
-<!ELEMENT posgrad_disc_area EMPTY>
-<!ATTLIST posgrad_disc_area
-    codigoInterno CDATA #REQUIRED
-    codigoAreaCientifica CDATA #REQUIRED
-    codigoDisciplina CDATA #REQUIRED
-    anoLectivo CDATA #REQUIRED
->
-
-<!ELEMENT exam_student_room EMPTY>
-<!ATTLIST exam_student_room
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EVALUATION CDATA #REQUIRED
-    KEY_STUDENT CDATA #REQUIRED
-    KEY_ROOM CDATA #IMPLIED
->
-
-<!ELEMENT support_lessons_timetable EMPTY>
-<!ATTLIST support_lessons_timetable
-    ID_INTERNAL CDATA #REQUIRED
-    WEEKDAY CDATA #REQUIRED
-    START_TIME CDATA #REQUIRED
-    END_TIME CDATA #REQUIRED
-    PLACE CDATA #REQUIRED
-    KEY_TEACHER CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
->
-
-<!ELEMENT country EMPTY>
-<!ATTLIST country
-    ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    NATIONALITY CDATA #REQUIRED
-    CODE CDATA #REQUIRED
->
-
-<!ELEMENT candidate_situation EMPTY>
-<!ATTLIST candidate_situation
-    ID_INTERNAL CDATA #REQUIRED
-    DATE CDATA #REQUIRED
-    REMARKS CDATA #IMPLIED
-    VALIDATION CDATA #REQUIRED
-    CANDIDATE_KEY CDATA #REQUIRED
-    SITUATION CDATA #REQUIRED
->
-
-<!ELEMENT mw_average EMPTY>
-<!ATTLIST mw_average
-    number CDATA #REQUIRED
-    numberOfCoursesEnrolled CDATA #REQUIRED
-    numberOfCoursesApproved CDATA #IMPLIED
-    sum CDATA #IMPLIED
-    average CDATA #IMPLIED
->
-
-<!ELEMENT equivalence EMPTY>
-<!ATTLIST equivalence
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EQUIVALENT_ENROLMENT CDATA #REQUIRED
-    KEY_ENROLMENT CDATA #REQUIRED
-    EQUIVALENCE_TYPE CDATA #REQUIRED
->
-
-<!ELEMENT credits_manager_department EMPTY>
-<!ATTLIST credits_manager_department
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_PERSON CDATA #REQUIRED
-    KEY_DEPARTMENT CDATA #REQUIRED
->
-
-<!ELEMENT guide EMPTY>
-<!ATTLIST guide
-    ID_INTERNAL CDATA #REQUIRED
-    NUMBER CDATA #REQUIRED
-    YEAR CDATA #REQUIRED
-    KEY_CONTRIBUTOR CDATA #REQUIRED
-    KEY_PERSON CDATA #REQUIRED
-    TOTAL CDATA #REQUIRED
-    REMARKS CDATA #IMPLIED
-    GUIDE_REQUESTER CDATA #REQUIRED
-    KEY_EXECUTION_DEGREE CDATA #REQUIRED
-    PAYMENT_TYPE CDATA #IMPLIED
-    CREATION_DATE CDATA #REQUIRED
-    VERSION CDATA #REQUIRED
-    PAYMENT_DATE CDATA #IMPLIED
->
-
-<!ELEMENT website EMPTY>
-<!ATTLIST website
-    ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    MAIL CDATA #IMPLIED
-    STYLE CDATA #IMPLIED
-    CLASS_NAME CDATA #IMPLIED
->
-
-<!ELEMENT xpto EMPTY>
-<!ATTLIST xpto
-    ccid CDATA #REQUIRED
-    ccname CDATA #REQUIRED
-    cc2id CDATA #REQUIRED
-    cc2name CDATA #REQUIRED
->
-
-<!ELEMENT ass_url EMPTY>
-<!ATTLIST ass_url
-    chaveUrl CDATA #REQUIRED
-    url CDATA #REQUIRED
->
-
-<!ELEMENT website_section EMPTY>
-<!ATTLIST website_section
-    ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    SIZE CDATA #REQUIRED
-    SORTING_ORDER CDATA #REQUIRED
-    WHAT_TO_SORT CDATA #REQUIRED
-    EXCERPT_SIZE CDATA #IMPLIED
-    KEY_WEBSITE CDATA #REQUIRED
->
-
-<!ELEMENT ass_periodo_ferias EMPTY>
-<!ATTLIST ass_periodo_ferias
-    codigoInterno CDATA #REQUIRED
-    chaveFuncionario CDATA #REQUIRED
-    dataInicio CDATA #REQUIRED
-    dataFim CDATA #IMPLIED
-    numDiasUteis CDATA #REQUIRED
-    tipoFerias CDATA #REQUIRED
-    quem CDATA #REQUIRED
-    quando CDATA #REQUIRED
->
-
-<!ELEMENT seminary_casestudy EMPTY>
-<!ATTLIST seminary_casestudy
-    id_internal CDATA #REQUIRED
-    name CDATA #REQUIRED
-    description CDATA #IMPLIED
-    code CDATA #REQUIRED
-    seminary_theme_Id_Internal CDATA #IMPLIED
->
-
-<!ELEMENT student_test_question EMPTY>
-<!ATTLIST student_test_question
+<!ELEMENT STUDENT_TEST_QUESTION EMPTY>
+<!ATTLIST STUDENT_TEST_QUESTION
     ID_INTERNAL CDATA #REQUIRED
     KEY_STUDENT CDATA #REQUIRED
     KEY_DISTRIBUTED_TEST CDATA #REQUIRED
@@ -987,194 +669,85 @@
     OPTION_SHUFFLE CDATA #IMPLIED
 >
 
-<!ELEMENT mw_enrolment EMPTY>
-<!ATTLIST mw_enrolment
-    number CDATA #IMPLIED
-    enrolmentYear CDATA #IMPLIED
-    curricularCourseYear CDATA #IMPLIED
-    curricularCourseSemester CDATA #IMPLIED
-    season CDATA #IMPLIED
-    courseCode CDATA #IMPLIED
-    degreeCode CDATA #IMPLIED
-    branchCode CDATA #IMPLIED
-    grade CDATA #IMPLIED
-    teacherNumber CDATA #IMPLIED
-    examDate CDATA #IMPLIED
-    universityCode CDATA #IMPLIED
-    remarks CDATA #IMPLIED
-    idinternal CDATA #REQUIRED
->
-
-<!ELEMENT restriction EMPTY>
-<!ATTLIST restriction
-    ID_INTERNAL CDATA #REQUIRED
-    CLASS_NAME CDATA #REQUIRED
-    KEY_PRECEDENCE CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE CDATA #IMPLIED
-    NUMBER_OF_CURRICULAR_COURSE_DONE CDATA #IMPLIED
->
-
-<!ELEMENT curricular_course_equivalence EMPTY>
-<!ATTLIST curricular_course_equivalence
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE CDATA #REQUIRED
->
-
-<!ELEMENT shift_lesson EMPTY>
-<!ATTLIST shift_lesson
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_SHIFT CDATA #REQUIRED
-    KEY_LESSON CDATA #REQUIRED
->
-
-<!ELEMENT student_group_attend EMPTY>
-<!ATTLIST student_group_attend
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_ATTEND CDATA #REQUIRED
-    KEY_STUDENT_GROUP CDATA #REQUIRED
->
-
-<!ELEMENT conversaocidadepais EMPTY>
-<!ATTLIST conversaocidadepais
-    descr1 CDATA #IMPLIED
-    descr2 CDATA #IMPLIED
->
-
-<!ELEMENT price EMPTY>
-<!ATTLIST price
-    ID_INTERNAL CDATA #REQUIRED
-    GRADUATION_TYPE CDATA #REQUIRED
-    DOCUMENT_TYPE CDATA #REQUIRED
-    DESCRIPTION CDATA #REQUIRED
-    PRICE CDATA #REQUIRED
->
-
-<!ELEMENT ass_param_justificacao EMPTY>
-<!ATTLIST ass_param_justificacao
+<!ELEMENT posgrad_disc_area EMPTY>
+<!ATTLIST posgrad_disc_area
     codigoInterno CDATA #REQUIRED
-    sigla CDATA #REQUIRED
-    descricao CDATA #REQUIRED
-    tipo CDATA #REQUIRED
-    tipoDias CDATA #REQUIRED
-    grupo CDATA #IMPLIED
-    quem CDATA #REQUIRED
-    quando CDATA #REQUIRED
+    codigoAreaCientifica CDATA #REQUIRED
+    codigoDisciplina CDATA #REQUIRED
+    anoLectivo CDATA #REQUIRED
 >
 
-<!ELEMENT paisnaturalidade EMPTY>
-<!ATTLIST paisnaturalidade
-    Cod CDATA #REQUIRED
-    Origem CDATA #REQUIRED
+<!ELEMENT paisExpansao EMPTY>
+<!ATTLIST paisExpansao
+    descr1 CDATA #REQUIRED
+    descr2 CDATA #REQUIRED
 >
 
-<!ELEMENT evaluation EMPTY>
-<!ATTLIST evaluation
-    ID_INTERNAL CDATA #REQUIRED
-    CLASS_NAME CDATA #REQUIRED
-    DAY CDATA #IMPLIED
-    BEGINNING CDATA #IMPLIED
-    END CDATA #IMPLIED
-    SEASON CDATA #REQUIRED
-    ENROLLMENT_BEGIN_DAY CDATA #IMPLIED
-    ENROLLMENT_BEGIN_TIME CDATA #IMPLIED
-    ENROLLMENT_END_DAY CDATA #IMPLIED
-    ENROLLMENT_END_TIME CDATA #IMPLIED
-    PUBLISHMENT_MESSAGE CDATA #IMPLIED
->
-
-<!ELEMENT advisory EMPTY>
-<!ATTLIST advisory
-    ID_INTERNAL CDATA #REQUIRED
-    SENDER CDATA #REQUIRED
-    CREATED CDATA #IMPLIED
-    SUBJECT CDATA #REQUIRED
-    MESSAGE CDATA #REQUIRED
-    EXPIRES CDATA #REQUIRED
-    ONLY_SHOW_ONCE CDATA #REQUIRED
->
-
-<!ELEMENT class EMPTY>
-<!ATTLIST class
-    ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    SEMESTER CDATA #IMPLIED
-    CURRICULAR_YEAR CDATA #REQUIRED
-    KEY_EXECUTION_DEGREE CDATA #REQUIRED
-    KEY_DEGREE CDATA #IMPLIED
-    KEY_EXECUTION_PERIOD CDATA #REQUIRED
->
-
-<!ELEMENT student_test_log EMPTY>
-<!ATTLIST student_test_log
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_STUDENT CDATA #REQUIRED
-    KEY_DISTRIBUTED_TEST CDATA #REQUIRED
-    DATE CDATA #IMPLIED
-    EVENT CDATA #IMPLIED
->
-
-<!ELEMENT orientation EMPTY>
-<!ATTLIST orientation
-    ID_INTERNAL CDATA #REQUIRED
-    ORIENTATION_TYPE CDATA #IMPLIED
-    LAST_MODIFICATION_DATE CDATA #IMPLIED
-    NUMBER_OF_STUDENTS CDATA #IMPLIED
-    DESCRIPTION CDATA #IMPLIED
-    KEY_TEACHER CDATA #REQUIRED
->
-
-<!ELEMENT curricular_course_enrolment_info EMPTY>
-<!ATTLIST curricular_course_enrolment_info
-    ID_INTERNAL CDATA #REQUIRED
-    MAX_INCREMENT_NAC CDATA #REQUIRED
-    MIN_INCREMENT_NAC CDATA #REQUIRED
-    WEIGTH CDATA #REQUIRED
->
-
-<!ELEMENT mw_university EMPTY>
-<!ATTLIST mw_university
-    universityCode CDATA #IMPLIED
-    universityName CDATA #IMPLIED
->
-
-<!ELEMENT plano_curricular_2003final EMPTY>
-<!ATTLIST plano_curricular_2003final
-    Id_Internal CDATA #REQUIRED
-    Ano_Lectivo CDATA #IMPLIED
-    Codigo_Lic CDATA #IMPLIED
-    Codigo_Ramo CDATA #IMPLIED
-    Ano_Curricular CDATA #IMPLIED
-    Semestre CDATA #IMPLIED
-    Codigo_Disc CDATA #IMPLIED
-    Nome_Disc CDATA #IMPLIED
-    ciencia_base CDATA #IMPLIED
-    ender_web CDATA #IMPLIED
-    Objectivos CDATA #IMPLIED
-    Progr_Res CDATA #IMPLIED
-    bib_princ_1 CDATA #IMPLIED
-    bib_princ_2 CDATA #IMPLIED
-    bib_princ_3 CDATA #IMPLIED
-    bib_sec_1 CDATA #IMPLIED
-    bib_sec_2 CDATA #IMPLIED
-    bib_sec_3 CDATA #IMPLIED
-    Crit_Av CDATA #IMPLIED
-    data_act CDATA #IMPLIED
-    Ingles_Nome_Disc CDATA #IMPLIED
-    Ingles_Objectivos CDATA #IMPLIED
-    Ingles_Progr_Res CDATA #IMPLIED
-    Ingles_Crit_Av CDATA #IMPLIED
-    Ingles_relatorio CDATA #IMPLIED
-    Ingles_data_act CDATA #IMPLIED
->
-
-<!ELEMENT ojb_dset EMPTY>
-<!ATTLIST ojb_dset
+<!ELEMENT OJB_DSET EMPTY>
+<!ATTLIST OJB_DSET
     ID CDATA #REQUIRED
     SIZE_ CDATA #IMPLIED
 >
 
-<!ELEMENT degree_objectives EMPTY>
-<!ATTLIST degree_objectives
+<!ELEMENT CURRICULAR_COURSE_EQUIVALENCE EMPTY>
+<!ATTLIST CURRICULAR_COURSE_EQUIVALENCE
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE CDATA #REQUIRED
+>
+
+<!ELEMENT EQUIVALENCY_THEME EMPTY>
+<!ATTLIST EQUIVALENCY_THEME
+    theme_id CDATA #REQUIRED
+    equivalency_id CDATA #REQUIRED
+>
+
+<!ELEMENT PERSON EMPTY>
+<!ATTLIST PERSON
+    ID_INTERNAL CDATA #REQUIRED
+    DOCUMENT_ID_NUMBER CDATA #REQUIRED
+    EMISSION_LOCATION_OF_DOCUMENT_ID CDATA #IMPLIED
+    EMISSION_DATE_OF_DOCUMENT_ID CDATA #IMPLIED
+    EXPERATION_DATE_OF_DOCUMENT_ID CDATA #IMPLIED
+    NAME CDATA #IMPLIED
+    DATE_OF_BIRTH CDATA #IMPLIED
+    NAME_OF_FATHER CDATA #IMPLIED
+    NAME_OF_MOTHER CDATA #IMPLIED
+    NATIONALITY CDATA #IMPLIED
+    PARISH_OF_BIRTH CDATA #IMPLIED
+    DISTRICT_SUBDIVISION_OF_BIRTH CDATA #IMPLIED
+    DISTRICT_OF_BIRTH CDATA #IMPLIED
+    ADDRESS CDATA #IMPLIED
+    AREA CDATA #IMPLIED
+    AREA_CODE CDATA #IMPLIED
+    AREA_OF_AREA_CODE CDATA #IMPLIED
+    PARISH_OF_RESIDENCE CDATA #IMPLIED
+    DISTRICT_SUBDIVISION_OF_RESIDENCE CDATA #IMPLIED
+    DISTRICT_OF_RESIDENCE CDATA #IMPLIED
+    PHONE CDATA #IMPLIED
+    MOBILE CDATA #IMPLIED
+    EMAIL CDATA #IMPLIED
+    WEB_ADRDRESS CDATA #IMPLIED
+    SOCIAL_SECURITY_NUMBER CDATA #IMPLIED
+    PROFESSION CDATA #IMPLIED
+    USERNAME CDATA #REQUIRED
+    PASSWD CDATA #IMPLIED
+    KEY_COUNTRY CDATA #IMPLIED
+    FISCAL_CODE CDATA #IMPLIED
+    TYPE_ID_DOCUMENT CDATA #REQUIRED
+    SEX CDATA #IMPLIED
+    MARITAL_STATUS CDATA #IMPLIED
+>
+
+<!ELEMENT ATTEND EMPTY>
+<!ATTLIST ATTEND
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_STUDENT CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    KEY_ENROLMENT CDATA #IMPLIED
+>
+
+<!ELEMENT DEGREE_OBJECTIVES EMPTY>
+<!ATTLIST DEGREE_OBJECTIVES
     ID_INTERNAL CDATA #REQUIRED
     KEY_DEGREE CDATA #REQUIRED
     GENERAL_OBJECTIVES CDATA #IMPLIED
@@ -1183,80 +756,145 @@
     END_DATE CDATA #IMPLIED
 >
 
-<!ELEMENT guide_entry EMPTY>
-<!ATTLIST guide_entry
+<!ELEMENT MASTER_DEGREE_PROOF_VERSION EMPTY>
+<!ATTLIST MASTER_DEGREE_PROOF_VERSION
     ID_INTERNAL CDATA #REQUIRED
-    KEY_GUIDE CDATA #REQUIRED
-    GRADUATION_TYPE CDATA #IMPLIED
-    DOCUMENT_TYPE CDATA #REQUIRED
-    DESCRIPTION CDATA #IMPLIED
-    PRICE CDATA #REQUIRED
-    QUANTITY CDATA #REQUIRED
+    KEY_MASTER_DEGREE_THESIS CDATA #REQUIRED
+    KEY_EMPLOYEE CDATA #REQUIRED
+    PROOF_DATE CDATA #IMPLIED
+    THESIS_DELIVERY_DATE CDATA #IMPLIED
+    FINAL_RESULT CDATA #REQUIRED
+    ATTACHED_COPIES_NUMBER CDATA #IMPLIED
+    LAST_MODIFICATION CDATA #IMPLIED
+    CURRENT_STATE CDATA #REQUIRED
 >
 
-<!ELEMENT disciplinas EMPTY>
-<!ATTLIST disciplinas
-    Sigla CDATA #IMPLIED
-    Nome CDATA #IMPLIED
-    Aulas_Teoricas CDATA #IMPLIED
-    Aulas_Praticas CDATA #IMPLIED
-    Tipo_Sala_Teorica CDATA #IMPLIED
-    Tipo_Sala_Pratica CDATA #IMPLIED
-    Tipo_Sala_Teorica_Pratica CDATA #IMPLIED
-    Tipo_Sala_Laboratorio CDATA #IMPLIED
-    Epoca_Inicio CDATA #IMPLIED
-    Epoca_Fim CDATA #IMPLIED
->
-
-<!ELEMENT ass_regime EMPTY>
-<!ATTLIST ass_regime
-    codigoInterno CDATA #REQUIRED
-    designacao CDATA #REQUIRED
->
-
-<!ELEMENT concelhoexpansao EMPTY>
-<!ATTLIST concelhoexpansao
-    descr1 CDATA #IMPLIED
-    descr2 CDATA #IMPLIED
->
-
-<!ELEMENT guide_situation EMPTY>
-<!ATTLIST guide_situation
+<!ELEMENT CANDIDATE_ENROLMENT EMPTY>
+<!ATTLIST CANDIDATE_ENROLMENT
     ID_INTERNAL CDATA #REQUIRED
-    KEY_GUIDE CDATA #REQUIRED
-    SITUATION CDATA #REQUIRED
-    DATE CDATA #REQUIRED
+    KEY_MASTER_DEGREE_CANDIDATE CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE_SCOPE CDATA #REQUIRED
+>
+
+<!ELEMENT CURRICULAR_COURSE_EXECUTION_COURSE EMPTY>
+<!ATTLIST CURRICULAR_COURSE_EXECUTION_COURSE
+    INTERNAL_CODE CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+>
+
+<!ELEMENT SERVICE_PROVIDER_REGIME EMPTY>
+<!ATTLIST SERVICE_PROVIDER_REGIME
+    ID_INTERNAL CDATA #REQUIRED
+    PROVIDER_REGIME_TYPE CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
+    KEY_TEACHER CDATA #REQUIRED
+>
+
+<!ELEMENT XML_DOCUMENTS EMPTY>
+<!ATTLIST XML_DOCUMENTS
+    ID_INTERNAL CDATA #REQUIRED
+    XML_FILE CDATA #REQUIRED
+    XML_FILE_NAME CDATA #REQUIRED
+    KEY_METADATA CDATA #REQUIRED
+    VISIBILITY CDATA #REQUIRED
+>
+
+<!ELEMENT SEMINARY_CURRICULARCOURSE EMPTY>
+<!ATTLIST SEMINARY_CURRICULARCOURSE
+    id_internal CDATA #REQUIRED
+    seminary_id_internal CDATA #REQUIRED
+    curricular_course_id_internal CDATA #REQUIRED
+    modality_id_internal CDATA #REQUIRED
+>
+
+<!ELEMENT GRATUITY EMPTY>
+<!ATTLIST GRATUITY
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_STUDENT_CURRICULAR_PLAN CDATA #REQUIRED
+    STATE CDATA #IMPLIED
+    GRATUITY_STATE CDATA #IMPLIED
+    DATE CDATA #IMPLIED
     REMARKS CDATA #IMPLIED
-    STATE CDATA #REQUIRED
 >
 
-<!ELEMENT item EMPTY>
-<!ATTLIST item
+<!ELEMENT ass_PERIODO_FERIAS EMPTY>
+<!ATTLIST ass_PERIODO_FERIAS
+    codigoInterno CDATA #REQUIRED
+    chaveFuncionario CDATA #REQUIRED
+    dataInicio CDATA #REQUIRED
+    dataFim CDATA #IMPLIED
+    numDiasUteis CDATA #REQUIRED
+    tipoFerias CDATA #REQUIRED
+    quem CDATA #REQUIRED
+    quando CDATA #REQUIRED
+>
+
+<!ELEMENT CAREER EMPTY>
+<!ATTLIST CAREER
+    ID_INTERNAL CDATA #REQUIRED
+    CLASS_NAME CDATA #REQUIRED
+    BEGIN_YEAR CDATA #IMPLIED
+    END_YEAR CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
+    KEY_TEACHER CDATA #REQUIRED
+    ENTITY CDATA #IMPLIED
+    FUNCTION CDATA #IMPLIED
+    COURSE_OR_POSITION CDATA #IMPLIED
+    KEY_CATEGORY CDATA #IMPLIED
+>
+
+<!ELEMENT EXECUTION_COURSE EMPTY>
+<!ATTLIST EXECUTION_COURSE
     ID_INTERNAL CDATA #REQUIRED
     NAME CDATA #IMPLIED
-    ITEM_ORDER CDATA #IMPLIED
-    INFORMATION CDATA #IMPLIED
-    URGENT CDATA #IMPLIED
-    KEY_SECTION CDATA #REQUIRED
+    CODE CDATA #REQUIRED
+    THEORETICAL_HOURS CDATA #IMPLIED
+    PRATICAL_HOURS CDATA #IMPLIED
+    THEO_PRAT_HOURS CDATA #IMPLIED
+    LAB_HOURS CDATA #IMPLIED
+    SEMESTER CDATA #IMPLIED
+    KEY_EXECUTION_PERIOD CDATA #REQUIRED
+    COMMENT CDATA #IMPLIED
 >
 
-<!ELEMENT posgrad_aluno_mestrado EMPTY>
-<!ATTLIST posgrad_aluno_mestrado
-    codigoInterno CDATA #REQUIRED
-    numero CDATA #REQUIRED
-    codigoPessoa CDATA #REQUIRED
-    codigoCursoMestrado CDATA #REQUIRED
-    especializacao CDATA #REQUIRED
-    anoCandidatura CDATA #REQUIRED
-    escolaLicenciatura CDATA #IMPLIED
-    anoLicenciatura CDATA #IMPLIED
-    media CDATA #IMPLIED
-    creditos CDATA #IMPLIED
-    observacoes CDATA #IMPLIED
+<!ELEMENT ENROLMENT_PERIOD EMPTY>
+<!ATTLIST ENROLMENT_PERIOD
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
+    KEY_EXECUTION_PERIOD CDATA #REQUIRED
+    START_DATE CDATA #REQUIRED
+    END_DATE CDATA #REQUIRED
 >
 
-<!ELEMENT ass_horario_excepcao EMPTY>
-<!ATTLIST ass_horario_excepcao
+<!ELEMENT WEBSITE_ITEM EMPTY>
+<!ATTLIST WEBSITE_ITEM
+    ID_INTERNAL CDATA #REQUIRED
+    TITLE CDATA #REQUIRED
+    MAIN_ENTRY_TEXT CDATA #REQUIRED
+    EXCERPT CDATA #IMPLIED
+    PUBLISHED CDATA #REQUIRED
+    CREATION_DATE CDATA #REQUIRED
+    KEY_EDITOR CDATA #REQUIRED
+    AUTHOR_NAME CDATA #REQUIRED
+    AUTHOR_EMAIL CDATA #REQUIRED
+    KEYWORDS CDATA #REQUIRED
+    ONLINE_BEGIN_DAY CDATA #REQUIRED
+    ONLINE_END_DAY CDATA #REQUIRED
+    ITEM_BEGIN_DAY CDATA #IMPLIED
+    ITEM_END_DAY CDATA #IMPLIED
+    KEY_WEBSITE_SECTION CDATA #REQUIRED
+>
+
+<!ELEMENT EXAM_EXECUTION_COURSE EMPTY>
+<!ATTLIST EXAM_EXECUTION_COURSE
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_EVALUATION CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+>
+
+<!ELEMENT ass_HORARIO_EXCEPCAO EMPTY>
+<!ATTLIST ass_HORARIO_EXCEPCAO
     codigoInterno CDATA #REQUIRED
     chaveHorarioTipo CDATA #REQUIRED
     chaveFuncionario CDATA #REQUIRED
@@ -1286,75 +924,196 @@
     quando CDATA #REQUIRED
 >
 
-<!ELEMENT atribuicaodisciplinas EMPTY>
-<!ATTLIST atribuicaodisciplinas
-    NumEpoca CDATA #IMPLIED
-    Turma CDATA #IMPLIED
-    Disciplina CDATA #IMPLIED
-    TipoAula CDATA #IMPLIED
-    NumDivisao CDATA #IMPLIED
-    HorasMax CDATA #IMPLIED
-    HorasDadas CDATA #IMPLIED
-    HorasAula CDATA #IMPLIED
-    AlunosDivisao CDATA #IMPLIED
-    SalaPreferencial CDATA #IMPLIED
+<!ELEMENT ass_MARCACAO_PONTO EMPTY>
+<!ATTLIST ass_MARCACAO_PONTO
+    codigoInterno CDATA #REQUIRED
+    unidade CDATA #IMPLIED
+    siglaUnidade CDATA #IMPLIED
+    dataMarcacao CDATA #IMPLIED
+    numCartao CDATA #IMPLIED
+    numFuncionario CDATA #IMPLIED
+    estado CDATA #IMPLIED
 >
 
-<!ELEMENT metadata EMPTY>
-<!ATTLIST metadata
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
-    METADATA_FILE CDATA #IMPLIED
-    VISIBILITY CDATA #REQUIRED
+<!ELEMENT ass_HORARIOEXCEPCAO_REGIME EMPTY>
+<!ATTLIST ass_HORARIOEXCEPCAO_REGIME
+    chaveHorario CDATA #REQUIRED
+    chaveRegime CDATA #REQUIRED
 >
 
-<!ELEMENT master_degree_thesis_data_version_guider EMPTY>
-<!ATTLIST master_degree_thesis_data_version_guider
+<!ELEMENT EXTERNAL_PERSON EMPTY>
+<!ATTLIST EXTERNAL_PERSON
     ID_INTERNAL CDATA #REQUIRED
-    KEY_MASTER_DEGREE_THESIS_DATA_VERSION CDATA #REQUIRED
+    WORK_LOCATION CDATA #REQUIRED
+    KEY_PERSON CDATA #REQUIRED
+>
+
+<!ELEMENT PERSON_ADVISORY EMPTY>
+<!ATTLIST PERSON_ADVISORY
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_PERSON CDATA #REQUIRED
+    KEY_ADVISORY CDATA #REQUIRED
+>
+
+<!ELEMENT STUDENT_KIND EMPTY>
+<!ATTLIST STUDENT_KIND
+    ID_INTERNAL CDATA #REQUIRED
+    STUDENT_TYPE CDATA #REQUIRED
+    MIN_COURSES_TO_ENROL CDATA #REQUIRED
+    MAX_COURSES_TO_ENROL CDATA #REQUIRED
+    MAX_NAC_TO_ENROL CDATA #REQUIRED
+>
+
+<!ELEMENT ass_URL EMPTY>
+<!ATTLIST ass_URL
+    chaveUrl CDATA #REQUIRED
+    url CDATA #REQUIRED
+>
+
+<!ELEMENT MASTER_DEGREE_PROOF_VERSION_JURY EMPTY>
+<!ATTLIST MASTER_DEGREE_PROOF_VERSION_JURY
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_MASTER_DEGREE_PROOF_VERSION CDATA #REQUIRED
     KEY_TEACHER CDATA #REQUIRED
 >
 
-<!ELEMENT department EMPTY>
-<!ATTLIST department
+<!ELEMENT MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY EMPTY>
+<!ATTLIST MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_MASTER_DEGREE_PROOF_VERSION CDATA #REQUIRED
+    KEY_EXTERNAL_PERSON CDATA #REQUIRED
+>
+
+<!ELEMENT posgrad_aluno_mestrado EMPTY>
+<!ATTLIST posgrad_aluno_mestrado
+    codigoInterno CDATA #REQUIRED
+    numero CDATA #REQUIRED
+    codigoPessoa CDATA #REQUIRED
+    codigoCursoMestrado CDATA #REQUIRED
+    especializacao CDATA #REQUIRED
+    anoCandidatura CDATA #REQUIRED
+    escolaLicenciatura CDATA #IMPLIED
+    anoLicenciatura CDATA #IMPLIED
+    media CDATA #IMPLIED
+    creditos CDATA #IMPLIED
+    observacoes CDATA #IMPLIED
+>
+
+<!ELEMENT DEGREE_CURRICULAR_PLAN EMPTY>
+<!ATTLIST DEGREE_CURRICULAR_PLAN
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    KEY_DEGREE CDATA #REQUIRED
+    STATE CDATA #REQUIRED
+    INITIAL_DATE CDATA #IMPLIED
+    END_DATE CDATA #IMPLIED
+    DEGREE_DURATION CDATA #REQUIRED
+    MINIMAL_YEAR_FOR_OPTIONAL_COURSES CDATA #REQUIRED
+    MARK_TYPE CDATA #REQUIRED
+    NEEDED_CREDITS CDATA #IMPLIED
+    NUMERUS_CLAUSUS CDATA #IMPLIED
+    DESCRIPTION CDATA #IMPLIED
+    DESCRIPTION_EN CDATA #IMPLIED
+>
+
+<!ELEMENT WEBSITE EMPTY>
+<!ATTLIST WEBSITE
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    MAIL CDATA #IMPLIED
+    STYLE CDATA #IMPLIED
+    CLASS_NAME CDATA #IMPLIED
+>
+
+<!ELEMENT ass_FUNC_NAO_DOCENTE EMPTY>
+<!ATTLIST ass_FUNC_NAO_DOCENTE
+    codigoInterno CDATA #REQUIRED
+    chaveFuncionario CDATA #REQUIRED
+>
+
+<!ELEMENT SEMINARY_CASESTUDY EMPTY>
+<!ATTLIST SEMINARY_CASESTUDY
+    id_internal CDATA #REQUIRED
+    name CDATA #REQUIRED
+    description CDATA #IMPLIED
+    code CDATA #REQUIRED
+    seminary_theme_Id_Internal CDATA #IMPLIED
+>
+
+<!ELEMENT GUIDE_ENTRY EMPTY>
+<!ATTLIST GUIDE_ENTRY
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_GUIDE CDATA #REQUIRED
+    GRADUATION_TYPE CDATA #IMPLIED
+    DOCUMENT_TYPE CDATA #REQUIRED
+    DESCRIPTION CDATA #IMPLIED
+    PRICE CDATA #REQUIRED
+    QUANTITY CDATA #REQUIRED
+>
+
+<!ELEMENT DEPARTMENT_COURSE EMPTY>
+<!ATTLIST DEPARTMENT_COURSE
     ID_INTERNAL CDATA #REQUIRED
     NAME CDATA #REQUIRED
     CODE CDATA #REQUIRED
+    KEY_DEPARTMENT CDATA #REQUIRED
 >
 
-<!ELEMENT mw_degree_translation EMPTY>
-<!ATTLIST mw_degree_translation
-    ADM_DEGREE_CODE CDATA #IMPLIED
-    KEY_DEGREE CDATA #IMPLIED
->
-
-<!ELEMENT branch EMPTY>
-<!ATTLIST branch
+<!ELEMENT STUDENT_CURRICULAR_PLAN EMPTY>
+<!ATTLIST STUDENT_CURRICULAR_PLAN
     ID_INTERNAL CDATA #REQUIRED
-    BRANCH_CODE CDATA #REQUIRED
-    BRANCH_NAME CDATA #REQUIRED
+    KEY_STUDENT CDATA #REQUIRED
     KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
-    BRANCH_ACRONYM CDATA #IMPLIED
+    CURRENT_STATE CDATA #REQUIRED
+    START_DATE CDATA #REQUIRED
+    KEY_BRANCH CDATA #REQUIRED
+    SPECIALIZATION CDATA #IMPLIED
+    GIVEN_CREDITS CDATA #IMPLIED
+    COMPLETED_COURSES CDATA #IMPLIED
+    ENROLLED_COURSES CDATA #IMPLIED
+    CLASSIFICATION CDATA #IMPLIED
+    OBSERVATIONS CDATA #IMPLIED
+    KEY_EMPLOYEE CDATA #IMPLIED
+    WHEN_ALTER CDATA #IMPLIED
 >
 
-<!ELEMENT teacher EMPTY>
-<!ATTLIST teacher
+<!ELEMENT TEST_QUESTION EMPTY>
+<!ATTLIST TEST_QUESTION
     ID_INTERNAL CDATA #REQUIRED
-    TEACHER_NUMBER CDATA #IMPLIED
-    KEY_PERSON CDATA #REQUIRED
-    KEY_CATEGORY CDATA #IMPLIED
+    TEST_QUESTION_ORDER CDATA #REQUIRED
+    TEST_QUESTION_VALUE CDATA #REQUIRED
+    KEY_XML_DOCUMENT CDATA #REQUIRED
+    KEY_TEST CDATA #REQUIRED
 >
 
-<!ELEMENT seminary_candidacy EMPTY>
-<!ATTLIST seminary_candidacy
-    id_internal CDATA #REQUIRED
-    student_id_internal CDATA #REQUIRED
-    curricular_course_id_internal CDATA #REQUIRED
-    seminary_id_internal CDATA #REQUIRED
-    seminary_theme_id_internal CDATA #IMPLIED
-    seminary_modality_id_internal CDATA #REQUIRED
-    motivation CDATA #REQUIRED
-    APPROVED CDATA #IMPLIED
+<!ELEMENT DEGREE_FINAL_PROJECT_ORIENTATION EMPTY>
+<!ATTLIST DEGREE_FINAL_PROJECT_ORIENTATION
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_DEGREE_FINAL_PROJECT CDATA #REQUIRED
+    KEY_TEACHER CDATA #REQUIRED
+    CO_ORIENTATION CDATA #IMPLIED
+    PERCENTAGE CDATA #IMPLIED
+>
+
+<!ELEMENT STUDENT EMPTY>
+<!ATTLIST STUDENT
+    ID_INTERNAL CDATA #REQUIRED
+    NUMBER CDATA #REQUIRED
+    KEY_PERSON CDATA #REQUIRED
+    STATE CDATA #REQUIRED
+    DEGREE_TYPE CDATA #REQUIRED
+    KEY_STUDENT_KIND CDATA #REQUIRED
+>
+
+<!ELEMENT ROOM EMPTY>
+<!ATTLIST ROOM
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    BUILDING CDATA #REQUIRED
+    FLOOR CDATA #REQUIRED
+    TYPE CDATA #REQUIRED
+    NORMAL_CAPACITY CDATA #REQUIRED
+    EXAM_CAPACITY CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_candidato_situacao EMPTY>
@@ -1367,37 +1126,15 @@
     valido CDATA #REQUIRED
 >
 
-<!ELEMENT equivalency_theme EMPTY>
-<!ATTLIST equivalency_theme
-    theme_id CDATA #REQUIRED
-    equivalency_id CDATA #REQUIRED
+<!ELEMENT freguesiaExpansao EMPTY>
+<!ATTLIST freguesiaExpansao
+    descr1 CDATA #IMPLIED
+    descr2 CDATA #IMPLIED
 >
 
-<!ELEMENT equivalent_enrolment_for_enrolment_equivalence EMPTY>
-<!ATTLIST equivalent_enrolment_for_enrolment_equivalence
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_ENROLMENT_EQUIVALENCE CDATA #REQUIRED
-    KEY_EQUIVALENT_ENROLMENT CDATA #REQUIRED
->
-
-<!ELEMENT class_shift EMPTY>
-<!ATTLIST class_shift
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_CLASS CDATA #REQUIRED
-    KEY_SHIFT CDATA #REQUIRED
->
-
-<!ELEMENT master_degree_proof_version EMPTY>
-<!ATTLIST master_degree_proof_version
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_MASTER_DEGREE_THESIS CDATA #REQUIRED
-    KEY_EMPLOYEE CDATA #REQUIRED
-    PROOF_DATE CDATA #IMPLIED
-    THESIS_DELIVERY_DATE CDATA #IMPLIED
-    FINAL_RESULT CDATA #REQUIRED
-    ATTACHED_COPIES_NUMBER CDATA #IMPLIED
-    LAST_MODIFICATION CDATA #IMPLIED
-    CURRENT_STATE CDATA #REQUIRED
+<!ELEMENT TopWords EMPTY>
+<!ATTLIST TopWords
+    Palavra CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_disciplina EMPTY>
@@ -1405,120 +1142,119 @@
     codigoInterno CDATA #REQUIRED
     nome CDATA #REQUIRED
     codigoCursoMestrado CDATA #REQUIRED
-    creditos CDATA #IMPLIED
-    sigla CDATA #IMPLIED
-    tipo CDATA #IMPLIED
-    semestre CDATA #IMPLIED
-    optativa CDATA #IMPLIED
-    codigoCurricularCourse CDATA #IMPLIED
 >
 
-<!ELEMENT xml_documents EMPTY>
-<!ATTLIST xml_documents
+<!ELEMENT OJB_DLIST EMPTY>
+<!ATTLIST OJB_DLIST
+    ID CDATA #REQUIRED
+    SIZE_ CDATA #IMPLIED
+>
+
+<!ELEMENT conversaoLocalConcelho EMPTY>
+<!ATTLIST conversaoLocalConcelho
+    localidade CDATA #IMPLIED
+    concelho CDATA #IMPLIED
+>
+
+<!ELEMENT STUDENT_CURRICULAR_PLAN_DEGREE_FINAL_PROJECT EMPTY>
+<!ATTLIST STUDENT_CURRICULAR_PLAN_DEGREE_FINAL_PROJECT
     ID_INTERNAL CDATA #REQUIRED
-    XML_FILE CDATA #REQUIRED
-    XML_FILE_NAME CDATA #REQUIRED
-    KEY_METADATA CDATA #REQUIRED
-    VISIBILITY CDATA #REQUIRED
+    KEY_DEGREE_FINAL_PROJECT CDATA #IMPLIED
+    KEY_STUDENT_CURRICULAR_PLAN CDATA #IMPLIED
 >
 
-<!ELEMENT mw_student_class EMPTY>
-<!ATTLIST mw_student_class
-    STUDENT_NUMBER CDATA #IMPLIED
-    STUDENT_NAME CDATA #IMPLIED
-    DEGREE_CODE CDATA #IMPLIED
-    AVERAGE CDATA #IMPLIED
-    CLASS_NAME CDATA #IMPLIED
->
-
-<!ELEMENT category EMPTY>
-<!ATTLIST category
+<!ELEMENT WEBSITE_SECTION EMPTY>
+<!ATTLIST WEBSITE_SECTION
     ID_INTERNAL CDATA #REQUIRED
-    CODE CDATA #REQUIRED
-    LONG_NAME CDATA #REQUIRED
-    SHORT_NAME CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    SIZE CDATA #REQUIRED
+    SORTING_ORDER CDATA #IMPLIED
+    EXCERPT_SIZE CDATA #IMPLIED
+    KEY_WEBSITE CDATA #REQUIRED
 >
 
-<!ELEMENT student_kind EMPTY>
-<!ATTLIST student_kind
+<!ELEMENT GROUP_PROPERTIES EMPTY>
+<!ATTLIST GROUP_PROPERTIES
     ID_INTERNAL CDATA #REQUIRED
-    STUDENT_TYPE CDATA #REQUIRED
-    MIN_COURSES_TO_ENROL CDATA #REQUIRED
-    MAX_COURSES_TO_ENROL CDATA #REQUIRED
-    MAX_NAC_TO_ENROL CDATA #REQUIRED
+    MAXIMUM_CAPACITY CDATA #IMPLIED
+    MINIMUM_CAPACITY CDATA #IMPLIED
+    IDEAL_CAPACITY CDATA #IMPLIED
+    ENROLMENT_POLICY CDATA #IMPLIED
+    GROUP_MAXIMUM_NUMBER CDATA #IMPLIED
+    NAME CDATA #REQUIRED
+    SHIFT_TYPE CDATA #IMPLIED
+    ENROLMENT_BEGIN_DAY CDATA #IMPLIED
+    ENROLMENT_END_DAY CDATA #IMPLIED
+    PROJECT_DESCRIPTION CDATA #IMPLIED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
 >
 
-<!ELEMENT ojb_nrm EMPTY>
-<!ATTLIST ojb_nrm
+<!ELEMENT EXECUTION_DEGREE EMPTY>
+<!ATTLIST EXECUTION_DEGREE
+    ID_INTERNAL CDATA #REQUIRED
+    ACADEMIC_YEAR CDATA #REQUIRED
+    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
+    KEY_TEACHER CDATA #REQUIRED
+    TEMPORARY_EXAM_MAP CDATA #REQUIRED
+    KEY_CAMPUS CDATA #REQUIRED
+>
+
+<!ELEMENT SEMINARYCANDIDACY_SEMINARYCASESTUDY EMPTY>
+<!ATTLIST SEMINARYCANDIDACY_SEMINARYCASESTUDY
+    candidacy_id_internal CDATA #REQUIRED
+    casestudy_id_internal CDATA #REQUIRED
+    preference_order CDATA #REQUIRED
+>
+
+<!ELEMENT ass_HORARIO_TIPO EMPTY>
+<!ATTLIST ass_HORARIO_TIPO
+    codigoInterno CDATA #REQUIRED
+    sigla CDATA #REQUIRED
+    modalidade CDATA #REQUIRED
+    duracaoSemanal CDATA #REQUIRED
+    inicioPF1 CDATA #IMPLIED
+    fimPF1 CDATA #IMPLIED
+    inicioPF2 CDATA #IMPLIED
+    fimPF2 CDATA #IMPLIED
+    inicioHN1 CDATA #REQUIRED
+    fimHN1 CDATA #REQUIRED
+    inicioHN2 CDATA #IMPLIED
+    fimHN2 CDATA #IMPLIED
+    inicioRefeicao CDATA #IMPLIED
+    fimRefeicao CDATA #IMPLIED
+    descontoObrigatorio CDATA #IMPLIED
+    descontoMinimo CDATA #IMPLIED
+    inicioExpediente CDATA #IMPLIED
+    fimExpediente CDATA #IMPLIED
+    trabalhoConsecutivo CDATA #IMPLIED
+>
+
+<!ELEMENT SEMINARY EMPTY>
+<!ATTLIST SEMINARY
+    id_internal CDATA #REQUIRED
+    name CDATA #REQUIRED
+    description CDATA #IMPLIED
+    allowed_candidacies_per_student CDATA #IMPLIED
+>
+
+<!ELEMENT OJB_NRM EMPTY>
+<!ATTLIST OJB_NRM
     NAME CDATA #REQUIRED
     OID_ CDATA #IMPLIED
 >
 
-<!ELEMENT exam_student EMPTY>
-<!ATTLIST exam_student
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EVALUATION CDATA #REQUIRED
-    KEY_STUDENT CDATA #REQUIRED
->
-
-<!ELEMENT candidate_enrolment EMPTY>
-<!ATTLIST candidate_enrolment
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_MASTER_DEGREE_CANDIDATE CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE_SCOPE CDATA #REQUIRED
->
-
-<!ELEMENT mw_students_with_various_numbers EMPTY>
-<!ATTLIST mw_students_with_various_numbers
-    documentidnumber CDATA #REQUIRED
-    number CDATA #IMPLIED
-    maxidinternal CDATA #IMPLIED
-    total CDATA #REQUIRED
->
-
-<!ELEMENT site EMPTY>
-<!ATTLIST site
-    ID_INTERNAL CDATA #REQUIRED
+<!ELEMENT RESPONSIBLEFOR EMPTY>
+<!ATTLIST RESPONSIBLEFOR
+    INTERNAL_CODE CDATA #REQUIRED
+    KEY_TEACHER CDATA #REQUIRED
     KEY_EXECUTION_COURSE CDATA #REQUIRED
-    KEY_INITIAL_SECTION CDATA #IMPLIED
-    ALTERNATIVE_SITE CDATA #IMPLIED
-    MAIL CDATA #IMPLIED
-    INITIAL_STATEMENT CDATA #IMPLIED
-    INTRODUCTION CDATA #IMPLIED
-    STYLE CDATA #IMPLIED
 >
 
-<!ELEMENT abreviaturas EMPTY>
-<!ATTLIST abreviaturas
-    abrv CDATA #IMPLIED
-    expansao CDATA #IMPLIED
->
-
-<!ELEMENT external_person EMPTY>
-<!ATTLIST external_person
-    ID_INTERNAL CDATA #REQUIRED
-    WORK_LOCATION CDATA #REQUIRED
-    KEY_PERSON CDATA #REQUIRED
->
-
-<!ELEMENT mw_curricular_course EMPTY>
-<!ATTLIST mw_curricular_course
-    courseCode CDATA #REQUIRED
-    courseName CDATA #REQUIRED
-    universityCode CDATA #IMPLIED
->
-
-<!ELEMENT curriculum EMPTY>
-<!ATTLIST curriculum
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE CDATA #IMPLIED
-    GENERAL_OBJECTIVES CDATA #IMPLIED
-    OPERACIONAL_OBJECTIVES CDATA #IMPLIED
-    PROGRAM CDATA #IMPLIED
-    OPERACIONAL_OBJECTIVES_EN CDATA #IMPLIED
-    GENERAL_OBJECTIVES_EN CDATA #IMPLIED
-    PROGRAM_EN CDATA #IMPLIED
-    LAST_MODIFICATION_DATE CDATA #IMPLIED
+<!ELEMENT ass_PARAM_FERIAS EMPTY>
+<!ATTLIST ass_PARAM_FERIAS
+    codigoInterno CDATA #REQUIRED
+    sigla CDATA #REQUIRED
+    designacao CDATA #REQUIRED
 >
 
 <!ELEMENT almeida_aluno EMPTY>
@@ -1544,44 +1280,16 @@
     email CDATA #IMPLIED
 >
 
-<!ELEMENT freguesia EMPTY>
-<!ATTLIST freguesia
-    Chave CDATA #REQUIRED
-    chaveDistrito CDATA #REQUIRED
-    chaveConcelho CDATA #REQUIRED
-    Designacao CDATA #REQUIRED
->
-
 <!ELEMENT posgrad_situacao EMPTY>
 <!ATTLIST posgrad_situacao
     codigoInterno CDATA #REQUIRED
     situacao CDATA #REQUIRED
 >
 
-<!ELEMENT mw_curricular_course_scope_temp EMPTY>
-<!ATTLIST mw_curricular_course_scope_temp
-    executionYear CDATA #REQUIRED
-    courseCode CDATA #REQUIRED
-    degreeCode CDATA #REQUIRED
-    branchCode CDATA #REQUIRED
-    curricularYear CDATA #IMPLIED
-    curricularSemester CDATA #IMPLIED
-    courseType CDATA #IMPLIED
-    theoreticalHours CDATA #IMPLIED
-    praticaHours CDATA #IMPLIED
-    labHours CDATA #IMPLIED
-    theoPratHours CDATA #IMPLIED
-    credits CDATA #IMPLIED
-    orientation CDATA #IMPLIED
-    idInternal CDATA #REQUIRED
->
-
-<!ELEMENT ass_feriado EMPTY>
-<!ATTLIST ass_feriado
-    codigoInterno CDATA #REQUIRED
-    tipoFeriado CDATA #REQUIRED
-    descricao CDATA #IMPLIED
-    data CDATA #IMPLIED
+<!ELEMENT CAMPUS EMPTY>
+<!ATTLIST CAMPUS
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
 >
 
 <!ELEMENT almeida_disc EMPTY>
@@ -1600,59 +1308,26 @@
     nomeDis CDATA #IMPLIED
 >
 
-<!ELEMENT ass_cargo_url EMPTY>
-<!ATTLIST ass_cargo_url
-    chaveCargo CDATA #REQUIRED
-    chaveUrl CDATA #REQUIRED
->
-
-<!ELEMENT tests EMPTY>
-<!ATTLIST tests
+<!ELEMENT ANNOUNCEMENT EMPTY>
+<!ATTLIST ANNOUNCEMENT
     ID_INTERNAL CDATA #REQUIRED
-    TITLE CDATA #REQUIRED
-    INFORMATION CDATA #IMPLIED
-    NUMBER_OF_QUESTIONS CDATA #REQUIRED
+    TITLE CDATA #IMPLIED
     CREATION_DATE CDATA #IMPLIED
     LAST_MODIFICATION_DATE CDATA #IMPLIED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    INFORMATION CDATA #IMPLIED
+    KEY_SITE CDATA #REQUIRED
 >
 
-<!ELEMENT posgrad_guia_tabela EMPTY>
-<!ATTLIST posgrad_guia_tabela
-    codigoInterno CDATA #REQUIRED
-    codigoGuia CDATA #REQUIRED
-    codigoTabela CDATA #REQUIRED
->
-
-<!ELEMENT contributor EMPTY>
-<!ATTLIST contributor
-    ID_INTERNAL CDATA #REQUIRED
-    CONTRIBUTOR_NUMBER CDATA #REQUIRED
-    CONTRIBUTOR_NAME CDATA #REQUIRED
-    CONTRIBUTOR_ADDRESS CDATA #REQUIRED
->
-
-<!ELEMENT master_degree_thesis_data_version_assistent_guider EMPTY>
-<!ATTLIST master_degree_thesis_data_version_assistent_guider
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_MASTER_DEGREE_THESIS_DATA_VERSION CDATA #REQUIRED
-    KEY_TEACHER CDATA #REQUIRED
->
-
-<!ELEMENT summary EMPTY>
-<!ATTLIST summary
+<!ELEMENT COURSE_REPORT EMPTY>
+<!ATTLIST COURSE_REPORT
     ID_INTERNAL CDATA #REQUIRED
     KEY_EXECUTION_COURSE CDATA #REQUIRED
-    TITLE CDATA #IMPLIED
-    SUMMARY_DATE CDATA #IMPLIED
-    SUMMARY_HOUR CDATA #IMPLIED
+    REPORT CDATA #IMPLIED
     LAST_MODIFICATION_DATE CDATA #IMPLIED
-    SUMMARY_TEXT CDATA #IMPLIED
-    SUMMARY_TYPE CDATA #IMPLIED
 >
 
-<!ELEMENT distributed_tests EMPTY>
-<!ATTLIST distributed_tests
+<!ELEMENT DISTRIBUTED_TESTS EMPTY>
+<!ATTLIST DISTRIBUTED_TESTS
     ID_INTERNAL CDATA #REQUIRED
     TITLE CDATA #REQUIRED
     TEST_INFORMATION CDATA #IMPLIED
@@ -1667,15 +1342,58 @@
     KEY_EXECUTION_COURSE CDATA #REQUIRED
 >
 
-<!ELEMENT ojb_seq EMPTY>
-<!ATTLIST ojb_seq
-    TABLENAME CDATA #REQUIRED
-    FIELDNAME CDATA #REQUIRED
-    LAST_NUM CDATA #IMPLIED
+<!ELEMENT EXAM_ROOM EMPTY>
+<!ATTLIST EXAM_ROOM
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_EVALUATION CDATA #REQUIRED
+    KEY_ROOM CDATA #REQUIRED
 >
 
-<!ELEMENT ass_centro_custo EMPTY>
-<!ATTLIST ass_centro_custo
+<!ELEMENT posgrad_guia_tabela EMPTY>
+<!ATTLIST posgrad_guia_tabela
+    codigoInterno CDATA #REQUIRED
+    codigoGuia CDATA #REQUIRED
+    codigoTabela CDATA #REQUIRED
+>
+
+<!ELEMENT GRANT_RESPONSIBLE_TEACHER EMPTY>
+<!ATTLIST GRANT_RESPONSIBLE_TEACHER
+    ID_INTERNAL CDATA #REQUIRED
+    DATE_BEGIN CDATA #REQUIRED
+    DATE_END CDATA #IMPLIED
+    KEY_GRANT_CONTRACT CDATA #REQUIRED
+    KEY_GRANT_TEACHER CDATA #REQUIRED
+>
+
+<!ELEMENT EXECUTION_YEAR EMPTY>
+<!ATTLIST EXECUTION_YEAR
+    ID_INTERNAL CDATA #REQUIRED
+    YEAR CDATA #REQUIRED
+    STATE CDATA #REQUIRED
+    BEGIN_DATE CDATA #REQUIRED
+    END_DATE CDATA #REQUIRED
+>
+
+<!ELEMENT Concelho EMPTY>
+<!ATTLIST Concelho
+    Chave CDATA #REQUIRED
+    chaveDistrito CDATA #REQUIRED
+    Designacao CDATA #REQUIRED
+>
+
+<!ELEMENT SEMINARY_CANDIDACY EMPTY>
+<!ATTLIST SEMINARY_CANDIDACY
+    id_internal CDATA #REQUIRED
+    student_id_internal CDATA #REQUIRED
+    curricular_course_id_internal CDATA #REQUIRED
+    seminary_id_internal CDATA #REQUIRED
+    seminary_theme_id_internal CDATA #IMPLIED
+    seminary_modality_id_internal CDATA #REQUIRED
+    motivation CDATA #REQUIRED
+>
+
+<!ELEMENT ass_CENTRO_CUSTO EMPTY>
+<!ATTLIST ass_CENTRO_CUSTO
     codigoInterno CDATA #REQUIRED
     sigla CDATA #REQUIRED
     departamento CDATA #IMPLIED
@@ -1683,160 +1401,107 @@
     seccao2 CDATA #IMPLIED
 >
 
-<!ELEMENT degree_final_project EMPTY>
-<!ATTLIST degree_final_project
+<!ELEMENT MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER EMPTY>
+<!ATTLIST MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER
     ID_INTERNAL CDATA #REQUIRED
-    KEY_EXECUTION_YEAR CDATA #REQUIRED
-    TITLE CDATA #IMPLIED
+    KEY_MASTER_DEGREE_THESIS_DATA_VERSION CDATA #REQUIRED
+    KEY_EXTERNAL_PERSON CDATA #REQUIRED
 >
 
-<!ELEMENT master_degree_thesis_data_version EMPTY>
-<!ATTLIST master_degree_thesis_data_version
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_MASTER_DEGREE_THESIS CDATA #REQUIRED
-    KEY_EMPLOYEE CDATA #REQUIRED
-    DISSERTATION_TITLE CDATA #REQUIRED
-    LAST_MODIFICATION CDATA #IMPLIED
-    CURRENT_STATE CDATA #REQUIRED
->
-
-<!ELEMENT enrolment_evaluation EMPTY>
-<!ATTLIST enrolment_evaluation
-    ID_INTERNAL CDATA #REQUIRED
-    GRADE CDATA #IMPLIED
-    EVALUATION_TYPE CDATA #REQUIRED
-    EXAM_DATE CDATA #IMPLIED
-    GRADE_AVAILABLE_DATE CDATA #IMPLIED
-    RESPONSIBLE_PERSON CDATA #IMPLIED
-    STATE CDATA #REQUIRED
-    KEY_ENROLMENT CDATA #REQUIRED
-    KEY_EMPLOYEE CDATA #IMPLIED
-    WHEN_ALTER CDATA #IMPLIED
-    CHECKSUM CDATA #IMPLIED
-    OBSERVATION CDATA #IMPLIED
->
-
-<!ELEMENT seminary_modality EMPTY>
-<!ATTLIST seminary_modality
-    id_internal CDATA #REQUIRED
-    name CDATA #REQUIRED
-    description CDATA #IMPLIED
->
-
-<!ELEMENT external_activity EMPTY>
-<!ATTLIST external_activity
+<!ELEMENT EXTERNAL_ACTIVITY EMPTY>
+<!ATTLIST EXTERNAL_ACTIVITY
     ID_INTERNAL CDATA #REQUIRED
     ACTIVITY CDATA #IMPLIED
     LAST_MODIFICATION_DATE CDATA #IMPLIED
     KEY_TEACHER CDATA #REQUIRED
 >
 
-<!ELEMENT ass_horariotipo_regime EMPTY>
-<!ATTLIST ass_horariotipo_regime
-    chaveHorarioTipo CDATA #REQUIRED
+<!ELEMENT ORIENTATION EMPTY>
+<!ATTLIST ORIENTATION
+    ID_INTERNAL CDATA #REQUIRED
+    ORIENTATION_TYPE CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
+    NUMBER_OF_STUDENTS CDATA #IMPLIED
+    DESCRIPTION CDATA #IMPLIED
+    KEY_TEACHER CDATA #REQUIRED
+>
+
+<!ELEMENT ass_FERIAS EMPTY>
+<!ATTLIST ass_FERIAS
+    codigoInterno CDATA #REQUIRED
+    chaveFuncionario CDATA #REQUIRED
+    anoCorrente CDATA #REQUIRED
+    diasNormais CDATA #REQUIRED
+    diasEpocaBaixa CDATA #REQUIRED
+    diasHorasExtras CDATA #REQUIRED
+    diasAntiguidade CDATA #REQUIRED
+    diasMeioDia CDATA #REQUIRED
+    diasDispensaServico CDATA #REQUIRED
+    diasTolerancia CDATA #REQUIRED
+    diasTransferidos CDATA #REQUIRED
+    diasTransHorasExtras CDATA #REQUIRED
+    diasTransAntiguidade CDATA #REQUIRED
+>
+
+<!ELEMENT MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER EMPTY>
+<!ATTLIST MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_MASTER_DEGREE_THESIS_DATA_VERSION CDATA #REQUIRED
+    KEY_TEACHER CDATA #REQUIRED
+>
+
+<!ELEMENT ass_HORARIO_REGIME EMPTY>
+<!ATTLIST ass_HORARIO_REGIME
+    chaveHorario CDATA #REQUIRED
     chaveRegime CDATA #REQUIRED
 >
 
-<!ELEMENT student_curricular_plan_degree_final_project EMPTY>
-<!ATTLIST student_curricular_plan_degree_final_project
+<!ELEMENT EVALUATION_METHOD EMPTY>
+<!ATTLIST EVALUATION_METHOD
     ID_INTERNAL CDATA #REQUIRED
-    KEY_DEGREE_FINAL_PROJECT CDATA #IMPLIED
-    KEY_STUDENT_CURRICULAR_PLAN CDATA #IMPLIED
+    KEY_CURRICULAR_COURSE CDATA #REQUIRED
+    EVALUATION_ELEMENTS CDATA #IMPLIED
+    EVALUATION_ELEMENTS_EN CDATA #IMPLIED
 >
 
-<!ELEMENT department_course EMPTY>
-<!ATTLIST department_course
+<!ELEMENT SEMINARY_MODALITY EMPTY>
+<!ATTLIST SEMINARY_MODALITY
+    id_internal CDATA #REQUIRED
+    name CDATA #REQUIRED
+    description CDATA #IMPLIED
+>
+
+<!ELEMENT TEACHER_SHIFT_PERCENTAGE EMPTY>
+<!ATTLIST TEACHER_SHIFT_PERCENTAGE
     ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    CODE CDATA #REQUIRED
-    KEY_DEPARTMENT CDATA #REQUIRED
+    KEY_PROFESSOR_SHIP CDATA #REQUIRED
+    KEY_SHIFT CDATA #REQUIRED
+    PERCENTAGE CDATA #REQUIRED
 >
 
-<!ELEMENT enrolment_period EMPTY>
-<!ATTLIST enrolment_period
+<!ELEMENT TEACHER EMPTY>
+<!ATTLIST TEACHER
     ID_INTERNAL CDATA #REQUIRED
-    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
-    KEY_EXECUTION_PERIOD CDATA #REQUIRED
-    START_DATE CDATA #REQUIRED
-    END_DATE CDATA #REQUIRED
+    TEACHER_NUMBER CDATA #IMPLIED
+    KEY_PERSON CDATA #REQUIRED
+    KEY_CATEGORY CDATA #IMPLIED
 >
 
-<!ELEMENT ass_regularizacao_marcacao EMPTY>
-<!ATTLIST ass_regularizacao_marcacao
-    codigoInterno CDATA #REQUIRED
-    chaveMarcacaoPonto CDATA #REQUIRED
-    chaveParamRegularizacao CDATA #REQUIRED
-    quem CDATA #REQUIRED
-    quando CDATA #REQUIRED
+<!ELEMENT Distrito EMPTY>
+<!ATTLIST Distrito
+    Chave CDATA #REQUIRED
+    Designacao CDATA #REQUIRED
 >
 
-<!ELEMENT xpto4 EMPTY>
-<!ATTLIST xpto4
-    candidate_key CDATA #REQUIRED
->
-
-<!ELEMENT shift EMPTY>
-<!ATTLIST shift
+<!ELEMENT SUPPORT_LESSONS_TIMETABLE EMPTY>
+<!ATTLIST SUPPORT_LESSONS_TIMETABLE
     ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
+    WEEKDAY CDATA #REQUIRED
+    START_TIME CDATA #REQUIRED
+    END_TIME CDATA #REQUIRED
+    PLACE CDATA #REQUIRED
+    KEY_TEACHER CDATA #REQUIRED
     KEY_EXECUTION_COURSE CDATA #REQUIRED
-    TYPE CDATA #REQUIRED
-    CAPACITY CDATA #REQUIRED
-    AVAILLABILITY_FINAL CDATA #IMPLIED
->
-
-<!ELEMENT ass_horario_tipo EMPTY>
-<!ATTLIST ass_horario_tipo
-    codigoInterno CDATA #REQUIRED
-    sigla CDATA #REQUIRED
-    modalidade CDATA #REQUIRED
-    duracaoSemanal CDATA #REQUIRED
-    inicioPF1 CDATA #IMPLIED
-    fimPF1 CDATA #IMPLIED
-    inicioPF2 CDATA #IMPLIED
-    fimPF2 CDATA #IMPLIED
-    inicioHN1 CDATA #REQUIRED
-    fimHN1 CDATA #REQUIRED
-    inicioHN2 CDATA #IMPLIED
-    fimHN2 CDATA #IMPLIED
-    inicioRefeicao CDATA #IMPLIED
-    fimRefeicao CDATA #IMPLIED
-    descontoObrigatorio CDATA #IMPLIED
-    descontoMinimo CDATA #IMPLIED
-    inicioExpediente CDATA #IMPLIED
-    fimExpediente CDATA #IMPLIED
-    trabalhoConsecutivo CDATA #IMPLIED
->
-
-<!ELEMENT ass_horario EMPTY>
-<!ATTLIST ass_horario
-    codigoInterno CDATA #REQUIRED
-    chaveHorarioTipo CDATA #REQUIRED
-    chaveFuncionario CDATA #REQUIRED
-    sigla CDATA #IMPLIED
-    modalidade CDATA #IMPLIED
-    duracaoSemanal CDATA #IMPLIED
-    inicioPF1 CDATA #IMPLIED
-    fimPF1 CDATA #IMPLIED
-    inicioPF2 CDATA #IMPLIED
-    fimPF2 CDATA #IMPLIED
-    inicioHN1 CDATA #IMPLIED
-    fimHN1 CDATA #IMPLIED
-    inicioHN2 CDATA #IMPLIED
-    fimHN2 CDATA #IMPLIED
-    inicioRefeicao CDATA #IMPLIED
-    fimRefeicao CDATA #IMPLIED
-    descontoObrigatorio CDATA #IMPLIED
-    descontoMinimo CDATA #IMPLIED
-    inicioExpediente CDATA #IMPLIED
-    fimExpediente CDATA #IMPLIED
-    dataInicio CDATA #REQUIRED
-    dataFim CDATA #IMPLIED
-    numDias CDATA #IMPLIED
-    posicao CDATA #IMPLIED
-    trabalhoConsecutivo CDATA #IMPLIED
-    quem CDATA #REQUIRED
-    quando CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_guia EMPTY>
@@ -1856,12 +1521,12 @@
     observacoes CDATA #IMPLIED
 >
 
-<!ELEMENT evaluation_method EMPTY>
-<!ATTLIST evaluation_method
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #IMPLIED
-    EVALUATION_ELEMENTS CDATA #IMPLIED
-    EVALUATION_ELEMENTS_EN CDATA #IMPLIED
+<!ELEMENT OJB_HL_SEQ EMPTY>
+<!ATTLIST OJB_HL_SEQ
+    TABLENAME CDATA #REQUIRED
+    FIELDNAME CDATA #REQUIRED
+    MAX_KEY CDATA #IMPLIED
+    GRAB_SIZE CDATA #IMPLIED
 >
 
 <!ELEMENT almeida_curram EMPTY>
@@ -1873,74 +1538,65 @@
     descri CDATA #IMPLIED
 >
 
-<!ELEMENT topwords EMPTY>
-<!ATTLIST topwords
-    Palavra CDATA #REQUIRED
->
-
-<!ELEMENT master_degree_candidate EMPTY>
-<!ATTLIST master_degree_candidate
+<!ELEMENT DEPARTMENT EMPTY>
+<!ATTLIST DEPARTMENT
     ID_INTERNAL CDATA #REQUIRED
-    PERSON_KEY CDATA #REQUIRED
-    EXECUTION_DEGREE_KEY CDATA #REQUIRED
-    CANDIDATE_NUMBER CDATA #IMPLIED
-    SPECIALIZATION CDATA #REQUIRED
-    MAJOR_DEGREE CDATA #IMPLIED
-    MAJOR_DEGREE_SCHOOL CDATA #IMPLIED
-    MAJOR_DEGREE_YEAR CDATA #IMPLIED
-    AVERAGE CDATA #IMPLIED
-    SPECIALIZATION_AREA CDATA #IMPLIED
-    SUBSTITUTE_ORDER CDATA #IMPLIED
-    GIVEN_CREDITS CDATA #IMPLIED
-    GIVEN_CREDITS_REMARKS CDATA #IMPLIED
->
-
-<!ELEMENT master_degree_thesis_data_version_external_assistent_guider EMPTY>
-<!ATTLIST master_degree_thesis_data_version_external_assistent_guider
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_MASTER_DEGREE_THESIS_DATA_VERSION CDATA #REQUIRED
-    KEY_EXTERNAL_PERSON CDATA #REQUIRED
->
-
-<!ELEMENT curricular_course EMPTY>
-<!ATTLIST curricular_course
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_DEPARTMENT_COURSE CDATA #IMPLIED
-    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
-    CREDITS CDATA #IMPLIED
-    THEORETICAL_HOURS CDATA #IMPLIED
-    PRATICAL_HOURS CDATA #IMPLIED
-    THEO_PRAT_HOURS CDATA #IMPLIED
-    LAB_HOURS CDATA #IMPLIED
     NAME CDATA #REQUIRED
     CODE CDATA #REQUIRED
-    TYPE CDATA #IMPLIED
-    EXECUTION_SCOPE CDATA #IMPLIED
-    MANDATORY CDATA #IMPLIED
-    KEY_CURRICULAR_COURSE_ENROLMENT_INFO CDATA #IMPLIED
-    KEY_UNIVERSITY CDATA #IMPLIED
-    BASIC CDATA #IMPLIED
 >
 
-<!ELEMENT freguesiaexpansao EMPTY>
-<!ATTLIST freguesiaexpansao
-    descr1 CDATA #IMPLIED
-    descr2 CDATA #IMPLIED
+<!ELEMENT PUBLICATIONS_NUMBER EMPTY>
+<!ATTLIST PUBLICATIONS_NUMBER
+    ID_INTERNAL CDATA #REQUIRED
+    PUBLICATION_TYPE CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
+    NATIONAL CDATA #IMPLIED
+    INTERNATIONAL CDATA #IMPLIED
+    KEY_TEACHER CDATA #REQUIRED
 >
 
-<!ELEMENT almeida_coddisc EMPTY>
-<!ATTLIST almeida_coddisc
-    codint CDATA #REQUIRED
-    coddis CDATA #IMPLIED
-    nomedis CDATA #IMPLIED
+<!ELEMENT Freguesia EMPTY>
+<!ATTLIST Freguesia
+    Chave CDATA #REQUIRED
+    chaveDistrito CDATA #REQUIRED
+    chaveConcelho CDATA #REQUIRED
+    Designacao CDATA #REQUIRED
 >
 
-<!ELEMENT ojb_hl_seq EMPTY>
-<!ATTLIST ojb_hl_seq
-    TABLENAME CDATA #REQUIRED
-    FIELDNAME CDATA #REQUIRED
-    MAX_KEY CDATA #IMPLIED
-    GRAB_SIZE CDATA #IMPLIED
+<!ELEMENT CANDIDATE_SITUATION EMPTY>
+<!ATTLIST CANDIDATE_SITUATION
+    ID_INTERNAL CDATA #REQUIRED
+    DATE CDATA #REQUIRED
+    REMARKS CDATA #IMPLIED
+    VALIDATION CDATA #REQUIRED
+    CANDIDATE_KEY CDATA #REQUIRED
+    SITUATION CDATA #REQUIRED
+>
+
+<!ELEMENT SHIFT EMPTY>
+<!ATTLIST SHIFT
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    TYPE CDATA #REQUIRED
+    CAPACITY CDATA #REQUIRED
+    AVAILLABILITY_FINAL CDATA #IMPLIED
+>
+
+<!ELEMENT BRANCH EMPTY>
+<!ATTLIST BRANCH
+    ID_INTERNAL CDATA #REQUIRED
+    BRANCH_CODE CDATA #REQUIRED
+    BRANCH_NAME CDATA #REQUIRED
+    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
+    BRANCH_ACRONYM CDATA #REQUIRED
+>
+
+<!ELEMENT SHIFT_LESSON EMPTY>
+<!ATTLIST SHIFT_LESSON
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_SHIFT CDATA #REQUIRED
+    KEY_LESSON CDATA #REQUIRED
 >
 
 <!ELEMENT almeida_inscricoes EMPTY>
@@ -1955,143 +1611,207 @@
     ramo CDATA #IMPLIED
 >
 
-<!ELEMENT student_group_info EMPTY>
-<!ATTLIST student_group_info
+<!ELEMENT REIMBURSEMENT_GUIDE EMPTY>
+<!ATTLIST REIMBURSEMENT_GUIDE
     ID_INTERNAL CDATA #REQUIRED
-    STUDENT_TYPE CDATA #REQUIRED
-    MIN_COURSES_TO_ENROL CDATA #REQUIRED
-    MAX_COURSES_TO_ENROL CDATA #REQUIRED
-    MAX_NAC_TO_ENROL CDATA #REQUIRED
+    NUMBER CDATA #REQUIRED
+    VALUE CDATA #REQUIRED
+    JUSTIFICATION CDATA #IMPLIED
+    KEY_GUIDE CDATA #REQUIRED
+    CREATION_DATE CDATA #REQUIRED
 >
 
-<!ELEMENT course_report EMPTY>
-<!ATTLIST course_report
+<!ELEMENT CURRICULAR_COURSE_SCOPE EMPTY>
+<!ATTLIST CURRICULAR_COURSE_SCOPE
     ID_INTERNAL CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
-    REPORT CDATA #IMPLIED
+    KEY_CURRICULAR_SEMESTER CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE CDATA #REQUIRED
+    KEY_BRANCH CDATA #REQUIRED
+    THEORETICAL_HOURS CDATA #IMPLIED
+    PRATICAL_HOURS CDATA #IMPLIED
+    THEO_PRAT_HOURS CDATA #IMPLIED
+    LAB_HOURS CDATA #IMPLIED
+    MAX_INCREMENT_NAC CDATA #REQUIRED
+    MIN_INCREMENT_NAC CDATA #REQUIRED
+    WEIGTH CDATA #REQUIRED
+    CREDITS CDATA #IMPLIED
+    ECTS_CREDITS CDATA #IMPLIED
+    BEGIN_DATE CDATA #REQUIRED
+    END_DATE CDATA #IMPLIED
+>
+
+<!ELEMENT PRICE EMPTY>
+<!ATTLIST PRICE
+    ID_INTERNAL CDATA #REQUIRED
+    GRADUATION_TYPE CDATA #REQUIRED
+    DOCUMENT_TYPE CDATA #REQUIRED
+    DESCRIPTION CDATA #REQUIRED
+    PRICE CDATA #REQUIRED
+>
+
+<!ELEMENT ass_FUNCIONARIO_HISTORICO EMPTY>
+<!ATTLIST ass_FUNCIONARIO_HISTORICO
+    codigoInterno CDATA #REQUIRED
+    chaveFuncionario CDATA #REQUIRED
+    chaveFuncResponsavel CDATA #IMPLIED
+    chaveCCLocalTrabalho CDATA #IMPLIED
+    chaveCCCorrespondencia CDATA #IMPLIED
+    chaveCCVencimento CDATA #IMPLIED
+    calendario CDATA #IMPLIED
+    chaveStatus CDATA #IMPLIED
+    dataInicio CDATA #REQUIRED
+    dataFim CDATA #IMPLIED
+    quem CDATA #REQUIRED
+    quando CDATA #REQUIRED
+>
+
+<!ELEMENT REIMBURSEMENT_GUIDE_SITUATION EMPTY>
+<!ATTLIST REIMBURSEMENT_GUIDE_SITUATION
+    ID_INTERNAL CDATA #REQUIRED
+    STATE CDATA #REQUIRED
+    KEY_REIMBURSEMENT_GUIDE CDATA #REQUIRED
+    REMARKS CDATA #IMPLIED
+    KEY_EMPLOYEE CDATA #REQUIRED
+    MODIFICATION_DATE CDATA #REQUIRED
+    REIMBURSEMENT_GUIDE_STATE CDATA #REQUIRED
+>
+
+<!ELEMENT ass_PARAM_REGULARIZACAO EMPTY>
+<!ATTLIST ass_PARAM_REGULARIZACAO
+    codigoInterno CDATA #REQUIRED
+    sigla CDATA #REQUIRED
+    descricao CDATA #REQUIRED
+    quem CDATA #REQUIRED
+    quando CDATA #REQUIRED
+>
+
+<!ELEMENT OJB_DSET_ENTRIES EMPTY>
+<!ATTLIST OJB_DSET_ENTRIES
+    ID CDATA #REQUIRED
+    DLIST_ID CDATA #REQUIRED
+    POSITION_ CDATA #IMPLIED
+    OID_ CDATA #IMPLIED
+>
+
+<!ELEMENT Abreviaturas EMPTY>
+<!ATTLIST Abreviaturas
+    abrv CDATA #IMPLIED
+    expansao CDATA #IMPLIED
+>
+
+<!ELEMENT SECTION EMPTY>
+<!ATTLIST SECTION
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #IMPLIED
+    SECTION_ORDER CDATA #IMPLIED
+    KEY_SITE CDATA #REQUIRED
+    KEY_SUPERIOR_SECTION CDATA #IMPLIED
+    LAST_MODIFIED_DATE CDATA #IMPLIED
+>
+
+<!ELEMENT WEEKLY_OCUPATION EMPTY>
+<!ATTLIST WEEKLY_OCUPATION
+    ID_INTERNAL CDATA #REQUIRED
+    RESEARCH CDATA #IMPLIED
+    MANAGEMENT CDATA #IMPLIED
+    LECTURE CDATA #IMPLIED
+    SUPPORT CDATA #IMPLIED
+    OTHER CDATA #IMPLIED
     LAST_MODIFICATION_DATE CDATA #IMPLIED
->
-
-<!ELEMENT seminary_theme EMPTY>
-<!ATTLIST seminary_theme
-    id_internal CDATA #REQUIRED
-    name CDATA #REQUIRED
-    short_name CDATA #IMPLIED
-    description CDATA #IMPLIED
->
-
-<!ELEMENT responsiblefor EMPTY>
-<!ATTLIST responsiblefor
-    INTERNAL_CODE CDATA #REQUIRED
     KEY_TEACHER CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
 >
 
-<!ELEMENT test_question EMPTY>
-<!ATTLIST test_question
+<!ELEMENT MARK EMPTY>
+<!ATTLIST MARK
     ID_INTERNAL CDATA #REQUIRED
-    TEST_QUESTION_ORDER CDATA #REQUIRED
-    TEST_QUESTION_VALUE CDATA #REQUIRED
-    KEY_XML_DOCUMENT CDATA #REQUIRED
-    KEY_TEST CDATA #REQUIRED
+    MARK CDATA #IMPLIED
+    PUBLISHED_MARK CDATA #IMPLIED
+    KEY_EVALUATION CDATA #REQUIRED
+    KEY_ATTEND CDATA #REQUIRED
 >
 
-<!ELEMENT concelho EMPTY>
-<!ATTLIST concelho
-    Chave CDATA #REQUIRED
-    chaveDistrito CDATA #REQUIRED
-    Designacao CDATA #REQUIRED
->
-
-<!ELEMENT student_curricular_plan EMPTY>
-<!ATTLIST student_curricular_plan
+<!ELEMENT STUDENT_TEST_LOG EMPTY>
+<!ATTLIST STUDENT_TEST_LOG
     ID_INTERNAL CDATA #REQUIRED
     KEY_STUDENT CDATA #REQUIRED
-    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
-    CURRENT_STATE CDATA #REQUIRED
-    START_DATE CDATA #REQUIRED
-    KEY_BRANCH CDATA #REQUIRED
-    SPECIALIZATION CDATA #IMPLIED
-    GIVEN_CREDITS CDATA #IMPLIED
-    COMPLETED_COURSES CDATA #IMPLIED
-    ENROLLED_COURSES CDATA #IMPLIED
-    CLASSIFICATION CDATA #IMPLIED
-    OBSERVATIONS CDATA #IMPLIED
-    KEY_EMPLOYEE CDATA #IMPLIED
-    WHEN_ALTER CDATA #IMPLIED
+    KEY_DISTRIBUTED_TEST CDATA #REQUIRED
+    DATE CDATA #IMPLIED
+    EVENT CDATA #IMPLIED
 >
 
-<!ELEMENT lesson EMPTY>
-<!ATTLIST lesson
+<!ELEMENT EXAM_STUDENT_ROOM EMPTY>
+<!ATTLIST EXAM_STUDENT_ROOM
     ID_INTERNAL CDATA #REQUIRED
-    WEEKDAY CDATA #REQUIRED
-    START_TIME CDATA #REQUIRED
-    END_TIME CDATA #REQUIRED
-    KEY_ROOM CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
-    TYPE CDATA #REQUIRED
-    KEY_EXECUTION_PERIOD CDATA #REQUIRED
+    KEY_EVALUATION CDATA #REQUIRED
+    KEY_STUDENT CDATA #REQUIRED
+    KEY_ROOM CDATA #IMPLIED
 >
 
-<!ELEMENT professorships EMPTY>
-<!ATTLIST professorships
+<!ELEMENT GRANT_TYPE EMPTY>
+<!ATTLIST GRANT_TYPE
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    SIGLA CDATA #REQUIRED
+    MIN_PERIOD_DAYS CDATA #REQUIRED
+    MAX_PERIOD_DAYS CDATA #REQUIRED
+    INDICATIVE_VALUE CDATA #REQUIRED
+    SOURCE CDATA #REQUIRED
+    STATE CDATA #IMPLIED
+>
+
+<!ELEMENT OJB_DMAP_ENTRIES EMPTY>
+<!ATTLIST OJB_DMAP_ENTRIES
+    ID CDATA #REQUIRED
+    DMAP_ID CDATA #REQUIRED
+    KEY_OID CDATA #IMPLIED
+    VALUE_OID CDATA #IMPLIED
+>
+
+<!ELEMENT ENROLMENT_EVALUATION EMPTY>
+<!ATTLIST ENROLMENT_EVALUATION
+    ID_INTERNAL CDATA #REQUIRED
+    GRADE CDATA #IMPLIED
+    EVALUATION_TYPE CDATA #REQUIRED
+    EXAM_DATE CDATA #IMPLIED
+    GRADE_AVAILABLE_DATE CDATA #IMPLIED
+    RESPONSIBLE_PERSON CDATA #IMPLIED
+    STATE CDATA #REQUIRED
+    KEY_ENROLMENT CDATA #REQUIRED
+    WHEN_ALTER CDATA #IMPLIED
+    CHECKSUM CDATA #IMPLIED
+    KEY_EMPLOYEE CDATA #IMPLIED
+    OBSERVATION CDATA #IMPLIED
+>
+
+<!ELEMENT ass_FUNCIONARIO EMPTY>
+<!ATTLIST ass_FUNCIONARIO
+    codigoInterno CDATA #REQUIRED
+    chavePessoa CDATA #REQUIRED
+    numeroMecanografico CDATA #REQUIRED
+    chaveHorarioActual CDATA #REQUIRED
+    antiguidade CDATA #REQUIRED
+>
+
+<!ELEMENT PaisNaturalidade EMPTY>
+<!ATTLIST PaisNaturalidade
+    Cod CDATA #REQUIRED
+    Origem CDATA #REQUIRED
+>
+
+<!ELEMENT DEGREE EMPTY>
+<!ATTLIST DEGREE
+    ID_INTERNAL CDATA #REQUIRED
+    CODE CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    TYPE_DEGREE CDATA #REQUIRED
+>
+
+<!ELEMENT PROFESSORSHIPS EMPTY>
+<!ATTLIST PROFESSORSHIPS
     INTERNAL_CODE CDATA #REQUIRED
     KEY_TEACHER CDATA #REQUIRED
     KEY_EXECUTION_COURSE CDATA #REQUIRED
     CREDITS CDATA #IMPLIED
->
-
-<!ELEMENT distrito EMPTY>
-<!ATTLIST distrito
-    Chave CDATA #REQUIRED
-    Designacao CDATA #REQUIRED
->
-
-<!ELEMENT exam_room EMPTY>
-<!ATTLIST exam_room
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EVALUATION CDATA #REQUIRED
-    KEY_ROOM CDATA #REQUIRED
->
-
-<!ELEMENT publications_number EMPTY>
-<!ATTLIST publications_number
-    ID_INTERNAL CDATA #REQUIRED
-    PUBLICATION_TYPE CDATA #IMPLIED
-    LAST_MODIFICATION_DATE CDATA #IMPLIED
-    NATIONAL CDATA #IMPLIED
-    INTERNATIONAL CDATA #IMPLIED
-    KEY_TEACHER CDATA #REQUIRED
->
-
-<!ELEMENT degree_final_project_orientation EMPTY>
-<!ATTLIST degree_final_project_orientation
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_DEGREE_FINAL_PROJECT CDATA #REQUIRED
-    KEY_TEACHER CDATA #REQUIRED
-    CO_ORIENTATION CDATA #IMPLIED
-    PERCENTAGE CDATA #IMPLIED
->
-
-<!ELEMENT mw_aluno EMPTY>
-<!ATTLIST mw_aluno
-    documentIdNumber CDATA #REQUIRED
-    number CDATA #IMPLIED
-    degreeCode CDATA #IMPLIED
-    branchCode CDATA #IMPLIED
-    year CDATA #IMPLIED
-    ISTUniversity CDATA #IMPLIED
-    worker CDATA #IMPLIED
-    gratuitySituation CDATA #IMPLIED
-    trash CDATA #IMPLIED
-    answer1 CDATA #IMPLIED
-    answer2 CDATA #IMPLIED
-    answer3 CDATA #IMPLIED
-    answer4 CDATA #IMPLIED
-    answer5 CDATA #IMPLIED
-    answer6 CDATA #IMPLIED
-    answer7 CDATA #IMPLIED
-    idInternal CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_disc_area_aluno EMPTY>
@@ -2106,136 +1826,81 @@
     creditos CDATA #IMPLIED
 >
 
-<!ELEMENT ass_param_ferias EMPTY>
-<!ATTLIST ass_param_ferias
-    codigoInterno CDATA #REQUIRED
-    sigla CDATA #REQUIRED
-    designacao CDATA #REQUIRED
+<!ELEMENT LESSON EMPTY>
+<!ATTLIST LESSON
+    ID_INTERNAL CDATA #REQUIRED
+    WEEKDAY CDATA #REQUIRED
+    START_TIME CDATA #REQUIRED
+    END_TIME CDATA #REQUIRED
+    KEY_ROOM CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    TYPE CDATA #REQUIRED
+    KEY_EXECUTION_PERIOD CDATA #REQUIRED
 >
 
-<!ELEMENT gratuity EMPTY>
-<!ATTLIST gratuity
+<!ELEMENT GUIDE_SITUATION EMPTY>
+<!ATTLIST GUIDE_SITUATION
     ID_INTERNAL CDATA #REQUIRED
-    KEY_STUDENT_CURRICULAR_PLAN CDATA #REQUIRED
-    STATE CDATA #IMPLIED
-    GRATUITY_STATE CDATA #IMPLIED
-    DATE CDATA #IMPLIED
+    KEY_GUIDE CDATA #REQUIRED
+    SITUATION CDATA #REQUIRED
+    DATE CDATA #REQUIRED
     REMARKS CDATA #IMPLIED
+    STATE CDATA #REQUIRED
 >
 
-<!ELEMENT student_group EMPTY>
-<!ATTLIST student_group
-    ID_INTERNAL CDATA #REQUIRED
-    GROUP_NUMBER CDATA #REQUIRED
-    KEY_SHIFT CDATA #REQUIRED
-    KEY_GROUP_PROPERTIES CDATA #REQUIRED
->
-
-<!ELEMENT ass_pessoa_cargo EMPTY>
-<!ATTLIST ass_pessoa_cargo
-    chavePessoa CDATA #REQUIRED
-    chaveCargo CDATA #REQUIRED
->
-
-<!ELEMENT ass_modalidade EMPTY>
-<!ATTLIST ass_modalidade
+<!ELEMENT ass_JUSTIFICACAO EMPTY>
+<!ATTLIST ass_JUSTIFICACAO
     codigoInterno CDATA #REQUIRED
-    designacao CDATA #REQUIRED
->
-
-<!ELEMENT career EMPTY>
-<!ATTLIST career
-    ID_INTERNAL CDATA #REQUIRED
-    CLASS_NAME CDATA #REQUIRED
-    BEGIN_YEAR CDATA #IMPLIED
-    END_YEAR CDATA #IMPLIED
-    LAST_MODIFICATION_DATE CDATA #IMPLIED
-    KEY_TEACHER CDATA #REQUIRED
-    ENTITY CDATA #IMPLIED
-    FUNCTION CDATA #IMPLIED
-    COURSE_OR_POSITION CDATA #IMPLIED
-    KEY_CATEGORY CDATA #IMPLIED
->
-
-<!ELEMENT service_provider_regime EMPTY>
-<!ATTLIST service_provider_regime
-    ID_INTERNAL CDATA #REQUIRED
-    PROVIDER_REGIME_TYPE CDATA #IMPLIED
-    LAST_MODIFICATION_DATE CDATA #IMPLIED
-    KEY_TEACHER CDATA #REQUIRED
->
-
-<!ELEMENT shift_student EMPTY>
-<!ATTLIST shift_student
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_SHIFT CDATA #REQUIRED
-    KEY_STUDENT CDATA #REQUIRED
->
-
-<!ELEMENT ojb_dset_entries EMPTY>
-<!ATTLIST ojb_dset_entries
-    ID CDATA #REQUIRED
-    DLIST_ID CDATA #REQUIRED
-    POSITION_ CDATA #IMPLIED
-    OID_ CDATA #IMPLIED
->
-
-<!ELEMENT coordinator EMPTY>
-<!ATTLIST coordinator
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EXECUTION_DEGREE CDATA #REQUIRED
-    KEY_TEACHER CDATA #REQUIRED
-    RESPONSIBLE CDATA #REQUIRED
->
-
-<!ELEMENT ass_cartao EMPTY>
-<!ATTLIST ass_cartao
-    codigoInterno CDATA #REQUIRED
-    numCartao CDATA #REQUIRED
+    chaveParamJustificacao CDATA #REQUIRED
     chaveFuncionario CDATA #REQUIRED
-    dataInicio CDATA #REQUIRED
-    dataFim CDATA #IMPLIED
+    diaInicio CDATA #REQUIRED
+    horaInicio CDATA #IMPLIED
+    diaFim CDATA #IMPLIED
+    horaFim CDATA #IMPLIED
+    observacao CDATA #IMPLIED
     quem CDATA #REQUIRED
     quando CDATA #REQUIRED
-    estado CDATA #REQUIRED
 >
 
-<!ELEMENT ojb_dmap EMPTY>
-<!ATTLIST ojb_dmap
-    ID CDATA #REQUIRED
-    SIZE_ CDATA #IMPLIED
+<!ELEMENT ass_UNIDADE_MARCACAO EMPTY>
+<!ATTLIST ass_UNIDADE_MARCACAO
+    codigoInterno CDATA #REQUIRED
+    sigla CDATA #REQUIRED
+    descricao CDATA #REQUIRED
+    id CDATA #REQUIRED
 >
 
-<!ELEMENT execution_course EMPTY>
-<!ATTLIST execution_course
+<!ELEMENT ENROLMENT_EQUIVALENCE EMPTY>
+<!ATTLIST ENROLMENT_EQUIVALENCE
     ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #IMPLIED
-    CODE CDATA #REQUIRED
-    THEORETICAL_HOURS CDATA #IMPLIED
-    PRATICAL_HOURS CDATA #IMPLIED
-    THEO_PRAT_HOURS CDATA #IMPLIED
-    LAB_HOURS CDATA #IMPLIED
-    SEMESTER CDATA #IMPLIED
-    KEY_EXECUTION_PERIOD CDATA #REQUIRED
-    COMMENT CDATA #REQUIRED
+    KEY_ENROLMENT CDATA #REQUIRED
 >
 
-<!ELEMENT precedence EMPTY>
-<!ATTLIST precedence
+<!ELEMENT RESTRICTION EMPTY>
+<!ATTLIST RESTRICTION
     ID_INTERNAL CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE CDATA #REQUIRED
-    SCOPE_TO_APPLY CDATA #REQUIRED
+    CLASS_NAME CDATA #REQUIRED
+    KEY_PRECEDENCE CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE CDATA #IMPLIED
+    NUMBER_OF_CURRICULAR_COURSE_DONE CDATA #IMPLIED
 >
 
-<!ELEMENT university EMPTY>
-<!ATTLIST university
-    ID_INTERNAL CDATA #REQUIRED
-    CODE CDATA #REQUIRED
-    NAME CDATA #REQUIRED
+<!ELEMENT conversaoCidadePais EMPTY>
+<!ATTLIST conversaoCidadePais
+    descr1 CDATA #IMPLIED
+    descr2 CDATA #IMPLIED
 >
 
-<!ELEMENT enrolment EMPTY>
-<!ATTLIST enrolment
+<!ELEMENT SEMINARY_THEME EMPTY>
+<!ATTLIST SEMINARY_THEME
+    id_internal CDATA #REQUIRED
+    name CDATA #REQUIRED
+    short_name CDATA #IMPLIED
+    description CDATA #IMPLIED
+>
+
+<!ELEMENT ENROLMENT EMPTY>
+<!ATTLIST ENROLMENT
     ID_INTERNAL CDATA #REQUIRED
     KEY_STUDENT_CURRICULAR_PLAN CDATA #REQUIRED
     KEY_CURRICULAR_COURSE_SCOPE CDATA #REQUIRED
@@ -2246,75 +1911,112 @@
     EVALUATION_TYPE CDATA #REQUIRED
 >
 
-<!ELEMENT ojb_lockentry EMPTY>
-<!ATTLIST ojb_lockentry
-    OID_ CDATA #REQUIRED
-    TX_ID CDATA #REQUIRED
-    TIMESTAMP_ CDATA #IMPLIED
-    ISOLATIONLEVEL CDATA #IMPLIED
-    LOCKTYPE CDATA #IMPLIED
->
-
-<!ELEMENT degree_curricular_plan EMPTY>
-<!ATTLIST degree_curricular_plan
+<!ELEMENT COORDINATOR EMPTY>
+<!ATTLIST COORDINATOR
     ID_INTERNAL CDATA #REQUIRED
-    NAME CDATA #REQUIRED
-    KEY_DEGREE CDATA #REQUIRED
-    STATE CDATA #IMPLIED
-    INITIAL_DATE CDATA #IMPLIED
-    END_DATE CDATA #IMPLIED
-    DEGREE_DURATION CDATA #REQUIRED
-    MINIMAL_YEAR_FOR_OPTIONAL_COURSES CDATA #REQUIRED
-    MARK_TYPE CDATA #IMPLIED
-    NEEDED_CREDITS CDATA #IMPLIED
-    NUMERUS_CLAUSUS CDATA #IMPLIED
-    DESCRIPTION CDATA #IMPLIED
-    DESCRIPTION_EN CDATA #IMPLIED
+    KEY_EXECUTION_DEGREE CDATA #REQUIRED
+    KEY_TEACHER CDATA #REQUIRED
+    RESPONSIBLE CDATA #REQUIRED
 >
 
-<!ELEMENT qualification EMPTY>
-<!ATTLIST qualification
+<!ELEMENT concelhoExpansao EMPTY>
+<!ATTLIST concelhoExpansao
+    descr1 CDATA #IMPLIED
+    descr2 CDATA #IMPLIED
+>
+
+<!ELEMENT GUIDE EMPTY>
+<!ATTLIST GUIDE
+    ID_INTERNAL CDATA #REQUIRED
+    NUMBER CDATA #REQUIRED
+    YEAR CDATA #REQUIRED
+    KEY_CONTRIBUTOR CDATA #REQUIRED
+    KEY_PERSON CDATA #REQUIRED
+    TOTAL CDATA #REQUIRED
+    REMARKS CDATA #IMPLIED
+    GUIDE_REQUESTER CDATA #REQUIRED
+    KEY_EXECUTION_DEGREE CDATA #REQUIRED
+    PAYMENT_TYPE CDATA #IMPLIED
+    CREATION_DATE CDATA #REQUIRED
+    VERSION CDATA #REQUIRED
+    PAYMENT_DATE CDATA #IMPLIED
+>
+
+<!ELEMENT METADATA EMPTY>
+<!ATTLIST METADATA
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    METADATA_FILE CDATA #REQUIRED
+    VISIBILITY CDATA #REQUIRED
+>
+
+<!ELEMENT CREDITS_MANAGER_DEPARTMENT EMPTY>
+<!ATTLIST CREDITS_MANAGER_DEPARTMENT
     ID_INTERNAL CDATA #REQUIRED
     KEY_PERSON CDATA #REQUIRED
-    YEAR CDATA #IMPLIED
-    MARK CDATA #IMPLIED
-    SCHOOL CDATA #IMPLIED
-    TITLE CDATA #IMPLIED
-    DEGREE CDATA #IMPLIED
+    KEY_DEPARTMENT CDATA #REQUIRED
 >
 
-<!ELEMENT mark EMPTY>
-<!ATTLIST mark
+<!ELEMENT ass_HORARIOTIPO_REGIME EMPTY>
+<!ATTLIST ass_HORARIOTIPO_REGIME
+    chaveHorarioTipo CDATA #REQUIRED
+    chaveRegime CDATA #REQUIRED
+>
+
+<!ELEMENT EVALUATION EMPTY>
+<!ATTLIST EVALUATION
     ID_INTERNAL CDATA #REQUIRED
-    MARK CDATA #IMPLIED
-    PUBLISHED_MARK CDATA #IMPLIED
-    KEY_EVALUATION CDATA #REQUIRED
-    KEY_ATTEND CDATA #REQUIRED
+    CLASS_NAME CDATA #REQUIRED
+    DAY CDATA #IMPLIED
+    BEGINNING CDATA #IMPLIED
+    END CDATA #IMPLIED
+    SEASON CDATA #REQUIRED
+    ENROLLMENT_BEGIN_DAY CDATA #IMPLIED
+    ENROLLMENT_BEGIN_TIME CDATA #IMPLIED
+    ENROLLMENT_END_DAY CDATA #IMPLIED
+    ENROLLMENT_END_TIME CDATA #IMPLIED
+    PUBLISHMENT_MESSAGE CDATA #IMPLIED
 >
 
-<!ELEMENT ass_param_regularizacao EMPTY>
-<!ATTLIST ass_param_regularizacao
+<!ELEMENT STUDENT_GROUP EMPTY>
+<!ATTLIST STUDENT_GROUP
+    ID_INTERNAL CDATA #REQUIRED
+    GROUP_NUMBER CDATA #REQUIRED
+    KEY_SHIFT CDATA #REQUIRED
+    KEY_GROUP_PROPERTIES CDATA #REQUIRED
+>
+
+<!ELEMENT GRANT_OWNER EMPTY>
+<!ATTLIST GRANT_OWNER
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_PERSON CDATA #REQUIRED
+    NUMBER CDATA #REQUIRED
+    DATE_SEND_CGD CDATA #IMPLIED
+    CARD_COPY_NUMBER CDATA #IMPLIED
+>
+
+<!ELEMENT ass_PESSOA_CARGO EMPTY>
+<!ATTLIST ass_PESSOA_CARGO
+    chavePessoa CDATA #REQUIRED
+    chaveCargo CDATA #REQUIRED
+>
+
+<!ELEMENT ass_STATUS EMPTY>
+<!ATTLIST ass_STATUS
     codigoInterno CDATA #REQUIRED
     sigla CDATA #REQUIRED
-    descricao CDATA #REQUIRED
+    designacao CDATA #REQUIRED
+    estado CDATA #REQUIRED
+    assiduidade CDATA #REQUIRED
     quem CDATA #REQUIRED
     quando CDATA #REQUIRED
 >
 
-<!ELEMENT group_properties EMPTY>
-<!ATTLIST group_properties
+<!ELEMENT MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER EMPTY>
+<!ATTLIST MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER
     ID_INTERNAL CDATA #REQUIRED
-    MAXIMUM_CAPACITY CDATA #IMPLIED
-    MINIMUM_CAPACITY CDATA #IMPLIED
-    IDEAL_CAPACITY CDATA #IMPLIED
-    ENROLMENT_POLICY CDATA #IMPLIED
-    GROUP_MAXIMUM_NUMBER CDATA #IMPLIED
-    NAME CDATA #REQUIRED
-    SHIFT_TYPE CDATA #IMPLIED
-    ENROLMENT_BEGIN_DAY CDATA #IMPLIED
-    ENROLMENT_END_DAY CDATA #IMPLIED
-    PROJECT_DESCRIPTION CDATA #IMPLIED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
+    KEY_MASTER_DEGREE_THESIS_DATA_VERSION CDATA #REQUIRED
+    KEY_EXTERNAL_PERSON CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_docente EMPTY>
@@ -2327,52 +2029,24 @@
     nome CDATA #REQUIRED
 >
 
-<!ELEMENT mw_branch EMPTY>
-<!ATTLIST mw_branch
-    degreeCode CDATA #IMPLIED
-    branchCode CDATA #IMPLIED
-    orientationCode CDATA #IMPLIED
-    description CDATA #IMPLIED
-    id_internal CDATA #REQUIRED
->
-
-<!ELEMENT person_advisory EMPTY>
-<!ATTLIST person_advisory
+<!ELEMENT CURRICULUM EMPTY>
+<!ATTLIST CURRICULUM
     ID_INTERNAL CDATA #REQUIRED
-    KEY_PERSON CDATA #REQUIRED
-    KEY_ADVISORY CDATA #REQUIRED
+    KEY_CURRICULAR_COURSE CDATA #REQUIRED
+    GENERAL_OBJECTIVES CDATA #IMPLIED
+    OPERACIONAL_OBJECTIVES CDATA #IMPLIED
+    PROGRAM CDATA #IMPLIED
+    GENERAL_OBJECTIVES_EN CDATA #IMPLIED
+    OPERACIONAL_OBJECTIVES_EN CDATA #IMPLIED
+    PROGRAM_EN CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
+    KEY_PERSON_WHO_ALTERED CDATA #REQUIRED
 >
 
-<!ELEMENT master_degree_thesis EMPTY>
-<!ATTLIST master_degree_thesis
+<!ELEMENT CURRICULAR_YEAR EMPTY>
+<!ATTLIST CURRICULAR_YEAR
     ID_INTERNAL CDATA #REQUIRED
-    KEY_STUDENT_CURRICULAR_PLAN CDATA #REQUIRED
->
-
-<!ELEMENT ojb_dlist_entries EMPTY>
-<!ATTLIST ojb_dlist_entries
-    ID CDATA #REQUIRED
-    DLIST_ID CDATA #REQUIRED
-    POSITION_ CDATA #IMPLIED
-    OID_ CDATA #IMPLIED
->
-
-<!ELEMENT credits EMPTY>
-<!ATTLIST credits
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_EXECUTION_PERIOD CDATA #REQUIRED
-    KEY_TEACHER CDATA #REQUIRED
-    TFC_STUDENTS_NUMBER CDATA #REQUIRED
-    CREDITS CDATA #IMPLIED
-    ADDITIONAL_CREDITS CDATA #IMPLIED
-    ADDITIONAL_CREDITS_JUSTIFICATION CDATA #IMPLIED
->
-
-<!ELEMENT mw_person_with_duplicate_id EMPTY>
-<!ATTLIST mw_person_with_duplicate_id
-    documentidnumber CDATA #REQUIRED
-    maxidinternal CDATA #IMPLIED
-    total CDATA #REQUIRED
+    YEAR CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_pessoa EMPTY>
@@ -2408,18 +2082,11 @@
     password CDATA #IMPLIED
 >
 
-<!ELEMENT ass_justificacao EMPTY>
-<!ATTLIST ass_justificacao
-    codigoInterno CDATA #REQUIRED
-    chaveParamJustificacao CDATA #REQUIRED
-    chaveFuncionario CDATA #REQUIRED
-    diaInicio CDATA #REQUIRED
-    horaInicio CDATA #IMPLIED
-    diaFim CDATA #IMPLIED
-    horaFim CDATA #IMPLIED
-    observacao CDATA #IMPLIED
-    quem CDATA #REQUIRED
-    quando CDATA #REQUIRED
+<!ELEMENT UNIVERSITY EMPTY>
+<!ATTLIST UNIVERSITY
+    ID_INTERNAL CDATA #REQUIRED
+    CODE CDATA #REQUIRED
+    NAME CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_curso_mestrado EMPTY>
@@ -2427,6 +2094,14 @@
     codigoInterno CDATA #REQUIRED
     nomeMestrado CDATA #REQUIRED
     anoLectivo CDATA #REQUIRED
+>
+
+<!ELEMENT CATEGORY EMPTY>
+<!ATTLIST CATEGORY
+    ID_INTERNAL CDATA #REQUIRED
+    CODE CDATA #REQUIRED
+    LONG_NAME CDATA #REQUIRED
+    SHORT_NAME CDATA #REQUIRED
 >
 
 <!ELEMENT posgrad_pessoa_cargo EMPTY>
@@ -2437,163 +2112,108 @@
     data CDATA #REQUIRED
 >
 
-<!ELEMENT ass_funcionario_historico EMPTY>
-<!ATTLIST ass_funcionario_historico
+<!ELEMENT ITEM EMPTY>
+<!ATTLIST ITEM
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #IMPLIED
+    ITEM_ORDER CDATA #IMPLIED
+    INFORMATION CDATA #IMPLIED
+    URGENT CDATA #IMPLIED
+    KEY_SECTION CDATA #REQUIRED
+>
+
+<!ELEMENT OLD_PUBLICATION EMPTY>
+<!ATTLIST OLD_PUBLICATION
+    ID_INTERNAL CDATA #REQUIRED
+    OLD_PUBLICATION_TYPE CDATA #IMPLIED
+    LAST_MODIFICATION_DATE CDATA #IMPLIED
+    PUBLICATION CDATA #IMPLIED
+    KEY_TEACHER CDATA #REQUIRED
+>
+
+<!ELEMENT CURRICULAR_COURSE EMPTY>
+<!ATTLIST CURRICULAR_COURSE
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_DEPARTMENT_COURSE CDATA #IMPLIED
+    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
+    CREDITS CDATA #IMPLIED
+    THEORETICAL_HOURS CDATA #IMPLIED
+    PRATICAL_HOURS CDATA #IMPLIED
+    THEO_PRAT_HOURS CDATA #IMPLIED
+    LAB_HOURS CDATA #IMPLIED
+    NAME CDATA #REQUIRED
+    CODE CDATA #REQUIRED
+    TYPE CDATA #REQUIRED
+    EXECUTION_SCOPE CDATA #IMPLIED
+    MANDATORY CDATA #REQUIRED
+    KEY_UNIVERSITY CDATA #IMPLIED
+    BASIC CDATA #REQUIRED
+>
+
+<!ELEMENT MASTER_DEGREE_THESIS_DATA_VERSION EMPTY>
+<!ATTLIST MASTER_DEGREE_THESIS_DATA_VERSION
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_MASTER_DEGREE_THESIS CDATA #REQUIRED
+    KEY_EMPLOYEE CDATA #REQUIRED
+    DISSERTATION_TITLE CDATA #REQUIRED
+    LAST_MODIFICATION CDATA #IMPLIED
+    CURRENT_STATE CDATA #REQUIRED
+>
+
+<!ELEMENT CLASS EMPTY>
+<!ATTLIST CLASS
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    SEMESTER CDATA #IMPLIED
+    CURRICULAR_YEAR CDATA #REQUIRED
+    KEY_EXECUTION_DEGREE CDATA #REQUIRED
+    KEY_DEGREE CDATA #IMPLIED
+    KEY_EXECUTION_PERIOD CDATA #REQUIRED
+>
+
+<!ELEMENT COUNTRY EMPTY>
+<!ATTLIST COUNTRY
+    ID_INTERNAL CDATA #REQUIRED
+    NAME CDATA #REQUIRED
+    NATIONALITY CDATA #REQUIRED
+    CODE CDATA #REQUIRED
+>
+
+<!ELEMENT EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE EMPTY>
+<!ATTLIST EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_ENROLMENT_EQUIVALENCE CDATA #REQUIRED
+    KEY_EQUIVALENT_ENROLMENT CDATA #REQUIRED
+>
+
+<!ELEMENT POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE EMPTY>
+<!ATTLIST POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE
+    ID_INTERNAL CDATA #REQUIRED
+    KEY_POSSIBLE_CURRICULAR_COURSE CDATA #REQUIRED
+    KEY_OPTIONAL_CURRICULAR_COURSE CDATA #REQUIRED
+>
+
+<!ELEMENT OJB_DMAP EMPTY>
+<!ATTLIST OJB_DMAP
+    ID CDATA #REQUIRED
+    SIZE_ CDATA #IMPLIED
+>
+
+<!ELEMENT ass_REGULARIZACAO_MARCACAO EMPTY>
+<!ATTLIST ass_REGULARIZACAO_MARCACAO
     codigoInterno CDATA #REQUIRED
-    chaveFuncionario CDATA #REQUIRED
-    chaveFuncResponsavel CDATA #IMPLIED
-    chaveCCLocalTrabalho CDATA #IMPLIED
-    chaveCCCorrespondencia CDATA #IMPLIED
-    chaveCCVencimento CDATA #IMPLIED
-    calendario CDATA #IMPLIED
-    chaveStatus CDATA #IMPLIED
-    dataInicio CDATA #REQUIRED
-    dataFim CDATA #IMPLIED
+    chaveMarcacaoPonto CDATA #REQUIRED
+    chaveParamRegularizacao CDATA #REQUIRED
     quem CDATA #REQUIRED
     quando CDATA #REQUIRED
 >
 
-<!ELEMENT mw_enrolment_temp EMPTY>
-<!ATTLIST mw_enrolment_temp
-    number CDATA #IMPLIED
-    enrolmentYear CDATA #IMPLIED
-    curricularCourseYear CDATA #IMPLIED
-    curricularCourseSemester CDATA #IMPLIED
-    season CDATA #IMPLIED
-    courseCode CDATA #IMPLIED
-    degreeCode CDATA #IMPLIED
-    branchCode CDATA #IMPLIED
-    grade CDATA #IMPLIED
-    teacherNumber CDATA #IMPLIED
-    examDate CDATA #IMPLIED
-    universityCode CDATA #IMPLIED
-    remarks CDATA #IMPLIED
-    idinternal CDATA #REQUIRED
->
-
-<!ELEMENT ass_horario_regime EMPTY>
-<!ATTLIST ass_horario_regime
-    chaveHorario CDATA #REQUIRED
-    chaveRegime CDATA #REQUIRED
->
-
-<!ELEMENT announcement EMPTY>
-<!ATTLIST announcement
+<!ELEMENT ROLE EMPTY>
+<!ATTLIST ROLE
     ID_INTERNAL CDATA #REQUIRED
-    TITLE CDATA #IMPLIED
-    CREATION_DATE CDATA #IMPLIED
-    LAST_MODIFICATION_DATE CDATA #IMPLIED
-    INFORMATION CDATA #IMPLIED
-    KEY_SITE CDATA #REQUIRED
+    ROLE_TYPE CDATA #REQUIRED
+    PORTAL_SUB_APPLICATION CDATA #IMPLIED
+    PAGE CDATA #IMPLIED
+    PAGE_NAME_PROPERTY CDATA #IMPLIED
 >
 
-<!ELEMENT publication EMPTY>
-<!ATTLIST publication
-    ID_INTERNAL CDATA #REQUIRED
-    CLASS_NAME CDATA #REQUIRED
-    CONFERENCE CDATA #REQUIRED
-    JOURNAL CDATA #REQUIRED
-    LOCATION CDATA #REQUIRED
-    MONTH CDATA #REQUIRED
-    NUMBER CDATA #REQUIRED
-    PAGES CDATA #REQUIRED
-    PUBLISHER CDATA #REQUIRED
-    SERIES CDATA #REQUIRED
-    TITLE CDATA #REQUIRED
-    TRNUMBER CDATA #REQUIRED
-    UNIVERSITY CDATA #REQUIRED
-    VOLUME CDATA #REQUIRED
-    YEAR CDATA #REQUIRED
->
-
-<!ELEMENT attend EMPTY>
-<!ATTLIST attend
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_STUDENT CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
-    KEY_ENROLMENT CDATA #IMPLIED
->
-
-<!ELEMENT grant_owner EMPTY>
-<!ATTLIST grant_owner
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_PERSON CDATA #REQUIRED
-    NUMBER CDATA #REQUIRED
-    DATE_SEND_CGD CDATA #IMPLIED
-    CARD_COPY_NUMBER CDATA #IMPLIED
->
-
-<!ELEMENT curricular_course_equivalence_restriction EMPTY>
-<!ATTLIST curricular_course_equivalence_restriction
-    ID_INTERNAL CDATA #REQUIRED
-    KEY_CURRICULAR_COURSE_EQUIVALENCE CDATA #REQUIRED
-    KEY_EQUIVALENT_CURRICULAR_COURSE CDATA #REQUIRED
-    YEAR_OF_EQUIVALENCE CDATA #REQUIRED
->
-
-<!ELEMENT bibliographic_reference EMPTY>
-<!ATTLIST bibliographic_reference
-    ID_INTERNAL CDATA #REQUIRED
-    TITLE CDATA #REQUIRED
-    AUTHORS CDATA #REQUIRED
-    REFERENCE CDATA #REQUIRED
-    YEAR CDATA #REQUIRED
-    OPTIONAL CDATA #REQUIRED
-    KEY_EXECUTION_COURSE CDATA #REQUIRED
->
-
-<!ELEMENT execution_degree EMPTY>
-<!ATTLIST execution_degree
-    ID_INTERNAL CDATA #REQUIRED
-    ACADEMIC_YEAR CDATA #REQUIRED
-    KEY_DEGREE_CURRICULAR_PLAN CDATA #REQUIRED
-    KEY_TEACHER CDATA #IMPLIED
-    TEMPORARY_EXAM_MAP CDATA #IMPLIED
-    KEY_CAMPUS CDATA #REQUIRED
->
-
-<!ELEMENT website_item EMPTY>
-<!ATTLIST website_item
-    ID_INTERNAL CDATA #REQUIRED
-    TITLE CDATA #REQUIRED
-    MAIN_ENTRY_TEXT CDATA #REQUIRED
-    EXCERPT CDATA #IMPLIED
-    PUBLISHED CDATA #REQUIRED
-    CREATION_DATE CDATA #REQUIRED
-    KEY_EDITOR CDATA #REQUIRED
-    AUTHOR_NAME CDATA #REQUIRED
-    AUTHOR_EMAIL CDATA #REQUIRED
-    KEYWORDS CDATA #REQUIRED
-    ONLINE_BEGIN_DAY CDATA #IMPLIED
-    ONLINE_END_DAY CDATA #IMPLIED
-    ITEM_BEGIN_DAY CDATA #IMPLIED
-    ITEM_END_DAY CDATA #IMPLIED
-    KEY_WEBSITE_SECTION CDATA #REQUIRED
->
-
-<!ELEMENT conversaolocaldistrito EMPTY>
-<!ATTLIST conversaolocaldistrito
-    localidade CDATA #IMPLIED
-    distrito CDATA #IMPLIED
->
-
-<!ELEMENT REIMBURSEMENT_GUIDE EMPTY>
-<!ATTLIST REIMBURSEMENT_GUIDE
-    id_internal CDATA #REQUIRED
-    number CDATA #REQUIRED
-    value CDATA #REQUIRED
-    justification CDATA #IMPLIED
-    key_guide CDATA #REQUIRED
-    creation_date CDATA #REQUIRED
->
-
-<!ELEMENT REIMBURSEMENT_GUIDE_SITUATION EMPTY>
-<!ATTLIST REIMBURSEMENT_GUIDE_SITUATION
-    id_internal CDATA #REQUIRED
-    state CDATA #REQUIRED
-    key_reimbursement_guide CDATA #REQUIRED
-    remarks CDATA #IMPLIED
-    key_employee CDATA #REQUIRED
-    modification_date CDATA #REQUIRED
-    reimbursement_guide_state CDATA #REQUIRED
->
