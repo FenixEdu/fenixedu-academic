@@ -209,6 +209,10 @@
         <exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
           handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+        <exception type="ServidorAplicacao.Servico.student.WriteStudentAttendingCourses$AlreadyEnroledInGroupServiceException"
+          				   key="errors.student.already.enroled.in.group" path="/student/studentShiftEnrolmentManager.do?method=start&amp;firstTime=yes"/>
+        <exception type="ServidorAplicacao.Servico.student.WriteStudentAttendingCourses$AlreadyEnroledServiceException"
+          				   key="errors.student.already.enroled" path="/student/studentShiftEnrolmentManager.do?method=start&amp;firstTime=yes"/>
                            
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
 	      

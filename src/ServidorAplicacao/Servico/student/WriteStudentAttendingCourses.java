@@ -12,12 +12,14 @@ import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
+import Dominio.IStudentGroupAttend;
 import Dominio.ITurnoAluno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -29,9 +31,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @version 1.0
  */
 public class WriteStudentAttendingCourses implements IServico {
-
-	private static WriteStudentAttendingCourses _servico =
-		new WriteStudentAttendingCourses();
+	public class AlreadyEnroledInGroupServiceException  extends FenixServiceException {
+	}
+	public class AlreadyEnroledServiceException  extends FenixServiceException {
+	}
+	
+	private static WriteStudentAttendingCourses _servico = new WriteStudentAttendingCourses();
 
 	/**
 	 * The actor of this class.
@@ -63,14 +68,15 @@ public class WriteStudentAttendingCourses implements IServico {
 	 * @param infoExecutionCourses a <code>List</code> with the wanted executionCourse.idInternal's of the ATTEND table.
 	 * @return a <code>Boolean</code> to indicate if all went fine.
 	 * @exception FenixServiceException if an error occurs.
+	 * @exception AlreadyEnroledInGroupServiceException  if student is enrolled in any of the executionCourses groups.
+	 * @exception AlreadyEnroledServiceException if student is enrolled in any of the executionCourses
 	 */
-	public Boolean run(InfoStudent infoStudent, List infoExecutionCourses)
-		throws FenixServiceException {
-	
-		if ( infoStudent == null) {
+	public Boolean run(InfoStudent infoStudent, List infoExecutionCourses) throws FenixServiceException {
+
+		if (infoStudent == null) {
 			return new Boolean(false);
 		}
-		if (infoExecutionCourses == null){
+		if (infoExecutionCourses == null) {
 			infoExecutionCourses = new ArrayList();
 		}
 		System.out.println(infoExecutionCourses);
@@ -79,10 +85,7 @@ public class WriteStudentAttendingCourses implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Reads the student from the database
-			IStudent student =
-				sp.getIPersistentStudent().readByNumero(
-					infoStudent.getNumber(),
-					infoStudent.getDegreeType());
+			IStudent student = sp.getIPersistentStudent().readByNumero(infoStudent.getNumber(), infoStudent.getDegreeType());
 
 			IFrequentaPersistente attendsDAO = sp.getIFrequentaPersistente();
 
@@ -91,26 +94,18 @@ public class WriteStudentAttendingCourses implements IServico {
 
 			List attendingCourses = getExecutionCoursesFromAttends(attends);
 
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 
 			//Gets the database objects for the wanted courses
 			List wantedAttendingCourses = new ArrayList();
 			Iterator i = infoExecutionCourses.iterator();
 			while (i.hasNext()) {
 				Integer executionCourseId = new Integer((String) i.next());
-				IDisciplinaExecucao executionCourse =
-					new DisciplinaExecucao(executionCourseId);
-				executionCourse =
-					(IDisciplinaExecucao) executionCourseDAO.readByOId(
-						executionCourse,
-						false);
+				IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+				executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
 
 				if (executionCourse == null) {
-					System.out.println(
-						"Execution course with ID="
-							+ executionCourseId
-							+ " does not exist in the database!");
+					System.out.println("Execution course with ID=" + executionCourseId + " does not exist in the database!");
 					throw new FenixServiceException();
 				} else {
 					wantedAttendingCourses.add(executionCourse);
@@ -120,14 +115,8 @@ public class WriteStudentAttendingCourses implements IServico {
 
 			//Delete all courses the student is currently attendin to that he/she doesn't want to:
 			//attendings to remove : 
-			List attendsToRemove =
-				(List) CollectionUtils.subtract(
-					attendingCourses,
-					wantedAttendingCourses);
-			List attendingCoursesToAdd =
-				(List) CollectionUtils.subtract(
-					wantedAttendingCourses,
-					attendingCourses);
+			List attendsToRemove = (List) CollectionUtils.subtract(attendingCourses, wantedAttendingCourses);
+			List attendingCoursesToAdd = (List) CollectionUtils.subtract(wantedAttendingCourses, attendingCourses);
 			if (attendsToRemove != null && !attendsToRemove.isEmpty()) {
 				deleteAttends(attendsToRemove, student);
 			}
@@ -136,13 +125,9 @@ public class WriteStudentAttendingCourses implements IServico {
 			i = attendingCoursesToAdd.iterator();
 			while (i.hasNext()) {
 
-				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) i.next();
+				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) i.next();
 
-				IFrequenta attendsEntry =
-					attendsDAO.readByAlunoAndDisciplinaExecucao(
-						student,
-						executionCourse);
+				IFrequenta attendsEntry = attendsDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 				if (attendsEntry == null) {
 					attendsEntry = new Frequenta();
 					attendsDAO.simpleLockWrite(attendsEntry);
@@ -171,38 +156,39 @@ public class WriteStudentAttendingCourses implements IServico {
 		return executionCourses;
 	}
 
-	private void deleteAttends(List attendingCoursesToRemove, IStudent student)
-		throws FenixServiceException {
+	private void deleteAttends(List attendingCoursesToRemove, IStudent student) throws FenixServiceException {
 		Iterator iterator = attendingCoursesToRemove.iterator();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IFrequentaPersistente persistentAttends =
-				sp.getIFrequentaPersistente();
-			ITurnoAlunoPersistente persistentShiftStudent =
-				sp.getITurnoAlunoPersistente();
+			IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
+			ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+			IPersistentStudentGroupAttend studentGroupAttendDAO = sp.getIPersistentStudentGroupAttend();
 			while (iterator.hasNext()) {
-				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) iterator.next();
-				IFrequenta attends =
-					persistentAttends.readByAlunoAndDisciplinaExecucao(
-						student,
-						executionCourse);
-				if (attends != null && attends.getEnrolment() == null) {
+				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator.next();
+				IFrequenta attends = persistentAttends.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+				IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attends);
+				
+				if (studentGroupAttend != null) {
+					throw new AlreadyEnroledInGroupServiceException();	 
+				}
+				
+				if (attends.getEnrolment() != null) {
+					throw new AlreadyEnroledServiceException();			
+				}
+				
+				
+				
+				if (attends != null && attends.getEnrolment() == null && studentGroupAttend == null) {
 					//NOTE: attends that are linked to enrollments are not deleted
-					List shiftAttendsToDelete =
-						persistentShiftStudent.readByStudentAndExecutionCourse(
-							student,
-							executionCourse);
+					List shiftAttendsToDelete = persistentShiftStudent.readByStudentAndExecutionCourse(student, executionCourse);
 					if (shiftAttendsToDelete != null) {
 						Iterator iter = shiftAttendsToDelete.iterator();
 						while (iter.hasNext()) {
-							persistentShiftStudent.delete(
-								(ITurnoAluno) iter.next());
+							persistentShiftStudent.delete((ITurnoAluno) iter.next());
 						}
 					}
 					persistentAttends.delete(attends);
 				}
-
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

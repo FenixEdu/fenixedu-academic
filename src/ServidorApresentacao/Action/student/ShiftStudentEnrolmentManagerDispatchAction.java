@@ -35,6 +35,7 @@ import DataBeans.InfoStudent;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.student.WriteStudentAttendingCourses;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
@@ -172,7 +173,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 	}
 
 	public ActionForward addCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException, FenixServiceException {
 
 		DynaActionForm studentShiftEnrolmentForm = (DynaActionForm) form;
 		IUserView userView = SessionUtils.getUserView(request);
@@ -192,7 +193,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 	}
 
 	public ActionForward removeCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException, FenixServiceException {
 		DynaActionForm studentShiftEnrolmentForm = (DynaActionForm) form;
 
 		String[] unWantedCourses = (String[]) studentShiftEnrolmentForm.get("wantedCourse");
@@ -408,7 +409,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 	}
 
 	private void enrollStudent(DynaActionForm studentShiftEnrolmentForm, HttpServletRequest request, InfoStudent infoStudent, List wantedCourses)
-		throws FenixActionException {
+		throws FenixActionException, FenixServiceException {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -437,15 +438,18 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		return infoStudent;
 	}
 
-	private Boolean writeAttendingCourses(IUserView userView, InfoStudent infoStudent, List wantedCoursesList) throws FenixActionException {
+	private Boolean writeAttendingCourses(IUserView userView, InfoStudent infoStudent, List wantedCoursesList) throws FenixServiceException {
 		Boolean attendenceChanged;
-		try {
+//		try {
 			attendenceChanged =
 				(Boolean) (ServiceUtils.executeService(userView, "WriteStudentAttendingCourses", new Object[] { infoStudent, wantedCoursesList }));
-		} catch (FenixServiceException e1) {
-			System.out.println("Nao foi possivel actualizar as disciplinas do aluno");
-			throw new FenixActionException(e1);
-		}
+//		} catch (FenixServiceException e) {
+//			if (e instanceof WriteStudentAttendingCourses.AlreadyEnroledServiceException || e instanceof WriteStudentAttendingCourses.AlreadyEnroledInGroupServiceException) {
+//				throw e;
+//			}else {
+//				throw new FenixActionException(e);
+//			}
+//		}
 		return attendenceChanged;
 	}
 
