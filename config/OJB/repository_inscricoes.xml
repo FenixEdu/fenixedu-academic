@@ -341,7 +341,6 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularYear -->
 <!-- ************************************************************************************************************ -->
-<!--
 <class-descriptor class="Dominio.CurricularYear" table="CURRICULAR_YEAR">
 	<field-descriptor id="1"
 		name="internalID"
@@ -356,11 +355,10 @@
 		jdbc-type="INTEGER"
 	/>
 </class-descriptor>
--->
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularSemester -->
 <!-- ************************************************************************************************************ -->
-<!--
 <class-descriptor class="Dominio.CurricularSemester" table="CURRICULAR_SEMESTER">
 	<field-descriptor id="1"
 		name="internalID"
@@ -394,7 +392,7 @@
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
 </class-descriptor>
--->
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.Branch -->
 <!-- ************************************************************************************************************ -->

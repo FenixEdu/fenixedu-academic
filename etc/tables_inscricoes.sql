@@ -107,6 +107,18 @@ create table ENROLMENT (
    type=InnoDB;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 #----------------------------
 # Table structure for BRANCH
 #----------------------------
@@ -141,4 +153,15 @@ create table STUDENT_CURRICULAR_PLAN_BRANCH (
    KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_BRANCH, KEY_STUDENT_CURRICULAR_PLAN)
+)type=InnoDB;
+
+#----------------------------
+# Table structure for CURRICULAR_YEAR
+#----------------------------
+drop table if exists CURRICULAR_YEAR;
+create table CURRICULAR_YEAR (
+   ID_INTERNAL int(11) not null auto_increment,
+   YEAR int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (YEAR)
 )type=InnoDB;
