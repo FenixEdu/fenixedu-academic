@@ -131,6 +131,7 @@ import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideSituationOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
+import ServidorPersistente.OJB.places.campus.CampusOJB;
 import ServidorPersistente.OJB.teacher.CareerOJB;
 import ServidorPersistente.OJB.teacher.CategoryOJB;
 import ServidorPersistente.OJB.teacher.ExternalActivityOJB;
@@ -158,6 +159,7 @@ import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
+import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
@@ -1029,6 +1031,14 @@ public class SuportePersistenteOJB implements ISuportePersistente
     public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
     {
         return new TeacherInstitutionWorkingTimeOJB();
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ISuportePersistente#getIPersistentCampus()
+     */
+    public IPersistentCampus getIPersistentCampus()
+    {
+        return new CampusOJB();
     }
 
 }

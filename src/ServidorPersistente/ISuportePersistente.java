@@ -23,6 +23,7 @@ import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
+import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
@@ -225,5 +226,9 @@ public interface ISuportePersistente
 
     public IPersistentTeacherDegreeFinalProjectStudent getIPersistentTeacherDegreeFinalProjectStudent();
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
+    /**
+     * @return
+     */
+    public IPersistentCampus getIPersistentCampus();
   
 }
