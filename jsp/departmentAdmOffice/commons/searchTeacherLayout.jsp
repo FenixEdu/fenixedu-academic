@@ -9,7 +9,7 @@
 <p class="infoop">
 	<bean:message name="searchInfo"/>
 </p>
-<span class="error"><html:errors /></span>
+<html:errors />
 <bean:define id="path" name="<%= Globals.MAPPING_KEY %>" property="path" type="java.lang.String"/>
 <html:form action="<%= path %>">
 	<input type="hidden" name="method" value="doSearch"/>

@@ -2,8 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-<bean:define id="hoursPattern">HH:mm</bean:define>
 
 <bean:define id="infoTeacher" name="infoProfessorship" property="infoTeacher" scope="request" />
 <bean:define id="infoExecutionCourse" name="infoProfessorship" property="infoExecutionCourse" scope="request" />
@@ -15,6 +13,9 @@
 
 	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="infoExecutionCourse" property="nome"/>
 </p>
+<logic:messagesPresent>
+	<html:errors/>
+</logic:messagesPresent>
 
 <h3>
 	<logic:present name="infoSupportLesson">
@@ -45,7 +46,7 @@
 
 		<tr>
 			<td>
-				<bean:message key="label.support-lesson.start-time"/>(<i><bean:write name="hoursPattern"/></i>)
+				<bean:message key="label.support-lesson.start-time"/>
 			</td>
 			<td>
 				<html:text property="startTimeHour"  size="3"/> : <html:text property="startTimeMinutes" size="3"/>
@@ -53,7 +54,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="label.support-lesson.end-time"/>(<i><bean:write name="hoursPattern"/></i>)
+				<bean:message key="label.support-lesson.end-time"/>
 			</td>
 			<td>
 				<html:text property="endTimeHour" size="3"/> : <html:text property="endTimeMinutes"  size="3"/>

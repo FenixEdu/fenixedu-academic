@@ -23,7 +23,7 @@
 	<html:hidden property="studentId"/>	
 	<html:hidden property="teacherId"/>	
 	<html:hidden property="executionYearId"/>		
-
+	<html:errors />
 	<p>
 		<bean:message key="label.teacher-dfp-student.student-number"/>
 		<html:text property="studentNumber" value=""/>
