@@ -12,7 +12,6 @@ import Dominio.PersonRole;
 import Dominio.Pessoa;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.utils.GeneratePassword;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentPersonRole;
