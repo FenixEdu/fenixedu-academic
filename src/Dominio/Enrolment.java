@@ -14,18 +14,18 @@ import Util.EnrolmentState;
 public class Enrolment extends DomainObject implements IEnrolment {
 
 	private IStudentCurricularPlan studentCurricularPlan;
-//	private ICurricularCourse curricularCourse;
+	//private ICurricularCourse curricularCourse;
 	private IExecutionPeriod executionPeriod;
 	private EnrolmentState enrolmentState;
 	private EnrolmentEvaluationType enrolmentEvaluationType;
 	private ICurricularCourseScope curricularCourseScope;
 
-//	private Integer internalID;
+	//private Integer internalID;
 	private Integer studentCurricularPlanKey;
-//	private Integer curricularCourseKey;
+	//private Integer curricularCourseKey;
 	private Integer curricularCourseScopeKey;
 	private Integer keyExecutionPeriod;
-	
+
 	private List evaluations;
 
 	private String ojbConcreteClass;
@@ -53,8 +53,12 @@ public class Enrolment extends DomainObject implements IEnrolment {
 		setExecutionPeriod(executionPeriod);
 	}
 
-	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, 
-	EnrolmentState state, IExecutionPeriod executionPeriod, EnrolmentEvaluationType enrolmentEvaluationType) {
+	public Enrolment(
+		IStudentCurricularPlan studentCurricularPlan,
+		ICurricularCourseScope curricularCourseScope,
+		EnrolmentState state,
+		IExecutionPeriod executionPeriod,
+		EnrolmentEvaluationType enrolmentEvaluationType) {
 		this();
 		setCurricularCourseScope(curricularCourseScope);
 		setStudentCurricularPlan(studentCurricularPlan);
@@ -68,7 +72,7 @@ public class Enrolment extends DomainObject implements IEnrolment {
 
 		if (obj instanceof IEnrolment) {
 			IEnrolment enrolment = (IEnrolment) obj;
-						
+
 			resultado =
 				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
 					&& this.getCurricularCourseScope().equals(enrolment.getCurricularCourseScope())
@@ -76,28 +80,28 @@ public class Enrolment extends DomainObject implements IEnrolment {
 		}
 		return resultado;
 	}
-		
+
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
 		result += "enrolmentState = " + this.enrolmentState + "; ";
 		result += "execution Period = " + this.executionPeriod + "; ";
 		result += "curricularCourseScope = " + this.curricularCourseScope + "]\n";
-//		result += "curricularCourse = " + this.curricularCourse + "]\n";
+		//		result += "curricularCourse = " + this.curricularCourse + "]\n";
 		return result;
 	}
 
-//	public ICurricularCourse getCurricularCourse() {
-//		return curricularCourse;
-//	}
-//
-//	public Integer getCurricularCourseKey() {
-//		return curricularCourseKey;
-//	}
+	//	public ICurricularCourse getCurricularCourse() {
+	//		return curricularCourse;
+	//	}
+	//
+	//	public Integer getCurricularCourseKey() {
+	//		return curricularCourseKey;
+	//	}
 
-//	public Integer getInternalID() {
-//		return internalID;
-//	}
+	//	public Integer getInternalID() {
+	//		return internalID;
+	//	}
 
 	/**
 	 * Returns the studentCurricularPlan.
@@ -115,21 +119,21 @@ public class Enrolment extends DomainObject implements IEnrolment {
 		return studentCurricularPlanKey;
 	}
 
-//	public void setCurricularCourse(ICurricularCourse curricularCourse) {
-//		this.curricularCourse = curricularCourse;
-//	}
-//
-//	public void setCurricularCourseKey(Integer curricularCourseKey) {
-//		this.curricularCourseKey = curricularCourseKey;
-//	}
+	//	public void setCurricularCourse(ICurricularCourse curricularCourse) {
+	//		this.curricularCourse = curricularCourse;
+	//	}
+	//
+	//	public void setCurricularCourseKey(Integer curricularCourseKey) {
+	//		this.curricularCourseKey = curricularCourseKey;
+	//	}
 
-//	/**
-//	 * Sets the internalID.
-//	 * @param internalID The internalID to set
-//	 */
-//	public void setInternalID(Integer internalID) {
-//		this.internalID = internalID;
-//	}
+	//	/**
+	//	 * Sets the internalID.
+	//	 * @param internalID The internalID to set
+	//	 */
+	//	public void setInternalID(Integer internalID) {
+	//		this.internalID = internalID;
+	//	}
 
 	/**
 	 * Sets the studentCurricularPlan.
@@ -205,9 +209,9 @@ public class Enrolment extends DomainObject implements IEnrolment {
 		this.ojbConcreteClass = ojbConcreteClass;
 	}
 
-//	public ICurricularCourse getRealCurricularCourse() {
-//		return this.getCurricularCourse();	
-//	}
+	//	public ICurricularCourse getRealCurricularCourse() {
+	//		return this.getCurricularCourse();	
+	//	}
 
 	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
 		return this.enrolmentEvaluationType;

@@ -47,8 +47,7 @@ public class LoadInscricoes extends LoadDataFile {
 	}
 
 	protected void processLine(String line) {
-		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeparator());
+		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
 		String numero = stringTokenizer.nextToken();
 		String ano = stringTokenizer.nextToken();
@@ -65,8 +64,7 @@ public class LoadInscricoes extends LoadDataFile {
 		almeida_inscricoes.setAno((new Integer(ano)).longValue());
 		almeida_inscricoes.setSemestre((new Integer(semestre)).longValue());
 		almeida_inscricoes.setCoddis(codigoDisciplina);
-		almeida_inscricoes.setAnoinscricao(
-			(new Integer(anoInscricao)).longValue());
+		almeida_inscricoes.setAnoinscricao((new Integer(anoInscricao)).longValue());
 		almeida_inscricoes.setCurso((new Integer(curso)).longValue());
 		almeida_inscricoes.setRamo(ramo);
 
@@ -74,24 +72,18 @@ public class LoadInscricoes extends LoadDataFile {
 	}
 
 	private void processEnrolement(Almeida_inscricoes almeida_inscricoes) {
-		IStudentCurricularPlan studentCurricularPlan =
-			readStudentCurricularPlan(almeida_inscricoes);
-		ICurricularCourse curricularCourse =
-			readCurricularCourse(almeida_inscricoes);
+		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(almeida_inscricoes);
+		ICurricularCourse curricularCourse = readCurricularCourse(almeida_inscricoes);
 		IExecutionPeriod executionPeriod = null;
 		IDisciplinaExecucao disciplinaExecucao = null;
 
 		if (curricularCourse != null) {
 			executionPeriod = readActiveExecutionPeriod();
 
-			IEnrolment enrolment =
-				persistentObjectOJB.readEnrolment(
-					studentCurricularPlan,
-					curricularCourse,
-					executionPeriod);
+			IEnrolment enrolment = persistentObjectOJB.readEnrolment(studentCurricularPlan, curricularCourse, executionPeriod);
 			if (enrolment == null) {
 				enrolment = new Enrolment();
-//				enrolment.setCurricularCourse(curricularCourse);
+				//				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
@@ -99,15 +91,14 @@ public class LoadInscricoes extends LoadDataFile {
 
 				writeElement(enrolment);
 			} else {
-//				enrolment.setCurricularCourse(curricularCourse);
+				//				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 				writeElement(enrolment);
 			}
 
-			disciplinaExecucao =
-				readExecutionCourse(curricularCourse, executionPeriod);
+			disciplinaExecucao = readExecutionCourse(curricularCourse, executionPeriod);
 
 			if (disciplinaExecucao == null) {
 				executionCoursesNotFound += "Curricular: code= "
@@ -120,14 +111,9 @@ public class LoadInscricoes extends LoadDataFile {
 				//writeElement(almeida_inscricoes);
 				numberUntreatableElements++;
 			} else {
-				IFrequenta frequenta =
-					persistentObjectOJB.readFrequenta(
-						studentCurricularPlan.getStudent(),
-						disciplinaExecucao);
+				IFrequenta frequenta = persistentObjectOJB.readFrequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
 				if (frequenta == null) {
-					frequenta = new Frequenta(
-						studentCurricularPlan.getStudent(),
-						disciplinaExecucao);
+					frequenta = new Frequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
 					writeElement(frequenta);
 				} else {
 					frequenta.setAluno(studentCurricularPlan.getStudent());
@@ -143,12 +129,8 @@ public class LoadInscricoes extends LoadDataFile {
 	 * @param executionPeriod
 	 * @return
 	 */
-	private IDisciplinaExecucao readExecutionCourse(
-		ICurricularCourse curricularCourse,
-		IExecutionPeriod executionPeriod) {
-		return persistentObjectOJB.readExecutionCourse(
-			curricularCourse,
-			executionPeriod);
+	private IDisciplinaExecucao readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
+		return persistentObjectOJB.readExecutionCourse(curricularCourse, executionPeriod);
 
 	}
 
@@ -168,8 +150,7 @@ public class LoadInscricoes extends LoadDataFile {
 
 		// First read Almeidas curricular course
 		Almeida_disc almeida_disc =
-			persistentObjectOJB.readAlmeidaCurricularCourse(
-				almeida_inscricoes.getCoddis(), almeida_inscricoes.getCurso());
+			persistentObjectOJB.readAlmeidaCurricularCourse(almeida_inscricoes.getCoddis(), almeida_inscricoes.getCurso());
 
 		// Log the ones that don't exist in his database!
 		if (almeida_disc == null) {
@@ -198,24 +179,19 @@ public class LoadInscricoes extends LoadDataFile {
 	 */
 	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_inscricoes almeida_inscricoes) {
 		IStudentCurricularPlan studentCurricularPlan =
-			persistentObjectOJB.readStudentCurricularPlan(
-				new Integer("" + almeida_inscricoes.getNumero()));
+			persistentObjectOJB.readStudentCurricularPlan(new Integer("" + almeida_inscricoes.getNumero()));
 
 		if (studentCurricularPlan == null) {
 			IStudent student =
-				persistentObjectOJB.readStudent(
-					new Integer("" + almeida_inscricoes.getNumero()),
-					new TipoCurso(TipoCurso.LICENCIATURA));
+				persistentObjectOJB.readStudent(new Integer("" + almeida_inscricoes.getNumero()), new TipoCurso(TipoCurso.LICENCIATURA));
 
 			studentCurricularPlan =
 				new StudentCurricularPlan(
 					student,
-					persistentObjectOJB.readDegreeCurricularPlanByDegreeID(
-						new Integer("" + almeida_inscricoes.getCurso())),
+					persistentObjectOJB.readDegreeCurricularPlanByDegreeID(new Integer("" + almeida_inscricoes.getCurso())),
 					getBranch(almeida_inscricoes),
 					new Date(),
-					new StudentCurricularPlanState(
-						StudentCurricularPlanState.ACTIVE));
+					new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
 			studentCurricularPlan.setBranch(new Branch());
 			writeElement(studentCurricularPlan);
 		}
@@ -227,7 +203,7 @@ public class LoadInscricoes extends LoadDataFile {
 	 * @param string
 	 */
 	private IBranch getBranch(Almeida_inscricoes almeida_inscricoes) {
-		
+
 		return null;
 	}
 
