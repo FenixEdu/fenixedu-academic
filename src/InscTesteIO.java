@@ -1,4 +1,7 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -95,12 +98,12 @@ public abstract class InscTesteIO {
 		int i = 1;
 		while (iterator.hasNext()) {
 			String msg = (String) iterator.next();
-			System.out.println(i + " - MESSAGE: " + msg);
+			System.out.println(i + " - MESSAGE: " + selectApropriateMessageFromAppResource(msg, (List) infoEnrolmentContext.getEnrolmentValidationResult().getMessage().get(msg)));
 			i++;
 		}
 	}
 
-	public static void selectNormalCurricularCoursesToEnroll(InfoEnrolmentContext infoEnrolmentContext, boolean remove) {
+	public static void selectNormalCurricularCoursesToEnroll(InfoEnrolmentContext infoEnrolmentContext) {
 		List indexes = new ArrayList();
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String str = new String(" ");
@@ -127,14 +130,10 @@ public abstract class InscTesteIO {
 			InfoCurricularCourseScope infoCurricularCourseScope;
 			try {
 				infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-				if(remove && !infoCurricularCourseScope.getInfoCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) {
-					if(infoEnrolmentContext.getActualEnrolment().contains(infoCurricularCourseScope)) {
-						infoEnrolmentContext.getActualEnrolment().remove(infoCurricularCourseScope);
-					}
-				} else {
-					if(!infoEnrolmentContext.getActualEnrolment().contains(infoCurricularCourseScope)) {
-						infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-					}
+				if(!infoEnrolmentContext.getActualEnrolment().contains(infoCurricularCourseScope)) {
+					infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+				} else if(!infoCurricularCourseScope.getInfoCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) {
+					infoEnrolmentContext.getActualEnrolment().remove(infoCurricularCourseScope);
 				}
 			} catch (IndexOutOfBoundsException e) {
 				continue;
@@ -155,6 +154,9 @@ public abstract class InscTesteIO {
 				if(!str.equals(endStr)) {
 					Integer i = new Integer(str);
 					infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(i.intValue()));
+					flag = false;
+				} else {
+					infoEnrolmentContext.setChosenOptionalInfoDegree(null);
 					flag = false;
 				}
 			} catch (NumberFormatException e) {
@@ -192,5 +194,51 @@ public abstract class InscTesteIO {
 			}
 		}
 		return infoCurricularCourse;
+	}
+
+	public static String selectApropriateMessageFromAppResource(String appResourceKey, List values) {
+		BufferedReader in = null;
+		String str = null;
+		String strFinal = null;
+
+		try {
+			in = new BufferedReader(new FileReader("config/ServidorApresentacao/StudentResources.properties"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace(System.out);
+			return str;
+		}
+
+		try {
+			while(in.ready()) {
+				str = in.readLine();
+				String aux1 = new String(appResourceKey + "=");
+				String aux2 = null;
+				CharSequence aux3 = null;
+				CharSequence aux4 = null;
+				if(str.startsWith(aux1)) {
+					int j = str.indexOf("{0}");
+					if(j == -1) {
+						strFinal = str.substring(aux1.length());
+					} else {
+						aux2 = str.substring(aux1.length());
+						Iterator iterator = values.iterator();
+						while(iterator.hasNext()) {
+							String val = (String) iterator.next();
+							int i = aux2.indexOf("{0}");
+							aux3 = aux2.subSequence(0, i);
+							aux4 = aux2.subSequence((i + 3), aux2.length());
+							strFinal = aux3.toString() + val + aux4.toString();
+						}
+					}
+					break;
+				}
+			}
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		}
+		return strFinal;
 	}
 }

@@ -25,10 +25,9 @@ public class InscTeste2 {
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		autentication();
-		boolean flag = generateEnrolmentProssess(infoEnrolmentContext, true, true, false);
-//		if(flag) {
-//			flag = generateEnrolmentProssess(infoEnrolmentContext, true, true, false);
-//		}
+		while(true) {
+			generateEnrolmentProssess(infoEnrolmentContext, true, true);
+		}
 	}
 
 	private static void autentication() {
@@ -51,12 +50,13 @@ public class InscTeste2 {
 		return null;
 	}
 
-	private static boolean generateEnrolmentProssess(InfoEnrolmentContext infoEnrolmentContext, boolean withValidation, boolean withConfirm, boolean remove) {
+	private static void generateEnrolmentProssess(InfoEnrolmentContext infoEnrolmentContext, boolean withValidation, boolean withConfirm) {
 		Object serviceArgs1[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		InscTesteIO.showFinalSpan(infoEnrolmentContext);
+		boolean remove = false;
 		
-		InscTesteIO.selectNormalCurricularCoursesToEnroll(infoEnrolmentContext, remove);
+		InscTesteIO.selectNormalCurricularCoursesToEnroll(infoEnrolmentContext);
 
 		final List actualEnrolments = infoEnrolmentContext.getActualEnrolment();
 
@@ -67,7 +67,7 @@ public class InscTeste2 {
 			}
 		});
 
-		if(!optionalCurricularCoursesScopesEnrolled.isEmpty() && !remove) {
+		if(!optionalCurricularCoursesScopesEnrolled.isEmpty()) {
 			Iterator iterator = optionalCurricularCoursesScopesEnrolled.iterator();
 			while(iterator.hasNext()) {
 				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
@@ -79,15 +79,20 @@ public class InscTeste2 {
 				InscTesteIO.showAvailableDegreesForOption(infoEnrolmentContext);
 
 				InscTesteIO.selectDegreeForOptionalCurricularCourseToEnroll(infoEnrolmentContext);
+				
+				if(infoEnrolmentContext.getChosenOptionalInfoDegree() != null) {
+					Object serviceArgs3[] = { infoEnrolmentContext };
+					infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
+					InscTesteIO.showAvailableCurricularCoursesForOption(infoEnrolmentContext);
 
-				Object serviceArgs3[] = { infoEnrolmentContext };
-				infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
-				InscTesteIO.showAvailableCurricularCoursesForOption(infoEnrolmentContext);
-
-				Object serviceArgs4[] = { infoEnrolmentContext, InscTesteIO.selectOptionalCurricularCourseToEnroll(infoEnrolmentContext) };
-				infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
+					Object serviceArgs4[] = { infoEnrolmentContext, InscTesteIO.selectOptionalCurricularCourseToEnroll(infoEnrolmentContext) };
+					infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
+				} else {
+					remove = true;
+				}
 			}
-		} else if(!optionalCurricularCoursesScopesEnrolled.isEmpty() && remove) {
+		}
+		if(!optionalCurricularCoursesScopesEnrolled.isEmpty() && remove) {
 			Iterator iterator = optionalCurricularCoursesScopesEnrolled.iterator();
 			List aux = new ArrayList();
 			while(iterator.hasNext()) {
@@ -115,7 +120,6 @@ public class InscTeste2 {
 			infoEnrolmentContext = executeService("ConfirmActualEnrolment", serviceArgs6);
 		}
 		InscTesteIO.showEnrolmentValidationResultMessages(infoEnrolmentContext);
-		return infoEnrolmentContext.getEnrolmentValidationResult().isSucess();
 	}
 
 	private static void secureEnrolmentProssess() {
