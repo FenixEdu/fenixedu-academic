@@ -289,6 +289,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         degreeCurricularPlan.setInitialDate(infoDegreeCurricularPlan.getInitialDate());
         degreeCurricularPlan.setEndDate(infoDegreeCurricularPlan.getEndDate());
         degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
+        degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
+        degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
     }
     
     public static IDegreeCurricularPlan newDomainFromInfo(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {

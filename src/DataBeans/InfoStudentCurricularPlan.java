@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import Dominio.IStudentCurricularPlan;
+import Dominio.StudentCurricularPlan;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 
@@ -351,5 +352,25 @@ public class InfoStudentCurricularPlan
 			infoStudentCurricularPlan.copyFromDomain(studentCurricularPlan);
 		}
 		 return infoStudentCurricularPlan;
+	}
+	
+	public void copyToDomain(InfoStudentCurricularPlan infoStudentCurricularPlan, IStudentCurricularPlan studentCurricularPlan) {
+	    super.copyToDomain(infoStudentCurricularPlan, studentCurricularPlan);
+	    
+	    studentCurricularPlan.setClassification(infoStudentCurricularPlan.getClassification());
+	    studentCurricularPlan.setCompletedCourses(infoStudentCurricularPlan.getCompletedCourses());
+	    studentCurricularPlan.setGivenCredits(infoStudentCurricularPlan.getGivenCredits());
+	    studentCurricularPlan.setSpecialization(infoStudentCurricularPlan.getSpecialization());
+	    studentCurricularPlan.setStartDate(infoStudentCurricularPlan.getStartDate());
+	    studentCurricularPlan.setCurrentState(infoStudentCurricularPlan.currentState);
+	}
+	
+	public static IStudentCurricularPlan newDomainFromInfo(InfoStudentCurricularPlan infoStudentCurricularPlan) {
+	    IStudentCurricularPlan studentCurricularPlan = null;
+	    if(infoStudentCurricularPlan != null) {
+	        studentCurricularPlan = new StudentCurricularPlan();
+	        infoStudentCurricularPlan.copyToDomain(infoStudentCurricularPlan, studentCurricularPlan);
+	    }
+	    return studentCurricularPlan;   
 	}
 }
