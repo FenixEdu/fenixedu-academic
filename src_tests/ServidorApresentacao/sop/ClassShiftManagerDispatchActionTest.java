@@ -57,6 +57,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedAddClassShift() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
 		//sets needed objects to session/request
@@ -110,6 +112,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedAddClassShift() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		/**
 		 * prepare session 
 		 */
@@ -225,6 +229,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedRemoveClassShift() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
 		//sets needed objects to session/request
@@ -281,6 +287,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedRemoveClassShift() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
 		//sets needed objects to session/request
@@ -398,6 +406,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedViewClassShift() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
 		//sets needed objects to session/request
@@ -465,6 +475,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedListAvailableShifts() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
 		//sets needed objects to session/request
@@ -516,6 +528,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedListAvailableShifts() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
 		//sets needed objects to session/request

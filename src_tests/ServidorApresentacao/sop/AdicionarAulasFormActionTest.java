@@ -14,6 +14,7 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
 import Util.TipoSala;
 
@@ -44,6 +45,7 @@ public class AdicionarAulasFormActionTest extends TestCaseActionExecution {
 
 	private void prepareRequest() {
 		//required to put form manipularTurnosForm in request
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 		setRequestPathInfo("/sop", "/manipularTurnosForm");
 		addRequestParameter("indexTurno", new Integer(0).toString());
 		actionPerform();		
@@ -65,7 +67,9 @@ public class AdicionarAulasFormActionTest extends TestCaseActionExecution {
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 
 		Map items = new HashMap();
-
+		
+		items.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		try {
 			GestorServicos gestor = GestorServicos.manager();
 

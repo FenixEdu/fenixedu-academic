@@ -28,6 +28,7 @@ import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -45,8 +46,8 @@ public class CriarAulaFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 		DynaActionForm criarAulaForm = (DynaActionForm) form;
-
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 			IUserView userView =

@@ -44,6 +44,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testSuccessfulCriarTurno() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 
 		// define mapping de origem
 		setRequestPathInfo("sop", "/criarTurnoForm");
@@ -120,6 +121,8 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testUnsuccessfulCriarTurno() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+
 		setRequestPathInfo("sop", "/criarTurnoForm");
 		addRequestParameter("nome", "turno1");
 		addRequestParameter(

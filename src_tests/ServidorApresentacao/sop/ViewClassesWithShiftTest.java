@@ -89,6 +89,7 @@ public class ViewClassesWithShiftTest extends TestCaseActionExecution {
 		HashMap itemsInSession = new HashMap();		
 		readShifts();
 		itemsInSession.put(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, this.infoShifts);
+		itemsInSession.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 		
 		doTest(itemsInRequest, itemsInSession, forward, null, null, null, null);
 	}

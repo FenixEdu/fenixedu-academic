@@ -11,6 +11,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DiaSemana;
 import Util.TipoAula;
 /**
@@ -51,6 +52,7 @@ public class EditarAulaFormActionTest extends TestCaseActionExecution {
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 	
 		Map items = new HashMap();
+		items.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 			
 		try {
 			GestorServicos gestor = GestorServicos.manager();

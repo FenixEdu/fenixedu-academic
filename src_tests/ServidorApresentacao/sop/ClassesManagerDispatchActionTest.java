@@ -58,6 +58,8 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedListClasses() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassesManagerDA");
 		//sets needed objects to session/request
@@ -94,6 +96,8 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedListClasses() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassesManagerDA");
 		//sets needed objects to session/request

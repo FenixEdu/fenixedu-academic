@@ -58,6 +58,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedCreateClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -80,6 +82,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedCreateExistingClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -119,6 +123,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedCreateNonExistingClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -161,6 +167,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedPrepareEditClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -211,6 +219,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedEditClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -261,6 +271,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedPrepareEditClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -303,6 +315,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedEditClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -361,6 +375,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 
 
 	public void testAuthorizedEditClassToExisting() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -418,6 +434,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 
 
 	public void testUnAuthorizedDeleteClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -440,6 +458,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedDeleteClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -477,6 +497,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testUnAuthorizedViewClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//			set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request
@@ -498,6 +520,8 @@ public class ClassManagerDispatchActionTest extends TestCasePresentation {
 	}
 
 	public void testAuthorizedViewClass() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		//		set request path
 		setRequestPathInfo("sop", "/ClassManagerDA");
 		//sets needed objects to session/request

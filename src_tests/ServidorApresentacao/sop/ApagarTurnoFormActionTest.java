@@ -62,6 +62,7 @@ public class ApagarTurnoFormActionTest extends TestCaseActionExecution {
 	 */
 	public void testSuccessfulExecutionOfAction() {
 		//place form manipularAulasForm in session
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 		setRequestPathInfo("/sop", "/manipularTurnosForm");
 		addRequestParameter("indexTurno", new Integer(0).toString());
 		actionPerform();
@@ -84,6 +85,8 @@ public class ApagarTurnoFormActionTest extends TestCaseActionExecution {
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 		Map result = new Hashtable();
 
+		result.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		try {
 			GestorServicos manager = GestorServicos.manager();
 			InfoExecutionCourse iDE = 

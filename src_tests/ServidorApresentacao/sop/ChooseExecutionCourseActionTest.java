@@ -39,7 +39,7 @@ public class ChooseExecutionCourseActionTest extends TestCaseActionExecution {
 		super(testName);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
@@ -49,7 +49,7 @@ public class ChooseExecutionCourseActionTest extends TestCaseActionExecution {
 		return items;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
@@ -58,12 +58,14 @@ public class ChooseExecutionCourseActionTest extends TestCaseActionExecution {
 		return items;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 
 		HashMap items = new HashMap();
+
+		items.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 
 		// create execution period
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
@@ -95,12 +97,14 @@ public class ChooseExecutionCourseActionTest extends TestCaseActionExecution {
 		return items;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
 
 		HashMap items = new HashMap();
+
+		items.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 
 		// create execution period
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
@@ -132,63 +136,63 @@ public class ChooseExecutionCourseActionTest extends TestCaseActionExecution {
 		return items;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
 		return "/escolherDisciplinaExecucaoForm";
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
 	 */
 	protected String getRequestPathInfoPathAction() {
 		return "/sop";
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
 		return "/WEB-INF/tests/web-sop.xml";
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
 		return "forwardChoose";
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorApresentacao.TestCaseActionExecution#getUnsuccessfulForward()
 	 */
 	protected String getUnsuccessfulForward() {

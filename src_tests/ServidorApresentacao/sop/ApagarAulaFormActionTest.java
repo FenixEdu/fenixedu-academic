@@ -11,6 +11,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.TestCaseActionExecution;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
 author tfc130
@@ -37,6 +38,7 @@ public class ApagarAulaFormActionTest extends TestCaseActionExecution {
 
 	private void prepareRequest() {
 		//required to put form manipularTurnosForm in request
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);		
 		setRequestPathInfo("/sop", "/manipularAulasForm");
 		addRequestParameter("indexAula", new Integer(0).toString());
 		addRequestParameter("operation", "Apagar Aula");
@@ -53,6 +55,8 @@ public class ApagarAulaFormActionTest extends TestCaseActionExecution {
 
 		Map items = new HashMap();
 		
+		items.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+				
 		try {
 			GestorServicos gestor = GestorServicos.manager();
 			InfoExecutionCourse iDE =

@@ -41,6 +41,8 @@ public class EscolherContextoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testSuccessfulEscolherContexto() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+
 		// define mapping de origem
 		setRequestPathInfo("", "/escolherContextoForm");
 

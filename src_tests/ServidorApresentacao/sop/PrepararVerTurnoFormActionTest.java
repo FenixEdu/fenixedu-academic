@@ -42,6 +42,7 @@ public class PrepararVerTurnoFormActionTest extends TestCasePresentation{
   }
 
   public void testSuccessfulPrepararVerTurno() {
+	getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
 
   	// Necessario para colocar form manipularTurnosForm em sessao
   	setRequestPathInfo("/sop", "/manipularTurnosForm");

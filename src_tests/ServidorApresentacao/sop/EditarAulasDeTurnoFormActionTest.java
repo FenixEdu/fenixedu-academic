@@ -4,6 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * EditarAulasDeTurnoFormActionTest.java
@@ -34,6 +35,8 @@ public class EditarAulasDeTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testAdicionarAulas() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		/* :FIXME: change this when changing action */
 		String operation = "Adicionar Aulas";
 		
@@ -42,6 +45,8 @@ public class EditarAulasDeTurnoFormActionTest extends TestCasePresentation {
 	}
 
 	public void testRemoverAula() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		/* :FIXME: change this when changing action */
 		String operation = "Remover Aula";
 

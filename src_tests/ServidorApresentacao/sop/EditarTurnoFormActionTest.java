@@ -12,6 +12,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
 /**
  *@author tfc130
@@ -39,6 +40,8 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
   }
 
     public void testSuccessfulEditarTurno() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+
     // define mapping de origem
     setRequestPathInfo("", "/editarTurnoForm");
     // Preenche campos do formulario
@@ -89,6 +92,8 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
    
    
     public void testUnsuccessfulEditarTurno() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+    	
     setRequestPathInfo("", "/editarTurnoForm");
 
     addRequestParameter("nome", "turno2");

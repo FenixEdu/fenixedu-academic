@@ -42,6 +42,8 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 	}
 
 	public void testSuccessfulCriarAula() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+
 		// define mapping de origem
 		setRequestPathInfo("", "/criarAulaForm");
 		// Preenche campos do formulario
@@ -120,6 +122,8 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 	}
 
 	public void testUnsuccessfulCriarAula() {
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+
 		setRequestPathInfo("", "/criarAulaForm");
 		addRequestParameter(
 			"diaSemana",

@@ -7,6 +7,7 @@ import junit.framework.TestSuite;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 
 /**
@@ -38,6 +39,8 @@ public class CriarSalaFormActionTest extends TestCasePresentation {
   }
 
   public void testSuccessfulCriarSala() {      
+	getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+
     // define mapping de origem
     setRequestPathInfo("", "/criarSalaForm");
     
@@ -66,6 +69,8 @@ public class CriarSalaFormActionTest extends TestCasePresentation {
   }
 
   public void testUnsuccessfulCriarSala() {
+	getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+
     setRequestPathInfo("", "/criarSalaForm");
     addRequestParameter("name","Fa1");
     addRequestParameter("building","Pavilhão Novas Licenciaturas");
@@ -74,9 +79,9 @@ public class CriarSalaFormActionTest extends TestCasePresentation {
     addRequestParameter("capacityNormal","100");
     addRequestParameter("capacityExame","50");
     actionPerform();
-    verifyForwardPath("/autenticacaoSOP.jsp");
+    verifyForwardPath("/naoExecutado.do");
     
-	verifyActionErrors(new String[] {"error.invalid.session"});
+//	verifyActionErrors(new String[] {"error.invalid.session"});
   }
   
 
