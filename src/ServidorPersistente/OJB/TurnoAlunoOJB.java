@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.IDisciplinaExecucao;
@@ -27,6 +28,15 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersistente {
+
+
+	public List readByStudentAndExecutionCourse(IStudent student,IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("keyStudent",student.getIdInternal());
+		crit.addEqualTo("shift.chaveDisciplinaExecucao",executionCourse.getIdInternal());
+		
+		 return queryList(ShiftStudent.class, crit);
+	}
 
 	public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno) throws ExcepcaoPersistencia {
 		try {
