@@ -9,23 +9,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
+import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.Season;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class CreateExamActionDA extends DispatchAction {
+public class CreateExamActionDA extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,
@@ -34,11 +35,11 @@ public class CreateExamActionDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			//HttpSession session = request.getSession(false);
-			
+			SessionUtils.getExecutionCourses(request);
+
 			String nextPage = request.getParameter("nextPage");
 			request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
-			
+
 			ArrayList horas = Util.getExamShifts();
 			request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
@@ -68,7 +69,6 @@ public class CreateExamActionDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			//HttpSession session = request.getSession(false);
 			IUserView userView = SessionUtils.getUserView(request);
 
 			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
@@ -76,7 +76,7 @@ public class CreateExamActionDA extends DispatchAction {
 			Season season = new Season(new Integer((String) chooseDayAndShiftForm.get("season")));
 			Calendar examDate = Calendar.getInstance();
 			Calendar examTime = Calendar.getInstance();
-			InfoExecutionCourse executionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+			InfoExecutionCourse executionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
 			Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
 			Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
@@ -98,7 +98,9 @@ public class CreateExamActionDA extends DispatchAction {
 			// Create an exam with season, examDateAndTime and executionCourse
 			Object argsCreateExam[] = { examDate, examTime, season, executionCourse};
 			try {
+				System.out.println("Calling create exam service.");
 				ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
+				System.out.println("Completed create exam service.");
 			} catch (ExistingServiceException ex) {
 				throw new ExistingActionException("O exame", ex);
 			}
@@ -106,8 +108,10 @@ public class CreateExamActionDA extends DispatchAction {
 			String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
 
 			if (nextPage != null) {
+				System.out.println("returning to next page forward");
 				return mapping.findForward(nextPage);
 			} else {
+				System.out.println("returning sucess forward");
 				return mapping.findForward("Sucess");
 			}
 	}

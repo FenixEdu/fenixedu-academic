@@ -7,6 +7,12 @@
 		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         	<input type="hidden" value="nextPage" name="method"/>
+
+		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+        	
+			<html:hidden property="<%= SessionConstants.NEXT_PAGE %>"
+						 value="<%= pageContext.findAttribute("nextPage").toString() %>"/>
         	<html:hidden property="page" value="1"/>
          <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>

@@ -44,6 +44,8 @@ public class ChooseContextDA extends FenixContextDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		System.out.println("In ChooseContext DA");
+
 		DynaActionForm chooseScheduleContext = (DynaActionForm) form;
 
 		IUserView userView = SessionUtils.getUserView(request);
@@ -81,13 +83,16 @@ public class ChooseContextDA extends FenixContextDispatchAction {
 				"errors.invalid.execution.degree",
 				new ActionError("errors.invalid.execution.degree"));
 			saveErrors(request, actionErrors);
+			System.out.println("Out ChooseContext DA");
 			return mapping.getInputForward();
 		} else {
 			request.setAttribute(
 				SessionConstants.EXECUTION_DEGREE,
 				infoExecutionDegree);
+			System.out.println("Out ChooseContext DA");
 			return mapping.findForward("ManageSchedules");
 		}
+
 	}
 
 }

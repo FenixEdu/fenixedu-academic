@@ -51,12 +51,13 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
+
 			String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
 			String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
 			if (inputPage != null)
-				session.setAttribute(SessionConstants.INPUT_PAGE, inputPage);
+				request.setAttribute(SessionConstants.INPUT_PAGE, inputPage);
 			if (nextPage != null)
-				session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+				request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
 			IUserView userView = SessionUtils.getUserView(request);
 
@@ -68,7 +69,7 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 			semestres.add(new LabelValueBean("escolher", ""));
 			semestres.add(new LabelValueBean("1 º", "1"));
 			semestres.add(new LabelValueBean("2 º", "2"));
-			session.setAttribute("semestres", semestres);
+			request.setAttribute("semestres", semestres);
 
 			/* Criar o bean de anos curricutares */
 			ArrayList anosCurriculares = new ArrayList();
@@ -78,7 +79,7 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 			anosCurriculares.add(new LabelValueBean("3 º", "3"));
 			anosCurriculares.add(new LabelValueBean("4 º", "4"));
 			anosCurriculares.add(new LabelValueBean("5 º", "5"));
-			session.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
+			request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
 
 			/* Cria o form bean com as licenciaturas em execucao.*/
 			Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear()};
@@ -107,7 +108,7 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 				licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
 			}
 
-			session.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
+			request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
 
 			request.setAttribute(SessionConstants.DEGREES, licenciaturas);
 
@@ -188,34 +189,49 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 		HttpSession session = request.getSession(false);
 		DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-		SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
+		IUserView userView = SessionUtils.getUserView(request);
+
+		//SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
+		
+		String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
+		if (nextPage == null) {
+			nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+		}
 
 		if (session != null) {
-			Integer semestre = ((InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getSemester();
+			Integer semestre = ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getSemester();
 			Integer anoCurricular = (Integer) escolherContextoForm.get("curricularYear");
 
 			int index = Integer.parseInt((String) escolherContextoForm.get("index"));
 
-			session.setAttribute("anoCurricular", anoCurricular);
-			session.setAttribute("semestre", semestre);
+			request.setAttribute("anoCurricular", anoCurricular);
+			request.setAttribute("semestre", semestre);
 
-			List infoExecutionDegreeList = (List) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+			//List infoExecutionDegreeList = (List) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+			Object argsLerLicenciaturas[] = { ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getInfoExecutionYear()} ;
+			List infoExecutionDegreeList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+			ArrayList licenciaturas = new ArrayList();
+			licenciaturas.add(new LabelValueBean("escolher", ""));
+			Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+			//////
 
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
 
 			if (infoExecutionDegree != null) {
 				CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
 					new CurricularYearAndSemesterAndInfoExecutionDegree(anoCurricular, semestre, infoExecutionDegree);
-				session.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
+				request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
 
-				session.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, anoCurricular);
-				session.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
-
+				request.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, anoCurricular);
+				request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, anoCurricular.toString());
+				request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+				request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+				request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
 			} else {
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}
 
-			String nextPage = (String) session.getAttribute(SessionConstants.NEXT_PAGE);
+			//String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
 			if (nextPage != null) {
 				return mapping.findForward(nextPage);
 			} else
@@ -343,12 +359,12 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
 		HttpSession session = request.getSession(false);
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		if (infoExecutionPeriod == null) {
 			IUserView userView = SessionUtils.getUserView(request);
 			infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", new Object[0]);
 
-			session.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+			request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 		}
 		return infoExecutionPeriod;
 	}

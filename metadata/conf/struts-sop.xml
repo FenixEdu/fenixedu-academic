@@ -1005,7 +1005,7 @@
 
 	<action path="/createExam"
 			name="examForm"
-			input="/createExam.jsp"
+			input="/createExam.do?method=prepare"
     		type="ServidorApresentacao.Action.sop.CreateExamActionDA"
             parameter="method"
     		>
@@ -1014,7 +1014,7 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         		   />
     	<forward name="showCreateForm" path="/createExam.jsp"/>
-    	<forward name="Sucess" path="/mainExams.do?method=prepare"/>
+    	<forward name="Sucess" path="/mainExams.do?method=prepare&amp;page=0"/>
     	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
 	</action>
 
