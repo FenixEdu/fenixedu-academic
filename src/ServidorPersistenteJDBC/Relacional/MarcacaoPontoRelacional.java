@@ -299,7 +299,7 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 			
 				PreparedStatement sql2 =
 					UtilRelacionalOracle.prepararComando(
-						"SELECT * FROM regularizacao_marcacao WHERE "
+						"SELECT * FROM ass_REGULARIZACAO_MARCACAO WHERE "
 							+ "chaveMarcacaoPonto = ? AND chaveParamRegularizacao = 6");
 				ResultSet resultado2 = null;
 			
@@ -447,35 +447,51 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 				marcacoesPonto = new ArrayList();
 				Timestamp dataMarcacao = null;
 
-				PreparedStatement sql2 =
-					UtilRelacionalOracle.prepararComando("SELECT * FROM ASS_MARREG WHERE ASS_MARREGMARCAS = ? AND " + "ASS_MARREGREGUL = 'MA'");
-				ResultSet resultado2 = null;
-				while (resultado.next()) {
-					// retirar as marcacoes de ponto que foram marcadas para anular
-					sql2.setInt(1, resultado.getInt("ASS_MARSEQ"));
-					resultado2 = sql2.executeQuery();
-					if (!resultado2.next()) {
-						if (resultado.getString("ASS_MARDHMARCA") != null) {
-							dataMarcacao = Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
-						}
+				//				obtem o codigo das marcacoes a anular			
+				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_PARAM_REGULARIZACAO WHERE sigla = 'MA'");
+				ResultSet resultado2 = sql2.executeQuery();
+				int marcacaoAnular = 0;
+				if (resultado2.next()) {
+					marcacaoAnular = resultado2.getInt("codigoInterno");
+				} else {
+					sql2.close();
+					SuportePersistenteOracle.getInstance().cancelarTransaccao();
+					return null;
+				}
+				sql2.close();
 
-						MarcacaoPonto marcacaoPonto =
-							new MarcacaoPonto(
-								resultado.getInt("ASS_MARSEQ"),
-								resultado.getString("ASS_MARUNID"),
-								dataMarcacao,
-								resultado.getInt("ASS_MARCARTAO"),
-								resultado.getInt("ASS_MARPESSOA"));
-						// diferenciar as marcacoes regularizadas
-						if (resultado.getString("ASS_MARREGUL").equals("S")) {
+				// marcacaoes regularizadas
+				PreparedStatement sql3 =
+					UtilRelacional.prepararComando("SELECT * FROM ass_REGULARIZACAO_MARCACAO WHERE " + "chaveMarcacaoPonto = ?");
+				ResultSet resultado3 = null;
+				while (resultado.next()) {
+					if (resultado.getString("ASS_MARDHMARCA") != null) {
+						dataMarcacao = Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
+					}
+					MarcacaoPonto marcacaoPonto =
+						new MarcacaoPonto(
+							resultado.getInt("ASS_MARSEQ"),
+							resultado.getString("ASS_MARUNID"),
+							dataMarcacao,
+							resultado.getInt("ASS_MARCARTAO"),
+							resultado.getInt("ASS_MARPESSOA"));
+
+					// diferenciar as marcacoes regularizadas
+					sql3.setInt(1, resultado.getInt("ASS_MARSEQ"));
+					resultado3 = sql3.executeQuery();
+					if (resultado3.next()) {
+						// retirar as marcacoes de ponto que foram marcadas para anular
+						if (resultado3.getInt("chaveParamRegularizacao") == marcacaoAnular) {
+							continue;
+						} else {
 							marcacaoPonto.setEstado("regularizada");
 							marcacaoPonto.setSiglaUnidade("");
 							marcacaoPonto.setNumCartao(0);
 						}
-						marcacoesPonto.add(marcacaoPonto);
 					}
+					marcacoesPonto.add(marcacaoPonto);
 				}
-				sql2.close();
+				sql3.close();
 				sql.close();
 			} catch (Exception e) {
 				SuportePersistenteOracle.getInstance().cancelarTransaccao();
@@ -666,7 +682,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 
 				PreparedStatement sql =
 					UtilRelacionalOracle.prepararComando(
-						"SELECT * FROM ASS_MARCAS " + "WHERE ASS_MARDHMARCA = TO_DATE(?, 'YYYY-MM-DD HH24:MI:SS') AND ASS_MARPESSOA = ?");
+						"SELECT * FROM ASS_MARCAS "
+							+ "WHERE ASS_MARDHMARCA = TO_DATE(?, 'YYYY-MM-DD HH24:MI:SS') AND ASS_MARPESSOA = ?");
 
 				sql.setTimestamp(1, new Timestamp(dataMarcacao.getTime()));
 				sql.setInt(2, numFuncionario);
@@ -767,7 +784,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 				MarcacaoPonto marcacaoPonto = null;
 
 				// chaveUnidade
-				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_UNIDADE_MARCACAO WHERE sigla = ?");
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_UNIDADE_MARCACAO WHERE sigla = ?");
 				ResultSet resultado2 = null;
 
 				// marcacoes de ponto regularizadas nao tem unidade de marcacao
@@ -1178,7 +1196,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 				sql.close();
 
 				// altera a regularizacao de marcacao de ponto na tabela ASS_MARREG
-				sql = UtilRelacionalOracle.prepararComando("UPDATE ASS_MARREG SET " + "ASS_MARREGREGUL = ? " + "WHERE ASS_MARREGMARCAS = ? ");
+				sql =
+					UtilRelacionalOracle.prepararComando(
+						"UPDATE ASS_MARREG SET " + "ASS_MARREGREGUL = ? " + "WHERE ASS_MARREGMARCAS = ? ");
 
 				sql.setString(1, sigla);
 				sql.setInt(2, regularizacao.getChaveMarcacaoPonto());
@@ -1361,7 +1381,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 				sql.setString(9, "V");
 				sql.setInt(10, ultimo);
 
-				sql.setString(11, regularizacao.getQuando().toString().substring(0, regularizacao.getQuando().toString().indexOf(".")));
+				sql.setString(
+					11,
+					regularizacao.getQuando().toString().substring(0, regularizacao.getQuando().toString().indexOf(".")));
 
 				sql.setInt(12, numMecanograficoSessao);
 
@@ -1676,7 +1698,7 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 //		
 //			PreparedStatement sql2 =
 //				UtilRelacionalOracle.prepararComando(
-//					"SELECT * FROM regularizacao_marcacao WHERE "
+//					"SELECT * FROM ass_REGULARIZACAO_MARCACAO WHERE "
 //						+ "chaveMarcacaoPonto = ? AND chaveParamRegularizacao = 6");
 //			ResultSet resultado2 = null;
 //		
@@ -1719,7 +1741,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 //
 //				// procura de marcacoes de ponto normais
 //				StringBuffer query =
-//					new StringBuffer("SELECT * FROM ASS_MARCAS WHERE ((ASS_MARDHMARCA IS NULL) OR " + "(ASS_MARDHMARCA BETWEEN ? AND ?))");
+//					new StringBuffer(
+//						"SELECT * FROM ASS_MARCAS WHERE ((ASS_MARDHMARCA IS NULL) OR " + "(ASS_MARDHMARCA BETWEEN ? AND ?))");
 //				if (listaFuncionarios != null) {
 //					if (listaFuncionarios.size() > 0) {
 //						query = query.append(" AND (");
@@ -1822,35 +1845,51 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 //				marcacoesPonto = new ArrayList();
 //				Timestamp dataMarcacao = null;
 //
-//				PreparedStatement sql2 =
-//					UtilRelacionalOracle.prepararComando("SELECT * FROM ASS_MARREG WHERE ASS_MARREGMARCAS = ? AND " + "ASS_MARREGREGUL = 'MA'");
-//				ResultSet resultado2 = null;
-//				while (resultado.next()) {
-//					// retirar as marcacoes de ponto que foram marcadas para anular
-//					sql2.setInt(1, resultado.getInt("ASS_MARSEQ"));
-//					resultado2 = sql2.executeQuery();
-//					if (!resultado2.next()) {
-//						if (resultado.getString("ASS_MARDHMARCA") != null) {
-//							dataMarcacao = Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
-//						}
+//				//				obtem o codigo das marcacoes a anular			
+//				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_PARAM_REGULARIZACAO WHERE sigla = 'MA'");
+//				ResultSet resultado2 = sql2.executeQuery();
+//				int marcacaoAnular = 0;
+//				if (resultado2.next()) {
+//					marcacaoAnular = resultado2.getInt("codigoInterno");
+//				} else {
+//					sql2.close();
+//					SuportePersistenteOracle.getInstance().cancelarTransaccao();
+//					return null;
+//				}
+//				sql2.close();
 //
-//						MarcacaoPonto marcacaoPonto =
-//							new MarcacaoPonto(
-//								resultado.getInt("ASS_MARSEQ"),
-//								resultado.getString("ASS_MARUNID"),
-//								dataMarcacao,
-//								resultado.getInt("ASS_MARCARTAO"),
-//								resultado.getInt("ASS_MARPESSOA"));
-//						// diferenciar as marcacoes regularizadas
-//						if (resultado.getString("ASS_MARREGUL").equals("S")) {
+//				// marcacaoes regularizadas
+//				PreparedStatement sql3 =
+//					UtilRelacional.prepararComando("SELECT * FROM ass_REGULARIZACAO_MARCACAO WHERE " + "chaveMarcacaoPonto = ?");
+//				ResultSet resultado3 = null;
+//				while (resultado.next()) {
+//					if (resultado.getString("ASS_MARDHMARCA") != null) {
+//						dataMarcacao = Timestamp.valueOf(resultado.getString("ASS_MARDHMARCA"));
+//					}
+//					MarcacaoPonto marcacaoPonto =
+//						new MarcacaoPonto(
+//							resultado.getInt("ASS_MARSEQ"),
+//							resultado.getString("ASS_MARUNID"),
+//							dataMarcacao,
+//							resultado.getInt("ASS_MARCARTAO"),
+//							resultado.getInt("ASS_MARPESSOA"));
+//
+//					// diferenciar as marcacoes regularizadas
+//					sql3.setInt(1, resultado.getInt("ASS_MARSEQ"));
+//					resultado3 = sql3.executeQuery();
+//					if (resultado3.next()) {
+//						// retirar as marcacoes de ponto que foram marcadas para anular
+//						if (resultado3.getInt("chaveParamRegularizacao") == marcacaoAnular) {
+//							continue;
+//						} else {
 //							marcacaoPonto.setEstado("regularizada");
 //							marcacaoPonto.setSiglaUnidade("");
 //							marcacaoPonto.setNumCartao(0);
 //						}
-//						marcacoesPonto.add(marcacaoPonto);
 //					}
+//					marcacoesPonto.add(marcacaoPonto);
 //				}
-//				sql2.close();
+//				sql3.close();
 //				sql.close();
 //			} catch (Exception e) {
 //				SuportePersistenteOracle.getInstance().cancelarTransaccao();
@@ -2040,7 +2079,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 //			try {
 //
 //				PreparedStatement sql =
-//					UtilRelacionalOracle.prepararComando("SELECT * FROM ASS_MARCAS " + "WHERE ASS_MARDHMARCA = ? AND ASS_MARPESSOA = ?");
+//					UtilRelacionalOracle.prepararComando(
+//						"SELECT * FROM ASS_MARCAS " + "WHERE ASS_MARDHMARCA = ? AND ASS_MARPESSOA = ?");
 //
 //				sql.setTimestamp(1, new Timestamp(dataMarcacao.getTime()));
 //				sql.setInt(2, numFuncionario);
@@ -2142,7 +2182,8 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 //				MarcacaoPonto marcacaoPonto = null;
 //
 //				// chaveUnidade
-//				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_UNIDADE_MARCACAO WHERE sigla = ?");
+//				PreparedStatement sql2 =
+//					UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_UNIDADE_MARCACAO WHERE sigla = ?");
 //				ResultSet resultado2 = null;
 //
 //				// marcacoes de ponto regularizadas nao tem unidade de marcacao
@@ -2547,7 +2588,9 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente {
 //				sql.close();
 //
 //				// altera a regularizacao de marcacao de ponto na tabela ASS_MARREG
-//				sql = UtilRelacionalOracle.prepararComando("UPDATE ASS_MARREG SET " + "ASS_MARREGREGUL = ? " + "WHERE ASS_MARREGMARCAS = ? ");
+//				sql =
+//					UtilRelacionalOracle.prepararComando(
+//						"UPDATE ASS_MARREG SET " + "ASS_MARREGREGUL = ? " + "WHERE ASS_MARREGMARCAS = ? ");
 //
 //				sql.setString(1, sigla);
 //				sql.setInt(2, regularizacao.getChaveMarcacaoPonto());

@@ -247,6 +247,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 
 			listaHeaders.add(messages.getMessage("prompt.funcionario"));
 			listaHeaders.add(messages.getMessage("prompt.sigla"));
+			listaHeaders.add(messages.getMessage("prompt.descricaoJustificacao"));
 			listaHeaders.add(messages.getMessage("prompt.tipo"));
 			listaHeaders.add(messages.getMessage("prompt.diaInicio"));
 			listaHeaders.add(messages.getMessage("prompt.diaFim"));

@@ -60,21 +60,22 @@ public class Ocorrencia implements IStrategyJustificacoes {
 		Calendar calendario = Calendar.getInstance();
 
 		listaJustificacoesBody.add(1, paramJustificacao.getSigla());
-		listaJustificacoesBody.add(2, paramJustificacao.getTipo());
+		listaJustificacoesBody.add(2, paramJustificacao.getDescricao());
+		listaJustificacoesBody.add(3, paramJustificacao.getTipo());
 
 		calendario.clear();
 		calendario.setTime(justificacao.getDiaInicio());
-		listaJustificacoesBody.add(3, FormataCalendar.data(calendario));
+		listaJustificacoesBody.add(4, FormataCalendar.data(calendario));
 
 		if (justificacao.getDiaFim() != null) {
 			calendario.clear();
 			calendario.setTime(justificacao.getDiaFim());
-			listaJustificacoesBody.add(4, FormataCalendar.data(calendario));
+			listaJustificacoesBody.add(5, FormataCalendar.data(calendario));
 		} else {
-			listaJustificacoesBody.add(4, new String("&nbsp;"));
+			listaJustificacoesBody.add(5, new String("&nbsp;"));
 		}
-		listaJustificacoesBody.add(5, new String("&nbsp;"));
 		listaJustificacoesBody.add(6, new String("&nbsp;"));
+		listaJustificacoesBody.add(7, new String("&nbsp;"));
 	} /* setListaJustificacoesBody */
 
 	public void updateSaldosHorarioVerbeteBody(
