@@ -176,8 +176,7 @@ public class InfoEnrolment extends InfoObject {
 		InfoEnrolment infoEnrolment = null;
 		if (enrollment != null) {
 			if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
-				infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
-				infoEnrolment = InfoEnrolment.newInfoFromDomain(enrollment);
+				infoEnrolment = InfoEnrolmentInOptionalCurricularCourse.newInfoFromDomain(enrollment);
 			} else {
 				infoEnrolment = new InfoEnrolment();
 				infoEnrolment.copyFromDomain(enrollment);

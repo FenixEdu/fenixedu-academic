@@ -23,7 +23,7 @@ public class InfoEnrolmentWithInfoStudentCurricularPlan extends InfoEnrolment {
 		InfoEnrolmentWithInfoStudentCurricularPlan infoEnrolment = null;
 		if(enrolment != null) {
 			infoEnrolment = new InfoEnrolmentWithInfoStudentCurricularPlan();
-			infoEnrolment.copyFromDomain(enrolment.getStudentCurricularPlan());
+			infoEnrolment.copyFromDomain(enrolment);
 		}				
 		return infoEnrolment;
 	}
