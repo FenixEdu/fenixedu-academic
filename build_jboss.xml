@@ -375,9 +375,16 @@
 
 		<!-- Run this externally so it doesn't fail when
 			 the web-app is not yet installed. -->
-		<exec executable="ant" failonerror="false">
-			<arg line="-f build_tomcat.xml remove"/>
-		</exec>
+		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
+			<arg line="-f"/>
+			<arg line="build_tomcat.xml"/>			
+			<arg line="remove"/>			
+		</exec> 
+		<exec executable="ant" failonerror="false" os="Linux">
+			<arg line="-f"/>
+			<arg line="build_tomcat.xml"/>			
+			<arg line="remove"/>			
+		</exec> 
 
 		<!-- Install web-app -->
 		<ant antfile="build_tomcat.xml" target="install">
@@ -442,9 +449,17 @@
 
 		<!-- Run this externally so it doesn't fail when
 			 the web-app is not yet installed. -->
-		<exec executable="ant" failonerror="false">
-			<arg line="-f build_tomcat.xml remove"/>
-		</exec>
+		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
+			<arg line="-f"/>
+			<arg line="build_tomcat.xml"/>			
+			<arg line="remove"/>			
+		</exec> 
+		<exec executable="ant" failonerror="false" os="Linux">
+			<arg line="-f"/>
+			<arg line="build_tomcat.xml"/>			
+			<arg line="remove"/>			
+		</exec> 
+		
 
 		<!-- Install web-app -->
 		<ant antfile="build_tomcat.xml" target="install">
