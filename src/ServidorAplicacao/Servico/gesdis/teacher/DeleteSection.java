@@ -68,8 +68,6 @@ public class DeleteSection implements IServico {
 			List sectionsReordered =
 				persistentSection.readBySiteAndSection(site, superiorSection);
 			// persistentItem.readAllItemsBySection(section);
-			System.out.println(
-				"contains?=" + sectionsReordered.contains(deletedSection));
 			//only necessary if we reomve the open/close transaction from the service
 			//sectionsReordered.remove(deletedSection);
 
