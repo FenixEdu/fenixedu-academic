@@ -59,10 +59,10 @@ public class ReadActualExecutionPeriodTest extends TestCaseServicos {
 		InfoExecutionPeriod executionPeriod = null;
 		try {
 			executionPeriod =
-				(InfoExecutionPeriod) ServiceUtils.executeService(_userView, "ReadActualExecutionPeriod", null);
+				(InfoExecutionPeriod) ServiceUtils.executeService(_userView, "ReadCurrentExecutionPeriod", null);
 		} catch (Exception ex) {
 			ex.printStackTrace(System.out);
-			fail("Executing service ReadActualExecutionPeriod");
+			fail("Executing service ReadCurrentExecutionPeriod");
 		}
 		IExecutionPeriod expectedIExecutionPeriod = null;
 		try {
