@@ -1,7 +1,6 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
