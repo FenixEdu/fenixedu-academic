@@ -8,6 +8,7 @@
  */
 package ServidorApresentacao.Action.sop.utils;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,10 @@ import javax.servlet.http.HttpSession;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
@@ -119,70 +122,143 @@ public abstract class RequestUtils {
 	public static final InfoSite getSiteFromRequest(HttpServletRequest request)
 		throws FenixActionException {
 		InfoSite infoSite = null;
-		
+
 		try {
-			InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
-			Object[] args= {infoExecutionCourse	};
-			infoSite = (InfoSite) ServiceUtils.executeService(null,"ReadSite",args);
-			
+			InfoExecutionCourse infoExecutionCourse =
+				getExecutionCourseFromRequest(request);
+			Object[] args = { infoExecutionCourse };
+			infoSite =
+				(InfoSite) ServiceUtils.executeService(null, "ReadSite", args);
+
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
 		return infoSite;
 	}
-	
+
 	public static final InfoSite getSiteFromAnyScope(HttpServletRequest request)
-			throws FenixActionException {
-			InfoSite infoSite = null;
-			HttpSession session = request.getSession();
-			
-			infoSite = (InfoSite)session.getAttribute(SessionConstants.INFO_SITE);
-			if (infoSite==null) {
-			
+		throws FenixActionException {
+		InfoSite infoSite = null;
+		HttpSession session = request.getSession(true);
+
+		infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+		if (infoSite == null) {
+
 			try {
-				InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
-				Object[] args= {infoExecutionCourse	};
-				infoSite = (InfoSite) ServiceUtils.executeService(null,"ReadSite",args);
-			
+				InfoExecutionCourse infoExecutionCourse =
+					getExecutionCourseFromRequest(request);
+				Object[] args = { infoExecutionCourse };
+				infoSite =
+					(InfoSite) ServiceUtils.executeService(
+						null,
+						"ReadSite",
+						args);
+
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-			}
-			return infoSite;
 		}
-	
-	public static final List getSectionsFromRequest(HttpServletRequest request) throws FenixActionException {
+		return infoSite;
+	}
+
+	public static final List getSectionsFromRequest(HttpServletRequest request)
+		throws FenixActionException {
 		List sections = null;
 		try {
-					InfoSite infoSite = getSiteFromRequest(request);
-					Object[] args= {infoSite};
-					sections = (List) ServiceUtils.executeService(null,"ReadSections",args);
-			
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}
-		
+			InfoSite infoSite = getSiteFromRequest(request);
+			Object[] args = { infoSite };
+			sections =
+				(List) ServiceUtils.executeService(null, "ReadSections", args);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
 		return sections;
 	}
-	
-	public static final void setSiteToRequest(HttpServletRequest request,InfoSite infoSite) {
-		if (infoSite!=null) {
-			request.setAttribute("siteMail",infoSite.getMail());
-			request.setAttribute("altSite",infoSite.getAlternativeSite());
-			request.setAttribute("initStat",infoSite.getInitialStatement());
-			request.setAttribute("intro",infoSite.getIntroduction());
-			
+
+	public static final void setSiteToRequest(
+		HttpServletRequest request,
+		InfoSite infoSite) {
+		if (infoSite != null) {
+			request.setAttribute("siteMail", infoSite.getMail());
+			request.setAttribute("altSite", infoSite.getAlternativeSite());
+			request.setAttribute("initStat", infoSite.getInitialStatement());
+			request.setAttribute("intro", infoSite.getIntroduction());
+
 		}
 	}
-	
-	public static final void setExecutionCourseToRequest(HttpServletRequest request,InfoExecutionCourse infoExecutionCourse) {
-			if (infoExecutionCourse!=null) {
-				request.setAttribute("exeCode",infoExecutionCourse.getSigla());
-				request.setAttribute("ePName",infoExecutionCourse.getInfoExecutionPeriod().getName());
-				request.setAttribute("eYName",infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
-				
-			
-			}
+
+	public static final void setExecutionCourseToRequest(
+		HttpServletRequest request,
+		InfoExecutionCourse infoExecutionCourse) {
+		if (infoExecutionCourse != null) {
+			request.setAttribute("exeName", infoExecutionCourse.getNome());
+			request.setAttribute("exeCode", infoExecutionCourse.getSigla());
+			request.setAttribute(
+				"ePName",
+				infoExecutionCourse.getInfoExecutionPeriod().getName());
+			request.setAttribute(
+				"eYName",
+				infoExecutionCourse
+					.getInfoExecutionPeriod()
+					.getInfoExecutionYear()
+					.getYear());
+
 		}
+	}
+
+	public static final void setExecutionPeriodToRequest(
+		HttpServletRequest request,
+		InfoExecutionPeriod infoExecutionPeriod) {
+		if (infoExecutionPeriod != null) {
+
+			request.setAttribute("ePName", infoExecutionPeriod.getName());
+			request.setAttribute(
+				"eYName",
+				infoExecutionPeriod.getInfoExecutionYear().getYear());
+
+		}
+	}
+
+	public static final void setSectionsToRequest(
+		HttpServletRequest request,
+		InfoSite infoSite)
+		throws FenixActionException {
+		if (infoSite != null) {
+			GestorServicos gestor = GestorServicos.manager();
+			Object argsReadSections[] = { infoSite };
+
+			List infoSections = null;
+
+			try {
+				infoSections =
+					(List) gestor.executar(
+						null,
+						"ReadSections",
+						argsReadSections);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+
+			if (infoSections != null) {
+				Collections.sort(infoSections);
+			}
+
+			request.setAttribute("sections", infoSections);
+
+		}
+	}
+
+	public static final void setSectionToRequest(HttpServletRequest request)
+		throws FenixActionException {
+
+		InfoSection infoSection =
+			(InfoSection) request.getAttribute("infoSection");
+		if (infoSection != null) {
+			request.setAttribute("infoSection", infoSection);
+		}
+
+	}
 }
