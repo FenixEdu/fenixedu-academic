@@ -1,6 +1,8 @@
 package ServidorAplicacao.Servico.enrolment.degree;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import Dominio.Enrolment;
 import Dominio.ICurricularCourse;
@@ -92,15 +94,48 @@ public class ConfirmActualEnrolment implements IServico {
 
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
-				
+
+			// lista de todos os enrolments temporarios				
+			final List temporarilyEnrolmentsRead = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+					enrolmentContext.getStudentActiveCurricularPlan(),
+					new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
+			
+			// lista de todos os enrolments a escrever
+			List temporarilyEnrolmentsToWrite = new ArrayList();
 			Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
-				IEnrolment enrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED), executionPeriod);
-				persistentEnrolment.lockWrite(enrolment);
+				temporarilyEnrolmentsToWrite.add(new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED), executionPeriod));
 			}
 
+			// interseccao das duas listas de enrolments
+			List enrolmentsIntersection = new ArrayList();
+			iterator = temporarilyEnrolmentsRead.iterator();
+			while (iterator.hasNext()) {
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+				if(temporarilyEnrolmentsToWrite.contains(enrolment)){
+					enrolmentsIntersection.add(enrolment);
+				}
+			}
+			temporarilyEnrolmentsRead.removeAll(enrolmentsIntersection);
+			temporarilyEnrolmentsToWrite.removeAll(enrolmentsIntersection);
+
+			// apagar da base de dados os enrolments que nao interessam
+			iterator = temporarilyEnrolmentsRead.iterator();
+			while (iterator.hasNext()) {
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+				persistentEnrolment.delete(enrolment);
+			}
+			
+			// adicionar a base de dados os novos enrolments
+			iterator = temporarilyEnrolmentsToWrite.iterator();
+			while (iterator.hasNext()) {
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+				persistentEnrolment.lockWrite(enrolment);
+			}
+			
+			// opcoes
 			Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 			while (iterator2.hasNext()) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();

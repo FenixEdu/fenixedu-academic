@@ -27,6 +27,7 @@ public class InscTeste {
 		
 		autentication();
 
+		System.out.println("Mostra cadeira");
 		Object serviceArgs1[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
@@ -75,10 +76,10 @@ public class InscTeste {
 //		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs9);
 //		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
 
-//		for(int i = 0; i < 1; i++) {
-//			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//		}
+		for(int i = 0; i < 3; i++) {
+			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
+			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+		}
 
 //		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
@@ -93,11 +94,41 @@ public class InscTeste {
 //		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 
+		System.out.println("Escolheu cadeiras e vai escrever na BD");
+		Object serviceArgs10[] = {infoEnrolmentContext};
+		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
 
-//		Object serviceArgs10[] = {infoEnrolmentContext};
-//		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
-//		showActualEnrolments(infoEnrolmentContext);
-//		showEnrolmentValidationResultMessages(infoEnrolmentContext);
+		Object serviceArgs11[] = {infoEnrolmentContext};
+		infoEnrolmentContext = executeService("ConfirmActualEnrolment", serviceArgs11);
+		showActualEnrolments(infoEnrolmentContext);
+
+		System.out.println("Mostra cadeiras");
+		
+		Object serviceArgs12[] = {userView};
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs12);
+		showFinalSpan(infoEnrolmentContext);
+		showActualEnrolments(infoEnrolmentContext);
+		showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
+
+		infoEnrolmentContext.getActualEnrolment().remove(0);
+		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
+		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+
+		System.out.println("Escolheu cadeiras e vai escrever na BD");
+		Object serviceArgs13[] = {infoEnrolmentContext};
+		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs13);
+
+		Object serviceArgs14[] = {infoEnrolmentContext};
+		infoEnrolmentContext = executeService("ConfirmActualEnrolment", serviceArgs14);
+		showActualEnrolments(infoEnrolmentContext);
+		
+		System.out.println("Mostra cadeiras");
+		Object serviceArgs15[] = {userView};
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs15);
+		showFinalSpan(infoEnrolmentContext);
+		showActualEnrolments(infoEnrolmentContext);
+		showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
+
 
 //		Object serviceArgs11[] = {userView};
 //		executeService("ChangeEnrolmentStateFromTemporarilyToEnroled", serviceArgs11);		
