@@ -84,11 +84,12 @@ public class ContextUtils {
 				infoExecutionPeriod.getIdInternal().toString());
 			System.out.println(
 				"### ExecutionPeriod in request- " + infoExecutionPeriod);
-			System.out.println("### setExecutionPeriodContext - OUT");
 		} else {
 			System.out.println(
-				"#### Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");
+				"#### ERROR: Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");
 		}
+
+		System.out.println("### setExecutionPeriodContext - OUT");
 	}
 
 	/**
@@ -127,10 +128,15 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 
-			// Place it in request
-			request.setAttribute(
-				SessionConstants.EXECUTION_DEGREE,
-				infoExecutionDegree);
+			if (infoExecutionDegree != null) {
+				// Place it in request
+				request.setAttribute(
+					SessionConstants.EXECUTION_DEGREE,
+					infoExecutionDegree);
+			} else {
+				System.out.println(
+					"#### ERROR: Unexisting or invalid executionDegree - throw proper exception: Someone was playing with the links");
+			}
 		}
 	}
 
@@ -169,10 +175,16 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 
-			// Place it in request
-			request.setAttribute(
-				SessionConstants.CURRICULAR_YEAR,
-				infoCurricularYear);
+			if (infoCurricularYear != null) {
+				// Place it in request
+				request.setAttribute(
+					SessionConstants.CURRICULAR_YEAR,
+					infoCurricularYear);
+			} else {
+				System.out.println(
+					"#### ERROR: Unexisting or invalid curricularYear - throw proper exception: Someone was playing with the links");
+			}
+
 		}
 	}
 
@@ -212,10 +224,15 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 
-			// Place it in request
-			request.setAttribute(
-				SessionConstants.EXECUTION_COURSE,
-				infoExecutionCourse);
+			if (infoExecutionCourse != null) {
+				// Place it in request
+				request.setAttribute(
+					SessionConstants.EXECUTION_COURSE,
+					infoExecutionCourse);
+			} else {
+				System.out.println(
+					"#### ERROR: Unexisting or invalid executionCourse - throw proper exception: Someone was playing with the links");
+			}
 		}
 	}
 
@@ -251,8 +268,13 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 
-			// Place it in request
-			request.setAttribute(SessionConstants.SHIFT, infoShift);
+			if (infoShift != null) {
+				// Place it in request
+				request.setAttribute(SessionConstants.SHIFT, infoShift);
+			} else {
+				System.out.println(
+					"#### ERROR: Unexisting or invalid shift - throw proper exception: Someone was playing with the links");
+			}
 		}
 	}
 
