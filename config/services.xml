@@ -5179,5 +5179,23 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadAllContractsByGrantOwner</name>
+		<implementationClass>ServidorAplicacao.Servico.grant.contract.ReadAllContractsByGrantOwner</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    	<service>
+		<name>ReadGrantContract</name>
+		<implementationClass>ServidorAplicacao.Servico.grant.contract.ReadGrantContract</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
     
 </serviceDefinitions>
