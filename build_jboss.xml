@@ -334,7 +334,7 @@
 		<mkdir dir="${build.web-client.webinf}"/>
 		<mkdir dir="${build.web-client.webinf.classes}"/>
 		<mkdir dir="${build.web-client.webinf.libs}"/>
-		<mkdir dir="${log.image.directory}"/>
+		<mkdir dir="${build.web-client}/images/logs"/>
 
 		<!-- Copy needed configuration files for application server -->
 		<copy todir="${build.web-client}">
