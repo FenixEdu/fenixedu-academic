@@ -241,11 +241,12 @@ public abstract class Cloner {
 	private static void copyObjectProperties(
 		Object destination,
 		Object source) {
-		try {
-			BeanUtils.copyProperties(destination, source);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		if (source != null)
+			try {
+				BeanUtils.copyProperties(destination, source);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 	}
 	
 	/**

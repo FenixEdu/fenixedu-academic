@@ -34,10 +34,10 @@
 						<jsp:getProperty name="infoRoom" property="tipo"/>
 					</td> 
 					<td class="listClasses">
-						<jsp:getProperty name="infoRoom" property="capacidadeExame"/>
+						<jsp:getProperty name="infoRoom" property="capacidadeNormal"/>
 					</td> 
 					<td class="listClasses">
-						<jsp:getProperty name="infoRoom" property="capacidadeNormal"/>
+						<jsp:getProperty name="infoRoom" property="capacidadeExame"/>
 					</td> 
 					
 				</tr>

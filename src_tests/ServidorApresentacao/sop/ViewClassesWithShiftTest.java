@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.TestCaseActionExecution;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;

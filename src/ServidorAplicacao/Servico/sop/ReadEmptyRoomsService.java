@@ -55,7 +55,7 @@ public class ReadEmptyRoomsService implements IServico {
 			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
 			ISalaPersistente roomDAO = sp.getISalaPersistente();
 			
-			
+			// Read all Rooms with a capacity
 			List roomList = roomDAO.readSalas(
 							null,
 							null,
@@ -81,7 +81,6 @@ public class ReadEmptyRoomsService implements IServico {
 			}
 			
 			IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-	
 			
 			List lessonList = lessonDAO.readLessonsInPeriod(lesson);
 			
