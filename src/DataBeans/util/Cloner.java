@@ -92,6 +92,8 @@ import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
+import DataBeans.degree.finalProject.InfoDegreeFinalProject;
+import DataBeans.degree.finalProject.InfoOrientation;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.teacher.InfoCareer;
@@ -103,6 +105,7 @@ import DataBeans.teacher.InfoTeachingCareer;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
+import DataBeans.teacher.professorship.InfoShiftProfessorship;
 import Dominio.*;
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.CaseStudyChoice;
@@ -113,6 +116,8 @@ import Dominio.Seminaries.ICourseEquivalency;
 import Dominio.Seminaries.IModality;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.ITheme;
+import Dominio.degree.finalProject.IDegreeFinalProject;
+import Dominio.degree.finalProject.IDegreeFinalProjectOrientation;
 import Dominio.gesdis.CourseReport;
 import Dominio.gesdis.ICourseReport;
 import Dominio.grant.owner.GrantOwner;
@@ -3597,4 +3602,48 @@ public abstract class Cloner
 
         return serviceProviderRegime;
     }
+    
+	/**
+	 * @param project
+	 * @return @author jpvl
+	 */
+	public static InfoDegreeFinalProject copyIDegreeFinalProject2InfoDegreeFinalProject(IDegreeFinalProject project)
+	{
+		InfoDegreeFinalProject infoDegreeFinalProject = new InfoDegreeFinalProject();
+		InfoExecutionYear infoExecutionYear = copyIExecutionYear2InfoExecutionYear(project.getExecutionYear());
+		infoDegreeFinalProject.setInfoExecutionYear(infoExecutionYear);
+		copyObjectProperties(infoDegreeFinalProject, project);
+		return infoDegreeFinalProject;
+	}
+	public static InfoOrientation copyIDegreeFinalProjectOrientation2InfoDegreeFinalProjectOrientation(IDegreeFinalProjectOrientation degreeFinalProjectOrientation)
+	{
+		InfoOrientation infoOrientation = new InfoOrientation();
+
+		InfoTeacher infoTeacher = copyITeacher2InfoTeacher(degreeFinalProjectOrientation.getTeacher());
+		InfoDegreeFinalProject infoDegreeFinalProject =
+			copyIDegreeFinalProject2InfoDegreeFinalProject(degreeFinalProjectOrientation.getDegreeFinalProject());
+		infoOrientation.setInfoTeacher(infoTeacher);
+		infoOrientation.setInfoDegreeFinalProject(infoDegreeFinalProject);
+
+		copyObjectProperties(infoOrientation, degreeFinalProjectOrientation);
+
+		return infoOrientation;
+	}
+	/**
+	 * @param infoObject
+	 * @return
+	 */
+	public static IShiftProfessorship copyInfoShiftProfessorship2IShiftProfessorshift(InfoShiftProfessorship infoShiftProfessorship)
+	{
+		IShiftProfessorship shiftProfessorship = new ShiftProfessorship(); 
+		InfoProfessorShip infoProfessorShip = infoShiftProfessorship.getInfoProfessorship();
+		InfoShift infoShift = infoShiftProfessorship.getInfoShift();
+		IProfessorship professorship = copyInfoProfessorShip2IProfessorShip(infoProfessorShip);
+		ITurno shift = copyInfoShift2IShift(infoShift);
+        
+		copyObjectProperties(shiftProfessorship, infoShiftProfessorship);
+		shiftProfessorship.setProfessorship(professorship);
+		shiftProfessorship.setShift(shift);
+		return shiftProfessorship;
+	}    
 }
