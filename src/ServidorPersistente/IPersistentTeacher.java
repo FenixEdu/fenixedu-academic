@@ -9,6 +9,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import Dominio.IDepartment;
 import Dominio.ITeacher;
 public interface IPersistentTeacher extends IPersistentObject{
 
@@ -57,5 +58,11 @@ public interface IPersistentTeacher extends IPersistentObject{
 
 	public ITeacher readTeacherByUsernamePB(String user)
 				throws ExcepcaoPersistencia;
+
+	/**
+	 * @param department
+	 * @return
+	 */
+	public List readByDepartment(IDepartment department) throws ExcepcaoPersistencia;
 	
 }
