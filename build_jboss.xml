@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project basedir="." default="deploy-all" name="JBoss">
+<project basedir="." default="deploy-standalone" name="JBoss">
 
     <property environment="env"/>
 	<property name="encoding" value="ISO-8859-1"/>	
@@ -465,6 +465,25 @@
 		<ant antfile="build_tomcat.xml" target="install">
 			<property name="webapp" value="${build.standalone}"/>
 		</ant>
+	</target>
+
+	<target name="prepare-standalone"
+			depends="prepare-app-server,prepare-web-client"
+			description="Copy configuration files to compile dir">
+      	<mkdir dir="${build.standalone}"/>
+		<copy todir="${build.standalone}">
+			<fileset dir="${build.web-client}"/>
+		</copy>
+		<copy todir="${build.standalone.webinf.classes}">
+			<fileset dir="${build.app-server}">
+				<exclude name="**/*.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.standalone.webinf.libs}">
+			<fileset dir="${build.app-server}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
 	</target>
 
 </project>
