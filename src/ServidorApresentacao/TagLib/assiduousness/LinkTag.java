@@ -325,7 +325,7 @@ public class LinkTag extends BaseHandlerTag {
 			results.append(linkName);
 			results.append("\">");
 			ResponseUtils.write(pageContext, results.toString());
-			return (EVAL_BODY_TAG);
+			return (EVAL_BODY_BUFFERED);
 		}
 
 		//acrescentado por Fernanda Quitério & Tânia Pousão
@@ -341,14 +341,14 @@ public class LinkTag extends BaseHandlerTag {
 				property,
 				scope,
 				transaction);
-		String url = null;
+		
 
 		String fwd = (String) pageContext.findAttribute(forward);
 		if (fwd != null)
 			forward = fwd;
 
 		try {
-			url = RequestUtils.computeURL(pageContext, forward, href, page, params, anchor, false);
+			RequestUtils.computeURL(pageContext, forward, href, page, null, params, anchor, false);
 		} catch (MalformedURLException e) {
 			RequestUtils.saveException(pageContext, e);
 			throw new JspException(messages.getMessage("rewrite.url", e.toString()));
@@ -384,7 +384,7 @@ public class LinkTag extends BaseHandlerTag {
 
 		// Evaluate the body of this tag
 		this.text = null;
-		return (EVAL_BODY_TAG);
+		return (EVAL_BODY_BUFFERED);
 
 	}
 
