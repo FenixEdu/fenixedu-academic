@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <ul>
-	<li>Inscrições</li>
+	<li><bean:message key="link.student.enrollmentTitle"/></li>
 	<ul>	
 		<li><html:link page="<%="/warningFirst.do"%>"><bean:message key="link.student.enrollment"/></html:link></li>
 	 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning"><bean:message key="link.shift.enrolment"/></html:link></li>
