@@ -15,12 +15,13 @@
 <html:link  page="/accessAnnouncements.do">
 	<li><bean:message key="link.announcements"/></li>
 </html:link>
-<html:link page="/accessObjectives.do">
+<html:link page="/accessObjectives.do?method=acessObjectives">
 	<li><bean:message key="link.objectives"/></li>
 </html:link>
-<html:link page="/programManagerDA.do?method=acessProgram">
+<html:link page="/accessProgram.do?method=acessProgram">
 	<li><bean:message key="link.program"/></li>
-</html:link><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference">
+</html:link>
+<html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference">
 	<li><bean:message key="link.bibliography"/></li>
 </html:link>
 	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">

@@ -233,9 +233,9 @@
 
 	<!-- access to announcements -->
 	<action 
-		type="ServidorApresentacao.Action.publico.AccessAnnouncementsAction" 
+		type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
 		path="/accessAnnouncements">
-        <forward name="Announcements" path="/announcements.jsp" />       
+        <forward name="AnnouncementManagement" path="/announcements.jsp" />       
 	</action>
 
 	<!-- access to alternative site -->
@@ -247,9 +247,20 @@
 
 	<!-- access to objectives -->
 	<action 
-		type="ServidorApresentacao.Action.publico.AccessObjectivesAction" 
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction" 
+		parameter="method"
+		scope="session"
 		path="/accessObjectives">
-        <forward name="Objectives" path="/objectives.jsp" />       
+        <forward name="viewObjectives" path="/objectives.jsp" />       
+	</action>
+
+	<!-- access to program -->
+	<action 
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction" 
+		parameter="method"
+		scope="session"
+		path="/accessProgram">
+        <forward name="viewProgram" path="/program.jsp" />       
 	</action>
 
 	<!-- Actions For Teachers  -->
