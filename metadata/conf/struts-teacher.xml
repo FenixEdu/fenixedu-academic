@@ -273,6 +273,7 @@
 	<action name="sectionForm"
 		input="/viewSection.jsp"
 		path="/createSection"
+		scope="request"
 		type="ServidorApresentacao.Action.teacher.InsertSectionAction"
         validate="false">    
        <forward name="viewSite" path="/viewSite.jsp"/>
