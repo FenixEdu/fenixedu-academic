@@ -47,7 +47,7 @@ public class EnrolmentFilterAutomaticEnrolmentRuleTest extends BaseEnrolmentRule
 		doApplyRule(new EnrolmentFilterAutomaticEnrolmentRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
-		automaticSpan = enrolmentContext.getCurricularCoursesScopesEnroledByStudent();
+		automaticSpan = enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled();
 		
 		assertEquals("Inital span Size:", initialSpan.size(), 60);
 		assertEquals("Final span size:", finalSpan.size(),58);

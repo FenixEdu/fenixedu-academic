@@ -57,15 +57,14 @@ public class EnrolmentFilterPrecedenceRule implements IEnrolmentRule {
 				List scopes = curricularCourse.getScopes();	
 				for (int scopeIndex = 0; scopeIndex < scopes.size(); scopeIndex++){
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(scopeIndex);
-					if (! (curricularCourseScopesNotToStay.contains(curricularCourse))
-						&& (finalCurricularCourseScopesSpan.contains(curricularCourseScope))){
+					if (!curricularCourseScopesNotToStay.contains(curricularCourseScope)) {
 							curricularCourseScopesNotToStay.add(curricularCourseScope);
-						}
+					}
 				}
 			}
 		}
 
-
+		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(curricularCourseScopesNotToStay);
 		finalCurricularCourseScopesSpan.removeAll(curricularCourseScopesNotToStay);		
 
 		return enrolmentContext;

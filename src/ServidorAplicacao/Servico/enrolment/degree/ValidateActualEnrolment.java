@@ -63,8 +63,10 @@ public class ValidateActualEnrolment implements IServico {
 	 */
 	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) {
 
+		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
+
 		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
-		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
+		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
 		IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
 		EnrolmentContext enrolmentContext = strategy.validateEnrolment();
 

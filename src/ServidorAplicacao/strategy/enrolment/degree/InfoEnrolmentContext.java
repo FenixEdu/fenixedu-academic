@@ -30,7 +30,7 @@ public class InfoEnrolmentContext {
 
 	private List actualEnrolment;
 	private List infoFinalCurricularCoursesScopesSpanToBeEnrolled;
-	private List infoCurricularCoursesScopesEnroledByStudent;
+	private List infoCurricularCoursesScopesAutomaticalyEnroled;
 	private List infoDegreesForOptionalCurricularCourses;
 	private List optionalInfoCurricularCoursesToChooseFromDegree;
 	private List infoCurricularCoursesDoneByStudent;
@@ -179,16 +179,16 @@ public class InfoEnrolmentContext {
 	/**
 	 * @return List
 	 */
-	public List getInfoCurricularCoursesScopesEnroledByStudent() {
-		return infoCurricularCoursesScopesEnroledByStudent;
+	public List getInfoCurricularCoursesScopesAutomaticalyEnroled() {
+		return infoCurricularCoursesScopesAutomaticalyEnroled;
 	}
 
 	/**
-	 * Sets the infoCurricularCoursesScopesEnroledByStudent.
-	 * @param infoCurricularCoursesScopesEnroledByStudent The infoCurricularCoursesScopesEnroledByStudent to set
+	 * Sets the infoCurricularCoursesScopesAutomaticalyEnroled.
+	 * @param infoCurricularCoursesScopesAutomaticalyEnroled The infoCurricularCoursesScopesAutomaticalyEnroled to set
 	 */
-	public void setInfoCurricularCoursesScopesEnroledByStudent(List infoCurricularCoursesScopesEnroledByStudent) {
-		this.infoCurricularCoursesScopesEnroledByStudent = infoCurricularCoursesScopesEnroledByStudent;
+	public void setInfoCurricularCoursesScopesAutomaticalyEnroled(List infoCurricularCoursesScopesEnroledByStudent) {
+		this.infoCurricularCoursesScopesAutomaticalyEnroled = infoCurricularCoursesScopesEnroledByStudent;
 	}
 
 	/**

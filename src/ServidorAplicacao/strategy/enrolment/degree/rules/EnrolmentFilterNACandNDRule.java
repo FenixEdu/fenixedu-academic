@@ -33,7 +33,7 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
 		while ((possibleND < MAXCOURSES) && (possibleNAC < MAXNAC) && (year < YEAR)) {
 
-			Iterator iteratorEnroled = enrolmentContext.getCurricularCoursesScopesEnroledByStudent().iterator();
+			Iterator iteratorEnroled = enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().iterator();
 			while (iteratorEnroled.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorEnroled.next();
 				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(new Integer(year))) {
@@ -66,7 +66,7 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 		}
 
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(possibleScopesSpan);
-		enrolmentContext.setCurricularCoursesScopesEnroledByStudent(possibleScopesEnroled);
+		enrolmentContext.setCurricularCoursesScopesAutomaticalyEnroled(possibleScopesEnroled);
 		return enrolmentContext;
 	}
 

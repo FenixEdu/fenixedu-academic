@@ -31,7 +31,7 @@ public class InscTeste {
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
 
-		Object serviceArgs2[] = { infoEnrolmentContext };
+/*		Object serviceArgs2[] = { infoEnrolmentContext };
 		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
 		showAvailableDegreesForOption(infoEnrolmentContext);
 
@@ -47,7 +47,7 @@ public class InscTeste {
 		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
 		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
 
-/*		Object serviceArgs5[] = { infoEnrolmentContext };
+		Object serviceArgs5[] = { infoEnrolmentContext };
 		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs5);
 		showAvailableDegreesForOption(infoEnrolmentContext);
 
@@ -74,13 +74,13 @@ public class InscTeste {
 		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
 
 		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
-*/
+
 		for(int i = 0; i < 4; i++) {
 			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 		}
 
-
+*/
 //		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 //		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(1);
@@ -95,11 +95,11 @@ public class InscTeste {
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 
 
-		Object serviceArgs10[] = {infoEnrolmentContext};
+/*		Object serviceArgs10[] = {infoEnrolmentContext};
 		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
 		showActualEnrolments(infoEnrolmentContext);
 		showEnrolmentValidationResultMesages(infoEnrolmentContext);
-
+*/
 //		System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
 
 //		Object serviceArgs11[] = {userView};
@@ -139,7 +139,7 @@ public class InscTeste {
 		System.out.println();
 
 		System.out.println("AUTOMATIC CHOOSEN (ANUALS + ALTERNATIVES):");
-		Iterator iterator2 = infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent().iterator();
+		Iterator iterator2 = infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled().iterator();
 		while (iterator2.hasNext()) {
 			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator2.next();
 			System.out.println("YEAR: " + infoCurricularCourseScope.getInfoCurricularSemester().getInfoCurricularYear().getYear() + "; SEMESTER: " + infoCurricularCourseScope.getInfoCurricularSemester().getSemester() + "; CURRICULAR COURSE: " + infoCurricularCourseScope.getInfoCurricularCourse().getName());

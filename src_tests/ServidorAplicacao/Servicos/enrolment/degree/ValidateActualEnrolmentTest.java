@@ -112,7 +112,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 			result.getActualEnrolment().add(infoCurricularCourseScope);
 		}
 		for (int i = 0; i < 5; i++) {
-			InfoCurricularCourseScope infoCurricularCourseScope =	(InfoCurricularCourseScope) result.getInfoCurricularCoursesScopesEnroledByStudent().get(i);
+			InfoCurricularCourseScope infoCurricularCourseScope =	(InfoCurricularCourseScope) result.getInfoCurricularCoursesScopesAutomaticalyEnroled().get(i);
 			result.getActualEnrolment().add(infoCurricularCourseScope);
 		}
 
@@ -130,7 +130,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 		// mais que 10 acumuladas
 		result.getActualEnrolment().clear();
 		for (int i = 0; i < 5; i++) {
-			InfoCurricularCourseScope infoCurricularCourseScope =	(InfoCurricularCourseScope) result.getInfoCurricularCoursesScopesEnroledByStudent().get(i);
+			InfoCurricularCourseScope infoCurricularCourseScope =	(InfoCurricularCourseScope) result.getInfoCurricularCoursesScopesAutomaticalyEnroled().get(i);
 			result.getActualEnrolment().add(infoCurricularCourseScope);
 		}
 		for (int i = 0; i < 2; i++) {

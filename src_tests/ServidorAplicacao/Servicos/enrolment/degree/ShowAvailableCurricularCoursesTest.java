@@ -75,7 +75,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 		}
 
 		List finalSpan = result.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		List automaticSpan = result.getInfoCurricularCoursesScopesEnroledByStudent();
+		List automaticSpan = result.getInfoCurricularCoursesScopesAutomaticalyEnroled();
 
 		assertEquals("Final span size:",  6, finalSpan.size());
 		assertEquals("Automatic span size:",  5, automaticSpan.size());

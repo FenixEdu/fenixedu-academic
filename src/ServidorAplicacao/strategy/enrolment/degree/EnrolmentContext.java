@@ -37,7 +37,7 @@ public final class EnrolmentContext {
 	private List actualEnrolment;
 	private List curricularCoursesFromStudentCurricularPlan;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
-	private List curricularCoursesScopesEnroledByStudent;
+	private List curricularCoursesScopesAutomaticalyEnroled;
 
 	private List degreesForOptionalCurricularCourses;
 	private List optionalCurricularCoursesToChooseFromDegree;
@@ -198,16 +198,16 @@ public final class EnrolmentContext {
 	/**
 	 * @return List
 	 */
-	public List getCurricularCoursesScopesEnroledByStudent() {
-		return curricularCoursesScopesEnroledByStudent;
+	public List getCurricularCoursesScopesAutomaticalyEnroled() {
+		return curricularCoursesScopesAutomaticalyEnroled;
 	}
 
 	/**
-	 * Sets the curricularCoursesScopesEnroledByStudent.
-	 * @param curricularCoursesScopesEnroledByStudent The curricularCoursesScopesEnroledByStudent to set
+	 * Sets the curricularCoursesScopesAutomaticalyEnroled.
+	 * @param curricularCoursesScopesAutomaticalyEnroled The curricularCoursesScopesAutomaticalyEnroled to set
 	 */
-	public void setCurricularCoursesScopesEnroledByStudent(List curricularCoursesEnroledByStudent) {
-		this.curricularCoursesScopesEnroledByStudent = curricularCoursesEnroledByStudent;
+	public void setCurricularCoursesScopesAutomaticalyEnroled(List curricularCoursesEnroledByStudent) {
+		this.curricularCoursesScopesAutomaticalyEnroled = curricularCoursesEnroledByStudent;
 	}
 
 	/**

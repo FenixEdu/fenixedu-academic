@@ -65,7 +65,7 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 				curricularCourseScopesFromDegreeList.addAll(curricularCourse.getScopes());
 			}
 
-			List curricularCoursesEnroledByStudent = getDistinctCurricularCoursesOfScopes(enrolmentContext.getCurricularCoursesScopesEnroledByStudent());
+			List curricularCoursesEnroledByStudent = getDistinctCurricularCoursesOfScopes(enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled());
 			List curricularCoursesFromFinalSpan = getDistinctCurricularCoursesOfScopes(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 			List opionalCurricularCoursesEnrolmentsList = (List) CollectionUtils.collect(enrolmentContext.getOptionalCurricularCoursesEnrolments(), new Transformer() {
 				public Object transform(Object obj) {

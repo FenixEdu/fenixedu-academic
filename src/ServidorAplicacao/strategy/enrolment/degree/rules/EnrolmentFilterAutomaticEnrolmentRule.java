@@ -24,7 +24,7 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 		//	Anual curricular course filter
 		List finalListToRemove = new ArrayList();
 
-		Iterator iteratorAnualScopes = enrolmentContext.getCurricularCoursesScopesEnroledByStudent().iterator();
+		Iterator iteratorAnualScopes = enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().iterator();
 		List anualCurricularCourseScopes = new ArrayList();
 		while (iteratorAnualScopes.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorAnualScopes.next();
@@ -35,8 +35,8 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 				}
 			}
 		}
-		enrolmentContext.getCurricularCoursesScopesEnroledByStudent().clear();
-		enrolmentContext.getCurricularCoursesScopesEnroledByStudent().addAll(anualCurricularCourseScopes);
+		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().clear();
+		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().addAll(anualCurricularCourseScopes);
 
 		while(!anualCurricularCourseScopes.isEmpty()) {
 			final ICurricularCourseScope curricularCourseScope1 = (ICurricularCourseScope) anualCurricularCourseScopes.get(0);
@@ -63,7 +63,7 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 			finalListToRemove.addAll(aux);
 			aux.clear();
 		}
-		enrolmentContext.getCurricularCoursesScopesEnroledByStudent().removeAll(finalListToRemove);
+		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(finalListToRemove);
 				
 		// ---------------------------------------------------------------------------- //
 
@@ -84,7 +84,7 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorAlternative.next();
 			if ((curricularCourseScope.getBranch().equals(enrolmentContext.getStudentActiveCurricularPlan().getBranch()))
 				|| (curricularCourseScope.getBranch().getName().equals(""))) {
-				enrolmentContext.getCurricularCoursesScopesEnroledByStudent().add(curricularCourseScope);
+				enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().add(curricularCourseScope);
 			}
 		}
 
