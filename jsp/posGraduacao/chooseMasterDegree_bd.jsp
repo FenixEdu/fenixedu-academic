@@ -9,6 +9,7 @@
 	<br />
 </logic:present>
 <span class="error"><html:errors/></span>
+<br />
 <logic:present name="<%= SessionConstants.DEGREE_LIST %>">
 	<logic:present name="executionYear" >
 	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
