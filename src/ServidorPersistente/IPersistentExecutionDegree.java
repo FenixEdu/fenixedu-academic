@@ -48,6 +48,17 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
             throws ExcepcaoPersistencia;
 
     /**
+     * 
+     * @param degreeCurricularPlanID
+     * @param executionYearID
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    public ICursoExecucao readByDegreeCurricularPlanIDAndExecutionYear(
+            Integer degreeCurricularPlanID, String executionYear)
+            throws ExcepcaoPersistencia;
+    
+    /**
      * @param degreeInitials
      * @param nameDegreeCurricularPlan
      * @param executionYear

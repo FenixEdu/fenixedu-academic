@@ -73,6 +73,24 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
     }
 
     /**
+     * 
+     * @param degreeCurricularPlanID
+     * @param executionYearID
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    public ICursoExecucao readByDegreeCurricularPlanIDAndExecutionYear(
+            Integer degreeCurricularPlanID, String executionYear)
+            throws ExcepcaoPersistencia {
+        
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("executionYear.year", executionYear);
+        criteria.addEqualTo("curricularPlan.idInternal", degreeCurricularPlanID);
+        
+        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+    }
+
+    /**
      * @see ServidorPersistente.IPersistentExecutionDegree#readByDegreeAndExecutionYear(Dominio.ICurso,
      *      Dominio.IExecutionYear)
      */

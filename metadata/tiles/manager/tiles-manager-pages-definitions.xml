@@ -361,4 +361,19 @@
 		<put name="body" value="/manager/curricularCourseGroups/editCurricularCourseGroup.jsp" />
         <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
 	</definition>
+	
+	<!-- ========== GUIDES MANAGEMENT ========== -->
+	<definition name="firstPageGuideManagement" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/guideManagement/welcomeScreen.jsp" />
+        <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
+	</definition>	
+	<definition name="chooseGuide" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/guideManagement/chooseGuide.jsp" />
+        <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
+	</definition>
+	<definition name="editGuide" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/guideManagement/editGuide.jsp" />
+        <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
+	</definition>
+		
 </tiles-definitions>

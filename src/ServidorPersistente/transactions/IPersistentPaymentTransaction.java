@@ -1,5 +1,7 @@
 package ServidorPersistente.transactions;
 
+import Dominio.transactions.IPaymentTransaction;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
 /**
@@ -9,4 +11,7 @@ import ServidorPersistente.IPersistentObject;
  *  
  */
 public interface IPersistentPaymentTransaction extends IPersistentObject {
+    
+    public IPaymentTransaction readByGuideEntryID(Integer guideEntryID) throws ExcepcaoPersistencia;
+    
 }

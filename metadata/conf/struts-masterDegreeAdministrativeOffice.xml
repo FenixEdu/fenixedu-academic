@@ -1326,6 +1326,7 @@
 	         <forward name="PrepareReady" path="/guide/chooseGuideYear.jsp"/> 
 	         <forward name="ShowGuideList" path="/guide/showGuideList.jsp"/> 
    	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
+   	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>
       </action>
 
       <!-- List Guides by Person -->

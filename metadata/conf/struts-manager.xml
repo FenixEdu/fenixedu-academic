@@ -415,6 +415,32 @@
 			<form-property name="curricularCourseIdsToTransfer" type="java.lang.String[]"/>
 	  	</form-bean>
 
+	<!-- ========== GUIDE MANAGEMENT ========== -->
+		<form-bean name="editGuideForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="method" type="java.lang.String"/> 
+			<form-property name="page" type="java.lang.Integer"/> 			 			
+			<form-property name="number" type="java.lang.Integer"/> 			
+			<form-property name="year" type="java.lang.Integer" initial="2005"/> 
+			<form-property name="version" type="java.lang.Integer" /> 						
+			<form-property name="guideID" type="java.lang.Integer"/> 
+			<form-property name="newEntryDescription" type="java.lang.String"/> 
+			<form-property name="newEntryQuantity" type="java.lang.Integer"/> 
+			<form-property name="newEntryPrice" type="java.lang.Double"/> 
+			<form-property name="newEntryDocumentType" type="java.lang.Integer"/> 		
+			<form-property name="newSituationRemarks" type="java.lang.String"/> 
+			<form-property name="newSituationDay" type="java.lang.Integer"/> 
+			<form-property name="newSituationMonth" type="java.lang.Integer"/> 
+			<form-property name="newSituationYear" type="java.lang.Integer"/> 
+			<form-property name="newSituationType" type="java.lang.String"/> 
+			<form-property name="selectedGuideEntryDocumentType" type="java.lang.Integer"/>
+			<form-property name="selectedGuideEntryID" type="java.lang.Integer"/>
+			<form-property name="newExecutionYear" type="java.lang.String"/> 		
+			<form-property name="newDegreeCurricularPlanID" type="java.lang.Integer"/>								
+			<form-property name="guideSituationID" type="java.lang.Integer"/>						
+		</form-bean>
+		
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1499,6 +1525,19 @@
 			scope="request">
 		<forward name="prepare" path="/password/generateNewStudentsPassword.jsp"/>
 		<forward name="success" path="/password/severalNewPasswordsTemplate.jsp"/>
+     </action>
+        
+        
+	<!-- ========== GUIDE MANAGEMENT ========== -->	
+	<action path="/guideManagement"
+		type="ServidorApresentacao.Action.manager.guideManagement.GuideManagementDispatchAction"
+		parameter="method"
+		scope="request"
+		name="editGuideForm"
+	>
+		<forward name="firstPage" path="firstPageGuideManagement"/>         
+		<forward name="chooseGuide" path="chooseGuide"/>         
+		<forward name="editGuide" path="editGuide"/> 
      </action>
         
 	</action-mappings>

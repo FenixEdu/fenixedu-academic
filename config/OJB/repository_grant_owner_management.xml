@@ -534,8 +534,7 @@
 	 />
 	 <reference-descriptor
 		name="grantPaymentEntity"
-		class-ref="Dominio.grant.contract.GrantPaymentEntity"
-		proxy="true">
+		class-ref="Dominio.grant.contract.GrantPaymentEntity">
 		<foreignkey field-ref="keyGrantPaymentEntity"/>
 	</reference-descriptor>
 	<reference-descriptor
@@ -664,9 +663,7 @@
 	 />
 	 <reference-descriptor
 		name="grantPaymentEntity"
-		class-ref="Dominio.grant.contract.GrantPaymentEntity"
-		proxy="true"
-		refresh="true">
+		class-ref="Dominio.grant.contract.GrantPaymentEntity">
 		<foreignkey field-ref="keyGrantPaymentEntity"/>
 	</reference-descriptor>
 	<reference-descriptor

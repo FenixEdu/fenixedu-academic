@@ -104,10 +104,15 @@ public class GuideListingDispatchAction extends DispatchAction {
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Guia", e);
             }
-
+            
             request.setAttribute(SessionConstants.GUIDE_LIST, result);
-            request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
+            if (result.size() == 1) {
+                request.setAttribute(SessionConstants.GUIDE, result.get(0));
+                return mapping.findForward("ActionReady");
+            }
+
             request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
+            request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
 
             return mapping.findForward("ShowVersionList");
         }

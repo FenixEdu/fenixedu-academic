@@ -40,16 +40,22 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
     public CreateGratuitySituationsForCurrentExecutionYear() {
     }
 
-    public void run() throws FenixServiceException {
+    public void run(String year) throws FenixServiceException {
         try {
 
             System.out.println("createGratuitySituation task running!!!");
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear()
-                    .readCurrentExecutionYear();
-
+            IExecutionYear executionYear = null;
+            
+            if(year == null || year.equals("")){
+                executionYear = (IExecutionYear) sp.getIPersistentExecutionYear()
+                .readCurrentExecutionYear(); 
+            }else{
+                executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);                
+            }
+            
             IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
 
             IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp

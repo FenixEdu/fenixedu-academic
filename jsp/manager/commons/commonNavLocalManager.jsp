@@ -51,6 +51,14 @@
 		<bean:message key="label.uploadFiles"/>
 	</html:link>
 </strong></p>
+<br />
+
+<strong><bean:message key="label.manageFinance"/></strong>
+<p><strong>&raquo;
+	<html:link page="/guideManagement.do?method=firstPage">
+		<bean:message key="label.guidesManagement"/>
+	</html:link>
+</strong></p>
 
 <br />
 <strong>Gestão de Suport</strong>

@@ -2086,7 +2086,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="ManagerOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -8007,7 +8007,7 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>
-		<service>
+	<service>
 		<name>ReadNextExecutionPeriod</name>
 		<implementationClass>
 			ServidorAplicacao.Servico.commons.ReadNextExecutionPeriod
@@ -8094,4 +8094,114 @@
             <chain name="ProjectsManagerAuthorization"/>
         </filterChains>
 	</service>
+	<service>
+		<name>ReadPaymentTransactionByGuideEntryID</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadPaymentTransactionByGuideEntryID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>	
+	<service>
+		<name>CreateGuideEntry</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.CreateGuideEntry
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>	
+	<service>
+		<name>CreateGuideSituation</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.CreateGuideSituation
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>		
+	<service>
+		<name>CreateGratuityTransaction</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.CreateGratuityTransaction
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>	
+	<service>
+		<name>CreateInsuranceTransaction</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.CreateInsuranceTransaction
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>		
+	<service>
+		<name>EditGuideInformationInManager</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.EditGuideInformationInManager
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>		
+	<service>
+		<name>ReadDegreeCurricularPlansLabelValueBeanList</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.manager.ReadDegreeCurricularPlansLabelValueBeanList
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>		
+	<service>
+		<name>DeleteGuideSituationInManager</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.DeleteGuideSituationInManager
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>		
+	<service>
+		<name>DeleteGuideEntryAndPaymentTransactionInManager</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.DeleteGuideEntryAndPaymentTransactionInManager
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>		
+	<service>
+		<name>DeleteGuideVersionInManager</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.DeleteGuideVersionInManager
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>		
+	</service>		
 </serviceDefinitions>

@@ -215,6 +215,18 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
     private static final String DATA_SEPARATOR = "\t";
 
+    private static final String EMPTY = "-";
+
+    private static final String STUDENT_NUMBER_COLUMN = "NUMERO";
+    
+    private static final String AREA_COLUMN = "LOCALIDADE";
+    
+    private static final String POSTAL_CODE_COLUMN = "COD_POSTAL";
+    
+    private static final String AREA_POSTAL_CODE_COLUMN = "LOCALIDADE_COD_POSTAL";
+    
+    private static final String DEGREE_COLUMN = "CURSO";
+
     public GeneratePaymentLettersFileByExecutionYearID() {
 
     }
@@ -427,7 +439,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
         String sibsPaymentCode = determineTotalPaymentCode(studentCurricularPlan);
         Date endDate = gratuitySituation.getGratuityValues().getEndPayment();
 
-        if (endDate.before(Calendar.getInstance().getTime()) == true) {
+        if (endDate != null && endDate.before(Calendar.getInstance().getTime()) == true) {
             // end date already passed
             return gratuityLetterFileEntry;
         }
@@ -634,6 +646,11 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
                 letterFiles.put(numberOfPhases, letterFile);
             }
 
+            //Student number
+            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
+                    .getNumber() + DATA_SEPARATOR);
+
+            
             // Student name
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
                     .getPerson().getNome()
@@ -644,14 +661,33 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
                     .getPerson().getMorada()
                     + DATA_SEPARATOR);
 
+            // Student localidade
+            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
+                    .getPerson().getLocalidade()
+                    + DATA_SEPARATOR);
+
+            // Student cod. postal
+            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
+                    .getPerson().getCodigoPostal()
+                    + DATA_SEPARATOR);
+
+            // Student localidade - cod. postal
+            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
+                    .getPerson().getLocalidadeCodigoPostal()
+                    + DATA_SEPARATOR);
+
+            
             // Master degree name
+            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan()
+                    .getDegreeCurricularPlan().getDegree().getNome()
+                    + DATA_SEPARATOR);
+            
+            
+            // Master degree curricular plan name
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan()
                     .getDegreeCurricularPlan().getName()
                     + DATA_SEPARATOR);
-
-            // gratuity full payment value
-            letterFile.append(gratuityLetterFileEntry.getTotalGratuityValue() + DATA_SEPARATOR);
-
+            
             // gratuity full payment end date
             letterFile.append(gratuityLetterFileEntry.getTotalGratuityEndDate() + DATA_SEPARATOR);
 
@@ -659,29 +695,33 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
             letterFile.append(gratuityLetterFileEntry.getTotalGratuityFullSibsReference()
                     + DATA_SEPARATOR);
 
-            // insurance payment value
-            letterFile.append(gratuityLetterFileEntry.getInsuranceValue() + DATA_SEPARATOR);
-
+            // gratuity full payment value
+            letterFile.append(gratuityLetterFileEntry.getTotalGratuityValue() + DATA_SEPARATOR);
+            
             // insurance payment end date
             letterFile.append(gratuityLetterFileEntry.getInsuranceEndDate() + DATA_SEPARATOR);
 
             // insurance payment full sibs reference
             letterFile.append(gratuityLetterFileEntry.getInsuranceFullSibsReference() + DATA_SEPARATOR);
 
+            // insurance payment value
+            letterFile.append(gratuityLetterFileEntry.getInsuranceValue() + DATA_SEPARATOR);
+            
             for (Iterator iterator = gratuityLetterFileEntry.getGratuityLetterPaymentPhases().iterator(); iterator
                     .hasNext();) {
 
                 GratuityLetterPaymentPhase gratuityLetterPaymentPhase = (GratuityLetterPaymentPhase) iterator
                         .next();
-
-                // payment phase value
-                letterFile.append(gratuityLetterPaymentPhase.getValue() + DATA_SEPARATOR);
-
+                
                 // payment phase end date
                 letterFile.append(gratuityLetterPaymentPhase.getEndDate() + DATA_SEPARATOR);
 
                 // payment phase full sibs reference
                 letterFile.append(gratuityLetterPaymentPhase.getFullSibsReference() + DATA_SEPARATOR);
+                
+                // payment phase value
+                letterFile.append(gratuityLetterPaymentPhase.getValue() + DATA_SEPARATOR);
+
             }
 
             letterFile.append("\n");
@@ -720,15 +760,20 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
         StringBuffer file = new StringBuffer();
 
         //add header
+        file.append(STUDENT_NUMBER_COLUMN + COLUMN_SEPARATOR);
         file.append(STUDENT_NAME_COLUMN + COLUMN_SEPARATOR);
         file.append(STUDENT_ADDRESS_COLUMN + COLUMN_SEPARATOR);
+        file.append(AREA_COLUMN + COLUMN_SEPARATOR);
+        file.append(POSTAL_CODE_COLUMN + COLUMN_SEPARATOR);
+        file.append(AREA_POSTAL_CODE_COLUMN + COLUMN_SEPARATOR);
+        file.append(DEGREE_COLUMN + COLUMN_SEPARATOR);
         file.append(MASTER_DEGREE_NAME_COLUMN + COLUMN_SEPARATOR);
-        file.append(GRATUITY_TOTAL_VALUE_COLUMN + COLUMN_SEPARATOR);
         file.append(GRATUITY_TOTAL_END_DATE_COLUMN + COLUMN_SEPARATOR);
         file.append(TOTAL_GRATUITY_SIBS_REFERENCE_COLUMN + COLUMN_SEPARATOR);
-        file.append(INSURANCE_VALUE_COLUMN + COLUMN_SEPARATOR);
+        file.append(GRATUITY_TOTAL_VALUE_COLUMN + COLUMN_SEPARATOR);
         file.append(INSURANCA_END_DATE_COLUMN + COLUMN_SEPARATOR);
         file.append(INSURANCE_SIBS_REFERENCE_COLUMN + COLUMN_SEPARATOR);
+        file.append(INSURANCE_VALUE_COLUMN + COLUMN_SEPARATOR);
 
         for (int i = 0; i < numberOfPhases; i++) {
             file.append(PHASE_VALUE_BASE_COLUMN + i + COLUMN_SEPARATOR);

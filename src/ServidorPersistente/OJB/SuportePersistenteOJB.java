@@ -88,6 +88,7 @@ import ServidorPersistente.OJB.teacher.professorship.SupportLessonOJB;
 import ServidorPersistente.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import ServidorPersistente.OJB.transactions.GratuityTransactionOJB;
 import ServidorPersistente.OJB.transactions.InsuranceTransactionOJB;
+import ServidorPersistente.OJB.transactions.PaymentTransactionOJB;
 import ServidorPersistente.OJB.transactions.ReimbursementTransactionOJB;
 import ServidorPersistente.OJB.transactions.SmsTransactionOJB;
 import ServidorPersistente.OJB.transactions.TransactionOJB;
@@ -148,6 +149,7 @@ import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import ServidorPersistente.transactions.IPersistentGratuityTransaction;
 import ServidorPersistente.transactions.IPersistentInsuranceTransaction;
+import ServidorPersistente.transactions.IPersistentPaymentTransaction;
 import ServidorPersistente.transactions.IPersistentReimbursementTransaction;
 import ServidorPersistente.transactions.IPersistentSmsTransaction;
 import ServidorPersistente.transactions.IPersistentTransaction;
@@ -1271,4 +1273,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new ExtraWorkOJB();
     }
     
+    public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
+        return new PaymentTransactionOJB();
+    }
 }

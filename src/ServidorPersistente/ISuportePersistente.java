@@ -63,6 +63,7 @@ import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import ServidorPersistente.transactions.IPersistentGratuityTransaction;
 import ServidorPersistente.transactions.IPersistentInsuranceTransaction;
+import ServidorPersistente.transactions.IPersistentPaymentTransaction;
 import ServidorPersistente.transactions.IPersistentReimbursementTransaction;
 import ServidorPersistente.transactions.IPersistentSmsTransaction;
 import ServidorPersistente.transactions.IPersistentTransaction;
@@ -428,6 +429,8 @@ public interface ISuportePersistente {
     public IPersistentPersonAccount getIPersistentPersonAccount();
 
     public IPersistentTransaction getIPersistentTransaction();
+    
+    public IPersistentPaymentTransaction getIPersistentPaymentTransaction();
 
     public IPersistentInsuranceValue getIPersistentInsuranceValue();
 

@@ -25,7 +25,7 @@ public final class SibsPaymentType extends FenixValuedEnum {
 
     public static final int MASTER_DEGREE_GRATUTITY_SECOND_PHASE_TYPE = 42;
 
-    public static final int INSURANCE_TYPE = 20;
+    public static final int INSURANCE_TYPE = 60;
 
     public static final SibsPaymentType SPECIALIZATION_GRATUTITY_TOTAL = new SibsPaymentType(
             "sibsPaymentType.specialization.gratuity.total",

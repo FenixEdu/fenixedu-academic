@@ -51,15 +51,30 @@ public class StartupServlet extends HttpServlet {
         TimerTask gratuitySituationCreatorTask = new TimerTask() {
 
             public void run() {
-                Object[] args = {};
+                
 
                 try {
+                    Object[] args = { "" };
                     ServiceManagerServiceFactory.executeService(null,
                             "CreateGratuitySituationsForCurrentExecutionYear", args);
 
                 } catch (Exception e) {
                     //TODO: This should be written in log file
                     System.out.println("Gratuity Situation Creator task failed to execute");
+                    e.printStackTrace();
+                }
+
+                //temporary
+                try {
+                    Object[] args2003_2004 = { "2003/2004" };
+                    ServiceManagerServiceFactory.executeService(null,
+                            "CreateGratuitySituationsForCurrentExecutionYear",
+                            args2003_2004);
+
+                } catch (Exception e) {
+                    //TODO: This should be written in log file
+                    System.out
+                            .println("Gratuity Situation Creator task failed to execute");
                     e.printStackTrace();
                 }
 

@@ -254,7 +254,10 @@ public class SubmitMarks implements IServico {
                 return arg0 != null;
             }
         });
-        List alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
+        List alreadySubmiteMarks = new ArrayList();
+        if(!enrolmentListIds.isEmpty()) {
+            alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
+        }
 
         if (!alreadySubmiteMarks.isEmpty()) {
             throw new FenixServiceException("errors.submitMarks.yetSubmited");

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -98,7 +99,11 @@ public class ValidateSubmitMarks implements IServico {
                     return arg0 != null;
                 }
             });
-            List alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
+            
+            List alreadySubmiteMarks = new ArrayList();
+            if(!enrolmentListIds.isEmpty()) {
+                alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
+            }
 
             if (!alreadySubmiteMarks.isEmpty()) {
                 throw new FenixServiceException("errors.submitMarks.yetSubmited");

@@ -4,10 +4,9 @@
  */
 package DataBeans;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
@@ -31,12 +30,19 @@ public class InfoExecutionCourseWithExecutionPeriodAndExams extends
      * @return
      */
     private List copyIExam2InfoExam(List associatedExams) {
-        List associatedInfoExams = (List) CollectionUtils.collect(associatedExams, new Transformer() {
-
-            public Object transform(Object arg0) {
-                return InfoExam.newInfoFromDomain((IExam) arg0);
+//        List associatedInfoExams = (List) CollectionUtils.collect(associatedExams, new Transformer() {
+//
+//            public Object transform(Object arg0) {
+//                return InfoExam.newInfoFromDomain((IExam) arg0);
+//            }
+//        });
+        List associatedInfoExams = new ArrayList(associatedExams.size());
+        for (Iterator iterator = associatedExams.iterator(); iterator.hasNext(); ) {
+            Object object = iterator.next();
+            if (object != null && object instanceof IExam) {
+                associatedInfoExams.add(InfoExam.newInfoFromDomain((IExam) object));
             }
-        });
+        }
         return associatedInfoExams;
     }
 

@@ -104,6 +104,27 @@ public class DocumentType extends FenixUtil {
         return resultado;
     }
 
+    public static List toArrayListWithIntValues() {
+        List result = new ArrayList();
+        result.add(new LabelValueBean(DocumentType.DEFAULT, null));
+        result.add(new LabelValueBean(DocumentType.CERTIFICATE_STRING, DocumentType.CERTIFICATE + ""));
+        result.add(new LabelValueBean(DocumentType.CERTIFICATE_OF_DEGREE_STRING,
+                DocumentType.CERTIFICATE_OF_DEGREE + ""));
+        result.add(new LabelValueBean(DocumentType.ACADEMIC_PROOF_EMOLUMENT_STRING,
+                DocumentType.ACADEMIC_PROOF_EMOLUMENT + ""));
+        result.add(new LabelValueBean(DocumentType.APPLICATION_EMOLUMENT_STRING,
+                DocumentType.APPLICATION_EMOLUMENT + ""));
+        result.add(new LabelValueBean(DocumentType.ENROLMENT_STRING, DocumentType.ENROLMENT + ""));
+        result.add(new LabelValueBean(DocumentType.FINE_STRING, DocumentType.FINE + ""));
+        result.add(new LabelValueBean(DocumentType.INSURANCE_STRING, DocumentType.INSURANCE + ""));
+        result.add(new LabelValueBean(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_STRING,
+                DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS + ""));
+        result.add(new LabelValueBean(DocumentType.GRATUITY_STRING, DocumentType.GRATUITY + ""));
+        result.add(new LabelValueBean(DocumentType.EMOLUMENT_STRING, DocumentType.EMOLUMENT + ""));
+        result.add(new LabelValueBean(DocumentType.OTHERS_STRING, DocumentType.OTHERS + ""));
+        return result;
+    }
+
     public List toArrayList() {
         List result = new ArrayList();
         result.add(new LabelValueBean(DocumentType.DEFAULT, null));

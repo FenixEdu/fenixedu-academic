@@ -26,7 +26,7 @@
 </logic:present>
 
 
-<bean:define id="nextSemester" name="previousInfoExecutionPeriod" property="semester"/>
+<bean:define id="nextSemester" name="nextInfoExecutionPeriod" property="semester"/>
 <bean:define id="currentSemester" name="execution_period" property="semester"/>
 
 <table class="tab_lay" cellspacing="0" width="75%">
@@ -83,8 +83,8 @@
 
 	<tr>
 		<th colspan="5" scope="col">
-			<bean:write name="previousInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbr"/>
-			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year"/>
+			<bean:write name="nextInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbr"/>
+			<bean:write name="nextInfoExecutionPeriod" property="infoExecutionYear.year"/>
 		</th>	
 	</tr>
 
@@ -94,11 +94,11 @@
 	<% } %>
 	</tr>
 
-	<bean:define id="numberRowsNext" name="classViewsTablePrevious" property="numberRows" />
+	<bean:define id="numberRowsNext" name="classViewsTableNext" property="numberRows" />
 	<% for (int rowIndex=0; rowIndex < new Integer(pageContext.findAttribute("numberRowsNext").toString()).intValue(); rowIndex++) { %>
 	<% String rowColor = rowIndex % 2 == 0 ? "white" : "bluecell" ; %>
 	<tr>	
-		<logic:iterate id="classView" name="classViewsTablePrevious" property='<%= "row[" + rowIndex + "]" %>'>
+		<logic:iterate id="classView" name="classViewsTableNext" property='<%= "row[" + rowIndex + "]" %>'>
 			<td class="<%= rowColor %>">
 				<logic:notEmpty name="classView">
 					<bean:define id="classOID" name="classView" property="classOID"/>

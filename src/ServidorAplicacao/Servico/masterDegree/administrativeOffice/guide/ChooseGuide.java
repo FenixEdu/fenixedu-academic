@@ -46,7 +46,7 @@ public class ChooseGuide implements IService {
             throw newEx;
         }
 
-        if (guides == null) {
+        if (guides == null || guides.isEmpty()) {
             throw new NonExistingServiceException();
         }
 
