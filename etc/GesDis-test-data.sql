@@ -91,4 +91,10 @@ INSERT INTO responsiblefor VALUES (1, 26);
 DELETE FROM announcement;
 INSERT INTO announcement VALUES (1, 'announcement1', '2003-01-21', '2003-01-21', 'information1', 1);
 
+#----------------------------
+# Records for table bibliographic_reference
+#----------------------------
+
+insert  into bibliographic_reference values (1, 'xpto', 'pedro', 'ref', '2002', 0, 24) ;
+insert  into bibliographic_reference values (2, 'so', 'am', 'ref2', '2004', 0, 25) ;
 
