@@ -6,6 +6,7 @@ package DataBeans;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import Util.MasterDegreeClassification;
 import Util.State;
@@ -26,6 +27,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
 	private MasterDegreeClassification finalResult;
 	private Integer attachedCopiesNumber;
 	private State currentState;
+	private List infoJuries;
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": \n";
@@ -117,6 +119,14 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
 
 	public Date getThesisDeliveryDate() {
 		return thesisDeliveryDate;
+	}
+
+	public void setInfoJuries(List infoJuries) {
+		this.infoJuries = infoJuries;
+	}
+
+	public List getInfoJuries() {
+		return infoJuries;
 	}
 
 }

@@ -2656,9 +2656,13 @@ public abstract class Cloner {
 		IMasterDegreeThesis masterDegreeThesis =
 			Cloner.copyInfoMasterDegreeThesis2IMasterDegreeThesis(infoMasterDegreeProofVersion.getInfoMasterDegreeThesis());
 		IEmployee employee = Cloner.copyInfoEmployee2IEmployee(infoMasterDegreeProofVersion.getInfoResponsibleEmployee());
-
+		List juries = Cloner.copyListInfoTeacher2ListITeacher(infoMasterDegreeProofVersion.getInfoJuries());
+		
 		masterDegreeProofVersion.setMasterDegreeThesis(masterDegreeThesis);
 		masterDegreeProofVersion.setResponsibleEmployee(employee);
+		masterDegreeProofVersion.setJuries(juries);
+		
+		
 
 		return masterDegreeProofVersion;
 	}
@@ -2671,9 +2675,11 @@ public abstract class Cloner {
 		InfoMasterDegreeThesis infoMasterDegreeThesis =
 			Cloner.copyIMasterDegreeThesis2InfoMasterDegreeThesis(masterDegreeProofVersion.getMasterDegreeThesis());
 		InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(masterDegreeProofVersion.getResponsibleEmployee());
+		List infoJuries = Cloner.copyListITeacher2ListInfoTeacher(masterDegreeProofVersion.getJuries());
 
 		infoMasterDegreeProofVersion.setInfoMasterDegreeThesis(infoMasterDegreeThesis);
 		infoMasterDegreeProofVersion.setInfoResponsibleEmployee(infoEmployee);
+		infoMasterDegreeProofVersion.setInfoJuries(infoJuries);
 
 		return infoMasterDegreeProofVersion;
 

@@ -8,6 +8,7 @@ package Dominio;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import Util.MasterDegreeClassification;
 import Util.State;
@@ -43,5 +44,8 @@ public interface IMasterDegreeProofVersion extends IDomainObject {
 
 	public void setCurrentState(State currentState);
 	public State getCurrentState();
+	
+	public void setJuries(List jurys);
+	public List getJuries();
 
 }

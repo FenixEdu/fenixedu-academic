@@ -6,6 +6,7 @@ package Dominio;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import Util.MasterDegreeClassification;
 import Util.State;
@@ -30,6 +31,7 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 	private MasterDegreeClassification finalResult;
 	private Integer attachedCopiesNumber;
 	private State currentState;
+	private List juries;
 
 	/**
 	 * Default Constructor
@@ -48,9 +50,16 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 	 * @param attachedCopiesNumber
 	 * @param currentState
 	 */
-	public MasterDegreeProofVersion(IMasterDegreeThesis masterDegreeThesis, IEmployee responsibleEmployee, Timestamp lastModification,
-	Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult, Integer attachedCopiesNumber,
-			State currentState) {
+	public MasterDegreeProofVersion(
+		IMasterDegreeThesis masterDegreeThesis,
+		IEmployee responsibleEmployee,
+		Timestamp lastModification,
+		Date proofDate,
+		Date thesisDeliveryDate,
+		MasterDegreeClassification finalResult,
+		Integer attachedCopiesNumber,
+		State currentState,
+		List juries) {
 		this.masterDegreeThesis = masterDegreeThesis;
 		this.responsibleEmployee = responsibleEmployee;
 		this.lastModification = lastModification;
@@ -59,6 +68,7 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 		this.finalResult = finalResult;
 		this.attachedCopiesNumber = attachedCopiesNumber;
 		this.currentState = currentState;
+		this.juries = juries;
 	}
 	public void setLastModification(Timestamp lastModification) {
 		this.lastModification = lastModification;
@@ -120,6 +130,13 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 	public State getCurrentState() {
 		return currentState;
 	}
+	public void setJuries(List juries) {
+		this.juries = juries;
+	}
+
+	public List getJuries() {
+		return juries;
+	}
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": \n";
 		result += "idInternal = " + getIdInternal() + "; \n";
@@ -141,7 +158,8 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 
 		if (obj instanceof IMasterDegreeProofVersion) {
 			IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) obj;
-			result = this.masterDegreeThesis.equals(masterDegreeProofVersion.getMasterDegreeThesis())
+			result =
+				this.masterDegreeThesis.equals(masterDegreeProofVersion.getMasterDegreeThesis())
 					&& this.lastModification.equals(masterDegreeProofVersion.getLastModification());
 		}
 
