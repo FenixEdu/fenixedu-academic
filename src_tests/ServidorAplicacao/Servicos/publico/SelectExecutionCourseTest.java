@@ -17,8 +17,10 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
+import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author jmota
@@ -26,7 +28,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
  */
 public class SelectExecutionCourseTest extends TestCaseServicos {
 
-	
 	private InfoDegree infoDegree = null;
 	/**
 	 * Constructor for SelectClassesTest.
@@ -47,12 +48,32 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 
 	protected void setUp() {
 		super.setUp();
+		try {
+			_gestor = GestorServicos.manager();
+			_suportePersistente = SuportePersistenteOJB.getInstance();
+			_turmaPersistente = _suportePersistente.getITurmaPersistente();
+			persistentExecutionYear =
+				_suportePersistente.getIPersistentExecutionYear();
+			persistentExecutionPeriod =
+				_suportePersistente.getIPersistentExecutionPeriod();
+			_cursoPersistente = _suportePersistente.getICursoPersistente();
+			_persistentDegreeCurricularPlan =
+				_suportePersistente.getIPlanoCurricularCursoPersistente();
+			_cursoExecucaoPersistente =
+				_suportePersistente.getICursoExecucaoPersistente();
+			_disciplinaExecucaoPersistente =
+				_suportePersistente.getIDisciplinaExecucaoPersistente();
+			_disciplinaCurricularPersistente=_suportePersistente.getIPersistentCurricularCourse();
+		} catch (ExcepcaoPersistencia e) {
+			fail("setup failed");
+			e.printStackTrace();
+		}
 	}
 
 	protected void tearDown() {
 		super.tearDown();
 	}
-	
+
 	public void testReadAll() {
 
 		Object argsSelectExecutionCourses[] = new Object[3];
@@ -64,36 +85,48 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 		ICursoExecucao executionDegree = null;
 		ICurso degree = null;
 
-		try { 
+		try {
 			_suportePersistente.iniciarTransaccao();
 			// Insert two new Classes
 
-			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
 			assertNotNull(executionPeriod);
-			degreeCurricularPlan = _persistentDegreeCurricularPlan.readByName("plano1");
-			assertNotNull(degreeCurricularPlan);
+
 			degree = _cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);			
-			executionDegree = _cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(degree);
+			degreeCurricularPlan =
+				_persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			executionDegree =
+				_cursoExecucaoPersistente
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
 			assertNotNull(executionDegree);
-			
+
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Read All Failure");
 		}
-		
-		
-		// Create the arguments
-		InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
-		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
-		Integer curricularYear = new Integer(1);
-		
-		argsSelectExecutionCourses[0] = infoExecutionDegree;
-		argsSelectExecutionCourses[1] = infoExecutionPeriod; 
-		argsSelectExecutionCourses[2] = curricularYear;  
 
+		// Create the arguments
+		InfoExecutionDegree infoExecutionDegree =
+			Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+		InfoExecutionPeriod infoExecutionPeriod =
+			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+		Integer curricularYear = new Integer(1);
+
+		argsSelectExecutionCourses[0] = infoExecutionDegree;
+		argsSelectExecutionCourses[1] = infoExecutionPeriod;
+		argsSelectExecutionCourses[2] = curricularYear;
 
 		//Empty database	
 		try {
@@ -105,7 +138,10 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 		}
 		try {
 			result =
-				_gestor.executar(_userView, "SelectExecutionCourse", argsSelectExecutionCourses);
+				_gestor.executar(
+					_userView,
+					"SelectExecutionCourse",
+					argsSelectExecutionCourses);
 			assertEquals(
 				"testReadAll: no classes to read aqui",
 				0,
@@ -115,30 +151,58 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 		}
 
 		//2 classes in database
-		try { 
+		try {
 			_suportePersistente.iniciarTransaccao();
 			// Insert two new Classes
-			IDisciplinaExecucao executionCourse1 = new DisciplinaExecucao("Disc1", "sigla1", "programa1", new Double(0),new Double(0),new Double(0),new Double(0), executionPeriod);
-			IDisciplinaExecucao executionCourse2 = new DisciplinaExecucao("Disc2", "sigla2", "programa2", new Double(0),new Double(0),new Double(0),new Double(0), executionPeriod);
-			
-			ICurricularCourse curricularCourse = _disciplinaCurricularPersistente.readCurricularCourseByNameCode("Arquitecturas de Computadores","AC");
-	
+			IDisciplinaExecucao executionCourse1 =
+				new DisciplinaExecucao(
+					"Disc1",
+					"sigla1",
+					"programa1",
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					executionPeriod);
+			IDisciplinaExecucao executionCourse2 =
+				new DisciplinaExecucao(
+					"Disc2",
+					"sigla2",
+					"programa2",
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					executionPeriod);
+
+			ICurricularCourse curricularCourse =
+				_disciplinaCurricularPersistente
+					.readCurricularCourseByNameCode(
+					"Arquitecturas de Computadores",
+					"AC");
+
 			List associatedCurricularCourses = new ArrayList();
 			associatedCurricularCourses.add(curricularCourse);
-			
-			executionCourse1.setAssociatedCurricularCourses(associatedCurricularCourses);
 
-			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(executionCourse1);
-			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(executionCourse2);
+			executionCourse1.setAssociatedCurricularCourses(
+				associatedCurricularCourses);
+
+			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
+				executionCourse1);
+			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
+				executionCourse2);
 
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Read All Failure");
 		}
-	
+
 		try {
 			result =
-				_gestor.executar(_userView, "SelectExecutionCourse", argsSelectExecutionCourses);
+				_gestor.executar(
+					_userView,
+					"SelectExecutionCourse",
+					argsSelectExecutionCourses);
 			assertEquals(
 				"testReadAll: 1 classes in db",
 				1,
