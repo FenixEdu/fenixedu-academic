@@ -95,11 +95,16 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 		Integer executionDegreeId = Integer.valueOf((String) tutorForm.get("executionDegreeId"));
 		request.setAttribute("executionDegreeId", executionDegreeId);
 
+		
+		 //This service returns a list with size two:
+		 // 		first element is infoTeacher that is tutor
+		 // 		second element is the list of students that this tutor tutorizes
+		 // 
 		Object[] args = { executionDegreeId, tutorNumber };
-		List infoStudentsOfTutor = null;
+		List infoTeacherAndStudents = null;
 		try
 		{
-			infoStudentsOfTutor =
+		    infoTeacherAndStudents =
 				(List) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadStudentsByTutor",
@@ -113,35 +118,14 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 			return mapping.getInputForward();
 		}
 
-		if (infoStudentsOfTutor != null && infoStudentsOfTutor.size() >= 0)
+		InfoTeacher infoTeacher = (InfoTeacher)infoTeacherAndStudents.get(0);
+		request.setAttribute("infoTeacher", infoTeacher);
+		
+		if (infoTeacherAndStudents.size() > 1)
 		{
 			//order list by number
-			Collections.sort(infoStudentsOfTutor, new BeanComparator("infoStudent.number"));
-			request.setAttribute("studentsOfTutor", infoStudentsOfTutor);
-		}
-		else
-		{
-			//read teacher
-			Object[] args2 = { tutorNumber };
-			InfoTeacher infoTeacher = null;
-			try
-			{
-				infoTeacher =
-					(InfoTeacher) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadTeacherByNumber",
-						args2);
-			}
-			catch (FenixServiceException e)
-			{
-				e.printStackTrace();
-				errors.add("error", new ActionError(e.getMessage(), tutorNumber));
-				saveErrors(request, errors);
-			}
-			if (infoTeacher != null)
-			{
-				request.setAttribute("infoTeacher", infoTeacher);
-			}
+			Collections.sort((List)infoTeacherAndStudents.get(1), new BeanComparator("infoStudent.number"));
+			request.setAttribute("studentsOfTutor", (List)infoTeacherAndStudents.get(1));
 		}
 
 		cleanForm(tutorForm);

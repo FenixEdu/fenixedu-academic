@@ -20,25 +20,9 @@
 				
 				<!-- Tutor's name and number -->
 				<strong><bean:message key="label.tutor"/>:&nbsp;</strong>
-				<logic:present name="studentsOfTutor">
-				<logic:notEmpty name="studentsOfTutor">					
-					<logic:iterate id="teacher" name="studentsOfTutor" length="1">
-						<bean:write name="teacher" property="infoTeacher.infoPerson.nome" />
-						&nbsp;-&nbsp;
-						<bean:write name="teacher" property="infoTeacher.teacherNumber" />
-					</logic:iterate>
-				</logic:notEmpty>
-				</logic:present>
-				<logic:notPresent name="studentsOfTutor">
-					<logic:present name="infoTeacher">
-						<bean:write name="infoTeacher" property="infoPerson.nome" />
-						&nbsp;-&nbsp;
-						<bean:write name="infoTeacher" property="teacherNumber" />
-					</logic:present>
-					<logic:notPresent name="infoTeacher">
-						<%= request.getAttribute("tutorNumber") %>
-					</logic:notPresent>
-				</logic:notPresent>				
+				<bean:write name="infoTeacher" property="infoPerson.nome" />
+				&nbsp;-&nbsp;
+				<bean:write name="infoTeacher" property="teacherNumber" />
 			</p>
 		</td>
 	</tr>

@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoTeacherWithPerson;
 import DataBeans.InfoTutor;
-import DataBeans.util.Cloner;
+import DataBeans.InfoTutorWithInfoStudent;
 import Dominio.IDepartment;
 import Dominio.ITeacher;
 import Dominio.ITutor;
@@ -18,6 +19,7 @@ import Dominio.Teacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
+import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTutor;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -34,6 +36,12 @@ public class ReadStudentsByTutor implements IService
 
 	}
 
+	/*
+	 * This service returns a list with size two:
+	 * 		first element is infoTeacher that is tutor
+	 * 		second element is the list of students that this tutor tutorizes
+	 * 
+	 */
 	
 	public List run(
 		Integer executionDegreeId, Integer tutorNumber) throws FenixServiceException{
@@ -41,7 +49,7 @@ public class ReadStudentsByTutor implements IService
 			throw new FenixServiceException("error.tutor.impossibleOperation");
 		}
 		
-		List infoTutorStudents = null;
+		List teacherAndStudentsList = null;
 		ISuportePersistente sp = null;
 		try
 		{
@@ -59,22 +67,30 @@ public class ReadStudentsByTutor implements IService
 			if(!department.getCode().equals(new String("21"))){
 				throw new FenixServiceException("error.tutor.tutor.notLEEC");
 			}
+
+			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+			ITeacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
 			
+			teacherAndStudentsList = new ArrayList();
+			teacherAndStudentsList.add(InfoTeacherWithPerson.newInfoFromDomain(teacherDB));
+
 			List tutorStudents = persistentTutor.readStudentsByTeacher(teacher);
 			if(tutorStudents == null || tutorStudents.size() <= 0){
-				return infoTutorStudents;
+				return teacherAndStudentsList;
 			}
 		
 			//Clone
-			infoTutorStudents = new ArrayList();
+			List infoTutorStudents = new ArrayList();
 			ListIterator iterator = tutorStudents.listIterator();
 			while (iterator.hasNext())
 			{
 				ITutor tutor = (ITutor) iterator.next();
-				InfoTutor infoTutor = Cloner.copyITutor2InfoTutor(tutor);
-				
+				//CLONER
+				//InfoTutor infoTutor = Cloner.copyITutor2InfoTutor(tutor);
+				InfoTutor infoTutor = InfoTutorWithInfoStudent.newInfoFromDomain(tutor);
 				infoTutorStudents.add(infoTutor);
 			}			
+			teacherAndStudentsList.add(infoTutorStudents);
 		}
 		catch (ExcepcaoPersistencia e)
 		{			
@@ -82,6 +98,6 @@ public class ReadStudentsByTutor implements IService
 			throw new FenixServiceException("error.tutor.impossibleOperation");
 		}
 				
-		return infoTutorStudents;
+		return teacherAndStudentsList;
 	}
 }
