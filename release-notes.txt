@@ -1,4 +1,33 @@
+--------------------------------------------------------------------
+Release 2004-05-26
+---------------------------------------------------------------------
 
+NEW FEATURES:
+=============
+- Added the general class properties concept. For more information related to this,
+  see file docs/txt/general-class-properties-doc.txt.
+- Added new feature in Degree Administrative Office portal: Change student areas.
+- Added new feature in Degree Administrative Office, Coordinator and Master Degree Administrative Office portals:
+  Make enrollment equivalences for students.
+
+NOTES:
+======
+- It is necessary to run "deploy-scripts/updates_for_deploy_2004-05-26.sql" "deploy-scripts/new_tables_for_deploy_2004-05-26.sql"
+  from project middleware to update database with the new create and alter tables corresponding to the domain changes.
+  The file updates_for_deploy_2004-05-26.sql must be runned in the following way:
+                          mysql <DBNAME> < updates_for_deploy_2004-05-26.sql > result.sql
+                          mysql <DBNAME> < result.sql
+
+CHANGES:
+========
+- Added the creationDate attribute in Enrolment.
+
+BUG FIXES:
+==========
+
+
+KNOWN ISSUES:
+=============
 
 
 --------------------------------------------------------------------
