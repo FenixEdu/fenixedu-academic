@@ -113,7 +113,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
                     klass);
 
             enrollmentDetails = new InfoClassEnrollmentDetails();
-            enrollmentDetails.setInfoStudent(Cloner.getInstance()
+            enrollmentDetails.setInfoStudent(Cloner
                     .copyIStudent2InfoStudent(student));
             //enrollmentDetails.setInfoShiftEnrolledList(studentShifts);
             enrollmentDetails.setInfoShiftEnrolledList(infoShifts);
@@ -144,7 +144,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
                     public Object transform(Object input)
                     {
                         ITurno shift = (ITurno) input;
-                        InfoShift infoShift = Cloner.getInstance().copyITurno2InfoShift(shift);
+                        InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
                         return infoShift;
                     }
                 });
@@ -198,7 +198,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
 
             //Clone class
             ITurma klass = (ITurma) classList.get(i);
-            InfoClass infoClass = Cloner.getInstance().copyITurma2InfoClass(klass);
+            InfoClass infoClass = Cloner.copyClass2InfoClass(klass);
             infoClassList.add(infoClass);
 
             Integer klassId = klass.getIdInternal();
@@ -264,8 +264,8 @@ public class ReadClassShiftEnrollmentDetails implements IService
         if (executionCourseShiftEnrollmentDetails == null)
         {
             executionCourseShiftEnrollmentDetails = new ExecutionCourseShiftEnrollmentDetails();
-            InfoExecutionCourse infoExecutionCourse = Cloner
-                    .getInstance().copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+                    .get(executionCourse);
             executionCourseShiftEnrollmentDetails
                     .setInfoExecutionCourse(infoExecutionCourse);
 
@@ -292,7 +292,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
         {
             shiftEnrollmentDetails = new ShiftEnrollmentDetails();
 
-            InfoShift infoShift = Cloner.getInstance().copyITurno2InfoShift(shift);
+            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
             int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift);
             shiftEnrollmentDetails.setInfoShift(infoShift);
             shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao()
