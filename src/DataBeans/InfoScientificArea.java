@@ -43,13 +43,13 @@ public class InfoScientificArea
 
     public boolean equals(Object obj)
     {
-        boolean resultado = false;
+        boolean result = false;
         if (obj instanceof InfoScientificArea)
         {
 			InfoScientificArea scientificArea = (InfoScientificArea) obj;
 
-            resultado = scientificArea.getName().equals(getName());
+            result = scientificArea.getName().equals(getName());
         }
-        return false;
+        return result;
     }
 }

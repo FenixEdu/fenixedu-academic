@@ -1,127 +1,171 @@
 package Dominio;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 /**
  * @author Alexandra Alves
  */
-public class Credits extends DomainObject implements ICredits {
+public class Credits extends DomainObject implements ICredits
+{
+    private Double degreeFinalProjectStudents;
 
-	private IExecutionPeriod executionPeriod;
-	private Integer keyExecutionPeriod;
+    private IExecutionPeriod executionPeriod;
 
-	private ITeacher teacher;
-	private Integer keyTeacher;
+    private Double institutionWorkTime;
 
-	private Integer tfcStudentsNumber;
-	private Double credits;
-	private Double additionalCredits;
-	private String additionalCreditsJustification;
-	/**
-	 * @return
-	 */
-	public Double getAdditionalCredits() {
-		return this.additionalCredits;
-	}
+    private Integer keyExecutionPeriod;
 
-	/**
-	 * @param additionalCredits
-	 */
-	public void setAdditionalCredits(Double additionalCredits) {
-		this.additionalCredits = additionalCredits;
-	}
+    private Integer keyTeacher;
 
-	/**
-	 * @return
-	 */
-	public String getAdditionalCreditsJustification() {
-		return this.additionalCreditsJustification;
-	}
+    private Double lessons;
 
-	/**
-	 * @param additionalCreditsJustification
-	 */
-	public void setAdditionalCreditsJustification(String additionalCreditsJustification) {
-		this.additionalCreditsJustification = additionalCreditsJustification;
-	}
+    private Double supportLessons;
 
-	public Credits() {
-	}
+    private ITeacher teacher;
 
-	public Double getCredits() {
-		return credits;
-	}
+    public boolean equals( Object obj )
+    {
+        boolean result = false;
+        if (obj instanceof ICredits)
+        {
+            ICredits credits = (ICredits) obj;
+            result = this.getExecutionPeriod().equals(credits.getExecutionPeriod())
+                            && this.getTeacher().equals(credits.getTeacher());
+        }
+        return result;
+    }
 
-	public IExecutionPeriod getExecutionPeriod() {
-		return executionPeriod;
-	}
+    /**
+     * @return Returns the degreeFinalProjectStudents.
+     */
+    public Double getDegreeFinalProjectStudents()
+    {
+        return this.degreeFinalProjectStudents;
+    }
 
-	public Integer getKeyExecutionPeriod() {
-		return keyExecutionPeriod;
-	}
+    /**
+     * @return Returns the executionPeriod.
+     */
+    public IExecutionPeriod getExecutionPeriod()
+    {
+        return this.executionPeriod;
+    }
 
-	public Integer getKeyTeacher() {
-		return keyTeacher;
-	}
+    /**
+     * @return Returns the institutionWorkTime.
+     */
+    public Double getInstitutionWorkTime()
+    {
+        return this.institutionWorkTime;
+    }
 
-	public ITeacher getTeacher() {
-		return teacher;
-	}
+    /**
+     * @return Returns the keyExecutionPeriod.
+     */
+    public Integer getKeyExecutionPeriod()
+    {
+        return this.keyExecutionPeriod;
+    }
 
-	public Integer getTfcStudentsNumber() {
-		return tfcStudentsNumber;
-	}
+    /**
+     * @return Returns the keyTeacher.
+     */
+    public Integer getKeyTeacher()
+    {
+        return this.keyTeacher;
+    }
 
-	public void setCredits(Double double1) {
-		credits = double1;
-	}
+    /**
+     * @return Returns the lessons.
+     */
+    public Double getLessons()
+    {
+        return this.lessons;
+    }
 
-	public void setExecutionPeriod(IExecutionPeriod period) {
-		executionPeriod = period;
-	}
+    /**
+     * @return Returns the supportLessons.
+     */
+    public Double getSupportLessons()
+    {
+        return this.supportLessons;
+    }
 
-	public void setKeyExecutionPeriod(Integer integer) {
-		keyExecutionPeriod = integer;
-	}
+    /**
+     * @return Returns the teacher.
+     */
+    public ITeacher getTeacher()
+    {
+        return this.teacher;
+    }
 
-	public void setKeyTeacher(Integer integer) {
-		keyTeacher = integer;
-	}
+    /**
+     * @param degreeFinalProjectStudents
+     *                   The degreeFinalProjectStudents to set.
+     */
+    public void setDegreeFinalProjectStudents( Double degreeFinalProjectStudents )
+    {
+        this.degreeFinalProjectStudents = degreeFinalProjectStudents;
+    }
 
-	public void setTeacher(ITeacher teacher) {
-		this.teacher = teacher;
-	}
+    /**
+     * @param executionPeriod
+     *                   The executionPeriod to set.
+     */
+    public void setExecutionPeriod( IExecutionPeriod executionPeriod )
+    {
+        this.executionPeriod = executionPeriod;
+    }
 
-	public void setTfcStudentsNumber(Integer integer) {
-		tfcStudentsNumber = integer;
-	}
+    /**
+     * @param institutionWorkTime
+     *                   The institutionWorkTime to set.
+     */
+    public void setInstitutionWorkTime( Double institutionWorkTime )
+    {
+        this.institutionWorkTime = institutionWorkTime;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof ICredits) {
-			ICredits credits = (ICredits) arg0;
-			result =
-				this.getExecutionPeriod().equals(credits.getExecutionPeriod())
-					&& this.getTeacher().equals(credits.getTeacher());
-		}
-		return result;
-	}
-	/* (non-Javadoc)
-	 * @see Dominio.IDomainObject#getUniqueProperties()
-	 */
-	public List getUniqueProperties() {
-		List list = new ArrayList();
-		list.add("executionPeriod.semester");
-		list.add("executionPeriod.name");
-		list.add("executionPeriod.executionYear.year");
-		list.add("teacher.teacherNumber");
-		list.add("teacher.person.username");
-		return list;
-	}
+    /**
+     * @param keyExecutionPeriod
+     *                   The keyExecutionPeriod to set.
+     */
+    public void setKeyExecutionPeriod( Integer keyExecutionPeriod )
+    {
+        this.keyExecutionPeriod = keyExecutionPeriod;
+    }
 
+    /**
+     * @param keyTeacher
+     *                   The keyTeacher to set.
+     */
+    public void setKeyTeacher( Integer keyTeacher )
+    {
+        this.keyTeacher = keyTeacher;
+    }
+
+    /**
+     * @param lessons
+     *                   The lessons to set.
+     */
+    public void setLessons( Double lessons )
+    {
+        this.lessons = lessons;
+    }
+
+    /**
+     * @param supportLessons
+     *                   The supportLessons to set.
+     */
+    public void setSupportLessons( Double supportLessons )
+    {
+        this.supportLessons = supportLessons;
+    }
+
+    /**
+     * @param teacher
+     *                   The teacher to set.
+     */
+    public void setTeacher( ITeacher teacher )
+    {
+        this.teacher = teacher;
+    }
 }

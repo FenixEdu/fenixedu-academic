@@ -18,9 +18,6 @@ public class InfoDegree extends InfoObject implements Comparable {
 	protected String nome;
 	protected TipoCurso tipoCurso;
 
-	//FIXME : Esta variavel e para sair
-	protected String degreeTypeString;
-
 	private List infoDegreeCurricularPlans;
 	private List infoDegreeInfos; //added by Tânia Pousão
 
@@ -30,15 +27,6 @@ public class InfoDegree extends InfoObject implements Comparable {
 	public InfoDegree(String sigla, String nome) {
 		setSigla(sigla);
 		setNome(nome);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public InfoDegree(String sigla, String nome, String degreeType) {
-		setSigla(sigla);
-		setNome(nome);
-		setDegreeTypeString(degreeType);
 	}
 
 	public InfoDegree(String sigla, String nome, TipoCurso degreeType) {
@@ -113,25 +101,6 @@ public class InfoDegree extends InfoObject implements Comparable {
 	 */
 	public void setInfoDegreeCurricularPlans(List infoDegreeCurricularPlans) {
 		this.infoDegreeCurricularPlans = infoDegreeCurricularPlans;
-	}
-
-	/**
-	 * @return String
-	 * @deprecated
-	 */
-	public String getDegreeTypeString() {
-		return degreeTypeString;
-	}
-
-	/**
-	 * Sets the degreeTypeString.
-	 * 
-	 * @param degreeTypeString
-	 *          The degreeTypeString to set
-	 * @deprecated
-	 */
-	public void setDegreeTypeString(String degreeTypeString) {
-		this.degreeTypeString = degreeTypeString;
 	}
 
 	//alphabetic order

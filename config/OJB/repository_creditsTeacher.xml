@@ -33,14 +33,14 @@
 
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
-      <field-descriptor name="tfcStudentsNumber" column="TFC_STUDENTS_NUMBER" jdbc-type="INTEGER"/>
-
-      <field-descriptor name="credits" column="CREDITS" jdbc-type="DOUBLE"/>
-
-      <field-descriptor name="additionalCredits" column="ADDITIONAL_CREDITS" jdbc-type="DOUBLE"/>
-
-      <field-descriptor name="additionalCreditsJustification" column="ADDITIONAL_CREDITS_JUSTIFICATION" jdbc-type="VARCHAR"/>
+      <field-descriptor name="degreeFinalProjectStudents" column="DEGREE_FINAL_PROJECT_STUDENTS" jdbc-type="DOUBLE"/>
       
+      <field-descriptor name="supportLessons" column="SUPPORT_LESSONS" jdbc-type="DOUBLE"/>
+
+      <field-descriptor name="lessons" column="LESSONS" jdbc-type="DOUBLE"/>
+      
+      <field-descriptor name="institutionWorkTime" column="INSTITUTION_WORK_TIME" jdbc-type="DOUBLE"/>
+
       <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>

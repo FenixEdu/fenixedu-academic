@@ -1,6 +1,6 @@
 /*
  * Created on 27/Mai/2003
- *
+ * 
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
@@ -8,23 +8,59 @@ package Dominio;
 
 /**
  * @author Alexandra Alves
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface ICredits extends IDomainObject {
-	public abstract Double getCredits();
-	public abstract IExecutionPeriod getExecutionPeriod();
-	public abstract ITeacher getTeacher();
-	public abstract Integer getTfcStudentsNumber();
-	String getAdditionalCreditsJustification();
-	void setAdditionalCreditsJustification(String additionalCreditsJustification);
+public interface ICredits extends IDomainObject
+{
 
-	Double getAdditionalCredits();
-	void setAdditionalCredits(Double additionalCredits);
-	
-	public abstract void setCredits(Double double1);
-	public abstract void setExecutionPeriod(IExecutionPeriod period);
-	public abstract void setTeacher(ITeacher teacher);
-	public abstract void setTfcStudentsNumber(Integer integer);
+    /**
+     * @return Returns the degreeFinalProjectStudents.
+     */
+    public abstract Double getDegreeFinalProjectStudents();
+    public abstract IExecutionPeriod getExecutionPeriod();
+
+    /**
+     * @return Returns the institutionWorkTime.
+     */
+    public abstract Double getInstitutionWorkTime();
+
+    /**
+     * @return Returns the lessons.
+     */
+    public abstract Double getLessons();
+
+    /**
+     * @return Returns the supportLessons.
+     */
+    public abstract Double getSupportLessons();
+
+    public abstract ITeacher getTeacher();
+
+    /**
+     * @param degreeFinalProjectStudents
+     *                   The degreeFinalProjectStudents to set.
+     */
+    public abstract void setDegreeFinalProjectStudents( Double degreeFinalProjectStudents );
+
+    void setExecutionPeriod( IExecutionPeriod executionPeriod );
+
+    /**
+     * @param institutionWorkTime
+     *                   The institutionWorkTime to set.
+     */
+    public abstract void setInstitutionWorkTime( Double institutionWorkTime );
+
+    /**
+     * @param lessons
+     *                   The lessons to set.
+     */
+    public abstract void setLessons( Double lessons );
+
+    /**
+     * @param supportLessons
+     *                   The supportLessons to set.
+     */
+    public abstract void setSupportLessons( Double supportLessons );
+
+    void setTeacher( ITeacher teacher );
+
 }

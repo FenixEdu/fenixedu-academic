@@ -6,8 +6,6 @@
 package DataBeans;
 import java.util.Iterator;
 import java.util.List;
-
-import Dominio.IStudent;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *

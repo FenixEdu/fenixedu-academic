@@ -19,7 +19,10 @@ create table CREDITS (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EXECUTION_PERIOD int(11) not null,
    KEY_TEACHER int(11) not null,
-   CREDITS float,
+   SUPPORT_LESSONS float,
+   INSTITUTION_WORK_TIME float,
+   LESSONS float,
+   DEGREE_FINAL_PROJECT_STUDENTS float,
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXECUTION_PERIOD, KEY_TEACHER))
    type=InnoDB;
