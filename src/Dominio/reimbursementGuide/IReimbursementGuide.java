@@ -36,11 +36,11 @@ public interface IReimbursementGuide extends IDomainObject {
 	/**
 	 * @return
 	 */
-	public IGuide getPaymentGuide();
+	public IGuide getGuide();
 	/**
 	 * @param paymentGuide
 	 */
-	public void setPaymentGuide(IGuide paymentGuide);
+	public void setGuide(IGuide paymentGuide);
 	/**
 	 * @return
 	 */

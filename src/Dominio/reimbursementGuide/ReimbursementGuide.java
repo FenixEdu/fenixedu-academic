@@ -20,12 +20,12 @@ import Dominio.IGuide;
 public class ReimbursementGuide extends DomainObject implements IReimbursementGuide {
     
     protected Integer number;
-	protected IGuide paymentGuide;
+	protected IGuide guide;
 	protected Double value;
 	protected String justification;
 	protected Calendar creationDate;
 	
-	private Integer keyPaymentGuide;
+	private Integer keyGuide;
 	
 	/**
 	 * 
@@ -65,15 +65,15 @@ public class ReimbursementGuide extends DomainObject implements IReimbursementGu
 	/**
 	 * @return
 	 */
-	public IGuide getPaymentGuide() {
-		return paymentGuide;
+	public IGuide getGuide() {
+		return guide;
 	}
 
 	/**
 	 * @param paymentGuide
 	 */
-	public void setPaymentGuide(IGuide paymentGuide) {
-		this.paymentGuide = paymentGuide;
+	public void setGuide(IGuide paymentGuide) {
+		this.guide = paymentGuide;
 	}
 
 	/**
@@ -93,15 +93,15 @@ public class ReimbursementGuide extends DomainObject implements IReimbursementGu
 	/**
 	 * @return
 	 */
-	public Integer getKeyPaymentGuide() {
-		return keyPaymentGuide;
+	public Integer getKeyGuide() {
+		return keyGuide;
 	}
 
 	/**
 	 * @param keyPaymentGuide
 	 */
-	public void setKeyPaymentGuide(Integer keyPaymentGuide) {
-		this.keyPaymentGuide = keyPaymentGuide;
+	public void setKeyGuide(Integer keyPaymentGuide) {
+		this.keyGuide = keyPaymentGuide;
 	}
 
 	/**

@@ -21,224 +21,254 @@ import Util.TipoCurso;
  *   - Shezad Anavarali (sana@mega.ist.utl.pt)
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
+public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
+{
 
-	/**
-	 * @param testName
-	 */
-	public ChangeMasterDegreeProofTest(String testName) {
-		super(testName);
-		if (testName.equals("testSuccessfulChangeMasterDegreeProofWhenProofDoesNotExist")) {
-			this.dataSetFilePath =
-				"etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml";
-		} else {
-			this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeProofDataSet.xml";
-		}
-	}
+    /**
+     * @param testName
+     */
+    public ChangeMasterDegreeProofTest(String testName)
+    {
+        super(testName);
+        if (testName.equals("testSuccessfulChangeMasterDegreeProofWhenProofDoesNotExist"))
+        {
+            this.dataSetFilePath =
+                "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml";
+        } else
+        {
+            this.dataSetFilePath =
+                "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeProofDataSet.xml";
+        }
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ChangeMasterDegreeProof";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ChangeMasterDegreeProof";
+    }
 
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
-		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-		infoStudentCurricularPlan.setIdInternal(new Integer(8582));
-		Object[] argsChangeMasterDegreeProof =
-			{
-				null,
-				infoStudentCurricularPlan,
-				new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
-				new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
-				MasterDegreeClassification.UNDEFINED,
-				new Integer(5)};
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
+    {
+        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+        infoStudentCurricularPlan.setIdInternal(new Integer(8582));
+        Object[] argsChangeMasterDegreeProof =
+            {
+                null,
+                infoStudentCurricularPlan,
+                new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
+                new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
+                MasterDegreeClassification.UNDEFINED,
+                new Integer(5)};
 
-		return argsChangeMasterDegreeProof;
-	}
+        return argsChangeMasterDegreeProof;
+    }
 
-	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
-		Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
-		InfoStudentCurricularPlan infoStudentCurricularPlan =
-			(InfoStudentCurricularPlan) serviceManager.executar(
-				userViewNotAuthorized,
-				"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-				argsReadStudentCurricularPlan);
-		Object[] argsChangeMasterDegreeProof =
-			{
-				userViewNotAuthorized,
-				infoStudentCurricularPlan,
-				new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
-				new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
-				MasterDegreeClassification.UNDEFINED,
-				new Integer(5)};
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
+    {
+        Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+        InfoStudentCurricularPlan infoStudentCurricularPlan =
+            (InfoStudentCurricularPlan) serviceManager.executar(
+                userViewNotAuthorized,
+                "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                argsReadStudentCurricularPlan);
+        Object[] argsChangeMasterDegreeProof =
+            {
+                userViewNotAuthorized,
+                infoStudentCurricularPlan,
+                new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
+                new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
+                MasterDegreeClassification.UNDEFINED,
+                new Integer(5)};
 
-		return argsChangeMasterDegreeProof;
-	}
+        return argsChangeMasterDegreeProof;
+    }
 
-	public void testSuccessChangeExistingMasterDegreeProof() {
-		try {
-			Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) serviceManager.executar(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsReadStudentCurricularPlan);
+    public void testSuccessChangeExistingMasterDegreeProof()
+    {
+        try
+        {
+            Object[] argsReadStudentCurricularPlan =
+                { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+            InfoStudentCurricularPlan infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) serviceManager.executar(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsReadStudentCurricularPlan);
 
-			Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
-			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) serviceManager.executar(
-					userView,
-					"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
-					argsReadMasterDegreeProofVersion);
+            Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
+            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
+                (InfoMasterDegreeProofVersion) serviceManager.executar(
+                    userView,
+                    "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
+                    argsReadMasterDegreeProofVersion);
 
-			Object[] argsChangeMasterDegreeProof =
-				{
-					userView,
-					infoStudentCurricularPlan,
-					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
-					infoMasterDegreeProofVersion.getThesisDeliveryDate(),
-					MasterDegreeClassification.APPROVED,
-					infoMasterDegreeProofVersion.getAttachedCopiesNumber(),
-					infoMasterDegreeProofVersion.getInfoJuries()};
+            Object[] argsChangeMasterDegreeProof =
+                {
+                    userView,
+                    infoStudentCurricularPlan,
+                    new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
+                    infoMasterDegreeProofVersion.getThesisDeliveryDate(),
+                    MasterDegreeClassification.APPROVED,
+                    infoMasterDegreeProofVersion.getAttachedCopiesNumber(),
+                    infoMasterDegreeProofVersion.getInfoJuries()};
 
-			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofDataSet.xml");
-			//ok
+            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofDataSet.xml");
+            //ok
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testSuccessChangeExistingMasterDegreeProof " + ex.getMessage());
-		}
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            fail("testSuccessChangeExistingMasterDegreeProof " + ex.getMessage());
+        }
 
-	}
+    }
 
-	public void testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished() {
-		try {
-			Object[] argsReadStudentCurricularPlan = { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) serviceManager.executar(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsReadStudentCurricularPlan);
+    public void testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished()
+    {
+        try
+        {
+            Object[] argsReadStudentCurricularPlan =
+                { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
+            InfoStudentCurricularPlan infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) serviceManager.executar(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsReadStudentCurricularPlan);
 
-			/*Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
-			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) serviceManager.executar(
-					userView,
-					"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
-					argsReadMasterDegreeProofVersion);
-			
-			Object[] argsChangeMasterDegreeProof =
-				{
-					userView,
-					infoStudentCurricularPlan,
-					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
-					infoMasterDegreeProofVersion.getThesisDeliveryDate(),
-					MasterDegreeClassification.APPROVED,
-					infoMasterDegreeProofVersion.getAttachedCopiesNumber(),
-					infoMasterDegreeProofVersion.getInfoJuries()}; */
+            /*Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
+            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
+            	(InfoMasterDegreeProofVersion) serviceManager.executar(
+            		userView,
+            		"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
+            		argsReadMasterDegreeProofVersion);
+            
+            Object[] argsChangeMasterDegreeProof =
+            	{
+            		userView,
+            		infoStudentCurricularPlan,
+            		new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
+            		infoMasterDegreeProofVersion.getThesisDeliveryDate(),
+            		MasterDegreeClassification.APPROVED,
+            		infoMasterDegreeProofVersion.getAttachedCopiesNumber(),
+            		infoMasterDegreeProofVersion.getInfoJuries()}; */
 
-			InfoTeacher infoTeacherJury = new InfoTeacher();
-			infoTeacherJury.setIdInternal(new Integer(954));
-			ArrayList infoTeacherJuries = new ArrayList();
-			infoTeacherJuries.add(infoTeacherJury);
+            InfoTeacher infoTeacherJury = new InfoTeacher();
+            infoTeacherJury.setIdInternal(new Integer(954));
+            ArrayList infoTeacherJuries = new ArrayList();
+            infoTeacherJuries.add(infoTeacherJury);
 
-			Object[] argsChangeMasterDegreeProof =
-				{
-					userView,
-					infoStudentCurricularPlan,
-					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
-					new GregorianCalendar(2003, Calendar.DECEMBER, 10).getTime(),
-					MasterDegreeClassification.APPROVED,
-					new Integer(5),
-					infoTeacherJuries };
+            Object[] argsChangeMasterDegreeProof =
+                {
+                    userView,
+                    infoStudentCurricularPlan,
+                    new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
+                    new GregorianCalendar(2003, Calendar.DECEMBER, 10).getTime(),
+                    MasterDegreeClassification.APPROVED,
+                    new Integer(5),
+                    infoTeacherJuries };
 
-			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 
-			fail("testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished didn't throw ScholarshipNotFinishedServiceException");
+            fail("testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished didn't throw ScholarshipNotFinishedServiceException");
 
-		} catch (ScholarshipNotFinishedServiceException ex) {
-			//ok
+        } catch (ScholarshipNotFinishedServiceException ex)
+        {
+            //ok
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished " + ex.getMessage());
-		}
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            fail(
+                "testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished "
+                    + ex.getMessage());
+        }
 
-	}
+    }
 
-	public void testUnsuccessfulChangeMasterDegreeProofWithoutExistingMasterDegreeThesis() {
-		try {
-			Object[] argsReadStudentCurricularPlan = { new Integer(5461), new TipoCurso(TipoCurso.MESTRADO)};
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) serviceManager.executar(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsReadStudentCurricularPlan);
+    public void testUnsuccessfulChangeMasterDegreeProofWithoutExistingMasterDegreeThesis()
+    {
+        try
+        {
+            Object[] argsReadStudentCurricularPlan =
+                { new Integer(5461), new TipoCurso(TipoCurso.MESTRADO)};
+            InfoStudentCurricularPlan infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) serviceManager.executar(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsReadStudentCurricularPlan);
 
-			InfoTeacher infoTeacherJury = new InfoTeacher();
-			infoTeacherJury.setIdInternal(new Integer(954));
+            InfoTeacher infoTeacherJury = new InfoTeacher();
+            infoTeacherJury.setIdInternal(new Integer(954));
 
-			List infoTeacherJuries = new ArrayList();
-			infoTeacherJuries.add(infoTeacherJury);
+            List infoTeacherJuries = new ArrayList();
+            infoTeacherJuries.add(infoTeacherJury);
 
-			Object[] argsChangeMasterDegreeProof =
-				{
-					userView,
-					infoStudentCurricularPlan,
-					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
-					new GregorianCalendar(2003, Calendar.NOVEMBER, 15).getTime(),
-					MasterDegreeClassification.APPROVED,
-					new Integer(5),
-					infoTeacherJuries };
+            Object[] argsChangeMasterDegreeProof =
+                {
+                    userView,
+                    infoStudentCurricularPlan,
+                    new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
+                    new GregorianCalendar(2003, Calendar.NOVEMBER, 15).getTime(),
+                    MasterDegreeClassification.APPROVED,
+                    new Integer(5),
+                    infoTeacherJuries };
 
-			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 
-			fail("testUnsuccessfulChangeMasterDegreeProofWithoutExistingMasterDegreeThesis didn't throw NonExistingServiceException");
+            fail("testUnsuccessfulChangeMasterDegreeProofWithoutExistingMasterDegreeThesis didn't throw NonExistingServiceException");
 
-		} catch (NonExistingServiceException ex) {
-			//ok
+        } catch (NonExistingServiceException ex)
+        {
+            //ok
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished " + ex.getMessage());
-		}
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            fail(
+                "testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished "
+                    + ex.getMessage());
+        }
 
-	}
+    }
 
-	public void testSuccessfulChangeMasterDegreeProofWhenProofDoesNotExist() {
-		try {
-			Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) serviceManager.executar(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsReadStudentCurricularPlan);
+    public void testSuccessfulChangeMasterDegreeProofWhenProofDoesNotExist()
+    {
+        try
+        {
+            Object[] argsReadStudentCurricularPlan =
+                { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+            InfoStudentCurricularPlan infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) serviceManager.executar(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsReadStudentCurricularPlan);
 
-			InfoTeacher infoTeacherJury = new InfoTeacher();
-			infoTeacherJury.setIdInternal(new Integer(954));
+            InfoTeacher infoTeacherJury = new InfoTeacher();
+            infoTeacherJury.setIdInternal(new Integer(954));
 
-			List infoTeacherJuries = new ArrayList();
-			infoTeacherJuries.add(infoTeacherJury);
+            List infoTeacherJuries = new ArrayList();
+            infoTeacherJuries.add(infoTeacherJury);
 
-			Object[] argsChangeMasterDegreeProof =
-				{
-					userView,
-					infoStudentCurricularPlan,
-					new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
-					new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
-					MasterDegreeClassification.UNDEFINED,
-					new Integer(5),
-					infoTeacherJuries };
+            Object[] argsChangeMasterDegreeProof =
+                {
+                    userView,
+                    infoStudentCurricularPlan,
+                    new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
+                    new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
+                    MasterDegreeClassification.UNDEFINED,
+                    new Integer(5),
+                    infoTeacherJuries };
 
-			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml");
-			//ok
+            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml");
+            //ok
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testSuccessChangeExistingMasterDegreeProof " + ex.getMessage());
-		}
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            fail("testSuccessChangeExistingMasterDegreeProof " + ex.getMessage());
+        }
 
-	}
+    }
 
 }

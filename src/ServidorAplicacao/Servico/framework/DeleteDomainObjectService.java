@@ -6,7 +6,6 @@ package ServidorAplicacao.Servico.framework;
 
 import Dominio.IDomainObject;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;

@@ -4,7 +4,6 @@
 
 package ServidorAplicacao.Servicos.person.qualification;
 
-import DataBeans.SiteView;
 import DataBeans.person.InfoQualification;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;

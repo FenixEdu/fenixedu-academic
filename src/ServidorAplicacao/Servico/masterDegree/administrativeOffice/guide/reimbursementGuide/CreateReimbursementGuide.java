@@ -36,9 +36,6 @@ import Util.State;
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
  * 
- * @throws FenixServiceException, InvalidReimbursementValueServiceException,
- *  InvalidGuideSituationServiceException, InvalidReimbursementValueSumServiceException
- * 
  * <br>
  * <strong>Description:</strong><br>
  * This service creates a reimbursement guide and associates it with a payment guide.
@@ -82,7 +79,11 @@ public class CreateReimbursementGuide implements IServico
     {
         return "CreateReimbursementGuide";
     }
-
+ /**
+  *  @throws FenixServiceException, InvalidReimbursementValueServiceException,
+  *  InvalidGuideSituationServiceException, InvalidReimbursementValueSumServiceException
+  */
+ 
     public void run(Integer guideId, String justification, Double value, IUserView userView)
         throws FenixServiceException
     {
@@ -121,7 +122,7 @@ public class CreateReimbursementGuide implements IServico
             reimbursementGuide.setCreationDate(Calendar.getInstance());
             reimbursementGuide.setJustification(justification);
             reimbursementGuide.setNumber(reimbursementGuideNumber);
-            reimbursementGuide.setPaymentGuide(guide);
+            reimbursementGuide.setGuide(guide);
             reimbursementGuide.setValue(value);
 
             IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();

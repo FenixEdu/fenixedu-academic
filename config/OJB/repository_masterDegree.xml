@@ -959,4 +959,127 @@
    
 <!-- End of definitions for class Dominio.ExternalPerson -->
 
+<!-- Start of definitions for class Dominio.reimbursementGuide.ReimbursementGuide -->
+<class-descriptor
+		class="Dominio.reimbursementGuide.ReimbursementGuide"
+		table="REIMBURSEMENT_GUIDE"
+	>
+	  <field-descriptor 
+	     name="idInternal"    
+	     column="ID_INTERNAL"  
+	     jdbc-type="INTEGER"
+	     primarykey="true"
+	     autoincrement="true"
+	  />
+	  <field-descriptor 
+	     name="number"
+	     column="NUMBER"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="value"
+	     column="VALUE"
+	     jdbc-type="DOUBLE"
+	  />
+	  <field-descriptor 
+	     name="justification"
+	     column="JUSTIFICATION"
+	     jdbc-type="LONGVARCHAR"
+	  />
+	  <field-descriptor 
+	     name="keyGuide"
+	     column="KEY_GUIDE"
+	     jdbc-type="INTEGER"
+	  />
+	 <field-descriptor 
+	     name="creationDate"
+	     column="CREATION_DATE"
+         jdbc-type="DATE"
+          conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	 />
+ 	  <reference-descriptor
+         	name="guide"
+         	class-ref="Dominio.Guide"
+         	proxy="true"
+			refresh="true"
+      	  >
+          <foreignkey field-ref="keyGuide"/>
+      </reference-descriptor>
+  
+<!--
+    <collection-descriptor
+         name="guideSituations"
+         refresh="true"
+         element-class-ref="Dominio.GuideSituation"
+       >
+       <inverse-foreignkey field-ref="keyGuide"/>
+     </collection-descriptor>
+        -->
+	 </class-descriptor>
+<!-- End of definitions for class Dominio.reimbursementGuide.ReimbursementGuide -->
+
+<!-- Start of definitions for class Dominio.reimbursementGuide.ReimbursementGuideSituation -->
+<class-descriptor
+		class="Dominio.reimbursementGuide.ReimbursementGuideSituation"
+		table="REIMBURSEMENT_GUIDE_SITUATION"
+	>
+	  <field-descriptor 
+	     name="idInternal"    
+	     column="ID_INTERNAL"  
+	     jdbc-type="INTEGER"
+	     primarykey="true"
+	     autoincrement="true"
+	  />
+	  <field-descriptor 
+	     name="state"
+	     column="STATE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
+	  />
+	  <field-descriptor 
+	     name="keyReimbursementGuide"
+	     column="KEY_REIMBURSEMENT_GUIDE"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="remarks"
+	     column="REMARKS"
+	     jdbc-type="LONGVARCHAR"
+	  />
+	  <field-descriptor 
+	     name="keyEmployee"
+	     column="KEY_EMPLOYEE"
+	     jdbc-type="INTEGER"
+	  />
+	 <field-descriptor 
+	     name="modificationDate"
+	     column="MODIFICATION_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	 />
+	 <field-descriptor 
+	     name="reimbursementGuideState"
+	     column="REIMBURSEMENT_GUIDE_STATE"
+         jdbc-type="INTEGER"         		 conversion="ServidorPersistente.Conversores.JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion"
+	 />
+ 	  <reference-descriptor
+         	name="reimbursementGuide"
+         	class-ref="Dominio.reimbursementGuide.ReimbursementGuide"
+         	proxy="true"
+			refresh="true"
+      	  >
+          <foreignkey field-ref="keyReimbursementGuide"/>
+      </reference-descriptor>
+  	<reference-descriptor
+         	name="employee"
+         	class-ref="Dominio.Employee"
+         	proxy="true"
+			refresh="true"
+      	  >
+          <foreignkey field-ref="keyEmployee"/>
+      </reference-descriptor>
+
+	 </class-descriptor>
+<!-- End of definitions for class Dominio.reimbursementGuide.ReimbursementGuide -->
+
 <!-- Mapping of User defined classes ends here -->

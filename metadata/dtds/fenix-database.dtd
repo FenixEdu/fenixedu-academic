@@ -184,7 +184,9 @@
     ass_REGULARIZACAO_MARCACAO*,
     ass_HORARIO_TIPO*,
     ROLE*,
-    SEMINARY*)>
+    SEMINARY*,
+    REIMBURSEMENT_GUIDE_SITUATION*,
+    REIMBURSEMENT_GUIDE*)>
 
 <!ELEMENT OJB_NRM EMPTY>
 <!ATTLIST OJB_NRM
@@ -2064,3 +2066,23 @@
     allowed_candidacies_per_student CDATA #IMPLIED
 >
 
+<!ELEMENT REIMBURSEMENT_GUIDE EMPTY>
+<!ATTLIST REIMBURSEMENT_GUIDE
+    id_internal CDATA #REQUIRED
+    number CDATA #REQUIRED
+    value CDATA #REQUIRED
+    justification CDATA #IMPLIED
+    key_guide CDATA #REQUIRED
+    creation_date CDATA #REQUIRED
+>
+
+<!ELEMENT REIMBURSEMENT_GUIDE_SITUATION EMPTY>
+<!ATTLIST REIMBURSEMENT_GUIDE_SITUATION
+    id_internal CDATA #REQUIRED
+    state CDATA #REQUIRED
+    key_reimbursement_guide CDATA #REQUIRED
+    remarks CDATA #IMPLIED
+    key_employee CDATA #REQUIRED
+    modification_date CDATA #REQUIRED
+    reimbursement_guide_state CDATA #REQUIRED
+>

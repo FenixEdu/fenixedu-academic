@@ -47,7 +47,6 @@ public class ReimbursementGuideOJB extends ObjectFenixOJB implements IPersistent
 
         if (reimbursementGuides != null && !reimbursementGuides.isEmpty())
         {
-            System.out.println("guides->" + reimbursementGuides.size());
             IReimbursementGuide reimbursementGuide = (IReimbursementGuide) reimbursementGuides.get(0);
             reimbursementGuideNumber = new Integer(reimbursementGuide.getNumber().intValue() + 1);
         }
