@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="Util.TipoCurso" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<logic:present name="siteView" property="component" >	
+
 <br/>
 			<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > 
 			<bean:define id="degreeType" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" property="infoDegree.tipoCurso" />	
@@ -50,6 +50,7 @@
 </span>
 </h2>
 <br />
+<logic:present name="siteView" property="component" >	
 	<bean:define id="component" name="siteView" property="component" />	
 <table align="center">
 		<tr>
