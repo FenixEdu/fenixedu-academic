@@ -1,12 +1,10 @@
 package ServidorPersistente;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.IBranch;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao
@@ -16,16 +14,13 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IPersistentBranch extends IPersistentObject {
 
-//    public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
 
-	/**
-	 * @deprecated
-	 */
-	public IBranch readBranchByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia;
-    public ArrayList readAll() throws ExcepcaoPersistencia;
-    public void lockWrite(IBranch branch) throws ExcepcaoPersistencia, ExistingPersistentException;
+
+	
+    public List readAll() throws ExcepcaoPersistencia;
+   
     public void delete(IBranch branch) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+    
 	
 	
 	/**

@@ -23,5 +23,5 @@ public interface IPersistentSite extends IPersistentObject{
     List readAll() throws ExcepcaoPersistencia;
     void lockWrite(ISite site) throws ExcepcaoPersistencia;
     void delete(ISite site) throws ExcepcaoPersistencia;
-    void deleteAll() throws ExcepcaoPersistencia;
+   
 }

@@ -21,7 +21,7 @@ public interface IPersistentSection extends IPersistentObject{
 	List readBySiteAndSection(ISite site,ISection superiorSection)throws ExcepcaoPersistencia;
     void lockWrite(ISection section) throws ExcepcaoPersistencia;
     void delete(ISection section) throws ExcepcaoPersistencia;
-    void deleteAll() throws ExcepcaoPersistencia;
+ 
 	List readBySite(ISite site) throws ExcepcaoPersistencia;
 	List readAll() throws ExcepcaoPersistencia;     
 }

@@ -6,7 +6,6 @@
  */
 package ServidorPersistente;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.IEnrolment;
@@ -20,11 +19,11 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * 17/Jul/2003
  */
 public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends IPersistentObject {
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public void lockWrite(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestrictionToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction) throws ExcepcaoPersistencia;
 	public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
-	public ArrayList readAll() throws ExcepcaoPersistencia;
+	public List readAll() throws ExcepcaoPersistencia;
 	public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
 }

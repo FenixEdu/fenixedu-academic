@@ -14,7 +14,7 @@ import Util.EnrolmentEvaluationType;
  */
 
 public interface IPersistentEnrolmentEvaluation extends IPersistentObject {
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public void lockWrite(IEnrolmentEvaluation enrolmentEvaluationToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IEnrolmentEvaluation enrolmentEvaluation) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;	

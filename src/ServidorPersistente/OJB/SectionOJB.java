@@ -1,21 +1,20 @@
 /*
  * SectionOJB.java
- *
+ * 
  * Created on 23 de Agosto de 2002, 16:58
  */
 
 package ServidorPersistente.OJB;
 
 /**
- *
- * @author  ars
- * @author  lmac1
+ * @author ars
+ * @author lmac1
  */
 
 import java.util.Iterator;
 import java.util.List;
 
-import org.odmg.QueryException;
+import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IItem;
 import Dominio.ISection;
@@ -26,206 +25,163 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
+public class SectionOJB extends ObjectFenixOJB implements IPersistentSection
+{
 
-	/** Creates a new instance of SeccaoOJB */
-	public SectionOJB() {
-	}
+    /** Creates a new instance of SeccaoOJB */
+    public SectionOJB()
+    {
+    }
 
-	public ISection readBySiteAndSectionAndName(
-		ISite site,
-		ISection superiorSection,
-		String name)
-		throws ExcepcaoPersistencia {
-			
-			Section section = null;
-			section = (Section) superiorSection;
-		try {
-			
-			ISection resultSection = null;
-			
-			String oqlQuery = "select section from " + Section.class.getName();
-			oqlQuery += " where name = $1 ";
-			oqlQuery +=	" and site.executionCourse.code = $2";
-			oqlQuery += " and site.executionCourse.executionPeriod.name = $3";
-			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $4";
-			if (section == null) {
-				oqlQuery += " and is_undefined(keySuperiorSection) " ;
-			} else {
-				oqlQuery += " and keySuperiorSection = $5";
-			}
+    public ISection readBySiteAndSectionAndName(ISite site, ISection superiorSection, String name)
+        throws ExcepcaoPersistencia
+    {
 
-			query.create(oqlQuery);
-			
-			query.bind(name);
-			query.bind(site.getExecutionCourse().getSigla());
-			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
-			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-			
-			if (section != null) {
-			
-				query.bind(section.getIdInternal());			
-			}
+        Section section = null;
+        section = (Section) superiorSection;
+        Criteria crit = new Criteria();
+        crit.addEqualTo("name", name);
+        crit.addEqualTo("site.executionCourse.code", site.getExecutionCourse().getSigla());
+        crit.addEqualTo(
+            "site.executionCourse.executionPeriod.name",
+            site.getExecutionCourse().getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "site.executionCourse.executionPeriod.executionYear.year",
+            site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        if (section == null)
+        {
+            crit.addIsNull("keySuperiorSection");
+        }
+        else
+        {
+            crit.addEqualTo("keySuperiorSection", section.getIdInternal());
+        }
+        return (ISection) queryObject(Section.class, crit);
 
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				resultSection = (ISection) result.get(0);
-			return resultSection;
-		} catch (QueryException queryEx) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
-		}
-	}
+    }
 
+    //reads imediatly inferior sections of a section
+    public List readBySiteAndSection(ISite site, ISection superiorSection) throws ExcepcaoPersistencia
+    {
 
-  //reads imediatly inferior sections of a section
-	public List readBySiteAndSection(ISite site,ISection superiorSection)
-		throws ExcepcaoPersistencia {
-		
-	try {
-			
-		Section section = (Section) superiorSection;
-		String oqlQuery = "select all from " + Section.class.getName();
-		oqlQuery +=	" where site.executionCourse.code = $1";
-		oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
-		oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
-		if (section == null) {
-				
-			oqlQuery += " and is_undefined(keySuperiorSection) " ;
-				
-		} else {
-				
-			oqlQuery += " and keySuperiorSection = $4";
-			}
+        ISection section = (Section) superiorSection;
+        Criteria crit = new Criteria();
+        crit.addEqualTo("site.executionCourse.code", site.getExecutionCourse().getSigla());
+        crit.addEqualTo(
+            "site.executionCourse.executionPeriod.name",
+            site.getExecutionCourse().getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "site.executionCourse.executionPeriod.executionYear.year",
+            site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        if (section == null)
+        {
+            crit.addIsNull("keySuperiorSection");
+        }
+        else
+        {
+            crit.addEqualTo("keySuperiorSection", section.getIdInternal());
+        }
+        return queryList(Section.class, crit);
 
-		query.create(oqlQuery);
-			
-		query.bind(site.getExecutionCourse().getSigla());
-		query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
-		query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-	
-			
-		 
-		if (section != null) {
-			query.bind(section.getIdInternal());			
-		}	
-		
-		List result = (List) query.execute();		
-		lockRead(result);
-		
-		return result;
-	} catch (QueryException queryEx) {
-		throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
-	}
-}
+    }
 
-public List readBySite(ISite site) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select section from " + Section.class.getName();
-			oqlQuery +=	" where site.executionCourse.code = $1";
-			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
-			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
+    public List readBySite(ISite site) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("site.executionCourse.code", site.getExecutionCourse().getSigla());
+        crit.addEqualTo(
+            "site.executionCourse.executionPeriod.name",
+            site.getExecutionCourse().getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "site.executionCourse.executionPeriod.executionYear.year",
+            site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        return queryList(Section.class, crit);
 
-			query.create(oqlQuery);
-			
-			query.bind(site.getExecutionCourse().getSigla());
-			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
-			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+    }
 
-			List result = (List) query.execute();
-			lockRead(result);
-			
-			return result;
-		} catch (QueryException queryEx) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
-		}
-	}
-	
-	public List readAll() throws ExcepcaoPersistencia {
-		 try {
-			 String oqlQuery = "select section from " + Section.class.getName();
-			 query.create(oqlQuery);
-			 List result = (List) query.execute();
-			 lockRead(result);
-			 return result;
-		 } catch (QueryException ex) {
-			 throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		 }
-	 }
-	 
-	public void lockWrite(ISection section) throws ExcepcaoPersistencia, ExistingPersistentException {
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        return queryList(Section.class, new Criteria());
 
-		// If there is nothing to write, simply return.
-		if (section == null) { return;}
-		
-		ISection sectionFromDB = this.readBySiteAndSectionAndName(section.getSite(), section.getSuperiorSection(), section.getName());
-		
-		// If section is not in database, then write it.
-		if (sectionFromDB == null){
-			super.lockWrite(section);
-		}
-		// else If the section is mapped to the database, then write any existing changes.
-		else if ((section instanceof Section) && ((Section) sectionFromDB).getIdInternal().equals(
-			((Section) section).getIdInternal())) {
-										
-					super.lockWrite(section);
-					
-					// else Throw an already existing exception
-				} else{
-					throw new ExistingPersistentException();
-				}
-	}
+    }
 
-	public void delete(ISection section) throws ExcepcaoPersistencia {
-					
-		ISection inferiorSection = section;
-		List imediatlyInferiorSections = readBySiteAndSection(section.getSite(),  section);
-		  
-		   Iterator iterator = imediatlyInferiorSections.iterator();
-		   while(iterator.hasNext())
-		        {
-		    	 inferiorSection = (ISection) iterator.next();
-	  		     delete(inferiorSection);
-		        }
-		try {
+    public void lockWrite(ISection section) throws ExcepcaoPersistencia, ExistingPersistentException
+    {
 
-			IItem item = null;
-			ItemOJB itemOJB = new ItemOJB();
-			String oqlQuery = "select all from " + Item.class.getName();
-			oqlQuery
-			+= " where section.name = $1 and section.site.executionCourse.code = $2 "
-			+ "and  section.site.executionCourse.executionPeriod.name = $3  "
-			+ "and  section.site.executionCourse.executionPeriod.executionYear.year = $4  ";
-			query.create(oqlQuery);
-			query.bind(section.getName());
-			query.bind(section.getSite().getExecutionCourse().getSigla());
-			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getName());
-			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-						
-			List result = (List) query.execute();
-			lockRead(result);
-			
-			Iterator iterador = result.iterator();
-			while (iterador.hasNext()) {
-				item = (IItem) iterador.next();
-				itemOJB.delete(item);
-			}
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-		
-	
-		super.delete(section);
-		
-		
-	}
+        // If there is nothing to write, simply return.
+        if (section == null)
+        {
+            return;
+        }
 
+        ISection sectionFromDB =
+            this.readBySiteAndSectionAndName(
+                section.getSite(),
+                section.getSuperiorSection(),
+                section.getName());
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + Section.class.getName();
-		super.deleteAll(oqlQuery);
-	}
+        // If section is not in database, then write it.
+        if (sectionFromDB == null)
+        {
+            super.lockWrite(section);
+        }
+        // else If the section is mapped to the database, then write any
+        // existing changes.
+        else if (
+            (section instanceof Section)
+                && ((Section) sectionFromDB).getIdInternal().equals(((Section) section).getIdInternal()))
+        {
 
-	
+            super.lockWrite(section);
+
+            // else Throw an already existing exception
+        }
+        else
+        {
+            throw new ExistingPersistentException();
+        }
+    }
+
+    public void delete(ISection section) throws ExcepcaoPersistencia
+    {
+
+        ISection inferiorSection = section;
+        List imediatlyInferiorSections = readBySiteAndSection(section.getSite(), section);
+
+        Iterator iterator = imediatlyInferiorSections.iterator();
+        while (iterator.hasNext())
+        {
+            inferiorSection = (ISection) iterator.next();
+            delete(inferiorSection);
+        }
+
+        Criteria crit = new Criteria();
+        crit.addEqualTo("section.name", section.getName());
+        crit.addEqualTo(
+            "section.site.executionCourse.code",
+            section.getSite().getExecutionCourse().getSigla());
+        crit.addEqualTo(
+            "section.site.executionCourse.executionPeriod.name",
+            section.getSite().getExecutionCourse().getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "section.site.executionCourse.executionPeriod.executionYear.year",
+            section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        IItem item = null;
+        ItemOJB itemOJB = new ItemOJB();
+
+        List result = queryList(Item.class, crit);
+
+        Iterator iterador = result.iterator();
+        while (iterador.hasNext())
+        {
+            item = (IItem) iterador.next();
+            itemOJB.delete(item);
+        }
+
+        super.delete(section);
+
+    }
+
+   
 
 }

@@ -27,7 +27,7 @@ public interface IPersistentExamExecutionCourse extends IPersistentObject {
 		throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IExamExecutionCourse examExecutionCourse)
 		throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public void delete(IExam exam) throws ExcepcaoPersistencia;
 	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;

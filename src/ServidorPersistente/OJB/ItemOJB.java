@@ -13,7 +13,7 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
-import org.odmg.QueryException;
+import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IItem;
 import Dominio.ISection;
@@ -25,49 +25,25 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
    
     public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia {
-        try {
-            IItem item = null;
-            String oqlQuery = "select sectionItem from " + Item.class.getName();
-            oqlQuery += " where section.name = $1 and name = $2";
-			oqlQuery +=	" and section.site.executionCourse.code = $3";
-			oqlQuery += " and section.site.executionCourse.executionPeriod.name = $4";
-			oqlQuery += " and section.site.executionCourse.executionPeriod.executionYear.year = $5";
-            query.create(oqlQuery);
-            query.bind(section.getName());
-            query.bind(name);
-            query.bind(section.getSite().getExecutionCourse().getSigla());
-			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getName());
-			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                item = (IItem) result.get(0);
-            return item;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        crit.addEqualTo("section.name",section.getName());
+        crit.addEqualTo("name",name);
+        crit.addEqualTo("section.site.executionCourse.code",section.getSite().getExecutionCourse().getSigla());
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.name",section.getSite().getExecutionCourse().getExecutionPeriod().getName());
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year",section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        return (IItem) queryObject(Item.class,crit);
+       
     }
       
       
 	public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia {
-			try {
-				String oqlQuery = "select sectionItem from " + Item.class.getName();
-				oqlQuery += " where section.name = $1 " ; 
-				oqlQuery +=	" and section.site.executionCourse.code = $2";
-				oqlQuery += " and section.site.executionCourse.executionPeriod.name = $3";
-				oqlQuery += " and section.site.executionCourse.executionPeriod.executionYear.year = $4";
-				query.create(oqlQuery);
-				query.bind(section.getName());
-				query.bind(section.getSite().getExecutionCourse().getSigla());
-				query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getName());
-				query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-				List result = (List) query.execute();
-				lockRead(result);
-				return result;
-				
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+        Criteria crit = new Criteria();
+        crit.addEqualTo("section.name",section.getName());
+        crit.addEqualTo("section.site.executionCourse.code",section.getSite().getExecutionCourse().getSigla());
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.name",section.getSite().getExecutionCourse().getExecutionPeriod().getName());
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year",section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+		return queryList(Item.class,crit);	
+       
 		}
 		
 		    
@@ -108,9 +84,6 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
         super.delete(item);
     }
     
-    public void deleteAll() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + Item.class.getName();
-        super.deleteAll(oqlQuery);
-    }
+   
     
 }

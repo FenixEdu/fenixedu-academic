@@ -8,8 +8,9 @@ package ServidorPersistente.OJB;
  * @author João Mota
  */
 import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
+
 import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
@@ -46,10 +47,8 @@ public class CurriculumOJB extends ObjectFenixOJB implements IPersistentCurricul
         criteria.addEqualTo("keyCurricularCourse", curricularCourse.getIdInternal());
         criteria.addLessOrEqualThan("lastModificationDate", executionYear.getEndDate());
         criteria.addOrderBy("lastModificationDate", false);
-
         return (ICurriculum) queryObject(Curriculum.class, criteria);
     }
-
     public void lockWrite(ICurriculum curriculum)
         throws ExcepcaoPersistencia, ExistingPersistentException
     {
@@ -62,7 +61,8 @@ public class CurriculumOJB extends ObjectFenixOJB implements IPersistentCurricul
         // If curriculum is not in database, then write it.
         if (curriculumFromDB == null)
             super.lockWrite(curriculum);
-        // else If the curriculum is mapped to the database, then write any existing changes.
+        // else If the curriculum is mapped to the database, then write any
+		// existing changes.
         else if (
             (curriculum instanceof Curriculum)
                 && ((Curriculum) curriculumFromDB).getIdInternal().equals(
@@ -70,30 +70,17 @@ public class CurriculumOJB extends ObjectFenixOJB implements IPersistentCurricul
         {
             super.lockWrite(curriculum);
             // else Throw an already existing exception
-        } else
+        }
+        else
             throw new ExistingPersistentException();
     }
     public List readAll() throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select all from " + Curriculum.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        return queryList(Curriculum.class, new Criteria());
     }
     public void delete(ICurriculum curriculum) throws ExcepcaoPersistencia
     {
         super.delete(curriculum);
     }
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        String oqlQuery = "select all from " + Curriculum.class.getName();
-        super.deleteAll(oqlQuery);
-    }
+    
 }

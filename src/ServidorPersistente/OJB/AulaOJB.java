@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.Aula;
 import Dominio.IAula;
@@ -41,49 +40,24 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente
         IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            IAula aula = null;
-            String oqlQuery = "select diasemanainiciofimsala from " + Aula.class.getName();
-            oqlQuery += " where diaSemana = $1";
-            oqlQuery += " and inicio = $2";
-            oqlQuery += " and fim = $3";
-            oqlQuery += " and sala.nome = $4";
-            oqlQuery += " and disciplinaExecucao.executionPeriod.name = $5";
-            oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $6";
-            query.create(oqlQuery);
-            query.bind(diaSemana);
-            query.bind(inicio);
-            query.bind(fim);
-            query.bind(sala.getNome());
-            query.bind(executionPeriod.getName());
-            query.bind(executionPeriod.getExecutionYear().getYear());
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                aula = (IAula) result.get(0);
-            return aula;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        crit.addEqualTo("diaSemana", diaSemana);
+        crit.addEqualTo("inicio", inicio);
+        crit.addEqualTo("fim", fim);
+        crit.addEqualTo("sala.nome", sala.getNome());
+        crit.addEqualTo("disciplinaExecucao.executionPeriod.name", executionPeriod.getName());
+        crit.addEqualTo(
+            "disciplinaExecucao.executionPeriod.executionYear.year",
+            executionPeriod.getExecutionYear().getYear());
+        return (IAula) queryObject(Aula.class, crit);
+
     }
 
     public List readAll() throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select all from " + Aula.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        return queryList(Aula.class, crit);
+
     }
 
     public void lockWrite(IAula lessonToWrite) throws ExcepcaoPersistencia, ExistingPersistentException
@@ -128,41 +102,26 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente
     {
         if (aula != null)
         {
-            try
+
+            ITurnoAula turnoAula = null;
+            TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
+            Criteria crit = new Criteria();
+            crit.addEqualTo("aula.diaSemana", aula.getDiaSemana());
+            crit.addEqualTo("aula.inicio", aula.getInicio());
+            crit.addEqualTo("aula.fim", aula.getFim());
+            crit.addEqualTo("aula.sala.nome", aula.getSala().getNome());
+
+            List result = queryList(TurnoAula.class, crit);
+
+            Iterator iterador = result.iterator();
+            while (iterador.hasNext())
             {
-                ITurnoAula turnoAula = null;
-                TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
-                String oqlQuery = "select all from " + TurnoAula.class.getName();
-                oqlQuery += " where aula.diaSemana = $1"
-                    + " and  aula.inicio = $2"
-                    + " and aula.fim = $3"
-                    + " and aula.sala.nome= $4";
-                query.create(oqlQuery);
-                query.bind(aula.getDiaSemana());
-                query.bind(aula.getInicio());
-                query.bind(aula.getFim());
-                query.bind(aula.getSala().getNome());
-                List result = (List) query.execute();
-                lockRead(result);
-                Iterator iterador = result.iterator();
-                while (iterador.hasNext())
-                {
-                    turnoAula = (ITurnoAula) iterador.next();
-                    turnoAulaOJB.delete(turnoAula);
-                }
+                turnoAula = (ITurnoAula) iterador.next();
+                turnoAulaOJB.delete(turnoAula);
             }
-            catch (QueryException ex)
-            {
-                throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-            }
+
             super.delete(aula);
         }
-    }
-
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        String oqlQuery = "select all from " + Aula.class.getName();
-        super.deleteAll(oqlQuery);
     }
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
@@ -189,83 +148,30 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente
         TipoAula lessonType)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            //			List aulas = new ArrayList();
-            String oqlQuery =
-                "select aulas from "
-                    + Aula.class.getName()
-                    + " where tipo = $1"
-                    + " and disciplinaExecucao.sigla = $2"
-                    + " and disciplinaExecucao.executionPeriod.name = $3"
-                    + " and disciplinaExecucao.executionPeriod.executionYear.year = $4";
-            query.create(oqlQuery);
+        Criteria crit = new Criteria();
+        crit.addEqualTo("tipo", lessonType);
+        crit.addEqualTo("disciplinaExecucao.sigla", executionCourse.getSigla());
+        crit.addEqualTo(
+            "disciplinaExecucao.executionPeriod.name",
+            executionCourse.getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "disciplinaExecucao.executionPeriod.executionYear.year",
+            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        return queryList(Aula.class, crit);
 
-            query.bind(lessonType);
-
-            query.bind(executionCourse.getSigla());
-
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
     }
 
     public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select aulas from " + Aula.class.getName();
-            oqlQuery += " where sala.nome = $1"
-                + " and disciplinaExecucao.executionPeriod.name = $2"
-                + " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
-            query.create(oqlQuery);
-            query.bind(room.getNome());
-            query.bind(executionPeriod.getName());
-            query.bind(executionPeriod.getExecutionYear().getYear());
+        Criteria crit = new Criteria();
+        crit.addEqualTo("sala.nome", room.getNome());
+        crit.addEqualTo("disciplinaExecucao.executionPeriod.name", executionPeriod.getName());
+        crit.addEqualTo(
+            "disciplinaExecucao.executionPeriod.executionYear.year",
+            executionPeriod.getExecutionYear().getYear());
+        return queryList(Aula.class, crit);
 
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
-
-    // Depricated : This Method does not meet it's requierments...
-    //              Use readLessonsInBroadPeriodInAnyRoom instead.
-    public List readLessonsInPeriod(IAula lesson) throws ExcepcaoPersistencia
-    {
-        try
-        {
-            List lessonList = null;
-            String oqlQuery = "select aulas from " + Aula.class.getName();
-            oqlQuery += " where inicio >= $1 " + "and fim <= $2 " + "and diaSemana = $3";
-            // 
-            //oqlQuery += " and disciplinaExecucao.semestre = $2";
-            query.create(oqlQuery);
-            query.bind(lesson.getInicio());
-            query.bind(lesson.getFim());
-            query.bind(lesson.getDiaSemana());
-            //query.bind(semestre);
-            lessonList = (List) query.execute();
-            lockRead(lessonList);
-            return lessonList;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
     }
 
     public List readLessonsInBroadPeriod(
@@ -274,81 +180,68 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente
         IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia
     {
-        try
+        Criteria crit = new Criteria();
+
+        List lessonList = null;
+
+        Criteria crit1 = new Criteria();
+        crit1.addGreaterThan("inicio", newLesson.getInicio());
+        crit1.addLessThan("inicio", newLesson.getFim());
+        crit1.addEqualTo("diaSemana", newLesson.getDiaSemana());
+        crit1.addEqualTo("sala.nome", newLesson.getSala().getNome());
+        crit.addOrCriteria(crit1);
+
+        Criteria crit2 = new Criteria();
+        crit2.addGreaterThan("fim", newLesson.getInicio());
+        crit2.addLessThan("fim", newLesson.getFim());
+        crit2.addEqualTo("diaSemana", newLesson.getDiaSemana());
+        crit2.addEqualTo("sala.nome", newLesson.getSala().getNome());
+        crit.addOrCriteria(crit2);
+
+        Criteria crit3 = new Criteria();
+        crit3.addEqualTo("inicio", newLesson.getInicio());
+        crit3.addEqualTo("fim", newLesson.getFim());
+        crit3.addEqualTo("diaSemana", newLesson.getDiaSemana());
+        crit3.addEqualTo("sala.nome", newLesson.getSala().getNome());
+        crit.addOrCriteria(crit3);
+
+        Criteria crit4 = new Criteria();
+        crit4.addLessOrEqualThan("inicio", newLesson.getInicio());
+        crit4.addGreaterOrEqualThan("fim", newLesson.getFim());
+        crit4.addEqualTo("diaSemana", newLesson.getDiaSemana());
+        crit4.addEqualTo("sala.nome", newLesson.getSala().getNome());
+        crit.addOrCriteria(crit4);
+
+        Criteria crit5 = new Criteria();
+        crit5.addEqualTo("inicio", newLesson.getInicio());
+        crit5.addLessOrEqualThan("fim", newLesson.getFim());
+        crit5.addEqualTo("diaSemana", newLesson.getDiaSemana());
+        crit5.addEqualTo("sala.nome", newLesson.getSala().getNome());
+        crit.addOrCriteria(crit5);
+
+        crit.addEqualTo("disciplinaExecucao.executionPeriod.name", executionPeriod.getName());
+        crit.addEqualTo(
+            "disciplinaExecucao.executionPeriod.executionYear.year",
+            executionPeriod.getExecutionYear().getYear());
+
+        lessonList = queryList(Aula.class, crit);
+
+        // Remove the Lesson that is being edited from the list
+        // of intercepting lessons.
+        // TODO : this aspect is not yet contemplated in the tests.
+        if (oldLesson != null && oldLesson instanceof Aula)
         {
-            List lessonList = null;
-            String oqlQuery = "select aulas from " + Aula.class.getName();
-            oqlQuery += " where (( inicio >$1 "
-                + "and inicio <$2 "
-                + "and diaSemana = $3 "
-                + "and sala.nome = $4 ) "
-                + "or ( fim > $5 "
-                + "and fim < $6 "
-                + "and diaSemana = $7 "
-                + "and sala.nome = $8 )"
-                + "or ( inicio = $9 "
-                + "and fim = $10 "
-                + "and diaSemana = $11 "
-                + "and sala.nome = $12 )"
-                + "or ( inicio <= $13 "
-                + "and fim >= $14"
-                + "and diaSemana = $15 "
-                + "and sala.nome = $16 )"
-                + "or ( inicio = $17 "
-                + "and fim <= $18 "
-                + "and diaSemana = $19 "
-                + "and sala.nome = $20 ))"
-                + "and disciplinaExecucao.executionPeriod.name = $21"
-                + "and disciplinaExecucao.executionPeriod.executionYear.year = $22";
-
-            query.create(oqlQuery);
-            query.bind(newLesson.getInicio());
-            query.bind(newLesson.getFim());
-            query.bind(newLesson.getDiaSemana());
-            query.bind(newLesson.getSala().getNome());
-
-            query.bind(newLesson.getInicio());
-            query.bind(newLesson.getFim());
-            query.bind(newLesson.getDiaSemana());
-            query.bind(newLesson.getSala().getNome());
-
-            query.bind(newLesson.getInicio());
-            query.bind(newLesson.getFim());
-            query.bind(newLesson.getDiaSemana());
-            query.bind(newLesson.getSala().getNome());
-
-            query.bind(newLesson.getInicio());
-            query.bind(newLesson.getFim());
-            query.bind(newLesson.getDiaSemana());
-            query.bind(newLesson.getSala().getNome());
-
-            query.bind(newLesson.getInicio());
-            query.bind(newLesson.getFim());
-            query.bind(newLesson.getDiaSemana());
-            query.bind(newLesson.getSala().getNome());
-
-            query.bind(executionPeriod.getName());
-            query.bind(executionPeriod.getExecutionYear().getYear());
-
-            lessonList = (List) query.execute();
-            lockRead(lessonList);
-
-            // Remove the Lesson that is being edited from the list
-            // of intercepting lessons.
-            // TODO : this aspect is not yet contemplated in the tests.
-            if (oldLesson != null && oldLesson instanceof Aula)
-                for (int ipto = 0; ipto < lessonList.size(); ipto++)
-                    if (((Aula) lessonList.get(ipto))
-                        .getIdInternal()
-                        .equals(((Aula) oldLesson).getIdInternal()))
-                        lessonList.remove(ipto);
-
-            return lessonList;
+            for (int ipto = 0; ipto < lessonList.size(); ipto++)
+            {
+                if (((Aula) lessonList.get(ipto))
+                    .getIdInternal()
+                    .equals(((Aula) oldLesson).getIdInternal()))
+                {
+                    lessonList.remove(ipto);
+                }
+            }
         }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        return lessonList;
     }
 
     public List readLessonsInBroadPeriodInAnyRoom(IAula lesson, IExecutionPeriod executionPeriod)

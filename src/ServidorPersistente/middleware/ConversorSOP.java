@@ -214,12 +214,12 @@ public class ConversorSOP
         try
         {
             sp.iniciarTransaccao();
-
-            classDAO.deleteAll();
+//deleteAll was removed - too dangerous
+            //classDAO.deleteAll();
             //shiftDAO.deleteAll();
           //  shiftLessonDAO.deleteAll();
-            classShiftDAO.deleteAll();
-            lessonDAO.deleteAll();
+          //  classShiftDAO.deleteAll();
+            //lessonDAO.deleteAll();
             readDatabase.deleteAll("select all from " + ExecutionCourse.class.getName());
 
             Constants.executionPeriod = executionPeriodDAO.readActualExecutionPeriod();

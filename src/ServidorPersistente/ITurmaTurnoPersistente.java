@@ -23,7 +23,7 @@ public interface ITurmaTurnoPersistente extends IPersistentObject {
                throws ExcepcaoPersistencia;
     public void lockWrite(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+   
     public List readByClass(ITurma group) throws ExcepcaoPersistencia;
 	public List readClassesWithShift(ITurno turno) throws ExcepcaoPersistencia;
 	public List readByShift(ITurno group) throws ExcepcaoPersistencia;

@@ -19,7 +19,7 @@ public interface IPersistentCurriculum extends IPersistentObject {
 	public ICurriculum readCurriculumByCurricularCourseAndExecutionYear(ICurricularCourse curricularCourse, IExecutionYear executionYear) throws ExcepcaoPersistencia;
 	public void lockWrite(ICurriculum curriculum) throws ExcepcaoPersistencia;
 	public void delete(ICurriculum curriculum) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public List readAll() throws ExcepcaoPersistencia;
 
 }

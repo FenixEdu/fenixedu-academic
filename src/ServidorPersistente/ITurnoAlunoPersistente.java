@@ -30,7 +30,7 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
                throws ExcepcaoPersistencia;
     public void lockWrite(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+   
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;   
 	public List readByStudentAndExecutionCourse(IStudent student,IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 	

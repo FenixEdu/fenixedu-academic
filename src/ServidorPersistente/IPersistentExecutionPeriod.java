@@ -37,16 +37,7 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	
 	public boolean deleteWorkingArea(IExecutionPeriod executionPeriod);
 	
-	/**
-	 * 
-	 * @return boolean
-	 */
-	public boolean deleteAll();
-	/**
-	 * Returns the actual executionPeriod using the actual date.
-	 * @return IExecutionPeriod
-	 * @throws ExcepcaoPersistencia
-	 */
+	
 	public IExecutionPeriod readActualExecutionPeriod()
 		throws ExcepcaoPersistencia;
 

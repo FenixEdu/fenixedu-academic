@@ -31,7 +31,7 @@ public interface IAulaPersistente extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IAula aula) throws ExcepcaoPersistencia;
 	public void delete(IAula aula) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	public List readByRoomAndExecutionPeriod(
@@ -49,20 +49,12 @@ public interface IAulaPersistente extends IPersistentObject {
 	 * @param tipoAula
 	 * @return List
 	 */
-	List readByExecutionCourseAndLessonType(
+	public List readByExecutionCourseAndLessonType(
 		IExecutionCourse executionCourse,
 		TipoAula lessonType)
 		throws ExcepcaoPersistencia;
 
-	/**
-	 * 
-	 * @param lesson
-	 * @return List
-	 * @throws ExcepcaoPersistencia when query fails.
-	 */
-	// Depricated : This Method does not meet it's requierments...
-	//              Use readLessonsInBroadPeriodInAnyRoom instead.	
-	public List readLessonsInPeriod(IAula lesson) throws ExcepcaoPersistencia;
+	
 
 	public List readLessonsInBroadPeriodInAnyRoom(
 		IAula lesson,

@@ -25,7 +25,7 @@ public interface IPersistentEvaluationMethod extends IPersistentObject {
 	
 	public void delete(IEvaluationMethod evaluation) throws ExcepcaoPersistencia;
 	
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	
 	public void lockWrite(IEvaluationMethod evaluation) throws ExcepcaoPersistencia;	
 	

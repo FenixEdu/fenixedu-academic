@@ -2,7 +2,7 @@
 
 package ServidorPersistente;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.ICurricularYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -15,8 +15,8 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface IPersistentCurricularYear extends IPersistentObject {
 
     public ICurricularYear readCurricularYearByYear(Integer year) throws ExcepcaoPersistencia;
-    public ArrayList readAll() throws ExcepcaoPersistencia;
+    public List readAll() throws ExcepcaoPersistencia;
     public void lockWrite(ICurricularYear CurricularYear) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(ICurricularYear CurricularYear) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+   
 }

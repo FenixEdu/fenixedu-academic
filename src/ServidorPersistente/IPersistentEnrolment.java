@@ -20,7 +20,7 @@ import Util.StudentCurricularPlanState;
 
 public interface IPersistentEnrolment extends IPersistentObject {
 
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public void lockWrite(IEnrolment enrolmentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
 //	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;

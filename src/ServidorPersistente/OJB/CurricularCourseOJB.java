@@ -1,11 +1,8 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
 import Dominio.IBranch;
@@ -20,472 +17,256 @@ import Util.TipoCurso;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 25/Mar/2003
  */
 
-public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCurricularCourse {
+public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCurricularCourse
+{
 
-	public CurricularCourseOJB() {
-	}
+    public CurricularCourseOJB()
+    {
+    }
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			super.deleteAll(oqlQuery);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
-
-	/**
+    /**
 	 * @deprecated
 	 */
-	public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code) throws ExcepcaoPersistencia {
-		try {
-			ICurricularCourse curricularCourse = null;
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where name = $1";
-			oqlQuery += " and code = $2";
-			query.create(oqlQuery);
-			query.bind(name);
-			query.bind(code);
+    public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code)
+        throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("name", name);
+        crit.addEqualTo("code", code);
+        return (ICurricularCourse) queryObject(CurricularCourse.class, crit);
 
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+    }
 
-			if ((result != null) && (result.size() != 0)) {
-				curricularCourse = (ICurricularCourse) result.get(0);
-			}
-			return curricularCourse;
+    public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
+        Integer degreeCurricularPlanId,
+        String name,
+        String code)
+        throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("name", name);
+        crit.addEqualTo("code", code);
+        crit.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlanId);
+        return (ICurricularCourse) queryObject(CurricularCourse.class, crit);
 
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+    }
 
-	public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(Integer degreeCurricularPlanId, String name, String code) throws ExcepcaoPersistencia {
-		try {
-			ICurricularCourse curricularCourse = null;
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where name = $1";
-			oqlQuery += " and code = $2";
-			oqlQuery += " and degreeCurricularPlanKey = $3";
-			query.create(oqlQuery);
-			query.bind(name);
-			query.bind(code);
-			query.bind(degreeCurricularPlanId);
+    public void lockWrite(ICurricularCourse curricularCourseToWrite)
+        throws ExcepcaoPersistencia, ExistingPersistentException
+    {
 
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+        ICurricularCourse curricularCourseFromBD = null;
 
-			if ((result != null) && (result.size() != 0)) {
-				curricularCourse = (ICurricularCourse) result.get(0);
-			}
-			return curricularCourse;
+        // If there is nothing to write, simply return.
+        if (curricularCourseToWrite == null)
+        {
+            return;
+        }
 
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+        // Read branch from database.
+        curricularCourseFromBD =
+            this.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
+                curricularCourseToWrite.getDegreeCurricularPlan().getIdInternal(),
+                curricularCourseToWrite.getName(),
+                curricularCourseToWrite.getCode());
+        // If branch is not in database, then write it.
+        if (curricularCourseFromBD == null)
+        {
+            super.lockWrite(curricularCourseToWrite);
+            // else If the branch is mapped to the database, then write any
+            // existing changes.
+        }
+        else if (
+            (curricularCourseToWrite instanceof CurricularCourse)
+                && ((CurricularCourse) curricularCourseFromBD).getIdInternal().equals(
+                    ((CurricularCourse) curricularCourseToWrite).getIdInternal()))
+        {
+            super.lockWrite(curricularCourseToWrite);
+            // else Throw an already existing exception
+        }
+        else
+            throw new ExistingPersistentException();
+    }
 
-	public void lockWrite(ICurricularCourse curricularCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+    public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
+    {
 
-		ICurricularCourse curricularCourseFromBD = null;
+        super.delete(curricularCourse);
 
-		// If there is nothing to write, simply return.
-		if (curricularCourseToWrite == null) {
-			return;
-		}
+    }
 
-		// Read branch from database.
-		curricularCourseFromBD =
-			this.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
-				curricularCourseToWrite.getDegreeCurricularPlan().getIdInternal(),
-				curricularCourseToWrite.getName(),
-				curricularCourseToWrite.getCode());
-		// If branch is not in database, then write it.
-		if (curricularCourseFromBD == null) {
-			super.lockWrite(curricularCourseToWrite);
-			// else If the branch is mapped to the database, then write any existing changes.
-		} else if (
-			(curricularCourseToWrite instanceof CurricularCourse)
-				&& ((CurricularCourse) curricularCourseFromBD).getIdInternal().equals(((CurricularCourse) curricularCourseToWrite).getIdInternal())) {
-			super.lockWrite(curricularCourseToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        return queryList(CurricularCourse.class, crit);
+    }
 
-	public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		
-		super.delete(curricularCourse);
-		
-	}
+    public List readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
+        return queryList(CurricularCourse.class, crit);
 
-	public List readAll() throws ExcepcaoPersistencia {
+    }
 
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
+    public List readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
+        throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("degreeCurricularPlan.name", degreeCurricularPlan.getName());
+        crit.addEqualTo("degreeCurricularPlan.degree.nome", degreeCurricularPlan.getDegree().getNome());
+        crit.addEqualTo(
+            "degreeCurricularPlan.degree.sigla",
+            degreeCurricularPlan.getDegree().getSigla());
+        return queryList(CurricularCourse.class, crit);
 
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+    }
 
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add(iterator.next());
-			}
-			return list;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+    public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(
+        IDegreeCurricularPlan degreeCurricularPlan,
+        Boolean basic)
+        throws ExcepcaoPersistencia
+    {
 
-	public List readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia {
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where scopes.curricularSemester.curricularYear.year = $1";
-			query.create(oqlQuery);
-			query.bind(year);
-			List result = (List) query.execute();
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+        criteria.addEqualTo("basic", basic);
+        return queryList(CurricularCourse.class, criteria);
+    }
 
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+    public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("scopes.branch.name", branch.getName());
+        criteria.addEqualTo("scopes.branch.code", branch.getCode());
+        return queryList(CurricularCourse.class, criteria);
 
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add(iterator.next());
-			}
-			return list;
+    }
 
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+    public List readAllCurricularCoursesBySemester(Integer semester) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("scopes.curricularSemester.semester", semester);
+        return queryList(CurricularCourse.class, criteria);
 
-	//	public ArrayList readCurricularCoursesByCurricularSemesterAndCurricularYear(Integer semester, Integer year) throws ExcepcaoPersistencia {
-	//		try {
-	//			ArrayList list = new ArrayList();
-	//			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-	//			oqlQuery += " where associatedCurricularSemesters.semester = $1";
-	//			oqlQuery += " and associatedCurricularSemesters.curricularYear.year = $2";
-	//			query.create(oqlQuery);
-	//			query.bind(semester);
-	//			query.bind(year);
-	//			List result = (List) query.execute();
-	//
-	//			try {
-	//				lockRead(result);
-	//			} catch (ExcepcaoPersistencia ex) {
-	//				throw ex;
-	//			}
-	//
-	//			if ((result != null) && (result.size() != 0)) {
-	//				ListIterator iterator = result.listIterator();
-	//				while (iterator.hasNext())
-	//					list.add((ICurricularCourse) iterator.next());
-	//			}
-	//			return list;
-	//
-	//		} catch (QueryException ex) {
-	//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-	//		}
-	//	}
+    }
 
-	public List readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
-
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where degreeCurricularPlan.name = $1";
-			oqlQuery += " and degreeCurricularPlan.degree.nome = $2";
-			oqlQuery += " and degreeCurricularPlan.degree.sigla = $3";
-			query.create(oqlQuery);
-
-			query.bind(degreeCurricularPlan.getName());
-			query.bind(degreeCurricularPlan.getDegree().getNome());
-			query.bind(degreeCurricularPlan.getDegree().getSigla());
-
-			List result = (List) query.execute();
-
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add(iterator.next());
-			}
-			return list;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(IDegreeCurricularPlan degreeCurricularPlan, Boolean basic) throws ExcepcaoPersistencia {
-
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
-		criteria.addEqualTo("basic", basic);
-		return queryList(CurricularCourse.class, criteria);
-	}
-
-	public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia {
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where scopes.branch.name = $1";
-			oqlQuery += " and scopes.branch.code = $2";
-
-			query.create(oqlQuery);
-
-			query.bind(branch.getName());
-			query.bind(branch.getCode());
-
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			ICurricularCourse curricularCourse = null;
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext()) {
-					curricularCourse = (ICurricularCourse) iterator.next();
-					list.add(curricularCourse);
-				}
-			}
-			return list;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	public List readAllCurricularCoursesBySemester(Integer semester /*, IStudentCurricularPlan studentCurricularPlan*/
-	) throws ExcepcaoPersistencia {
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where scopes.curricularSemester.semester = $1";
-			//			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $2";
-			//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.name = $3";
-
-			query.create(oqlQuery);
-
-			query.bind(semester);
-			//			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getName());
-			//			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
-
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			ICurricularCourse curricularCourse = null;
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext()) {
-					curricularCourse = (ICurricularCourse) iterator.next();
-					list.add(curricularCourse);
-				}
-			}
-			return list;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYear(java.lang.Integer, java.lang.Integer)
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYear(java.lang.Integer,
+	 *      java.lang.Integer)
 	 */
-	public List readCurricularCoursesBySemesterAndYear(Integer semester, Integer year) throws ExcepcaoPersistencia {
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where scopes.curricularSemester.semester = $1";
-			oqlQuery += " and scopes.curricularSemester.curricularYear.year = $2";
+    public List readCurricularCoursesBySemesterAndYear(Integer semester, Integer year)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("scopes.curricularSemester.semester", semester);
+        criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
+        return queryList(CurricularCourse.class, criteria);
 
-			query.create(oqlQuery);
+    }
 
-			query.bind(semester);
-			query.bind(year);
-
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			ICurricularCourse curricularCourse = null;
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext()) {
-					curricularCourse = (ICurricularCourse) iterator.next();
-					list.add(curricularCourse);
-				}
-			}
-			return list;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAnBranch(java.lang.Integer, java.lang.Integer, Dominio.IBranch)
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAnBranch(java.lang.Integer,
+	 *      java.lang.Integer, Dominio.IBranch)
 	 */
-	public List readCurricularCoursesBySemesterAndYearAndBranch(Integer semester, Integer year, IBranch branch) throws ExcepcaoPersistencia {
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where scopes.curricularSemester.semester = $1";
-			oqlQuery += " and scopes.curricularSemester.curricularYear.year = $2";
-			oqlQuery += " and scopes.branch.name = $3";
-			oqlQuery += " and scopes.branch.code = $4";
+    public List readCurricularCoursesBySemesterAndYearAndBranch(
+        Integer semester,
+        Integer year,
+        IBranch branch)
+        throws ExcepcaoPersistencia
+    {
 
-			query.create(oqlQuery);
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("scopes.curricularSemester.semester", semester);
+        criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
+        criteria.addEqualTo("scopes.branch.name", branch.getName());
+        criteria.addEqualTo("scopes.branch.code", branch.getCode());
+        return queryList(CurricularCourse.class, criteria);
 
-			query.bind(semester);
-			query.bind(year);
-			query.bind(branch.getName());
-			query.bind(branch.getCode());
+    }
 
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			ICurricularCourse curricularCourse = null;
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext()) {
-					curricularCourse = (ICurricularCourse) iterator.next();
-					list.add(curricularCourse);
-				}
-			}
-			return list;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(java.lang.Integer, java.lang.Integer, Dominio.IBranch)
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(java.lang.Integer,
+	 *      java.lang.Integer, Dominio.IBranch)
 	 */
-	public List readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(Integer semester, Integer year, IBranch branch) throws ExcepcaoPersistencia {
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourse.class.getName();
-			oqlQuery += " where scopes.curricularSemester.semester = $1";
-			oqlQuery += " and scopes.curricularSemester.curricularYear.year = $2";
-			oqlQuery += " and ((scopes.branch.name = $3";
-			oqlQuery += " and scopes.branch.code = $4)";
-			oqlQuery += " or (scopes.branch.name = $5";
-			oqlQuery += " and scopes.branch.name = $6))";
+    public List readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(
+        Integer semester,
+        Integer year,
+        IBranch branch)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("scopes.curricularSemester.semester", semester);
+        criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
+        Criteria criteria2 = new Criteria();
+        criteria2.addEqualTo("scopes.branch.name", branch.getName());
+        criteria2.addEqualTo("scopes.branch.code", branch.getCode());
 
-			query.create(oqlQuery);
+        Criteria criteria3 = new Criteria();
+        criteria3.addEqualTo("scopes.branch.name", "");
+        criteria3.addEqualTo("scopes.branch.code", "");
+        criteria.addOrCriteria(criteria2);
+        criteria.addOrCriteria(criteria3);
+        return queryList(CurricularCourse.class, criteria);
 
-			query.bind(semester);
-			query.bind(year);
-			query.bind(branch.getName());
-			query.bind(branch.getCode());
-			query.bind("");
-			query.bind("");
+    }
 
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+    public List readbyCourseCodeAndDegreeCurricularPlan(
+        String curricularCourseCode,
+        IDegreeCurricularPlan degreeCurricularPlan)
+        throws ExcepcaoPersistencia
+    {
 
-			ICurricularCourse curricularCourse = null;
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("code", curricularCourseCode);
+        criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
 
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext()) {
-					curricularCourse = (ICurricularCourse) iterator.next();
-					list.add(curricularCourse);
-				}
-			}
-			return list;
+        return queryList(CurricularCourse.class, criteria);
+    }
 
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+    public List readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(
+        String courseCode,
+        TipoCurso degreeType,
+        DegreeCurricularPlanState degreeCurricularPlanState)
+        throws ExcepcaoPersistencia
+    {
 
-	public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
-		
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("code", curricularCourseCode);
-		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("code", courseCode);
+        criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", degreeType);
+        criteria.addEqualTo("degreeCurricularPlan.state", degreeCurricularPlanState);
 
-		return queryList(CurricularCourse.class, criteria);
-	}
+        return queryList(CurricularCourse.class, criteria);
+    }
 
-	public List readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(String courseCode, TipoCurso degreeType, DegreeCurricularPlanState degreeCurricularPlanState) throws ExcepcaoPersistencia {
-		
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("code", courseCode);
-		criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", degreeType);
-		criteria.addEqualTo("degreeCurricularPlan.state", degreeCurricularPlanState);
+    public List readbyCourseNameAndDegreeCurricularPlan(
+        String curricularCourseName,
+        IDegreeCurricularPlan degreeCurricularPlan)
+        throws ExcepcaoPersistencia
+    {
 
-		return queryList(CurricularCourse.class, criteria);
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("name", curricularCourseName);
+        criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
 
-	public List readbyCourseNameAndDegreeCurricularPlan(String curricularCourseName, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
-		
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("name", curricularCourseName);
-		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+        return queryList(CurricularCourse.class, criteria);
+    }
 
-		return queryList(CurricularCourse.class, criteria);
-	}
-	
-	public List readByScientificArea(IScientificArea scientificArea) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyScientificArea",scientificArea.getIdInternal());
-		
-		return queryList(CurricularCourse.class, criteria);
-	}
+    public List readByScientificArea(IScientificArea scientificArea) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("scientificArea.idInternal", scientificArea.getIdInternal());
+
+        return queryList(CurricularCourse.class, criteria);
+    }
 }

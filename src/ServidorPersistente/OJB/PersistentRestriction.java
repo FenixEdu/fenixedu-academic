@@ -1,12 +1,12 @@
 /*
  * Created on 7/Abr/2003 by jpvl
- *
+ *  
  */
 package ServidorPersistente.OJB;
 
 import java.util.List;
 
-import org.odmg.QueryException;
+import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.ICurricularCourse;
 import Dominio.Restriction;
@@ -16,35 +16,27 @@ import ServidorPersistente.IPersistentRestriction;
 /**
  * @author jpvl
  */
-public class PersistentRestriction
-	extends ObjectFenixOJB
-	implements IPersistentRestriction {
+public class PersistentRestriction extends ObjectFenixOJB implements IPersistentRestriction
+{
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorPersistente.OJB.IPersistentRestriction#readByCurricularCourse(Dominio.ICurricularCourse)
 	 */
-	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		String oqlQuery = " select all from "+ Restriction.class.getName()
-						+	" where precedence.curricularCourse.name = $1"
-						+   " and precedence.curricularCourse.code = $2"
-						+   " and precedence.curricularCourse.degreeCurricularPlan.name = $3 "
-						+   " and precedence.curricularCourse.degreeCurricularPlan.degree.sigla = $4";
-		List restrictionList;				
-		try {
-			query.create(oqlQuery);
-			
-			query.bind(curricularCourse.getName());
-			query.bind(curricularCourse.getCode());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getName());
-			query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
-			restrictionList = (List) query.execute();
-			lockRead(restrictionList);
-		} catch (QueryException e) {
-			e.printStackTrace();
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
-		}
-		
-		return restrictionList;
-	}
+    public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("precedence.curricularCourse.name", curricularCourse.getName());
+        crit.addEqualTo("precedence.curricularCourse.code", curricularCourse.getCode());
+        crit.addEqualTo(
+            "precedence.curricularCourse.degreeCurricularPlan.name",
+            curricularCourse.getDegreeCurricularPlan().getName());
+        crit.addEqualTo(
+            "precedence.curricularCourse.degreeCurricularPlan.degree.sigla",
+            curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+        return queryList(Restriction.class, crit);
+
+    }
 
 }

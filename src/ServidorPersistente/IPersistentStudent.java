@@ -23,24 +23,14 @@ public interface IPersistentStudent extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IStudent student) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IStudent student) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 		
 // feitos pelo Nortadas
 	public IStudent readByNumero(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia;
 	public IStudent readByUsername(String username) throws ExcepcaoPersistencia;
 
-	/**
-	 * @deprecated
-	 */
-	public IStudent readByNumeroAndEstado(Integer numero, Integer estado, TipoCurso degreeType) throws ExcepcaoPersistencia;
-	/**
-	 * @deprecated
-	 */
-	public IStudent readByNumeroAndEstadoAndPessoa(Integer numero, Integer estado, IPessoa pessoa, TipoCurso degreeType) throws ExcepcaoPersistencia;
-//	public void lockWrite(IStudent student) throws ExcepcaoPersistencia;
-//	public void delete(IStudent aluno) throws ExcepcaoPersistencia;
-//	public void deleteByNumeroAndEstado(Integer numero,Integer estado) throws ExcepcaoPersistencia;
-//	public void deleteAll() throws ExcepcaoPersistencia;
+	
+	
 
 	/**
 	 * @param IPessoa

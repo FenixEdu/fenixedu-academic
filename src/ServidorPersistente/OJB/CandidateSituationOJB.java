@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
@@ -38,53 +37,24 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
     }
     
     public ICandidateSituation readActiveCandidateSituation(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
-        try {
-            ICandidateSituation candidate = null;
-            
-            String oqlQuery = "select all from " + CandidateSituation.class.getName()
-				            + " where masterDegreeCandidate.candidateNumber = $1"
-				            + " and masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla = $2"
-				            + " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
-							+ " and validation = $4"
-							+ " and masterDegreeCandidate.specialization = $5";
-            
-            query.create(oqlQuery);
-			query.bind(masterDegreeCandidate.getCandidateNumber());
-			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
-			query.bind(masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
-			query.bind(new Integer(State.ACTIVE));
-			query.bind(masterDegreeCandidate.getSpecialization().getSpecialization());
-            
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                candidate = (ICandidateSituation) result.get(0);
-            return candidate;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+       Criteria crit = new Criteria();
+       crit.addEqualTo("masterDegreeCandidate.candidateNumber",masterDegreeCandidate.getCandidateNumber());
+       crit.addEqualTo("masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla",masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
+       crit.addEqualTo("masterDegreeCandidate.executionDegree.executionYear.year",masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
+       crit.addEqualTo("validation",new Integer(State.ACTIVE));
+       crit.addEqualTo("masterDegreeCandidate.specialization",masterDegreeCandidate.getSpecialization().getSpecialization());
+       return (ICandidateSituation) queryObject(CandidateSituation.class,crit);
+        
     }
     
 	public List readCandidateSituations(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + CandidateSituation.class.getName()
-							+ " where masterDegreeCandidate.candidateNumber = $1"
-							+ " and masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla = $2"
-							+ " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
-							+ " and masterDegreeCandidate.specialization = $4";
-            
-			query.create(oqlQuery);
-			query.bind(masterDegreeCandidate.getCandidateNumber());
-			query.bind(masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
-			query.bind(masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
-			query.bind(masterDegreeCandidate.getSpecialization().getSpecialization());
-            
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria crit = new Criteria();
+        crit.addEqualTo("masterDegreeCandidate.candidateNumber",masterDegreeCandidate.getCandidateNumber());
+        crit.addEqualTo("masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla",masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
+        crit.addEqualTo("masterDegreeCandidate.executionDegree.executionYear.year",masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
+        crit.addEqualTo("masterDegreeCandidate.specialization",masterDegreeCandidate.getSpecialization().getSpecialization());
+        return queryList(CandidateSituation.class,crit);
+       
 	}
     
 	public List readActiveSituationsBySituationList(ICursoExecucao executionDegree, List situations) throws ExcepcaoPersistencia {
@@ -118,10 +88,7 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         super.delete(candidateSituation);
     }
 
-    public void deleteAll() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + CandidateSituation.class.getName();
-        super.deleteAll(oqlQuery);
-    }    
+    
 
 
 

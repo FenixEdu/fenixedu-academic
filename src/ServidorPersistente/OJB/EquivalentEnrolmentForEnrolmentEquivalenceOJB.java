@@ -1,11 +1,8 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.IEnrolment;
@@ -26,18 +23,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
     implements IPersistentEquivalentEnrolmentForEnrolmentEquivalence
 {
 
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        try
-        {
-            String oqlQuery =
-                "select all from " + EquivalentEnrolmentForEnrolmentEquivalence.class.getName();
-            super.deleteAll(oqlQuery);
-        } catch (ExcepcaoPersistencia ex)
-        {
-            throw ex;
-        }
-    }
+   
 
     public void lockWrite(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestrictionToWrite)
         throws ExcepcaoPersistencia, ExistingPersistentException
@@ -115,36 +101,10 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
         }
     }
 
-    public ArrayList readAll() throws ExcepcaoPersistencia
+    public List readAll() throws ExcepcaoPersistencia
     {
 
-        try
-        {
-            ArrayList list = new ArrayList();
-            String oqlQuery =
-                "select all from " + EquivalentEnrolmentForEnrolmentEquivalence.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-
-            try
-            {
-                lockRead(result);
-            } catch (ExcepcaoPersistencia ex)
-            {
-                throw ex;
-            }
-
-            if ((result != null) && (result.size() != 0))
-            {
-                ListIterator iterator = result.listIterator();
-                while (iterator.hasNext())
-                    list.add(iterator.next());
-            }
-            return list;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+       return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class,new Criteria());
     }
 
 }

@@ -1,6 +1,5 @@
 package ServidorPersistente;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface IPersistentCurricularCourseScope extends IPersistentObject
 {
 
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public void lockWrite(ICurricularCourseScope curricularCourseScopeToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
@@ -57,7 +56,7 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject
 			IDegreeCurricularPlan degreeCurricularPlan,
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia;
-	public ArrayList readAll() throws ExcepcaoPersistencia;
+	public List readAll() throws ExcepcaoPersistencia;
 
 	/**
 	 * @param curricularCourse

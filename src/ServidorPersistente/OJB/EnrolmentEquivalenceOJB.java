@@ -1,11 +1,8 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.EnrolmentEquivalence;
 import Dominio.IEnrolment;
@@ -16,24 +13,12 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 24/Mar/2003
  */
 
 public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersistentEnrolmentEquivalence
 {
-
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        try
-        {
-            String oqlQuery = "select all from " + EnrolmentEquivalence.class.getName();
-            super.deleteAll(oqlQuery);
-        } catch (ExcepcaoPersistencia ex)
-        {
-            throw ex;
-        }
-    }
 
     public void lockWrite(IEnrolmentEquivalence equivalenceToWrite)
         throws ExcepcaoPersistencia, ExistingPersistentException
@@ -55,7 +40,8 @@ public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersiste
             criteria.addEqualTo("idInternal", equivalenceToWrite.getIdInternal());
             equivalenceFromDB =
                 (IEnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw e;
         }
@@ -64,15 +50,18 @@ public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersiste
         if (equivalenceFromDB == null)
         {
             super.lockWrite(equivalenceToWrite);
-            // else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
-        } else if (
+            // else If the EnrolmentEquivalence is mapped to the database, then
+			// write any existing changes.
+        }
+        else if (
             (equivalenceToWrite instanceof EnrolmentEquivalence)
                 && ((EnrolmentEquivalence) equivalenceFromDB).getIdInternal().equals(
                     ((EnrolmentEquivalence) equivalenceToWrite).getIdInternal()))
         {
             super.lockWrite(equivalenceToWrite);
             // else Throw an already existing exception
-        } else
+        }
+        else
             throw new ExistingPersistentException();
     }
 
@@ -81,47 +70,23 @@ public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersiste
         try
         {
             super.delete(enrolment);
-        } catch (ExcepcaoPersistencia ex)
+        }
+        catch (ExcepcaoPersistencia ex)
         {
             throw ex;
         }
     }
 
-    public ArrayList readAll() throws ExcepcaoPersistencia
+    public List readAll() throws ExcepcaoPersistencia
     {
 
-        try
-        {
-            ArrayList list = new ArrayList();
-            String oqlQuery = "select all from " + EnrolmentEquivalence.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-
-            try
-            {
-                lockRead(result);
-            } catch (ExcepcaoPersistencia ex)
-            {
-                throw ex;
-            }
-
-            if ((result != null) && (result.size() != 0))
-            {
-                ListIterator iterator = result.listIterator();
-                while (iterator.hasNext())
-                    list.add(iterator.next());
-            }
-            return list;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        return queryList(EnrolmentEquivalence.class, new Criteria());
     }
 
-	public IEnrolmentEquivalence readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
-		return (IEnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);
-	}
+    public IEnrolmentEquivalence readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
+        return (IEnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);
+    }
 }

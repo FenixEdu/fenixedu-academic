@@ -26,17 +26,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark
         super();
     }
 
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        try
-        {
-            String oqlQuery = "select all from " + Mark.class.getName();
-            super.deleteAll(oqlQuery);
-        } catch (ExcepcaoPersistencia ex)
-        {
-            throw ex;
-        }
-    }
+   
 
     public void lockWrite(IMark markToWrite) throws ExcepcaoPersistencia, ExistingPersistentException
     {

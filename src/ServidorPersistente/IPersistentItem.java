@@ -20,5 +20,5 @@ public interface IPersistentItem extends IPersistentObject{
 	public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia;
     public void lockWrite(IItem item) throws ExcepcaoPersistencia;
     public void delete(IItem item) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+   
 }

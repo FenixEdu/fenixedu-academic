@@ -1,13 +1,13 @@
 /*
  * Created on 21/Mar/2003
- *
  * 
+ *  
  */
 package ServidorPersistente.OJB;
 
 import java.util.List;
 
-import org.odmg.QueryException;
+import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Contributor;
 import Dominio.IContributor;
@@ -16,94 +16,78 @@ import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ContributorOJB extends ObjectFenixOJB implements IPersistentContributor {
+public class ContributorOJB extends ObjectFenixOJB implements IPersistentContributor
+{
 
-	public ContributorOJB() {
-	}
+    public ContributorOJB()
+    {
+    }
 
-	public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia {
-		try {
-			IContributor contributor = null;
-			String oqlQuery = "select all from " + Contributor.class.getName();
-			oqlQuery += " where contributorNumber = $1";
-			query.create(oqlQuery);
-			query.bind(contributorNumber);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			if (result.size() != 0)
-				contributor = (IContributor) result.get(0);
-			return contributor;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+    public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("contributorNumber", contributorNumber);
+        return (IContributor) queryObject(Contributor.class, crit);
 
-	public void write(IContributor contributor) throws ExcepcaoPersistencia, ExistingPersistentException {
+    }
 
-		IContributor contributorBD = null;
+    public void write(IContributor contributor) throws ExcepcaoPersistencia, ExistingPersistentException
+    {
 
-		// If there is nothing to write, simply return.
-		if (contributor == null) {
-			return;
-		}
+        IContributor contributorBD = null;
 
-		// Read contributor from database.
-		contributorBD = this.readByContributorNumber(contributor.getContributorNumber());
+        // If there is nothing to write, simply return.
+        if (contributor == null)
+        {
+            return;
+        }
 
+        // Read contributor from database.
+        contributorBD = this.readByContributorNumber(contributor.getContributorNumber());
 
-		// If contributor is not in database, then write it.
-		if (contributorBD == null) {
-			super.lockWrite(contributor);
-			return;
-		}
+        // If contributor is not in database, then write it.
+        if (contributorBD == null)
+        {
+            super.lockWrite(contributor);
+            return;
+        }
 
-		// the contributor is mapped to the database, then write any existing changes.
-		if ((contributor instanceof Contributor) &&
-			((Contributor) contributorBD).getIdInternal().equals(((Contributor) contributor).getIdInternal())) {
-			super.lockWrite(contributorBD);
-			return;
-		
-		} 
-		
-		throw new ExistingPersistentException();
+        // the contributor is mapped to the database, then write any existing
+        // changes.
+        if ((contributor instanceof Contributor)
+            && ((Contributor) contributorBD).getIdInternal().equals(
+                ((Contributor) contributor).getIdInternal()))
+        {
+            super.lockWrite(contributorBD);
+            return;
 
-	}
+        }
 
-	public List readAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + Contributor.class.getName() + " order by contributorName asc";
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			super.lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+        throw new ExistingPersistentException();
 
-	public List readContributorListByNumber(Integer contributorNumber) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + Contributor.class.getName();
+    }
 
-			if (contributorNumber != null)
-				oqlQuery += " where contributorNumber = $1";
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
 
-			oqlQuery += " order by contributorNumber asc ";
-			query.create(oqlQuery);
+        return queryList(Contributor.class, crit);
+    }
 
-			if (contributorNumber != null)
-				query.bind(contributorNumber);
+    public List readContributorListByNumber(Integer contributorNumber) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        if (contributorNumber != null)
+        {
+            crit.addEqualTo("contributorNumber", contributorNumber);
+        }
 
-			List result = (List) query.execute();
-			super.lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+        crit.addOrderBy("contributorNumber", true);
 
-	}
+        return queryList(Contributor.class, crit);
+
+    }
 
 }

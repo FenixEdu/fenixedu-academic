@@ -15,7 +15,7 @@ public interface IPersistentStudentGroupAttend extends IPersistentObject
 {
 	public List readByStudentGroupId(Integer ID) throws ExcepcaoPersistencia;
 	public void delete(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public void lockWrite(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia;
 	public IStudentGroupAttend readBy(IStudentGroup studentGroup, IFrequenta attend) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;

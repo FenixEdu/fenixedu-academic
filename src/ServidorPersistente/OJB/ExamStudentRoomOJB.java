@@ -105,10 +105,7 @@ public class ExamStudentRoomOJB extends ObjectFenixOJB implements IPersistentExa
 		}
 	}
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + ExamStudentRoom.class.getName();
-		super.deleteAll(oqlQuery);
-	}
+	
 
 	
 }

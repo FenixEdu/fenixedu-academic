@@ -22,20 +22,7 @@ public class StudentKindOJB extends ObjectFenixOJB implements IPersistentStudent
     public StudentKindOJB() {}
     
 	public IStudentKind readByStudentType(StudentType studentType) throws ExcepcaoPersistencia{
-//		String oqlQuery = "select all from "+ StudentKind.class.getName()
-//						+ " where studentType = $1 ";
-//	 	try {
-//			query.create(oqlQuery);
-//			query.bind(studentType.getState());
-//				
-//			List result = (List) query.execute();
-//			super.lockRead(result);
-//			if (result.size() != 0)
-//				return (IStudentKind) result.get(0);
-//			return null;
-//		} catch (QueryException ex) {
-//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//		}
+
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentType", studentType);

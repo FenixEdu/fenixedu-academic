@@ -1,6 +1,5 @@
 package ServidorPersistente;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.IExecutionYear;
@@ -23,7 +22,7 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 	 * 
 	 * @return ArrayList
 	 */
-	public ArrayList readAllExecutionYear()throws ExcepcaoPersistencia;
+	public List readAllExecutionYear()throws ExcepcaoPersistencia;
 	/**
 	 * 
 	 * @return ArrayList
@@ -35,11 +34,7 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 	 * @return boolean
 	 */
 	public void writeExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia, ExistingPersistentException;
-	/**
-	 * 
-	 * @return boolean
-	 */
-	public boolean deleteAll();
+	
 	
 	/**
 	 * 

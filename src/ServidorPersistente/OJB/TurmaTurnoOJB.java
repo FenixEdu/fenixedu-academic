@@ -1,21 +1,19 @@
 /*
  * TurmaTurnoOJB.java
- *
+ * 
  * Created on 19 de Outubro de 2002, 15:23
  */
 
 package ServidorPersistente.OJB;
 
 /**
- *
- * @author  tfc130
+ * @author tfc130
  */
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.ICursoExecucao;
 import Dominio.ITurma;
@@ -26,211 +24,151 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class TurmaTurnoOJB
-	extends ObjectFenixOJB
-	implements ITurmaTurnoPersistente {
+public class TurmaTurnoOJB extends ObjectFenixOJB implements ITurmaTurnoPersistente
+{
 
-	public ITurmaTurno readByTurmaAndTurno(ITurma turma, ITurno turno)
-		throws ExcepcaoPersistencia {
-		try {
-			ITurmaTurno turmaTurno = null;
-			String oqlQuery =
-				"select turmaturno from " + TurmaTurno.class.getName()
-				// Unique from Class
-	+" where turma.nome = $1"
-		+ " and turma.executionPeriod.name = $2"
-		+ " and turma.executionPeriod.executionYear.year = $3"
-		+ " and turma.executionDegree.executionYear.year = $4"
-		+ " and turma.executionDegree.curricularPlan.name = $5"
-		+ " and turma.executionDegree.curricularPlan.degree.sigla = $6"
-				// Unique from Shift
-	+" and turno.nome = $7"
-		+ " and turno.disciplinaExecucao.sigla = $8"
-		+ " and turno.disciplinaExecucao.executionPeriod.name = $9"
-		+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $10";
+    public ITurmaTurno readByTurmaAndTurno(ITurma turma, ITurno turno) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("turma.nome", turma.getNome());
+        crit.addEqualTo("turma.executionPeriod.name", turma.getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "turma.executionPeriod.executionYear.year",
+            turma.getExecutionPeriod().getExecutionYear().getYear());
+        crit.addEqualTo(
+            "turma.executionDegree.executionYear.year",
+            turma.getExecutionDegree().getExecutionYear().getYear());
+        crit.addEqualTo(
+            "turma.executionDegree.curricularPlan.name",
+            turma.getExecutionDegree().getCurricularPlan().getName());
+        crit.addEqualTo(
+            "turma.executionDegree.curricularPlan.degree.sigla",
+            turma.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
+        crit.addEqualTo("turno.nome", turno.getNome());
+        crit.addEqualTo("turno.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
+        crit.addEqualTo(
+            "turno.disciplinaExecucao.executionPeriod.name",
+            turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "turno.disciplinaExecucao.executionPeriod.executionYear.year",
+            turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+        return (ITurmaTurno) queryObject(TurmaTurno.class, crit);
 
-			query.create(oqlQuery);
-			query.bind(turma.getNome());
-			query.bind(turma.getExecutionPeriod().getName());
-			query.bind(turma.getExecutionPeriod().getExecutionYear().getYear());
-			query.bind(turma.getExecutionDegree().getExecutionYear().getYear());
-			query.bind(
-				turma.getExecutionDegree().getCurricularPlan().getName());
-			query.bind(
-				turma
-					.getExecutionDegree()
-					.getCurricularPlan()
-					.getDegree()
-					.getSigla());
+    }
 
-			query.bind(turno.getNome());
-			query.bind(turno.getDisciplinaExecucao().getSigla());
-			query.bind(
-				turno.getDisciplinaExecucao().getExecutionPeriod().getName());
-			query.bind(
-				turno
-					.getDisciplinaExecucao()
-					.getExecutionPeriod()
-					.getExecutionYear()
-					.getYear());
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				turmaTurno = (ITurmaTurno) result.get(0);
-			return turmaTurno;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+    public void lockWrite(ITurmaTurno classShiftToWrite)
+        throws ExcepcaoPersistencia, ExistingPersistentException
+    {
 
-	public void lockWrite(ITurmaTurno classShiftToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException {
+        ITurmaTurno classShiftFromDB = null;
 
-		ITurmaTurno classShiftFromDB = null;
+        // If there is nothing to write, simply return.
+        if (classShiftToWrite == null)
+            return;
 
-		// If there is nothing to write, simply return.
-		if (classShiftToWrite == null)
-			return;
+        // Read classShift from database.
+        classShiftFromDB =
+            this.readByTurmaAndTurno(classShiftToWrite.getTurma(), classShiftToWrite.getTurno());
 
-		// Read classShift from database.
-		classShiftFromDB =
-			this.readByTurmaAndTurno(
-				classShiftToWrite.getTurma(),
-				classShiftToWrite.getTurno());
+        // If classShift is not in database, then write it.
+        if (classShiftFromDB == null)
+            super.lockWrite(classShiftToWrite);
+        // else If the classShift is mapped to the database, then write any
+        // existing changes.
+        else if (
+            (classShiftToWrite instanceof TurmaTurno)
+                && classShiftFromDB.getIdInternal().equals(classShiftToWrite.getIdInternal()))
+        {
+            super.lockWrite(classShiftToWrite);
+            // else Throw an already existing exception
+        }
+        else
+            throw new ExistingPersistentException();
+    }
 
-		// If classShift is not in database, then write it.
-		if (classShiftFromDB == null)
-			super.lockWrite(classShiftToWrite);
-		// else If the classShift is mapped to the database, then write any existing changes.
-		else if (
-			(classShiftToWrite instanceof TurmaTurno)
-				&& classShiftFromDB.getIdInternal().equals(
-					classShiftToWrite.getIdInternal())) {
-			super.lockWrite(classShiftToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+    public void delete(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia
+    {
+        super.delete(turmaTurno);
+    }
 
-	public void delete(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia {
-		super.delete(turmaTurno);
-	}
-
-	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + TurmaTurno.class.getName();
-		super.deleteAll(oqlQuery);
-	}
-
-	/**
+    /**
 	 * Returns a shift list
+	 * 
 	 * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)
 	 */
-	public List readByClass(ITurma group) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select turnos from " + TurmaTurno.class.getName();
-			oqlQuery += " where turma.nome = $1 "
-				+ " and turma.executionPeriod.name = $2 "
-				+ " and turma.executionPeriod.executionYear.year = $3"
-				+ " and turma.executionDegree.executionYear.year = $4"
-				+ " and turma.executionDegree.curricularPlan.name = $5"
-				+ " and turma.executionDegree.curricularPlan.degree.sigla = $6 ";
-			query.create(oqlQuery);
+    public List readByClass(ITurma group) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("turma.nome", group.getNome());
+        crit.addEqualTo("turma.executionPeriod.name", group.getExecutionPeriod().getName());
+        crit.addEqualTo(
+            "turma.executionPeriod.executionYear.year",
+            group.getExecutionPeriod().getExecutionYear().getYear());
+        ICursoExecucao executionDegree = group.getExecutionDegree();
+        crit.addEqualTo(
+            "turma.executionDegree.executionYear.year",
+            executionDegree.getExecutionYear().getYear());
+        crit.addEqualTo(
+            "turma.executionDegree.curricularPlan.name",
+            executionDegree.getCurricularPlan().getName());
+        crit.addEqualTo(
+            "turma.executionDegree.curricularPlan.degree.sigla",
+            executionDegree.getCurricularPlan().getDegree().getSigla());
 
-			query.bind(group.getNome());
-			query.bind(group.getExecutionPeriod().getName());
-			query.bind(group.getExecutionPeriod().getExecutionYear().getYear());
+        List result = queryList(TurmaTurno.class, crit);
 
-			ICursoExecucao executionDegree = group.getExecutionDegree();
-			query.bind(executionDegree.getExecutionYear().getYear());
+        List shiftList = new ArrayList();
+        Iterator resultIterator = result.iterator();
+        while (resultIterator.hasNext())
+        {
+            ITurmaTurno classShift = (ITurmaTurno) resultIterator.next();
+            shiftList.add(classShift.getTurno());
+        }
+        return shiftList;
 
-			query.bind(executionDegree.getCurricularPlan().getName());
-
-			query.bind(
-				executionDegree.getCurricularPlan().getDegree().getSigla());
-
-			List result = (List) query.execute();
-			lockRead(result);
-
-			List shiftList = new ArrayList();
-			Iterator resultIterator = result.iterator();
-			while (resultIterator.hasNext()) {
-				ITurmaTurno classShift = (ITurmaTurno) resultIterator.next();
-				shiftList.add(classShift.getTurno());
-			}
-			return shiftList;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-	/**
+    }
+    /**
 	 * Returns a class list
+	 * 
 	 * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)
 	 */
-	public List readByShift(ITurno group) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select turma from " + TurmaTurno.class.getName();
-			oqlQuery += " where turno.idInternal = $1 ";
-			query.create(oqlQuery);
+    public List readByShift(ITurno group) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("turno.idInternal", group.getIdInternal());
 
-			query.bind(group.getIdInternal());
-			
-			List result = (List) query.execute();
-			lockRead(result);
-			
-			List classList = new ArrayList();
-			Iterator resultIterator = result.iterator();
-			while (resultIterator.hasNext()) {
-				ITurmaTurno classShift = (ITurmaTurno) resultIterator.next();
-				classList.add(classShift.getTurma());
-			}
-			return classList;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-	public List readClassesWithShift(ITurno turno)
-		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select all from "
-					+ TurmaTurno.class.getName()
-					+ " where turno.nome = $1"
-					+ " and turno.disciplinaExecucao.sigla = $2"
-					+ " and turno.disciplinaExecucao.executionPeriod.name = $3"
-					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4";
-			query.create(oqlQuery);
-			query.bind(turno.getNome());
-			query.bind(turno.getDisciplinaExecucao().getSigla());
-			query.bind(
-				turno.getDisciplinaExecucao().getExecutionPeriod().getName());
-			query.bind(
-				turno
-					.getDisciplinaExecucao()
-					.getExecutionPeriod()
-					.getExecutionYear()
-					.getYear());
+        List result = queryList(TurmaTurno.class, crit);
 
-			List classesList = (List) query.execute();
-			lockRead(classesList);
+        List classList = new ArrayList();
+        Iterator resultIterator = result.iterator();
+        while (resultIterator.hasNext())
+        {
+            ITurmaTurno classShift = (ITurmaTurno) resultIterator.next();
+            classList.add(classShift.getTurma());
+        }
+        return classList;
 
-			return classesList;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+    }
+    public List readClassesWithShift(ITurno turno) throws ExcepcaoPersistencia
+    {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("turno.nome",turno.getNome());
+        crit.addEqualTo("turno.disciplinaExecucao.sigla",turno.getDisciplinaExecucao().getSigla());
+        crit.addEqualTo("turno.disciplinaExecucao.executionPeriod.name",turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+        crit.addEqualTo("turno.disciplinaExecucao.executionPeriod.executionYear.year",turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+        return queryList(TurmaTurno.class,crit);
+        
+    }
 
-	public List readByShiftAndExecutionDegree(
-		ITurno turno,
-		ICursoExecucao execucao)
-		throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("turno.nome", turno.getNome());
-		criteria.addEqualTo(
-			"turma.executionDegree.curricularPlan.degree.sigla",
-			execucao.getCurricularPlan().getDegree().getSigla());
-		return queryList(TurmaTurno.class, criteria);
-	}
+    public List readByShiftAndExecutionDegree(ITurno turno, ICursoExecucao execucao)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("turno.nome", turno.getNome());
+        criteria.addEqualTo(
+            "turma.executionDegree.curricularPlan.degree.sigla",
+            execucao.getCurricularPlan().getDegree().getSigla());
+        return queryList(TurmaTurno.class, criteria);
+    }
 
 }

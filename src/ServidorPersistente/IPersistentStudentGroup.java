@@ -15,7 +15,7 @@ import Dominio.ITurno;
  */
 public interface IPersistentStudentGroup extends IPersistentObject{
 	public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IStudentGroup studentGroup) throws ExcepcaoPersistencia;
 	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(IGroupProperties groupProperties,Integer studentGroupNumber) throws ExcepcaoPersistencia;

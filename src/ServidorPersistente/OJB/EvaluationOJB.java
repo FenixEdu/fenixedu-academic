@@ -21,9 +21,5 @@ public class EvaluationOJB extends ObjectFenixOJB implements IPersistentEvaluati
         return queryList(Evaluation.class, criteria);
     }
 
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        String oqlQuery = "select all from " + Evaluation.class.getName();
-        super.deleteAll(oqlQuery);
-    }
+    
 }

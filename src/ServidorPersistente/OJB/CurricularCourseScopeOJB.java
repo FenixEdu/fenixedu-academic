@@ -1,13 +1,10 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.CurricularCourseScope;
 import Dominio.Enrolment;
@@ -30,14 +27,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersistentCurricularCourseScope {
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
-			super.deleteAll(oqlQuery);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
+	
 
 	public void lockWrite(ICurricularCourseScope curricularCourseScopeToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
@@ -103,29 +93,9 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 
 	}
 
-	public ArrayList readAll() throws ExcepcaoPersistencia {
+	public List readAll() throws ExcepcaoPersistencia {
 
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add(iterator.next());
-			}
-			return list;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		return queryList(CurricularCourseScope.class,new Criteria());
 	}
 
 	public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {

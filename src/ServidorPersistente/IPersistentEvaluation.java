@@ -8,5 +8,5 @@ import java.util.List;
  */
 public interface IPersistentEvaluation extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
-  public void deleteAll() throws ExcepcaoPersistencia;
+ 
 }

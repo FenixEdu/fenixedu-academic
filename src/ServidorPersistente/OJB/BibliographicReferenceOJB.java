@@ -21,11 +21,7 @@ public class BibliographicReferenceOJB
     {
         super.delete(bibliographicReference);
     }
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        String oqlQuery = "select all from " + BibliographicReference.class.getName();
-        super.deleteAll(oqlQuery);
-    }
+   
     public IBibliographicReference readBibliographicReference(
         IExecutionCourse executionCourse,
         String title,
@@ -53,7 +49,7 @@ public class BibliographicReferenceOJB
     public List readBibliographicReference(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
-        crit.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+        crit.addEqualTo("executionCourse.idInternal", executionCourse.getIdInternal());
         List result = queryList(BibliographicReference.class, crit);
         return result;
 

@@ -15,7 +15,7 @@ import Util.TipoCurso;
 public interface IPersistentExecutionCourse extends IPersistentObject
 {
     public List readAll() throws ExcepcaoPersistencia;
-    public boolean apagarTodasAsDisciplinasExecucao();
+   
     public void escreverDisciplinaExecucao(IExecutionCourse disciplinaExecucao)
         throws ExcepcaoPersistencia, ExistingPersistentException;
 

@@ -1,6 +1,6 @@
 /*
  * Created on 6/Jan/2004
- *  
+ *
  */
 package ServidorPersistente.OJB;
 
@@ -20,7 +20,7 @@ import Util.Specialization;
 
 /**
  * @author Tânia Pousão
- *  
+ *
  */
 public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentGratuitySituation
 {
@@ -30,10 +30,10 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-
+				
 		return (IGratuitySituation) queryObject(GratuitySituation.class, criteria);
 	}
-
+	
 	public List readGratuitySituationsByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
 		throws ExcepcaoPersistencia
 	{
@@ -41,7 +41,7 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 		criteria.addEqualTo(
 			"studentCurricularPlan.degreeCurricularPlan.idInternal",
 			degreeCurricularPlan.getIdInternal());
-
+		
 		return queryList(GratuitySituation.class, criteria);
 	}
 
@@ -56,12 +56,11 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 			criteria.addEqualTo(
 				"studentCurricularPlan.Specialization.specialization",
 				specialization.getSpecialization());
-		}
+}
 		else
 		{
 			criteria.addNotNull("studentCurricularPlan.Specialization.specialization");
 		}
-
 		if (executionDegree != null)
 		{
 			criteria.addEqualTo(

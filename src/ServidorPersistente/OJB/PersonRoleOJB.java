@@ -1,8 +1,6 @@
 package ServidorPersistente.OJB;
 
-import java.util.List;
-
-import org.odmg.QueryException;
+import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
@@ -52,22 +50,11 @@ public class PersonRoleOJB extends ObjectFenixOJB implements IPersistentPersonRo
 
 
 	public IPersonRole readByPersonAndRole(IPessoa person, IRole role) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + PersonRole.class.getName()
-					+ " where person.username = $1"
-					+ " and role.roleType = $2";
-
-			query.create(oqlQuery);
-			query.bind(person.getUsername());
-			query.bind(new Integer(role.getRoleType().getValue()));
-			
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0) return (IPersonRole) result.get(0);
-			return null;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria crit = new Criteria();
+        crit.addEqualTo("person.username",person.getUsername());
+        crit.addEqualTo("role.roleType",new Integer(role.getRoleType().getValue()));
+        return (IPersonRole) queryObject(PersonRole.class,crit);
+       
 	}
 
 }

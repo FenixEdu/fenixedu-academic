@@ -1,6 +1,6 @@
 /*
  * Created on 12/Jul/2003 by jpvl
- *
+ *  
  */
 package ServidorPersistente.OJB;
 
@@ -52,9 +52,6 @@ public class EmployeeOJB extends ObjectFenixOJB implements IPersistentEmployee
 
     public List readHistoricByKeyEmployee(int keyEmployee) throws ExcepcaoPersistencia
     {
-        /*SELECT * FROM ass_FUNCIONARIO_HISTORICO "
-        				+ "WHERE chaveFuncionario = ? AND "
-        				+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");*/
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyEmployee", new Integer(keyEmployee));
@@ -71,27 +68,8 @@ public class EmployeeOJB extends ObjectFenixOJB implements IPersistentEmployee
         criteria.addAndCriteria(criteria2);
         criteria2.addOrCriteria(criteria3);
 
-        return queryList(EmployeeHistoric.class, criteria); //emploee's historic list
+        return queryList(EmployeeHistoric.class, criteria); //emploee's
+															// historic list
     }
-
-    //ATENÇÃO: só para testar o funionario em ojb
-    //	System.out.println("-------->Funcionario: a ler o funcionário");
-    //	IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
-    //	Employee employee = employeeDAO.readByNumber(new Integer(2997));
-    //	System.out.println(
-    //		"-------->Funcionario: "
-    //			+ employee.getIdInternal()
-    //			+ "; "
-    //			+ employee.getEmployeeNumber()
-    //			+ "; "
-    //			+ employee.getKeyPerson()
-    //			+ "; "
-    //			+ employee.getAntiquity()
-    //			+ "; "
-    //			+ employee.getWorkingHours());
-    //			
-    //	employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal().intValue()));
-    //	employee.fillEmployeeHistoric();
-    //	System.out.println("-------->Funcionario Historico: " + employee.getEmployeeHistoric());
 
 }

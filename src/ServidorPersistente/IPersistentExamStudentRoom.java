@@ -41,6 +41,6 @@ public interface IPersistentExamStudentRoom extends IPersistentObject {
 	public void deleteByCriteria(IExamStudentRoom examStudentRoom)
 		throws ExcepcaoPersistencia;
 
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 
 }

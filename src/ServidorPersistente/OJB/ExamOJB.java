@@ -15,13 +15,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -39,16 +38,10 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + Exam.class.getName();
-			oqlQuery += " order by season asc";
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+        Criteria crit = new Criteria();
+        crit.addOrderBy("season",true);
+        return queryList(Exam.class,crit);
+		
 	}
 
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
@@ -94,10 +87,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 		}
 	}
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + Exam.class.getName();
-		super.deleteAll(oqlQuery);
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentExam#readBy(Dominio.ISala, Dominio.IExecutionPeriod)

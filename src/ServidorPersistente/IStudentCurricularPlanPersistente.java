@@ -34,7 +34,7 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoPersistencia;
+	public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoPersistencia;
 
 	/**
 	 * 
@@ -51,11 +51,7 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 	 */
 	public void delete(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 
-	/**
-	 * 
-	 * @throws ExcepcaoPersistencia
-	 */
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 
 	/**
 	 * 

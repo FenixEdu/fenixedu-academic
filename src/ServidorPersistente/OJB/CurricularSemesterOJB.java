@@ -1,10 +1,8 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
-import org.odmg.QueryException;
+import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CurricularSemester;
 import Dominio.ICurricularSemester;
@@ -24,14 +22,7 @@ public class CurricularSemesterOJB extends ObjectFenixOJB implements IPersistent
 	public CurricularSemesterOJB() {
 	}
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + CurricularSemester.class.getName();
-			super.deleteAll(oqlQuery);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
+	
 
 	public void lockWrite(ICurricularSemester curricularSemesterToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
@@ -65,56 +56,16 @@ public class CurricularSemesterOJB extends ObjectFenixOJB implements IPersistent
 	}
 
 	public ICurricularSemester readCurricularSemesterBySemesterAndCurricularYear(Integer semester, ICurricularYear curricularYear) throws ExcepcaoPersistencia {
-
-		try {
-			ICurricularSemester curricularSemester = null;
-			String oqlQuery = "select all from " + CurricularSemester.class.getName();
-			oqlQuery += " where semester = $1";
-			oqlQuery += " and curricularYear.year = $2";
-			query.create(oqlQuery);
-			query.bind(semester);
-			query.bind(curricularYear.getYear());
-
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			if( (result != null) && (result.size() != 0) ) {
-				curricularSemester = (ICurricularSemester) result.get(0);
-			}
-			return curricularSemester;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+	    Criteria crit = new Criteria();
+        crit.addEqualTo("semester",semester);
+        crit.addEqualTo("curricularYear.year",curricularYear.getYear());
+        return (ICurricularSemester) queryObject(CurricularSemester.class,crit);
+		
 	}
 
-	public ArrayList readAll() throws ExcepcaoPersistencia {
-
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularSemester.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-
-			if( (result != null) && (result.size() != 0) ) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add(iterator.next());
-			}
-			return list;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+	public List readAll() throws ExcepcaoPersistencia {
+	    return queryList(CurricularSemester.class,new Criteria());
+		
 	}
 
 }

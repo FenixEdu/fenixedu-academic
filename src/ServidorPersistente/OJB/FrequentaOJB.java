@@ -102,11 +102,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         super.delete(frequenta);
     }
 
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        String oqlQuery = "select all from " + Frequenta.class.getName();
-        super.deleteAll(oqlQuery);
-    }
+    
 
     public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia
     {

@@ -13,7 +13,6 @@ package ServidorPersistente.OJB;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -33,25 +32,12 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
     public IStudent readByNumeroAndEstado(Integer numero, Integer estado, TipoCurso degreeType)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            IStudent aluno = null;
-            String oqlQuery = "select all from " + Student.class.getName();
-            oqlQuery += " where number = $1 and state = $2 and degreeType = $3";
-            query.create(oqlQuery);
-            query.bind(numero);
-            query.bind(estado);
-            query.bind(degreeType.getTipoCurso());
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if (result.size() != 0)
-                aluno = (IStudent) result.get(0);
-            return aluno;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        crit.addEqualTo("number", numero);
+        crit.addEqualTo("state", estado);
+        crit.addEqualTo("degreeType", degreeType.getTipoCurso());
+        return (IStudent) queryObject(Student.class, crit);
+
     }
 
     public IStudent readByUsername(String username) throws ExcepcaoPersistencia
@@ -76,128 +62,9 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
         return (IStudent) queryObject(Student.class, criteria);
     }
 
-    //
-    //	public void delete(IStudent student) throws ExcepcaoPersistencia {
-    //		// Delete all Attends
-    //		// try {
-    //		// String oqlQuery = "select all from " + Frequenta.class.getName();
-    //		// oqlQuery += " where aluno.number = $1"
-    //		// + " and aluno.degreeType = $2";
-    //		// query.create(oqlQuery);
-    //		// query.bind(student.getNumber());
-    //		// query.bind(student.getDegreeType());
-    //		// List result = (List) query.execute();
-    //		// ListIterator iterator = result.listIterator();
-    //		// while(iterator.hasNext())
-    //		// SuportePersistenteOJB.getInstance().getIFrequentaPersistente().delete((IFrequenta)
-    // iterator.next());
-    //		// } catch (QueryException ex) {
-    //		// throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-    //		// }
-    //
-    //		// Delete all Student Curricular Plans
-    //		try {
-    //			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-    //			oqlQuery += " where student.number = $1" + " and student.degreeType = $2";
-    //			query.create(oqlQuery);
-    //			query.bind(student.getNumber());
-    //			query.bind(student.getDegreeType());
-    //			List result = (List) query.execute();
-    //			ListIterator iterator = result.listIterator();
-    //			while (iterator.hasNext())
-    //				SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente().delete((IStudentCurricularPlan)
-    // iterator.next());
-    //		} catch (QueryException ex) {
-    //			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-    //		}
-    //
-    //		// Delete Student
-    //		super.delete(student);
-    //	}
-    //
-    //	/*
-    //	     public void deleteByNumeroAndEstado(Integer numero, Integer estado) throws ExcepcaoPersistencia {
-    //	        try {
-    //	            String oqlQuery = "select all from " + Student.class.getName();
-    //	            oqlQuery += " where numero = $1 and estado = $2";
-    //	            query.create(oqlQuery);
-    //	            query.bind(numero);
-    //	            query.bind(estado);
-    //	            List result = (List) query.execute();
-    //	            ListIterator iterator = result.listIterator();
-    //	            while(iterator.hasNext())
-    //	                super.delete(iterator.next());
-    //	        } catch (QueryException ex) {
-    //	            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-    //	        }
-    //	    }
-    //	*/
-    //
-    //	public void deleteAll() throws ExcepcaoPersistencia {
-    //		try {
-    //			String oqlQuery = "select all from " + Student.class.getName();
-    //			query.create(oqlQuery);
-    //			List result = (List) query.execute();
-    //			Iterator iterator = result.iterator();
-    //			while (iterator.hasNext()) {
-    //				delete((IStudent) iterator.next());
-    //			}
-    //		} catch (QueryException ex) {
-    //			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-    //		}
-    //
-    //	}
-
-    /**
-	 * @deprecated
-	 */
-    public IStudent readByNumeroAndEstadoAndPessoa(
-        Integer numero,
-        Integer estado,
-        IPessoa pessoa,
-        TipoCurso degreeType)
-        throws ExcepcaoPersistencia
-    {
-        try
-        {
-            IStudent aluno = null;
-            String oqlQuery = "select all from " + Student.class.getName();
-            oqlQuery += " where number = $1 and state = $2 and person.numeroDocumentoIdentificacao = $3";
-            oqlQuery += " and degreeType = $4";
-
-            query.create(oqlQuery);
-            query.bind(numero);
-            query.bind(estado);
-            //query.bind(pessoa.getNome());
-            query.bind(pessoa.getNumeroDocumentoIdentificacao());
-            query.bind(degreeType.getTipoCurso());
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if (result.size() != 0)
-                aluno = (IStudent) result.get(0);
-            return aluno;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
-
     //	---------------------------------------------------------------------------------------------------------
 
     // feitos por David \ Ricardo
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
-        try
-        {
-            String oqlQuery = "select all from " + Student.class.getName();
-            super.deleteAll(oqlQuery);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
-            throw ex;
-        }
-    }
 
     public void delete(IStudent student) throws ExcepcaoPersistencia
     {
@@ -214,41 +81,13 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
     public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPessoa person)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            IStudent student = null;
-            String oqlQuery = "select all from " + Student.class.getName();
-            oqlQuery += " where degreeType  = $1";
-            oqlQuery += " and person.username = $2";
-            oqlQuery += " and person.numeroDocumentoIdentificacao = $3";
-            oqlQuery += " and person.tipoDocumentoIdentificacao = $4";
-            query.create(oqlQuery);
-            query.bind(degreeType);
-            query.bind(person.getUsername());
-            query.bind(person.getNumeroDocumentoIdentificacao());
-            query.bind(person.getTipoDocumentoIdentificacao());
+        Criteria crit = new Criteria();
+        crit.addEqualTo("degreeType", degreeType);
+        crit.addEqualTo("person.username", person.getUsername());
+        crit.addEqualTo("person.numeroDocumentoIdentificacao", person.getNumeroDocumentoIdentificacao());
+        crit.addEqualTo("person.tipoDocumentoIdentificacao", person.getTipoDocumentoIdentificacao());
+        return (IStudent) queryObject(Student.class, crit);
 
-            List result = (List) query.execute();
-            try
-            {
-                lockRead(result);
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
-                throw ex;
-            }
-
-            if ((result != null) && (result.size() != 0))
-            {
-                student = (IStudent) result.get(0);
-            }
-            return student;
-
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
     }
 
     public IStudent readStudentByNumberAndDegreeType(Integer number, TipoCurso degreeType)
@@ -282,7 +121,8 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
         if (studentFromDB == null)
         {
             super.lockWrite(studentToWrite);
-            // else If the CurricularYear is mapped to the database, then write any existing changes.
+            // else If the CurricularYear is mapped to the database, then write
+            // any existing changes.
         }
         else if (
             (studentToWrite instanceof Student)
@@ -299,90 +139,37 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
 
     public List readAll() throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select all from " + Student.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        return queryList(Student.class, new Criteria());
     }
 
     public IStudent readByPersonAndDegreeType(IPessoa person, TipoCurso degreeType)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            IStudent student = null;
-            String oqlQuery =
-                "select all from "
-                    + Student.class.getName()
-                    + " where person.idInternal = $1"
-                    + " and degreeType = $2";
-            query.create(oqlQuery);
-            query.bind(person.getIdInternal());
-            query.bind(degreeType);
-
-            List result = (List) query.execute();
-            try
-            {
-                lockRead(result);
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
-                throw ex;
-            }
-
-            if ((result != null) && (result.size() != 0))
-            {
-                student = (IStudent) result.get(0);
-            }
-            return student;
-
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        crit.addEqualTo("person.idInternal", person.getIdInternal());
+        crit.addEqualTo("degreeType", degreeType);
+        return (IStudent) queryObject(Student.class, crit);
 
     }
 
     public Integer generateStudentNumber(TipoCurso degreeType) throws ExcepcaoPersistencia
     {
-        try
-        {
+        
             Integer number = new Integer(0);
-
-            String oqlQuery =
-                "select all from "
-                    + Student.class.getName()
-                    + " where degreeType = $1"
-                    + " order by number desc";
-            query.create(oqlQuery);
-
-            query.bind(degreeType);
-
-            List result = (List) query.execute();
-            try
-            {
-                lockRead(result);
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
-                throw ex;
-            }
+            Criteria crit = new Criteria();
+            crit.addEqualTo("degreeType", degreeType);
+            crit.addOrderBy("number", false);
+           
+            List result = queryList(Student.class,crit);
+           
 
             if ((result != null) && (result.size() != 0))
             {
                 number = ((IStudent) result.get(0)).getNumber();
             }
 
-            // FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS NA SECRETARIA QUE
+            // FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS
+            // NA SECRETARIA QUE
             // POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
 
             if (degreeType.equals(TipoCurso.MESTRADO_OBJ) && (number.intValue() < 5411))
@@ -393,11 +180,8 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
             return new Integer(number.intValue() + 1);
 
         }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
+       
+   
 
     public List readbyPerson(IPessoa person) throws ExcepcaoPersistencia
     {

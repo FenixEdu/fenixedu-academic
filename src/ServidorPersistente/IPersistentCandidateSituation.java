@@ -59,11 +59,7 @@ public interface IPersistentCandidateSituation extends IPersistentObject {
      */
     public void delete(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia;
     
-    /**
-     * REMINDER: When we delete a Candidate Situation we must ensure that one stays active
-     * @throws ExcepcaoPersistencia
-     */
-    public void deleteAll() throws ExcepcaoPersistencia;
+  
 
 	/**
 	 * 

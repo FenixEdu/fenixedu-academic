@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.IGratuityValues;
 import Dominio.PaymentPhase;
@@ -21,39 +20,32 @@ import ServidorPersistente.IPersistentPaymentPhase;
  */
 public class PaymentPhaseOJB extends ObjectFenixOJB implements IPersistentPaymentPhase
 {
-	public void deletePaymentPhasesOfThisGratuity(Integer gratuityValuesID) throws ExcepcaoPersistencia
-	{
-		try
-		{
+    public void deletePaymentPhasesOfThisGratuity(Integer gratuityValuesID) throws ExcepcaoPersistencia
+    {
 
-			String oqlQuery =
-				"select all from "
-					+ PaymentPhase.class.getName()
-					+ " where gratuityValues.idInternal = $1";
+        Criteria crit = new Criteria();
+        crit.addEqualTo("gratuityValues.idInternal", gratuityValuesID);
 
-			query.create(oqlQuery);
-			query.bind(gratuityValuesID);
-				
-			List result = (List) query.execute();
-			ListIterator iterator = result.listIterator();
-			while (iterator.hasNext())
-			{
+        List result = queryList(PaymentPhase.class, crit);
+        if (result != null)
+        {
 
-				delete(iterator.next());
-			}
-		}
-		catch (QueryException ex)
-		{
-			ex.printStackTrace();
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+            ListIterator iterator = result.listIterator();
+            while (iterator.hasNext())
+            {
 
-	public List readByGratuityValues(IGratuityValues gratuityValues) throws ExcepcaoPersistencia{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("gratuityValues.idInternal", gratuityValues.getIdInternal());
-		
-		return (List) queryList(PaymentPhase.class, criteria);
-	}
-	
+                delete(iterator.next());
+            }
+        }
+
+    }
+
+    public List readByGratuityValues(IGratuityValues gratuityValues) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("gratuityValues.idInternal", gratuityValues.getIdInternal());
+
+        return queryList(PaymentPhase.class, criteria);
+    }
+
 }

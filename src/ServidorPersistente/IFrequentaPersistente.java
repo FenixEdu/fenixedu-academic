@@ -22,7 +22,7 @@ public interface IFrequentaPersistente extends IPersistentObject
 		throws ExcepcaoPersistencia;
 	public void lockWrite(IFrequenta frequenta) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
 	public List readByStudentNumberInCurrentExecutionPeriod(Integer number) throws ExcepcaoPersistencia;

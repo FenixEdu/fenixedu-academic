@@ -11,7 +11,7 @@
 
 package ServidorPersistente;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.ICountry;
 
@@ -21,9 +21,9 @@ public interface IPersistentCountry extends IPersistentObject {
 	public ICountry readCountryByNationality(String nationality) throws ExcepcaoPersistencia;
 	public ICountry readCountryByCode(String code) throws ExcepcaoPersistencia;
 	
-    public ArrayList readAllCountrys() throws ExcepcaoPersistencia;
+    public List readAllCountrys() throws ExcepcaoPersistencia;
     public void writeCountry(ICountry country) throws ExcepcaoPersistencia;
     public void deleteCountryByName(String name) throws ExcepcaoPersistencia;
     public void deleteCountry(ICountry country) throws ExcepcaoPersistencia;
-    public void deleteAllCountrys() throws ExcepcaoPersistencia;
+    
 }

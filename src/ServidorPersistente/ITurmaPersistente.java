@@ -23,7 +23,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 	public void lockWrite(ITurma turma)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(ITurma turma) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public List readAll() throws ExcepcaoPersistencia;
 
 	public List readByExecutionPeriodAndCurricularYearAndExecutionDegree(
