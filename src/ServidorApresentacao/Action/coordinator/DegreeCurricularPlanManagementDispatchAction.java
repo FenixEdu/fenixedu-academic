@@ -112,6 +112,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			saveErrors(request, errors);
 		}
 
+
 		//order list by year, next semester, next course
 		ComparatorChain comparatorChain = new ComparatorChain();
 		comparatorChain.addComparator(

@@ -93,6 +93,8 @@ public class LoggedCoordinatorCanEdit implements IServico
 					teacher,
 					executionDegree);
 
+			// if user is coordinator and is the current coordinator and curricular course is not basic
+			// coordinator can edit
 			result =
 				new Boolean(
 					(coordinator != null)

@@ -6,7 +6,6 @@
 
 package DataBeans;
 
-import Dominio.ICountry;
 
 /**
  *

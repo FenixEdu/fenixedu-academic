@@ -7,7 +7,6 @@ package ServidorAplicacao.Servico.coordinator;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.Coordinator;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
-<%@ page import="DataBeans.InfoCurricularCourseScope, java.lang.Boolean, Util.Data, java.util.Calendar" %>
+<%@ page import="java.lang.Boolean, java.util.Calendar" %>
 <logic:present name="infoCurriculum">
 	<logic:notPresent name="executionYear"> 
 		<%-- want to see current curricular course information --%>
@@ -182,18 +182,6 @@
 				</logic:empty>
 			</td>
 		</tr>
-
-		<%--
-		<logic:notEmpty name="infoCurriculum" property="lastModificationDate">
-			<tr>
-				<td><br /><br />
-					<bean:define id="lastModificationDate" name="infoCurriculum" property="lastModificationDate" type="java.util.Date"/>
-					<b><bean:message key="label.coordinator.degreeSite.lastModificationDate"/>
-					<%= Data.format2DayMonthYear(lastModificationDate)%></b>		
-				</td>
-			</tr>
-		</logic:notEmpty>--%>
-
 		<logic:notEmpty name="infoCurriculum" property="infoCurricularCourse.mandatory">
 			<tr>
 				<td><br /><br />
