@@ -10,136 +10,141 @@ package DataBeans;
  *
  * @author  tfc130
  */
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import Util.DiaSemana;
 import Util.TipoAula;
 
 public class InfoLesson {
-  protected DiaSemana _diaSemana;
-  protected Calendar _inicio;
-  protected Calendar _fim;
-  protected TipoAula _tipo;
-  protected InfoRoom _infoSala;
-  protected InfoExecutionCourse _infoDisciplinaExecucao;
-    
-  public InfoLesson() { }
-  /**
-   * @param diaSemana
-   * @param inicio
-   * @param fim
-   * @param tipo
-   * @param infoSala
-   * @param infoDisciplinaExecucao
-   */  
-  public InfoLesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo,
-                  InfoRoom infoSala, InfoExecutionCourse infoDisciplinaExecucao) {
-    setDiaSemana(diaSemana);
-    setInicio(inicio);
-    setFim(fim);
-    setTipo(tipo);
-    setInfoSala(infoSala);
-    setInfoDisciplinaExecucao(infoDisciplinaExecucao);
-  }
+	protected DiaSemana _diaSemana;
+	protected Calendar _fim;
+	protected InfoExecutionCourse _infoDisciplinaExecucao;
+	protected InfoRoom _infoSala;
+	protected Calendar _inicio;
+	protected TipoAula _tipo;
 
+	private List infoShiftList = new ArrayList();
 
-  public DiaSemana getDiaSemana() {
-    return _diaSemana;
-  }
-    
-  public void setDiaSemana(DiaSemana diaSemana) {
-    _diaSemana = diaSemana;
-  }
-  
-  public Calendar getInicio() {
-    return _inicio;
-  }
-    
-  public void setInicio(Calendar inicio) {
-    _inicio = inicio;
-  }
+	public InfoLesson() {
+	}
+	/**
+	 * @param diaSemana
+	 * @param inicio
+	 * @param fim
+	 * @param tipo
+	 * @param infoSala
+	 * @param infoDisciplinaExecucao
+	 */
+	public InfoLesson(
+		DiaSemana diaSemana,
+		Calendar inicio,
+		Calendar fim,
+		TipoAula tipo,
+		InfoRoom infoSala,
+		InfoExecutionCourse infoDisciplinaExecucao) {
+		setDiaSemana(diaSemana);
+		setInicio(inicio);
+		setFim(fim);
+		setTipo(tipo);
+		setInfoSala(infoSala);
+		setInfoDisciplinaExecucao(infoDisciplinaExecucao);
+	}
 
-  public Calendar getFim() {
-    return _fim;
-  }
-    
-  public void setFim(Calendar fim) {
-    _fim = fim;
-  }
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof InfoLesson) {
+			InfoLesson infoAula = (InfoLesson) obj;
+			resultado =
+				(getDiaSemana().equals(infoAula.getDiaSemana()))
+					&& (getInicio().get(Calendar.HOUR_OF_DAY)
+						== infoAula.getInicio().get(Calendar.HOUR_OF_DAY))
+					&& (getInicio().get(Calendar.MINUTE)
+						== infoAula.getInicio().get(Calendar.MINUTE))
+					&& (getFim().get(Calendar.HOUR_OF_DAY)
+						== infoAula.getFim().get(Calendar.HOUR_OF_DAY))
+					&& (getFim().get(Calendar.MINUTE)
+						== infoAula.getFim().get(Calendar.MINUTE))
+					&& (getInfoSala().equals(infoAula.getInfoSala()));
+		}
 
-  public TipoAula getTipo() {
-    return _tipo;
-  }
-    
-  public void setTipo(TipoAula tipo) {
-    _tipo = tipo;
-  }
+		return resultado;
+	}
 
- 
-  public InfoRoom getInfoSala() {
-    return _infoSala;
-  }
-    
-  public void setInfoSala(InfoRoom infoSala) {
-    _infoSala = infoSala;
-  }
-  
-  public InfoExecutionCourse getInfoDisciplinaExecucao() {
-    return _infoDisciplinaExecucao;
-  }
-    
-  public void setInfoDisciplinaExecucao(InfoExecutionCourse infoDisciplinaExecucao) {
-    _infoDisciplinaExecucao = infoDisciplinaExecucao;
-  }
-  
-  public boolean equals(Object obj) {
-    boolean resultado = false;
-    if (obj instanceof InfoLesson) {
-      InfoLesson infoAula = (InfoLesson)obj;
-      resultado = (getDiaSemana().equals(infoAula.getDiaSemana())) &&
-                  (getInicio().get(Calendar.HOUR_OF_DAY) == infoAula.getInicio().get(Calendar.HOUR_OF_DAY)) &&
-                  (getInicio().get(Calendar.MINUTE) == infoAula.getInicio().get(Calendar.MINUTE)) &&
-                
-                  (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim().get(Calendar.HOUR_OF_DAY)) &&
-                  (getFim().get(Calendar.MINUTE) == infoAula.getFim().get(Calendar.MINUTE)) &&
-                 
-                  (getInfoSala().equals(infoAula.getInfoSala()));
-    }
+	public DiaSemana getDiaSemana() {
+		return _diaSemana;
+	}
 
-    return resultado;
-  }
-  
-  public String toString() {
-    String result = "[INFOAULA";
-    result += ", diaSemana=" + _diaSemana;
-    result += ", inicio=" + _inicio;
-    result += ", fim=" + _fim;
-    result += ", tipo=" + _tipo;
-    result += ", sala=" + _infoSala;
-    result += ", disciplinaExecucao=" + _infoDisciplinaExecucao;
-    result += "]";
-    return result;
-  }
-  
-  // Para ser retirado após ter a independencia da interface.
-/*  public  String getInicioHourOfDay(){
-    int hora = _inicio.get(Calendar.HOUR_OF_DAY);
-    String ret = ""+hora;
-    if (hora < 10)
-  	  ret ="0" + ret;
-    return ret;
-  }
+	public Calendar getFim() {
+		return _fim;
+	}
 
-  public  int getInicioMinute(){
-    return _inicio.get(Calendar.MINUTE);
-  }
-  
-  public  int getFimHourOfDay(){
-    return _inicio.get(Calendar.HOUR_OF_DAY);
-  }
+	public InfoExecutionCourse getInfoDisciplinaExecucao() {
+		return _infoDisciplinaExecucao;
+	}
 
-  public  int getFimMinute(){
-    return _inicio.get(Calendar.MINUTE);
-  }
-*/
+	public InfoRoom getInfoSala() {
+		return _infoSala;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getInfoShiftList() {
+		return infoShiftList;
+	}
+
+	public Calendar getInicio() {
+		return _inicio;
+	}
+
+	public TipoAula getTipo() {
+		return _tipo;
+	}
+
+	public void setDiaSemana(DiaSemana diaSemana) {
+		_diaSemana = diaSemana;
+	}
+
+	public void setFim(Calendar fim) {
+		_fim = fim;
+	}
+
+	public void setInfoDisciplinaExecucao(InfoExecutionCourse infoDisciplinaExecucao) {
+		_infoDisciplinaExecucao = infoDisciplinaExecucao;
+	}
+
+	public void setInfoSala(InfoRoom infoSala) {
+		_infoSala = infoSala;
+	}
+
+	/**
+	 * Sets the infoShiftList.
+	 * @param infoShiftList The infoShiftList to set
+	 */
+	public void setInfoShiftList(List infoShiftList) {
+		this.infoShiftList = infoShiftList;
+	}
+
+	public void setInicio(Calendar inicio) {
+		_inicio = inicio;
+	}
+
+	public void setTipo(TipoAula tipo) {
+		_tipo = tipo;
+	}
+
+	public String toString() {
+		String result = "[INFOAULA";
+		result += ", diaSemana=" + _diaSemana;
+		result += ", inicio=" + _inicio;
+		result += ", fim=" + _fim;
+		result += ", tipo=" + _tipo;
+		result += ", sala=" + _infoSala;
+		result += ", disciplinaExecucao=" + _infoDisciplinaExecucao;
+		result += "]";
+		return result;
+	}
+
 }
