@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS EXECUTION_COURSE;
 CREATE TABLE EXECUTION_COURSE (
   ID_INTERNAL int(11) NOT NULL auto_increment,
   NAME varchar(100) default NULL,
-  CODE varchar(50) NOT NULL default '',
+  CODE varchar(100) NOT NULL default '',
   THEORETICAL_HOURS double default NULL,
   PRATICAL_HOURS double default NULL,
   THEO_PRAT_HOURS double default NULL,

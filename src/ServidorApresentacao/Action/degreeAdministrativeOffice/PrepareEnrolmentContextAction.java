@@ -86,6 +86,7 @@ public class PrepareEnrolmentContextAction extends Action {
 		session.setAttribute(SessionConstants.ENROLMENT_SEMESTER_KEY, semester);
 		session.setAttribute(SessionConstants.ENROLMENT_YEAR_KEY, year);
 		session.setAttribute(SessionConstants.ENROLMENT_DEGREE_NAME_KEY, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+		session.setAttribute(SessionConstants.ENROLMENT_CAN_BE_REMOVED_KEY, new Integer(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled().size()));
 
 		return mapping.findForward(forwards[0]);
 	}

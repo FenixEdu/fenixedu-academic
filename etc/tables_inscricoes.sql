@@ -94,7 +94,7 @@ create table CURRICULAR_COURSE (
    THEO_PRAT_HOURS double,
    LAB_HOURS double,
    NAME varchar(100) not null,
-   CODE varchar(50) not null,
+   CODE varchar(100) not null,
    TYPE int(11),
    EXECUTION_SCOPE int(11),
    MANDATORY bit,

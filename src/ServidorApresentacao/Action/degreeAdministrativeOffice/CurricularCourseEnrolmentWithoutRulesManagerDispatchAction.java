@@ -47,6 +47,8 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 		this.initializeForm(infoEnrolmentContext, enrolmentForm);
 
+		session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+
 		return mapping.findForward(forwards[0]);
 	}
 
@@ -100,6 +102,8 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+		// This next line is here, and not in method "processEnrolment", because I only want to add the
+		// curricular courses scopes in witch the student is already enrolled or temporarily enrolled, at this point.
 		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
 
 		Integer semester = (Integer) session.getAttribute(SessionConstants.ENROLMENT_SEMESTER_KEY);
@@ -115,6 +119,7 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 			session.removeAttribute(SessionConstants.ENROLMENT_YEAR_KEY);
 			session.removeAttribute(SessionConstants.ENROLMENT_DEGREE_NAME_KEY);
 			session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+			session.removeAttribute(SessionConstants.ENROLMENT_CAN_BE_REMOVED_KEY);
 			return mapping.findForward(forwards[2]);
 		} else {
 			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
@@ -170,6 +175,7 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
 
 		actualEnrolment.clear();
+//		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
 
 		List curricularCourseScopesToBeEnrolled = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
 		if (curricularCourses != null) {
@@ -222,8 +228,9 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		Integer semester = (Integer) session.getAttribute(SessionConstants.ENROLMENT_SEMESTER_KEY);
 		Integer year = (Integer) session.getAttribute(SessionConstants.ENROLMENT_YEAR_KEY);
 		String degreeName = (String) session.getAttribute(SessionConstants.ENROLMENT_DEGREE_NAME_KEY);
+		Integer size = (Integer) session.getAttribute(SessionConstants.ENROLMENT_CAN_BE_REMOVED_KEY);
 
-		if( (infoEnrolmentContext == null) || (studentNumber == null) || (semester == null) || (year == null) || (degreeName == null) ) {
+		if( (infoEnrolmentContext == null) || (studentNumber == null) || (semester == null) || (year == null) || (degreeName == null) || (size == null) ) {
 			result = false;
 		}
 

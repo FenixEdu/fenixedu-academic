@@ -8,9 +8,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.Enrolment;
 import Dominio.ICurricularCourseScope;
+import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
@@ -22,7 +24,6 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -73,7 +74,6 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 		ISuportePersistente sp = null;
 		IPersistentEnrolment persistentEnrolment = null;
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		IPersistentExecutionPeriod persistentExecutionPeriod = null;
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 
@@ -81,15 +81,18 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			sp = SuportePersistenteOJB.getInstance();
 			persistentEnrolment = sp.getIPersistentEnrolment();
 			persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
-			persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 			persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
 
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
 
+			ICurso degreeCriteria = new Curso();
+			degreeCriteria.setNome(enrolmentContext.getChosenOptionalDegree().getNome());
+			degreeCriteria.setSigla(enrolmentContext.getChosenOptionalDegree().getSigla());
+			degreeCriteria.setTipoCurso(enrolmentContext.getChosenOptionalDegree().getTipoCurso());
 			IDegreeCurricularPlan degreeCurricularPlanCriteria = new DegreeCurricularPlan();
-			degreeCurricularPlanCriteria.setDegree(enrolmentContext.getChosenOptionalDegree());
+			degreeCurricularPlanCriteria.setDegree(degreeCriteria);
 			final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
 
 			// list of all enrolments that may have been deleted.
@@ -98,7 +101,7 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			List enrolmentsRead = new ArrayList();
 			enrolmentsRead.addAll(enrolmentsWithStateTemporarilyEnroled);
 			enrolmentsRead.addAll(enrolmentsWithStateEnroled);
-			
+
 			final Integer semester2 = semester;
 			final Integer year2 = year;
 			List validEnrolmentsRead = (List) CollectionUtils.select(enrolmentsRead, new Predicate() {
@@ -125,10 +128,9 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			IEnrolment enrolmentToWrite = null;
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-				ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(curricularCourseScope);
 				if(!curricularCoursesScopesFromEnrolmentsRead.contains(curricularCourseScope)) {
 					enrolmentToWrite = new Enrolment();
-					enrolmentToWrite.setCurricularCourseScope(curricularCourseScope2);
+					enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
 					enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
 					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);

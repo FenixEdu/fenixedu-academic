@@ -9,9 +9,10 @@
 <bean:define id="degreeName" name="<%= SessionConstants.ENROLMENT_DEGREE_NAME_KEY %>" scope="session"/>
 <bean:define id="semester" name="<%= SessionConstants.ENROLMENT_SEMESTER_KEY %>" scope="session"/>
 <bean:define id="year" name="<%= SessionConstants.ENROLMENT_YEAR_KEY %>" scope="session"/>
+<bean:define id="sizeAutomaticalyEnroled" name="<%= SessionConstants.ENROLMENT_CAN_BE_REMOVED_KEY %>" scope="session"/>
+
 <bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled"/>
 <bean:size id="sizeAprovedAndEnroled" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent"/>
-<bean:size id="sizeAutomaticalyEnroled" name="infoEnrolmentContext" property="infoCurricularCoursesScopesAutomaticalyEnroled"/>
 
 <logic:equal name="sizeToBeEnroled" value="0">
 	<b><bean:message key="message.no.curricular.course.for.enrolment" arg0="<%= studentNumber.toString() %>" arg1="<%= degreeName.toString() %>" arg2="<%= semester.toString() %>" arg3="<%= year.toString() %>"/></b>
@@ -60,13 +61,13 @@
 		</logic:iterate>
 	</table>
 	<logic:equal name="sizeToBeEnroled" value="0">
-		<%--<logic:notEqual name="sizeAutomaticalyEnroled" value="0">--%>
+		<logic:notEqual name="sizeAutomaticalyEnroled" value="0">
 			<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
 				<html:hidden property="method" value="verifyEnrolment"/>
 				<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment"/></html:submit>
 				<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 			</html:form>
-		<%--</logic:notEqual>--%>
+		</logic:notEqual>
 	</logic:equal>
 </logic:notEqual>
 <logic:notEqual name="sizeToBeEnroled" value="0">

@@ -31,6 +31,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEnrolmentPeriod;
@@ -569,8 +570,7 @@ public abstract class EnrolmentContextManager {
 			}
 		});
 
-		// TODO DAVID-RICARDO: Ainda falta filtrar esta lista para obter apenas as cadeiras que têm execução no periodo de execução em causa.
-		List possibleCurricularCoursesScopesToChoose = EnrolmentContextManager.subtract(curricularCoursesScopesFromDegreeCurricularPlan, invalidStudentCurricularCoursesScopes);
+		List possibleCurricularCoursesScopesToChoose = EnrolmentContextManager.filterByExecutionCourses(EnrolmentContextManager.subtract(curricularCoursesScopesFromDegreeCurricularPlan, invalidStudentCurricularCoursesScopes), executionPeriod);
 		
 		enrolmentContext.setAcumulatedEnrolments(null);
 		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(new ArrayList());
@@ -646,4 +646,34 @@ public abstract class EnrolmentContextManager {
 			}
 		}
 	}
+
+	private static List filterByExecutionCourses(List possibleCurricularCoursesScopesToChoose, IExecutionPeriod executionPeriod) {
+
+		List curricularCoursesToRemove = new ArrayList();
+		final IExecutionPeriod executionPeriod2 = executionPeriod;
+		
+		Iterator iterator = possibleCurricularCoursesScopesToChoose.iterator();
+		while (iterator.hasNext()) {
+			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+			List executionCourseList = curricularCourseScope.getCurricularCourse().getAssociatedExecutionCourses(); 
+				
+			List executionCourseInExecutionPeriod = (List) CollectionUtils.select(executionCourseList, new Predicate() {
+				public boolean evaluate(Object obj) {
+					IDisciplinaExecucao disciplinaExecucao = (IDisciplinaExecucao) obj;
+					return disciplinaExecucao.getExecutionPeriod().equals(executionPeriod2);
+				}
+			});
+				
+			if(executionCourseInExecutionPeriod.isEmpty()){
+				curricularCoursesToRemove.add(curricularCourseScope);
+			} else {
+				executionCourseInExecutionPeriod.clear();
+			}
+		}
+
+		possibleCurricularCoursesScopesToChoose.removeAll(curricularCoursesToRemove);
+		
+		return possibleCurricularCoursesScopesToChoose;
+	}
+
 }

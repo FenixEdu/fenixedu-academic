@@ -24,6 +24,7 @@ public abstract class SessionConstants {
 	public static final String ENROLMENT_DEGREE_NAME_KEY = "degreeName";
 	public static final String ENROLMENT_ACTOR_KEY = "actor";
 	public static final String ENROLMENT_TO_REMOVE_LIST_KEY = "erolmentsToRemoveList";
+	public static final String ENROLMENT_CAN_BE_REMOVED_KEY = "canRemoveEnrolments";
 
 	//
 	// Constants for Student Enrolment...
