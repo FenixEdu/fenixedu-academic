@@ -284,7 +284,7 @@
 	</action>
 	
 	<action 
-		path="/teacherLogin"
+		path="/index"
         type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
 		>    
      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>
