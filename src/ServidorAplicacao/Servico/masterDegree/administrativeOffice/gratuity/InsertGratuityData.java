@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.util.MessageResources;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuityValues;
@@ -400,6 +399,9 @@ public class InsertGratuityData implements IService
 			//							}
 			//							gratuitySituation.setRemainingValue(new Double(totalToPay));
 			//						}
+			//					} else {
+			//						gratuitySituation.setPayedValue(new Double(0));
+			//						gratuitySituation.setRemainingValue(gratuityValue);
 			//					}
 			//				}
 			//				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
@@ -478,6 +480,9 @@ public class InsertGratuityData implements IService
 								}
 								gratuitySituation.setRemainingValue(new Double(totalToPay));
 							}
+						} else {
+							gratuitySituation.setPayedValue(new Double(0));
+							gratuitySituation.setRemainingValue(gratuityValue);
 						}
 					}
 					persistentGratuitySituation.simpleLockWrite(gratuitySituation);
