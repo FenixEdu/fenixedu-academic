@@ -12,7 +12,11 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 </head>
 <body>
+<logic:present name="infoSchoolClass">
+<bean:define id="infoSchoolClass" name="infoSchoolClass"/>
+<div align="center"><h2>Turma <bean:write name="infoSchoolClass" property="nome"/></h2></div>
+</logic:present>
 <bean:define id="infoLessons" name="infoLessons"/>
-<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/> 
+<div align="center"><app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div> 
 </body>
 </html:html>
