@@ -1228,6 +1228,10 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 		optionalAndTFCCurricularCourses.addAll(result);
 		
+		selectDesiredCurricularCourses(studentEnrolmentContext.getStudentApprovedEnrollments(), optionalAndTFCCurricularCourses);
+		selectDesiredCurricularCourses(studentEnrolmentContext.getStudentApprovedEnrollments(), optionalAndTFCCurricularCourses);
+		selectDesiredCurricularCourses(optionalAndTFCCurricularCourses, studentEnrolmentContext.getExecutionPeriod().getSemester());
+
 		return optionalAndTFCCurricularCourses;
 	}
 

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Branch;
 import Dominio.IBranch;
 import Dominio.ICurricularCourseGroup;
 import Dominio.IEnrolment;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
@@ -20,10 +24,12 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
+import Util.BranchType;
 import Util.EnrolmentState;
 
 /**
@@ -105,15 +111,64 @@ public class WriteStudentAreas implements IService
 	private boolean areNewAreasCompatible(
 		IBranch specializationArea,
 		IBranch secundaryArea,
-		IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia
+		final IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+		IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
 
+		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+		
 		List enrollmentsWithAprovedState =
 			enrolmentDAO.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan, EnrolmentState.APROVED);
+		
+		List enrollmentsWithEnrolledState =
+		enrolmentDAO.readAllByStudentCurricularPlanAndEnrolmentStateAndExecutionPeriod(
+				studentCurricularPlan,
+				EnrolmentState.ENROLED,
+				executionPeriod);
 
+		List studentApprovedEnrollments = (List) CollectionUtils.select(enrollmentsWithAprovedState, new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrolment = (IEnrolment) obj;
+				return enrolment.getCurricularCourse().getDegreeCurricularPlan().equals(
+					studentCurricularPlan.getDegreeCurricularPlan());
+			}
+		});
+		
+		List studentCurrentSemesterEnrollments = (List) CollectionUtils.select(enrollmentsWithEnrolledState, new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrolment = (IEnrolment) obj;
+				return enrolment.getCurricularCourse().getDegreeCurricularPlan().equals(
+					studentCurricularPlan.getDegreeCurricularPlan());
+			}
+		});
+		
+		final List baseAreasCurricularCourses =
+			getBaseAreasCurricularCourses(
+				studentApprovedEnrollments,
+				studentCurrentSemesterEnrollments,
+				executionPeriod,
+				studentCurricularPlan);
+		
+		List studentEnrollmentsTemp = new ArrayList();
+		studentEnrollmentsTemp.addAll(studentApprovedEnrollments);
+		studentEnrollmentsTemp.addAll(studentCurrentSemesterEnrollments);
+		
+		List studentEnrollments = (List) CollectionUtils.select(studentEnrollmentsTemp, new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrolment = (IEnrolment) obj;
+				return !baseAreasCurricularCourses.contains(enrolment.getCurricularCourse());
+			}
+		});
+		
 		List curricularCoursesFromNewSpecializationArea = new ArrayList();
 		List curricularCoursesFromNewSecundaryArea = new ArrayList();
 		
@@ -147,8 +202,7 @@ public class WriteStudentAreas implements IService
 		newCurricularCourses.addAll(curricularCoursesFromNewSpecializationArea);
 		newCurricularCourses.addAll(curricularCoursesFromNewSecundaryArea);
 		
-		
-		Iterator iterator = enrollmentsWithAprovedState.iterator();
+		Iterator iterator = studentEnrollments.iterator();
 		while (iterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
@@ -161,4 +215,97 @@ public class WriteStudentAreas implements IService
 		return true;
 	}
 
+	/**
+	 * @param enrollmentsWithAprovedState
+	 * @param enrollmentsWithEnrolledState
+	 * @return BaseAreasCurricularCourses
+	 * @throws ExcepcaoPersistencia
+	 */
+	private List getBaseAreasCurricularCourses(
+			List enrollmentsWithAprovedState,
+			List enrollmentsWithEnrolledState,
+			IExecutionPeriod executionPeriod,
+			IStudentCurricularPlan studentCurricularPlan)
+	throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+		IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
+		
+		List baseAreasCurricularCourses = new ArrayList();
+
+		List baseBranches =
+		branchDAO.readAllByDegreeCurricularPlanAndBranchType(
+				studentCurricularPlan.getDegreeCurricularPlan(),
+				BranchType.COMMON_BRANCH);
+
+		Iterator iterator = baseBranches.iterator();
+		while (iterator.hasNext())
+		{
+			IBranch baseArea = (IBranch) iterator.next();
+			List groups = curricularCourseGroupDAO.readByBranchAndAreaType(baseArea, AreaType.BASE_OBJ);
+			Iterator iterator2 = groups.iterator();
+			while (iterator2.hasNext())
+			{
+				ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
+				baseAreasCurricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
+			}
+		}
+
+//		selectDesiredCurricularCourses(enrollmentsWithAprovedState, baseAreasCurricularCourses);
+//		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, baseAreasCurricularCourses);
+//		selectDesiredCurricularCourses(baseAreasCurricularCourses, executionPeriod.getSemester());
+
+		return baseAreasCurricularCourses;
+	}
+
+//	/**
+//	 * @param enrollmentsInCurricularCourseToRemove
+//	 * @param curricularCoursesToRemoveFrom
+//	 */
+//	private void selectDesiredCurricularCourses(List enrollmentsInCurricularCourseToRemove, List curricularCoursesToRemoveFrom)
+//	{
+//		List curricularCoursesToRemove = new ArrayList();
+//		Iterator iterator = enrollmentsInCurricularCourseToRemove.iterator();
+//		while(iterator.hasNext())
+//		{
+//			IEnrolment enrolment = (IEnrolment) iterator.next();
+//			if (curricularCoursesToRemoveFrom.contains(enrolment.getCurricularCourse()))
+//			{
+//				curricularCoursesToRemove.add(enrolment.getCurricularCourse());
+//			}
+//		}
+//		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
+//	}
+//
+//	/**
+//	 * @param curricularCoursesToRemoveFrom
+//	 * @param semester
+//	 */
+//	private void selectDesiredCurricularCourses(List curricularCoursesToRemoveFrom, Integer semester)
+//	{
+//		List curricularCoursesToRemove = new ArrayList();
+//		Iterator iterator = curricularCoursesToRemoveFrom.iterator();
+//		while(iterator.hasNext())
+//		{
+//			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+//			List scopes = curricularCourse.getScopes();
+//			boolean courseIsToMantain = false;
+//			Iterator iteratorScopes = scopes.iterator();
+//			while(iteratorScopes.hasNext())
+//			{
+//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
+//				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
+//				{
+//					courseIsToMantain = true;
+//				}
+//			}
+//			if (!courseIsToMantain)
+//			{
+//				curricularCoursesToRemove.add(curricularCourse);
+//			}
+//		}
+//		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
+//	}
+	
 }

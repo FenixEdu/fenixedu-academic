@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<!-- NOTA: Nï¿½o foram incluidas tags do beans tipo <bean:message key="title.listClasses"/> -->
+<!-- NOTA: Não foram incluidas tags do beans tipo <bean:message key="title.listClasses"/> -->
 <%--<p><strong>&raquo; <bean:message key="group.enrolment"/></strong></p>--%>
 <ul>
 	<%-- <li><html:link page="/curricularCourseEnrolmentManager.do?method=start"><bean:message key="link.curricular.course.enrolment"/></html:link></li>--%>
