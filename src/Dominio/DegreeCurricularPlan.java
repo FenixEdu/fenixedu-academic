@@ -14,6 +14,7 @@ import Dominio.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmen
 import Dominio.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import Dominio.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCurricularCourseGroup;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -408,6 +409,24 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         return false;
     }
 
+    public List getAllOptionalCurricularCourseGroups() {
+
+        List groups = new ArrayList();
+
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
+                    .getIPersistentCurricularCourseGroup();
+
+            groups = curricularCourseGroupDAO.readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(this);
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new RuntimeException(e);
+        }
+
+        return groups;
+    }
+    
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
     // -------------------------------------------------------------

@@ -18,6 +18,7 @@ public class CurricularCourse2Enroll implements Serializable {
     private ICurricularCourse curricularCourse;
     private CurricularCourseEnrollmentType enrollmentType;
     private Integer accumulatedWeight;
+    private Boolean optionalCurricularCourse;
     
     
     /**
@@ -43,6 +44,14 @@ public class CurricularCourse2Enroll implements Serializable {
         return curricularCourse;
     }
     
+    public Boolean getOptionalCurricularCourse() {
+        return optionalCurricularCourse;
+    }
+    
+    public void setOptionalCurricularCourse(Boolean optionalCurricularCourse) {
+        this.optionalCurricularCourse = optionalCurricularCourse;
+    }
+
     /**
      * @param curricularCourse The curricularCourse to set.
      */
@@ -86,4 +95,8 @@ public class CurricularCourse2Enroll implements Serializable {
         	getAccumulatedWeight().toString();
     }
 
+    public boolean isOptionalCurricularCourse() {
+        return optionalCurricularCourse.booleanValue();
+    }
+    
 }

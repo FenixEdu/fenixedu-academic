@@ -58,8 +58,7 @@ public interface IDegreeCurricularPlan extends IDomainObject
     public List getSpecializationAreas();
     public List getSecundaryAreas();
     public List getTFCs();
-  
-   
+    public List getAllOptionalCurricularCourseGroups();
     public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester,IBranch area);
     public List getSpecialListOfCurricularCourses();
 	

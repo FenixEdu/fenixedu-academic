@@ -13,7 +13,9 @@ import Dominio.CurricularCourseGroup;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IScientificArea;
+import Dominio.OptionalCurricularCourseGroup;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
 import Util.AreaType;
@@ -69,6 +71,19 @@ public class CurricularCourseGroupOJB extends ObjectFenixOJB implements IPersist
     	criteria.addEqualTo("scientificAreas.idInternal", scientificArea.getIdInternal());
     	criteria.addEqualTo("areaType", areaType);
     	return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
+    }
+
+    public List readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(
+            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("branch.degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
+        return queryList(OptionalCurricularCourseGroup.class, criteria);
+    }
+
+    public List readOptionalCurricularCourseGroupsFromArea(IBranch area) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("branch.idInternal", area.getIdInternal());
+        return queryList(OptionalCurricularCourseGroup.class, criteria);
     }
 
 }
