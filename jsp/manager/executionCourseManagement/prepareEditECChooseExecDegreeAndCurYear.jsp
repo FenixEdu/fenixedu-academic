@@ -6,10 +6,12 @@
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <bean:write name="executionPeriodName"/>
-<html:form action="/editExecutionCourse">
+<html:form action="/editExecutionCourseChooseExDegree">
 	<input type="hidden" name="method" value="prepareEditExecutionCourse"/>
 	<html:hidden property="executionPeriodName" value="<%= pageContext.findAttribute("executionPeriodName").toString() %>" />
 	<html:hidden property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>" />
+	<html:hidden property="executionPeriod"/>
+	<html:hidden property="page" value="2" />
 	
 	<p class="infoop">
 		<bean:message key="message.manager.executionCourseManagement.chooseLinked"/>

@@ -32,7 +32,7 @@
 					<var-value>itemEndDay</var-value>
 				</var>
 				<var>
-					<var-name>field-test[0]</var-name>
+					<var-name>fieldTest[0]</var-name>
 					<var-value>NOTNULL</var-value>
 				</var>				
 		   	</field>
@@ -58,7 +58,7 @@
 					<var-value>publish</var-value>
 				</var>
 				<var>
-					<var-name>field-test[0]</var-name>
+					<var-name>fieldTest[0]</var-name>
 					<var-value>NOTNULL</var-value>
 				</var>
 			   	
@@ -89,7 +89,7 @@
 					<var-value>publish</var-value>
 				</var>
 				<var>
-					<var-name>field-test[0]</var-name>
+					<var-name>fieldTest[0]</var-name>
 					<var-value>NOTNULL</var-value>
 				</var>				
 		   	</field>

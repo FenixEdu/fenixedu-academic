@@ -128,7 +128,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 		buildCurricularYearLabelValueBean(request);
 
 		Integer executionPeriodId =
-			separateLabel(form, request, "executionPeriodId", "executionPeriodName");
+			separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
 		Object args[] = { executionPeriodId };
 		List executionDegreeList = null;
@@ -156,11 +156,12 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 		return mapping.findForward("prepareEditECChooseExecDegreeAndCurYear");
 	}
 
-	private Integer separateLabel(ActionForm form, HttpServletRequest request, String id, String name)
+	private Integer separateLabel(ActionForm form, HttpServletRequest request, String property, String id, String name)
 	{
 		DynaActionForm executionCourseForm = (DynaValidatorForm) form;
 		// the value returned to action is a string name#idInternal
-		String object = (String) executionCourseForm.get(id);
+		String object = (String) executionCourseForm.get(property);
+		System.out.println(object);
 		Integer objectId = Integer.valueOf(StringUtils.substringAfter(object, "#"));
 		object = object.substring(0, object.indexOf("#"));
 		request.setAttribute(name, object);
@@ -246,7 +247,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 		Integer curYear = null;
 		if (getNotLinked == null || getNotLinked.equals(Boolean.FALSE))
 		{
-			executionDegreeId = separateLabel(form, request, "executionDegreeId", "executionDegreeName");
+			executionDegreeId = separateLabel(form, request, "executionDegreeId", "executionDegreeId", "executionDegreeName");
 			curYear = Integer.valueOf((String) executionCourseForm.get("curYear"));
 			request.setAttribute("executionDegreeId", executionDegreeId);
 			request.setAttribute("curYear", curYear);
@@ -302,7 +303,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 		String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
 		String executionPeriodName = getAndSetStringToRequest(request, "executionPeriodName");
 		String executionDegreeName = getAndSetStringToRequest(request, "executionDegreeName");
-		
+
 		Object args[] = { Integer.valueOf(executionCourseId)};
 
 		InfoExecutionCourse infoExecutionCourse;
@@ -361,14 +362,14 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 			String executionDegreeId = getAndSetStringToRequest(request, "executionDegreeId");
 			String curYear = getAndSetStringToRequest(request, "curYear");
 			String getNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-			
+
 			DynaActionForm executionCourseForm = (DynaValidatorForm) form;
 
 			executionCourseForm.set("curYear", curYear);
-			executionCourseForm.set("executionDegreeId", executionDegreeName+"#"+executionDegreeId);
+			executionCourseForm.set("executionDegreeId", executionDegreeName + "#" + executionDegreeId);
 			executionCourseForm.set("executionPeriodId", executionPeriodId);
 			executionCourseForm.set("executionCoursesNotLinked", Boolean.valueOf(getNotLinked));
-			
+
 			ActionErrors actionErrors = new ActionErrors();
 			Iterator codesIter = errorCodes.iterator();
 			ActionError error = null;

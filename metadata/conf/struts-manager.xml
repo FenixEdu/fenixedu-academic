@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE struts-config PUBLIC
+
 	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
@@ -147,6 +148,7 @@
 				<form-property name="labHours" type="java.lang.String" />
 				<form-property name="semester" type="java.lang.String" />
 				<form-property name="comment" type="java.lang.String" />
+				<form-property name="executionPeriod" type="java.lang.String" />
 				<form-property name="executionPeriodId" type="java.lang.String" />
 				<form-property name="executionCourseId" type="java.lang.String" />
 				<form-property name="executionDegreeId" type="java.lang.String" />
@@ -1070,18 +1072,33 @@
 		<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
 	</action>
 
+	<action path="/editExecutionCourseChooseExPeriod"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+			parameter="method"
+			name="executionCourseForm"
+			scope="request"
+			input="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod&amp;page=0">
+
+		<forward name="prepareEditECChooseExecutionPeriod" path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod"/>
+		<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
+	</action>
+	<action path="/editExecutionCourseChooseExDegree"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+			parameter="method"
+			name="executionCourseForm"
+			scope="request"
+			input="/editExecutionCourseChooseExDegree.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
+
+		<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
+		<forward name="prepareEditExecutionCourse" path="df.executionCourseManagement.prepareEditExecutionCourse"/>
+		<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
+	</action>
 	<action path="/editExecutionCourse"
 			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
 			parameter="method"
 			name="executionCourseForm"
 			scope="request"
-			input="/editExecutionCourse.do?method=prepareEditECChooseExecutionPeriod&amp;page=0">
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
 
 		<forward name="prepareEditECChooseExecutionPeriod" path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod"/>
 		<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>

@@ -6,16 +6,17 @@
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
-	<html:form action="/editExecutionCourse">  
+	<html:form action="/editExecutionCourseChooseExPeriod">  
 		<html:hidden property="method" value="prepareEditECChooseExecDegreeAndCurYear"/>
+		<html:hidden property="page" value="1" />
 		<table>
 			<tr>
 				<td>
 					<bean:message key="label.manager.executionCourseManagement.executionPeriod"/>
 				</td>
 				<td>
-					<html:select property="executionPeriodId">
-						<html:option value="-1" key="label.manager.executionCourseManagement.select">
+					<html:select property="executionPeriod">
+						<html:option value="" key="label.manager.executionCourseManagement.select">
 							<bean:message key="label.manager.executionCourseManagement.select"/>
 						</html:option>
 						<html:optionsCollection name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"/>
