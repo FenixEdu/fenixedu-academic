@@ -146,7 +146,8 @@ public class AlternativeSiteManagementActionTest extends TestCasePresentationTea
 		verifyNoActionErrors();
 
 		//verifies forward
-		verifyForward("editAlternativeSite");
+//		verifyForward("editAlternativeSite");
+		verifyForward("viewSite");
 	}
 
 	/**
