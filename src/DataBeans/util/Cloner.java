@@ -25,6 +25,7 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
+import DataBeans.InfoEvaluation;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
@@ -75,6 +76,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Equivalence;
+import Dominio.Evaluation;
 import Dominio.EvaluationMethod;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
@@ -105,6 +107,7 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
+import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
@@ -1687,26 +1690,71 @@ public abstract class Cloner {
 	}
 
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
-	public static IEvaluationMethod copyInfoEvaluation2IEvaluation(InfoEvaluationMethod infoEvaluation) {
+	public static IEvaluationMethod copyInfoEvaluationMethod2IEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
 
-		IEvaluationMethod evaluation = new EvaluationMethod();
-		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoEvaluation.getInfoExecutionCourse());
+		IEvaluationMethod evaluationMethod = new EvaluationMethod();
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoEvaluationMethod.getInfoExecutionCourse());
 
-		copyObjectProperties(evaluation, infoEvaluation);
+		copyObjectProperties(evaluationMethod, infoEvaluationMethod);
 
-		evaluation.setExecutionCourse(executionCourse);
+		evaluationMethod.setExecutionCourse(executionCourse);
 
-		return evaluation;
+		return evaluationMethod;
 	}
 
-	public static InfoEvaluationMethod copyIEvaluation2InfoEvaluation(IEvaluationMethod evaluation) {
+	public static InfoEvaluationMethod copyIEvaluationMethod2InfoEvaluationMethod(IEvaluationMethod evaluationMethod) {
 
-		InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod();
-		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(evaluation.getExecutionCourse());
+		InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(evaluationMethod.getExecutionCourse());
 
+		copyObjectProperties(infoEvaluationMethod, evaluationMethod);
+
+		infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
+
+		return infoEvaluationMethod;
+	}
+	public static IEvaluation copyInfoEvaluation2IEvaluation(InfoEvaluation infoEvaluation) {
+
+		IEvaluation evaluation = null;
+		
+		if (infoEvaluation instanceof IExam) {
+			
+			InfoExam infoExam = new InfoExam();
+			infoExam.setAssociatedRooms(((IExam) infoEvaluation).getAssociatedRooms());
+			infoExam.setBeginning(((IExam)infoEvaluation).getBeginning());
+			infoExam.setDay(((IExam)infoEvaluation).getDay());
+			infoExam.setEnd(((IExam)infoEvaluation).getEnd());
+			infoExam.setEnrollmentBeginDay(((IExam)infoEvaluation).getEnrollmentBeginDay());
+			infoExam.setEnrollmentBeginTime(((IExam)infoEvaluation).getEnrollmentBeginTime());
+			infoExam.setEnrollmentEndDay(((IExam)infoEvaluation).getEnrollmentEndDay());
+			infoExam.setEnrollmentEndTime(((IExam)infoEvaluation).getEnrollmentEndTime());
+			
+			IExam exam = Cloner.copyInfoExam2IExam(infoExam);
+			copyObjectProperties(evaluation, infoEvaluation);
+			
+		}
+		return evaluation;
+	}
+	public static InfoEvaluation copyIEvaluation2InfoEvaluation(IEvaluation evaluation) {
+
+		InfoEvaluation infoEvaluation = new InfoEvaluation();
+		if (evaluation instanceof IExam) {
+		    InfoExam infoExam = new InfoExam();
+			IExam exam = new Exam();
+			exam.setAssociatedExecutionCourses(((IExam)evaluation).getAssociatedExecutionCourses());
+			exam.setAssociatedRooms(((IExam)evaluation).getAssociatedRooms());
+			exam.setBeginning(((IExam)evaluation).getBeginning());
+			exam.setDay(((IExam)evaluation).getDay());
+			exam.setEnd(((IExam)evaluation).getEnd());
+			exam.setEnrollmentBeginDay(((IExam)evaluation).getEnrollmentBeginDay());
+			exam.setEnrollmentBeginTime(((IExam)evaluation).getEnrollmentBeginTime());
+			exam.setEnrollmentEndDay(((IExam)evaluation).getEnrollmentEndDay());
+			exam.setEnrollmentEndTime(((IExam)evaluation).getEnrollmentEndTime());
+	
+			infoExam = Cloner.copyIExam2InfoExam(exam);
+		} 
 		copyObjectProperties(infoEvaluation, evaluation);
 
-		infoEvaluation.setInfoExecutionCourse(infoExecutionCourse);
 
 		return infoEvaluation;
 	}
