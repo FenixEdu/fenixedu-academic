@@ -4,7 +4,9 @@
  */
 package ServidorAplicacao.strategy.enrolment.degree;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import Dominio.ICurso;
 import Dominio.IStudent;
@@ -12,11 +14,14 @@ import Dominio.IStudent;
 /**
  * @author jpvl
  */
-public class EnrolmentContext {
+public final class EnrolmentContext {
 	private ICurso degree;
 	private IStudent student;
 	private List curricularCoursesDoneByStudent;
+	private Map acumulatedEnrolments;
 	private Integer semester;
+	
+	private List actualEnrolment;
 	
 	/**
 	 * defines the list that student can be enrolled
@@ -29,6 +34,7 @@ public class EnrolmentContext {
 	 */
 	public EnrolmentContext() {
 		super();
+		actualEnrolment = new ArrayList();
 	}
 
 	/**
@@ -99,6 +105,34 @@ public class EnrolmentContext {
 	 */
 	public void setFinalCurricularCoursesSpanToBeEnrolled(List list) {
 		finalCurricularCoursesSpanToBeEnrolled = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getActualEnrollment() {
+		return actualEnrolment;
+	}
+
+	/**
+	 * @return
+	 */
+	public Map getAcumulatedEnrolments() {
+		return acumulatedEnrolments;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setActualEnrollment(List list) {
+		actualEnrolment = list;
+	}
+
+	/**
+	 * @param map
+	 */
+	public void setAcumulatedEnrolments(Map map) {
+		acumulatedEnrolments = map;
 	}
 
 }
