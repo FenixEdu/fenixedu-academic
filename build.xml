@@ -764,7 +764,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
     
     <target name="tomcat-stop"
             description="Stops tomcat">
-<!--      <parallel>
+      <parallel>
 	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
 	  	      os="Linux, Unix">
 		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
@@ -777,7 +777,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
 		  <arg value="stop"/>
 	  	</exec>
-     </parallel>-->
+     </parallel>
     </target>
 
 <!--    <target name="tomcat-start"
@@ -898,7 +898,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
     </target>
 
     <target name="clean-all"
-            depends="tomcat-stop, clean-build, clean-tests, clean-standalone"
+            depends="clean-build, clean-tests, clean-standalone"
             description="Delete all class and temp files">
         <delete dir="${build.home}"/>
         <delete dir="${deploy.home}"/>        
