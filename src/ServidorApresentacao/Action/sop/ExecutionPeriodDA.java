@@ -1,12 +1,15 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -50,6 +53,12 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 				userView,
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
+			selectedExecutionPeriod.getInfoExecutionYear().getYear();
+			selectedExecutionPeriod.getSemester();
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+		chainComparator.addComparator(new BeanComparator("semester"));
+		Collections.sort(executionPeriods, chainComparator);
 
 		// if executionPeriod was previously selected,form has that
 		// value as default
@@ -103,6 +112,10 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 				userView,
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+		chainComparator.addComparator(new BeanComparator("semester"));
+		Collections.sort(infoExecutionPeriodList, chainComparator);
 
 		//		ArrayList infoExecutionPeriodList =
 		//			(ArrayList) request.getAttribute(
@@ -149,6 +162,10 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 				userView,
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+		chainComparator.addComparator(new BeanComparator("semester"));
+		Collections.sort(executionPeriods, chainComparator);
 
 		Integer index = (Integer) indexForm.get("index");
 		InfoExecutionPeriod selectedInfoExecutionPeriod = null;
