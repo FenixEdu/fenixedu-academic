@@ -6,6 +6,7 @@
  */
 package middleware.almeida;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -26,6 +27,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEquivalenceRestriction;
 import Dominio.EnrolmentEvaluation;
+import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Frequenta;
@@ -99,7 +101,20 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		if (result.size() == 1) {
 			return (IDegreeCurricularPlan) result.get(0);
 		} else {
-			System.out.println("readDegreeCurricularPlan: degree =  " + degreeID + " result.size = " + result.size());
+			System.out.println("readDegreeCurricularPlanByDegreeID: degree =  " + degreeID + " result.size = " + result.size());
+			return null;
+		}
+	}
+
+	public IDegreeCurricularPlan readDegreeCurricularPlanByDegreeIDAndActiveState(Integer degreeID) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("state", DegreeCurricularPlanState.ACTIVE_OBJ);
+		criteria.addEqualTo("degree.idInternal", degreeID);
+		List result = query(DegreeCurricularPlan.class, criteria);
+		if (result.size() == 1) {
+			return (IDegreeCurricularPlan) result.get(0);
+		} else {
+			System.out.println("readDegreeCurricularPlanByDegreeID: degree =  " + degreeID + " result.size = " + result.size());
 			return null;
 		}
 	}
@@ -108,11 +123,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		// Delete blank space in the beggining of code1
 		if (code.charAt(0) == ' ') {
 			code = code.substring(1);
-		} else if (code.equals("ALG") && degreeID.intValue() == 5) {
-			code = "AP9";
-		} else if (code.equals("AWX") && degreeID.intValue() == 21) {
-			code = "AXK";
-		}
+		} 
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
@@ -131,7 +142,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	public ICurricularCourse readCurricularCourse(String name, Integer degreeID, String code) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);
-		criteria.addEqualTo("degreeCurricularPlan", degreeID);
+		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeID);
 		criteria.addEqualTo("code", code);
 		List result = query(CurricularCourse.class, criteria);
 		if (result.size() == 1) {
@@ -146,6 +157,20 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("coddis", code);
 		criteria.addEqualTo("codcur", (new Integer("" + curso)));
+		List result = query(Almeida_disc.class, criteria);
+		//System.out.println("result.size" + result.size());
+		if (result.size() > 0) {
+			return (Almeida_disc) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public Almeida_disc readAlmeidaCurricularCourse(String code, long curso, long year) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("coddis", code);
+		criteria.addEqualTo("codcur", new Integer("" + curso));
+		criteria.addEqualTo("anoLectivo", new Integer("" + year));
 		List result = query(Almeida_disc.class, criteria);
 		//System.out.println("result.size" + result.size());
 		if (result.size() > 0) {
@@ -229,7 +254,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		ICurricularCourse curricularCourse,
 		IExecutionPeriod executionPeriod) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getIdInternal());
+		criteria.addEqualTo("studentCurricularPlan.idInternal", ((StudentCurricularPlan) studentCurricularPlan).getIdInternal());
 		criteria.addEqualTo("curricularCourse.idInternal", ((CurricularCourse) curricularCourse).getIdInternal());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 		criteria.addEqualTo("executionPeriod.name.executionYear.year", executionPeriod.getExecutionYear().getYear());
@@ -248,9 +273,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 */
 	public IFrequenta readFrequenta(IStudent student, IDisciplinaExecucao disciplinaExecucao) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("aluno.internalCode", ((Student) student).getIdInternal());
+		criteria.addEqualTo("aluno.idInternal", ((Student) student).getIdInternal());
 		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
-		criteria.addEqualTo("aluno.internalCode", ((Student) student).getIdInternal());
+		criteria.addEqualTo("aluno.idInternal", ((Student) student).getIdInternal());
 		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
 		List result = query(Frequenta.class, criteria);
 		if (result.size() == 1) {
@@ -354,6 +379,20 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
+	public ICurricularYear readCurricularYearByYear(Integer year) {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("year", year);
+
+		List result = query(CurricularYear.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularYear) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readCurricularYear: year = " + year + " result.size = " + result.size());
+		}
+		return null;
+	}
+
 	public ICurricularSemester readCurricularSemester(Integer semester, ICurricularYear curricularYear) {
 
 		Criteria criteria = new Criteria();
@@ -444,7 +483,26 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
 		criteria.addEqualTo("branch.internalID", branch.getInternalID());
 		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getInternalID());
-		criteria.addEqualTo("executionYear", executionYear);
+		//criteria.addEqualTo("executionYear", executionYear);
+
+		List result = query(CurricularCourseScope.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourseScope) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("CurricularCourseScope: " + result.size());
+		}
+		return null;
+	}
+
+	public ICurricularCourseScope readCurricularCourseScopeByUniqueWithoutBranch(
+		ICurricularCourse curricularCourse,
+		ICurricularSemester curricularSemester,
+		Integer executionYear) {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getInternalID());
+		//criteria.addEqualTo("executionYear", executionYear);
 
 		List result = query(CurricularCourseScope.class, criteria);
 		if (result.size() == 1) {
@@ -504,7 +562,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public List readAllEnrolmentsFromStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getIdInternal());
+		criteria.addEqualTo("studentCurricularPlan.idInternal", ((StudentCurricularPlan) studentCurricularPlan).getIdInternal());
 		return query(Enrolment.class, criteria);
 	}
 
@@ -651,7 +709,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IEnrolment readEnrolmentByUnique(IStudentCurricularPlan plan, ICurricularCourseScope scope, IExecutionPeriod period) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getIdInternal());
+		criteria.addEqualTo("studentCurricularPlan.idInternal", ((StudentCurricularPlan) plan).getIdInternal());
 		criteria.addEqualTo("curricularCourseScope.idInternal", scope.getIdInternal());
 		criteria.addEqualTo("executionPeriod.idInternal", period.getIdInternal());
 		List result = query(Enrolment.class, criteria);
@@ -665,7 +723,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndScope(IStudentCurricularPlan plan, ICurricularCourseScope scope) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getIdInternal());
+		criteria.addEqualTo("studentCurricularPlan.idInternal", ((StudentCurricularPlan) plan).getIdInternal());
 		criteria.addEqualTo("curricularCourseScope.idInternal", scope.getIdInternal());
 		List result = query(Enrolment.class, criteria);
 		if (result.size() == 1) {
@@ -681,6 +739,28 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
 		criteria.addEqualTo("enrolmentEvaluationType", type);
 		criteria.addEqualTo("grade", grade);
+		List result = query(EnrolmentEvaluation.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolmentEvaluation) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readEnrolmentByUnique mais que um\n");
+		}
+		return null;
+	}
+
+	public IEnrolmentEvaluation readEnrolmentEvaluationByUnique(
+		IEnrolment enrolment,
+		EnrolmentEvaluationType type,
+		String grade,
+		Date evaluationDate) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+		criteria.addEqualTo("enrolmentEvaluationType", type);
+		criteria.addEqualTo("grade", grade);
+		if (evaluationDate != null) {
+			criteria.addEqualTo("examDate", evaluationDate);
+		}
+		
 		List result = query(EnrolmentEvaluation.class, criteria);
 		if (result.size() == 1) {
 			return (IEnrolmentEvaluation) result.get(0);

@@ -2,6 +2,7 @@ package ServidorAplicacao.Servico.teacher;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.ISiteComponent;
@@ -41,7 +42,6 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import java.util.List;
 
 /**
  * @author Fernanda Quitério

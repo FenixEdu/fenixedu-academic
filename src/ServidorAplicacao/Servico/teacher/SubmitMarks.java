@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import middleware.marks.CreateFile;
-
 import DataBeans.ISiteComponent;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
@@ -213,7 +212,8 @@ public class SubmitMarks implements IServico {
 					publishedMark);
 
 			if (enrolmentEvaluation == null) {
-				throw new FenixServiceException();
+				enrolmentEvaluation = new EnrolmentEvaluation();
+				//throw new FenixServiceException();
 			}
 
 			enrolmentEvaluation.setGrade(publishedMark);

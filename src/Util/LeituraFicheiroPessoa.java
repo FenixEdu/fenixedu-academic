@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
@@ -169,13 +170,14 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(tipoDocumentoIdentificacao.intValue()));
 
 		localEmissaoDocumentoIdentificacao = new String(stringTokenizer.nextToken().trim());
-		pessoa.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
+		pessoa.setLocalEmissaoDocumentoIdentificacao(StringUtils.capitaliseAllWords(StringUtils.lowerCase(localEmissaoDocumentoIdentificacao)));
 
 		dataEmissaoDocumentoIdentificacao = formataData(stringTokenizer.nextToken().trim());
 		pessoa.setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
 
 		nome = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNome(nome);
+		pessoa.setNome(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nome)));
+
 
 		/* campo a formatar */
 		sexo = formataSexo(stringTokenizer.nextToken().trim());
@@ -189,40 +191,40 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		pessoa.setNascimento(nascimento);
 
 		nomePai = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNomePai(nomePai);
+		pessoa.setNomePai(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nomePai)));
 
 		nomeMae = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNomeMae(nomeMae);
+		pessoa.setNomeMae(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nomeMae)));
 
 		nacionalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNacionalidade(nacionalidade);
+		pessoa.setNacionalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nacionalidade)));
 
 		freguesiaNaturalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setFreguesiaNaturalidade(freguesiaNaturalidade);
+		pessoa.setFreguesiaNaturalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(freguesiaNaturalidade)));
 
 		concelhoNaturalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setConcelhoNaturalidade(concelhoNaturalidade);
+		pessoa.setConcelhoNaturalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(concelhoNaturalidade)));
 
 		distritoNaturalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setDistritoNaturalidade(distritoNaturalidade);
+		pessoa.setDistritoNaturalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(distritoNaturalidade)));
 
 		morada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setMorada(morada);
+		pessoa.setMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(morada)));
 
 		localidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setLocalidade(localidade);
+		pessoa.setLocalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(localidade)));
 
 		codigoPostal = new String(stringTokenizer.nextToken().trim());
 		pessoa.setCodigoPostal(codigoPostal);
 
 		freguesiaMorada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setFreguesiaMorada(freguesiaMorada);
+		pessoa.setFreguesiaMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(freguesiaMorada)));
 
 		concelhoMorada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setConcelhoMorada(concelhoMorada);
+		pessoa.setConcelhoMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(concelhoMorada)));
 
 		distritoMorada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setDistritoMorada(distritoMorada);
+		pessoa.setDistritoMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(distritoMorada)));
 
 		telefone = new String(stringTokenizer.nextToken().trim());
 		pessoa.setTelefone(telefone);
@@ -240,7 +242,7 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		pessoa.setNumContribuinte(numContribuinte);
 
 		profissao = new String(stringTokenizer.nextToken().trim());
-		pessoa.setProfissao(profissao);
+		pessoa.setProfissao(StringUtils.capitaliseAllWords(StringUtils.lowerCase(profissao)));
 
 		username = new String(stringTokenizer.nextToken().trim());
 		//pessoa.setUsername(username);
@@ -253,22 +255,24 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		/* campo a formatar */
 		
 		pessoa.setPais(formataNacionalidadeCompleta(stringTokenizer.nextToken().trim()));
+		pessoa.getPais().setName(StringUtils.capitaliseAllWords(StringUtils.lowerCase(pessoa.getPais().getName())));
+		pessoa.getPais().setNationality(StringUtils.capitaliseAllWords(StringUtils.lowerCase(pessoa.getPais().getNationality())));
 		
 		//nacionalidadeCompleta = formataNacionalidadeCompleta(stringTokenizer.nextToken().trim());
 		//pessoa.setNacionalidadeCompleta(nacionalidadeCompleta.intValue());
 
 		localidadeCodigoPostal = new String(stringTokenizer.nextToken().trim());
-		pessoa.setLocalidadeCodigoPostal(localidadeCodigoPostal);
+		pessoa.setLocalidadeCodigoPostal(StringUtils.capitaliseAllWords(StringUtils.lowerCase(localidadeCodigoPostal)));
 
 		codigoFiscal = new String(stringTokenizer.nextToken().trim());
-		pessoa.setCodigoFiscal(codigoFiscal);
+		pessoa.setCodigoFiscal(StringUtils.capitaliseAllWords(StringUtils.lowerCase(codigoFiscal)));
 
 		/* este atributo esta invalido, contem zeros no ficheiro */
 		dataValidadeDocumentoIdentificacao = formataData(stringTokenizer.nextToken().trim());
 		pessoa.setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
 
 		codigoFiscal = new String(stringTokenizer.nextToken().trim());
-		pessoa.setCodigoFiscal(codigoFiscal);
+		pessoa.setCodigoFiscal(StringUtils.capitaliseAllWords(StringUtils.lowerCase(codigoFiscal)));
 
 		//ignorar localidade codigo fiscal
 		stringTokenizer.nextToken();

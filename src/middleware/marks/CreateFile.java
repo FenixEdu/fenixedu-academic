@@ -10,10 +10,9 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import Util.TipoCurso;
-
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolmentEvaluation;
+import Util.TipoCurso;
 
 /**
  * @author Tânia Pousão

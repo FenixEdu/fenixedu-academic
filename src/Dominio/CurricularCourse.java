@@ -145,7 +145,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 			.append("[")
 			.append(this.getClass())
 			.append(":")
-			.append("idInternal = ")
+			.append("idInternal = ").append(this.getIdInternal())
 			.append(";name = ").append(this.name).append(";code = ").append(this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan()).append(";type = ").append(this.type);
 		return stringBuffer.toString();
 	}

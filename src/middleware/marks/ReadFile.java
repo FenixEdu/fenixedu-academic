@@ -48,6 +48,9 @@ public class ReadFile extends LoadDataFile {
 	private static final String TEN_SPACES = "          ";
 	private static final String FIFTEEN_SPACES = "               ";
 
+	private static final String EXECUTION_YEAR = "2002/2003";
+	private static final int EXECUTION_SEMESTER = 2;
+
 	private static ReadFile loader = null;
 	private String fileName = null;
 	private String fileOutputName = "outputMarks.txt";
@@ -145,7 +148,15 @@ public class ReadFile extends LoadDataFile {
 		almeida_enrolment.setCoduniv(universityCode);
 		almeida_enrolment.setObserv(observation);
 
-		processEnrolment(almeida_enrolment);
+		if (enrolmentThisYear(almeida_enrolment)) {
+			processEnrolment(almeida_enrolment);
+		}
+	}
+
+	private boolean enrolmentThisYear(Almeida_enrolment almeida_enrolment) {
+		String enrolment_year = String.valueOf(almeida_enrolment.getAnoins()) + "/" + String.valueOf(almeida_enrolment.getAnoins() + 1);
+
+		return enrolment_year.equals(EXECUTION_YEAR);
 	}
 
 	private void processEnrolment(Almeida_enrolment almeida_enrolment) {
@@ -195,68 +206,70 @@ public class ReadFile extends LoadDataFile {
 						writeElement(enrolment);
 					}
 
-					//update evaluation
-					IEnrolmentEvaluation enrolmentEvaluation =
-						persistentObjectOJB.readEnrolmentEvaluationByUnique(
-							enrolment,
-							enrolment.getEnrolmentEvaluationType(),
-							almeida_enrolment.getResult(),
-							readEvaluationDate(almeida_enrolment.getDatexa()));
-					if (enrolmentEvaluation == null) {
-						enrolmentEvaluation = new EnrolmentEvaluation();
+					if (enrolment != null) {
+						//update evaluation
+						IEnrolmentEvaluation enrolmentEvaluation =
+							persistentObjectOJB.readEnrolmentEvaluationByUnique(
+								enrolment,
+								enrolment.getEnrolmentEvaluationType(),
+								almeida_enrolment.getResult(),
+								readEvaluationDate(almeida_enrolment.getDatexa()));
+						if (enrolmentEvaluation == null) {
+							enrolmentEvaluation = new EnrolmentEvaluation();
 
-						enrolmentEvaluation.setGrade(almeida_enrolment.getResult());
-						enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-						enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-						enrolmentEvaluation.setExamDate(readEvaluationDate(almeida_enrolment.getDatexa()));
-						enrolmentEvaluation.setEnrolment(enrolment);
+							enrolmentEvaluation.setGrade(almeida_enrolment.getResult());
+							enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+							enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+							enrolmentEvaluation.setExamDate(readEvaluationDate(almeida_enrolment.getDatexa()));
+							enrolmentEvaluation.setEnrolment(enrolment);
 
-						if (almeida_enrolment.getNumdoc() != null) {
-							ITeacher teacher = persistentObjectOJB.readTeacher(Integer.valueOf(almeida_enrolment.getNumdoc()));
-							if (teacher != null) {
-								enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-							} else {
-								logString += numberLine + "-ERRO: Professor " + almeida_enrolment.getNumdoc() + " desconhecidos\n";
+							if (almeida_enrolment.getNumdoc() != null) {
+								ITeacher teacher = persistentObjectOJB.readTeacher(Integer.valueOf(almeida_enrolment.getNumdoc()));
+								if (teacher != null) {
+									enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
+								} else {
+									logString += numberLine + "-ERRO: Professor " + almeida_enrolment.getNumdoc() + " desconhecidos\n";
+								}
 							}
+							if (almeida_enrolment.getObserv() != null) {
+								enrolmentEvaluation.setObservation("carregamentos: " + almeida_enrolment.getObserv());
+							} else {
+								enrolmentEvaluation.setObservation("carregamentos");
+							}
+
+							Calendar calendar = Calendar.getInstance();
+							enrolmentEvaluation.setWhen(calendar.getTime());
+
+							writeElement(enrolmentEvaluation);
 						}
-						if (almeida_enrolment.getObserv() != null) {
-							enrolmentEvaluation.setObservation("carregamentos: " + almeida_enrolment.getObserv());
+
+						//update frequenta
+						disciplinaExecucao = readExecutionCourse(curricularCourse, executionPeriod);
+						if (disciplinaExecucao != null) {
+							IFrequenta frequenta = persistentObjectOJB.readFrequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
+							if (frequenta == null) {
+								frequenta = new Frequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
+								frequenta.setEnrolment(enrolment);
+
+								writeElement(frequenta);
+							} else {
+								frequenta.setEnrolment(enrolment);
+
+								writeElement(frequenta);
+							}
 						} else {
-							enrolmentEvaluation.setObservation("carregamentos");
+							logString += numberLine
+								+ "-ERRO: disciplina Execucao: code= "
+								+ curricularCourse.getCode()
+								+ "  name= "
+								+ curricularCourse.getName()
+								+ "  curso= "
+								+ almeida_enrolment.getCurso()
+								+ "\n";
+							//writeElement(almeida_inscricoes);
+							numberUntreatableElements++;
+							return;
 						}
-
-						Calendar calendar = Calendar.getInstance();
-						enrolmentEvaluation.setWhen(calendar.getTime());
-
-						writeElement(enrolmentEvaluation);
-					}
-
-					//update frequenta
-					disciplinaExecucao = readExecutionCourse(curricularCourse, executionPeriod);
-					if (disciplinaExecucao != null) {
-						IFrequenta frequenta = persistentObjectOJB.readFrequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
-						if (frequenta == null) {
-							frequenta = new Frequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
-							frequenta.setEnrolment(enrolment);
-
-							writeElement(frequenta);
-						} else {
-							frequenta.setEnrolment(enrolment);
-
-							writeElement(frequenta);
-						}
-					} else {
-						logString += numberLine
-							+ "-ERRO: disciplina Execucao: code= "
-							+ curricularCourse.getCode()
-							+ "  name= "
-							+ curricularCourse.getName()
-							+ "  curso= "
-							+ almeida_enrolment.getCurso()
-							+ "\n";
-						//writeElement(almeida_inscricoes);
-						numberUntreatableElements++;
-						return;
 					}
 				}
 			}
@@ -369,23 +382,23 @@ public class ReadFile extends LoadDataFile {
 		//executionPeriod = persistentObjectOJB.readActiveExecutionPeriod();
 
 		//prof.Rito decide that Execution Period is builded hard code
-		IExecutionYear executionYear = persistentObjectOJB.readExecutionYearByYear("2002/2003");
+		IExecutionYear executionYear = persistentObjectOJB.readExecutionYearByYear(EXECUTION_YEAR);
 		if (executionYear == null) {
 			executionYear = new ExecutionYear();
 			executionYear.setState(PeriodState.CURRENT);
-			executionYear.setYear("2002/2003");
+			executionYear.setYear(EXECUTION_YEAR);
 			writeElement(executionYear);
 		}
 
-		executionPeriod = persistentObjectOJB.readExecutionPeriodByYearAndSemester(executionYear, new Integer(2)); //semester
+		executionPeriod = persistentObjectOJB.readExecutionPeriodByYearAndSemester(executionYear, new Integer(EXECUTION_SEMESTER));
 		if (executionPeriod != null) {
 			return executionPeriod;
 		} else {
 			executionPeriod = new ExecutionPeriod();
 			executionPeriod.setExecutionYear(executionYear);
-			executionPeriod.setSemester(new Integer(2)); //semester
+			executionPeriod.setSemester(new Integer(EXECUTION_SEMESTER));
 			executionPeriod.setState(PeriodState.CURRENT);
-			executionPeriod.setName("2º Semestre"); //semester
+			executionPeriod.setName(EXECUTION_SEMESTER + "º Semestre");
 			writeElement(executionPeriod);
 
 			return executionPeriod;
