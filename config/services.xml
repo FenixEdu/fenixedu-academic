@@ -8090,7 +8090,18 @@
             <chain name="ProjectsManagerAuthorization"/>
         </filterChains>
 	</service>
-		<service>
+	<service>
+		<name>ReadSummaryReport</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReadSummaryReport
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
 		<name>ReadExpensesReport</name>
 		<implementationClass>
 			ServidorAplicacao.Servico.projectsManagement.ReadExpensesReport
@@ -8105,6 +8116,72 @@
 		<name>ReadRubric</name>
 		<implementationClass>
 			ServidorAplicacao.Servico.projectsManagement.ReadRubric
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>InsertNewProjectAccess</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.InsertNewProjectAccess
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>ReadProjectAccesses</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReadProjectAccesses
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>RemoveProjectAccess</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.RemoveProjectAccess
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>EditProjectAccess</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.EditProjectAccess
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>ReviewProjectAccess</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReviewProjectAccess
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>ReadProjectWithoutPersonAccess</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReadProjectWithoutPersonAccess
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>

@@ -12,13 +12,11 @@ import DataBeans.projectsManagement.InfoMovementReport;
 import DataBeans.projectsManagement.InfoProject;
 import DataBeans.projectsManagement.InfoProjectReport;
 import DataBeans.projectsManagement.InfoRevenueReportLine;
-import DataBeans.projectsManagement.InfoSummaryReportLine;
 import Dominio.IEmployee;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.projectsManagement.IMovementReport;
 import Dominio.projectsManagement.IRevenueReportLine;
-import Dominio.projectsManagement.ISummaryReportLine;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -46,21 +44,18 @@ public class ReadReport implements IService {
             infoReport = new InfoProjectReport();
             List infoLines = new ArrayList();
             if (reportType.equals(ReportType.REVENUE)) {
-                if (projectCode != null && p.getIPersistentProject().isUserProject(userNumber, projectCode)) {
+                if (projectCode != null
+                        && (p.getIPersistentProject().isUserProject(userNumber, projectCode) || persistentSuport.getIPersistentProjectAccess()
+                                .hasPersonProjectAccess(userView.getUtilizador(), projectCode))) {
                     infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
                     List lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);
                     for (int i = 0; i < lines.size(); i++)
                         infoLines.add(InfoRevenueReportLine.newInfoFromDomain((IRevenueReportLine) lines.get(i)));
                 }
-            } else if (reportType.equals(ReportType.SUMMARY)) {
-                Integer coordinatorId = p.getIPersistentProjectUser().getUserCoordId(userNumber);
-                if (coordinatorId != null) {
-                    List lines = p.getIPersistentSummaryReport().getCompleteReport(reportType, coordinatorId);
-                    for (int i = 0; i < lines.size(); i++)
-                        infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines.get(i)));
-                }
             } else if (reportType.equals(ReportType.ADIANTAMENTOS) || reportType.equals(ReportType.CABIMENTOS)) {
-                if (projectCode != null && p.getIPersistentProject().isUserProject(userNumber, projectCode)) {
+                if (projectCode != null
+                        && (p.getIPersistentProject().isUserProject(userNumber, projectCode) || persistentSuport.getIPersistentProjectAccess()
+                                .hasPersonProjectAccess(userView.getUtilizador(), projectCode))) {
                     infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
                     List lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
                     for (int i = 0; i < lines.size(); i++)

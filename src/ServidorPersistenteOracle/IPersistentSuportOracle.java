@@ -31,7 +31,7 @@ public interface IPersistentSuportOracle {
 
     public abstract IPersistentReport getIPersistentRevenueReport();
 
-    public abstract IPersistentReport getIPersistentSummaryReport();
+    public abstract IPersistentSummaryReport getIPersistentSummaryReport();
 
     public abstract IPersistentReport getIPersistentAdiantamentosReport();
 
@@ -41,5 +41,5 @@ public interface IPersistentSuportOracle {
 
     public abstract IPersistentReport getIPersistentSummaryEURReport();
 
-    public IPersistentReport getIPersistentMovementReport();
+    public abstract IPersistentReport getIPersistentMovementReport();
 }

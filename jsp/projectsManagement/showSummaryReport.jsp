@@ -4,40 +4,40 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-report.tld" prefix="report"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants"%>
-<logic:present name="infoSummaryReport">
 
-	<logic:notEmpty name="infoSummaryReport" property="lines">
-		<table width="100%" cellspacing="0">
+<logic:present name="infoSummaryReportList">
+
+	<logic:iterate id="infoSummaryReport" name="infoSummaryReportList" indexId="index">
+		<bean:define id="infoCoordinator" name="infoSummaryReport" property="infoCoordinator" />
+		<logic:equal name="index" value="0">
+			<table width="100%" cellspacing="0">
+				<tr>
+					<td class="infoop">
+					<h2><bean:message key="title.summaryReport" /></h2>
+					</td>
+					<logic:notEmpty name="infoSummaryReport" property="lines">
+						<td class="infoop" width="20"><html:link page="/projectReport.do?method=exportToExcel&amp;reportType=summaryReport">
+							<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
+						</html:link></td>
+						<td class="infoop" width="20"><html:link target="_blank" page="/projectReport.do?method=getReport&amp;reportType=summaryReport&amp;print=true">
+							<html:img border="0" src="<%= request.getContextPath() + "/images/printer.gif"%>" altKey="label.print" align="right" />
+						</html:link></td>
+					</logic:notEmpty>
+				</tr>
+			</table>
+		</logic:equal>
+		<br />
+		<table>
 			<tr>
-				<td class="infoop">
-				<h2><bean:message key="title.summaryReport" /></h2>
-				</td>
-				<logic:notEmpty name="infoSummaryReport" property="lines">
-					<td class="infoop" width="20"><html:link page="/projectReport.do?method=exportToExcel&amp;reportType=summaryReport">
-						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
-					</html:link></td>
-					<td class="infoop" width="20"><html:link target="_blank" page="/projectReport.do?method=getReport&amp;reportType=summaryReport&amp;print=true">
-						<html:img border="0" src="<%= request.getContextPath() + "/images/printer.gif"%>" altKey="label.print" align="right" />
-					</html:link></td>
-				</logic:notEmpty>
+				<td><strong><bean:message key="label.coordinator" />:</strong></td>
+				<td><bean:write name="infoCoordinator" property="description" /></td>
+			</tr>
+			<tr>
+				<td><strong><bean:message key="label.date" />:</strong></td>
+				<td><report:computeDate /></td>
 			</tr>
 		</table>
 		<br />
-		<logic:present name="userView" name="<%= SessionConstants.U_VIEW %>" scope="session">
-			<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session" />
-			<table>
-				<tr>
-					<td><strong><bean:message key="label.coordinator" />:</strong></td>
-					<td><bean:write name="userView" property="fullName" /></td>
-				</tr>
-				<tr>
-					<td><strong><bean:message key="label.date" />:</strong></td>
-					<td><report:computeDate /></td>
-				</tr>
-			</table>
-		</logic:present>
-		<br />
-
 		<bean:message key="message.summaryReport" />
 		<br />
 		<br />
@@ -86,13 +86,16 @@
 				<td class="report-line-total-last"><report:sumColumn id="summaryLines" column="11" /></td>
 			</tr>
 		</table>
-	</logic:notEmpty>
-	<logic:empty name="infoSummaryReport" property="lines">
-		<span class="error"><bean:message key="message.noUserProjects" /></span>
-	</logic:empty>
-	<br />
-	<br />
-	<br />
+		</logic:notEmpty>
+		<logic:empty name="infoSummaryReport" property="lines">
+			<span class="error"><bean:message key="message.noUserProjects" /></span>
+		</logic:empty>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+	</logic:iterate>
 </logic:present>
 <logic:notPresent name="infoSummaryReport">
 	<span class="error"><bean:message key="message.noUserProjects" /></span>

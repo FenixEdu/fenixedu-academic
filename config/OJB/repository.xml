@@ -60,6 +60,7 @@
 <!ENTITY glossaryEntry SYSTEM "repository_glossaryEntry.xml">
 <!ENTITY executionPeriod SYSTEM "repository_execution_period.xml">
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
+<!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
 ]>
 
 
@@ -126,5 +127,6 @@
 	&glossaryEntry;
 	&executionPeriod;
 	&managementAssiduousness;
-
+	&projectsManagement;
+	
 </descriptor-repository>

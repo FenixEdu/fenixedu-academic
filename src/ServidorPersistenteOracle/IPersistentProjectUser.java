@@ -4,6 +4,7 @@
  */
 package ServidorPersistenteOracle;
 
+import Dominio.projectsManagement.IRubric;
 import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
@@ -11,5 +12,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
  * 
  */
 public interface IPersistentProjectUser {
+    public IRubric readProjectCoordinator(Integer userCode) throws ExcepcaoPersistencia;
+
     public abstract Integer getUserCoordId(Integer userCode) throws ExcepcaoPersistencia;
 }

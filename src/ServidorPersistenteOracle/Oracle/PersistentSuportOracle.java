@@ -20,6 +20,7 @@ import ServidorPersistenteOracle.IPersistentProject;
 import ServidorPersistenteOracle.IPersistentProjectUser;
 import ServidorPersistenteOracle.IPersistentReport;
 import ServidorPersistenteOracle.IPersistentRubric;
+import ServidorPersistenteOracle.IPersistentSummaryReport;
 import ServidorPersistenteOracle.IPersistentSuportOracle;
 
 /**
@@ -57,7 +58,14 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
             if (DBUserName == null || DBUserPass == null || DBUrl == null) {
                 throw new ExcepcaoPersistencia();
             }
-            databaseUrl = new String("jdbc:oracle:thin:" + DBUserName + "/" + DBUserPass + "@" + DBUrl);
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("jdbc:oracle:thin:");
+            stringBuffer.append(DBUserName);
+            stringBuffer.append("/");
+            stringBuffer.append(DBUserPass);
+            stringBuffer.append("@");
+            stringBuffer.append(DBUrl);
+            databaseUrl = stringBuffer.toString();
         }
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -146,7 +154,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
         return new PersistentRevenueReport();
     }
 
-    public IPersistentReport getIPersistentSummaryReport() {
+    public IPersistentSummaryReport getIPersistentSummaryReport() {
         return new PersistentSummaryReport();
     }
 

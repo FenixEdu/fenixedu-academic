@@ -28,7 +28,7 @@ public class ReadUserProjects implements IService {
     public ReadUserProjects() {
     }
 
-    public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(IUserView userView, Boolean all) throws FenixServiceException, ExcepcaoPersistencia {
         List infoProjectList = new ArrayList();
 
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -46,10 +46,13 @@ public class ReadUserProjects implements IService {
         }
         if (userNumber != null) {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-            List projectList = p.getIPersistentProject().getAllProjectsByUserLogin(userNumber.toString());
+            List projectList = p.getIPersistentProject().readByUserLogin(userNumber.toString());
+            if (all.booleanValue())
+                projectList.addAll(p.getIPersistentProject().readByProjectsCodes(
+                        persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndDate(userView.getUtilizador())));
             for (int i = 0; i < projectList.size(); i++)
                 infoProjectList.add(InfoProject.newInfoFromDomain((IProject) projectList.get(i)));
         }
         return infoProjectList;
-    }
+    }    
 }

@@ -20,11 +20,6 @@ import ServidorPersistente.ISuportePersistente;
  *  
  */
 public class ReadPerson extends ReadDomainObjectService implements IService {
-    /**
-     * The constructor of this class.
-     */
-    public ReadPerson() {
-    }
 
     /*
      * (non-Javadoc)

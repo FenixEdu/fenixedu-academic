@@ -1,0 +1,54 @@
+<!-- ************************************* -->
+<!-- Definitions for Dominio.PersonProject -->
+<!-- ************************************* -->
+<class-descriptor class="Dominio.projectsManagement.ProjectAccess"
+				  proxy="dynamic"
+                  table="PROJECT_ACCESS">
+	<field-descriptor
+		name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="keyPerson"
+        column="KEY_PERSON"
+        jdbc-type="INTEGER"
+	/>
+	 <field-descriptor
+        name="keyProjectCoordinator"
+        column="KEY_PROJECT_COORDINATOR"
+        jdbc-type="INTEGER"
+	/>
+    <field-descriptor
+         name="keyProject"
+         column="KEY_PROJECT"
+    	 jdbc-type="INTEGER"
+    />
+    <field-descriptor
+		name="beginDate"
+		column="BEGIN_DATE"
+    	jdbc-type="DATE"
+        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+    <field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="DATE"
+        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+    />
+	<field-descriptor
+		name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+	/>
+	<reference-descriptor
+         name="person"
+         class-ref="Dominio.Pessoa"
+         proxy="true"
+    >
+    <foreignkey field-ref="keyPerson"/>
+	</reference-descriptor>
+</class-descriptor>

@@ -44,6 +44,7 @@ import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkHistoric;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkRequests;
 import ServidorPersistente.managementAssiduousness.IPersistentMoneyCostCenter;
 import ServidorPersistente.places.campus.IPersistentCampus;
+import ServidorPersistente.projectsManagement.IPersistentProjectAccess;
 import ServidorPersistente.publication.IPersistentAuthor;
 import ServidorPersistente.publication.IPersistentPublication;
 import ServidorPersistente.publication.IPersistentPublicationAttribute;
@@ -467,4 +468,6 @@ public interface ISuportePersistente {
     public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric();
     
     public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent();
+    
+    public IPersistentProjectAccess getIPersistentProjectAccess();
 }

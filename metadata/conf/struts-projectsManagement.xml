@@ -13,6 +13,20 @@
 	    	<form-property name="reportType" type="java.lang.String" />
 	    	<form-property name="projectCode" type="java.lang.String" />
 	    </form-bean>
+	    <form-bean name="accessForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	    	<form-property name="username" type="java.lang.String" />
+	    	<form-property name="personCode" type="java.lang.Integer" />
+	    	<form-property name="projectCode" type="java.lang.Integer" />
+	    	<form-property name="projectCodes" type="java.lang.String" />
+	    	<form-property name="beginDay" type="java.lang.String" />
+	    	<form-property name="beginMonth" type="java.lang.String" />
+	    	<form-property name="beginYear" type="java.lang.String" />
+	    	<form-property name="endDay" type="java.lang.String" />
+	    	<form-property name="endMonth" type="java.lang.String" />
+	    	<form-property name="endYear" type="java.lang.String" />
+	    	<form-property name="method" type="java.lang.String" />
+	    	<form-property name="page" type="java.lang.Integer" initial="0"/>
+	    </form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -32,13 +46,16 @@
   <!-- ========== Global Forward Definitions ============================== -->
   <global-forwards type="org.apache.struts.action.ActionForward">
     <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+    <forward name="index" path="/index.do" redirect="true"/>
   </global-forwards>
 
   <!-- ========== Action Mapping Definitions ============================== -->
   <action-mappings type="org.apache.struts.action.ActionMapping">
-    <action path="/index" forward="/index.jsp"/>
+	<action path="/index" type="ServidorApresentacao.Action.projectsManagement.IndexAction">
+    	<forward name="success" path="/index.jsp"/>
+    </action>
     <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
-    <action path="/projectReport" type="ServidorApresentacao.Action.projectsManagement.ProjectReportsAction" 
+    <action path="/projectReport" type="ServidorApresentacao.Action.projectsManagement.ProjectReportsDispatchAction" 
         parameter="method" scope="request"  validate="true" name="rubricForm" >
         <forward name="index" path="df.page.projectManager"/>
         <forward name="projectList" path="project-List"/>
@@ -54,6 +71,23 @@
 		<forward name="printcabimentosReport" path="/printMovementsReport.jsp"/>
 		<forward name="printadiantamentosReport" path="/printMovementsReport.jsp"/>
     </action>
+    <action path="/projectAccess" name="accessForm"
+	    input="/projectAccess.do?method=showPersonAccesses&amp;page=0" scope="request"
+        parameter="method" type="ServidorApresentacao.Action.projectsManagement.ProjectAccessDelegationDispatchAction"
+        validate="true" >
+   		<forward name="choosePerson" path="choose-Person"/>
+   		<forward name="showPersonAccesses" path="show-Person-Accesses"/>
+   		<forward name="editProjectAccess" path="edit-Project-Access"/>   		
+   		<forward name="showProjectsAccesses" path="show-Projects-Accesses"/>
+   		
+    </action>
+    <action path="/projectAccessEdition" name="accessForm"
+	    input="/projectAccess.do?method=prepareEditProjectAccess&amp;page=0" scope="request"
+        parameter="method" type="ServidorApresentacao.Action.projectsManagement.ProjectAccessDelegationDispatchAction"
+        validate="true" >
+        <forward name="showPersonAccesses" path="show-Person-Accesses"/>
+   		<forward name="editProjectAccess" path="edit-Project-Access"/>
+    </action>
   </action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
@@ -64,7 +98,7 @@
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 
-            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml"/>
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-projectsManagement.xml" /> 
     </plug-in>
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
         <set-property property="definitions-config" 

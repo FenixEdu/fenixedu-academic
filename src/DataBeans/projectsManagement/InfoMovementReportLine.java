@@ -121,7 +121,16 @@ public class InfoMovementReportLine extends DataTranferObject implements IReport
     }
 
     public Double getValue(int column) {
-        return null;
+        switch (column) {
+        case 5:
+            return getValue();
+        case 6:
+            return getTax();
+        case 7:
+            return getTotal();
+        default:
+            return null;
+        }
     }
 
     public void getHeaderToExcel(HSSFSheet sheet) {

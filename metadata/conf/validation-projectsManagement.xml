@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @validation.doctype@ -->
+<form-validation>
+	<formset>
+		<form name="accessForm">
+			<field property="beginDay"
+				depends="required, integer, range" page="1">
+				<arg0 key="message.beginDay" />
+				<arg1 key="${var:min}" resource="false" />
+				<arg2 key="${var:max}" resource="false" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>31</var-value>
+				</var>
+			</field>
+			<field property="beginMonth"
+				depends="required, integer, range" page="1">
+				<arg0 key="message.beginMonth" />
+				<arg1 key="${var:min}" resource="false" />
+				<arg2 key="${var:max}" resource="false" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>12</var-value>
+				</var>
+			</field>
+			<field property="beginYear"
+				depends="required, integer, range" page="1">
+				<arg0 key="message.beginYear" />
+				<arg1 key="${var:min}" resource="false" />
+				<arg2 key="${var:max}" resource="false" />
+				<var>
+					<var-name>month</var-name>
+					<var-value>month</var-value>
+				</var>
+				<var>
+					<var-name>day</var-name>
+					<var-value>day</var-value>
+				</var>
+
+				<var>
+					<var-name>min</var-name>
+					<var-value>1900</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>2100</var-value>
+				</var>
+			</field>
+			<field property="endDay" depends="required, integer, range"
+				page="1">
+				<arg0 key="message.endDay" />
+				<arg1 key="${var:min}" resource="false" />
+				<arg2 key="${var:max}" resource="false" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>31</var-value>
+				</var>
+			</field>
+			<field property="endMonth"
+				depends="required, integer, range" page="1">
+				<arg0 key="message.endMonth" />
+				<arg1 key="${var:min}" resource="false" />
+				<arg2 key="${var:max}" resource="false" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>12</var-value>
+				</var>
+			</field>
+			<field property="endYear" depends="required, integer, range"
+				page="1">
+				<arg0 key="message.endYear" />
+				<arg1 key="${var:min}" resource="false" />
+				<arg2 key="${var:max}" resource="false" />
+				<var>
+					<var-name>month</var-name>
+					<var-value>month</var-value>
+				</var>
+				<var>
+					<var-name>day</var-name>
+					<var-value>day</var-value>
+				</var>
+
+				<var>
+					<var-name>min</var-name>
+					<var-value>1900</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>2100</var-value>
+				</var>
+			</field>
+		</form>
+	</formset>
+</form-validation>

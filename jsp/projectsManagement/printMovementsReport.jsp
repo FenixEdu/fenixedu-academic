@@ -59,6 +59,7 @@
 						<bean:define id="parentValue" name="parentLine" property="parentValue" />
 						<%parentTotal = parentTotal + ((Double) pageContext.findAttribute("parentValue")).doubleValue();
         double thisTotal = 0;%>
+						<strong><bean:message key="<%="label."+reportType%>" /></strong>
 						<table width="100%" cellspacing="0">
 							<tr>
 								<td class="listClasses-header"><strong><bean:message key="label.idMov" /></strong></td>
@@ -79,6 +80,7 @@
 						</table>
 						<logic:notEmpty name="parentLine" property="movements">
 							<br />
+							<strong><bean:message key="<%="label.executionsOf."+reportType%>" /></strong>
 							<table class="report-table">
 								<tr>
 									<td class="report-hdr"><bean:message key="label.idMov" /></td>
@@ -90,7 +92,8 @@
 									<td class="report-hdr"><bean:message key="label.tax" /></td>
 									<td class="report-hdr"><bean:message key="label.total" /></td>
 								</tr>
-								<logic:iterate id="line" name="parentLine" property="movements" indexId="lineIndex">
+								<bean:define id="lines" name="parentLine" property="movements" />
+								<logic:iterate id="line" name="lines" indexId="lineIndex">
 									<tr>
 										<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="movementId" /></td>
 										<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="rubricId" /></td>
@@ -106,6 +109,12 @@
         thisTotal = Util.projectsManagement.FormatDouble.round(thisTotal + ((Double) pageContext.findAttribute("total")).doubleValue());
         totalJustified = Util.projectsManagement.FormatDouble.round(totalJustified + ((Double) pageContext.findAttribute("total")).doubleValue());%>
 								</logic:iterate>
+								<tr>
+									<td class="report-line-total-first" colspan="5"><bean:message key="label.total" /></td>
+									<td class="report-line-total"><report:sumColumn id="lines" column="5" /></td>
+									<td class="report-line-total"><report:sumColumn id="lines" column="6" /></td>
+									<td class="report-line-total-last"><report:sumColumn id="lines" column="7" /></td>
+								</tr>
 							</table>
 							<table>
 								<tr>

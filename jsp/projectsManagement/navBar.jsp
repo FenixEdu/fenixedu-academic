@@ -33,7 +33,7 @@
 			<bean:message key="link.summary" />
 		</html:link></li>
 	</ul>
-	<%}%>
+
 	<br />
 	<br />
 	<p><strong><bean:message key="label.help" /></strong></p>
@@ -41,27 +41,31 @@
 		<li><html:link page="/projectReport.do?method=showHelp&amp;helpPage=listHelp">
 			<bean:message key="link.listHelp" />
 		</html:link></li>
-	</ul>
-	<ul>
 		<li><html:link page="/projectReport.do?method=showHelp&amp;helpPage=explorationUnitsRubric">
 			<bean:message key="link.explorationUnitsRubric" />
 		</html:link></li>
-	</ul>
-	<ul>
 		<li><html:link page="/projectReport.do?method=showHelp&amp;helpPage=expensesRubric">
 			<bean:message key="link.expensesRubric" />
 		</html:link></li>
-	</ul>
-	<ul>
 		<li><html:link page="/projectReport.do?method=showHelp&amp;helpPage=revenueRubric">
 			<bean:message key="link.revenueRubric" />
 		</html:link></li>
-	</ul>
-	<ul>
 		<li><html:link page="/projectReport.do?method=showHelp&amp;helpPage=projectTypesRubric">
 			<bean:message key="link.projectTypesRubric" />
 		</html:link></li>
 	</ul>
+	<br />
+	<br />
+	<p><strong><bean:message key="title.accessDelegation" /></strong></p>
+	<ul>
+		<li><html:link page="/projectAccess.do?method=choosePerson">
+			<bean:message key="link.delegateAccess" />
+		</html:link></li>
+		<li><html:link page="/projectAccess.do?method=showProjectsAccesses">
+			<bean:message key="link.showAccesses" />
+		</html:link></li>
+	</ul>
+	<%}%>
 	<br />
 	<br />
 </logic:present>

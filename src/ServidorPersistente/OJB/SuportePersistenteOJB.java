@@ -68,6 +68,7 @@ import ServidorPersistente.OJB.managementAssiduousness.ExtraWorkResquestsOJB;
 import ServidorPersistente.OJB.managementAssiduousness.MoneyCostCenterOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.places.campus.CampusOJB;
+import ServidorPersistente.OJB.projectsManagement.ProjectAccessOJB;
 import ServidorPersistente.OJB.publication.AuthorOJB;
 import ServidorPersistente.OJB.publication.PublicationAttributeOJB;
 import ServidorPersistente.OJB.publication.PublicationAuthorOJB;
@@ -133,6 +134,7 @@ import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkHistoric;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkRequests;
 import ServidorPersistente.managementAssiduousness.IPersistentMoneyCostCenter;
 import ServidorPersistente.places.campus.IPersistentCampus;
+import ServidorPersistente.projectsManagement.IPersistentProjectAccess;
 import ServidorPersistente.publication.IPersistentAuthor;
 import ServidorPersistente.publication.IPersistentPublication;
 import ServidorPersistente.publication.IPersistentPublicationAttribute;
@@ -1288,12 +1290,16 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent() {
         return new SecretaryEnrolmentStudentOJB();
     }
-
+    
     public IPersistentExtraWorkCompensation getIPersistentExtraWorkCompensation() {
         return new ExtraWorkCompensationOJB();
     }
 
     public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric() {
         return new ExtraWorkHistoricOJB();
+    }
+    
+    public IPersistentProjectAccess getIPersistentProjectAccess() {
+        return new ProjectAccessOJB();
     }
 }

@@ -24,7 +24,7 @@ import ServidorPersistenteOracle.IPersistentProject;
  */
 public class PersistentProject implements IPersistentProject {
 
-    public List getAllProjectsByUserLogin(String userLogin) throws ExcepcaoPersistencia {
+    public List readByUserLogin(String userLogin) throws ExcepcaoPersistencia {
         List projects = new ArrayList();
 
         String query = " select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO "
@@ -37,6 +37,96 @@ public class PersistentProject implements IPersistentProject {
             PreparedStatement stmt = p.prepareStatement(query);
 
             stmt.setString(1, userLogin);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int i = 1;
+                IProject project = new Project();
+                project.setProjectCode(rs.getString("projectCode"));
+                project.setTitle(rs.getString("title"));
+                project.setOrigin(rs.getString("origem"));
+                project.setType(new LabelValueBean(rs.getString("tipo"), ""));
+                project.setCost(rs.getString("custo"));
+                project.setCoordination(rs.getString("coordenacao"));
+                project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
+                projects.add(project);
+            }
+            rs.close();
+            p.commitTransaction();
+        } catch (SQLException e) {
+            throw new ExcepcaoPersistencia();
+        }
+        return projects;
+    }
+
+    public List readByProjectsCodes(List projectCodes) throws ExcepcaoPersistencia {
+        List projects = new ArrayList();
+        if (projectCodes != null && projectCodes.size() != 0) {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer
+                    .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p where p.projectCode IN (");
+            for (int i = 0; i < projectCodes.size(); i++) {
+                if (i != 0)
+                    stringBuffer.append(", ");
+                stringBuffer.append(projectCodes.get(i));
+            }
+            stringBuffer.append(") order by p.projectCode");
+            String query = stringBuffer.toString();
+
+            try {
+                PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+                p.startTransaction();
+
+                PreparedStatement stmt = p.prepareStatement(query);
+
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    int i = 1;
+                    IProject project = new Project();
+                    project.setProjectCode(rs.getString("projectCode"));
+                    project.setTitle(rs.getString("title"));
+                    project.setOrigin(rs.getString("origem"));
+                    project.setType(new LabelValueBean(rs.getString("tipo"), ""));
+                    project.setCost(rs.getString("custo"));
+                    project.setCoordination(rs.getString("coordenacao"));
+                    project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
+                    projects.add(project);
+                }
+                rs.close();
+                p.commitTransaction();
+            } catch (SQLException e) {
+                throw new ExcepcaoPersistencia();
+            }
+        }
+        return projects;
+    }
+
+    public List readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes) throws ExcepcaoPersistencia {
+        List projects = new ArrayList();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer
+                .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p , web_user_projs up where up.login = '");
+        stringBuffer.append(coordinatorId);
+        stringBuffer.append("' and p.projectCode = up.id_proj");
+        if (projectCodes != null && projectCodes.size() != 0) {
+            stringBuffer.append(" and p.projectCode NOT IN (");
+            for (int i = 0; i < projectCodes.size(); i++) {
+                if (i != 0)
+                    stringBuffer.append(", ");
+                stringBuffer.append(projectCodes.get(i));
+            }
+            stringBuffer.append(")");
+        }
+        stringBuffer.append(" order by p.projectCode");
+        String query = stringBuffer.toString();
+
+        try {
+            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            p.startTransaction();
+
+            PreparedStatement stmt = p.prepareStatement(query);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -103,6 +193,28 @@ public class PersistentProject implements IPersistentProject {
                 if (rs.getInt(1) > 0)
                     result = true;
 
+            rs.close();
+            p.commitTransaction();
+        } catch (SQLException e) {
+            throw new ExcepcaoPersistencia();
+        }
+        return result;
+    }
+
+    public int countUserProject(Integer userCode) throws ExcepcaoPersistencia {
+        int result = 0;
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("select count(*) from web_user_projs up where up.login='");
+        stringBuffer.append(userCode);
+        stringBuffer.append("'");
+        try {
+            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            p.startTransaction();
+
+            PreparedStatement stmt = p.prepareStatement(stringBuffer.toString());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                result = rs.getInt(1);
             rs.close();
             p.commitTransaction();
         } catch (SQLException e) {

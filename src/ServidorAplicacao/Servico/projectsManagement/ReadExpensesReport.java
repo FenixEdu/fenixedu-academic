@@ -47,7 +47,11 @@ public class ReadExpensesReport implements IService {
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
         Integer userNumber = getUserNumber(persistentSuport, userView);
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        if (userNumber != null && projectCode != null && p.getIPersistentProject().isUserProject(userNumber, projectCode)) {
+        if (userNumber != null
+                && projectCode != null
+                && (p.getIPersistentProject().isUserProject(userNumber, projectCode) || persistentSuport.getIPersistentProjectAccess()
+                        .hasPersonProjectAccess(userView.getUtilizador(), projectCode))) {
+
             List infoLines = new ArrayList();
 
             if (infoReport == null) {

@@ -31,4 +31,32 @@
 		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/helpPage.jsp" />
 	</definition>
+	<definition name="choose-Project" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/chooseProject.jsp" />
+	</definition>
+	<definition name="show-Project-Accesses" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showProjectAccesses.jsp" />
+	</definition>
+	<definition name="choose-Dates" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/chooseDates.jsp" />
+	</definition>
+	<definition name="edit-Project-Access" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/editProjectAccess.jsp" />
+	</definition>
+	<definition name="choose-Person" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/choosePerson.jsp" />
+	</definition>
+	<definition name="show-Person-Accesses" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showPersonAccesses.jsp" />
+	</definition>
+		<definition name="show-Projects-Accesses" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showProjectsAccesses.jsp" />
+	</definition>
 </tiles-definitions>
