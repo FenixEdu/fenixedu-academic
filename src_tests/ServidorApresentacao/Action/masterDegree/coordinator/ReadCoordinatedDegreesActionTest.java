@@ -61,6 +61,10 @@ public class ReadCoordinatedDegreesActionTest
 		degrees.add(infoExecutionDegree);
 		degrees.add(infoExecutionDegree);
 
+		List candidates = new ArrayList();
+		candidates.add(new Integer(1));
+		candidates.add(new Integer(2));
+		
 		Collection roles = new ArrayList();
 		InfoRole infoRole = new InfoRole();
 		infoRole.setRoleType(RoleType.COORDINATOR);
@@ -70,6 +74,7 @@ public class ReadCoordinatedDegreesActionTest
 		
 		HashMap items = new HashMap();
 		items.put(SessionConstants.MASTER_DEGREE_LIST, degrees);
+		items.put(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, candidates);
 		items.put(SessionConstants.U_VIEW, userView);
 		return items;
 
@@ -98,7 +103,8 @@ public class ReadCoordinatedDegreesActionTest
 		HashMap attributes = new HashMap();
 		
 		List sessionAttributes = new ArrayList();
-		sessionAttributes.add(SessionConstants.MASTER_DEGREE_LIST);
+		sessionAttributes.add(SessionConstants.MASTER_DEGREE);
+		sessionAttributes.add(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT);
 		attributes.put(new Integer(ScopeConstants.SESSION),sessionAttributes);
 		return null;
 	}

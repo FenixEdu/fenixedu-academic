@@ -57,8 +57,13 @@ public class CoordinatedDegreeInfoActionTest
 		degrees.add(infoExecutionDegree);
 		degrees.add(infoExecutionDegree);
 		
+		List candidates = new ArrayList();
+		candidates.add(new Integer(1));
+		candidates.add(new Integer(2));
+		
 		HashMap items = new HashMap();
 		items.put(SessionConstants.MASTER_DEGREE_LIST, degrees);
+		items.put(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT, candidates);
 		return items;
 
 	}
@@ -89,7 +94,7 @@ public class CoordinatedDegreeInfoActionTest
 		HashMap attributes = new HashMap();
 		
 		List sessionAttributes = new ArrayList();
-		sessionAttributes.add(SessionConstants.MASTER_DEGREE_LIST);
+		sessionAttributes.add(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT);
 		sessionAttributes.add(SessionConstants.MASTER_DEGREE);
 		attributes.put(new Integer(ScopeConstants.SESSION),sessionAttributes);
 		return null;
