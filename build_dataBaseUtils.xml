@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project basedir="." default="get-dump" name="DBUtils">
-
-	<taskdef name="scp"
-             classname="org.apache.tools.ant.taskdefs.optional.ssh.Scp"
-             />
-
-    <taskdef name="sshexec"
-             classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"
-             />
+<project basedir="." default="get-dump" name="DataBase Utils">
 
     <!-- ########## PROPERTIES ########## -->
 
@@ -16,7 +8,139 @@
 
 	<property file="build.properties"/>
 
+	<property name="sql" location="etc"/>
+
     <!-- ########## TARGETS ########## -->
+
+    <target name="create-tables"
+            description="Cria as tabelas da base de dados.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            classpath="${lib}/mysql-connector-java-3.0.7.jar"
+        >
+        DROP DATABASE IF EXISTS ${db.name};
+        CREATE DATABASE ${db.name};
+        </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="tables_*.sql" />
+			 <exclude name="tables_AssiduousnessASSMARCAS.sql" />
+			 <exclude name="tables_inscricoes_backup.sql" />
+			 <exclude name="tables_slide.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+    <target name="create-tables_assiduidade"
+            description="Cria as tabelas da base de dados.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/"
+            userid="${db.assiduousness.user}"
+            password="${db.assiduousness.pass}"
+            encoding="${encoding}"
+	    classpath="${lib}/mysql-connector-java-3.0.7.jar"
+        >
+        DROP DATABASE IF EXISTS ${db.assiduousness.name};
+        CREATE DATABASE ${db.assiduousness.name};
+        </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.assiduousness.name}"
+            userid="${db.assiduousness.user}"
+            password="${db.assiduousness.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="tables_AssiduousnessASSMARCAS.sql" />
+			 <include name="test-data_AssiduousnessASSMARCAS.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+    <target name="create-tables_filterperson"
+            description="Cria as tabelas da base de dados.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/"
+            userid="${db.personFilter.user}"
+            password="${db.personFilter.pass}"
+            encoding="${encoding}"
+	    classpath="${lib}/mysql-connector-java-3.0.7.jar"
+        >
+        DROP DATABASE IF EXISTS ${db.personFilter.name};
+        CREATE DATABASE ${db.personFilter.name};
+        </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.personFilter.name}"
+            userid="${db.personFilter.user}"
+            password="${db.personFilter.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="tables_personFilter.sql" />
+			 <include name="test-data_personFilter.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+    <target name="load-database"
+            depends="create-tables"
+            description="Cria as tabelas da base de dados.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_*.sql"
+        >
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+    <target name="dump-db"
+            description="Uses dbunit to load database to xml file">
+	  <dbunit driver="com.mysql.jdbc.Driver"
+    	      url="jdbc:mysql://localhost/${db.name}"
+        	  userid="${db.user}"
+	          password="${db.pass}">
+    	  <export dest="${sql}/dbContents.xml"/> 
+	  </dbunit>
+    </target>
+
+    <target name="load-dump-db" depends="load-database, dump-db"
+            description="Load and dump database to testDataSet.xml">
+	  <copy file="${sql}/dbContents.xml" toFile="${sql}/testDataSet.xml"/>
+    </target>
+
 
     <target name="get-fenix-dump"
             description="Deploys application to test server"
@@ -106,14 +230,15 @@
 		<property name="server.hostname"
 				  value="fenix-tests.ist.utl.pt"
 				  />
-		<property name="server.dumpScript"
-				  value="/root/configs/getDBDump"
-				  />
-		<property name="server.dumpFilename"
+		<property name="server.dumpFilename.fenix"
 				  value="fenix.dump.sql"
+				  />
+		<property name="server.dumpFilename.slide"
+				  value="slide.dump.sql"
 				  />
 
 		<!-- Prompt for username & password -->
+
 		<input message="Enter username for ${server.hostname}:"
 			   addproperty="server.username"
 			   />
@@ -121,31 +246,50 @@
 			   addproperty="server.password"
 			   />
 
-		<!-- Run Dump Script on Server -->
-        <sshexec host="${server.hostname}"
-        		 username="${server.username}"
-        		 password="${server.password}"
-        		 command="${server.dumpScript}; zip ${server.dumpFilename}.zip ${server.dumpFilename}; rm ${server.dumpFilename}"
-        		 timeout="0"
-        		 />
-
 		<!-- Transfer DB Dump File -->
-        <scp file="${server.username}:${server.password}@${server.hostname}:/root/${server.dumpFilename}.zip"
-        	 todir="${basedir}"
+
+        <scp file="${server.username}:${server.password}@${server.hostname}:${server.dumpFilename.fenix}.zip"
+        	 todir="${sql}"
+        	 trust="true"
+        	 />
+        <scp file="${server.username}:${server.password}@${server.hostname}:${server.dumpFilename.slide}.zip"
+        	 todir="${sql}"
         	 trust="true"
         	 />
 
-		<!-- Remove DB Dump File from Server -->
-        <sshexec host="${server.hostname}"
-        		 username="${server.username}"
-        		 password="${server.password}"
-        		 command="rm ${server.dumpFilename}.zip"
-        		 timeout="0"
-        		 />
+		<unzip src="${sql}/${server.dumpFilename.fenix}.zip" dest="${sql}/${server.dumpFilename.fenix}"/>
+		<unzip src="${sql}/${server.dumpFilename.slide}.zip" dest="${sql}/${server.dumpFilename.slide}"/>
+		<delete file="${sql}/${server.dumpFilename.fenix}.zip"/>
+		<delete file="${sql}/${server.dumpFilename.slide}.zip"/>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/${fenix.dump.sql}"
+        >
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
 
-		<unzip src="${server.dumpFilename}.zip" dest="${basedir}/${server.dumpFilename}"/>
-		<delete file="${server.dumpFilename}.zip"/>		
-
+        <sql
+            driver="${db.slide.driver}"
+            url="${db.slide.alias}"
+            userid="${db.slide.user}"
+            password="${db.slide.pass}"
+            encoding="${encoding}"
+            src="${sql}/${slide.dump.sql}"
+        >
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
     </target>
 
 </project>
