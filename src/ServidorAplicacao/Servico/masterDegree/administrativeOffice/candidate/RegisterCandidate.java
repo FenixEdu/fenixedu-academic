@@ -20,17 +20,22 @@ import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IGratuity;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IQualification;
+import Dominio.IRole;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.IStudentKind;
 import Dominio.MasterDegreeCandidate;
+import Dominio.PersonRole;
 import Dominio.Pessoa;
 import Dominio.Qualification;
+import Dominio.Role;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
@@ -41,6 +46,7 @@ import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.GratuityState;
+import Util.RoleType;
 import Util.SituationName;
 import Util.State;
 import Util.StudentCurricularPlanState;
@@ -110,7 +116,27 @@ public class RegisterCandidate implements IServico {
 				IStudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(new StudentType(StudentType.NORMAL));
 				student.setStudentKind(studentKind);
 				
-				
+
+				List roles = new ArrayList();
+				Iterator iterator = masterDegreeCandidate.getPerson().getPersonRoles().iterator();
+				while(iterator.hasNext()){
+					roles.add(Cloner.copyIRole2InfoRole((IRole) iterator.next()));
+				}
+
+				IRole role = new Role();
+				role.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+				IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(masterDegreeCandidate.getPerson(), role);
+				sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+
+
+				// Give The Student Role if Necessary
+				if (!AuthorizationUtils.containsRole(roles, RoleType.STUDENT)){
+					personRole = new PersonRole();
+					sp.getIPersistentPersonRole().simpleLockWrite(personRole);
+					personRole.setPerson(masterDegreeCandidate.getPerson());
+					role = sp.getIPersistentRole().readByRoleType(RoleType.STUDENT);
+					personRole.setRole(role);
+				}
 			}
 
 			IStudentCurricularPlan studentCurricularPlanOld = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(), TipoCurso.MESTRADO_OBJ); 
@@ -164,11 +190,8 @@ public class RegisterCandidate implements IServico {
 				enrolmentEvaluation.setEnrolment(enrolment);
 				enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 				enrolmentEvaluation.setEnrolmentEvaluationType(new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL));
-			
 				
 				enrolment.getEvaluations().add(enrolmentEvaluation);
-				
-				
 			}
 			
 			// Change the Candidate Situation
@@ -177,6 +200,7 @@ public class RegisterCandidate implements IServico {
 			
 			ICandidateSituation oldCandidateSituation = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp, true);
 			oldCandidateSituation.setValidation(new State(State.INACTIVE));
+
 			
 			ICandidateSituation candidateSituation = new CandidateSituation();
 			sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
@@ -193,8 +217,8 @@ public class RegisterCandidate implements IServico {
 			gratuity.setGratuityState(GratuityState.NOT_PAYED);
 			gratuity.setState(new State(State.ACTIVE));
 			gratuity.setStudentCurricularPlan(studentCurricularPlan);
-			
-						
+
+
 			// Copy Qualifications
 			
 			IQualification qualification = new Qualification();

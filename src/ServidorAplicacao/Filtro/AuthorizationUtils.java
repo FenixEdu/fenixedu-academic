@@ -20,7 +20,7 @@ public abstract class AuthorizationUtils {
 	 * @param collection
 	 * @return boolean
 	 */
-	static boolean containsRole(Collection roles, RoleType role) {
+	public static boolean containsRole(Collection roles, RoleType role) {
 		Iterator rolesIterator = roles.iterator();
 		while (rolesIterator.hasNext()) {
 			InfoRole infoRole = (InfoRole) rolesIterator.next();

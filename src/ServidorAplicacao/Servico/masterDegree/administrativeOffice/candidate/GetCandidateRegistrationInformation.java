@@ -67,11 +67,17 @@ public class GetCandidateRegistrationInformation implements IServico {
 			
 			infoCandidateRegistration.setInfoMasterDegreeCandidate(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate));
 			infoCandidateRegistration.setInfoStudentCurricularPlan(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-			infoCandidateRegistration.setEnrolments(new ArrayList());
-			Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
-			while(iterator.hasNext()){
-				Enrolment enrolment = (Enrolment) iterator.next();
-				infoCandidateRegistration.getEnrolments().add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));
+
+
+			if (studentCurricularPlan.getEnrolments().size() == 0){
+				infoCandidateRegistration.setEnrolments(null);
+			} else {
+				infoCandidateRegistration.setEnrolments(new ArrayList());
+				Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
+				while(iterator.hasNext()){
+					Enrolment enrolment = (Enrolment) iterator.next();
+					infoCandidateRegistration.getEnrolments().add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));
+				}
 			}
 		} catch(ExcepcaoPersistencia e){
 			throw new FenixServiceException(e);

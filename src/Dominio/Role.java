@@ -14,6 +14,7 @@ public class Role extends DomainObject implements IRole {
 	//private Collection rolePersons;
 	private RoleType roleType;
 
+
 	public Role() {
 	}
 
@@ -26,6 +27,13 @@ public class Role extends DomainObject implements IRole {
 				&& (((IRole) obj).getRoleType().equals(getRoleType())));
 	}
 
+
+	public int hashCode() {
+		return 0;
+	}
+
+
+	
 
 	/**
 	 * @return String
