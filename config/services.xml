@@ -5898,5 +5898,15 @@
     	<filterChains>
     	    <chain name="StudentCourseReportAuthorization"/>
     	</filterChains>
+    </service>
+    <service>
+        <name>ReadExecutionDegreesByDegreeCurricularPlanID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
     </service>    
 </serviceDefinitions>
