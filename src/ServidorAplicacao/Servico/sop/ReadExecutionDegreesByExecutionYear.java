@@ -25,50 +25,53 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadExecutionDegreesByExecutionYear implements IService
-{
+public class ReadExecutionDegreesByExecutionYear implements IService {
 
-    public ReadExecutionDegreesByExecutionYear()
-    {
+    public ReadExecutionDegreesByExecutionYear() {
     }
 
-    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException
-    {
+    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
         ArrayList infoExecutionDegreeList = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
 
             List executionDegrees = null;
-            if (infoExecutionYear == null)
-            {
+            if (infoExecutionYear == null) {
                 IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
                 IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
                 executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
-            }
-            else
-            {
-            	executionDegrees = executionDegreeDAO.readByExecutionYear(infoExecutionYear.getYear());
+            } else {
+                executionDegrees = executionDegreeDAO.readByExecutionYear(infoExecutionYear.getYear());
             }
 
             Iterator iterator = executionDegrees.iterator();
             infoExecutionDegreeList = new ArrayList();
 
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-                infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getCurricularPlan()));
-                infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(InfoDegree.newInfoFromDomain(executionDegree.getCurricularPlan().getDegree()));
+                System.out.println("EXECUTION_COURSE: " + executionDegree.getIdInternal());
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                        .newInfoFromDomain(executionDegree);
+                if (executionDegree.getCurricularPlan() == null) {
+                    System.out.println("--> CurricularPlan null");
+                } else {
+                    infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
+                            .newInfoFromDomain(executionDegree.getCurricularPlan()));
+                    if (executionDegree.getCurricularPlan().getDegree() == null) {
+                        System.out.println("--> Degree null");
+                    } else
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(
+                                InfoDegree.newInfoFromDomain(executionDegree.getCurricularPlan()
+                                        .getDegree()));
+                }
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
             throw new FenixServiceException(ex);
         }
         return infoExecutionDegreeList;

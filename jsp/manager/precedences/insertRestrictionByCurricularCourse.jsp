@@ -6,9 +6,6 @@
 	<%--<html:form action="/makeSimplePrecedence.do">
 		
 	</html:form>--%>
-<logic:equal name="className" value="RestrictionByNumberOfDoneCurricularCourses">
-	<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionByNumberOfDoneCurricularCourses"/></h3>
-</logic:equal>
 <logic:equal name="className" value="RestrictionDoneCurricularCourse">
 	<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionDoneCurricularCourse"/></h3>
 </logic:equal>
@@ -23,7 +20,4 @@
 </logic:equal>
 <logic:equal name="className" value="RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse">
 	<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse"/></h3>
-</logic:equal>
-<logic:equal name="className" value="RestrictionPeriodToApply">
-	<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionPeriodToApply"/></h3>
 </logic:equal>

@@ -299,10 +299,6 @@
 		<put name="body" value="/manager/precedences/manageRestriction.jsp"/>
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
 	</definition>
-	<definition name="df.page.manage.precedences.insertRestriction" extends="definition.manager.masterPage">
-		<put name="body" value="/manager/precedences/insertRestriction.jsp"/>
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
-	</definition>
 	<definition name="df.page.manage.precedences.insertRestrictionByNumber" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/precedences/insertRestrictionByNumber.jsp"/>
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
@@ -313,6 +309,10 @@
 	</definition>
 	<definition name="df.page.manage.precedences.insertRestrictionByPeriodToApply" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/precedences/insertRestrictionByPeriodToApply.jsp"/>
+		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
+	</definition>
+	<definition name="df.page.manage.precedences.insertRestrictionConfirmation" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/precedences/insertRestrictionConfirmation.jsp"/>
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
 	</definition>
     
