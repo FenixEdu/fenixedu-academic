@@ -58,7 +58,7 @@
     </filterChain>
     <filterChain>
         <name>StudentCurriculumAccess</name>
-        <expression>EnrollmentLEECAuthorization || MasterDegreeAdministrativeOfficeAuthorization || SeminaryCoordinator</expression>
+        <expression>EnrollmentLEECAuthorization || MasterDegreeAdministrativeOfficeAuthorization || SeminaryCoordinatorOrStudent</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
