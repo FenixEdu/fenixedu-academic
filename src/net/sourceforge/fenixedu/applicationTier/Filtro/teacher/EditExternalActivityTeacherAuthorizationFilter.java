@@ -28,7 +28,7 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-     *      DataBeans.InfoObject)
+     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject)
      */
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
         try {

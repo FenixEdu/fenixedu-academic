@@ -59,7 +59,7 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
-     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
      */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws Exception {

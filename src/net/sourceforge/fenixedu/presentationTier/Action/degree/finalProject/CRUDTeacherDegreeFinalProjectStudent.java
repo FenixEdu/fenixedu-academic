@@ -40,7 +40,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
      * (non-Javadoc)
      * 
      * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateFormFromInfoObject(org.apache.struts.action.ActionMapping,
-     *      DataBeans.InfoObject, org.apache.struts.action.ActionForm,
+     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
     protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
