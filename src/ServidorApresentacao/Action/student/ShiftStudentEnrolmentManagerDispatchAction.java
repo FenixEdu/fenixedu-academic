@@ -16,8 +16,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoShiftEnrollment;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
+import DataBeans.enrollment.shift.InfoShiftEnrollment;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;

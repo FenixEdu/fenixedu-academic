@@ -15,7 +15,7 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoShiftEnrollment;
+import DataBeans.enrollment.shift.InfoShiftEnrollment;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.Frequenta;

@@ -2,10 +2,12 @@
  * Created on 10/Fev/2004
  *  
  */
-package DataBeans;
+package DataBeans.enrollment.shift;
 
 import java.util.List;
-import java.util.Map;
+
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoStudent;
 
 /**
  * This class keeps all information usefull for shift enrollment use case
@@ -21,22 +23,24 @@ public class InfoShiftEnrollment
 	private List infoAttendingCourses;
 	
 	/**
-	 * execution courses that belongs to execution degree selected
+	 * Execution courses that belongs to execution degree selected
 	 */
 	private List infoExecutionCoursesList;
 	
 	/**
-	 * execution degree selected
+	 * Execution degree selected
 	 */
 	private InfoExecutionDegree infoExecutionDegree;
 	
 	/**
-	 * TODO: explain this.
+	 * List with Execution degrees labels and values to display in the select box. 
+	 * Witch label has degree's name concat with degree curricular plan name
+	 * because it's necessary to distinct two execution degree of the same degree.
 	 */
 	private List infoExecutionDegreesLabelsList;
 	
 	/**
-	 * executionDegrees present.
+	 * Execution degrees present.
 	 */
 	private List infoExecutionDegreesList;
     
@@ -155,29 +159,42 @@ public class InfoShiftEnrollment
 		string.append("[InfoShiftEnrollment ");
 		string.append("\ninfoStudent: ");
 		string.append(infoStudent.getNumber());
+		
+		string.append("\ninfoExecutionDegreesList: ");		
 		if (infoExecutionDegreesList != null)
 		{
-			string.append("\ninfoExecutionDegreesList: ");
 			string.append(infoExecutionDegreesList.size());
+		} else {
+			string.append("null");			
 		}
+		
+		string.append("\ninfoExecutionDegreesLabelsList: ");
 		if (infoExecutionDegreesLabelsList != null)
 		{
-			string.append("\ninfoExecutionDegreesLabelsList: ");
 			string.append(infoExecutionDegreesLabelsList.size());
+		} else {
+			string.append("null");			
 		}
+		
 		string.append("\ninfoExecutionDegree: ");
 		string.append(infoExecutionDegree.getIdInternal());
+		
+		string.append("\ninfoExecutionCoursesList: ");
 		if (infoExecutionCoursesList != null)
 		{
-			string.append("\ninfoExecutionCoursesList: ");
 			string.append(infoExecutionCoursesList.size());
+		} else {
+			string.append("null");			
 		}
+		
+		string.append("\ninfoAttendingCourses: ");
 		if (infoAttendingCourses != null)
 		{
-			string.append("\ninfoAttendingCourses: ");
 			string.append(infoAttendingCourses.size());
+		} else {
+			string.append("null");			
 		}
-		string.append("]");
+		string.append(" ]");
 
 		return string.toString();
 	}
