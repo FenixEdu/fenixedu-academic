@@ -71,5 +71,13 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
 	 * @param curricularCourse
 	 */
 	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param branch
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByBranch(IBranch branch) throws ExcepcaoPersistencia;
 
 }
