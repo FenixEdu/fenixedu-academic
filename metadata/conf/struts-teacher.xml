@@ -156,7 +156,7 @@
         	dynamic="true">
         	<form-property name="studentsNumbers"  type="java.lang.Integer[]" />
 	        <form-property name="marks"  type="java.lang.String[]" />
-	        <form-property name="theFile" type="org.apache.struts.upload.FormFile" />
+	        <form-property name="theFile"  type="java.lang.Object" />
 	        <form-property name="publishmentMessage"  type="java.lang.String" />
 	        <form-property name="sendSMS"  type="java.lang.Boolean" />
 			<form-property name="page" type="java.lang.Integer" initial="0"/>

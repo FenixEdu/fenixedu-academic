@@ -7,7 +7,7 @@
 <h2><bean:message key="title.loadMarks"/></h2>
 
 
- <html:form action="/loadMarks.do?method=loadMarks" method="post" enctype="multipart/form-data">
+ <html:form action="/writeMarks.do?method=loadFile" method="post" enctype="multipart/form-data">
  
  	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>--%>
 	<html:file property="theFile" />
