@@ -29,31 +29,49 @@ public class ExamsMapRenderer {
 	
 	public StringBuffer render() {
 		StringBuffer strBuffer = new StringBuffer("");
-		
-		strBuffer.append(
-			"<table cellspacing='0' cellpadding='0' width='100%'>");
 
+		strBuffer.append(
+			"<table cellspacing='3' cellpadding='3' width='100%'>");
+		strBuffer.append("<tr>");
 		renderHeader(strBuffer);
+		strBuffer.append("</tr>");
 		
 		for(int week = 0; week < numberOfWeks; week++) {
 			strBuffer.append("<tr>");
-			for(int slot = 0; slot < daysOfWeek.length; slot++) {			
-				strBuffer.append("<td>");
-				strBuffer.append(
-					examsMapSlotContentRenderer.render(
-						(ExamsMapSlot) examsMap.getDays().get(week*daysOfWeek.length + slot)));
-				strBuffer.append("</td>");
-			}
+			renderLabelsForRowOfDays(strBuffer, week);
+			strBuffer.append("</tr>");
+			strBuffer.append("<tr>");
+			renderExamsForRowOfDays(strBuffer, week);
 			strBuffer.append("</tr>");
 		}
+
 		strBuffer.append("</table>");
 		
 		return strBuffer;
 	}
 
 
-	private void renderHeader(StringBuffer strBuffer) {
+	private void renderExamsForRowOfDays(StringBuffer strBuffer, int week) {
+		for(int slot = 0; slot < daysOfWeek.length; slot++) {			
+			strBuffer.append("<td align='left'>");
+			strBuffer.append(
+				examsMapSlotContentRenderer.renderExams(
+					(ExamsMapSlot) examsMap.getDays().get(week*daysOfWeek.length + slot)));
+			strBuffer.append("</td>");
+		}
+	}
 
+	private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week) {
+		for(int slot = 0; slot < daysOfWeek.length; slot++) {			
+			strBuffer.append("<td align='right'>");
+			strBuffer.append(
+				examsMapSlotContentRenderer.renderDayLabel(
+					(ExamsMapSlot) examsMap.getDays().get(week*daysOfWeek.length + slot)));
+			strBuffer.append("</td>");
+		}
+	}
+
+	private void renderHeader(StringBuffer strBuffer) {
 		for (int index = 0; index < this.daysOfWeek.length; index++) {
 
 			StringBuffer classCSS = new StringBuffer("horarioHeader");
@@ -68,7 +86,6 @@ public class ExamsMapRenderer {
 				.append("</td>\r\n");
 		}
 	}
-
 
 	/**
 	 * @return

@@ -16,7 +16,7 @@ import ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot;
 public class ExamsMapContentRenderer
 	implements ExamsMapSlotContentRenderer {
 
-	public StringBuffer render(ExamsMapSlot examsMapSlot) {
+	public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot) {
 		StringBuffer strBuffer = new StringBuffer();
 		
 		strBuffer.append("<strong>");
@@ -32,12 +32,27 @@ public class ExamsMapContentRenderer
 		strBuffer.append("</strong>");
 		strBuffer.append("</br>");
 
-		// Write exam info
+		return strBuffer;
+	}
+
+	public StringBuffer renderExams(ExamsMapSlot examsMapSlot) {
+		StringBuffer strBuffer = new StringBuffer();
+
 		for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
 			InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
+
 			strBuffer.append(infoExam.getInfoExecutionCourse().getSigla());
+
+			if (infoExam.getBeginning() != null) {
+				strBuffer.append(" às ");
+				strBuffer.append(infoExam.getBeginning().get(Calendar.HOUR_OF_DAY));
+				strBuffer.append("H");
+			}
+
 			strBuffer.append("</br>");
 		}
+
+		strBuffer.append("</br>");
 
 		return strBuffer;
 	}
