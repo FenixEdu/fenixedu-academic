@@ -18,22 +18,20 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.BibliographicReference;
+import Dominio.CurricularCourse;
 import Dominio.Curriculum;
 import Dominio.DisciplinaExecucao;
-import Dominio.Evaluation;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluationMethod;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
 import Dominio.ITeacher;
 import Dominio.Professorship;
 import Dominio.ResponsibleFor;
-import Dominio.Site;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -47,47 +45,205 @@ public class SiglaDataLoader {
 		SiglaDataLoader loader = new SiglaDataLoader();
 		PersistenceBroker broker =
 			PersistenceBrokerFactory.defaultPersistenceBroker();
-		System.out.println("A carregar disciplinas execução do fenix");
-		List fenixExecutionCourses = loader.loadFenixExecutionCourses();
-		System.out.println(
-			"carregamento efectuado! nº de disciplinas->"
-				+ fenixExecutionCourses.size());
-		Iterator fenixIter = fenixExecutionCourses.iterator();
-		while (fenixIter.hasNext()) {
+
+		updateCurriculum(loader, broker); 
+		updateBibliography(loader, broker);
+
+		broker.close();
+
+	}
+
+	private static void updateBibliography(SiglaDataLoader loader, PersistenceBroker broker) {
+		System.out.println("a carregar disciplinas execução do fénix");
+		List fenixExecutionCourses = loader.loadFenixExecutionCourses(broker);
+		Iterator iter = fenixExecutionCourses.iterator();
+		System.out.println("iniciando actualização das bibliografias");	
+		while (iter.hasNext()) {
 			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) fenixIter.next();
-			System.out.println(
-				"a efectuar update à disciplinaExecução->"
-					+ executionCourse.getSigla()
-					+ "-"
-					+ executionCourse.getNome());
-			List fenixCurricularCourses =
-				executionCourse.getAssociatedCurricularCourses();
+				(IDisciplinaExecucao) iter.next();
+			
 			List siglaCurricularCourses =
 				loader.fenixToSiglaCurricularCourses(
-					fenixCurricularCourses,
+					executionCourse.getAssociatedCurricularCourses(),
 					executionCourse,
 					broker);
-			List siglaCurricularCoursesEng =
-				loader.fenixToSiglaCurricularCoursesEng(
-					fenixCurricularCourses,
-					executionCourse,
-					broker);
-
 			try {
-				loader.updateFenixCourses(
-					executionCourse,
-					siglaCurricularCourses,
-					siglaCurricularCoursesEng,
-					broker);
-
-				System.out.println("update efectuado");
+				loader.updateBibliography(executionCourse,siglaCurricularCourses,broker);
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
 			}
+			System.out.println("update da bibliografia concluído");
+		}
+		System.out.println("update das bibliografias concluído");
+	}
+
+	private static void updateCurriculum(
+		SiglaDataLoader loader,
+		PersistenceBroker broker) {
+		System.out.println("A carregar disciplinas curriculares do fenix");
+		//todo: usar uma query melhor para apanhar as disciplinas
+		List fenixCurricularCourses = loader.loadFenixCurricularCourses(broker);
+		System.out.println(
+			"carregamento efectuado! nº de disciplinas->"
+				+ fenixCurricularCourses.size());
+		Criteria notInCrit = new Criteria();
+		notInCrit.addEqualTo("ano_lectivo", "2002");
+		notInCrit.addEqualTo("semestre", "1");
+		Iterator fenixIter = fenixCurricularCourses.iterator();
+		while (fenixIter.hasNext()) {
+			ICurricularCourse fenixCurricularCourse =
+				(ICurricularCourse) fenixIter.next();
+			notInCrit.addNotEqualTo("codigo_disc",codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
+			
+			Criteria crit = new Criteria();
+			crit.addEqualTo(
+				"codigo_disc",
+				codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
+			//			//note: change the year for future migrations
+						crit.addEqualTo("ano_lectivo", "2002");
+			//			crit.addEqualTo("semestre", "1");
+			//			crit.addEqualTo(
+			//				"codigo_lic",
+			//				fenixCurricularCourse
+			//					.getDegreeCurricularPlan()
+			//					.getDegree()
+			//					.getIdInternal());
+
+			Query query = new QueryByCriteria(Curr_licenciatura.class, crit);
+			Curr_licenciatura curr_licenciatura =
+				(Curr_licenciatura) broker.getObjectByQuery(query);
+			Criteria critEn = new Criteria();
+			critEn.addEqualTo(
+				"codigo_disc",
+				codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
+			//note: change the year for future migrations
+						critEn.addEqualTo("ano_lectivo", "2002");
+			//			critEn.addEqualTo("semestre", "1");
+			//			critEn.addEqualTo(
+			//				"codigo_lic",
+			//				fenixCurricularCourse
+			//					.getDegreeCurricularPlan()
+			//					.getDegree()
+			//					.getIdInternal());
+
+			Query queryEn = new QueryByCriteria(Curr_lic_ingles.class, critEn);
+			Curr_lic_ingles curr_lic_ingles =
+				(Curr_lic_ingles) broker.getObjectByQuery(queryEn);
+			if (curr_licenciatura == null) {
+				System.out.println(
+					"Não encontrei nada no sigla para a disciplina curricular ->"
+						+ fenixCurricularCourse.getCode()
+						+ "-"
+						+ fenixCurricularCourse.getName());
+			} else {
+				Criteria crit1 = new Criteria();
+				crit1.addEqualTo(
+					"keyCurricularCourse",
+					fenixCurricularCourse.getIdInternal());
+				Query query1 = new QueryByCriteria(Curriculum.class, crit1);
+				ICurriculum curriculum =
+					(ICurriculum) broker.getObjectByQuery(query1);
+				if (curriculum == null) {
+					insertCurriculum(
+						broker,
+						fenixCurricularCourse,
+						curr_licenciatura,
+						curr_lic_ingles);
+				} else {
+					updateCurriculum(
+						broker,
+						fenixCurricularCourse,
+						curr_licenciatura,
+						curr_lic_ingles,
+						curriculum);
+				}
+
+			}
+			
 
 		}
-		broker.close();
+		
+		
+		System.out.println(
+			"update de todas as  disciplinas curriculares efectuado");
+			
+		Query notInQuery = new QueryByCriteria(Curr_licenciatura.class,notInCrit);
+		Collection siglaCurricularCoursesNotInFenix = broker.getCollectionByQuery(notInQuery);	
+		Iterator notInIter = siglaCurricularCoursesNotInFenix.iterator();
+		System.out.println("Lista de disciplinas curriculares que estão no Sigla e não no Fénix:");
+		while (notInIter.hasNext()) {
+			Curr_licenciatura curr_licenciatura = (Curr_licenciatura) notInIter.next();
+			System.out.println(curr_licenciatura.getCodigo_disc()+"-"+curr_licenciatura.getNome_disc());
+			System.out.println("Licenciatura:" +curr_licenciatura.getCodigo_lic());			
+			System.out.println("ano curricular:" +curr_licenciatura.getAno_curricular());
+			System.out.println("ano lectivo:" +curr_licenciatura.getAno_lectivo()+" - semestre:"+curr_licenciatura.getSemestre());
+			
+		} 
+			
+	}
+
+	/**
+	 * @param broker
+	 * @param fenixCurricularCourse
+	 * @param curr_licenciatura
+	 * @param curriculum
+	 */
+	private static void updateCurriculum(
+		PersistenceBroker broker,
+		ICurricularCourse fenixCurricularCourse,
+		Curr_licenciatura curr_licenciatura,
+		Curr_lic_ingles curr_lic_ingles,
+		ICurriculum curriculum) {
+		curriculum.setEvaluationElements(curr_licenciatura.getCrit_av());
+		curriculum.setGeneralObjectives(curr_licenciatura.getObjectivos());
+		curriculum.setOperacionalObjectives(
+			curr_licenciatura.getObjectivos_op());
+		curriculum.setProgram(curr_licenciatura.getProgr_res());
+		if (curr_lic_ingles != null) {
+			curriculum.setEvaluationElementsEn(curr_lic_ingles.getCrit_av());
+			curriculum.setGeneralObjectivesEn(curr_lic_ingles.getObjectivos());
+			curriculum.setOperacionalObjectivesEn(
+				curr_lic_ingles.getObjectivos_op());
+			curriculum.setProgramEn(curr_lic_ingles.getProgr_res());
+
+		}
+		try {
+			broker.store(curriculum);
+		} catch (PersistenceBrokerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @param broker
+	 * @param fenixCurricularCourse
+	 * @param curr_licenciatura
+	 */
+	private static void insertCurriculum(
+		PersistenceBroker broker,
+		ICurricularCourse fenixCurricularCourse,
+		Curr_licenciatura curr_licenciatura,
+		Curr_lic_ingles curr_lic_ingles) {
+		ICurriculum curriculum = new Curriculum();
+		curriculum.setCurricularCourse(fenixCurricularCourse);
+		curriculum.setEvaluationElements(curr_licenciatura.getCrit_av());
+		curriculum.setGeneralObjectives(curr_licenciatura.getObjectivos());
+		curriculum.setOperacionalObjectives(
+			curr_licenciatura.getObjectivos_op());
+		curriculum.setProgram(curr_licenciatura.getProgr_res());
+		if (curr_lic_ingles != null) {
+			curriculum.setEvaluationElementsEn(curr_lic_ingles.getCrit_av());
+			curriculum.setGeneralObjectivesEn(curr_lic_ingles.getObjectivos());
+			curriculum.setOperacionalObjectivesEn(
+				curr_lic_ingles.getObjectivos_op());
+			curriculum.setProgramEn(curr_lic_ingles.getProgr_res());
+
+		}
+		try {
+			broker.store(curriculum);
+		} catch (PersistenceBrokerException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -248,104 +404,105 @@ public class SiglaDataLoader {
 		return siglaCurricularCourses;
 	}
 
-	private void updateFenixCourses(
-		IDisciplinaExecucao executionCourse,
-		List siglaCurricularCourses,
-		List siglaCurricularCoursesEng,
-		PersistenceBroker broker)
-		throws ExcepcaoPersistencia {
-		ISite site = null;
-		ICurriculum curriculum = null;
-		IEvaluationMethod evaluation = null;
+	//	private void updateFenixCourses(
+	//		IDisciplinaExecucao executionCourse,
+	//		List siglaCurricularCourses,
+	//		List siglaCurricularCoursesEng,
+	//		PersistenceBroker broker)
+	//		throws ExcepcaoPersistencia {
+	//		ISite site = null;
+	//		ICurriculum curriculum = null;
+	//		IEvaluationMethod evaluation = null;
+	//
+	//		try {
+	//
+	//			Criteria crit = new Criteria();
+	//			crit.addEqualTo(
+	//				"executionCourse.idInternal",
+	//				executionCourse.getIdInternal());
+	//			Query query = new QueryByCriteria(Site.class, crit);
+	//			site = (ISite) broker.getObjectByQuery(query);
+	//			if (site == null) {
+	//				System.out.println("não encontrei o site");
+	//			}
+	//			query = new QueryByCriteria(Curriculum.class, crit);
+	//			curriculum = (ICurriculum) broker.getObjectByQuery(query);
+	//			if (curriculum == null) {
+	//				curriculum = new Curriculum();
+	//				//FIXME: curriculum now has curricularCourse
+	//				//curriculum.setExecutionCourse(executionCourse);
+	//			}
+	//			query = new QueryByCriteria(Evaluation.class, crit);
+	//
+	//			evaluation = (IEvaluationMethod) broker.getObjectByQuery(query);
+	//			site = updateSite(site, siglaCurricularCourses);
+	//
+	//			curriculum =
+	//				updateCurriculum(curriculum, siglaCurricularCourses, broker);
+	//			curriculum =
+	//				updateCurriculumEng(
+	//					curriculum,
+	//					siglaCurricularCoursesEng,
+	//					broker);
+	//			if (evaluation == null) {
+	//				//evaluation = new EvaluationMethod(executionCourse);
+	//			}
+	//			evaluation =
+	//				updateEvaluation(evaluation, siglaCurricularCourses, broker);
+	//
+	//			evaluation =
+	//				updateEvaluationEng(
+	//					evaluation,
+	//					siglaCurricularCoursesEng,
+	//					broker);
+	//			updateBibliography(executionCourse, siglaCurricularCourses, broker);
+	//			updateResponsibleTeachers(
+	//				executionCourse,
+	//				siglaCurricularCourses,
+	//				broker);
+	//			System.out.println("a guardar evaluation");
+	//			broker.store(evaluation);
+	//			System.out.println("a guardar curriculum");
+	//			broker.store(curriculum);
+	//			System.out.println("a guardar site");
+	//			broker.store(site);
+	//
+	//		} catch (ExcepcaoPersistencia e) {
+	//			throw e;
+	//		}
+	//
+	//	}
 
-		try {
-
-			Criteria crit = new Criteria();
-			crit.addEqualTo(
-				"executionCourse.idInternal",
-				executionCourse.getIdInternal());
-			Query query = new QueryByCriteria(Site.class, crit);
-			site = (ISite) broker.getObjectByQuery(query);
-			if (site == null) {
-				System.out.println("não encontrei o site");
-			}
-			query = new QueryByCriteria(Curriculum.class, crit);
-			curriculum = (ICurriculum) broker.getObjectByQuery(query);
-			if (curriculum == null) {
-				curriculum = new Curriculum();
-				//FIXME: curriculum now has curricularCourse
-				//curriculum.setExecutionCourse(executionCourse);
-			}
-			query = new QueryByCriteria(Evaluation.class, crit);
-
-			evaluation = (IEvaluationMethod) broker.getObjectByQuery(query);
-			site = updateSite(site, siglaCurricularCourses);
-
-			curriculum =
-				updateCurriculum(curriculum, siglaCurricularCourses, broker);
-			curriculum =
-				updateCurriculumEng(
-					curriculum,
-					siglaCurricularCoursesEng,
-					broker);
-			if (evaluation == null) {
-				//evaluation = new EvaluationMethod(executionCourse);
-			}
-			evaluation =
-				updateEvaluation(evaluation, siglaCurricularCourses, broker);
-
-			evaluation =
-				updateEvaluationEng(
-					evaluation,
-					siglaCurricularCoursesEng,
-					broker);
-			updateBibliography(executionCourse, siglaCurricularCourses, broker);
-			updateResponsibleTeachers(
-				executionCourse,
-				siglaCurricularCourses,
-				broker);
-			System.out.println("a guardar evaluation");
-			broker.store(evaluation);
-			System.out.println("a guardar curriculum");
-			broker.store(curriculum);
-			System.out.println("a guardar site");
-			broker.store(site);
-
-		} catch (ExcepcaoPersistencia e) {
-			throw e;
-		}
-
-	}
-
-	/**
-	 * @param evaluation
-	 * @param siglaCurricularCoursesEng
-	 * @return
-	 */
-	private IEvaluationMethod updateEvaluationEng(
-		IEvaluationMethod evaluation,
-		List siglaCurricularCoursesEng,
-		PersistenceBroker broker) {
-
-		String crit_av = "";
-
-		Iterator iter = siglaCurricularCoursesEng.iterator();
-		while (iter.hasNext()) {
-			Curr_lic_ingles siglaCurricularCourse =
-				(Curr_lic_ingles) iter.next();
-			if (siglaCurricularCourse.getCrit_av() != null
-				&& siglaCurricularCourse.getCrit_av().length()
-					> crit_av.length()) {
-				crit_av = siglaCurricularCourse.getCrit_av();
-			}
-		}
-		if (evaluation.getEvaluationElementsEn() == null
-			|| evaluation.getEvaluationElementsEn().length()
-				<= crit_av.length()) {
-			evaluation.setEvaluationElementsEn(crit_av);
-		}
-		return evaluation;
-	}
+	//	/**
+	//	 * @param evaluation
+	//	 * @param siglaCurricularCoursesEng
+	//	 * @deprecated
+	//	 * @return
+	//	 */
+	//	private IEvaluationMethod updateEvaluationEng(
+	//		IEvaluationMethod evaluation,
+	//		List siglaCurricularCoursesEng,
+	//		PersistenceBroker broker) {
+	//
+	//		String crit_av = "";
+	//
+	//		Iterator iter = siglaCurricularCoursesEng.iterator();
+	//		while (iter.hasNext()) {
+	//			Curr_lic_ingles siglaCurricularCourse =
+	//				(Curr_lic_ingles) iter.next();
+	//			if (siglaCurricularCourse.getCrit_av() != null
+	//				&& siglaCurricularCourse.getCrit_av().length()
+	//					> crit_av.length()) {
+	//				crit_av = siglaCurricularCourse.getCrit_av();
+	//			}
+	//		}
+	//		if (evaluation.getEvaluationElementsEn() == null
+	//			|| evaluation.getEvaluationElementsEn().length()
+	//				<= crit_av.length()) {
+	//			evaluation.setEvaluationElementsEn(crit_av);
+	//		}
+	//		return evaluation;
+	//	}
 
 	/**
 	 * @param curriculum
@@ -400,85 +557,60 @@ public class SiglaDataLoader {
 
 	}
 
-	/**
-	 * @param evaluation
-	 * @param siglaCurricularCourses
-	 * @return
-	 */
-	private IEvaluationMethod updateEvaluation(
-		IEvaluationMethod evaluation,
-		List siglaCurricularCourses,
-		PersistenceBroker broker) {
-		String crit_av = "";
-
-		Iterator iter = siglaCurricularCourses.iterator();
-		while (iter.hasNext()) {
-			Curr_licenciatura siglaCurricularCourse =
-				(Curr_licenciatura) iter.next();
-			if (siglaCurricularCourse.getCrit_av() != null
-				&& siglaCurricularCourse.getCrit_av().length()
-					> crit_av.length()) {
-				crit_av = siglaCurricularCourse.getCrit_av();
-			}
-		}
-		if (evaluation.getEvaluationElements() == null
-			|| evaluation.getEvaluationElements().length() <= crit_av.length()) {
-			evaluation.setEvaluationElements(crit_av);
-		}
-		return evaluation;
-	}
-
-	/**
-	 * @param curriculum
-	 * @param siglaCurricularCourses
-	 * @return
-	 */
-	private ICurriculum updateCurriculum(
-		ICurriculum curriculum,
-		List siglaCurricularCourses,
-		PersistenceBroker broker) {
-		String objectivosOP = "";
-		String objectivosGerais = "";
-		String programa = "";
-
-		Iterator iter = siglaCurricularCourses.iterator();
-		while (iter.hasNext()) {
-			Curr_licenciatura siglaCurricularCourse =
-				(Curr_licenciatura) iter.next();
-			if (siglaCurricularCourse.getObjectivos() != null
-				&& siglaCurricularCourse.getObjectivos().length()
-					>= objectivosGerais.length()) {
-				objectivosGerais = siglaCurricularCourse.getObjectivos();
-			}
-			if (siglaCurricularCourse.getObjectivos_op() != null
-				&& siglaCurricularCourse.getObjectivos_op().length()
-					>= objectivosOP.length()) {
-				objectivosOP = siglaCurricularCourse.getObjectivos_op();
-			}
-			if (siglaCurricularCourse.getProgr_res() != null
-				&& siglaCurricularCourse.getProgr_res().length()
-					>= programa.length()) {
-				programa = siglaCurricularCourse.getProgr_res();
-			}
-
-		}
-		if (curriculum.getGeneralObjectives() == null
-			|| curriculum.getGeneralObjectives().length()
-				< objectivosGerais.length()) {
-			curriculum.setGeneralObjectives(objectivosGerais);
-		}
-		if (curriculum.getOperacionalObjectives() == null
-			|| curriculum.getOperacionalObjectives().length()
-				< objectivosOP.length()) {
-			curriculum.setOperacionalObjectives(objectivosOP);
-		}
-		if (curriculum.getProgram() == null
-			|| curriculum.getProgram().length() < programa.length()) {
-			curriculum.setProgram(programa);
-		}
-
-		return curriculum;
-	}
+	//	/**
+	//	 * 
+	//	 * @param curriculum
+	//	 * @param siglaCurricularCourses
+	//	 * @param broker
+	//	 * @deprecated
+	//	 * @return
+	//	 */
+	//	private ICurriculum updateCurriculum(
+	//		ICurriculum curriculum,
+	//		List siglaCurricularCourses,
+	//		PersistenceBroker broker) {
+	//		String objectivosOP = "";
+	//		String objectivosGerais = "";
+	//		String programa = "";
+	//
+	//		Iterator iter = siglaCurricularCourses.iterator();
+	//		while (iter.hasNext()) {
+	//			Curr_licenciatura siglaCurricularCourse =
+	//				(Curr_licenciatura) iter.next();
+	//			if (siglaCurricularCourse.getObjectivos() != null
+	//				&& siglaCurricularCourse.getObjectivos().length()
+	//					>= objectivosGerais.length()) {
+	//				objectivosGerais = siglaCurricularCourse.getObjectivos();
+	//			}
+	//			if (siglaCurricularCourse.getObjectivos_op() != null
+	//				&& siglaCurricularCourse.getObjectivos_op().length()
+	//					>= objectivosOP.length()) {
+	//				objectivosOP = siglaCurricularCourse.getObjectivos_op();
+	//			}
+	//			if (siglaCurricularCourse.getProgr_res() != null
+	//				&& siglaCurricularCourse.getProgr_res().length()
+	//					>= programa.length()) {
+	//				programa = siglaCurricularCourse.getProgr_res();
+	//			}
+	//
+	//		}
+	//		if (curriculum.getGeneralObjectives() == null
+	//			|| curriculum.getGeneralObjectives().length()
+	//				< objectivosGerais.length()) {
+	//			curriculum.setGeneralObjectives(objectivosGerais);
+	//		}
+	//		if (curriculum.getOperacionalObjectives() == null
+	//			|| curriculum.getOperacionalObjectives().length()
+	//				< objectivosOP.length()) {
+	//			curriculum.setOperacionalObjectives(objectivosOP);
+	//		}
+	//		if (curriculum.getProgram() == null
+	//			|| curriculum.getProgram().length() < programa.length()) {
+	//			curriculum.setProgram(programa);
+	//		}
+	//
+	//		return curriculum;
+	//	}
 
 	/**
 	 * @param site
@@ -576,12 +708,7 @@ public class SiglaDataLoader {
 								.getDegreeCurricularPlan()
 								.getDegree()
 								.getIdInternal());
-					System.out.println(
-						"ano_curricular="
-							+ scope
-								.getCurricularSemester()
-								.getCurricularYear()
-								.getYear());
+					
 				}
 				siglaCurricularCourses.addAll(curricularCourses);
 			}
@@ -607,7 +734,7 @@ public class SiglaDataLoader {
 	 * @param string
 	 * @return
 	 */
-	private Object codeFixerFenixToSigla(String string) {
+	private static Object codeFixerFenixToSigla(String string) {
 		String result = null;
 		if (string.equals("2")) {
 			result = "02";
@@ -619,23 +746,44 @@ public class SiglaDataLoader {
 		return result;
 	}
 
-	private List loadFenixExecutionCourses() {
+	private List loadFenixExecutionCourses(PersistenceBroker broker) {
 		List fenixExecutionCourses = null;
-		PersistenceBroker broker = null;
-
-		Query query = new QueryByCriteria(DisciplinaExecucao.class, null);
+		
+		Criteria crit = new Criteria();
+		crit.addEqualTo("executionPeriod.name","1 Semestre");
+		crit.addEqualTo("executionPeriod.executionYear.year","2003/2004");
+		Query query = new QueryByCriteria(DisciplinaExecucao.class, crit);
 		try {
-			broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			
 
 			// ask the broker to retrieve the Extent collection
 			fenixExecutionCourses = (List) broker.getCollectionByQuery(query);
 
-			broker.close();
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
 
 		return fenixExecutionCourses;
+	}
+
+	private List loadFenixCurricularCourses(PersistenceBroker broker) {
+		List fenixCurricularCourses = null;
+		
+		
+		Query query = new QueryByCriteria(CurricularCourse.class, null);
+		try {
+		
+
+			// ask the broker to retrieve the Extent collection
+			fenixCurricularCourses = (List) broker.getCollectionByQuery(query);
+
+			
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+
+		return fenixCurricularCourses;
 	}
 
 	private List loadCurrLicPt() {
