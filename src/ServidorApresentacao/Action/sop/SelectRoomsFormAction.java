@@ -62,20 +62,34 @@ public class SelectRoomsFormAction extends FenixAction {
 
 			if (infoRooms != null && !infoRooms.isEmpty()) {
 				Collections.sort(infoRooms);
+				sessao.removeAttribute("publico.infoRooms");
 				sessao.setAttribute("publico.infoRooms", infoRooms);
+				sessao.removeAttribute("name");
 				sessao.setAttribute("name", readFormValue(roomForm, "name"));
+				sessao.removeAttribute("building");
 				sessao.setAttribute(
 					"building",
 					readFormValue(roomForm, "building"));
+				sessao.removeAttribute("floor");
 				sessao.setAttribute("floor", readFormValue(roomForm, "floor"));
+				sessao.removeAttribute("type");
 				sessao.setAttribute("type", readFormValue(roomForm, "type"));
+				sessao.removeAttribute("capacityNormal");
 				sessao.setAttribute(
 					"capacityNormal",
 					readFormValue(roomForm, "capacityNormal"));
+				sessao.removeAttribute("capacityExame");
 				sessao.setAttribute(
 					"capacityExame",
 					readFormValue(roomForm, "capacityExame"));
-
+			} else {
+				sessao.removeAttribute("publico.infoRooms");
+				sessao.removeAttribute("name");
+				sessao.removeAttribute("building");
+				sessao.removeAttribute("floor");
+				sessao.removeAttribute("type");
+				sessao.removeAttribute("capacityNormal");
+				sessao.removeAttribute("capacityExame");
 			}
 
 			InfoExecutionPeriod executionPeriod;
