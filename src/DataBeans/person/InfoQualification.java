@@ -12,31 +12,29 @@ import DataBeans.InfoPerson;
  * @author Pica
  */
 
-public class InfoQualification extends InfoObject {
-
+public class InfoQualification extends InfoObject
+{
 	private Integer year;
 	private String mark;
 	private String school;
 	private String title;
-	private InfoPerson personInfo;
+	private InfoPerson infoPerson;
 
-	public InfoQualification() {
+	public InfoQualification()
+	{
 	}
 
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		boolean result = false;
-		if (obj != null && obj instanceof InfoQualification) {
+		if (obj != null && obj instanceof InfoQualification)
+		{
 			result =
-				getQualificationMark().equals(
-					((InfoQualification) obj).getQualificationMark())
-					&& getQualificationSchool().equals(
-						((InfoQualification) obj).getQualificationSchool())
-					&& getQualificationTitle().equals(
-						((InfoQualification) obj).getQualificationTitle())
-					&& getQualificationYear().equals(
-						((InfoQualification) obj).getQualificationYear())
-					&& getPersonInfo().equals(
-						((InfoQualification) obj).getPersonInfo());
+				getMark().equals(((InfoQualification) obj).getMark())
+					&& getSchool().equals(((InfoQualification) obj).getSchool())
+					&& getTitle().equals(((InfoQualification) obj).getTitle())
+					&& getYear().equals(((InfoQualification) obj).getYear())
+					&& getPersonInfo().equals(((InfoQualification) obj).getPersonInfo());
 		}
 		return result;
 	}
@@ -44,35 +42,40 @@ public class InfoQualification extends InfoObject {
 	/**
 	 * @return InfoPerson
 	 */
-	public InfoPerson getPersonInfo() {
-		return personInfo;
+	public InfoPerson getPersonInfo()
+	{
+		return infoPerson;
 	}
 
 	/**
 	 * @return Integer
 	 */
-	public Integer getQualificationYear() {
+	public Integer getYear()
+	{
 		return year;
 	}
 
 	/**
 	 * @return String
 	 */
-	public String getQualificationMark() {
+	public String getMark()
+	{
 		return mark;
 	}
 
 	/**
 	 * @return String
 	 */
-	public String getQualificationSchool() {
+	public String getSchool()
+	{
 		return school;
 	}
 
 	/**
 	 * @return String
 	 */
-	public String getQualificationTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
@@ -82,8 +85,9 @@ public class InfoQualification extends InfoObject {
 	 * @param infoPerson
 	 *                    The personInfo to set
 	 */
-	public void setPersonInfo(InfoPerson infoPerson) {
-		this.personInfo = infoPerson;
+	public void setPersonInfo(InfoPerson infoPerson)
+	{
+		this.infoPerson = infoPerson;
 	}
 
 	/**
@@ -91,7 +95,8 @@ public class InfoQualification extends InfoObject {
 	 * 
 	 * @param mark.
 	 */
-	public void setQualificationMark(String mark) {
+	public void setMark(String mark)
+	{
 		this.mark = mark;
 	}
 
@@ -101,7 +106,8 @@ public class InfoQualification extends InfoObject {
 	 * @param year
 	 *                    The Year to set
 	 */
-	public void setQualificationYear(Integer year) {
+	public void setYear(Integer year)
+	{
 		this.year = year;
 	}
 
@@ -111,7 +117,8 @@ public class InfoQualification extends InfoObject {
 	 * @param school;
 	 *                    The school to set
 	 */
-	public void setQualificationSchool(String school) {
+	public void setSchool(String school)
+	{
 		this.school = school;
 	}
 
@@ -121,7 +128,8 @@ public class InfoQualification extends InfoObject {
 	 * @param title;
 	 *                    The title to set
 	 */
-	public void setQualificationTitle(String title) {
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 
