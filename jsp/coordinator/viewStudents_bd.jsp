@@ -104,7 +104,12 @@
 	<tr valign="top">
 	       <td colspan="3">
 	
-
+		<%Map spreadSheetArgs = new TreeMap(request.getParameterMap());
+			request.setAttribute("spreadSheetArgs",spreadSheetArgs);%>
+			<bean:define id="spreadSheetLinkArgs" type="java.util.Map" name="spreadSheetArgs"/>
+				<html:link page="/getTabSeparatedStudentList.do" name="spreadSheetLinkArgs">
+				<bean:message key="link.getExcelSpreadSheet"/><br/>
+			</html:link>
 			 <h2>
 				<logic:present name="studentsComponent" property="infoCurricularCourseScope">  		
 						&nbsp;-&nbsp;&nbsp;-&nbsp;				

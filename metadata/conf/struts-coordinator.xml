@@ -580,6 +580,11 @@
             <forward name="success" path="/viewStudents.jsp" />
         </action>
 		
+	 <action type="ServidorApresentacao.Action.teacher.DownloadStudentList" 
+            path="/getTabSeparatedStudentList" scope="request">
+        </action>
+        
+        	
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
