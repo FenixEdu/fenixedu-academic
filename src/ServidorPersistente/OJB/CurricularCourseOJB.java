@@ -79,8 +79,8 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			// else If the branch is mapped to the database, then write any existing changes.
 		} else if (
 			(curricularCourseToWrite instanceof CurricularCourse)
-				&& ((CurricularCourse) curricularCourseFromBD).getInternalCode().equals(
-					((CurricularCourse) curricularCourseToWrite).getInternalCode())) {
+				&& ((CurricularCourse) curricularCourseFromBD).getIdInternal().equals(
+					((CurricularCourse) curricularCourseToWrite).getIdInternal())) {
 			super.lockWrite(curricularCourseToWrite);
 			// else Throw an already existing exception
 		} else

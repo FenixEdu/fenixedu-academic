@@ -9,7 +9,6 @@ import java.io.Serializable;
  */
 public class InfoDegreeCurricularPlanEnrolmentInfo implements Serializable {
 
-	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	private Integer degreeDuration;
 	private Integer minimalYearForOptionalCourses;
 
@@ -17,11 +16,9 @@ public class InfoDegreeCurricularPlanEnrolmentInfo implements Serializable {
 	}
 
 	public InfoDegreeCurricularPlanEnrolmentInfo(
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan,
 		Integer degreeDuration,
 		Integer minimalYearForOptionalCourses) {
 		this();
-		setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		setDegreeDuration(degreeDuration);
 		setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
 	}
@@ -31,15 +28,14 @@ public class InfoDegreeCurricularPlanEnrolmentInfo implements Serializable {
 		if (obj instanceof InfoDegreeCurricularPlanEnrolmentInfo) {
 			InfoDegreeCurricularPlanEnrolmentInfo infoDegreeEnrolmentInfo =
 				(InfoDegreeCurricularPlanEnrolmentInfo) obj;
-			result =
-				this.getInfoDegreeCurricularPlan().equals(infoDegreeEnrolmentInfo.getInfoDegreeCurricularPlan());
+			result = 	this.getDegreeDuration().equals(infoDegreeEnrolmentInfo.getDegreeDuration()) &&
+						this.getMinimalYearForOptionalCourses().equals(infoDegreeEnrolmentInfo.getMinimalYearForOptionalCourses());
 		}
 		return result;
 	}
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
-		result += "infoDegreeCurricularPlan = " + this.infoDegreeCurricularPlan + "; ";
 		result += "degreeDuration = " + this.degreeDuration + "; ";
 		result += "minimalYearForOptionalCourses = "+ this.minimalYearForOptionalCourses + "]\n";
 		return result;
@@ -55,13 +51,6 @@ public class InfoDegreeCurricularPlanEnrolmentInfo implements Serializable {
 	/**
 	 * @return
 	 */
-	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-		return infoDegreeCurricularPlan;
-	}
-
-	/**
-	 * @return
-	 */
 	public Integer getMinimalYearForOptionalCourses() {
 		return minimalYearForOptionalCourses;
 	}
@@ -71,13 +60,6 @@ public class InfoDegreeCurricularPlanEnrolmentInfo implements Serializable {
 	 */
 	public void setDegreeDuration(Integer integer) {
 		degreeDuration = integer;
-	}
-
-	/**
-	 * @param plan
-	 */
-	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan plan) {
-		infoDegreeCurricularPlan = plan;
 	}
 
 	/**

@@ -58,6 +58,7 @@ create table DEGREE_CURRICULAR_PLAN (
    STATE int(11),
    INITIAL_DATE date,
    END_DATE date,
+   KEY_DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (NAME, KEY_DEGREE)
 )type=InnoDB;
@@ -94,6 +95,7 @@ create table CURRICULAR_COURSE (
    TYPE int(11),
    EXECUTION_SCOPE int(11),
    MANDATORY bit,
+   KEY_CURRICULAR_COURSE_ENROLMENT_INFO int(11) not null,
    PRIMARY KEY  (ID_INTERNAL),
    UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
@@ -227,11 +229,10 @@ create table POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE (
 drop table if exists DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
 create table DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
    DEGREE_DURATION int(11) not null,
    MINIMAL_YEAR_FOR_OPTIONAL_COURSES int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_DEGREE_CURRICULAR_PLAN)
+   unique U1 (DEGREE_DURATION, MINIMAL_YEAR_FOR_OPTIONAL_COURSES)
 )type=InnoDB;
 
 -- --------------------------------------------
@@ -246,6 +247,19 @@ create table STUDENT_GROUP_INFO (
    MAX_NAC_TO_ENROL int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (STUDENT_TYPE)
+)type=InnoDB;
+
+-- --------------------------------------------
+--  Table structure for CURRICULAR_COURSE_ENROLMENT_INFO
+-- --------------------------------------------
+drop table if exists CURRICULAR_COURSE_ENROLMENT_INFO;
+create table CURRICULAR_COURSE_ENROLMENT_INFO (
+   ID_INTERNAL int(11) not null auto_increment,
+   MAX_INCREMENT_NAC int(11) not null,
+   MIN_INCREMENT_NAC int(11) not null,
+   WEIGTH int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (MAX_INCREMENT_NAC, MIN_INCREMENT_NAC, WEIGTH)
 )type=InnoDB;
 
 -- ==================================================================================

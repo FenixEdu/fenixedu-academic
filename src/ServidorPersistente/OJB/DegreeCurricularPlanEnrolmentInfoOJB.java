@@ -1,15 +1,6 @@
 package ServidorPersistente.OJB;
 
-import java.util.List;
-
-import org.odmg.QueryException;
-
-import Dominio.DegreeCurricularPlanEnrolmentInfo;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IDegreeCurricularPlanEnrolmentInfo;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentDegreeEnrolmentInfo;
-import ServidorPersistente.exceptions.ExistingPersistentException;
+import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
 
 /**
  * @author dcs-rjao
@@ -17,9 +8,9 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * 24/Mar/2003
  */
 
-public class DegreeEnrolmentInfoOJB extends ObjectFenixOJB implements IPersistentDegreeEnrolmentInfo {
+public class DegreeCurricularPlanEnrolmentInfoOJB extends ObjectFenixOJB implements IPersistentDegreeCurricularPlanEnrolmentInfo {
 
-	public void deleteAll() throws ExcepcaoPersistencia {
+/*	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + DegreeCurricularPlanEnrolmentInfo.class.getName();
 		super.deleteAll(oqlQuery);
 	}
@@ -87,4 +78,6 @@ public class DegreeEnrolmentInfoOJB extends ObjectFenixOJB implements IPersisten
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	
+	*/
 }

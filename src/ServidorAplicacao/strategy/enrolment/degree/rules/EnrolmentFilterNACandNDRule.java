@@ -6,7 +6,6 @@ import java.util.List;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import Util.CurricularCourseType;
 
 /**
  * @author dcs-rjao
@@ -17,16 +16,12 @@ import Util.CurricularCourseType;
 // NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
-	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
-	private static final int MAX_INCREMENT_NAC = 2;
-	private static final int MIN_INCREMENT_NAC = 1;
-	
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
 		int degreeDuration = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeCurricularPlanEnrolmentInfo().getDegreeDuration().intValue();
 		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxCoursesToEnrol().intValue();
 		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxNACToEnrol().intValue();
-		
+
 		List possibleScopesSpan = new ArrayList();
 		List possibleScopesEnroled = new ArrayList();
 		int possibleNAC = 0;
@@ -40,16 +35,13 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorEnroled.next();
 				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(new Integer(year))) {
 					possibleScopesEnroled.add(curricularCourseScope);
-					possibleND = possibleND + 1;
+
+					possibleND += curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
 
 					if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
-						possibleNAC = possibleNAC + MAX_INCREMENT_NAC;
+						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
 					} else {
-						if(curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) {
-							possibleNAC = possibleNAC + (2 * MIN_INCREMENT_NAC);
-						} else {
-							possibleNAC = possibleNAC + MIN_INCREMENT_NAC;
-						}
+						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
 					}
 				}
 			}
@@ -59,16 +51,13 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorSpan.next();
 				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(new Integer(year))) {
 					possibleScopesSpan.add(curricularCourseScope);
-					possibleND = possibleND + 1;
-
+					
+					possibleND += curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
+					
 					if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
-						possibleNAC = possibleNAC + MAX_INCREMENT_NAC;
+						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
 					} else {
-						if(curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) {
-							possibleNAC = possibleNAC + (2 * MIN_INCREMENT_NAC);
-						} else {
-							possibleNAC = possibleNAC + MIN_INCREMENT_NAC;
-						}
+						possibleNAC = possibleNAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
 					}
 				}
 			}
@@ -79,5 +68,4 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 		enrolmentContext.setCurricularCoursesScopesAutomaticalyEnroled(possibleScopesEnroled);
 		return enrolmentContext;
 	}
-
 }

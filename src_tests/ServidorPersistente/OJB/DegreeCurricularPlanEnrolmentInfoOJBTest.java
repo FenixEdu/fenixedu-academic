@@ -1,19 +1,9 @@
 package ServidorPersistente.OJB;
 
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import Dominio.DegreeCurricularPlanEnrolmentInfo;
-import Dominio.ICurso;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IDegreeCurricularPlanEnrolmentInfo;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentDegreeEnrolmentInfo;
+import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
 import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao
@@ -21,26 +11,26 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * 20/Mar/2003
  */
 
-public class DegreeEnrolmentInfoOJBTest extends TestCaseOJB {
+public class DegreeCurricularPlanEnrolmentInfoOJBTest extends TestCaseOJB {
 
 	private IPersistentExecutionPeriod executionPeriodDAO;
 	SuportePersistenteOJB persistentSupport = null;
-	IPersistentDegreeEnrolmentInfo persistentDegreeEnrolmentInfo = null;
+	IPersistentDegreeCurricularPlanEnrolmentInfo persistentDegreeEnrolmentInfo = null;
 	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	ICursoPersistente persistentDegree = null;
 
-	public DegreeEnrolmentInfoOJBTest(java.lang.String testName) {
+	public DegreeCurricularPlanEnrolmentInfoOJBTest(java.lang.String testName) {
 		super(testName);
 	}
-
+/*
 	public static void main(java.lang.String[] args) {
-		System.out.println("Beginning of test from class DegreeEnrolmentInfoOJB.");
+		System.out.println("Beginning of test from class DegreeCurricularPlanEnrolmentInfoOJB.");
 		junit.textui.TestRunner.run(suite());
-		System.out.println("End of test from class DegreeEnrolmentInfoOJB.");
+		System.out.println("End of test from class DegreeCurricularPlanEnrolmentInfoOJB.");
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(DegreeEnrolmentInfoOJBTest.class);
+		TestSuite suite = new TestSuite(DegreeCurricularPlanEnrolmentInfoOJBTest.class);
 		return suite;
 	}
 
@@ -300,4 +290,6 @@ public class DegreeEnrolmentInfoOJBTest extends TestCaseOJB {
 		assertNotNull(list);
 		assertEquals(1, list.size());
 	}
+	
+	*/
 }

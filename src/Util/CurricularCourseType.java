@@ -14,8 +14,7 @@ public class CurricularCourseType {
 	public static final int PROJECT_COURSE = 3;
 	public static final int TFC_COURSE = 4;
 	public static final int TRAINING_COURSE = 5;
-	public static final int LABORATORY_COURSE = 6;
-
+	public static final int LABORATORY_COURSE = 6; 
 
 	public static final CurricularCourseType NORMAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.NORMAL_COURSE);
 	public static final CurricularCourseType OPTIONAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE);

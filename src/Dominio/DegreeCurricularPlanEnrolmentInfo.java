@@ -9,19 +9,16 @@ package Dominio;
 
 public class DegreeCurricularPlanEnrolmentInfo implements IDegreeCurricularPlanEnrolmentInfo {
 
-	private IDegreeCurricularPlan degreeCurricularPlan;
 	private Integer degreeDuration;
 	private Integer minimalYearForOptionalCourses;
 
 	private Integer internalID;
-	private Integer degreeCurricularPlanKey;
 
 	public DegreeCurricularPlanEnrolmentInfo() {
 	}
 
 	public DegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlan degreeCurricularPlan, Integer degreeDuration, Integer minimalYearForOptionalCourses) {
 		this();
-		setDegreeCurricularPlan(degreeCurricularPlan);
 		setDegreeDuration(degreeDuration);
 		setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
 	}
@@ -30,32 +27,18 @@ public class DegreeCurricularPlanEnrolmentInfo implements IDegreeCurricularPlanE
 		boolean result = false;
 		if (obj instanceof IDegreeCurricularPlanEnrolmentInfo) {
 			IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfo = (IDegreeCurricularPlanEnrolmentInfo) obj;
-			result = this.getDegreeCurricularPlan().equals(degreeEnrolmentInfo.getDegreeCurricularPlan());
+			result = 	this.getDegreeDuration().equals(degreeEnrolmentInfo.getDegreeDuration()) &&
+						this.getMinimalYearForOptionalCourses().equals(degreeEnrolmentInfo.getMinimalYearForOptionalCourses());
 		}
 		return result;
 	}
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
-		result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
 		result += "degreeDuration = " + this.degreeDuration + "; ";
 		result += "minimalYearForOptionalCourses = " + this.minimalYearForOptionalCourses + "]\n";
 		return result;
 	}
-	/**
-	 * @return
-	 */
-	public IDegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getDegreeCurricularPlanKey() {
-		return degreeCurricularPlanKey;
-	}
-
 	/**
 	 * @return
 	 */
@@ -75,20 +58,6 @@ public class DegreeCurricularPlanEnrolmentInfo implements IDegreeCurricularPlanE
 	 */
 	public Integer getMinimalYearForOptionalCourses() {
 		return minimalYearForOptionalCourses;
-	}
-
-	/**
-	 * @param plan
-	 */
-	public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
-		degreeCurricularPlan = plan;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setDegreeCurricularPlanKey(Integer integer) {
-		degreeCurricularPlanKey = integer;
 	}
 
 	/**

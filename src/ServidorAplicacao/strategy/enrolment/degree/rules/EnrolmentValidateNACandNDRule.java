@@ -6,7 +6,6 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
-import Util.CurricularCourseType;
 
 /**
  * @author dcs-rjao
@@ -16,46 +15,41 @@ import Util.CurricularCourseType;
 
 public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
-	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
-	private static final int MAX_INCREMENT_NAC = 2;
-	private static final int MIN_INCREMENT_NAC = 1;
-	
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		 
 		int NAC = 0;
 		int maxCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxCoursesToEnrol().intValue();
 		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxNACToEnrol().intValue();
 		int minCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMinCoursesToEnrol().intValue();
-
+		int number_of_enrolments = 0;
+ 		
 		Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
-				NAC = NAC + MAX_INCREMENT_NAC;
+				NAC = NAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
 			} else {
-				if(curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) {
-					NAC = NAC + (2 * MIN_INCREMENT_NAC);
-				} else {
-					NAC = NAC + MIN_INCREMENT_NAC;
-				}
+				NAC = NAC + curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
 			}
+			number_of_enrolments += curricularCourseScope.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
 		}
 
-		
 		Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 		while (iterator2.hasNext()) {
 			IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();
 			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(enrolmentInOptionalCurricularCourse.getCurricularCourse()).intValue() > 0) {
-				NAC = NAC + MAX_INCREMENT_NAC;
+				NAC = NAC + enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMaxIncrementNac().intValue();
 			} else {
-				NAC = NAC + MIN_INCREMENT_NAC;
+				NAC = NAC + enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseEnrolmentInfo().getMinIncrementNac().intValue();
 			}
+			
+			number_of_enrolments += enrolmentInOptionalCurricularCourse.getCurricularCourse().getCurricularCourseEnrolmentInfo().getWeigth().intValue();
 		}
-
-		if ((enrolmentContext.getActualEnrolments().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < minCourses) {
+		
+		if ((number_of_enrolments) < minCourses) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MINIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(minCourses));
 		}
-		if ((enrolmentContext.getActualEnrolments().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) > maxCourses) {
+		if ((number_of_enrolments) > maxCourses) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MAXIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(maxCourses));
 		}
 		if (NAC > maxNAC) {

@@ -11,7 +11,7 @@ import Util.CurricularCourseType;
  * 20/Mar/2003
  */
 
-public interface ICurricularCourse {
+public interface ICurricularCourse extends IDomainObject {
 
 	public void setCredits(Double credits);
 	public void setTheoreticalHours(Double theoreticalHours);
@@ -23,13 +23,11 @@ public interface ICurricularCourse {
 	public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse);
 	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
 	public void setAssociatedExecutionCourses(List associatedExecutionCourses);
-//	public void setAssociatedBranches(List associatedBranches);
-//	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters);
 	public void setScopes(List scopes);
 	public void setType(CurricularCourseType type);
-
 	public void setCurricularCourseExecutionScope(CurricularCourseExecutionScope scope);
 	public void setMandatory(Boolean boolean1);
+	public void setCurricularCourseEnrolmentInfo(ICurricularCourseEnrolmentInfo info);
 
 	public boolean curricularCourseIsMandatory();
 
@@ -43,11 +41,10 @@ public interface ICurricularCourse {
 	public IDisciplinaDepartamento getDepartmentCourse();
 	public IDegreeCurricularPlan getDegreeCurricularPlan();
 	public List getAssociatedExecutionCourses();
-//	public List getAssociatedBranches();
-//	public List getAssociatedCurricularSemesters();
 	public List getScopes();
 	public CurricularCourseType getType();
 	public CurricularCourseExecutionScope getCurricularCourseExecutionScope();
 	public Boolean getMandatory();
+	public ICurricularCourseEnrolmentInfo getCurricularCourseEnrolmentInfo();	
 
 }

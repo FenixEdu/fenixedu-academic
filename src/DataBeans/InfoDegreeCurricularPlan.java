@@ -2,7 +2,6 @@ package DataBeans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import Util.DegreeCurricularPlanState;
 
@@ -19,7 +18,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
-	private List infoEnrolmentInfo;
+	private InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo;
 
 	public InfoDegreeCurricularPlan() {
 		setName(null);
@@ -27,7 +26,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		setState(null);
 		setInitialDate(null);
 		setEndDate(null);
-		setInfoEnrolmentInfo(null);
+		setInfoDegreeCurricularPlanEnrolmentInfo(null);
 	}
 
 	public InfoDegreeCurricularPlan(String name, InfoDegree infoDegree) {
@@ -36,12 +35,13 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		setInfoDegree(infoDegree);
 	}
 
-	public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state, Date initialDate, Date endDate) {
+	public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state, Date initialDate, Date endDate, InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo) {
 		setName(nome);
 		setInfoDegree(infoDegree);
 		setState(state);
 		setInitialDate(initialDate);
 		setEndDate(endDate);
+		setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
 	}
 
 	public boolean equals(Object obj) {
@@ -137,24 +137,18 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	public void setState(DegreeCurricularPlanState state) {
 		this.state = state;
 	}
-
-	public List getInfoEnrolmentInfo() {
-		return infoEnrolmentInfo;
+	/**
+	 * @return
+	 */
+	public InfoDegreeCurricularPlanEnrolmentInfo getInfoDegreeCurricularPlanEnrolmentInfo() {
+		return infoDegreeCurricularPlanEnrolmentInfo;
 	}
 
-	public void setInfoEnrolmentInfo(List list) {
-		infoEnrolmentInfo = list;
-	}
-	public InfoDegreeCurricularPlanEnrolmentInfo getInfoDegreeCurricularPlanEnrolmentInfo(){
-		if(infoEnrolmentInfo.isEmpty()){
-			return null;
-		}else{
-			return (InfoDegreeCurricularPlanEnrolmentInfo) infoEnrolmentInfo.get(0);
-		}
-	}
-
-	public void setInfoDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo) {
-		infoEnrolmentInfo.set(0, infoDegreeCurricularPlanEnrolmentInfo);
+	/**
+	 * @param info
+	 */
+	public void setInfoDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo info) {
+		infoDegreeCurricularPlanEnrolmentInfo = info;
 	}
 
 }

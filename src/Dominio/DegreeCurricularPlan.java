@@ -13,16 +13,19 @@ import Util.DegreeCurricularPlanState;
 
 public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 
-	private List curricularCourses;
 	private Integer idInternal;
-	private Integer keyDegree;
+	private Integer degreeKey;
+	private Integer degreeCurricularPlanEnrolmentInfoKey;
+	
+	private IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo;
 	private ICurso degree;
 	private String name;
 	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
-	private List enrolmentInfo;
-
+	
+	private List curricularCourses;
+	
 	public DegreeCurricularPlan() {
 	}
 
@@ -32,7 +35,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		setState(null);
 		setInitialDate(null);
 		setEndDate(null);
-		setEnrolmentInfo(null);
+		setDegreeCurricularPlanEnrolmentInfo(null);
 	}
 
 	public DegreeCurricularPlan(
@@ -40,13 +43,15 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		ICurso degree,
 		DegreeCurricularPlanState state,
 		Date initialDate,
-		Date endDate) {
+		Date endDate,
+		IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo) {
 		this();
 		setName(nome);
 		setDegree(degree);
 		setState(state);
 		setInitialDate(initialDate);
 		setEndDate(endDate);
+		setDegreeCurricularPlanEnrolmentInfo(degreeCurricularPlanEnrolmentInfo);
 	}
 
 	public boolean equals(Object obj) {
@@ -80,11 +85,11 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	}
 
 	/**
-	 * Returns the keyDegree.
+	 * Returns the degreeKey.
 	 * @return Integer
 	 */
-	public Integer getKeyDegree() {
-		return keyDegree;
+	public Integer getDegreeKey() {
+		return degreeKey;
 	}
 
 	/**
@@ -112,11 +117,11 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	}
 
 	/**
-	 * Sets the keyDegree.
-	 * @param keyDegree The keyDegree to set
+	 * Sets the degreeKey.
+	 * @param degreeKey The degreeKey to set
 	 */
-	public void setKeyDegree(Integer chaveCurso) {
-		this.keyDegree = chaveCurso;
+	public void setDegreeKey(Integer chaveCurso) {
+		this.degreeKey = chaveCurso;
 	}
 
 	/**
@@ -193,24 +198,32 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	public void setCurricularCourses(List curricularCourses) {
 		this.curricularCourses = curricularCourses;		
 	}
-
-	public List getEnrolmentInfo() {
-		return enrolmentInfo;	
+	/**
+	 * @return
+	 */
+	public IDegreeCurricularPlanEnrolmentInfo getDegreeCurricularPlanEnrolmentInfo() {
+		return degreeCurricularPlanEnrolmentInfo;
 	}
 
-	public void setEnrolmentInfo(List list) {
-		enrolmentInfo = list;
-	}
-	
-	public IDegreeCurricularPlanEnrolmentInfo getDegreeCurricularPlanEnrolmentInfo(){
-		if(enrolmentInfo.isEmpty()){
-			return null;
-		}else{
-			return (IDegreeCurricularPlanEnrolmentInfo) enrolmentInfo.get(0);
-		}
+	/**
+	 * @return
+	 */
+	public Integer getDegreeCurricularPlanEnrolmentInfoKey() {
+		return degreeCurricularPlanEnrolmentInfoKey;
 	}
 
-	public void setDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo) {
-		enrolmentInfo.set(0, degreeCurricularPlanEnrolmentInfo);
+	/**
+	 * @param info
+	 */
+	public void setDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo info) {
+		degreeCurricularPlanEnrolmentInfo = info;
 	}
+
+	/**
+	 * @param integer
+	 */
+	public void setDegreeCurricularPlanEnrolmentInfoKey(Integer integer) {
+		degreeCurricularPlanEnrolmentInfoKey = integer;
+	}
+
 }

@@ -29,6 +29,7 @@ public class InfoCurricularCourse  extends InfoObject{
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
+	private InfoCurricularCourseEnrolmentInfo infoCurricularCourseEnrolmentInfo;
 
 	public InfoCurricularCourse() {
 	}
@@ -279,4 +280,18 @@ public class InfoCurricularCourse  extends InfoObject{
 	public boolean infoCurricularCourseIsMandatory() {
 		return mandatory.booleanValue();
 	}
+	/**
+	 * @return
+	 */
+	public InfoCurricularCourseEnrolmentInfo getInfoCurricularCourseEnrolmentInfo() {
+		return infoCurricularCourseEnrolmentInfo;
+	}
+
+	/**
+	 * @param info
+	 */
+	public void setInfoCurricularCourseEnrolmentInfo(InfoCurricularCourseEnrolmentInfo info) {
+		infoCurricularCourseEnrolmentInfo = info;
+	}
+
 }

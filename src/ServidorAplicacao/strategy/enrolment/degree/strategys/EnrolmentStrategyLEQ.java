@@ -87,6 +87,9 @@ public class EnrolmentStrategyLEQ implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterRestrictedOptionalCoursesRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
+//		enrolmentRule = new EnrolmentFilterLEQSimultaneousEnrolmentRule();
+//		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
+
 		return this.enrolmentContext;
 	}
 

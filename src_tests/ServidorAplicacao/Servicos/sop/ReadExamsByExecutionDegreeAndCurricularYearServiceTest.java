@@ -17,6 +17,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoDegreeCurricularPlanEnrolmentInfo;
 import DataBeans.InfoExecutionCourseAndExams;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -67,7 +68,12 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
-		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
+
+		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
+		infoDegreeCurricularPlanEnrolmentInfo.setDegreeDuration(new Integer(5));
+		infoDegreeCurricularPlanEnrolmentInfo.setMinimalYearForOptionalCourses(new Integer(3));
+		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
+
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre",new InfoExecutionYear("2002/2003"));
 		infoExecutionPeriod.setSemester(new Integer(2));

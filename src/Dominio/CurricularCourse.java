@@ -11,11 +11,12 @@ import Util.CurricularCourseType;
  * 20/Mar/2003
  */
 
-public class CurricularCourse implements ICurricularCourse {
+public class CurricularCourse extends DomainObject implements ICurricularCourse {
 
-	private Integer internalCode;
 	private Integer departmentCourseKey;
 	private Integer degreeCurricularPlanKey;
+	private Integer curricularCourseEnrolmentInfoKey;
+	
 	private Double credits;
 	private Double theoreticalHours;
 	private Double praticalHours;
@@ -28,13 +29,12 @@ public class CurricularCourse implements ICurricularCourse {
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
+	private ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo;
 
 	private List associatedExecutionCourses;
 	private List scopes;
 
 	public CurricularCourse() {
-
-		setInternalCode(null);
 
 		setCode(null);
 		setCredits(null);
@@ -47,9 +47,10 @@ public class CurricularCourse implements ICurricularCourse {
 		setPraticalHours(null);
 		setTheoPratHours(null);
 		setTheoreticalHours(null);
-
 		setAssociatedExecutionCourses(null);
 		setScopes(null);
+		setCurricularCourseEnrolmentInfo(null);
+		setCurricularCourseEnrolmentInfoKey(null);
 	}
 
 	/**
@@ -147,7 +148,7 @@ public class CurricularCourse implements ICurricularCourse {
 			.append(this.getClass())
 			.append(":")
 			.append("idInternal = ")
-			.append(this.internalCode).append(";name = ").append(this.name).append(";code = ").append(this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan()).append(";type = ").append(this.type);
+			.append(";name = ").append(this.name).append(";code = ").append(this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan()).append(";type = ").append(this.type);
 		return stringBuffer.toString();
 	}
 
@@ -197,14 +198,6 @@ public class CurricularCourse implements ICurricularCourse {
 	 */
 	public Integer getDepartmentCourseKey() {
 		return departmentCourseKey;
-	}
-
-	/**
-	 * Returns the internalCode.
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
 	}
 
 	/**
@@ -285,14 +278,6 @@ public class CurricularCourse implements ICurricularCourse {
 	 */
 	public void setDepartmentCourseKey(Integer departmentCourseKey) {
 		this.departmentCourseKey = departmentCourseKey;
-	}
-
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
 	}
 
 	/**
@@ -408,4 +393,32 @@ public class CurricularCourse implements ICurricularCourse {
 	public void setMandatory(Boolean boolean1) {
 		mandatory = boolean1;
 	}
+	/**
+	 * @return
+	 */
+	public ICurricularCourseEnrolmentInfo getCurricularCourseEnrolmentInfo() {
+		return curricularCourseEnrolmentInfo;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getCurricularCourseEnrolmentInfoKey() {
+		return curricularCourseEnrolmentInfoKey;
+	}
+
+	/**
+	 * @param info
+	 */
+	public void setCurricularCourseEnrolmentInfo(ICurricularCourseEnrolmentInfo info) {
+		curricularCourseEnrolmentInfo = info;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setCurricularCourseEnrolmentInfoKey(Integer integer) {
+		curricularCourseEnrolmentInfoKey = integer;
+	}
+
 }

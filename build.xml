@@ -604,8 +604,22 @@
 	  <copy file="${sql}/dbContents.xml" toFile="${sql}/testDataSet.xml"/>
     </target>
     
-	<target name="soft-load-database-for-insc" depends="" description="Apenas carrega as tabelas da base de dados que interessam para as inscrições.">
-		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/ciapl" userid="root" password="" encoding="${encoding}" src="${sql}/test-data_inscricoes_curso.sql"/>
+	<target name="load-db-with-actual-degree" depends="" description="Apenas carrega a base de dados com informacao de um curso">
+		<sql driver="com.mysql.jdbc.Driver" 
+			url="jdbc:mysql://localhost/ciapl" 
+			userid="root" password="" 
+			encoding="${encoding}" 
+			src="${sql}/test-data_inscricoes_LERCI.sql"
+		/>
+	</target>
+
+	<target name="load-db-with-enrolment-info" depends="" description="Apenas carrega a base de dados com informacao relevante para as incricoes">
+		<sql driver="com.mysql.jdbc.Driver" 
+			url="jdbc:mysql://localhost/ciapl" 
+			userid="root" password="" 
+			encoding="${encoding}" 
+			src="${sql}/test-data_inscricoes_info.sql"
+		/>
 	</target>
 
 	<!-- Targets for tomcat -->

@@ -11,12 +11,11 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.ArrayList;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoDegreeCurricularPlanEnrolmentInfo;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
@@ -70,7 +69,12 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
-		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
+
+		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
+		infoDegreeCurricularPlanEnrolmentInfo.setDegreeDuration(new Integer(15));
+		infoDegreeCurricularPlanEnrolmentInfo.setMinimalYearForOptionalCourses(new Integer(15));
+		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
+
 
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(
@@ -98,7 +102,11 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
-		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
+
+		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
+		infoDegreeCurricularPlanEnrolmentInfo.setDegreeDuration(new Integer(15));
+		infoDegreeCurricularPlanEnrolmentInfo.setMinimalYearForOptionalCourses(new Integer(15));
+		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
 
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(

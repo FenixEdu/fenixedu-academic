@@ -14,6 +14,7 @@ import DataBeans.InfoClass;
 import DataBeans.InfoContributor;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseEnrolmentInfo;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
@@ -56,6 +57,7 @@ import Dominio.CandidateSituation;
 import Dominio.Contributor;
 import Dominio.Country;
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseEnrolmentInfo;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
 import Dominio.CurricularYear;
@@ -83,6 +85,7 @@ import Dominio.ICandidateSituation;
 import Dominio.IContributor;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseEnrolmentInfo;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
@@ -1306,27 +1309,15 @@ public abstract class Cloner {
 	public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
 		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 
-		ICurso degree =
-			Cloner.copyInfoDegree2IDegree(
-				infoDegreeCurricularPlan.getInfoDegree());
-
-		List degreeCurricularPlanEnrolmentInfoList = new ArrayList();
-		Iterator iterator =
-			infoDegreeCurricularPlan.getInfoEnrolmentInfo().iterator();
-		while (iterator.hasNext()) {
-			InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo =
-				(InfoDegreeCurricularPlanEnrolmentInfo) iterator.next();
-			degreeCurricularPlanEnrolmentInfoList.add(
-				Cloner
-					.copyInfoDegreeCurricularPlanEnrolmentInfo2IDegreeCurricularPlanEnrolmentInfo(
-					infoDegreeCurricularPlanEnrolmentInfo));
-		}
-
+		ICurso degree =	Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
+		
+		IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo = Cloner.copyInfoDegreeCurricularPlanEnrolmentInfo2IDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlan.getInfoDegreeCurricularPlanEnrolmentInfo());
+		
 		copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
 
 		degreeCurricularPlan.setDegree(degree);
-		degreeCurricularPlan.setEnrolmentInfo(
-			degreeCurricularPlanEnrolmentInfoList);
+		degreeCurricularPlan.setDegreeCurricularPlanEnrolmentInfo(degreeCurricularPlanEnrolmentInfo);
+		
 		return degreeCurricularPlan;
 	}
 
@@ -1343,22 +1334,12 @@ public abstract class Cloner {
 		InfoDegree infoDegree =
 			Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
 
-		List infoDegreeCurricularPlanEnrolmentInfoList = new ArrayList();
-		Iterator iterator = degreeCurricularPlan.getEnrolmentInfo().iterator();
-		while (iterator.hasNext()) {
-			IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo =
-				(IDegreeCurricularPlanEnrolmentInfo) iterator.next();
-			infoDegreeCurricularPlanEnrolmentInfoList.add(
-				Cloner
-					.copyIDegreeCurricularPlanEnrolmentInfo2InfoDegreeCurricularPlanEnrolmentInfo(
-					degreeCurricularPlanEnrolmentInfo));
-		}
+		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = Cloner.copyIDegreeCurricularPlanEnrolmentInfo2InfoDegreeCurricularPlanEnrolmentInfo(degreeCurricularPlan.getDegreeCurricularPlanEnrolmentInfo());
 
 		copyObjectProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
 
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-		infoDegreeCurricularPlan.setInfoEnrolmentInfo(
-			infoDegreeCurricularPlanEnrolmentInfoList);
+		infoDegreeCurricularPlan.setInfoDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo);
 
 		return infoDegreeCurricularPlan;
 	}
@@ -1395,27 +1376,16 @@ public abstract class Cloner {
 	public static ICurricularCourse copyInfoCurricularCourse2CurricularCourse(InfoCurricularCourse infoCurricularCourse) {
 
 		ICurricularCourse curricularCourse = new CurricularCourse();
-		//		List infoCurricularCourseScopeList = null;
-		//		List curricularCourseScopeList = new ArrayList();
 
-		IDegreeCurricularPlan planoCurricularCurso =
-			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
+		IDegreeCurricularPlan planoCurricularCurso = copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
 				infoCurricularCourse.getInfoDegreeCurricularPlan());
-
-		//		infoCurricularCourseScopeList = infoCurricularCourse.getInfoScopes();
-		//		if (infoCurricularCourseScopeList != null && !infoCurricularCourseScopeList.isEmpty()) {
-		//			ListIterator iterator = infoCurricularCourseScopeList.listIterator();
-		//			while (iterator.hasNext()) {
-		//				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
-		//				ICurricularSemester curricularSemester = copyInfoCurricularCourseScope2CurricularCourseScope(infoCurricularCourseScope);
-		//				curricularCourseScopeList.add(curricularSemester);
-		//			}
-		//		}
+		
+		ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = Cloner.copyInfoCurricularCourseEnrolmentInfo2ICurricularCourseEnrolmentInfo(infoCurricularCourse.getInfoCurricularCourseEnrolmentInfo());
 
 		copyObjectProperties(curricularCourse, infoCurricularCourse);
 
 		curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
-		//		curricularCourse.setAssociatedCurricularSemesters(curricularCourseScopeList);
+		curricularCourse.setCurricularCourseEnrolmentInfo(curricularCourseEnrolmentInfo);
 
 		return curricularCourse;
 	}
@@ -1429,28 +1399,17 @@ public abstract class Cloner {
 	public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
 
 		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-		//		List infoCurricularCourseScopeList = new ArrayList();
-		//		List curricularCourseScopeList = null;
 
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
+
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =	copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
 				curricularCourse.getDegreeCurricularPlan());
 
-		//		curricularCourseScopeList = curricularCourse.getScopes();
-		//		if (curricularCourseScopeList != null && !curricularCourseScopeList.isEmpty()) {
-		//			ListIterator iterator = curricularCourseScopeList.listIterator();
-		//			while (iterator.hasNext()) {
-		//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-		//				InfoCurricularCourseScope infoCurricularCourseScope = copyCurricularSemester2InfoCurricularCourseScope(curricularCourseScope);
-		//				infoCurricularCourseScopeList.add(infoCurricularCourseScope);
-		//			}
-		//		}
-
+		InfoCurricularCourseEnrolmentInfo infoCurricularCourseEnrolmentInfo = Cloner.copyICurricularCourseEnrolmentInfo2InfoCurricularCourseEnrolmentInfo(curricularCourse.getCurricularCourseEnrolmentInfo());
+		
 		copyObjectProperties(infoCurricularCourse, curricularCourse);
 
-		infoCurricularCourse.setInfoDegreeCurricularPlan(
-			infoDegreeCurricularPlan);
-		//		infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		infoCurricularCourse.setInfoCurricularCourseEnrolmentInfo(infoCurricularCourseEnrolmentInfo);
 
 		return infoCurricularCourse;
 	}
@@ -1813,13 +1772,7 @@ public abstract class Cloner {
 		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo =
 			new InfoDegreeCurricularPlanEnrolmentInfo();
 
-		//InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlanEnrolmentInfo.getDegreeCurricularPlan());
-
-		copyObjectProperties(
-			infoDegreeCurricularPlanEnrolmentInfo,
-			degreeCurricularPlanEnrolmentInfo);
-
-		//infoDegreeCurricularPlanEnrolmentInfo.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		copyObjectProperties(infoDegreeCurricularPlanEnrolmentInfo, degreeCurricularPlanEnrolmentInfo);
 
 		return infoDegreeCurricularPlanEnrolmentInfo;
 	}
@@ -1834,13 +1787,7 @@ public abstract class Cloner {
 		IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo =
 			new DegreeCurricularPlanEnrolmentInfo();
 
-		//InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlanEnrolmentInfo.getDegreeCurricularPlan());
-
-		copyObjectProperties(
-			degreeCurricularPlanEnrolmentInfo,
-			infoDegreeCurricularPlanEnrolmentInfo);
-
-		//infoDegreeCurricularPlanEnrolmentInfo.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		copyObjectProperties(degreeCurricularPlanEnrolmentInfo,infoDegreeCurricularPlanEnrolmentInfo);
 
 		return degreeCurricularPlanEnrolmentInfo;
 	}
@@ -1865,6 +1812,28 @@ public abstract class Cloner {
 		IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
 		copyObjectProperties(studentGroupInfo, infoStudentGroupInfo);
 		return studentGroupInfo;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularCourseEnrolmentInfo
+	 * @return InfoCurricularCourseEnrolmentInfo
+	 */
+	public static InfoCurricularCourseEnrolmentInfo copyICurricularCourseEnrolmentInfo2InfoCurricularCourseEnrolmentInfo(ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo) {
+		InfoCurricularCourseEnrolmentInfo infoCurricularCourseEnrolmentInfo = new InfoCurricularCourseEnrolmentInfo();
+		copyObjectProperties(infoCurricularCourseEnrolmentInfo, curricularCourseEnrolmentInfo);
+		return infoCurricularCourseEnrolmentInfo;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularCourseEnrolmentInfo
+	 * @return InfoCurricularCourseEnrolmentInfo
+	 */
+	public static ICurricularCourseEnrolmentInfo copyInfoCurricularCourseEnrolmentInfo2ICurricularCourseEnrolmentInfo(InfoCurricularCourseEnrolmentInfo infoCurricularCourseEnrolmentInfo) {
+		ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = new CurricularCourseEnrolmentInfo();
+		copyObjectProperties(curricularCourseEnrolmentInfo, infoCurricularCourseEnrolmentInfo);
+		return curricularCourseEnrolmentInfo;
 	}
 
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
