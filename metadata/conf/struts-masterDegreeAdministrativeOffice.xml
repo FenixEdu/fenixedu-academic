@@ -556,6 +556,19 @@
 	  		<form-property name="guideId" type="java.lang.Integer"/>
 	  </form-bean>
 
+	  <form-bean name="insertExternalPersonForm"  
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+	  		<form-property name="name" type="java.lang.String"/>
+	  		<form-property name="workLocationID" type="java.lang.Integer"/>
+	  		<form-property name="address" type="java.lang.String"/>
+	  		<form-property name="phone" type="java.lang.String"/>
+	  		<form-property name="mobile" type="java.lang.String"/>
+	  		<form-property name="homepage" type="java.lang.String"/>
+	  		<form-property name="email" type="java.lang.String"/>
+	  		<form-property name="page" type="java.lang.Integer"/>
+	  </form-bean>
+
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -714,6 +727,13 @@
               type="ServidorApresentacao.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/> 
+      </action>
+      
+      <action path="/externalPersonSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="df.page.externalPersonIndex"/> 
       </action>
       
       <action path="/studentSection"
@@ -1937,6 +1957,18 @@
 			<forward name="errorNonExistingProofVersion" path="/thesis/indexThesis.jsp"/>
 	</action>	
 	
+	<!-- insert external person -->
+	<action		name="insertExternalPersonForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.InsertExternalPersonDispatchAction"
+				path="/insertExternalPerson"
+				parameter="method"
+				scope="request">
+			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="df.page.insertExternalPerson"/>
+			<forward name="error" path="df.page.insertExternalPerson"/>			
+	</action>	
 	
 	<action type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"
 			name="createReimbursementGuide"
