@@ -286,6 +286,8 @@ public class ReadTeacherCreditsSheet implements IServico
             List infoTeacherDegreeFinalProjectStudentList = readTeacherDegreeFinalProjectStudentList(
                     teacher, executionPeriod, sp);
 
+			List infoProfessorshipsList = readInfoProfessorships(teacher, executionPeriod, sp);
+            
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
                     executionPeriod);
@@ -304,6 +306,8 @@ public class ReadTeacherCreditsSheet implements IServico
 
             teacherCreditsSheetDTO.setInfoTeacherDegreeFinalProjectStudentList(
                     infoTeacherDegreeFinalProjectStudentList);
+            
+            teacherCreditsSheetDTO.setInfoProfessorshipList(infoProfessorshipsList);
 
         }
         catch (ExcepcaoPersistencia e)
@@ -313,5 +317,30 @@ public class ReadTeacherCreditsSheet implements IServico
         }
 
         return teacherCreditsSheetDTO;
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
+    private List readInfoProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia
+    {
+        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        
+        List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+		List infoProfessorshipList = (List) CollectionUtils.collect(
+				professorshipList, new Transformer()
+				{
+
+					public Object transform(Object input)
+					{
+						IProfessorship professorship = (IProfessorship) input;
+						InfoProfessorship infoProfessorship = Cloner.copyIProfessorship2InfoProfessorship(professorship);
+						return infoProfessorship;
+					}
+				});
+        return infoProfessorshipList;
     }
 }
