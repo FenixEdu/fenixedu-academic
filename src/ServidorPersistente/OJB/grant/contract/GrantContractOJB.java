@@ -1,7 +1,6 @@
 package ServidorPersistente.OJB.grant.contract;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;

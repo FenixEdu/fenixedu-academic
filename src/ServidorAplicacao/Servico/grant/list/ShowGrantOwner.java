@@ -16,7 +16,6 @@ import DataBeans.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import DataBeans.grant.contract.InfoGrantPart;
-import DataBeans.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import DataBeans.grant.contract.InfoGrantSubsidy;
 import DataBeans.grant.contract.InfoGrantSubsidyWithContract;
 import DataBeans.grant.list.InfoListGrantContract;
