@@ -49,12 +49,6 @@
 		  <html:hidden property="username" />
         </tr>
         
-       <!-- Specialization Area -->
-       <tr>
-         <td><bean:message key="label.candidate.specializationArea"/> </td>
-         <td><html:text property="specializationArea"/></td>
-         </td>
-       </tr>
         <!-- Nome do Pai -->
         <tr>
          <td width="30%"><bean:message key="label.person.fatherName" /></td>
@@ -141,6 +135,35 @@
              </html:select>          
          </td>
         </tr>
+        <!-- Numero de Contribuinte -->
+        <tr>
+         <td width="30%"><bean:message key="label.person.contributorNumber" /></td>
+          <td><html:text property="contributorNumber"/></td>
+        </tr>
+        <!-- Profissao -->
+        <tr>
+         <td width="30%"><bean:message key="label.person.occupation" /></td>
+          <td><html:text property="occupation"/></td>
+        </tr>
+        <!-- Sexo -->
+        <tr>
+         <td width="30%"><bean:message key="label.person.sex" /></td>
+         <td>
+            <html:select property="sex">
+                <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
+             </html:select>          
+         </td>
+        </tr>
+        <!-- Nacionalidade -->
+        <tr>
+         <td width="30%"><bean:message key="label.person.nationality" /></td>
+         <td>
+            <html:select property="nationality">
+                <html:options collection="<%= SessionConstants.NATIONALITY_LIST_KEY %>" property="value" labelProperty="label"/>
+             </html:select>          
+         </td>
+        </tr>
+        
 </table>
 <br />
         <!-- Morada -->
@@ -215,34 +238,6 @@
          <td width="30%"><bean:message key="label.person.webSite" /></td>
           <td><html:text property="webSite"/></td>
         </tr>
-        <!-- Numero de Contribuinte -->
-        <tr>
-         <td width="30%"><bean:message key="label.person.contributorNumber" /></td>
-          <td><html:text property="contributorNumber"/></td>
-        </tr>
-        <!-- Profissao -->
-        <tr>
-         <td width="30%"><bean:message key="label.person.occupation" /></td>
-          <td><html:text property="occupation"/></td>
-        </tr>
-        <!-- Sexo -->
-        <tr>
-         <td width="30%"><bean:message key="label.person.sex" /></td>
-         <td>
-            <html:select property="sex">
-                <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
-             </html:select>          
-         </td>
-        </tr>
-        <!-- Nacionalidade -->
-        <tr>
-         <td width="30%"><bean:message key="label.person.nationality" /></td>
-         <td>
-            <html:select property="nationality">
-                <html:options collection="<%= SessionConstants.NATIONALITY_LIST_KEY %>" property="value" labelProperty="label"/>
-             </html:select>          
-         </td>
-        </tr>
 </table>
 <br />
 	 <!-- Informacao de Licenciatura -->
@@ -269,6 +264,13 @@
         <td width="30%"><bean:message key="label.candidate.majorDegreeYear" />:</td>
         <td><html:text property="majorDegreeYear"/></td>
 	   </tr>
+	   <!-- Specialization Area -->
+       <tr>
+         <td><bean:message key="label.candidate.specializationArea"/> </td>
+         <td><html:text property="specializationArea"/></td>
+         </td>
+       </tr>
+	   
 		<!-- Active Situation -->
        <tr>
         <td width="30%"><bean:message key="label.masterDegree.administrativeOffice.situation" />:</td>
