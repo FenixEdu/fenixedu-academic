@@ -90,9 +90,6 @@ public class TimeTableRenderer {
 							colisionList,
 							timeTable.getDayColumn(dayIndex));
 
-					int emptyLessonSlotNumber =
-						getEmptyLessonSlotNumber(lessonSlotListResolved);
-
 					for (int slotIndex = 0, colspan = 0;
 						slotIndex < lessonSlotListResolved.length
 							&& colspan < lessonSlotListResolved.length;
