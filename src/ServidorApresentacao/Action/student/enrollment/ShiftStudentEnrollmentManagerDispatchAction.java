@@ -34,7 +34,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author tdi-dev (bruno) Modified by Tânia Pousão Modified by Fernanda Quitério
  *  
  */
-public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDispatchAction {
+public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDispatchAction {
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("prepareEnrollmentViewWarning");

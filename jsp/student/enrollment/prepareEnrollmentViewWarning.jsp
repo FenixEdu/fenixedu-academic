@@ -21,13 +21,13 @@
 	</p>
 	<p align="left">
 		<bean:message key="message.warning.student.enrolmentClasses.notEnroll" />
-		&nbsp;<html:link page="<%= "/studentShiftEnrolmentManager.do?method=start&selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /></html:link>
+		&nbsp;<html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /></html:link>
 	</p>
 
 	<table>
 		<tr>
 			<td>
-				<html:form action="/studentShiftEnrolmentManager">
+				<html:form action="/studentShiftEnrollmentManager">
 					<input type="hidden" name="method" value="start">
 					<html:submit styleClass="inputbutton">
 						<bean:message key="button.continue.enrolment"/>
@@ -35,7 +35,7 @@
 				</html:form>
 			</td>
 			<td>
-				<html:form action="/studentShiftEnrolmentManagerLoockup" >
+				<html:form action="/studentShiftEnrollmentManagerLoockup" >
 					<html:submit property="method" styleClass="inputbutton"  style="width:100%">
 						<bean:message key="button.exit.enrollment"/>
 					</html:submit>	

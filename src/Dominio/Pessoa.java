@@ -9,8 +9,8 @@ import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
 public class Pessoa extends DomainObject implements IPessoa {
-	private Boolean availableEmail;
-	private Boolean availableWebSite;
+	private Boolean availableEmail = Boolean.FALSE;
+	private Boolean availableWebSite  = Boolean.FALSE;
 	private Integer chavePais;
 	private String codigoFiscal;
 	private String codigoPostal;

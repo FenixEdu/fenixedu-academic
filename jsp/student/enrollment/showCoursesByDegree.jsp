@@ -30,7 +30,7 @@
 	
 	<logic:present name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList">	
 	<div class="infotable" style="width:95%;">		
-	<html:form action="/studentShiftEnrolmentManager" >
+	<html:form action="/studentShiftEnrollmentManager" >
 		<html:hidden property="method" value="start" />
 		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
 		<logic:present name="selectCourses">
@@ -43,7 +43,7 @@
 			<html:optionsCollection name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList"/>				
 		</html:select>
 	</html:form>
-	<html:form action="/studentShiftEnrolmentManagerLoockup" >
+	<html:form action="/studentShiftEnrollmentManagerLoockup" >
 		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
 		<html:hidden property="degree" value="<%= degreeSelected.toString() %>" />
 		<logic:present name="selectCourses">

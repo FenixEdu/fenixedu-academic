@@ -19,7 +19,7 @@
 				<br />
 				<ul>
 					<li>
-						<html:link page="<%= "/studentShiftEnrolmentManager.do?method=start&amp;selectCourses=true"%>">
+						<html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true"%>">
 							<b><bean:message key="link.shift.chooseCourses" /></b>
 						</html:link>
 						&nbsp;-&nbsp;<bean:message key="message.shift.enrollment.chooseCourses.help" />
@@ -28,7 +28,7 @@
 						<bean:define id="link">
 							<bean:message key="link.shift.enrolement.edit"/>
 						</bean:define>
-						<html:link page="<%="/studentShiftEnrolmentManagerLoockup.do?method=" + link + "&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>">
+						<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>">
 					  		<b><bean:message key="link.shift.enrolment" />/<bean:write name="link"/></b>
 						</html:link>
 						&nbsp;-&nbsp;<bean:message key="message.shift.enrollment.modifyShifts.help" />
@@ -90,7 +90,7 @@
 						<bean:write name="infoShift" property="nome" />
 						<bean:define id="infoShiftId" name="infoShift" property="idInternal" />
 						-
-						<html:link page="<%= "/studentShiftEnrolmentManager.do?method=unEnroleStudentFromShift&amp;studentId="
+						<html:link page="<%= "/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;studentId="
 													+ pageContext.findAttribute("studentId").toString()
 													+ "&amp;shiftId="
 													+ pageContext.findAttribute("infoShiftId").toString()

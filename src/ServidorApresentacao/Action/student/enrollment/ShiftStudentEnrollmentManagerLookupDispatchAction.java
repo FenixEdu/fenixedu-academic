@@ -41,7 +41,7 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Tânia Pousão
  */
-public class ShiftStudentEnrolmentManagerLookupDispatchAction extends
+public class ShiftStudentEnrollmentManagerLookupDispatchAction extends
         TransactionalLookupDispatchAction
 {
     public ActionForward addCourses(ActionMapping mapping, ActionForm form,

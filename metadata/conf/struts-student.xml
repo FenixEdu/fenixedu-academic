@@ -11,7 +11,7 @@
     <form-beans type="org.apache.struts.action.ActionFormBean">
 	  
       
-      <form-bean name="studentShiftEnrolmentForm"
+      <form-bean name="studentShiftEnrollmentForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
 		<form-property name="studentId" type="java.lang.Integer"/>      			
@@ -24,7 +24,7 @@
 	    <form-property name="classId" type="java.lang.String"/>
       </form-bean>
       
-	  <form-bean name="selectShiftEnrolmentForm"
+	  <form-bean name="selectShiftEnrollmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="index" type="java.lang.String" />
@@ -170,9 +170,9 @@
       </action>
 
       <!-- Student Shift Enrolment Manager-->
-	  <action path="/studentShiftEnrolmentManager"
-	  	name="studentShiftEnrolmentForm"
-        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrolmentManagerDispatchAction"
+	  <action path="/studentShiftEnrollmentManager"
+	  	name="studentShiftEnrollmentForm"
+        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrollmentManagerDispatchAction"
 		input="/dotIstPortal.do?prefix=/student&amp;page=/index.do" 
         parameter="method"
         scope="request"
@@ -180,29 +180,29 @@
         <forward name="prepareEnrollmentViewWarning" path="prepare-enrollment-view-warning"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
 		<forward name="showShiftsEnrollment" path="show-shifts-enrollment"/>
-		<forward name="showEnrollmentPage" path="/studentShiftEnrolmentManagerLoockup.do?method=Escolher Turnos"/>
+		<forward name="showEnrollmentPage" path="/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos"/>
       </action>
       
-   	  <action path="/studentShiftEnrolmentManagerLoockup"
-	  	name="studentShiftEnrolmentForm"
-        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrolmentManagerLookupDispatchAction"
-		input="/studentShiftEnrolmentManager.do?method=prepareShiftEnrollment" 
+   	  <action path="/studentShiftEnrollmentManagerLoockup"
+	  	name="studentShiftEnrollmentForm"
+        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrollmentManagerLookupDispatchAction"
+		input="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment" 
 		parameter="method"
         scope="request"
         validate="false">                           
-        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
+        <forward name="beginTransaction" path="/studentShiftEnrollmentManager.do?method=start&amp;firstTime=true"/>
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
-    	<forward name="prepareShiftEnrollment" path="/studentShiftEnrolmentManager.do?method=prepareShiftEnrollment" />
+    	<forward name="prepareShiftEnrollment" path="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment" />
     	<forward name="showShiftsToEnroll" path="show-shifts-to-enroll" />
       </action>
       
 	  <action path="/enrollStudentInShifts"
         type="ServidorApresentacao.Action.student.enrollment.EnrollStudentInShiftsAction"
-	  	name="studentShiftEnrolmentForm"
+	  	name="studentShiftEnrollmentForm"
         scope="request"
         validate="false"
-        input="/studentShiftEnrolmentManagerLoockup.do?method=Escolher Turnos&amp;page=0" > 
-        <forward name="enrollmentConfirmation" path="/studentShiftEnrolmentManager.do?method=prepareShiftEnrollment"/>
+        input="/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos&amp;page=0" > 
+        <forward name="enrollmentConfirmation" path="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment"/>
       </action>
       
       <action 
@@ -213,18 +213,18 @@
       
       <action 
         type="ServidorApresentacao.Action.commons.VoidAction"
-        path="/studentShiftEnrolmentOptions"
+        path="/studentShiftEnrollmentOptions"
         scope="request">
         <forward name="Success" path="shift-enrolment-options"/>
       </action>
       
-      <action type="ServidorApresentacao.Action.student.ShiftEnrolmentAction"
-              path="/shiftEnrolment"
+      <action type="ServidorApresentacao.Action.student.ShiftEnrollmentAction"
+              path="/shiftEnrollment"
               input="/viewShiftsList.do"
               scope="request"
-              name="shiftEnrolmentForm"
+              name="shiftEnrollmentForm"
               validate="true">
-        <forward name="sucess" path="/viewEnrolment.do"/>
+        <forward name="sucess" path="/viewEnrollment.do"/>
       </action>
 
       <action type="ServidorApresentacao.Action.student.ChooseOtherCourseAction"

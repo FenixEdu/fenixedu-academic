@@ -84,7 +84,7 @@
 					</html:form>
 				</td>
 				<td>
-					<html:form action="/studentShiftEnrolmentManagerLoockup">
+					<html:form action="/studentShiftEnrollmentManagerLoockup">
 						<html:hidden property="classId" value="<%=pageContext.findAttribute("classId").toString()%>"/>
 						<html:hidden property="studentId" value="<%=pageContext.findAttribute("studentId").toString()%>"/>
 						<html:submit property="method" styleClass="inputbutton">
