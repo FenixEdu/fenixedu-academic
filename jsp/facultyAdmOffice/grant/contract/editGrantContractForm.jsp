@@ -27,7 +27,7 @@
 	<%-- contract regime --%>
 	<html:hidden property="grantContractRegimeId"/>
 
-	<strong><p><bean:message key="label.grant.contract.information"/></p></strong><br/>
+	<strong><p><bean:message key="label.grant.contract.information"/></p></strong>
 
 	<table>
 		<tr>

@@ -36,11 +36,12 @@
 	
 	<table>
 		<tr>
+		<logic:present name="editGrantInsuranceForm" property="totalValue">
 			<td align="left">
 				<bean:message key="label.grant.insurance.totalValue"/>:&nbsp;
 			</td>
 			<td>
-				<logic:present name="editGrantInsuranceForm" property="totalValue">
+				
 					<bean:define id="totalValue" name="editGrantInsuranceForm" property="totalValue"/>
 					<%-- This part of the code is used to truncate the totalValue--%>
 					<% 
@@ -49,8 +50,14 @@
 						totalValue = new Double(totalValueRounded);
 					%>
 					<p><bean:write name="totalValue"/>&nbsp;<bean:message key="label.euroSymbol"/></p>
-				</logic:present>
+				
 			</td>
+		</logic:present>
+		<logic:notPresent name="editGrantInsuranceForm" property="totalValue">
+			<td align="left" colspan="2">
+				<bean:message key="info.grant.insurance.noInsurance"/>&nbsp;
+			</td>
+		</logic:notPresent>
 		</tr>
 		<tr>
 			<td colspan="2">&nbsp;</td>

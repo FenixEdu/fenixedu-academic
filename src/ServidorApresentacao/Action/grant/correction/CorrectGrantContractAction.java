@@ -84,7 +84,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			//Read the grant owner
-			Object[] argsGrantOwner = {null, null, null, grantOwnerNumber, new Boolean(false)};
+			Object[] argsGrantOwner = {null, null, null, grantOwnerNumber, new Boolean(false),null};
 			List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",argsGrantOwner);
 			if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1)
 			{

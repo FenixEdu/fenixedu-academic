@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<strong><p align="center"><bean:message key="label.grant.owner.management"/></p></strong><br/>
+<strong><p align="center"><bean:message key="label.grant.owner.management"/></p></strong>
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
@@ -415,7 +415,7 @@
 <br/>
 
 <%-- Gerir contractos --%>
-<strong><p align='center'><bean:message key="label.grant.contract.manage"/></p></strong>
+<%-- <strong><p align='center'><bean:message key="label.grant.contract.manage"/></p></strong> --%>
 <bean:message key="message.grant.contract.manage" />:&nbsp;
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <html:link page='<%= "/manageGrantContract.do?method=prepareManageGrantContractForm&amp;idInternal=" +  idGrantOwner.toString() %>' > 
@@ -424,8 +424,8 @@
 	
 <br/><br/>
 
-<%-- Gerir qualifica��es --%>
-<strong><p align='center'><bean:message key="label.grant.qualification.manage"/></p></strong>
+<%-- Gerir qualificacoes --%>
+<%-- <strong><p align='center'><bean:message key="label.grant.qualification.manage"/></p></strong> --%>
 <bean:message key="message.grant.qualification.manage" />:&nbsp;
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <bean:define id="username" name="infoGrantOwner" property="personInfo.username"/>
