@@ -10,6 +10,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -17,10 +19,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoRole;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.RoleType;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -91,9 +95,15 @@ public class FindPersonAction extends FenixDispatchAction
 				
 		request.setAttribute("personListFinded", personListFinded);
 		
+		if(isEmployeeOrTeacher(userView)) {
+			request.setAttribute("show", Boolean.TRUE);			
+		} else {
+			request.setAttribute("show", Boolean.FALSE);
+		}
+		
 		return mapping.findForward("displayPerson");
 	}
-	
+
 	private String putSearchChar(String searchElem) {		
 		String newSearchElem = null;
 		if(searchElem != null) {
@@ -101,7 +111,20 @@ public class FindPersonAction extends FenixDispatchAction
 		}
 		return newSearchElem;
 	}
-	
+
+	private boolean isEmployeeOrTeacher(IUserView userView) {
+		List employeeAndTeacherRoles = (List) CollectionUtils.select(userView.getRoles(), new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                InfoRole role = (InfoRole) arg0;
+                return role.getRoleType().equals(RoleType.EMPLOYEE) || role.getRoleType().equals(RoleType.TEACHER);
+            }	    
+		
+		});
+				
+		return employeeAndTeacherRoles != null && employeeAndTeacherRoles.size() > 0;
+	}
+
 	public ActionForward findEmployee(
 			ActionMapping mapping,
 			ActionForm actionForm,

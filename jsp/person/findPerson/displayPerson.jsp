@@ -28,27 +28,56 @@
           </tr>
 	 	</table>
 		<table width="100%">
-          <!-- Telefone de Trabalho -->
-          <logic:notEmpty name="personalInfo" property="workPhone">          
-	          <tr>
-	            <td width="30%"><bean:message key="label.person.workPhone" /></td>
-	            <td class="greytxt"><bean:write name="personalInfo" property="workPhone"/></td>
-	          </tr>
-          </logic:notEmpty>
-          <!-- E-Mail -->
-          <logic:equal name="personalInfo" property="availableEmail" value="true">
+		  <!-- Role -->
+		  <tr>
+	      	<td width="30%" colspan="2">
+	      		<logic:match name="personalInfo" property="username" value="D">
+	      			<b><bean:message key="teacher"/></b>
+	      		</logic:match>
+	      		<logic:match name="personalInfo" property="username" value="F">
+	      			<b><bean:message key="employee"/></b>
+	      		</logic:match>
+	      		<logic:match name="personalInfo" property="username" value="L">
+	      			<b><bean:message key="student"/></b>
+	      		</logic:match>	      	
+	      	</td>
+	      </tr>
+		  
+		  
+          <!-- Telefone de Trabalho -->                    
+	      <tr>
+	      	<td width="30%"><bean:message key="label.person.workPhone" /></td>
+	        <td class="greytxt"><bean:write name="personalInfo" property="workPhone"/></td>
+	      </tr>
+                    
+          <logic:equal name="show" value="true">
+          	  <!-- E-Mail -->
 	          <tr>
 	            <td width="30%"><bean:message key="label.person.email" /></td>
 	            <td class="greytxt"><bean:write name="personalInfo" property="email"/></td>
-	          </tr>
-          </logic:equal>
-          <!-- WebPage -->
-          <logic:equal name="personalInfo" property="availableWebSite" value="true">        
+	          </tr>  
+	          <!-- WebPage --> 	          
 	          <tr>
 	            <td width="30%"><bean:message key="label.person.webSite" /></td>
 	            <td class="greytxt"><bean:write name="personalInfo" property="enderecoWeb"/></td>
-	          </tr>
-          </logic:equal>
+	          </tr>	                 
+          </logic:equal>          
+                    
+          <logic:equal name="show" value="false">
+	          <logic:equal name="personalInfo" property="availableEmail" value="true">
+		          <tr>
+		            <td width="30%"><bean:message key="label.person.email" /></td>
+		            <td class="greytxt"><bean:write name="personalInfo" property="email"/></td>
+		          </tr>
+	          </logic:equal>
+	          <!-- WebPage -->
+	          <logic:equal name="personalInfo" property="availableWebSite" value="true">        
+		          <tr>
+		            <td width="30%"><bean:message key="label.person.webSite" /></td>
+		            <td class="greytxt"><bean:write name="personalInfo" property="enderecoWeb"/></td>
+		          </tr>
+	          </logic:equal>
+          </logic:equal> 
     	</table>
     	<br />
 	</logic:iterate>
