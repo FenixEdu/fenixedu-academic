@@ -279,7 +279,7 @@ public abstract class Cloner
 			{
 				System.out.println("  interface: " + interfaces[i].getName());
 				if (Arrays.asList(interfaces[i].getInterfaces()).contains(IDomainObject.class)
-					|| (interfaces[i].getSuperclass().getName().equals(IDomainObject.class.getName())))
+					|| ((interfaces[i].getSuperclass()!=null) && (interfaces[i].getSuperclass().getName().equals(IDomainObject.class.getName()))))
 				{
 					parameters = new Class[1];
 					parameters[0] = interfaces[i];
