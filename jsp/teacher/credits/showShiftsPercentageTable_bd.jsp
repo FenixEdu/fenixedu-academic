@@ -14,28 +14,29 @@
 	<html:hidden property="method" value="accept"/>
 	<html:hidden property="objectCode"/>
 	
-	<table border="1">
+	<table width="100%">
 		<tr>
-			<th rowspan="2" align="center">Turno</th>
-			<th colspan="4" align="center">Aulas</th>
-			<th rowspan="2" align="center">% que lecciona</th>
-			<th rowspan="2" align="center">Alterar?</th>			
-			<th colspan="2" align="center">Atribuidos</th>			
+			<td rowspan="2" class="listClasses-header">Turno</td>
+			<td rowspan="2" class="listClasses-header">Tipo</td>
+			<td colspan="4" class="listClasses-header">Aulas</td>
+			<td rowspan="2" class="listClasses-header">% que lecciona</td>
+			<td rowspan="2" class="listClasses-header">Alterar?</td>			
+			<td colspan="2" class="listClasses-header">Atribuidos</td>			
 		</tr>
 		<tr>
-			<td align="center">
+			<td class="listClasses-header">
 				Dia da Semana
 			</td>
-			<td align="center">
+			<td class="listClasses-header">
 				Inicio
 			</td>
-			<td align="center">
+			<td class="listClasses-header">
 				Fim
 			</td>
-			<td align="center">
+			<td class="listClasses-header">
 				Sala
 			</td>			
-			<td align="center">
+			<td class="listClasses-header">
 				Professor - % que lecciona
 			</td>
 		</tr> 
@@ -45,13 +46,13 @@
 			
 			<bean:size id="lessonsSize" name="infoShiftPercentage" property="infoLessons" />	
 										
-			<tr>
-				<td rowspan="<%= String.valueOf(lessonsSize.intValue()) %>">
-					<bean:write name="infoShiftPercentage" property="shift.nome"/>			
-				</td>
 
 				<logic:equal name="lessonsSize" value="0">
-					<td colspan="7" rowspan="<%= String.valueOf(lessonsSize.intValue()) %>"> Não tem aulas </td>
+					<tr>
+						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.nome"/></td>
+						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.tipo.siglaTipoAula"/></td>
+						<td class="listClasses" colspan="7"> Não tem aulas </td>
+					</tr>
 				</logic:equal>
 				<logic:notEqual name="lessonsSize" value="0">
 					<logic:iterate id="infoLesson" name="infoShiftPercentage" property="infoLessons" indexId="indexLessons" >
@@ -61,61 +62,64 @@
 			            <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
 			            
 			            <logic:equal name="indexLessons" value="0">
-							<td align="center">
+							<tr>
+							<td class="listClasses" rowspan="<%= lessonsSize %>"><bean:write name="infoShiftPercentage" property="shift.nome"/></td>
+							<td class="listClasses" rowspan="<%= lessonsSize %>"><bean:write name="infoShiftPercentage" property="shift.tipo.siglaTipoAula"/></td>
+							<td class="listClasses">
 								<bean:write name="infoLesson" property="diaSemana"/>
 							</td>
-							<td align="center">
+							<td class="listClasses">
 								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>				
 							</td>
-							<td align="center">
+							<td class="listClasses">
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>	
 							</td>
-							<td align="center">
+							<td class="listClasses">
 								<bean:write name="infoLesson" property="infoSala.nome"/>					
 							</td>
 							
-							<td align="center" rowspan="<%= String.valueOf(lessonsSize.intValue()) %>">
+							<td class="listClasses" rowspan="<%= lessonsSize %>">
 						  		<bean:define id="propertyName">
 									percentage_<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
 								</bean:define>
-								<html:text property='<%= propertyName.toString() %>' size="4" value="" />%
+								<html:text property='<%= propertyName.toString() %>' size="4"/> %
 							</td>
-							<td align="center" rowspan="<%= String.valueOf(lessonsSize.intValue()) %>">
+							<td class="listClasses" rowspan="<%= lessonsSize %>">
 								<html:multibox property="shiftProfessorships">
 									<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
 								</html:multibox>
 							</td>	
 							
-							<td align="center" rowspan="<%= String.valueOf(lessonsSize.intValue()) %>">					
+							<td class="listClasses" rowspan="<%= lessonsSize %>">					
 								<logic:iterate id="teacherShiftPercentage"	name="infoShiftPercentage" property="teacherShiftPercentageList" indexId="indexPercentage">						
 						    		<bean:write name="teacherShiftPercentage" property="infoProfessorship.infoTeacher.infoPerson.nome" />
 			 						&nbsp;-&nbsp;<bean:write name="teacherShiftPercentage" property="percentage" />
 			 						<br>
 								</logic:iterate> 					
 							</td>						
+							</tr>
 						</logic:equal>
 						
 						<logic:greaterThan name="indexLessons" value="0">
-							</tr>
 							<tr>
-								<td align="center">
+								<td class="listClasses">
 									<bean:write name="infoLesson" property="diaSemana"/>
 								</td>
-								<td align="center">
+								<td class="listClasses">
 									<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>				
 								</td>
-								<td align="center">
+								<td class="listClasses">
 									<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>	
 								</td>
-								<td align="center">
+								<td class="listClasses">
 									<bean:write name="infoLesson" property="infoSala.nome"/>					
 								</td>						
+							</tr>
 						</logic:greaterThan>
 					</logic:iterate>
 				</logic:notEqual>	
-			</tr>			
 		</logic:iterate>
 	</table>
 	<p>
-	<html:submit value="Submeter"/>
+	<html:submit styleClass="inputbutton" value="Submeter"/>
 </html:form>
