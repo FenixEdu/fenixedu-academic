@@ -11,19 +11,12 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoRole;
 import DataBeans.InfoStudent;
-import Dominio.ExecutionCourse;
-import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
-import Dominio.IExecutionCourse;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Student;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AccessControlFilter;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -38,7 +31,7 @@ import Util.TipoCurso;
 public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilter
 {
 
-	private static String DEGREE_LEEC_CODE = new String("LEEC");
+//	private static String DEGREE_LEEC_CODE = new String("LEEC");
 
 	public StudentShiftEnrollmentAuthorizationFilter()
 	{
@@ -119,7 +112,7 @@ public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilt
 		CollectionUtils.intersection(roles, getNeededRoles());
 
 		InfoStudent infoStudent = (InfoStudent) arguments[0];
-		Integer executionCourseIdToAttend = (Integer) arguments[1];
+//		Integer executionCourseIdToAttend = (Integer) arguments[1];
 
 		IStudentCurricularPlan studentCurricularPlan = null;
 
@@ -162,13 +155,13 @@ public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilt
 				{
 					return "noAuthorization";
 				}
-
-				if (verifyStudentLEEC(studentCurricularPlan))
-				{
-					if(!findEnrollmentForAttend(studentCurricularPlan, executionCourseIdToAttend)){
-						return "noAuthorization";
-					}
-				}
+				
+//				if (verifyStudentLEEC(studentCurricularPlan))
+//				{
+//					if(!findEnrollmentForAttend(studentCurricularPlan, executionCourseIdToAttend)){
+//						return "noAuthorization";
+//					}
+//				}
 			}
 			catch (Exception e)
 			{
@@ -179,57 +172,57 @@ public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilt
 		return "noAuthorization";
 	}
 
-	private boolean findEnrollmentForAttend(
-		IStudentCurricularPlan studentCurricularPlan,
-		Integer executionCourseIdToAttend)
-		throws ExcepcaoPersistencia
-	{
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
-		IExecutionCourse executionCourse = findExecutionCourse(executionCourseIdToAttend, sp);
-		
-		if(executionCourse == null) {
-			return false;
-		}
-		// checks if there is an enrollment for this attend
-		Iterator iterCurricularCourses = executionCourse.getAssociatedCurricularCourses().iterator();
-		while (iterCurricularCourses.hasNext())
-		{
-			ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses.next();
+//	private boolean findEnrollmentForAttend(
+//		IStudentCurricularPlan studentCurricularPlan,
+//		Integer executionCourseIdToAttend)
+//		throws ExcepcaoPersistencia
+//	{
+//		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+//		IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+//		IExecutionCourse executionCourse = findExecutionCourse(executionCourseIdToAttend, sp);
+//		
+//		if(executionCourse == null) {
+//			return false;
+//		}
+//		// checks if there is an enrollment for this attend
+//		Iterator iterCurricularCourses = executionCourse.getAssociatedCurricularCourses().iterator();
+//		while (iterCurricularCourses.hasNext())
+//		{
+//			ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses.next();
+//
+//			IEnrolment enrollment =
+//				persistentEnrolment.readByStudentCurricularPlanAndCurricularCourse(
+//					studentCurricularPlan,
+//					curricularCourseElem);
+//			if (enrollment != null)
+//			{
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
-			IEnrolment enrollment =
-				persistentEnrolment.readByStudentCurricularPlanAndCurricularCourse(
-					studentCurricularPlan,
-					curricularCourseElem);
-			if (enrollment != null)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private IExecutionCourse findExecutionCourse(Integer executionCourseIdToAttend, ISuportePersistente sp) throws ExcepcaoPersistencia
-	{
-		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-
-		IExecutionCourse executionCourse =
-			(IExecutionCourse) persistentExecutionCourse.readByOID(
-				ExecutionCourse.class,
-				executionCourseIdToAttend);
-		return executionCourse;
-	}
-
-	private boolean verifyStudentLEEC(IStudentCurricularPlan studentCurricularPlan)
-		throws ExcepcaoPersistencia
-	{
-		String degreeCode = null;
-		if (studentCurricularPlan.getDegreeCurricularPlan() != null
-			&& studentCurricularPlan.getDegreeCurricularPlan().getDegree() != null)
-		{
-			degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla();
-		}
-
-		return DEGREE_LEEC_CODE.equals(degreeCode);
-	}
+//	private IExecutionCourse findExecutionCourse(Integer executionCourseIdToAttend, ISuportePersistente sp) throws ExcepcaoPersistencia
+//	{
+//		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+//
+//		IExecutionCourse executionCourse =
+//			(IExecutionCourse) persistentExecutionCourse.readByOID(
+//				ExecutionCourse.class,
+//				executionCourseIdToAttend);
+//		return executionCourse;
+//	}
+//
+//	private boolean verifyStudentLEEC(IStudentCurricularPlan studentCurricularPlan)
+//		throws ExcepcaoPersistencia
+//	{
+//		String degreeCode = null;
+//		if (studentCurricularPlan.getDegreeCurricularPlan() != null
+//			&& studentCurricularPlan.getDegreeCurricularPlan().getDegree() != null)
+//		{
+//			degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla();
+//		}
+//
+//		return DEGREE_LEEC_CODE.equals(degreeCode);
+//	}
 }
