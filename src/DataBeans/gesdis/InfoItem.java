@@ -6,8 +6,6 @@ package DataBeans.gesdis;
 
 import java.io.Serializable;
 
-import Dominio.ISection;
-
 /**
  * @author Ivo Brandão
  */
@@ -16,7 +14,7 @@ public class InfoItem implements Serializable {
 	private String information;
 	private String name;
 	private Integer order;
-	private ISection section;
+	private InfoSection infoSection;
 	private Boolean urgent;
 
 	/**
@@ -29,12 +27,12 @@ public class InfoItem implements Serializable {
 	 * Constructor
 	 */
 	public InfoItem(String information, String name, Integer order, 
-		ISection section, Boolean urgent) {
+		InfoSection infoSection, Boolean urgent) {
 
 		this.information = information;
 		this.name = name;
 		this.order = order;
-		this.section = section;
+		this.infoSection = infoSection;
 		this.urgent = urgent;
 	}
 
@@ -48,7 +46,7 @@ public class InfoItem implements Serializable {
 			resultado =  getInformation().equals(infoItem.getInformation())
 				&& getName().equals(infoItem.getName())
 				&& getOrder().equals(infoItem.getOrder())
-				&& getSection().equals(infoItem.getSection())
+				&& getInfoSection().equals(infoItem.getInfoSection())
 				&& getUrgent().equals(infoItem.getUrgent());
 		}
 		return resultado;
@@ -61,7 +59,7 @@ public class InfoItem implements Serializable {
 		String result = "[INFOITEM";
 		result += ", name=" + name;
 		result += ", order=" + order;
-		result += ", section=" + section;
+		result += ", infoSection=" + infoSection;
 		result += ", urgent=" + urgent;		
 		result += "]";
 		return result;
@@ -88,12 +86,7 @@ public class InfoItem implements Serializable {
 		return order;
 	}
 
-	/**
-	 * @return ISection
-	 */
-	public ISection getSection() {
-		return section;
-	}
+
 
 	/**
 	 * @return Boolean
@@ -126,13 +119,7 @@ public class InfoItem implements Serializable {
 		this.order = order;
 	}
 
-	/**
-	 * Sets the section.
-	 * @param section The section to set
-	 */
-	public void setSection(ISection section) {
-		this.section = section;
-	}
+
 
 	/**
 	 * Sets the urgent.
@@ -140,6 +127,21 @@ public class InfoItem implements Serializable {
 	 */
 	public void setUrgent(Boolean urgent) {
 		this.urgent = urgent;
+	}
+
+	/**
+	 * @return InfoSection
+	 */
+	public InfoSection getInfoSection() {
+		return infoSection;
+	}
+
+	/**
+	 * Sets the infoSection.
+	 * @param infoSection The infoSection to set
+	 */
+	public void setInfoSection(InfoSection infoSection) {
+		this.infoSection = infoSection;
 	}
 
 }
