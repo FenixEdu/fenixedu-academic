@@ -19,7 +19,7 @@
 			<put name="infoTeacher"/>
 			<put name="executionCourseLink"/>
 			<put name="paramId"/>
-			<put name="infoProfessorshipList"/>			
+			<put name="detailedProfessorshipList"/>			
 	</definition>
 	
 </tiles-definitions>
