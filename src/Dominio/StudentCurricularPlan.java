@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -824,7 +825,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     protected List getCommonBranchAndStudentBranchesCourses(IExecutionPeriod executionPeriod) {
 
-        List curricularCourses = new ArrayList();
+        HashSet curricularCourses = new HashSet();
         IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         List commonAreas = degreeCurricularPlan.getCommonAreas();
         int commonAreasSize = commonAreas.size();
@@ -849,15 +850,18 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         //        curricularCourses.addAll(degreeCurricularPlan.getSpecialListOfCurricularCourses());
 
+        List allCurricularCourses = new ArrayList(curricularCourses.size());
+        allCurricularCourses.addAll(curricularCourses);
+        
         List result = new ArrayList();
         int curricularCoursesSize = curricularCourses.size();
 
         for (int i = 0; i < curricularCoursesSize; i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
+            ICurricularCourse curricularCourse = (ICurricularCourse) allCurricularCourses.get(i);
             result.add(transformToCurricularCourse2Enroll(curricularCourse, executionPeriod));
         }
 
-        markOptionalCurricularCourses(curricularCourses, result);
+        markOptionalCurricularCourses(allCurricularCourses, result);
 
         List elementsToRemove = (List) CollectionUtils.select(result, new Predicate() {
             public boolean evaluate(Object obj) {
