@@ -38,8 +38,7 @@ public class ApagarTurnoFormAction extends FenixAction {
       Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
       ArrayList infoTurnos = (ArrayList) sessao.getAttribute("infoTurnosDeDisciplinaExecucao");
       InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
-
-	  sessao.removeAttribute("indexTurno");
+	  manipularTurnosForm.set("indexTurno", null);
 	  InfoExecutionCourse IEC = (InfoExecutionCourse) sessao.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 	  
 	  

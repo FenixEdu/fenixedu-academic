@@ -38,7 +38,8 @@ public class ApagarAulaFormAction extends FenixAction {
       Integer indexAula = (Integer) manipularAulasForm.get("indexAula");
       ArrayList infoAulas = (ArrayList) sessao.getAttribute("listaAulas");
       InfoLesson infoAula = (InfoLesson) infoAulas.get(indexAula.intValue());
-
+      
+	  manipularAulasForm.set("indexAula", null);
 	  sessao.removeAttribute("indexAula");
 	  
 	  Object argsApagarAula[] = { new KeyLesson(infoAula.getDiaSemana(), infoAula.getInicio(), infoAula.getFim(),

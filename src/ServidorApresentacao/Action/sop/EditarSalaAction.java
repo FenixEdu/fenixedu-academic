@@ -40,7 +40,7 @@ public class EditarSalaAction extends FenixAction {
 		ArrayList listaSalasBean =
 			(ArrayList) session.getAttribute("publico.infoRooms");
 		DynaActionForm posicaoSalaFormBean =
-			(DynaActionForm) session.getAttribute("posicaoFormBean");
+			(DynaActionForm) session.getAttribute("indexForm");
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -73,7 +73,7 @@ public class EditarSalaAction extends FenixAction {
 
 		/* Actualiza a lista de salas no "scope" de sessao */
 		Integer salaSelecionadaIdx =
-			(Integer) posicaoSalaFormBean.get("posicao");
+			(Integer) posicaoSalaFormBean.get("index");
 		listaSalasBean.set(salaSelecionadaIdx.intValue(), sala);
 
 		if (listaSalasBean.isEmpty())

@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
@@ -33,14 +34,19 @@ public class ViewClassesWithShift extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = request.getSession(false);
+		
 		try {
 			DynaValidatorForm shiftForm = (DynaValidatorForm) form;
 			String name = (String) shiftForm.get("name");
+			
+			InfoExecutionDegree infoExecutionDegree =
+				(InfoExecutionDegree) session.getAttribute(
+					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
 			InfoShift infoShift = getInfoShift(name, request);
 
-			Object[] args = { infoShift };
+			Object[] args = { infoShift, infoExecutionDegree };
 			List infoClasses =
 				(List) ServiceUtils.executeService(
 					SessionUtils.getUserView(request),
