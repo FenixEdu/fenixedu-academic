@@ -166,7 +166,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentationSopPortal {
 		}
 
 		actionPerform();
-		verifyForwardPath("/criarTurno.jsp");
+		verifyInputForward();
 
 		verifyActionErrors(new String[] { "error.exception.existing" });
 	}
