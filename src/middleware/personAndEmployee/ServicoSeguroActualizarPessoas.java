@@ -10,6 +10,8 @@ import middleware.dataClean.personFilter.LimpaNaturalidades;
 import middleware.dataClean.personFilter.LimpaOutput;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -32,8 +34,6 @@ import Util.RoleType;
 public class ServicoSeguroActualizarPessoas {
 
 	private String _ficheiro = null;
-	private Collection _listaPessoas = null;
-	private Pessoa _pessoa = null;
 	private String _delimitador = new String(";");
 
 	/** Construtor */
@@ -44,92 +44,113 @@ public class ServicoSeguroActualizarPessoas {
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */
 	public static void main(String[] args) throws Exception {
 		ServicoSeguroActualizarPessoas servico = new ServicoSeguroActualizarPessoas(args);
+
+		Collection listaPessoasFromFile = null;
+
+		try {
+			listaPessoasFromFile = LeituraFicheiroPessoa.lerFicheiro(servico._ficheiro, servico._delimitador);
+		} catch (NotExecuteException nee) {
+			throw new NotExecuteException(nee.getMessage());
+		}
+		System.out.println("Converting Persons " + listaPessoasFromFile.size() + " ... ");
+
+		actualizaPessoas(listaPessoasFromFile);
+
+		desactivarPessoas(listaPessoasFromFile);
+
+		System.out.println("  Done !");
+	}
+
+	private static void actualizaPessoas(Collection listaPessoasFromFile) {
 		int newPersons = 0;
 		int newRoles = 0;
 
 		try {
-			servico._listaPessoas = LeituraFicheiroPessoa.lerFicheiro(servico._ficheiro, servico._delimitador);
-		} catch (NotExecuteException nee) {
-			throw new NotExecuteException(nee.getMessage());
-		}
+			if (listaPessoasFromFile != null) {
+				//open databases
+				PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+				broker.clearCache();
+				broker.beginTransaction();
 
-		System.out.println("Converting Persons " + servico._listaPessoas.size() + " ... ");
+				DB.iniciarTransaccao();
+				LimpaNaturalidades limpaNaturalidades = new LimpaNaturalidades();
 
-		if (servico._listaPessoas != null) {
-			//open databases
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			broker.clearCache();
-			broker.beginTransaction();
+				Iterator iterador = listaPessoasFromFile.iterator();
+				Pessoa pessoa = null;
+				// ciclo que percorre a Collection de Pessoas 
+				while (iterador.hasNext()) {
+					try {
+						pessoa = (Pessoa) iterador.next();
+						personFilter(limpaNaturalidades, pessoa);
 
-			DB.iniciarTransaccao();
-			LimpaNaturalidades limpaNaturalidades = new LimpaNaturalidades();
+						Criteria criteria = new Criteria();
+						Query query = null;
 
-			Iterator iterador = servico._listaPessoas.iterator();
-			/* ciclo que percorre a Collection de Pessoas */
-			while (iterador.hasNext()) {
-				try {
-					servico._pessoa = (Pessoa) iterador.next();
-					personFilter(limpaNaturalidades, servico._pessoa);
+						criteria.addEqualTo("numeroDocumentoIdentificacao", pessoa.getNumeroDocumentoIdentificacao());
+						criteria.addEqualTo("tipoDocumentoIdentificacao", pessoa.getTipoDocumentoIdentificacao());
+						query = new QueryByCriteria(Pessoa.class, criteria);
+						List result = (List) broker.getCollectionByQuery(query);
 
-					Criteria criteria = new Criteria();
-					Query query = null;
-
-					criteria.addEqualTo("numeroDocumentoIdentificacao", servico._pessoa.getNumeroDocumentoIdentificacao());
-					criteria.addEqualTo("tipoDocumentoIdentificacao", servico._pessoa.getTipoDocumentoIdentificacao());
-					query = new QueryByCriteria(Pessoa.class, criteria);
-					List result = (List) broker.getCollectionByQuery(query);
-
-					IPessoa person2Write = null;
-					// A Pessoa nao Existe
-					if (result.size() == 0) {
-						person2Write = (IPessoa) servico._pessoa;
-						newPersons++;
-					} else {
-						// A Pessoa Existe
-						person2Write = (IPessoa) result.get(0);
-						updatePerson((Pessoa) person2Write, (Pessoa) servico._pessoa);
-					}
-
-					//roles
-					IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) person2Write, RoleType.PERSON, broker);
-					if (personRole == null) {
-						criteria = new Criteria();
-						query = null;
-						criteria.addEqualTo("roleType", RoleType.PERSON);
-						query = new QueryByCriteria(Role.class, criteria);
-
-						result = (List) broker.getCollectionByQuery(query);
-
+						IPessoa person2Write = null;
+						// A Pessoa nao Existe
 						if (result.size() == 0) {
-							throw new Exception("Role Desconhecido !!!");
+							person2Write = (IPessoa) pessoa;
+							newPersons++;
 						} else {
+							// A Pessoa Existe
+							person2Write = (IPessoa) result.get(0);
+							updatePerson((Pessoa) person2Write, (Pessoa) pessoa);
+						}
+
+						//roles
+						IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) person2Write, RoleType.PERSON, broker);
+						if (personRole == null) {
 							if (person2Write.getPersonRoles() == null) {
 								person2Write.setPersonRoles(new ArrayList());
 							}
-							person2Write.getPersonRoles().add((Role) result.get(0));
+							person2Write.getPersonRoles().add(descobreRole(broker, RoleType.PERSON));
 							newRoles++;
 						}
-					}
-					if (person2Write.getEstadoCivil().getEstadoCivil().intValue() > 7) {
-						System.out.println("Erro : " + person2Write.getEstadoCivil().getEstadoCivil().intValue());
-					}
 
-					broker.store(person2Write);
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("Erro a converter a pessoa " + servico._pessoa + "\n");
-					//throw new Exception("Erro a converter a pessoa " + servico._pessoa + "\n" + e);
-					continue;
+						if (person2Write.getEstadoCivil().getEstadoCivil().intValue() > 7) {
+							System.out.println("Erro : " + person2Write.getEstadoCivil().getEstadoCivil().intValue());
+						}
+
+						broker.store(person2Write);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Erro a converter a pessoa " + pessoa + "\n");
+						continue;
+					}
 				}
-			}
 
-			//close databases
-			DB.confirmarTransaccao();
-			broker.commitTransaction();
+				//close databases
+				DB.confirmarTransaccao();
+				broker.commitTransaction();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 		System.out.println("New persons added : " + newPersons);
 		System.out.println("New Roles added : " + newRoles);
-		System.out.println("  Done !");
+	}
+
+	private static Role descobreRole(PersistenceBroker broker, RoleType roleType) throws Exception {
+		Role role = null;
+
+		Criteria criteria = new Criteria();
+		Query query = null;
+		criteria.addEqualTo("roleType", roleType);
+		query = new QueryByCriteria(Role.class, criteria);
+
+		List result = (List) broker.getCollectionByQuery(query);
+		if (result.size() == 0) {
+			throw new Exception("Role Desconhecido !!!");
+		} else {
+			role = (Role) result.get(0);
+		}
+		return role;
 	}
 
 	private static void personFilter(LimpaNaturalidades limpaNaturalidades, Pessoa pessoa) {
@@ -151,7 +172,7 @@ public class ServicoSeguroActualizarPessoas {
 			if (limpaOutput.getNomeFreguesia() != null) {
 				pessoa.setFreguesiaNaturalidade(StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
 			}
-			
+
 			//locais da Morada
 			limpaOutput =
 				limpaNaturalidades.limpaNats(
@@ -171,12 +192,7 @@ public class ServicoSeguroActualizarPessoas {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
-	}
-
-	/** retorna a lista de pessoas */
-	public Collection getListaPessoas() {
-		return _listaPessoas;
+		}
 	}
 
 	private static void updatePerson(Pessoa person2Write, Pessoa person2Convert) throws Exception {
@@ -189,6 +205,8 @@ public class ServicoSeguroActualizarPessoas {
 			String mobilePhone = new String(person2Write.getTelemovel());
 			String email = new String(person2Write.getEmail());
 			String url = new String(person2Write.getEnderecoWeb());
+			Collection rolesLists = person2Write.getPersonRoles();
+			List credtisLists = person2Write.getManageableDepartmentCredits();
 
 			BeanUtils.copyProperties(person2Write, person2Convert);
 
@@ -198,6 +216,8 @@ public class ServicoSeguroActualizarPessoas {
 			person2Write.setEmail(email);
 			person2Write.setTelemovel(mobilePhone);
 			person2Write.setEnderecoWeb(url);
+			person2Write.setPersonRoles(rolesLists);
+			person2Write.setManageableDepartmentCredits(credtisLists);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -205,4 +225,78 @@ public class ServicoSeguroActualizarPessoas {
 			throw new Exception(e);
 		}
 	}
+
+	private static void desactivarPessoas(Collection listaPessoasFromFile) {
+		if (listaPessoasFromFile != null) {
+			//Open databases
+			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			broker.clearCache();
+			broker.beginTransaction();
+
+			//Read all person from Data Base
+			Collection listaPessoasFromDB = readAllPersonsEmployee(broker);
+			if (listaPessoasFromDB != null) {
+
+				Iterator iterador = listaPessoasFromDB.iterator();
+				IPessoa pessoaFromDB = null;
+				while (iterador.hasNext()) {
+					pessoaFromDB = (IPessoa) iterador.next();
+					try {
+						final IPessoa pessoaPredicate = pessoaFromDB;
+						//Find if the person from BD exists in file with active persons.
+						IPessoa pessoaFromFile = (IPessoa) CollectionUtils.find(listaPessoasFromFile, new Predicate() {
+							public boolean evaluate(Object obj) {
+								IPessoa pessoa = (IPessoa) obj;
+								return pessoa.getNumeroDocumentoIdentificacao().equals(pessoaPredicate.getNumeroDocumentoIdentificacao())
+									&& pessoa.getTipoDocumentoIdentificacao().equals(pessoaPredicate.getTipoDocumentoIdentificacao());
+							}
+						});
+
+						if (pessoaFromFile == null) {
+							//person is inactive, then delete roles and put password null
+							pessoaFromDB.setPassword(null);
+
+							pessoaFromDB.getPersonRoles().remove(descobreRole(broker, RoleType.EMPLOYEE));
+							pessoaFromDB.getPersonRoles().remove(descobreRole(broker, RoleType.TEACHER));
+
+							Role rolePerson = descobreRole(broker, RoleType.PERSON);
+							if (pessoaFromDB.getPersonRoles().size() == 1 && pessoaFromDB.getPersonRoles().contains(rolePerson)) {
+								pessoaFromDB.getPersonRoles().remove(rolePerson);
+							}
+
+							broker.store(pessoaFromDB);
+
+							System.out.println(
+								"Inactive person: "
+									+ pessoaFromDB.getNumeroDocumentoIdentificacao()
+									+ "-"
+									+ pessoaFromDB.getTipoDocumentoIdentificacao().getTipo());
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Error with person: " + pessoaFromDB);
+						continue;
+					}
+				}
+			}
+
+			//close databases
+			broker.commitTransaction();
+		}
+		System.out.println("  Done !");
+	}
+
+	private static List readAllPersonsEmployee(PersistenceBroker broker) {
+		System.out.println("Reading persons from DB");
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("personRoles.roleType", RoleType.EMPLOYEE);
+
+		Query query = new QueryByCriteria(Pessoa.class, criteria);
+
+		List result = (List) broker.getCollectionByQuery(query);
+
+		System.out.println("Finished read persons from DB(" + result.size() + ")");
+		return result;
+	}
+
 }
