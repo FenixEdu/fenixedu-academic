@@ -1,9 +1,21 @@
 package ServidorAplicacao.Servico.exceptions;
 
 public class FenixServiceException extends Exception {
+	private int errorType;
+    
+	/**
+	 * @return
+	 */
+	public int getErrorType() {
+		return this.errorType;
+	}
 
     public FenixServiceException() {
     }
+
+	public FenixServiceException(int errorType) {
+		this.errorType = errorType;
+	}
     
     public FenixServiceException(String s) {
         super(s);
