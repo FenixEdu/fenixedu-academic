@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.enrollment.shift.ShiftEnrollmentErrorReport;
 import DataBeans.util.Cloner;
@@ -34,7 +31,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class EnrollStudentInShifts implements IService
 {
-    
+
     public class StudentNotFoundServiceException extends FenixServiceException
     {
 
@@ -83,17 +80,13 @@ public class EnrollStudentInShifts implements IService
 
                 List shiftsToUnEnroll = new ArrayList();
                 List filteredShiftsIdsToEnroll = new ArrayList();
-                if (shiftEnrollments == null || shiftEnrollments.isEmpty())
-                {
-                    filteredShiftsIdsToEnroll = shiftIdsToEnroll;
-                }
-                else
-                {
-                    calculateShiftsToUnEnroll(shiftIdsToEnroll,
-                            shiftEnrollments, shiftsToUnEnroll);
-                    calculateShiftsToEnroll(shiftIdsToEnroll, shiftEnrollments,
-                            filteredShiftsIdsToEnroll);
-                }
+
+                shiftsToUnEnroll = calculateShiftsToUnEnroll(shiftIdsToEnroll,
+                        shiftEnrollments, shiftsToUnEnroll);
+                filteredShiftsIdsToEnroll = calculateShiftsToEnroll(
+                        shiftIdsToEnroll, shiftEnrollments,
+                        filteredShiftsIdsToEnroll);
+
                 enrollStudentsInShifts(student, filteredShiftsIdsToEnroll,
                         errorReport, persistentShift, persistentShiftStudent);
                 unEnrollStudentsInShifts(shiftsToUnEnroll, errorReport,
@@ -105,7 +98,7 @@ public class EnrollStudentInShifts implements IService
         }
         catch (ExcepcaoPersistencia e)
         {
-        	e.printStackTrace();
+            e.printStackTrace();
             throw new FenixServiceException(e);
         }
     }
@@ -179,78 +172,21 @@ public class EnrollStudentInShifts implements IService
      * @param shiftEnrollments
      * @param filteredShiftsIdsToEnroll
      */
-    private void calculateShiftsToEnroll(List shiftIdsToEnroll,
-            final List shiftEnrollments, List filteredShiftsIdsToEnroll)
+    private List calculateShiftsToEnroll(List shiftIdsToEnroll,
+            List shiftEnrollments, List filteredShiftsIdsToEnroll)
     {
-        filteredShiftsIdsToEnroll = (List) CollectionUtils.select(
-                shiftIdsToEnroll, new Predicate()
-                {
-
-                    public boolean evaluate(Object arg0)
-                    {
-                        final Integer shiftId = (Integer) arg0;
-
-                        if (CollectionUtils.exists(shiftEnrollments,
-                                new Predicate()
-                                {
-
-                                    public boolean evaluate(Object arg0)
-                                    {
-                                        ITurnoAluno shiftStudent = (ITurnoAluno) arg0;
-                                        return shiftStudent.getShift()
-                                                .getIdInternal()
-                                                .equals(shiftId);
-                                    }
-                                }))
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-
-                    }
-                });
-
+        return shiftIdsToEnroll;
     }
 
     /**
      * @param shiftIdsToEnroll
      * @param shiftEnrollments
      */
-    private void calculateShiftsToUnEnroll(final List shiftIdsToEnroll,
+    private List calculateShiftsToUnEnroll(List shiftIdsToEnroll,
             List shiftEnrollments, List shiftsToUnEnroll)
     {
 
-        shiftsToUnEnroll = (List) CollectionUtils.select(shiftEnrollments,
-                new Predicate()
-                {
-
-                    public boolean evaluate(Object arg0)
-                    {
-                        ITurnoAluno shiftStudent = (ITurnoAluno) arg0;
-                        final Integer idToCompare = shiftStudent.getShift()
-                                .getIdInternal();
-                        if (CollectionUtils.exists(shiftIdsToEnroll,
-                                new Predicate()
-                                {
-
-                                    public boolean evaluate(Object arg0)
-                                    {
-                                        return idToCompare.equals(arg0);
-                                    }
-                                }))
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-
-                    }
-                });
+        return shiftEnrollments;
 
     }
 
