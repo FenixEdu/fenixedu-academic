@@ -12,6 +12,7 @@ import Dominio.GratuitySituation;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IGratuitySituation;
+import Dominio.IGratuityValues;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuitySituation;
@@ -25,12 +26,13 @@ import Util.Specialization;
 public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentGratuitySituation
 {
 
-	public IGratuitySituation readGratuitySituatuionByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+	public IGratuitySituation readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(IStudentCurricularPlan studentCurricularPlan, IGratuityValues gratuityValues)
 		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-				
+		criteria.addEqualTo("gratuityValues.idInternal", gratuityValues.getIdInternal());
+		
 		return (IGratuitySituation) queryObject(GratuitySituation.class, criteria);
 	}
 	
