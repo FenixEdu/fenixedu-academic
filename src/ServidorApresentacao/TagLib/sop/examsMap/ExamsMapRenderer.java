@@ -82,10 +82,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
 			// Generate Exam Map Side Lable
 			strBuffer.append("<td class='courseList'>");
-			strBuffer.append("<br/>");
+			strBuffer.append("<br />");
 			renderExecutionCourseListForYear(strBuffer, year1);
 			if (year2 != null) {
-				strBuffer.append("<br/>");
+				strBuffer.append("<br />");
 				renderExecutionCourseListForYear(strBuffer, year2);
 			}
 			strBuffer.append("</td>");
@@ -96,8 +96,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			strBuffer.append("</table>");
 
 			if (i < numberOfCurricularYearsToDisplay - 1) {
-				strBuffer.append("<br/>");
-				strBuffer.append("<br/>");
+				strBuffer.append("<br />");
+				strBuffer.append("<br />");
 			}
 		}
 
@@ -108,7 +108,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		StringBuffer strBuffer,
 		Integer year) {
 		strBuffer.append(
-			"<strong>Disciplinas do " + year + "º ano:</strong><br/>");
+			"<strong>Disciplinas do " + year + "º ano:</strong><br />");
 		for (int i = 0; i < examsMap.getExecutionCourses().size(); i++) {
 			InfoExecutionCourse infoExecutionCourse =
 				(InfoExecutionCourse) examsMap.getExecutionCourses().get(i);
@@ -193,7 +193,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 						strBuffer.append("</a>");
 					}
 				}
-				strBuffer.append("<br/>");
+				strBuffer.append("<br />");
 
 				// Get 1st season exam
 				InfoExam season1Exam =
@@ -247,13 +247,13 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							InfoRoom infoRoom = (InfoRoom) infoRooms.get(r);
 							strBuffer.append(infoRoom.getNome() + ";");
 						}
-						strBuffer.append("<br>");
+						strBuffer.append("<br />");
 					}
 				}
-				strBuffer.append("<br>");
+				strBuffer.append("<br />");
 			}
 		}
-		strBuffer.append("<br>");
+		strBuffer.append("<br />");
 	}
 
 	private void renderExamsMapForFilteredYears(
@@ -261,7 +261,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		Integer year1,
 		Integer year2) {
 		strBuffer.append(
-			"<table class='examMap' cellspacing='0' cellpadding='3'>");
+			"<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
 
 		strBuffer.append("<tr>");
 		renderHeader(strBuffer);

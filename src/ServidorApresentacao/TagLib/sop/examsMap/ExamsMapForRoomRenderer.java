@@ -39,7 +39,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 		StringBuffer strBuffer = new StringBuffer("");
 
 		strBuffer.append(
-			"<table class='examMapContainer' cellspacing='0' cellpadding='3' width='90%'>");
+			"<table class='examMapContainer' cellspacing='0' cellpadding='3' width='100%'>");
 		strBuffer.append("<tr>");
 		strBuffer.append("<td>");
 		renderExamsMapForRoom(strBuffer);
@@ -54,7 +54,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 
 	private void renderExamsMapForRoom(StringBuffer strBuffer) {
 		strBuffer.append(
-			"<table class='examMap' cellspacing='0' cellpadding='3'>");
+			"<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
 
 		strBuffer.append("<tr>");
 		renderHeader(strBuffer);

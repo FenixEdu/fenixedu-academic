@@ -76,7 +76,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						strBuffer.append(courseInitials);
 					} else {
 						strBuffer.append(
-							"<font color='red'>" + courseInitials + "</font>");
+							"<span class='redtxt'>" + courseInitials + "</span>");
 					}
 
 				} else if (typeUser.equals("public")) {
@@ -97,7 +97,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						strBuffer.append(hoursText);
 					} else {
 						strBuffer.append(
-							"<font color='red'>" + hoursText + "</font>");
+							"<span class='redtxt'>" + hoursText + "</span>");
 					}
 				}
 
@@ -194,7 +194,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 			String courseInitials =
 				infoExam.getInfoExecutionCourse().getSigla();
 
-			strBuffer.append("<font color='red'>" + courseInitials);
+			strBuffer.append("<b><span class='redtxt'>" + courseInitials);
 
 			if (infoExam.getBeginning() != null) {
 				String hoursText =
@@ -204,7 +204,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 				strBuffer.append(hoursText);
 			}
 
-			strBuffer.append("</font>");
+			strBuffer.append("</span></b>");
 
 			strBuffer.append("<br />");
 		}
