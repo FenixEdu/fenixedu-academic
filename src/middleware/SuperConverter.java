@@ -1,4 +1,4 @@
-
+ 
 package middleware;
 
 
@@ -26,8 +26,11 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.Country;
+import Dominio.Curso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Funcionario;
 import Dominio.ICountry;
+import Dominio.ICurricularCourse;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -75,18 +78,18 @@ public static void main(String args[]) throws Exception{
 		
 	
 	// Converter Pessoas de Pos Graduacao em Persons
-	superConverter.migratePosgradPessoa2Fenix();
+//	superConverter.migratePosgradPessoa2Fenix();
 	
 	
 	// Converter Alunos de Pos Graduacao em Students 
-	superConverter.migratePosgradAluno2Fenix();
+//	superConverter.migratePosgradAluno2Fenix();
 	
 	
 	// Converte Areas Cientificas
 	
 	
 	// Converte Disciplinas
-	
+	superConverter.migratePosGradDisciplina2Fenix();
 	
 	// Inscricoes do Alunos em Disciplinas
 	
@@ -97,6 +100,83 @@ public static void main(String args[]) throws Exception{
 	
 	}
 
+
+
+
+	public void migratePosGradDisciplina2Fenix() throws Exception{
+		ICurricularCourse curricularCourse2Write = null;
+		Posgrad_disciplina curricularCourse2Convert = null;
+		List result = null;
+		Query query = null;
+		Criteria criteria = null;
+		QueryByCriteria queryByCriteria = null;
+		try {
+			System.out.print("Reading PosGrad Curricular Courses ...");
+			List curricularCoursesPG = getDisciplinas();
+			System.out.println("  Done !");
+			
+			System.out.println("Migrating " + curricularCoursesPG.size() + " PosGrad Curricular Courses to Fenix ...");
+			Iterator iterator = curricularCoursesPG.iterator();
+			while(iterator.hasNext()){
+				curricularCourse2Convert = (Posgrad_disciplina) iterator.next();
+				
+				// Get the old degree corresponding to this Curricular Course
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("codigointerno", new Integer(String.valueOf(curricularCourse2Convert.getCodigocursomestrado())));
+				query = new QueryByCriteria(Posgrad_curso_mestrado.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+		
+				if (result.size() == 0){
+					System.out.println("Error Reading OLD Degree (" + curricularCourse2Convert.getNome() + ")");
+					throw new Exception("Cannot Read PosGrad Degree");
+				}
+
+				Posgrad_curso_mestrado oldDegre = (Posgrad_curso_mestrado) result.get(0); 
+
+				// Get the new Degree
+
+				criteria = new Criteria();
+				criteria.addEqualTo("nome", oldDegre.getNomemestrado());
+				query = new QueryByCriteria(Curso.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);
+				
+				if (result.size() == 0){
+					System.out.println("Error Reading NEW Degree (" + oldDegre.getNomemestrado() + ")");
+					throw new Exception("Cannot Read Fenix Degree");
+				}
+				
+				Curso degree = (Curso) result.get(0);
+								
+				// Get the Degree Curricular Plan for the new Degree
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("degreeKey", degree.getCodigoInterno());
+				query = new QueryByCriteria(DegreeCurricularPlan.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+				
+				if (result.size() == 0){
+					System.out.println("Error Reading Degree Curricular Plan (" + degree.getNome() + ")");
+					throw new Exception("Cannot Read Fenix Degree Curricular Plan");
+				}				
+				
+				// Check the Curricular Course type
+				
+				
+				
+				
+				
+				
+				
+			}
+			System.out.println("  Done !");
+
+		} catch (Exception e){
+			System.out.println();
+			throw new Exception("Error Migrating Curricular Course " + curricularCourse2Convert.getNome() , e);
+			
+		}
+	}
 
 	public void migratePosgradAluno2Fenix() throws Exception{
 		IStudent student2Write = null;
@@ -185,22 +265,51 @@ public static void main(String args[]) throws Exception{
 					student2Write.setStudentGroupInfo(studentGroupInfo);
 					broker.store(student2Write);
 					
+					// Give the Student Role (This student may not exist but the person may already be a 
+					// Graduate Student) 
 					
-					
-					
-					
-					// VERIFICAR O ROLE
-					
+					IPersonRole personRole = readPersonRole((Pessoa) person, RoleType.STUDENT);
+					if (personRole == null){
+						giveStudentRole(student2Write);												
+					}
 					
 				} else System.out.println("O Aluno " + student2Convert.getNumero() + " ja existe. Nenhuma alteracao efectuada");
 		
 			}
+			System.out.println("  Done !");
 		} catch(Exception e) {;
 			System.out.println("Error converting Student " + student2Convert.getNumero());
 			throw new Exception(e);
 		}
 		
 		
+	}
+	
+	
+	public IPersonRole readPersonRole(Pessoa person, RoleType roleType) throws Exception {
+		
+		// Read The Role
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("roleType", roleType);
+		
+		Query query = new QueryByCriteria(Role.class, criteria);
+		List result = (List)broker.getCollectionByQuery(query);
+		
+		Role role = null;
+		if (result.size() == 0)
+			throw new Exception("Unknown Role !!!");
+		else role = (Role) result.get(0);
+		
+		
+		criteria = new Criteria();
+		criteria.addEqualTo("keyRole", role.getIdInternal());
+		criteria.addEqualTo("keyPerson", person.getCodigoInterno());
+		
+		query = new QueryByCriteria(PersonRole.class, criteria);
+		result = (List) broker.getCollectionByQuery(query);
+		
+		if (result.size() == 0) return null;
+		return (IPersonRole) result.get(0);
 	}
 
 
@@ -296,7 +405,6 @@ public static void main(String args[]) throws Exception{
 				else if (person2Convert.getSexo().equalsIgnoreCase("feminino"))
 					person2Write.setSexo(new Sexo(Sexo.FEMININO));
 				else {
-					System.out.println();
 					System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no SEXO. (Encontrado: " + person2Convert.getSexo() + ")");
 				} 
 			}						
@@ -463,7 +571,11 @@ public static void main(String args[]) throws Exception{
 					student2Write.setState(new StudentState(StudentState.INSCRITO));
 					student2Write.setStudentGroupInfo(studentGroupInfo);
 				
-					giveStudentRole(student2Write);
+					IPersonRole personRole = readPersonRole((Pessoa) person2Write, RoleType.STUDENT);
+					if (personRole == null){
+						giveStudentRole(student2Write);												
+					}
+					
 				} else {
 					student2Write = (IStudent) result.get(0);
 					student2Write.setStudentGroupInfo(studentGroupInfo);
