@@ -57,8 +57,15 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>StudentCurriculumAccess</name>
+        <expression>MasterDegreeAdministrativeOfficeAuthorization || SeminaryCoordinatorOrStudent</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>MasterDegreeAdministrativeOfficeAuthorization</name>
-        <expression>MasterDegreeAdministrativeOfficeAuthorization</expression>
+        <expression>MasterDegreeAdministrativeOfficeAuthorization </expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
