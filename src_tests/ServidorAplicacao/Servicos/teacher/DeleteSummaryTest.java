@@ -16,7 +16,11 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testEditSummaryDataSet.xml";
+		return "etc/testDeleteSummaryDataSet.xml";
+	}
+
+	protected String getExpectedDataSetFilePath() {
+		return "etc/testExpectedDeleteSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -74,11 +78,12 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 				getNameOfServiceToBeTested(),
 				getAuthorizeArguments());
 
-			// TODO: testar a bd a garantir que foi apagado
-			compareDataSet(getDataSetFilePath());
-		} catch (FenixServiceException ex) {
+			compareDataSet(getExpectedDataSetFilePath());
+		}
+		catch (FenixServiceException ex) {
 			fail("Deleting the Summary of a Site" + ex);
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			fail("Deleting the Summary of a Site" + ex);
 		}
 	}

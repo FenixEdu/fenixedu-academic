@@ -1,13 +1,14 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import java.util.Calendar;
-
-import DataBeans.InfoSiteSummary;
-import DataBeans.InfoSummary;
-import DataBeans.SiteView;
+import Dominio.ISummary;
+import Dominio.Summary;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentSummary;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
 /**
@@ -25,6 +26,10 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 	protected String getDataSetFilePath() {
 		return "etc/testEditSummaryDataSet.xml";
+	}
+
+	protected String getExpectedDataSetFilePath() {
+		return "etc/testExpectedEditSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -54,28 +59,36 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 		Integer executionCourseId = new Integer(24);
 		Integer summaryId = new Integer(261);
 
-		Calendar summaryDate = Calendar.getInstance();
-		summaryDate.set(Calendar.DAY_OF_MONTH, 1);
-		summaryDate.set(Calendar.MONTH, 2);
-		summaryDate.set(Calendar.YEAR, 1999);
+		ISummary summary = null;
 
-		Calendar summaryHour = Calendar.getInstance();
-		summaryHour.set(Calendar.HOUR_OF_DAY, 12);
-		summaryHour.set(Calendar.MINUTE, 0);
+		try {
 
-		int tipoAula = TipoAula.DUVIDAS;
-		String title = "Novo Titulo";
-		String text = "Novo texto do sumario";
+			summary = new Summary(summaryId);
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+			IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+			summary = (ISummary) persistentSummary.readByOId(summary, false);
+			sp.confirmarTransaccao();
+		}
+		catch (ExcepcaoPersistencia ex) {
+			fail(
+				"Editing the summary: failed reading the summary to edit "
+					+ ex);
+		}
+
+		summary.setTitle("Novo Titulo");
+		summary.setSummaryText("Novo texto do sumario");
+		summary.setSummaryType(new TipoAula(TipoAula.DUVIDAS));
 
 		Object[] args =
 			{
 				executionCourseId,
 				summaryId,
-				summaryDate,
-				summaryHour,
-				new Integer(tipoAula),
-				title,
-				text };
+				summary.getSummaryDate(),
+				summary.getSummaryHour(),
+				summary.getSummaryType(),
+				summary.getTitle(),
+				summary.getSummaryText()};
 		return args;
 	}
 
@@ -84,28 +97,36 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 		Integer executionCourseId = new Integer(24);
 		Integer summaryId = new Integer(261);
 
-		Calendar summaryDate = Calendar.getInstance();
-		summaryDate.set(Calendar.DAY_OF_MONTH, 1);
-		summaryDate.set(Calendar.MONTH, 2);
-		summaryDate.set(Calendar.YEAR, 1999);
+		ISummary summary = null;
 
-		Calendar summaryHour = Calendar.getInstance();
-		summaryHour.set(Calendar.HOUR_OF_DAY, 12);
-		summaryHour.set(Calendar.MINUTE, 0);
+		try {
 
-		int tipoAula = TipoAula.DUVIDAS;
-		String title = "Novo Titulo";
-		String text = "Novo texto do sumario";
+			summary = new Summary(summaryId);
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+			IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+			summary = (ISummary) persistentSummary.readByOId(summary, false);
+			sp.confirmarTransaccao();
+		}
+		catch (ExcepcaoPersistencia ex) {
+			fail(
+				"Editing the summary: failed reading the summary to edit "
+					+ ex);
+		}
+
+		summary.setTitle("Novo Titulo");
+		summary.setSummaryText("Novo texto do sumario");
+		summary.setSummaryType(new TipoAula(TipoAula.DUVIDAS));
 
 		Object[] args =
 			{
 				executionCourseId,
 				summaryId,
-				summaryDate,
-				summaryHour,
-				new Integer(tipoAula),
-				title,
-				text };
+				summary.getSummaryDate(),
+				summary.getSummaryHour(),
+				summary.getSummaryType(),
+				summary.getTitle(),
+				summary.getSummaryText()};
 		return args;
 	}
 
@@ -113,29 +134,37 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 		Integer executionCourseId = new Integer(25);
 		Integer summaryId = new Integer(281);
-		
-		Calendar summaryDate = Calendar.getInstance();
-		summaryDate.set(Calendar.DAY_OF_MONTH, 1);
-		summaryDate.set(Calendar.MONTH, 2);
-		summaryDate.set(Calendar.YEAR, 1999);
-		
-		Calendar summaryHour = Calendar.getInstance();
-		summaryHour.set(Calendar.HOUR_OF_DAY, 12);
-		summaryHour.set(Calendar.MINUTE, 0);
 
-		int tipoAula = TipoAula.DUVIDAS;
-		String title = "Novo Titulo";
-		String text = "Novo texto do sumario";
-		
+		ISummary summary = null;
+
+		try {
+
+			summary = new Summary(summaryId);
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+			IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+			summary = (ISummary) persistentSummary.readByOId(summary, false);
+			sp.confirmarTransaccao();
+		}
+		catch (ExcepcaoPersistencia ex) {
+			fail(
+				"Editing the summary: failed reading the summary to edit "
+					+ ex);
+		}
+
+		summary.setTitle("Novo Titulo");
+		summary.setSummaryText("Novo texto do sumario");
+		summary.setSummaryType(new TipoAula(TipoAula.DUVIDAS));
+
 		Object[] args =
 			{
 				executionCourseId,
 				summaryId,
-				summaryDate,
-				summaryHour,
-				new Integer(tipoAula),
-				title,
-				text };
+				summary.getSummaryDate(),
+				summary.getSummaryHour(),
+				summary.getSummaryType(),
+				summary.getTitle(),
+				summary.getSummaryText()};
 		return args;
 	}
 
@@ -146,29 +175,21 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	public void testSuccessfull() {
 
 		try {
-			SiteView result = null;
-	
 			String[] args = getAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			result =
-				(SiteView) gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					getAuthorizeArguments());
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				getAuthorizeArguments());
 
-			InfoSummary oldInfoSummary = new InfoSummary();
-			// TODO: falta alterar o sumario para fazer a comparação
-
-			InfoSiteSummary infoSiteSummary =
-				(InfoSiteSummary) result.getComponent();
-			InfoSummary newInfoSummary = infoSiteSummary.getInfoSummary();
-			assertEquals(newInfoSummary, oldInfoSummary);
 			// verificar as alteracoes da bd
-			compareDataSet(getDataSetFilePath());
-		} catch (FenixServiceException ex) {
+			compareDataSet(getExpectedDataSetFilePath());
+		}
+		catch (FenixServiceException ex) {
 			fail("Editing the Summary of a Site" + ex);
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			fail("Editing the Summary of a Site" + ex);
 		}
 	}
