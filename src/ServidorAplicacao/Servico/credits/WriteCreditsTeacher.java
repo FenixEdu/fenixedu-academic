@@ -81,8 +81,8 @@ public class WriteCreditsTeacher implements IServico {
 ////
 //			}
 //			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
-			creditsTeacher.setAdditionalCredits(infoCredits.getAdditionalCredits());
-			creditsTeacher.setAdditionalCreditsJustification(infoCredits.getAdditionalCreditsJustification());
+//			creditsTeacher.setAdditionalCredits(infoCredits.getAdditionalCredits());
+//			creditsTeacher.setAdditionalCreditsJustification(infoCredits.getAdditionalCreditsJustification());
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException();
