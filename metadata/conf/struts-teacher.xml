@@ -1426,10 +1426,10 @@
       	<set-property property="oidProperty" value="idInternal" />
       	<set-property property="requestAttribute" value="infoProfessionalCareer" />   
       	<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoProfessionalCareer" />   	
-      	<forward name="show-form" path="edit-professional-career"/> 
-		<forward name="successfull-edit" path="/readCareers.do?careerType=Professional&amp;page=0"/> 
-		<forward name="successfull-read" path="/readCareers.do?careerType=Professional&amp;page=0"/>
-		<forward name="successfull-delete" path="/readCareers.do?careerType=Professional&amp;page=0"/>
+      <forward name="show-form" path="edit-professional-career"/> 
+			<forward name="successfull-edit" path="/readCareers.do?careerType=Professional&amp;page=0"/> 
+			<forward name="successfull-read" path="/readCareers.do?careerType=Professional&amp;page=0"/>
+			<forward name="successfull-delete" path="/readCareers.do?careerType=Professional&amp;page=0"/>
 	  </action>
 
       <!-- Teaching Career -->
