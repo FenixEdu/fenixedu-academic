@@ -8,7 +8,7 @@
 <class-descriptor class="Dominio.Site"
                   table="SITE">
     <field-descriptor id="1"
-        name="internalCode"
+        name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
