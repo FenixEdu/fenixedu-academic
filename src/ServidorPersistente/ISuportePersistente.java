@@ -232,5 +232,8 @@ public interface ISuportePersistente
     public IPersistentCampus getIPersistentCampus();
     
     public IPersistentWorkLocation getIPersistentWorkLocation();
+    
+	//Nuno Correia & Ricardo Rodrigues
+	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
   
 }
