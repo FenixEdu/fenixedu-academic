@@ -64,7 +64,6 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
 		//TODO: add to SessionConstants w/different name
 		session.setAttribute("ALL_SECTIONS", allSections);
-		System.out.println("ALL_SECTIONS.size():" + allSections.size());
 
 		//relative to children sections
 		ArrayList sections;
@@ -241,7 +240,6 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		List sections = new ArrayList();
 		Object args[] = { infoSite, infoSection };
 		GestorServicos manager = GestorServicos.manager();
-		System.out.println("after allSections.size():" + allSections.size());
 		try {
 			sections = (List) manager.executar(userView, "ReadSectionsBySiteAndSuperiorSection", args);
 		} catch (FenixServiceException fenixServiceException) {
@@ -254,7 +252,6 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 			InfoSection infoSection2 = (InfoSection) iterator.next();
 			allSections = removeDaughters(userView, infoSite, infoSection2, allSections);
 		}
-		System.out.println("before allSections.size():" + allSections.size());
 
 		return allSections;
 	}

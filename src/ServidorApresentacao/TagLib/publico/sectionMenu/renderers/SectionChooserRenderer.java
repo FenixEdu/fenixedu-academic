@@ -41,7 +41,7 @@ public class SectionChooserRenderer
 			
 		strBuffer.append(infoSection.getName());
 		
-		strBuffer.append("</a></br>");
+		strBuffer.append("</a><br>");
 			
 		return strBuffer;
 	}
@@ -49,7 +49,8 @@ public class SectionChooserRenderer
 	private StringBuffer renderDepthIdent(InfoSection infoSection) {
 		StringBuffer strBuffer = new StringBuffer();
 		int depth = infoSection.getSectionDepth().intValue();
-		while (depth >1){
+		
+		while (depth >0){
 			strBuffer.append("&nbsp&nbsp");
 			depth--;
 		}

@@ -92,6 +92,12 @@ public class SectionMenuMapRenderer {
 
 	private StringBuffer renderSuffix(List sections, int iterator) {
 		StringBuffer strBuffer = new StringBuffer("");
+		
+		//section management
+		if (renderer.equals("sectionChooser")){
+		}
+		//main menu
+		else {		
 		if (((InfoSection) sections.get(iterator)).getSectionDepth().intValue() != 0 && iterator==sections.size()-1) {
 						strBuffer.append("</dl>\n");	
 			 
@@ -106,13 +112,15 @@ public class SectionMenuMapRenderer {
 				}
 				if (((InfoSection) sections.get(iterator+1)).getSectionDepth().intValue() != 0
 				&& ((InfoSection) sections.get(iterator)).getSectionDepth().intValue() == 0) {				
-				strBuffer.append("<dl id=\""+((InfoSection) sections.get(iterator)).getName()+"\" style=\"display:"+getStyle(sections,iterator)+";\">\n");
+					strBuffer.append("<dl id=\""+((InfoSection) sections.get(iterator)).getName()+"\" style=\"display:"+getStyle(sections,iterator)+";\">\n");
 				}}}
-				
-			
-			
+		}
+					
 		return strBuffer;
 	}
+
+
+
 
 	private StringBuffer getStyle(List sections,int iterator) {
 		StringBuffer strBuffer = new StringBuffer("");
@@ -121,6 +129,12 @@ public class SectionMenuMapRenderer {
 		}	
 		return strBuffer;
 	}
+	
+	private StringBuffer getStyleSectionChooser(List sections,int iterator) {
+			StringBuffer strBuffer = new StringBuffer("");
+			
+			return strBuffer;
+		}
 	/**
 	 * @return
 	 */
