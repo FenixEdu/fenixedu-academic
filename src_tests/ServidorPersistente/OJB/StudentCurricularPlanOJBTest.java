@@ -261,7 +261,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			studentTemp = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 			assertNotNull(studentTemp);
 
-			degree = persistentDegree.readBySigla("LEEC");
+			degree = persistentDegree.readBySigla("MEEC");
 			assertNotNull(degree);
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
 			assertNotNull(degreeCurricularPlan);
