@@ -1,20 +1,17 @@
-/*
- * SitioOJB.java
+/**
+ * DisciplinaExecucaoOJB.java
  *
  * Created on 25 de Agosto de 2002, 1:02
  */
 
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
 
-import Dominio.CurricularCourse;
 import Dominio.DisciplinaExecucao;
-import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -123,48 +120,30 @@ public class DisciplinaExecucaoOJB
 		IExecutionPeriod executionPeriod,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
-		List resultList = new ArrayList();
 		try {
+			//FIXME : Curricular Semester is HARDCODED!!! Isto NÂO PODE FICAR ASSIM!!!
 			String oqlQuery =
 				"select all from "
-					+ CurricularCourse.class.getName()
-					+ " where scopes.curricularSemester.curricularYear.year = $1"
-					+ " and scopes.curricularSemester.semester = $2"
-					+ " and degreeCurricularPlan.name = $3"
-					+ " and degreeCurricularPlan.degree.sigla = $4";
+					+ DisciplinaExecucao.class.getName()
+					+ " where associatedCurricularCourses.scopes.curricularSemester.curricularYear.year = $1"
+					+ " and associatedCurricularCourses.scopes.curricularSemester.semester = 2"
+					+ " and associatedCurricularCourses.degreeCurricularPlan.name = $2"
+					+ " and associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $3"
+					+ " and executionPeriod.name = $4 "
+					+ " and executionPeriod.executionYear.year = $5";
 			query.create(oqlQuery);
 			query.bind(curricularYear);
-			query.bind(executionPeriod.getSemester());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
 			List result = (List) query.execute();
 			lockRead(result);
-			Iterator iterator = result.listIterator();
-			
-			while (iterator.hasNext()) {
-				ICurricularCourse curricularCourse =
-					(ICurricularCourse) iterator.next();
-				List associatedExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
-				if (associatedExecutionCourses != null){
-					Iterator executionCourseIterator = associatedExecutionCourses.iterator();
-					while (executionCourseIterator.hasNext()) {
-						IDisciplinaExecucao executionCourse =
-							(IDisciplinaExecucao) executionCourseIterator.next();
-						if (executionCourse
-							.getExecutionPeriod()
-							.equals(executionPeriod)
-							&& !resultList.contains(executionCourse)) {
-							resultList.add(executionCourse);
-						}
-					}
-				}
-			}
-
+			return result;
 		} catch (QueryException ex) {
 			ex.printStackTrace(System.out);
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
-		return resultList;
 	}
 	/**
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
