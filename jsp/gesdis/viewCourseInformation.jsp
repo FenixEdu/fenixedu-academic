@@ -292,11 +292,5 @@
 </tr>
 </table>
 <h3>
-<table>
-<html:hidden property="courseReportId" value="siteCourseInformation.infoCourseReport.idInternal"/> 
-<html:hidden property="executionCourseId" value="executionCourse.idInternal"/> 
-<html:hidden property="executionPeriodId" value="executionPeriod.idInternal"/> 
-<html:hidden property="executionYearId" value="executionYear.idInternal"/>
-</table>
 </h3>
 </logic:present>
