@@ -408,6 +408,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
 		return new EvaluationMethodOJB();
 	}
+	
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
 		return new PersistentEnrolmentPeriod();
