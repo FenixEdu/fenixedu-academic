@@ -59,7 +59,7 @@ create table DEGREE_CURRICULAR_PLAN (
    INITIAL_DATE date,
    END_DATE date,
    DEGREE_DURATION int(11) not null,
-   MINIMAL_YEAR_FOR_OPTIONAL_COURSES int(11) not null,
+   MINIMAL_YEAR_FOR_OPTIONAL_COURSES int(11) not null,,
    NEEDED_CREDITS float (11,2),
    MARK_TYPE integer (11),
    primary key (ID_INTERNAL),
@@ -95,7 +95,7 @@ create table CURRICULAR_COURSE (
    TYPE int(11),
    EXECUTION_SCOPE int(11),
    MANDATORY bit,
-   UNIVERSITY_CODE varchar(255),
+   KEY_UNIVERSITY int(11),
    PRIMARY KEY  (ID_INTERNAL),
    UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN),
    index U2 (CODE, KEY_DEGREE_CURRICULAR_PLAN)
@@ -174,9 +174,33 @@ create table CURRICULAR_COURSE_SCOPE (
    MAX_INCREMENT_NAC int(11) not null,
    MIN_INCREMENT_NAC int(11) not null,
    WEIGTH int(11) not null,
+   CREDITS double,
    primary key (ID_INTERNAL),
    unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH),
    index U2 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
+)type=InnoDB;
+
+
+-- ----------------------------
+--  Table structure for ENROLMENT_EQUIVALENCE
+-- ----------------------------
+drop table if exists ENROLMENT_EQUIVALENCE;
+create table ENROLMENT_EQUIVALENCE (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_ENROLMENT int(11) not null,
+   primary key (ID_INTERNAL),
+)type=InnoDB;
+
+-- ----------------------------
+--  Table structure for ENROLMENT_EQUIVALENCE_RESTRICTION
+-- ----------------------------
+drop table if exists ENROLMENT_EQUIVALENCE_RESTRICTION;
+create table ENROLMENT_EQUIVALENCE_RESTRICTION (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_ENROLMENT_EQUIVALENCE int(11) not null,
+   KEY_EQUIVALENT_ENROLMENT int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_ENROLMENT_EQUIVALENCE, KEY_EQUIVALENT_ENROLMENT)
 )type=InnoDB;
 
 -- ----------------------------
@@ -260,6 +284,27 @@ create table EXECUTION_YEAR (
    unique U1 (`YEAR`))
    type=InnoDB comment="InnoDB free: 373760 kB";
 
+-- ----------------------------
+--  Table structure for CURRICULAR_COURSE_EQUIVALENCE
+-- ----------------------------
+drop table if exists CURRICULAR_COURSE_EQUIVALENCE;
+create table CURRICULAR_COURSE_EQUIVALENCE (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_CURRICULAR_COURSE int(11) not null,
+   primary key (ID_INTERNAL)
+)type=InnoDB;
+
+-- ----------------------------
+--  Table structure for CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION
+-- ----------------------------
+drop table if exists CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION;
+create table CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_CURRICULAR_COURSE_EQUIVALENCE int(11) not null,
+   KEY_EQUIVALENT_CURRICULAR_COURSE int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_CURRICULAR_COURSE_EQUIVALENCE, KEY_EQUIVALENT_CURRICULAR_COURSE)
+)type=InnoDB;
 
 -- ----------------------------
 -- Table struture for ENROLMENT_PERIOD
@@ -298,46 +343,15 @@ create table CURRICULAR_SEMESTER (
    unique U1 (SEMESTER, KEY_CURRICULAR_YEAR)
 )type=InnoDB;
 
---  Table structure for ENROLMENT_EQUIVALENCE
 -- ----------------------------
-drop table if exists ENROLMENT_EQUIVALENCE;
-create table ENROLMENT_EQUIVALENCE (
+--  Table structure for UNIVERSITY
+-- ----------------------------
+drop table if exists UNIVERSITY;
+create table UNIVERSITY (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_ENROLMENT int(11) not null,
+   CODE varchar(10) not null,
+   NAME varchar(150) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_ENROLMENT)
+   unique U1 (CODE,NAME)
 )type=InnoDB;
 
--- ----------------------------
---  Table structure for ENROLMENT_EQUIVALENCE_RESTRICTION
--- ----------------------------
-drop table if exists ENROLMENT_EQUIVALENCE_RESTRICTION;
-create table ENROLMENT_EQUIVALENCE_RESTRICTION (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_ENROLMENT_EQUIVALENCE int(11) not null,
-   KEY_EQUIVALENT_ENROLMENT int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (KEY_ENROLMENT_EQUIVALENCE, KEY_EQUIVALENT_ENROLMENT)
-)type=InnoDB;
-
--- ----------------------------
---  Table structure for CURRICULAR_COURSE_EQUIVALENCE
--- ----------------------------
-drop table if exists CURRICULAR_COURSE_EQUIVALENCE;
-create table CURRICULAR_COURSE_EQUIVALENCE (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_CURRICULAR_COURSE int(11) not null,
-   primary key (ID_INTERNAL)
-)type=InnoDB;
-
--- ----------------------------
---  Table structure for CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION
--- ----------------------------
-drop table if exists CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION;
-create table CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_CURRICULAR_COURSE_EQUIVALENCE int(11) not null,
-   KEY_EQUIVALENT_CURRICULAR_COURSE int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (KEY_CURRICULAR_COURSE_EQUIVALENCE, KEY_EQUIVALENT_CURRICULAR_COURSE)
-)type=InnoDB;
