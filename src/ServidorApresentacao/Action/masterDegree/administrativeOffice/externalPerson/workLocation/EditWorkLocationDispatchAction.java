@@ -115,7 +115,7 @@ public class EditWorkLocationDispatchAction extends DispatchAction
 		}
 		catch (ExistingServiceException e)
 		{
-			throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("errorLocationAlreadyExists"));
 		}
 		catch (FenixServiceException e)
 		{
