@@ -109,6 +109,9 @@ public class ServicoSeguroActualizarPessoas {
 						}
 							  
 					}
+					if (person2Write.getEstadoCivil().getEstadoCivil().intValue() > 7){
+						System.out.println("Erro : " + person2Write.getEstadoCivil().getEstadoCivil().intValue());	
+					}					
 					
 					broker.store(person2Write);
 				}
@@ -136,11 +139,22 @@ public class ServicoSeguroActualizarPessoas {
 			
 			String password = new String(person2Write.getPassword());
 			Integer internalCode = new Integer(person2Write.getIdInternal().intValue());
+			String username = new String(person2Write.getUsername());
+			String mobilePhone = new String(person2Write.getTelemovel());
+			String email = new String(person2Write.getEmail());
+			String url = new String(person2Write.getEnderecoWeb());
+			
 			
 			BeanUtils.copyProperties(person2Write, person2Convert);
 
 			person2Write.setIdInternal(internalCode);
 			person2Write.setPassword(password);
+			person2Write.setUsername(username);
+			person2Write.setEmail(email);
+			person2Write.setTelemovel(mobilePhone);
+			person2Write.setEnderecoWeb(url);
+			
+			
 		} catch(Exception e){
 			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());
 			throw new Exception(e);

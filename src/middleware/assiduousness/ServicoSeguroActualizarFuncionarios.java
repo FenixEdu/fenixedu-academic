@@ -130,25 +130,7 @@ public class ServicoSeguroActualizarFuncionarios {
 						funcionario2Write = new Funcionario();
 						funcionario2Write.setNumeroMecanografico(numeroMecanografico.intValue());
 						funcionario2Write.setChavePessoa(person.getIdInternal().intValue());
-						
-						IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
-						if (personRole == null){
-						
-							criteria = new Criteria();
-							criteria.addEqualTo("roleType", RoleType.EMPLOYEE);
-			
-							query = new QueryByCriteria(Role.class, criteria);
-							List result = (List) broker.getCollectionByQuery(query);
-			
-							Role roleBD = null;
-			
-							if (result.size() == 0)
-								throw new Exception("Unknown Role !!!");
-							else roleBD = (Role) result.get(0);
-			 
-							person.getPersonRoles().add(roleBD);
-							newRoles++;
-						}
+
 					} else {
 						// Decision Time ... Keep The Old NumeroMecanografico or Put The new ?
 						funcionario2Write = (Funcionario) resultFuncionario.get(0);
@@ -158,6 +140,7 @@ public class ServicoSeguroActualizarFuncionarios {
 							funcionario2Write.setNumeroMecanografico(numeroMecanografico.intValue());
 						}
 					}
+
 					broker.store(funcionario2Write);
 					newEmployees++;
 
@@ -165,6 +148,25 @@ public class ServicoSeguroActualizarFuncionarios {
 				
 				// Change the person Username
 				person.setUsername("F" + String.valueOf(numeroMecanografico));
+
+				IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
+				if (personRole == null){
+						
+					criteria = new Criteria();
+					criteria.addEqualTo("roleType", RoleType.EMPLOYEE);
+			
+					query = new QueryByCriteria(Role.class, criteria);
+					List result = (List) broker.getCollectionByQuery(query);
+			
+					Role roleBD = null;
+			
+					if (result.size() == 0)
+						throw new Exception("Unknown Role !!!");
+					else roleBD = (Role) result.get(0);
+			 
+					person.getPersonRoles().add(roleBD);
+					newRoles++;
+				}
 				broker.store(person);					
 			}
 			

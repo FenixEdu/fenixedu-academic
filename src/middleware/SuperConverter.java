@@ -29,12 +29,14 @@ import org.odmg.QueryException;
 import Dominio.Branch;
 import Dominio.Country;
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.Funcionario;
 import Dominio.IBranch;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -96,7 +98,7 @@ public static void main(String args[]) throws Exception{
 	
 	
 	// Converte Disciplinas
-	superConverter.migratePosGradDisciplina2Fenix();
+//	superConverter.migratePosGradDisciplina2Fenix();
 	
 	// Inscricoes do Alunos em Disciplinas
 	
@@ -106,6 +108,9 @@ public static void main(String args[]) throws Exception{
 	
 //	superConverter.updatePasswords();
 //	superConverter.updateGraduationStudentsUsernames();
+	
+	superConverter.updateEmployesRoleAndUsername();
+	
 	
 	}
 
@@ -271,6 +276,65 @@ public static void main(String args[]) throws Exception{
 
 
 
+	public void updateEmployesRoleAndUsername() throws Exception{
+		Funcionario funcionario = null;
+		IPessoa person = null;
+		List result = null;
+		Query query = null;
+		Criteria criteria = null;
+		QueryByCriteria queryByCriteria = null;
+		try {
+			System.out.print("A Ler Funcionarios ...");
+			List employees = getEmployes();
+			System.out.println("  Done !");
+	
+			System.out.println("A Actualizar Roles e Usernames a " + employees.size() + " Empregados ...");
+
+			Iterator iterator = employees.iterator();
+			while(iterator.hasNext()){
+				funcionario = (Funcionario) iterator.next();
+
+
+				criteria = new Criteria();
+				criteria.addEqualTo("roleType", RoleType.EMPLOYEE);
+		
+				query = new QueryByCriteria(Role.class, criteria);
+				result = (List)broker.getCollectionByQuery(query);
+		
+				Role role = null;
+				if (result.size() == 0)
+					throw new Exception("Unknown Role !!!");
+				else role = (Role) result.get(0);
+
+				criteria = new Criteria();
+				criteria.addEqualTo("codigoInterno", new Integer(funcionario.getChavePessoa()));
+				query = new QueryByCriteria(Pessoa.class,criteria);
+				List resultPerson = (List) broker.getCollectionByQuery(query);		
+			
+				
+				
+			
+				if (resultPerson.size() == 0){
+					throw new Exception("Error Reading Person");
+				}
+			
+				person = (IPessoa) resultPerson.get(0);
+				person.setUsername("F" + String.valueOf(funcionario.getNumeroMecanografico()));
+
+				IPersonRole personRole = readPersonRole((Pessoa) person, RoleType.EMPLOYEE);
+				if (personRole == null){
+					person.getPersonRoles().add(role);												
+				}
+				broker.store(person);
+			
+			}
+		} catch (Exception e){
+			throw new Exception("Error Employee " + funcionario.getNumeroMecanografico() , e);
+		}
+	}
+
+
+
 
 	public void migratePosGradDisciplina2Fenix() throws Exception{
 		ICurricularCourse curricularCourse2Write = null;
@@ -293,7 +357,10 @@ public static void main(String args[]) throws Exception{
 				
 				// Delete unwanted courses
 				if ((curricularCourse2Convert.getNome().indexOf("CRÉDITOS") != -1) ||
-				    (curricularCourse2Convert.getNome().indexOf("CURRICULAR") != -1)){
+				    (curricularCourse2Convert.getNome().indexOf("CURRICULAR") != -1) ||
+				    (curricularCourse2Convert.getCodigocursomestrado() == 15) ||
+					(curricularCourse2Convert.getCodigocursomestrado() == 31) ||
+					(curricularCourse2Convert.getCodigocursomestrado() == 50)){
 					continue;
 				}
 				
@@ -385,10 +452,16 @@ public static void main(String args[]) throws Exception{
 				
 
 				// Check if the Curricular Course Exists
+				if (curricularCourse2Convert.getSigla() != null){
+					curricularCourse2Write.setCode(curricularCourse2Convert.getSigla());
+				} else {
+					curricularCourse2Write.setCode(generateCode(curricularCourse2Convert.getNome(), 1));
+				}
 				
 				boolean writableCourse = false;
-				while(writableCourse == false){
-					curricularCourse2Write.setCode(generateCode(curricularCourse2Convert.getNome(), 1));
+				int i = 1;
+				while(!writableCourse){
+					
 					criteria = new Criteria();
 					criteria.addEqualTo("code", curricularCourse2Write.getCode());
 					criteria.addEqualTo("name", curricularCourse2Write.getName());
@@ -396,12 +469,22 @@ public static void main(String args[]) throws Exception{
 					query = new QueryByCriteria(CurricularCourse.class,criteria);
 					result = (List) broker.getCollectionByQuery(query);
 					
+					
+					
 					if (result.size() == 0){
 						writableCourse = true;
+					} else {
+						curricularCourse2Write.setCode(generateCode(curricularCourse2Convert.getNome(), i++));
 					}
 				}
 				
 				broker.store(curricularCourse2Write);
+				
+				
+				// Create Scopes
+				
+				ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+				
 	
 			}
 			System.out.println("  Done !");
@@ -1009,6 +1092,13 @@ public static void main(String args[]) throws Exception{
 		Query query = new QueryByCriteria(Pessoa.class,criteria);
 		return (List) broker.getCollectionByQuery(query);
 	}
+
+	public List getEmployes() throws Exception {
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Funcionario.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
+	}
+
 
 	public List getFenixStudents() throws Exception {
 		Criteria criteria = new Criteria();
