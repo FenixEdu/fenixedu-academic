@@ -180,10 +180,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		{
 			return mapping.findForward("showDescription");
 		}
-		else
-		{
+	
 			return mapping.findForward("showDescriptionEnglish");
-		}
+		
 	}
 
 	public ActionForward showAccessRequirements(
@@ -232,10 +231,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		{
 			return mapping.findForward("showAccessRequirements");
 		}
-		else
-		{
+		
 			return mapping.findForward("showAccessRequirementsEnglish");
-		}
+		
 	}
 
 	public ActionForward showCurricularPlan(
@@ -346,10 +344,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		{
 			return mapping.findForward("showCurricularPlans");
 		}
-		else
-		{
+		
 			return mapping.findForward("showCurricularPlansEnglish");
-		}
+		
 	}
 
 	private Integer getFromRequest(String parameter, HttpServletRequest request)

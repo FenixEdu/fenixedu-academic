@@ -46,11 +46,12 @@
 			</td>
 			<td>
 				<br />
+				<bean:define id="specializationAreas" name="branches" property="finalSpecializationAreas" />
 				<html:select property="specializationArea">
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<html:options collection="infoBranches" property="idInternal" labelProperty="name"/>
+					<html:options collection="specializationAreas" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>
@@ -59,11 +60,12 @@
 				<bean:message key="label.student.enrollment.secondaryArea" />
 			</td>
 			<td>
+				<bean:define id="secundaryAreas" name="branches" property="finalSecundaryAreas" />
 				<html:select property="secondaryArea">
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<html:options collection="infoBranches" property="idInternal" labelProperty="name"/>
+					<html:options collection="secundaryAreas" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>

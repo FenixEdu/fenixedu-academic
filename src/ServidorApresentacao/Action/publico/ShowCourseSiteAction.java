@@ -126,10 +126,9 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
 		{
 			return mapping.findForward("showCurricularCourseSite");
 		}
-		else
-		{
+	
 			return mapping.findForward("showCurricularCourseSiteEnglish");
-		}
+		
 	}
 
 	public ActionForward showExecutionCourseSite(

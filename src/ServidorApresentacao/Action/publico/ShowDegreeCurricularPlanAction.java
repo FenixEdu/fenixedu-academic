@@ -81,10 +81,9 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 		{
 			return mapping.findForward("showDegreeCurricularPlan");
 		}
-		else
-		{
+		
 			return mapping.findForward("showDegreeCurricularPlanEnglish");
-		}
+		
 	}
 
 	private Integer getFromRequest(String parameter, HttpServletRequest request)

@@ -150,9 +150,9 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
 
 		if (result.isEmpty()) {
 			return null;
-		} else {
+		} 
 			return result;
-		}
+		
  	}
 
 	  

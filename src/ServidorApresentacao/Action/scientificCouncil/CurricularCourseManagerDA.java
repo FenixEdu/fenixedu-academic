@@ -57,9 +57,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             ISiteComponent component = new InfoSiteSCDegrees();
             readSiteView(request, userView, null, null, null, component);
             return mapping.findForward("selectDegree");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
+        
 
     }
 
@@ -81,9 +81,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             ISiteComponent component = new InfoSiteDegreeCurricularPlans();
             readSiteView(request, userView, degreeId, null, null, component);
             return mapping.findForward("showDegreeCurricularPlans");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
+       
 
     }
 
@@ -105,9 +105,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             ISiteComponent component = new InfoSiteCurricularCourses();
             readSiteView(request, userView, null, null, degreeCurricularPlanId, component);
             return mapping.findForward("showCurricularCourses");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
+       
 
     }
 
@@ -150,9 +150,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
 
             coursesForm.set("basicCurricularCourses", formValues);
             return mapping.findForward("showCurricularCourses");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
+        
 
     }
 
@@ -189,10 +189,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             }
 
             return mapping.findForward("firstPage");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
-
+      
     }
 
     public ActionForward viewCurriculum(
@@ -224,10 +223,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             }
             request.setAttribute("siteView", siteView);
             return mapping.findForward("viewCurriculum");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
-
+       
     }
 
     public ActionForward prepareEditCurriculum(
@@ -256,10 +254,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             }
             request.setAttribute("siteView", siteView);
             return mapping.findForward("editCurriculum");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
-
+        
     }
 
     public ActionForward editCurriculum(
@@ -305,15 +302,13 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             if (result.booleanValue())
             {
                 return showCurricularCourses(mapping, form, request, response);
-            } else
-            {
+            } 
                 return null;
-            }
+            
 
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
-
+        
     }
 
     public ActionForward prepareInsertCurriculum(
@@ -345,10 +340,9 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             }
             request.setAttribute("siteView", siteView);
             return mapping.findForward("insertCurriculum");
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
-
+       
     }
 
     public ActionForward insertCurriculum(
@@ -394,15 +388,13 @@ public class CurricularCourseManagerDA extends FenixDispatchAction
             if (result.booleanValue())
             {
                 return showCurricularCourses(mapping, form, request, response);
-            } else
-            {
+            } 
                 return null;
-            }
+           
 
-        } else
+        } 
             throw new FenixActionException();
-        //			 nao ocorre... pedido passa pelo filtro Autorizacao
-
+       
     }
 
     private SiteView readSiteView(

@@ -92,14 +92,14 @@ public class AdicionarAulasFormAction
 			if (actionErrors.isEmpty()) {
 
 				return mapping.findForward("Sucesso");
-			} else {
+			} 
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
-			}
+			
 
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 
 	private ActionErrors getActionErrors(

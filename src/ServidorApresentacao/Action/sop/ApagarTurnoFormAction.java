@@ -55,7 +55,6 @@ public class ApagarTurnoFormAction extends FenixExecutionCourseAndExecutionDegre
 
       InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
 	  manipularTurnosForm.set("indexTurno", null);
-	  //InfoExecutionCourse IEC = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 	  
 	  
 	  Object argsApagarTurno[] = { new ShiftKey(infoTurno.getNome(),iDE) };
@@ -69,7 +68,7 @@ public class ApagarTurnoFormAction extends FenixExecutionCourseAndExecutionDegre
 	  }
 	
       return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception();  
   }
 }

@@ -128,9 +128,9 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			request.setAttribute(SessionConstants.DEGREES, licenciaturas);
 
 			return mapping.findForward("chooseExamsMapContext");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 
 	}
 

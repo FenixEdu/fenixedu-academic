@@ -82,12 +82,12 @@ public class ChooseContextDA extends FenixDateAndTimeDispatchAction {
 				new ActionError("errors.invalid.execution.degree"));
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
-		} else {
+		} 
 			request.setAttribute(
 				SessionConstants.EXECUTION_DEGREE,
 				infoExecutionDegree);
 			return mapping.findForward("ManageSchedules");
-		}
+		
 
 	}
 

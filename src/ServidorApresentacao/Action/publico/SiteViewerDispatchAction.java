@@ -450,10 +450,9 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
                 throw new FenixActionException(e);
             }
             return mapping.findForward("roomViewer");
-        } else
-        {
+        } 
             throw new FenixActionException();
-        }
+        
     }
 
     private ExecutionCourseSiteView readGroupView(

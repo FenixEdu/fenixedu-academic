@@ -104,7 +104,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
                             .format(infoGuide.getCreationDate());
             session.setAttribute(SessionConstants.DATE, formatedDate);
             return mapping.findForward("PrintReady");
-        } else
+        } 
             throw new Exception();
     }
 
@@ -173,7 +173,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
             session.setAttribute(SessionConstants.DATE, formatedDate);
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
             return mapping.findForward("PrintOneGuide");
-        } else
+        } 
             throw new Exception();
     }
 }

@@ -67,7 +67,7 @@ public class ChooseGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("PrepareReady");
         }
-        else
+        
             throw new Exception();
 
     }
@@ -118,7 +118,7 @@ public class ChooseGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("ShowVersionList");
         }
-        else
+        
             throw new Exception();
     }
 
@@ -169,7 +169,7 @@ public class ChooseGuideDispatchAction extends DispatchAction
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
             return mapping.findForward("ActionReady");
         }
-        else
+        
             throw new Exception();
     }
 

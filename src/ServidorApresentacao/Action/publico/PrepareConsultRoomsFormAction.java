@@ -53,7 +53,7 @@ public class PrepareConsultRoomsFormAction extends FenixContextAction {
 			request.setAttribute("publico.types", types);
 
 			return mapping.findForward("Sucess");
-		} else
+		} 
 			throw new Exception();
 	}
 }

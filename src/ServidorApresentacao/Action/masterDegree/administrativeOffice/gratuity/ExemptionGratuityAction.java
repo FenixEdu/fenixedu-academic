@@ -164,11 +164,10 @@ public class ExemptionGratuityAction extends DispatchAction
 				((InfoStudentCurricularPlan) studentCurricularPlans.get(0)).getIdInternal());
 			return mapping.findForward("readExemptionGratuity");
 		}
-		else
-		{
+		
 			request.setAttribute("studentCurricularPlans", studentCurricularPlans);
 			return mapping.findForward("chooseStudentCurricularPlan");
-		}
+		
 	}
 
 	public ActionForward readExemptionGratuity(
@@ -252,10 +251,9 @@ public class ExemptionGratuityAction extends DispatchAction
 			saveErrors(request, errors);
 			return mapping.findForward("chooseStudent");
 		}
-		else
-		{
+		
 			request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
-		}
+		
 
 		//read gratuity situation of the student
 		InfoGratuitySituation infoGratuitySituation = null;

@@ -53,4 +53,8 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
 		
 		return curricularCourses;
 	}
+    
+    public List getSecundaryAreas() {
+        return getSpecializationAreas();
+    }
 }

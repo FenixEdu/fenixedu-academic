@@ -69,7 +69,7 @@ public class ChooseExecutionCourseAction
 				SessionConstants.EXECUTION_COURSE,
 				infoCourse);
 			return mapping.findForward("forwardChoose");
-		} else {
+		} 
 			if (page != null && page.intValue() > 1)
 			{
 				request.removeAttribute(SessionConstants.EXECUTION_COURSE);
@@ -80,7 +80,7 @@ public class ChooseExecutionCourseAction
 				saveErrors(request, actionErrors);
 			}
 			return mapping.findForward("showForm");
-		}
+		
 	}
 
 }

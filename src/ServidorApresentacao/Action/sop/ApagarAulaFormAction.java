@@ -89,14 +89,14 @@ public class ApagarAulaFormAction
 
 			if (result != null && result.booleanValue()) {
 				infoAulas.remove(indexAula.intValue());
-				//sessao.removeAttribute("listaAulas");
+				
 				if (!infoAulas.isEmpty())
 					request.setAttribute("listaAulas", infoAulas);
 			}
 
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+	
 	}
 }

@@ -41,8 +41,7 @@ public class ShowStudentGroupInfo extends Action
 		String result = new String();
 		if (username == null)
 			return new String();
-		else
-		{
+		
 			try
 			{
 				Object argsAutenticacao[] = { username, password, "" };
@@ -100,7 +99,7 @@ public class ShowStudentGroupInfo extends Action
 			{
 				result = "-1";
 			}
-		}
+		
 		return result;
 	}
 	public ActionForward execute(

@@ -73,9 +73,9 @@ public class AddShiftsToClassesDA
 			request.setAttribute("siteView", siteView);
 
 			return mapping.findForward("showClasses");
-		} else
+		} 
 			throw new FenixActionException();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 	public ActionForward addShiftToClasses(
 		ActionMapping mapping,
@@ -105,8 +105,8 @@ public class AddShiftsToClassesDA
 			}
 
 			return mapping.findForward("sucess");
-		} else
+		} 
 			throw new FenixActionException();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

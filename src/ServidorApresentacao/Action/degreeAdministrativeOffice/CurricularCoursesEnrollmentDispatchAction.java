@@ -21,6 +21,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoRole;
+import DataBeans.enrollment.InfoAreas2Choose;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ChosenAreasAreIncompatibleServiceException;
@@ -218,10 +219,10 @@ public class CurricularCoursesEnrollmentDispatchAction extends
         maintainEnrollmentState(request, studentNumber);
 
         Integer executionDegreeId = getExecutionDegree(request);
-        List infoBranches = null;
+       InfoAreas2Choose infoAreas2Choose = null;
         Object[] args = { executionDegreeId, null, studentNumber };
         try {
-            infoBranches = (List) ServiceManagerServiceFactory.executeService(
+            infoAreas2Choose =  (InfoAreas2Choose) ServiceManagerServiceFactory.executeService(
                     userView, "ReadSpecializationAndSecundaryAreasByStudent",
                     args);
         } catch (NotAuthorizedException e) {
@@ -240,7 +241,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends
                         "error.student.curricularPlan.nonExistent"));
             }
         } catch (FenixServiceException e) {
-            throw new FenixActionException();
+            throw new FenixActionException(e);
         }
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
@@ -253,9 +254,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends
             enrollmentForm.set("secondaryArea", Integer.valueOf(secondary));
         }
 
-        Collections.sort(infoBranches, new BeanComparator("name"));
-
-        request.setAttribute("infoBranches", infoBranches);
+        Collections.sort(infoAreas2Choose.getFinalSpecializationAreas(), new BeanComparator("name"));
+        Collections.sort(infoAreas2Choose.getFinalSecundaryAreas(), new BeanComparator("name"));
+        request.setAttribute("branches", infoAreas2Choose);
         return mapping.findForward("prepareEnrollmentChooseAreas");
     }
 

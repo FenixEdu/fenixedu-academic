@@ -68,7 +68,7 @@ public class ChooseDataToCreateGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("DisplayMasterDegreeList");
         }
-        else
+        
             throw new Exception();
     }
 
@@ -119,7 +119,7 @@ public class ChooseDataToCreateGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("DisplayMasterDegreeCurricularPlanList");
         }
-        else
+        
             throw new Exception();
     }
 
@@ -160,10 +160,9 @@ public class ChooseDataToCreateGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("DisplayExecutionDegreeList");
         }
-        else
-        {
+        
             throw new Exception();
-        }
+        
     }
 
 }
