@@ -52,9 +52,9 @@ public class InsertDegreeService implements IServico {
 				String code = infoDegree.getSigla();
 				String name = infoDegree.getNome();
 				TipoCurso type = infoDegree.getTipoCurso();
-				List errors = new ArrayList();
-				errors.add(null);
-				errors.add(null);
+				List errors = new ArrayList(2);
+//				errors.add(null);
+//				errors.add(null);
 				int modified = 0;
 			
 				while(iter.hasNext()) {

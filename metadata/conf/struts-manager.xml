@@ -15,7 +15,7 @@
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 		</form-bean>  
 	
-		<form-bean name="insertDegreeForm"
+		<form-bean name="degreeForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">
 				<form-property name="name" type="java.lang.String" />       
