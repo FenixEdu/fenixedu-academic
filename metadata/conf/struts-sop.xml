@@ -485,7 +485,7 @@
              parameter="operation"
              name="aulaForm"
              scope="request"
-             input="/prepararEditarAula.do">
+             input="/editarAulaForm.do?operation=input">
 		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
@@ -501,6 +501,7 @@
          <forward name="Guardar" path="/escolherAulas.do"/>
          <forward name="Sucesso" path="/escolherAulas.do"/>
          <forward name="Alterar Sala" path="/changeLessonRoom.jsp"/>
+         <forward name="Input" path="/editarAula.jsp"/>
 	 </action>
 
       <!-- Gestao de Salas -->

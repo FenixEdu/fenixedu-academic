@@ -34,8 +34,15 @@ import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
-import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
-import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextLookupDispatchAction;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.InvalidTimeIntervalActionException;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextLookupDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -60,6 +67,7 @@ public class LessonManagerDispatchAction
 		map.put("label.save", "storeChanges");
 		map.put("lable.chooseRoom", "chooseRoom");
 		map.put("label.create", "createRoom");
+		map.put("input", "input");
 		return map;
 	}
 
@@ -70,7 +78,8 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("################## Start if Create Room ###################");
+		System.out.println(
+			"################## Start if Create Room ###################");
 
 		DynaActionForm criarAulaForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
@@ -191,10 +200,15 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("################## Start if Store Changes ###################");
+		System.out.println(
+			"################## Start if Store Changes ###################");
 
-		System.out.println("Parameter InfoLesson OID= " + request.getParameter("infoAula_oid"));
-		System.out.println("Attribute InfoLesson OID= " + request.getAttribute("infoAula_oid"));
+		System.out.println(
+			"Parameter InfoLesson OID= "
+				+ request.getParameter("infoAula_oid"));
+		System.out.println(
+			"Attribute InfoLesson OID= "
+				+ request.getAttribute("infoAula_oid"));
 
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
@@ -209,20 +223,18 @@ public class LessonManagerDispatchAction
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
 			GestorServicos gestor = GestorServicos.manager();
-			
-			RequestUtils.setLessonTypes(request);
-			
-			Integer oldLessonOID = new Integer(request.getParameter("infoAula_oid"));
 
-			Object args[] =	{ oldLessonOID };
+			RequestUtils.setLessonTypes(request);
+
+			Integer oldLessonOID =
+				new Integer(request.getParameter("infoAula_oid"));
+
+			Object args[] = { oldLessonOID };
 
 			InfoLesson iAulaAntiga = null;
-				iAulaAntiga =
-					(InfoLesson) gestor.executar(
-						userView,
-						"ReadLessonByOID",
-						args);
-			
+			iAulaAntiga =
+				(InfoLesson) gestor.executar(userView, "ReadLessonByOID", args);
+
 			//InfoLesson iAulaAntiga =
 			//	(InfoLesson) request.getAttribute("infoAula");
 
@@ -259,7 +271,9 @@ public class LessonManagerDispatchAction
 			InfoLesson iAula =
 				new InfoLesson(
 					new DiaSemana(
-						new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana")))),
+						new Integer(
+							formDay2EnumerateDay(
+								(String) editarAulaForm.get("diaSemana")))),
 					inicio,
 					fim,
 					new TipoAula(
@@ -319,7 +333,7 @@ public class LessonManagerDispatchAction
 				return mapping.findForward(parameter);
 			} else {
 				System.out.println("Store Changes, else...................");
-				
+
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
@@ -334,8 +348,8 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("################## Start of Change Room ###################");
-
+		System.out.println(
+			"################## Start of Change Room ###################");
 
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
@@ -353,19 +367,22 @@ public class LessonManagerDispatchAction
 
 			RequestUtils.setLessonTypes(request);
 
-			Integer oldLessonOID = new Integer(request.getParameter("infoAula_oid"));
-			Object argsLesson[] =	{ oldLessonOID };
+			Integer oldLessonOID =
+				new Integer(request.getParameter("infoAula_oid"));
+			Object argsLesson[] = { oldLessonOID };
 			InfoLesson iAulaAntiga = null;
-				iAulaAntiga =
-					(InfoLesson) gestor.executar(
-						userView,
-						"ReadLessonByOID",
-						argsLesson);
+			iAulaAntiga =
+				(InfoLesson) gestor.executar(
+					userView,
+					"ReadLessonByOID",
+					argsLesson);
 			request.setAttribute("infoAula", iAulaAntiga);
 
 			DiaSemana weekDay =
 				new DiaSemana(
-					new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana"))));
+					new Integer(
+						formDay2EnumerateDay(
+							(String) editarAulaForm.get("diaSemana"))));
 
 			request.setAttribute("weekDayString", weekDay.toString());
 
@@ -403,8 +420,7 @@ public class LessonManagerDispatchAction
 
 				InfoExecutionPeriod infoExecutionPeriod =
 					(InfoExecutionPeriod) (request
-						.getAttribute(
-							SessionConstants.EXECUTION_PERIOD));
+						.getAttribute(SessionConstants.EXECUTION_PERIOD));
 
 				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
@@ -445,9 +461,9 @@ public class LessonManagerDispatchAction
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} else {
-				
+
 				System.out.println("Change Room, else...................");
-				
+
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
@@ -462,8 +478,8 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("################## Start of Choose Room ###################");
-
+		System.out.println(
+			"################## Start of Choose Room ###################");
 
 		//super.execute(mapping, form, request, response);
 		ContextUtils.setExecutionPeriodContext(request);
@@ -476,14 +492,11 @@ public class LessonManagerDispatchAction
 		RequestUtils.setLessonTypes(request);
 		SessionUtils.getExecutionCourses(request);
 		if (sessao != null) {
-			IUserView userView =
-				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-
-			GestorServicos gestor = GestorServicos.manager();
-
 			DiaSemana weekDay =
 				new DiaSemana(
-					new Integer( formDay2EnumerateDay((String)editarAulaForm.get("diaSemana"))));
+					new Integer(
+						formDay2EnumerateDay(
+							(String) editarAulaForm.get("diaSemana"))));
 
 			request.setAttribute("weekDayString", weekDay.toString());
 
@@ -517,9 +530,8 @@ public class LessonManagerDispatchAction
 				infoLesson.setFim(fim);
 
 				InfoExecutionPeriod infoExecutionPeriod =
-					(InfoExecutionPeriod) request
-						.getAttribute(
-							SessionConstants.EXECUTION_PERIOD);
+					(InfoExecutionPeriod) request.getAttribute(
+						SessionConstants.EXECUTION_PERIOD);
 
 				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
@@ -631,4 +643,64 @@ public class LessonManagerDispatchAction
 		return actionErrors;
 	}
 
+	public ActionForward input(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		//super.execute(mapping, form, request, response);
+		ContextUtils.setExecutionPeriodContext(request);
+		ContextUtils.setExecutionDegreeContext(request);
+		ContextUtils.setCurricularYearContext(request);
+		ContextUtils.setExecutionCourseContext(request);
+
+		DynaActionForm editarAulaForm = (DynaActionForm) form;
+
+		HttpSession sessao = request.getSession(false);
+		if (sessao != null) {
+
+			IUserView userView = (IUserView) sessao.getAttribute("UserView");
+			GestorServicos gestor = GestorServicos.manager();
+
+			Integer oldLessonOID =
+				new Integer(request.getParameter("infoAula_oid"));
+			Object argsLesson[] = { oldLessonOID };
+			InfoLesson infoAula = null;
+			infoAula =
+				(InfoLesson) gestor.executar(
+					userView,
+					"ReadLessonByOID",
+					argsLesson);
+			request.setAttribute("infoAula", infoAula);
+
+			editarAulaForm.set(
+				"diaSemana",
+				String.valueOf(infoAula.getWeekDay()));
+			editarAulaForm.set(
+				"horaInicio",
+				String.valueOf(infoAula.getInicio().get(Calendar.HOUR_OF_DAY)));
+			editarAulaForm.set(
+				"minutosInicio",
+				String.valueOf(infoAula.getInicio().get(Calendar.MINUTE)));
+			editarAulaForm.set(
+				"horaFim",
+				String.valueOf(infoAula.getFim().get(Calendar.HOUR_OF_DAY)));
+			editarAulaForm.set(
+				"minutosFim",
+				String.valueOf(infoAula.getFim().get(Calendar.MINUTE)));
+			editarAulaForm.set(
+				"tipoAula",
+				String.valueOf(infoAula.getTipo().getTipo().intValue()));
+			editarAulaForm.set("nomeSala", infoAula.getInfoSala().getNome());
+
+			RequestUtils.setLessonTypes(request);
+
+			return mapping.findForward("Input");
+		} else
+			throw new Exception();
+
+		
+	}
 }

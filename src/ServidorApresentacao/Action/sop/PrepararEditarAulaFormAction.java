@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
+import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
@@ -60,12 +62,19 @@ public class PrepararEditarAulaFormAction
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
 
+			if (infoAulas != null && !infoAulas.isEmpty()) {
+				Collections.sort(
+					infoAulas,
+					new InfoLessonComparatorByWeekDayAndTime());
+				//request.setAttribute("listaAulas", infoAulas);
+			}
+
 //			ArrayList infoAulas =
 //				(ArrayList) request.getAttribute("listaAulas");
 			InfoLesson infoAula =
 				(InfoLesson) infoAulas.get(indexAula.intValue());
 
-			//sessao.removeAttribute("indexAula");
+			request.removeAttribute("infoAula");
 			request.setAttribute("infoAula", infoAula);
 
 			editarAulaForm.set(
