@@ -10,6 +10,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Aula;
+import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
@@ -537,12 +538,50 @@ public class ExecutionPeriodOJB
 
 	private DisciplinaExecucao createExecutionCourse(
 		Object arg0,
-		IExecutionPeriod executionPeriodToImportDataTo) {
+		IExecutionPeriod executionPeriodToImportDataTo) throws ExcepcaoPersistencia {
 		DisciplinaExecucao executionCourseToTransfer =
 			(DisciplinaExecucao) arg0;
 		DisciplinaExecucao executionCourseToCreate = new DisciplinaExecucao();
+		List curricularCourses = new ArrayList();
 
-		executionCourseToCreate.setAssociatedCurricularCourses(new ArrayList());
+		for (int i = 0;
+			i
+				< executionCourseToTransfer
+					.getAssociatedCurricularCourses()
+					.size();
+			i++) {
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) executionCourseToTransfer
+					.getAssociatedCurricularCourses()
+					.get(i);
+			Criteria criteriaExecutionDegree = new Criteria();
+			criteriaExecutionDegree.addEqualTo("executionYear.idInternal", executionPeriodToImportDataTo.getExecutionYear().getIdInternal());
+			criteriaExecutionDegree.addEqualTo("curricularPlan.degree.idInternal", curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal());
+			CursoExecucao executionDegree = (CursoExecucao) queryObject(CursoExecucao.class, criteriaExecutionDegree);
+
+			if (executionDegree != null) {
+				Criteria criteriaCurricularCourse = new Criteria();
+				criteriaCurricularCourse.addEqualTo("code", curricularCourse.getCode());
+				criteriaCurricularCourse.addEqualTo("degreeCurricularPlan.idInternal", executionDegree.getDegreeCurricularPlan().getIdInternal());
+				ICurricularCourse curricularCourseInNewExecutionPeriod = (ICurricularCourse) queryObject(CurricularCourse.class, criteriaCurricularCourse);
+				if (curricularCourseInNewExecutionPeriod != null) {
+					curricularCourses.add(curricularCourseInNewExecutionPeriod);
+				}
+			}
+		}
+
+		try {
+			// It's Ok to just write it with no verification because:
+			//   - all data from this execution period has been cleared
+			//   - suposedly all data related to the other execution period
+			//     is correct.
+			simpleLockWrite(executionCourseToCreate);
+		} catch (ExcepcaoPersistencia e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		executionCourseToCreate.setAssociatedCurricularCourses(curricularCourses);
 		executionCourseToCreate.setAssociatedEvaluations(new ArrayList());
 		executionCourseToCreate.setAssociatedExams(new ArrayList());
 		executionCourseToCreate.setComment(" ");
@@ -560,30 +599,19 @@ public class ExecutionPeriodOJB
 		executionCourseToCreate.setTheoreticalHours(
 			executionCourseToTransfer.getTheoreticalHours());
 
-		try {
-			// It's Ok to just write it with no verification because:
-			//   - all data from this execution period has been cleared
-			//   - suposedly all data related to the other execution period
-			//     is correct.
-			lockWrite(executionCourseToCreate);
-		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		for (int i = 0;
-			i
-				< executionCourseToTransfer
-					.getAssociatedCurricularCourses()
-					.size();
-			i++) {
-			ICurricularCourse curricularCourse =
-				(ICurricularCourse) executionCourseToTransfer
-					.getAssociatedCurricularCourses()
-					.get(i);
-			executionCourseToCreate.getAssociatedCurricularCourses().add(
-				curricularCourse);
-		}
+//		for (int i = 0;
+//			i
+//				< executionCourseToTransfer
+//					.getAssociatedCurricularCourses()
+//					.size();
+//			i++) {
+//			ICurricularCourse curricularCourse =
+//				(ICurricularCourse) executionCourseToTransfer
+//					.getAssociatedCurricularCourses()
+//					.get(i);
+//			executionCourseToCreate.getAssociatedCurricularCourses().add(
+//				curricularCourse);
+//		}
 
 		return executionCourseToCreate;
 	}
