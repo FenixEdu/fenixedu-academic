@@ -52,6 +52,7 @@ import ServidorPersistente.IPersistentGuideSituation;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPersistentPersonRole;
+import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentPrice;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
@@ -393,6 +394,14 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	
 	public IPersistentPersonRole getIPersistentPersonRole() {
 		return new PersonRoleOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPrecedence()
+	 */
+	public IPersistentPrecedence getIPersistentPrecedence() {
+		// TODO Auto-generated method stub
+		return new PrecedenceOJB();
 	}
 
 }
