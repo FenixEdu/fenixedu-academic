@@ -13,7 +13,7 @@
         <center><font color='#034D7A' size='5'> <b> <bean:message key="title.editAula"/> </b> </font></center>
         <br/>
         <br/>
-        <html:errors/>
+        <span class="error"><html:errors/></span>
         <html:form action="/editarAulaForm">
             <table align="center" cellspacing="10"> 
                 <tr>
