@@ -38,17 +38,10 @@ public class DeleteTeacher implements IServico {
         }
     }
 
-    private static DeleteTeacher service = new DeleteTeacher();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static DeleteTeacher getService() {
-		return service;
-	}
 	/**
 	 * The Actor of this class.
 	 **/
-	private DeleteTeacher() {
+	public DeleteTeacher() {
 	}
 	/**
 	 * Returns service name
@@ -82,9 +75,18 @@ public class DeleteTeacher implements IServico {
 			//note: removed the possibility for a responsible teacher to remove from himself the professorship 
 			//(it was a feature that didnt make sense)
 			IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(iTeacher, iExecutionCourse);
+			IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
+			
+			
 			if (responsibleFor != null) {
-				throw new notAuthorizedServiceDeleteException();
+			    if (!canDeleteResponsibleFor()) {
+			        throw new notAuthorizedServiceDeleteException();
+			    }else {
+			        responsibleForDAO.delete(responsibleFor);
+			    }
+				
 			}
+			
 			IProfessorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(iTeacher, iExecutionCourse);
 			
 			List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
@@ -100,4 +102,12 @@ public class DeleteTeacher implements IServico {
 			throw new FenixServiceException(e);
 		}
 	}
+    /**
+     * @return
+     */
+    protected boolean canDeleteResponsibleFor()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
