@@ -4,8 +4,7 @@
  */
 package ServidorPersistente.Conversores;
 
-import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
-import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
+import org.apache.commons.beanutils.ConversionException;
 
 import Util.RoleType;
 
