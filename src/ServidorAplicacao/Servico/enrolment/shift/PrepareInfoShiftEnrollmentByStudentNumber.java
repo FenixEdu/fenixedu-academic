@@ -147,11 +147,14 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 			{
 				IFrequenta attend = (Frequenta) iterator.next();
 				IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-				if (executionCourse.getExecutionPeriod().getState().equals(new PeriodState(PeriodState.CURRENT)))
+				if (executionCourse != null &&
+					executionCourse.getExecutionPeriod() != null &&
+					executionCourse.getExecutionPeriod().getState().equals(new PeriodState(PeriodState.CURRENT)))
 				{
 					infoAttendingCourses.add(Cloner.get(executionCourse));
 				}
 			}
+
 		}
 
 		return infoAttendingCourses;
