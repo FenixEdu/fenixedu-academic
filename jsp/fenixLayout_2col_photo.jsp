@@ -33,7 +33,9 @@
    <tr>
      <td width="25%" align="left" valign="top" nowrap="nowrap"><tiles:insert attribute="photos" />
     </td>
-     <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent"><tiles:insert attribute="body" />
+     <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent">
+     	<tiles:insert attribute="body-context" />     
+     	<tiles:insert attribute="body" />
 	</td>
   </tr>
 </table>
