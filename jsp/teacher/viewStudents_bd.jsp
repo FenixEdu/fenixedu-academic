@@ -117,9 +117,9 @@
 				<html:link page="/getTabSeparatedStudentList.do" name="spreadSheetLinkArgs">
 				<bean:message key="link.getExcelSpreadSheet"/><br/>
 			</html:link>
-
+			<%--
 			 <h2>
-				<logic:present name="studentsComponent" property="infoCurricularCourseScope">  		
+				<logic:present name="studentsComponent" property="infoCurricularCourse">  		
 						&nbsp;-&nbsp;&nbsp;-&nbsp;				
 						<bean:define id="ano" name="studentsComponent" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year" />
 						<bean:define id="semestre" name="studentsComponent" property="infoCurricularCourseScope.infoCurricularSemester.semester" />					
@@ -131,7 +131,7 @@
 						<bean:message key="label.year" arg0="<%= String.valueOf(ano) %>"/>
 						<bean:message key="label.period" arg0="<%= String.valueOf(semestre) %>"/>
 			   </logic:present>
-	   		</h2><br />
+	   		</h2><br /> --%>
 		   </td>
 		  
 		</tr> 

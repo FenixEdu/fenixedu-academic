@@ -35,5 +35,4 @@ public class InfoSummaryWithAll extends InfoSummary {
         }
         return infoSummary;
     }
-
 }

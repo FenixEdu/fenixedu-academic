@@ -66,6 +66,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
         {
             scopeCode = new Integer(scopeCodeString);
         }
+        
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, scopeCode };
         Object argsProjects[] = { objectCode };
@@ -83,7 +84,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
                 (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsByCurricularCourse",
-                    args);
+                    args);//site, curricular course e nº de alunos
             projects =
                 (InfoSiteProjects) ServiceManagerServiceFactory.executeService(
                     userView,

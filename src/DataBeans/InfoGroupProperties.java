@@ -6,6 +6,7 @@ package DataBeans;
 
 import java.util.Calendar;
 
+import Dominio.IGroupProperties;
 import Util.EnrolmentGroupPolicyType;
 import Util.TipoAula;
 
@@ -445,4 +446,30 @@ public class InfoGroupProperties extends InfoObject
 		result += date.get(Calendar.MINUTE);
 		return result;
 	}
+		
+    public void copyFromDomain(IGroupProperties groupProperties) {
+        super.copyFromDomain(groupProperties);
+        if(groupProperties != null) {
+            setName(groupProperties.getName());
+            setProjectDescription(groupProperties.getProjectDescription());
+            setShiftType(groupProperties.getShiftType());
+            setEnrolmentPolicy(groupProperties.getEnrolmentPolicy());
+            setGroupMaximumNumber(groupProperties.getGroupMaximumNumber());
+            setIdealCapacity(groupProperties.getIdealCapacity());
+            setMaximumCapacity(groupProperties.getMaximumCapacity());
+            setMinimumCapacity(groupProperties.getMinimumCapacity());
+            setEnrolmentBeginDay(groupProperties.getEnrolmentBeginDay());
+            setEnrolmentEndDay(groupProperties.getEnrolmentEndDay());
+        }
+    }
+    
+    public static InfoGroupProperties newInfoFromDomain(IGroupProperties groupProperties){
+        InfoGroupProperties infoGroupProperties = null;
+        if(groupProperties != null) {
+            infoGroupProperties = new InfoGroupProperties();
+            infoGroupProperties.copyFromDomain(groupProperties);
+        }
+        
+        return infoGroupProperties;
+    }
 }

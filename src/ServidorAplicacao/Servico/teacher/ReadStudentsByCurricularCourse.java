@@ -7,11 +7,12 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteStudents;
 import DataBeans.InfoStudent;
+import DataBeans.InfoStudentWithInfoPerson;
 import DataBeans.TeacherAdministrationSiteView;
-import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
@@ -44,21 +45,18 @@ public class ReadStudentsByCurricularCourse implements IService
     {
 
     }
-
-    
-
     
     public Object run( Integer executionCourseCode, Integer courseCode ) throws ExcepcaoInexistente,
                     FenixServiceException
     {
         List infoStudentList = null;
         ISite site = null;
-//        ICurricularCourseScope curricularCourseScope = null;
         ICurricularCourse curricularCourse = null;
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
+            //execution course's site
             IExecutionCourse executionCourse = new ExecutionCourse();
             executionCourse.setIdInternal(executionCourseCode);
 
@@ -71,27 +69,17 @@ public class ReadStudentsByCurricularCourse implements IService
             }
             else
             {
-//                curricularCourseScope = new CurricularCourseScope();
-//                curricularCourseScope.setIdInternal(scopeCode);
-                
                 curricularCourse = new CurricularCourse();
                 curricularCourse.setIdInternal(courseCode);
                 
-//                infoStudentList = getCurricularCourseScopeStudents(curricularCourseScope, sp);
                 infoStudentList = getCurricularCourseStudents(curricularCourse, sp);
                 
-//                IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
-//                                .getIPersistentCurricularCourseScope();
-//                curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
-//                                .readByOId(curricularCourseScope, false);
-
                 IPersistentCurricularCourse persistentCurricularCourse = sp
                 .getIPersistentCurricularCourse();
                 curricularCourse = (ICurricularCourse) persistentCurricularCourse
                 .readByOId(curricularCourse, false);
             }
 
-//            TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site, curricularCourseScope);
             TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site, curricularCourse);
             return siteView;
             
@@ -106,13 +94,11 @@ public class ReadStudentsByCurricularCourse implements IService
 
     }
 
-//    private List getCurricularCourseScopeStudents( ICurricularCourseScope curricularCourseScope, ISuportePersistente sp ) throws ExcepcaoPersistencia
     private List getCurricularCourseStudents( ICurricularCourse curricularCourse, ISuportePersistente sp ) throws ExcepcaoPersistencia
     {
         List infoStudentList;
         IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 
-//        List enrolments = persistentEnrolment.readByCurricularCourseScope(curricularCourseScope);
         List enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse);
 
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer()
@@ -121,7 +107,9 @@ public class ReadStudentsByCurricularCourse implements IService
             {
                 IEnrolment enrolment = (IEnrolment) input;
                 IStudent student = enrolment.getStudentCurricularPlan().getStudent();
-                InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                //CLONER
+                //InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
                 return infoStudent;
             }
         });
@@ -142,14 +130,15 @@ public class ReadStudentsByCurricularCourse implements IService
             {
                 IFrequenta attend = (IFrequenta) input;
                 IStudent student = attend.getAluno();
-                InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                //CLONER
+                //InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
                 return infoStudent;
             }
         });
         return infoStudentList;
     }
 
-//    private TeacherAdministrationSiteView createSiteView( List infoStudentList, ISite site, ICurricularCourseScope curricularCourseScope ) throws FenixServiceException
     private TeacherAdministrationSiteView createSiteView( List infoStudentList, ISite site, ICurricularCourse curricularCourse) throws FenixServiceException
     {
         InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
@@ -157,9 +146,11 @@ public class ReadStudentsByCurricularCourse implements IService
 
         if (curricularCourse != null)
         {
-//            infoSiteStudents.setInfoCurricularCourseScope(Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope));
-            infoSiteStudents.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+            //CLONER
+            //infoSiteStudents.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));            
+            infoSiteStudents.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
+        
         TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
         ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,
                         null, null, null);

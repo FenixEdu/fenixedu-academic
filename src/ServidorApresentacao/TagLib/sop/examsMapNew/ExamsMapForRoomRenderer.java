@@ -50,7 +50,11 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer
         strBuffer.append("</td>");
         strBuffer.append("</tr>");
         strBuffer.append("</table>");
-		renderExamsTableForRoom(strBuffer);
+
+        System.out.println("-->" + getUser());
+        if(getUser() != null && !getUser().equals("sop")) {
+            renderExamsTableForRoom(strBuffer);
+        }
         strBuffer.append("<br />");
 
         return strBuffer;

@@ -761,6 +761,7 @@ public class InfoPerson extends InfoObject {
                     .getNumeroDocumentoIdentificacao());
             setTipoDocumentoIdentificacao(person
                     .getTipoDocumentoIdentificacao());
+            setEmail(person.getEmail());
         }
     }
     /**
@@ -770,7 +771,7 @@ public class InfoPerson extends InfoObject {
     public static InfoPerson newInfoFromDomain(IPessoa person) {
         InfoPerson infoPerson = null;
         if (person != null) {
-            infoPerson = new InfoPerson();
+           infoPerson = new InfoPerson();
            infoPerson.copyFromDomain(person);
         }
         return infoPerson;

@@ -1,7 +1,7 @@
 /*
  * Created on 29/Set/2003, 9:16:22
- *
- *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
+ * 
+ * By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Servico.teacher;
 
@@ -23,74 +23,77 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 29/Set/2003, 9:16:22
- * 
+ *  
  */
 //by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Set/2003
 //this service reads ALL the execution course's projects
-//to read the projects which has opened enrollments use the same service in student package (ReadExecutionCourseProjects)
-public class ReadExecutionCourseProjects implements IServico
-{
+//to read the projects which has opened enrollments use the same service in
+// student package (ReadExecutionCourseProjects)
+public class ReadExecutionCourseProjects implements IServico {
+
     private static ReadExecutionCourseProjects _servico = new ReadExecutionCourseProjects();
-        /**
-         * The singleton access method of this class.
-         **/
-        public static ReadExecutionCourseProjects getService() {
-            return _servico;
-        }
 
-        /**
-         * The actor of this class.
-         **/
-        private ReadExecutionCourseProjects() {
-        }
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionCourseProjects getService() {
+        return _servico;
+    }
 
-        /**
-         * Devolve o nome do servico
-         **/
-        public final String getNome() {
-            return "teacher.ReadExecutionCourseProjects";
-        }
+    /**
+     * The actor of this class.
+     */
+    private ReadExecutionCourseProjects() {
+    }
 
-        public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "teacher.ReadExecutionCourseProjects";
+    }
 
-            InfoSiteProjects infoSiteProjects = null;
+    public ISiteComponent run(Integer executionCourseCode)
+            throws FenixServiceException {
 
-            try {
-                ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-                IExecutionCourse executionCourse =
-                    (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-                        new ExecutionCourse(executionCourseCode),
-                        false);
+        InfoSiteProjects infoSiteProjects = null;
 
-                List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IExecutionCourse executionCourse = (IExecutionCourse) sp
+                    .getIPersistentExecutionCourse().readByOId(
+                            new ExecutionCourse(executionCourseCode), false);
 
-                if (executionCourseProjects.size() != 0) 
-                {
-                    infoSiteProjects = new InfoSiteProjects();
-//                    IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-//                    IGroupEnrolmentStrategy strategy = null;
+            List executionCourseProjects = sp.getIPersistentGroupProperties()
+                    .readAllGroupPropertiesByExecutionCourse(executionCourse);
 
-                    List infoGroupPropertiesList = new ArrayList();
-                    Iterator iterator = executionCourseProjects.iterator();
+            if (executionCourseProjects.size() != 0) {
+                infoSiteProjects = new InfoSiteProjects();
 
-                    while (iterator.hasNext()) {
-                        IGroupProperties groupProperties = (IGroupProperties) iterator.next();
-//                        strategy =
-// enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
-                            infoGroupPropertiesList.add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties));
+                List infoGroupPropertiesList = new ArrayList();
+                Iterator iterator = executionCourseProjects.iterator();
 
-                    }
-                
-                    infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
+                while (iterator.hasNext()) {
+                    IGroupProperties groupProperties = (IGroupProperties) iterator
+                            .next();
+                    //infoGroupPropertiesList
+                    //.add(Cloner
+                    //.copyIGroupProperties2InfoGroupProperties(groupProperties));
+
                 }
-            } catch (ExcepcaoPersistencia e) {
-                e.printStackTrace();
-                throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
+
+                infoSiteProjects
+                        .setInfoGroupPropertiesList(infoGroupPropertiesList);
             }
-            return infoSiteProjects;
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException(
+                    "error.impossibleReadExecutionCourseProjects");
         }
+        return infoSiteProjects;
+    }
 
 }
