@@ -66,8 +66,8 @@ public class InfoSite {
 		boolean resultado = false;
 		if (obj != null && obj instanceof InfoSite) {
 			resultado = 
-				getSections().equals(((InfoSite) obj).getSections())
-				&& getInitialSection().equals(((InfoSite) obj).getInitialSection())
+			getSections().equals(((InfoSite) obj).getSections())
+			
 				&& getInfoExecutionCourse().equals(((InfoSite) obj).getInfoExecutionCourse());
 		}
 		return resultado;
