@@ -183,36 +183,4 @@ public class EditCustomizationOptionsTest
 			fail("Deleting an announcument of a Site " + ex);
 		}
 	}
-
-	//	/**
-	//	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	//	 */
-	//	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-	//		ISuportePersistente sp = null;
-	//		InfoExecutionCourse infoExecutionCourse = null;
-	//		try {
-	//			sp = SuportePersistenteOJB.getInstance();
-	//			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-	//				sp.getIDisciplinaExecucaoPersistente();
-	//
-	//			sp.iniciarTransaccao();
-	//			IDisciplinaExecucao executionCourse =
-	//				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-	//					new DisciplinaExecucao(new Integer(26)),
-	//					false);
-	//			sp.confirmarTransaccao();
-	//			infoExecutionCourse =
-	//				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-	//					executionCourse);
-	//
-	//		} catch (ExcepcaoPersistencia e) {
-	//			System.out.println("failed setting up the test data");
-	//			e.printStackTrace();
-	//		}
-	//		InfoSite infoSite =
-	//			new InfoSite(infoExecutionCourse, "blabla", "blabla");
-	//
-	//		Object[] args = { new Integer(26), infoSite };
-	//		return args;
-	//	}
 }
