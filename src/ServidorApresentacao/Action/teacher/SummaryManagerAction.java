@@ -73,6 +73,21 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         SiteView siteView = null;
         try {
             siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaries", args);
+            
+            InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) siteView.getComponent();
+            for (Iterator iter = infoSiteSummaries.getInfoSummaries().iterator(); iter.hasNext();)
+            {
+                InfoSummary infoSummary = (InfoSummary) iter.next();
+            
+                String stuffedSummaryTitle = infoSummary.getTitle().replaceAll("<","&lt;");
+                stuffedSummaryTitle = stuffedSummaryTitle.replaceAll(">","&gt;");
+                String stuffedSummaryBody = infoSummary.getSummaryText().replaceAll("<","&lt;");
+                stuffedSummaryBody = stuffedSummaryBody.replaceAll("<","&lt;");
+                infoSummary.setTitle(stuffedSummaryTitle);
+                infoSummary.setSummaryText(stuffedSummaryBody);
+            }
+            
+            
         } catch (FenixServiceException e) {
             e.printStackTrace();
             ActionErrors errors = new ActionErrors();
@@ -353,8 +368,8 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         Object[] args = { executionCourseId, summaryId, userView.getUtilizador() };
         SiteView siteView = null;
         try {
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
-
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);                    
+            
             boolean loggedIsResponsible = false;
             List responsibleTeachers = null;
             Object argsReadResponsibleTeachers[] = { executionCourseId };

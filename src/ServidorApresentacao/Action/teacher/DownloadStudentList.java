@@ -244,8 +244,8 @@ public class DownloadStudentList extends FenixAction {
 
         try {
             ServletOutputStream writer = response.getOutputStream();
-            response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=listaDeAlunos.xls");
+            response.setContentType("plain/text");
+            response.setHeader("Content-disposition", "attachment; filename=listaDeAlunos.csv");
             writer.print(result);
             writer.flush();
             response.flushBuffer();

@@ -147,6 +147,7 @@ public class InsertSummary implements IService {
                 throw new FenixServiceException("error.summary.no.teacher");
             }
 
+
             summary.setTitle(infoSummary.getTitle());
             summary.setSummaryText(infoSummary.getSummaryText());
             summary.setLastModifiedDate(Calendar.getInstance().getTime());
