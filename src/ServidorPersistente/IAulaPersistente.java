@@ -24,6 +24,7 @@ public interface IAulaPersistente extends IPersistentObject {
     public IAula readByDiaSemanaAndInicioAndFimAndSala(DiaSemana diaSemana,
                     Calendar inicio, Calendar fim, ISala sala)
                throws ExcepcaoPersistencia;
+	public List readAll() throws ExcepcaoPersistencia;
     public void lockWrite(IAula aula) throws ExcepcaoPersistencia;
     public void delete(IAula aula) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;

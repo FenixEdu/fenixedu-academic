@@ -61,6 +61,18 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
+	public List readAll() throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + Aula.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
 	public void lockWrite(IAula lessonToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 		IAula lessonFromDB = null;
