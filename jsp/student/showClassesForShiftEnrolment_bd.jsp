@@ -7,7 +7,10 @@
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <br/>
 <bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
-<html:link href='<%= link %>'><b>Sair do processo de inscrição</b></html:link>
+<html:link href='<%= link %>'><b>
+		Sair do processo de inscrição
+	</b>
+</html:link>
 <br/>
 <br/>
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
