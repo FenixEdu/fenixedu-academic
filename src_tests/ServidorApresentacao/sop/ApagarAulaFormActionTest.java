@@ -46,7 +46,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 		actionPerform();		
 	}
 	
-	/** :FIXME dummy method to prevent super.testUnsuccessfulExecutionOfAction() 
+	/**dummy method to prevent super.testUnsuccessfulExecutionOfAction() 
 	 * from executing 
 	 */
 	public void testUnsuccessfulExecutionOfAction() {
@@ -76,13 +76,13 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 			
 			Object argsLerSalas[] = new Object[0];
 			ArrayList infoSalas =
-				(ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
+				(ArrayList) gestor.executar(getAuthorizedUser(), "LerSalas", argsLerSalas);
 			getSession().setAttribute("listaSalas", infoSalas);
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
 				(ArrayList) gestor.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
 			items.put("listaAulas", infoAulas);
@@ -91,7 +91,8 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 			items.put("infoAula", infoAula);
 
 		} catch (Exception ex) {
-			System.out.println("Erro na invocacao do servico " + ex);
+			ex.printStackTrace(System.out);
+			fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
 		}
 		
 		return items;		
@@ -106,7 +107,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-sop.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/**

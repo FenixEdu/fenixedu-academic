@@ -77,7 +77,7 @@ public class EditarAulaFormActionTest extends TestCasePresentationSopPortal {
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
 				(ArrayList) gestor.executar(
-					userView,
+					getAuthorizedUser(),
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
 			items.put("listaAulas", infoAulas);
@@ -85,7 +85,8 @@ public class EditarAulaFormActionTest extends TestCasePresentationSopPortal {
 			items.put("infoAula", infoAula);
 	
 		} catch (Exception ex) {
-			System.out.println("Erro na invocacao do servico " + ex);
+			ex.printStackTrace(System.out);
+			fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
 		}
 			
 		return items;		
@@ -153,7 +154,7 @@ public class EditarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-sop.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 
