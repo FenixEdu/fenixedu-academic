@@ -97,7 +97,7 @@ CREATE TABLE EXECUTION_COURSE (
   SEMESTER int(11) default '2',
   KEY_EXECUTION_PERIOD int(11) unsigned NOT NULL,
   PRIMARY KEY  (ID_INTERNAL),
-  UNIQUE KEY U1 (CODE, KEY_EXECUTION_PERIOD)
+  UNIQUE KEY U1 (ID_INTERNAL, CODE, KEY_EXECUTION_PERIOD)
 ) TYPE=InnoDB;
 
 #---------------------------------------------------------------
