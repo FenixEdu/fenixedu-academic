@@ -18,8 +18,16 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ContextUtils {
 
 	public static final void setExecutionPeriodContext(HttpServletRequest request) {
-		Integer executionPeriodOID =
-			new Integer(request.getParameter("executionPeriodOID"));
+		String executionPeriodOIDString = (String) request.getAttribute("executionPeriodOID");
+		if (executionPeriodOIDString == null) {
+			executionPeriodOIDString = request.getParameter("executionPeriodOID");
+		}
+		Integer executionPeriodOID = null;		
+		if (executionPeriodOIDString != null) {
+			executionPeriodOID =
+				new Integer(executionPeriodOIDString);
+		}
+		
 		InfoExecutionPeriod infoExecutionPeriod = null;
 
 		if (executionPeriodOID != null) {
