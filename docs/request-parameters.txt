@@ -22,3 +22,5 @@ exeCourse.lab -> executionCourse lab hours
 program -> curriculum program
 genObjectives -> curriculum generalObjectives
 opObjectives -> curriculum operationalObjectives
+
+lossonList -> list of lesson to the gerarHorario Tag

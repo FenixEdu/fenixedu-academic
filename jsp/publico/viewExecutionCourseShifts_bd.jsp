@@ -42,7 +42,7 @@
 						</td>
 					</tr>
 			
-				<logic:iterate id="infoShift" name="publico.infoShifts" scope="session" indexId="infoShiftIndex">
+				<logic:iterate id="infoShift" name="publico.infoShifts"  indexId="infoShiftIndex">
 
 					<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
                        <% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>

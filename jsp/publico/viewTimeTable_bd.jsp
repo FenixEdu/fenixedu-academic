@@ -49,7 +49,10 @@
             </table>
 		<br/>
 		<br/>
-	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/> 
-
-
+	<logic:present name="lessonList">
+	<app:gerarHorario name="lessonList" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/> 
+	</logic:present>	
+	<logic:notPresent name="lessonList" >
+		<bean:message key="message.public.notfound.timeTable"/>
+	</logic:notPresent>	
 

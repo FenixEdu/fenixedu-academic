@@ -57,7 +57,7 @@ public class ViewExecutionCourseTimeTableAction extends FenixAction {
 
 //place in session/request data required for jsp display
 		if (infoLessons != null) {
-			session.setAttribute(SessionConstants.LESSON_LIST_ATT, infoLessons);
+			request.setAttribute("lessonList", infoLessons);
 		}
 		
 		
