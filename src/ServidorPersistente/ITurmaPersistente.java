@@ -12,6 +12,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -30,6 +31,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 		Integer curricularYear,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia;
+	public List readByExecutionDegreeAndDegreeAndExecutionPeriod(ICursoExecucao execucao,ICurso degree,IExecutionPeriod executionPeriod)throws ExcepcaoPersistencia;
 
 	/**
 	 * 

@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -200,6 +201,24 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente
         //Query queryPB = new QueryByCriteria(Turma.class, criteria);
         return queryList(Turma.class, criteria);
     }
+	public List readByExecutionDegreeAndDegreeAndExecutionPeriod(
+		   ICursoExecucao execucao,
+		   ICurso degree,
+		   IExecutionPeriod executionPeriod)
+		   throws ExcepcaoPersistencia
+	   {
+		    Criteria criteria = new Criteria();
+			criteria.addEqualTo(
+			"executionDegree.idInternal",
+			execucao.getIdInternal());
+			criteria.addEqualTo(
+			"executionDegree.curricularPlan.degree.idInternal",
+			degree.getIdInternal());
+			criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+		   return queryList(Turma.class, criteria);
+	   }
 
     /*
 	 * (non-Javadoc)
