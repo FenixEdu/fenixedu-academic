@@ -58,6 +58,7 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPersistentStudent;
@@ -115,6 +116,7 @@ public class TestCaseOJB extends TestCase {
   protected IPersistentMasterDegreeCandidate persistentMasterDegreeCandidate = null;
   protected IPersistentCandidateSituation persistentCandidateSituation = null;
   protected IPersistentExecutionYear persistentExecutionYear = null;
+  protected IPersistentExecutionPeriod persistentExecutionPeriod = null;
 
   private dbaccess _dbAcessPoint = null;
 
@@ -452,6 +454,7 @@ public class TestCaseOJB extends TestCase {
     persistentMasterDegreeCandidate = _suportePersistente.getIPersistentMasterDegreeCandidate();
     persistentCandidateSituation = _suportePersistente.getIPersistentCandidateSituation();
 	persistentExecutionYear = _suportePersistente.getIPersistentExecutionYear();
+	persistentExecutionPeriod = _suportePersistente.getIPersistentExecutionPeriod();
  
   }
     

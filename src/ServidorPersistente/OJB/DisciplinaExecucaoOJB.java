@@ -17,6 +17,8 @@ import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
+import Dominio.IFrequenta;
+import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 
@@ -169,14 +171,29 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 				
 			query.bind(executionCourse.getExecutionPeriod().getName());
 			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-			query.bind(executionCourse.getNome());	
+			query.bind(executionCourse.getSigla());	
 
 			List result = (List) query.execute();
 			lockRead(result);
 
-			IDisciplinaExecucao executionCourseTemp = null;
-			if (!result.isEmpty())
-				super.delete((IDisciplinaExecucao) result.get(0));
+			if (!result.isEmpty()){
+				IDisciplinaExecucao executionCourseTemp = (IDisciplinaExecucao) result.get(0);
+				// Delete All Attends
+				
+				List attendsTemp = SuportePersistenteOJB.getInstance().getIFrequentaPersistente().readByExecutionCourse(executionCourseTemp);
+				Iterator iterator = attendsTemp.iterator();
+				while(iterator.hasNext()){
+					SuportePersistenteOJB.getInstance().getIFrequentaPersistente().delete((IFrequenta) iterator.next());
+				}
+
+				// Delete All Shifts
+				List shiftsTemp = SuportePersistenteOJB.getInstance().getITurnoPersistente().readByExecutionCourse(executionCourseTemp);
+				iterator = shiftsTemp.iterator();
+				while(iterator.hasNext()){
+					SuportePersistenteOJB.getInstance().getITurnoPersistente().delete((ITurno) iterator.next());
+				}
+				super.delete(executionCourseTemp);
+			}
 				
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

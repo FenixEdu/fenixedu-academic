@@ -22,4 +22,5 @@ public interface IFrequentaPersistente extends IPersistentObject {
     public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 	public List readByStudentId(Integer id) throws ExcepcaoPersistencia;
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 }

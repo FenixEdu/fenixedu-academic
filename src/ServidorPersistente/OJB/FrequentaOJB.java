@@ -69,5 +69,25 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select frequentas from " + Frequenta.class.getName();
+			oqlQuery += " where disciplinaExecucao.sigla = $1 "
+			+ " and disciplinaExecucao.executionPeriod.name = $2 "
+			+ " and disciplinaExecucao.executionPeriod.executionYear.year = $3 ";
+			query.create(oqlQuery);
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
     
 }
