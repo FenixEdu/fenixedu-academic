@@ -27,7 +27,7 @@ public interface IPersistentMiddlewareSupport {
 	public IPersistentMWGruposIleec getIPersistentMWGruposILeec();
 	public IPersistentMWAreasEspecializacaoIleec getIPersistentMWAreasEspecializacaoIleec();
 	public IPersistentMWAreaSecundariaIleec getIPersistentMWAreaSecundariaIleec();
-	public IPersistentMWDisciplinaIleec getIPersistentMWDisciplinaIleec();
+	public IPersistentMWDisciplinasIleec getIPersistentMWDisciplinaIleec();
 	public IPersistentMWDisciplinaGrupoIleec getIPersistentMWDisciplinaGrupoIleec();
 	public IPersistentMWEquivalenciasIleec getIPersistentMWEquivalenciasIleec();
 	public IPersistentMWDisciplinasIleec getIPersistentMWDisciplinasIleec();

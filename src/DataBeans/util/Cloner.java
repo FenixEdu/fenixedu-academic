@@ -4216,6 +4216,7 @@ public abstract class Cloner
         infoCCGroup.setInfoBranch(infoBranch);
         infoCCGroup.setAreaType(curricularCourseGroup.getAreaType());
         return infoCCGroup;
+    }
 
 	public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation)
 	{
@@ -4224,7 +4225,7 @@ public abstract class Cloner
 
 		return workLocation;
     }
-}
+
 	public static InfoWorkLocation copyIWorkLocation2InfoWorkLocation(IWorkLocation workLocation)
 	{
 		InfoWorkLocation infoWorkLocation = new InfoWorkLocation();
