@@ -16,6 +16,11 @@
 <h2>Gestão de Disciplinas</h2>
 <br />
 <span class="error"><html:errors /></span>
+<br />
+Aviso: A alteração das cargas horárias pode tornar os dados incoeirentes.
+Sempre que se altere as cargas é necessário confirmar que os turnos da disciplina
+obdecem à nova carga definida.
+<br />
 <html:form action="/manageExecutionCourse" focus="theoreticalHours">
 
 	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
