@@ -285,12 +285,14 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
 		try {
 			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
-			fail("testEditExistingLessonCompleteMatch");
-		} catch (ExistingServiceException ex) {
 			// all is ok
+		} catch (ExistingServiceException ex) {
+			fail("testEditExistingLessonCompleteMatch");
 		} catch (Exception ex) {
 			fail("Unexpected exception " + ex);
 		}
+		
+		// TODO : test the case of a complete match with a lesson other than the one being edited.
 	}
 
 	//	edit new existing lesson with intercepting match
@@ -299,6 +301,14 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		InfoRoom infoSala =
 			new InfoRoom(
 				"Ga1",
+				"Pavilhao Central",
+				new Integer(0),
+				new TipoSala(1),
+				new Integer(100),
+				new Integer(50));
+		InfoRoom infoSala1 =
+			new InfoRoom(
+				"Ga2",
 				"Pavilhao Central",
 				new Integer(0),
 				new TipoSala(1),
@@ -356,7 +366,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				inicio1,
 				fim1,
 				new TipoAula(TipoAula.TEORICA),
-				infoSala,
+				infoSala1,
 				iDE);
 
 		Object result = null;

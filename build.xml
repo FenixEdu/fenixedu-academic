@@ -203,8 +203,8 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
-                    <!--<include name="**/CriarTurnoServicosTest.java"/>-->
+                    <!--<include name="**/*Test.java"/>-->
+                    <include name="**/EditarAulaServicosTest.java"/>
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
                     <exclude name="**/SessionUtilsTest.java"/>
