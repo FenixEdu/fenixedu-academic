@@ -186,7 +186,7 @@ public class EditQualificationTest
 		return args;
 	}
 
-	/** *************************** INICIO DOS TESTES******************* */
+	/****************************** INICIO DOS TESTES********************/
 
 	/*
 	 * Um Grant Owner Manager tenta criar com sucesso uma qualificação a um
@@ -214,6 +214,7 @@ public class EditQualificationTest
 			fail("Creating a new Qualification for GrantOwner: " + e);
 		}
 	}
+	
 	/*
 	 * Um Grant Owner Manager tenta editar com sucesso uma qualificação de um
 	 * Grant Owner
@@ -240,6 +241,7 @@ public class EditQualificationTest
 			fail("Editing a Qualification for a GrantOwner: " + e);
 		}
 	}
+	
 	/*
 	 * Um professor tenta criar com sucesso uma qualificação sua.
 	 */
@@ -265,6 +267,7 @@ public class EditQualificationTest
 			fail("Creating a new Qualification for Teacher: " + e);
 		}
 	}
+	
 	/*
 	 * Um professor tenta editar com sucesso uma qualificação sua
 	 */
@@ -290,8 +293,11 @@ public class EditQualificationTest
 		}
 	}
 
-	public void testCreateQualificationUnsuccessfull() {
-		//Valid user(teacher), but wrong arguments(Grant Owner)
+	/*
+	 *  Valid user(teacher), but wrong arguments(Grant Owner)
+	 */
+	public void testCreateQualificationUnsuccessfull1() {
+
 		try {
 			String[] args = getAuthorizedUserTeacher();
 			IUserView user = authenticateUser(args);
@@ -313,8 +319,12 @@ public class EditQualificationTest
 		} catch (Exception e) {
 			fail("CreateQualificationUnsuccessfull: " + e);
 		}
-
-		//Valid user(Grant Owner), but wrong arguments(Teacher)
+	}
+	
+	/*
+	 * Valid user(Grant Owner), but wrong arguments(Teacher)
+	 */
+	public void testCreateQualificationUnsuccessfull2() {
 		try {
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
@@ -336,17 +346,21 @@ public class EditQualificationTest
 		} catch (Exception e) {
 			fail("CreateQualificationUnsuccessfull: " + e);
 		}
-
-		//Valid user, but wrong arguments (editing a qualification that does't exists)
+	}
+	
+	/*
+	 * Valid user, but wrong arguments (editing a qualification that does't exists)
+	 */
+	public void testCreateQualificationUnsuccessfull3() {
 		try {
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
 			Object[] argserv =
 				getAuthorizeArgumentsEditQualificationGrantOwner();
-			
+
 			//Invalid qualification
-			((InfoQualification)argserv[1]).setIdInternal(new Integer(1220));
-			
+			 ((InfoQualification) argserv[1]).setIdInternal(new Integer(1220));
+
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("CreateQualificationUnsuccessfull.");
@@ -365,7 +379,8 @@ public class EditQualificationTest
 
 	}
 
-	/** *********************************** */
+	/****************************** FIM DOS TESTES********************/
+
 	protected InfoPerson getInfoPersonGO() {
 		InfoPerson info =
 			new InfoPerson(
