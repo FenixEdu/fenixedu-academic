@@ -10,7 +10,7 @@
 <bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.ENROLMENT_LIST%>" />
 <table width="90%">
 	<tr> 
-    	<td align="center" ><h2>Folha de Apuramento Final</h2><b>Ano lectivo <bean:write name="infoExecutionYear" /></b><br /><br /><br /><br /></td>
+    	<td align="center" ><h2>Folha de Apuramento Final</h2><b>Ano lectivo <bean:write name="infoExecutionYear" property="year" /></b><br /><br /><br /><br /></td>
     <tr>
  		<td>Curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
  			<b><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
