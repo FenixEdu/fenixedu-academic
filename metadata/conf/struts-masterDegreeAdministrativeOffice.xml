@@ -29,15 +29,9 @@
         <form-property name="degree" type="java.lang.String" />
         <form-property name="specialization" type="java.lang.String" />
         <form-property name="candidateSituation" type="java.lang.String" />
+        <form-property name="candidateNumber" type="java.lang.String" />
       </form-bean>
 
-      <form-bean name="chooseCandidateForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="degree" type="java.lang.String" />
-        <form-property name="specialization" type="java.lang.String" />
-        <form-property name="candidateSituation" type="java.lang.String" />
-      </form-bean>
       <form-bean name="errorMailForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -101,12 +95,13 @@
       <action attribute="listCandidatesForm"
       		  input="/chooseCandidateList.jsp"
       	      name="listCandidatesForm"
-		      path="/listCandidatesDispatchAction"
+		      path="/visualizeCandidates"
 		      parameter="method"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
               validate="true">
-	         <forward name="PrepareSuccess" path="/chooseCandidateList.jsp"/>  
-	         <forward name="Success" path="/candidateList.jsp"/>  
+	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
+	         <forward name="ActionReady" path="/visualizeCandidate.jsp"/>  
+	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <html>
@@ -16,7 +17,9 @@
     <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />
     <bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="session" />
     
-    <html:form action="/listCandidatesDispatchAction?method=create">
+    <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+        <html:form action="<%=path%>">
+        <input type="hidden" value="getCandidates" name="method"/>
        <!-- Degree -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.degree"/></td>
@@ -46,9 +49,16 @@
          </td>
        </tr>
     
+       <!-- Candidate Number -->
+       <tr>
+         <td><bean:message key="label.masterDegree.administrativeOffice.candidateNumber"/></td>
+         <td><html:text property="candidateNumber"/></td>
+         </td>
+       </tr>
+    
        <br/>
          <td align="right">
-             <html:submit value="Listar Candidatos" styleClass="button" property="ok"/>
+             <html:submit value="Seguinte" styleClass="button" property="ok"/>
             <html:reset value="Limpar" styleClass="button"/>
          </td>
          </tr>

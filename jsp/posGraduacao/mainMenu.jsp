@@ -7,10 +7,10 @@
   </head>
   <body>
     <html:link page="/createCandidateDispatchAction.do?method=prepare">
-    	<bean:message key="link.masterDegree.administrativeOffice.candidate" />
+    	<bean:message key="link.masterDegree.administrativeOffice.createCandidate" />
     </html:link><br>
-     <html:link page="/listCandidatesDispatchAction.do?method=prepare">
-    	<bean:message key="link.masterDegree.administrativeOffice.lists" />
+     <html:link page="/visualizeCandidates.do?method=prepareChoose">
+    	<bean:message key="link.masterDegree.administrativeOffice.visualizeCandidateInformations" />
     </html:link><br>
     
     <html:link page="/logoff.do"><bean:message key="link.logoff" /></html:link><br>

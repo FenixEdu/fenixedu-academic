@@ -68,6 +68,7 @@ public abstract class SessionConstants {
 	public static final String INFO_TEACHER = "info_teacher";	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
+
 	public static final String TEACHERS_LIST ="teachers_list";
 	public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
 	// Master Degree 
@@ -77,6 +78,11 @@ public abstract class SessionConstants {
 	public static final String APPLICATION_INFO = "application_info";
 	public static final String CANDIDATE_SITUATION = "candidate_situation";
 	public static final String CANDIDATE_SITUATION_LIST = "candidate_situation_list";
+	public static final String MASTER_DEGREE_CANDIDATE = "master_degree_candidate";
+	public static final String MASTER_DEGREE_CANDIDATE_LIST = "master_degree_candidate_list";
+	public static final String MASTER_DEGREE_CANDIDATE_QUERY = "master_degree_candidate_query";
+
+
 	
 	// Person constants
 	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";

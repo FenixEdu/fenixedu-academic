@@ -19,11 +19,14 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.CandidateSituationValidation;
+import Util.SituationName;
 import Util.Specialization;
 
 public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersistentMasterDegreeCandidate{
@@ -218,5 +221,83 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+    
+	/**
+	 * Reads all candidates that with certains properties. The properties are
+	 * specified by the arguments of this method. If an argument is
+	 * null, then the candidate can have any value concerning that
+	 * argument. 
+	 * @return a list with all candidates that satisfy the conditions specified by the 
+	 * non-null arguments.
+	 **/
+	public List readCandidateList(String degreeName, Specialization specialization, SituationName candidateSituation, Integer candidateNumber,
+				IExecutionYear executionYear) throws ExcepcaoPersistencia {
+		
+		  if (degreeName == null && specialization == null && candidateSituation == null && candidateNumber == null)
+			return readByExecutionYear(executionYear);
+
+		  try {
+		  	
+			String oqlQuery = new String("select all from ");
+
+			oqlQuery += MasterDegreeCandidate.class.getName() +
+			            " where executionDegree.executionYear.year = \"" + executionYear.getYear()+ "\"";
+			
+			if (degreeName != null) {
+		  		oqlQuery += " and executionDegree.curricularPlan.degree.nome = \"" + degreeName + "\"";
+			}
+
+			if (specialization != null) {
+		  		oqlQuery += " and specialization = \"" + specialization.getSpecialization() + "\"";
+			}
+
+			if (candidateNumber != null) {
+				oqlQuery += " and candidateNumber = \"" + candidateNumber + "\"";
+			}
+
+			if (candidateSituation != null) {
+				oqlQuery += " and situations.situation = \"" + candidateSituation.getSituationName() + "\"" + 
+				            " and situations.validation = " + CandidateSituationValidation.ACTIVE ; 
+			}
+			
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		  } catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		  }
+	 } 
+	 
+	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+					+ " where executionDegree.executionYear.year = $1" ; 
+	
+			query.create(oqlQuery);
+			query.bind(executionYear.getYear());
+	
+			List result = (List) query.execute();
+	
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+  
+//  public static void main(String args[]) {
+//  	
+//  	try {
+//		SuportePersistenteOJB suportePersistenteOJB = SuportePersistenteOJB.getInstance();
+//		suportePersistenteOJB.iniciarTransaccao();
+//		System.out.println(suportePersistenteOJB.getIPersistentMasterDegreeCandidate().readCandidateList(null, null,new SituationName(SituationName.PENDENTE), null, new ExecutionYear("2003/2004")).size());
+//		suportePersistenteOJB.confirmarTransaccao();
+//	} catch (ExcepcaoPersistencia e) {
+//		e.printStackTrace();
+//	}
+//  }
+  
+  
     
 } // End of class definition

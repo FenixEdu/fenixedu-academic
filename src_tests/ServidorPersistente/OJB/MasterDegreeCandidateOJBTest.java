@@ -27,16 +27,17 @@
 package ServidorPersistente.OJB;
 
 import java.util.Calendar;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ICountry;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
 import ServidorAplicacao.security.PasswordEncryptor;
@@ -44,10 +45,10 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentCountry;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EstadoCivil;
 import Util.Sexo;
@@ -525,6 +526,37 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			IMasterDegreeCandidate masterDegreeCandidate = persistentMasterDegreeCandidate.readByUsernameAndExecutionDegreeAndSpecialization("nmsn", executionDegree, new Specialization(Specialization.MESTRADO));
 			assertNotNull(masterDegreeCandidate);		
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Error on test");
+		}
+		
+	}
+
+
+	public void testReadByExecutionYear(){
+		System.out.println("- Test 12 : Read By Execution Year");
+		ICurso masterDegreeTemp = null;
+		IExecutionYear executionYear = null;
+		ICursoExecucao executionDegree = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+
+			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear);
+
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Error on test");
+		}
+			
+		try {
+			persistentSupport.iniciarTransaccao();
+			List result = persistentMasterDegreeCandidate.readByExecutionYear(executionYear);
+			assertNotNull(result);
+			assertEquals(result.size(), 2);		
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("    -> Error on test");

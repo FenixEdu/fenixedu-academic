@@ -13,9 +13,13 @@
  */
 package ServidorPersistente;
 
-import Util.Specialization;
+import java.util.List;
+
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
+import Util.SituationName;
+import Util.Specialization;
 
 public interface IPersistentMasterDegreeCandidate {
 	/**
@@ -86,6 +90,26 @@ public interface IPersistentMasterDegreeCandidate {
 	 */
 	public IMasterDegreeCandidate readByUsernameAndExecutionDegreeAndSpecialization(String username, ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia;
 	
-	
+	/**
+	 * 
+	 * @param degreeName
+	 * @param degreeType
+	 * @param candidateSituation
+	 * @param candidateNumber
+	 * @param executionYear
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readCandidateList(String degreeName, Specialization degreeType, SituationName candidateSituation, Integer candidateNumber,
+			IExecutionYear executionYear) throws ExcepcaoPersistencia;
+
+
+	/**
+	 * 
+	 * @param executionYear
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia;
 	
 } // End of class definition

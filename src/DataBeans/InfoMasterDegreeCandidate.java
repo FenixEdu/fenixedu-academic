@@ -1,6 +1,7 @@
 package DataBeans;
 
 import java.util.Date;
+import java.util.List;
 
 /*
  * InfoMasterDegreeCandidate.java
@@ -28,7 +29,7 @@ public class InfoMasterDegreeCandidate {
 	private InfoExecutionDegree infoExecutionDegree = null;
     private String specialization = null;
 	private InfoCandidateSituation infoCandidateSituation = null;
-
+	private List situationList = null;
     	
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public InfoMasterDegreeCandidate() {
@@ -41,6 +42,7 @@ public class InfoMasterDegreeCandidate {
 		infoCandidateSituation = null;
 		infoExecutionDegree = null;
 		infoPerson = null;
+		situationList = null;
     } // Fim do Construtor Sem Argumentos
     
     /**
@@ -103,141 +105,146 @@ public class InfoMasterDegreeCandidate {
 
         
 		   return result;
-	   }  
-    
+	   }
+	     
 	/**
-	 * @return Double
+	 * @return
 	 */
 	public Double getAverage() {
 		return average;
 	}
 
-/**
- * @return Integer
- */
-public Integer getCandidateNumber() {
-	return candidateNumber;
-}
-
-/**
- * @return InfoCandidateSituation
- */
-public InfoCandidateSituation getInfoCandidateSituation() {
-	return infoCandidateSituation;
-}
+	/**
+	 * @return
+	 */
+	public Integer getCandidateNumber() {
+		return candidateNumber;
+	}
 
 	/**
-	 * @return InfoExecutionDegree
+	 * @return
+	 */
+	public InfoCandidateSituation getInfoCandidateSituation() {
+		return infoCandidateSituation;
+	}
+
+	/**
+	 * @return
 	 */
 	public InfoExecutionDegree getInfoExecutionDegree() {
 		return infoExecutionDegree;
 	}
 
 	/**
-	 * @return InfoPerson
+	 * @return
 	 */
 	public InfoPerson getInfoPerson() {
 		return infoPerson;
 	}
 
-/**
- * @return String
- */
-public String getMajorDegree() {
-	return majorDegree;
-}
+	/**
+	 * @return
+	 */
+	public String getMajorDegree() {
+		return majorDegree;
+	}
 
 	/**
-	 * @return String
+	 * @return
 	 */
 	public String getMajorDegreeSchool() {
 		return majorDegreeSchool;
 	}
 
 	/**
-	 * @return Integer
+	 * @return
 	 */
 	public Integer getMajorDegreeYear() {
 		return majorDegreeYear;
 	}
 
-/**
- * @return String
- */
-public String getSpecialization() {
-	return specialization;
-}
-
 	/**
-	 * Sets the average.
-	 * @param average The average to set
+	 * @return
 	 */
-	public void setAverage(Double average) {
-		this.average = average;
-	}
-
-/**
- * Sets the candidateNumber.
- * @param candidateNumber The candidateNumber to set
- */
-public void setCandidateNumber(Integer candidateNumber) {
-	this.candidateNumber = candidateNumber;
-}
-
-/**
- * Sets the infoCandidateSituation.
- * @param infoCandidateSituation The infoCandidateSituation to set
- */
-public void setInfoCandidateSituation(InfoCandidateSituation infoCandidateSituation) {
-	this.infoCandidateSituation = infoCandidateSituation;
-}
-
-	/**
-	 * Sets the infoExecutionDegree.
-	 * @param infoExecutionDegree The infoExecutionDegree to set
-	 */
-	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-		this.infoExecutionDegree = infoExecutionDegree;
+	public List getSituationList() {
+		return situationList;
 	}
 
 	/**
-	 * Sets the infoPerson.
-	 * @param infoPerson The infoPerson to set
+	 * @return
 	 */
-	public void setInfoPerson(InfoPerson infoPerson) {
-		this.infoPerson = infoPerson;
-	}
-
-/**
- * Sets the majorDegree.
- * @param majorDegree The majorDegree to set
- */
-public void setMajorDegree(String majorDegree) {
-	this.majorDegree = majorDegree;
-}
-
-	/**
-	 * Sets the majorDegreeSchool.
-	 * @param majorDegreeSchool The majorDegreeSchool to set
-	 */
-	public void setMajorDegreeSchool(String majorDegreeSchool) {
-		this.majorDegreeSchool = majorDegreeSchool;
+	public String getSpecialization() {
+		return specialization;
 	}
 
 	/**
-	 * Sets the majorDegreeYear.
-	 * @param majorDegreeYear The majorDegreeYear to set
+	 * @param double1
 	 */
-	public void setMajorDegreeYear(Integer majorDegreeYear) {
-		this.majorDegreeYear = majorDegreeYear;
+	public void setAverage(Double double1) {
+		average = double1;
 	}
 
-/**
- * Sets the specialization.
- * @param specialization The specialization to set
- */
-public void setSpecialization(String specialization) {
-	this.specialization = specialization;
+	/**
+	 * @param integer
+	 */
+	public void setCandidateNumber(Integer integer) {
+		candidateNumber = integer;
+	}
+
+	/**
+	 * @param situation
+	 */
+	public void setInfoCandidateSituation(InfoCandidateSituation situation) {
+		infoCandidateSituation = situation;
+	}
+
+	/**
+	 * @param degree
+	 */
+	public void setInfoExecutionDegree(InfoExecutionDegree degree) {
+		infoExecutionDegree = degree;
+	}
+
+	/**
+	 * @param person
+	 */
+	public void setInfoPerson(InfoPerson person) {
+		infoPerson = person;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setMajorDegree(String string) {
+		majorDegree = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setMajorDegreeSchool(String string) {
+		majorDegreeSchool = string;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setMajorDegreeYear(Integer integer) {
+		majorDegreeYear = integer;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setSituationList(List list) {
+		situationList = list;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setSpecialization(String string) {
+		specialization = string;
+	}
+
 }
-
-	}
