@@ -57,22 +57,21 @@ public class PrepareInsertSectionAction extends FenixAction {
 		ArrayList sections;
 		Object args[] = { infoSite, parentSection };
 		GestorServicos manager = GestorServicos.manager();
-		System.out.println("antes do servico");
+		
 		try {
 			sections = 
 				(ArrayList)manager.executar(
 					userView,
 					"ReadSectionsBySiteAndSuperiorSection",
-					args);
-			System.out.println("SECTIONS"+sections);
-			
+					args);					
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		System.out.println("depois do servico");
-			
-		if (sections.size() != 0)
+		}		
+					
+		if (sections.size() != 0) {
+			Collections.sort(sections);
 			session.setAttribute(SessionConstants.CHILDREN_SECTIONS, sections);
+		}
 		else
 			session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
 

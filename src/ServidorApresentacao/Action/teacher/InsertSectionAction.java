@@ -8,6 +8,7 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ public class InsertSectionAction extends FenixAction {
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String sectionName = (String) dynaForm.get("name");
-		Integer order = (Integer) dynaForm.get("sectionOrder");
+		String order = (String) dynaForm.get("sectionOrder");
 
 		HttpSession session = request.getSession();
 
@@ -57,12 +58,26 @@ public class InsertSectionAction extends FenixAction {
 
 		InfoSection parentSection =
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-			
+
+		Integer sectionOrder = new Integer(0);
+		ArrayList childrenSections =
+			(ArrayList) session.getAttribute(
+				SessionConstants.CHILDREN_SECTIONS);
+		if (childrenSections != null) {
+			Iterator iterator = childrenSections.iterator();
+			while (iterator.hasNext()) {
+				InfoSection infoSection = (InfoSection) iterator.next();
+				if (infoSection.getName().equals(order)) {
+					sectionOrder = infoSection.getSectionOrder();
+					break;
+				}
+			}
+		}
+
 		if (parentSection == null) {
 
 			InfoSection infoSection =
-				new InfoSection(sectionName, order, infoSite);
-			
+				new InfoSection(sectionName, sectionOrder, infoSite);
 
 			Object args[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
@@ -87,15 +102,17 @@ public class InsertSectionAction extends FenixAction {
 
 			Collections.sort(sections);
 			session.setAttribute(SessionConstants.SECTIONS, sections);
-			
-			return mapping.findForward("viewSite"); 
-			
+
+			return mapping.findForward("viewSite");
+
 		} else {
-				
-			
+
 			InfoSection infoSection =
-				new InfoSection(sectionName, order, infoSite, parentSection);			
-			
+				new InfoSection(
+					sectionName,
+					sectionOrder,
+					infoSite,
+					parentSection);
 
 			Object args[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
@@ -119,10 +136,9 @@ public class InsertSectionAction extends FenixAction {
 					fenixServiceException.getMessage());
 			}
 
-
 			Collections.sort(sections);
 			session.setAttribute(SessionConstants.SECTIONS, sections);
-			return mapping.findForward("viewSite"); 
+			return mapping.findForward("viewSite");
 		}
 	}
 }
