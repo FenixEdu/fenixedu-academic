@@ -77,7 +77,7 @@
 							</td>
 						</tr>	
 						<tr>
-							<td class="listClasses-subheader" style="text-align:left" colspan='5'>
+							<td class="listClasses-subheader" style="text-align:left;background:#4F82B5" colspan='5' >
 								<bean:write name="infoShift" property="infoDisciplinaExecucao.nome" />
 							</td>
 						</tr>	
@@ -86,7 +86,6 @@
 				<%-- SHIFTS --%>
 				<tr>
 					<td class="listClasses-header" style="text-align:left" colspan='5'>
-<%--					<th bgcolor="#EBECED" align="left" width="5%" colspan="5">--%>
 						<bean:message key="property.turno" />:</b>&nbsp;
 						<bean:write name="infoShift" property="nome" />
 						<bean:define id="infoShiftId" name="infoShift" property="idInternal" />

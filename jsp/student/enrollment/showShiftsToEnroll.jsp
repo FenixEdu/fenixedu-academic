@@ -16,13 +16,18 @@
 				<h2 class="redtxt" style="text-align:left"><bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome"/></h2>
 				<br />
 				<table border="0" width="75%" cellspacing="1" cellpadding="5">
+					<tr>
+						<td colspan="4" class="px9">
+							<bean:message key="message.shif.type.help" />							
+						</td>
+					</tr>
 					<!-- MAP -->
 					<logic:iterate id="executionCourseDetailsElem" name="infoClassEnrollmentDetails" property="classExecutionCourseShiftEnrollmentDetailsMap">
 						<logic:equal name="executionCourseDetailsElem" property="key" value="<%= infoClassId.toString()%>" >					
 							<logic:iterate id="executionCourseDetails" name="executionCourseDetailsElem" property="value">		
 								<!-- COURSE -->	
 								<tr>
-									<td colspan="4" class="listClasses-subheader"><%--<b><bean:message key="label.course" /></b>&nbsp;--%><bean:write name="executionCourseDetails" property="infoExecutionCourse.nome"/></td>
+									<td colspan="4" class="listClasses-subheader" style="background:#4F82B5"><%--<b><bean:message key="label.course" /></b>&nbsp;--%><bean:write name="executionCourseDetails" property="infoExecutionCourse.nome"/></td>
 								</tr>
 						
 								<!-- SHIFT -->
@@ -69,8 +74,23 @@
 			</logic:present>		
 	</logic:iterate>
 	<p>
-		<html:submit styleClass="inputbutton">
-			<bean:message key="button.enroll"/>
-		</html:submit>
+		<table>
+			<tr>
+				<td>
+						<html:submit styleClass="inputbutton">
+							<bean:message key="button.enroll"/>
+						</html:submit>
+					</html:form>
+				</td>
+				<td>
+					<html:form action="/studentShiftEnrolmentManagerLoockup">
+						<html:hidden property="classId" value="<%=pageContext.findAttribute("classId").toString()%>"/>
+						<html:hidden property="studentId" value="<%=request.getParameter("studentId").toString()%>"/>
+						<html:submit property="method" styleClass="inputbutton">
+							<bean:message key="button.clean"/>
+						</html:submit>
+					</html:form>
+				</td>
+			</tr>
+		</table>
 	</p>
-</html:form>

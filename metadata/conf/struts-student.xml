@@ -26,6 +26,7 @@
 		<form-property name="shiftMap" type="java.util.HashMap" /> 		  			
 	    <form-property name="shifts" type="java.lang.Integer[]"/>
 	    <form-property name="class" type="java.lang.String"/>
+	    <form-property name="classId" type="java.lang.String"/>
       </form-bean>
       
 <!--

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -111,25 +110,5 @@ public class EnrollStudentInShiftsAction extends FenixAction
             }
         }
         return list;
-    }
-
-    /**
-     * @param shiftsToEnroll
-     */
-    private Vector buildShiftVector(Map shiftsToEnroll)
-    {
-        Vector vector = new Vector();
-        Iterator iterator = shiftsToEnroll.entrySet().iterator();
-
-        while (iterator.hasNext())
-        {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            Integer shiftId = Integer.valueOf((String) entry.getValue());
-            if (shiftId != null)
-            {
-                vector.add(shiftId);
-            }
-        }
-        return vector;
     }
 }

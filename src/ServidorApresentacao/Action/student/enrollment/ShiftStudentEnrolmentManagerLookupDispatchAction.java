@@ -378,6 +378,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		map.put("button.exit.enrollment", "exitEnrollment");
 		map.put("label.class", "proceedToShiftEnrolment");
 		map.put("link.shift.enrolement.edit", "proceedToShiftEnrolment");
+		map.put("button.clean", "proceedToShiftEnrolment");
 		return map;
 	}
 }
