@@ -1,16 +1,29 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.thesis;
 
-import DataBeans.InfoMasterDegreeProofVersion;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
+import Dominio.IEmployee;
 import Dominio.IMasterDegreeProofVersion;
+import Dominio.IMasterDegreeThesis;
+import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
+import Dominio.MasterDegreeProofVersion;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
+import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
+import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
+import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.MasterDegreeClassification;
+import Util.State;
 
 /**
  * 
@@ -42,26 +55,57 @@ public class ChangeMasterDegreeProof implements IServico {
 		return "ChangeMasterDegreeProof";
 	}
 
-	public InfoMasterDegreeProofVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException {
-		InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
-
+	public void run(
+		IUserView userView,
+		InfoStudentCurricularPlan infoStudentCurricularPlan,
+		Timestamp proofDate,
+		Timestamp thesisDeliveryDate,
+		MasterDegreeClassification finalResult,
+		Integer attachedCopiesNumber)
+		throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
-			IMasterDegreeProofVersion masterDegreeProofVersion = sp.getIPersistentMasterDegreeProofVersion()
-					.readActiveByStudentCurricularPlan(studentCurricularPlan);
 
-			if (masterDegreeProofVersion == null)
-				throw new ExcepcaoInexistente("Master Degree Proof not found.");
+			IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis().readByStudentCurricularPlan(studentCurricularPlan);
+			if (storedMasterDegreeThesis == null)
+				throw new NonExistingServiceException("message.masterDegree.nonExistentMasterDegreeThesis");
 
-			infoMasterDegreeProofVersion = Cloner.copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(masterDegreeProofVersion);
+			IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
+			IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
+				(IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(
+					studentCurricularPlan.getDegreeCurricularPlan());
+
+			if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
+				throw new ScholarshipNotFinishedServiceException("message.masterDegree.scholarshipNotFinished");
+
+
+			IMasterDegreeProofVersion storedMasterDegreeProofVersion =
+				sp.getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(studentCurricularPlan);
+			if (storedMasterDegreeProofVersion != null) {
+				storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
+				sp.getIPersistentMasterDegreeProofVersion().lockWrite(storedMasterDegreeProofVersion);
+			}
+
+			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+			IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
+
+			IMasterDegreeProofVersion masterDegreeProofVersion =
+				new MasterDegreeProofVersion(
+					storedMasterDegreeThesis,
+					employee,
+					new Timestamp(new Date().getTime()),
+					proofDate,
+					thesisDeliveryDate,
+					finalResult,
+					attachedCopiesNumber,
+					new State(State.ACTIVE));
+			sp.getIPersistentMasterDegreeProofVersion().lockWrite(masterDegreeProofVersion);
 
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-
-		return infoMasterDegreeProofVersion;
 	}
 }
