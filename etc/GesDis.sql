@@ -95,16 +95,5 @@ create table site (
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
-#----------------------------
-# Table structure for teacher
-#----------------------------
-drop table if exists teacher;
-create table teacher (
-   ID_INTERNAL int(11) unsigned not null auto_increment,
-   USERNAME varchar(20),
-   `PASSWORD` varchar(16),
-   TEACHER_NUMBER int(10) unsigned,
-   primary key (ID_INTERNAL))
-   type=InnoDB comment="InnoDB free: 372736 kB";
 
 
