@@ -61,7 +61,7 @@ abstract public class DomainObject implements IDomainObject {
 				List objInterfaces = Arrays.asList(domainObject.getClass().getInterfaces());
 				CollectionUtils.filter(thisInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
 				CollectionUtils.filter(objInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
-				if (thisInterfaces.containsAll(objInterfaces) && objInterfaces.containsAll(thisInterfaces)) {
+				if (!CollectionUtils.intersection(thisInterfaces, objInterfaces).isEmpty()) {
 					return true;
 				}
 			}
