@@ -13,17 +13,16 @@ package ServidorPersistente.OJB;
 import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
-import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -136,7 +135,8 @@ public class FrequentaOJB
 
 	public Integer countStudentsAttendingExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-			PersistenceBroker broker = ((HasBroker) tx).getBroker();
+			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			//((HasBroker) tx).getBroker();
 			//try{
 			Criteria criteria = new Criteria();
 			criteria.addEqualTo(
