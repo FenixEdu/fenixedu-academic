@@ -97,7 +97,6 @@ public class EditItem implements IServico {
 	 *
 	 **/
 	public Boolean run(Integer infoExecutionCourseCode, Integer itemCode, InfoItem newInfoItem) throws FenixServiceException {
-
 		IItem item = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();

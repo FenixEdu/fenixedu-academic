@@ -1052,7 +1052,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException("Um item com esse nome", e);
 		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
+			throw new FenixActionException(fenixServiceException);
 		}
 		return viewSection(mapping, form, request, response);
 	}
