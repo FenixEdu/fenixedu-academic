@@ -80,25 +80,48 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 		} else {
 			request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
 		}
-		
+
 		/*------------------------------------*/
-		
+
 		// if executionPeriod was previously selected,form has that
 		// value as default
+		// keep (selected or current) executionPeriod in request
+
 		InfoExecutionPeriod selectedExecutionPeriod =
-			(InfoExecutionPeriod) sessao.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
 		if (selectedExecutionPeriod != null) {
 			DynaActionForm indexForm = (DynaActionForm) form;
 			indexForm.set(
 				"index",
 				new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
+			request.setAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+				selectedExecutionPeriod);
+
+		} else {
+			Object argsReadCurrentExecutionPeriod[] = {
+			};
+			InfoExecutionPeriod currentExecutionPeriod = null;
+			try {
+				currentExecutionPeriod =
+					(InfoExecutionPeriod) ServiceUtils.executeService(
+						null,
+						"ReadCurrentExecutionPeriod",
+						argsReadExecutionPeriods);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException();
+			}
+			request.setAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+				currentExecutionPeriod);
 		}
 		//----------------------------------------------------------		
-		
+
 		return mapping.findForward("showForm");
 	}
-	
+
 	public ActionForward choose(
 		ActionMapping mapping,
 		ActionForm form,
@@ -124,12 +147,15 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 		Integer index = (Integer) indexForm.get("index");
 
 		if (infoExecutionPeriods != null && index != null) {
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				infoExecutionPeriods.get(index.intValue()));
+			//			session.setAttribute(
+			//				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			//				infoExecutionPeriods.get(index.intValue()));
 		}
-	
+
 		return mapping.findForward("choose");
-	}	
-	
+	}
+
 }

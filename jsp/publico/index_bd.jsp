@@ -1,11 +1,19 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
+
+<logic:present name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" scope="request">
+	<bean:define id="infoExecutionPeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" scope="request"/>
+	<bean:define id="ePName" name="infoExecutionPeriod" property="name"/>	
+	<bean:define id="eYName" name="infoExecutionPeriod" property="infoExecutionYear.year"/>		
+</logic:present>
+
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   		<tr>
     		<td class="infoop">
-    			<html:link page="/chooseContextDA.do?method=preparePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext" ><h2 style="display: inline;"><bean:message key="link.classes.consult"/></h2></html:link>
+    			<html:link page="<%= "/chooseContextDA.do?method=preparePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +pageContext.findAttribute("eYName") %>" > <h2 style="display: inline;"><bean:message key="link.classes.consult"/></h2></html:link>
     		</td>
   		</tr>
 	</table>
@@ -16,7 +24,7 @@
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
-    		<td class="infoop"><html:link page="/chooseContextDA.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext"><h2 style="display: inline;"><bean:message key="link.executionCourse.consult"/></h2></html:link></td>
+    		<td class="infoop"><html:link page="<%= "/chooseContextDA.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +pageContext.findAttribute("eYName") %>"><h2 style="display: inline;"><bean:message key="link.executionCourse.consult"/></h2></html:link></td>
   		</tr>
 	</table>
 <br />
@@ -26,7 +34,7 @@
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
-    		<td class="infoop"><html:link page="/prepareConsultRooms.do"><h2 style="display: inline;"><bean:message key="link.rooms.consult"/></h2></html:link></td>
+    		<td class="infoop"><html:link page="<%= "/prepareConsultRooms.do?ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +pageContext.findAttribute("eYName") %>" ><h2 style="display: inline;"><bean:message key="link.rooms.consult"/></h2></html:link></td>
   		</tr>
 	</table>
 <br />
@@ -36,7 +44,7 @@
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
-    		<td class="infoop"><html:link page="/chooseExamsMapContextDA.do?method=prepare"><h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2></html:link></td>
+    		<td class="infoop"><html:link page="<%= "/chooseExamsMapContextDA.do?method=prepare&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +pageContext.findAttribute("eYName") %>" ><h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2></html:link></td>
   		</tr>
 	</table>
 <br />
