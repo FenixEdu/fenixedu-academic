@@ -6,6 +6,17 @@
 <%@ page import="java.util.Calendar" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
+<logic:notPresent name="siteView">
+<table align="center"  cellpadding='0' cellspacing='0'>
+			<tr align="center">
+				<td>
+					<span class="error"> <bean:message key="errors.invalidSiteExecutionCourse"/> </span>
+				</td>
+			</tr>
+		</table>
+</logic:notPresent>
+
+<logic:present name="siteView">
 <logic:notPresent name="siteView" property="component">
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
@@ -142,4 +153,5 @@
 </logic:notEmpty>
 </table>
 </logic:notEmpty> 
+</logic:present>
 </logic:present>

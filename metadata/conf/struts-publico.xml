@@ -219,7 +219,7 @@
 		input="/chooseContextDA.do?method=nextPagePublic"
 		parameter="method"
         type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
-     <forward name="sucess" path="/executionCourseSite.jsp"/>   
+     		<forward name="sucess" path="/executionCourseSite.jsp"/> 
    	</action>
 
 

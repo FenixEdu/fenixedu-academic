@@ -50,5 +50,9 @@
 	<definition name="showExecutionCourseSite" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/executionCourseSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showExecutionCourseSite.jsp"/>
-	</definition>	
+	</definition>
+	<definition name="errorExecutionCourseSite" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="" />	
+		<put name="body" value="/publico/degreeSite/errorExecutionCourseSite.jsp"/>
+	</definition>		
 </tiles-definitions>

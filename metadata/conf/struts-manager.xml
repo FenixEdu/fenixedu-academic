@@ -210,9 +210,9 @@
 		<form-property name="userType" type="java.lang.String"/>
 		<form-property name="username" type="java.lang.String"/>
 		<form-property name="page" type="java.lang.Integer"/>
-      </form-bean>   
-
-	  <!-- ========== TEACHERS MANAGEMENT ========== -->
+      </form-bean> 
+  
+	<!-- ========== TEACHERS MANAGEMENT ========== -->
 
 	<form-bean name="teacherManagementForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
@@ -223,10 +223,21 @@
     <form-property name="professorshipsListSize" type="java.lang.Integer" />
     <form-property name="responsibleForListSize" type="java.lang.Integer" />
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
-      </form-bean>   
+    </form-bean>       
 
+	<!-- ================= COORDINATOR FORM ===================-->
+    <form-bean name="coordinatorForm"
+    	type="org.apache.struts.validator.DynaValidatorForm"
+    	dynamic="true">
+			<form-property name="responsibleCoordinatorsIds" type="java.lang.Integer[]" />
+			<form-property name="deletedCoordinatorsIds" type="java.lang.Integer[]" />
+			<form-property name="number" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>       
+    </form-bean>
+      
+      
     </form-beans>
-
+    
 	 <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
 		<exception type="ServidorAplicacao.NotAuthorizedException"
@@ -340,8 +351,8 @@
     
     <!-- Action for reading a degree curricular plan -->
     <action path="/readDegreeCurricularPlan"
-         input="/readDegree.do"
-         type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
+         	input="/readDegree.do"
+         	type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
           <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
@@ -917,7 +928,7 @@
           <forward name="Manage" path="df.page.manage-roles"/>
       </action>
 
-<action	name="newPasswordForm"
+	<action	name="newPasswordForm"
 				attribute="newPasswordForm"
 				type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"
 				path="/generateNewPassword"
@@ -970,6 +981,19 @@
 				validate="false">
 			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
 	</action>	
+	
+	<!-- ========== Manage coordinators of a execution degree ========== -->
+	<action path="/manageCoordinators"
+		type="ServidorApresentacao.Action.manager.ManageCoordinatorsAction"
+		name="coordinatorForm"
+		parameter="method"
+		scope="request"
+		>
+		<forward name="viewCoordinators" path="/manageCoordinators.do?method=prepare" />
+		<forward name="manageCoordinators" path="manageCoordinators" />
+		<forward name="insertCoordinator" path="insertCoordinator" />
+	</action>
+	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

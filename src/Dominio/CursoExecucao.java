@@ -6,6 +6,8 @@
 
 package Dominio;
 
+import java.util.List;
+
 /**
  *
  * @author  rpfi
@@ -20,7 +22,10 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	private Integer academicYear;
 
 	private IDegreeCurricularPlan degreeCurricularPlan;
-	private ITeacher coordinator;
+	
+	//added by Tânia Pousão
+	private List coordinatorsList;
+	private ITeacher coordinator;//to remove
 	
 	private Boolean temporaryExamMap;
 	
@@ -63,8 +68,12 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 		result += ", codInt=" + getIdInternal();
 		result += ", executionYear=" + executionYear;
 		result += ", keyExecutionYear=" + academicYear;
-		result += ", planoCurricularCurso=" + degreeCurricularPlan;
-		result += ", coordinator=" + coordinator;
+		result += ", degreeCurricularPlan=" + degreeCurricularPlan;
+		if(coordinatorsList != null) {
+			result += ", coordinatorsList=" + coordinatorsList.size();
+		} else {
+			result += ", coordinatorsList is NULL";
+		}
 		result += ", campus=" + campus;		
 		result += "]";
 		return result;
@@ -221,4 +230,19 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 		this.keyCampus = keyCampus;
 	}
 
+	/**
+	 * @return Returns the coordinatorsList.
+	 */
+	public List getCoordinatorsList()
+	{
+		return coordinatorsList;
+	}
+
+	/**
+	 * @param coordinatorsList The coordinatorsList to set.
+	 */
+	public void setCoordinatorsList(List coordinatorsList)
+	{
+		this.coordinatorsList = coordinatorsList;
+	}	
 }

@@ -376,6 +376,8 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
                     null,
                     "ExecutionCourseSiteComponentService",
                     args);
+                    
+            if(siteView != null) {      
             if (infoExecutionCourseCode != null)
             {
                 request.setAttribute(
@@ -401,7 +403,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
                     "infoSection",
                     ((InfoSiteSection) siteView.getComponent()).getSection());
             }
-
+}
             return siteView;
         } catch (NonExistingServiceException e)
         {

@@ -61,7 +61,11 @@ public class InfoExecutionDegree extends InfoObject implements Serializable
         String result = "[INFOEXECUTIONDEGREE";
         result += ", infoExecutionYear=" + infoExecutionYear;
         result += ", infoDegreeCurricularPlan=" + infoDegreeCurricularPlan;
-        result += ", infoCoordinator=" + infoCoordinator;
+        if(coordinatorsList != null) {
+        	result += ", coordinatorsList=" + coordinatorsList.size();
+        } else {
+        	result += ", coordinatorsList is NULL";
+        }
         result += ", infoCampus= " + infoCampus;
         result += "]";
         return result;

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <%@ page import="Util.Data" %>
 <%@ page import="java.util.Date" %>
 
@@ -95,7 +96,7 @@
 		  
 		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
-			<table width="70%" cellpadding="0" border="0">
+			<table cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
 					</td>
@@ -109,6 +110,7 @@
 					</td>
 				</tr>
 				<logic:iterate id="executionDegree" name="executionDegreesList">
+				<bean:define id="executionDegreeId" name="executionDegree" property="idInternal"/>
 				<tr>	 
 					<td class="listClasses">
 						<html:multibox property="internalIds">
@@ -119,12 +121,31 @@
 					<td class="listClasses"><bean:write name="executionYear" property="year"/>
 					</td>
 					<td class="listClasses">
-						<logic:notPresent name="executionDegree" property="infoCoordinator">
+						<logic:notPresent name="executionDegree" property="coordinatorsList">
+							NA
+						</logic:notPresent>
+						<logic:present name="executionDegree" property="coordinatorsList">
+							<logic:empty name="executionDegree" property="coordinatorsList">
+								NA
+							</logic:empty>
+							<logic:notEmpty name="executionDegree" property="coordinatorsList">
+								<logic:iterate id="coordinator" name="executionDegree" property="coordinatorsList">
+									<str:getPrechomp delimiter=" ">
+										<bean:write name="coordinator" property="infoTeacher.infoPerson.nome"/>
+									</str:getPrechomp> 
+									<str:getChomp delimiter=" ">
+										<bean:write name="coordinator" property="infoTeacher.infoPerson.nome"/>
+									</str:getChomp>
+									<br />								
+								</logic:iterate>
+							</logic:notEmpty>
+						</logic:present>
+						<%--<logic:notPresent name="executionDegree" property="infoCoordinator">
 							NA
 						</logic:notPresent>
 						<logic:present name="executionDegree" property="infoCoordinator">
 							<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome"/>
-						</logic:present>
+						</logic:present> --%>
 					</td>
 					<td class="listClasses">
 						<logic:notEmpty name="executionDegree" property="temporaryExamMap">
@@ -144,6 +165,7 @@
 					</td>
 					<td class="listClasses">
 						<html:link page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message key="label.edit"/></html:link>
+						/<html:link page="<%= "/manageCoordinators.do?method=prepare&amp;view=true&amp;executionDegreeId=" + pageContext.getAttribute("executionDegreeId")%>" ><bean:message key="label.manager.edit.executionDegree.coordinators"/></html:link>
 					</td>
 	 			</tr>
 	 			</logic:iterate>						

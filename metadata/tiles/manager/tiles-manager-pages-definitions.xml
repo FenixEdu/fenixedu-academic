@@ -158,12 +158,21 @@
 	<definition name="df.page.manage-roles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageRoles_bd.jsp" />
 	</definition>
-<!-- ========== EXECUTION COURSE MERGE ========== -->
+	<!-- ========== EXECUTION COURSE MERGE ========== -->
 	<definition name="df.page.chooseDegreesForExecutionCourseMerge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/chooseDegreesForExecutionCourseMerge.jsp" />
 	</definition>
 	<definition name="df.page.chooseExecutionCoursesForExecutionCourseMerge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/chooseExecutionCoursesForExecutionCourseMerge.jsp" />
 	</definition>	
+	<!-- ========== Manage Coordinators ============= -->
+	<definition name="manageCoordinators" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/manageCoordinators.jsp" />
+		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
+	<definition name="insertCoordinator" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/insertCoordinator.jsp" />
+		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
 	
 </tiles-definitions>

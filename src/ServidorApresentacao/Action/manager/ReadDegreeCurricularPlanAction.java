@@ -48,6 +48,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
+
 		// in case the degreeCurricularPlan really exists
 		List curricularCourses = null;
 		try {

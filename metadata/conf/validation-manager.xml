@@ -319,6 +319,12 @@
       </field>
     </form>
 
+    <!--validation to the form to insert a coordinator-->
+    <form name="teacherForm">
+      <field property="number" depends="required,integer" page="1" >
+        <arg0 key="label.manager.teacher.number" resource="true"/>
+      </field>
+    </form>
     </formset>
 </form-validation>
 

@@ -145,7 +145,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         {
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
-            //            return (new ActionForward(mapping.getInput()));
+            //return (new ActionForward(mapping.getInput()));
         }
 
         //execution degrees of this degree
