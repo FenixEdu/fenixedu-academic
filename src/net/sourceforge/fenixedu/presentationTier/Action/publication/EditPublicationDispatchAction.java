@@ -179,8 +179,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("done");
 	}
 	
-	private void loadData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	private void loadData(ActionForm form, HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 		String id = request.getParameter("idInternal");
 		if (id == null) return;
 		
@@ -221,9 +220,9 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		if (publication.getUrl() != null) actionForm.set("url",publication.getUrl());
 		if (publication.getEditorCity() != null) actionForm.set("editorCity",publication.getEditorCity());
 		if (publication.getNumberPages() != null) actionForm.set("numberPages",publication.getNumberPages());
-		if (publication.getEdition().toString() != null) actionForm.set("edition",publication.getEdition().toString());
-		if (publication.getFascicle().toString() != null) actionForm.set("fascicle",publication.getFascicle().toString());
-		if (publication.getSerie().toString() != null) actionForm.set("fascicle",publication.getSerie().toString());
+		if (publication.getEdition() != null) actionForm.set("edition",publication.getEdition().toString());
+		if (publication.getFascicle() != null) actionForm.set("fascicle",publication.getFascicle().toString());
+		if (publication.getSerie() != null) actionForm.set("fascicle",publication.getSerie().toString());
 		if (publication.getIsbn() != null) actionForm.set("isbn",publication.getIsbn());
 		if (publication.getLocal() != null) actionForm.set("local",publication.getLocal());
 		if (publication.getConference() != null) actionForm.set("conference",publication.getConference());
@@ -255,7 +254,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 			
 			ids[i] = author.getIdInternal();
 		}
-		
+
 		actionForm.set("authorsName",names);
 		actionForm.set("authorsId",ids);
 		
@@ -319,7 +318,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
     	
-        loadData(mapping,form,request,response);
+        loadData(form,request);        
         lightPrepare(mapping,form,request,response);
 		
         return mapping.findForward("edit");
