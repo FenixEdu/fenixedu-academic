@@ -24,6 +24,7 @@ public class ShowAvailableCurricularCourses extends
             Integer studentCurricularPlanId, Integer studentNumber)
             throws FenixServiceException {
         try {
+
             IStudent student = getStudent(studentNumber);
 
             if (student != null) {
