@@ -195,13 +195,13 @@
    	  <action path="/studentShiftEnrollmentManagerLoockup"
 	  	name="studentShiftEnrollmentForm"
         type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrollmentManagerLookupDispatchAction"
-		input="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment" 
+		input="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" 
 		parameter="method"
         scope="request"
         validate="false">                           
         <forward name="beginTransaction" path="/studentShiftEnrollmentManager.do?method=start&amp;firstTime=true"/>
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
-    	<forward name="prepareShiftEnrollment" path="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" />
+    	<forward name="prepareShiftEnrollment" path="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment" />
     	<forward name="showShiftsToEnroll" path="show-shifts-to-enroll" />
       </action>
       
@@ -489,7 +489,7 @@
    
       <!-- END OF GROUPS -->
       
-          <!-- TESTS -->
+      <!-- TESTS -->
       <action path="/studentTests"
 		    name="studentTestForm"
 			input="/studentTests.do?method=prepareToDoTest"
@@ -635,7 +635,7 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-student.xml"/>
     </plug-in>
- <!--  -->
+ 	<!--  -->
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/student/tiles-student-definitions.xml,/WEB-INF/tiles/student/tiles-student-pages-definitions.xml" />

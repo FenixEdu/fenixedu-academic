@@ -85,8 +85,7 @@ public class InfoExecutionCourse extends InfoObject {
      * @deprecated
      */
     public InfoExecutionCourse(String nome, String sigla, String programa,
-            InfoExecutionDegree infoLicenciaturaExecucao,
-            Double theoreticalHours, Double praticalHours,
+            InfoExecutionDegree infoLicenciaturaExecucao, Double theoreticalHours, Double praticalHours,
             Double theoPratHours, Double labHours) {
         setNome(nome);
         setSigla(sigla);
@@ -98,9 +97,8 @@ public class InfoExecutionCourse extends InfoObject {
         setLabHours(labHours);
     }
 
-    public InfoExecutionCourse(String nome, String sigla, String programa,
-            Double theoreticalHours, Double praticalHours,
-            Double theoPratHours, Double labHours,
+    public InfoExecutionCourse(String nome, String sigla, String programa, Double theoreticalHours,
+            Double praticalHours, Double theoPratHours, Double labHours,
             InfoExecutionPeriod infoExecutionPeriod) {
         setNome(nome);
         setSigla(sigla);
@@ -125,8 +123,7 @@ public class InfoExecutionCourse extends InfoObject {
      * @param semester
      */
     public InfoExecutionCourse(String nome, String sigla, String programa,
-            InfoExecutionDegree infoLicenciaturaExecucao,
-            Double theoreticalHours, Double praticalHours,
+            InfoExecutionDegree infoLicenciaturaExecucao, Double theoreticalHours, Double praticalHours,
             Double theoPratHours, Double labHours, Integer semester) {
         setNome(nome);
         setSigla(sigla);
@@ -383,8 +380,7 @@ public class InfoExecutionCourse extends InfoObject {
      * @param infoSiteEvaluationStatistics
      *            The infoSiteEvaluationStatistics to set.
      */
-    public void setInfoSiteEvaluationStatistics(
-            InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
+    public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
         this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
 
@@ -401,8 +397,7 @@ public class InfoExecutionCourse extends InfoObject {
         }
     }
 
-    public static InfoExecutionCourse newInfoFromDomain(
-            IExecutionCourse executionCourse) {
+    public static InfoExecutionCourse newInfoFromDomain(IExecutionCourse executionCourse) {
         InfoExecutionCourse infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourse();

@@ -26,9 +26,10 @@
 					<logic:iterate id="executionCourseDetailsElem" name="infoClassEnrollmentDetails" property="classExecutionCourseShiftEnrollmentDetailsMap">
 						<logic:equal name="executionCourseDetailsElem" property="key" value="<%= infoClassId.toString()%>" >					
 							<logic:iterate id="executionCourseDetails" name="executionCourseDetailsElem" property="value">		
-								<!-- COURSE -->	
+								<!-- COURSE -->
 								<tr>
-									<td colspan="4" class="listClasses-subheader" style="background:#4F82B5"><%--<b><bean:message key="label.course" /></b>&nbsp;--%><bean:write name="executionCourseDetails" property="infoExecutionCourse.nome"/></td>
+									<td colspan="4" class="listClasses-subheader" style="background:#4F82B5">
+									<bean:write name="executionCourseDetails" property="infoExecutionCourse.nome"/></td>
 								</tr>
 						
 								<!-- SHIFT -->

@@ -14,7 +14,9 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoShift;
+import DataBeans.InfoShiftWithInfoLessons;
 import DataBeans.InfoStudent;
 import DataBeans.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
 import DataBeans.enrollment.shift.InfoClassEnrollmentDetails;
@@ -238,7 +240,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 
         if (executionCourseShiftEnrollmentDetails == null) {
             executionCourseShiftEnrollmentDetails = new ExecutionCourseShiftEnrollmentDetails();
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);
             executionCourseShiftEnrollmentDetails
                     .setInfoExecutionCourse(infoExecutionCourse);
 
@@ -263,7 +265,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         if (shiftEnrollmentDetails == null) {
             shiftEnrollmentDetails = new ShiftEnrollmentDetails();
 
-            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+            InfoShift infoShift = InfoShiftWithInfoLessons.newInfoFromDomain(shift);
             int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift);
             shiftEnrollmentDetails.setInfoShift(infoShift);
             shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao()
