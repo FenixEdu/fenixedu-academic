@@ -12,16 +12,7 @@
 	</html:link></i>)
 
 </p>
-<%--
-<h3>
-	<logic:present name="infoTeacherInstitutionWorkingTime">
-		<bean:message key="label.teacher-institution-working-time.edit"/>
-	</logic:present>
-	<logic:notPresent name="infoTeacherInstitutionWorkingTime">
-		<bean:message key="label.teacher-institution-working-time.create"/>			
-	</logic:notPresent>
-</h3>
---%>
+
 <logic:messagesPresent>
 	<html:errors/>
 </logic:messagesPresent>
@@ -33,6 +24,7 @@
 		<span class="emphasis-box">1</span> <i><bean:message key="label.professorship.chooseExecutionDegree"/></i>
 	</h2>
 	<html:select property="executionDegreeId" onchange="this.form.method.value='showExecutionDegreeExecutionCourses';this.form.submit();">
+		<option></option>
 		<html:options collection="executionDegrees" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" property="idInternal"/>
 	</html:select>
 
@@ -42,8 +34,14 @@
 			<span class="emphasis-box">2</span> <i><bean:message key="label.professorship.chooseExecutionCourse"/></i>
 		</h2>
 		<html:select property="executionCourseId">
+			<option></option>		
 			<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
 		</html:select>
+		<br />
+		<html:checkbox property="responsibleFor" value="true">
+			<bean:message key="label.professorship.responsibleFor"/>
+		</html:checkbox>
+		<br />
 		<br />
 		<html:submit styleClass="inputbutton">
 			<bean:message key="button.ok"/>
