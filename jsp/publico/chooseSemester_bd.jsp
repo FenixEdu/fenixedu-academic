@@ -11,7 +11,9 @@
 
 	<logic:present name="publico.semester" scope="session">
 	<html:form action="/viewRoomOcupation.do">
-
+<bean:define id="exePeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="name"/>
+<bean:define id="exeYear" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="infoExecutionYear"/>	
+<bean:define id="exeYearName" name="exeYear" property="year"/>	
 		<table align="center" border="5" cellpadding='20' cellspacing='10'>
 			<bean:define id="i" value="i_index" />
                 <tr>
@@ -27,6 +29,8 @@
 
 		<br/>
 		<center>
+		<html:hidden name="exePeriod" property="ePName"/>	
+		<html:hidden name="exeYearName" property="eYName"/>	
 		<html:submit>
 			<bean:message key="label.choose"/>
 		</html:submit>
