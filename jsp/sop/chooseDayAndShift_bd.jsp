@@ -1,7 +1,9 @@
 <%@ page language="java" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
         <h2><bean:message key="title.exams"/></h2>
         <span class="error"><html:errors/></span>
         <html:form action="/chooseDayAndShiftForm">
@@ -15,7 +17,7 @@
                     <td nowrap class="formTD" align="left">
                         <html:select property="year">
                         	<option value="" selected="selected">[Ano]</option>
-                            <html:options name="yearsList"/>
+                            <html:options name="<%= SessionConstants.LABLELIST_YEARS %>"/>
                         </html:select>
                    </td>
                     <td nowrap class="formTD" align="right">
@@ -24,7 +26,7 @@
                     <td nowrap class="formTD" align="left">
                         <html:select property="month">
                         	<option value="" selected="selected">[Mês]</option>
-                            <html:options collection="monthsOfYear" property="value" labelProperty="label"/>
+                            <html:options collection="<%= SessionConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
                         </html:select>
                    </td>
                     <td nowrap class="formTD" align="right">
@@ -33,7 +35,7 @@
                     <td nowrap class="formTD" align="left">
                         <html:select property="day">
                         	<option value="" selected="selected">[Dia]</option>
-                            <html:options name="daysOfMonth"/>
+                            <html:options name="<%= SessionConstants.LABLELIST_DAYSOFMONTH %>"/>
                         </html:select>
                    </td>
                 </tr>
@@ -44,7 +46,7 @@
                     <td nowrap="nowrap" align="left">
                         <html:select property="beginning">
                         	<option value="" selected="selected">[Turno]</option>                        
-                            <html:options name="horas"/>
+                            <html:options name="<%= SessionConstants.LABLELIST_HOURS %>"/>
                         </html:select>
                     </td>
                 </tr>

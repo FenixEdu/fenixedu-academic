@@ -77,24 +77,28 @@
 		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoreticalHours" value="0">
 			<bean:message key="property.executionCourse.theoreticalHours"/>
 			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoreticalHours"/>
+			<bean:message key="property.hours"/>
 			</br>
 		</logic:notEqual>
 
 		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="praticalHours" value="0">
 			<bean:message key="property.executionCourse.practicalHours"/>
 			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="praticalHours"/>
+			<bean:message key="property.hours"/>
 			</br>
 		</logic:notEqual>
 
 		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoPratHours" value="0">
 			<bean:message key="property.executionCourse.theoreticalPracticalHours"/>
 			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoPratHours"/>
+			<bean:message key="property.hours"/>
 			</br>
 		</logic:notEqual>
 		
 		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours" value="0">
 			<bean:message key="property.executionCourse.labHours"/>
-			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours"/>		
+			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours"/>
+			<bean:message key="property.hours"/>
 		</logic:notEqual>
 	</blockquote>
 

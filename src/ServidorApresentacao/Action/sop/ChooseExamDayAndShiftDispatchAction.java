@@ -22,6 +22,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 
@@ -43,16 +44,16 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		ArrayList horas = Util.getExamShifts();
-		session.setAttribute("horas", horas);
+		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
 		ArrayList daysOfMonth = Util.getDaysOfMonth();
-		session.setAttribute("daysOfMonth", daysOfMonth);
+		session.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
 		ArrayList monthsOfYear = Util.getMonthsOfYear();
-		session.setAttribute("monthsOfYear", monthsOfYear);
+		session.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
 		ArrayList years = Util.getYears();
-		session.setAttribute("yearsList", years);
+		session.setAttribute(SessionConstants.LABLELIST_YEARS, years);
 
 		return mapping.findForward("Show Choose Form");
 
@@ -85,8 +86,8 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		examDateAndTime.set(Calendar.MINUTE, 0);
 		examDateAndTime.set(Calendar.SECOND, 0);
 
-		session.removeAttribute("examDateAndTime");
-		session.setAttribute("examDateAndTime", examDateAndTime);
+		session.removeAttribute(SessionConstants.EXAM_DATEANDTIME);
+		session.setAttribute(SessionConstants.EXAM_DATEANDTIME, examDateAndTime);
 
 		return mapping.findForward("View Exams");
 	}

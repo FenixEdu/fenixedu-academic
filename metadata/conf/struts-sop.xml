@@ -746,9 +746,10 @@
             path="/chooseExamsContextDA"
             scope="request"
             validate="true"
-            type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
+            type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
+            >
         <forward name="chooseExamsContext" path="/chooseExamsContext.jsp"/>
-        <forward name="createExam" path="/viewExamsByDegreeAndCurricularYear.do"/>
+        <forward name="createExam" path="/createExam.do"/>
         <forward name="listByDegreeAndAcademicYear" path="/viewExamsByDegreeAndCurricularYear.do"/>
     </action>
 	

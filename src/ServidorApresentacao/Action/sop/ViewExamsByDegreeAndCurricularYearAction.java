@@ -37,7 +37,7 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 			HttpSession session = request.getSession(false);
 			if (session != null) {
 				GestorServicos gestor = GestorServicos.manager();
-				IUserView userView = (IUserView) session.getAttribute("UserView");				
+				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);				
 				InfoClass infoClass = new InfoClass();
 			
 				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);

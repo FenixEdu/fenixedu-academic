@@ -1,4 +1,5 @@
 <%@ page language="java" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -11,7 +12,7 @@
 aparece qd se escolhe a licenciatura e ano curricular na gestão
 de horários. <br/> <br/>
 
-<logic:notPresent name="infoExams" scope="session">
+<logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 	<table align="center"  cellpadding='0' cellspacing='0'>
 		<tr align="center">
 			<td>
@@ -21,7 +22,7 @@ de horários. <br/> <br/>
 	</table>
 </logic:notPresent>
 
-<logic:present name="infoExams" scope="session">
+<logic:present name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 	<table align="center" border='1' cellpadding='10'>
 		<tr align="center">
 			<td>
@@ -37,7 +38,7 @@ de horários. <br/> <br/>
 				manipular
 			</td>
 		</tr>
-		<logic:iterate id="infoViewExam" name="infoExams" scope="session">
+		<logic:iterate id="infoViewExam" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 			<tr align="center">
 				<td>
 					<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.nome"/>

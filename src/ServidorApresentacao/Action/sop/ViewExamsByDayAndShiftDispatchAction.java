@@ -22,6 +22,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -42,7 +43,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Calendar examDateAndTime =
-			(Calendar) session.getAttribute("examDateAndTime");
+			(Calendar) session.getAttribute(SessionConstants.EXAM_DATEANDTIME);
 
 		Object args[] = { examDateAndTime.getTime(), examDateAndTime };
 		List infoExams =
@@ -54,8 +55,8 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		if (infoExams != null && infoExams.size() == 0)
 			infoExams = null;
 
-		session.removeAttribute("infoExams");
-		session.setAttribute("infoExams", infoExams);
+		session.removeAttribute(SessionConstants.LIST_EXAMSANDINFO);
+		session.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoExams);
 
 		return mapping.findForward("View Exams");
 	}

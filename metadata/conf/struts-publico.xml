@@ -128,40 +128,22 @@
         <forward name="showTimeTables" path="/viewClasses.do"/>
       </action>
 		
-      <action input="/chooseClassSearchContextDA.do?method=prepare&amp;page=0"
+
+      <action input="/chooseContextDA.do?method=prepare&amp;page=0"
               name="chooseSearchContextForm"
               parameter="method"
-              path="/chooseClassSearchContextDA"
+              path="/chooseContextDA"
               scope="request"
               validate="true"
-              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
-        <forward name="formPage" path="/chooseContext.jsp"/>
-        <forward name="nextPage" path="/viewClasses.do"/>
+              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
+              >
+        <forward name="chooseContext" path="/chooseContext.jsp"/>
+        <forward name="classSearch" path="/viewClasses.do"/>
+        <forward name="executionCourseSearch" path="/prepareSelectExecutionCourseAction.do"/>
       </action>
 
-	  <action input="/chooseShiftSearchContextDA.do?method=prepare&amp;page=0"
-              name="chooseSearchContextForm"
-              parameter="method"
-              path="/chooseShiftSearchContextDA"
-              scope="request"
-              validate="true"
-              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
-        <forward name="formPage" path="/chooseContext.jsp"/>       
-        <forward name="nextPage" path="/prepareSelectExecutionCourseAction.do"/>
-      </action>
 
-	  <action input="/chooseExecutionCourseSearchContextDA.do?method=prepare&amp;page=0"
-              name="chooseSearchContextForm"
-              parameter="method"
-              path="/chooseExecutionCourseSearchContextDA"
-              scope="request"
-              validate="true"
-              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
-        <forward name="formPage" path="/chooseContext.jsp"/>       
-        <forward name="nextPage" path="/prepareSelectExecutionCourseAction.do"/>
-      </action>
 	<!-- Turmas -->	
-	
 	<action path="/viewClasses"
               type="ServidorApresentacao.Action.publico.ViewClassesAction"
               >

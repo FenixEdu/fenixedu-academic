@@ -54,13 +54,12 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 			HttpSession session = request.getSession(false);
 			if (session != null) {
-				// TODO : update public interface links acordingly
-				String inputPage = request.getParameter("inputPage");
-				String nextPage = request.getParameter("nextPage");
+				String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
+				String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
 				if (inputPage != null)
-					session.setAttribute("inputPage", inputPage);
+					session.setAttribute(SessionConstants.INPUT_PAGE, inputPage);
 				if (nextPage != null)
-					session.setAttribute("nextPage", nextPage);				
+					session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 				
 				IUserView userView = SessionUtils.getUserView(request);
 
@@ -130,15 +129,13 @@ public class ChooseContextDispatchAction extends DispatchAction {
 					SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
 					executionDegreeList);
 
-				request.setAttribute("licenciaturas", licenciaturas);
+				request.setAttribute(SessionConstants.DEGREES, licenciaturas);
 
 				if (inputPage != null)
 					return mapping.findForward(inputPage);
-				// else should be removed once the variable input page is
-				// used across all envocations of this function.
-				// TODO : update public interface links acordingly
 				else
-					return mapping.findForward("formPage");
+					// TODO : throw a proper exception
+					throw new Exception("SomeOne is messing around with the links");
 			} else
 				throw new Exception();
 			// nao ocorre... pedido passa pelo filtro Autorizacao
@@ -171,7 +168,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 				int index = Integer.parseInt((String)escolherContextoForm.get("index"));
 
-				IUserView userView = (IUserView) session.getAttribute("UserView");
+				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 				session.setAttribute("anoCurricular", anoCurricular);
 				session.setAttribute("semestre", semestre);
@@ -195,14 +192,12 @@ public class ChooseContextDispatchAction extends DispatchAction {
 					return mapping.findForward("Licenciatura execucao inexistente");
 				}
 
-				String nextPage = (String) session.getAttribute("nextPage");
+				String nextPage = (String) session.getAttribute(SessionConstants.NEXT_PAGE);
 				if (nextPage != null)
 					return mapping.findForward(nextPage);
-				// this else must be removed once the links from the
-				// public interface are updated acordingly
-				// TODO : update public interface links acordingly
 				else
-					return mapping.findForward("nextPage");
+					// TODO : throw a proper exception
+					throw new Exception("SomeOne is messing around with the links");
 			} else
 				throw new Exception();
 			// nao ocorre... pedido passa pelo filtro Autorizacao
