@@ -259,6 +259,14 @@
       </field> 
    </form>
 
+   <!-- validation for the choose Year form -->
+    <form name="chooseYearForm">
+      <field property="year" depends="required, integer" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.guideYear" />
+      </field>
+   </form>
+
+
 
 
   </formset>

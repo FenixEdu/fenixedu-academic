@@ -516,7 +516,7 @@
 
       <!-- List Guides by Year -->
       <action attribute="chooseYearForm"
-      		  input="/guide/chooseYear.jsp"
+      		  input="/guide/chooseGuideYear.jsp"
       	      name="chooseYearForm"
 		      path="/guideListingByYear"
 		      parameter="method"
