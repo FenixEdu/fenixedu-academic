@@ -295,6 +295,10 @@
 		<put name="body" value="/manager/precedences/managePrecedences.jsp"/>
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
 	</definition>
+	<definition name="df.page.manage.precedences.showAllRestrictions" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/precedences/manageRestrictions.jsp"/>
+		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
+	</definition>
     
     <!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->
 	<definition name="viewCurricularCourseGroups" extends="definition.manager.masterPage" >

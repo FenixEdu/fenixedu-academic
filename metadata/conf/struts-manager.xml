@@ -1227,7 +1227,15 @@
 
 	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
 	<!--<action path="/managePrecedences" forward="df.page.manage.precedences"/>-->
-	<action path="/makeSimplePrecedence" forward="df.page.manage.precedences"/>
+	<action path="/makeSimplePrecedence" 
+		input="/managePrecedences.do"
+		type="ServidorApresentacao.Action.manager.precedences.MakeSimplePrecedenceAction"
+		parameter="method"
+		scope="request"
+	>
+		<forward name="showAllRestrictions" path="df.page.manage.precedences.showAllRestrictions" />
+	</action>	
+	
 	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>
 	<action path="/makePrecedenceDijunction" forward="df.page.manage.precedences"/>
 
@@ -1238,6 +1246,7 @@
 			type="ServidorApresentacao.Action.manager.precedences.ReadPrecedencesFromDegreeCurricularPlanAction">
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
+
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"
 		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCouseGroupManagementDispatchAction"
@@ -1246,7 +1255,8 @@
 	>
 		<forward name="viewGroups" path="viewCurricularCourseGroups"/>
      </action>
-
+        
+        
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
