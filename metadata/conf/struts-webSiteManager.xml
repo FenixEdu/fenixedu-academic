@@ -19,12 +19,24 @@
 			<form-property name="authorEmail" type="java.lang.String"/>
 			<form-property name="itemBeginDay" type="java.lang.String"/>
 			<form-property name="itemEndDay" type="java.lang.String"/>
-			<form-property name="publish" type="java.lang.Boolean"/>
+			<form-property name="creationDate" type="java.lang.String"/> 
+			<form-property name="publish" type="java.lang.String"/>
 			<form-property name="onlineBeginDay" type="java.lang.String"/>
 			<form-property name="onlineEndDay" type="java.lang.String"/>
 			<form-property name="delete" type="java.lang.Boolean"/>
 			<form-property name="itemsListSize" type="java.lang.String"/>
 			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="sectionForm"
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="idInternal" type="java.lang.String"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="ftpName" type="java.lang.String"/>
+			<form-property name="whatToSort" type="java.lang.String"/>
+			<form-property name="sortingOrder" type="java.lang.String"/> 
+			<form-property name="size" type="java.lang.String"/>
+			<form-property name="excerptSize" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 
@@ -62,12 +74,9 @@
       	type="ServidorApresentacao.Action.webSiteManager.SectionsManagementAction"
       	input="/index.jsp">
       	
-      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
-      	
       	<forward name="sectionsMenu" path="/sectionsFirstPage.jsp"/>
       	<forward name="sectionPage" path="/sectionPage.jsp"/>
+      	<forward name="sectionsConfiguration" path="/sectionsConfiguration.jsp"/>
       </action>
 
       <action path="/itemsManagement" 
@@ -78,10 +87,6 @@
       	validate="true"
       	input="/itemsManagement.do?method=prepareAddItem&amp;page=0"
       	>
-      	
-      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
       	
       	<forward name="addItem" path="/addItem.jsp"/>
       	<forward name="listItems" path="/listItems.jsp"/>
@@ -97,10 +102,6 @@
       	input="/listItemsManagement.do?method=listItems&amp;page=0"
       	>
       	
-      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
-      	
       	<forward name="listItems" path="/listItems.jsp"/>
       </action>
 
@@ -113,13 +114,23 @@
       	input="/editItemsManagement.do?method=prepareEditItem&amp;page=0"
       	>
       	
-      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
-      	
       	<forward name="listItems" path="/listItems.jsp"/>
       	<forward name="editItem" path="/editItem.jsp"/>
       </action>
+
+      <action path="/sectionsConfiguration" 
+      	parameter="method"
+      	type="ServidorApresentacao.Action.webSiteManager.SectionsManagementAction"
+      	name="sectionForm"
+      	scope="request"
+      	validate="true"
+      	input="/sectionsConfiguration.do?method=prepareSectionsConfiguration&amp;objectCode=1&amp;page=0">
+      	
+      	<forward name="sectionsMenu" path="/sectionsFirstPage.jsp"/>
+      	<forward name="sectionPage" path="/sectionPage.jsp"/>
+      	<forward name="sectionsConfiguration" path="/sectionsConfiguration.jsp"/>
+      </action>
+
      </action-mappings>     
 
     

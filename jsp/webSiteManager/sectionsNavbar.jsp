@@ -24,6 +24,7 @@
 	</logic:iterate> 
 </logic:notEmpty>
 <logic:empty name="sectionsList" > lista de seccoes vazia</logic:empty>
+<li><html:link page="<%="/sectionsConfiguration.do?method=prepareSectionsConfiguration&amp;objectCode=1"%>"><bean:message key="label.sections.configuration"/></html:link></li>
 </ul>
 <br/>
 <br/>

@@ -1,43 +1,55 @@
----------------------------------------------------------------------
-Release 2004-04-13
+--------------------------------------------------------------------
+Release 2004-04-28
 ---------------------------------------------------------------------
 
 NEW FEATURES:
-- Change state of a student curricular course in master degree operation INACTIVE for ACTIVE, it should change all curricular course ANNULLED for ENROLEMENT
-(modified service file EditPosGradStudentCurricularPlanStateAndCredits.java )
+- websiteManager: added the possibility to sort information when listing items, but only ascendingly for now
+- websiteManager: added keywords inserted with items to metadata of html files created
+- websiteManager: added filter for websiteManager role
+- webSiteManager: added the possibility to edit the creation date for an item whose relevant date is creation date
+- webSiteManager: added configuration functionality. That is sections configuration.
+- new images for IST site
 - task [#179] Student Candidacy for Final Degree Works
 - task [#181] View of Student Candidacies
 - task [#175] Fénix Error Page - don't kill session when showing the error page.
 - task [#175] Attribution of final degree work (and confirmation)
 
+
 NOTES:
+- updateWebSiteItem-14-04-2004.sql: 
+  - added field ftpName in website_item table
+  - updated items that have erroneous item begin day filled
+  - updated name of sections that have accents
+  - updated number of posts for all sections
+- updateGuideEntry-20-04-2004.sql: data fix in database about guide entries
+  - insert of guide entry for guide with id_internal 3822
  	
 CHANGES:
-- In degree curricular plan site it was add a new column to the list, CurricularCourseType.
-(modified publico/degreeSite/showDegreeCurricularPlan.jsp, publico/degreeSite/showDegreeCurricularPlanEnglish.jsp, ApplicationResources, Util/CurricularCourseType.java)
-- In curricular course's site without CURRICULUM information are shown in the same the execution courses.
-- The degree's site in the area of the degree coordinator did not show all actives curricular plans.
-- The student´s list about gratuity shouldn't show only the students with SCP actives or with school part conclued.
-(modified )
-- In the degree's site only the responsible professor for the degree's coordination is shown.
-(modified publico/degreeSite/showDegreeSiteDescription.jsp, publico/degreeSite/showDegreeSiteDescriptionEnglish.jsp)
-- In students list about gratuities, all students with SCP inactive or similar should appear in the list.
-(modified StudentsGratuityListAction.java, GratuitySituationOJB.java, studentsGrauityList.jsp)
-- In students list about gratuities, degrees with gratuity values defined by 
-(modified StudentsGratuityListAction.java, GratuitySituationOJB.java, studentsGrauityList.jsp)
+- webSiteManager: changed interface for adding and editing an item. Only the relevant dates appear for each section:
+  - creation date for news
+  - item begin and end date for events
+- websiteManager: changed interface for listing items
+- websiteManager: changed files name
 
 BUG FIXES:
-- in the use cases of GROUP PROPERTIES. This bugs had appeared because bad merge was made in the last deploy.
-- in master degree operation when check enrolment for extra_curricular
-(ATTEND, ENROLMENT_EVALUATION, 
-ENROLMENT_EQUIVALENCE, EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE, 
-CREDITS_IN_SCIENTIFIC_AREA, CREDITS_IN_ANY_SECUNDARY_AREA)
- 
+- websiteManager: fixed sections that have accent in word and it was not shown
+- webSiteManager: fixed archive of items that was mixing months from different years
+- webStieManager: fixed verification of dates in edition of item
+- webSiteManager: fixed way of searching for last item inserted or edited, for subsequent update in server files. 
+  - way of finding the last item modified 
+  - to know which file to update when seeing month of modified item
+- webSiteManager: fixed ordering of months in news archive
+- masterDegreeAdministrativeOffice: fixed sum of needed credits for final work proposal that were managed in float way
+  and passed to double way in class MasterDegreeCurricularPlanStrategy in method checkEndOfScholarship
+
 KNOWN ISSUES:
+- method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 
+	by execution year and degree code, should return a list and it is returning an object CursoExecucao.
 - Final degree work proposals are associated with the execution degree prior to the one they
   are proposed for. This is due to not yet having information regarding the next execution
   year. This must be resolved by establishing dates when the information must be introduced
   into the database.
+
 
 
 ---------------------------------------------------------------------

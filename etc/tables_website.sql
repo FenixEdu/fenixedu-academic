@@ -21,6 +21,7 @@ create table WEBSITE_SECTION (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    ACK_OPT_LOCK int(11),
    NAME varchar(100) not null,
+   FTP_NAME varchar(100) not null,
    SIZE int(11) unsigned not null,
    SORTING_ORDER enum('ascendent', 'descendent'),
    EXCERPT_SIZE int(11),

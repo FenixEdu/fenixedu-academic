@@ -57,14 +57,15 @@ public class ReadWebSiteSectionByCode implements IServico {
 
 	public Object run(Integer sectionCode) throws ExcepcaoInexistente, FenixServiceException {
 
-		IWebSiteSection webSiteSection =null;
+		IWebSiteSection webSiteSection = new WebSiteSection();
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
 			IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(new WebSiteSection(sectionCode), false);
+			webSiteSection.setIdInternal(sectionCode);
+			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
 
 			if (webSiteSection == null) {
 				throw new NonExistingServiceException();

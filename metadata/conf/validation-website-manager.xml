@@ -15,6 +15,19 @@
 		   	<field property="authorEmail" depends="email" page="1">
 		   		<arg0 key="message.Email" resource="true"/>
 		   	</field>
+			<field property="creationDate" depends="required,mask,date" page="1" >
+				<msg name="date" key="errors.invalid.date"/>
+			   	<msg name="mask" key="errors.invalid.date"/>
+			   	<arg0 key="label.creation.date" resource="true"/>
+			   	<var>
+			   		<var-name>datePattern</var-name>
+			   		<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+			   		<var-name>mask</var-name>
+			   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+		   	</field>
 			<field property="itemBeginDay" depends="requiredif,mask,date" page="1" >
 				<msg name="date" key="errors.invalid.date"/>
 			   	<msg name="mask" key="errors.invalid.date"/>

@@ -61,8 +61,8 @@
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
-					<td><bean:write name="curricularCourseScope" property="ectsCredits"/></td>
-					<td colspan="2"><bean:write name="curricularCourseScope" property="credits"/></td>
+					<td><bean:write name="curricularCourse" property="ectsCredits"/></td>
+					<td colspan="2"><bean:write name="curricularCourse" property="credits"/></td>
 				</tr>
 				<tr>
 					<td><strong><bean:message key="label.ects.webPage"

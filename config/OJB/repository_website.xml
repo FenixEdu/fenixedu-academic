@@ -101,6 +101,11 @@
          jdbc-type="VARCHAR"
     />
     <field-descriptor
+         name="ftpName"
+         column="FTP_NAME"
+         jdbc-type="VARCHAR"
+    />
+    <field-descriptor
         name="size"
          column="SIZE"
          jdbc-type="INTEGER"

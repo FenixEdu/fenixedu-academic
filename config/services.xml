@@ -4883,7 +4883,9 @@
             ServidorAplicacao.Servico.webSiteManager.ReadWebSiteByObjectCode</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="WebSiteManagerAuthorization"/>
+        </filterChains>
     </service>
     <service>
         <name>ReadWebSiteBySectionCode</name>
@@ -4891,21 +4893,27 @@
             ServidorAplicacao.Servico.webSiteManager.ReadWebSiteBySectionCode</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="WebSiteManagerAuthorization"/>
+        </filterChains>
     </service>
     <service>
         <name>AddItem</name>
         <implementationClass>ServidorAplicacao.Servico.webSiteManager.AddItem</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="WebSiteManagerAuthorization"/>
+        </filterChains>
     </service>
     <service>
         <name>DeleteItems</name>
         <implementationClass>ServidorAplicacao.Servico.webSiteManager.DeleteItems</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="WebSiteManagerAuthorization"/>
+        </filterChains>
     </service>
     <service>
         <name>EditWebSiteItem</name>
@@ -4913,7 +4921,9 @@
             ServidorAplicacao.Servico.webSiteManager.EditWebSiteItem</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="WebSiteManagerAuthorization"/>
+        </filterChains>
     </service>
     <service>
         <name>SendWebSiteSectionFileToServer</name>
@@ -4921,7 +4931,9 @@
             ServidorAplicacao.Servico.webSiteManager.SendWebSiteSectionFileToServer</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="WebSiteManagerAuthorization"/>
+        </filterChains>
     </service>
     <service>
         <name>ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan</name>
@@ -6486,6 +6498,14 @@
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ConfigureWebSiteSections</name>
+        <implementationClass>ServidorAplicacao.Servico.webSiteManager.ConfigureWebSiteSections</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
         </filterChains>
     </service>
 </serviceDefinitions>

@@ -676,4 +676,11 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+	<filterChain>
+		<name>WebSiteManagerAuthorization</name>
+		<expression>WebSiteManagerAuthorization</expression>
+		<description />
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
 </filterChainsDefinitions>

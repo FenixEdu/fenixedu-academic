@@ -42,14 +42,13 @@ public class DeleteItems implements IServico {
 
 	public boolean run(Integer sectionCode, List itemsToDelete) throws FenixServiceException {
 
-		IWebSiteSection webSiteSection = null;
-
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentWebSiteSection persistentWebSiteSection = persistentSuport.getIPersistentWebSiteSection();
 			IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
 
-			webSiteSection = new WebSiteSection(sectionCode);
+			IWebSiteSection webSiteSection = new WebSiteSection();
+			webSiteSection.setIdInternal(sectionCode);
 			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
 
 			Iterator iterItemsCode = itemsToDelete.iterator();

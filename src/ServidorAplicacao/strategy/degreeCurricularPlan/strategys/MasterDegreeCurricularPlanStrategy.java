@@ -35,7 +35,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 	 * @return A boolean indicating if he has fineshed it or not.
 	 */
 	public boolean checkEndOfScholarship(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia{
-		float studentCredits = 0;
+		double studentCredits = 0;
 		
 		IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
 		
@@ -44,7 +44,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		Iterator iterator = enrolments.iterator();
 		
 		if (studentCurricularPlan.getGivenCredits() != null) {
-			studentCredits += studentCurricularPlan.getGivenCredits().floatValue();
+			studentCredits += studentCurricularPlan.getGivenCredits().doubleValue();
 		}
 
 		while(iterator.hasNext()){
@@ -52,11 +52,11 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 	
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))&&
 				(!(enrolment instanceof IEnrolmentInExtraCurricularCourse))){
-				studentCredits += enrolment.getCurricularCourse().getCredits().floatValue(); 
+				studentCredits += enrolment.getCurricularCourse().getCredits().doubleValue(); 
 			}
 		}
 		
-		return (studentCredits >= degreeCurricularPlan.getNeededCredits().floatValue());
+		return (studentCredits >= degreeCurricularPlan.getNeededCredits().doubleValue());
 	}
 	
 	

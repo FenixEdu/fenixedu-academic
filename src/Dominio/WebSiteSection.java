@@ -1,6 +1,5 @@
 package Dominio;
 
-import java.io.UnsupportedEncodingException;
 
 /**
  * @author Fernanda Quitério
@@ -10,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 public class WebSiteSection extends DomainObject implements IWebSiteSection {
 
 	private String name;
+	private String ftpName;
 	private Integer size;
 	private String sortingOrder;
 	private String whatToSort;
@@ -32,10 +32,6 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 	}
 
 	public WebSiteSection() {
-	}
-
-	public WebSiteSection(Integer idInternal) {
-		setIdInternal(idInternal);
 	}
 
 	/**
@@ -120,14 +116,23 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 	 * @param name The name to set
 	 */
 	public void setName(String name) {
-		try {
-			this.name =
-				new String(name.getBytes("ISO-8859-1"), "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			this.name = name;
-		}
+		this.name = name;
 	}
 
+	/**
+	 * @return String
+	 */
+	public String getFtpName() {
+		return ftpName;
+	}
+
+	/**
+	 * Sets the ftpName.
+	 * @param name The ftpName to set
+	 */
+	public void setFtpName(String ftpName) {
+		this.ftpName = ftpName;
+	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -173,6 +178,7 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 		String result = "[WEBSITESECTION";
 		result += ", codInt=" + getIdInternal();
 		result += ", name=" + getName();
+		result += ", ftpName=" + getFtpName();
 		result += ", size=" + getSize();
 		result += ", sortingOrder=" + getSortingOrder();
 		result += ", whatToSort=" + getWhatToSort();

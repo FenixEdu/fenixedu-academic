@@ -656,4 +656,10 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
+	<filter>
+        <name>WebSiteManagerAuthorization</name>
+        <implementationClass>ServidorAplicacao.Filtro.webSiteManager.WebSiteManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>  
 </filterDefinitions>

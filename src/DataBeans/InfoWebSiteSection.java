@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
  **/
 public class InfoWebSiteSection extends InfoObject {
 	private String name;
+	private String ftpName;
 	private Integer size;
 	private String sortingOrder;
 	private String whatToSort;
@@ -63,6 +64,7 @@ public class InfoWebSiteSection extends InfoObject {
 		String result = "[INFOWEBSITESECTION";
 		result += ", codInt=" + getIdInternal();
 		result += ", name=" + getName();
+		result += ", ftpName=" + getFtpName();
 		result += ", size=" + getSize();
 		result += ", sortingOrder=" + getSortingOrder();
 		result += ", whatToSort=" + getWhatToSort();
@@ -115,6 +117,20 @@ public class InfoWebSiteSection extends InfoObject {
 		this.name = name;
 	}
 
+	/**
+	 * @return
+	 */
+	public String getFtpName() {
+		return ftpName;
+	}
+
+	/**
+	 * @param name
+	 */
+	public void setFtpName(String ftpName) {
+		this.ftpName = ftpName;
+	}
+	
 	/**
 	 * @return
 	 */

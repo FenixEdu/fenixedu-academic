@@ -1,7 +1,9 @@
 package ServidorApresentacao.Action.webSiteManager;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -9,12 +11,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.MessageResources;
+import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
@@ -26,7 +33,6 @@ import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -46,6 +52,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
+		ActionErrors errors = new ActionErrors();
 
 		InfoWebSite infoWebSite = null;
 		Integer objectCode = Integer.valueOf(request.getParameter("objectCode"));
@@ -53,13 +60,21 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			Object args[] = { objectCode };
 			infoWebSite = (InfoWebSite) ServiceUtils.executeService(userView, "ReadWebSiteBySectionCode", args);
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(e);
+		    errors.add("website", new ActionError("error.impossibleReadWebsite"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
+		}
+		if(!errors.isEmpty()) {
+		    saveErrors(request, errors);
+		    return mapping.getInputForward();
 		}
 		request.setAttribute("objectCode", objectCode);
 		request.setAttribute("infoWebSite", infoWebSite);
 
+		Calendar calendar = Calendar.getInstance();
+		DynaValidatorForm itemForm = (DynaValidatorForm) form;
+		itemForm.set("creationDate", getDateFormatted(calendar.getTime()));
+		
 		return mapping.findForward("addItem");
 	}
 
@@ -67,14 +82,15 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
-
+        MessageResources messages = getResources(request);
+		
 		InfoWebSite webSite = null;
 		Integer objectCode = Integer.valueOf(request.getParameter("objectCode"));
 		request.setAttribute("objectCode", objectCode);
 		InfoWebSiteItem infoWebSiteItem = new InfoWebSiteItem();
 
 		fillInfoWebSiteItem(form, infoWebSiteItem);
-
+		
 		ActionErrors errors = new ActionErrors();
 		try {
 			Object args[] = { objectCode, infoWebSiteItem, userView.getUtilizador()};
@@ -83,7 +99,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			errors.add("excerpt", new ActionError("error.excerptSize"));
 			saveErrors(request, errors);
 		} catch (InvalidArgumentsServiceException e) {
-			errors.add("notFilled", new ActionError("error.notFilled"));
+			errors.add("notFilled", new ActionError("error.notFilled", messages.getMessage(e.getMessage())));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -97,7 +113,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		if (infoWebSiteItem.getPublished() != null && infoWebSiteItem.getPublished().equals(Boolean.TRUE)) {
 			// build file to send to ist server
 			try {
-				Object args[] = { objectCode, Boolean.FALSE };
+				Object args[] = { objectCode, infoWebSiteItem };
 				ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
@@ -122,6 +138,13 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			calendar.setTime(convertStringDate(itemEndDayString));
 			infoWebSiteItem.setItemEndDayCalendar(calendar);
 		}
+		
+		String creationDateString = (String) itemForm.get("creationDate");
+		if (creationDateString != null && creationDateString.length() > 0) {
+			calendar = Calendar.getInstance();
+			calendar.setTime(convertStringDate(creationDateString));
+			infoWebSiteItem.setCreationDate(new Timestamp(calendar.getTimeInMillis()));
+		}
 
 		infoWebSiteItem.setKeywords((String) itemForm.get("keywords"));
 		infoWebSiteItem.setMainEntryText((String) itemForm.get("mainEntryText"));
@@ -135,8 +158,11 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		String onlineEndDayString = (String) itemForm.get("onlineEndDay");
 		infoWebSiteItem.setOnlineEndDay(convertStringDate(onlineEndDayString));
 
-		infoWebSiteItem.setPublished((Boolean) itemForm.get("publish"));
-
+		if((String) itemForm.get("publish") != null && ((String) itemForm.get("publish")).length() > 0) 
+		{
+		    infoWebSiteItem.setPublished(new Boolean((String) itemForm.get("publish")));
+		}
+		
 		infoWebSiteItem.setTitle((String) itemForm.get("title"));
 	}
 
@@ -158,21 +184,76 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
+		ActionErrors errors = new ActionErrors();
 
 		InfoWebSite infoWebSite = null;
-		Integer objectCode = Integer.valueOf(request.getParameter("objectCode"));
+		final Integer objectCode = Integer.valueOf(request.getParameter("objectCode"));
 		try {
 			Object args[] = { objectCode };
 			infoWebSite = (InfoWebSite) ServiceUtils.executeService(userView, "ReadWebSiteBySectionCode", args);
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(e);
+		    errors.add("website", new ActionError("error.impossibleReadWebsite"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		if(!errors.isEmpty()) {
+		    saveErrors(request, errors);
+		    return mapping.getInputForward();
+		}		
+		orderItems(request, infoWebSite, objectCode);
+		
 		request.setAttribute("objectCode", objectCode);
 		request.setAttribute("infoWebSite", infoWebSite);
 
 		return mapping.findForward("listItems");
+	}
+
+	/**
+	 * @param request
+	 * @param infoWebSite
+	 * @param objectCode
+	 */
+	private void orderItems(HttpServletRequest request, InfoWebSite infoWebSite, final Integer objectCode) {
+		String orderBy = request.getParameter("orderBy");
+		if(orderBy == null) {
+			orderBy=(String) request.getAttribute("orderBy");
+		}
+		if(orderBy != null) {
+
+			InfoWebSiteSection sectionToSort = (InfoWebSiteSection) CollectionUtils.find(infoWebSite.getSections(), new Predicate() {
+				public boolean evaluate(Object object) {
+					InfoWebSiteSection infoWebSiteSection = (InfoWebSiteSection) object;
+					if(infoWebSiteSection.getIdInternal().equals(objectCode)) {
+						return true;
+					}
+					return false;
+				}
+			});
+			if(!orderBy.equals("published")) {
+				Collections.sort(sectionToSort.getInfoItemsList(),new BeanComparator(orderBy));
+			} else {
+				List orderedByPublished = new ArrayList();
+				CollectionUtils.select(sectionToSort.getInfoItemsList(), new Predicate() {
+					public boolean evaluate(Object object) {
+						InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) object;
+						if(!infoWebSiteItem.getPublished().booleanValue()) {
+							return true;
+						}
+						return false;
+					}
+				}, orderedByPublished);
+				orderedByPublished.addAll(CollectionUtils.select(sectionToSort.getInfoItemsList(), new Predicate() {
+					public boolean evaluate(Object object) {
+						InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) object;
+						if(infoWebSiteItem.getPublished().booleanValue()) {
+							return true;
+						}
+						return false;
+					}
+				}));
+				sectionToSort.setInfoItemsList(orderedByPublished);
+			}
+		}
 	}
 
 	//	****************************************** delete items from section *******************************
@@ -201,7 +282,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		}
 		
 		try {
-			Object args[] = { objectCode, Boolean.TRUE };
+			Object args[] = { objectCode, null };
 			ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -229,7 +310,8 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
-
+		ActionErrors errors = new ActionErrors();
+		
 		InfoWebSite infoWebSite = null;
 		Integer objectCode = Integer.valueOf(request.getParameter("objectCode"));
 		Integer itemCode = Integer.valueOf(request.getParameter("itemCode"));
@@ -237,11 +319,15 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			Object args[] = { objectCode };
 			infoWebSite = (InfoWebSite) ServiceUtils.executeService(userView, "ReadWebSiteBySectionCode", args);
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(e);
+		    errors.add("website", new ActionError("error.impossibleReadWebsite"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-
+		if(!errors.isEmpty()) {
+		    saveErrors(request, errors);
+		    return mapping.getInputForward();
+		}
+		
 		InfoWebSiteSection infoWebSiteSection = null;
 		Iterator iterSections = infoWebSite.getSections().iterator();
 		while (iterSections.hasNext()) {
@@ -259,7 +345,22 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			}
 		}
 
-		DynaActionForm itemForm = (DynaActionForm) form;
+		fillForm(form, infoWebSiteItem);
+
+		request.setAttribute("objectCode", objectCode);
+		request.setAttribute("itemCode", itemCode);
+		request.setAttribute("infoWebSite", infoWebSite);
+
+		return mapping.findForward("editItem");
+	}
+
+	/**
+     * @param form
+     * @param infoWebSiteItem
+     */
+    private void fillForm(ActionForm form, InfoWebSiteItem infoWebSiteItem)
+    {
+        DynaActionForm itemForm = (DynaActionForm) form;
 
 		itemForm.set("title", infoWebSiteItem.getTitle());
 		itemForm.set("mainEntryText", infoWebSiteItem.getMainEntryText());
@@ -279,16 +380,15 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		if (infoWebSiteItem.getOnlineEndDay() != null) {
 			itemForm.set("onlineEndDay", getDateFormatted(infoWebSiteItem.getOnlineEndDay()));
 		}
-		itemForm.set("publish", infoWebSiteItem.getPublished());
+		// this field should never be null, but just in case we test it
+		if (infoWebSiteItem.getCreationDate() != null) {
+			itemForm.set("creationDate", getDateFormatted(infoWebSiteItem.getCreationDate()));
+		}
+		if(infoWebSiteItem.getPublished() != null && infoWebSiteItem.getPublished().booleanValue())
+		itemForm.set("publish", "true");
+    }
 
-		request.setAttribute("objectCode", objectCode);
-		request.setAttribute("itemCode", itemCode);
-		request.setAttribute("infoWebSite", infoWebSite);
-
-		return mapping.findForward("editItem");
-	}
-
-	private String getDateFormatted(Date date) {
+    private String getDateFormatted(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		String dateFormatted =
@@ -301,6 +401,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
+        MessageResources messages = getResources(request);
 
 		Integer objectCode = Integer.valueOf(request.getParameter("objectCode"));
 		request.setAttribute("objectCode", objectCode);
@@ -313,26 +414,33 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		infoWebSiteItem.setIdInternal(itemCode);
 
 		ActionErrors errors = new ActionErrors();
+		Boolean result = Boolean.FALSE;
 		try {
 			Object args[] = { objectCode, infoWebSiteItem, userView.getUtilizador()};
-			ServiceUtils.executeService(userView, "EditWebSiteItem", args);
+			result = (Boolean) ServiceUtils.executeService(userView, "EditWebSiteItem", args);
 		} catch (InvalidSituationServiceException e) {
 			errors.add("excerpt", new ActionError("error.excerptSize"));
-			saveErrors(request, errors);
 		} catch (InvalidArgumentsServiceException e) {
-			errors.add("notFilled", new ActionError("error.notFilled"));
-			saveErrors(request, errors);
+			errors.add("notFilled", new ActionError("error.notFilled", messages.getMessage(e.getMessage())));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 		if (!errors.isEmpty()) {
+			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
 
 		if (infoWebSiteItem.getPublished() != null && infoWebSiteItem.getPublished().equals(Boolean.TRUE)) {
+		    
+		    // if the item being edited modified date whose value is used in section ordering
+		    // all files must be sent to server
+		    if (result.booleanValue())
+		    {
+		        infoWebSiteItem = null;
+		    }
 			// build file to send to ist server
 			try {
-				Object args[] = { objectCode, Boolean.FALSE };
+				Object args[] = { objectCode, infoWebSiteItem };
 				ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
