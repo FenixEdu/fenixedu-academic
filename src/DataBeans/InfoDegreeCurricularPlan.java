@@ -3,7 +3,7 @@ package DataBeans;
 import java.io.Serializable;
 import java.util.Date;
 
-import Util.DegreeState;
+import Util.DegreeCurricularPlanState;
 
 /**
  * @author David Santos
@@ -15,7 +15,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 
 	private InfoDegree infoDegree;
 	private String name;
-	private DegreeState state;
+	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
 
@@ -35,7 +35,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		setEndDate(null);
 	}
 
-	public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeState state, Date initialDate, Date endDate) {
+	public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state, Date initialDate, Date endDate) {
 		setName(nome);
 		setInfoDegree(infoDegree);
 		setState(state);
@@ -91,9 +91,9 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	}
 
 	/**
-	 * @return DegreeState
+	 * @return DegreeCurricularPlanState
 	 */
-	public DegreeState getState() {
+	public DegreeCurricularPlanState getState() {
 		return state;
 	}
 
@@ -133,7 +133,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	 * Sets the state.
 	 * @param state The state to set
 	 */
-	public void setState(DegreeState state) {
+	public void setState(DegreeCurricularPlanState state) {
 		this.state = state;
 	}
 

@@ -2,7 +2,7 @@ package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.DegreeState;
+import Util.DegreeCurricularPlanState;
 
 /**
  * @author dcs-rjao
@@ -10,11 +10,11 @@ import Util.DegreeState;
  * 19/Mar/2003
  */
 
-public class JavaDegreeState2SqlDegreeStateFieldConversion implements FieldConversion {
+public class JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion implements FieldConversion {
 
 	public Object javaToSql(Object source) {
-		if (source instanceof DegreeState) {
-			DegreeState s = (DegreeState) source;
+		if (source instanceof DegreeCurricularPlanState) {
+			DegreeCurricularPlanState s = (DegreeCurricularPlanState) source;
 			return s.getDegreeState();
 		} else {
 			return source;
@@ -24,7 +24,7 @@ public class JavaDegreeState2SqlDegreeStateFieldConversion implements FieldConve
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
-			return new DegreeState(src);
+			return new DegreeCurricularPlanState(src);
 		} else {
 			return source;
 		}

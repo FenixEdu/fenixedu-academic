@@ -114,7 +114,7 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaDegreeState2SqlDegreeStateFieldConversion"
+		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="initialDate"

@@ -7,7 +7,7 @@ package Util;
  * 19/Mar/2003
  */
 
-public class DegreeState {
+public class DegreeCurricularPlanState {
 
 	public static final int ACTIVE = 1;
 	public static final int NOT_ACTIVE = 2;
@@ -15,14 +15,14 @@ public class DegreeState {
 
 	private Integer state;
 
-	public DegreeState() {
+	public DegreeCurricularPlanState() {
 	}
 
-	public DegreeState(int state) {
+	public DegreeCurricularPlanState(int state) {
 		this.state = new Integer(state);
 	}
 
-	public DegreeState(Integer state) {
+	public DegreeCurricularPlanState(Integer state) {
 		this.state = state;
 	}
 
@@ -36,8 +36,8 @@ public class DegreeState {
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof DegreeState) {
-			DegreeState ds = (DegreeState) obj;
+		if (obj instanceof DegreeCurricularPlanState) {
+			DegreeCurricularPlanState ds = (DegreeCurricularPlanState) obj;
 			resultado = this.getDegreeState().equals(ds.getDegreeState());
 		}
 		return resultado;

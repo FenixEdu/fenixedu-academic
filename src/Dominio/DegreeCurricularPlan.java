@@ -2,7 +2,7 @@ package Dominio;
 
 import java.util.Date;
 
-import Util.DegreeState;
+import Util.DegreeCurricularPlanState;
 
 /**
  * @author dcs-rjao
@@ -16,7 +16,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	private Integer keyDegree;
 	private ICurso degree;
 	private String name;
-	private DegreeState state;
+	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
 
@@ -36,7 +36,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		setEndDate(null);
 	}
 
-	public DegreeCurricularPlan(String nome, ICurso degree, DegreeState state, Date initialDate, Date endDate) {
+	public DegreeCurricularPlan(String nome, ICurso degree, DegreeCurricularPlanState state, Date initialDate, Date endDate) {
 		setName(nome);
 		setDegree(degree);
 		setState(state);
@@ -129,9 +129,9 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	}
 
 	/**
-	 * @return DegreeState
+	 * @return DegreeCurricularPlanState
 	 */
-	public DegreeState getState() {
+	public DegreeCurricularPlanState getState() {
 		return state;
 	}
 
@@ -153,7 +153,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	 * Sets the state.
 	 * @param state The state to set
 	 */
-	public void setState(DegreeState state) {
+	public void setState(DegreeCurricularPlanState state) {
 		this.state = state;
 	}
 
