@@ -20,7 +20,7 @@ public interface IGratuitySituation extends IDomainObject
 	public ExemptionGratuityType getExemptionType();
 	public String getExemptionDescription();
 	public IGratuityValues getGratuityValues();
-	public IStudent getStudent();
+	public IStudentCurricularPlan getStudentCurricularPlan();
 	public List getTransactionList();
 	
 	public void setPayedValue(Double payedValue);
@@ -29,6 +29,6 @@ public interface IGratuitySituation extends IDomainObject
 	public void setExemptionType(ExemptionGratuityType exemptionType);
 	public void setExemptionDescription(String exemptionDescription);
 	public void setGratuityValues(IGratuityValues gratuity);
-	public void setStudent(IStudent student);
+	public void setStudentCurricularPlan(IStudentCurricularPlan student);
 	public void setTransactionList(List transactionList);
 }

@@ -23,8 +23,8 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	private IGratuityValues gratuityValues;
 	private Integer keyGratuity;
 	
-	private IStudent student;
-	private Integer keyStudent;
+	private IStudentCurricularPlan studentCurricularPlan;
+	private Integer keyStudentCurricularPlan;
 	
 	private List transactionList;
 	
@@ -111,17 +111,17 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	/**
 	 * @return Returns the keyStudent.
 	 */
-	public Integer getKeyStudent()
+	public Integer getKeyStudentCurricularPlan()
 	{
-		return keyStudent;
+		return keyStudentCurricularPlan;
 	}
 
 	/**
 	 * @param keyStudent The keyStudent to set.
 	 */
-	public void setKeyStudent(Integer keyStudent)
+	public void setKeyStudentCurricularPlan(Integer keyStudent)
 	{
-		this.keyStudent = keyStudent;
+		this.keyStudentCurricularPlan = keyStudent;
 	}
 
 	/**
@@ -159,17 +159,17 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	/**
 	 * @return Returns the student.
 	 */
-	public IStudent getStudent()
+	public IStudentCurricularPlan getStudentCurricularPlan()
 	{
-		return student;
+		return studentCurricularPlan;
 	}
 
 	/**
 	 * @param student The student to set.
 	 */
-	public void setStudent(IStudent student)
+	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
 	{
-		this.student = student;
+		this.studentCurricularPlan = studentCurricularPlan;
 	}
 
 	/**

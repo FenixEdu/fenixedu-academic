@@ -4,6 +4,9 @@
  */
 package ServidorPersistente.OJB;
 
+import Dominio.ICursoExecucao;
+import Dominio.IGratuityValues;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuityValues;
 
 /**
@@ -12,5 +15,10 @@ import ServidorPersistente.IPersistentGratuityValues;
  */
 public class GratuityValuesOJB extends ObjectFenixOJB implements IPersistentGratuityValues
 {
+
+	public IGratuityValues readGratuityValuesByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -1337,7 +1337,7 @@
     <reference-descriptor
       	name="executionDegree"
        	class-ref="Dominio.CursoExecucao"
-       	proxy="true"
+       	proxy="false"
 		refresh="true"
     >
         <foreignkey field-ref="keyExecutionDegree"/>
@@ -1345,7 +1345,7 @@
     <reference-descriptor
       	name="employee"
        	class-ref="Dominio.Employee"
-       	proxy="true"
+       	proxy="false"
 		refresh="true"
     >
         <foreignkey field-ref="keyEmployee"/>
@@ -1357,7 +1357,7 @@
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		proxy="false">
 		<inverse-foreignkey field-ref="keyGratuity"/>
 	 </collection-descriptor>   
 </class-descriptor>  
@@ -1407,8 +1407,8 @@
    		jdbc-type="INTEGER"   		
    	/>
    	<field-descriptor
-   		name="keyStudent"
-   		column="KEY_STUDENT"
+   		name="keyStudentCurricularPlan"
+   		column="KEY_STUDENT_CURRICULAR_PLAN"
    		jdbc-type="INTEGER"   		
    	/>   	   	   	   	   	   	
     <field-descriptor
@@ -1420,18 +1420,18 @@
     <reference-descriptor
       	name="gratuity"
        	class-ref="Dominio.GratuityValues"
-       	proxy="true"
+       	proxy="false"
 		refresh="true"
     >
         <foreignkey field-ref="keyGratuity"/>
     </reference-descriptor>
     <reference-descriptor
-      	name="student"
-       	class-ref="Dominio.Student"
-       	proxy="true"
+      	name="studentCurricularPlan"
+       	class-ref="Dominio.StudentCurricularPlan"
+       	proxy="false"
 		refresh="true"
     >
-        <foreignkey field-ref="keyStudent"/>
+        <foreignkey field-ref="keyStudentCurricularPlan"/>
     </reference-descriptor>   
 	<!--<collection-descriptor
 		name="transactionList"
@@ -1498,7 +1498,7 @@
     <reference-descriptor
       	name="gratuity"
        	class-ref="Dominio.GratuityValues"
-       	proxy="true"
+       	proxy="false"
 		refresh="true"
     >   	
         <foreignkey field-ref="keyGratuity"/>

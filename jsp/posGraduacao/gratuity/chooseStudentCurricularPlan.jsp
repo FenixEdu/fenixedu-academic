@@ -24,6 +24,8 @@
 	</table>
 	
 	<logic:iterate id="studentCurricularPlan" name="studentCurricularPlans">
-		<html:link page=""><bean:write name="studentCurricularPlan" property="infoDegreeCurricularPlan.name" /></html:link>
+		<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="idInternal" />
+	
+		<html:link page="<%= "/readExemptionGratuity.do?method=readExemptionGratuity&amp;studentCurricularPlanID=" + pageContext.getAttribute("studentCurricularPlanID")%>"><bean:write name="studentCurricularPlan" property="infoDegreeCurricularPlan.name" /></html:link>
 	</logic:iterate>
 </logic:present>

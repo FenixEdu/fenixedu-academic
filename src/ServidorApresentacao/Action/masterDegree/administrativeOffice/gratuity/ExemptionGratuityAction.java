@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -79,7 +80,7 @@ public class ExemptionGratuityAction extends DispatchAction
 		return mapping.findForward("chooseStudent");
 	}
 
-	public ActionForward prepareInsertExemption(
+	public ActionForward readStudent(
 		ActionMapping mapping,
 		ActionForm actionForm,
 		HttpServletRequest request,
@@ -118,15 +119,57 @@ public class ExemptionGratuityAction extends DispatchAction
 		} 
 		
 		if(studentCurricularPlans.size() == 1){
-			request.setAttribute("studentCurricularPlan", studentCurricularPlans.get(0));
-			
-			request.setAttribute("percentageOfExemption", ExemptionGratuityType.percentageOfExemption());
-			request.setAttribute("exemptionGratuityList", ExemptionGratuityType.getEnumList());
-			
-			return mapping.findForward("insertExemptionGratuity");
+			request.setAttribute("studentCurricularPlanID", ((InfoStudentCurricularPlan)studentCurricularPlans.get(0)).getIdInternal());
+			return mapping.findForward("readExemptionGratuity");
 		} else {
 			request.setAttribute("studentCurricularPlans", studentCurricularPlans);
 			return mapping.findForward("chooseStudentCurricularPlan");
 		}		
+	}
+	
+	public ActionForward readExemptionGratuity(
+			ActionMapping mapping,
+			ActionForm actionForm,
+			HttpServletRequest request,
+			HttpServletResponse response)
+	throws Exception
+	{
+		ActionErrors errors = new ActionErrors();
+		HttpSession session  = request.getSession();
+		
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		
+		Integer studentCurricularPlanID = (Integer) request.getAttribute("studentCurricularPlanID");
+
+		InfoStudentCurricularPlan studentCurricularPlan = null;
+		Object[] args = { studentCurricularPlanID };
+		try
+		{
+			studentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(null, "ReadStudentCurricularPlan", args);
+		}
+		catch(FenixServiceException fenixServiceException)
+		{
+			fenixServiceException.printStackTrace();
+			errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		} 
+		
+		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+		request.setAttribute("percentageOfExemption", ExemptionGratuityType.percentageOfExemption());
+		request.setAttribute("exemptionGratuityList", ExemptionGratuityType.getEnumList());
+		
+		return mapping.findForward("manageExemptionGratuity");
+	}	
+	
+	public ActionForward insertExemptionGratuity(
+			ActionMapping mapping,
+			ActionForm actionForm,
+			HttpServletRequest request,
+			HttpServletResponse response)
+	throws Exception
+	{
+	
+		return mapping.findForward("manageExemptionGratuity");
 	}
 }

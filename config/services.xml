@@ -5382,4 +5382,48 @@
     	<isTransactional>true</isTransactional>
         <filterChains/>                    	
     </service>
+    <service>
+    	<name>ReadGratuitySituationByStudentCurricularPlan</name>
+    	<description>Retrieves gratuity situation associated with this student</description>
+    	<implementationClass>
+    		ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlan
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>EditGratuitySituationById</name>
+    	<description>Servive that edit or create a gratuity situatuion</description>
+    	<implementationClass>
+    		ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>DeleteGratuitySituationById</name>
+    	<description>Servive that delete a gratuity situatuion</description>
+    	<implementationClass>
+    		ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.DeleteGratuitySituationById
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>ReadGratuityValuesByExecutionDegree</name>
+    	<description>Retrieves gratuity values associated with this execution degree</description>
+    	<implementationClass>
+    		ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

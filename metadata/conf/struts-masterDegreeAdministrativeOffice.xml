@@ -2060,16 +2060,30 @@
 		<forward name="chooseStudent" path="chooseStudent"/>
 	</action>
 	
-	<action path="/prepareInsertExemption"
+	<action path="/readStudent"
 	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
 	parameter="method"
 	name="chooseStudentGratuityForm"
 	input="/chooseStudent.do?method=chooseStudent"
 	>
-		<forward name="insertExemptionGratuity" path="insertExemptionGratuity"/>
+		<forward name="readExemptionGratuity" path="/readExemptionGratuity.do?method=readExemptionGratuity"/>
 		<forward name="chooseStudentCurricularPlan" path="chooseStudentCurricularPlan" />
 	</action>
-      
+	
+	<action path="/readExemptionGratuity"
+	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
+	parameter="method"
+	>
+		<forward name="manageExemptionGratuity" path="manageExemptionGratuity"/>
+	</action>	
+
+	<action path="/insertExemptionGratuity"
+	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
+	parameter="method"
+	>
+		<forward name="manageExemptionGratuity" path="manageExemptionGratuity"/>
+	</action>
+	      
     </action-mappings>
     
     

@@ -7,8 +7,8 @@
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></h2>
 
-<html:form action="/prepareInsertExemption.do" focus="studentNumber" method="post">
-	<html:hidden property="method" value="prepareInsertExemption"/>
+<html:form action="/readStudent" focus="studentNumber" method="post">
+	<html:hidden property="method" value="readStudent"/>
 	<html:hidden property="page" value="1"/>
 	
 	<table>

@@ -9,6 +9,9 @@
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></h2>
 
+</logic:notPresent name="studentCurricularPlan">
+not present student curricular plan
+</logic:notPresent>
 <logic:present name="studentCurricularPlan">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -25,6 +28,8 @@
 	</tr>
 </table>
 <p />
+</logic:present>
+
 <table width='100%'>
 	<tr>
 		<td valign='middle'><b><bean:message key="label.exemptionGratuity.value" /><p /></b></td>		
@@ -42,6 +47,7 @@
 						</td>
 					<tr>
 				</logic:iterate>
+												
 			</table>
 		</td>
 		<td><p /><p /><p /><p /><p /><p /><p /><p /><p /><td>
@@ -62,4 +68,3 @@
 		</td>
 	</tr>	
 </table>
-</logic:present>
