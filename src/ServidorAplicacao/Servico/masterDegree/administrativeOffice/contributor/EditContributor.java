@@ -10,6 +10,7 @@ import Dominio.IContributor;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -54,6 +55,10 @@ public class EditContributor implements IServico {
 			
 			// Read the Actual Contributor
 			contributorBD = sp.getIPersistentContributor().readByContributorNumber(infoContributor.getContributorNumber());
+			
+			if (contributorBD == null)
+				throw new NonExistingContributorServiceException();
+				
 			contributorBD.setContributorNumber(contributorNumber);
 			contributorBD.setContributorName(contributorName);
 			contributorBD.setContributorAddress(contributorAddress);
