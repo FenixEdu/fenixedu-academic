@@ -190,7 +190,7 @@ public class CreditsInitializer
                     creditsDAO);
 
             double actualCredits =
-                credits.getSupportLessons() == null ? 0 : credits.getSupportLessons().doubleValue();
+                credits.getLessons() == null ? 0 : credits.getLessons().doubleValue();
 
             double shiftDuration = calculateShiftDuration(shiftProfessorship.getShift());
 
