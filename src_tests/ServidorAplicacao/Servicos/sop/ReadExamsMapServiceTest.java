@@ -22,9 +22,10 @@ import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServices;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 
-public class ReadExamsMapServiceTest extends TestCaseServices {
+public class ReadExamsMapServiceTest extends TestCaseRequeiersAuthorizationServices {
 
 	InfoDegree infoDegree = null;
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
@@ -63,7 +64,7 @@ public class ReadExamsMapServiceTest extends TestCaseServices {
 		return true;
 	}
 
-	protected Object[] getArgumentsForCallToService() {
+	public void testReadValidResult() {
 		infoDegree =
 			new InfoDegree(
 				"LEIC",
@@ -82,12 +83,17 @@ public class ReadExamsMapServiceTest extends TestCaseServices {
 		curricularYears.add(new Integer(3));
 		curricularYears.add(new Integer(5));
 
-		Object[] result =
-			{ infoExecutionDegree, curricularYears, infoExecutionPeriod };
-		return result;
-	}
+		args = new Object[3];
+		args[0] = infoExecutionDegree;
+		args[1] = curricularYears;
+		args[2] = infoExecutionPeriod;
 
-	protected boolean verifyServiceResult(Object result) {
+		try {
+			callServiceWithAuthorizedUserView();
+		} catch (FenixServiceException e) {
+			fail("");
+		}
+
 		Calendar startSeason1 = Calendar.getInstance();
 		startSeason1.set(Calendar.YEAR, 2003);
 		startSeason1.set(Calendar.MONTH, Calendar.JUNE);
@@ -150,8 +156,6 @@ public class ReadExamsMapServiceTest extends TestCaseServices {
 			"Unexpected number of execution courses!",
 			2,
 			infoExamsMap.getExecutionCourses().size());
-
-		return true;
 	}
 
 }
