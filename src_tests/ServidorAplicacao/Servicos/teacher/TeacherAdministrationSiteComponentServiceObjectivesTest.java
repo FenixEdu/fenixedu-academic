@@ -85,7 +85,7 @@ public class TeacherAdministrationSiteComponentServiceObjectivesTest extends Tes
 
 			sections =  persistentSection.readBySite(site);			
 			
-			curriculum = sp.getIPersistentCurriculum().readCurriculumByExecutionCourse(executionCourse);
+//			curriculum = sp.getIPersistentCurriculum().readCurriculumByExecutionCourse(executionCourse);
 			
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

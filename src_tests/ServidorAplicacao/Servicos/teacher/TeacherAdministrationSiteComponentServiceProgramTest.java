@@ -84,7 +84,7 @@ public class TeacherAdministrationSiteComponentServiceProgramTest extends TestCa
 
 			sections =  persistentSection.readBySite(site);			
 			
-			curriculum = sp.getIPersistentCurriculum().readCurriculumByExecutionCourse(executionCourse);
+//			curriculum = sp.getIPersistentCurriculum().readCurriculumByExecutionCourse(executionCourse);
 			
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

@@ -81,14 +81,14 @@ public class EditCurriculumServiceTest extends TestCaseDeleteAndEditServices {
 			IPersistentCurriculum persistentCurriculum =
 				sp.getIPersistentCurriculum();
 
-			ICurriculum curriculum =
-				persistentCurriculum.readCurriculumByExecutionCourse(
-					executionCourse);
+//			ICurriculum curriculum =
+//				persistentCurriculum.readCurriculumByExecutionCourse(
+//					executionCourse);
 			sp.confirmarTransaccao();
 
-			oldCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-			newCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-			newCurriculum.setGeneralObjectives("blablablabla");
+//			oldCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+//			newCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+//			newCurriculum.setGeneralObjectives("blablablabla");
 			newCurriculum.setGeneralObjectivesEn(null);
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");

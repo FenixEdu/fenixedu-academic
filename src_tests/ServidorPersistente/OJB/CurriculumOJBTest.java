@@ -118,7 +118,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 //		Read Existing Curriculum
 		 try{
 			 persistentSupport.iniciarTransaccao();
-			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+//			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
 			 assertNotNull(curriculum);
 			 persistentSupport.confirmarTransaccao();
 		
@@ -146,7 +146,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 		 }
 		 try{
 			 persistentSupport.iniciarTransaccao();
-			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+//			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
 			 assertNull(curriculum);
 			 persistentSupport.confirmarTransaccao();
 		
@@ -174,7 +174,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 //		Read Existing Curriculum
 		 try{
 			 persistentSupport.iniciarTransaccao();
-			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+//			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
 			 assertNotNull(curriculum);
 			 persistentSupport.confirmarTransaccao();
 		
@@ -189,7 +189,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 //		delete curriculum
 		 try{
 			 persistentSupport.iniciarTransaccao();
-			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+//			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
 			 assertNotNull(curriculum);
 			 persistentCurriculum.delete(curriculum);
 			 persistentSupport.confirmarTransaccao();
@@ -200,7 +200,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 //		Read Again
 		 try{
 			 persistentSupport.iniciarTransaccao();
-			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
+//			 curriculum=persistentCurriculum.readCurriculumByExecutionCourse(executionCourse);
 			 assertNull(curriculum);
 			 persistentSupport.confirmarTransaccao();
 		

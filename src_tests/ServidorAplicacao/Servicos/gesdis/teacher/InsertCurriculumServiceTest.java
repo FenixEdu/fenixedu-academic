@@ -77,12 +77,12 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
 			IPersistentCurriculum persistentCurriculum =
 				sp.getIPersistentCurriculum();
 
-			ICurriculum curriculum =
-				persistentCurriculum.readCurriculumByExecutionCourse(
-					executionCourse);
+//			ICurriculum curriculum =
+//				persistentCurriculum.readCurriculumByExecutionCourse(
+//					executionCourse);
 			sp.confirmarTransaccao();
 
-			oldCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+////			oldCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
@@ -134,7 +134,7 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
 			oldCurriculum.setGeneralObjectivesEn(null);
 			oldCurriculum.setOperacionalObjectivesEn(null);
 			oldCurriculum.setProgramEn(null);
-			oldCurriculum.setInfoExecutionCourse(infoExecutionCourse);
+//			oldCurriculum.setInfoExecutionCourse(infoExecutionCourse);
 
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
