@@ -27,7 +27,7 @@
 		<form-property name="yearOfEmissionDateOfDocumentId" type="java.lang.String" />
 		<form-property name="dayOfExpirationDateOfDocumentId" type="java.lang.String" />
 		<form-property name="monthOfExpirationDateOfDocumentId" type="java.lang.String" />
-		<form-property name="yearOfExpirationDateOfDocumentId" type="java.lang.Integer" />
+		<form-property name="yearOfExpirationDateOfDocumentId" type="java.lang.String" />
 		<form-property name="name" type="java.lang.String" />
 		<form-property name="dateOfBirth" type="java.lang.String" />
 		<form-property name="nameOfFather" type="java.lang.String" />

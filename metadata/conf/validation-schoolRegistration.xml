@@ -2,7 +2,7 @@
 <!-- @validation.doctype@ -->
 <form-validation>
   <formset>
-   <!--<form name="schoolRegistrationForm">
+   <!-- <form name="schoolRegistrationForm">
     	<field property="oldPassword" depends="required" page="1">
         	<arg0 key="label.candidate.oldPasswordError" />
       	</field>
@@ -16,27 +16,27 @@
         </field>
         
         <field property="dayOfEmissionDateOfDocumentId" depends="required,integer" page="2">
-        	<arg0 key="label.person.identificationDocumentIssueDate" />
+        	<arg0 key="error.schoolRegistration.dayOfEmissionDateOfDocumentId" />
         </field>
         
         <field property="monthOfEmissionDateOfDocumentId" depends="required,integer" page="2">
-        	<arg0 key="label.person.identificationDocumentIssueDate" />
+        	<arg0 key="error.schoolRegistration.monthOfEmissionDateOfDocumentId" />
         </field>
         
         <field property="yearOfEmissionDateOfDocumentId" depends="required,integer" page="2">
-        	<arg0 key="label.person.identificationDocumentIssueDate" />
+        	<arg0 key="error.schoolRegistration.yearOfEmissionDateOfDocumentId" />
         </field>
         
         <field property="dayOfExpirationDateOfDocumentId" depends="required,integer" page="2">
-        	<arg0 key="label.person.identificationDocumentExpirationDate" />
+        	<arg0 key="error.schoolRegistration.dayOfExpirationDateOfDocumentId" />
         </field>
         
         <field property="monthOfExpirationDateOfDocumentId" depends="required,integer" page="2">
-        	<arg0 key="label.person.identificationDocumentExpirationDate" />
+        	<arg0 key="error.schoolRegistration.monthOfExpirationDateOfDocumentId" />
         </field>
         
         <field property="yearOfExpirationDateOfDocumentId" depends="required,integer" page="2">
-        	<arg0 key="label.person.identificationDocumentExpirationDate" />
+        	<arg0 key="error.schoolRegistration.yearOfExpirationDateOfDocumentId" />
         </field>
         
         <field property="nameOfFather" depends="required" page="2">
@@ -110,9 +110,9 @@
         
         <field property="mobile" depends="integer" page="2">
         	<arg0 key="label.person.mobilePhone" />
-        </field> -->
+        </field>
                 
-    </form>
+    </form>-->
     
   </formset>
 </form-validation>
