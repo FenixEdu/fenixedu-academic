@@ -149,7 +149,7 @@ public class ExecutionPeriodOJB
 				+" where state = $1";
 
 			query.create(oqlQuery);
-			query.bind(PeriodState.ACTUAL);
+			query.bind(PeriodState.CURRENT);
 			
 			List result = (List) query.execute();
 			lockRead(result);

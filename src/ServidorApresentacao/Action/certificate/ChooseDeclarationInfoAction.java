@@ -127,7 +127,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 				
 		    else {			
 				try {
-					infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadActualExecutionYear", null);
+					infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);
 
 				} catch (RuntimeException e) {
 					throw new RuntimeException("Error", e);

@@ -168,7 +168,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						}			
 						session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
 						try {
-							infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadActualExecutionYear", null);
+							infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);
 		
 						} catch (RuntimeException e) {
 							throw new RuntimeException("Error", e);

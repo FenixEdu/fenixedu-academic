@@ -42,8 +42,8 @@ public class JavaPeriodState2SqlPeriodState implements FieldConversion{
         if (source instanceof String){
         	String code = (String) source;
 			PeriodState periodState = null;
-        	if (code.equals(PeriodState.ACTUAL_CODE)){
-        		periodState = new PeriodState(PeriodState.ACTUAL);
+        	if (code.equals(PeriodState.CURRENT_CODE)){
+        		periodState = new PeriodState(PeriodState.CURRENT);
         	}else if (code.equals(PeriodState.OPEN_CODE)){
         		periodState = new PeriodState(PeriodState.OPEN);
         	}else if (code.equals(PeriodState.NOT_OPEN_CODE)){

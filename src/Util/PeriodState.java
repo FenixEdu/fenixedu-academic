@@ -12,11 +12,11 @@ public class PeriodState {
 	public static final PeriodState CLOSED = new PeriodState(PeriodState.CLOSED_CODE);
 	public static final PeriodState OPEN = new PeriodState(PeriodState.OPEN_CODE);
 	public static final PeriodState NOT_OPEN = new PeriodState(PeriodState.NOT_OPEN_CODE);
-	public static final PeriodState ACTUAL = new PeriodState(PeriodState.ACTUAL_CODE);	
+	public static final PeriodState CURRENT = new PeriodState(PeriodState.CURRENT_CODE);	
 	
 	
-	public static final String CLOSED_CODE = "C";
-	public static final String ACTUAL_CODE = "A";
+	public static final String CLOSED_CODE = "CL";
+	public static final String CURRENT_CODE = "C";
 	public static final String  OPEN_CODE = "O";
 	public static final String NOT_OPEN_CODE = "NO";
 	

@@ -154,7 +154,7 @@ public class ExecutionYearOJB
 			String oqlQuery = "select all from " + ExecutionYear.class.getName()
 							+ " where state = $1";
 			query.create(oqlQuery);
-			query.bind(PeriodState.ACTUAL);
+			query.bind(PeriodState.CURRENT);
 			List result = (List) query.execute();
 
 			lockRead(result);

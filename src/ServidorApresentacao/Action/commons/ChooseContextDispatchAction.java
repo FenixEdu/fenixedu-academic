@@ -178,7 +178,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) ServiceUtils.executeService(
 				null,
-				"ReadActualExecutionPeriod",
+				"ReadCurrentExecutionPeriod",
 				null);
 		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
 		//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
@@ -523,7 +523,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			infoExecutionPeriod =
 				(InfoExecutionPeriod) ServiceUtils.executeService(
 					userView,
-					"ReadActualExecutionPeriod",
+					"ReadCurrentExecutionPeriod",
 					new Object[0]);
 
 			session.setAttribute(
