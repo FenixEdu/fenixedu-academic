@@ -224,7 +224,7 @@
 		      path="/chooseExecutionYear"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateCandidateDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -242,7 +242,7 @@
 		      path="/createCandidateDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateCandidateDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -258,7 +258,7 @@
 		      path="/visualizeCandidates"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
               validate="true">
 	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
 	         <forward name="ActionReady" path="/visualizeCandidate.jsp"/>  
@@ -272,7 +272,7 @@
 		      path="/editCandidates"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -288,7 +288,7 @@
 		      path="/editCandidate"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
 		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
@@ -316,7 +316,7 @@
 	      validate="true"
 		 parameter="method"
   	         scope="request"
-      	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateContributorDispatchAction">
+      	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.CreateContributorDispatchAction">
    		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
             key="ServidorApresentacao.Action.exceptions.ExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -381,7 +381,7 @@
 		      path="/createGuideDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
               validate="true">
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
@@ -431,7 +431,7 @@
 		      path="/createGuideReadyDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"

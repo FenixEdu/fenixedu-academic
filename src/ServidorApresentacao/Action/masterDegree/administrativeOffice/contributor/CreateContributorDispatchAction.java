@@ -2,7 +2,7 @@
  * Created on 21/Mar/2003
  *
  */
-package ServidorApresentacao.Action.masterDegree.administrativeOffice;
+package ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -2,7 +2,7 @@
  * Created on 14/Mar/2003
  *
  */
-package ServidorApresentacao.Action.masterDegree.administrativeOffice;
+package ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
 import java.util.Calendar;

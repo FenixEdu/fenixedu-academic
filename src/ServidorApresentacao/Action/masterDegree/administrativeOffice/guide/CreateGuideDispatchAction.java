@@ -2,7 +2,7 @@
  * Created on 14/Mar/2003
  *
  */
-package ServidorApresentacao.Action.masterDegree.administrativeOffice;
+package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide;
 
 import java.util.ArrayList;
 import java.util.Iterator;
