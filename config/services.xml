@@ -2260,9 +2260,18 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
-        <service>
+    <service>
         <name>ListGrantOwners</name>
         <implementationClass>ServidorAplicacao.Servico.grant.list.ListGrantOwners</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ListGrantOwnerByCriteria</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.list.ListGrantOwnerByCriteria</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

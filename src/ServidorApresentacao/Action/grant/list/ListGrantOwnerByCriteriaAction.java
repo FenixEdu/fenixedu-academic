@@ -32,29 +32,24 @@ public class ListGrantOwnerByCriteriaAction extends FenixDispatchAction {
     public ActionForward actionStart(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+    	DynaValidatorForm listForm = (DynaValidatorForm) form;
+    	listForm.set("filterType", new Integer(1));
         return mapping.findForward("select-criteria");
+        
+        
     }
 
     public ActionForward prepareListGrantOwnerByCriteria(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        InfoSpanByCriteriaListGrantOwner infoSpanByCriteriaListGrantOwner = null;
-        if (verifyParameterInRequest(request, "parameterInRequest")) {
-            //The values are in the request
+        DynaValidatorForm listForm = (DynaValidatorForm) form;
 
-        } else {
-            //The values are in the form
-            DynaValidatorForm listForm = (DynaValidatorForm) form;
-
-            InfoSpanListGrantOwner infoSpanListGrantOwner = populateInfoFromForm(listForm);
-            if (infoSpanListGrantOwner.getSpanNumber().intValue() > infoSpanListGrantOwner
-                    .getNumberOfSpans().intValue()) { return setError(request,
-                    mapping, "errors.grant.list.invalidSpan",
-                    "select-criteria-to-list", null); }
+        InfoSpanByCriteriaListGrantOwner infoSpanByCriteriaListGrantOwner = populateInfoFromForm(listForm);
+        
+        if (infoSpanByCriteriaListGrantOwner.getTotalElements() != null && infoSpanByCriteriaListGrantOwner.getSpanNumber().intValue() > infoSpanByCriteriaListGrantOwner.getNumberOfSpans().intValue()) { 
+        		return setError(request,mapping, "errors.grant.list.invalidSpan","select-criteria", null);
         }
-
-        return listGrantOwner(mapping, request, form, response,
-                infoSpanByCriteriaListGrantOwner);
+        return listGrantOwner(mapping, request, form, response,infoSpanByCriteriaListGrantOwner);
     }
 
     private ActionForward listGrantOwner(ActionMapping mapping,
@@ -67,14 +62,11 @@ public class ListGrantOwnerByCriteriaAction extends FenixDispatchAction {
 
             //Read the grant owners
             Object[] args = { infoSpanByCriteriaListGrantOwner};
-            List listGrantOwners = (List) ServiceUtils.executeService(userView,
-                    "ListGrantOwners", args);
+            List listGrantOwners = (List) ServiceUtils.executeService(userView,"ListGrantOwnerByCriteria", args);
 
             if (listGrantOwners != null && listGrantOwners.size() != 0) {
-                if (listGrantOwners.size() > infoSpanByCriteriaListGrantOwner
-                        .getNumberOfElementsInSpan().intValue()) {
-                    infoSpanByCriteriaListGrantOwner = (InfoSpanByCriteriaListGrantOwner) listGrantOwners
-                            .get(listGrantOwners.size() - 1);
+                if (listGrantOwners.size() > infoSpanByCriteriaListGrantOwner.getNumberOfElementsInSpan().intValue()) {
+                    infoSpanByCriteriaListGrantOwner = (InfoSpanByCriteriaListGrantOwner) listGrantOwners.get(listGrantOwners.size() - 1);
                     listGrantOwners.remove(listGrantOwners.size() - 1);
                 }
 
@@ -82,39 +74,28 @@ public class ListGrantOwnerByCriteriaAction extends FenixDispatchAction {
                 DynaValidatorForm listForm = (DynaValidatorForm) form;
                 setForm(listForm, infoSpanByCriteriaListGrantOwner);
                 request.setAttribute("listGrantOwner", listGrantOwners);
-                request.setAttribute("spanNumber",
-                        infoSpanByCriteriaListGrantOwner.getSpanNumber());
-                request.setAttribute("numberOfElementsInSpan",
-                        infoSpanByCriteriaListGrantOwner
-                                .getNumberOfElementsInSpan());
-                request.setAttribute("orderBy",
-                        infoSpanByCriteriaListGrantOwner.getOrderBy());
-                request.setAttribute("totalElements",
-                        infoSpanByCriteriaListGrantOwner.getTotalElements());
+                request.setAttribute("spanNumber",infoSpanByCriteriaListGrantOwner.getSpanNumber());
+                request.setAttribute("numberOfElementsInSpan",infoSpanByCriteriaListGrantOwner.getNumberOfElementsInSpan());
+                request.setAttribute("orderBy",infoSpanByCriteriaListGrantOwner.getOrderBy());
+                request.setAttribute("totalElements",infoSpanByCriteriaListGrantOwner.getTotalElements());
+                //TODO.. set other atributes!
 
                 if (infoSpanByCriteriaListGrantOwner.hasBeforeSpan()) {
-                    request.setAttribute("beforeSpan",
-                            infoSpanByCriteriaListGrantOwner.getBeforeSpan());
+                    request.setAttribute("beforeSpan",infoSpanByCriteriaListGrantOwner.getBeforeSpan());
                 }
                 if (infoSpanByCriteriaListGrantOwner.hasAfterSpan()) {
-                    request.setAttribute("afterSpan",
-                            infoSpanByCriteriaListGrantOwner.getAfterSpan());
+                    request.setAttribute("afterSpan",infoSpanByCriteriaListGrantOwner.getAfterSpan());
                 }
-                request.setAttribute("numberOfSpans",
-                        infoSpanByCriteriaListGrantOwner.getNumberOfSpans());
+                request.setAttribute("numberOfSpans",infoSpanByCriteriaListGrantOwner.getNumberOfSpans());
             } else {
                 throw new Exception();
             }
         } catch (FenixServiceException e) {
-            return setError(request, mapping, "errors.grant.unrecoverable",
-                    "select-criteria-to-list", null);
-
+            return setError(request, mapping, "errors.grant.unrecoverable","select-criteria-to-list", null);
         } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable",
-                    "select-criteria-to-list", null);
+            return setError(request, mapping, "errors.grant.unrecoverable","select-criteria-to-list", null);
         }
-
-        return mapping.findForward("select-criteria-to-list");
+        return mapping.findForward("list-byCriteria-grant-owner");
     }
 
     public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form,
@@ -180,13 +161,15 @@ public class ListGrantOwnerByCriteriaAction extends FenixDispatchAction {
      * <form-property name="endContract" type="java.lang.String"/>
      */
 
-    private InfoSpanListGrantOwner populateInfoFromForm(DynaValidatorForm form)
+    private InfoSpanByCriteriaListGrantOwner populateInfoFromForm(DynaValidatorForm form)
             throws Exception {
         InfoSpanByCriteriaListGrantOwner infoSpanByCriteriaListGrantOwner = new InfoSpanByCriteriaListGrantOwner();
 
         infoSpanByCriteriaListGrantOwner.setNumberOfElementsInSpan((Integer) form.get("numberOfElementsInSpan"));
         infoSpanByCriteriaListGrantOwner.setSpanNumber((Integer) form.get("spanNumber"));
-        infoSpanByCriteriaListGrantOwner.setTotalElements((Integer) form.get("totalElements"));
+        if(verifyStringParameterInForm(form,"totalElements")) {
+        	infoSpanByCriteriaListGrantOwner.setTotalElements((Integer) form.get("totalElements"));
+        }
         infoSpanByCriteriaListGrantOwner.setOrderBy((String) form.get("orderBy"));
 
         infoSpanByCriteriaListGrantOwner.setJustActiveContract(new Boolean(false));

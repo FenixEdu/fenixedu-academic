@@ -1,4 +1,30 @@
 --------------------------------------------------------------------
+Release 2004-07-01
+---------------------------------------------------------------------
+ 
+NEW FEATURES: 
+=============
+- Creation of insurance associated to a Grant Contract in the faculty Adm Office Portal.
+- Listing all grant owners by various orders (facultyAdmOffice Portal).
+
+NOTES:
+======
+- It is necessary to run the script of creation of table GRANT_INSURANCE in the folde deploy_scripts/deploy 30-06-2004
+		mysql < createtables_GRANT_INSURANCE.sql
+
+
+CHANGES:
+========
+
+BUG FIXES:
+==========
+
+
+KNOWN ISSUES:
+=============
+
+
+--------------------------------------------------------------------
 Release 2004-05-26
 ---------------------------------------------------------------------
  

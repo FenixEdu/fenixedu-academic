@@ -2,12 +2,12 @@ package ServidorPersistente.OJB.grant.owner;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import DataBeans.grant.list.InfoSpanByCriteriaListGrantOwner;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -123,31 +123,30 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria);
     }
     
-    public List readAllGrantOwnersBySpanAndCriteria(InfoSpanByCriteriaListGrantOwner infoSpanByCriteriaListGrantOwner)
+    public List readAllGrantOwnersBySpanAndCriteria(String orderBy, Boolean justActiveContracts, Boolean justDesactiveContracts, Date beginContract, Date endContract, Integer spanNumber, Integer numberOfElementsInSpan) 
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addOrderBy(infoSpanByCriteriaListGrantOwner.getOrderBy(), true);
+        criteria.addOrderBy(orderBy, true);
         
         criteria.addEqualTo("contractRegimes.state", new Integer(1));
         
-        if(infoSpanByCriteriaListGrantOwner.getJustActiveContract() != null && 
-                infoSpanByCriteriaListGrantOwner.getJustActiveContract().booleanValue()) { 
+        if(justActiveContracts != null && justActiveContracts.booleanValue()) { 
             criteria.addGreaterOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
             criteria.addEqualTo("endContractMotive","");
         }
-        if(infoSpanByCriteriaListGrantOwner.getJustDesactiveContract() != null && 
-                infoSpanByCriteriaListGrantOwner.getJustDesactiveContract().booleanValue()) {
+        
+        if(justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
             criteria.addLessOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
             criteria.addNotEqualTo("endContractMotive","");
         }
         
-        if(infoSpanByCriteriaListGrantOwner.getBeginContract() != null) {
-            criteria.addGreaterOrEqualThan("contractRegimes.dateBeginContract",infoSpanByCriteriaListGrantOwner.getBeginContract());
+        if(beginContract != null) {
+            criteria.addGreaterOrEqualThan("contractRegimes.dateBeginContract",beginContract);
         } 
-        if(infoSpanByCriteriaListGrantOwner.getEndContract() != null) {
-            criteria.addLessOrEqualThan("contractRegimes.dateEndContract",infoSpanByCriteriaListGrantOwner.getEndContract());
+        if(endContract != null) {
+            criteria.addLessOrEqualThan("contractRegimes.dateEndContract",endContract);
         }
-        return readBySpanAndCriteria(infoSpanByCriteriaListGrantOwner.getSpanNumber(), infoSpanByCriteriaListGrantOwner.getNumberOfElementsInSpan(),criteria);        
+        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria);        
     }
 
 }

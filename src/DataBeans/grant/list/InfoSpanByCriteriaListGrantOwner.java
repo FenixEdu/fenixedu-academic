@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 /**
- * @author Barbpsa
+ * @author Barbosa
  * @author Pica
  */
 public class InfoSpanByCriteriaListGrantOwner extends InfoSpanListGrantOwner {

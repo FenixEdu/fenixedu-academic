@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<strong><p align="center"><bean:message key="label.grant.type.edition"/></p></strong><br/>
+<strong><p align="center"><bean:message key="label.list.byCriteria"/></p></strong><br/>
 
 <html:form action="/listGrantOwnerByCriteria" style="display:inline">
 
@@ -16,20 +16,45 @@
 
 	<html:hidden property="method" value="prepareListGrantOwnerByCriteria"/>
 	<html:hidden property="page" value="1"/>
-
+	
+	<html:hidden property="spanNumber" value="1"/>
+	<html:hidden property="numberOfElementsInSpan" value="100"/>
+	<html:hidden property="orderBy" value="orderByNumber"/>
+	
 	<table>
 		<tr>
-			<td>
-				<bean:message key="label.list.byCriteria.grant.owner.radio.all"/>:&nbsp;
-				<html:radio name="filterType" property="filterType"  value="1"/>
+			<td colspan="2">
+				<table border="1">
+					<tr>
+						<td>
+							<bean:message key="label.list.byCriteria.grant.owner.radio.all"/>:&nbsp;
+						</td>
+						<td>
+							<html:radio name="listGrantOwnerByCriteriaForm" property="filterType"  value="1"/>
+						</td>
+		           </tr>
+				   <tr>
+				   		<td>
+							<bean:message key="label.list.byCriteria.grant.owner.radio.justActive"/>:&nbsp;
+						</td>
+						<td>
+							<html:radio name="listGrantOwnerByCriteriaForm" property="filterType"  value="2"/>
+						</td>
+                   </tr>
+				   <tr>
+				   		<td>
+							<bean:message key="label.list.byCriteria.grant.owner.radio.justDesactive"/>:&nbsp;
+						</td>
+						<td>
+							<html:radio name="listGrantOwnerByCriteriaForm" property="filterType"  value="3"/>			
+			            </td>
+					</tr>
+				</table>
 			</td>
+		</tr>
+		<tr>
 			<td>
-				<bean:message key="label.list.byCriteria.grant.owner.radio.justActive"/>:&nbsp;
-				<html:radio name="filterType" property="filterType"  value="1"/>
-			</td>
-			<td>
-				<bean:message key="label.list.byCriteria.grant.owner.radio.justDesactive"/>:&nbsp;
-				<html:radio name="filterType" property="filterType"  value="1"/>			
+				&nbsp;
 			</td>
 		</tr>
 		<tr>

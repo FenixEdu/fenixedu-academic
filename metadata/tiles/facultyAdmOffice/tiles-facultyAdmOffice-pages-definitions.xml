@@ -102,14 +102,13 @@
 		<put name="body" value="/facultyAdmOffice/grant/list/showGrantOwner.jsp"></put>
 	</definition>
 	
-	
 	<!-- GRANT OWNER BY CRITERIA LIST -->
 	<definition name="selectCriteria" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/list/selectCriteriaToListGrantOwner.jsp"></put>
 	</definition>
-<!--	<definition name="listGrantOwnerByCriteria" extends="facultyAdmOffice.masterPage">
+	<definition name="listGrantOwnerByCriteria" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/list/listGrantOwnerByCriteria.jsp"></put>
-	</definition> -->
+	</definition>
 
 
 	<!-- GRANT CORRECTIONS -->
