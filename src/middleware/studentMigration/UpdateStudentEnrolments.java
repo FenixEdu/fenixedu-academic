@@ -68,31 +68,50 @@ public class UpdateStudentEnrolments
 		IPersistentMWEnrolment persistentEnrolment = mws.getIPersistentMWEnrolment();
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 
-		System.out.println("[INFO] Reading all MWStudents...");
+//		System.out.println("[INFO] Reading all MWStudents...");
 
 		sp.iniciarTransaccao();
 
 		executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
-		List result = persistentMWAluno.readAll();
 
+//------------------------------------------------------------------------------------------------------------------------
+		Integer numberOfStudents = persistentMWAluno.countAll();
 		sp.confirmarTransaccao();
 
-		System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
+		int numberOfElementsInSpan = 100;
+		int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
+		numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 
-		Iterator iterator = result.iterator();
-		while (iterator.hasNext())
-		{
-			MWAluno oldStudent = (MWAluno) iterator.next();
-			try
+		for (int span = 0; span < numberOfSpans; span++) {
+			sp.iniciarTransaccao();
+			sp.clearCache();	
+			System.out.println("[INFO] Reading MWStudents...");
+			List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
+//------------------------------------------------------------------------------------------------------------------------
+
+//			List result = persistentMWAluno.readAll();
+	
+			sp.confirmarTransaccao();
+	
+			System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
+	
+			Iterator iterator = result.iterator();
+			while (iterator.hasNext())
 			{
-				sp.iniciarTransaccao();
-				// Read all the MWEnrolments.
-				oldStudent.setEnrolments(persistentEnrolment.readByStudentNumber(oldStudent.getNumber()));
-				UpdateStudentEnrolments.updateStudentEnrolment(oldStudent, sp);
-				sp.confirmarTransaccao();
-			} catch (Exception e)
-			{}
+				MWAluno oldStudent = (MWAluno) iterator.next();
+				try
+				{
+					sp.iniciarTransaccao();
+					// Read all the MWEnrolments.
+					oldStudent.setEnrolments(persistentEnrolment.readByStudentNumber(oldStudent.getNumber()));
+					UpdateStudentEnrolments.updateStudentEnrolment(oldStudent, sp);
+					sp.confirmarTransaccao();
+				} catch (Exception e)
+				{}
+			}
+//------------------------------------------------------------------------------------------------------------------------
 		}
+//------------------------------------------------------------------------------------------------------------------------
 
 		ReportEnrolment.report(new PrintWriter(System.out, true));
 	}
@@ -586,8 +605,8 @@ public class UpdateStudentEnrolments
 			if (branch == null)
 			{
 				if( ((curricularCourseScope.getBranch().getCode().equals("")) &&
-					 (curricularCourseScope.getBranch().getName().equals(""))) ||
-					(curricularCourseScope.getBranch().getName().startsWith("CURSO DE"))
+					 (curricularCourseScope.getBranch().getName().equals("")))/* ||
+					(curricularCourseScope.getBranch().getName().startsWith("CURSO DE"))*/
 				  )
 				{
 					return curricularCourseScope;
@@ -863,6 +882,12 @@ public class UpdateStudentEnrolments
 		}
 
 		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+
+//		if(mwbranch.getDescription().startsWith("CURSO DE ")) {
+//			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+//		} else {
+//			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+//		}
 
 		if (branch == null)
 		{

@@ -26,7 +26,6 @@ import Dominio.IStudentKind;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.StudentCurricularPlanState;
@@ -85,7 +84,7 @@ public class CreateStudent {
 	public static void createStudent(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception {
 		
 		try {
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+//			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 		
 			// Check if the person Exists
 			// If it does then we will not change his information
@@ -150,7 +149,7 @@ public class CreateStudent {
 	 */
 	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWAluno oldStudent, ISuportePersistente sp) throws Exception {
 	
-		IDegreeCurricularPlan degreeCurricularPlan = null;
+//		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
 
@@ -203,6 +202,11 @@ public class CreateStudent {
 		
 		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
 
+//		if(mwbranch.getDescription().startsWith("CURSO DE ")) {
+//			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+//		} else {
+//			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+//		}
 
 		if (branch == null) {
 			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
