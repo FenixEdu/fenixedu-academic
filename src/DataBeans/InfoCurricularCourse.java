@@ -6,7 +6,6 @@
 
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.List;
 
 import Util.CurricularCourseType;
@@ -15,7 +14,7 @@ import Util.CurricularCourseType;
  *
  * @author  tfc130
  */
-public class InfoCurricularCourse implements Serializable {
+public class InfoCurricularCourse  extends InfoObject{
 	private String name;
 	private String code;
 	private Double credits;

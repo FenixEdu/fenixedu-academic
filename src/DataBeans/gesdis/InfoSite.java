@@ -1,6 +1,7 @@
 package DataBeans.gesdis;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoObject;
 
 /**
  * This is the view class that contains information about the site domain objects.
@@ -10,7 +11,7 @@ import DataBeans.InfoExecutionCourse;
  * @author Ivo Brandão
  **/
 
-public class InfoSite {
+public class InfoSite extends InfoObject {
 
 	private InfoSection initialInfoSection;
 	private InfoExecutionCourse infoExecutionCourse;
