@@ -1,5 +1,5 @@
 /*  -------------------------------------
-	GESDIS CSS - WEB | 07.04.2003
+	GESDIS CSS - WEB | 08.04.2003
 	------------------------------------- */
 
 /*****************************************
@@ -275,6 +275,15 @@ p.citation-author	{
 	padding: 20px;
 	background-color: transparent;
 	}
+.ultAnuncio-date {
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	text-align: right;
+	padding: 20px;
+	background-color: transparent;
+	}
+	
+	
 
 /*
 .ultAnuncio {
