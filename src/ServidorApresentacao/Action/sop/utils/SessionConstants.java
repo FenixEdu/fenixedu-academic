@@ -89,6 +89,7 @@ public abstract class SessionConstants {
 	public static final String CONTRIBUTOR = "contributor";
 	public static final String CONTRIBUTOR_ACTION = "contributor_action";
 	public static final String GUIDE_REQUESTER_LIST = "guide_requester_list";
+	public static final String STUDENT_GUIDE_LIST = "student_guide_list";
 	public static final String GUIDE = "guide";
 	public static final String GUIDE_YEAR = "guide_year";
 	public static final String GUIDE_NUMBER = "guide_number";
