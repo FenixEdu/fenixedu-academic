@@ -18,7 +18,7 @@ public class InfoSection {
     protected Date lastModifiedDate;
     protected InfoSite infoSite;
     protected InfoSection infoSuperiorSection;
-    protected Integer depth = new Integer(0);
+    protected Integer sectionDepth = new Integer(0);
 //    protected List inferiorInfoSections;
 //    protected List infoItems;
     
@@ -51,7 +51,7 @@ public class InfoSection {
         this.sectionOrder = sectionOrder;        
         this.infoSite = infoSite;
         this.infoSuperiorSection =infoSuperiorSection;
-        this.depth = calculateDepth();
+        this.sectionDepth = calculateDepth();
 		
         
 //        if ((inferiorInfoSections != null) &&
@@ -125,7 +125,7 @@ public class InfoSection {
 	*/
 	public void setSectionOrder(Integer sectionOrder) {
 		this.sectionOrder=sectionOrder;
-		this.depth = calculateDepth();
+		this.sectionDepth = calculateDepth();
 		}
     
 	
@@ -230,7 +230,7 @@ public class InfoSection {
 		result += ", sectionOrder=" + getSectionOrder();
 		result += ", infoSite=" + getInfoSite();
 		result += ", superiorInfoSection=" + getSuperiorInfoSection();
-		result += ", depth=" + getDepth();
+		result += ", sectionDepth=" + getSectionDepth();
 		result += "]";
 		return result;
 	}
@@ -264,16 +264,16 @@ public class InfoSection {
 	/**
 	 * @return int
 	 */
-	public Integer getDepth() {
-		return depth;
+	public Integer getSectionDepth() {
+		return sectionDepth;
 	}
 
 	/**
 	 * Sets the depth.
 	 * @param depth The depth to set
 	 */
-	public void setDepth(Integer depth) {
-		this.depth = depth;
+	public void setSectionDepth(Integer depth) {
+		this.sectionDepth = depth;
 	}
 
 }
