@@ -66,11 +66,9 @@ public class AssociateTeacher implements IServico {
 			executionCourse =
 				Cloner.copyInfoExecutionCourse2ExecutionCourse(
 					infoExecutionCourse);
-			System.out.println("Teacher: " + teacher.getTeacherNumber());
-			System.out.println("Teacher: " + teacher);
+			
 			if (teacher == null) {
-				System.out.println("O Teacher está a null: ");
-				
+						
 				throw new InvalidArgumentsServiceException();
 			} else {
 

@@ -33,7 +33,7 @@ public class AssociateTeacherTest extends TestCaseCreateServices {
 	 */
 	public AssociateTeacherTest(String testName) {
 		super(testName);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/* (non-Javadoc)
