@@ -1,7 +1,9 @@
 package ServidorAplicacao.Servico.student;
 
 import Dominio.Exam;
+import Dominio.ExamStudentRoom;
 import Dominio.IExam;
+import Dominio.IExamStudentRoom;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -9,6 +11,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -49,6 +52,7 @@ public class EnrollStudentInExam implements IServico {
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			IStudent student = persistentStudent.readByUsername(username);
 			IPersistentExam persistentExam = sp.getIPersistentExam();
+			IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
 			IExam exam = new Exam();
 			exam.setIdInternal(examId);
 			exam = (IExam) persistentExam.readByOId(exam, true);
@@ -56,14 +60,14 @@ public class EnrollStudentInExam implements IServico {
 
 				throw new InvalidArgumentsServiceException();
 			}
-			if ( student.getExamsEnrolled().contains(exam)) {
+			
+			IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam,student);
+			if (examStudentRoom != null){
 				throw new ExistingServiceException();
 			}
-			persistentStudent.lockWrite(student);
+			examStudentRoom = new ExamStudentRoom(exam,student,null);
+			persistentExamStudentRoom.lockWrite(examStudentRoom);
 	
-			student.getExamsEnrolled().add(exam);
-
-			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

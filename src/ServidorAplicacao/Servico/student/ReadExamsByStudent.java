@@ -58,48 +58,78 @@ public class ReadExamsByStudent implements IServico {
 
 		List examsToEnroll = new ArrayList();
 
-		List infoExamsEnrolled = new ArrayList();
 		List infoExamsToEnroll = new ArrayList();
-		List studentExamDistribution = new ArrayList();
+		List infoExamStudentRoomList = new ArrayList();
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
+			IPersistentExamStudentRoom examStudentRoomDAO =
+				sp.getIPersistentExamStudentRoom();
 			IStudent student =
 				(IStudent) sp.getIPersistentStudent().readByUsername(username);
 
 			if (student != null) {
-				List examsEnrolled = student.getExamsEnrolled();
+				List examsStudentRooms = examStudentRoomDAO.readBy(student);
+				Iterator iter = examsStudentRooms.iterator();
+				List examsEnrolled = new ArrayList();
 
-				Iterator examsEnrolledIterator = examsEnrolled.iterator();
-				while (examsEnrolledIterator.hasNext()) {
-					IExam exam = (IExam) examsEnrolledIterator.next();
-					InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
-					infoExam.setInfoExecutionCourse(
+				while (iter.hasNext()) {
+					IExamStudentRoom examStudentRoom =
+						(IExamStudentRoom) iter.next();
+					InfoExamStudentRoom infoExamStudentRoom =
+						new InfoExamStudentRoom();
+					infoExamStudentRoom.setIdInternal(
+						examStudentRoom.getIdInternal());
+					infoExamStudentRoom.setInfoExam(
+						Cloner.copyIExam2InfoExam(examStudentRoom.getExam()));
+					infoExamStudentRoom.getInfoExam().setInfoExecutionCourse(
 						Cloner.copyIExecutionCourse2InfoExecutionCourse(
-							(IDisciplinaExecucao) exam
+							(IDisciplinaExecucao) examStudentRoom
+								.getExam()
 								.getAssociatedExecutionCourses()
-								.get(
-								0)));
-
-					infoExamsEnrolled.add(infoExam);
-
-					if (!isInDate(exam)) {
-						//closedEnrollmentExams.add(infoExam);
-						IExamStudentRoom examStudentRoom = examStudentRoomDAO.readBy(exam, student);
-						InfoExamStudentRoom infoExamStudentRoom = null;
-						if (examStudentRoom != null) {
-							infoExamStudentRoom = Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);							
-						} else {
-							infoExamStudentRoom = new InfoExamStudentRoom();
-							infoExamStudentRoom.setInfoRoom(null);
-							infoExamStudentRoom.setInfoStudent(null);
-							infoExamStudentRoom.setInfoExam(infoExam);
-						}
-						studentExamDistribution.add(infoExamStudentRoom);
+								.get(0)));
+					infoExamStudentRoom.setInfoStudent(
+						Cloner.copyIStudent2InfoStudent(
+							examStudentRoom.getStudent()));
+					if (examStudentRoom.getRoom() != null) {
+						infoExamStudentRoom.setInfoRoom(
+							Cloner.copyRoom2InfoRoom(
+								examStudentRoom.getRoom()));
 					}
-
+					infoExamStudentRoomList.add(infoExamStudentRoom);
+					examsEnrolled.add(examStudentRoom.getExam());
 				}
+
+				//
+				//				Iterator examsEnrolledIterator = examsEnrolled.iterator();
+				//				while (examsEnrolledIterator.hasNext()) {
+				//					IExam exam = (IExam) examsEnrolledIterator.next();
+				//					InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+				//					infoExam.setInfoExecutionCourse(
+				//						Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				//							(IDisciplinaExecucao) exam
+				//								.getAssociatedExecutionCourses()
+				//								.get(
+				//								0)));
+				//
+				//					infoExamsEnrolled.add(infoExam);
+				//
+				//					if (!isInDate(exam)) {
+				//						//closedEnrollmentExams.add(infoExam);
+				//						IExamStudentRoom examStudentRoom = examStudentRoomDAO.readBy(exam, student);
+				//						InfoExamStudentRoom infoExamStudentRoom = null;
+				//						if (examStudentRoom != null) {
+				//							infoExamStudentRoom = Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);							
+				//						} else {
+				//							infoExamStudentRoom = new InfoExamStudentRoom();
+				//							infoExamStudentRoom.setInfoRoom(null);
+				//							infoExamStudentRoom.setInfoStudent(null);
+				//							infoExamStudentRoom.setInfoExam(infoExam);
+				//						}
+				//						studentExamDistribution.add(infoExamStudentRoom);
+				//					}
+				//
+				//				}
 
 				List attends =
 					sp.getIFrequentaPersistente().readByStudentId(
@@ -139,8 +169,9 @@ public class ReadExamsByStudent implements IServico {
 		}
 
 		InfoStudentSiteExams component =
-			new InfoStudentSiteExams(infoExamsToEnroll, infoExamsEnrolled);
-		component.setStudentDistributions(studentExamDistribution);
+			new InfoStudentSiteExams(
+				infoExamsToEnroll,
+				infoExamStudentRoomList);
 		SiteView siteView = new SiteView(component);
 		return siteView;
 
@@ -157,19 +188,39 @@ public class ReadExamsByStudent implements IServico {
 			|| exam.getEnrollmentEndTime() == null) {
 			return false;
 		} else {
-		Calendar begin = Calendar.getInstance();
-		begin.set(Calendar.YEAR,exam.getEnrollmentBeginDay().get(Calendar.YEAR));
-		begin.set(Calendar.MONTH,exam.getEnrollmentBeginDay().get(Calendar.MONTH));
-		begin.set(Calendar.DAY_OF_MONTH,exam.getEnrollmentBeginDay().get(Calendar.DAY_OF_MONTH));
-		begin.set(Calendar.HOUR_OF_DAY,exam.getEnrollmentBeginTime().get(Calendar.HOUR_OF_DAY));
-		begin.set(Calendar.MINUTE,exam.getEnrollmentBeginTime().get(Calendar.MINUTE));
-		
-		Calendar end = Calendar.getInstance();
-		end.set(Calendar.YEAR,exam.getEnrollmentEndDay().get(Calendar.YEAR));
-		end.set(Calendar.MONTH,exam.getEnrollmentEndDay().get(Calendar.MONTH));
-		end.set(Calendar.DAY_OF_MONTH,exam.getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
-		end.set(Calendar.HOUR_OF_DAY,exam.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
-		end.set(Calendar.MINUTE,exam.getEnrollmentEndTime().get(Calendar.MINUTE));
+			Calendar begin = Calendar.getInstance();
+			begin.set(
+				Calendar.YEAR,
+				exam.getEnrollmentBeginDay().get(Calendar.YEAR));
+			begin.set(
+				Calendar.MONTH,
+				exam.getEnrollmentBeginDay().get(Calendar.MONTH));
+			begin.set(
+				Calendar.DAY_OF_MONTH,
+				exam.getEnrollmentBeginDay().get(Calendar.DAY_OF_MONTH));
+			begin.set(
+				Calendar.HOUR_OF_DAY,
+				exam.getEnrollmentBeginTime().get(Calendar.HOUR_OF_DAY));
+			begin.set(
+				Calendar.MINUTE,
+				exam.getEnrollmentBeginTime().get(Calendar.MINUTE));
+
+			Calendar end = Calendar.getInstance();
+			end.set(
+				Calendar.YEAR,
+				exam.getEnrollmentEndDay().get(Calendar.YEAR));
+			end.set(
+				Calendar.MONTH,
+				exam.getEnrollmentEndDay().get(Calendar.MONTH));
+			end.set(
+				Calendar.DAY_OF_MONTH,
+				exam.getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
+			end.set(
+				Calendar.HOUR_OF_DAY,
+				exam.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
+			end.set(
+				Calendar.MINUTE,
+				exam.getEnrollmentEndTime().get(Calendar.MINUTE));
 			return (
 				Calendar.getInstance().getTimeInMillis()
 					< end.getTimeInMillis()

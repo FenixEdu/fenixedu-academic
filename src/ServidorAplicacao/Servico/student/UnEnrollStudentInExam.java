@@ -1,11 +1,14 @@
 package ServidorAplicacao.Servico.student;
 
+import java.util.Calendar;
+
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
 import Dominio.IExam;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamStudentRoom;
@@ -41,7 +44,8 @@ public class UnEnrollStudentInExam implements IServico {
 		return "UnEnrollStudentInExam";
 	}
 
-	public Boolean run(String username, Integer examId) throws FenixServiceException {
+	public Boolean run(String username, Integer examId)
+		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -55,13 +59,20 @@ public class UnEnrollStudentInExam implements IServico {
 				IExam exam = new Exam();
 				exam.setIdInternal(examId);
 				exam = (IExam) persistentExam.readByOId(exam, true);
+				if (!validUnEnrollment(exam)) {
+					throw new notAuthorizedServiceDeleteException();
+				}
 
-				persistentStudent.lockWrite(student);
-				student.getExamsEnrolled().remove(exam);
-
-				IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-				ExamStudentRoom examStudentRoom = (ExamStudentRoom) persistentExamStudentRoom.readBy(exam, student);
+				IPersistentExamStudentRoom persistentExamStudentRoom =
+					sp.getIPersistentExamStudentRoom();
+				ExamStudentRoom examStudentRoom =
+					(ExamStudentRoom) persistentExamStudentRoom.readBy(
+						exam,
+						student);
 				if (examStudentRoom != null) {
+					if (examStudentRoom.getRoom() != null) {
+						throw new notAuthorizedServiceDeleteException();
+					}
 					persistentExamStudentRoom.delete(examStudentRoom);
 				}
 			}
@@ -72,6 +83,35 @@ public class UnEnrollStudentInExam implements IServico {
 
 		return new Boolean(true);
 
+	}
+
+	/**
+	 * @param exam
+	 * @return
+	 */
+	private boolean validUnEnrollment(IExam exam) {
+		Calendar enrollmentEnd = Calendar.getInstance();
+		enrollmentEnd.set(
+			Calendar.DAY_OF_MONTH,
+			exam.getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
+		enrollmentEnd.set(
+			Calendar.MONTH,
+			exam.getEnrollmentEndDay().get(Calendar.MONTH));
+		enrollmentEnd.set(
+			Calendar.YEAR,
+			exam.getEnrollmentEndDay().get(Calendar.YEAR));
+		enrollmentEnd.set(
+			Calendar.HOUR_OF_DAY,
+			exam.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
+		enrollmentEnd.set(
+			Calendar.MINUTE,
+			exam.getEnrollmentEndTime().get(Calendar.MINUTE));
+		Calendar now = Calendar.getInstance();
+		if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
