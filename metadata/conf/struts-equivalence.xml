@@ -10,6 +10,7 @@
 		<form-bean name="manualEquivalenceFrom" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>
+			<form-property name="enrolmentIndex" type="java.lang.Integer"/>
 			<form-property name="grades" type="java.lang.String[]"/>
 			<form-property name="curricularCoursesToGiveEquivalence" type="java.lang.Integer[]"/>
 			<form-property name="curricularCoursesToGetEquivalence" type="java.lang.Integer[]"/>
@@ -76,6 +77,7 @@
 			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
 			<forward name="confirmCurricularCoursesForEquivalence" path="df.page.confirmCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
 			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
+			<forward name="detailsCurricularCourseScope" path="df.page.detailsCurricularCourseScopeForDegreeAdministrativeOfficeEquivalence"/>
 			<forward name="begin" path="/manualEquivalenceManagerForDegreeAdministrativeOffice.do?method=show"/>
 			<forward name="home" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
 		</action>
@@ -94,6 +96,7 @@
 			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="confirmCurricularCoursesForEquivalence" path="df.page.confirmCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForCoordinatorEquivalence"/>
+			<forward name="detailsCurricularCourseScope" path="df.page.detailsCurricularCourseScopeForCoordinatorEquivalence"/>
 			<forward name="begin" path="/manualEquivalenceManagerForCoordinator.do?method=show"/>
 			<forward name="home" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
 		</action>

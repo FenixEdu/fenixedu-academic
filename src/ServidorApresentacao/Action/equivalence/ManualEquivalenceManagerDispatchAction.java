@@ -18,6 +18,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.equivalence.InfoCurricularCourseScopeGrade;
@@ -36,7 +37,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 	
-	private final String[] forwards = { "showCurricularCoursesForEquivalence", "verifyCurricularCoursesForEquivalence", "confirmCurricularCoursesForEquivalence", "acceptCurricularCoursesForEquivalence", "begin", "home" };
+	private final String[] forwards = { "showCurricularCoursesForEquivalence", "verifyCurricularCoursesForEquivalence", "confirmCurricularCoursesForEquivalence", "acceptCurricularCoursesForEquivalence", "detailsCurricularCourseScope", "begin", "home" };
 
 	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -72,7 +73,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 	public ActionForward verify(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if (isCancelled(request)) {
-			return mapping.findForward(forwards[5]);
+			return mapping.findForward(forwards[6]);
 		}
 		
 		validateToken(request, form, mapping);
@@ -152,8 +153,35 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		return mapping.findForward(forwards[3]);
 	}
 
-	public ActionForward begin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward details(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		if (isCancelled(request)) {
+			return mapping.findForward(forwards[0]);
+		}
+
+		validateToken(request, form, mapping);
+
+		DynaActionForm equivalenceForm = (DynaActionForm) form;
+		HttpSession session = request.getSession();
+
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer enrolmentIndex = (Integer) equivalenceForm.get("enrolmentIndex");
+		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) session.getAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
+		InfoEnrolment infoEnrolment = (InfoEnrolment) infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence().get(enrolmentIndex.intValue());
+		InfoStudent infoStudent = (InfoStudent) infoEquivalenceContext.getInfoStudentCurricularPlan().getInfoStudent();
+
+		Object args[] = { infoStudent, infoEnrolment };
+
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceUtils.executeService(userView, "GetEnrolmentEvaluation", args);
+
+		request.setAttribute(SessionConstants.INFO_ENROLMENT_KEY, infoEnrolment);
+		request.setAttribute(SessionConstants.INFO_ENROLMENT_EVALUATION_KEY, infoEnrolmentEvaluation);
+
 		return mapping.findForward(forwards[4]);
+	}
+
+	public ActionForward begin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return mapping.findForward(forwards[5]);
 	}
 
 	private void initializeForm(InfoEquivalenceContext infoEquivalenceContext, DynaActionForm equivalenceForm) {

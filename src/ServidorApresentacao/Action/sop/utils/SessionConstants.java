@@ -28,6 +28,9 @@ public abstract class SessionConstants {
 
 	public static final String EQUIVALENCE_CONTEXT_KEY = "equivalenceContext";
 
+	public static final String INFO_ENROLMENT_KEY = "infoEnrolment";
+	public static final String INFO_ENROLMENT_EVALUATION_KEY = "infoEnrolmentEvaluation";
+
 	//
 	// Constants for Student Enrolment...
 	//

@@ -62,7 +62,13 @@
 									<html:multibox property="curricularCoursesToGiveEquivalence"><bean:write name="index"/></html:multibox>
 								</td>
 								<td align="center">
-									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/><br/>(<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>)
+									<bean:define id="link">
+										<%= path %>.do?method=details&enrolmentIndex=<bean:write name="index"/>
+									</bean:define>
+									<html:link page="<%= pageContext.findAttribute("link").toString() %>" transaction="true">
+										<%--<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/><br/>(<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>)--%>
+										<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+									</html:link>
 								</td>
 								<td align="center">
 									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>

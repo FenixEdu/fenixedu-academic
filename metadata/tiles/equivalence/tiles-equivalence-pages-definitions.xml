@@ -14,6 +14,9 @@
 	<definition name="df.page.acceptCurricularCoursesForDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/equivalence/acceptCurricularCoursesForEquivalence.jsp"/>
 	</definition>
+	<definition name="df.page.detailsCurricularCourseScopeForDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.degreeAdministrativeOffice">
+		<put name="body" value="/equivalence/detailsCurricularCourseScope.jsp"/>
+	</definition>
 
 	<definition name="df.page.showCurricularCoursesForCoordinatorEquivalence" extends="definition.equivalence.for.coordinator">
 		<put name="body" value="/equivalence/showCurricularCoursesForEquivalence.jsp"/>
@@ -26,5 +29,8 @@
 	</definition>
 	<definition name="df.page.acceptCurricularCoursesForCoordinatorEquivalence" extends="definition.equivalence.for.coordinator.masterPage">
 		<put name="body" value="/equivalence/acceptCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.detailsCurricularCourseScopeForCoordinatorEquivalence" extends="definition.equivalence.for.coordinator">
+		<put name="body" value="/equivalence/detailsCurricularCourseScope.jsp"/>
 	</definition>
 </tiles-definitions>
