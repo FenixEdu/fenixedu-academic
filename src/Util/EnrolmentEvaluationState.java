@@ -11,11 +11,13 @@ public class EnrolmentEvaluationState {
 	public static final int TEMPORARY = 2;
 //	public static final int RECTIFIED = 2;
 //	public static final int RECTIFICATION = 3;
+	public static final int ANNULED = 4;
 
 	public static final EnrolmentEvaluationState FINAL_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL);
 	public static final EnrolmentEvaluationState TEMPORARY_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY);
 //	public static final EnrolmentEvaluationState RECTIFIED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED);
 //	public static final EnrolmentEvaluationState RECTIFICATION_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFICATION);
+	public static final EnrolmentEvaluationState ANNULED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.ANNULED);
 
 
 	private Integer state;

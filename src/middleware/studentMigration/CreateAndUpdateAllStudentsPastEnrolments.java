@@ -26,6 +26,8 @@ import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -37,6 +39,8 @@ import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentUniversity;
@@ -376,52 +380,58 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 */
 	private static IEnrolment createAndUpdateEnrolment(MWEnrolment mwEnrolment, IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope/*, IExecutionPeriod currentExecutionPeriod*/, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-//		EnrolmentEvaluationType enrolmentEvaluationType = CreateAndUpdateAllStudentsPastEnrolments.getEvaluationType(mwEnrolment);
-//
-//		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
-//		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
-//
-//		IEnrolment enrolment = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(studentCurricularPlan, curricularCourseScope/*, currentExecutionPeriod*/);
-//
-//		if (enrolment == null) {
-//			// Create the Enrolment.
-//			enrolment = new Enrolment();
-//
-//			fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolment);
-//
-//			enrolment.setCurricularCourseScope(curricularCourseScope);
-//			enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
-//			enrolment.setEnrolmentState(CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentStateByGrade(mwEnrolment));
-//			enrolment.setExecutionPeriod(currentExecutionPeriod);
-//			enrolment.setStudentCurricularPlan(studentCurricularPlan);
-//		}
-//
-//		// Create the EnrolmentEvaluation.
-//		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade());
-//
-//		if (enrolmentEvaluation == null) {
-//			enrolmentEvaluation = new EnrolmentEvaluation();
-//
-//			fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
-//
-//			enrolmentEvaluation.setEnrolment(enrolment);
-//			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-//			enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
-//			enrolmentEvaluation.setExamDate(mwEnrolment.getExamdate());
-//			enrolmentEvaluation.setGrade(mwEnrolment.getGrade());
-//			enrolmentEvaluation.setObservation(mwEnrolment.getRemarks());
-//			enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
-//
-//			enrolmentEvaluation.setEmployee(null);
-//			enrolmentEvaluation.setGradeAvailableDate(null);
-//			enrolmentEvaluation.setWhen(null);
-//			enrolmentEvaluation.setCheckSum(null);
-//		}
-//		
-//		ReportEnrolment.addEnrolmentMigrated();
-//
-//		return enrolment;
-		return null;
+		EnrolmentEvaluationType enrolmentEvaluationType = CreateAndUpdateAllStudentsPastEnrolments.getEvaluationType(mwEnrolment);
+
+		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
+		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
+		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();
+
+		String executionYearName = mwEnrolment.getEnrolmentyear().intValue() + "/" + (mwEnrolment.getEnrolmentyear().intValue() + 1);
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
+		String executionPeriodName = mwEnrolment.getCurricularcoursesemester() + " Semestre";
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
+
+		IEnrolment enrolment = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(studentCurricularPlan, curricularCourseScope, executionPeriod);
+
+		if (enrolment == null) {
+			// Create the Enrolment.
+			enrolment = new Enrolment();
+
+			fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolment);
+
+			enrolment.setCurricularCourseScope(curricularCourseScope);
+			enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
+			enrolment.setEnrolmentState(CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentStateByGrade(mwEnrolment));
+			enrolment.setExecutionPeriod(executionPeriod);
+			enrolment.setStudentCurricularPlan(studentCurricularPlan);
+		}
+
+		// Create the EnrolmentEvaluation.
+		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade());
+
+		if (enrolmentEvaluation == null) {
+			enrolmentEvaluation = new EnrolmentEvaluation();
+
+			fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+
+			enrolmentEvaluation.setEnrolment(enrolment);
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+			enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
+			enrolmentEvaluation.setExamDate(mwEnrolment.getExamdate());
+			enrolmentEvaluation.setGrade(mwEnrolment.getGrade());
+			enrolmentEvaluation.setObservation(mwEnrolment.getRemarks());
+			enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
+
+			enrolmentEvaluation.setEmployee(null);
+			enrolmentEvaluation.setGradeAvailableDate(null);
+			enrolmentEvaluation.setWhen(null);
+			enrolmentEvaluation.setCheckSum(null);
+		}
+		
+		ReportEnrolment.addEnrolmentMigrated();
+
+		return enrolment;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package middleware.studentMigration;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -369,10 +370,9 @@ public class CreateAndUpdateAllPastCurriculums
 			curricularCourseScopeToWrite.setTheoreticalHours(mwCurricularCourseScope.getTheoreticalhours());
 			curricularCourseScopeToWrite.setPraticalHours(mwCurricularCourseScope.getPraticahours());
 			curricularCourseScopeToWrite.setTheoPratHours(mwCurricularCourseScope.getTheoprathours());
-
-//			curricularCourseScopeToWrite.setBeginDate(Calendar.getInstance());
-//			curricularCourseScopeToWrite.setEndDate(Calendar.getInstance());
-//			curricularCourseScopeToWrite.setEctsCredits(null);
+			curricularCourseScopeToWrite.setBeginDate(Calendar.getInstance());
+			curricularCourseScopeToWrite.setEndDate(Calendar.getInstance());
+			curricularCourseScopeToWrite.setEctsCredits(null);
 
 			curricularCourseScopeToWrite.setWeigth(null);
 
