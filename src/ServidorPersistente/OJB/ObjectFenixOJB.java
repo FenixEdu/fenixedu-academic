@@ -48,6 +48,7 @@ import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 import org.odmg.Transaction;
 
+import Dominio.DomainObject;
 import Dominio.IDomainObject;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -663,5 +664,14 @@ public abstract class ObjectFenixOJB implements IPersistentObject
     {
         return new QueryByCriteria(classToQuery, criteria);
     }
-
+    
+	/**
+	 * Store the object in the database without creating any lock's  
+	 * @param domainObject object to store
+	 */
+	protected void store(IDomainObject domainObject)
+	{
+		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+		pb.store(domainObject);
+	}
 }
