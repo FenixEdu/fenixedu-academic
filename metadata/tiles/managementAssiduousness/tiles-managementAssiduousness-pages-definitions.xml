@@ -17,4 +17,8 @@
 		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
 		<put name="body" value="/managementAssiduousness/moneyCostCenter/showMoneyCostCenterList.jsp"/>
 	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.employee.input" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/inputDateAndEmployee.jsp"/>
+	</definition>
 </tiles-definitions>

@@ -9,7 +9,7 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 		<form-bean name="moneyCostCenterFormBean"
-			type="org.apache.struts.validator.DynaValidatorForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 				<form-property name="year" type="java.lang.Integer" />    
@@ -17,6 +17,15 @@
 				<form-property name="id" type="java.lang.Integer" />  
 				<form-property name="initialValue" type="java.lang.Double" />    
 				<form-property name="totalValue" type="java.lang.Double" />    
+		</form-bean>
+		<form-bean name="extraWorkByEmployeeFormBean"
+				type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="moth" type="java.lang.Integer" />
+				<form-property name="year" type="java.lang.Integer" />    
+				<form-property name="employeeNumber" type="java.lang.Integer" />    
+				<form-property name="todo" type="java.lang.String" />  
 		</form-bean>
 	</form-beans>
 	
@@ -40,9 +49,14 @@
 			<forward name="inputYear" path="managementAssiduousnessWelcome.extraWork.inputYear"/>
 			<forward name="showMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.moneyCostCenterList"/>
 		</action>	
-		<action path="/consultSheetExtraWork" 
-	      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
-	      		  forward="managementAssiduousnessWelcome.extraWork"/>
+		<action path="/extraWorkByEmployee" 
+	      		type="ServidorApresentacao.Action.managementAssiduousness.ExtraWorkByEmployeeAction" 
+				name="extraWorkByEmployeeFormBean"
+				parameter="method"
+				scope="request"
+				validate="true">
+					<forward name="inputDateAndEmployee" path="managementAssiduousnessWelcome.extraWork.employee.input"/>
+		</action>
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
