@@ -44,27 +44,67 @@ public class Executor {
 		try {
 			//termina transacção da BD do Teleponto
 			//SuportePersistenteOracle.getInstance().confirmarTransaccao();
-			
+
 			SuportePersistente.getInstance().confirmarTransaccao();
 		} catch (Exception e) {
 			throw new PersistenceException(ErrorConstants.PERSISTENCE_ERROR);
 		}
 	}
 
-	public void doIt(ServicoSeguro ss) throws NotAuthorizeException, NotExecuteException, PersistenceException {
+	public void doIt(ServicoSeguro ss)
+		throws NotAuthorizeException, NotExecuteException, PersistenceException {
 		try {
-			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName());
+			System.out.println(
+				"LOGTIME= "
+					+ new Date()
+					+ " : SERVICE= "
+					+ ss.getClass().getName());
 			begin();
-			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + "Finished begin Transaction");
+			System.out.println(
+				"LOGTIME= "
+					+ new Date()
+					+ " : SERVICE= "
+					+ ss.getClass().getName()
+					+ "Finished begin Transaction");
 			ss.authorize();
-			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + "Finished Authentication");
+			System.out.println(
+				"LOGTIME= "
+					+ new Date()
+					+ " : SERVICE= "
+					+ ss.getClass().getName()
+					+ "Finished Authentication");
 			ss.execute();
 			end();
-			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + " finished sucessfully.");
+			System.out.println(
+				"LOGTIME= "
+					+ new Date()
+					+ " : SERVICE= "
+					+ ss.getClass().getName()
+					+ " finished sucessfully.");
 		} catch (NotExecuteException e) {
-			System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName() + " aborted.");			
+			System.out.println(
+				"LOGTIME= "
+					+ new Date()
+					+ " : SERVICE= "
+					+ ss.getClass().getName()
+					+ " aborted.");
 			cancel();
 			throw e;
+		// TODO : this case was never considered.
+		//        Does it make sense?
+		} catch (Exception e) {
+			if (!(e instanceof NotExecuteException)) {
+				System.out.println(
+					"LOGTIME= "
+						+ new Date()
+						+ " : SERVICE= "
+						+ ss.getClass().getName()
+						+ " Caught an unhandled exception!!!!!!!!!!!!");
+				cancel();
+				throw new NotExecuteException(e.getLocalizedMessage());
+			} else {
+				throw (NotExecuteException) e;
+			}
 		}
 	}
 }
