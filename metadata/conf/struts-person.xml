@@ -10,6 +10,12 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
       
+      <form-bean name="voidForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+          <form-property name="voidProperty" type="java.lang.Integer" />
+      </form-bean>
+      
       <!-- Dynamic-FormBean for Password Change -->
       <form-bean name="changePasswordForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -18,9 +24,6 @@
         <form-property name="newPassword" type="java.lang.String" />
         <form-property name="reTypeNewPassword" type="java.lang.String" />
       </form-bean>
-
-
-     
 
       <!-- Bean for change of Application Information -->
       <form-bean name="changePersonalInfoForm" 
@@ -66,15 +69,16 @@
       </form-bean>
 
 	  <!-- Dynamic-FormBean for Qualification Edit-->
-      <form-bean name="manageQualificationForm" 
+      <form-bean name="qualificationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="mark"   type="java.lang.String" />
         <form-property name="year"   type="java.lang.String" />
         <form-property name="school" type="java.lang.String" />
-        <form-property name="title"  type="java.lang.String" />
+        <form-property name="degree"  type="java.lang.String" />
+        <form-property name="title" type="java.lang.String" />
         <form-property name="idInternal" type="java.lang.Integer" />
-        <form-property name="infoPerson#IdInternal" type="java.lang.Integer" />
+        <form-property name="infoPerson#idInternal" type="java.lang.Integer" />
       </form-bean>
 
     </form-beans>
@@ -110,6 +114,10 @@
 -->
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
 
+	<action path="/voidAction" type="ServidorApresentacao.Action.commons.VoidAction" name="voidForm">
+      <!-- form is not used -->
+		<forward name="Success" path="/teacher/teacherInformation.do?method=prepareEdit&amp;page=0" contextRelative="true" redirect="true"/>
+	</action>
 
 
 
@@ -167,28 +175,30 @@
   	  </action>
 
 	  <!-- Action to manage a Qualification -->
-   	  <action path="/manageQualificationForm"  
-		   	  name="manageQualificationForm"
-		   	  input="/manageQualificationForm?method=prepareEdit&amp;page=0"
-   	          type="ServidorApresentacao.Action.person.ManageQualificationAction"    
-   	          scope="request" 
+   	  <action path="/qualificationForm"
+		   	  name="qualificationForm"
+		   	  input="/qualificationForm?method=prepareEdit&amp;page=0"
+   	          type="ServidorApresentacao.Action.framework.CRUDActionByOID"
+   	          parameter="method"
+   	          scope="request"
    	          className="ServidorApresentacao.mapping.framework.CRUDMapping"> 
- 		<set-property property="editService" value="EditQualification"/>
+		<set-property property="editService" value="EditQualification"/>
  		<set-property property="deleteService" value="DeleteQualification"/>
  		<set-property property="readService" value="ReadQualification"/>
   		<set-property property="oidProperty" value="idInternal"/>
-  		<set-property property="RequestAttributes" value=""/>
- 		<forward name="show-form" path="qualifications-management"/> 
- 		<forward name="successfull-edit" path="qualification-edit"/> 
-   		<forward name="successfull-read" path="qualification-read"/>
-   		<forward name="successfull-delete" path="qualification-delete"/>
+    	<set-property property="requestAttribute" value="infoQualification" />
+    	<set-property property="infoObjectClassName" value="DataBeans.person.InfoQualification" />
+ 		<forward name="show-form" path="edit-qualification"/> 
+ 		<forward name="successfull-edit" path="/readQualifications.do?page=0"/> 
+   		<forward name="successfull-read" path="/readQualifications.do?page=0"/>
+   		<forward name="successfull-delete" path="/readQualifications.do?page=0"/>
  	   </action>
 
 
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
@@ -199,5 +209,11 @@
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-person.xml"/>
     </plug-in>
     
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/person/tiles-person-pages-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>    
 </struts-config>
 
