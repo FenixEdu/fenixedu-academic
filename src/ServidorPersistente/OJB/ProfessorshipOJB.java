@@ -22,9 +22,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  *
  * 
  */
-public class ProfessorshipOJB
-	extends ObjectFenixOJB
-	implements IPersistentProfessorship {
+public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfessorship {
 
 	/**
 	 * 
@@ -33,12 +31,8 @@ public class ProfessorshipOJB
 		super();
 	}
 
+	public List readAll() throws ExcepcaoPersistencia {
 
-
-
-
-	public List readAll()throws ExcepcaoPersistencia {
-	
 		try {
 			String oqlQuery = "select all from " + Professorship.class.getName();
 			query.create(oqlQuery);
@@ -50,10 +44,7 @@ public class ProfessorshipOJB
 		}
 	}
 
-	public IProfessorship readByTeacherAndExecutionCourse(
-		ITeacher teacher,
-		IDisciplinaExecucao executionCourse)
-		throws ExcepcaoPersistencia {
+	public IProfessorship readByTeacherAndExecutionCourse(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 		try {
 			IProfessorship professorship = null;
 			String oqlQuery =
@@ -68,11 +59,7 @@ public class ProfessorshipOJB
 			query.bind(teacher.getTeacherNumber());
 			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(
-				executionCourse
-					.getExecutionPeriod()
-					.getExecutionYear()
-					.getYear());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -84,26 +71,20 @@ public class ProfessorshipOJB
 		}
 	}
 
-	public IProfessorship readByTeacherAndExecutionCoursePB(
-			ITeacher teacher,
-			IDisciplinaExecucao executionCourse)
-			throws ExcepcaoPersistencia {
-			
-				IProfessorship professorship = new Professorship();
-				professorship.setExecutionCourse(executionCourse);
-				professorship.setTeacher(teacher);
-				professorship = (IProfessorship) readDomainObjectByCriteria(professorship);				
-				return professorship;
-			
-		}
+	public IProfessorship readByTeacherAndExecutionCoursePB(ITeacher teacher, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+
+		IProfessorship professorship = new Professorship();
+		professorship.setExecutionCourse(executionCourse);
+		professorship.setTeacher(teacher);
+		professorship = (IProfessorship) readDomainObjectByCriteria(professorship);
+		return professorship;
+
+	}
 
 	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 		try {
 
-			String oqlQuery =
-				"select professorship from "
-					+ Professorship.class.getName()
-					+ " where teacher.teacherNumber = $1";
+			String oqlQuery = "select professorship from " + Professorship.class.getName() + " where teacher.teacherNumber = $1";
 
 			query.create(oqlQuery);
 			query.bind(teacher.getTeacherNumber());
@@ -117,8 +98,7 @@ public class ProfessorshipOJB
 		}
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
-		throws ExcepcaoPersistencia {
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery =
 				"select professorship from "
@@ -130,11 +110,7 @@ public class ProfessorshipOJB
 			query.create(oqlQuery);
 			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(
-				executionCourse
-					.getExecutionPeriod()
-					.getExecutionYear()
-					.getYear());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -145,45 +121,35 @@ public class ProfessorshipOJB
 		}
 	}
 
-	public void delete(IProfessorship professorship)
-		throws ExcepcaoPersistencia {	
+	public void delete(IProfessorship professorship) throws ExcepcaoPersistencia {
 		super.delete(professorship);
 	}
-
-
 
 	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + Professorship.class.getName();
 		super.deleteAll(oqlQuery);
 	}
 
-	public void lockWrite(IProfessorship professorship)
-			throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(IProfessorship professorship) throws ExcepcaoPersistencia, ExistingPersistentException {
 		IProfessorship professorshipFromDB = null;
 
-			// If there is nothing to write, simply return.
-			if (professorship == null)
-				return;
+		// If there is nothing to write, simply return.
+		if (professorship == null)
+			return;
 
-			// Read professorship from database.
-			professorshipFromDB =
-				this.readByTeacherAndExecutionCourse(
-				professorship.getTeacher(),
-				professorship.getExecutionCourse());
+		// Read professorship from database.
+		professorshipFromDB = this.readByTeacherAndExecutionCourse(professorship.getTeacher(), professorship.getExecutionCourse());
 
-			// If professorship is not in database, then write it.
-			if (professorshipFromDB == null)
-				super.lockWrite(professorship);
-				
-			// else If the professorship is mapped to the database, then write any existing changes.
-			else if (
-				(professorship instanceof Professorship)
-					&& ((Professorship) professorshipFromDB).getIdInternal().equals(
-						((Professorship) professorship).getIdInternal())) {
-				super.lockWrite(professorship);
-				// else Throw an already existing exception
-			} else
-				throw new ExistingPersistentException();
-			}
+		// If professorship is not in database, then write it.
+		if (professorshipFromDB == null)
+			super.lockWrite(professorship);
+
+		// else If the professorship is mapped to the database, then write any existing changes.
+		else if ((professorship instanceof Professorship) && ((Professorship) professorshipFromDB).getIdInternal().equals(((Professorship) professorship).getIdInternal())) {
+			super.lockWrite(professorship);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
+	}
 
 }

@@ -29,17 +29,12 @@ public class MyProfessorships extends ControllerSupport {
 	/* (non-Javadoc)
 	 * @see org.apache.struts.tiles.Controller#perform(org.apache.struts.tiles.ComponentContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.ServletContext)
 	 */
-	public void perform(
-		ComponentContext tileContext,
-		HttpServletRequest request,
-		HttpServletResponse response,
-		ServletContext servletContext)
-		throws ServletException, IOException {
+	public void perform(ComponentContext tileContext, HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws ServletException, IOException {
 
 		IUserView userView = SessionUtils.getUserView(request);
-		
-		Object [] args = {userView};
-		List professorShipList = new ArrayList(); 
+
+		Object[] args = { userView };
+		List professorShipList = new ArrayList();
 		try {
 			professorShipList = (List) ServiceUtils.executeService(userView, "ReadProfessorships", args);
 		} catch (FenixServiceException e) {
