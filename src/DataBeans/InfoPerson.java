@@ -762,6 +762,7 @@ public class InfoPerson extends InfoObject {
             setTipoDocumentoIdentificacao(person
                     .getTipoDocumentoIdentificacao());
             setEmail(person.getEmail());
+            setTelemovel(person.getTelemovel());
         }
     }
     /**
