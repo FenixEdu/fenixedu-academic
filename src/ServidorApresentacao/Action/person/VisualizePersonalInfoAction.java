@@ -33,6 +33,7 @@ public class VisualizePersonalInfoAction extends ServidorApresentacao.Action.bas
                                 HttpServletResponse response)
       throws Exception {
 
+	
 	SessionUtils.validSessionVerification(request, mapping);
 
 	HttpSession session = request.getSession(false);
@@ -48,6 +49,7 @@ public class VisualizePersonalInfoAction extends ServidorApresentacao.Action.bas
 	  
 	  request.removeAttribute("personalInfo");
       request.setAttribute("personalInfo", infoPerson);
+
 
       return mapping.findForward("Success");
     } else

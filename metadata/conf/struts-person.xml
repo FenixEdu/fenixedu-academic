@@ -86,12 +86,16 @@
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
 	  <forward name="index" path="index.do" redirect="true"/>
-      <forward name="firstPage" path="/home.do"/>
+      <forward name="firstPage" path="/index.do"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -101,11 +105,13 @@
       <action path="/changePasswordForward" forward="/changePassword.jsp"/>
       <action path="/authentication" forward="/autenticacaoCand.jsp"/>
       <action path="/naoExecutado" forward="/error.jsp"/>
+      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>      
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
      
       <!-- Action for Visualization Of the Person's Personal Information -->
       <action path="/visualizePersonalInfo"
+             input="personMainPage.jsp"
       	      type="ServidorApresentacao.Action.person.VisualizePersonalInfoAction">
       	  <forward name="Success" path="/visualizePersonalInfo.jsp"/>      	      
       </action>
@@ -143,7 +149,7 @@
       </action>
 
 
-      	<!-- ExceptionHandling -->   
+      <!-- ExceptionHandling -->   
       <action parameter="method"
               name="errorMailForm" 
               path="/exceptionHandling"
