@@ -118,6 +118,18 @@ class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.f
 }
 
 
+class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge.fenixedu.domain.DomainObject {
+	String sectionName;
+	Integer keyParentSection;
+
+	interface "
+    public IFAQSection getParentSection()
+
+    public void setParentSection(IFAQSection parentSection);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
 	Double deviation2_3;
