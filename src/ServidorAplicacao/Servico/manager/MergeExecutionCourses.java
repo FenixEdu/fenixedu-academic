@@ -55,7 +55,7 @@ import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 29/Nov/2003
- *  
+ * 
  */
 public class MergeExecutionCourses implements IService {
 
@@ -75,43 +75,33 @@ public class MergeExecutionCourses implements IService {
 
     }
 
-    /**
-     *  
-     */
-    public MergeExecutionCourses() {
-    }
-
     public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
-            IExecutionCourse destination;
-            IExecutionCourse source;
-            destination = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
-                    executionCourseDestinationId, true);
-            source = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
-                    executionCourseSourceId);
-            if (!isMergeAllowed(destination, source, ps)) {
-                throw new InvalidArgumentsServiceException();
-            }
-            copyProfessorshipsAndResponsibleFors(destination, source, ps);
-            copyAttends(destination, source, ps);
-            copyBibliography(destination, source, ps);
-            copyEvaluations(destination, source, ps);
-            copySites(destination, source, ps);
-            copyShiftsAndLessons(destination, source, ps);
-            copyCourseReport(destination, source, ps);
-            copyGroups(destination, source, ps);
-            copySummaries(destination, source, ps);
-            copyEvaluationMethod(destination, source, ps);
-
-            destination.getAssociatedCurricularCourses().addAll(source.getAssociatedCurricularCourses());
-            persistentExecutionCourse.deleteExecutionCourse(source);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+        IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
+        IExecutionCourse destination;
+        IExecutionCourse source;
+        destination = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
+                executionCourseDestinationId, true);
+        source = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,
+                executionCourseSourceId);
+        if (!isMergeAllowed(destination, source, ps)) {
+            throw new InvalidArgumentsServiceException();
         }
+        copyProfessorshipsAndResponsibleFors(destination, source, ps);
+        copyAttends(destination, source, ps);
+        copyBibliography(destination, source, ps);
+        copyEvaluations(destination, source, ps);
+        copySites(destination, source, ps);
+        copyShiftsAndLessons(destination, source, ps);
+        copyCourseReport(destination, source, ps);
+        copyGroups(destination, source, ps);
+        copySummaries(destination, source, ps);
+        copyEvaluationMethod(destination, source, ps);
+
+        destination.getAssociatedCurricularCourses().addAll(source.getAssociatedCurricularCourses());
+        persistentExecutionCourse.deleteExecutionCourse(source);
 
     }
 
@@ -129,7 +119,7 @@ public class MergeExecutionCourses implements IService {
                     && (distributedTests == null || distributedTests.isEmpty());
 
         } catch (ExcepcaoPersistencia e1) {
-            //ignore
+            // ignore
 
         }
 
@@ -194,19 +184,19 @@ public class MergeExecutionCourses implements IService {
      */
     private void copyGroups(IExecutionCourse destination, IExecutionCourse source, ISuportePersistente ps)
             throws ExcepcaoPersistencia {
-       IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse= 
-        						ps.getIPersistentGroupPropertiesExecutionCourse();
-       List sourceGroupPropertiesExecutionCourseList = 
-          persistentGroupPropertiesExecutionCourse.readAllByExecutionCourse(source);
-       Iterator iter = sourceGroupPropertiesExecutionCourseList.iterator();
-       while (iter.hasNext()) {
-          IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse=
-             (IGroupPropertiesExecutionCourse) iter.next();
-          persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
-          groupPropertiesExecutionCourse.setExecutionCourse(destination);
-          destination.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-          source.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-       }
+        IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = ps
+                .getIPersistentGroupPropertiesExecutionCourse();
+        List sourceGroupPropertiesExecutionCourseList = persistentGroupPropertiesExecutionCourse
+                .readAllByExecutionCourse(source);
+        Iterator iter = sourceGroupPropertiesExecutionCourseList.iterator();
+        while (iter.hasNext()) {
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iter
+                    .next();
+            persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
+            groupPropertiesExecutionCourse.setExecutionCourse(destination);
+            destination.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+            source.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+        }
 
     }
 
@@ -284,7 +274,7 @@ public class MergeExecutionCourses implements IService {
     private void copyShiftsAndLessons(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         ITurnoPersistente persistentShift = ps.getITurnoPersistente();
-        //        IAulaPersistente persistentLesson = ps.getIAulaPersistente();
+        // IAulaPersistente persistentLesson = ps.getIAulaPersistente();
         List sourceShifts = persistentShift.readByExecutionCourse(source);
         Iterator iter = sourceShifts.iterator();
         while (iter.hasNext()) {
@@ -308,7 +298,7 @@ public class MergeExecutionCourses implements IService {
      */
     private void copyAttends(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
-        
+
         List sourceAttends = source.getAttends();
         Map alreadyAttendingDestination = new HashMap();
         for (int i = 0; i < destination.getAttends().size(); i++) {
@@ -329,37 +319,37 @@ public class MergeExecutionCourses implements IService {
             }
         }
 
-        //        List destinationAttends =
+        // List destinationAttends =
         // persistentAttend.readByExecutionCourse(destination);
-        //        if (destinationAttends == null) {
-        //            destinationAttends = new ArrayList();
-        //        }
-        //        List sourceAttends = persistentAttend.readByExecutionCourse(source);
-        //        if (sourceAttends != null) {
-        //            Iterator iter = sourceAttends.iterator();
-        //            while (iter.hasNext()) {
-        //                IFrequenta attend = (IFrequenta) iter.next();
-        //                final IFrequenta attend2Compare = attend;
-        //                if (CollectionUtils.find(destinationAttends, new Predicate() {
+        // if (destinationAttends == null) {
+        // destinationAttends = new ArrayList();
+        // }
+        // List sourceAttends = persistentAttend.readByExecutionCourse(source);
+        // if (sourceAttends != null) {
+        // Iterator iter = sourceAttends.iterator();
+        // while (iter.hasNext()) {
+        // IFrequenta attend = (IFrequenta) iter.next();
+        // final IFrequenta attend2Compare = attend;
+        // if (CollectionUtils.find(destinationAttends, new Predicate() {
         //
-        //                    public boolean evaluate(Object arg0) {
-        //                        IFrequenta frequenta = (IFrequenta) arg0;
-        //                        if (frequenta.getAluno() == attend2Compare.getAluno()) {
-        //                            return true;
-        //                        }
-        //                        return false;
+        // public boolean evaluate(Object arg0) {
+        // IFrequenta frequenta = (IFrequenta) arg0;
+        // if (frequenta.getAluno() == attend2Compare.getAluno()) {
+        // return true;
+        // }
+        // return false;
         //
-        //                    }
-        //                }) == null) {
-        //                    persistentAttend.simpleLockWrite(attend);
-        //                    attend.setDisciplinaExecucao(destination);
+        // }
+        // }) == null) {
+        // persistentAttend.simpleLockWrite(attend);
+        // attend.setDisciplinaExecucao(destination);
         //
-        //                } else {
-        //                    persistentAttend.delete(attend);
-        //                }
+        // } else {
+        // persistentAttend.delete(attend);
+        // }
         //
-        //            }
-        //        }
+        // }
+        // }
     }
 
     /**
@@ -427,6 +417,17 @@ public class MergeExecutionCourses implements IService {
                     while (iterator.hasNext()) {
                         ISupportLesson supportLesson = (ISupportLesson) iterator.next();
                         persistentSupportLesson.delete(supportLesson);
+                    }
+
+                    IPersistentSummary persistentSummary = ps.getIPersistentSummary();
+                    List summaryList = persistentSummary.readByTeacher(professorship.getExecutionCourse(), professorship.getTeacher());
+                    if (summaryList != null && !summaryList.isEmpty()) {
+                        for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries.hasNext(); ) {
+                            ISummary summary = (ISummary) iteratorSummaries.next();
+                            persistentSummary.simpleLockWrite(summary);
+                            summary.setProfessorship(null);
+                            summary.setKeyProfessorship(null);
+                        }
                     }
 
                     persistentProfessorship.delete(professorship);

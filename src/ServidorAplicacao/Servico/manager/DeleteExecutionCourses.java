@@ -13,6 +13,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
+import Dominio.ISummary;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
@@ -21,6 +22,7 @@ import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSite;
+import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -82,6 +84,19 @@ public class DeleteExecutionCourses implements IService {
                                     iterator = professorShips.iterator();
                                     while (iterator.hasNext()) {
                                         professorShip = (IProfessorship) iterator.next();
+
+                                        IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+                                        List summaryList = persistentSummary.readByTeacher(professorShip.getExecutionCourse(), professorShip.getTeacher());
+                                        if (summaryList != null && !summaryList.isEmpty()) {
+                                            for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries.hasNext(); ) {
+                                                ISummary summary = (ISummary) iteratorSummaries.next();
+                                                persistentSummary.simpleLockWrite(summary);
+                                                summary.setProfessorship(null);
+                                                summary.setKeyProfessorship(null);
+                                            }
+                                        }
+
+
                                         persistentProfessorShip.delete(professorShip);
                                     }
                                 }

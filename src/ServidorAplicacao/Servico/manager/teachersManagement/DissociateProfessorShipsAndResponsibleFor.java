@@ -10,6 +10,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
+import Dominio.ISummary;
 import Dominio.ITeacher;
 import Dominio.Professorship;
 import Dominio.ResponsibleFor;
@@ -19,6 +20,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentShiftProfessorship;
+import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -100,6 +102,18 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                     if ((shiftProfessorships == null || shiftProfessorships.size() == 0)
                             && (supportLessons == null || supportLessons.size() == 0)) {
                         persistentProfessorship.delete(professorship);
+
+                        IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+                        List summaryList = persistentSummary.readByTeacher(professorship.getExecutionCourse(), professorship.getTeacher());
+                        if (summaryList != null && !summaryList.isEmpty()) {
+                            for (Iterator iterator = summaryList.iterator(); iterator.hasNext(); ) {
+                                ISummary summary = (ISummary) iterator.next();
+                                persistentSummary.simpleLockWrite(summary);
+                                summary.setProfessorship(null);
+                                summary.setKeyProfessorship(null);
+                            }
+                        }
+
                     } else {
                         if (supportLessons.size() > 0) {
                             professorshipsWithSupportLessons.add(Cloner

@@ -1,11 +1,13 @@
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.Iterator;
 import java.util.List;
 
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
+import Dominio.ISummary;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IServico;
@@ -17,6 +19,7 @@ import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentShiftProfessorship;
+import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -105,6 +108,17 @@ public class DeleteTeacher implements IServico {
             List supportLessonList = supportLessonDAO.readByProfessorship(professorshipToDelete);
 
             if (shiftProfessorshipList.isEmpty() && supportLessonList.isEmpty()) {
+                IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+                List summaryList = persistentSummary.readByTeacher(professorshipToDelete.getExecutionCourse(), professorshipToDelete.getTeacher());
+                if (summaryList != null && !summaryList.isEmpty()) {
+                    for (Iterator iterator = summaryList.iterator(); iterator.hasNext(); ) {
+                        ISummary summary = (ISummary) iterator.next();
+                        persistentSummary.simpleLockWrite(summary);
+                        summary.setProfessorship(null);
+                        summary.setKeyProfessorship(null);
+                    }
+                }
+
                 persistentProfessorship.delete(professorshipToDelete);
             } else {
                 if (!shiftProfessorshipList.isEmpty()) {

@@ -12,6 +12,7 @@ import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
+import Dominio.ISummary;
 import Dominio.ITeacher;
 import Dominio.Professorship;
 import Dominio.ResponsibleFor;
@@ -22,6 +23,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
+import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -119,10 +121,24 @@ public class SaveTeachersBody implements IService {
                 Iterator oldProfIterator = oldProfessorShipTeachersIds.iterator();
                 while (oldProfIterator.hasNext()) {
                     id = (Integer) oldProfIterator.next();
-                    if (!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id))
+                    if (!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id)) {
+
+                        IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+                        IProfessorship professorship2 = (IProfessorship) persistentProfessorShip.readByOID(Professorship.class, id);
+                        List summaryList = persistentSummary.readByTeacher(professorship2.getExecutionCourse(), professorship2.getTeacher());
+                        if (summaryList != null && !summaryList.isEmpty()) {
+                            for (Iterator iterator = summaryList.iterator(); iterator.hasNext(); ) {
+                                ISummary summary = (ISummary) iterator.next();
+                                persistentSummary.simpleLockWrite(summary);
+                                summary.setProfessorship(null);
+                                summary.setKeyProfessorship(null);
+                            }
+                        }
+
                         persistentProfessorShip.deleteByOID(Professorship.class,
                                 ((IProfessorship) oldProfessorShips.get(oldProfessorShipTeachersIds
                                         .indexOf(id))).getIdInternal());
+                    }
                 }
             }
             // add new professorShips
