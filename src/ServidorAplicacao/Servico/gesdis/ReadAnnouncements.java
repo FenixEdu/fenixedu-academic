@@ -8,13 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISite;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -50,7 +51,9 @@ public class ReadAnnouncements implements IServico {
 	 * Executes the service.
 	 *
 	 **/
-	public List run(InfoSite infoSite) throws Exception {
+	public List run(InfoSite infoSite) throws FenixServiceException {
+        
+        try {
         
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		
@@ -73,6 +76,9 @@ public class ReadAnnouncements implements IServico {
 		
         
 		return infoAnnouncementsList;
+	       } catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
 	}
     
 }
