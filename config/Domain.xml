@@ -12,7 +12,9 @@
          <parameter name="driver" >@db.slide.driver@</parameter >
          <parameter name="url" >@db.slide.alias@</parameter >
          <parameter name="user">@db.slide.user@</parameter>
-         <parameter name="password">@db.slide.pass@</parameter>         
+         <parameter name="password">@db.slide.pass@</parameter>  
+         <parameter name="jdbcversion">2</parameter>
+                
         </nodestore >
         <securitystore >
           <reference store="nodestore" />
@@ -32,6 +34,8 @@
           <parameter name="user">@db.slide.user@</parameter>
           <parameter name="password">@db.slide.pass@</parameter>
           <parameter name="rootpath" >files</parameter >
+          <parameter name="jdbcversion">2</parameter>
+          
           
            
         </contentstore>
