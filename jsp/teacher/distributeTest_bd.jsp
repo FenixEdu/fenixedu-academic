@@ -4,6 +4,30 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.distributeTest"/></h2>
 
+<script language="Javascript" type="text/javascript">
+<!--
+var select = false;
+
+function invertSelect(){
+	if ( select == false ) { 
+		select = true; 
+	} else { 
+		select = false;
+	}
+	for (var i=0;i<document.testDistributionForm.selectedShifts.length;i++){
+		var e = document.testDistributionForm.selectedShifts[i];
+		if ( select == true ) { e.checked = true; } else { e.checked = false; }
+	}
+}
+
+function cleanSelect() { 
+	select = false; 
+	document.testDistributionForm.selectedShifts[0].checked = false; 
+}
+
+// -->
+</script>
+
 <html:form action="/testDistribution">
 <html:hidden property="page" value="1"/>
 <html:hidden property="method" value="distributeTest"/>
@@ -11,6 +35,12 @@
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 
 <table>
+	<tr>
+		<td><bean:message key="label.test.information"/></td>
+	</tr>
+	<tr>
+		<td><html:textarea rows="7" cols="45" property="testInformation"/></td>
+	</tr>
 	<tr>
 		<td><bean:message key="message.testBeginDate"/><bean:message key="message.dateFormat"/></td>
 	</tr>
@@ -77,12 +107,12 @@
 <br/>
 <table>
 	<tr>
-		<td><b><bean:message key="message.selectShifts"/></b></td>
+		<td><b><bean:message key="message.selectShifts"/></b></td><td/><td/><td/><td><span class="error"><html:errors property="selectedShifts"/></span></td>
 	</tr>
 	<tr><td></td>
 		<td><b><bean:message key="label.allStudents"/></b></td>
 		<td>
-		<html:multibox property="selectedShifts">
+		<html:multibox property="selectedShifts" onclick="invertSelect()">
 		    <bean:message key="label.allStudents"/>
 		</html:multibox> 
 		</td>	
@@ -100,8 +130,8 @@
 				<td class="listClasses"><bean:write name="shiftList" property="nome"/></td>
 				<td class="listClasses"><bean:write name="shiftType" property="label"/></td>
 				<td class="listClasses">
-					<html:multibox property="selectedShifts">
-				    <bean:write name="shiftList" property="nome"/>
+					<html:multibox property="selectedShifts" onclick="cleanSelect()">
+				    <bean:write name="shiftList" property="idInternal"/>
 					</html:multibox> 
 				</td>
 				</tr>

@@ -5,7 +5,7 @@
 <h2><bean:message key="label.edit"/></h2>
 
 <html:form action="/testEdition">
-<html:hidden property="page" value="1"/>
+<html:hidden property="page" value="0"/>
 <html:hidden property="method" value="chooseTestAction"/>
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>

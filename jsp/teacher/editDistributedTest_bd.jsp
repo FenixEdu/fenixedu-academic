@@ -24,28 +24,34 @@
 
 <table>
 	<tr>
+		<td><bean:message key="label.test.information"/></td>
+	</tr>
+	<tr>
+		<td><html:textarea rows="7" cols="45" name="infoDistributedTest" property="testInformation"/></td>
+	</tr>
+	<tr>
 		<td><bean:message key="message.testBeginDate"/><bean:message key="message.dateFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text name="infoDistributedTest" property="beginDateFormatted"/></td><td><span class="error"><html:errors property="testBeginDate"/></span></td>
+		<td><html:text name="infoDistributedTest" property="beginDateFormatted"/></td><td><span class="error"><html:errors property="beginDateFormatted"/></span></td>
 	<tr/>
 	<tr>
 		<td><bean:message key="message.testBeginHour"/><bean:message key="message.hourFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text name="infoDistributedTest" property="beginHourFormatted"/></td><td><span class="error"><html:errors property="testBeginHour"/></span></td>
+		<td><html:text name="infoDistributedTest" property="beginHourFormatted"/></td><td><span class="error"><html:errors property="beginHourFormatted"/></span></td>
 	<tr/>
 	<tr>
 		<td><bean:message key="message.testEndDate"/><bean:message key="message.dateFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text name="infoDistributedTest" property="endDateFormatted"/></td><td><span class="error"><html:errors property="testEndDate"/></span></td>
+		<td><html:text name="infoDistributedTest" property="endDateFormatted"/></td><td><span class="error"><html:errors property="endDateFormatted"/></span></td>
 	<tr/>
 	<tr>
 		<td><bean:message key="message.testEndHour"/><bean:message key="message.hourFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text name="infoDistributedTest" property="endHourFormatted"/></td><td><span class="error"><html:errors property="testEndHour"/></span></td>
+		<td><html:text name="infoDistributedTest" property="endHourFormatted"/></td><td><span class="error"><html:errors property="endHourFormatted"/></span></td>
 	<tr/>
 </table>
 <br/>

@@ -63,53 +63,73 @@
 			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="link.removeTestQuestion" />
 			</html:link></div></td>
-		</tr></table><tr><td>
-			<br/><td>
-				<%int index=0; String imgType=new String();%>
+		</tr></table></td></tr>
+		<br/><tr>
+			<td>
+				<bean:define id="index" value="0"/>
+				<bean:define id="imageLabel" value="false"/>
 				<logic:iterate id="questionBody" name="thisQuestion" property="question">
-				<% if (((String)questionBody).startsWith("Content-Type: ")){
-					index++;
-					imgType = ((String)questionBody).substring(new String("Content-Type: ").length());
-				%>
-				<html:img align="middle" src="<%= "/ciapl/teacher/testsManagement.do?method=showImage&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index +"&amp;imgType="+imgType%>"/>
-				<% }else if (((String)questionBody).equals("<flow>")){%>
+				<bean:define id="questionLabel" name="questionBody" property="label"/>
+				
+				<% if (((String)questionLabel).startsWith("image/")){%>
+					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
+					<html:img align="middle" src="<%= "/ciapl/teacher/testsManagement.do?method=showImage&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
+					
+					<logic:equal name="imageLabel" value="true">
+						</td><td>
+					</logic:equal>
+				<% } else if (((String)questionLabel).equals("image_label")){%>
+									
+					<logic:equal name="imageLabel" value="false">
+						<bean:define id="imageLabel" value="true"/>
+						<table><tr><td>
+					</logic:equal>
+				
+					<bean:write name="questionBody" property="value"/>
+					<br/>
+				<% }else if (((String)questionLabel).equals("flow")){%>
+					<logic:equal name="imageLabel" value="true">
+						</td></tr></table>
+						<bean:define id="imageLabel" value="false"/>
+					</logic:equal>
 					</td></tr>
 					<tr><td>
 				<% }else{%>
-					<bean:write name="questionBody"/>
+					<bean:write name="questionBody" property="value"/>
 				<% } %>
 				</logic:iterate>
+				<logic:equal name="imageLabel" value="true">
+					</td></tr></table>
+				</logic:equal>
 			</td></tr><tr><td>
+			
 			<bean:define id="cardinality" name="thisQuestion" property="questionCardinality"/>
 			<table><td>
-				<%int indexOption=0;%>
+				<bean:define id="indexOption" value="0"/>
 				<logic:iterate id="optionBody" name="thisQuestion" property="options">
-				<% if (((String)optionBody).startsWith("Content-Type:")){
-					index++;
-					imgType = ((String)optionBody).substring(new String("Content-Type: ").length());
-				%>
-				<html:img align="middle" src="<%= "/ciapl/teacher/testsManagement.do?method=showImage&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index +"&amp;imgType="+imgType%>"/>
-				<% }else if (((String)optionBody).equals("<response_label>")){ 
-					indexOption++;
-					if(cardinality.equals("Single")){
-					%>
-					</td></tr><tr><td>
-					<html:radio property="option" value="<%= (new Integer(indexOption)).toString() %>"/>
-					</td><td>
-					<% }else if(cardinality.equals("Multiple")){ %>
-					</td></tr><tr><td>
-					<html:multibox property="option" value="<%= (new Integer(indexOption)).toString() %>">
-					</html:multibox>
-					</td><td>
-					<% }else if(cardinality.equals("Multiple_old")){ %>
-					</td></tr><tr><td>
-					<html:multibox property="option" value="<%= (new Integer(indexOption)).toString() %>">
-					</html:multibox>
-					</td><td>
-					<%}%>
-				<% }else{%>
-				<bean:write name="optionBody"/>
-				<% } %>
+					<bean:define id="optionLabel" name="optionBody" property="label"/>
+					<% if (((String)optionLabel).startsWith("image/")){ %>
+						<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
+						<html:img align="middle" src="<%= "/ciapl/teacher/testsManagement.do?method=showImage&amp;exerciceCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+					<% } else if (((String)optionLabel).equals("image_label")){%>
+						<bean:write name="optionBody" property="value"/>
+						<br/>
+					<% } else if (((String)optionLabel).equals("response_label")){ %>				
+						<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
+						<%	if(cardinality.equals("Single")){ %>
+							</td></tr><tr><td>
+								<html:radio property="option" value="<%= indexOption.toString() %>"/>
+							</td><td>
+						<% }else if(cardinality.equals("Multiple")){ %>
+							</td></tr><tr><td>
+								<html:multibox property="option" value="<%= indexOption.toString() %>">
+								</html:multibox>
+							</td><td>
+						<%}%>
+					<% } else {%>
+					<bean:write name="optionBody" property="value"/>
+					<% } %>
+						
 				</logic:iterate>
 			</td></table></td>	
 	</tr>
