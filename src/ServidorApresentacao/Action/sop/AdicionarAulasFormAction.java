@@ -27,12 +27,13 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author tfc130
  */
 public class AdicionarAulasFormAction extends FenixAction {
+	
 	public static String THEORETICAL_HOURS_LIMIT_EXCEEDED =
 		"errors.shift.theoretical.hours.limit.exceeded";
 	public static String PRATICAL_HOURS_LIMIT_EXCEEDED =
 		"errors.shift.pratical.hours.limit.exceeded";
 	public static String THEO_PRAT_HOURS_LIMIT_EXCEEDED =
-		"errors.shift.theoPrat.hours.limit.exceeded";
+		"errors.shift.theo.pratical.hours.limit.exceeded";
 	public static String LAB_HOURS_LIMIT_EXCEEDED =
 		"errors.shift.lab.hours.limit.exceeded";
 	public static String THEORETICAL_HOURS_LIMIT_REACHED =
@@ -40,7 +41,7 @@ public class AdicionarAulasFormAction extends FenixAction {
 	public static String PRATICAL_HOURS_LIMIT_REACHED =
 		"errors.shift.pratical.hours.limit.reached";
 	public static String THEO_PRAT_HOURS_LIMIT_REACHED =
-		"errors.shift.theoPrat.hours.limit.reached";
+		"errors.shift.theo.pratical.hours.limit.reached";
 	public static String LAB_HOURS_LIMIT_REACHED =
 		"errors.shift.lab.hours.limit.reached";
 	public static String UNKNOWN_ERROR = "errors.unknown";
@@ -103,6 +104,7 @@ public class AdicionarAulasFormAction extends FenixAction {
 		InfoShiftServiceResult result,
 		InfoShift infoShift) {
 		ActionErrors actionErrors = new ActionErrors();
+
 		switch (result.getMessageType()) {
 			case InfoShiftServiceResult.SUCESS :
 				break;
