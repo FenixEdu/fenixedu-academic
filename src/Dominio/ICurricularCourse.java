@@ -21,12 +21,21 @@ public interface ICurricularCourse {
     public void setPraticalHours(Double praticalHours);
     public void setTheoPratHours(Double theoPratHours);
     public void setLabHours(Double labHours);
+
+    /**
+     * @deprecated
+     */
     public void setSemester(Integer semester);
+
     public void setName(java.lang.String name);
     public void setCode(java.lang.String code);
 	public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse);
 	public void setDegreeCurricularPlan(IPlanoCurricularCurso degreeCurricularPlan);
 	public void setAssociatedExecutionCourses(List associatedExecutionCourses);
+
+	/**
+	 * @deprecated
+	 */
 	public void setCurricularYear(Integer newCurricularYear);
 
     public Double getCredits();
@@ -34,8 +43,16 @@ public interface ICurricularCourse {
     public Double getPraticalHours();
     public Double getTheoPratHours();
     public Double getLabHours();
+
+	/**
+	 * @deprecated
+	 */
     public Integer getCurricularYear();
+	/**
+	 * @deprecated
+	 */
     public Integer getSemester();
+
     public java.lang.String getName();
     public java.lang.String getCode();
     public IDisciplinaDepartamento getDepartmentCourse();

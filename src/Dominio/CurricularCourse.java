@@ -113,6 +113,7 @@ public class CurricularCourse implements ICurricularCourse{
 	/**
 	 * Returns the curricularYear.
 	 * @return int
+	 * @deprecated
 	 */
 	public Integer getCurricularYear() {
 		return curricularYear;
@@ -185,6 +186,7 @@ public class CurricularCourse implements ICurricularCourse{
 	/**
 	 * Returns the semester.
 	 * @return int
+	 * @deprecated
 	 */
 	public Integer getSemester() {
 		return semester;
@@ -225,6 +227,7 @@ public class CurricularCourse implements ICurricularCourse{
 	/**
 	 * Sets the curricularYear.
 	 * @param curricularYear The curricularYear to set
+	 * @deprecated
 	 */
 	public void setCurricularYear(Integer curricularYear) {
 		this.curricularYear = curricularYear;
@@ -297,6 +300,7 @@ public class CurricularCourse implements ICurricularCourse{
 	/**
 	 * Sets the semester.
 	 * @param semester The semester to set
+	 * @deprecated
 	 */
 	public void setSemester(Integer semester) {
 		this.semester = semester;
