@@ -4,20 +4,20 @@
  */
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.gratuity;
 
-import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoGratuityValues;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão
  *  
  */
-public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
+public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYearTest
 	extends AdministrativeOfficeBaseTest
 {
 
-	public ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear(String name)
+	public ReadGratuityValuesByDegreeCurricularPlanAndExecutionYearTest(String name)
 	{
 		super(name);
 		this.dataSetFilePath =
