@@ -490,7 +490,7 @@ public class FileSuport implements IFileSuport {
 	 * 
 	 * @see fileSuport.IFileSuport#retrieveFile(java.lang.String)
 	 */
-	public FileSuportObject retrieveFile(String path) {
+	public FileSuportObject retrieveFile(String path) throws SlideException {
 		if (!path.startsWith("/files")) {
 			path = "/files" + path;
 		}
@@ -505,7 +505,7 @@ public class FileSuport implements IFileSuport {
 			file.setLinkName((String) nodeRevisionDescriptor.getProperty(
 					"linkName").getValue());
 		} catch (SlideException e) {
-			file = null;
+			throw e;
 		}
 		return file;
 	}
@@ -516,8 +516,13 @@ public class FileSuport implements IFileSuport {
 	 */
 	public boolean storeFile(FileSuportObject file) throws SlideException {
 		boolean result = false;
-		FileSuportObject fileInDb = retrieveFile(file.getUri() + "/"
-				+ file.getFileName());
+		FileSuportObject fileInDb=null;
+		try {
+			fileInDb = retrieveFile(file.getUri() + "/"
+					+ file.getFileName());
+		} catch (SlideException e) {
+			//file doesnt exist
+		}
 		if (fileInDb == null) {
 			storeFile(file.getFileName(), file.getUri(), file.getContent(),
 					file.getContentType(), file.getLinkName());

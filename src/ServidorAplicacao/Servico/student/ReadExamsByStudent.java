@@ -7,18 +7,20 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
+import Dominio.Exam;
+import Dominio.IEvaluation;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.utils.ExamsNotEnrolledPredicate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExamStudentRoom;
@@ -30,32 +32,18 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *  
  */
 
-public class ReadExamsByStudent implements IServico
+public class ReadExamsByStudent implements IService
 {
 
-    private static ReadExamsByStudent _servico = new ReadExamsByStudent();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExamsByStudent getService()
-    {
-        return _servico;
-    }
-
+  
     /**
 	 * The actor of this class.
 	 */
-    private ReadExamsByStudent()
+    public ReadExamsByStudent()
     {
     }
 
-    /**
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
-        return "ReadExamsByStudent";
-    }
+   
 
     //TODO: filtrar os exames por período de inscrição
 
@@ -153,16 +141,22 @@ public class ReadExamsByStudent implements IServico
 
                 Iterator iter3 = examsToEnroll.iterator();
                 while (iter3.hasNext())
-                {
-                    IExam exam = (IExam) iter3.next();
-
-                    if (isInDate(exam))
+                {   
+                    
+                    IEvaluation evaluation = (IEvaluation) iter3.next();
+                    if (evaluation instanceof Exam) 
                     {
+                     IExam exam = (IExam) evaluation;   
+                   
+
+                     if (isInDate(exam))
+                     {
                         InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
                         infoExam.setInfoExecutionCourse(
                             (InfoExecutionCourse) Cloner.get(
                                 (IExecutionCourse) exam.getAssociatedExecutionCourses().get(0)));
                         infoExamsToEnroll.add(infoExam);
+                     }
                     }
                 }
 

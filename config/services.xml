@@ -6270,4 +6270,13 @@
             <chain name="EnrollmentLEECAuthorization"/>
         </filterChains>
     </service>
+	<service>
+        <name>EditCurriculumByManager</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.EditCurriculum</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

@@ -3,9 +3,9 @@
  *
  */
 package ServidorAplicacao.Servico.fileManager;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IItem;
 import Dominio.Item;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.FileAlreadyExistsServiceException;
 import ServidorAplicacao.Servico.exceptions.FileNameTooLongServiceException;
@@ -22,16 +22,11 @@ import fileSuport.IFileSuport;
  * @author João Mota 17/Set/2003
  *  
  */
-public class StoreItemFile implements IServico {
-	private static StoreItemFile service = new StoreItemFile();
-	public static StoreItemFile getService() {
-		return service;
+public class StoreItemFile implements IService {
+	
+	public StoreItemFile() {
 	}
-	private StoreItemFile() {
-	}
-	public final String getNome() {
-		return "StoreItemFile";
-	}
+	
 	public Boolean run(FileSuportObject file, Integer itemId)
 			throws FenixServiceException {
 		try {

@@ -6,9 +6,9 @@ package ServidorAplicacao.Servico.fileManager;
 
 import org.apache.slide.common.SlideException;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IItem;
 import Dominio.Item;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
@@ -25,24 +25,14 @@ import fileSuport.IFileSuport;
  *17/Set/2003
  *
  */
-public class RetrieveItemFile implements IServico {
+public class RetrieveItemFile implements IService {
 
-	private static RetrieveItemFile service = new RetrieveItemFile();
-
-	public static RetrieveItemFile getService() {
-
-		return service;
-	}
-
-	private RetrieveItemFile() {
+	
+	public RetrieveItemFile() {
 
 	}
 
-	public final String getNome() {
-
-		return "RetrieveItemFile";
-	}
-
+	
 	public FileSuportObject run(Integer itemId, String fileName)
 		throws FenixServiceException {
 			FileSuportObject file = null;

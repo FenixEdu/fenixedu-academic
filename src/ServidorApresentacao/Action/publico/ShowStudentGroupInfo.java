@@ -123,12 +123,12 @@ public class ShowStudentGroupInfo extends Action
 				coursesIds[i]=new Integer(ids[i]);
 
 		}
-		//these are the ids of the exectuion courses. TODO: get this working with any execution courses read by some property
+		
 		String result = new String();
-        System.out.println("os ids que eu quero sao :" + coursesIds);
+       
 		for (int i = 0; i < coursesIds.length; i++)
 		{
-         System.out.println("Vou ver deste:"+coursesIds[i]);
+        
 			result
 				+= this.buildInfo(coursesIds[i], studentUsername, studentPassword);
 		}

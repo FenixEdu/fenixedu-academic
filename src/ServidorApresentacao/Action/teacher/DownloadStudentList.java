@@ -21,8 +21,11 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoAttendWithEnrollment;
 import DataBeans.InfoAttendsSummary;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProjectStudents;
 import DataBeans.InfoGroupProperties;
+import DataBeans.InfoShift;
+import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteStudents;
 import DataBeans.TeacherAdministrationSiteView;
@@ -41,8 +44,8 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class DownloadStudentList extends FenixAction
 {
-	static final String COLUMNS_HEADERS = "Nº\tNúmero de Inscrições\tCurso\tNome\tE-mail";
-	static final String RESUME_COLUMNS_HEADERS = "Número de inscrições\tNúmero de Alunos";
+	static final String COLUMNS_HEADERS = "Nº\tNúmero total de Inscrições\tCurso\tNome\tE-mail";
+	static final String RESUME_COLUMNS_HEADERS = "Número total de inscrições\tNúmero de Alunos";
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
@@ -140,6 +143,20 @@ public class DownloadStudentList extends FenixAction
 				result += "\t" + "\"" + "Grupo do Projecto " + infoGroupProperties.getName() + "\"";
 			}
 		}
+       
+        InfoExecutionCourse infoExecutionCourse = ((InfoSiteCommon)siteView.getCommonComponent()).getExecutionCourse();
+        if (infoExecutionCourse.getTheoreticalHours().intValue()>0) {
+            result +="\tTurno Teórico";
+        }
+        if (infoExecutionCourse.getPraticalHours().intValue()>0) {
+            result +="\tTurno Prático";
+        }
+        if (infoExecutionCourse.getTheoPratHours().intValue()>0) {
+            result +="\tTurno Teórico-Prático";
+        }
+        if (infoExecutionCourse.getLabHours().intValue()>0) {
+            result +="\tTurno Laboratorial";
+        }
 		result += "\n";
 
 		for (Iterator attendaciesIterator = attendacies.iterator(); attendaciesIterator.hasNext();)
@@ -214,6 +231,40 @@ public class DownloadStudentList extends FenixAction
 						result += "\t" + "N/A";
 				}
 			}
+            //TODO: add shifts names by type
+             if (infoExecutionCourse.getTheoreticalHours().intValue()>0) {
+                 InfoShift infoShift =(InfoShift) infoFrequenta.getInfoShifts().get("T");
+                 if (infoShift!=null) {
+                     result +="\t"+infoShift.getNome();
+                 }else {
+                     result += "\t" + "N/A";
+                 }
+                    
+                }
+                if (infoExecutionCourse.getPraticalHours().intValue()>0) {
+                    InfoShift infoShift =(InfoShift) infoFrequenta.getInfoShifts().get("P");
+                    if (infoShift!=null) {
+                        result +="\t"+infoShift.getNome();
+                    }else {
+                        result += "\t" + "N/A";
+                    }
+                }
+                if (infoExecutionCourse.getTheoPratHours().intValue()>0) {
+                    InfoShift infoShift =(InfoShift) infoFrequenta.getInfoShifts().get("TP");
+                    if (infoShift!=null) {
+                        result +="\t"+infoShift.getNome();
+                    }else {
+                        result += "\t" + "N/A";
+                    }
+                }
+                if (infoExecutionCourse.getLabHours().intValue()>0) {
+                    InfoShift infoShift =(InfoShift) infoFrequenta.getInfoShifts().get("L");
+                    if (infoShift!=null) {
+                        result +="\t"+infoShift.getNome();
+                    }else {
+                        result += "\t" + "N/A";
+                    }
+                }
 			result += "\n";
 		}
 		Iterator numberOfEnrollmentsIt = infoAttendsSummary.getNumberOfEnrollments().iterator();

@@ -1,31 +1,36 @@
 ---------------------------------------------------------------------
-Release XXXX
+Release D2004-03-31
 ---------------------------------------------------------------------
 
 NEW FEATURES:
 -added ECTS information in english
 -added stats of the ECTS information in english
+-manager area: it's now possible to dissociate an execution course from a curricular course in the curricular course site.
+-added to InfoAttendWithEnrollment a map with the shifts a student is enrolled in
+-added the shifts the students are enrolled in to the student list table and also to the excell file in the teacher and coordinator areas
 
 NOTES:
- ficheiro de sql "guiasAAlterar.sql" que lista as guias onde se alterarão o execution degree.
- ficheiro de sql "guias20022004.sql" que procede às alterações dos execution degrees.
- A fazer: mysql fenix < guiasAAlterar.sql > guiasAlteradas.txt
- 	e	  mysql fenix < guias20022004.sql > guias20022004_result.txt
+ 
+-the bug [ #128 ] could be replicated in the Exam Enrollment Use cases
  	
 CHANGES:
- na pos-graduação na "folha de apuramento final" sobre o arredondamento do total de créditos
- - Updated exames period for the second semesters exams season of 2003/2004.
+- changed in master-degree area the rounding of the total credits of "folha de apuramento final"
+- Updated exames period for the second semesters exams season of 2003/2004.
 - Filtered exams from list of evaluations of an execution course when reading all exams sorted by degree.	
 - fix [#137] validation in forms that use requiredif: fieldTest instead of field-test
 - fix [#139] information about current curricular courses in degree curricular plan management in coordinator site.
   It asked for information about in curricular course scopes instead of doing it in curricular courses.
 - fix [#136] filter WriteCandidateEnrolments that refered to curricular course scopes, and it should refer to curricular courses.
 - fix [#136] service WriteCandidateEnrolments to eliminate confirm and begin transaction.
+- ReadItems is now a berserk service
+- StoreItemFile is now a berserk service
+- ReadStudentsByCurricularCourse is now a berserk service
+- list of students of an execution course now displays "total number of enrollments" instead of "number of enrollments"
 
 
 BUG FIXES:
- bug número 116 - www.ist.utl.pt/serviços/	
- bug nas migrações de pessoas do IST. 
+- fixed [#116 ]- www.ist.utl.pt/serviços/	
+- fixed IST person migration
 - Corrected input forward for create exams mapping on SOP's interface.
 - Corrected sucessful forward for create exams mapping on SOP's interface to avoid stack overflow.
 - Fixed validation of selecting a context for listing exams by day and shift.
@@ -36,6 +41,9 @@ BUG FIXES:
 - fix [#138] listing of students by curricular course in coordinator of master degrees
 - fix [#133] edit curricular course information in coordinator
 - fix error while consulting employee assiduousness
+- fixed bug [ #127 ] edit curricular course information in the manager portal doesn't work
+- fixed bug [ #128 ] class cast Exception in ExamEnrollmentManager
+- fixed bug [ #131 ] cannot store files to fenix
  
 KNOWN ISSUES:
 - method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 

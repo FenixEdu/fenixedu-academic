@@ -5,6 +5,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author João Mota
@@ -19,6 +20,8 @@ public class InfoAttendWithEnrollment extends InfoObject implements
     protected Integer enrollments;
     
     protected InfoEnrolment infoEnrolment;
+    
+    protected Map infoShifts;
 
    
     public InfoAttendWithEnrollment()
@@ -95,4 +98,16 @@ public class InfoAttendWithEnrollment extends InfoObject implements
     {
         this.infoEnrolment = infoEnrolment;
     }
+	/**
+	 * @return Returns the infoShifts.
+	 */
+	public Map getInfoShifts() {
+		return infoShifts;
+	}
+	/**
+	 * @param infoShifts The infoShifts to set.
+	 */
+	public void setInfoShifts(Map infoShifts) {
+		this.infoShifts = infoShifts;
+	}
 }

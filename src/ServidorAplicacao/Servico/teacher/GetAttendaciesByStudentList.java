@@ -18,15 +18,21 @@ import DataBeans.InfoAttendsSummary;
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
+import Dominio.ExecutionCourse;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
+import Dominio.ITurnoAluno;
 import Dominio.Student;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -35,12 +41,11 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class GetAttendaciesByStudentList implements IService
 {
-
-    public GetAttendaciesByStudentList()
-    {
+    public GetAttendaciesByStudentList() {
     }
 
-    public InfoAttendsSummary run(Integer executionCourseID, List infoStudents) throws BDException
+    public InfoAttendsSummary run(Integer executionCourseID, List infoStudents)
+            throws FenixServiceException
     {
         List attendacies = new LinkedList();
         InfoAttendsSummary attendsSummary = new InfoAttendsSummary();
@@ -52,8 +57,18 @@ public class GetAttendaciesByStudentList implements IService
             IFrequentaPersistente persistentAttendacy = persistenceSupport.getIFrequentaPersistente();
             IPersistentStudent persistentStudent = persistenceSupport.getIPersistentStudent();
             IPersistentEnrolment persistentEnrolment = persistenceSupport.getIPersistentEnrolment();
+            ITurnoAlunoPersistente persistentShiftStudent = persistenceSupport
+                    .getITurnoAlunoPersistente();
+            IPersistentExecutionCourse persistentExecutionCourse = persistenceSupport
+                    .getIPersistentExecutionCourse();
             List students = new LinkedList();
-            for (Iterator infoStudentsIterator = infoStudents.iterator(); infoStudentsIterator.hasNext(); )
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
+                    new ExecutionCourse(executionCourseID), false);
+            if (executionCourse == null)
+            {
+                throw new FenixServiceException();
+            }
+            for (Iterator infoStudentsIterator = infoStudents.iterator(); infoStudentsIterator.hasNext();)
             {
                 InfoStudent infoStudent = (InfoStudent) infoStudentsIterator.next();
                 IStudent student = new Student(infoStudent.getIdInternal());
@@ -62,15 +77,12 @@ public class GetAttendaciesByStudentList implements IService
                 {
                     students.add(student);
                 }
-
             }
-
-            for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext(); )
+            for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();)
             {
                 IStudent student = (IStudent) studentsIterator.next();
                 IFrequenta attendacy = persistentAttendacy.readByAlunoIdAndDisciplinaExecucaoId(student
                         .getIdInternal(), executionCourseID);
-
                 Integer enrollments = new Integer(0);
                 if (attendacy.getEnrolment() != null)
                 {
@@ -83,7 +95,6 @@ public class GetAttendaciesByStudentList implements IService
                     {
                         enrollments = new Integer(1);
                     }
-
                 }
                 if (keys.contains(enrollments))
                 {
@@ -95,6 +106,15 @@ public class GetAttendaciesByStudentList implements IService
                     keys.add(enrollments);
                     enrollmentDistribution.put(enrollments, new Integer(1));
                 }
+                Map infoShifts = new HashMap();
+                List shifts = persistentShiftStudent.readByStudentAndExecutionCourse(student,executionCourse);
+                if (shifts!=null) {
+                    Iterator iter = shifts.iterator();
+                    while (iter.hasNext()) {
+                        ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
+                        infoShifts.put(shiftStudent.getShift().getTipo().getSiglaTipoAula(),Cloner.get(shiftStudent.getShift()));
+                    }
+                }
                 InfoFrequenta infoFrequenta = Cloner.copyIFrequenta2InfoFrequenta(attendacy);
                 InfoAttendWithEnrollment infoAttendWithEnrollment = new InfoAttendWithEnrollment();
                 infoAttendWithEnrollment.setAluno(infoFrequenta.getAluno());
@@ -102,14 +122,13 @@ public class GetAttendaciesByStudentList implements IService
                 infoAttendWithEnrollment.setIdInternal(infoFrequenta.getIdInternal());
                 infoAttendWithEnrollment.setEnrollments(enrollments);
                 infoAttendWithEnrollment.setInfoEnrolment(infoFrequenta.getInfoEnrolment());
+                infoAttendWithEnrollment.setInfoShifts(infoShifts);
                 attendacies.add(infoAttendWithEnrollment);
-
             }
             attendsSummary.setAttends(attendacies);
             attendsSummary.setEnrollmentDistribution(enrollmentDistribution);
             Collections.sort(keys);
             attendsSummary.setNumberOfEnrollments(keys);
-
         }
         catch (ExcepcaoPersistencia ex)
         {

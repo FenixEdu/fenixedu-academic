@@ -11,11 +11,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.ISection;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
@@ -26,29 +26,16 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac2 & lmac1
  */
 
-public class ReadItems implements IServico {
+public class ReadItems implements IService {
     
-	private static ReadItems service = new ReadItems();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadItems getService() {
-		return service;
-	}
-    
+	
 	/**
 	 * The ctor of this class.
 	 **/
-	private ReadItems() {
+	public ReadItems() {
 	}
     
-	/**
-	 * Returns the name of this service.
-	 **/
-	public final String getNome() {
-		return "ReadItems";
-	}
+	
     
 	/**
 	 * Executes the service.

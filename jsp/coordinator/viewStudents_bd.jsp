@@ -128,14 +128,14 @@
 		</tr> 
 		<tr>
      	   <bean:define id="colspan" value="1"/>
-     	   <bean:define id="rowspan" value="1"/>
+     	   <bean:define id="rowspan" value="2"/>
 		   <logic:present name="projects">
 			<logic:notEmpty name="projects">
 				<bean:size id="colspanAux" name="projects"/>
 				<bean:define id="colspan">
 					<bean:write name="colspanAux"/>
 				</bean:define>
-   	     	    <bean:define id="rowspan" value="2"/>
+   	     	    
 			</logic:notEmpty>
 		   </logic:present>
 		
@@ -143,7 +143,7 @@
 				<bean:message key="label.number" /> 
 		   </td>
 			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
-				Número de Inscrições <%--<bean:message key="label.enrollmentStatus" /> --%>
+				<bean:message key="label.numberOfEnrollments" />
 		   </td>
 			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.Degree" /> 
@@ -161,6 +161,29 @@
 			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.mail" />
 		   </td>
+		    <bean:define id="theoreticalHours" name="commonComponent" property="executionCourse.theoreticalHours" />
+           <bean:define id="praticalHours" name="commonComponent" property="executionCourse.praticalHours" />
+           <bean:define id="theoPratHours" name="commonComponent" property="executionCourse.theoPratHours" />
+           <bean:define id="labHours" name="commonComponent" property="executionCourse.labHours" />
+           <% int shiftColSpan=0; %>
+           <logic:greaterThan value="0" name="theoreticalHours" >
+          <% shiftColSpan=shiftColSpan+1; %>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="praticalHours" >
+          <% shiftColSpan=shiftColSpan+1; %>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="theoPratHours" >
+         <% shiftColSpan=shiftColSpan+1; %>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="labHours" >
+           <% shiftColSpan=shiftColSpan+1; %>
+         </logic:greaterThan>
+         <% Integer shiftColSpanInteger = new Integer(shiftColSpan); %>
+         <% if (shiftColSpan>0) {%>
+         <td class="listClasses-header" colspan="<%= shiftColSpanInteger %>" >
+                Turnos
+            </td>
+            <%     }%>
 		</tr>    		
 		<tr>
 		   <logic:present name="projects">
@@ -173,6 +196,26 @@
 				</logic:iterate>
 			</logic:notEmpty>
 		   </logic:present>
+		    <logic:greaterThan value="0" name="theoreticalHours" >
+          <td class="listClasses-header" >
+             Teórico
+          </td>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="praticalHours" >
+          <td class="listClasses-header" >
+             Prático
+          </td>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="theoPratHours" >
+          <td class="listClasses-header" >
+             Teórico-Prático
+          </td>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="labHours" >
+          <td class="listClasses-header" >
+             Laboratorial
+          </td>
+         </logic:greaterThan>
 		</tr>    		
 		
 		<bean:define id="mailingList" value=""/>
@@ -274,6 +317,58 @@
 						&nbsp;
 					</logic:notPresent>
 				</td>
+				<logic:greaterThan value="0" name="theoreticalHours" >
+          <td class="listClasses">
+            <logic:present name="attendacy" property="infoShifts">
+            <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
+            <% if (((DataBeans.InfoShift)map.get("T"))==null)
+            {
+              out.print("N/A");
+            } else {
+             out.print(((DataBeans.InfoShift)map.get("T")).getNome());
+              } %>  
+            </logic:present>
+          </td>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="praticalHours" >
+          <td class="listClasses">
+            <logic:present name="attendacy" property="infoShifts">
+            <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
+            <% if (((DataBeans.InfoShift)map.get("P"))==null)
+            {
+              out.print("N/A");
+            } else {
+             out.print(((DataBeans.InfoShift)map.get("P")).getNome());
+              } %>  
+            </logic:present>
+          </td>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="theoPratHours" >
+          <td class="listClasses">
+          <logic:present name="attendacy" property="infoShifts">
+            <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
+            <% if (((DataBeans.InfoShift)map.get("TP"))==null)
+            {
+              out.print("N/A");
+            } else {
+             out.print(((DataBeans.InfoShift)map.get("TP")).getNome());
+              } %>  
+            </logic:present>
+          </td>
+         </logic:greaterThan>
+         <logic:greaterThan value="0" name="labHours" >
+          <td class="listClasses">
+            <logic:present name="attendacy" property="infoShifts">
+            <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
+            <% if (((DataBeans.InfoShift)map.get("L"))==null)
+            {
+              out.print("N/A");
+            } else {
+             out.print(((DataBeans.InfoShift)map.get("L")).getNome());
+              } %>  
+            </logic:present>
+          </td>
+         </logic:greaterThan>
 			</tr>
     	</logic:iterate>
 		
