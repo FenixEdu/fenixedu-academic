@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ITurmaTurno;
+import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -40,31 +40,16 @@ public class ReadClassesWithShiftService implements IServico {
 		return "ReadClassesWithShiftService";
 	}
 
-	public Object run(
-		InfoShift infoShift,
-		InfoExecutionDegree infoExecutionDegree) {
+	public Object run(InfoShift infoShift) {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			ITurmaTurnoPersistente classShiftDAO =
 				sp.getITurmaTurnoPersistente();
 
-//			ITurma turma =
-//				new Turma(
-//					null,
-//					null,
-//					Cloner.copyInfoExecutionDegree2ExecutionDegree(
-//						infoExecutionDegree),
-//					null);
-//			ITurmaTurno turmaTurno =
-//				new TurmaTurno(turma, Cloner.copyInfoShift2Shift(infoShift));
+			ITurno shift = Cloner.copyInfoShift2Shift(infoShift);
 
-			//List shiftClasses =  classShiftDAO.readByCriteria(turmaTurno);
-			List shiftClasses =
-				classShiftDAO.readByShiftAndExecutionDegree(
-					Cloner.copyInfoShift2Shift(infoShift),
-					Cloner.copyInfoExecutionDegree2ExecutionDegree(
-						infoExecutionDegree));
+			List shiftClasses = classShiftDAO.readClassesWithShift(shift);
 
 			Iterator iterator = shiftClasses.iterator();
 
@@ -74,7 +59,6 @@ public class ReadClassesWithShiftService implements IServico {
 				infoClasses.add(Cloner.copyClass2InfoClass(element.getTurma()));
 			}
 			return infoClasses;
-
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
 			return null;

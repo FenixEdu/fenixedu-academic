@@ -83,9 +83,7 @@ public class ReadAllClasses implements IServico {
 				InfoClass infoClass = Cloner.copyClass2InfoClass(dClass);
 				infoClasses.add(infoClass);
 			}
-			Collections.sort(
-				infoClasses,
-				new BeanComparator("infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"));
+
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
