@@ -15,7 +15,6 @@ import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.IBibliographicReference;
 import Dominio.IEvaluationMethod;
-import Dominio.IEvalutionExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
@@ -175,7 +174,11 @@ public class MergeExecutionCourses implements IServico
     {
         IPersistentEvaluationMethod persistentEvaluationMethod = ps.getIPersistentEvaluationMethod();
         IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByExecutionCourse(source);
-        persistentEvaluationMethod.delete(evaluationMethod);
+        if (evaluationMethod != null)
+        {
+            persistentEvaluationMethod.delete(evaluationMethod);
+        }
+
     }
 
     /**
@@ -214,7 +217,10 @@ public class MergeExecutionCourses implements IServico
     {
         IPersistentCourseReport persistentCourseReport = ps.getIPersistentCourseReport();
         ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(source);
+        if (courseReport!=null) {
+            
         persistentCourseReport.delete(courseReport);
+        }
 
     }
 
@@ -250,7 +256,7 @@ public class MergeExecutionCourses implements IServico
         IExecutionCourse destination,
         IExecutionCourse source,
         ISuportePersistente ps)
-        throws ExcepcaoPersistencia
+        throws ExcepcaoPersistencia, InvalidArgumentsServiceException
     {
 
         IPersistentEvaluationExecutionCourse persistentEvaluationExecutionCourse =
@@ -262,48 +268,49 @@ public class MergeExecutionCourses implements IServico
             destinationEvaluations = new ArrayList();
         }
         List sourceEvaluations = persistentEvaluationExecutionCourse.readByExecutionCourse(source);
-        if (sourceEvaluations != null)
+        if (sourceEvaluations != null && !sourceEvaluations.isEmpty())
         {
-            Iterator iter = sourceEvaluations.iterator();
-            while (iter.hasNext())
-            {
-                IEvalutionExecutionCourse evaluationExecutionCourse =
-                    (IEvalutionExecutionCourse) iter.next();
-                final IEvalutionExecutionCourse evaluationExecutionCourse2Compare =
-                    evaluationExecutionCourse;
-                if (CollectionUtils.find(destinationEvaluations, new Predicate()
-                {
-
-                    public boolean evaluate(Object arg0)
-                    {
-                        IEvalutionExecutionCourse evaluationExecutionCourseArg =
-                            (IEvalutionExecutionCourse) arg0;
-                            if (evaluationExecutionCourseArg.getEvaluation()
-                                == evaluationExecutionCourse2Compare.getEvaluation())
-                        {
-                            return true; }
-                        else
-                        {
-                            return false; }
-                    }
-                }) == null)
-                {
-                    persistentEvaluationExecutionCourse.simpleLockWrite(evaluationExecutionCourse);
-                    evaluationExecutionCourse.setExecutionCourse(destination);
-
-                }
-                else
-                {
-                    if (evaluationExecutionCourse.getEvaluation().getAssociatedExecutionCourses().size()
-                        == 1)
-                    {
-                        persistentEvaluationExecutionCourse.delete(
-                            evaluationExecutionCourse.getEvaluation());
-                    }
-                    persistentEvaluationExecutionCourse.delete(evaluationExecutionCourse);
-
-                }
-            }
+            throw new InvalidArgumentsServiceException();
+//            Iterator iter = sourceEvaluations.iterator();
+//            while (iter.hasNext())
+//            {
+//                IEvalutionExecutionCourse evaluationExecutionCourse =
+//                    (IEvalutionExecutionCourse) iter.next();
+//                final IEvalutionExecutionCourse evaluationExecutionCourse2Compare =
+//                    evaluationExecutionCourse;
+//                if (CollectionUtils.find(destinationEvaluations, new Predicate()
+//                {
+//
+//                    public boolean evaluate(Object arg0)
+//                    {
+//                        IEvalutionExecutionCourse evaluationExecutionCourseArg =
+//                            (IEvalutionExecutionCourse) arg0;
+//                            if (evaluationExecutionCourseArg.getEvaluation()
+//                                == evaluationExecutionCourse2Compare.getEvaluation())
+//                        {
+//                            return true; }
+//                        else
+//                        {
+//                            return false; }
+//                    }
+//                }) == null)
+//                {
+//                    persistentEvaluationExecutionCourse.simpleLockWrite(evaluationExecutionCourse);
+//                    evaluationExecutionCourse.setExecutionCourse(destination);
+//
+//                }
+//                else
+//                {
+//                    if (evaluationExecutionCourse.getEvaluation().getAssociatedExecutionCourses().size()
+//                        == 1)
+//                    {
+//                        persistentEvaluationExecutionCourse.delete(
+//                            evaluationExecutionCourse.getEvaluation());
+//                    }
+//                    persistentEvaluationExecutionCourse.delete(evaluationExecutionCourse);
+//
+//                }
+//            }
         }
 
     }
@@ -460,7 +467,10 @@ public class MergeExecutionCourses implements IServico
     {
         IPersistentSite persistentSite = ps.getIPersistentSite();
         ISite site = persistentSite.readByExecutionCourse(source);
+        if (site!=null) {
+            
         persistentSite.delete(site);
+        }
 
     }
 
