@@ -64,14 +64,14 @@
 	<logic:notPresent name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic&amp;executionDegreeId=all" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 		</logic:present>
 		<logic:notPresent name="basic">
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false" target="_blank">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
@@ -335,14 +335,14 @@
 	<logic:notPresent name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic&amp;executionDegreeId=all" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 		</logic:present>
 		<logic:notPresent name="basic">
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false" target="_blank">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
