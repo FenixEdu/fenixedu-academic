@@ -108,6 +108,7 @@ public class CreateStudent {
 			sp.confirmarTransaccao();			
 
 		} catch(Exception e) {
+			e.printStackTrace(System.out);
 			throw new Exception(e);
 		}
 		
@@ -164,6 +165,13 @@ public class CreateStudent {
 
 		
 		String degreeName = StringUtils.prechomp(mwBranch.getDescription(), "DE ");
+
+		
+		if (degreeName.indexOf("TAGUS") != -1) {
+			degreeName = "Engenharia Informática e de Computadores - Taguspark";
+		}
+
+
 		ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYear(degreeName, executionPeriod.getExecutionYear());
 
 		return executionDegree.getCurricularPlan();
