@@ -97,7 +97,6 @@ public class EditGroupProperties implements IServico{
 			Integer groupMaximumNumber = infoGroupProperties.getGroupMaximumNumber();
 			Integer maximumCapacity = infoGroupProperties.getMaximumCapacity();
 			Integer minimumCapacity = infoGroupProperties.getMinimumCapacity();
-			System.out.println("MINIMUM CAPACITY "+minimumCapacity);
 			
 			if(groupMaximumNumber!=null)
 			{
@@ -216,6 +215,7 @@ public class EditGroupProperties implements IServico{
 				groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
 				
 				groupProperties.setName(infoGroupProperties.getName());
+				groupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
 				groupProperties.setShiftType(infoGroupProperties.getShiftType());
 				persistentGroupProperties.lockWrite(groupProperties);
 			}

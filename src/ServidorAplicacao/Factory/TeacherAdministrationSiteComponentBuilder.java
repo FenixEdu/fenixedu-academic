@@ -1076,55 +1076,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return studentGroupAttendInformationList;
 	}
 
-	//	public static List insertWithOrder(
-	//		List infoSiteStudentGroupsList,
-	//		InfoSiteStudentInformation infoSiteStudentInformation) {
-	//		
-	//		int size = infoSiteStudentGroupsList.size();
-	//		System.out.println("SIZE "+size);
-	//		List finalList = null;
-	//		int lastNumber;
-	//		
-	//		if (size == 0) {
-	//			System.out.println("ENTRA NO IF DO 0");
-	//			infoSiteStudentGroupsList.add(infoSiteStudentInformation);
-	//			return infoSiteStudentGroupsList;
-	//		}
-	//		if (size == 1) {
-	//			System.out.println("ENTRA NO IF DO 1");
-	//			lastNumber =
-	//				((InfoSiteStudentInformation) (infoSiteStudentGroupsList
-	//					.get(0)))
-	//					.getNumber()
-	//					.intValue();
-	//			if (lastNumber
-	//				< infoSiteStudentInformation.getNumber().intValue()) {
-	//				infoSiteStudentGroupsList.add(infoSiteStudentInformation);
-	//				return infoSiteStudentGroupsList;
-	//			} else {
-	//				infoSiteStudentGroupsList.add(0, infoSiteStudentInformation);
-	//				return infoSiteStudentGroupsList;
-	//			}
-	//		} else
-	//			lastNumber =
-	//				((InfoSiteStudentInformation) (infoSiteStudentGroupsList
-	//					.get(size - 1)))
-	//					.getNumber()
-	//					.intValue();
-	//
-	//		if (lastNumber < infoSiteStudentInformation.getNumber().intValue()) {
-	//
-	//			infoSiteStudentGroupsList.add(infoSiteStudentInformation);
-	//			return infoSiteStudentGroupsList;
-	//		} else {
-	//			finalList =
-	//				insertWithOrder(
-	//					infoSiteStudentGroupsList.subList(0, size - 2),
-	//					infoSiteStudentInformation);
-	//			finalList.add(infoSiteStudentGroupsList.get(size - 1));
-	//			return finalList;
-	//		}
-	//	}
+	
 
 	/**
 			* @param component

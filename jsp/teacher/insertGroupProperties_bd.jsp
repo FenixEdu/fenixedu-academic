@@ -3,14 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 
-
+<logic:present name="siteView"> 
 
 <h2><bean:message key="title.insertGroupProperties"/></h2>
 
 <span class="error"><html:errors/></span>
-
-<logic:present name="siteView"> 
-
 
 <html:form action="/createGroupProperties">
 <html:hidden property="page" value="1"/>
@@ -25,11 +22,15 @@
 			<td><html:text size="40" property="name" /></td>
 		</tr>
 	    
-
+		<tr>
+			<td><bean:message key="message.groupPropertiesProjectDescription"/></td>
+			<td><html:textarea property="projectDescription" cols="30" rows="4"/></td>
+		</tr>
+		
     	<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentBeginDay"/></td>
 			<td><html:text size="10" property="enrolmentBeginDay" /></td>
-			<%--<td><span class="error"><html:errors property="enrolmentBeginDay"/></span></td>--%>
+			
 		</tr>
 		<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentEndDay"/></td>
@@ -44,7 +45,7 @@
 	    		<html:option key="option.groupProperties.enrolmentPolicy.individual" value="false"/>
 	    		</html:select>
 	    	</td>
-			<td><span class="error"><html:errors property="enrolmentPolicy"/></span></td>
+			
 		</tr>
     
     	<tr>
@@ -53,29 +54,29 @@
 				<html:options name="shiftTypeValues" labelName="shiftTypeNames"/>
 				</html:select>
 			</td>
-			<td><span class="error"><html:errors property="shiftType"/></span></td>
+			
 		</tr>
 
 	    <tr>
 			<td><bean:message key="message.groupPropertiesMaximumCapacity"/></td>
 			<td><html:text size="5" property="maximumCapacity" /></td>
-			<td><span class="error"><html:errors property="maximumCapacity"/></span></td>
+			
 		</tr>	
     	<tr>
 			<td><bean:message key="message.groupPropertiesMinimumCapacity"/></td>
 			<td><html:text size="5" property="minimumCapacity" /></td>
-			<td><span class="error"><html:errors property="minimumCapacity"/></span></td>
+			
 		</tr>
 		<tr>
 			<td><bean:message key="message.groupPropertiesIdealCapacity"/></td>
 			<td><html:text size="5" property="idealCapacity" /></td>
-			<td><span class="error"><html:errors property="idealCapacity"/></span></td>
+			
 		</tr>
 
 		<tr>
 			<td><bean:message key="message.groupPropertiesGroupMaximumNumber"/></td>
 			<td><html:text size="5" property="groupMaximumNumber" /></td>
-			<td><span class="error"><html:errors property="groupMaximumNumber"/></span></td>
+			
 		</tr>	
 
 
@@ -92,3 +93,9 @@
 
 </html:form>
 </logic:present>
+
+<logic:notPresent name="siteView">
+<h4>
+<bean:message key="message.insert.infoGroupProperties.not.available" />
+</h4> 
+</logic:notPresent> 

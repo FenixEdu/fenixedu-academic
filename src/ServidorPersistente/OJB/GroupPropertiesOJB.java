@@ -36,8 +36,7 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 
 			Criteria criteria = new Criteria(); 
 			criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
-			criteria.addEqualTo("name", name);
-			criteria.addAndCriteria(criteria);	
+			criteria.addEqualTo("name", name);	
 			return (IGroupProperties) queryObject(GroupProperties.class, criteria);
 		}
 		

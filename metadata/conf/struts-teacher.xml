@@ -250,56 +250,13 @@
         	dynamic="true">
 		</form-bean>	
 
-		<!-- GROUP FORMS  -->
-		<form-bean name="groupPropertiesForm"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-			dynamic="true">   
-			<form-property name="name" type="java.lang.String" />     
-			<form-property name="maximumCapacity" type="java.lang.String" />
-			<form-property name="minimumCapacity" type="java.lang.String" />
-			<form-property name="idealCapacity" type="java.lang.String" />
-			<form-property name="enrolmentPolicy" type="java.lang.String" />
-			<form-property name="shiftType" type="java.lang.String" />
-			<form-property name="groupMaximumNumber" type="java.lang.String" />
-			<form-property name="enrolmentBeginDay" type="java.lang.String" />
-			<form-property name="enrolmentEndDay" type="java.lang.String" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-
-		</form-bean>  
-		
-		
-		<form-bean name="groupPropertiesForm1"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-			dynamic="true">   
-			<form-property name="name" type="java.lang.String" />     
-			<form-property name="maximumCapacity" type="java.lang.String" />
-			<form-property name="minimumCapacity" type="java.lang.String" />
-			<form-property name="idealCapacity" type="java.lang.String" />
-			<form-property name="enrolmentPolicy" type="java.lang.String" />
-			<form-property name="shiftType" type="java.lang.String" />
-			<form-property name="groupMaximumNumber" type="java.lang.String" />
-			<form-property name="enrolmentBeginDayFormatted" type="java.lang.String" />
-			<form-property name="enrolmentEndDayFormatted" type="java.lang.String" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-
-		</form-bean>
-		
-		<form-bean name="studentGroupForm"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-			dynamic="true">        
-			<form-property name="groupNumber" type="java.lang.Integer" />
-			<form-property name="studentCodes" type="java.lang.Integer[]" />
-			<form-property name="studentNumbers" type="java.lang.Integer[]" />
-			<form-property name="shifts" type="java.lang.Integer[]" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			
-		</form-bean>
 	
 		<!-- GROUP FORMS  -->
 		<form-bean name="groupPropertiesForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">   
-			<form-property name="name" type="java.lang.String" />     
+			<form-property name="name" type="java.lang.String" />  
+			<form-property name="projectDescription" type="java.lang.String" />    
 			<form-property name="maximumCapacity" type="java.lang.String" />
 			<form-property name="minimumCapacity" type="java.lang.String" />
 			<form-property name="idealCapacity" type="java.lang.String" />
@@ -316,7 +273,8 @@
 		<form-bean name="groupPropertiesForm1"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">   
-			<form-property name="name" type="java.lang.String" />     
+			<form-property name="name" type="java.lang.String" />  
+			<form-property name="projectDescription" type="java.lang.String" />     
 			<form-property name="maximumCapacity" type="java.lang.String" />
 			<form-property name="minimumCapacity" type="java.lang.String" />
 			<form-property name="idealCapacity" type="java.lang.String" />
@@ -1001,38 +959,6 @@
        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
 	</action>
 	   
-	<action     
-		path="/createGroupProperties"
-		name="groupPropertiesForm"
-		parameter="method"      			
-		input="/createGroupProperties.do?method=prepareCreateGroupProperties&amp;page=0"
-		scope="request"
-        type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-       	validate="true"
-       	>  
-       	<forward name="insertGroupProperties" path="/insertGroupProperties.jsp"/>
-       	<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
-	</action>    
-	
-	<action     
-		path="/editGroupProperties"
-		name="groupPropertiesForm1"
-		parameter="method"
-		input="/editGroupProperties.do?method=prepareEditGroupProperties&amp;page=0"      			
-		scope="request"
-     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"    
-       	validate="true"
-       		>
-       	<forward name="editGroupProperties" path="/editGroupProperties.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
-	</action>
-	
-	<action 
-		path="/deleteStudentGroup"
- 		parameter="method"
-        type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
-	    <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
-    </action>
 	   
 	<action     
 		path="/createGroupProperties"
@@ -1069,29 +995,7 @@
 	    <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
     </action>
 
-	<action     
-		path="/insertStudentGroup"
-		name="studentGroupForm"
-		parameter="method"      			
-		scope="request"
-		input="/insertStudentGroup.do?method=prepareInsertStudentGroup&amp;page=0"
-		validate="true"
-     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
-       	<forward name="insertStudentGroup" path="/insertStudentGroup.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
-	</action>
-	
-	<action     
-		path="/editStudentGroup"
-		name="studentGroupForm"
-		parameter="method"      			
-		scope="request"
-		validate="true"
-     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
-       	<forward name="editStudentGroup" path="/editStudentGroup.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
-	</action>
-	
+
 	<action     
 		path="/insertStudentGroup"
 		name="studentGroupForm"
@@ -1108,8 +1012,6 @@
 		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
 	
-
-
 	<action     
 		path="/editStudentGroupShift"
 		name="editStudentGroupForm"

@@ -1519,6 +1519,7 @@ public class TeacherAdministrationViewerDispatchAction
 		DynaActionForm insertGroupPropertiesForm = (DynaActionForm) form;
 		UserView userView = (UserView) session.getAttribute("UserView");
 		String name = (String) insertGroupPropertiesForm.get("name");
+		String projectDescription = (String) insertGroupPropertiesForm.get("projectDescription");
 		String maximumCapacity =
 			(String) insertGroupPropertiesForm.get("maximumCapacity");
 		String minimumCapacity =
@@ -1537,6 +1538,7 @@ public class TeacherAdministrationViewerDispatchAction
 				(String) insertGroupPropertiesForm.get("enrolmentPolicy"));
 		InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
 		infoGroupProperties.setName(name);
+		infoGroupProperties.setProjectDescription(projectDescription);
 		infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));
 		if (!maximumCapacity.equals(""))
 			infoGroupProperties.setMaximumCapacity(
@@ -1614,56 +1616,44 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 		HttpSession session = request.getSession(false);
+		
 		String groupPropertiesCodeString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		ISiteComponent viewGroupProperties = new InfoSiteGroupProperties();
-		SiteView siteView =
-			readSiteView(
-				request,
-				viewGroupProperties,
-				null,
-				groupPropertiesCode,
-				null);
-
+		SiteView siteView =readSiteView(request,viewGroupProperties,null,groupPropertiesCode,null);
+		
 		List shiftTypeValues = new ArrayList();
 		shiftTypeValues.add(new Integer(1));
 		shiftTypeValues.add(new Integer(2));
 		shiftTypeValues.add(new Integer(3));
 		shiftTypeValues.add(new Integer(4));
-
+		
 		List shiftTypeNames = new ArrayList();
 		shiftTypeNames.add("Teórica");
 		shiftTypeNames.add("Prática");
 		shiftTypeNames.add("Teórico-Prática");
 		shiftTypeNames.add("Laboratorial");
-
+		
 		List enrolmentPolicyValues = new ArrayList();
 		enrolmentPolicyValues.add(new Integer(1));
 		enrolmentPolicyValues.add(new Integer(2));
-
+		
 		List enrolmentPolicyNames = new ArrayList();
 		enrolmentPolicyNames.add("Atómica");
 		enrolmentPolicyNames.add("Individual");
-
-		InfoGroupProperties infoGroupProperties =
-			((InfoSiteGroupProperties) siteView.getComponent())
-				.getInfoGroupProperties();
-
-		Integer enrolmentPolicy =
-			infoGroupProperties.getEnrolmentPolicy().getType();
-
+		
+		InfoGroupProperties infoGroupProperties =((InfoSiteGroupProperties) siteView.getComponent()).getInfoGroupProperties();
+		
+		Integer enrolmentPolicy =infoGroupProperties.getEnrolmentPolicy().getType();
+		
 		enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);
-		String enrolmentPolicyName =
-			enrolmentPolicyNames
-				.remove(enrolmentPolicy.intValue() - 1)
-				.toString();
-
+		String enrolmentPolicyName =enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1).toString();
+		
 		Integer shiftType = infoGroupProperties.getShiftType().getTipo();
 		shiftTypeValues.remove(shiftType.intValue() - 1);
-		String shiftTypeName =
-			shiftTypeNames.remove(shiftType.intValue() - 1).toString();
-
+		String shiftTypeName =shiftTypeNames.remove(shiftType.intValue() - 1).toString();
+		
 		request.setAttribute("shiftTypeName", shiftTypeName);
 		request.setAttribute("shiftTypeValue", shiftType);
 		request.setAttribute("shiftTypeValues", shiftTypeValues);
@@ -1672,7 +1662,7 @@ public class TeacherAdministrationViewerDispatchAction
 		request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);
 		request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
 		request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
-
+		
 		return mapping.findForward("editGroupProperties");
 	}
 	public ActionForward editGroupProperties(
@@ -1681,13 +1671,14 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
+			
 		HttpSession session = request.getSession(false);
 		DynaActionForm editGroupPropertiesForm = (DynaActionForm) form;
 		String groupPropertiesString =
 			request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesString);
 		String name = (String) editGroupPropertiesForm.get("name");
+		String projectDescription = (String) editGroupPropertiesForm.get("projectDescription");
 		String maximumCapacity =
 			(String) editGroupPropertiesForm.get("maximumCapacity");
 		String minimumCapacity =
@@ -1701,8 +1692,7 @@ public class TeacherAdministrationViewerDispatchAction
 		String enrolmentEndDayString =
 			(String) editGroupPropertiesForm.get("enrolmentEndDayFormatted");
 		String shiftType = (String) editGroupPropertiesForm.get("shiftType");
-		String enrolmentPolicy =
-			(String) editGroupPropertiesForm.get("enrolmentPolicy");
+		String enrolmentPolicy =(String) editGroupPropertiesForm.get("enrolmentPolicy");
 		Calendar enrolmentBeginDay = null;
 		if (!enrolmentBeginDayString.equals("")) {
 			String[] beginDate = enrolmentBeginDayString.split("/");
@@ -1736,8 +1726,7 @@ public class TeacherAdministrationViewerDispatchAction
 		infoGroupProperties.setIdInternal(groupPropertiesCode);
 		infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
 		infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
-		infoGroupProperties.setEnrolmentPolicy(
-			new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
+		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
 		if (!groupMaximumNumber.equals(""))
 			infoGroupProperties.setGroupMaximumNumber(
 				new Integer(groupMaximumNumber));
@@ -1750,6 +1739,7 @@ public class TeacherAdministrationViewerDispatchAction
 			infoGroupProperties.setMinimumCapacity(
 				new Integer(minimumCapacity));
 		infoGroupProperties.setName(name);
+		infoGroupProperties.setProjectDescription(projectDescription);
 		infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));
 		Integer objectCode = getObjectCode(request);
 		Object args[] = { objectCode, infoGroupProperties };
@@ -1765,33 +1755,25 @@ public class TeacherAdministrationViewerDispatchAction
 			throw new FenixActionException(e);
 		}
 		if (result.size() != 0) {
-
+		
 			Iterator iter = result.iterator();
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			while (iter.hasNext()) {
 				Object exception = iter.next();
-				if (exception
-					.getClass()
-					.equals(ExistingServiceException.class)) {
-					error =
-						new ActionError("error.exception.existing.groupProperties");
-					actionErrors.add(
-						"error.exception.existing.groupProperties",
-						error);
+				if (exception.getClass().equals(ExistingServiceException.class)) {
+					error =new ActionError("error.exception.existing.groupProperties");
+					actionErrors.add("error.exception.existing.groupProperties",error);
 					saveErrors(request, actionErrors);
-				} else if (
-					exception.getClass().equals(
-						NonValidChangeServiceException.class)) {
+				} 
+				else 
+					if (exception.getClass().equals(NonValidChangeServiceException.class)) {
 					System.out.println("entra no else");
-
-					error =
-						new ActionError("error.exception.nonValidChange.editGroupProperties");
-					actionErrors.add(
-						"error.exception.nonValidChange.editGroupProperties",
-						error);
-					System.out.println("actionErros" + actionErrors);
-
+				
+					error =new ActionError("error.exception.nonValidChange.editGroupProperties");
+					actionErrors.add("error.exception.nonValidChange.editGroupProperties",error);
+					System.out.println("actionErros"+actionErrors);
+				
 					saveErrors(request, actionErrors);
 				}
 			}
@@ -1807,12 +1789,14 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 		Boolean result;
 		HttpSession session = request.getSession(false);
+		
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getObjectCode(request);
 		String studentGroupCodeString =
 			(String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		Object[] args = { studentGroupCode };
+		Object[] args = { objectCode, studentGroupCode };
 		GestorServicos gestorServicos = GestorServicos.manager();
 		try {
 			gestorServicos.executar(userView, "DeleteStudentGroup", args);
@@ -1893,41 +1877,55 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+			
+			
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Integer objectCode = getObjectCode(request);
+		
 		String groupPropertiesCodeString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		
+		
 		DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
+		
 		List studentCodes =
 			Arrays.asList(
 				(Integer[]) insertStudentGroupForm.get("studentCodes"));
+		
+		
 		String groupNumberString =
 			(String) insertStudentGroupForm.get("groupNumber");
 		Integer groupNumber = new Integer(groupNumberString);
+		
+		
 		String newShiftString = (String) insertStudentGroupForm.get("shift");
+		
 		if (newShiftString.equals("")) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			// Create an ACTION_ERROR 
 			error = new ActionError("errors.invalid.insert.studentGroupShift");
-			actionErrors.add("errors.invalid.edit.studentGroupShift", error);
+			actionErrors.add(
+				"errors.invalid.edit.studentGroupShift",
+				error);
 			saveErrors(request, actionErrors);
 			return prepareCreateStudentGroup(mapping, form, request, response);
 		} else {
 			Integer shiftCode = new Integer(newShiftString);
 			Object args[] =
 				{
+					objectCode,
 					groupNumber,
 					groupPropertiesCode,
 					shiftCode,
-					studentCodes,
-					objectCode };
+					studentCodes };
 			GestorServicos gestor = GestorServicos.manager();
 			Boolean result;
 			try {
 				gestor.executar(userView, "CreateStudentGroup", args);
+				
 			} catch (ExistingServiceException e) {
 				ActionErrors actionErrors = new ActionErrors();
 				ActionError error = null;
@@ -2019,7 +2017,7 @@ public class TeacherAdministrationViewerDispatchAction
 			return viewProjectStudentGroups(mapping, form, request, response);
 		} else {
 			Integer newShiftCode = new Integer(newShiftString);
-			Object args[] = { studentGroupCode, newShiftCode };
+			Object args[] = {objectCode, studentGroupCode, newShiftCode };
 			GestorServicos gestor = GestorServicos.manager();
 			Boolean result;
 			try {
@@ -2111,7 +2109,7 @@ public class TeacherAdministrationViewerDispatchAction
 			Arrays.asList(
 				(Integer[]) insertStudentGroupForm.get("studentCodes"));
 
-		Object args[] = { studentGroupCode, studentCodes, objectCode };
+		Object args[] = { objectCode, studentGroupCode, studentCodes };
 		GestorServicos gestor = GestorServicos.manager();
 		Boolean result;
 		try {
@@ -2140,14 +2138,14 @@ public class TeacherAdministrationViewerDispatchAction
 			Arrays.asList(
 				(String[]) deleteStudentGroupForm.get("studentsToRemove"));
 
-		Object args[] = { studentGroupCode, studentUsernames, objectCode };
-		GestorServicos gestor = GestorServicos.manager();
-		Boolean result;
-		try {
-			gestor.executar(userView, "DeleteStudentGroupMembers", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+			Object args[] = { objectCode, studentGroupCode, studentUsernames };
+				GestorServicos gestor = GestorServicos.manager();
+				Boolean result;
+				try {
+					gestor.executar(userView, "DeleteStudentGroupMembers", args);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+				return prepareEditStudentGroupMembers(mapping, form, request, response);
+			}
 		}
-		return prepareEditStudentGroupMembers(mapping, form, request, response);
-	}
-}
