@@ -149,35 +149,35 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 		actionErrors.add("diferentePasswords", new ActionError("errors.different.passwords"));
 	}
 	
-
-
+	Integer year = new Integer(((String) form.get("birthYear")));
 	Integer month = new Integer(((String) form.get("birthMonth")));
 	Integer day = new Integer(((String) form.get("birthDay")));
 					
   	// Validate the birth Date
   	
-  	if (!Data.validDate(day, month)){
+  	if (!Data.validDate(day, month, year)){
   		result = false;
 		actionErrors.add("invalidBirthDate", new ActionError("errors.invalid.date", "Data de Nascimento"));
   	}
   		
   	// Validate the Identification Document Issue Date  
 
-
+	year = new Integer(((String) form.get("idIssueDateYear")));
 	month = new Integer(((String) form.get("idIssueDateMonth")));
 	day = new Integer(((String) form.get("idIssueDateDay")));
 
-	if (!Data.validDate(day, month)){
+	if (!Data.validDate(day, month, year)){
 		result = false;
 		actionErrors.add("invalidIdIssueDate", new ActionError("errors.invalid.date", "Data de Emissão do Documento de Identificação"));
 	}
 
 	
 	// Validate the document expiration date 
+	year = new Integer(((String) form.get("idExpirationDateYear")));
 	month = new Integer(((String) form.get("idExpirationDateMonth")));
 	day = new Integer(((String) form.get("idExpirationDateDay")));
 
-	if (!Data.validDate(day, month)){
+	if (!Data.validDate(day, month, year)){
 		result = false;
 		actionErrors.add("invalidIdExpirationDate", new ActionError("errors.invalid.date", "Data de Validade do Documento de Identificação"));
 	}

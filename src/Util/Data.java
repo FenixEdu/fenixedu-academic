@@ -136,16 +136,24 @@ public class Data {
 	}
 
   
-  public static boolean validDate(Integer day, Integer month) {
+  public static boolean validDate(Integer day, Integer month, Integer year) {
+  	boolean leapYear = false;
+  	
   	
 	// check 30 day months
 	if (month.equals(APRIL) || month.equals(JUNE) || month.equals(SETEMBER) || month.equals(NOVEMBER))
 		if (day.intValue() == 31)
 		return false;
 
-	if (month.equals(FEBRUARY) && day.intValue() >= 30)
-		return false;	 
+	// Verifies if the Year
 	
+	if ((year.intValue() % 4 == 0 && year.intValue() % 100 != 0) || (year.intValue() % 400 == 0))
+		leapYear = true;
+
+	if (month.equals(FEBRUARY) && leapYear && day.intValue() >= 30)
+		return false;
+	else if (month.equals(FEBRUARY) && !leapYear && day.intValue() >= 29)
+		return false;
 	
   	return true;
   }
