@@ -50,7 +50,6 @@ public class EditObjectives implements IServico
         String username)
         throws FenixServiceException
     {
-		System.out.println("-->Service EditObjectives");
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();

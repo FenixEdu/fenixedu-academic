@@ -342,12 +342,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
+    	
         ISiteComponent objectivesComponent = new InfoCurriculum();
-
+        
+        Integer objectCode = getObjectCode(request);
+        
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);
         request.setAttribute("curricularCourseCode", curricularCourseCode);
-
+        
         try
         {
             readSiteView(request, objectivesComponent, null, curricularCourseCode, null);
@@ -357,15 +360,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw e1;
         }
 
-        //Filter if the course is of the AERO degree
-        Object args[] = { curricularCourseCode, "LEA" };
-        Boolean isExpectedDegree = null;
+        HttpSession session = request.getSession(false);        
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        
+        //Filter if the cteacher is responsibles for the execution course
+        Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode};
+        Boolean isResponsible = null;
         try
         {
-            isExpectedDegree =
+        	isResponsible =
                 (Boolean) ServiceManagerServiceFactory.executeService(
                     null,
-                    "CourseOfTheExpectedDegree",
+                    "TeacherResponsibleByExecutionCourse",
                     args);
 
         }
@@ -374,7 +380,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             e.printStackTrace();
             throw new FenixActionException(e);
         }
-        if (isExpectedDegree.booleanValue() == false)
+        if (isResponsible.booleanValue() == false)
         {
             ActionErrors errors = new ActionErrors();
 
@@ -466,6 +472,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
+    	Integer objectCode = getObjectCode(request);
+    	
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);
         request.setAttribute("curricularCourseCode", curricularCourseCode);
@@ -482,32 +490,35 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw e1;
         }
 
-        //Filter if the course is of the AERO degree
-        Object args[] = { curricularCourseCode, "LEA" };
-        Boolean isExpectedDegree = null;
-        try
-        {
-            isExpectedDegree =
-                (Boolean) ServiceManagerServiceFactory.executeService(
-                    null,
-                    "CourseOfTheExpectedDegree",
-                    args);
+        HttpSession session = request.getSession(false);        
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        
+        //Filter if the cteacher is responsibles for the execution course
+        Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode};
+         Boolean isResponsible = null;
+         try
+         {
+         	isResponsible =
+         (Boolean) ServiceManagerServiceFactory.executeService(
+         null,
+         "TeacherResponsibleByExecutionCourse",
+         args);
 
-        }
-        catch (FenixServiceException e)
-        {
-            e.printStackTrace();
-            throw new FenixActionException(e);
-        }
-        if (isExpectedDegree.booleanValue() == false)
-        {
-            ActionErrors errors = new ActionErrors();
+         }
+         catch (FenixServiceException e)
+         {
+         e.printStackTrace();
+         throw new FenixActionException(e);
+         }
+         if (isResponsible.booleanValue() == false)
+         {
+         ActionErrors errors = new ActionErrors();
 
-            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
-            saveErrors(request, errors);
+         errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
+         saveErrors(request, errors);
 
-            return mapping.findForward("notAuthorized");
-        }
+         return mapping.findForward("notAuthorized");
+         }
 
         TeacherAdministrationSiteView siteView =
             (TeacherAdministrationSiteView) request.getAttribute("siteView");

@@ -2969,7 +2969,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseAndCurricularCourseLecturingTeacherAuthorization"/>
+        	<chain name="ExecutionCourseResponsibleForTeacherAuthorization" />
         </filterChains>
     </service>
     <service>
@@ -2978,7 +2978,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseAndCurricularCourseLecturingTeacherAuthorization"/>
+        	<chain name="ExecutionCourseResponsibleForTeacherAuthorization" />
         </filterChains>
     </service>
     <service>
@@ -5179,6 +5179,14 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+        <name>TeacherResponsibleByExecutionCourse</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.teacher.TeacherResponsibleByExecutionCourse</implementationClass>
+        <description>This service verify if teacher is responsible of the execution course to edit</description>
+        <isTransactional>true</isTransactional>
+		<filterChains/>
+    </service>
 	<service>
 		<name>ReadAllContractsByGrantOwner</name>
 		<implementationClass>ServidorAplicacao.Servico.grant.contract.ReadAllContractsByGrantOwner</implementationClass>
