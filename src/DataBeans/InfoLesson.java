@@ -17,7 +17,7 @@ import java.util.List;
 import Util.DiaSemana;
 import Util.TipoAula;
 
-public class InfoLesson extends InfoObject{
+public class InfoLesson extends InfoObject {
 	protected DiaSemana _diaSemana;
 	protected Calendar _fim;
 	protected InfoExecutionCourse _infoDisciplinaExecucao;
@@ -135,17 +135,16 @@ public class InfoLesson extends InfoObject{
 		_tipo = tipo;
 	}
 
-	public String getWeekDay(){
+	public String getWeekDay() {
 		String result = getDiaSemana().getDiaSemana().toString();
-		if (result!= null && result.equals("7")){
-			result="S";
+		if (result != null && result.equals("7")) {
+			result = "S";
 		}
-		if (result!= null && result.equals("1")){
-					result="D";
-				}
+		if (result != null && result.equals("1")) {
+			result = "D";
+		}
 		return result;
 	}
-
 
 	public String toString() {
 		String result = "[INFOAULA";

@@ -5,7 +5,7 @@
   <tiles:put name="navGeral" value="/sop/commonNavGeralSop.jsp" />
   <tiles:put name="navLocal" value="/sop/commonNavLocalSchedulesSop.jsp" />
   <tiles:put name="body-context" value=""/>  
-  <tiles:put name="body" value="/sop/manageSchedules_bd.jsp" />
+  <tiles:put name="body" value="/sop/manageShifts_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
-  <tiles:put name="context" value="/commons/contextExecutionDegreeAndCurricularYear.jsp" />
+  <tiles:put name="context" value="/commons/contextExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 </tiles:insert>

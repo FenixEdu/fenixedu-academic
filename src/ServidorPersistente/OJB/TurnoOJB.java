@@ -14,16 +14,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.ICurricularYear;
+import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.ITurnoAula;
+import Dominio.ShiftStudent;
 import Dominio.TurmaTurno;
 import Dominio.Turno;
-import Dominio.ShiftStudent;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoPersistente;
@@ -159,7 +163,8 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		try {
 			ITurnoAluno turnoAluno = null;
 			TurnoAlunoOJB turnoAlunoOJB = new TurnoAlunoOJB();
-			String oqlQuery2 = "select all from " + ShiftStudent.class.getName();
+			String oqlQuery2 =
+				"select all from " + ShiftStudent.class.getName();
 			oqlQuery2 += " where shift.idInternal = $1";
 			//oqlQuery2
 			//	+= " where turno.nome = $1 and turno.disciplinaExecucao.sigla = $2 "
@@ -368,6 +373,31 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ITurnoPersistente#readByExecutionDegreeAndCurricularYear(Dominio.ICursoExecucao, Dominio.ICurricularYear)
+	 */
+	public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(
+		IExecutionPeriod executionPeriod,
+		ICursoExecucao executionDegree,
+		ICurricularYear curricularYear)
+		throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo(
+			"disciplinaExecucao.associatedCurricularCourses.scopes.curricularSemester.curricularYear.idInternal",
+			curricularYear.getIdInternal());
+		criteria.addEqualTo(
+			"disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+			executionDegree.getCurricularPlan().getIdInternal());
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+
+		List shifts = queryList(Turno.class, criteria);
+		return shifts;
 	}
 
 }

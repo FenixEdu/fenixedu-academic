@@ -42,7 +42,7 @@
         <!--        <form-property name="semestre" type="java.lang.Integer"/> -->
       </form-bean>
 
-      <!-- Dynamic-FormBean for Choose Context-->
+      <!-- Dynamic-FormBean for Choose Context -->
       <form-bean name="chooseContextForm"
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
@@ -50,6 +50,17 @@
         <form-property name="curricularYear" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
+
+	  <!-- Dynamic-FormBean for Create Shift -->
+      <form-bean name="createShiftForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="nome" type="java.lang.String"/>
+        <form-property name="courseInitials" type="java.lang.String"/>
+        <form-property name="tipoAula" type="java.lang.Integer"/>
+      </form-bean>
+
 
 	  <!-- AULAS -->
       <!-- Dynamic-FormBean para CriarAula -->
@@ -1095,6 +1106,22 @@
             >
     	<forward name="ShowChooseForm" path="/chooseScheduleContext.jsp"/>
         <forward name="ManageSchedules" path="/manageSchedules.do"/>
+	</action>
+
+	<action path="/manageShifts"
+			input="/manageShifts.do?method=listShifts&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageShiftsDA"
+            name="createShiftForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="ShowShiftList" path="/manageShifts.jsp"/>
+    	<forward name="EditShift" path="/manageShifts.do?method=listShifts&amp;page=0"/>
 	</action>
 
 
