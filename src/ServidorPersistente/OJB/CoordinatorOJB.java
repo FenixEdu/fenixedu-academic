@@ -37,14 +37,22 @@ public class CoordinatorOJB
 		List executionDegrees = new ArrayList();
 		while (iter.hasNext()) {
 			ICoordinator coordinator = (ICoordinator) iter.next();
-			ICursoExecucao executionDegree =
-				coordinator
-					.getExecutionDegree();
+			ICursoExecucao executionDegree = coordinator.getExecutionDegree();
 			if (!executionDegrees.contains(executionDegree)) {
 				executionDegrees.add(executionDegree);
 			}
 		}
 		return executionDegrees;
+	}
+
+	public List readCoordinatorsByExecutionDegree(ICursoExecucao executionDegree)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionDegree.idInternal",
+			executionDegree.getIdInternal());
+		return queryList(Coordinator.class, criteria);
+
 	}
 
 }

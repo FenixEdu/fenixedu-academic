@@ -2,6 +2,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
 
 
@@ -16,4 +17,8 @@ public interface IPersistentCoordinator extends IPersistentObject {
 
 	public List readExecutionDegreesByTeacher(ITeacher teacher)
 			throws ExcepcaoPersistencia;	
+			
+	public List readCoordinatorsByExecutionDegree(ICursoExecucao executionDegree)
+			throws ExcepcaoPersistencia;		
+			
 }
