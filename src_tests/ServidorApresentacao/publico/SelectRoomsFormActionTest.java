@@ -24,7 +24,7 @@ public class SelectRoomsFormActionTest extends TestCasePresentation {
   public void setUp() {
     super.setUp();
     // define ficheiro de configuração Struts a utilizar
-    setServletConfigFile("/WEB-INF/tests/web-publico.xml");  
+    setServletConfigFile("/WEB-INF/web.xml");  
    
   }
   
@@ -110,7 +110,7 @@ public class SelectRoomsFormActionTest extends TestCasePresentation {
 	actionPerform();
 
 	// verifica reencaminhamento
-	verifyForwardPath("/consultRooms.jsp");
+	verifyInputForward();
 
 	//verifica ausencia de erros
 	verifyActionErrors(new String[] {"errors.integer"});
