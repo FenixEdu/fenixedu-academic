@@ -128,6 +128,8 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 
+		this.initializeRemovedCurricularCourseScopesList(request, infoEnrolmentContext);
+
 		return mapping.findForward(forwards[3]);
 	}
 
@@ -284,6 +286,7 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 				InfoCurricularCourse optionalCurricularCourse = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse();
 				if (!optionalCurricularCoursesChoosen.contains(optionalCurricularCourse)) {
 					optionalEnrolmentsIterator.remove();
+//					this.setRemovedCurricularCourseScope(request, infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope());
 				}
 			}
 		}
@@ -306,5 +309,37 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 			actionErrors.add(message, actionError);
 		}
 		saveErrors(request, actionErrors);
+	}
+
+	private void computeRemovedCurricularCourseScope(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
+		HttpSession session = request.getSession();
+		List list = (List) session.getAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+		if(list != null) {
+			List aux = new ArrayList();
+			aux.addAll(infoEnrolmentContext.getActualEnrolment());
+			Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
+			while(iterator.hasNext()) {
+				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator.next();
+				InfoCurricularCourseScope optionalCurricularCourseScope = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope();
+				aux.add(optionalCurricularCourseScope);
+			}
+			session.setAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY, list);
+		}
+	}
+
+	private void initializeRemovedCurricularCourseScopesList(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
+		HttpSession session = request.getSession();
+		List list = (List) session.getAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+		if(list == null) {
+			list = new ArrayList();
+			list.addAll(infoEnrolmentContext.getActualEnrolment());
+			Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
+			while(iterator.hasNext()) {
+				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator.next();
+				InfoCurricularCourseScope optionalCurricularCourseScope = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope();
+				list.add(optionalCurricularCourseScope);
+			}
+			session.setAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY, list);
+		}
 	}
 }
