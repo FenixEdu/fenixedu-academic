@@ -56,46 +56,63 @@ public class FixCurriculum
                 {
                     IDegreeCurricularPlan degreeCurricularPlanAux = (IDegreeCurricularPlan) iter3
                             .next();
-                    if (!degreeCurricularPlan.equals(degreeCurricularPlanAux)
+                    if (!degreeCurricularPlan.getIdInternal().equals(
+                            degreeCurricularPlanAux.getIdInternal())
                             && !degreeCurricularPlanAux.getName().startsWith(
-                                    "PAST"))
+                                    "PAST")
+                            && !degreeCurricularPlanAux.getName()
+                                    .equalsIgnoreCase("LEIC 2003"))
                     {
                         oldDegreeCurricularPlan = degreeCurricularPlanAux;
+                        break;
                     }
 
                 }
-                List curricularCourses = degreeCurricularPlan
-                        .getCurricularCourses();
-                Iterator iter2 = curricularCourses.iterator();
-                while (iter2.hasNext())
+                if (oldDegreeCurricularPlan != null)
                 {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) iter2
-                            .next();
-                    List curriculums = persistentCurriculum
-                            .readCurriculumHistoryByCurricularCourse(curricularCourse);
-                    if (curriculums == null || curriculums.size() < 1)
+                    System.out.println(oldDegreeCurricularPlan.getName());
+
+                    List curricularCourses = degreeCurricularPlan
+                            .getCurricularCourses();
+                    Iterator iter2 = curricularCourses.iterator();
+                    while (iter2.hasNext())
                     {
-                        List oldCurricularCourses = oldDegreeCurricularPlan
-                                .getCurricularCourses();
-                        Iterator iter4 = oldCurricularCourses.iterator();
-                        while (iter4.hasNext())
+                        ICurricularCourse curricularCourse = (ICurricularCourse) iter2
+                                .next();
+                        List curriculums = persistentCurriculum
+                                .readCurriculumHistoryByCurricularCourse(curricularCourse);
+                        if (curriculums == null || curriculums.size() < 1)
                         {
-                            ICurricularCourse oldCurricularCourse = (ICurricularCourse) iter
-                                    .next();
-                            if (curricularCourse.getCode().equalsIgnoreCase(
-                                    curricularCourse.getCode()))
+                            List oldCurricularCourses = oldDegreeCurricularPlan
+                                    .getCurricularCourses();
+                            Iterator iter4 = oldCurricularCourses.iterator();
+                            while (iter4.hasNext())
                             {
-                                List oldCurriculums = persistentCurriculum
-                                        .readCurriculumHistoryByCurricularCourse(oldCurricularCourse);
-                                if (oldCurriculums != null
-                                        && !oldCurriculums.isEmpty())
+                                ICurricularCourse oldCurricularCourse = (ICurricularCourse) iter4
+                                        .next();
+                                if (curricularCourse.getCode()
+                                        .equalsIgnoreCase(
+                                                curricularCourse.getCode()))
                                 {
-                                    ICurriculum curriculum = (ICurriculum) oldCurriculums
-                                            .get(0);
-                                    curriculum
-                                            .setCurricularCourse(curricularCourse);
+                                    List oldCurriculums = persistentCurriculum
+                                            .readCurriculumHistoryByCurricularCourse(oldCurricularCourse);
+                                    if (oldCurriculums != null
+                                            && !oldCurriculums.isEmpty())
+                                    {
+                                        Iterator iterator = oldCurriculums
+                                                .iterator();
+                                        while (iterator.hasNext())
+                                        {
+                                            ICurriculum curriculum = (ICurriculum) iterator
+                                                    .next();
+                                            curriculum
+                                                    .setCurricularCourse(curricularCourse);
+                                        }
+
+                                    }
+                                    break;
                                 }
-                                break;
+
                             }
 
                         }
@@ -103,7 +120,6 @@ public class FixCurriculum
                     }
 
                 }
-
             }
             ps.confirmarTransaccao();
         }
