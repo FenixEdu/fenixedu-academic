@@ -4,7 +4,6 @@
  */
 package DataBeans;
 
-
 /**
  * @author: 
  * 			- Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -38,5 +37,15 @@ public class InfoExternalPerson extends InfoObject {
 	 */
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
+	}
+
+	public boolean equals(Object obj) {
+		boolean result = false;
+
+		if (obj instanceof InfoExternalPerson) {
+			InfoExternalPerson infoExternalPerson = (InfoExternalPerson) obj;
+			result = this.getInfoPerson().equals(infoExternalPerson.getInfoPerson());
+		}
+		return result;
 	}
 }
