@@ -10,10 +10,6 @@
 			<bean:message key="label.manager.insert.professorShip.by.number"/>
 		</html:link>
 	</li>
-	<li><html:link page="<%="/insertProfessorShipByDepartment.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>">
-			<bean:message key="label.manager.insert.professorShip.by.department"/>
-		</html:link>
-	</li>
 </ul>
 	
 <logic:notPresent name="infoTeachersList">

@@ -26,7 +26,7 @@
 		</tr>
 	    <tr>
 			<td>
-				<bean:message key="label.manager.curricular.course.scope.semester"/>
+				<bean:message key="label.manager.semester"/>
 			</td>
 			<td>
 				<html:select property="curricularSemesterId">
@@ -45,7 +45,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.scope.theoreticalHours"/>
+				<bean:message key="message.manager.theoreticalHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="theoreticalHours" />
@@ -53,7 +53,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.scope.praticalHours"/>
+				<bean:message key="message.manager.praticalHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="praticalHours" />
@@ -61,7 +61,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.scope.theoPratHours"/>
+				<bean:message key="message.manager.theoPratHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="theoPratHours" />
@@ -69,7 +69,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.scope.labHours"/>
+				<bean:message key="message.manager.labHours"/>
 			</td>
 			<td>
 				<html:text size="5" property="labHours" />

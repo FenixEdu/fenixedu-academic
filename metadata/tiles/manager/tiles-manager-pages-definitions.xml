@@ -97,12 +97,19 @@
 	<definition name="df.page.insert-professorShip-by-number" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertTeacherByNumber_bd.jsp" />
 		<put name="navLocal" value="/manager/teachersBodyModificationNavLocalManager.jsp" />
+	</definition>
+	<definition name="df.page.insert-execution-course" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/password/insertExecutionCourse_bd.jsp" />
 	</definition>	
 	<definition name="df.page.choosePerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/choosePersonPage_bd.jsp" />
 	</definition>
 	<definition name="df.page.confirmPasswordChange" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/confirmPasswordChange_bd.jsp" />
+	</definition>
+	<definition name="df.page.insert-execution-course" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/insertExecutionCourse_bd.jsp" />
+		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
 
 

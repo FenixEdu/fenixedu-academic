@@ -17,6 +17,12 @@
 </strong></p>
 
 <p><strong>&raquo; 
+	<html:link page="/readExecutionPeriods.do?method=prepare">
+		<bean:message key="label.manager.insert.execution.course" />
+	</html:link>
+</strong></p>
+
+<p><strong>&raquo; 
 	<html:link page="/manageCache.do?method=prepare">
 		Gest&atilde;o da Cache
 	</html:link>

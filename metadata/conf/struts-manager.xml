@@ -115,6 +115,30 @@
 				<form-property name="number" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+		
+		<form-bean name="executionCourseForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+                <form-property name="name" type="java.lang.String" />
+                <form-property name="code" type="java.lang.String" />
+                <form-property name="theoreticalHours" type="java.lang.String" />
+				<form-property name="praticalHours" type="java.lang.String" />
+				<form-property name="theoPratHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />
+				<form-property name="semester" type="java.lang.String" />
+				<form-property name="comment" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="teacherForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+                <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
+                <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
+				<form-property name="number" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 
@@ -144,7 +168,8 @@
         <form-property name="recipients" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
-<form-bean name="newPasswordForm"
+     
+	<form-bean name="newPasswordForm"
       			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
       			dynamic="true">
 		<form-property name="userType" type="java.lang.String"/>
@@ -649,6 +674,46 @@
        <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
     </action>
+    
+    
+    <!--FALTA EXCEPCES PARA AS QUE SE SEGUEM-->
+    <action path="/readExecutionPeriods"
+          input="mainPageInput.do"
+              type="ServidorApresentacao.Action.manager.ReadExecutionPeriodsAction"
+              scope="request">
+          <forward name="readExecutionPeriods" path="df.page.read-execution-periods"/>
+      </action>
+    
+    <!--insertExecutionCourseAtExecutionPeriod
+    insertExecutionCourse input="/insertExecutionCourse.do?method=prepareInsert&amp;page=0"-->
+    
+    <action
+		path="/readExecutionCourses"
+		input="/readExecutionPeriods.do"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.ReadExecutionCoursesAction"
+        validate="true">
+       <forward name="readExecutionCourses" path="df.page.read-execution-courses"/>      	      
+	</action>
+    
+    <action
+		path="/insertExecutionCourse"
+		name="executionCourseForm"
+		
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.InsertExecutionCourseDA"
+        validate="true">
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="insertExecutionCourse" path="df.page.insert-execution-course"/>
+       <forward name="readExecutionCourses" path="/readExecutionCourses.do"/> 
+         <forward name="readExecutionPeriods" path="/readExecutionPeriods.do"/>    	      
+	</action>
     
       <!--Input actions-->  
      <action path="/readDegreesInput"

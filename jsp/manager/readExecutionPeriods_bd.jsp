@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
+<logic:present name="name" scope="request">
 <table>
 	<tr>
 		<td>
@@ -15,6 +15,7 @@
 		</td>	
 	</tr>
 </table>
+</logic:present>
 
 <span class="error"><html:errors /></span>
 
@@ -38,10 +39,21 @@
 		<logic:iterate id="infoExecutionPeriod" name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 			<tr>
 				<td class="listClasses">
+				<logic:present name="name" scope="request">
 					<html:link page="<%= "/associateExecutionCourseToCurricularCourse.do?method=prepare&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;name=" + request.getParameter("name") %>" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="name" /></html:link>
+				</logic:present>
+				<logic:notPresent name="name" scope="request">
+					<html:link page="/readExecutionCourses.do" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="name" /></html:link>
+				</logic:notPresent>
+				
 				</td>
 				<td class="listClasses">
+				<logic:present name="name" scope="request">
 					<html:link page="<%= "/associateExecutionCourseToCurricularCourse.do?method=prepare&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;name=" + request.getParameter("name") %>" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" /></html:link>
+				</logic:present>
+				<logic:notPresent name="name" scope="request">
+					<html:link page="/readExecutionCourses.do" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="name" /></html:link>
+				</logic:notPresent>
 				</td>
 				<td class="listClasses">
 					<bean:write name="infoExecutionPeriod" property="state" />

@@ -7,7 +7,7 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/insertCurricularCourse" method ="get">  
+<html:form action="/insertExecutionCourse" method ="get">  
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insert"/>
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
