@@ -525,6 +525,52 @@ class Dominio.grant.contract.GrantType {
 	String name;
 }
 
+class Dominio.inquiries.OldInquiriesCoursesRes {
+	Double tolerance2_3;
+	Double deviation2_3;
+	Double tolerance2_2;
+	Integer idInternal;
+	Integer numAnswers2_4;
+	Integer gepCourseId;
+	Integer numAnswers2_5_number;
+	Double average2_8;
+	Integer numAnswers2_3;
+	String gepCourseName;
+	String average2_7;
+	Double numberEvaluated;
+	Integer numAnswers2_6;
+	Double tolerance2_4;
+	Double deviation2_2;
+	Double average2_6;
+	Integer semester;
+	Integer numAnswers2_7;
+	Double average2_3;
+	Integer numAnswers2_8;
+	Integer keyExecutionPeriod;
+	Double tolerance2_6;
+	Double deviation2_4;
+	Double numberApproved;
+	Integer curricularYear;
+	Double average2_4;
+	Double tolerance2_5;
+	Double deviation2_5;
+	Integer firstEnrollment;
+	Double average2_2;
+	String courseCode;
+	Integer keyDegree;
+	Double average2_5;
+	Integer numAnswers2_2;
+	Double numberEnrollments;
+	Integer gepExecutionYear;
+	Double representationQuota;
+	Double deviation2_8;
+	Double deviation2_6;
+	Double tolerance2_8;
+	Integer numAnswers2_5_text;
+	Integer numberAnswers;
+	Integer inquiryId;
+}
+
 class Dominio.SiteIST {
 	String ojbConcreteClass;
 	String style;
@@ -883,7 +929,6 @@ class Dominio.inquiries.OldInquiriesTeachersRes {
 	Integer numAnswers3_7;
 	Double tolerance3_5;
 	String active;
-	Integer keyCurricularCourse;
 	Integer numAnswers3_8;
 	Integer numAnswers3_9;
 	Double average3_6;
@@ -1640,6 +1685,7 @@ class Dominio.inquiries.OldInquiriesSummary {
 	Double firstEnrollment;
 	Double average2_2;
 	String courseCode;
+	Integer keyDegree;
 	Double average3_7;
 	Double average2_5;
 	Integer numberEnrollments;
@@ -1649,7 +1695,6 @@ class Dominio.inquiries.OldInquiriesSummary {
 	Double average6_3;
 	Double average3_8;
 	Integer numberAnswers;
-	Integer degreeKey;
 	Integer inquiryId;
 }
 
@@ -2371,198 +2416,30 @@ class Dominio.student.PersonalDataUseInquiryAnswers {
 }
 
 relation ??? {
-	Dominio.Qualification playsRole ??? {
+	Dominio.Teacher playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Country playsRole country;
+	Dominio.credits.ServiceExemptionCreditLine playsRole serviceExemptionSituations {
+		multiplicity *;
+	}
 }
 
 relation ??? {
 	Dominio.ExecutionCourse playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Student playsRole attendingStudents {
+	Dominio.CurricularCourse playsRole associatedCurricularCourses {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole ??? {
+	Dominio.MasterDegreeThesis playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation ??? {
-	Dominio.ExamExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.GroupStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
-}
-
-relation ??? {
-	Dominio.teacher.OldPublication playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.Aula playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.RoomOccupation playsRole roomOccupation;
-}
-
-relation ??? {
-	Dominio.Professorship playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.transactions.ReimbursementTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole responsiblePerson;
-}
-
-relation ??? {
-	Dominio.Aula playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Sala playsRole sala;
-}
-
-relation ??? {
-	Dominio.Gratuity playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation ??? {
-	Dominio.ExternalPerson playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.WorkLocation playsRole workLocation;
-}
-
-relation ??? {
-	Dominio.student.Delegate playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.CurricularSemester playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularYear playsRole curricularYear;
-}
-
-relation ??? {
-	Dominio.teacher.Orientation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantContractRegime playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantContract playsRole grantContract;
-}
-
-relation ??? {
-	Dominio.Turno playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turma playsRole associatedClasses {
+	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
 		multiplicity *;
 	}
-}
-
-relation ??? {
-	Dominio.StudentGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turno playsRole shift;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.GroupStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.Proposal playsRole finalDegreeWorkProposalConfirmation;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Student playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionYear playsRole registrationYear;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionNotEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole precedentCurricularCourse;
-}
-
-relation ??? {
-	Dominio.Frequenta playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole enrolment;
-}
-
-relation ??? {
-	Dominio.Aula playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turno playsRole shift;
 }
 
 relation ??? {
@@ -2575,214 +2452,47 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.EnrolmentEvaluation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole personResponsibleForGrade;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantInsurance playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
-}
-
-relation ??? {
-	Dominio.teacher.workTime.TeacherInstitutionWorkTime playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.support.FAQSection playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.support.FAQSection playsRole parentSection;
-}
-
-relation ??? {
-	Dominio.Seminaries.CourseEquivalency playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Seminary playsRole seminary;
-}
-
-relation ??? {
-	Dominio.GratuityValues playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.PaymentPhase playsRole paymentPhaseList {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Turno playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ShiftProfessorship playsRole associatedShiftProfessorship {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.RoomOccupation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Sala playsRole room;
-}
-
-relation ??? {
-	Dominio.OptionalCurricularCourseGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Announcement playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Site playsRole site;
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.credits.ServiceExemptionCreditLine playsRole serviceExemptionSituations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.StudentTestLog playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DistributedTest playsRole distributedTest;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantContract playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantType playsRole grantType;
-}
-
-relation ??? {
-	Dominio.Seminaries.Candidacy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Modality playsRole modality;
-}
-
-relation ??? {
-	org.apache.ojb.odmg.collections.DListImpl_2 playsRole ??? {
-		multiplicity ???;
-	}
-	org.apache.ojb.odmg.collections.DListEntry_2 playsRole elements {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Scheduleing playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CursoExecucao playsRole executionDegree;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.student.Delegate playsRole ??? {
+	Dominio.ExecutionPeriod playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.ExecutionYear playsRole executionYear;
 }
 
 relation ??? {
-	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
+	Dominio.TurmaTurno playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+	Dominio.Turno playsRole turno;
+}
+
+relation ??? {
+	Dominio.Aula playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Sala playsRole sala;
+}
+
+relation ??? {
+	Dominio.publication.Author playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Publication playsRole authorPublications {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	Dominio.Pessoa playsRole ??? {
+	Dominio.transactions.ReimbursementTransaction playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Role playsRole personRoles {
-		multiplicity *;
-	}
+	Dominio.PersonAccount playsRole personAccount;
 }
 
 relation ??? {
-	Dominio.MasterDegreeCandidate playsRole ??? {
+	Dominio.EnrolmentPeriodInCurricularCourses playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.CandidateSituation playsRole situations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantProject playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole responsibleTeacher;
-}
-
-relation ??? {
-	Dominio.CreditsInAnySecundaryArea playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole enrolment;
-}
-
-relation ??? {
-	Dominio.Seminaries.CourseEquivalency playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-}
-
-relation ??? {
-	Dominio.publication.Attribute playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.PublicationType playsRole publications {
-		multiplicity *;
-	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
 relation ??? {
@@ -2793,68 +2503,144 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.Seminaries.CaseStudy playsRole ??? {
+	Dominio.DegreeCurricularPlan playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Seminaries.CaseStudyChoice playsRole seminaryCandidacies {
+	Dominio.Branch playsRole areas {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	Dominio.GratuitySituation playsRole ??? {
+	Dominio.Seminaries.CourseEquivalency playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.GratuityValues playsRole gratuityValues;
-}
-
-relation ??? {
-	Dominio.Curriculum playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole personWhoAltered;
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CostCenter playsRole costCenter;
+	Dominio.Seminaries.Modality playsRole modality;
 }
 
 relation ??? {
 	Dominio.Frequenta playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Student playsRole aluno;
+	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+		multiplicity *;
+	}
 }
 
 relation ??? {
-	Dominio.teacher.TeachingCareer playsRole ??? {
+	Dominio.StudentGroup playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.teacher.Category playsRole category;
+	Dominio.Turno playsRole shift;
 }
 
 relation ??? {
-	Dominio.finalDegreeWork.GroupProposal playsRole ??? {
+	Dominio.EnrolmentEvaluation playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.finalDegreeWork.Proposal playsRole finalDegreeWorkProposal;
+	Dominio.Pessoa playsRole personResponsibleForGrade;
 }
 
 relation ??? {
-	Dominio.StudentGroupAttend playsRole ??? {
+	Dominio.StudentCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole secundaryBranch;
+}
+
+relation ??? {
+	Dominio.WrittenEvaluation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseScope playsRole associatedCurricularCourseScope {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Turno playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole disciplinaExecucao;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+}
+
+relation ??? {
+	Dominio.ExecutionPeriod playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turma playsRole schoolClasses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlan playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole branch;
+}
+
+relation ??? {
+	Dominio.EmployeeHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StatusAssiduidade playsRole status;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantProject playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+relation ??? {
+	Dominio.AttendInAttendsSet playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.Frequenta playsRole attend;
 }
 
 relation ??? {
-	Dominio.sms.SentSms playsRole ??? {
+	Dominio.transactions.InsuranceTransaction playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Pessoa playsRole person;
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.EnrolmentPeriodInCurricularCourses playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole branch;
+}
+
+relation ??? {
+	Dominio.ShiftStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turno playsRole shift;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionNotEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Precedence playsRole precedence;
 }
 
 relation ??? {
@@ -2865,10 +2651,40 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.publication.Author playsRole ??? {
+	Dominio.grant.contract.GrantProject playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.publication.Publication playsRole authorPublications {
+	Dominio.Teacher playsRole responsibleTeacher;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Proposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.Group playsRole groupAttributed;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole whoEmployee;
+}
+
+relation ??? {
+	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.EnrolmentEvaluation playsRole evaluations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole areas {
 		multiplicity *;
 	}
 }
@@ -2883,10 +2699,111 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.finalDegreeWork.Group playsRole ??? {
+	Dominio.CursoExecucao playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.CursoExecucao playsRole executionDegree;
+	Dominio.Coordinator playsRole coordinatorsList {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ResponsibleFor playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.credits.OtherTypeCreditLine playsRole otherTypeCreditLines {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.CurricularSemester playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularYear playsRole curricularYear;
+}
+
+relation ??? {
+	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.Section playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Section playsRole superiorSection;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+}
+
+relation ??? {
+	Dominio.ScientificArea playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExamExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Exam playsRole exam;
+}
+
+relation ??? {
+	Dominio.Seminaries.CourseEquivalency playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Theme playsRole themes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.CurricularCourseScope playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole branch;
+}
+
+relation ??? {
+	Dominio.CandidateEnrolment playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
 }
 
 relation ??? {
@@ -2899,707 +2816,24 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.Branch playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseScope playsRole scopes {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ExamStudentRoom playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Exam playsRole exam;
-}
-
-relation ??? {
-	Dominio.DistributedTest playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentTestLog playsRole studentLogs {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantContract playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.owner.GrantOwner playsRole grantOwner;
-}
-
-relation ??? {
-	Dominio.GuideSituation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Guide playsRole guide;
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Professorship playsRole professorships {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Evaluation playsRole associatedEvaluations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Tutor playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.transactions.SmsTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.PersonAccount playsRole personAccount;
-}
-
-relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GuideEntry playsRole guideEntries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.gesdis.CourseHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Professorship playsRole professorships {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionYear playsRole executionYear;
-}
-
-relation ??? {
-	Dominio.ExecutionYear playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriods {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Enrolment playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation ??? {
-	Dominio.publication.PublicationSubtype playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.PublicationType playsRole publicationType;
-}
-
-relation ??? {
-	Dominio.EmployeeNotTeacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.publication.PublicationType playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.Attribute playsRole nonRequiredAttributes {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Seminaries.Candidacy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.CaseStudyChoice playsRole caseStudyChoices {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Test playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.TestScope playsRole testScope;
-}
-
-relation ??? {
-	Dominio.ExamStudentRoom playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.log.EnrolmentLog playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Proposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole branches {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.OptionalCurricularCourseGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ScientificArea playsRole scientificAreas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.GroupProperties playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ShiftProfessorship playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turno playsRole shift;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantContractRegime playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantCostCenter playsRole grantCostCenter;
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Frequenta playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Proposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole orientator;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole enrolments {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkCompensation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionNotDoneCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole precedentCurricularCourse;
-}
-
-relation ??? {
-	Dominio.Employee playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GuideEntry playsRole guideEntry;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole precedentCurricularCourse;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantPart playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole responsibleTeacher;
-}
-
-relation ??? {
-	Dominio.CurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseScope playsRole scopes {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DistributedTest playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.TestScope playsRole testScope;
-}
-
-relation ??? {
-	Dominio.transactions.SmsTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GuideEntry playsRole guideEntry;
-}
-
-relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole whoEmployee;
-}
-
-relation ??? {
-	Dominio.CurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.AttendInAttendsSet playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Frequenta playsRole attend;
-}
-
-relation ??? {
-	Dominio.teacher.ServiceProviderRegime playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.classProperties.ExecutionCourseProperty playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole guiders {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CandidateEnrolment playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidate;
-}
-
-relation ??? {
-	Dominio.precedences.Precedence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.precedences.Restriction playsRole restrictions {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Turma playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.WrittenEvaluation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.RoomOccupation playsRole associatedRoomOccupation {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.OptionalCurricularCourseGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole branch;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEM playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Seminaries.Theme playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.CaseStudy playsRole caseStudies {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.InsuranceValue playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionYear playsRole executionYear;
-}
-
-relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Contributor playsRole contributor;
-}
-
-relation ??? {
-	Dominio.StudentGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.AttendsSet playsRole attendsSet;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantContract playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantCostCenter playsRole grantCostCenter;
-}
-
-relation ??? {
-	Dominio.Summary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turno playsRole shift;
-}
-
-relation ??? {
-	Dominio.Coordinator playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.teacher.Category playsRole category;
-}
-
-relation ??? {
-	Dominio.grant.owner.GrantOwner playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.FinalEvaluation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.PersonRole playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEICTAGUS playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole areas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.credits.OtherTypeCreditLine playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesis playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CursoExecucao playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Period playsRole periodLessonsFirstSemester;
-}
-
-relation ??? {
 	Dominio.WebSiteItem playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.WebSiteSection playsRole webSiteSection;
+	Dominio.Pessoa playsRole editor;
 }
 
 relation ??? {
-	Dominio.Sala playsRole ??? {
+	Dominio.DistributedTestAdvisory playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Building playsRole building;
+	Dominio.DistributedTest playsRole distributedTest;
 }
 
 relation ??? {
-	Dominio.precedences.RestrictionDoneCurricularCourse playsRole ??? {
+	Dominio.student.ResidenceCandidacies playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.precedences.Precedence playsRole precedence;
-}
-
-relation ??? {
-	Dominio.CurricularCourseScope playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularSemester playsRole curricularSemester;
-}
-
-relation ??? {
-	Dominio.TestQuestion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Question playsRole question;
-}
-
-relation ??? {
-	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole enrolments {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ShiftProfessorship playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Professorship playsRole professorship;
-}
-
-relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GuideSituation playsRole guideSituations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole whoEmployee;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Proposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CursoExecucao playsRole executionDegree;
-}
-
-relation ??? {
-	Dominio.MasterDegreeProofVersion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole responsibleEmployee;
-}
-
-relation ??? {
-	Dominio.publication.PublicationTeacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.DistributedTest playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentTestQuestion playsRole studentQuestions {
-		multiplicity *;
-	}
+	Dominio.Student playsRole student;
 }
 
 relation ??? {
@@ -3612,75 +2846,656 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.Seminaries.CaseStudyChoice playsRole ??? {
+	Dominio.StudentTestQuestion playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Seminaries.Candidacy playsRole candidacy;
+	Dominio.Question playsRole question;
 }
 
 relation ??? {
-	Dominio.Branch playsRole ??? {
+	Dominio.log.EnrolmentLog playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.OptionalCurricularCourseGroup playsRole optionalCurricularCourseGroups {
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideSituation playsRole guideSituations {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	Dominio.Pessoa playsRole ??? {
+	Dominio.WrittenTest playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Country playsRole pais;
+	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+		multiplicity *;
+	}
 }
 
 relation ??? {
-	Dominio.OnlineTest playsRole ??? {
+	Dominio.PersonRole playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.DistributedTest playsRole distributedTest;
+	Dominio.Pessoa playsRole person;
 }
 
 relation ??? {
-	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
+	Dominio.transactions.InsuranceTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+
+relation ??? {
+	org.apache.ojb.odmg.collections.DListImpl_2 playsRole ??? {
+		multiplicity ???;
+	}
+	org.apache.ojb.odmg.collections.DListEntry_2 playsRole elements {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Coordinator playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.Seminaries.Seminary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.CourseEquivalency playsRole equivalencies {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.FuncNaoDocente playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole funcionario;
+}
+
+relation ??? {
+	Dominio.AttendsSet playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GroupProperties playsRole groupProperties;
+}
+
+relation ??? {
+	Dominio.Sala playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Building playsRole building;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeProofVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole responsibleEmployee;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantPart playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole responsibleTeacher;
+}
+
+relation ??? {
+	Dominio.WrittenEvaluationCurricularCourseScope playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseScope playsRole curricularCourseScope;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantOrientationTeacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole orientationTeacher;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantContractMovement playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantContract playsRole grantContract;
+}
+
+relation ??? {
+	Dominio.OptionalCurricularCourseGroup playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ScientificArea playsRole scientificAreas {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExternalPerson playsRole externalGuiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Frequenta playsRole attends {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.EmployeeNotTeacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.PersonAccount playsRole personAccount;
+}
+
+relation ??? {
+	Dominio.EnrolmentEvaluation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.Turma playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turno playsRole associatedShifts {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.TestQuestion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Test playsRole test;
+}
+
+relation ??? {
+	Dominio.Curriculum playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole personWhoAltered;
+}
+
+relation ??? {
+	Dominio.PersonRole playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Role playsRole role;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.teacher.Category playsRole category;
+}
+
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.PersonAccount playsRole personAccount;
+}
+
+relation ??? {
+	Dominio.WebSiteSection playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.WebSite playsRole webSite;
+}
+
+relation ??? {
+	Dominio.Enrolment playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation ??? {
-	Dominio.ExecutionPeriod playsRole ??? {
+	Dominio.Aula playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.ExecutionYear playsRole executionYear;
+	Dominio.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ??? {
-	Dominio.precedences.RestrictionByNumberOfDoneCurricularCourses playsRole ??? {
+	Dominio.grant.contract.GrantContractRegime playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.precedences.Precedence playsRole precedence;
+	Dominio.Teacher playsRole teacher;
 }
 
 relation ??? {
-	Dominio.GratuitySituation playsRole ??? {
+	Dominio.transactions.ReimbursementTransaction playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
 }
 
 relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkCompensation playsRole ??? {
+	org.apache.ojb.odmg.collections.DMapImpl playsRole ??? {
+		multiplicity ???;
+	}
+	org.apache.ojb.odmg.collections.DMapEntry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Seminaries.Candidacy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Modality playsRole modality;
+}
+
+relation ??? {
+	Dominio.TestQuestion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Question playsRole question;
+}
+
+relation ??? {
+	Dominio.support.FAQEntry playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.support.FAQSection playsRole parentSection;
+}
+
+relation ??? {
+	Dominio.transactions.ReimbursementTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.credits.ServiceExemptionCreditLine playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Proposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole coorientator;
+}
+
+relation ??? {
+	Dominio.OptionalCurricularCourseGroup playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole branch;
+}
+
+relation ??? {
+	Dominio.teacher.TeachingCareer playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.MoneyCostCenter playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.Employee playsRole whoEmployee;
 }
 
 relation ??? {
-	Dominio.gesdis.CourseReport playsRole ??? {
+	Dominio.WrittenEvaluation playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse;
+	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Evaluation playsRole associatedEvaluations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Frequenta playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole aluno;
+}
+
+relation ??? {
+	Dominio.Seminaries.Candidacy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Theme playsRole theme;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole secundaryBranch;
+}
+
+relation ??? {
+	Dominio.Turma playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideEntry playsRole guideEntries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.AreaCurricularCourseGroup playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.CurricularSemester playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseScope playsRole scopes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.GuideEntry playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Guide playsRole guide;
+}
+
+relation ??? {
+	Dominio.Pessoa playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Advisory playsRole advisories {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.AttendsSet playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentGroup playsRole studentGroups {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.CurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ??? {
+	Dominio.OptionalCurricularCourseGroup playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkCompensation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.ExamStudentRoom playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CostCenter playsRole costCenter;
+}
+
+relation ??? {
+	Dominio.CurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DisciplinaDepartamento playsRole departmentCourse;
+}
+
+relation ??? {
+	Dominio.RoomOccupation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Sala playsRole room;
+}
+
+relation ??? {
+	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole senderPerson;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole branch;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Precedence playsRole precedence;
+}
+
+relation ??? {
+	Dominio.Curso playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeInfo playsRole degreeInfos {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Period playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.teacher.ServiceProviderRegime playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.publication.PublicationAuthor playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Publication playsRole publication;
+}
+
+relation ??? {
+	Dominio.CursoExecucao playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Period playsRole periodExamsSecondSemester;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEM playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.gaugingTests.physics.GaugingTestResult playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.ShiftProfessorship playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Professorship playsRole professorship;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.EnrolmentEvaluation playsRole evaluations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionNotDoneCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Precedence playsRole precedence;
+}
+
+relation ??? {
+	Dominio.CurricularCourseEquivalence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole equivalentCurricularCourse;
+}
+
+relation ??? {
+	Dominio.EnrolmentEquivalence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalenceRestrictions {
+		multiplicity *;
+	}
 }
 
 relation ??? {
@@ -3691,26 +3506,313 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.grant.contract.GrantContract playsRole ??? {
+	Dominio.transactions.SmsTransaction playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.grant.contract.GrantContractRegime playsRole contractRegimes {
+	Dominio.PersonAccount playsRole personAccount;
+}
+
+relation ??? {
+	Dominio.EvaluationExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole precedentCurricularCourse;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlan playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	Dominio.grant.contract.GrantProject playsRole ??? {
+	Dominio.finalDegreeWork.Group playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.grant.contract.GrantCostCenter playsRole grantCostCenter;
+	Dominio.finalDegreeWork.GroupStudent playsRole groupStudents {
+		multiplicity *;
+	}
 }
 
 relation ??? {
-	Dominio.MasterDegreeProofVersion playsRole ??? {
+	Dominio.CursoExecucao playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
+	Dominio.DegreeCurricularPlan playsRole curricularPlan;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.GratuitySituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.Summary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Professorship playsRole professorship;
+}
+
+relation ??? {
+	Dominio.DegreeInfo playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantContractRegime playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantContract playsRole grantContract;
+}
+
+relation ??? {
+	Dominio.SupportLesson playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Professorship playsRole professorship;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.MoneyCostCenter playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CostCenter playsRole costCenter;
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.StudentGroupAttend playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Frequenta playsRole attend;
+}
+
+relation ??? {
+	Dominio.Seminaries.Candidacy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Professorship playsRole professorships {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExternalPerson playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.DistributedTest playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.TestScope playsRole testScope;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Precedence playsRole precedence;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExternalPerson playsRole externalAssistentGuiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Branch playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ??? {
+	Dominio.CurricularCourseScope playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularSemester playsRole curricularSemester;
+}
+
+relation ??? {
+	Dominio.Student playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentKind playsRole studentKind;
+}
+
+relation ??? {
+	Dominio.transactions.SmsTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+
+relation ??? {
+	Dominio.CurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ScientificArea playsRole scientificArea;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesCoursesRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.GratuitySituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GratuityValues playsRole gratuityValues;
+}
+
+relation ??? {
+	Dominio.Turma playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GratuitySituation playsRole gratuitySituation;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlan playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.Site playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ResponsibleFor playsRole responsibleTeachers {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantContract playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.owner.GrantOwner playsRole grantOwner;
+}
+
+relation ??? {
+	Dominio.CreditsInAnySecundaryArea playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole enrolment;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEICTAGUS playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Turno playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ShiftStudent playsRole studentShifts {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Frequenta playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole enrolment;
+}
+
+relation ??? {
+	Dominio.gesdis.CourseReport playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
 }
 
 relation ??? {
@@ -3723,10 +3825,655 @@ relation ??? {
 }
 
 relation ??? {
+	Dominio.Period playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Period playsRole nextPeriod;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionPeriodToApply playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Precedence playsRole precedence;
+}
+
+relation ??? {
+	Dominio.GratuitySituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.transactions.GratuityTransaction playsRole transactionList {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.StudentGroup playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.AttendsSet playsRole attendsSet;
+}
+
+relation ??? {
+	Dominio.CreditsInScientificArea playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Proposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.log.EnrolmentLog playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.Branch playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseScope playsRole scopes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole areas {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.PaymentPhase playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GratuityValues playsRole gratuityValues;
+}
+
+relation ??? {
+	Dominio.WrittenEvaluationCurricularCourseScope playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.WrittenEvaluation playsRole writtenEvaluation;
+}
+
+relation ??? {
+	Dominio.GratuityValues playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.PersonAccount playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.precedences.Precedence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Restriction playsRole restrictions {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.teacher.workTime.TeacherInstitutionWorkTime playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.DisciplinaDepartamento playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Department playsRole departamento;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWork playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole whoEmployee;
+}
+
+relation ??? {
+	Dominio.ExamStudentRoom playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Exam playsRole exam;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.GroupStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.student.PersonalDataUseInquiryAnswers playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Proposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.GroupProposal playsRole groupProposals {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation ??? {
+	Dominio.Summary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Sala playsRole room;
+}
+
+relation ??? {
+	Dominio.ResponsibleFor playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.WebSiteItem playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.WebSiteSection playsRole webSiteSection;
+}
+
+relation ??? {
+	Dominio.OnlineTest playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Aula playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.RoomOccupation playsRole roomOccupation;
+}
+
+relation ??? {
+	Dominio.InsuranceValue playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation ??? {
+	Dominio.CursoExecucao playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Period playsRole periodExamsFirstSemester;
+}
+
+relation ??? {
+	Dominio.ExamStudentRoom playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Sala playsRole room;
+}
+
+relation ??? {
+	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole receiverPerson;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.GroupProposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantContract playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+relation ??? {
+	Dominio.DistributedTest playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentTestLog playsRole studentLogs {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.publication.PublicationTeacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Publication playsRole publication;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.GroupProperties playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.AttendsSet playsRole attendsSet;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole guiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Building playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Sala playsRole rooms {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.AttendsSet playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWork playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.Aula playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turno playsRole shift;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantInsurance playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantContract playsRole grantContract;
+}
+
+relation ??? {
+	Dominio.MasterDegreeCandidate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CandidateSituation playsRole situations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
 	Dominio.Section playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Section playsRole superiorSection;
+	Dominio.Site playsRole site;
+}
+
+relation ??? {
+	Dominio.Frequenta playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole disciplinaExecucao;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole whoEmployee;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.CandidateSituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidate;
+}
+
+relation ??? {
+	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.EvaluationExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Evaluation playsRole evaluation;
+}
+
+relation ??? {
+	Dominio.publication.PublicationType playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Attribute playsRole nonRequiredAttributes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.WrittenEvaluation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.teacher.PublicationsNumber playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.publication.Attribute playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.PublicationType playsRole publications {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Announcement playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Site playsRole site;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesCoursesRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkCompensation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole whoEmployee;
+}
+
+relation ??? {
+	Dominio.Student playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlans {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Student playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.StudentTestQuestion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DistributedTest playsRole distributedTest;
+}
+
+relation ??? {
+	Dominio.student.Senior playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.Coordinator playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	org.apache.ojb.odmg.collections.DBagImpl playsRole ??? {
+		multiplicity ???;
+	}
+	org.apache.ojb.odmg.collections.DListEntry playsRole elements {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Group playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.GroupProposal playsRole groupProposals {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.credits.ManagementPositionCreditLine playsRole managementPositions {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.projectsManagement.ProjectAccess playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEM playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.DegreeObjectives playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Publication playsRole teacherPublications {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.StudentTestLog playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Exam playsRole associatedExams {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole responsibleEmployee;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantPart playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantSubsidy playsRole grantSubsidy;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.sms.SentSms playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.credits.OtherTypeCreditLine playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.EmployeeHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
 }
 
 relation ??? {
@@ -3737,7 +4484,1378 @@ relation ??? {
 }
 
 relation ??? {
+	Dominio.teacher.OldPublication playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.credits.OtherTypeCreditLine playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.Gratuity playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.Summary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.Seminaries.Theme playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.CaseStudy playsRole caseStudies {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Item playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Section playsRole section;
+}
+
+relation ??? {
+	Dominio.TurmaTurno playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turma playsRole turma;
+}
+
+relation ??? {
+	Dominio.ShiftStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.StudentTestLog playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DistributedTest playsRole distributedTest;
+}
+
+relation ??? {
+	Dominio.publication.PublicationTeacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantOrientationTeacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantContract playsRole grantContract;
+}
+
+relation ??? {
+	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CostCenter playsRole costCenterMoney;
+}
+
+relation ??? {
+	org.apache.ojb.odmg.collections.DSetImpl playsRole ??? {
+		multiplicity ???;
+	}
+	org.apache.ojb.odmg.collections.DSetEntry playsRole elements {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Pessoa playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Department playsRole manageableDepartmentCredits {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.CandidateEnrolment playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidate;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Proposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole branches {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Tutor playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.SecretaryEnrolmentStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.DistributedTestAdvisory playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Advisory playsRole advisory;
+}
+
+relation ??? {
+	Dominio.Seminaries.Candidacy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlan playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+}
+
+relation ??? {
 	Dominio.teacher.ExternalActivity playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.Seminaries.CaseStudy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Theme playsRole seminaryTheme;
+}
+
+relation ??? {
+	Dominio.Summary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turno playsRole shift;
+}
+
+relation ??? {
+	Dominio.Professorship playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.SupportLesson playsRole supportLessons {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.FinalEvaluation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Contributor playsRole contributor;
+}
+
+relation ??? {
+	Dominio.Seminaries.Candidacy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.CaseStudyChoice playsRole caseStudyChoices {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.precedences.Precedence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.Qualification playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.publication.PublicationSubtype playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.PublicationType playsRole publicationType;
+}
+
+relation ??? {
+	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.AreaCurricularCourseGroup playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole branch;
+}
+
+relation ??? {
+	Dominio.Seminaries.CaseStudyChoice playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.CaseStudy playsRole caseStudy;
+}
+
+relation ??? {
+	Dominio.CursoExecucao playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Period playsRole periodLessonsFirstSemester;
+}
+
+relation ??? {
+	Dominio.MasterDegreeCandidate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.Question playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Metadata playsRole metadata;
+}
+
+relation ??? {
+	Dominio.Enrolment playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.EnrolmentEvaluation playsRole evaluations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExecutionPeriod playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole previousExecutionPeriod;
+}
+
+relation ??? {
+	Dominio.publication.Author playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlan playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	org.apache.ojb.odmg.collections.DListImpl playsRole ??? {
+		multiplicity ???;
+	}
+	org.apache.ojb.odmg.collections.DListEntry playsRole elements {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Turno playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ShiftProfessorship playsRole associatedShiftProfessorship {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesis playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole areas {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.student.Delegate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.CurricularCourseEquivalence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ??? {
+	Dominio.CursoExecucao playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Campus playsRole campus;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.EnrolmentPeriodInClasses playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.Seminaries.Seminary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Candidacy playsRole candidacies {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.teacher.ProfessionalCareer playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.CreditsInScientificArea playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ScientificArea playsRole scientificArea;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ??? {
+	Dominio.RoomOccupation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Period playsRole period;
+}
+
+relation ??? {
+	Dominio.AttendInAttendsSet playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.AttendsSet playsRole attendsSet;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionNotDoneCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole precedentCurricularCourse;
+}
+
+relation ??? {
+	Dominio.classProperties.ExecutionCourseProperty playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.CurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.University playsRole university;
+}
+
+relation ??? {
+	Dominio.Student playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionYear playsRole registrationYear;
+}
+
+relation ??? {
+	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.teacher.workTime.TeacherInstitutionWorkTime playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Proposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.Group playsRole groupAttributedByTeacher;
+}
+
+relation ??? {
+	Dominio.GuideEntry playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeProofVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
+}
+
+relation ??? {
+	Dominio.Seminaries.Candidacy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Seminary playsRole seminary;
+}
+
+relation ??? {
+	Dominio.GratuityValues playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Professorship playsRole professorships {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionByNumberOfDoneCurricularCourses playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Precedence playsRole precedence;
+}
+
+relation ??? {
+	Dominio.Exam playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.publication.PublicationType playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.PublicationSubtype playsRole subtypes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.teacher.Orientation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlan playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Mark playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Frequenta playsRole attend;
+}
+
+relation ??? {
+	Dominio.ExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.CurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseScope playsRole scopes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantSubsidy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantContract playsRole grantContract;
+}
+
+relation ??? {
+	Dominio.publication.PublicationAuthor playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Author playsRole author;
+}
+
+relation ??? {
+	Dominio.Employee playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.CreditsInAnySecundaryArea playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEEC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole degreeFinalProjectStudents {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEICTAGUS playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole areas {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantInsurance playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
+}
+
+relation ??? {
+	Dominio.publication.PublicationType playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Attribute playsRole requiredAttributes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Turno playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turma playsRole associatedClasses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExecutionYear playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriods {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.precedences.Precedence playsRole precedence;
+}
+
+relation ??? {
+	Dominio.ExamExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantContract playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantType playsRole grantType;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEM playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesis playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Qualification playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Country playsRole country;
+}
+
+relation ??? {
+	Dominio.student.Delegate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation ??? {
+	Dominio.CurricularCourseScope playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole precedentCurricularCourse;
+}
+
+relation ??? {
+	Dominio.StudentCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.GratuityValues playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.PaymentPhase playsRole paymentPhaseList {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Employee playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.EmployeeHistoric playsRole historicList {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.credits.ManagementPositionCreditLine playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlan playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Metadata playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Question playsRole visibleQuestions {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.GuideSituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Guide playsRole guide;
+}
+
+relation ??? {
+	Dominio.EmployeeHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CostCenter playsRole mailingCostCenter;
+}
+
+relation ??? {
+	Dominio.teacher.TeachingCareer playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.teacher.Category playsRole category;
+}
+
+relation ??? {
+	Dominio.Professorship playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ShiftProfessorship playsRole associatedShiftProfessorship {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Guide playsRole guide;
+}
+
+relation ??? {
+	Dominio.EquivalentEnrolmentForEnrolmentEquivalence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.EnrolmentEquivalence playsRole enrolmentEquivalence;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.EnrolmentPeriodInClasses playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ??? {
+	Dominio.Seminaries.CourseEquivalency playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.CursoExecucao playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Period playsRole periodLessonsSecondSemester;
+}
+
+relation ??? {
+	Dominio.Seminaries.CourseEquivalency playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Seminary playsRole seminary;
+}
+
+relation ??? {
+	Dominio.EquivalentEnrolmentForEnrolmentEquivalence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole equivalentEnrolment;
+}
+
+relation ??? {
+	Dominio.OnlineTest playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DistributedTest playsRole distributedTest;
+}
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.teacher.workTime.TeacherInstitutionWorkTime playsRole institutionWorkTimePeriods {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Professorship playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.student.Delegate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.Summary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.GroupStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.Proposal playsRole finalDegreeWorkProposalConfirmation;
+}
+
+relation ??? {
+	Dominio.GroupProperties playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Seminaries.CaseStudyChoice playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.Candidacy playsRole candidacy;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEICTAGUS playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionNotEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole precedentCurricularCourse;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEM playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Branch playsRole areas {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.publication.Publication playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.Author playsRole publicationAuthors {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantContractRegime playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+relation ??? {
+	Dominio.Exam playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourseScope playsRole associatedCurricularCourseScope {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.transactions.SmsTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole senderExecutionCourse;
+}
+
+relation ??? {
+	Dominio.AreaCurricularCourseGroup playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ScientificArea playsRole scientificAreas {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.support.FAQSection playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.support.FAQSection playsRole parentSection;
+}
+
+relation ??? {
+	Dominio.grant.owner.GrantOwner playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantContract playsRole grantContracts {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Seminaries.CaseStudy playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Seminaries.CaseStudyChoice playsRole seminaryCandidacies {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Enrolment playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.CurricularCourseEquivalence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole oldCurricularCourse;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionDoneCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole precedentCurricularCourse;
+}
+
+relation ??? {
+	Dominio.CurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Branch playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.OptionalCurricularCourseGroup playsRole optionalCurricularCourseGroups {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Exam playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Metadata playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ??? {
+	Dominio.DistributedTest playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentTestQuestion playsRole studentQuestions {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.CreditsInScientificArea playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole enrolment;
+}
+
+relation ??? {
+	Dominio.teacher.WeeklyOcupation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.Branch playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.StudentGroupAttend playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentGroup playsRole studentGroup;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Scheduleing playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.MasterDegreeCandidate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.Proposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole orientator;
+}
+
+relation ??? {
+	Dominio.grant.owner.GrantOwner playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.Test playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.TestScope playsRole testScope;
+}
+
+relation ??? {
+	Dominio.Curso playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlans {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Tutor playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.GratuitySituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.gesdis.StudentCourseReport playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.EmployeeHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CostCenter playsRole salaryCostCenter;
+}
+
+relation ??? {
+	Dominio.gesdis.CourseHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantCostCenter playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole responsibleTeacher;
+}
+
+relation ??? {
+	Dominio.ShiftProfessorship playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Turno playsRole shift;
+}
+
+relation ??? {
+	Dominio.publication.Publication playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.publication.PublicationType playsRole type;
+}
+
+relation ??? {
+	Dominio.gratuity.masterDegree.SibsPaymentFileEntry playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
+}
+
+relation ??? {
+	Dominio.Curriculum playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.Pessoa playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Country playsRole pais;
+}
+
+relation ??? {
+	Dominio.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole precedentCurricularCourse;
+}
+
+relation ??? {
+	Dominio.EnrolmentEquivalence playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Enrolment playsRole enrolment;
+}
+
+relation ??? {
+	Dominio.grant.contract.GrantContract playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.grant.contract.GrantContractRegime playsRole contractRegimes {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.finalDegreeWork.GroupStudent playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
+}
+
+relation ??? {
+	Dominio.Enrolment playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.ExternalPerson playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.WorkLocation playsRole workLocation;
+}
+
+relation ??? {
+	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.Teacher playsRole teacher;
@@ -3753,603 +5871,6 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.EnrolmentEvaluation playsRole evaluations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkRequests playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CostCenter playsRole costCenterMoney;
-}
-
-relation ??? {
-	Dominio.Curriculum playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.Mark playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Evaluation playsRole evaluation;
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWorkHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.EnrolmentEquivalence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole enrolment;
-}
-
-relation ??? {
-	Dominio.publication.Author playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.gaugingTests.physics.GaugingTestResult playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Proposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.Group playsRole groupAttributedByTeacher;
-}
-
-relation ??? {
-	Dominio.Seminaries.CaseStudy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Theme playsRole seminaryTheme;
-}
-
-relation ??? {
-	Dominio.CurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.University playsRole university;
-}
-
-relation ??? {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.Enrolment playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.CurricularCourseEquivalence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole equivalentCurricularCourse;
-}
-
-relation ??? {
-	Dominio.CurricularSemester playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseScope playsRole scopes {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.publication.Publication playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.PublicationType playsRole type;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.credits.OtherTypeCreditLine playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.EnrolmentPeriodInClasses playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.ExamStudentRoom playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Sala playsRole room;
-}
-
-relation ??? {
-	Dominio.AreaCurricularCourseGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole branch;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole secundaryBranch;
-}
-
-relation ??? {
-	Dominio.publication.PublicationAuthor playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.Publication playsRole publication;
-}
-
-relation ??? {
-	Dominio.Frequenta playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole disciplinaExecucao;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.precedences.Precedence playsRole precedence;
-}
-
-relation ??? {
-	Dominio.Metadata playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.Seminaries.CourseEquivalency playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Modality playsRole modality;
-}
-
-relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.PersonAccount playsRole personAccount;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole branch;
-}
-
-relation ??? {
-	Dominio.Curso playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeInfo playsRole degreeInfos {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CursoExecucao playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Period playsRole periodExamsSecondSemester;
-}
-
-relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.gesdis.StudentCourseReport playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEM playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.ResponsibleFor playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	org.apache.ojb.odmg.collections.DListImpl playsRole ??? {
-		multiplicity ???;
-	}
-	org.apache.ojb.odmg.collections.DListEntry playsRole elements {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CandidateSituation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidate;
-}
-
-relation ??? {
-	Dominio.DistributedTestAdvisory playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Advisory playsRole advisory;
-}
-
-relation ??? {
-	Dominio.gratuity.masterDegree.SibsPaymentFileEntry playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
-}
-
-relation ??? {
-	Dominio.WrittenEvaluationCurricularCourseScope playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.WrittenEvaluation playsRole writtenEvaluation;
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExternalPerson playsRole externalAssistentGuiders {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole responsiblePerson;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantPart playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantSubsidy playsRole grantSubsidy;
-}
-
-relation ??? {
-	Dominio.EnrolmentPeriodInClasses playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.EvaluationMethod playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionPeriodToApply playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.precedences.Precedence playsRole precedence;
-}
-
-relation ??? {
-	Dominio.Seminaries.Candidacy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.PersonAccount playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.Enrolment playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation ??? {
-	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole senderPerson;
-}
-
-relation ??? {
-	Dominio.EmployeeHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CostCenter playsRole mailingCostCenter;
-}
-
-relation ??? {
-	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole senderExecutionCourse;
-}
-
-relation ??? {
-	Dominio.PersonRole playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Role playsRole role;
-}
-
-relation ??? {
-	Dominio.credits.ServiceExemptionCreditLine playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.EnrolmentPeriodInCurricularCourses playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantContractRegime playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.EnrolmentEvaluation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole enrolment;
-}
-
-relation ??? {
-	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeInfo playsRole degree;
-}
-
-relation ??? {
-	Dominio.FuncNaoDocente playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole funcionario;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.teacher.workTime.TeacherInstitutionWorkTime playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.transactions.SmsTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole responsiblePerson;
-}
-
-relation ??? {
-	Dominio.credits.ManagementPositionCreditLine playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.gratuity.masterDegree.SibsPaymentFile playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.EmployeeHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole responsableEmployee;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEM playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole areas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.GroupProposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
-}
-
-relation ??? {
-	Dominio.Professorship playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesis playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.GratuitySituation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.Qualification playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWork playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole whoEmployee;
-}
-
-relation ??? {
-	Dominio.Branch playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation ??? {
-	Dominio.Turma playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turno playsRole associatedShifts {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.teacher.workTime.TeacherInstitutionWorkTime playsRole institutionWorkTimePeriods {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.Employee playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.EmployeeHistoric playsRole historicList {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Frequenta playsRole attends {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ScientificArea playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
-		multiplicity *;
-	}
-}
-
-relation ??? {
 	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
 		multiplicity ???;
 	}
@@ -4359,658 +5880,19 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.grant.contract.GrantInsurance playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantContract playsRole grantContract;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole branch;
-}
-
-relation ??? {
-	Dominio.WebSiteSection playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.WebSite playsRole webSite;
-}
-
-relation ??? {
-	Dominio.EquivalentEnrolmentForEnrolmentEquivalence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole equivalentEnrolment;
-}
-
-relation ??? {
-	Dominio.StudentTestQuestion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DistributedTest playsRole distributedTest;
-}
-
-relation ??? {
-	Dominio.EmployeeHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CostCenter playsRole salaryCostCenter;
-}
-
-relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GuideEntry playsRole guideEntry;
-}
-
-relation ??? {
-	Dominio.Mark playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Frequenta playsRole attend;
-}
-
-relation ??? {
-	Dominio.StudentTestQuestion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole branch;
-}
-
-relation ??? {
-	Dominio.Student playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlans {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionDoneCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole precedentCurricularCourse;
-}
-
-relation ??? {
-	Dominio.Aula playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.TurmaTurno playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turma playsRole turma;
-}
-
-relation ??? {
-	Dominio.teacher.WeeklyOcupation playsRole ??? {
+	Dominio.Professorship playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.Teacher playsRole teacher;
 }
 
 relation ??? {
-	Dominio.publication.Publication playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.Author playsRole publicationAuthors {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Guide playsRole guide;
-}
-
-relation ??? {
-	Dominio.StudentTestQuestion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Question playsRole question;
-}
-
-relation ??? {
-	Dominio.Branch playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.PaymentPhase playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GratuityValues playsRole gratuityValues;
-}
-
-relation ??? {
-	Dominio.student.Senior playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.precedences.Precedence playsRole precedence;
-}
-
-relation ??? {
-	Dominio.Turno playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole disciplinaExecucao;
-}
-
-relation ??? {
-	Dominio.MasterDegreeCandidate playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CursoExecucao playsRole executionDegree;
-}
-
-relation ??? {
-	Dominio.publication.PublicationAuthor playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.Author playsRole author;
-}
-
-relation ??? {
-	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation ??? {
-	Dominio.AreaCurricularCourseGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ScientificArea playsRole scientificAreas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole areas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Seminaries.Candidacy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Theme playsRole theme;
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.Publication playsRole teacherPublications {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.grant.owner.GrantOwner playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantContract playsRole grantContracts {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionNotEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.precedences.Precedence playsRole precedence;
-}
-
-relation ??? {
-	Dominio.DegreeInfo playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.Summary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Sala playsRole room;
-}
-
-relation ??? {
-	Dominio.Exam playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.RoomOccupation playsRole associatedRoomOccupation {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CursoExecucao playsRole executionDegree;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Proposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole coorientator;
-}
-
-relation ??? {
-	Dominio.ShiftStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.transactions.ReimbursementTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.PersonAccount playsRole personAccount;
-}
-
-relation ??? {
-	Dominio.student.PersonalDataUseInquiryAnswers playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionNotDoneCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.precedences.Precedence playsRole precedence;
-}
-
-relation ??? {
-	Dominio.Site playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.AttendsSet playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GroupProperties playsRole groupProperties;
-}
-
-relation ??? {
-	Dominio.CursoExecucao playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Period playsRole periodLessonsSecondSemester;
-}
-
-relation ??? {
-	Dominio.Seminaries.Seminary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Candidacy playsRole candidacies {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.AttendsSet playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentGroup playsRole studentGroups {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CursoExecucao playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole curricularPlan;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.GroupStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	org.apache.ojb.odmg.collections.DBagImpl playsRole ??? {
-		multiplicity ???;
-	}
-	org.apache.ojb.odmg.collections.DListEntry playsRole elements {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DisciplinaDepartamento playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Department playsRole departamento;
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.MoneyCostCenter playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole whoEmployee;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole secundaryBranch;
-}
-
-relation ??? {
-	Dominio.Turno playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ShiftStudent playsRole studentShifts {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.CreditsInAnySecundaryArea playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation ??? {
 	Dominio.ExecutionCourse playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Exam playsRole associatedExams {
+	Dominio.Student playsRole attendingStudents {
 		multiplicity *;
 	}
-}
-
-relation ??? {
-	org.apache.ojb.odmg.collections.DSetImpl playsRole ??? {
-		multiplicity ???;
-	}
-	org.apache.ojb.odmg.collections.DSetEntry playsRole elements {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CursoExecucao playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Period playsRole periodExamsFirstSemester;
-}
-
-relation ??? {
-	Dominio.Turma playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CursoExecucao playsRole executionDegree;
-}
-
-relation ??? {
-	Dominio.EvaluationExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.StudentGroupAttend playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentGroup playsRole studentGroup;
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DegreeObjectives playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.precedences.Precedence playsRole precedence;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.AttendInAttendsSet playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.AttendsSet playsRole attendsSet;
-}
-
-relation ??? {
-	Dominio.teacher.PublicationsNumber playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.Summary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Professorship playsRole professorship;
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
-}
-
-relation ??? {
-	Dominio.CurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ScientificArea playsRole scientificArea;
-}
-
-relation ??? {
-	Dominio.OnlineTest playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.GratuityValues playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CursoExecucao playsRole executionDegree;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole areas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Proposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.GroupProposal playsRole groupProposals {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GratuitySituation playsRole gratuitySituation;
-}
-
-relation ??? {
-	Dominio.MasterDegreeProofVersion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExternalPerson playsRole externalJuries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Seminaries.Candidacy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.CurricularCourseEquivalence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole oldCurricularCourse;
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole degreeFinalProjectStudents {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Exam playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseScope playsRole associatedCurricularCourseScope {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.log.EnrolmentLog playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.EnrolmentEquivalence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalenceRestrictions {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CreditsInScientificArea playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation ??? {
-	Dominio.CandidateEnrolment playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
 }
 
 relation ??? {
@@ -5023,432 +5905,31 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.ExecutionPeriod playsRole ??? {
+	Dominio.precedences.RestrictionDoneCurricularCourse playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Turma playsRole schoolClasses {
-		multiplicity *;
-	}
+	Dominio.precedences.Precedence playsRole precedence;
 }
 
 relation ??? {
-	Dominio.student.Delegate playsRole ??? {
+	Dominio.EvaluationMethod playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Student playsRole student;
+	Dominio.ExecutionCourse playsRole executionCourse;
 }
 
 relation ??? {
-	Dominio.WrittenEvaluation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseScope playsRole associatedCurricularCourseScope {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Section playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Site playsRole site;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.credits.ManagementPositionCreditLine playsRole managementPositions {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.EnrolmentEvaluation playsRole evaluations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.student.ResidenceCandidacies playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.TurmaTurno playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turno playsRole turno;
-}
-
-relation ??? {
-	Dominio.publication.PublicationType playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.PublicationSubtype playsRole subtypes {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.RoomOccupation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Period playsRole period;
-}
-
-relation ??? {
-	Dominio.Building playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Sala playsRole rooms {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantContractMovement playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantContract playsRole grantContract;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole areas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.SupportLesson playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Professorship playsRole professorship;
-}
-
-relation ??? {
-	Dominio.WrittenTest playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.RoomOccupation playsRole associatedRoomOccupation {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantOrientationTeacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole orientationTeacher;
-}
-
-relation ??? {
-	Dominio.Tutor playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.teacher.ProfessionalCareer playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.transactions.ReimbursementTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole associatedCurricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.CurricularCourseScope playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole branch;
-}
-
-relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.support.FAQEntry playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.support.FAQSection playsRole parentSection;
-}
-
-relation ??? {
-	Dominio.EquivalentEnrolmentForEnrolmentEquivalence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.EnrolmentEquivalence playsRole enrolmentEquivalence;
-}
-
-relation ??? {
-	Dominio.CurricularCourseEquivalence playsRole ??? {
+	Dominio.StudentCurricularPlan playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
 relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
+	Dominio.Pessoa playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole responsiblePerson;
-}
-
-relation ??? {
-	Dominio.ExternalPerson playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Question playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Metadata playsRole metadata;
-}
-
-relation ??? {
-	Dominio.Student playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.GroupProperties playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.AttendsSet playsRole attendsSet;
-}
-
-relation ??? {
-	Dominio.Exam playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DistributedTestAdvisory playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DistributedTest playsRole distributedTest;
-}
-
-relation ??? {
-	Dominio.projectsManagement.ProjectAccess playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GroupProperties playsRole groupProperties;
-}
-
-relation ??? {
-	Dominio.EvaluationExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Evaluation playsRole evaluation;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantSubsidy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantContract playsRole grantContract;
-}
-
-relation ??? {
-	Dominio.CursoExecucao playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Coordinator playsRole coordinatorsList {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Seminaries.CourseEquivalency playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Theme playsRole themes {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.ExtraWork playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.GuideEntry playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.credits.OtherTypeCreditLine playsRole otherTypeCreditLines {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Professorship playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.SupportLesson playsRole supportLessons {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ??? {
-	Dominio.Summary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.AreaCurricularCourseGroup playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.PersonAccount playsRole personAccount;
-}
-
-relation ??? {
-	Dominio.AttendsSet playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEICTAGUS playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExternalPerson playsRole externalGuiders {
+	Dominio.Role playsRole personRoles {
 		multiplicity *;
 	}
 }
@@ -5457,95 +5938,23 @@ relation ??? {
 	Dominio.EnrolmentEvaluation playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantOrientationTeacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.grant.contract.GrantContract playsRole grantContract;
-}
-
-relation ??? {
-	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.grant.contract.GrantCostCenter playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole responsibleTeacher;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEEC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.TestQuestion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Test playsRole test;
-}
-
-relation ??? {
-	Dominio.publication.PublicationType playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.Attribute playsRole requiredAttributes {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.precedences.Precedence playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.Summary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.WrittenEvaluation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CreditsInScientificArea playsRole ??? {
-		multiplicity ???;
-	}
 	Dominio.Enrolment playsRole enrolment;
 }
 
 relation ??? {
-	Dominio.CurricularCourseScope playsRole ??? {
+	Dominio.EmployeeHistoric playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.CurricularCourse playsRole curricularCourse;
+	Dominio.Employee playsRole responsableEmployee;
+}
+
+relation ??? {
+	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
 }
 
 relation ??? {
@@ -5556,418 +5965,61 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.Coordinator playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CursoExecucao playsRole executionDegree;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEICTAGUS playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Curso playsRole degree;
-}
-
-relation ??? {
-	Dominio.ExecutionPeriod playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole previousExecutionPeriod;
-}
-
-relation ??? {
-	Dominio.CurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation ??? {
-	org.apache.ojb.odmg.collections.DMapImpl playsRole ??? {
-		multiplicity ???;
-	}
-	org.apache.ojb.odmg.collections.DMapEntry playsRole entries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEIC playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Branch playsRole areas {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.managementAssiduousness.MoneyCostCenter playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CostCenter playsRole costCenter;
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole precedentCurricularCourse;
-}
-
-relation ??? {
-	Dominio.Period playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.RoomOccupation playsRole roomOccupations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.CurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DisciplinaDepartamento playsRole departmentCourse;
-}
-
-relation ??? {
-	Dominio.WebSiteItem playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole editor;
-}
-
-relation ??? {
-	Dominio.Seminaries.Candidacy playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.Seminary playsRole seminary;
-}
-
-relation ??? {
-	Dominio.Seminaries.Seminary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.CourseEquivalency playsRole equivalencies {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Proposal playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.Group playsRole groupAttributed;
-}
-
-relation ??? {
-	Dominio.CreditsInScientificArea playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ScientificArea playsRole scientificArea;
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole responsibleEmployee;
-}
-
-relation ??? {
-	Dominio.EnrolmentInOptionalCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourse;
-}
-
-relation ??? {
-	Dominio.GratuitySituation playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.transactions.GratuityTransaction playsRole transactionList {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ShiftStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Turno playsRole shift;
-}
-
-relation ??? {
-	Dominio.Student playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StudentKind playsRole studentKind;
-}
-
-relation ??? {
-	Dominio.teacher.TeachingCareer playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Teacher playsRole teacher;
-}
-
-relation ??? {
-	Dominio.Item playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Section playsRole section;
-}
-
-relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.ExamExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Exam playsRole exam;
-}
-
-relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.GuideEntry playsRole guideEntry;
-}
-
-relation ??? {
-	Dominio.Metadata playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Question playsRole visibleQuestions {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Pessoa playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Department playsRole manageableDepartmentCredits {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Curso playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlans {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole person;
-}
-
-relation ??? {
-	Dominio.ResponsibleFor playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionCourse playsRole executionCourse;
-}
-
-relation ??? {
-	Dominio.SecretaryEnrolmentStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.Enrolment playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.EnrolmentEvaluation playsRole evaluations {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.publication.PublicationTeacher playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.publication.Publication playsRole publication;
-}
-
-relation ??? {
-	Dominio.EnrolmentPeriodInCurricularCourses playsRole ??? {
+	Dominio.EnrolmentInExtraCurricularCourse playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ??? {
-	Dominio.StudentTestLog playsRole ??? {
+	Dominio.finalDegreeWork.GroupProposal playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.finalDegreeWork.Proposal playsRole finalDegreeWorkProposal;
+}
+
+relation ??? {
+	Dominio.gratuity.masterDegree.SibsPaymentFile playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeProofVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExternalPerson playsRole externalJuries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.StudentTestQuestion playsRole ??? {
 		multiplicity ???;
 	}
 	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.Seminaries.CaseStudyChoice playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Seminaries.CaseStudy playsRole caseStudy;
-}
-
-relation ??? {
-	Dominio.Professorship playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ShiftProfessorship playsRole associatedShiftProfessorship {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.ExecutionCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ResponsibleFor playsRole responsibleTeachers {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Group playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.GroupStudent playsRole groupStudents {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole precedentCurricularCourse;
-}
-
-relation ??? {
-	Dominio.Period playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Period playsRole nextPeriod;
-}
-
-relation ??? {
-	Dominio.StudentCurricularPlan playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Enrolment playsRole enrolments {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.Pessoa playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Advisory playsRole advisories {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Student playsRole student;
-}
-
-relation ??? {
-	Dominio.EmployeeHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.StatusAssiduidade playsRole status;
-}
-
-relation ??? {
-	Dominio.WrittenEvaluationCurricularCourseScope playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourseScope playsRole curricularCourseScope;
-}
-
-relation ??? {
-	Dominio.CursoExecucao playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Campus playsRole campus;
-}
-
-relation ??? {
-	Dominio.GratuityValues playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
-}
-
-relation ??? {
-	Dominio.DegreeCurricularPlanLEM playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.GuideEntry playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Guide playsRole guide;
-}
-
-relation ??? {
-	Dominio.finalDegreeWork.Group playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.finalDegreeWork.GroupProposal playsRole groupProposals {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	Dominio.EmployeeHistoric playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Employee playsRole employee;
 }
 
 relation ??? {
 	Dominio.GroupPropertiesExecutionCourse playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Pessoa playsRole receiverPerson;
+	Dominio.GroupProperties playsRole groupProperties;
 }
 
 relation ??? {
-	Dominio.MasterDegreeCandidate playsRole ??? {
+	Dominio.Mark playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.Pessoa playsRole person;
+	Dominio.Evaluation playsRole evaluation;
 }
 
 relation ??? {
-	Dominio.MasterDegreeThesis playsRole ??? {
+	Dominio.finalDegreeWork.Group playsRole ??? {
 		multiplicity ???;
 	}
-	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+	Dominio.CursoExecucao playsRole executionDegree;
 }
