@@ -10,7 +10,6 @@ import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import DataBeans.grant.contract.InfoGrantProject;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
-import Dominio.grant.contract.GrantPaymentEntity;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
@@ -25,39 +24,42 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  */
 public class EditGrantPaymentEntity extends EditDomainObjectService
 {
-    /**
-     * The constructor of this class.
-     */
-    public EditGrantPaymentEntity()
-    {
-    }
+	/**
+	 * The constructor of this class.
+	 */
+	public EditGrantPaymentEntity()
+	{
+	}
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject)
-    {
-        return Cloner.copyInfoGrantPaymentEntity2IGrantPaymentEntity((InfoGrantPaymentEntity) infoObject);
-    }
+	protected IDomainObject clone2DomainObject(InfoObject infoObject)
+	{
+		return Cloner.copyInfoGrantPaymentEntity2IGrantPaymentEntity(
+			(InfoGrantPaymentEntity) infoObject);
+	}
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
-        return sp.getIPersistentGrantPaymentEntity();
-    }
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
+	{
+		return sp.getIPersistentGrantPaymentEntity();
+	}
 
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
-        IPersistentGrantPaymentEntity pgs = sp.getIPersistentGrantPaymentEntity();
-        IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) domainObject;
+	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+		throws ExcepcaoPersistencia
+	{
+		IPersistentGrantPaymentEntity pgs = sp.getIPersistentGrantPaymentEntity();
+		IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) domainObject;
 
-        return pgs.readByOID(GrantPaymentEntity.class,grantPaymentEntity.getIdInternal());
-    }
-   
-    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException
-    {
-        super.run(new Integer(0), infoObject);
-    }
-    
-    public void run(InfoGrantProject infoObject) throws FenixServiceException
-    {
-        super.run(new Integer(0), infoObject);
-    }
+		return pgs.readByNumberAndClass(
+			grantPaymentEntity.getNumber(),
+			grantPaymentEntity.getOjbConcreteClass());
+	}
+
+	public void run(InfoGrantCostCenter infoObject) throws FenixServiceException
+	{
+		super.run(new Integer(0), infoObject);
+	}
+
+	public void run(InfoGrantProject infoObject) throws FenixServiceException
+	{
+		super.run(new Integer(0), infoObject);
+	}
 }
