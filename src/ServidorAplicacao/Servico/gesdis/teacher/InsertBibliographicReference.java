@@ -46,7 +46,7 @@ public class InsertBibliographicReference implements IServico {
 		return "InsertBibliographicReference";
 	}	
 
-	public boolean run(
+	public Boolean run(
 		InfoExecutionCourse infoExecutionCourse,
 		String title,
 		String authors,
@@ -87,6 +87,6 @@ public class InsertBibliographicReference implements IServico {
 		catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 			}
-			return true;
+			return new Boolean(true);
 	}
 }
