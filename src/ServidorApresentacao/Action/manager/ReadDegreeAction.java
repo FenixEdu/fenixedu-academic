@@ -79,8 +79,9 @@ public class ReadDegreeAction extends FenixAction  {
 				}
 				
 				Collections.sort(degreeCurricularPlans);
-				
-				request.setAttribute(SessionConstants.INFO_DEGREE, degree);					
+				System.out.println("ANTES----DEGREEIDaaaaaaaaaaaaaaaaaaaAA"+degreeId);
+				request.setAttribute("degreeId",degreeId);
+				request.setAttribute("infoDegree", degree);					
 				request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST, degreeCurricularPlans);
 				return mapping.findForward("viewDegree");
 	}

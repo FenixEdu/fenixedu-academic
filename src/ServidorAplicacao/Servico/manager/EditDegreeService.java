@@ -51,23 +51,32 @@ public class EditDegreeService implements IServico {
 	
 		ISuportePersistente persistentSuport = null;	
 		ICursoPersistente persistentDegree = null;
+		ICurso oldDegree = null;
+		String newCode = null;
+		String newName = null;
+		TipoCurso newType = null;
+		
 		try {
 				persistentSuport = SuportePersistenteOJB.getInstance();
 				persistentDegree = persistentSuport.getICursoPersistente();
-				ICurso oldDegree = persistentDegree.readByIdInternal(oldDegreeId);
+				oldDegree = persistentDegree.readByIdInternal(oldDegreeId);
 				
+			System.out.println("AQUI0000000000000000000000000000000"+oldDegreeId);	
+			System.out.println("AQUI11111111111111111111111111111"+oldDegree);
+			
+			
 				List degrees = persistentDegree.readAll();
 				degrees.remove((ICurso)oldDegree);
 			
 			
-				String newCode = newInfoDegree.getSigla();
-				String newName = newInfoDegree.getNome();
-				TipoCurso newType = newInfoDegree.getTipoCurso();
+				newCode = newInfoDegree.getSigla();
+				newName = newInfoDegree.getNome();
+				newType = newInfoDegree.getTipoCurso();
 				List errors = new ArrayList(2);
-				if(newCode.compareToIgnoreCase(oldDegree.getSigla())==0 ||(newName.compareToIgnoreCase(oldDegree.getNome())==0 && newType.equals((TipoCurso) oldDegree.getTipoCurso())))
-					errors = null;
-				else
-				{
+//				if(newCode.compareToIgnoreCase(oldDegree.getSigla())==0 ||(newName.compareToIgnoreCase(oldDegree.getNome())==0 && newType.equals((TipoCurso) oldDegree.getTipoCurso())))
+//					errors = null;
+//				else
+//				{
 					int modified = 0;
 					Iterator iter = degrees.iterator();
 				
@@ -75,18 +84,20 @@ public class EditDegreeService implements IServico {
 						ICurso degreeIter = (ICurso) iter.next();
 						if(newCode.compareToIgnoreCase(degreeIter.getSigla())==0) {
 							modified++;
-							errors.set(0, newCode);
+							errors.add(0, newCode);
 				 		}
 						if(newName.compareToIgnoreCase(degreeIter.getNome())==0 && newType.equals((TipoCurso) degreeIter.getTipoCurso())) {
 						modified++;
-						errors.set(1, newName);
+						errors.add(1, newName);
 						}
 					}
+
+System.out.println("AQUI11111111111111111111111111111"+oldDegree);
 
 					oldDegree.setNome(newName);
 					oldDegree.setSigla(newCode);
 					oldDegree.setTipoCurso(newType);
-				}
+//				}
 				
 				return errors;
 			

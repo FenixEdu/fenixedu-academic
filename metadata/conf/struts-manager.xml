@@ -21,6 +21,7 @@
 				<form-property name="name" type="java.lang.String" />       
 				<form-property name="code" type="java.lang.String" />
 				<form-property name="degreeType" type="java.lang.Integer" />
+				<form-property name="idInternal" type="java.lang.Integer" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
 
@@ -96,7 +97,19 @@
         validate="true">  
        <forward name="insertDegree" path="df.page.insert-degree"/>
        <forward name="readDegrees" path="df.page.read-degrees"/>      	      
-	</action>			     
+	</action>	
+	
+	<action
+		path="/editDegree"
+		name="degreeForm"
+		input="/insertDegreeInput.do"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
+        validate="true">  
+       <forward name="insertDegree" path="df.page.insert-degree"/>
+       <forward name="readDegrees" path="df.page.read-degrees"/>      	      
+	</action>			     		     
          
 	<!-- Action for deleting degrees --> 
       <action 
@@ -112,12 +125,12 @@
 	<action
 		path="/editDegree"
 		name="degreeForm"
-		input="/insertDegreeInput.do"
+		input="/editDegreeInput.do"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditDegreeDispatchAction"
         validate="true">  
-       <forward name="editDegree" path="df.page.insert-degree"/>
+       <forward name="editDegree" path="df.page.edit-degree"/>
        <forward name="readDegrees" path="df.page.read-degrees"/>      	      
 	</action>
      
@@ -133,6 +146,11 @@
       <action path="/insertDegreeInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.insert-degree"/>      	      
+      </action>
+      
+       <action path="/editDegreeInput"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.edit-degree"/>      	      
       </action>
       
      <action path="/readDegreesInput"

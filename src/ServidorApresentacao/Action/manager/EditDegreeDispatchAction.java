@@ -46,19 +46,29 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
-			Integer internalId = (Integer)readDegreeForm.get("degreeId");
+			Integer degreeId =new Integer(request.getParameter("degreeId"));
+			
 			InfoDegree oldInfoDegree = null;
 
-			Object args[] = { internalId };
+			Object args[] = { degreeId };
 			GestorServicos manager = GestorServicos.manager();
-			
 			try{
 				oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
 			}catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
-		    }
-		    
-			request.setAttribute(SessionConstants.INFO_DEGREE,oldInfoDegree);
+			}
+			
+			TipoCurso degreeType =(TipoCurso) oldInfoDegree.getTipoCurso();
+	
+			
+			
+			readDegreeForm.set("name",(String) oldInfoDegree.getNome());
+			readDegreeForm.set("code",(String) oldInfoDegree.getSigla());
+			readDegreeForm.set("degreeType",degreeType.getTipoCurso());
+
+			System.out.println("antes editDEGREEIDaaaaaaaaaaaaaaaaaaaAA"+degreeId);
+//			request.setAttribute("infoDegree",oldInfoDegree);
+//			request.setAttribute("degreeId",degreeId);
 			return mapping.findForward("editDegree");
 		}
 
@@ -77,7 +87,10 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
-		Integer oldDegreeId = (Integer)editDegreeForm.get("degreeId");
+		Integer oldDegreeId = (Integer)request.getAttribute("degreeId");
+		System.out.println("DEGREEIDaaaaaaaaaaaaaaaaaaaAA"+oldDegreeId);
+		
+//		Integer oldDegreeId = (Integer)editDegreeForm.get("degreeId");
 			
 		
 		String code = (String) editDegreeForm.get("code");
@@ -93,6 +106,8 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		Object args[] = { oldDegreeId, newInfoDegree };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
+		System.out.println("AQUI33333333333333333333333333"+oldDegreeId);
+		System.out.println("AQUI44444444444444444444444444"+newInfoDegree);
 		try {
 				serviceResult = (List) manager.executar(userView, "EditDegreeService", args);
 		} catch (FenixServiceException e) {
