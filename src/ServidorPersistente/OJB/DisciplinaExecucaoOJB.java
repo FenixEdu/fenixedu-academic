@@ -128,9 +128,9 @@ public class DisciplinaExecucaoOJB
 		criteria.addEqualTo(
 			"associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",
 			curricularYear);
-		criteria.addEqualTo(
-			"associatedCurricularCourses.scopes.curricularSemester.semester",
-			executionPeriod.getSemester());
+//		criteria.addEqualTo(
+//			"associatedCurricularCourses.scopes.curricularSemester.semester",
+//			executionPeriod.getSemester());
 		criteria.addEqualTo(
 			"associatedCurricularCourses.degreeCurricularPlan.name",
 			executionDegree.getCurricularPlan().getName());
@@ -139,8 +139,8 @@ public class DisciplinaExecucaoOJB
 			executionDegree.getCurricularPlan().getDegree().getSigla());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 		criteria.addEqualTo(
-			"executionPeriod.executionYear.year",
-			executionPeriod.getExecutionYear().getYear());
+			"executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
 
 		List executionCourseList =
 			queryList(DisciplinaExecucao.class, criteria);
