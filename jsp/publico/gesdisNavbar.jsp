@@ -54,11 +54,11 @@
 <li><html:link page="<%= "/viewSite.do" + "?method=shifts&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
 		<bean:message key="link.executionCourse.shifts"/>
 </html:link></li>
-
+<!--
 <li><html:link page="<%= "/viewSite.do" + "?method=evaluation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
 		<bean:message key="link.evaluation"/>
 </html:link></li>
-
+-->
 <li><html:link page="<%= "/viewSite.do" + "?method=viewExecutionCourseProjects&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>">
 		<bean:message key="link.groups"/>
 </html:link></li>

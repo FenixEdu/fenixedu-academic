@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoExecutionPeriod" %>
 <span class="error"><html:errors/></span>
@@ -52,7 +53,13 @@
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
-    		<td class="infoop"><html:link page="<%= "/chooseExamsMapContextDA.do?method=prepare&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" ><h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2></html:link></td>
+    		<td class="infoop">
+    			<% if (!request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).equals("80")) { %>
+	    			<html:link page="<%= "/chooseExamsMapContextDA.do?method=prepare&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" ><h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2></html:link>
+	    		<% } else { %>
+		    		<h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2> - Em construção
+	    		<% }%>
+    		</td>
   		</tr>
 	</table>
 <br />
