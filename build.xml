@@ -113,7 +113,7 @@
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 	    	<include name="**/**/slide.properties"/>
 		  <replacefilter 
-		    token="@validation.doctype@" property="validation.doctype"/>
+		    token="&lt;-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
 		    token="@login.page@" 
 		    property="login.page"/>
