@@ -85,10 +85,12 @@ public class EMail extends FenixUtil {
                 try {
                     if (bcc != null) {
                         mensagem.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
+                        System.out.println("Adicionei (BCC) " + bcc);
                     }
 
                 } catch (AddressException e) {
                     unsentMails.add(bcc);
+                    System.out.println("Falhou (BCC) " + bcc);
                 }
             }
             for (Iterator iter = tos.iterator(); iter.hasNext();) {
