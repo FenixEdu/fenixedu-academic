@@ -5460,4 +5460,13 @@
         <isTransactional>True</isTransactional>
         <filterChains/>
     </service>
+    <service>
+    	<name>ReadGratuitySituationListByExecutionDegreeAndSpecialization</name>
+    	<description>Return a list of gratuity situation of a execution degree or/and specialization or/and situation</description>
+    	<implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>
