@@ -88,7 +88,53 @@ public class ReadBibliographicReferenceTest extends TestCaseReadServices{
 		}
 	
 		protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-			return null;
+			ISuportePersistente sp = null;
+			IExecutionYear executionYear = null;
+			IExecutionPeriod executionPeriod = null;
+			IDisciplinaExecucao executionCourse = null;
+			IBibliographicReference biblioRef = null;
+			try {
+				sp = SuportePersistenteOJB.getInstance();
+				sp.iniciarTransaccao();
+
+				IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+				executionYear = ieyp.readExecutionYearByName("2002/2003");
+
+				IPersistentExecutionPeriod iepp =
+					sp.getIPersistentExecutionPeriod();
+				executionPeriod =
+					iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+
+				IDisciplinaExecucaoPersistente idep =
+					sp.getIDisciplinaExecucaoPersistente();
+				executionCourse =
+					idep.readByExecutionCourseInitialsAndExecutionPeriod(
+						"TFCI",
+						executionPeriod);
+
+				IPersistentBibliographicReference ipbr =
+					sp.getIPersistentBibliographicReference();
+				biblioRef =
+					ipbr.readBibliographicReference(
+						executionCourse,
+						"xpto",
+						"pedro",
+						"ref",
+						"2002");
+				sp.confirmarTransaccao();
+			} catch (ExcepcaoPersistencia e) {
+				System.out.println("failed setting up the test data");
+				e.printStackTrace();
+			}
+
+			InfoExecutionCourse infoExecutionCourse =
+				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+			InfoBibliographicReference infoBiblioRef =
+				Cloner.copyIBibliographicReference2InfoBibliographicReference(
+					biblioRef);		
+			Object[] testArgs = { infoExecutionCourse, new Boolean(true)};
+			return testArgs;		
+
 		}
 	
 		protected int getNumberOfItemsToRetrieve() {return 2;}

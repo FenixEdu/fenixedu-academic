@@ -57,10 +57,15 @@ public class ReadBibliographicReference implements IServico {
 		List infoBibRefs = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-			IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = sp.getIPersistentBibliographicReference();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionYear persistentExecutionYear =
+				sp.getIPersistentExecutionYear();
+			IPersistentExecutionPeriod persistentExecutionPeriod =
+				sp.getIPersistentExecutionPeriod();
+			IPersistentBibliographicReference persistentBibliographicReference =
+				persistentBibliographicReference =
+					sp.getIPersistentBibliographicReference();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+				sp.getIDisciplinaExecucaoPersistente();
 
 			IExecutionYear executionYear =
 				persistentExecutionYear.readExecutionYearByName(
@@ -80,14 +85,20 @@ public class ReadBibliographicReference implements IServico {
 			references =
 				persistentBibliographicReference.readBibliographicReference(
 					executionCourse);
-					
-			Iterator iterator = references.iterator();	
+
+			Iterator iterator = references.iterator();
 			infoBibRefs = new ArrayList();
-			while(iterator.hasNext()) {
-				IBibliographicReference bibRef = (IBibliographicReference)iterator.next();
-				InfoBibliographicReference infoBibRef = Cloner.copyIBibliographicReference2InfoBibliographicReference(bibRef);
-				infoBibRefs.add(infoBibRef);		
-			}										
+			while (iterator.hasNext()) {
+				IBibliographicReference bibRef =
+					(IBibliographicReference) iterator.next();
+				if (bibRef.getOptional().equals(optional)) {
+					InfoBibliographicReference infoBibRef =
+						Cloner
+							.copyIBibliographicReference2InfoBibliographicReference(
+							bibRef);
+					infoBibRefs.add(infoBibRef);
+				}
+			}
 
 		} catch (ExistingPersistentException e) {
 			throw new ExistingServiceException(e);
