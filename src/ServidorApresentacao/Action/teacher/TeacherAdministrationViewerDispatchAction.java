@@ -1424,10 +1424,12 @@ public class TeacherAdministrationViewerDispatchAction
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		Collections.sort(
-			((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
-				.getComponent())
-				.getInfoSummaries());
+	
+		Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+		.getComponent())
+		.getInfoSummaries(),Collections.reverseOrder());		
+		
+
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("showSummaries");
 	}

@@ -1,5 +1,7 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -204,8 +206,13 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent summariesComponent = new InfoSiteSummaries();
-		readSiteView(request, summariesComponent, null, null, null);
-
+		SiteView siteView= readSiteView(request, summariesComponent, null, null, null);
+		
+		Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+				.getComponent())
+				.getInfoSummaries(),Collections.reverseOrder());
+		request.setAttribute("siteView",siteView);
+		
 		return mapping.findForward("sucess");
 
 	}
@@ -330,7 +337,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 	
 		}
 
-	private void readSiteView(
+	private SiteView readSiteView(
 		HttpServletRequest request,
 		ISiteComponent firstPageComponent,
 		Integer infoExecutionCourseCode,
@@ -391,7 +398,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 					"infoSection",
 					((InfoSiteSection) siteView.getComponent()).getSection());
 			}
-
+			return siteView;
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("A disciplina", e);
 		} catch (FenixServiceException e) {
