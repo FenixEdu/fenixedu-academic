@@ -122,10 +122,10 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico
                 curriculum.setCurricularCourse(curricularCourse);
             }
 
-            curriculum.getCurricularCourse().setScopes(activeCurricularCourseScopes);
-            curriculum.getCurricularCourse().setAssociatedExecutionCourses(associatedExecutionCourses);
+//            curriculum.getCurricularCourse().setScopes(activeCurricularCourseScopes);
+//            curriculum.getCurricularCourse().setAssociatedExecutionCourses(associatedExecutionCourses);
 
-            infoCurriculum = createInfoCurriculum(curriculum, persistentExecutionCourse);
+            infoCurriculum = createInfoCurriculum(curriculum, persistentExecutionCourse, activeCurricularCourseScopes, associatedExecutionCourses);
         }
         catch (ExcepcaoPersistencia e)
         {
@@ -136,15 +136,16 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico
 
     private InfoCurriculum createInfoCurriculum(
         ICurriculum curriculum,
-        IPersistentExecutionCourse persistentExecutionCourse)
+        IPersistentExecutionCourse persistentExecutionCourse, List activeCurricularCourseScopes, List associatedExecutionCourses)
         throws ExcepcaoPersistencia
     {
         InfoCurriculum infoCurriculum;
         infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-
+        infoCurriculum.setIdInternal(curriculum.getIdInternal());
+        
         List scopes = new ArrayList();
 
-        CollectionUtils.collect(curriculum.getCurricularCourse().getScopes(), new Transformer()
+        CollectionUtils.collect(activeCurricularCourseScopes, new Transformer()
         {
             public Object transform(Object arg0)
             {
@@ -157,8 +158,8 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
         List infoExecutionCourses = new ArrayList();
-        List executionCourses = curriculum.getCurricularCourse().getAssociatedExecutionCourses();
-        Iterator iterExecutionCourses = executionCourses.iterator();
+//        List executionCourses = associatedExecutionCourses;
+        Iterator iterExecutionCourses = associatedExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext())
         {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();

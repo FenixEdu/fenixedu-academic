@@ -192,8 +192,8 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		Criteria crit4 = new Criteria();
 		crit4.addGreaterThan("endDate", executionPeriod.getBeginDate());
 
-		crit.addAndCriteria(crit3);
 		crit3.addOrCriteria(crit4);
+		crit.addAndCriteria(crit3);
 
 		List result = queryList(CurricularCourseScope.class, crit);
 		return result;
@@ -213,8 +213,8 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		Criteria crit4 = new Criteria();
 		crit4.addGreaterThan("endDate", executionYear.getBeginDate());
 
-		crit.addAndCriteria(crit3);
 		crit3.addOrCriteria(crit4);
+		crit.addAndCriteria(crit3);
 
 		List result = queryList(CurricularCourseScope.class, crit);
 		return result;

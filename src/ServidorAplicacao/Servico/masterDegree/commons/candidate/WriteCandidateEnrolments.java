@@ -1,5 +1,12 @@
 package ServidorAplicacao.Servico.masterDegree.commons.candidate;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import Dominio.CandidateEnrolment;
 import Dominio.CurricularCourse;
 import Dominio.ICandidateEnrolment;
@@ -10,6 +17,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCandidateEnrolment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -56,9 +64,9 @@ public class WriteCandidateEnrolments implements IServico
     {
         try
         {
-
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
+            IPersistentCandidateEnrolment persistentCandidateEnrolment = sp.getIPersistentCandidateEnrolment();
+            
             IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
             mdcTemp.setIdInternal(candidateID);
             IMasterDegreeCandidate masterDegreeCandidate =
@@ -70,7 +78,7 @@ public class WriteCandidateEnrolments implements IServico
             {
                 throw new NonExistingServiceException();
             }
-
+            
             masterDegreeCandidate.setGivenCredits(credits);
 
             if (credits.floatValue() != 0)
@@ -78,55 +86,19 @@ public class WriteCandidateEnrolments implements IServico
                 masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
             }
 
-            // Clean the Enrolment Information
-            sp.getIPersistentCandidateEnrolment().deleteAllByCandidateID(masterDegreeCandidate);
-
-            sp.confirmarTransaccao();
-            sp.iniciarTransaccao();
-
+            List candidateEnrollmentsToDelete = new ArrayList();
+            List curricularCoursesToEnroll = new ArrayList();
+            
             for (int i = 0; i < selection.length; i++)
             {
-//                ICurricularCourseScope curricularCourseScopeTemp = new CurricularCourseScope();
-//                curricularCourseScopeTemp.setIdInternal(selection[i]);
-//                ICurricularCourseScope curricularCourseScope =
-//                    (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope().readByOId(
-//                        curricularCourseScopeTemp,
-//                        false);
-//
-//                if (curricularCourseScope == null)
-//                {
-//                    throw new NonExistingServiceException();
-//                }
-				
-				ICurricularCourse curricularCourseTemp = new CurricularCourse();
-				curricularCourseTemp.setIdInternal(selection[i]);
-				ICurricularCourse curricularCourse =
-					(ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
-						curricularCourseTemp,
-						false);
-
-				if (curricularCourse == null)
-				{
-					throw new NonExistingServiceException();
-				}
-
-                ICandidateEnrolment candidateEnrolment = new CandidateEnrolment();
-
-                candidateEnrolment.setMasterDegreeCandidate(masterDegreeCandidate);
-                //candidateEnrolment.setCurricularCourseScope(curricularCourseScope);
-				candidateEnrolment.setCurricularCourse(curricularCourse);
-
-                try
-                {
-                    sp.getIPersistentCandidateEnrolment().write(candidateEnrolment);
-                }
-                catch (ExcepcaoPersistencia e)
-                {
-                    throw new ExcepcaoPersistencia();
-                }
-
+                curricularCoursesToEnroll.add(selection[i]);
             }
 
+            filterEnrollments(persistentCandidateEnrolment, masterDegreeCandidate, candidateEnrollmentsToDelete, curricularCoursesToEnroll);
+
+            writeFilteredEnrollments(sp, masterDegreeCandidate, curricularCoursesToEnroll);
+             
+            deleteRemainingEnrollments(persistentCandidateEnrolment, candidateEnrollmentsToDelete);
         }
         catch (ExcepcaoPersistencia ex)
         {
@@ -134,5 +106,97 @@ public class WriteCandidateEnrolments implements IServico
             newEx.fillInStackTrace();
             throw newEx;
         }
+    }
+
+    /**
+     * @param persistentCandidateEnrolment
+     * @param candidateEnrollmentsToDelete
+     * @throws ExcepcaoPersistencia
+     */
+    private void deleteRemainingEnrollments(IPersistentCandidateEnrolment persistentCandidateEnrolment, List candidateEnrollmentsToDelete) throws ExcepcaoPersistencia
+    {
+        Iterator iterCandidateEnrollmentsToDelete = candidateEnrollmentsToDelete.iterator();
+        while(iterCandidateEnrollmentsToDelete.hasNext()) {
+            ICandidateEnrolment candidateEnrolmentToDelete = (ICandidateEnrolment) iterCandidateEnrollmentsToDelete.next();
+            persistentCandidateEnrolment.delete(candidateEnrolmentToDelete);
+        }
+    }
+
+    /**
+     * @param sp
+     * @param masterDegreeCandidate
+     * @param curricularCoursesToEnroll
+     * @throws NonExistingServiceException
+     * @throws ExcepcaoPersistencia
+     */
+    private void writeFilteredEnrollments(ISuportePersistente sp, IMasterDegreeCandidate masterDegreeCandidate, List curricularCoursesToEnroll) throws NonExistingServiceException, ExcepcaoPersistencia
+    {
+        Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
+        while (iterCurricularCourseIds.hasNext())
+        {
+        	ICurricularCourse curricularCourseTemp = new CurricularCourse();
+        	curricularCourseTemp.setIdInternal((Integer)iterCurricularCourseIds.next());
+        	ICurricularCourse curricularCourse =
+        		(ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
+        			curricularCourseTemp,
+        			false);
+
+        	if (curricularCourse == null)
+        	{
+        		throw new NonExistingServiceException();
+        	}
+        	
+            ICandidateEnrolment candidateEnrolment = new CandidateEnrolment();
+            sp.getIPersistentCandidateEnrolment().simpleLockWrite(candidateEnrolment);
+            
+            candidateEnrolment.setMasterDegreeCandidate(masterDegreeCandidate);
+        	candidateEnrolment.setCurricularCourse(curricularCourse);
+        }
+    }
+
+    /**
+     * @param persistentCandidateEnrolment
+     * @param masterDegreeCandidate
+     * @param candidateEnrollmentsToDelete
+     * @param curricularCoursesToEnroll
+     * @throws ExcepcaoPersistencia
+     */
+    private void filterEnrollments(IPersistentCandidateEnrolment persistentCandidateEnrolment, IMasterDegreeCandidate masterDegreeCandidate, List candidateEnrollmentsToDelete, List curricularCoursesToEnroll) throws ExcepcaoPersistencia
+    {
+        List existentCandidateEnrollments = persistentCandidateEnrolment.readByMDCandidate(masterDegreeCandidate);
+        Iterator iterCandidateEnrollment = existentCandidateEnrollments.iterator();
+        while (iterCandidateEnrollment.hasNext())
+        {
+            ICandidateEnrolment existentCandidateEnrolment = (ICandidateEnrolment) iterCandidateEnrollment.next();
+            if(curricularCoursesToEnroll.contains(existentCandidateEnrolment.getCurricularCourse().getIdInternal())) 
+            {
+                removeElement(curricularCoursesToEnroll, existentCandidateEnrolment);
+            } else 
+            {
+                candidateEnrollmentsToDelete.add(existentCandidateEnrolment);
+            }
+        }
+    }
+
+    /**
+     * @param curricularCoursesToEnroll
+     * @param existentCandidateEnrolment
+     */
+    private void removeElement(List curricularCoursesToEnroll, ICandidateEnrolment existentCandidateEnrolment)
+    {
+        final Integer idToRemove =  existentCandidateEnrolment.getCurricularCourse().getIdInternal();
+        CollectionUtils.filter(curricularCoursesToEnroll, new Predicate()
+        {
+
+            public boolean evaluate(Object object)
+            {
+                Integer id = (Integer) object;
+
+                if(id.equals(idToRemove)) {
+                return false;
+                }
+                return true;
+            }
+        });
     }
 }

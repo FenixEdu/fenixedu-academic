@@ -17,9 +17,9 @@
 	           		<td>
             			<bean:write name="candidateEnrolment" property="infoCurricularCourse.name"/>
             		</td>
-	           	<!-- <td>
+	           	<%-- <td>
             			<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoBranch.name"/>
-            		</td> -->
+            		</td> --%>
 	           		<td>
             			<bean:write name="candidateEnrolment" property="infoCurricularCourse.credits"/>
 					</td>		

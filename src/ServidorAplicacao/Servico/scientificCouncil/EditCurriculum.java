@@ -64,7 +64,8 @@ public class EditCurriculum implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurriculum persistentCurriculum =
 				sp.getIPersistentCurriculum();
-			ICurriculum curriculum = new Curriculum(curriculumId);
+			ICurriculum curriculum = new Curriculum();
+			curriculum.setIdInternal(curriculumId);
 			curriculum =
 				(ICurriculum) persistentCurriculum.readByOId(curriculum, true);
 			if (curriculum.getCurricularCourse().getBasic().equals(basic)){

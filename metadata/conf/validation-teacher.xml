@@ -393,7 +393,7 @@
 				   <var-value>additionalCredits</var-value>
 			   </var>
    			   <var>
-				   <var-name>field-test[0]</var-name>
+				   <var-name>fieldTest[0]</var-name>
 				   <var-value>NOTNULL</var-value>
 			   </var>
 		   </field>		   

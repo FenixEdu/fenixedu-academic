@@ -82,7 +82,6 @@
 		<html:form action="/displayCourseListToStudyPlan?method=chooseCurricularCourses">
 	   	  	<html:hidden property="page" value="1"/> 
 	   	  	<html:hidden property="candidateID"/> 
-	   	  	<html:hidden property="degree"/>
 			<!-- CurricularCourse -->
 			<table>
 				<tr>
@@ -119,18 +118,17 @@
 							<td>
 								<bean:write name="candidateEnrolment" property="infoCurricularCourse.name"/>
 							</td>
-							<!-- <td>
+							<%-- <td>
 								<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoBranch.name"/> <br/>
-							</td> -->
+							</td> --%>
 						</tr>
 					</logic:iterate>
 				</logic:present>
 			</table>
 	
-	
-			<h2><bean:message key="label.masterDegree.newCourses"/> <bean:write name="newDegree" property="infoDegreeCurricularPlan.infoDegree.nome" /></h2>
-	
-			
+			<logic:iterate id="curricularCourseElem" name="curricularCourses" length="1">
+				<h2><bean:message key="label.masterDegree.newCourses"/> <bean:write name="curricularCourseElem" property="infoDegreeCurricularPlan.infoDegree.nome" /></h2>
+			</logic:iterate>
 			<br />
 			<br />
 			

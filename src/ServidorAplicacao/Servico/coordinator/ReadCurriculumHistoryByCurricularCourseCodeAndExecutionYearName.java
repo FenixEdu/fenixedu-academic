@@ -22,10 +22,10 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurriculum;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -120,7 +120,10 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
                             executionPeriod);
                     if (curricularCourseScopes != null)
                     {
-                        allCurricularCourseScopes.addAll(curricularCourseScopes);
+                        List disjunctionCurricularCourseScopes = (List) CollectionUtils.disjunction(allCurricularCourseScopes,curricularCourseScopes );
+                        List intersectionCurricularCourseScopes = (List) CollectionUtils.intersection(allCurricularCourseScopes, curricularCourseScopes);
+                        
+                        allCurricularCourseScopes = (List) CollectionUtils.union(disjunctionCurricularCourseScopes,intersectionCurricularCourseScopes);
                     }
                     List associatedExecutionCourses =
                         persistentExecutionCourse.readListbyCurricularCourseAndExecutionPeriod(
@@ -132,14 +135,14 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
                     }
 
                 }
-                curriculumExecutionYear.getCurricularCourse().setScopes(allCurricularCourseScopes);
+//                curriculumExecutionYear.getCurricularCourse().setScopes(allCurricularCourseScopes);
 
                 //selects execution courses for current execution period
-                curriculumExecutionYear.getCurricularCourse().setAssociatedExecutionCourses(
-                    allExecutionCourses);
+//                curriculumExecutionYear.getCurricularCourse().setAssociatedExecutionCourses(
+//                    allExecutionCourses);
 
                 infoCurriculum =
-                    createInfoCurriculum(curriculumExecutionYear, persistentExecutionCourse);
+                    createInfoCurriculum(curriculumExecutionYear, persistentExecutionCourse, allCurricularCourseScopes, allExecutionCourses);
             }
         }
         catch (ExcepcaoPersistencia e)
@@ -151,14 +154,14 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
 
     private InfoCurriculum createInfoCurriculum(
         ICurriculum curriculum,
-        IPersistentExecutionCourse persistentExecutionCourse)
+        IPersistentExecutionCourse persistentExecutionCourse, List allCurricularCourseScopes, List allExecutionCourses)
         throws ExcepcaoPersistencia
     {
         InfoCurriculum infoCurriculum;
         infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 
-        List scopes = curriculum.getCurricularCourse().getScopes();
-        CollectionUtils.transform(scopes, new Transformer()
+        List scopes = new ArrayList(); 
+        CollectionUtils.collect(allCurricularCourseScopes, new Transformer()
         {
             public Object transform(Object arg0)
             {
@@ -167,12 +170,12 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
                     Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
                 return infoCurricularCourseScope;
             }
-        });
+        }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
         List infoExecutionCourses = new ArrayList();
-        List executionCourses = curriculum.getCurricularCourse().getAssociatedExecutionCourses();
-        Iterator iterExecutionCourses = executionCourses.iterator();
+//        List executionCourses = curriculum.getCurricularCourse().getAssociatedExecutionCourses();
+        Iterator iterExecutionCourses = allExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext())
         {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();

@@ -112,7 +112,7 @@
 			</form-bean>
 
       <!-- Dynamic-FormBean for curricularCourseEdition -->
-      <form-bean name="curriculumForm"
+      <form-bean name="curricularCourseInformationForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="page" type="java.lang.Integer" initial="0"/>
@@ -475,7 +475,7 @@
 		<action path="/degreeCurricularPlanManagement"
 		    type="ServidorApresentacao.Action.coordinator.DegreeCurricularPlanManagementDispatchAction"
 				parameter="method"
-				name="curriculumForm"
+				name="curricularCourseInformationForm"
 				scope="request"
 				validate="true"
 				input="/chooseDegree.do">

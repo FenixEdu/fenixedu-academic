@@ -52,6 +52,11 @@
 	    </table>    
 	    <table>        
 			<tr>
+				<td colspan="3" class="px9">
+					<bean:message key="message.submission.help" /> 
+			   	</td>
+			</tr>    				
+			<tr>
 				<td class="listClasses-header">
 					<bean:message key="label.number" /> 
 			   	</td>

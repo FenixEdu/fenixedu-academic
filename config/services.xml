@@ -1801,7 +1801,8 @@
         <name>ReadCurricularCoursesByDegree</name>
         <implementationClass> 
             ServidorAplicacao.Servico.masterDegree.administrativeOffice.ReadCurricularCoursesByDegree</implementationClass>
-        <description/>
+        <description>
+        	Returns curricular courses given execution year and degree curricular plan name</description>
         <isTransactional>true</isTransactional>
         <filterChains/>
     </service>

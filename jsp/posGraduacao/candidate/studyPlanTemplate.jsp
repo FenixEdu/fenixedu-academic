@@ -92,19 +92,26 @@
 					            			<strong><bean:message key="property.course"/></strong>
 					            		</td>
 						           		<td align="center">
+						           			&nbsp;
+						           			<%-- RESOLVER 
 					            			<strong><bean:message key="property.curricularCourse.branch"/></strong>
-					            		</td>
-						           		<td>
-										</td>		
+					            			--%>
+					            		</td>	
+										<td align="center">
+					            			<strong><bean:message key="message.manager.credits"/></strong>
+					            		</td>	
 									</tr>
 					           	<logic:iterate id="candidateEnrolment" name="candidateEnrolments" >	
 						           	<tr>
 						           		<td>
 					            			<bean:write name="candidateEnrolment" property="infoCurricularCourse.name"/>
 					            		</td>
-						           <%-- RESOLVER		<td>
+						           		<td>
+						           			&nbsp;
+							           		<%-- RESOLVER
 					            			<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoBranch.name"/>
-					            		</td>--%>
+						            		--%>
+					            		</td>
 						           		<td>
 					            			<bean:write name="candidateEnrolment" property="infoCurricularCourse.credits"/>
 										</td>		
@@ -112,6 +119,7 @@
 						       	</logic:iterate>
 						       	<tr>
 						       		<td>
+						       			&nbsp;
 						       		</td>
 						       		<td>
 						       			<strong><bean:message key="label.totalCredits"/></strong>

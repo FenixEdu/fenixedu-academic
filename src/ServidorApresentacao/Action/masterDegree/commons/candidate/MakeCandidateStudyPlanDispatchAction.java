@@ -67,9 +67,11 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         DynaActionForm approvalForm = (DynaActionForm) form;
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        String executionYear = (String) request.getAttribute("executionYear");
-		executionYear = (String)session.getAttribute( SessionConstants.EXECUTION_YEAR );
-        String degree = (String) request.getAttribute("degree");
+        String executionYear = getFromRequest("executionYear", request);
+        if(executionYear == null) {
+            executionYear = (String)session.getAttribute( SessionConstants.EXECUTION_YEAR );    
+        }
+        String degree = getFromRequest("degree", request);
 		Integer executionDegree = Integer.valueOf( request.getParameter("executionDegreeID"));
         InfoExecutionDegree infoExecutionDegree =
             (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
@@ -99,7 +101,6 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
                 degree = (String) approvalForm.get("degree");
             }*/
         }
-		String degreeSigla = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
         List candidateList = null;
 
         List admitedSituations = new ArrayList();
@@ -138,7 +139,6 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
-		request.setAttribute("degreeSigla", degreeSigla);
 		request.setAttribute(SessionConstants.EXECUTION_DEGREE,String.valueOf( executionDegree));
         request.setAttribute("candidateList", candidateList);
         return mapping.findForward("PrepareSuccess");
@@ -267,23 +267,20 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         String degree = getFromRequest("degree", request);
         String candidateID = getFromRequest("candidateID", request);
 
-        InfoExecutionDegree infoExecutionDegree =
-            (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
-        if ((degree == null) || (degree.length() == 0))
+        if (((degree == null) || (degree.length() == 0)) && infoExecutionDegree != null)
         {
             degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         }
        
-        if ((executionYear == null) || (executionYear.length() == 0))
+        if (((executionYear == null) || (executionYear.length() == 0)) && infoExecutionDegree != null)
         {
             executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
         }
-        String curricularPlanCode = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
-
         // Get the Curricular Course List
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -291,7 +288,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         try
         {
 
-            Object args[] = { executionYear, degree,curricularPlanCode };
+            Object args[] = { executionYear, degree };
             curricularCourseList =
                 (List) ServiceManagerServiceFactory.executeService(
                     userView,
@@ -364,14 +361,9 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             throw new FenixActionException(e);
         }
-
         request.setAttribute("candidate", infoMasterDegreeCandidate);
 
-        if (infoExecutionDegree != null)
-        {
-            request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-        }
-        else
+        if(infoExecutionDegree == null) 
         {
             try
             {
@@ -390,27 +382,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
             {
                 throw new FenixActionException(e);
             }
-
-            request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-
         }
-
-        InfoExecutionDegree newInfoExecutionDegree = null;
-        try
-        {
-            Object args[] = { executionYear, degree };
-            newInfoExecutionDegree =
-                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "ReadExecutionDegreeByExecutionYearAndDegreeCode",
-                    args);
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
-
-        request.setAttribute("newDegree", newInfoExecutionDegree);
+        request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 
         //
         //		generateToken(request);
@@ -571,6 +544,10 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 			
             Object args[] = { selection, candidateID, attributedCredits, givenCreditsRemarks };
             ServiceManagerServiceFactory.executeService(userView, "WriteCandidateEnrolments", args);
+        }
+        catch (NotAuthorizedException e)
+        {
+            throw new NotAuthorizedActionException(e);
         }
         catch (NonExistingServiceException e)
         {
@@ -748,50 +725,50 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 
         return mapping.findForward("PrintReady");
     }
+    
 	private List buildExecutionDegreeLabelValueBean(List executionDegreeList)
-				{
-					List executionDegreeLabels = new ArrayList();
-					Iterator iterator = executionDegreeList.iterator();
-					while (iterator.hasNext())
-					{
-						InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-						String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+	{
+		List executionDegreeLabels = new ArrayList();
+		Iterator iterator = executionDegreeList.iterator();
+		while (iterator.hasNext())
+		{
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-						name =
-							infoExecutionDegree
-								.getInfoDegreeCurricularPlan()
-								.getInfoDegree()
-								.getTipoCurso()
-								.toString()
-								+ " em "
-								+ name;
+			name =
+				infoExecutionDegree
+					.getInfoDegreeCurricularPlan()
+					.getInfoDegree()
+					.getTipoCurso()
+					.toString()
+					+ " em "
+					+ name;
 
-						name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
-							? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
-							: "";
+			name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
+				? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
+				: "";
 
-						executionDegreeLabels.add(
-							new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan ().getName()));
-					}
-					return executionDegreeLabels;
-			}
-		private boolean duplicateInfoDegree(
-					List executionDegreeList,
-					InfoExecutionDegree infoExecutionDegree)
-				{
-					InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-					Iterator iterator = executionDegreeList.iterator();
+			executionDegreeLabels.add(
+				new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan ().getName()));
+		}
+		return executionDegreeLabels;
+	}
+	
+	private boolean duplicateInfoDegree(
+		List executionDegreeList,
+		InfoExecutionDegree infoExecutionDegree)
+	{
+		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+		Iterator iterator = executionDegreeList.iterator();
 
-					while (iterator.hasNext())
-					{
-						InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-						if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-							&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
-							return true;
+		while (iterator.hasNext())
+		{
+			InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+				&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
+				return true;
 
-					}
-					return false;
-				}
-	  
-
+		}
+		return false;
+	}
 }

@@ -99,14 +99,18 @@ public class StudentListDispatchAction extends DispatchAction {
 
 	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
-	  Object args[] = { infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla() };
+	  Object args[] = { infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree.getInfoDegreeCurricularPlan().getName() };
 	  List result = null;
 
 	  try {
 
 	  result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCoursesByDegree", args);
 
-	  } catch (FenixServiceException e) {
+	  } catch (NonExistingServiceException e) 
+	  {
+		  throw new NonExistingActionException("error.exception.noStudents", "");
+	  }catch (FenixServiceException e) 
+	  {
 		  throw new FenixActionException();
 	  }
 

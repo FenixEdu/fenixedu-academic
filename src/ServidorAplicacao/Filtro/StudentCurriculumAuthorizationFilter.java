@@ -243,7 +243,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 					List activeStudentCurricularPlans = 
 						persistentStudentCurricularPlan.readAllActiveStudentCurricularPlan(
 							studentCurricularPlan.getStudent().getNumber());
-					System.out.println("activeStudentCurricularPlans.size= " + activeStudentCurricularPlans.size());
 					boolean hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = false;
 					for (int i = 0; i < activeStudentCurricularPlans.size(); i++)
 					{

@@ -10,9 +10,9 @@ import org.apache.commons.collections.CollectionUtils;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoRole;
-import Dominio.CurricularCourseScope;
+import Dominio.CurricularCourse;
 import Dominio.ICoordinator;
-import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularCourse;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.ITeacher;
 import Dominio.MasterDegreeCandidate;
@@ -150,15 +150,30 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro
 
                 for (int i = 0; i < selection.length; i++)
                 {
-                    ICurricularCourseScope ccScopeTemp = new CurricularCourseScope();
-                    ccScopeTemp.setIdInternal(selection[i]);
-                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) sp
-                                    .getIPersistentCurricularCourse().readByOId(ccScopeTemp, false);
-                    if (!curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().equals(
-                                    masterDegreeCandidate.getExecutionDegree().getCurricularPlan()))
-                    {
-                        return false;
-                    }
+                    
+                     // Modified by Fernanda Quitério
+                     
+                  ICurricularCourse ccTemp = new CurricularCourse();
+                  ccTemp.setIdInternal(selection[i]);
+                  ICurricularCourse curricularCourse = (ICurricularCourse) sp
+                                  .getIPersistentCurricularCourse().readByOId(ccTemp, false);
+                  if (!curricularCourse.getDegreeCurricularPlan().equals(
+                                  masterDegreeCandidate.getExecutionDegree().getCurricularPlan()))
+                  {
+                      return false;
+                  }
+
+                  //TODO: delete this code. it is not valid because enrolment is in curricular courses
+                  // and not in curricular course scopes
+//                    ICurricularCourseScope ccScopeTemp = new CurricularCourseScope();
+//                    ccScopeTemp.setIdInternal(selection[i]);
+//                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) sp
+//                                    .getIPersistentCurricularCourse().readByOId(ccScopeTemp, false);
+//                    if (!curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().equals(
+//                                    masterDegreeCandidate.getExecutionDegree().getCurricularPlan()))
+//                    {
+//                        return false;
+//                    }
                 }
                 return true;
 

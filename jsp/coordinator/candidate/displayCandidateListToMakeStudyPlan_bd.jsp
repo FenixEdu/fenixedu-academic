@@ -26,7 +26,7 @@
     			</bean:define>
     		<tr>
     		<td class="listClasses">
-      			<html:link page="<%= pageContext.findAttribute("candidateLink").toString() + "&amp;executionYear=" + pageContext.findAttribute("executionYear")+ "&amp;degree=" + pageContext.findAttribute("degreeSigla") %>">
+      			<html:link page="<%= pageContext.findAttribute("candidateLink").toString() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") %>">
     				<bean:write name="candidate" property="infoPerson.nome" />
     			</html:link>
     		</td>

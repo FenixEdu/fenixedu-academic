@@ -720,6 +720,11 @@
       	  >
           <foreignkey field-ref="curricularCourseKey"/>
          </reference-descriptor>
+
+   		<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+
   </class-descriptor>
  
  

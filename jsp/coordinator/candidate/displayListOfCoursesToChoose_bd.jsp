@@ -106,10 +106,9 @@
 					</td>
 				</tr>
 			</table>
-			<table>
-				<logic:present name="candidateEnrolments">		
-					<h2><bean:message key="label.masterDegree.alreadyChosenCourses"/></h2>
-	
+			<logic:present name="candidateEnrolments">		
+				<h2><bean:message key="label.masterDegree.alreadyChosenCourses"/></h2>
+				<table>
 					<logic:iterate id="candidateEnrolment" name="candidateEnrolments" indexId="index">
 						<tr>
 							<td>
@@ -125,8 +124,8 @@
 							
 						</tr>
 					</logic:iterate>
-				</logic:present>
-			</table>
+				</table>
+			</logic:present>
 	
 			<br />
 			<br />
@@ -155,7 +154,7 @@
 		        						<logic:equal name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
 		        							<bean:define id="offset" value="1"/>
 		            						<html:multibox property="selection">
-		                						<bean:write name="curricularCourseScope" property="idInternal"/>
+		                						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
 		            						</html:multibox>
 		        						</logic:equal>
 		        						<logic:notEqual name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
@@ -168,7 +167,7 @@
 		            			<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="infoScopes" 
 		            						    offset="<%= new String(offset) %>" length="<%= String.valueOf(ccsSize.intValue() - Integer.parseInt(offset)) %>">
 		                						<html:multibox property="selection">
-		                    						<bean:write name="curricularCourseScope" property="idInternal"/>
+		                    						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
 		                						</html:multibox>
 		               							<bean:write name="curricularCourseScope" property="infoBranch.name"/> <br/>
 								</logic:iterate>	

@@ -52,7 +52,12 @@
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
+							<logic:notEmpty name="curricularCourseScopeElem" property="infoBranch.prettyCode">
+								<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
+							</logic:notEmpty>
+							<logic:empty name="curricularCourseScopeElem" property="infoBranch.prettyCode">
+								&nbsp;
+							</logic:empty>
 						</td>
 						<td class="listClasses">
 							<bean:define id="beginDate" name="curricularCourseScopeElem" property="beginDate" type="java.util.Calendar"/>
@@ -86,7 +91,12 @@
 									<bean:write name="scope" property="infoCurricularCourse.name"/>
 								</td>
 								<td rowspan="<%= equalScopesSize %>" class="listClasses">
-									<bean:write name="scope" property="infoBranch.prettyCode"/>
+									<logic:notEmpty name="scope" property="infoBranch.prettyCode">
+										<bean:write name="scope" property="infoBranch.prettyCode"/>
+									</logic:notEmpty>
+									<logic:empty name="scope" property="infoBranch.prettyCode">
+										&nbsp;
+									</logic:empty>
 								</td>
 								<bean:define id="write" value="0"/>
 							</logic:equal>

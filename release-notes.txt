@@ -16,6 +16,12 @@ CHANGES:
  na pos-graduação na "folha de apuramento final" sobre o arredondamento do total de créditos
  - Updated exames period for the second semesters exams season of 2003/2004.
 - Filtered exams from list of evaluations of an execution course when reading all exams sorted by degree.	
+- fix [#137] validation in forms that use requiredif: fieldTest instead of field-test
+- fix [#139] information about current curricular courses in degree curricular plan management in coordinator site.
+  It asked for information about in curricular course scopes instead of doing it in curricular courses.
+- fix [#136] filter WriteCandidateEnrolments that refered to curricular course scopes, and it should refer to curricular courses.
+- fix [#136] service WriteCandidateEnrolments to eliminate confirm and begin transaction.
+
 
 BUG FIXES:
  bug número 116 - www.ist.utl.pt/serviços/	
@@ -25,5 +31,12 @@ BUG FIXES:
 - Fixed validation of selecting a context for listing exams by day and shift.
 - Added missing validation message to selection of execution course on SOP's interface for creating exams.
 - Added context forwarding (of execution period) for choosing exams context by day and shift.
+- fix [#134] creation of study plan in master degree office
+- fix [#136] creation of study plan in coordinator of master degree
+- fix [#138] listing of students by curricular course in coordinator of master degrees
+- fix [#133] edit curricular course information in coordinator
+- fix error while consulting employee assiduousness
  
 KNOWN ISSUES:
+- method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 
+	by execution year and degree code, should return a list and it is returning an object CursoExecucao.

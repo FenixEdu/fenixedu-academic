@@ -224,15 +224,15 @@
 							</td>
 							<td class="listClasses-header" colspan="4"><bean:message key="label.coordinator.degreeCurricularPlan.scope.numberHours" />
 							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.maxIncrementNac" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.maxIncrementNac" />
 							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.minIncrementNac" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.minIncrementNac" />
 							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.credits" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.credits" />
 							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.ectsCredits" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.ectsCredits" />
 							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.weigth" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.weight" />
 							</td>
 							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.branch" />
 							</td>
@@ -258,7 +258,7 @@
 								</td>
 								<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
 								</td>	 			
-								<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
+<%--								<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
 								</td>
 								<td class="listClasses"><bean:write name="curricularCourseScope" property="praticalHours"/>
 								</td>
@@ -275,8 +275,34 @@
 								<td class="listClasses"><bean:write name="curricularCourseScope" property="ectsCredits"/>
 								</td>
 								<td class="listClasses"><bean:write name="curricularCourseScope" property="weigth"/>
+								</td> 
+--%>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.theoreticalHours"/>
 								</td>
-								<td class="listClasses"><bean:write name="infoBranch" property="prettyCode"/>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.praticalHours"/>
+								</td>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.theoPratHours"/>
+								</td>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.labHours"/>
+								</td>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.maximumValueForAcumulatedEnrollments"/>
+								</td>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.minimumValueForAcumulatedEnrollments"/>
+								</td>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.credits"/>
+								</td>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.ectsCredits"/>
+								</td>
+								<td class="listClasses"><bean:write name="curricularCourseScope" property="infoCurricularCourse.enrollmentWeigth"/>
+								</td>
+
+								<td class="listClasses">
+									<logic:notEmpty name="infoBranch" property="prettyCode">
+										<bean:write name="infoBranch" property="prettyCode"/>
+									</logic:notEmpty>
+									<logic:empty name="infoBranch" property="prettyCode">
+										&nbsp;
+									</logic:empty>
 								</td>
 								<td class="listClasses">
 									<bean:define id="beginDate" name="curricularCourseScope" property="beginDate" type="java.util.Calendar"/>
