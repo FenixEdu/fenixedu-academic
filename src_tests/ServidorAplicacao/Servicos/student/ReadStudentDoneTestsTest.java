@@ -2,7 +2,7 @@
  * Created on 8/Set/2003
  *
  */
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,15 +10,15 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDistributedTest;
-import DataBeans.InfoSiteDistributedTests;
-import DataBeans.util.CopyUtils;
-import Dominio.IDistributedTest;
-import Dominio.IStudent;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteDistributedTests;
+import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
+import net.sourceforge.fenixedu.domain.IDistributedTest;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Susana Fernandes

@@ -1,8 +1,8 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
 
 /**
  * @author asnr and scpo

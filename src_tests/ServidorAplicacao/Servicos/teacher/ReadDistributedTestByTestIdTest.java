@@ -2,22 +2,22 @@
  * Created on 26/Ago/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoDistributedTest;
-import Dominio.DistributedTest;
-import Dominio.IDistributedTest;
-import Dominio.ITest;
-import Dominio.Test;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentDistributedTest;
-import ServidorPersistente.IPersistentTest;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest;
+import net.sourceforge.fenixedu.domain.DistributedTest;
+import net.sourceforge.fenixedu.domain.IDistributedTest;
+import net.sourceforge.fenixedu.domain.ITest;
+import net.sourceforge.fenixedu.domain.Test;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentTest;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Susana Fernandes

@@ -1,47 +1,47 @@
 <!-- TJBF & PFON  -->
 <!-- Carlos Pereira & Francisco Passos  -->
 
-<!-- Definitions for Dominio.publication.PublicationType -->
-<class-descriptor class="Dominio.publication.PublicationType" table="PUBLICATION_TYPE">
+<!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationType -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationType" table="PUBLICATION_TYPE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
 	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
 	<collection-descriptor
 			name="requiredAttributes"
-			element-class-ref="Dominio.publication.Attribute"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.Attribute"
 			indirection-table="PUBLICATION_ATTRIBUTE"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_PUBLICATION_TYPE"/>
 		<fk-pointing-to-element-class column="KEY_ATTRIBUTE"/>
-		<query-customizer class="ServidorPersistente.customQueries.RequiredAttributeFilter">
+		<query-customizer class="net.sourceforge.fenixedu.persistenceTier.customQueries.RequiredAttributeFilter">
 	    </query-customizer>
 	</collection-descriptor>
 	<collection-descriptor
 			name="nonRequiredAttributes"
-			element-class-ref="Dominio.publication.Attribute"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.Attribute"
 			indirection-table="PUBLICATION_ATTRIBUTE"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_PUBLICATION_TYPE"/>
 		<fk-pointing-to-element-class column="KEY_ATTRIBUTE"/>
-		<query-customizer class="ServidorPersistente.customQueries.NonRequiredAttributeFilter">
+		<query-customizer class="net.sourceforge.fenixedu.persistenceTier.customQueries.NonRequiredAttributeFilter">
 	    </query-customizer>
 	</collection-descriptor>
 	<collection-descriptor
          	name="subtypes"
-         	element-class-ref="Dominio.publication.PublicationSubtype">
+         	element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationSubtype">
          <inverse-foreignkey field-ref="keyPublicationType"/>
     </collection-descriptor>
 
 </class-descriptor>
 
-<!-- Definitions for Dominio.publication.Attribute -->
-<class-descriptor class="Dominio.publication.Attribute" table="ATTRIBUTE">
+<!-- Definitions for net.sourceforge.fenixedu.domain.publication.Attribute -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.Attribute" table="ATTRIBUTE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
 	<field-descriptor name="attributeType" column="ATTRIBUTE_TYPE" jdbc-type="VARCHAR"/>
 	<collection-descriptor
 			name="publications"
-			element-class-ref="Dominio.publication.PublicationType"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType"
 			indirection-table="PUBLICATION_ATTRIBUTE"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_ATTRIBUTE"/>
@@ -49,7 +49,7 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<class-descriptor class="Dominio.publication.Publication" table="PUBLICATION_DATA">
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.Publication" table="PUBLICATION_DATA">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
@@ -88,13 +88,13 @@
 	<field-descriptor name="number" column="NUMBER" jdbc-type="INTEGER"/>
 	<field-descriptor name="didatic" column="DIDATIC" jdbc-type="INTEGER"/>	
 	
-	<reference-descriptor name="type" class-ref="Dominio.publication.PublicationType" proxy="true">
+	<reference-descriptor name="type" class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType" proxy="true">
 	    <foreignkey field-ref="keyPublicationType"/>
     </reference-descriptor>
     
     <collection-descriptor
 			name="publicationTeachers"
-			element-class-ref="Dominio.Teacher"
+			element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			indirection-table="PUBLICATION_TEACHER"
 			proxy="true"
@@ -104,7 +104,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="publicationAuthors"
-			element-class-ref="Dominio.publication.PublicationAuthor"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
 			proxy="true"
 			refresh="true">
 		<inverse-foreignkey field-ref="keyPublication"/>
@@ -114,28 +114,28 @@
 </class-descriptor>
 
 
-<!-- Definitions for Dominio.publication.PublicationSubtype -->
-<class-descriptor class="Dominio.publication.PublicationSubtype" table="PUBLICATION_SUBTYPE">
+<!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationSubtype -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationSubtype" table="PUBLICATION_SUBTYPE">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="subtype" column="SUBTYPE" jdbc-type="VARCHAR"/>
 
-	<reference-descriptor name="publicationType" class-ref="Dominio.publication.PublicationType" proxy="true">
+	<reference-descriptor name="publicationType" class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType" proxy="true">
 	    <foreignkey field-ref="keyPublicationType"/>
     </reference-descriptor>
 
 </class-descriptor>
 
-<!-- Definitions for Dominio.publication.PublicationFormat -->
-<class-descriptor class="Dominio.publication.PublicationFormat" table="PUBLICATION_FORMAT">
+<!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationFormat -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationFormat" table="PUBLICATION_FORMAT">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <field-descriptor name="format" column="FORMAT" jdbc-type="VARCHAR"/>
 </class-descriptor>
 
-<!-- Definitions for Dominio.publication.Author -->
-<class-descriptor class="Dominio.publication.Author" table="AUTHOR">
+<!-- Definitions for net.sourceforge.fenixedu.domain.publication.Author -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.Author" table="AUTHOR">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <field-descriptor name="keyPerson" column="KEY_PERSON" jdbc-type="INTEGER"/>
@@ -144,38 +144,38 @@
 
 	<collection-descriptor
 			name="authorPublications"
-			element-class-ref="Dominio.publication.PublicationAuthor"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyAuthor"/>
 	</collection-descriptor>	
 
-	<reference-descriptor name="person" class-ref="Dominio.Person" proxy="true">
+	<reference-descriptor name="person" class-ref="net.sourceforge.fenixedu.domain.Person" proxy="true">
 	    <foreignkey field-ref="keyPerson"/>
     </reference-descriptor>
     
 </class-descriptor>			
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.PublicationAuthor -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.PublicationAuthor -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.publication.PublicationAuthor" table="PUBLICATION_AUTHOR">
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationAuthor" table="PUBLICATION_AUTHOR">
 	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true" />
 	<field-descriptor name="keyPublication" column="KEY_PUBLICATION" jdbc-type="INTEGER" />
 	<field-descriptor name="keyAuthor" column="KEY_AUTHOR" jdbc-type="INTEGER" />
 	<field-descriptor name="order" column="AUTHOR_ORDER" jdbc-type="INTEGER" />
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
-	<reference-descriptor name="author" class-ref="Dominio.publication.Author" proxy="true"	refresh="true">
+	<reference-descriptor name="author" class-ref="net.sourceforge.fenixedu.domain.publication.Author" proxy="true"	refresh="true">
 		<foreignkey field-ref="keyAuthor"/>
 	</reference-descriptor>
-	<reference-descriptor name="publication" class-ref="Dominio.publication.Publication" proxy="true" refresh="true">
+	<reference-descriptor name="publication" class-ref="net.sourceforge.fenixedu.domain.publication.Publication" proxy="true" refresh="true">
 		<foreignkey field-ref="keyPublication"/>
 	</reference-descriptor>
 </class-descriptor>		
   		
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.PublicationTeacher -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.PublicationTeacher -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.publication.PublicationTeacher" table="PUBLICATION_TEACHER">
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationTeacher" table="PUBLICATION_TEACHER">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -197,7 +197,7 @@
 		name="publicationArea"
 		column="PUBLICATION_AREA"
 		jdbc-type="VARCHAR"
-		conversion="ServidorPersistente.Conversores.PublicationArea2SqlPublicationAreaFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationArea2SqlPublicationAreaFieldConversion"
 	/>
 	<field-descriptor
 		name="ackOptLock"
@@ -207,14 +207,14 @@
 	/>
 	<reference-descriptor
 			name="teacher"
-			class-ref="Dominio.Teacher"
+			class-ref="net.sourceforge.fenixedu.domain.Teacher"
 			proxy="true"
 			refresh="true">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="publication"
-			class-ref="Dominio.publication.Publication"
+			class-ref="net.sourceforge.fenixedu.domain.publication.Publication"
 			proxy="true"
 			refresh="true">
 		<foreignkey field-ref="keyPublication"/>

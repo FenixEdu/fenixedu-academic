@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="Util.Data"%>
+<%@ page import="net.sourceforge.fenixedu.util.Data"%>
 <h2><bean:message key="link.masterDegree.gratuity.insert"/></h2>
 <span class="error"><html:errors/></span>
 <p />
@@ -190,7 +190,7 @@
 								<td class="listClasses-header">
 									<bean:message key="button.masterDegree.gratuity.remove"/></td>
 							</tr>
-							<logic:iterate id="phase" name="infoPaymentPhases" type="DataBeans.InfoPaymentPhase" indexId="index">
+							<logic:iterate id="phase" name="infoPaymentPhases" type="net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase" indexId="index">
 								<tr>
 									<logic:notEmpty name="phase" property="startDate">
 										<td class="listClasses">

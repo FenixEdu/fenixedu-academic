@@ -4,22 +4,22 @@
  * Created on February 26th, 2003, 15:33
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * @author Nuno Nunes & Joana Mota
  */
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoExam;
-import DataBeans.InfoExamStudentRoom;
-import DataBeans.InfoStudentSiteExams;
-import DataBeans.SiteView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import ServidorAplicacao.Servicos.UtilsTestCase;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentSiteExams;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.applicationTier.Servicos.UtilsTestCase;
 
 public class ReadExamsByStudentTest extends ServiceNeedsAuthenticationTestCase {
 

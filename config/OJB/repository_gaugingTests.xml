@@ -1,8 +1,8 @@
 <!-- Please keep user defined mappings in this file only
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
-<!-- Definitions for Dominio.gaugingTests.physics.GaugingTestResult -->
-    <class-descriptor class="Dominio.gaugingTests.physics.GaugingTestResult" table="GAUGING_TEST_RESULT" >
+<!-- Definitions for net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult -->
+    <class-descriptor class="net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult" table="GAUGING_TEST_RESULT" >
         <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
             autoincrement="true" />
         <field-descriptor name="keyStudent" column="KEY_STUDENT" jdbc-type="INTEGER" />
@@ -40,14 +40,14 @@
         <field-descriptor name="correct" column="CORRECT" jdbc-type="INTEGER" />
         <field-descriptor name="wrong" column="WRONG" jdbc-type="INTEGER" />
         <field-descriptor name="cf" column="CF" jdbc-type="VARCHAR" 
-            conversion="ServidorPersistente.Conversores.JavaString2FloatFieldConversion" />
+            conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaString2FloatFieldConversion" />
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
       />
-        <reference-descriptor name="student" class-ref="Dominio.Student" proxy="true">
+        <reference-descriptor name="student" class-ref="net.sourceforge.fenixedu.domain.Student" proxy="true">
             <foreignkey field-ref="keyStudent"/>
         </reference-descriptor>
     </class-descriptor>

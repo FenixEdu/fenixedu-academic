@@ -2,669 +2,669 @@
 <filterDefinitions>
     <filter>
         <name>AA</name>
-        <implementationClass>ServidorAplicacao.Filtro.FiltroAutorizacao</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.FiltroAutorizacao</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CandidateAuthentication</name>
-        <implementationClass>ServidorAplicacao.Filtro.CandidateAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.CandidateAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>Autorizacao</name>
-        <implementationClass>ServidorAplicacao.Filtro.FiltroAutorizacao</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.FiltroAutorizacao</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>TimeTableManagerAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.TimeTableManagerAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.TimeTableManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>PersonAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.PersonAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.PersonAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>GrantOwnerManagerAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.grant.GrantOwnerManagerAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.grant.GrantOwnerManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsManagerAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.CreditsManagerAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
 	<filter>
         <name>DepartmentCreditsManagerAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.DepartmentCreditsManagerAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.DepartmentCreditsManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
 	<filter>
         <name>DepartmentMemberAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.DepartmentMemberAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
 	<filter>
         <name>EmployeeAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.EmployeeAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>StudentAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.StudentAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.StudentAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>TeacherAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.TeacherAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>MasterDegreeAdministrativeOfficeAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>TreasuryAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.TreasuryAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TreasuryAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CoordinatorAuthorization</name>
         <implementationClass>
-            ServidorAplicacao.Filtro.CoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionDegreeCoordinatorAuthorization</name>
         <implementationClass>
-            ServidorAplicacao.Filtro.coordinator.ExecutionDegreeCoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ManagerAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.ManagerAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseResponsibleForTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseResponsibleForTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseResponsibleForTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseCoordinatorAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseCoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
     <filter>
         <name>StudentListByDegreeAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.StudentListByDegreeAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByDegreeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CAFilter</name>
-        <implementationClass>ServidorAplicacao.Filtro.CreditsAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.CreditsAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>StudentCurriculumAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.StudentCurriculumAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.StudentCurriculumAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
     <filter>
         <name>StudentListByCurricularCourseAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.StudentListByCurricularCourseAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>StudentListByCurricularCourseScopeAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.StudentListByCurricularCourseScopeAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseScopeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CandidateApprovalAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.CandidateApprovalAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.CandidateApprovalAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCandidatesForSelectionAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ReadCandidatesForSelectionAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ReadCandidatesForSelectionAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>DegreeAdministrativeOfficeAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.DegreeAdministrativeOfficeAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EquivalenceAuthorization</name>
         <implementationClass>
-            ServidorAplicacao.Filtro.equivalence.EquivalenceAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.equivalence.EquivalenceAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>DegreeAdministrativeOfficeSuperUserAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.DegreeAdministrativeOfficeSuperUserAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeSuperUserAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCandidatesForSelectionAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ReadCandidatesForSelectionAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ReadCandidatesForSelectionAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ErasmusAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.ErasmusAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ErasmusAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ScientificCouncilAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ScientificCouncilAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCandidateEnrolmentsByCandidateIDAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadExecutionDegreeByCandidateIDAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ReadExecutionDegreeByCandidateIDAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ReadExecutionDegreeByCandidateIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>WriteCandidateEnrolmentsAuhorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.WriteCandidateEnrolmentsAuhorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.WriteCandidateEnrolmentsAuhorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>GetCandidatesByIDAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.GetCandidatesByIDAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.GetCandidatesByIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CandidacyAccess</name>
         <implementationClass>
-            ServidorAplicacao.Filtro.Seminaries.CandidacyAccessFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.CandidacyAccessFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CandidaciesAccess</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.Seminaries.CandidaciesAccessFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.CandidaciesAccessFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ManagerOrSeminariesCoordinator</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ManagerOrSeminariesCoordinatorFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ManagerOrSeminariesCoordinatorFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>SeminaryCoordinatorOrStudent</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.SeminaryCoordinatorOrStudentFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadShiftsByExecutionCourseIDAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ReadShiftsByExecutionCourseIDAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ReadShiftsByExecutionCourseIDAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>SearchExecutionCoursesAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.SearchExecutionCoursesAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.SearchExecutionCoursesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>SeminaryCoordinator</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.Seminaries.SeminaryCoordinatorFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.SeminaryCoordinatorFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndCurricularCourseLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndSummaryLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndAnnouncementLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndItemLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseAndItemLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndItemLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndSectionLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CurrentDegreeCoordinatorAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.CurrentDegreeCoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.CurrentDegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>DegreeCoordinatorAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.DegreeCoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.DegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ResponsibleDegreeCoordinatorAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>QualificationManagerAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.person.QualificationManagerAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.person.QualificationManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadQualificationsAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.person.ReadQualificationsAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.person.ReadQualificationsAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadQualificationAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.person.ReadQualificationAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.person.ReadQualificationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionCourseAndExamLecturingTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionCourseAndExamLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndExamLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CareerTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.CareerTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.CareerTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditCareerTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.EditCareerTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditCareerTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditOldPublicationTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.EditOldPublicationTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditOldPublicationTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>OldPublicationTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.OldPublicationTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.OldPublicationTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExternalActivityTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.ExternalActivityTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ExternalActivityTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditExternalActivityTeacherAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.EditExternalActivityTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditExternalActivityTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditTeacherInformationAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.EditTeacherInformationAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditTeacherInformationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditCourseInformationAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.gesdis.EditCourseInformationAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.EditCourseInformationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCourseInformationAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.gesdis.ReadCourseInformationAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadCourseInformationCoordinatorAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>GEPAuthorization</name>
-        <implementationClass> ServidorAplicacao.Filtro.gep.GEPAuthorizationFilter</implementationClass>
+        <implementationClass> net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadTeacherInformationCoordinatorAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.teacher.ReadTeacherInformationCoordinatorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ReadTeacherInformationCoordinatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExamStudentAuthorization</name>
         <implementationClass>
-            ServidorAplicacao.Filtro.ExamStudentAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExamStudentAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditSupportLessonAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.EditSupportLessonAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.EditSupportLessonAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadDeleteSupportLessonAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.ReadDeleteSupportLessonAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.ReadDeleteSupportLessonAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditTeacherInstitutionWorkingTimeAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.EditTeacherInstitutionWorkingTimeAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.EditTeacherInstitutionWorkingTimeAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadDeleteTeacherInstitutionWorkingTimeAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.ReadDeleteTeacherInstitutionWorkingTimeAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.ReadDeleteTeacherInstitutionWorkingTimeAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>EditTeacherDegreeFinalProjectStudentAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.EditTeacherDegreeFinalProjectStudentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.EditTeacherDegreeFinalProjectStudentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadDeleteTeacherDegreeFinalProjectStudentAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.ReadDeleteTeacherDegreeFinalProjectStudentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.ReadDeleteTeacherDegreeFinalProjectStudentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithInfoTeacherArgumentAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.CreditsServiceWithInfoTeacherArgumentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithInfoTeacherArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithTeacherIdArgumentAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.CreditsServiceWithTeacherIdArgumentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithTeacherIdArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithOtherCreditLineIdFirstArgumentFilter</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.otherTypeCreditLine.CreditsServiceWithOtherCreditLineIdFirstArgumentFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.otherTypeCreditLine.CreditsServiceWithOtherCreditLineIdFirstArgumentFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
     <filter>
         <name>CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithTeacherIdInSecondArgumentAuthorizationFilter</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.CreditsServiceWithTeacherIdInSecondArgumentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithTeacherIdInSecondArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CreditsServiceWithInfoProfessorshipArgumentAuthorizationFilter</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.credits.CreditsServiceWithInfoProfessorshipArgumentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithInfoProfessorshipArgumentAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadStudentTestToDoFilter</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.student.tests.ReadStudentTestToDoFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.student.tests.ReadStudentTestToDoFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ReadStudentTestForCorrectionFilter</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.student.tests.ReadStudentTestForCorrectionFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.student.tests.ReadStudentTestForCorrectionFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>RepositoryDescriptorPerThreadFilter</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.MetadataManager.RepositoryDescriptorPerThreadFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.MetadataManager.RepositoryDescriptorPerThreadFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
     <filter>
         <name>DirectiveCouncilAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.DirectiveCouncilAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.DirectiveCouncilAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>CoordinatorAndLEECAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.CoordinatorAndLEECAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAndLEECAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter> 
 	<filter>
         <name>TutorAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.TutorAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.TutorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter> 
 	<filter>
         <name>EnrollmentAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.enrollment.EnrollmentAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>             
     <filter>
         <name>EnrollmentLEECAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.enrollment.EnrollmentLEECAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentLEECAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>         
     <filter>
         <name>StudentInformationOwnerAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.student.StudentInformationOwnerAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentInformationOwnerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>         
     <filter>
         <name>StudentShiftEnrollmentAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.enrollment.shift.StudentShiftEnrollmentAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.shift.StudentShiftEnrollmentAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>   
     <filter>
         <name>StudentIsUserFilter</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.student.StudentIsUserFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentIsUserFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>     
     <filter>
         <name>EnrollmentLEECWithoutRulesAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.enrollment.EnrollmentLEECWithoutRulesAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentLEECWithoutRulesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>  
     <filter>
         <name>EnrollmentWithoutRulesAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
 	<filter>
         <name>EnrolmentImprovmentAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.enrollment.EnrolmentImprovmentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrolmentImprovmentAuthorization</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>  
     <filter>
         <name>MasterDegreeEnrollmentWithoutRulesAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>  
@@ -672,27 +672,27 @@
 	<filter>
         <name>EditStudentCourseReportAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.student.EditStudentCourseReportAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.student.EditStudentCourseReportAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
     <filter>
         <name>StudentCourseReportAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.student.StudentCourseReportAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentCourseReportAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
     <filter>
     	<name>DelegateAuthorization</name>
-    	<implementationClass>ServidorAplicacao.Filtro.student.DelegateAuthorizationFilter</implementationClass>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.DelegateAuthorizationFilter</implementationClass>
     	<description/>
     	<isTransactional>false</isTransactional>
     </filter>           
     <filter>
         <name>AccessFinalDegreeWorkProposalAuthorizationFilter</name>
         <implementationClass>
-	        ServidorAplicacao.Filtro.coordinator.AccessFinalDegreeWorkProposalAuthorizationFilter
+	        net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.AccessFinalDegreeWorkProposalAuthorizationFilter
         </implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
@@ -700,97 +700,97 @@
     <filter>
         <name>ReadFinalDegreeWorkProposalAuthorizationFilter</name>
         <implementationClass>
-	        ServidorAplicacao.Filtro.ReadFinalDegreeWorkProposalAuthorization
+	        net.sourceforge.fenixedu.applicationTier.Filtro.ReadFinalDegreeWorkProposalAuthorization
         </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
 	<filter>
         <name>WebSiteManagerAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.webSiteManager.WebSiteManagerAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.webSiteManager.WebSiteManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>  
     <filter>
         <name>OperatorAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.OperatorAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>    
     <filter>
         <name>PublicationAuthorAuthorizationFilter</name>
-        <implementationClass>ServidorAplicacao.Filtro.publication.PublicationAuthorAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.publication.PublicationAuthorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>   
 	<filter>
     	<name>FirstTimeStudentAuthorization</name>
-    	<implementationClass>ServidorAplicacao.Filtro.student.FirstTimeStudentAuthorizationFilter</implementationClass>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.FirstTimeStudentAuthorizationFilter</implementationClass>
     	<description/>
     	<isTransactional>false</isTransactional>
     </filter>     
     <filter>
     	<name>ClassEnrollmentAuthorizationFilter</name>
-    	<implementationClass>ServidorAplicacao.Filtro.enrollment.ClassEnrollmentAuthorizationFilter</implementationClass>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter</implementationClass>
     	<description/>
     	<isTransactional>true</isTransactional>
     </filter>
         <filter>
     	<name>EmployeeBelongsToTeacherDepartment</name>
-    	<implementationClass>ServidorAplicacao.Filtro.departmentAdmOffice.EmployeeBelongsToTeacherDepartment</implementationClass>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.departmentAdmOffice.EmployeeBelongsToTeacherDepartment</implementationClass>
     	<description>Verifies whether a given employee belongs to the same department the teacher does</description>
     	<isTransactional>true</isTransactional>
     </filter>
 	
 	<filter>
     	<name>StudentCurricularPlanOwnerAuthorization</name>
-    	<implementationClass>ServidorAplicacao.Filtro.student.StudentCurricularPlanOwnerAuthorizationFilter</implementationClass>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentCurricularPlanOwnerAuthorizationFilter</implementationClass>
     	<description/>
     	<isTransactional>true</isTransactional>
     </filter>
 	
 	<filter>
     	<name>StudentTutorAuthorization</name>
-    	<implementationClass>ServidorAplicacao.Filtro.student.StudentTutorAuthorizationFilter</implementationClass>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentTutorAuthorizationFilter</implementationClass>
     	<description/>
     	<isTransactional>true</isTransactional>
     </filter>
 	
 	<filter>
     	<name>StudentDegreeCoordinatorAuthorization</name>
-    	<implementationClass>ServidorAplicacao.Filtro.student.StudentDegreeCoordinatorAuthorizationFilter</implementationClass>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentDegreeCoordinatorAuthorizationFilter</implementationClass>
     	<description/>
     	<isTransactional>true</isTransactional>
     </filter>
     <filter>
         <name>PublishedExamsMapAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.PublishedExamsMapAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionDataIsForNotYetOpendedPeriod</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.ExecutionDataIsForNotYetOpenedPeriodFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionDataIsForNotYetOpenedPeriodFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ProjectsManagerAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.ProjectsManagerAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ProjectsManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ManagementAssiduousnessAuthorization</name>
-        <implementationClass>ServidorAplicacao.Filtro.ManagementAssiduousnessAuthorizationFilter</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ManagementAssiduousnessAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
         <name>ExecutionPeriodsEnrollmentFenix</name>
-        <implementationClass>ServidorAplicacao.Filtro.ExecutionPeriodsEnrollmentFenix</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionPeriodsEnrollmentFenix</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

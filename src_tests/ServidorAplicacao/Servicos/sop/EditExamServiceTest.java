@@ -4,7 +4,7 @@
  * Created on 2003/04/05
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -17,13 +17,13 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExam;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import DataBeans.InfoViewExamByDayAndShift;
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
-import Util.Season;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseCreateServices;
+import net.sourceforge.fenixedu.util.Season;
 
 public class EditExamServiceTest extends TestCaseCreateServices {
 

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <logic:present name="<%= SessionConstants.LIST_ADVISORY %>" scope="request">
 	<bean:size id="numberAdvisories" name="<%= SessionConstants.LIST_ADVISORY %>" scope="request"/>
 	<p><bean:message key="label.have"/>

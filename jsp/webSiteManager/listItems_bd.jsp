@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
-<%@ page import="DataBeans.InfoWebSiteItem, java.sql.Timestamp" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem, java.sql.Timestamp" %>
 <bean:define id="sectionsList" name="infoWebSite" property="sections" />
 <logic:notEmpty name="sectionsList" >
 	<logic:iterate id="section" name="sectionsList">
@@ -86,7 +86,7 @@
 					<logic:equal name="section" property="idInternal" value="<%=pageContext.findAttribute("objectCode").toString()%>">
 						<html:hidden property="itemsListSize" value="<%= itemsSize.toString() %>"/>
 						
-						<logic:iterate id="item" name="section" property="infoItemsList" indexId="itemId" type="DataBeans.InfoWebSiteItem">
+						<logic:iterate id="item" name="section" property="infoItemsList" indexId="itemId" type="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem">
 							<bean:define id="isEven">
 								<%= String.valueOf(itemId.intValue() % 2) %>
 							</bean:define>

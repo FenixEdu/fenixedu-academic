@@ -3,7 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-<%@ page import="java.util.HashMap, java.util.Iterator, DataBeans.InfoCurriculum, ServidorApresentacao.Action.gep.SearchCoursesInformationAction.InfoCourse, ServidorApresentacao.Action.gep.SearchCoursesInformationAction.InfoSimpleTeacher" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction.InfoCourse" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction.InfoSimpleTeacher" %>
+
 <h2>
 	<bean:message key="link.gep.executionCoursesInformation"
 				  bundle="GEP_RESOURCES"/>
@@ -154,7 +159,7 @@
 		</td>
 	</tr>
 	<logic:present name="infoCourses">
-		<logic:iterate id="infoCourse" name="infoCourses" type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction.InfoCourse">
+		<logic:iterate id="infoCourse" name="infoCourses" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction.InfoCourse">
 		<logic:present name="infoCourse" property="teachers">
 			<bean:size id="numberTeachers" name="infoCourse" property="teachers"/>
 		</logic:present>

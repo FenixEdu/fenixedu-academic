@@ -5,7 +5,7 @@
  * Created on 28 de Outubro de 2002, 11:15
  */
 
-package ServidorAplicacao.Servicos.publico;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publico;
 
 /**
  * 
@@ -16,9 +16,9 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoRoom;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 public class SelectRoomsTest extends TestCaseServicos {
     public SelectRoomsTest(java.lang.String testName) {

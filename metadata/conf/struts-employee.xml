@@ -15,12 +15,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -34,7 +34,7 @@
 
   <!-- ========== Action Mapping Definitions ============================== -->
   <action-mappings type="org.apache.struts.action.ActionMapping">
-  	<action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/employeeMainPage.jsp"/>
+  	<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" forward="/employeeMainPage.jsp"/>
   	<action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
   	<action path="/assiduousness" forward="/switchAction.do?prefix=&amp;page=/assiduousness/index.do"/>
     <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>

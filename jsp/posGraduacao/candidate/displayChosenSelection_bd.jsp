@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="java.util.List" %>
-<%@ page import="DataBeans.InfoMasterDegreeCandidate" %>
-<%@ page import="Util.SituationName" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
+<%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
 
 
 <span class="error"><html:errors/></span>

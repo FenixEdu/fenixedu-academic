@@ -1,11 +1,11 @@
 /*
  * Created on 3/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
-import DataBeans.InfoBranch;
-import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoCurricularSemester;
+import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
 
 /**
  * @author lmac1

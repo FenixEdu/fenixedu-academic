@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<%@ page import="DataBeans.InfoGroupProperties"%>
-<%@ page import="DataBeans.InfoShift"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
 
 
 <logic:present name="siteView" property="component">

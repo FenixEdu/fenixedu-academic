@@ -69,7 +69,7 @@
 
 
 <table width="100%">
-	<logic:iterate id="summary" name="bodyComponent" property="infoSummaries" type="DataBeans.InfoSummary">
+	<logic:iterate id="summary" name="bodyComponent" property="infoSummaries" type="net.sourceforge.fenixedu.dataTransferObject.InfoSummary">
 		<bean:define id="summaryCode" name="summary" property="idInternal" />
 		<logic:present name="summary" property="title">	
 		<logic:notEmpty name="summary" property="title">		

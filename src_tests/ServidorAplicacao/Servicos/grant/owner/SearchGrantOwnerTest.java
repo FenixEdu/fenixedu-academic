@@ -3,16 +3,16 @@
  *
  */
 
-package ServidorAplicacao.Servicos.grant.owner;
+package net.sourceforge.fenixedu.applicationTier.Servicos.grant.owner;
 
 import java.util.List;
 
-import DataBeans.grant.owner.InfoGrantOwner;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.UtilsTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.UtilsTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Barbosa

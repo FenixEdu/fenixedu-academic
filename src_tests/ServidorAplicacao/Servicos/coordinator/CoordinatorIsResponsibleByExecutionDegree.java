@@ -2,11 +2,11 @@
  * Created on 6/Nov/2003
  *
  */
-package ServidorAplicacao.Servicos.coordinator;
+package net.sourceforge.fenixedu.applicationTier.Servicos.coordinator;
 
-import framework.factory.ServiceManagerServiceFactory;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 
 /**
  * fenix-head ServidorAplicacao.Servicos.coordinator

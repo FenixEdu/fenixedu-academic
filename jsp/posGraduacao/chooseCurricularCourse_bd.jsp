@@ -19,7 +19,7 @@
 	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
 	<table>
 		<!-- CurricularCourse -->
-		<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="DataBeans.InfoCurricularCourse">
+		<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
 		   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
 				<tr>
 					<td>

@@ -1,9 +1,9 @@
 /*
  * Created on 25/Jul/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
-import DataBeans.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 
 /**
  * @author lmac1

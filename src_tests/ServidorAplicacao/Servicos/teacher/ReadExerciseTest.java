@@ -1,7 +1,7 @@
 /*
  * Created on 25/Set/2003
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,22 +14,22 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoMetadata;
-import DataBeans.InfoQuestion;
-import DataBeans.InfoSiteExercise;
-import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
-import Dominio.IMetadata;
-import Dominio.IQuestion;
-import Dominio.Metadata;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import UtilTests.ParseQuestion;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMetadata;
+import net.sourceforge.fenixedu.dataTransferObject.InfoQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExercise;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IMetadata;
+import net.sourceforge.fenixedu.domain.IQuestion;
+import net.sourceforge.fenixedu.domain.Metadata;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.utilTests.ParseQuestion;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

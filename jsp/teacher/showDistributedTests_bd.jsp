@@ -66,7 +66,7 @@ function invertSelect(){
 		<td class="listClasses-header"><bean:message key="message.testBeginDate"/></td>
 		<td class="listClasses-header"><bean:message key="message.testEndDate"/></td>
 	</tr>
-	<logic:iterate id="distributedTest" name="component" property="infoDistributedTests" type="DataBeans.InfoDistributedTest">
+	<logic:iterate id="distributedTest" name="component" property="infoDistributedTests" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest">
 	<tr>
 		<bean:define id="testType" name="distributedTest" property="testType.type"/>
 		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal" />

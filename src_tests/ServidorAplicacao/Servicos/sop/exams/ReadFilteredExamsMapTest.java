@@ -2,30 +2,30 @@
  * Created on Nov 4, 2003
  *
  */
-package ServidorAplicacao.Servicos.sop.exams;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop.exams;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoCurricularSemester;
-import DataBeans.InfoCurricularYear;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExamsMap;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servico.commons.ReadExecutionDegreeByOID;
-import ServidorAplicacao.Servico.manager.ReadExecutionPeriod;
-import ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.DegreeCurricularPlanState;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Ana e Ricardo

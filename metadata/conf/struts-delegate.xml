@@ -26,12 +26,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -43,11 +43,11 @@
         <action path="/index" forward="index" />
         
         <action path="/readCurricularCourses" 
-            type="ServidorApresentacao.Action.student.delegate.ReadDelegateCurricularCoursesAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.student.delegate.ReadDelegateCurricularCoursesAction">
             <forward name="show-curricular-courses" path="view-curricular-courses"/>
         </action>
         <action 
-			type="ServidorApresentacao.Action.student.delegate.StudentReportAction" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.delegate.StudentReportAction" 
 			path="/studentReport" name="studentReportForm" 
 			parameter="method" scope="request" validate="true" 
 			input="/studentReport.do?page=0&amp;method=prepareEdit">
@@ -56,7 +56,7 @@
 		</action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.DelegateResources" null="false"/>
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

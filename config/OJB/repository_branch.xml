@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.Branch -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Branch -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.Branch" table="BRANCH">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Branch" table="BRANCH">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -49,25 +49,25 @@
 		name="branchType"
 		column="BRANCH_TYPE"
 		jdbc-type="VARCHAR"
-		conversion="ServidorPersistente.Conversores.JavaBranchType2SqlBranchTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBranchType2SqlBranchTypeFieldConversion"
 	/>
    <reference-descriptor
 		name="degreeCurricularPlan"
-		class-ref="Dominio.DegreeCurricularPlan"
+		class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
         refresh="true"
 		proxy="true">
 	<foreignkey field-ref="keyDegreeCurricularPlan"/>
    </reference-descriptor>
 	<collection-descriptor
 			name="scopes"
-			element-class-ref="Dominio.CurricularCourseScope"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
             refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="branchKey"/>
 	</collection-descriptor>    
 	<collection-descriptor  
 			name="areaCurricularCourseGroups"
-			element-class-ref="Dominio.AreaCurricularCourseGroup"
+			element-class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"
             refresh="true"
 			proxy="true"
             >
@@ -75,7 +75,7 @@
 	</collection-descriptor>   
     <collection-descriptor
 			name="optionalCurricularCourseGroups"
-			element-class-ref="Dominio.OptionalCurricularCourseGroup"
+			element-class-ref="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup"
             refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyBranch"/>

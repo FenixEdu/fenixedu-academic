@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.ExecutionCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ExecutionCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.ExecutionCourse" proxy="dynamic" table="EXECUTION_COURSE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionCourse" proxy="dynamic" table="EXECUTION_COURSE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -52,7 +52,7 @@
       />
 	<reference-descriptor
 			name="executionPeriod"
-			class-ref="Dominio.ExecutionPeriod" 
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod" 
 			proxy="false">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
@@ -63,7 +63,7 @@
 	  />	
 	<collection-descriptor
 			name="associatedCurricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
   		    collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
 			auto-retrieve="true"
@@ -74,7 +74,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="associatedExams"
-			element-class-ref="Dominio.Exam"
+			element-class-ref="net.sourceforge.fenixedu.domain.Exam"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			refresh="true"
 			auto-retrieve="true"
@@ -87,7 +87,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="associatedEvaluations"
-			element-class-ref="Dominio.Evaluation"
+			element-class-ref="net.sourceforge.fenixedu.domain.Evaluation"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			refresh="true"
 			auto-retrieve="true"
@@ -100,7 +100,7 @@
 	</collection-descriptor>
     <collection-descriptor
 			name="attendingStudents"
-			element-class-ref="Dominio.Student"
+			element-class-ref="net.sourceforge.fenixedu.domain.Student"
 			indirection-table="ATTEND"
 			refresh="true"
 			auto-retrieve="true"
@@ -113,7 +113,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 		name="attends"
-		element-class-ref="Dominio.Attends"
+		element-class-ref="net.sourceforge.fenixedu.domain.Attends"
 		refresh="true"
 		auto-retrieve="true"
 		auto-update="false"
@@ -123,7 +123,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 		name="executionCourseProperties"
-		element-class-ref="Dominio.classProperties.ExecutionCourseProperty"
+		element-class-ref="net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty"
 		refresh="true"
 		auto-retrieve="true"
 		auto-update="false"
@@ -133,7 +133,7 @@
 	</collection-descriptor>     
 	<collection-descriptor
 		name="responsibleTeachers"
-		element-class-ref="Dominio.ResponsibleFor"
+		element-class-ref="net.sourceforge.fenixedu.domain.ResponsibleFor"
 		refresh="true"
 		auto-retrieve="true"
 		auto-update="false"
@@ -143,7 +143,7 @@
 	</collection-descriptor>        
 	<collection-descriptor
 		name="professorships"
-		element-class-ref="Dominio.Professorship"
+		element-class-ref="net.sourceforge.fenixedu.domain.Professorship"
 		refresh="true"
 		auto-retrieve="true"
 		auto-update="false"
@@ -153,7 +153,7 @@
 	</collection-descriptor>	
 	<collection-descriptor 
 			name="groupPropertiesExecutionCourse" 
-			element-class-ref="Dominio.GroupPropertiesExecutionCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
     </collection-descriptor>

@@ -1,7 +1,7 @@
 /*
  * Created on 6/Fev/2004
  */
-package ServidorAplicacao.Servicos.enrolment.degree;
+package net.sourceforge.fenixedu.applicationTier.Servicos.enrolment.degree;
 
 import java.util.Enumeration;
 

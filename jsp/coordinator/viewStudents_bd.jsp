@@ -4,19 +4,19 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="DataBeans.InfoGroupProperties" %>
-<%@ page import="DataBeans.InfoGroupProjectStudents" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProjectStudents" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Calendar" %>
-<%@ page import="DataBeans.InfoLesson" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
 
 <logic:present name="attendsSummary">
 <logic:present name="siteView">
 <logic:present name="shifts">
 <bean:define id="attendacies" name="attendsSummary" property="attends" />	
 <bean:define id="shifts" name="shifts" property="infoShifts" type="java.util.List"/>
-<bean:define id="studentsComponent" name="siteView" property="component" type="DataBeans.InfoSiteStudents"/>
-<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
+<bean:define id="studentsComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudents"/>
+<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>
 <bean:define id="infosGroups" name="infosGroups" type="java.util.List"/>
 <bean:define id="projects" name="projects" type="java.util.List"/>
     <span class="error"><html:errors/></span>
@@ -64,7 +64,7 @@
 							<option value="null">
 								<bean:message key="label.select.SelectShift"/>
 							</option>
-							<logic:iterate type="DataBeans.InfoShift" name="shifts" id="shift">
+							<logic:iterate type="net.sourceforge.fenixedu.dataTransferObject.InfoShift" name="shifts" id="shift">
 								<option value=<bean:write name="shift" property="idInternal"/>
 									<%
 									String text = new String();
@@ -201,7 +201,7 @@
 		<tr>
 		   <logic:present name="projects">
 			<logic:notEmpty name="projects">
-				<logic:iterate name="projects" id="project" type="DataBeans.InfoGroupProperties">
+				<logic:iterate name="projects" id="project" type="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties">
 					<td class="listClasses-header">
 <%--					<bean:message key="label.projectGroup"/>&nbsp; --%>
 					<bean:write name="project" property="name"/>
@@ -233,7 +233,7 @@
 		
 		<bean:define id="mailingList" value=""/>
 
-    	<logic:iterate id="attendacy" type="DataBeans.InfoAttendWithEnrollment" name="attendacies"> 
+    	<logic:iterate id="attendacy" type="net.sourceforge.fenixedu.dataTransferObject.InfoAttendWithEnrollment" name="attendacies"> 
 			
 			<tr>
 				<logic:equal name="viewPhoto" value="true">
@@ -340,11 +340,11 @@
           <td class="listClasses">
             <logic:present name="attendacy" property="infoShifts">
             <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
-            <% if (((DataBeans.InfoShift)map.get("T"))==null)
+            <% if (((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("T"))==null)
             {
               out.print("N/A");
             } else {
-             out.print(((DataBeans.InfoShift)map.get("T")).getNome());
+             out.print(((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("T")).getNome());
               } %>  
             </logic:present>
           </td>
@@ -353,11 +353,11 @@
           <td class="listClasses">
             <logic:present name="attendacy" property="infoShifts">
             <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
-            <% if (((DataBeans.InfoShift)map.get("P"))==null)
+            <% if (((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("P"))==null)
             {
               out.print("N/A");
             } else {
-             out.print(((DataBeans.InfoShift)map.get("P")).getNome());
+             out.print(((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("P")).getNome());
               } %>  
             </logic:present>
           </td>
@@ -366,11 +366,11 @@
           <td class="listClasses">
           <logic:present name="attendacy" property="infoShifts">
             <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
-            <% if (((DataBeans.InfoShift)map.get("TP"))==null)
+            <% if (((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("TP"))==null)
             {
               out.print("N/A");
             } else {
-             out.print(((DataBeans.InfoShift)map.get("TP")).getNome());
+             out.print(((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("TP")).getNome());
               } %>  
             </logic:present>
           </td>
@@ -379,11 +379,11 @@
           <td class="listClasses">
             <logic:present name="attendacy" property="infoShifts">
             <bean:define id="map" name="attendacy" property="infoShifts" type="java.util.Map"/>
-            <% if (((DataBeans.InfoShift)map.get("L"))==null)
+            <% if (((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("L"))==null)
             {
               out.print("N/A");
             } else {
-             out.print(((DataBeans.InfoShift)map.get("L")).getNome());
+             out.print(((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get("L")).getNome());
               } %>  
             </logic:present>
           </td>
@@ -403,7 +403,7 @@
 	<logic:iterate id="enrollmentNumber" name="attendsSummary" property="numberOfEnrollments">
 	<tr>
 		<td class="listClasses"><bean:write name="enrollmentNumber"/></td>
-		<td class="listClasses"><%= ((DataBeans.InfoAttendsSummary)pageContext.findAttribute("attendsSummary")).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
+		<td class="listClasses"><%= ((net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary)pageContext.findAttribute("attendsSummary")).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
 	</tr>
 	</logic:iterate> 
 </table>

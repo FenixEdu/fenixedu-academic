@@ -2,12 +2,12 @@
  * Created on 28/Mai/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.Calendar;
 import java.util.HashMap;
 
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseCreateServices;
 
 /**
  * @author Tânia Nunes

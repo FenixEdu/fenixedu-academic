@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="DataBeans.InfoGroupProperties"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties"%>
 
 <logic:present name="infoGroupPropertiesList">
 

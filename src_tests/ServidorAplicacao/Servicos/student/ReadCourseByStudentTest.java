@@ -4,7 +4,7 @@
  * Created on February 26th, 2003, 15:33
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * 
@@ -12,9 +12,9 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDegree;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class ReadCourseByStudentTest extends TestCaseReadServices {
 

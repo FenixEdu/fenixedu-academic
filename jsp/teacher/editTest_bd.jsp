@@ -50,13 +50,13 @@
 <br/>
 <table>
 	<tr><td><hr></td></tr>
-	<logic:iterate id="testQuestion" name="infoTestQuestionList" type="DataBeans.InfoTestQuestion">
+	<logic:iterate id="testQuestion" name="infoTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.InfoTestQuestion">
 	<tr>
 		<td><b><bean:message key="message.tests.question" /></b>&nbsp;<bean:write name="testQuestion" property="testQuestionOrder"/></td></tr>
 		<bean:define id="testQuestionValue" name="testQuestion" property="testQuestionValue"/>
 		<bean:define id="testQuestionValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(testQuestionValue.toString())).toString()) %>"/>		
 		<tr><td><b><bean:message key="message.tests.questionValue" /></b>&nbsp;<bean:write name="testQuestionValue"/></td></tr>
-		<bean:define id="thisQuestion" name="testQuestion" property="question" type="DataBeans.InfoQuestion"/>
+		<bean:define id="thisQuestion" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.InfoQuestion"/>
 		<bean:define id="questionCode" name="thisQuestion" property="idInternal"/>
 		<tr><td><table><tr><td>
 			<div class="gen-button">

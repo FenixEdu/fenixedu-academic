@@ -2,15 +2,15 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="Util.EvaluationType" %> 
+<%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %> 
 <logic:messagesPresent>
 	<span class="error"><html:errors/></span>
 </logic:messagesPresent>
  
 <html:form action="/writeMarks" >  
 	<logic:present name="siteView">
-	<bean:define id="marksListComponent" name="siteView" property="component" type="DataBeans.InfoSiteMarks"/>
-	<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
+	<bean:define id="marksListComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks"/>
+	<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>
 
 	<bean:define id="executionCourseId" name="commonComponent" property="executionCourse.idInternal"/>
 	<bean:define id="evaluationId" name="marksListComponent" property="infoEvaluation.idInternal" />
@@ -75,14 +75,14 @@
 			<bean:size id="size" name="marksListComponent" property="infoAttends" />	
 			<html:hidden property="sizeList" value="<%= size.toString() %>" /> 
 				    			    		
-	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends"  indexId="markId"  type="DataBeans.InfoFrequenta" > 
+	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends"  indexId="markId"  type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta" > 
 	    	
 		    	<bean:define id="studentCode" name="markElem" property="aluno.idInternal" />
 		    	<bean:define id="studentNumber" name="markElem" property="aluno.number" />
 
 		    	<logic:notEmpty name="markElem" property="infoEnrolment">
 		      		<bean:define id="infoEnrolment" name="markElem" property="infoEnrolment"/>					
-					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType" type="Util.EnrolmentEvaluationType"/>
+					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType" type="net.sourceforge.fenixedu.util.EnrolmentEvaluationType"/>
 		  		</logic:notEmpty>
 				<bean:define id="studentMark" value=""/>
 				<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>

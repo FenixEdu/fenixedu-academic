@@ -1,7 +1,7 @@
 /*
  * Created on Oct 29, 2003
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,19 +12,19 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.IMetadata;
-import Dominio.IQuestion;
-import Dominio.IStudentTestQuestion;
-import Dominio.Metadata;
-import Dominio.Question;
-import Dominio.StudentTestQuestion;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import Util.tests.TestQuestionChangesType;
-import Util.tests.TestQuestionStudentsChangesType;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.domain.IMetadata;
+import net.sourceforge.fenixedu.domain.IQuestion;
+import net.sourceforge.fenixedu.domain.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.Metadata;
+import net.sourceforge.fenixedu.domain.Question;
+import net.sourceforge.fenixedu.domain.StudentTestQuestion;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
+import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

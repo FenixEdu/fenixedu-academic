@@ -66,12 +66,12 @@
     <appender-ref ref="profileLog"/>
   </logger>
 
-  <logger name="ServidorAplicacao.Servico.student.InsertStudentTestResponses">
+  <logger name="net.sourceforge.fenixedu.applicationTier.Servico.student.InsertStudentTestResponses">
     <level value="debug"/>
     <appender-ref ref="ConsoleAppender"/>
   </logger>
 
-  <logger name="Tools.DMLGenerator" additivity="false">
+  <logger name="net.sourceforge.fenixedu.tools.DMLGenerator" additivity="false">
     <level value="info"/>
     <appender-ref ref="ConsoleAppender"/>
   </logger>

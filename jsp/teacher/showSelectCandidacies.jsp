@@ -45,7 +45,7 @@
 			</tr>
 			<logic:present name="candidacies">
 				<logic:notEmpty name="candidacies">
-					<logic:iterate name="candidacies" id="candidacy" type="DataBeans.Seminaries.CandidacyDTO">
+					<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO">
 						<tr>
 							<td class="listClasses">
 								<html:link page="/candidacyDetails.do" 
@@ -106,7 +106,7 @@
 				</logic:notEmpty>
 			</logic:present>
 		</table>
-		<logic:iterate name="candidacies" id="candidacy" type="DataBeans.Seminaries.CandidacyDTO">
+		<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO">
 			<logic:equal name="candidacy" property="approved" value="true">
 				<html:hidden property="previousSelected" value="<%=candidacy.getCandidacyId().toString()%>"/>
 			</logic:equal>

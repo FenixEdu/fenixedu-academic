@@ -34,12 +34,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -50,10 +50,10 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" forward="index" />
         <action path="/searchTeachersInformation" 
-            type="ServidorApresentacao.Action.gep.SearchTeachersInformationAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchTeachersInformationAction" 
             name="searchInformationForm" 
             input="/searchTeachersInformation?method=searchForm" scope="request" parameter="method" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadTeachersInformation"/>
             <set-property property="objectAttribute" value="infoSiteTeacherInformation"/>
             <set-property property="listAttribute" value="infoSiteTeachersInformation"/>
@@ -63,10 +63,10 @@
             <forward name="list-many" path="view-teachers-information"/>
         </action>
         <action path="/searchCoursesInformation" 
-            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" 
             name="searchInformationForm" 
             input="/searchCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
             <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
             <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
@@ -77,19 +77,19 @@
         </action>
         <!-- Read Teacher Information -->
         <action path="/readTeacherInformation" scope="request" 
-            type="ServidorApresentacao.Action.coordinator.ReadTeacherInformationAction" >
+            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ReadTeacherInformationAction" >
             <forward name="show" path="view-teacher-information"/>
         </action>
         
         <action path="/readCourseInformation" scope="request" 
-            type="ServidorApresentacao.Action.gep.ReadCourseInformationAction" >
+            type="net.sourceforge.fenixedu.presentationTier.Action.gep.ReadCourseInformationAction" >
             <forward name="show" path="view-course-information"/>
         </action>
         
         <action path="/listCoursesInformation" 
-            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" 
             input="/listCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
             <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
             <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
@@ -99,9 +99,9 @@
             <forward name="list-many" path="list-courses-information"/>
         </action>
         <action path="/listCoursesInformationEnglish" 
-            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" 
             input="/listCoursesInformationEnglish.do?method=searchForm" scope="request" parameter="method" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
             <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
             <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
@@ -111,9 +111,9 @@
             <forward name="list-many" path="list-courses-information-english"/>
         </action>
          <action path="/listCoursesAcreditation" 
-            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" 
             input="/listCoursesAcreditation.do?method=searchForm" scope="request" parameter="method" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
             <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
             <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
@@ -123,9 +123,9 @@
             <forward name="list-many" path="list-courses-acreditation"/>
         </action>
         <action path="/listTeachersAcreditation" 
-            type="ServidorApresentacao.Action.gep.SearchTeachersInformationAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchTeachersInformationAction" 
             input="/listTeachersAcreditation.do?method=searchForm" scope="request" parameter="method" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadTeachersInformation"/>
             <set-property property="objectAttribute" value="infoSiteTeacherInformation"/>
             <set-property property="listAttribute" value="infoSiteTeachersInformation"/>
@@ -136,14 +136,14 @@
         </action>
         
          <!-- Teaching Report -->
-        <action type="ServidorApresentacao.Action.gesdis.TeachingReportAction" 
+        <action type="net.sourceforge.fenixedu.presentationTier.Action.gesdis.TeachingReportAction" 
 			path="/viewTeachingReport" name="teachingReportForm" 
 			input="/viewTeachingReport.do?method=read" 
 			parameter="method" validate="true" scope="request">
 			<exception 
-				type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+				type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
 				key="error.exception.notAuthorized" 
-				handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" 
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixNotAuthorizedExceptionHandler" 
 				/>
 			<forward name="successfull-read" path="view-teaching-report"/>
 	</action>
@@ -151,7 +151,7 @@
 	    <!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
        		name="executionYearDegreeCurricularPlanForm"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
        		validate="true"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		scope="request"
@@ -161,7 +161,7 @@
        	</action>
 
 		<action path="/showCurriculumHistoric"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
        		scope="request"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		parameter="method">
@@ -170,7 +170,7 @@
 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
 
     <!-- ========== Plug Ins Configuration ================================= -->

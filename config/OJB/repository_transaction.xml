@@ -3,11 +3,11 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.transaction.Transaction -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.transaction.Transaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.transactions.Transaction">
-    <extent-class class-ref="Dominio.transactions.ReimbursementTransaction" />
-    <extent-class class-ref="Dominio.transactions.PaymentTransaction" />	
+<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.Transaction">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.transactions.PaymentTransaction" />	
 </class-descriptor>
 
 

@@ -2,8 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
 
 <p><span class="error"><html:errors/></span></p>
 
@@ -57,7 +57,7 @@
 <logic:notEmpty name="allActiveCurricularCourseScopes">
 
 	<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes" length="1" >
-		<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" length="1">
+		<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
 			<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
 		</logic:iterate>
 	</logic:iterate>
@@ -83,7 +83,7 @@
 			<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.labHours.en"/></td>
 		</tr>
 		<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes"  indexId="row">
-			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" length="1" >
+			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1" >
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
 					<!-- cabe�alho -->
 					<tr>
@@ -109,7 +109,7 @@
 				</logic:notEqual>
 			</logic:iterate>
 			<bean:size id="numberOfScopes" name="curricularCourseScopeElemList"/>
-			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" length="1">
+			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
 				<bean:define id="keyNameCCType" name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName" />
 				<bean:define id="keyNameCCTypeEnglish" value="<%= keyNameCCType.toString().concat(".en") %>"/>
 				<tr>
@@ -130,7 +130,7 @@
 					
 				</logic:iterate>		
 				
-				<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" offset="1">			
+				<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" offset="1">			
 						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;					
 				</logic:iterate>
 				</td>

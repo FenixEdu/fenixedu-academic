@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.AdvisoryRecipients" %>
+<%@ page import="net.sourceforge.fenixedu.util.AdvisoryRecipients" %>
 <h2><bean:message key="title.manage.advisories"/></h2>
 <br />
 <span class="error">Nota: A validação deste form ainda não está a funcionar.</span>

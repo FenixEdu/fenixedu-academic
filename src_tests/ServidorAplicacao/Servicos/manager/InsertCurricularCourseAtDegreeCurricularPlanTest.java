@@ -1,11 +1,11 @@
 /*
  * Created on 2/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
-import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoDegreeCurricularPlan;
-import Util.CurricularCourseType;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.util.CurricularCourseType;
 
 /**
  * @author lmac1

@@ -1,4 +1,4 @@
-	<class-descriptor class="Dominio.Seminaries.Seminary"
+	<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
                   table="SEMINARY">
 
     <field-descriptor 
@@ -37,28 +37,28 @@
          name="enrollmentBeginDate"
          column="ENROLLMENT_BEGIN_DATE"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
 
 	  <field-descriptor
          name="enrollmentEndDate"
          column="ENROLLMENT_END_DATE"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
 
 	  <field-descriptor
          name="enrollmentBeginTime"
          column="ENROLLMENT_BEGIN_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
 
 	  <field-descriptor
          name="enrollmentEndTime"
          column="ENROLLMENT_END_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
 
 	  <field-descriptor
@@ -77,7 +77,7 @@
 
 	<collection-descriptor
          name="equivalencies"
-         element-class-ref="Dominio.Seminaries.CourseEquivalency"
+         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
          proxy="true"
          refresh="true"
       >
@@ -86,7 +86,7 @@
      
      <collection-descriptor
          name="candidacies"
-         element-class-ref="Dominio.Seminaries.Candidacy"
+         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
          proxy="true"
          refresh="true"
       >
@@ -96,7 +96,7 @@
 	  
 </class-descriptor>
 
-<class-descriptor class="Dominio.Seminaries.CourseEquivalency"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
                   table="SEMINARY_CURRICULARCOURSE">
 
     <field-descriptor 
@@ -133,7 +133,7 @@
 
      <reference-descriptor
          name="seminary"
-         class-ref="Dominio.Seminaries.Seminary"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
          proxy="true"
          refresh="true"
       >
@@ -142,7 +142,7 @@
 
 	 <reference-descriptor
          name="curricularCourse"
-         class-ref="Dominio.CurricularCourse"
+         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
          proxy="true"
          refresh="true"
       >
@@ -151,7 +151,7 @@
 
       <reference-descriptor
          name="modality"
-         class-ref="Dominio.Seminaries.Modality"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Modality"
          proxy="true"
          refresh="true"
       >
@@ -161,7 +161,7 @@
      <collection-descriptor
         name="themes"
         collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        element-class-ref="Dominio.Seminaries.Theme"
+        element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
 	    indirection-table="EQUIVALENCY_THEME"
         proxy="true"
         refresh="true"
@@ -174,7 +174,7 @@
     	  
 </class-descriptor>
 
-<class-descriptor class="Dominio.Seminaries.Modality"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Modality"
                   table="SEMINARY_MODALITY">
 
     <field-descriptor 
@@ -205,7 +205,7 @@
     	 
 </class-descriptor>
 
-<class-descriptor class="Dominio.Seminaries.Theme"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Theme"
                   table="SEMINARY_THEME">
 
     <field-descriptor 
@@ -242,7 +242,7 @@
 
 	  <collection-descriptor
         name="caseStudies"
-        element-class-ref="Dominio.Seminaries.CaseStudy"
+        element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
 		proxy="true"
         refresh="true"
         orderby="code"
@@ -253,7 +253,7 @@
     	 
 </class-descriptor>
 
-<class-descriptor class="Dominio.Seminaries.CaseStudy"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
                   table="SEMINARY_CASESTUDY">
 
     <field-descriptor 
@@ -296,7 +296,7 @@
 
      <reference-descriptor
          name="seminaryTheme"
-         class-ref="Dominio.Seminaries.Theme"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
          proxy="true"
          refresh="true"
       >
@@ -306,7 +306,7 @@
 	 	<!-- Choices made to this case study -->
       <collection-descriptor
          name="seminaryCandidacies"
-         element-class-ref="Dominio.Seminaries.CaseStudyChoice"
+         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
 		 orderby="order"
          sort="ASC"
          proxy="true"
@@ -318,7 +318,7 @@
 </class-descriptor>
 
 
-<class-descriptor class="Dominio.Seminaries.Candidacy"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
                   table="SEMINARY_CANDIDACY">
 
     <field-descriptor 
@@ -378,7 +378,7 @@
       />
 <reference-descriptor
          name="seminary"
-         class-ref="Dominio.Seminaries.Seminary"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
          proxy="true"
          refresh="true"
       >
@@ -386,7 +386,7 @@
      </reference-descriptor>
 	 <reference-descriptor
          name="student"
-         class-ref="Dominio.Student"
+         class-ref="net.sourceforge.fenixedu.domain.Student"
          proxy="true"
          refresh="true"
       >
@@ -394,7 +394,7 @@
      </reference-descriptor>
       <reference-descriptor
          name="modality"
-         class-ref="Dominio.Seminaries.Modality"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Modality"
          proxy="true"
          refresh="true"
       >
@@ -402,7 +402,7 @@
      </reference-descriptor>
      <reference-descriptor
          name="curricularCourse"
-         class-ref="Dominio.CurricularCourse"
+         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
          proxy="true"
          refresh="true"
       >
@@ -410,7 +410,7 @@
      </reference-descriptor>
      <reference-descriptor
          name="theme"
-         class-ref="Dominio.Seminaries.Theme"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
          proxy="true"
          refresh="true"
       >
@@ -419,7 +419,7 @@
 	<!-- Choosen case studies -->
       <collection-descriptor
          name="caseStudyChoices"
-         element-class-ref="Dominio.Seminaries.CaseStudyChoice"
+         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
 		 orderby="order"
          sort="ASC"
          proxy="true"
@@ -429,7 +429,7 @@
       </collection-descriptor>    	 
 </class-descriptor>
 
-<class-descriptor class="Dominio.Seminaries.CaseStudyChoice"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
                   table="SEMINARYCANDIDACY_SEMINARYCASESTUDY">
   
    <field-descriptor 
@@ -459,7 +459,7 @@
       />
        <reference-descriptor
          name="caseStudy"
-         class-ref="Dominio.Seminaries.CaseStudy"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
          proxy="true"
          refresh="true"
       >
@@ -467,7 +467,7 @@
      </reference-descriptor>
      <reference-descriptor
          name="candidacy"
-         class-ref="Dominio.Seminaries.Candidacy"
+         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
          proxy="true"
          refresh="true"
       >

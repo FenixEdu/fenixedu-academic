@@ -77,12 +77,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
     
@@ -104,19 +104,19 @@
       
 
       <action path="/index"
-      	      type="ServidorApresentacao.Action.masterDegree.candidate.ReadPersonCandidatesAction">
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ReadPersonCandidatesAction">
       	  <forward name="ChooseCandidate" path="/chooseCandidatePage.jsp"/>      	      
           <forward name="Success" path="/indexCand.jsp"/>      	      
       </action>     
       
       <action path="/chooseCandidate"
    	         input="/startPage.jsp"
-      	      type="ServidorApresentacao.Action.masterDegree.candidate.ChooseCandidateAction">
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ChooseCandidateAction">
       	  <forward name="Success" path="/indexCand.jsp"/>      	      
       </action>     
       
      <action path="/backErrorPage"
-          type="ServidorApresentacao.Action.commons.VoidAction"
+          type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
     	  >
          <forward name="Success" path="/backErrorPage.jsp"/> 
       </action>
@@ -131,7 +131,7 @@
 	         input="/changeApplicationInfoDispatchAction.do?method=prepare&amp;page=0&amp;error=1"
 	      validate="true"
 		 parameter="method"
-      	      type="ServidorApresentacao.Action.masterDegree.candidate.ChangeApplicationInfoDispatchAction">
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ChangeApplicationInfoDispatchAction">
       	  <forward name="Success" path="/changeSuccess.jsp"/>
       	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
       	  <forward name="prepareReady" path="/changeApplicationInfo.jsp"/>
@@ -144,7 +144,7 @@
               name="errorMailForm" 
               path="/exceptionHandling"
               scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
+              type="net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction"     
               >
       </action>
 
@@ -152,7 +152,7 @@
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     

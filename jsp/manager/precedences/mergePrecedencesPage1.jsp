@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="DataBeans.precedences.InfoRestriction" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.precedences.InfoRestriction" %>
 
 <h3><bean:message key="label.manager.precedences.management"/></h3>
 

@@ -84,7 +84,7 @@
 
     <name>gerarHorario</name>
     
-    <tagclass>ServidorApresentacao.TagLib.sop.v3.RenderTimeTableTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.RenderTimeTableTag</tagclass>
     
     <bodycontent>empty</bodycontent>
     
@@ -119,7 +119,7 @@
   <tag>
 
     <name>generateExamsMap</name>
-    <tagclass>ServidorApresentacao.TagLib.sop.examsMap.RenderExamsMapTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.RenderExamsMapTag</tagclass>
     <bodycontent>empty</bodycontent>
     
     <info>
@@ -142,7 +142,7 @@
   <tag>
 
     <name>generateNewExamsMap</name>
-    <tagclass>ServidorApresentacao.TagLib.sop.examsMapNew.RenderExamsMapTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.RenderExamsMapTag</tagclass>
     <bodycontent>empty</bodycontent>
     
     <info>
@@ -171,7 +171,7 @@
    <tag>
 
     <name>generateSectionMenu</name>
-    <tagclass>ServidorApresentacao.TagLib.publico.sectionMenu.RenderSectionMenuTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.publico.sectionMenu.RenderSectionMenuTag</tagclass>
     <bodycontent>empty</bodycontent>
     
     <info>
@@ -370,7 +370,7 @@
   <tag>
   
     <name>options</name>
-    <tagclass>ServidorApresentacao.TagLib.assiduousness.OptionsTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.assiduousness.OptionsTag</tagclass>
     <bodycontent>empty</bodycontent>
 
     <attribute>
@@ -421,7 +421,7 @@
   <tag>
   
     <name>message</name>
-    <tagclass>ServidorApresentacao.TagLib.assiduousness.MessageTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.assiduousness.MessageTag</tagclass>
     <bodycontent>empty</bodycontent>
 
     <attribute>
@@ -481,7 +481,7 @@
   <tag>
   
     <name>date</name>
-    <tagclass>ServidorApresentacao.TagLib.commons.DateTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.commons.DateTag</tagclass>
     <bodycontent>empty</bodycontent>
 
     <attribute>

@@ -1,12 +1,12 @@
-package ServidorAplicacao.Servicos.commons.externalPerson;
+package net.sourceforge.fenixedu.applicationTier.Servicos.commons.externalPerson;
 
 import java.util.Iterator;
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoExternalPerson;
-import ServidorAplicacao.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
 
 /**
  * 

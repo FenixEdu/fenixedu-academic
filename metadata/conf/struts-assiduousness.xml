@@ -7,17 +7,17 @@
   <!-- ========== Form Bean Definitions =================================== -->
   <form-beans type="org.apache.struts.action.ActionFormBean">
   	
-    <form-bean name="DadosForm" type="ServidorApresentacao.formbeans.person.DadosForm" />
-	<form-bean name="AlterarPasswordForm" type="ServidorApresentacao.formbeans.person.AlterarPasswordForm" />
+    <form-bean name="DadosForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.person.DadosForm" />
+	<form-bean name="AlterarPasswordForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.person.AlterarPasswordForm" />
 		
     <!-- Nanda e Tania -->
-    <form-bean name="ConsultarFuncionarioMostrarForm" type="ServidorApresentacao.formbeans.assiduousness.ConsultarFuncionarioMostrarForm" />
+    <form-bean name="ConsultarFuncionarioMostrarForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.ConsultarFuncionarioMostrarForm" />
 
-    <form-bean name="MostrarListaForm" type="ServidorApresentacao.formbeans.assiduousness.MostrarListaForm" />
+    <form-bean name="MostrarListaForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.MostrarListaForm" />
 
-    <form-bean name="ConsultarMarcacaoPontoForm" type="ServidorApresentacao.formbeans.assiduousness.ConsultarMarcacaoPontoForm" />
+    <form-bean name="ConsultarMarcacaoPontoForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.ConsultarMarcacaoPontoForm" />
 
-    <form-bean name="ImprimirVerbetesForm" type="ServidorApresentacao.formbeans.assiduousness.ImprimirVerbetesForm" />    
+    <form-bean name="ImprimirVerbetesForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.ImprimirVerbetesForm" />    
 
   </form-beans>
 
@@ -26,12 +26,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -93,14 +93,14 @@
     </action>
     
     <action path="/forgotPassword"
-            type="ServidorApresentacao.Action.person.ForgotPasswordAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.person.ForgotPasswordAction"
             name="DadosForm"
             scope="request"
             input="/person/forgotPassword.jsp">
     </action>
 	
     <action path="/alterarPassword"
-            type="ServidorApresentacao.Action.person.AlterarPasswordAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.person.AlterarPasswordAction"
             name="AlterarPasswordForm"
             scope="request"
             input="/person/alterarPassword.jsp">
@@ -109,23 +109,23 @@
 	<action path="/topAdministrativa" forward="/topAdministrativa.jsp" />
 	
     <action path="/index"
-            type="ServidorApresentacao.Action.assiduousness.IndexAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.assiduousness.IndexAction">
     </action>
     
     <action path="/portalAssiduidade"
-            type="ServidorApresentacao.Action.assiduousness.PortalAssiduidadeAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.assiduousness.PortalAssiduidadeAction"
             input="/output.jsp">
     </action>
   
     <action path="/mostrarLista"
-            type="ServidorApresentacao.Action.assiduousness.MostrarListaAction"	    	
+            type="net.sourceforge.fenixedu.presentationTier.Action.assiduousness.MostrarListaAction"	    	
             name="MostrarListaForm"
             scope="session"
             validate="false">
     </action>
 
     <action path="/consultarFuncionarioMostrar"
-            type="ServidorApresentacao.Action.assiduousness.ConsultarFuncionarioMostrarAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.assiduousness.ConsultarFuncionarioMostrarAction"
             name="ConsultarFuncionarioMostrarForm"
             scope="session"
             validate="false"
@@ -133,21 +133,21 @@
     </action>
     
     <action path="/consultarFuncionarioEscolha"
-            type="ServidorApresentacao.Action.assiduousness.ConsultarFuncionarioEscolhaAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.assiduousness.ConsultarFuncionarioEscolhaAction"
             name="ConsultarFuncionarioMostrarForm"
             scope="session"
             input="/consultarFuncionarioMostrar.do">
     </action>
     
     <action path="/consultarMarcacaoPonto"
-            type="ServidorApresentacao.Action.assiduousness.ConsultarMarcacaoPontoAction"	    	
+            type="net.sourceforge.fenixedu.presentationTier.Action.assiduousness.ConsultarMarcacaoPontoAction"	    	
             name="ConsultarMarcacaoPontoForm"
             scope="request"              
             input="/prepararConsultarMarcacaoPonto.do" >
     </action>
 
     <action path="/imprimirVerbetes"
-            type="ServidorApresentacao.Action.assiduousness.ImprimirVerbetesAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.assiduousness.ImprimirVerbetesAction"
             name="ImprimirVerbetesForm"
             scope="request"
             input="/imprimirTodosVerbetes.jsp">
@@ -156,7 +156,7 @@
   </action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
-  <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+  <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
   
 	<message-resources parameter="ServidorApresentacao.AssiduousnessResources" null="false"/>
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

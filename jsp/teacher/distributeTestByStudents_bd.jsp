@@ -28,7 +28,7 @@ function cleanSelect() {
 </script>
 
 <logic:present name="siteView">
-<bean:define id="studentsComponent" name="siteView" property="component" type="DataBeans.InfoSiteStudents"/>
+<bean:define id="studentsComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudents"/>
 
 <bean:size id="studentsSize" name="studentsComponent" property="students"/>
 <logic:notEqual name="studentsSize" value="0">

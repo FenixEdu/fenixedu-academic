@@ -7,13 +7,13 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.lang.Integer" %>
 
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoGuideSituation" %>
-<%@ page import="DataBeans.InfoGuide" %>
-<%@ page import="Util.State" %>
-<%@ page import="Util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
+<%@ page import="net.sourceforge.fenixedu.util.State" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
-<%@ page import="Util.SituationOfGuide" %>
+<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
 
      <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="request" />
      <bean:define id="number" name="infoGuide" property="number" />

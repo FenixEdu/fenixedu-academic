@@ -2,12 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="Util.EvaluationType" %>
+<%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %>
 <logic:present name="siteView">
 <bean:message key="classification.nonOfficial.information" />
 <br />
-<bean:define id="marksListComponent" name="siteView" property="component" type="DataBeans.InfoSiteMarks"/>
-<bean:define id="infoEvaluation" name="marksListComponent" property="infoEvaluation" type="DataBeans.InfoEvaluation"/>
+<bean:define id="marksListComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks"/>
+<bean:define id="infoEvaluation" name="marksListComponent" property="infoEvaluation" type="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation"/>
 <span class="error"><html:errors/></span>
 <table width="90%" align="center">
 	<tr>
@@ -41,7 +41,7 @@
 	</tr>    		
 		
 	<logic:present name="marksListComponent" property="infoAttends">  								
-	   	<logic:iterate id="attendElem" name="marksListComponent" property="infoAttends" type="DataBeans.InfoFrequenta"> 
+	   	<logic:iterate id="attendElem" name="marksListComponent" property="infoAttends" type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta"> 
 	   		<bean:define id="studentNumber" name="attendElem" property="aluno.number" />
 	   		<bean:define id="studentMark" value=""/>
 			<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>

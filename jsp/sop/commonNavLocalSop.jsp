@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <!-- NOTA: Não foram incluidas tags do beans tipo <bean:message key="title.listClasses"/> -->
 
 <p><strong>&raquo; Gest&atilde;o de Turmas</strong></p>

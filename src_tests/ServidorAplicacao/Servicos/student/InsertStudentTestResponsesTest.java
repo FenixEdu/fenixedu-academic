@@ -2,7 +2,7 @@
  * Created on 9/Set/2003
  *  
  */
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 import java.beans.XMLDecoder;
 import java.io.ByteArrayInputStream;
@@ -14,19 +14,19 @@ import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.IStudent;
-import Dominio.IStudentTestQuestion;
-import Dominio.Student;
-import Dominio.StudentTestQuestion;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import Util.tests.Response;
-import Util.tests.ResponseLID;
-import Util.tests.ResponseNUM;
-import Util.tests.ResponseSTR;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentTestQuestion;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.util.tests.Response;
+import net.sourceforge.fenixedu.util.tests.ResponseLID;
+import net.sourceforge.fenixedu.util.tests.ResponseNUM;
+import net.sourceforge.fenixedu.util.tests.ResponseSTR;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

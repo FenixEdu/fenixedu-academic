@@ -50,13 +50,13 @@
 	<!-- ========== Action Mapping Definitions =============================== -->      		  
 	<action-mappings type="org.apache.struts.action.ActionMapping">
 		<action path="/index" 
-	      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
+	      		  type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
 	      		  forward="managementAssiduousnessWelcome"/>
 		<action path="/extraWork" 
-	      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
+	      		  type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
 	      		  forward="managementAssiduousnessWelcome.extraWork"/>
 		<action path="/managementMoneyCostCenter" 
-	      		type="ServidorApresentacao.Action.managementAssiduousness.ManagementMoneyCostCenterAction" 
+	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ManagementMoneyCostCenterAction" 
 				name="moneyCostCenterFormBean"
 				parameter="method"
 				scope="request"
@@ -65,7 +65,7 @@
 			<forward name="showMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.moneyCostCenterList"/>
 		</action>	
 		<action path="/workByEmployee" 
-	      		type="ServidorApresentacao.Action.managementAssiduousness.WorkByEmployeeAction" 
+	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.WorkByEmployeeAction" 
 				name="workByEmployeeFormBean"
 				parameter="method"
 				scope="request"
@@ -74,7 +74,7 @@
 				<forward name="workSheet" path="managementAssiduousnessWelcome.work.employee.sheet"/>
 		</action>
 		<action path="/extraWorkByEmployee" 
-	      		type="ServidorApresentacao.Action.managementAssiduousness.ExtraWorkByEmployeeAction" 
+	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExtraWorkByEmployeeAction" 
 				name="extraWorkByEmployeeFormBean"
 				parameter="method"
 				scope="request"
@@ -83,7 +83,7 @@
 				<forward name="extraWorkSheet" path="managementAssiduousnessWelcome.extraWork.employee.sheet"/>
 		</action>	
 		<action path="/requestsExtraWork" 
-	      		type="ServidorApresentacao.Action.managementAssiduousness.RequestsExtraWorkAction" 
+	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.RequestsExtraWorkAction" 
 				name="requestsExtraWorkFormBean"
 				parameter="method"
 				scope="request"
@@ -92,7 +92,7 @@
 				<forward name="requestsExtraWorkConfirmation" path="managementAssiduousnessWelcome.extraWork.requests.confirmation"/>
 		</action>
 		<action path="/requestsExtraWorkManagement" 
-	      		type="ServidorApresentacao.Action.managementAssiduousness.RequestsExtraWorkAction" 
+	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.RequestsExtraWorkAction" 
 				name="requestsExtraWorkFormBean"
 				parameter="method"
 				scope="request"
@@ -104,7 +104,7 @@
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.AssiduousnessResources" null="false"/>

@@ -1,5 +1,5 @@
 <class-descriptor
-		class="Dominio.support.FAQSection"
+		class="net.sourceforge.fenixedu.domain.support.FAQSection"
 		table="FAQ_SECTION"
 		>
 	<field-descriptor
@@ -27,7 +27,7 @@
 		/>
 	<reference-descriptor
 			name="parentSection"
-			class-ref="Dominio.support.FAQSection"
+			class-ref="net.sourceforge.fenixedu.domain.support.FAQSection"
 			proxy="true">
 		<foreignkey field-ref="keyParentSection"/>
 	</reference-descriptor>

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<bean:define id="submitMarksComponent" name="siteView" property="component" type="DataBeans.InfoSiteSubmitMarks"/>
+<bean:define id="submitMarksComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks"/>
 <logic:greaterThan name="submitMarksComponent" property="submited" value="0">
 	<p><h2><bean:message key="label.submitMarksNumber.submit" />
 	<bean:write name="submitMarksComponent" property="submited"/>

@@ -4,7 +4,7 @@
  * Created on 2003/03/19
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -16,20 +16,20 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExam;
-import DataBeans.InfoViewExam;
-import DataBeans.InfoViewExamByDayAndShift;
-import DataBeans.util.Cloner;
-import Dominio.ICurricularCourse;
-import Dominio.ICurso;
-import Dominio.IExecutionCourse;
-import Dominio.IExam;
-import Dominio.ISala;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurso;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.ISala;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseRequeiersAuthorizationServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuthorizationServices {
 

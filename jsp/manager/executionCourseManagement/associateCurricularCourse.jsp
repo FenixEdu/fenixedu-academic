@@ -40,7 +40,7 @@
 				</tr>
 				<bean:size id="curricularCoursesListSize" name="infoCurricularCourses"/>
 				<html:hidden property="curricularCoursesListSize" value="<%=curricularCoursesListSize.toString()%>"/>			
-				<logic:iterate id="curricularCourse" name="infoCurricularCourses" type="DataBeans.InfoCurricularCourse">
+				<logic:iterate id="curricularCourse" name="infoCurricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
 					<tr>	 			
 						<td class="listClasses">
 							<bean:define id="internalId" name="curricularCourse" property="idInternal"/>

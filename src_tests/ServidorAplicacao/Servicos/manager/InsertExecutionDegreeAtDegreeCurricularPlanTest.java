@@ -1,12 +1,12 @@
 /*
  * Created on 2/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
-import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionYear;
-import DataBeans.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 
 /**
  * @author lmac1

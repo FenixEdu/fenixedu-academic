@@ -1,7 +1,7 @@
 /*
  * Created on 26/Ago/2003
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.Calendar;
 import java.util.List;
@@ -12,16 +12,16 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.DistributedTest;
-import Dominio.IDistributedTest;
-import Dominio.StudentTestQuestion;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import Util.tests.CorrectionAvailability;
-import Util.tests.TestType;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.domain.DistributedTest;
+import net.sourceforge.fenixedu.domain.IDistributedTest;
+import net.sourceforge.fenixedu.domain.StudentTestQuestion;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
+import net.sourceforge.fenixedu.util.tests.TestType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

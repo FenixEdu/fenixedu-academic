@@ -35,7 +35,7 @@
 	<td>
 		<bean:define id="sectionOrder" name="section" property="sectionOrder" type="java.lang.Integer"/>
 		<html:select name="section" property="sectionOrder" size="1">
-			<logic:iterate id="otherSection" name="sections" property="sections" type="DataBeans.InfoSection">
+			<logic:iterate id="otherSection" name="sections" property="sections" type="net.sourceforge.fenixedu.dataTransferObject.InfoSection">
 				<bean:define id="otherSectionOrder" type="java.lang.String"><%= String.valueOf(otherSection.getSectionOrder().intValue()) %></bean:define>
 				<bean:define id="selected" value=""></bean:define>
 				<logic:equal name="otherSectionOrder" value="<%= String.valueOf(sectionOrder.intValue() + 1) %>">

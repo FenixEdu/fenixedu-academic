@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<%@ page import="Util.EvaluationType" %> 
+<%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %> 
 <logic:present name="siteView" property="component">
-	<bean:define id="evaluation" name="siteView" property="component" type="DataBeans.InfoEvaluation"/>
+	<bean:define id="evaluation" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation"/>
 	<h2><bean:message key="title.evaluation.enrollment.period" arg0="<%= evaluation.getEvaluationType().toString() %>"/></h2>
 	<br />
 	<table width="100%" cellpadding="0" cellspacing="0">

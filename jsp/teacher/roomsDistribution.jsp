@@ -23,7 +23,7 @@
     <br />
     <br />    
 	<table>
-		<logic:iterate id="infoRoom" name="rooms" indexId="roomIndex" type="DataBeans.InfoRoom">
+		<logic:iterate id="infoRoom" name="rooms" indexId="roomIndex" type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom">
 			<tr>
 				<td>
 					<b><%= roomIndex.intValue() + 1 %>.</b>

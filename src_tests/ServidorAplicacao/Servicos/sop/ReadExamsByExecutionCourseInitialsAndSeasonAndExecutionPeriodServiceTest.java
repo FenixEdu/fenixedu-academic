@@ -4,7 +4,7 @@
  * Created on 2003/04/05
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -12,13 +12,13 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExam;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import DataBeans.InfoViewExamByDayAndShift;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
-import Util.Season;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseRequeiersAuthorizationServices;
+import net.sourceforge.fenixedu.util.Season;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriodServiceTest extends
         TestCaseRequeiersAuthorizationServices {

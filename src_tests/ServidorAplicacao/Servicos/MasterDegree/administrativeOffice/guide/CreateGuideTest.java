@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.guide;
 
 /**
  * @author Nuno Nunes & Joana Mota
@@ -10,28 +10,28 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoGuide;
-import DataBeans.InfoGuideEntry;
-import DataBeans.InfoRole;
-import DataBeans.util.Cloner;
-import Dominio.IContributor;
-import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
-import Dominio.IPessoa;
-import Dominio.IPrice;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.DocumentType;
-import Util.GraduationType;
-import Util.GuideRequester;
-import Util.PaymentType;
-import Util.RoleType;
-import Util.SituationOfGuide;
-import Util.Specialization;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.IPessoa;
+import net.sourceforge.fenixedu.domain.IPrice;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.util.PaymentType;
+import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 public class CreateGuideTest extends TestCaseServicos {
 

@@ -1,15 +1,15 @@
-package ServidorAplicacao.Servicos.publico;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publico;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoMark;
-import DataBeans.InfoSiteMarks;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorAplicacao.Servicos.UtilsTestCase;
+import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.applicationTier.Servicos.UtilsTestCase;
 
 /**
  * @author Fernanda Quitério

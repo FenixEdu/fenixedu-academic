@@ -2,7 +2,7 @@
  * Created on 18/Fev/2004
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,22 +12,22 @@ import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import DataBeans.InfoDistributedTest;
-import DataBeans.InfoSiteStudentsTestMarks;
-import DataBeans.InfoStudentTestQuestionMark;
-import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-import DataBeans.util.CopyUtils;
-import Dominio.ExecutionCourse;
-import Dominio.IDistributedTest;
-import Dominio.IExecutionCourse;
-import Dominio.IStudentTestQuestion;
-import Dominio.StudentTestQuestion;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsTestMarks;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestionMark;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IDistributedTest;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.StudentTestQuestion;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 

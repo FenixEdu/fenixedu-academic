@@ -2,12 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="DataBeans.InfoEnrolmentEvaluation" %>
-<%@ page import="Util.StudentCurricularPlanState" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" %>
+<%@ page import="net.sourceforge.fenixedu.util.StudentCurricularPlanState" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.marksSubmission" /></h2>
 <logic:present name="infoSiteEnrolmentEvaluation">
 	<table width="100%">
-		<logic:iterate id="enrollmentEvaluationElem" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" length="1">	
+		<logic:iterate id="enrollmentEvaluationElem" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" length="1">	
 			<tr>
 				<td class="infoselected">
 					<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
@@ -72,7 +72,7 @@
 			<bean:size id="size" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" />	
 			<html:hidden property="sizeList" value="<%= size.toString() %>" />							
 					    			    		
-	    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" indexId="evaluationId" >
+	    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" indexId="evaluationId" >
 	    <% if (((InfoEnrolmentEvaluation) enrolmentEvaluation).getInfoEnrolment().getInfoStudentCurricularPlan().getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ)) { %> 		
 	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
 	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />

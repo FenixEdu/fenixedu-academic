@@ -15,7 +15,7 @@
 			<td class="listClasses-header"><bean:message key="label.curricular.course.acronym"/></td>
 			<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
 		</tr>
-		<logic:iterate id="executionCourse" name="studentExecutionCoursesList" type="DataBeans.InfoExecutionCourse">
+		<logic:iterate id="executionCourse" name="studentExecutionCoursesList" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
 		<tr>
 			<td class="listClasses">
 				<html:link page="/studentTests.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">

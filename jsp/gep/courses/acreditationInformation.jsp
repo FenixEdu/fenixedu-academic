@@ -114,9 +114,9 @@
 						</logic:iterate>
 						<br />
 						<bean:define id="labels" value="false"/>
-						<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="DataBeans.InfoTeacher">
+						<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
 							<bean:define id="present">false</bean:define>
-							<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="DataBeans.InfoTeacher">
+							<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
 								<logic:equal name="infoResponsible" property="idInternal" value="<%=infoTeacherId.getIdInternal().toString()%>">
 									<bean:define id="present">true</bean:define>
 								</logic:equal>
@@ -361,9 +361,9 @@
 					</logic:iterate>
 					<br />
 					<bean:define id="labels" value="false"/>
-					<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="DataBeans.InfoTeacher">
+					<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
 						<bean:define id="present">false</bean:define>
-						<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="DataBeans.InfoTeacher">
+						<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
 							<logic:equal name="infoResponsible" property="idInternal" value="<%=infoTeacherId.getIdInternal().toString()%>">
 								<bean:define id="present">true</bean:define>
 							</logic:equal>

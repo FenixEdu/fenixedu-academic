@@ -5,7 +5,7 @@
  * Created on 26 de Outubro de 2002, 11:23
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -13,10 +13,10 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoRoom;
-import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import Util.TipoSala;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.util.TipoSala;
 
 public class LerSalaServicosTest extends TestCaseReadServices {
     public LerSalaServicosTest(java.lang.String testName) {

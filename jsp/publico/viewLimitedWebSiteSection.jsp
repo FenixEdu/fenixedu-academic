@@ -2,7 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="java.util.Calendar, Util.Mes" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="net.sourceforge.fenixedu.util.Mes" %>
 <span class="error"><html:errors/></span>
 <logic:present name="infoWebSiteSection">
 	<table width="100%" align="center">

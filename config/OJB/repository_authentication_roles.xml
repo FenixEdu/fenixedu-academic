@@ -1,8 +1,8 @@
 
 <!-- ***********************************
-     Definitions for Dominio.Role 
+     Definitions for net.sourceforge.fenixedu.domain.Role 
      *********************************** -->
-<class-descriptor class="Dominio.Role"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Role"
                   table="ROLE">
     <field-descriptor
         name="idInternal"
@@ -17,7 +17,7 @@
         name="roleType"
         column="ROLE_TYPE"
         nullable = "false"
-	conversion="ServidorPersistente.Conversores.RoleTypeFieldConversion"        
+	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.RoleTypeFieldConversion"        
         jdbc-type="INTEGER"
         id="2"
     />
@@ -51,7 +51,7 @@
 <!--
     <collection-descriptor
          name="rolePersons"
-         element-class-ref="Dominio.Person"
+         element-class-ref="net.sourceforge.fenixedu.domain.Person"
          proxy="true"
          indirection-table = "PERSON_ROLE"
          auto-retrieve="true"
@@ -67,9 +67,9 @@
 
 
 <!-- ***********************************
-     Definitions for Dominio.PersonRole 
+     Definitions for net.sourceforge.fenixedu.domain.PersonRole 
      *********************************** -->
-<class-descriptor class="Dominio.PersonRole"
+<class-descriptor class="net.sourceforge.fenixedu.domain.PersonRole"
                   table="PERSON_ROLE">
     <field-descriptor
         name="idInternal"
@@ -99,7 +99,7 @@
       />
       <reference-descriptor
          name="role"
-         class-ref="Dominio.Role"
+         class-ref="net.sourceforge.fenixedu.domain.Role"
          proxy="false"
 	  >
          <foreignkey field-ref="keyRole"/>
@@ -107,7 +107,7 @@
       
      <reference-descriptor
          name="person"
-         class-ref="Dominio.Person"
+         class-ref="net.sourceforge.fenixedu.domain.Person"
          proxy="false"
 	  >
          <foreignkey field-ref="keyPerson"/>
@@ -117,9 +117,9 @@
 
 
 
-<!-- Definitions for Dominio.Teacher -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Teacher -->
    <class-descriptor
-   	  class="Dominio.Teacher"
+   	  class="net.sourceforge.fenixedu.domain.Teacher"
    	  table="TEACHER">
    	  
       <field-descriptor
@@ -146,7 +146,7 @@
 
       <reference-descriptor
          name="person"
-         class-ref="Dominio.Person"
+         class-ref="net.sourceforge.fenixedu.domain.Person"
          proxy="false">
          <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>       
@@ -158,7 +158,7 @@
 
       <reference-descriptor
          name="category"
-         class-ref="Dominio.teacher.Category"
+         class-ref="net.sourceforge.fenixedu.domain.teacher.Category"
          proxy="false">
          <foreignkey field-ref="keyCategory"/>
       </reference-descriptor>
@@ -166,7 +166,7 @@
      <collection-descriptor
 			name="teacherPublications"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.publication.Publication"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.Publication"
 			indirection-table="PUBLICATION_TEACHER"
 			proxy="true"
 			refresh="true">
@@ -176,7 +176,7 @@
 
 	<collection-descriptor
          name="professorships"
-         element-class-ref="Dominio.Professorship"
+         element-class-ref="net.sourceforge.fenixedu.domain.Professorship"
          auto-retrieve="true"
          refresh="true"
          proxy="true">
@@ -184,7 +184,7 @@
     </collection-descriptor>    	
 	<collection-descriptor
          name="institutionWorkTimePeriods"
-         element-class-ref="Dominio.teacher.workTime.TeacherInstitutionWorkTime"
+         element-class-ref="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"
          auto-retrieve="true"
          refresh="true"
          proxy="true">
@@ -192,7 +192,7 @@
     </collection-descriptor>    	
 	<collection-descriptor
          name="degreeFinalProjectStudents"
-         element-class-ref="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent"
+         element-class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent"
          auto-retrieve="true"
          refresh="true"
          proxy="true">
@@ -200,7 +200,7 @@
     </collection-descriptor>   
 	<collection-descriptor
          name="otherTypeCreditLines"
-         element-class-ref="Dominio.credits.OtherTypeCreditLine"
+         element-class-ref="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine"
          auto-retrieve="true"
          refresh="true"
          proxy="true">
@@ -208,7 +208,7 @@
     </collection-descriptor>  	 	
 	<collection-descriptor
          name="managementPositions"
-         element-class-ref="Dominio.credits.ManagementPositionCreditLine"
+         element-class-ref="net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine"
          auto-retrieve="true"
          refresh="true"
          proxy="true">
@@ -216,7 +216,7 @@
     </collection-descriptor>  	 	
 	<collection-descriptor
          name="serviceExemptionSituations"
-         element-class-ref="Dominio.credits.ServiceExemptionCreditLine"
+         element-class-ref="net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine"
          auto-retrieve="true"
          refresh="true"
          proxy="true">

@@ -2,20 +2,20 @@
  * Created on 13/Nov/2003
  */
 
-package ServidorAplicacao.Servicos.person.qualification;
+package net.sourceforge.fenixedu.applicationTier.Servicos.person.qualification;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoPerson;
-import DataBeans.person.InfoQualification;
-import Dominio.Qualification;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.Servicos.UtilsTestCase;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
+import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.UtilsTestCase;
 
 /**
  * @author Barbosa

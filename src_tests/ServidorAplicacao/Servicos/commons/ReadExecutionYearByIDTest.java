@@ -1,8 +1,8 @@
-package ServidorAplicacao.Servicos.commons;
+package net.sourceforge.fenixedu.applicationTier.Servicos.commons;
 
-import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 

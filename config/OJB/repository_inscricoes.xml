@@ -1,9 +1,9 @@
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.EnrolmentPeriod -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentPeriod -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.EnrolmentPeriod">
-	<extent-class class-ref="Dominio.EnrolmentPeriodInCurricularCourses" />
-	<extent-class class-ref="Dominio.EnrolmentPeriodInClasses" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriod">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses" />
 	<field-descriptor
 			name="ojbConcreteClass"
 			column="CLASS_NAME"
@@ -12,7 +12,7 @@
 </class-descriptor>
 
 <class-descriptor
-		class="Dominio.EnrolmentPeriodInCurricularCourses"
+		class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses"
 		table="ENROLMENT_PERIOD">
 	<field-descriptor
 			name="idInternal"
@@ -57,20 +57,20 @@
 
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.DegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="executionPeriod"
-			class-ref="Dominio.ExecutionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			proxy="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <class-descriptor
-		class="Dominio.EnrolmentPeriodInClasses"
+		class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"
 		table="ENROLMENT_PERIOD">
 	<field-descriptor
 			name="idInternal"
@@ -115,22 +115,22 @@
 
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.DegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="executionPeriod"
-			class-ref="Dominio.ExecutionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			proxy="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CurricularCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularCourse" table="CURRICULAR_COURSE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourse" table="CURRICULAR_COURSE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -187,13 +187,13 @@
 		name="type"
 		column="TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaCurricularCourseType2SqlCurricularCourseTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularCourseType2SqlCurricularCourseTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="curricularCourseExecutionScope"
 		column="EXECUTION_SCOPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaCurricularCourseExecutionScope2SqlCurricularCourseExecutionScopeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularCourseExecutionScope2SqlCurricularCourseExecutionScopeFieldConversion"
 	/>
 	<field-descriptor
 		name="mandatory"
@@ -263,31 +263,31 @@
 	/>
 	<reference-descriptor
 			name="university"
-			class-ref="Dominio.University"
+			class-ref="net.sourceforge.fenixedu.domain.University"
 			proxy="true">
 		<foreignkey field-ref="universityKey"/> 
 	</reference-descriptor>
 	<reference-descriptor
 			name="departmentCourse"
-			class-ref="Dominio.DepartmentCourse"
+			class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
 			proxy="true">
 		<foreignkey field-ref="departmentCourseKey"/> 
 	</reference-descriptor>
     <reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.DegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	 </reference-descriptor>
 	 <reference-descriptor
 			name="scientificArea"
-			class-ref="Dominio.ScientificArea"
+			class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			proxy="true">
 		<foreignkey field-ref="keyScientificArea"/>
 	 </reference-descriptor>
 	<collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
  		    collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			auto-retrieve="true"
@@ -298,16 +298,16 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="scopes"
-			element-class-ref="Dominio.CurricularCourseScope"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			proxy="true">
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>    
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CurricularYear -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.CurricularYear -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularYear" table="CURRICULAR_YEAR">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularYear" table="CURRICULAR_YEAR">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -329,9 +329,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CurricularSemester -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.CurricularSemester -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularSemester" table="CURRICULAR_SEMESTER">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularSemester" table="CURRICULAR_SEMESTER">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -357,7 +357,7 @@
       />
 	<reference-descriptor
 			name="curricularYear"
-			class-ref="Dominio.CurricularYear"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularYear"
 			proxy="true">
 		<foreignkey field-ref="curricularYearKey"/>
 	</reference-descriptor>
@@ -366,7 +366,7 @@
 <!--
 	<collection-descriptor
 			name="associatedCurricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_SEMESTER"
 			auto-retrieve="true"
 			proxy="true">
@@ -377,7 +377,7 @@
 
 	<collection-descriptor
 			name="scopes"
-			element-class-ref="Dominio.CurricularCourseScope"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			proxy="true">
 		<inverse-foreignkey field-ref="curricularSemesterKey"/>
 	</collection-descriptor>    
@@ -388,9 +388,9 @@
 
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EnrolmentEquivalence -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EnrolmentEquivalence" table="ENROLMENT_EQUIVALENCE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentEquivalence" table="ENROLMENT_EQUIVALENCE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -411,22 +411,22 @@
       />
 	<reference-descriptor
 		name="enrolment"
-		class-ref="Dominio.Enrolment"
+		class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 		proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>
     <collection-descriptor 
     	name="equivalenceRestrictions" 
-    	element-class-ref="Dominio.EquivalentEnrolmentForEnrolmentEquivalence" 
+    	element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence" 
     	proxy="true">
 	    <inverse-foreignkey field-ref="enrolmentEquivalenceKey"/>
     </collection-descriptor> 
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EquivalentEnrolmentForEnrolmentEquivalence -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EquivalentEnrolmentForEnrolmentEquivalence" table="EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence" table="EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -452,22 +452,22 @@
       />
 	<reference-descriptor
 		name="enrolmentEquivalence"
-		class-ref="Dominio.EnrolmentEquivalence"
+		class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence"
 		proxy="true">
 		<foreignkey field-ref="enrolmentEquivalenceKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="equivalentEnrolment"
-		class-ref="Dominio.Enrolment"
+		class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 		proxy="true">
 		<foreignkey field-ref="equivalentEnrolmentKey"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CurricularCourseScope -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourseScope -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularCourseScope" table="CURRICULAR_COURSE_SCOPE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseScope" table="CURRICULAR_COURSE_SCOPE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -494,13 +494,13 @@
 		name="beginDate"
 		column="BEGIN_DATE"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 	<field-descriptor
 		name="endDate"
 		column="END_DATE"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 			<!--	<field-descriptor
 		name="executionYear"
@@ -516,28 +516,28 @@
       />
 	<reference-descriptor
 			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="curricularSemester"
-			class-ref="Dominio.CurricularSemester"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularSemester"
 			proxy="true">
 		<foreignkey field-ref="curricularSemesterKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="branch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.StudentKind -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentKind -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.StudentKind" table="STUDENT_KIND">
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentKind" table="STUDENT_KIND">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -549,7 +549,7 @@
 		name="studentType"
 		column="STUDENT_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaStudentKind2SqlStudentKindFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentKind2SqlStudentKindFieldConversion"
 	/>
 	<field-descriptor
 		name="minCoursesToEnrol"
@@ -575,9 +575,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EnrolmentEvaluation -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentEvaluation -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EnrolmentEvaluation" table="ENROLMENT_EVALUATION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" table="ENROLMENT_EVALUATION">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -594,7 +594,7 @@
 		name="enrolmentEvaluationType"
 		column="EVALUATION_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="examDate"
@@ -617,7 +617,7 @@
 		name="enrolmentEvaluationState"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion"
 	/>
 	<field-descriptor
 		name="employeeKey"
@@ -628,7 +628,7 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor
 		name="checkSum"
@@ -654,21 +654,21 @@
       />
 	<reference-descriptor
 			name="personResponsibleForGrade"
-			class-ref="Dominio.Person"
+			class-ref="net.sourceforge.fenixedu.domain.Person"
 			proxy="true">
 		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
 			name="employee"
-			class-ref="Dominio.Employee"
+			class-ref="net.sourceforge.fenixedu.domain.Employee"
 			proxy="true">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
 			name="enrolment"
-			class-ref="Dominio.Enrolment"
+			class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			refresh="true"
 			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
@@ -676,9 +676,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.University -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.University -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.University" table="UNIVERSITY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.University" table="UNIVERSITY">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -715,9 +715,9 @@
 
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.ScientificArea -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ScientificArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.ScientificArea" table="SCIENTIFIC_AREA">
+<class-descriptor class="net.sourceforge.fenixedu.domain.ScientificArea" table="SCIENTIFIC_AREA">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -738,7 +738,7 @@
 	/>
 	<collection-descriptor
 			name="areaCurricularCourseGroups"
-			element-class-ref="Dominio.AreaCurricularCourseGroup"
+			element-class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_SCIENTIFIC_AREA"/>
@@ -747,9 +747,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CreditsInScientificArea -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.CreditsInScientificArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CreditsInScientificArea" table="CREDITS_IN_SCIENTIFIC_AREA">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CreditsInScientificArea" table="CREDITS_IN_SCIENTIFIC_AREA">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -785,28 +785,28 @@
 	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
-			class-ref="Dominio.StudentCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>		
 	<reference-descriptor
 			name="scientificArea"
-			class-ref="Dominio.ScientificArea"
+			class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			proxy="true">
 		<foreignkey field-ref="scientificAreaKey"/>
 	</reference-descriptor>		
 	<reference-descriptor
 			name="enrolment"
-			class-ref="Dominio.Enrolment"
+			class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>		
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CreditsInAnySecundaryArea -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CreditsInAnySecundaryArea" table="CREDITS_IN_ANY_SECUNDARY_AREA">
+<class-descriptor class="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea" table="CREDITS_IN_ANY_SECUNDARY_AREA">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -837,22 +837,22 @@
 	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
-			class-ref="Dominio.StudentCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>		
 	<reference-descriptor
 			name="enrolment"
-			class-ref="Dominio.Enrolment"
+			class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>		
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse" table="NOT_NEED_TO_ENROLL_IN_CURRICULAR_COURSE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse" table="NOT_NEED_TO_ENROLL_IN_CURRICULAR_COURSE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -878,13 +878,13 @@
 	/>
 	<reference-descriptor
 			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="studentCurricularPlan"
-			class-ref="Dominio.StudentCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>

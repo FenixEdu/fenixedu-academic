@@ -93,7 +93,7 @@ import org.apache.commons.lang.ClassUtils;
  * An alternative choice is to use the {@link EnumUtils} class.</p>
  *
  * @deprecated Replaced by {@link org.apache.commons.lang.enums.ValuedEnum org.apache.commons.lang.enums.ValuedEnum}
- *          and will be removed in version 3.0. All classes in this package net.sourceforge.fenixedu.are deprecated and repackaged to 
+ *          and will be removed in version 3.0. All classes in this package net.sourceforge.fenixedu.net.sourceforge.fenixedu.are deprecated and repackaged to 
  *          {@link org.apache.commons.lang.enums} since <code>enum</code> is a Java 1.5 keyword. 
  * @see org.apache.commons.lang.enums.ValuedEnum
  * @author Apache Avalon project
@@ -178,7 +178,7 @@ public abstract class ValuedEnum extends Enum {
      * <p>Human readable description of this <code>Enum</code> item.</p>
      *
      * @return String in the form <code>type[name=value]</code>, for example:
-     *  <code>JavaVersion[Java 1.0=100]</code>. Note that the package net.sourceforge.fenixedu.name is
+     *  <code>JavaVersion[Java 1.0=100]</code>. Note that the package net.sourceforge.fenixedu.net.sourceforge.fenixedu.name is
      *  stripped from the type name.
      */
     public String toString() {

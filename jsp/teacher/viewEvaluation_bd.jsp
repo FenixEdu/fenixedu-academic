@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<%@ page import="Util.EvaluationType" %> 
+<%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %> 
 <h2><bean:message key="title.evaluation"/></h2>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">

@@ -3,7 +3,7 @@
  * Created on 03/09/2003
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * 
@@ -11,7 +11,7 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
 
 public class ReadEnroledExecutionCoursesTest extends TestCaseReadServices {
 

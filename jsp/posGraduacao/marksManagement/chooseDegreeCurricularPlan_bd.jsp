@@ -20,7 +20,7 @@
 	<br /><br />
 	<table>
 	   <!-- Degree Curricular Plans -->
-		<logic:iterate id="degreeCurricularPlanElem" name="degreeCurricularPlans" type="DataBeans.InfoDegreeCurricularPlan">
+		<logic:iterate id="degreeCurricularPlanElem" name="degreeCurricularPlans" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan">
 			<tr>
 				<td>
 					<html:link page="<%= "/marksManagement.do?method=chooseCurricularCourses&amp;degreeId=" + degreeCurricularPlanElem.getInfoDegree().getIdInternal() + "&amp;objectCode=" + degreeCurricularPlanElem.getIdInternal()%>">

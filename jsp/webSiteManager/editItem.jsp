@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <tiles:insert page="/fenixLayout_2col.jsp" flush="true">
   <tiles:put name="serviceName" value="Gestão WebSite" />
   <tiles:put name="institutionName" value="Instituto Superior T&eacute;cnico" />

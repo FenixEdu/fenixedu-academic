@@ -4,9 +4,9 @@
  * Created on 2003/04/05
  */
 
-package ServidorAplicacao.Servicos;
+package net.sourceforge.fenixedu.applicationTier.Servicos;
 
-import ServidorAplicacao.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
 
 /**
  * 

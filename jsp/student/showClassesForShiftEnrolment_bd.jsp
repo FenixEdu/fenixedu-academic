@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <br/>
 <bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
 <html:link href='<%= link %>'><b>
@@ -66,7 +66,7 @@
 	<tr>
 		<td colspan="3"><h2>Turnos em que está inscrito:</h2></td>
 	</tr>
-		<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment"  type="DataBeans.InfoShift">
+		<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment"  type="net.sourceforge.fenixedu.dataTransferObject.InfoShift">
 	<tr>
 		<td class="listClasses"><bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/></td>
 		<td class="listClasses"><bean:write name="enroledShift" property="tipo.fullNameTipoAula"/></td>

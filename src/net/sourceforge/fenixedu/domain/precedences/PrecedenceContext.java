@@ -1,0 +1,45 @@
+package net.sourceforge.fenixedu.domain.precedences;
+
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+
+/**
+ * @author David Santos in Jun 9, 2004
+ */
+
+public class PrecedenceContext {
+    private List curricularCourses2Enroll;
+
+    private IExecutionPeriod executionPeriod;
+
+    private IStudentCurricularPlan studentCurricularPlan;
+
+    public PrecedenceContext() {
+    }
+
+    public IExecutionPeriod getExecutionPeriod() {
+        return executionPeriod;
+    }
+
+    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+        this.executionPeriod = executionPeriod;
+    }
+
+    public List getCurricularCourses2Enroll() {
+        return curricularCourses2Enroll;
+    }
+
+    public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
+        this.curricularCourses2Enroll = curricularCourses2Enroll;
+    }
+
+    public IStudentCurricularPlan getStudentCurricularPlan() {
+        return studentCurricularPlan;
+    }
+
+    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+        this.studentCurricularPlan = studentCurricularPlan;
+    }
+}

@@ -5,11 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.EnrollmentState" %>
-<%@ page import="Util.Data" %>
-<%@ page import="DataBeans.InfoGuideEntry" %>
-<%@ page import="Util.NumberUtils" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
+<%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 <%@ page import="java.util.Date" %>
 
 

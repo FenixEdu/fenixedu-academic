@@ -1,8 +1,8 @@
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.ExecutionPeriod -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ExecutionPeriod -->
 <!-- ******************************************************************************************************************************* -->
  <class-descriptor
-         class="Dominio.ExecutionPeriod"
+         class="net.sourceforge.fenixedu.domain.ExecutionPeriod"
          table="EXECUTION_PERIOD"
     >
        <field-descriptor
@@ -27,7 +27,7 @@
         <field-descriptor
           name="state"
           column="STATE"
-	      conversion="ServidorPersistente.Conversores.JavaPeriodState2SqlPeriodState"
+	      conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState"
           jdbc-type="VARCHAR"/>
         <field-descriptor
           name="semester"
@@ -53,20 +53,20 @@
       />
         <reference-descriptor
           name="executionYear"
-          class-ref="Dominio.ExecutionYear">
+          class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
           <foreignkey field-ref="keyExecutionYear"/>
        </reference-descriptor>
        
        <reference-descriptor
          name="previousExecutionPeriod"
-         class-ref="Dominio.ExecutionPeriod"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
          proxy="true"
       >
          <foreignkey field-ref="keyPreviousExecutionPeriod"/>
       </reference-descriptor> 
       <collection-descriptor
 			name="schoolClasses"
-			element-class-ref="Dominio.SchoolClass"
+			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>  

@@ -29,8 +29,8 @@
 	<logic:present name="infoStudentTestQuestionList">
 	<logic:notEmpty name="infoStudentTestQuestionList" >
 
-		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
+		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest"/>
 		<bean:define id="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 		<br/>
 		<br/>

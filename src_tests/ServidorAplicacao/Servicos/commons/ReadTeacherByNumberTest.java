@@ -1,8 +1,8 @@
-package ServidorAplicacao.Servicos.commons;
+package net.sourceforge.fenixedu.applicationTier.Servicos.commons;
 
-import framework.factory.ServiceManagerServiceFactory;
-import DataBeans.InfoTeacher;
-import ServidorAplicacao.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
 
 /**
  * 

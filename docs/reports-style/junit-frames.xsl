@@ -99,7 +99,7 @@
     </redirect:write>
     
     <!-- process all packages -->
-    <xsl:for-each select="./testsuite[not(./@package = preceding-sibling::testsuite/@package)]">
+    <xsl:for-each select="./testsuite[not(./@package net.sourceforge.fenixedu.= preceding-sibling::testsuite/@package)]">
         <xsl:call-template name="package">
             <xsl:with-param name="name" select="@package"/>
         </xsl:call-template>
@@ -113,15 +113,15 @@
         <xsl:if test="not($name = '')"><xsl:value-of select="translate($name,'.','/')"/></xsl:if>
         <xsl:if test="$name = ''">.</xsl:if>
     </xsl:variable> 
-    <!--Processing package <xsl:value-of select="@name"/> in <xsl:value-of select="$output.dir"/> -->
-    <!-- create a classes-list.html in the package directory -->
+    <!--Processing package net.sourceforge.fenixedu.<xsl:value-of select="@name"/> in <xsl:value-of select="$output.dir"/> -->
+    <!-- create a classes-list.html in the package net.sourceforge.fenixedu.directory -->
     <redirect:write file="{$output.dir}/{$package.dir}/package-frame.html">
         <xsl:call-template name="classes.list">
             <xsl:with-param name="name" select="$name"/>
         </xsl:call-template>
     </redirect:write>
     
-    <!-- create a package-summary.html in the package directory -->
+    <!-- create a package-summary.html in the package net.sourceforge.fenixedu.directory -->
     <redirect:write file="{$output.dir}/{$package.dir}/package-summary.html">
         <xsl:call-template name="package.summary">
             <xsl:with-param name="name" select="$name"/>
@@ -130,7 +130,7 @@
     
     <!-- for each class, creates a @name.html -->
     <!-- @bug there will be a problem with inner classes having the same name, it will be overwritten -->
-    <xsl:for-each select="/testsuites/testsuite[@package = $name]">
+    <xsl:for-each select="/testsuites/testsuite[@package net.sourceforge.fenixedu.= $name]">
         <redirect:write file="{$output.dir}/{$package.dir}/{@name}.html">
             <xsl:apply-templates select="." mode="class.details"/>
         </redirect:write>
@@ -308,9 +308,9 @@ h6 {
 <!-- ======================================================================
     This page is created for every package.
     It prints the name of all classes that belongs to this package.
-    @param name the package name to print classes.
+    @param name the package net.sourceforge.fenixedu.name to print classes.
      ====================================================================== -->
-<!-- list of classes in a package -->
+<!-- list of classes in a package net.sourceforge.fenixedu.-->
 <xsl:template name="classes.list">
     <xsl:param name="name"/>
     <html>
@@ -331,7 +331,7 @@ h6 {
     
             <h2>Classes</h2>
             <table width="100%">
-                <xsl:for-each select="/testsuites/testsuite[./@package = $name]">
+                <xsl:for-each select="/testsuites/testsuite[./@package net.sourceforge.fenixedu.= $name]">
                     <xsl:sort select="@name"/>
                     <tr>
                         <td nowrap="nowrap">
@@ -387,8 +387,8 @@ h6 {
 
 <!--
     Creates an html file that contains a link to all package-summary.html files on
-    each package existing on testsuites.
-    @bug there will be a problem here, I don't know yet how to handle unnamed package :(
+    each package net.sourceforge.fenixedu.existing on testsuites.
+    @bug there will be a problem here, I don't know yet how to handle unnamed package net.sourceforge.fenixedu.:(
 -->
 <xsl:template match="testsuites" mode="all.packages">
     <html>
@@ -402,7 +402,7 @@ h6 {
             <h2><a href="overview-summary.html" target="classFrame">Home</a></h2>
             <h2>Packages</h2>
             <table width="100%">
-                <xsl:apply-templates select="testsuite[not(./@package = preceding-sibling::testsuite/@package)]" mode="all.packages">
+                <xsl:apply-templates select="testsuite[not(./@package net.sourceforge.fenixedu.= preceding-sibling::testsuite/@package)]" mode="all.packages">
                     <xsl:sort select="@package"/>
                 </xsl:apply-templates>
             </table>
@@ -481,12 +481,12 @@ h6 {
         <h2>Packages</h2>
         <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
             <xsl:call-template name="testsuite.test.header"/>
-            <xsl:for-each select="testsuite[not(./@package = preceding-sibling::testsuite/@package)]">
+            <xsl:for-each select="testsuite[not(./@package net.sourceforge.fenixedu.= preceding-sibling::testsuite/@package)]">
                 <xsl:sort select="@package" order="ascending"/>
-                <!-- get the node set containing all testsuites that have the same package -->
-                <xsl:variable name="insamepackage" select="/testsuites/testsuite[./@package = current()/@package]"/>
+                <!-- get the node set containing all testsuites that have the same package net.sourceforge.fenixedu.-->
+                <xsl:variable name="insamepackage" select="/testsuites/testsuite[./@package net.sourceforge.fenixedu.= current()/@package]"/>
                 <tr valign="top">
-                    <!-- display a failure if there is any failure/error in the package -->
+                    <!-- display a failure if there is any failure/error in the package net.sourceforge.fenixedu.-->
                     <xsl:attribute name="class">
                         <xsl:choose>
                             <xsl:when test="sum($insamepackage/@errors) &gt; 0">Error</xsl:when>
@@ -529,7 +529,7 @@ h6 {
                 <xsl:apply-templates select="." mode="print.metrics"/>
             </table-->
             
-            <xsl:variable name="insamepackage" select="/testsuites/testsuite[./@package = $name]"/>
+            <xsl:variable name="insamepackage" select="/testsuites/testsuite[./@package net.sourceforge.fenixedu.= $name]"/>
             <xsl:if test="count($insamepackage) &gt; 0">
                 <h2>Classes</h2>
                 <p>
@@ -564,7 +564,7 @@ h6 {
 </xsl:template>
 
 
-<!-- create the link to the stylesheet based on the package name -->
+<!-- create the link to the stylesheet based on the package net.sourceforge.fenixedu.name -->
 <xsl:template name="create.stylesheet.link">
     <xsl:param name="package.name"/>
     <link rel="stylesheet" type="text/css" title="Style"><xsl:attribute name="href"><xsl:if test="not($package.name = 'unnamed package')"><xsl:call-template name="path"><xsl:with-param name="path" select="$package.name"/></xsl:call-template></xsl:if>stylesheet.css</xsl:attribute></link>

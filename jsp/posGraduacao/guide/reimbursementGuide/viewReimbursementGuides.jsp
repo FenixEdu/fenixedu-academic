@@ -5,13 +5,13 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DataBeans.InfoGuide" %>
-<%@ page import="DataBeans.InfoGuideEntry" %>
-<%@ page import="DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation" %>
-<%@ page import="DataBeans.guide.reimbursementGuide.InfoReimbursementGuide" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.Data" %>
-<%@ page import="Util.ReimbursementGuideState" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideSituation" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.util.ReimbursementGuideState" %>
 
 
 <center>

@@ -5,7 +5,7 @@
  * Created on 16th of December de 2002, 3:05
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * 
@@ -13,8 +13,8 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
 
 public class ReadStudentTest extends TestCaseReadServices {
     public ReadStudentTest(java.lang.String testName) {

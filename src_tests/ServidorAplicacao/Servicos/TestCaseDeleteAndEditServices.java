@@ -1,7 +1,7 @@
-package ServidorAplicacao.Servicos;
+package net.sourceforge.fenixedu.applicationTier.Servicos;
 
-import framework.factory.ServiceManagerServiceFactory;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 
 /**
  * @author dcs-rjao

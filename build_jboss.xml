@@ -72,17 +72,17 @@
 	<fileset dir="${src}"
 			 casesensitive="yes">
 		<patternset id="src.app-server">
-       		<include name="constants/**/*.class"/>
-       		<include name="DataBeans/**/*.class"/>
-       		<include name="Dominio/**/*.class"/>
-       		<include name="fileSuport/**/*.class"/>
-       		<include name="ServidorAplicacao/**/*.class"/>
-       		<include name="ServidorPersistente/**/*.class"/>
-       		<include name="ServidorPersistenteFiltroPessoa/**/*.class"/>
-       		<include name="ServidorPersistenteJDBC/**/*.class"/>
-       		<include name="ServidorPersistenteOracle/**/*.class"/>
-       		<include name="Util/**/*.class"/>
-       		<include name="UtilInsc/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.constants/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.DataBeans/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.domain/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.fileSuport/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.applicationTier/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTier/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTierFiltroPessoa/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTierJDBC/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTierOracle/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.util/**/*.class"/>
+       		<include name="net.sourceforge.fenixedu.utilInsc/**/*.class"/>
 		</patternset>
 	</fileset>
 
@@ -307,30 +307,28 @@
     		description="Compile application server"
     		depends="prepare-app-server">
 		<javac destdir="${build.app-server}"
-		source="1.4"
-		compiler="javac1.4"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
                encoding="${encoding}">
 			<src path="${src}"/>
-			<include name="_development/**/*.java"/>
-       		<include name="constants/**/*.java"/>
-			<include name="commons/**/*.java"/>
-       		<include name="DataBeans/**/*.java"/>
-       		<include name="Dominio/**/*.java"/>
-       		<include name="fileSuport/**/*.java"/>
-       		<include name="middleware/**/*.java"/>
-       		<include name="ServidorAplicacao/**/*.java"/>
-       		<include name="ServidorPersistente/**/*.java"/>
-       		<include name="ServidorPersistenteFiltroPessoa/**/*.java"/>
-       		<include name="ServidorPersistenteJDBC/**/*.java"/>
-       		<include name="ServidorPersistenteOracle/**/*.java"/>
-       		<include name="Util/**/*.java"/>
-       		<include name="UtilInsc/**/*.java"/>
-       		<include name="UtilTests/**/*.java"/>
-       		<include name="Tools/**/*.java"/>
+			<include name="net.sourceforge.fenixedu._development/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.constants/**/*.java"/>
+			<include name="net.sourceforge.fenixedu.commons/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.DataBeans/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.domain/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.fileSuport/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.middleware/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.applicationTier/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTier/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTierFiltroPessoa/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTierJDBC/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.persistenceTierOracle/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.util/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.utilInsc/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.utilTests/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.tools/**/*.java"/>
 		</javac>
 	</target>
 
@@ -502,32 +500,30 @@
     		description="Compile web client"
     		depends="prepare-web-client">
 		<javac destdir="${build.web-client.webinf.classes}"
-		source="1.4"
-		compiler="javac1.4"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
                encoding="${encoding}">
 			<src path="${src}"/>
-       		<include name="constants/**/*.java"/>
-       		<include name="DataBeans/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.constants/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.DataBeans/**/*.java"/>
        		<!--
-       		<include name="$Dominio/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.domain/**/*.java"/>
        		-->
-       		<include name="fileSuport/**/*.java"/>
-       		<include name="framework/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.fileSuport/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.framework/**/*.java"/>
        		<!--
-       		<include name="ServidorAplicacao/IServiceManager.java"/>
-       		<include name="ServidorAplicacao/IUserView.java"/>
-       		<include name="ServidorAplicacao/Servico/UserView.java"/>
-       		<include name="ServidorAplicacao/Servico/exceptions/FenixServiceException.java"/>
+       		<include name="net.sourceforge.fenixedu.applicationTier/IServiceManager.java"/>
+       		<include name="net.sourceforge.fenixedu.applicationTier/IUserView.java"/>
+       		<include name="net.sourceforge.fenixedu.applicationTier/Servico/UserView.java"/>
+       		<include name="net.sourceforge.fenixedu.applicationTier/Servico/exceptions/FenixServiceException.java"/>
        		-->
-       		<include name="ServidorAplicacao/logging/*.java"/>
-       		<include name="ServidorApresentacao/**/*.java"/>
-       		<include name="Util/**/*.java"/>
-       		<include name="UtilInsc/**/*.java"/>
-      		<include name="UtilTests/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.applicationTier/logging/*.java"/>
+       		<include name="net.sourceforge.fenixedu.presentationTier/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.util/**/*.java"/>
+       		<include name="net.sourceforge.fenixedu.utilInsc/**/*.java"/>
+      		<include name="net.sourceforge.fenixedu.utilTests/**/*.java"/>
 		</javac>
 	</target>
 

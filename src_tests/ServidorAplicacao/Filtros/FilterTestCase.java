@@ -2,7 +2,7 @@
  * Created on 06/Out/2003
  *  
  */
-package ServidorAplicacao.Filtros;
+package net.sourceforge.fenixedu.applicationTier.Filtros;
 
 import java.io.File;
 import java.sql.Connection;
@@ -17,8 +17,8 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
 import pt.utl.ist.berserk.ServiceRequest;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>

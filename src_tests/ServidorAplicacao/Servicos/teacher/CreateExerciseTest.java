@@ -2,24 +2,24 @@
  * Created on 26/Ago/2003
  *  
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import DataBeans.InfoQuestion;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import Util.tests.CardinalityType;
-import Util.tests.QuestionDifficultyType;
-import Util.tests.QuestionType;
-import Util.tests.RenderChoise;
-import Util.tests.ResponseCondition;
-import Util.tests.ResponseProcessing;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoQuestion;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.util.tests.CardinalityType;
+import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
+import net.sourceforge.fenixedu.util.tests.QuestionType;
+import net.sourceforge.fenixedu.util.tests.RenderChoise;
+import net.sourceforge.fenixedu.util.tests.ResponseCondition;
+import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

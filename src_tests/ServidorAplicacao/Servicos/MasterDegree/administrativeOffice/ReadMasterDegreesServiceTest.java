@@ -17,16 +17,16 @@
  *  
  */
 
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
 
 public class ReadMasterDegreesServiceTest extends TestCaseServicos {
 

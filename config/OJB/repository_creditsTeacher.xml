@@ -3,8 +3,8 @@
 <!-- Mapping of User defined classes starts here -->
 
 
-<!-- Definitions for Dominio.ShiftProfessorship -->
-<class-descriptor  class="Dominio.ShiftProfessorship"  table="SHIFT_PROFESSORSHIP">
+<!-- Definitions for net.sourceforge.fenixedu.domain.ShiftProfessorship -->
+<class-descriptor  class="net.sourceforge.fenixedu.domain.ShiftProfessorship"  table="SHIFT_PROFESSORSHIP">
 
       <field-descriptor  name="idInternal"  column="ID_INTERNAL"  jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 
@@ -20,18 +20,18 @@
       	locking="true"
       />
       
-      <reference-descriptor name="professorship" class-ref="Dominio.Professorship">
+      <reference-descriptor name="professorship" class-ref="net.sourceforge.fenixedu.domain.Professorship">
          <foreignkey field-ref="keyProfessorship"/>
       </reference-descriptor>
             
-      <reference-descriptor name="shift" class-ref="Dominio.Shift">
+      <reference-descriptor name="shift" class-ref="net.sourceforge.fenixedu.domain.Shift">
          <foreignkey field-ref="keyShift"/>
       </reference-descriptor>    
 </class-descriptor>
 
 
 <!-- Definitions for credits.CreditLine -->
-<class-descriptor class="Dominio.credits.OtherTypeCreditLine" table="crd_OTHER_TYPE_CREDIT_LINE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine" table="crd_OTHER_TYPE_CREDIT_LINE">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -48,33 +48,33 @@
       	locking="true"
       />
       
-      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
-      <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
+      <reference-descriptor name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor class="Dominio.credits.ServiceExemptionCreditLine" table="crd_SERVICE_EXEMPTION_CREDIT_LINE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine" table="crd_SERVICE_EXEMPTION_CREDIT_LINE">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
-      <field-descriptor name="type" column="TYPE" jdbc-type="INTEGER" conversion="ServidorPersistente.Conversores.ServiceExemptionTypeFieldConversion"/>
+      <field-descriptor name="type" column="TYPE" jdbc-type="INTEGER" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ServiceExemptionTypeFieldConversion"/>
 
-      <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>
-      <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>            
+      <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>
+      <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>            
 
       <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
       
-      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor class="Dominio.credits.ManagementPositionCreditLine" table="crd_MANAGEMENT_POSITION_CREDIT_LINE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine" table="crd_MANAGEMENT_POSITION_CREDIT_LINE">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -84,18 +84,18 @@
 
       <field-descriptor name="position" column="POSITION" jdbc-type="VARCHAR"/>
 
-      <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>
-      <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>            
+      <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>
+      <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>            
 
       <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
       
-      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
 </class-descriptor>
 
-<!-- Definitions for Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent -->
-<class-descriptor class="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent" table="crd_TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
+<!-- Definitions for net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent" table="crd_TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -113,35 +113,35 @@
       	locking="true"
       />
 
-      <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
+      <reference-descriptor name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor> 
 
-      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+      <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
 
-      <reference-descriptor name="student" class-ref="Dominio.Student">
+      <reference-descriptor name="student" class-ref="net.sourceforge.fenixedu.domain.Student">
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor>
 
 </class-descriptor>      
 
 
-<!-- Definitions for Dominio.teacher.workTime.TeacherInstitutionWorkTime -->
-<class-descriptor class="Dominio.teacher.workTime.TeacherInstitutionWorkTime"  table="crd_TEACHER_INSTITUTION_WORK_TIME">
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"  table="crd_TEACHER_INSTITUTION_WORK_TIME">
 	
 	<field-descriptor	name="idInternal"  column="ID_INTERNAL" jdbc-type="INTEGER"
 						        primarykey="true" autoincrement="true"/>
 						        
     <field-descriptor  name="weekDay" column="WEEKDAY" jdbc-type="INTEGER"
-						        conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion" />
+						        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.DiaSemana2EnumDiaSemanaFieldConversion" />
     
     <field-descriptor  name="startTime" column="START_TIME" jdbc-type="TIME"
-    						    conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"/>
+    						    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"/>
     						    
     <field-descriptor name="endTime" column="END_TIME" jdbc-type="TIME"
-					           conversion="ServidorPersistente.Conversores.Time2DateFieldConversion" />
+					           conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion" />
     
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
@@ -153,19 +153,19 @@
       	locking="true"
       />
 	
-	<reference-descriptor name="teacher"  class-ref="Dominio.Teacher">
+	<reference-descriptor name="teacher"  class-ref="net.sourceforge.fenixedu.domain.Teacher">
 		<foreignkey field-ref="keyTeacher"/>
     </reference-descriptor>
 
-    <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
+    <reference-descriptor name="executionPeriod" class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
        <foreignkey field-ref="keyExecutionPeriod"/>
     </reference-descriptor>
 
 </class-descriptor>
 
 
-<!-- Definitions for Dominio.teacher.Category -->
-<class-descriptor class="Dominio.teacher.Category" table="CATEGORY">
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Category -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.Category" table="CATEGORY">
 
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
       					

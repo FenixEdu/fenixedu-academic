@@ -1,9 +1,9 @@
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
-import framework.factory.ServiceManagerServiceFactory;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * 

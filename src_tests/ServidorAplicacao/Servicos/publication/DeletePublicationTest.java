@@ -3,13 +3,13 @@
  *
  */
 
-package ServidorAplicacao.Servicos.publication;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publication;
 
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.publication.DeletePublication;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.publication.DeletePublication;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Carlos Pereira & Francisco Passos

@@ -220,7 +220,7 @@ function invertSelect(){
 		</html:link>
 	</div></td> --%>
 	</tr>
-	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="DataBeans.InfoMetadata">
+	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="net.sourceforge.fenixedu.dataTransferObject.InfoMetadata">
 	<tr>
 		<bean:define id="metadataCode" name="metadata" property="idInternal" />
 		<td class="listClasses">

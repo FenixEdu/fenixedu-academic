@@ -5,18 +5,18 @@
  * Created on 24 de Outubro de 2002, 15:46
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
  * @author tfc130
  */
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.RoomKey;
-import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseDeleteAndEditServices;
 
 public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 

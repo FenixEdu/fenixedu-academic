@@ -65,7 +65,7 @@
 			<td class="listClasses-header" >&nbsp;</td>
 			
 		</tr>	
-		<logic:iterate id="examStudentRoom" name="examsEnrolled" type="DataBeans.InfoExamStudentRoom">
+		<logic:iterate id="examStudentRoom" name="examsEnrolled" type="net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom">
 			<bean:define id="exam" name="examStudentRoom" property="infoExam"/>
 			<bean:define id="objectCode" name="exam" property="idInternal"/>	
 			<logic:present name="exam" property="infoExecutionCourses">

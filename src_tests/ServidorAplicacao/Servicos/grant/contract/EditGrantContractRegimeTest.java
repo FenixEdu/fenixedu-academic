@@ -2,19 +2,19 @@
  * Created on Jun 15, 2004
  *
  */
-package ServidorAplicacao.Servicos.grant.contract;
+package net.sourceforge.fenixedu.applicationTier.Servicos.grant.contract;
 
 import java.text.SimpleDateFormat;
 
-import DataBeans.InfoTeacher;
-import DataBeans.grant.contract.InfoGrantContract;
-import DataBeans.grant.contract.InfoGrantContractRegime;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Pica

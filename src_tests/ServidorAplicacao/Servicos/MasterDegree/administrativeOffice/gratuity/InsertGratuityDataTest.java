@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.gratuity;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,24 +8,24 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import DataBeans.InfoEmployee;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoGratuityValues;
-import DataBeans.InfoPaymentPhase;
-import DataBeans.InfoPerson;
-import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
-import Dominio.GratuityValues;
-import Dominio.ICursoExecucao;
-import Dominio.IGratuityValues;
-import Dominio.IPaymentPhase;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
-import ServidorPersistente.IPersistentGratuityValues;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.CursoExecucao;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IGratuityValues;
+import net.sourceforge.fenixedu.domain.IPaymentPhase;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 

@@ -1,11 +1,11 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoSiteStudentGroup;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
 
 /**
  * @author asnr and scpo

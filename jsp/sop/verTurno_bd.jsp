@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DataBeans.InfoLesson" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
   		<td class="infoselected"><p>O curso seleccionado &eacute;:</p>

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
@@ -123,7 +123,7 @@
 									</td>
 								</tr>
 					
-								<logic:iterate id="curricularCourse" name="curricularCourses" type="DataBeans.InfoCurricularCourse">
+								<logic:iterate id="curricularCourse" name="curricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
 									<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal"/>
 									<tr>	 			
 										<td class="listClasses" style="text-align:left">

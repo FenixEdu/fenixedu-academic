@@ -17,11 +17,11 @@
  *  
  */
 
-package ServidorAplicacao.Servicos.general;
+package net.sourceforge.fenixedu.applicationTier.Servicos.general;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
 
 public class ReadAllCountriesTest extends TestCaseReadServices {
 

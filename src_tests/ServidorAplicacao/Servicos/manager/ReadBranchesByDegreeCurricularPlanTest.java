@@ -1,7 +1,7 @@
 /*
  * Created on 2/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
 /**
  * @author lmac1

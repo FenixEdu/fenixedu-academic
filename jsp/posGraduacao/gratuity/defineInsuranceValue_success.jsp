@@ -1,8 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.masterDegree.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoGuide" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
 
 <center>
 	<h2><bean:message key="message.masterDegree.gratuity.insuranceDefinition.success"/></h2>

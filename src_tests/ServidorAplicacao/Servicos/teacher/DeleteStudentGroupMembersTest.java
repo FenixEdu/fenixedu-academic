@@ -2,12 +2,12 @@
  * Created on 03/Set/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseDeleteAndEditServices;
 
 /**
  * @author asnr and scpo

@@ -2,9 +2,9 @@
  * Created on 04/Set/2003
  *
  */
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseDeleteAndEditServices;
 
 /**
  * @author asnr and scpo

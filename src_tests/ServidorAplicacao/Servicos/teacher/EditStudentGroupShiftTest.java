@@ -1,8 +1,8 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
-import Dominio.IExecutionCourse;
-import Dominio.IGroupProperties;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseDeleteAndEditServices;
 
 /**
  * @author asnr and scpo

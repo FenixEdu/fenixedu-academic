@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
 <logic:present name="equivalency" >
-<bean:define id="equivalency" type="DataBeans.Seminaries.InfoEquivalency" scope="request" name="equivalency"/>
+<bean:define id="equivalency" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency" scope="request" name="equivalency"/>
 <h2><bean:message key="label.candidacyFormTitle"/></h2>
 
 

@@ -50,11 +50,11 @@
 	<global-exceptions>
         <exception	type="java.lang.Exception"
         			key="error.Exception"
-        			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"/>
+        			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"/>
 
-		<exception	type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+		<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 					key="error.NotAuthorized"
-					handler="ServidorApresentacao.config.FenixContainerExceptionHandler"/>
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"/>
 	</global-exceptions>
 
 	<!-- ==================================================================== -->
@@ -81,7 +81,7 @@
 
 		<!-- Other Actions -->
 		<action	path="/equivalence"
-				type="ServidorApresentacao.Action.equivalence.PrepareAplicationContextForEnrollmentEquivalenceAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.equivalence.PrepareAplicationContextForEnrollmentEquivalenceAction">
 			<forward name="enrollmentEquivalenceForDegreeAdministratorOffice" path="df.page.chooseStudentForDegreeAdministrativeOfficeEnrollmentEquivalence"/>
 			<forward name="enrollmentEquivalenceForMasterDegreeAdministratorOffice" path="df.page.chooseStudentForMasterDegreeAdministrativeOfficeEnrollmentEquivalence"/>
 			<forward name="enrollmentEquivalenceForCoordinator" path="df.page.chooseStudentForCoordinatorEnrollmentEquivalence"/>
@@ -89,7 +89,7 @@
 
 
 		<action	name="studentNumberForm"
-				type="ServidorApresentacao.Action.equivalence.PrepareStudentForEnrollmentEquivalenceDispachAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.equivalence.PrepareStudentForEnrollmentEquivalenceDispachAction"
 				path="/prepareStudentForEnrollmentEquivalence"
 				input="/prepareStudentForEnrollmentEquivalence.do?method=error&amp;page=0"
 				parameter="method"
@@ -101,7 +101,7 @@
 
 
 		<action	path="/showMenuForEnrollmentEquivalence"
-				type="ServidorApresentacao.Action.equivalence.PrepareAplicationContextForEnrollmentEquivalenceAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.equivalence.PrepareAplicationContextForEnrollmentEquivalenceAction">
 			<forward name="enrollmentEquivalenceForDegreeAdministratorOffice" path="df.page.showMenuForDegreeAdministrativeOfficeEnrollmentEquivalence"/>
 			<forward name="enrollmentEquivalenceForMasterDegreeAdministratorOffice" path="df.page.showMenuForMasterDegreeAdministrativeOfficeEnrollmentEquivalence"/>
 			<forward name="enrollmentEquivalenceForCoordinator" path="df.page.showMenuForCoordinatorEnrollmentEquivalence"/>
@@ -109,7 +109,7 @@
 
 
 		<action path="/selectStudentCurricularPlansToMakeEnrollmentEquivalence"
-				type="ServidorApresentacao.Action.equivalence.SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.equivalence.SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction"
 				name="selectStudentCurricularPlansForm"
 				attribute="selectStudentCurricularPlansMakeForm"
 				input="/selectStudentCurricularPlansToMakeEnrollmentEquivalence.do?method=error&amp;commingFrom=chooseStudentCurricularPlans&amp;page=0"
@@ -126,7 +126,7 @@
 
 
 		<action path="/selectStudentCurricularPlansToDeleteEnrollmentEquivalence"
-				type="ServidorApresentacao.Action.equivalence.SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.equivalence.SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction"
 				name="selectStudentCurricularPlansForm"
 				attribute="selectStudentCurricularPlansDeleteForm"
 				input="/selectStudentCurricularPlansToDeleteEnrollmentEquivalence.do?method=error&amp;commingFrom=chooseStudentCurricularPlans&amp;page=0"
@@ -142,7 +142,7 @@
 		</action>
 
 		<action path="/makeEnrollmentEquivalence"
-				type="ServidorApresentacao.Action.equivalence.EnrollmentEquivalenceDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.equivalence.EnrollmentEquivalenceDispatchAction"
 				name="enrollmentEquivalenceFrom"
 				input="/makeEnrollmentEquivalence.do?method=error&amp;commingFrom=grades&amp;page=0"
 				parameter="method"
@@ -166,7 +166,7 @@
 		</action>
 
 		<action path="/deleteEnrollmentEquivalence"
-				type="ServidorApresentacao.Action.equivalence.DeleteEnrollmentEquivalenceDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.equivalence.DeleteEnrollmentEquivalenceDispatchAction"
 				name="enrollmentEquivalenceFrom"
 				input="/deleteEnrollmentEquivalence.do?method=error&amp;page=0"
 				parameter="method"
@@ -191,7 +191,7 @@
 	<!-- ==================================================================== -->
 	<!-- ========== CONTROLLER CONFIGURATION ================================ -->
 	<!-- ==================================================================== -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ==================================================================== -->
 	<!-- ========== MESSAGE RESOURCES DEFINITIONS =========================== -->

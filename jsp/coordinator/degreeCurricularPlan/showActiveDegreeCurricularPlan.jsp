@@ -5,7 +5,7 @@
 <h2><bean:message key="label.coordinator.degreeCurricular.active"/></h2>
 <span class="error"><html:errors/></span>
 <logic:present name="allActiveCurricularCourseScopes">
-			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope" length="1">
+			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
 				<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 			</logic:iterate>
 			<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
@@ -16,7 +16,7 @@
 			<td class="listClasses-header"><bean:message key="label.curricularCourse"/></td>
 			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
 		</tr>
-			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope">
+			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope">
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.semester" value="<%= pageContext.findAttribute("currentSemester").toString()%>">
 					<tr>
 						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear"/></td>

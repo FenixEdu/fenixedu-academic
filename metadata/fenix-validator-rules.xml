@@ -40,7 +40,7 @@
 
 	<global>
 		<validator name="greaterThanOrEqual" 
-			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
 			method="validateGreaterThanOrEqual" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -51,7 +51,7 @@
 			msg="error.greaterThanOrEqual"/>
 			
 		<validator name="greaterThan" 
-			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
 			method="validateGreaterThan" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -62,7 +62,7 @@
 			msg="error.greaterThan"/>
 			
 		<validator name="Equal" 
-			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
 			method="validateEqual" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -73,7 +73,7 @@
 			msg="error.equal"/>
 			
 		<validator name="lessThan" 
-			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
 			method="validateLessThan" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -84,7 +84,7 @@
 			msg="error.lessThan"/>
 			
 		<validator name="lessThanOrEqual" 
-			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
 			method="validateLessThanOrEqual" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -95,7 +95,7 @@
 			msg="error.lessThanOrEqual"/>
 			
 		<validator name="twoFields" 
-			classname="ServidorApresentacao.validator.form.ValidateTwoFields" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateTwoFields" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -106,7 +106,7 @@
 			msg="errors.different.passwords"/>
 			
 		<validator name="validateDate" 
-			classname="ServidorApresentacao.validator.form.ValidateDate" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateDate" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -117,7 +117,7 @@
 			msg="errors.invalid.date"/>
 			
 		<validator name="floatGreaterThen" 
-			classname="ServidorApresentacao.validator.form.GreaterThen" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.GreaterThen" 
 			method="validateFloat" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -128,7 +128,7 @@
 			msg="errors.invalid.floatValue"/>
 			
 		<validator name="floatGreater" 
-			classname="ServidorApresentacao.validator.form.GreaterThen" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.GreaterThen" 
 			method="validateFloat0" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -139,7 +139,7 @@
 			msg="errors.invalid.floatValue"/>
 			
 		<validator name="threeArgsDate" 
-			classname="ServidorApresentacao.validator.form.ValidateDate" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateDate" 
 			method="threeArgsDate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -150,7 +150,7 @@
 			msg="errors.invalidThreeArgs.date"/>
 			
 		<validator name="multiBoxWithSelectAllCheckBox" 
-			classname="ServidorApresentacao.validator.form.ValidateMultiBoxWithSelectAllCheckBox" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiBoxWithSelectAllCheckBox" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -161,7 +161,7 @@
 			msg="errors.required.checkbox" />
 			
 		<validator name="requiredAttributes" 
-			classname="ServidorApresentacao.validator.form.ValidatePublicationForm" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidatePublicationForm" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -195,7 +195,7 @@ Example:
 
 -->
 		<validator name="validateMultiBox" 
-			classname="ServidorApresentacao.validator.form.ValidateMultiBox" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiBox" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -207,7 +207,7 @@ Example:
                 />             
 
    	 <validator name="integerArray"
-            classname="ServidorApresentacao.validator.form.ValidateIntegerArray"
+            classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateIntegerArray"
                method="validate"
          methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -218,7 +218,7 @@ Example:
                   msg="error.integerArray"/>
 	
 	<validator name="multiRadioSelect" 
-			classname="ServidorApresentacao.validator.form.ValidateMultiRadioSelect" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiRadioSelect" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,

@@ -1,13 +1,13 @@
 /*
  * Created on 04/Set/2003
  */
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseCreateServices;
 
 /**
  * @author asnr and scpo

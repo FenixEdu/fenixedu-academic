@@ -20,7 +20,7 @@
 			<td class="listClasses"><b><bean:message key="label.testBeginDate"/></b></td>
 			<td class="listClasses"><b><bean:message key="label.testEndDate"/></b></td>
 		</tr>
-		<logic:iterate id="distributedTest" name="infoDistributedTestsToDo" type="DataBeans.InfoDistributedTest">
+		<logic:iterate id="distributedTest" name="infoDistributedTestsToDo" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest">
 		<tr>
 			<td class="listClasses">
 		
@@ -49,7 +49,7 @@
 			<td class="listClasses"><b><bean:message key="label.testBeginDate"/></b></td>
 			<td class="listClasses"><b><bean:message key="label.testEndDate"/></b></td>
 		</tr>
-		<logic:iterate id="distributedTest" name="infoDoneDistributedTests" type="DataBeans.InfoDistributedTest">
+		<logic:iterate id="distributedTest" name="infoDoneDistributedTests" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest">
 		<tr>
 			<td class="listClasses">
 				<html:link page="/studentTests.do?method=showTestCorrection" paramId="testCode" paramName="distributedTest" paramProperty="idInternal">

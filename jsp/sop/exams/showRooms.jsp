@@ -3,13 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.action.Action" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 
  
 <html:form action="/roomSearch">
 		
-	<logic:iterate indexId="i" id="room" name="availableRooms" type="DataBeans.InfoRoom">
+	<logic:iterate indexId="i" id="room" name="availableRooms" type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom">
 			<html:hidden property="availableRoomsId" value="<%= room.getIdInternal().toString() %>" />
 	</logic:iterate>
 
