@@ -9,7 +9,7 @@ import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRu
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterCurricularYearPrecedence;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterFinalistRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceSpanRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateCurricularYearPrecedenceRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateNACandNDRule;
@@ -36,7 +36,7 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterBranchRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
-		enrolmentRule = new EnrolmentFilterPrecedenceRule();
+		enrolmentRule = new EnrolmentFilterPrecedenceSpanRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		enrolmentRule = new EnrolmentFilterCurricularYearPrecedence();
