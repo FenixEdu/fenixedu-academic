@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CreditsInScientificArea;
+import Dominio.ICreditsInScientificArea;
+import Dominio.IEnrolment;
+import Dominio.IScientificArea;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCreditsInSpecificScientificArea;
@@ -20,5 +23,18 @@ public class CreditsInSpecificScientificAreaOJB extends ObjectFenixOJB implement
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
 		return queryList(CreditsInScientificArea.class, criteria);
+	}
+
+	public ICreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
+		IStudentCurricularPlan studentCurricularPlan,
+		IEnrolment enrolment,
+		IScientificArea scientificArea)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+		criteria.addEqualTo("scientificArea.idInternal", scientificArea.getIdInternal());
+		return (ICreditsInScientificArea) queryObject(CreditsInScientificArea.class, criteria);
 	}
 }

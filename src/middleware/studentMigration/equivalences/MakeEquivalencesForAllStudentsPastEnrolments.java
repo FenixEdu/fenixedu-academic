@@ -392,7 +392,12 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	{
 		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
 
-		IEnrolmentEvaluation enrolmentEvaluationToWrite = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluation.getEnrolmentEvaluationType(), enrolmentEvaluation.getGrade(), enrolmentEvaluation.getWhen());
+		IEnrolmentEvaluation enrolmentEvaluationToWrite =
+			persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
+				enrolment,
+				enrolmentEvaluation.getEnrolmentEvaluationType(),
+				enrolmentEvaluation.getGrade(),
+				enrolmentEvaluation.getWhen());
 
 		if (enrolmentEvaluationToWrite == null)
 		{
@@ -409,7 +414,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			{
 				enrolmentEvaluationToWrite = new EnrolmentEvaluation();
 
-				fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluationToWrite);
+				persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationToWrite);
 		
 				enrolmentEvaluationToWrite.setEnrolment(enrolment);
 				enrolmentEvaluationToWrite.setEnrolmentEvaluationState(enrolmentEvaluation.getEnrolmentEvaluationState());

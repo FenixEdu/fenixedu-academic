@@ -77,8 +77,8 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
         try
         {
             Criteria criteria = new Criteria();
-            criteria.addEqualTo("enrolmentEquivalenceKey", enrolmentEquivalence.getIdInternal());
-            criteria.addEqualTo("equivalentEnrolmentKey", equivalentEnrolment.getIdInternal());
+            criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
+            criteria.addEqualTo("equivalentEnrolment.idInternal", equivalentEnrolment.getIdInternal());
             return (IEquivalentEnrolmentForEnrolmentEquivalence) queryObject(
                 EquivalentEnrolmentForEnrolmentEquivalence.class,
                 criteria);
@@ -93,7 +93,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
         try
         {
             Criteria criteria = new Criteria();
-            criteria.addEqualTo("equivalentEnrolmentKey", equivalentEnrolment.getIdInternal());
+            criteria.addEqualTo("equivalentEnrolment.idInternal", equivalentEnrolment.getIdInternal());
             return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
         } catch (ExcepcaoPersistencia e)
         {

@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CreditsInAnySecundaryArea;
+import Dominio.ICreditsInAnySecundaryArea;
+import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
@@ -22,10 +24,15 @@ public class CreditsInAnySecundaryAreaOJB extends ObjectFenixOJB implements IPer
 		return queryList(CreditsInAnySecundaryArea.class, criteria);
 	}
 
-//	public IBranch readByDegreeCurricularPlanAndBranchName(IDegreeCurricularPlan degreeCurricularPlan, String branchName) throws ExcepcaoPersistencia {
-//		Criteria crit = new Criteria();
-//		crit.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
-//		crit.addEqualTo("name", branchName);
-//		return (IBranch) queryObject(Branch.class, crit);
-//	}
+	public ICreditsInAnySecundaryArea readByStudentCurricularPlanAndEnrollment(
+		IStudentCurricularPlan studentCurricularPlan,
+		IEnrolment enrolment)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+		return (ICreditsInAnySecundaryArea) queryObject(CreditsInAnySecundaryArea.class, criteria);
+	}
+
 }

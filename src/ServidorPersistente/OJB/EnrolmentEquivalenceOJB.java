@@ -86,7 +86,7 @@ public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersiste
     public IEnrolmentEquivalence readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
         return (IEnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);
     }
 }

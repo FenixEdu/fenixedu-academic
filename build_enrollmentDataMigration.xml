@@ -320,7 +320,7 @@
 
 	<!-- ********************** EQUIVALENCE MIGRATION RELATED ********************** -->
 	<target name="make-equivalences-for-all-students-past-enrolments" depends="compile-proj">
-		<java classname="middleware.studentMigration.equivalences.MakeEquivalencesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
+		<java classname="middleware.studentMigration.equivalences.MakeEquivalencesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="768m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -371,7 +371,7 @@
 	</target>
 
 	<target name="make-equivalences-for-ileec-students" depends="compile-proj, load-ileec-data" description="Cria na BD do Fénix as equivalências do ILEEC">
-		<java classname="middleware.studentMigration.equivalences.MakeEquivalencesForILEECStudents" fork="yes" failonerror="false" maxmemory="512m">
+		<java classname="middleware.studentMigration.equivalences.MakeEquivalencesForILEECStudents" fork="yes" failonerror="false" maxmemory="768m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>

@@ -5,7 +5,7 @@ package Dominio;
  * Jan 14, 2004
  */
 
-public interface ICreditsInAnySecundaryArea
+public interface ICreditsInAnySecundaryArea extends IDomainObject
 {
 	public IEnrolment getEnrolment();
 	public void setEnrolment(IEnrolment enrolment);
