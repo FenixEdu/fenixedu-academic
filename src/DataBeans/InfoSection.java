@@ -2,8 +2,6 @@ package DataBeans;
 
 import java.util.Date;
 
-import DataBeans.*;
-
 /**
  * This is the view class that contains information about the seccao
  * domain object.
@@ -12,7 +10,7 @@ import DataBeans.*;
  * 
  **/
 
-public class InfoSection implements Comparable {
+public class InfoSection implements Comparable,ISiteComponent {
 	private Integer internalCode;
     protected String name;
     protected Integer sectionOrder;
