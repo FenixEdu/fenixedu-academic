@@ -124,6 +124,41 @@
    			column="MARK_AVERAGE"
    			jdbc-type="DOUBLE"
    		/>   		
+  		<field-descriptor
+   			name="objectivesEn"
+   			column="OBJECTIVES_EN"
+   			jdbc-type="LONGVARCHAR"
+   		/>
+   		<field-descriptor
+   			name="historyEn"
+   			column="HISTORY_EN"
+   			jdbc-type="LONGVARCHAR"
+   		/>
+   		<field-descriptor
+   			name="professionalExitsEn"
+   			column="PROFESSIONAL_EXITS_EN"
+   			jdbc-type="LONGVARCHAR"
+   		/>
+   		<field-descriptor
+   			name="additionalInfoEn"
+   			column="ADDITIONAL_INFO_EN"
+   			jdbc-type="LONGVARCHAR"
+   		/>
+   		<field-descriptor
+   			name="linksEn"
+   			column="LINKS_EN"
+   			jdbc-type="LONGVARCHAR"
+   		/>
+   		<field-descriptor
+   			name="testIngressionEn"
+   			column="TEST_INGRESSION_EN"
+   			jdbc-type="LONGVARCHAR"
+   		/>   		
+   		<field-descriptor
+   			name="classificationsEn"
+   			column="CLASSIFICATIONS_EN"
+   			jdbc-type="LONGVARCHAR"
+   		/>      		
    		<field-descriptor
    			name="lastModificationDate"
    			column="LAST_MODIFICATION_DATE"

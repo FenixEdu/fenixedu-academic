@@ -32,7 +32,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testDataSetDegreeSite.xml";
+		return "etc/datasets_templates/servicos/coordinator/testDataSetDegreeSite.xml";
 	}
 
 	protected String[] getAuthenticatedAndAuthorizedUser() {

@@ -291,7 +291,9 @@ drop table if exists EXECUTION_YEAR;
 create table EXECUTION_YEAR (
    ID_INTERNAL int(11) not null auto_increment,
    `YEAR` varchar(9) not null,
-   STATE varchar(3) not null default "NO",   
+   STATE varchar(3) not null default "NO",  
+	 BEGIN_DATE date NOT NULL default '0000-00-00',
+   END_DATE date NOT NULL default '0000-00-00',      
    primary key (ID_INTERNAL),
    unique U1 (`YEAR`))
    type=InnoDB comment="InnoDB free: 373760 kB";

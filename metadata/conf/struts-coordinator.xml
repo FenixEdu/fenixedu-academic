@@ -89,6 +89,13 @@
 				<form-property name="markMax" type="java.lang.Double" />
 				<form-property name="markAverage" type="java.lang.Double" />
 				<form-property name="lastModificationDate" type="java.lang.String" />
+				<form-property name="objectivesEn" type="java.lang.String" />
+				<form-property name="historyEn" type="java.lang.String" />
+				<form-property name="professionalExitsEn" type="java.lang.String" />
+				<form-property name="additionalInfoEn" type="java.lang.String" />
+				<form-property name="linksEn" type="java.lang.String" />
+				<form-property name="testIngressionEn" type="java.lang.String" />
+				<form-property name="classificationsEn" type="java.lang.String" />								
 			</form-bean>
 
     </form-beans>

@@ -1,6 +1,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import Util.PeriodState;
 
@@ -11,6 +12,8 @@ import Util.PeriodState;
 public class InfoExecutionYear extends InfoObject implements Serializable{
 	private String year;
 	private PeriodState state;
+	private Date beginDate;
+	private Date endDate;	
 	
 	public InfoExecutionYear() {
 	}
@@ -71,6 +74,34 @@ public class InfoExecutionYear extends InfoObject implements Serializable{
 	public int compareTo(Object arg0) {
 		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 		return this.getYear().compareTo(infoExecutionYear.getYear());
+	}
+
+	/**
+	 * @return Returns the beginDate.
+	 */
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	/**
+	 * @param beginDate The beginDate to set.
+	 */
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	/**
+	 * @return Returns the endDate.
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate The endDate to set.
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

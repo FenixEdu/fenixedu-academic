@@ -25,6 +25,15 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 	private Double markAverage;
 	private Timestamp lastModificationDate;
 
+	//Data in english
+	private String objectivesEn;
+	private String historyEn;
+	private String professionalExitsEn;
+	private String additionalInfoEn;
+	private String linksEn;
+	private String testIngressionEn;
+	private String classificationsEn;
+	
 	public DegreeInfo(Integer idInternal) {
 		setIdInternal(idInternal);
 	}
@@ -229,6 +238,62 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 		this.testIngression = testIngression;
 	}
 
+	public String getAdditionalInfoEn() {
+		return additionalInfoEn;
+	}
+
+	public void setAdditionalInfoEn(String additionalInfoEn) {
+		this.additionalInfoEn = additionalInfoEn;
+	}
+
+	public String getClassificationsEn() {
+		return classificationsEn;
+	}
+
+	public void setClassificationsEn(String classificationsEn) {
+		this.classificationsEn = classificationsEn;
+	}
+
+	public String getHistoryEn() {
+		return historyEn;
+	}
+
+	public void setHistoryEn(String historyEn) {
+		this.historyEn = historyEn;
+	}
+
+	public String getLinksEn() {
+		return linksEn;
+	}
+
+	public void setLinksEn(String linksEn) {
+		this.linksEn = linksEn;
+	}
+
+	public String getObjectivesEn() {
+		return objectivesEn;
+	}
+
+	public void setObjectivesEn(String objectivesEn) {
+		this.objectivesEn = objectivesEn;
+	}
+
+	public String getProfessionalExitsEn() {
+		return professionalExitsEn;
+	}
+
+	public void setProfessionalExitsEn(String professionalExitsEn) {
+		this.professionalExitsEn = professionalExitsEn;
+	}
+
+	public String getTestIngressionEn() {
+		return testIngressionEn;
+	}
+
+	public void setTestIngressionEn(String testIngressionEn) {
+		this.testIngressionEn = testIngressionEn;
+	}
+
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof IDegreeInfo) {
@@ -250,10 +315,17 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 		result += " informação adicional= " + getAdditionalInfo();
 		result += " links= " + getLinks();
 		result += " provas de ingresso= " + getTestIngression();
+		result += " classificações= " + getClassifications();		
+		result += " objectivos(En)= " + getObjectivesEn();
+		result += " historial(En)= " + getHistoryEn();
+		result += " saidas profissionais(En)=" + getProfessionalExitsEn();
+		result += " informação adicional(En)= " + getAdditionalInfoEn();
+		result += " links(En)= " + getLinksEn();
+		result += " provas de ingresso(En)= " + getTestIngressionEn();
+		result += " classificações(En)= " + getClassificationsEn();	
 		result += " vagas iniciais= " + getDriftsInitial();
 		result += " vagas 1ª fase= " + getDriftsFirst();
 		result += " vagas 2ªfase= " + getDriftsSecond();
-		result += " classificações= " + getClassifications();
 		result += " nota minima= " + getMarkMin();
 		result += " nota máxima= " + getMarkMax();
 		result += " nota média= " + getMarkAverage();

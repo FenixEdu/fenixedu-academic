@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.coordinator;
 
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import Dominio.CursoExecucao;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeInfo;
+import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -45,27 +47,37 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 		InfoDegreeInfo infoDegreeInfo = null;
 
 		try {
+			if (infoExecutionDegreeId == null) {
+				throw new FenixServiceException("error.invalidExecutionDegree");
+			}
+			
+			
 			ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
 
+			//Execution degree
 			ICursoExecucaoPersistente cursoExecucaoPersistente = suportePersistente.getICursoExecucaoPersistente();
-
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(infoExecutionDegreeId);
 			executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOId(executionDegree, false);
 
-			if (executionDegree == null || executionDegree.getCurricularPlan() == null) {
-				return infoDegreeInfo;
+			if (executionDegree == null) {
+				throw new FenixServiceException("error.invalidExecutionDegree");
 			}
 
+			if (executionDegree.getCurricularPlan() == null) {
+				throw new FenixServiceException("error.impossibleDegreeInfo");
+			}
+
+			//Degree
 			ICurso degree = null;
 			degree = executionDegree.getCurricularPlan().getDegree();
 
 			if (degree == null) {
-				return infoDegreeInfo;
+				throw new FenixServiceException("error.impossibleDegreeInfo");
 			}
 
-			IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
 			//Read degree information
+			IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
 			List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(degree);
 
 			//Last information about this degree
@@ -74,13 +86,12 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 				Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
 				IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
 				infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
-			} else {
-				System.out.println("==degreeInfoList: NULL");
-			}
 
-			//verify if the record finded is this execution period
-			//IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente.getIPersistentExecutionPeriod();
-			//IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+				//verify if the record finded is this execution period
+				if (!verifyExecutionYear(infoDegreeInfo.getLastModificationDate(), executionDegree.getExecutionYear())) {
+					return null;
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FenixServiceException(e);
@@ -88,5 +99,19 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 
 		System.out.println("--->Terminou ReadDegreeInfoByExecutionDegree...");
 		return infoDegreeInfo;
+	}
+
+	/**
+	 * @param timestamp
+	 * @param year
+	 * @return boolean
+	 */
+	private boolean verifyExecutionYear(Timestamp lastModificationDate, IExecutionYear year) {
+		boolean result = false;
+
+		if ((!lastModificationDate.before(year.getBeginDate())) && (!lastModificationDate.after(year.getEndDate()))) {
+			result = true;
+		}
+		return result;
 	}
 }

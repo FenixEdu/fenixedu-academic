@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.Date;
+
 import Util.PeriodState;
 import fileSuport.INode;
 
@@ -14,6 +16,8 @@ public class ExecutionYear extends DomainObject implements IExecutionYear {
 
 	private PeriodState state;
 	protected String year;
+	private Date beginDate ;
+	private Date endDate ;	
 	
 	/**
 	 * Constructor for ExecutionYear.
@@ -90,5 +94,33 @@ public class ExecutionYear extends DomainObject implements IExecutionYear {
 	}
 
 	
+
+	/**
+	 * @return Returns the beginDate.
+	 */
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	/**
+	 * @param beginDate The beginDate to set.
+	 */
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	/**
+	 * @return Returns the endDate.
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate The endDate to set.
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 }

@@ -39,14 +39,14 @@ insert into EXECUTION_PERIOD values (15, '1º Semestre', 8, 'NO', 1);
 insert into EXECUTION_PERIOD values (16, '2º Semestre', 8, 'NO', 2);
 
 delete from EXECUTION_YEAR;
-insert into EXECUTION_YEAR values (1, '2002/2003','NO');
-insert into EXECUTION_YEAR values (2, '2003/2004','NO');
-insert into EXECUTION_YEAR values (3, '2005/2006','C');
-insert into EXECUTION_YEAR values (4, '2006/2007','NO');
-insert into EXECUTION_YEAR values (5, '2007/2008','NO');
-insert into EXECUTION_YEAR values (6, '2008/2009','NO');
-insert into EXECUTION_YEAR values (7, '2009/2010','NO');
-insert into EXECUTION_YEAR values (8, '2010/2011','NO');
+insert into EXECUTION_YEAR values (1, '2002/2003','NO', '2002-08-01', '2003-07-31');
+insert into EXECUTION_YEAR values (2, '2003/2004','NO', '2003-08-01', '2004-07-31');
+insert into EXECUTION_YEAR values (3, '2005/2006','C', '2005-08-01', '2006-07-31');
+insert into EXECUTION_YEAR values (4, '2006/2007','NO', '2006-08-01', '2007-07-31');
+insert into EXECUTION_YEAR values (5, '2007/2008','NO', '2007-08-01', '2008-07-31');
+insert into EXECUTION_YEAR values (6, '2008/2009','NO', '2008-08-01', '2009-07-31');
+insert into EXECUTION_YEAR values (7, '2009/2010','NO', '2009-08-01', '2010-07-31');
+insert into EXECUTION_YEAR values (8, '2010/2011','NO', '2010-08-01', '2011-07-31');
 
 -- -----------------------------
 -- Data for table 'CURRICULAR_YEAR'

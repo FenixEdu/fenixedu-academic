@@ -86,10 +86,18 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 			degreeInfo.setMarkMin(infoDegreeInfo.getMarkMin());
 			degreeInfo.setMarkMax(infoDegreeInfo.getMarkMax());
 			degreeInfo.setMarkAverage(infoDegreeInfo.getMarkAverage());
+			
+			//update information in english that it will be displayed in degree site.
+			degreeInfo.setObjectivesEn(infoDegreeInfo.getObjectivesEn());
+			degreeInfo.setHistoryEn(infoDegreeInfo.getHistoryEn());
+			degreeInfo.setProfessionalExitsEn(infoDegreeInfo.getProfessionalExitsEn());
+			degreeInfo.setAdditionalInfoEn(infoDegreeInfo.getAdditionalInfoEn());
+			degreeInfo.setLinksEn(infoDegreeInfo.getLinksEn());
+			degreeInfo.setTestIngressionEn(infoDegreeInfo.getTestIngressionEn());
+			degreeInfo.setClassificationsEn(infoDegreeInfo.getClassificationsEn());
 
 			//update last modification date
 			degreeInfo.setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-
 			
 
 			System.out.println("--->Escreveu: " + degreeInfo);

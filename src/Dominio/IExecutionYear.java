@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.Date;
+
 import fileSuport.INode;
 import Util.PeriodState;
 
@@ -13,7 +15,10 @@ import Util.PeriodState;
 public interface IExecutionYear extends IDomainObject,INode {
 	public String getYear();
 	public void setYear(String year);
-	void setState (PeriodState state);
-	PeriodState getState();
-
+	public void setState (PeriodState state);
+	public PeriodState getState();
+	public Date getBeginDate();
+	public void setBeginDate(Date beginDate);
+	public Date getEndDate();
+	public void setEndDate(Date endDate);
 }
