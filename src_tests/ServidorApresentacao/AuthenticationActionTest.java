@@ -10,6 +10,7 @@ import Dominio.Pessoa;
 import Dominio.Privilegio;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.security.PasswordEncryptor;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -89,10 +90,10 @@ public class AuthenticationActionTest extends MockStrutsTestCase {
 
   public void testSuccessfulAutenticacao() {      
     // define mapping de origem
-    setRequestPathInfo("", "/autenticacaoForm");
+    setRequestPathInfo("/login");
     
     // Preenche campos do formulário
-    addRequestParameter("utilizador","user");
+    addRequestParameter("username","user");
     addRequestParameter("password","pass");
 
     // coloca credenciais na sessão
@@ -103,14 +104,15 @@ public class AuthenticationActionTest extends MockStrutsTestCase {
     // invoca acção
     actionPerform();
     
+	//verifica ausencia de erros
+	verifyNoActionErrors();
+
     // verifica reencaminhamento
-    verifyForward("Docente");
+    verifyForward("sucess");
     
-    //verifica ausencia de erros
-    verifyNoActionErrors();
     
     //verifica UserView guardado na sessão
-    UserView newUserView = (UserView) getSession().getAttribute("UserView");
+    UserView newUserView = (UserView) getSession().getAttribute(SessionConstants.U_VIEW);
     assertEquals("Verify UserView", newUserView.getUtilizador(), "user");
 
   }
@@ -118,10 +120,10 @@ public class AuthenticationActionTest extends MockStrutsTestCase {
 
   public void testUnsuccessfulAutorizacao() {
     // define mapping de origem
-    setRequestPathInfo("", "/autenticacaoForm");
+    setRequestPathInfo("/login");
     
     // Preenche campos do formulário
-    addRequestParameter("utilizador","user");
+    addRequestParameter("username","user");
     addRequestParameter("password","xpto");
 
     // coloca credenciais na sessão
@@ -133,15 +135,15 @@ public class AuthenticationActionTest extends MockStrutsTestCase {
     actionPerform();
     
     // verifica endereço do reencaminhamento (ExcepcaoAutorizacao)
-    verifyForwardPath("/autenticacao.do");
+    verifyForwardPath("/loginPage.jsp");
     
     //verifica existencia de erros
-    verifyActionErrors(new String[] {"ServidorAplicacao.Servico.ExcepcaoAutenticacao"});
+    verifyActionErrors(new String[] {"errors.invalidAuthentication"});
 
     
     //verifica UserView guardado na sessão
-    UserView newUserView = (UserView) getSession().getAttribute("UserView");
-    assertEquals("Verify UserView", newUserView.getUtilizador(), "athirduser");
+    UserView newUserView = (UserView) getSession().getAttribute(SessionConstants.U_VIEW);
+    assertNull("UserView in session!", newUserView);
   }
 
   protected void ligarSuportePersistente() {
