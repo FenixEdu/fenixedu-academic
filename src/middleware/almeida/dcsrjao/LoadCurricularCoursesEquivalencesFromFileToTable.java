@@ -11,6 +11,11 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseEquivalence;
 import Dominio.ICurricularCourseEquivalenceRestricition;
 import Dominio.IDegreeCurricularPlan;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCurricularCourseEquivalence;
+import ServidorPersistente.IPersistentCurricularCourseEquivalenceRestriction;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  *
@@ -24,13 +29,47 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 	private static final String ONE_SPACE = " ";
 	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
 	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
+	private String inputFilename = "";
+	private boolean before1977 = true;
 
 	public LoadCurricularCoursesEquivalencesFromFileToTable() {
 	}
 
-	public static void main(String[] args) {
+	public static void main(boolean flag) {
 		if (loader == null) {
 			loader = new LoadCurricularCoursesEquivalencesFromFileToTable();
+		}
+
+		logString = "";
+		loader.before1977 = flag;
+		if (loader.before1977 == true) {
+			loader.inputFilename = "equivalenciasLEQBefore1997.txt";
+		} else {
+			loader.inputFilename = "equivalenciasLEQAfter1997.txt";
+		}
+		ISuportePersistente suportePersistente = null;
+		try {
+			suportePersistente = SuportePersistenteOJB.getInstance();
+			suportePersistente.iniciarTransaccao();
+			IPersistentCurricularCourseEquivalence persistentCurricularCourseEquivalence = suportePersistente.getIPersistentCurricularCourseEquivalence();
+			IPersistentCurricularCourseEquivalenceRestriction persistentCurricularCourseEquivalenceRestriction =
+				suportePersistente.getIPersistentCurricularCourseEquivalenceRestriction();
+			persistentCurricularCourseEquivalence.deleteAll();
+			persistentCurricularCourseEquivalenceRestriction.deleteAll();
+			suportePersistente.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			try {
+				suportePersistente.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia e1) {
+				logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
+				logString = loader.report(logString);
+				loader.writeToFile(logString);
+				return;
+			}
+			logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
+			logString = loader.report(logString);
+			loader.writeToFile(logString);
+			return;
 		}
 
 		loader.persistentObjectOJB = new PersistentObjectOJBReader();
@@ -166,7 +205,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 						curricularCourseEquivalence = new CurricularCourseEquivalence();
 						curricularCourseEquivalence.setCurricularCourse(newCurricularCourse);
 						writeElement(curricularCourseEquivalence);
-						
+
 						curricularCourseEquivalenceRestricition1 = new CurricularCourseEquivalenceRestriction();
 						curricularCourseEquivalenceRestricition1.setCurricularCourseEquivalence(curricularCourseEquivalence);
 						curricularCourseEquivalenceRestricition1.setEquivalentCurricularCourse(oldCurricularCourse1);
@@ -179,7 +218,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 	}
 
 	protected String getFilename() {
-		return "etc/migration/dcs-rjao/almeidaLEQData/equivalenciasLEQ.txt";
+		return "etc/migration/dcs-rjao/almeidaLEQData/" + this.inputFilename;
 	}
 
 	protected String getFieldSeparator() {
@@ -187,7 +226,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadCurricularCoursesEquivalencesFromFileToTable.txt";
+		return "etc/migration/dcs-rjao/logs/LoadCurricularCourses" + this.inputFilename;
 	}
 
 	protected String getClassName() {

@@ -25,7 +25,7 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 	private static HashMap error = new HashMap();
 	private static String errorMessage = "";
 	private static String errorDBID = "";
-	IExecutionPeriod executionPeriod = null;
+	List executionPeriodList = null;
 
 	public CreatetExecutionCoursesForLEQCurricularCourses() {
 	}
@@ -39,19 +39,19 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 		loader.migrationStart(loader.getClassName());
 
 		loader.setupDAO();
-		IDegreeCurricularPlan degreeCurricularPlan = loader.processNewLEQDegreeCurricularPlan();
+		IDegreeCurricularPlan newLEQdegreeCurricularPlan = loader.processNewLEQDegreeCurricularPlan();
 		loader.shutdownDAO();
-		if (degreeCurricularPlan == null) {
+		if (newLEQdegreeCurricularPlan == null) {
 			logString += error.toString();
 			loader.migrationEnd(loader.getClassName(), logString);
 			return;
 		}
 
 		loader.setupDAO();
-		loader.executionPeriod = loader.persistentObjectOJB.readActiveExecutionPeriod();
+		loader.executionPeriodList = loader.persistentObjectOJB.readAllExecutionPeriods();
 		loader.shutdownDAO();
-		if (loader.executionPeriod == null) {
-			errorMessage = "\n Erro ao ler o active execution period!";
+		if (loader.executionPeriodList == null) {
+			errorMessage = "\n Erro ao ler os execution periods!";
 			errorDBID = "";
 			error = loader.setErrorMessage(errorMessage, errorDBID, error);
 			logString += error.toString();
@@ -60,10 +60,10 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 		}
 
 		loader.setupDAO();
-		List leqCurricularCourses = loader.persistentObjectOJB.readAllLEQCurricularCourses(degreeCurricularPlan);
+		List leqCurricularCourses = loader.persistentObjectOJB.readAllLEQCurricularCourses(newLEQdegreeCurricularPlan);
 		loader.shutdownDAO();
 		if (leqCurricularCourses == null) {
-			errorMessage = "\n Erro ao ler as cadeiras do plano curricular " + degreeCurricularPlan.getName() + "!";
+			errorMessage = "\n Erro ao ler as cadeiras do plano curricular " + newLEQdegreeCurricularPlan.getName() + "!";
 			errorDBID = "";
 			error = loader.setErrorMessage(errorMessage, errorDBID, error);
 			logString += error.toString();
@@ -85,24 +85,30 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 	}
 
 	private void processCurricularCourse(ICurricularCourse curricularCourse) {
-		if (!curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)){
+		if (!curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
 
-			IDisciplinaExecucao executionCourse = loader.persistentObjectOJB.readExecutionCourseByUnique(curricularCourse.getCode(), this.executionPeriod);
-			if (executionCourse != null) {
-				errorMessage = "\n já existe o executionCourse com o codigo " + executionCourse.getSigla() + " e nome " + executionCourse.getNome() + "! Registos: ";
-				errorDBID = curricularCourse.getIdInternal() + ",";
-				error = loader.setErrorMessage(errorMessage, errorDBID, error);
-				numberUntreatableElements++;
-				return;
-			} else {
-				executionCourse = new DisciplinaExecucao();
-				executionCourse.setExecutionPeriod(this.executionPeriod);
-				executionCourse.setNome(curricularCourse.getName());
-				executionCourse.setSigla(curricularCourse.getCode());
-				List associatedCurricularCourses = new ArrayList();
-				associatedCurricularCourses.add(curricularCourse);
-				executionCourse.setAssociatedCurricularCourses(associatedCurricularCourses);
-				writeElement(executionCourse);
+			Iterator iteratorExecutionPeriod = executionPeriodList.iterator();
+			while (iteratorExecutionPeriod.hasNext()) {
+				IExecutionPeriod executionPeriod = (IExecutionPeriod) iteratorExecutionPeriod.next();
+				IDisciplinaExecucao executionCourse =
+					loader.persistentObjectOJB.readExecutionCourseByUnique(curricularCourse.getCode(), executionPeriod);
+				if (executionCourse != null) {
+					errorMessage =
+						"\n já existe o executionCourse com o codigo " + executionCourse.getSigla() + " e nome " + executionCourse.getNome() + "! Registos: ";
+					errorDBID = curricularCourse.getIdInternal() + ",";
+					error = loader.setErrorMessage(errorMessage, errorDBID, error);
+					numberUntreatableElements++;
+					return;
+				} else {
+					executionCourse = new DisciplinaExecucao();
+					executionCourse.setExecutionPeriod(executionPeriod);
+					executionCourse.setNome(curricularCourse.getName());
+					executionCourse.setSigla(curricularCourse.getCode());
+					List associatedCurricularCourses = new ArrayList();
+					associatedCurricularCourses.add(curricularCourse);
+					executionCourse.setAssociatedCurricularCourses(associatedCurricularCourses);
+					writeElement(executionCourse);
+				}
 			}
 		}
 	}
@@ -120,7 +126,7 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/" + this.getClassName() +".txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 
 	protected String getClassName() {

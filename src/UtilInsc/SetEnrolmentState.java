@@ -69,7 +69,7 @@ public class SetEnrolmentState {
 	}
 
 	private static void autentication() {
-		String argsAutenticacao[] = {"stdnt", "pass", Autenticacao.EXTRANET};
+		String argsAutenticacao[] = {"l44406", "1", Autenticacao.EXTRANET};
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (FenixServiceException e) {
@@ -160,7 +160,15 @@ public class SetEnrolmentState {
 			IStudent student = persistentStudent.readByUsername(((UserView) userView).getUtilizador());
 			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 			IEnrolmentPeriod enrolmentPeriod = getEnrolmentPeriod(persistentEnrolmentPeriod, studentActiveCurricularPlan);
-			final Integer i = new Integer(enrolmentPeriod.getExecutionPeriod().getIdInternal().intValue() + 1);
+			
+			int x = 0;
+			if(enrolmentPeriod.getExecutionPeriod().getIdInternal().intValue() < 100001){
+				x = enrolmentPeriod.getExecutionPeriod().getIdInternal().intValue() + 100000;	
+			}else{
+				x = enrolmentPeriod.getExecutionPeriod().getIdInternal().intValue() + 1;
+			}
+			
+			final Integer i = new Integer(x);
 			List executionPeriodList = persistentExecutionPeriod.readAllExecutionPeriod();
 			List finalExecutionPeriodList = (List) CollectionUtils.select(executionPeriodList, new Predicate() {
 				public boolean evaluate(Object obj) {
@@ -175,6 +183,7 @@ public class SetEnrolmentState {
 			System.out.println();
 			System.out.println("SETING NEW ENROLMENT PERIOD FOR: [" + executionPeriodName + "]");
 			System.out.println("START DATE: [" + enrolmentPeriod.getStartDate().toString() + "] END DATE: [" + enrolmentPeriod.getEndDate().toString() + "]");
+
 		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
 			e.printStackTrace(System.out);
 		} catch (ExcepcaoPersistencia e) {

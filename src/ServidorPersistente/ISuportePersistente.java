@@ -110,9 +110,16 @@ public interface ISuportePersistente {
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction();	
 	public IPersistentSummary getIPersistentSummary();
 
-public IPersistentQualification getIPersistentQualification();
+	public IPersistentQualification getIPersistentQualification();
 	
 	public IPersistentStudentGroup getIPersistentStudentGroup();
 	public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend();
 	public IPersistentGroupProperties getIPersistentGroupProperties();
+	
+	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
+	
+	public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction();
+
 }
+
+

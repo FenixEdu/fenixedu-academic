@@ -28,14 +28,14 @@ public class MakeEnrolment {
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		autentication();
-		//		userView = MakeEnrolmentIO.interactiveAutentication();
+		//userView = MakeEnrolmentIO.interactiveAutentication();
 		while (true) {
 			generateEnrolmentProssess(infoEnrolmentContext, true, true);
 		}
 	}
 
 	private static void autentication() {
-		String argsAutenticacao[] = { "21268", "1", Autenticacao.EXTRANET };
+		String argsAutenticacao[] = { "l44406", "1", Autenticacao.EXTRANET };
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
@@ -140,7 +140,7 @@ public class MakeEnrolment {
 
 	private static void secureEnrolmentProssess() {
 
-		String name = "LEQ-2003";
+		String name = "LEQ2003/2004";
 		Object serviceArgs[] = { name };
 
 		executeService("ChangeEnrolmentStateFromTemporarilyToEnroled", serviceArgs);

@@ -51,11 +51,11 @@ public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory {
 		String degree = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegree().getSigla();
 		String degreeCurricularPlan = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getName();
 		// FIXME DAVID-RICARDO: O nome do plano curricular e estratégias tem de ser alterados
-		if ( (degree.equals("LERCI")) && degreeCurricularPlan.equals("LERCI-2003")) {
+		if ( (degree.equals("LERCI")) && degreeCurricularPlan.equals("LERCI2003/2004")) {
 			strategyInstance = new EnrolmentStrategyLERCI();
-		} else if ( (degree.equals("LARQ")) && degreeCurricularPlan.equals("LARQ-2003")) {
+		} else if ( (degree.equals("LARQ")) && degreeCurricularPlan.equals("LARQ2003/2004")) {
 			strategyInstance = new EnrolmentStrategyLARQ();
-		} else if ( (degree.equals("LEQ")) && degreeCurricularPlan.equals("LEQ-2003")) {
+		} else if ( (degree.equals("LEQ")) && degreeCurricularPlan.equals("LEQ2003/2004")) {
 			strategyInstance = new EnrolmentStrategyLEQ();
 		}else{
 			throw new IllegalArgumentException("Degree or DegreeCurricularPlan invalid!");

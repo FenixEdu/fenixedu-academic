@@ -985,4 +985,26 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 		return null;
 	}
+
+	public ICurricularCourse readFirstCurricularCourseByCode(String code) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("code", code);
+		List result = query(CurricularCourse.class, criteria);
+		if (result.size() > 0) {
+			return (ICurricularCourse) result.get(0);
+		} else {
+			System.out.println("readFirstCurricularCourseByCode menos que um\n");
+		}
+		return null;
+	}
+	
+	public List readAllExecutionPeriods() {
+		List result = query(ExecutionPeriod.class, null);
+		if (result.size() > 0) {
+			return result;
+		} else {
+			return null;
+		}
+	}
+
 }

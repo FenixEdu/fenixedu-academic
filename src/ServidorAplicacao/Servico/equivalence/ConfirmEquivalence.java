@@ -37,7 +37,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
-import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
@@ -94,10 +93,9 @@ public class ConfirmEquivalence implements IServico {
 
 				Iterator infoEnrolmentsToGiveEquivalenceIterator = infoEquivalenceContext.getChosenInfoEnrolmentsToGiveEquivalence().iterator();
 				while (infoEnrolmentsToGiveEquivalenceIterator.hasNext()) {
-					InfoEnrolment infpEnrolmentToGiveEquivalence = (InfoEnrolment) infoEnrolmentsToGiveEquivalenceIterator.next();
-					createNewEnrolmentEquivalenceRestriction(enrolmentEquivalence, infpEnrolmentToGiveEquivalence);
+					InfoEnrolment infoEnrolmentToGiveEquivalence = (InfoEnrolment) infoEnrolmentsToGiveEquivalenceIterator.next();
+					createNewEnrolmentEquivalenceRestriction(enrolmentEquivalence, infoEnrolmentToGiveEquivalence);
 				}
-				//				TODO DAVID-RICARDO: Tratar opções
 			}
 		} catch (ExistingPersistentException e1) {
 			throw new FenixServiceException(e1);
@@ -180,11 +178,8 @@ public class ConfirmEquivalence implements IServico {
 			InfoStudentCurricularPlan infoStudentCurricularPlan = infoEquivalenceContext.getInfoStudentCurricularPlan();
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
-//			if(curricularCourseScopeToEnrol.getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)){
-//				
-//				
-//			}
 			newEnrolment = new Enrolment();
+
 			newEnrolment.setCurricularCourseScope(curricularCourseScopeToEnrol);
 			newEnrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
 			newEnrolment.setEnrolmentState(EnrolmentState.APROVED);

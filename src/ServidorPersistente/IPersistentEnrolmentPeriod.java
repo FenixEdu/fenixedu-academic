@@ -4,6 +4,7 @@
  */
 package ServidorPersistente;
 
+import Dominio.EnrolmentPeriod;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolmentPeriod;
 
@@ -24,6 +25,7 @@ public interface IPersistentEnrolmentPeriod extends IPersistentObject{
 	 * @return IEnrolmentPeriod next enrolment period if any. If doesn't exist other curricular plan then it returns null. 
 	 */
 	IEnrolmentPeriod readNextEnrolmentPeriodForDegreeCurricularPlan(IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
-
+	
+	public EnrolmentPeriod readEnrolmentPeriodByKeyAndDegreeCurricularPlan(Integer key, IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
 
 }

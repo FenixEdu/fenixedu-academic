@@ -7,6 +7,7 @@ package ServidorPersistente.OJB;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.EnrolmentPeriod;
@@ -80,4 +81,12 @@ public class PersistentEnrolmentPeriod extends ObjectFenixOJB implements IPersis
 		}
 		return enrolmentPeriod;
 	}
+	
+	public EnrolmentPeriod readEnrolmentPeriodByKeyAndDegreeCurricularPlan(Integer key, IDegreeCurricularPlan plan) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("idInternal", key);
+		criteria.addEqualTo("keyDegreeCurricularPlan", plan.getIdInternal());
+		return (EnrolmentPeriod) queryObject(EnrolmentPeriod.class, criteria);
+	}
+
 }

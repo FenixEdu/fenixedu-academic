@@ -53,7 +53,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 	private static HashMap errorFilterScopeWithoutSemesterAndBranch = new HashMap();
 	private static HashMap errorNoCourseInRealDegreeCPlan = new HashMap();
 	private static HashMap errorNoCourseInISTDegreeCPlan = new HashMap();
-	private static HashMap errorNoCourseAtAll = new HashMap();
+	private static HashMap errorNotExistingCourse = new HashMap();
 	private static HashMap error = new HashMap();
 	private static String errorMessage = "";
 	private static String errorDBID = "";
@@ -127,28 +127,28 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 	}
 
 	private void processCoursesErrors() {
-		String errorLog = errorFilterScopeByUnique.toString();
-		String filename = "etc/migration/dcs-rjao/logs/errorFilterScopeByUnique.txt";
+//		String errorLog = errorFilterScopeByUnique.toString();
+//		String filename = "etc/migration/dcs-rjao/logs/errorFilterScopeByUnique.txt";
+//		writeErrorToFile(errorLog, filename);
+//
+//		errorLog = errorFilterScopeWithoutSemester.toString();
+//		filename = "etc/migration/dcs-rjao/logs/errorFilterScopeWithoutSemester.txt";
+//		writeErrorToFile(errorLog, filename);
+
+		String errorLog = errorFilterScopeWithoutSemesterAndBranch.toString();
+		String filename = "etc/migration/dcs-rjao/logs/errorFilterScopeWithoutSemesterAndBranch.txt";
 		writeErrorToFile(errorLog, filename);
 
-		errorLog = errorFilterScopeWithoutSemester.toString();
-		filename = "etc/migration/dcs-rjao/logs/errorFilterScopeWithoutSemester.txt";
-		writeErrorToFile(errorLog, filename);
+//		errorLog = errorNoCourseInRealDegreeCPlan.toString();
+//		filename = "etc/migration/dcs-rjao/logs/errorNoCourseInRealDegreeCPlan.txt";
+//		writeErrorToFile(errorLog, filename);
+//
+//		errorLog = errorNoCourseInISTDegreeCPlan.toString();
+//		filename = "etc/migration/dcs-rjao/logs/errorNoCourseInISTDegreeCPlan.txt";
+//		writeErrorToFile(errorLog, filename);
 
-		errorLog = errorFilterScopeWithoutSemesterAndBranch.toString();
-		filename = "etc/migration/dcs-rjao/logs/errorFilterScopeWithoutSemesterAndBranch.txt";
-		writeErrorToFile(errorLog, filename);
-
-		errorLog = errorNoCourseInRealDegreeCPlan.toString();
-		filename = "etc/migration/dcs-rjao/logs/errorNoCourseInRealDegreeCPlan.txt";
-		writeErrorToFile(errorLog, filename);
-
-		errorLog = errorNoCourseInISTDegreeCPlan.toString();
-		filename = "etc/migration/dcs-rjao/logs/errorNoCourseInISTDegreeCPlan.txt";
-		writeErrorToFile(errorLog, filename);
-
-		errorLog = errorNoCourseAtAll.toString();
-		filename = "etc/migration/dcs-rjao/logs/errorNoCourseAtAll.txt";
+		errorLog = errorNotExistingCourse.toString();
+		filename = "etc/migration/dcs-rjao/logs/errorNotExistingCourse.txt";
 		writeErrorToFile(errorLog, filename);
 	}
 
@@ -410,16 +410,17 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		enrolmentEvaluation.setEnrolmentEvaluationType(this.enrolmentEvaluationType);
 		enrolmentEvaluation.setEnrolment(enrolment);
 		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); //		}
-
+		
+		//FIXME DAVID-RICARDO: As datas estão mal migradas
 		if (almeida_enrolment.getDatexa() != null) {
 			Calendar newCalendar = Calendar.getInstance();
 			int year = 0;
 			int month = 0;
 			int day = 0;
 			try {
-				year = new Integer(almeida_enrolment.getDatexa().substring(0, 3)).intValue();
-				month = new Integer(almeida_enrolment.getDatexa().substring(5, 6)).intValue();
-				day = new Integer(almeida_enrolment.getDatexa().substring(8, 9)).intValue();
+				year = (new Integer(almeida_enrolment.getDatexa().substring(0, 3))).intValue();
+				month = (new Integer(almeida_enrolment.getDatexa().substring(5, 6))).intValue();
+				day = (new Integer(almeida_enrolment.getDatexa().substring(8, 9))).intValue();
 			} catch (NumberFormatException e) {
 				errorMessage = "\n A data de exame " + almeida_enrolment.getDatexa() + " é inválida! Registos: ";
 				errorDBID = almeida_enrolment.getId_internal() + ", ";
@@ -500,49 +501,49 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		ICurricularCourseScope processedCurricularCourseScope = null;
 		processedCurricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByUnique(this.curricularCourse, this.oldBranch, this.curricularSemester);
 		if (processedCurricularCourseScope == null) {
-			errorMessage =
-				"\n Não existe a disciplina(scope) = "
-					+ this.curricularCourse.getCode()
-					+ "["
-					+ this.curricularCourse.getIdInternal()
-					+ "]"
-					+ " Semestre = "
-					+ this.curricularSemester.getSemester().intValue()
-					+ " Ano = "
-					+ this.curricularSemester.getCurricularYear().getYear().intValue()
-					+ " Ano Inscricao = "
-					+ almeida_enrolment.getAnoins()
-					+ " Ramo = "
-					+ this.oldBranch.getCode()
-					+ "["
-					+ this.oldBranch.getInternalID()
-					+ "]"
-					+ ". Registos: ";
-			errorDBID = almeida_enrolment.getId_internal() + ", ";
-			errorFilterScopeByUnique = loader.setErrorMessage(errorMessage, errorDBID, errorFilterScopeByUnique);
+//			errorMessage =
+//				"\n Não existe a disciplina(scope) = "
+//					+ this.curricularCourse.getCode()
+//					+ "["
+//					+ this.curricularCourse.getIdInternal()
+//					+ "]"
+//					+ " Semestre = "
+//					+ this.curricularSemester.getSemester().intValue()
+//					+ " Ano = "
+//					+ this.curricularSemester.getCurricularYear().getYear().intValue()
+//					+ " Ano Inscricao = "
+//					+ almeida_enrolment.getAnoins()
+//					+ " Ramo = "
+//					+ this.oldBranch.getCode()
+//					+ "["
+//					+ this.oldBranch.getInternalID()
+//					+ "]"
+//					+ ". Registos: ";
+//			errorDBID = almeida_enrolment.getId_internal() + ", ";
+//			errorFilterScopeByUnique = loader.setErrorMessage(errorMessage, errorDBID, errorFilterScopeByUnique);
 
 			processedCurricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByCurricularCourseAndBranch(this.curricularCourse, this.oldBranch);
 			if (processedCurricularCourseScope == null) {
-				errorMessage =
-					"\n Não existe a disciplina(scope) = "
-						+ this.curricularCourse.getCode()
-						+ "["
-						+ this.curricularCourse.getIdInternal()
-						+ "]"
-						+ " Semestre = "
-						+ this.curricularSemester.getSemester().intValue()
-						+ " Ano = "
-						+ this.curricularSemester.getCurricularYear().getYear().intValue()
-						+ " Ano Inscricao = "
-						+ almeida_enrolment.getAnoins()
-						+ " Ramo = "
-						+ this.oldBranch.getCode()
-						+ "["
-						+ this.oldBranch.getInternalID()
-						+ "]"
-						+ ". Registos: ";
-				errorDBID = almeida_enrolment.getId_internal() + ", ";
-				errorFilterScopeWithoutSemester = loader.setErrorMessage(errorMessage, errorDBID, errorFilterScopeWithoutSemester);
+//				errorMessage =
+//					"\n Não existe a disciplina(scope) = "
+//						+ this.curricularCourse.getCode()
+//						+ "["
+//						+ this.curricularCourse.getIdInternal()
+//						+ "]"
+//						+ " Semestre = "
+//						+ this.curricularSemester.getSemester().intValue()
+//						+ " Ano = "
+//						+ this.curricularSemester.getCurricularYear().getYear().intValue()
+//						+ " Ano Inscricao = "
+//						+ almeida_enrolment.getAnoins()
+//						+ " Ramo = "
+//						+ this.oldBranch.getCode()
+//						+ "["
+//						+ this.oldBranch.getInternalID()
+//						+ "]"
+//						+ ". Registos: ";
+//				errorDBID = almeida_enrolment.getId_internal() + ", ";
+//				errorFilterScopeWithoutSemester = loader.setErrorMessage(errorMessage, errorDBID, errorFilterScopeWithoutSemester);
 
 				processedCurricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByCurricularCourse(this.curricularCourse);
 				if (processedCurricularCourseScope == null) {
@@ -579,33 +580,40 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		ICurricularCourse processedCurricularCourse =
 			persistentObjectOJB.readCurricularCourseByCodeAndDegreeCurricularPlan(almeida_enrolment.getCoddis(), this.oldDegreeCurricularPlan);
 		if (processedCurricularCourse == null) {
-			errorMessage =
-				"\n Não existe (ou existe mais que um) curricularCourse com o code = "
-					+ almeida_enrolment.getCoddis()
-					+ " no plano curricular "
-					+ this.oldDegreeCurricularPlan.getName()
-					+ ". Registos: ";
-			errorDBID = almeida_enrolment.getId_internal() + ", ";
-			errorNoCourseInRealDegreeCPlan = loader.setErrorMessage(errorMessage, errorDBID, errorNoCourseInRealDegreeCPlan);
+//			errorMessage =
+//				"\n Não existe (ou existe mais que um) curricularCourse com o code = "
+//					+ almeida_enrolment.getCoddis()
+//					+ " no plano curricular "
+//					+ this.oldDegreeCurricularPlan.getName()
+//					+ ". Registos: ";
+//			errorDBID = almeida_enrolment.getId_internal() + ", ";
+//			errorNoCourseInRealDegreeCPlan = loader.setErrorMessage(errorMessage, errorDBID, errorNoCourseInRealDegreeCPlan);
 
 			processedCurricularCourse =
 				persistentObjectOJB.readCurricularCourseByCodeAndDegreeCurricularPlan(almeida_enrolment.getCoddis(), this.oldISTDegreeCurricularPlan);
 			if (processedCurricularCourse == null) {
-				errorMessage =
-					"\n Não existe (ou existe mais que um) curricularCourse com o code = "
-						+ almeida_enrolment.getCoddis()
-						+ " no plano curricular "
-						+ this.oldISTDegreeCurricularPlan.getName()
-						+ ". Registos: ";
-				errorDBID = almeida_enrolment.getId_internal() + ", ";
-				errorNoCourseInISTDegreeCPlan = loader.setErrorMessage(errorMessage, errorDBID, errorNoCourseInISTDegreeCPlan);
+//				errorMessage =
+//					"\n Não existe (ou existe mais que um) curricularCourse com o code = "
+//						+ almeida_enrolment.getCoddis()
+//						+ " no plano curricular "
+//						+ this.oldISTDegreeCurricularPlan.getName()
+//						+ ". Registos: ";
+//				errorDBID = almeida_enrolment.getId_internal() + ", ";
+//				errorNoCourseInISTDegreeCPlan = loader.setErrorMessage(errorMessage, errorDBID, errorNoCourseInISTDegreeCPlan);
 
 				processedCurricularCourse = persistentObjectOJB.readCurricularCourseByCode(almeida_enrolment.getCoddis());
 				if (processedCurricularCourse == null) {
-					errorMessage = "\n Não existe (ou existe mais que um) curricularCourse com o code = " + almeida_enrolment.getCoddis() + ". Registos: ";
-					errorDBID = almeida_enrolment.getId_internal() + ", ";
-					errorNoCourseAtAll = loader.setErrorMessage(errorMessage, errorDBID, errorNoCourseAtAll);
-					return null;
+//					errorMessage = "\n Não existe (ou existe mais que um) curricularCourse com o code = " + almeida_enrolment.getCoddis() + ". Registos: ";
+//					errorDBID = almeida_enrolment.getId_internal() + ", ";
+//					errorNotExistingCourse = loader.setErrorMessage(errorMessage, errorDBID, errorNotExistingCourse);
+//					return null;
+					processedCurricularCourse = persistentObjectOJB.readFirstCurricularCourseByCode(almeida_enrolment.getCoddis());
+					if (processedCurricularCourse == null) {
+						errorMessage = "\n Não existe o curricularCourse com o code = " + almeida_enrolment.getCoddis() + ". Registos: ";
+						errorDBID = almeida_enrolment.getId_internal() + ", ";
+						errorNotExistingCourse = loader.setErrorMessage(errorMessage, errorDBID, errorNotExistingCourse);
+						return null;						
+					}
 				}
 			}
 		}
