@@ -59,26 +59,9 @@ public class LerTurmas implements IServico {
 
 			ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-
-			System.out.println("1-"+infoExecutionPeriod.getInfoExecutionYear().getYear());
-			System.out.println("2-"+infoExecutionPeriod.getName());
-
-			System.out.println("3-"+curricularYear);
-			System.out.println("4-"+infoExecutionDegree.getInfoExecutionYear().getYear());
-			System.out.println("5-"+infoExecutionDegree.getInfoDegreeCurricularPlan().getName());
-			System.out.println("6-"+infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());			
-
-
-
-
-
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
 					infoExecutionPeriod);
-
-			System.out.println("1-"+infoExecutionPeriod.getInfoExecutionYear().getYear());
-			System.out.println("2-"+infoExecutionPeriod.getName());
-
 
 			ICursoExecucao executionDegree =
 				Cloner.copyInfoExecutionDegree2ExecutionDegree(
