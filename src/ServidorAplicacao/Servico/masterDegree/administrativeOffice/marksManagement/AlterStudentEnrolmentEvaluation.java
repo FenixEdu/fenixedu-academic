@@ -6,11 +6,13 @@ import java.util.List;
 
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
-import Dominio.CurricularCourseScope;
+import Dominio.CurricularCourse;
+import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Funcionario;
-import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -25,7 +27,8 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrat
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
@@ -36,6 +39,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.EnrolmentEvaluationState;
+import Util.EnrolmentState;
 import Util.TipoCurso;
 
 /**
@@ -72,10 +76,11 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 	List infoEvaluationsWithError = null;
 	try {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
+		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
 		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 
 		//			responsible teacher
 		ITeacher teacher = persistentTeacher.readTeacherByNumber(teacherNumber);
@@ -87,9 +92,9 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 		Funcionario employee = readEmployee(person);
 
 		//			curricular Course Scope
-		ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-		curricularCourseScope.setIdInternal(curricularCourseCode);
-		curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
+		ICurricularCourse curricularCourse = new CurricularCourse();
+		curricularCourse.setIdInternal(curricularCourseCode);
+		curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
 		
 		infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
 		
@@ -100,10 +105,11 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 
 
 		if (!isValidEvaluation(infoEnrolmentEvaluation)) {
+System.out.println("entrei aqui no servico");
 			infoEvaluationsWithError.add(infoEnrolmentEvaluation);
 		} else {
 			
-			// read enrolment
+			// read enrolmentEvaluation
 			IEnrolmentEvaluation iEnrolmentEvaluation = new EnrolmentEvaluation();
 
 			iEnrolmentEvaluation.setIdInternal(enrolmentEvaluationCode);
@@ -112,9 +118,31 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 			enrolmentEvaluation = Cloner.copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(infoEnrolmentEvaluation);
 			
-			//check if has an alteration
-			//
-			
+			//check for an alteration
+			if (!enrolmentEvaluation.getGrade().equals(iEnrolmentEvaluation.getGrade())){
+				try{
+					Integer grade = new Integer(enrolmentEvaluation.getGrade());
+					iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.APROVED);
+				}catch(NumberFormatException e){
+					if(enrolmentEvaluation.getGrade().equals("RE"))
+							iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.NOT_APROVED);
+					if(enrolmentEvaluation.getGrade().equals("NA"))
+							iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.NOT_EVALUATED);
+					System.out.println("há problemas");
+				}
+				IEnrolment enrolment = new Enrolment();
+				enrolment.setCurricularCourseScope(iEnrolmentEvaluation.getEnrolment().getCurricularCourseScope());
+				enrolment.setEnrolmentEvaluationType(iEnrolmentEvaluation.getEnrolment().getEnrolmentEvaluationType());
+				enrolment.setExecutionPeriod(iEnrolmentEvaluation.getEnrolment().getExecutionPeriod());
+				enrolment.setStudentCurricularPlan(iEnrolmentEvaluation.getEnrolment().getStudentCurricularPlan());
+				enrolment.setIdInternal(iEnrolmentEvaluation.getEnrolment().getIdInternal());
+				enrolment.setEnrolmentState(iEnrolmentEvaluation.getEnrolment().getEnrolmentState());
+System.out.println("verificar se há ou nap alteracao---- " + enrolment.getEnrolmentState());
+				persistentEnrolment.lockWrite(enrolment);
+				iEnrolmentEvaluation.setEnrolment(enrolment);
+				
+				
+			}
 			
 			enrolmentEvaluation.setEnrolment(iEnrolmentEvaluation.getEnrolment());
 			enrolmentEvaluation.setWhen(calendario.getTime());
@@ -124,10 +152,15 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 			} else {
 				enrolmentEvaluation.setExamDate(calendario.getTime());
 			}
+			if (infoEnrolmentEvaluation.getGradeAvailableDate() != null) {
+				enrolmentEvaluation.setGradeAvailableDate(infoEnrolmentEvaluation.getGradeAvailableDate());
+			} else {
+				enrolmentEvaluation.setGradeAvailableDate(calendario.getTime());
+			}
 			enrolmentEvaluation.setGrade(infoEnrolmentEvaluation.getGrade());
 			EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
 			enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-			enrolmentEvaluation.setGradeAvailableDate(calendario.getTime());
+//			enrolmentEvaluation.setGradeAvailableDate(calendario.getTime());
 			enrolmentEvaluation.setEnrolmentEvaluationType(infoEnrolmentEvaluation.getEnrolmentEvaluationType());
 			enrolmentEvaluation.setEnrolmentEvaluationState(enrolmentEvaluationState);
 			enrolmentEvaluation.setEmployee(employee);		

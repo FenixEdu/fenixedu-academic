@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -15,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -75,7 +77,10 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
+			
+		HttpSession session = request.getSession(false);
+		String executionYear = (String) getFromRequest("executionYear", request);
+		Integer courseID = Integer.valueOf(getFromRequest("courseID", request));
 		request.setAttribute("courseID", getFromRequest("courseID", request));
 
 		//		parameters necessary to write in jsp
@@ -83,6 +88,34 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		request.setAttribute("executionYear", getFromRequest("executionYear", request));
 		request.setAttribute("degree", getFromRequest("degree", request));
 		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+		
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		Object args[] = {userView,courseID,executionYear};
+		GestorServicos serviceManager = GestorServicos.manager();
+		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
+		List listEnrolmentEvaluation = null;
+		try {
+		 listEnrolmentEvaluation =
+				(List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);
+		} catch (NotAuthorizedException e){
+			return mapping.findForward("NotAuthorized");
+		} catch (NonExistingServiceException e) {
+			ActionErrors errors = new ActionErrors();
+			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
+			saveErrors(request, errors);
+			return mapping.findForward("NoStudents");
+		}
+
+		if (listEnrolmentEvaluation.size() == 0){
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+					"StudentNotEnroled",
+					new ActionError(
+						"error.students.Mark.NotAvailable"));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("NoStudents");
+		}
+
 
 		return mapping.findForward("ChooseSuccess");
 	}

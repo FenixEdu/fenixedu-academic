@@ -166,6 +166,25 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 								conclusionDate = dataAux;
 							}					 
 						}			
+						List newEnrolmentList = new ArrayList();
+						InfoEnrolment infoEnrolment = new InfoEnrolment();
+						//get the last enrolmentEvaluation
+//						Iterator iterator1 = enrolmentList.iterator();
+//						
+//						while(iterator1.hasNext()) {	
+//							result = iterator1.next();
+//							infoEnrolment = (InfoEnrolment) result;
+//							
+//							List enrolmentEvaluations = (List)((InfoEnrolment)result).getInfoEnrolmentEvaluation();	
+//							BeanComparator dateComparator = new BeanComparator("idInternal");
+//							Collections.sort(enrolmentEvaluations, dateComparator);
+//							Collections.reverse(enrolmentEvaluations);
+//							InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) enrolmentEvaluations.get(0);
+//							infoEnrolment.setInfoEnrolmentEvaluation(latestEvaluation);
+//							newEnrolmentList.add(infoEnrolment);
+//						}
+//					
+//System.out.println(newEnrolmentList.get(0));						
 						session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
 						try {
 							infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);

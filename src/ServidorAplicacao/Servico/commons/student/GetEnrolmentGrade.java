@@ -48,19 +48,24 @@ public class GetEnrolmentGrade implements IServico {
     public InfoEnrolmentEvaluation run(IEnrolment enrolment)  {
 
 		List enrolmentEvaluations = enrolment.getEvaluations();
-
+		
 		if ((enrolment == null) || (enrolment.getEvaluations() == null) || (enrolment.getEvaluations().size() == 0)) {
 			return null;
 		}        
 		
 		// if there's only one evaluation ...
 		if (enrolmentEvaluations.size() == 1){
+
 			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
 			
 			try {
+				
 				enrolmentEvaluation.setGrade((new Integer(enrolmentEvaluation.getGrade())).toString());	
+
 			} catch(NumberFormatException e) {
+			
 			}
+			
 			return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 		}
 

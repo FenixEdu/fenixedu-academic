@@ -5,10 +5,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
-<logic:present name="jspTitle">
-	<h2><bean:write name="jspTitle" /></h2>
-	<br />	
-</logic:present>
+<h2><bean:message key="label.students.listMarks"/></h2>
+<br />
 <bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />

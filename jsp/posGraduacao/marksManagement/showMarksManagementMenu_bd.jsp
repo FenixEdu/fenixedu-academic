@@ -16,23 +16,23 @@
 <ul>
     <li>
 		<html:link page="<%= "/showMarkDispatchAction.do?method=prepareShowMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;curricularCourseCode=" + pageContext.findAttribute("courseID") %>">
-    		<bean:message key="link.masterDegree.administrativeOffice.marksView" />
+    		<bean:message key="link.masterDegree.administrativeOffice.marksView" />    		
 		</html:link>
 	</li>
-    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") %>">
+    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;courseID=" + pageContext.findAttribute("courseID") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksSubmission" />
     	</html:link>
     </li>
     <li>
-		<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") %>">
+		<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;courseID=" + pageContext.findAttribute("courseID") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksConfirmation" />
 		</html:link>
 	</li>
      <li>
 		<html:link page="<%= "/changeMarkDispatchAction.do?method=prepareChangeMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") +  "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;curricularCourseCode=" + pageContext.findAttribute("courseID") %>">
-    		<bean:message key="link.masterDegree.administrativeOffice.changeMark" /> 
+    		<bean:message key="link.masterDegree.administrativeOffice.changeMark" /> 		
 		</html:link>
 	</li>
 </ul>
-     
+
      

@@ -73,6 +73,7 @@ public class GetEnrolmentList implements IServico {
 			result.add(Cloner.copyIEnrolment2InfoEnrolment((IEnrolment) iterator.next()));	
 		}
 		
+		
 		return result;		
 	}
 }

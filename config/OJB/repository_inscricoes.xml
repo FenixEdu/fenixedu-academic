@@ -408,6 +408,8 @@
 	</reference-descriptor>
 	<collection-descriptor
 			name="evaluations"
+			refresh="true"
+			auto-retrieve="true"			
 			element-class-ref="Dominio.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>    
@@ -964,7 +966,7 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor
 		name="checkSum"

@@ -68,9 +68,10 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
             sp = SuportePersistenteOJB.getInstance();
             
             // Read the Students
-            
+
             ICurricularCourse curricularCourseTemp = new CurricularCourse();
             curricularCourseTemp.setIdInternal(curricularCourseID);
+ 
             curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseTemp, false);
 
 			enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(curricularCourse, executionYear);
@@ -111,8 +112,8 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
 				|| (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent().getNumber().intValue())) {
 				numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 				
-				Object args[] = {userView,enrolment };
-				InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentMark", args);
+				Object args[] = {enrolment };
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args);
 				if (infoEnrolmentEvaluation != null){	
 					InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
 					infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
@@ -120,7 +121,7 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
 				}
 			}
 		}
-
+		
 		return result;
 	}
 	
