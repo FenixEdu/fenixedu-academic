@@ -13,17 +13,16 @@ import Util.TipoCurso;
 
 /**
  * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author Shezad Anavarali (sana@mega.ist.utl.pt)
+ * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlanTest
     extends AdministrativeOfficeBaseTest
 {
 
     /**
-     * @param testName
-     */
+	 * @param testName
+	 */
     public ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlanTest(String testName)
     {
         super(testName);
@@ -75,12 +74,13 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
                     userView,
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeThesisDataVersion);
-            
+
             assertNotNull(infoMasterDegreeThesisDataVersions);
             assertEquals(infoMasterDegreeThesisDataVersions.size(), 1);
-            
-            InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) infoMasterDegreeThesisDataVersions.get(0);
-            
+
+            InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
+                (InfoMasterDegreeThesisDataVersion) infoMasterDegreeThesisDataVersions.get(0);
+
             assertEquals(infoMasterDegreeThesisDataVersion.getIdInternal(), new Integer(2));
             assertEquals(
                 infoMasterDegreeThesisDataVersion.getInfoMasterDegreeThesis().getIdInternal(),
@@ -128,6 +128,7 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeThesisDataVersion);
 
+            assertNotNull(infoMasterDegreeThesisDataVersions);
             assertEquals(infoMasterDegreeThesisDataVersions.isEmpty(), true);
 
         }
