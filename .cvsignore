@@ -17,4 +17,4 @@ cvsImage
 unitTestReports
 *.log*
 report
-output/InscTest.java
+output/InscTeste.java
