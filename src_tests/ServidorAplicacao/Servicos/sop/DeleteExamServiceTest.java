@@ -10,9 +10,7 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author Luis Cruz & Sara Ribeiro
  */
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

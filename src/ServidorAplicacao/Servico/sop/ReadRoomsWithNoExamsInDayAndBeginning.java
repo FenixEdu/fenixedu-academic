@@ -17,7 +17,6 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoRoom;
-import DataBeans.InfoViewExam;
 import DataBeans.util.Cloner;
 import Dominio.IExam;
 import Dominio.ISala;

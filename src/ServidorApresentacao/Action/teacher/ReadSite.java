@@ -19,7 +19,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
-import DataBeans.InfoTeacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;

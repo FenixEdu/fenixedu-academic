@@ -10,28 +10,15 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.apache.ojb.odmg.OJB;
-import org.odmg.Database;
-import org.odmg.Implementation;
-import org.odmg.ODMGException;
-import org.odmg.OQLQuery;
-import org.odmg.QueryException;
-
-import Dominio.CursoExecucao;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
 import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
-import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  *

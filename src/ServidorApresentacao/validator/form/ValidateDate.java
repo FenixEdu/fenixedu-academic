@@ -39,8 +39,6 @@ public class ValidateDate {
 		String sProperty2 = ValidatorUtil.getValueAsString(bean,field.getVarValue("month"));
 		String sProperty3 = ValidatorUtil.getValueAsString(bean,field.getVarValue("day"));
 		
-System.out.println("Estou aqui");
-
 		if (((valueString == null) && (sProperty2 == null) && (sProperty3 == null)) ||
 			((valueString.length() == 0) && (sProperty2.length() == 0) && (sProperty3.length() == 0))){
 //			errors.add(field.getKey(),Resources.getActionError(request, va, field));
