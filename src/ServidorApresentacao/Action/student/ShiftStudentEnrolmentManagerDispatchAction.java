@@ -354,7 +354,8 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		}
 		return initializeShiftEnrolment(mapping, form, request, infoStudent);
 	}
-	public ActionForward initializeShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request) throws FenixActionException {
+	public ActionForward initializeShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+		createToken(request);
 		InfoStudent infoStudent = null;
 		IUserView userView = SessionUtils.getUserView(request);
 		try {
