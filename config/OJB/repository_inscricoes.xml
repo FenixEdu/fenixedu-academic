@@ -666,7 +666,6 @@
 		<inverse-foreignkey field-ref="curricularSemesterKey"/>
 	</collection-descriptor>    
 
-
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
