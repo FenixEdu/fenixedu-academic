@@ -169,12 +169,12 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
                 SessionConstants.JURIES_LIST,
                 infoMasterDegreeProofVersion.getInfoJuries());
 
-        if (infoMasterDegreeProofVersion.getInfoExternalJuries().isEmpty() == false)
-        {
-            request.setAttribute(
-                SessionConstants.EXTERNAL_JURIES_LIST,
-                infoMasterDegreeProofVersion.getInfoExternalJuries());
-        }
+		if (infoMasterDegreeProofVersion.getInfoExternalJuries().isEmpty() == false)
+		{
+			request.setAttribute(
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				infoMasterDegreeProofVersion.getInfoExternalJuries());
+		}
 
         int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
 

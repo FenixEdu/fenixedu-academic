@@ -34,100 +34,105 @@ import Util.MasterDegreeClassification;
 public class VisualizeMasterDegreeProofHistoryDispatchAction extends DispatchAction
 {
 
-    public ActionForward getStudentAndMasterDegreeProofVersion(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+	public ActionForward getStudentAndMasterDegreeProofVersion(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
 
-        IUserView userView = SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 
-        Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
-        Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
-        Integer masterDegreeProofVersionID =
-            Integer.valueOf(request.getParameter("masterDegreeProofVersionID"));
+		Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
+		Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
+		Integer masterDegreeProofVersionID =
+			Integer.valueOf(request.getParameter("masterDegreeProofVersionID"));
 
-        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-        ActionErrors actionErrors = new ActionErrors();
-        boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-        if (isSuccess == false)
-        {
-            throw new NonExistingActionException(
-                "error.exception.masterDegree.nonExistentStudent",
-                mapping.findForward("error"));
+		if (isSuccess == false)
+		{
+			throw new NonExistingActionException(
+				"error.exception.masterDegree.nonExistentStudent",
+				mapping.findForward("error"));
 
-        }
+		}
 
-        InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
+		InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
 
-        /* * * get master degree proof history * * */
-        Object argsMasterDegreeProofVersion[] = { masterDegreeProofVersionID };
-        try
-        {
-            infoMasterDegreeProofVersion =
-                (InfoMasterDegreeProofVersion) ServiceUtils.executeService(
-                    userView,
-                    "ReadMasterDegreeProofVersionByID",
-                    argsMasterDegreeProofVersion);
-        }
-        catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(
-                "error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
-                mapping.findForward("errorNonExistingProofVersion"));
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
+		/* * * get master degree proof history * * */
+		Object argsMasterDegreeProofVersion[] = { masterDegreeProofVersionID };
+		try
+		{
+			infoMasterDegreeProofVersion =
+				(InfoMasterDegreeProofVersion) ServiceUtils.executeService(
+					userView,
+					"ReadMasterDegreeProofVersionByID",
+					argsMasterDegreeProofVersion);
+		} catch (NonExistingServiceException e)
+		{
+			throw new NonExistingActionException(
+				"error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
+				mapping.findForward("errorNonExistingProofVersion"));
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
 
-        if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
-            request.setAttribute(
-                SessionConstants.JURIES_LIST,
-                infoMasterDegreeProofVersion.getInfoJuries());
+		if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
+			request.setAttribute(
+				SessionConstants.JURIES_LIST,
+				infoMasterDegreeProofVersion.getInfoJuries());
 
-        int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
+		if (infoMasterDegreeProofVersion.getInfoExternalJuries().isEmpty() == false)
+		{
+			request.setAttribute(
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				infoMasterDegreeProofVersion.getInfoExternalJuries());
+		}
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
 
-        String proofDate = null;
-        String thesisDeliveryDate = null;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        if (infoMasterDegreeProofVersion.getProofDate() != null)
-        {
-            proofDate = simpleDateFormat.format(infoMasterDegreeProofVersion.getProofDate());
-            request.setAttribute(SessionConstants.PROOF_DATE, proofDate);
-        }
+		String proofDate = null;
+		String thesisDeliveryDate = null;
 
-        if (infoMasterDegreeProofVersion.getThesisDeliveryDate() != null)
-        {
-            thesisDeliveryDate =
-                simpleDateFormat.format(infoMasterDegreeProofVersion.getThesisDeliveryDate());
-            request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
+		if (infoMasterDegreeProofVersion.getProofDate() != null)
+		{
+			proofDate = simpleDateFormat.format(infoMasterDegreeProofVersion.getProofDate());
+			request.setAttribute(SessionConstants.PROOF_DATE, proofDate);
+		}
 
-        }
+		if (infoMasterDegreeProofVersion.getThesisDeliveryDate() != null)
+		{
+			thesisDeliveryDate =
+				simpleDateFormat.format(infoMasterDegreeProofVersion.getThesisDeliveryDate());
+			request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
 
-        Date lastModification = new Date(infoMasterDegreeProofVersion.getLastModification().getTime());
-        simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
-        String formattedLastModification = simpleDateFormat.format(lastModification);
+		}
 
-        request.setAttribute(
-            SessionConstants.FINAL_RESULT,
-            MasterDegreeClassification.getClassificationString(classification));
-        request.setAttribute(
-            SessionConstants.ATTACHED_COPIES_NUMBER,
-            infoMasterDegreeProofVersion.getAttachedCopiesNumber());
+		Date lastModification = new Date(infoMasterDegreeProofVersion.getLastModification().getTime());
+		simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
+		String formattedLastModification = simpleDateFormat.format(lastModification);
 
-        request.setAttribute(
-            SessionConstants.RESPONSIBLE_EMPLOYEE,
-            infoMasterDegreeProofVersion.getInfoResponsibleEmployee());
-        request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
+		request.setAttribute(
+			SessionConstants.FINAL_RESULT,
+			MasterDegreeClassification.getClassificationString(classification));
+		request.setAttribute(
+			SessionConstants.ATTACHED_COPIES_NUMBER,
+			infoMasterDegreeProofVersion.getAttachedCopiesNumber());
 
-        return mapping.findForward("start");
+		request.setAttribute(
+			SessionConstants.RESPONSIBLE_EMPLOYEE,
+			infoMasterDegreeProofVersion.getInfoResponsibleEmployee());
+		request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
 
-    }
+		return mapping.findForward("start");
+
+	}
 
 }

@@ -46,361 +46,562 @@ import Util.TipoCurso;
 public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchAction
 {
 
-    public ActionForward addJury(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+	public ActionForward addJury(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
 
-        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-        ActionErrors actionErrors = new ActionErrors();
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-        transportData(form, request);
+		transportData(form, request);
 
-        try
-        {
-            operations.getTeachersByNumbers(
-                form,
-                request,
-                "juriesNumbers",
-                SessionConstants.JURIES_LIST,
-                actionErrors);
-            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"juriesNumbers",
+				SessionConstants.JURIES_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalJuriesIDs",
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-        }
-        catch (Exception e1)
-        {
-            throw new FenixActionException(e1);
-        }
-        finally
-        {
-            saveErrors(request, actionErrors);
-        }
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
 
-        return mapping.findForward("start");
+		return mapping.findForward("start");
 
-    }
+	}
 
-    public ActionForward removeJuries(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+	public ActionForward removeJuries(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
 
-        DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
+		DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
-        Integer[] teachersNumbersList = (Integer[]) changeMasterDegreeProofForm.get("juriesNumbers");
-        Integer[] removedJuries = (Integer[]) changeMasterDegreeProofForm.get("removedJuriesNumbers");
+		Integer[] teachersNumbersList = (Integer[]) changeMasterDegreeProofForm.get("juriesNumbers");
+		Integer[] removedJuries = (Integer[]) changeMasterDegreeProofForm.get("removedJuriesNumbers");
 
-        changeMasterDegreeProofForm.set(
-            "juriesNumbers",
-            subtractArray(teachersNumbersList, removedJuries));
+		changeMasterDegreeProofForm.set(
+			"juriesNumbers",
+			subtractArray(teachersNumbersList, removedJuries));
 
-        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-        ActionErrors actionErrors = new ActionErrors();
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-        transportData(form, request);
+		transportData(form, request);
 
-        try
-        {
-            operations.getTeachersByNumbers(
-                form,
-                request,
-                "juriesNumbers",
-                SessionConstants.JURIES_LIST,
-                actionErrors);
-            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"juriesNumbers",
+				SessionConstants.JURIES_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalJuriesIDs",
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-        }
-        catch (Exception e1)
-        {
-            throw new FenixActionException(e1);
-        }
-        finally
-        {
-            saveErrors(request, actionErrors);
-        }
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
 
-        return mapping.findForward("start");
+		return mapping.findForward("start");
 
-    }
+	}
 
-    public ActionForward changeMasterDegreeProof(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+	public ActionForward externalJury(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
 
-        IUserView userView = SessionUtils.getUserView(request);
+		//	to display the external persons search form
+		request.setAttribute(SessionConstants.SEARCH_EXTERNAL_JURIES, new Boolean(true));
 
-        DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-        Integer degreeType = (Integer) changeMasterDegreeProofForm.get("degreeType");
-        Integer studentNumber = (Integer) changeMasterDegreeProofForm.get("studentNumber");
-        MasterDegreeClassification finalResult =
-            MasterDegreeClassification.getEnum(
-                ((Integer) changeMasterDegreeProofForm.get("finalResult")).intValue());
-        Integer attachedCopiesNumber = (Integer) changeMasterDegreeProofForm.get("attachedCopiesNumber");
+		transportData(form, request);
 
-        String proofDateDay = (String) changeMasterDegreeProofForm.get("proofDateDay");
-        String proofDateMonth = (String) changeMasterDegreeProofForm.get("proofDateMonth");
-        String proofDateYear = (String) changeMasterDegreeProofForm.get("proofDateYear");
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"juriesNumbers",
+				SessionConstants.JURIES_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalJuriesIDs",
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-        String thesisDeliveryDateDay = (String) changeMasterDegreeProofForm.get("thesisDeliveryDateDay");
-        String thesisDeliveryDateMonth =
-            (String) changeMasterDegreeProofForm.get("thesisDeliveryDateMonth");
-        String thesisDeliveryDateYear =
-            (String) changeMasterDegreeProofForm.get("thesisDeliveryDateYear");
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
 
-        Date proofDate = buildProofDate(proofDateDay, proofDateMonth, proofDateYear);
+		return mapping.findForward("start");
 
-        Date thesisDeliveryDate =
-            buildThesisDeliveryDate(
-                thesisDeliveryDateDay,
-                thesisDeliveryDateMonth,
-                thesisDeliveryDateYear);
+	}
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan =
-            readStudentCurricularPlan(userView, degreeType, studentNumber);
+	public ActionForward searchExternalJury(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
 
-        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-        ActionErrors actionErrors = new ActionErrors();
-        ArrayList infoTeacherJuries = null;
-        try
-        {
-            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-            infoTeacherJuries =
-                operations.getTeachersByNumbers(
-                    form,
-                    request,
-                    "juriesNumbers",
-                    SessionConstants.JURIES_LIST,
-                    actionErrors);
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-        }
-        catch (Exception e1)
-        {
-            throw new FenixActionException(e1);
-        }
-        finally
-        {
+		transportData(form, request);
 
-            saveErrors(request, actionErrors);
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"juriesNumbers",
+				SessionConstants.JURIES_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalJuriesIDs",
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByName(
+				form,
+				request,
+				"externalJuryName",
+				SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS,
+				actionErrors);
 
-            if (actionErrors.isEmpty() == false)
-            {
-                transportData(form, request);
-                return mapping.findForward("start");
-            }
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
 
-        }
+		return mapping.findForward("start");
 
-        executeChangeMasterDegreeProofService(
-            mapping,
-            userView,
-            finalResult,
-            attachedCopiesNumber,
-            proofDate,
-            thesisDeliveryDate,
-            infoStudentCurricularPlan,
-            infoTeacherJuries);
+	}
 
-        return mapping.findForward("success");
+	public ActionForward addExternalJury(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
 
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-    private void executeChangeMasterDegreeProofService(
-        ActionMapping mapping,
-        IUserView userView,
-        MasterDegreeClassification finalResult,
-        Integer attachedCopiesNumber,
-        Date proofDate,
-        Date thesisDeliveryDate,
-        InfoStudentCurricularPlan infoStudentCurricularPlan,
-        ArrayList infoTeacherJuries)
-        throws
-            RequiredJuriesActionException,
-            NonExistingActionException,
-            ScholarshipNotFinishedActionException,
-            ExistingActionException
-    {
-        Object args2[] =
-            {
-                userView,
-                infoStudentCurricularPlan,
-                proofDate,
-                thesisDeliveryDate,
-                finalResult,
-                attachedCopiesNumber,
-                infoTeacherJuries };
+		transportData(form, request);
 
-        try
-        {
-            ServiceUtils.executeService(userView, "ChangeMasterDegreeProof", args2);
-        }
-        catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(e.getMessage(), mapping.findForward("start"));
-        }
-        catch (ScholarshipNotFinishedServiceException e)
-        {
-            throw new ScholarshipNotFinishedActionException(
-                e.getMessage(),
-                mapping.findForward("start"));
-        }
-        catch (FenixServiceException e)
-        {
-            throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
-        }
-    }
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"juriesNumbers",
+				SessionConstants.JURIES_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalJuriesIDs",
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-    private InfoStudentCurricularPlan readStudentCurricularPlan(
-        IUserView userView,
-        Integer degreeType,
-        Integer studentNumber)
-        throws FenixActionException
-    {
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
 
-        Object args[] = { studentNumber, new TipoCurso(degreeType)};
-        try
-        {
-            infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) ServiceUtils.executeService(
-                    userView,
-                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                    args);
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
-        return infoStudentCurricularPlan;
-    }
+		return mapping.findForward("start");
 
-    private Date buildThesisDeliveryDate(
-        String thesisDeliveryDateDay,
-        String thesisDeliveryDateMonth,
-        String thesisDeliveryDateYear)
-        throws NumberFormatException
-    {
-        Date thesisDeliveryDate = null;
+	}
 
-        if ((thesisDeliveryDateDay.length() > 0)
-            && (thesisDeliveryDateMonth.length() > 0)
-            && (thesisDeliveryDateYear.length() > 0))
-        {
-            Calendar thesisDeliveryDateCalendar =
-                new GregorianCalendar(
-                    Integer.parseInt(thesisDeliveryDateYear),
-                    Integer.parseInt(thesisDeliveryDateMonth),
-                    Integer.parseInt(thesisDeliveryDateDay));
+	public ActionForward removeExternalJuries(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
 
-            thesisDeliveryDate = thesisDeliveryDateCalendar.getTime();
-        }
-        return thesisDeliveryDate;
-    }
+		DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
 
-    private Date buildProofDate(String proofDateDay, String proofDateMonth, String proofDateYear)
-        throws NumberFormatException
-    {
-        Date proofDate = null;
+		Integer[] externalPersonsIDsList = (Integer[]) masterDegreeProofForm.get("externalJuriesIDs");
+		Integer[] removedExternalJuries =
+			(Integer[]) masterDegreeProofForm.get("removedExternalJuriesIDs");
 
-        if ((proofDateDay.length() > 0)
-            && (proofDateMonth.length() > 0)
-            && (proofDateYear.length() > 0))
-        {
-            Calendar proofDateCalendar =
-                new GregorianCalendar(
-                    Integer.parseInt(proofDateYear),
-                    Integer.parseInt(proofDateMonth),
-                    Integer.parseInt(proofDateDay));
+		masterDegreeProofForm.set(
+			"externalJuriesIDs",
+			subtractArray(externalPersonsIDsList, removedExternalJuries));
 
-            proofDate = proofDateCalendar.getTime();
-        }
-        return proofDate;
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-    public ActionForward cancelChangeMasterDegreeProof(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+		transportData(form, request);
 
-        PrepareStudentDataForThesisOperationsDispatchAction prepareStudentDataForThesisOperations =
-            new PrepareStudentDataForThesisOperationsDispatchAction();
-        return prepareStudentDataForThesisOperations.getStudentAndDegreeTypeForThesisOperations(
-            mapping,
-            form,
-            request,
-            response);
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"juriesNumbers",
+				SessionConstants.JURIES_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalJuriesIDs",
+				SessionConstants.EXTERNAL_JURIES_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-    }
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
 
-    public void transportData(ActionForm form, HttpServletRequest request) throws FenixActionException
-    {
+		return mapping.findForward("start");
 
-        // dissertation title
-        DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
-        String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
-        request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
+	}
 
-        // final result options
-        List finalResult = MasterDegreeClassification.toArrayList();
-        request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
+	public ActionForward changeMasterDegreeProof(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
 
-        // dates combo boxes options
-        request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
-        request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
-        request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+		IUserView userView = SessionUtils.getUserView(request);
 
-    }
+		DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
-    private Integer[] subtractArray(Integer[] originalArray, Integer[] arrayToSubtract)
-    {
-        List tmp = new ArrayList();
+		Integer degreeType = (Integer) changeMasterDegreeProofForm.get("degreeType");
+		Integer studentNumber = (Integer) changeMasterDegreeProofForm.get("studentNumber");
+		MasterDegreeClassification finalResult =
+			MasterDegreeClassification.getEnum(
+				((Integer) changeMasterDegreeProofForm.get("finalResult")).intValue());
+		Integer attachedCopiesNumber = (Integer) changeMasterDegreeProofForm.get("attachedCopiesNumber");
 
-        for (int i = 0; i < originalArray.length; i++)
-            tmp.add(originalArray[i]);
+		String proofDateDay = (String) changeMasterDegreeProofForm.get("proofDateDay");
+		String proofDateMonth = (String) changeMasterDegreeProofForm.get("proofDateMonth");
+		String proofDateYear = (String) changeMasterDegreeProofForm.get("proofDateYear");
 
-        for (int i = 0; i < arrayToSubtract.length; i++)
-            tmp.remove(arrayToSubtract[i]);
+		String thesisDeliveryDateDay = (String) changeMasterDegreeProofForm.get("thesisDeliveryDateDay");
+		String thesisDeliveryDateMonth =
+			(String) changeMasterDegreeProofForm.get("thesisDeliveryDateMonth");
+		String thesisDeliveryDateYear =
+			(String) changeMasterDegreeProofForm.get("thesisDeliveryDateYear");
 
-        originalArray = (Integer[]) tmp.toArray(new Integer[] {
-        });
-        return originalArray;
-    }
+		Date proofDate = buildProofDate(proofDateDay, proofDateMonth, proofDateYear);
 
-    private String getFromRequest(String parameter, HttpServletRequest request)
-    {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null)
-        {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
-    }
+		Date thesisDeliveryDate =
+			buildThesisDeliveryDate(
+				thesisDeliveryDateDay,
+				thesisDeliveryDateMonth,
+				thesisDeliveryDateYear);
 
-    /* (non-Javadoc)
-     * @see org.apache.struts.actions.LookupDispatchAction#getKeyMethodMap()
-     */
-    protected Map getKeyMethodMap()
-    {
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+			readStudentCurricularPlan(userView, degreeType, studentNumber);
 
-        Map map = new HashMap();
-        map.put("button.submit.masterDegree.thesis.addJury", "addJury");
-        map.put("button.submit.masterDegree.thesis.removeJuries", "removeJuries");
-        map.put("button.submit.masterDegree.thesis.changeProof", "changeMasterDegreeProof");
-        map.put("button.cancel", "cancelChangeMasterDegreeProof");
-        return map;
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+		ArrayList infoTeacherJuries = null;
+		ArrayList infoExternalPersonExternalJuries = null;
+
+		try
+		{
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			infoTeacherJuries =
+				operations.getTeachersByNumbers(
+					form,
+					request,
+					"juriesNumbers",
+					SessionConstants.JURIES_LIST,
+					actionErrors);
+			infoExternalPersonExternalJuries =
+				operations.getExternalPersonsByIDs(
+					form,
+					request,
+					"externalJuriesIDs",
+					SessionConstants.EXTERNAL_JURIES_LIST,
+					actionErrors);
+
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+
+			saveErrors(request, actionErrors);
+
+			if (actionErrors.isEmpty() == false)
+			{
+				transportData(form, request);
+				return mapping.findForward("start");
+			}
+
+		}
+
+		executeChangeMasterDegreeProofService(
+			mapping,
+			userView,
+			finalResult,
+			attachedCopiesNumber,
+			proofDate,
+			thesisDeliveryDate,
+			infoStudentCurricularPlan,
+			infoTeacherJuries,
+			infoExternalPersonExternalJuries);
+
+		return mapping.findForward("success");
+
+	}
+
+	private void executeChangeMasterDegreeProofService(
+		ActionMapping mapping,
+		IUserView userView,
+		MasterDegreeClassification finalResult,
+		Integer attachedCopiesNumber,
+		Date proofDate,
+		Date thesisDeliveryDate,
+		InfoStudentCurricularPlan infoStudentCurricularPlan,
+		ArrayList infoTeacherJuries,
+		ArrayList infoExternalPersonExternalJuries)
+		throws
+			RequiredJuriesActionException,
+			NonExistingActionException,
+			ScholarshipNotFinishedActionException,
+			ExistingActionException
+	{
+		Object args2[] =
+			{
+				userView,
+				infoStudentCurricularPlan,
+				proofDate,
+				thesisDeliveryDate,
+				finalResult,
+				attachedCopiesNumber,
+				infoTeacherJuries,
+				infoExternalPersonExternalJuries };
+
+		try
+		{
+			ServiceUtils.executeService(userView, "ChangeMasterDegreeProof", args2);
+		} catch (NonExistingServiceException e)
+		{
+			throw new NonExistingActionException(e.getMessage(), mapping.findForward("start"));
+		} catch (ScholarshipNotFinishedServiceException e)
+		{
+			throw new ScholarshipNotFinishedActionException(
+				e.getMessage(),
+				mapping.findForward("start"));
+		} catch (FenixServiceException e)
+		{
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+		}
+	}
+
+	private InfoStudentCurricularPlan readStudentCurricularPlan(
+		IUserView userView,
+		Integer degreeType,
+		Integer studentNumber)
+		throws FenixActionException
+	{
+		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+
+		Object args[] = { studentNumber, new TipoCurso(degreeType)};
+		try
+		{
+			infoStudentCurricularPlan =
+				(InfoStudentCurricularPlan) ServiceUtils.executeService(
+					userView,
+					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+					args);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		return infoStudentCurricularPlan;
+	}
+
+	private Date buildThesisDeliveryDate(
+		String thesisDeliveryDateDay,
+		String thesisDeliveryDateMonth,
+		String thesisDeliveryDateYear)
+		throws NumberFormatException
+	{
+		Date thesisDeliveryDate = null;
+
+		if ((thesisDeliveryDateDay.length() > 0)
+			&& (thesisDeliveryDateMonth.length() > 0)
+			&& (thesisDeliveryDateYear.length() > 0))
+		{
+			Calendar thesisDeliveryDateCalendar =
+				new GregorianCalendar(
+					Integer.parseInt(thesisDeliveryDateYear),
+					Integer.parseInt(thesisDeliveryDateMonth),
+					Integer.parseInt(thesisDeliveryDateDay));
+
+			thesisDeliveryDate = thesisDeliveryDateCalendar.getTime();
+		}
+		return thesisDeliveryDate;
+	}
+
+	private Date buildProofDate(String proofDateDay, String proofDateMonth, String proofDateYear)
+		throws NumberFormatException
+	{
+		Date proofDate = null;
+
+		if ((proofDateDay.length() > 0)
+			&& (proofDateMonth.length() > 0)
+			&& (proofDateYear.length() > 0))
+		{
+			Calendar proofDateCalendar =
+				new GregorianCalendar(
+					Integer.parseInt(proofDateYear),
+					Integer.parseInt(proofDateMonth),
+					Integer.parseInt(proofDateDay));
+
+			proofDate = proofDateCalendar.getTime();
+		}
+		return proofDate;
+	}
+
+	public ActionForward cancelChangeMasterDegreeProof(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+
+		PrepareStudentDataForThesisOperationsDispatchAction prepareStudentDataForThesisOperations =
+			new PrepareStudentDataForThesisOperationsDispatchAction();
+		return prepareStudentDataForThesisOperations.getStudentAndDegreeTypeForThesisOperations(
+			mapping,
+			form,
+			request,
+			response);
+
+	}
+
+	public void transportData(ActionForm form, HttpServletRequest request) throws FenixActionException
+	{
+
+		// dissertation title
+		DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
+		String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
+		request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
+
+		// final result options
+		List finalResult = MasterDegreeClassification.toArrayList();
+		request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
+
+		// dates combo boxes options
+		request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
+		request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
+		request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+
+	}
+
+	private Integer[] subtractArray(Integer[] originalArray, Integer[] arrayToSubtract)
+	{
+		List tmp = new ArrayList();
+
+		for (int i = 0; i < originalArray.length; i++)
+			tmp.add(originalArray[i]);
+
+		for (int i = 0; i < arrayToSubtract.length; i++)
+			tmp.remove(arrayToSubtract[i]);
+
+		originalArray = (Integer[]) tmp.toArray(new Integer[] {
+		});
+		return originalArray;
+	}
+
+	private String getFromRequest(String parameter, HttpServletRequest request)
+	{
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null)
+		{
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		return parameterString;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.struts.actions.LookupDispatchAction#getKeyMethodMap()
+	 */
+	protected Map getKeyMethodMap()
+	{
+
+		Map map = new HashMap();
+		map.put("button.submit.masterDegree.thesis.addJury", "addJury");
+		map.put("button.submit.masterDegree.thesis.removeJuries", "removeJuries");
+		map.put("button.submit.masterDegree.thesis.changeProof", "changeMasterDegreeProof");
+		map.put("button.submit.masterDegree.thesis.externalJury", "externalJury");
+		map.put("button.submit.masterDegree.thesis.searchExternalJury", "searchExternalJury");
+		map.put("button.submit.masterDegree.thesis.addExternalJury", "addExternalJury");
+		map.put("button.submit.masterDegree.thesis.removeExternalJuries", "removeExternalJuries");
+		map.put("button.cancel", "cancelChangeMasterDegreeProof");
+		return map;
+	}
 
 }
