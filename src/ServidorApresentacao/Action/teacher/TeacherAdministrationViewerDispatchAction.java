@@ -7,9 +7,11 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -18,11 +20,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
-import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoCurriculum;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoShift;
@@ -38,7 +41,7 @@ import DataBeans.InfoSiteGroupProperties;
 import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
 import DataBeans.InfoSiteObjectives;
-import DataBeans.InfoSiteProgram;
+import DataBeans.InfoSitePrograms;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
@@ -66,10 +69,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.notAuthorizedActionDeleteException;
+import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
@@ -399,65 +399,62 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		ISiteComponent programComponent = new InfoSiteProgram();
+		ISiteComponent programComponent = new InfoSitePrograms();
 		readSiteView(request, programComponent, null, null, null);
 		return mapping.findForward("viewProgram");
 	}
+	
 	public ActionForward prepareEditProgram(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		ISiteComponent programComponent = new InfoSiteProgram();
-		String curriculumIdString =
-			(String) request.getParameter("curriculumCode");
-		Integer curriculumId = null;
-		if (curriculumIdString != null) {
-			curriculumId = new Integer(curriculumIdString);
+
+			String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+			Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+			ISiteComponent programComponent = new InfoCurriculum();	
+			
+			try {
+				readSiteView(request,programComponent,null,curricularCourseCode,null);
+			} catch (FenixActionException e1) {
+				throw e1;
+			}
+			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request.getAttribute("siteView");
+			
+			if(siteView.getComponent() != null){
+				DynaActionForm programForm = (DynaActionForm) form;
+				programForm.set("program",((InfoCurriculum) siteView.getComponent()).getProgram());
+				programForm.set("programEn",((InfoCurriculum) siteView.getComponent()).getProgramEn());
+			}
+						
+			request.setAttribute("curricularCourseCode", curricularCourseCode);
+			return mapping.findForward("editProgram");
 		}
-		String curricularCourseCodeString =
-			request.getParameter("curricularCourseCode");
-		Integer curricularCourseCode = null;
-		if (curricularCourseCodeString != null) {
-			curricularCourseCode = new Integer(curricularCourseCodeString);
-		}
-		readSiteView(request, programComponent, null, curriculumId, null);
-		TeacherAdministrationSiteView siteView =
-			(TeacherAdministrationSiteView) request.getAttribute("siteView");
-		DynaActionForm programForm = (DynaActionForm) form;
-		programForm.set(
-			"program",
-			((InfoSiteProgram) siteView.getComponent()).getProgram());
-		programForm.set(
-			"programEn",
-			((InfoSiteProgram) siteView.getComponent()).getProgramEn());
-		request.setAttribute("curricularCourseCode", curricularCourseCode);
-		return mapping.findForward("editProgram");
-	}
+	
 	public ActionForward editProgram(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+			
 		HttpSession session = request.getSession(false);
 		Integer objectCode = getObjectCode(request);
+		String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+		
 		DynaActionForm programForm = (DynaActionForm) form;
-		InfoSiteProgram infoSiteProgramNew = new InfoSiteProgram();
-		infoSiteProgramNew.setProgram((String) programForm.get("program"));
-		infoSiteProgramNew.setProgramEn((String) programForm.get("programEn"));
-		String curricularCourseCodeString =
-			request.getParameter("curricularCourseCode");
-		Integer curricularCourseCode = null;
-		if (curricularCourseCodeString != null) {
-			curricularCourseCode = new Integer(curricularCourseCodeString);
-		}
-		Object args[] =
-			{ objectCode, curricularCourseCode, infoSiteProgramNew };
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
+		InfoCurriculum infoCurriculumNew = new InfoCurriculum();
+		infoCurriculumNew.setIdInternal(curricularCourseCode);
+		infoCurriculumNew.setProgram((String) programForm.get("program"));
+		infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
+			
+		Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
+		
 		try {
 			serviceManager.executar(userView, "EditProgram", args);
 		} catch (FenixServiceException e) {
@@ -465,6 +462,7 @@ public class TeacherAdministrationViewerDispatchAction
 		}
 		return viewProgram(mapping, form, request, response);
 	}
+	
 	//	========================  EvaluationMethod Management  ========================
 	public ActionForward viewEvaluationMethod(
 		ActionMapping mapping,
@@ -476,38 +474,42 @@ public class TeacherAdministrationViewerDispatchAction
 		readSiteView(request, evaluationComponent, null, null, null);
 		return mapping.findForward("viewEvaluationMethod");
 	}
+	
 	public ActionForward prepareEditEvaluationMethod(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
-		String curricularCourseCodeString =
-			request.getParameter("curricularCourseCode");
+
+		ISiteComponent evaluationComponent = new InfoCurriculum();
+
+		String curricularCourseCodeString = request.getParameter("curricularCourseCode");
 		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
-		readSiteView(
-			request,
-			evaluationComponent,
-			null,
-			curricularCourseCode,
-			null);
-		TeacherAdministrationSiteView siteView =
-			(TeacherAdministrationSiteView) request.getAttribute("siteView");
-		if (siteView.getComponent() != null) {
+
+		try {
+			readSiteView(request,evaluationComponent,null,curricularCourseCode,null);
+		} catch (FenixActionException e1) {
+			//if (e1.getCause()!= null && e1.getCause() instanceof IllegalEditException) {
+			//	ActionErrors errors = new ActionErrors();
+			//	errors.add("illegalAccessException",new ActionError("error.basicCurricularCourse"));
+			//	saveErrors(request, errors);
+			//} else {
+				throw e1;
+			//}
+		}
+		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request.getAttribute("siteView");
+		
+		//if ( siteView!= null && siteView.getComponent() != null) {
+		if(siteView.getComponent() != null){
 			DynaActionForm evaluationForm = (DynaActionForm) form;
-			evaluationForm.set(
-				"evaluationElements",
-				((InfoEvaluationMethod) siteView.getComponent())
-					.getEvaluationElements());
-			evaluationForm.set(
-				"evaluationElementsEn",
-				((InfoEvaluationMethod) siteView.getComponent())
-					.getEvaluationElementsEn());
+			evaluationForm.set("evaluationElements",((InfoCurriculum) siteView.getComponent()).getEvaluationElements());
+			evaluationForm.set("evaluationElementsEn",((InfoCurriculum) siteView.getComponent()).getEvaluationElementsEn());
 		}
 		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		return mapping.findForward("editEvaluationMethod");
 	}
+	
 	public ActionForward editEvaluationMethod(
 		ActionMapping mapping,
 		ActionForm form,
@@ -520,17 +522,22 @@ public class TeacherAdministrationViewerDispatchAction
 			request.getParameter("curricularCourseCode");
 		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
 		DynaActionForm evaluationForm = (DynaActionForm) form;
-		InfoEvaluationMethod infoEvaluationNew = new InfoEvaluationMethod();
-		infoEvaluationNew.setEvaluationElements(
+
+		InfoCurriculum infoCurriculumNew = new InfoCurriculum();
+		infoCurriculumNew.setIdInternal(curricularCourseCode);
+		infoCurriculumNew.setEvaluationElements(
 			(String) evaluationForm.get("evaluationElements"));
-		infoEvaluationNew.setEvaluationElementsEn(
+		infoCurriculumNew.setEvaluationElementsEn(
 			(String) evaluationForm.get("evaluationElementsEn"));
-		Object args[] = { objectCode, curricularCourseCode, infoEvaluationNew };
+
+		Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
+
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
 		try {
 			serviceManager.executar(userView, "EditEvaluation", args);
+
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -1191,6 +1198,7 @@ public class TeacherAdministrationViewerDispatchAction
 				objectCode,
 				obj1,
 				obj2 };
+
 		try {
 			TeacherAdministrationSiteView siteView =
 				(TeacherAdministrationSiteView) ServiceUtils.executeService(
@@ -1198,21 +1206,21 @@ public class TeacherAdministrationViewerDispatchAction
 					"TeacherAdministrationSiteComponentService",
 					args);
 			request.setAttribute("siteView", siteView);
-			request.setAttribute(
-				"objectCode",
-				((InfoSiteCommon) siteView.getCommonComponent())
-					.getExecutionCourse()
-					.getIdInternal());
+			request.setAttribute("objectCode",((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
 			if (siteView.getComponent() instanceof InfoSiteSection) {
 				request.setAttribute(
 					"infoSection",
 					((InfoSiteSection) siteView.getComponent()).getSection());
 			}
+
 			return siteView;
+
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+
 	}
+
 	//	========================  Tests Management  ========================
 	public ActionForward testsFirstPage(
 		ActionMapping mapping,
@@ -2120,14 +2128,14 @@ public class TeacherAdministrationViewerDispatchAction
 			Arrays.asList(
 				(String[]) deleteStudentGroupForm.get("studentsToRemove"));
 
-		Object args[] = { studentGroupCode, studentUsernames, objectCode };
-		GestorServicos gestor = GestorServicos.manager();
-		Boolean result;
-		try {
-			gestor.executar(userView, "DeleteStudentGroupMembers", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+			Object args[] = { studentGroupCode, studentUsernames, objectCode };
+				GestorServicos gestor = GestorServicos.manager();
+				Boolean result;
+				try {
+					gestor.executar(userView, "DeleteStudentGroupMembers", args);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+				return prepareEditStudentGroupMembers(mapping, form, request, response);
+			}
 		}
-		return prepareEditStudentGroupMembers(mapping, form, request, response);
-	}
-}
