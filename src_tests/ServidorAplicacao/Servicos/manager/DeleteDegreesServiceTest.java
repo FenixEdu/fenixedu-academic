@@ -4,16 +4,15 @@
 package ServidorAplicacao.Servicos.manager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import Dominio.Curso;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
-import Util.TipoCurso;
 
 /**
  * @author lmac1
  */
+
 public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices {
 
 	public DeleteDegreesServiceTest(String testName) {
@@ -21,9 +20,7 @@ public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices 
 		}
 		
 	protected void setUp() {
-			System.out.println("ENTRA NO SETUP");
 			super.setUp();
-		System.out.println("SAI DO SETUP");
 		}
 
 	protected void tearDown() {
@@ -38,33 +35,102 @@ public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices 
 			return true;
 		}
 		
-    //	delete non-existing object
-	public void testUnsuccessfulExecutionOfDeleteService() {
-
-		List result = new ArrayList();
-		Object[] args = { new Curso("NED", "Non Existing Degree", new TipoCurso(1)) };
-		try {
-			result = (List)_gestor.executar(
-											_userView,
-											getNameOfServiceToBeTested(),
-											args);
-			assertNull(result.get(0));
-			assertNull(result.get(1));
-			System.out.println(
-					"testUnsuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: "
-						+ this.getClass().getName());
-			} catch (FenixServiceException e) {
-				System.out.println(
-					"testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: "
-						+ this.getClass().getName());
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				System.out.println(
-					"testUnsuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: "
-						+ this.getClass().getName());
-				fail("testUnsuccessfulExecutionOfDeleteService");
-			}
+	protected String[] getArgsForAuthorizedUser() {
+			return new String[]{"manager", "pass", getApplication()};
+		}
 		
-	}
+    //	delete existing object
+	public void testSuccessfulExecutionOfDeleteServiceObjectExists() {
+
+		    Integer[] entry = { new Integer(12) };
+			List idList = Arrays.asList(entry);
+			Object[] args = { idList };
+
+			Object result = null;
+			try {
+					result =
+						_gestor.executar(
+							_userView,
+							getNameOfServiceToBeTested(),
+							args);
+					List comparatorArgument = new ArrayList();
+					assertEquals(
+						"testSuccessfulExecutionOfDeleteServiceObjectExists",
+						comparatorArgument,
+						result);
+					System.out.println(
+						"testSuccessfulExecutionOfDeleteServiceObjectExists was SUCCESSFULY runned by class: "
+							+ this.getClass().getName());
+			} catch (Exception ex) {
+					ex.printStackTrace();
+					System.out.println(
+						"testSuccessfulExecutionOfDeleteServiceObjectExists was UNSUCCESSFULY runned by class: "
+							+ this.getClass().getName());
+					fail("testSuccessfulExecutionOfDeleteService");
+			}
+		}
+		
+//	delete non-existing object
+	public void testSuccessfulExecutionOfDeleteServiceNoObject() {
+
+			Integer[] entry = { new Integer(5) };
+			List idList = Arrays.asList(entry);
+			Object[] args = { idList };
+
+			Object result = null;
+			try {
+					result =
+						_gestor.executar(
+							_userView,
+							getNameOfServiceToBeTested(),
+							args);
+					List comparatorArgument = new ArrayList();
+					assertEquals(
+						"testSuccessfulExecutionOfDeleteServiceNoObject",
+						comparatorArgument,
+						result);
+					System.out.println(
+						"testSuccessfulExecutionOfDeleteServiceNoObject was SUCCESSFULY runned by class: "
+							+ this.getClass().getName());
+			} catch (Exception ex) {
+					ex.printStackTrace();
+					System.out.println(
+						"testSuccessfulExecutionOfDeleteServiceNoObject was UNSUCCESSFULY runned by class: "
+							+ this.getClass().getName());
+					fail("testSuccessfulExecutionOfDeleteServiceNoObject");
+			}
+		}
+		
+//	try to delete object that can´t be deleted
+	public void testUnSuccessfulExecutionOfDeleteService() {
+
+			Integer[] entry = { new Integer(10) };
+			List idList = Arrays.asList(entry);
+			Object[] args = { idList };
+
+			Object result = null;
+			try {
+					result =
+						_gestor.executar(
+							_userView,
+							getNameOfServiceToBeTested(),
+							args);
+					List comparatorArgument = new ArrayList(1);
+					comparatorArgument.add("Informatica e Computadores");
+					assertEquals(
+						"testUnSuccessfulExecutionOfDeleteService",
+						comparatorArgument,
+						result);
+					System.out.println(
+						"testUnSuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: "
+							+ this.getClass().getName());
+			} catch (Exception ex) {
+					ex.printStackTrace();
+					System.out.println(
+						"testUnSuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: "
+							+ this.getClass().getName());
+					fail("testUnSuccessfulExecutionOfDeleteService");
+			}
+		}
 
 }
