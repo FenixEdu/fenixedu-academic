@@ -145,7 +145,7 @@ public abstract class EditDomainObjectService implements IServico
 	 *              to create never exists.
 	 */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
+        throws ExcepcaoPersistencia, FenixServiceException
     {
         return null;
     }
