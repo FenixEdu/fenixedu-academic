@@ -28,7 +28,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 			strBuffer.append(", ");
 			strBuffer.append(examsMapSlot.getDay().get(Calendar.YEAR));
 		}
-		strBuffer.append("</br>");
+		strBuffer.append("<br />");
 
 		return strBuffer;
 	}
@@ -73,7 +73,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 							+ "'>");
 					strBuffer.append(courseInitials);
 				}
-
+				strBuffer.append("</a>");
 				if (infoExam.getBeginning() != null) {
 					boolean isAtValidHour = atValidHour(infoExam);
 					String hoursText =
@@ -88,13 +88,13 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 					}
 				}
 
-				strBuffer.append("</a>");
+				
 
-				strBuffer.append("</br>");
+				strBuffer.append("<br />");
 			}
 		}
 
-		strBuffer.append("</br>");
+		strBuffer.append("<br />");
 
 		return strBuffer;
 	}
