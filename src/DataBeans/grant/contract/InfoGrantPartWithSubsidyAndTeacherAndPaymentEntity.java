@@ -4,6 +4,7 @@
  */
 package DataBeans.grant.contract;
 
+import DataBeans.InfoTeacherWithPerson;
 import Dominio.grant.contract.IGrantPart;
 
 
@@ -17,9 +18,9 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
 	{
 		super.copyFromDomain(grantPart);
 		if(grantPart != null){
-			//setInfoGrantSubsidy()
-			//setInfoGrantPaymentEntity()
-			//setInfoResponsibleTeacher()
+		    setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantPart.getGrantPaymentEntity()));
+			setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantPart.getResponsibleTeacher()));
+			setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantPart.getGrantSubsidy()));
 		}
 	}
 	

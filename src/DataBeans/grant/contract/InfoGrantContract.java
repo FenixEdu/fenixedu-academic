@@ -125,6 +125,19 @@ public class InfoGrantContract extends InfoObject {
     }
     
     /**
+     * @return Returns the active.
+     */
+    public Boolean getActive() {
+        return active;
+    }
+    /**
+     * @param active The active to set.
+     */
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+    
+    /**
      * @param GrantContract
      */
     public void copyFromDomain(IGrantContract grantContract)
@@ -150,19 +163,6 @@ public class InfoGrantContract extends InfoObject {
     		infoGrantContract.copyFromDomain(grantContract);
     	}
     	return infoGrantContract;
-    }
-    
-    /**
-     * @return Returns the active.
-     */
-    public Boolean getActive() {
-        return active;
-    }
-    /**
-     * @param active The active to set.
-     */
-    public void setActive(Boolean active) {
-        this.active = active;
     }
     
     public boolean getContractActive() {
