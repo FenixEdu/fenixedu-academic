@@ -51,41 +51,6 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
     }
     
     
-//    public ICurriculum readCurriculumByNomeSitio(String Nome) throws ExcepcaoPersistencia{
-//        try {
-//            ISitio sitio = null;
-//            String oqlQuery = "select sitio from " + Sitio.class.getName();
-//            oqlQuery += " where NOME = $1 ";
-//            query.create(oqlQuery);
-//            query.bind(Nome);
-//            List result = (List) query.execute();
-//            lockRead(result);
-//            if (result.size() != 0){
-//                sitio = (ISitio) result.get(0);
-//                return sitio.getCurriculum();
-//            }
-//            return null;
-//        } catch (QueryException ex) {
-//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//        }
-//    }
-//    
-//    public ISite readByName(String nome) throws ExcepcaoPersistencia {
-//        try {
-//            ISitio sitio = null;
-//            String oqlQuery = "select sitio from " + Sitio.class.getName();
-//            oqlQuery += " where NOME = $1 ";
-//            query.create(oqlQuery);
-//            query.bind(nome);
-//            List result = (List) query.execute();
-//            lockRead(result);
-//            if (result.size() != 0)
-//                sitio = (ISitio) result.get(0);
-//            return sitio;
-//        } catch (QueryException ex) {
-//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//        }
-//    }
 
 	public ISite readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 		try {
@@ -112,48 +77,7 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
 	}
     
     
-//    public List readSiteOwners(String name) throws ExcepcaoPersistencia {
-//        try {
-//            ISitio site = null;
-//            
-//            String oqlQuery = "select site from " + Site.class.getName();
-//            oqlQuery += " where nome = $1";
-//            query.create(oqlQuery);
-//            query.bind(name);
-//            List result = (List) query.execute();
-//            lockRead(result);
-//            
-//            if (result.size() != 0)
-//                site = (ISitio) result.get(0);
-//            else
-//                return new ArrayList();
-//            return site.getDocentesResponsavel();
-//        } catch (Exception ex) {
-//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//        }
-//    }
-    
-//    public List readSiteTeachers(String nome) throws ExcepcaoPersistencia {
-//        try {
-//            
-//            ISitio sitio = null;
-//            
-//            String oqlQuery = "select sitio from " + Sitio.class.getName();
-//            oqlQuery += " where nome = $1";
-//            query.create(oqlQuery);
-//            query.bind(nome);
-//            List result = (List) query.execute();
-//            lockRead(result);
-//            
-//            if (result.size() != 0)
-//                sitio = (ISitio) result.get(0);
-//            else
-//                return new ArrayList();
-//            return sitio.getDocentesLecciona();
-//        } catch (Exception ex) {
-//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//        }
-//    }
+
     
     public List readAll() throws ExcepcaoPersistencia {
         try {

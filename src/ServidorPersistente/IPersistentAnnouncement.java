@@ -7,9 +7,10 @@ import java.util.Date;
 
 import Dominio.IAnnouncement;
 import Dominio.ISection;
+import Dominio.ISite;
 public interface IPersistentAnnouncement extends IPersistentObject{
 	
-    public IAnnouncement readAnuncioByTituloAndDataAndSitio(String title, Date date, String siteName) throws ExcepcaoPersistencia;
+    public IAnnouncement readAnnouncementByTitleAndDateAndSite(String title, Date date, ISite site) throws ExcepcaoPersistencia;
     public void lockWrite(ISection announcement) throws ExcepcaoPersistencia;
     public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;

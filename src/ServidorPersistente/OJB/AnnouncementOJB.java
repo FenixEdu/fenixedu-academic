@@ -7,7 +7,7 @@ import org.odmg.QueryException;
 import Dominio.Announcement;
 import Dominio.IAnnouncement;
 import Dominio.ISection;
-import Dominio.Site;
+import Dominio.ISite;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentAnnouncement;
 /**
@@ -15,20 +15,10 @@ import ServidorPersistente.IPersistentAnnouncement;
  * @author  EP 15
  */
 public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnouncement {
-    public IAnnouncement readAnuncioByTituloAndDataAndSitio(String title, Date date, String siteName) throws ExcepcaoPersistencia {
+    public IAnnouncement readAnnouncementByTitleAndDateAndSite(String title, Date date, ISite site) throws ExcepcaoPersistencia {
         try {
             IAnnouncement announcementResult = null;
-            Site site = null;
-            String oqlQuery = "select site from " + Site.class.getName();
-            oqlQuery += " where name = $1 ";
-            query.create(oqlQuery);
-            query.bind(siteName);
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                site = (Site) result.get(0);
-            else
-                return null;
+           
             String oqlQuery1 = "select announcement from " + Announcement.class.getName();
             oqlQuery1 += " where title = $1 ";
 			oqlQuery1 += " and date = $2 ";
