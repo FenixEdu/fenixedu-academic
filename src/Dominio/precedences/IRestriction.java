@@ -13,7 +13,5 @@ public interface IRestriction extends IDomainObject
 
 	public void setPrecedence(IPrecedence precedence);
 
-//	public boolean evaluate(PrecedenceContext precedenceContext);
-
 	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
 }

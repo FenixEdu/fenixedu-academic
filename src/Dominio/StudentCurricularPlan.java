@@ -444,9 +444,9 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return curricularCourseAcumulatedEnrolments;
     }
 
-    public List getAllStudentEnrolledEnrollments() {
-        return initAcumulatedEnrollments(getStudentEnrollmentsWithEnrolledState());
-    }
+//    public List getAllStudentEnrolledEnrollments() {
+//        return initAcumulatedEnrollments(getStudentEnrollmentsWithEnrolledState());
+//    }
 
     public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final IExecutionPeriod executionPeriod) {
 
@@ -643,27 +643,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             }
         });
     }
-
-//    protected List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment() {
-//
-//        List studentEnrolledEnrollments = getStudentEnrollmentsWithEnrolledState();
-//
-//        final List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer() {
-//            public Object transform(Object obj) {
-//                IEnrollment enrollment = (IEnrollment) obj;
-//                String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
-//                return (key);
-//            }
-//        });
-//
-//        return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
-//            public boolean evaluate(Object obj) {
-//                IEnrollment enrollment = (IEnrollment) obj;
-//                String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
-//                return result.contains(key);
-//            }
-//        });
-//    }
 
     protected List getAllEnrollmentsExceptTheOnesWithEnrolledState() {
 

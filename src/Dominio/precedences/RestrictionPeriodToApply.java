@@ -50,23 +50,6 @@ public class RestrictionPeriodToApply extends Restriction implements IRestrictio
 		return stringBuffer.toString();
 	}
 
-//	public boolean evaluate(PrecedenceContext precedenceContext)
-//	{
-//		IExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();
-//
-//		boolean result = false;
-//
-//		if (this.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.BOTH_SEMESTERS))
-//		{
-//			result = true;
-//		} else if (executionPeriod.getSemester().equals(this.getPeriodToApplyRestriction().getPeriod()))
-//		{
-//			result = true;
-//		}
-//
-//		return result;
-//	}
-
 	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
 	{
 		IExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();

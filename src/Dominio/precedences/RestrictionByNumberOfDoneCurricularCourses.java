@@ -14,12 +14,6 @@ public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNum
 		super();
 	}
 
-//	public boolean evaluate(PrecedenceContext precedenceContext)
-//	{
-//		return (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses
-//			.intValue());
-//	}
-
 	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
 	{
 		if (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses

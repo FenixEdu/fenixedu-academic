@@ -14,11 +14,6 @@ public class RestrictionDoneCurricularCourse extends RestrictionByCurricularCour
 		super();
 	}
 
-//	public boolean evaluate(PrecedenceContext precedenceContext)
-//	{
-//		return precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(this.getPrecedentCurricularCourse());
-//	}
-
 	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
 
 	    if (precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(

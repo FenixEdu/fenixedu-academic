@@ -15,13 +15,6 @@ public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse exten
 		super();
 	}
 
-//	public boolean evaluate(PrecedenceContext precedenceContext)
-//	{
-//		ICurricularCourse curricularCourse = super.getPrecedentCurricularCourse();
-//		return (precedenceContext.getStudentCurricularPlan().isCurricularCourseEnrolled(curricularCourse) || super
-//			.evaluate(precedenceContext));
-//	}
-
 	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
 	{
 		ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();

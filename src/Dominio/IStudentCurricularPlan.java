@@ -52,7 +52,7 @@ public interface IStudentCurricularPlan extends IDomainObject
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
 	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod);
-	public List getAllStudentEnrolledEnrollments();
+//	public List getAllStudentEnrolledEnrollments();
 	public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod);
 //	public List getStudentTemporarilyEnrolledEnrollments();
 	public Integer getMinimumNumberOfCoursesToEnroll();

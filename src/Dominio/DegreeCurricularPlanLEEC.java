@@ -28,7 +28,7 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
         
         List result = super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod);
         
-        result.add(new SpecificLEECEnrollmentRule(studentCurricularPlan));
+        result.add(new SpecificLEECEnrollmentRule(studentCurricularPlan, executionPeriod));
         
         return result;
     }
