@@ -92,71 +92,84 @@
 
 	<logic:present name="curricularCourseScopesList" scope="request">
 		<logic:notEmpty name="curricularCourseScopesList">
-			<table width="70%" cellpadding="0" border="0">
-				<tr>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.praticalHours" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoPratHours" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.labHours" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.maxIncrementNac" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.minIncrementNac" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.credits" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.weigth" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
-					</td>
-					<td class="listClasses-header">
-					</td>
-				</tr>
-				<logic:iterate id="curricularCourseScope" name="curricularCourseScopesList">
-				
-					<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>
-					<bean:define id="infoCurricularSemester" name="curricularCourseScope" property="infoCurricularSemester"/>
-					<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
-					<tr>
-						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
-						</td>
-						<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
-						</td>	 			
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="praticalHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="theoPratHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="labHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="maxIncrementNac"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="minIncrementNac"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="credits"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="weigth"/>
-						</td>
-						<td class="listClasses"><bean:write name="infoBranch" property="code"/>
-						</td>										
-						<td class="listClasses">
-							<html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-								<bean:message key="label.manager.edit.curricularCourseScope"/>
-							</html:link> /<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-												<bean:message key="label.manager.insert.curricularCourseScope.fromAnother"/>
-										  </html:link>
-						</td>
-	 				</tr>
-	 			</logic:iterate>			
-			</table>
+			<html:form action="/deleteCurricularCourseScope" method="get">
+				<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
+				<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+				<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+					<bean:define id="onclick">
+						return confirm('<bean:message key="message.confirm.delete.curricular.course.scope"/>')
+	 				</bean:define>
+					<table width="70%" cellpadding="0" border="0">
+						<tr>
+							<td class="listClasses-header">
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.praticalHours" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoPratHours" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.labHours" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.maxIncrementNac" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.minIncrementNac" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.credits" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.weigth" />
+							</td>
+							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
+							</td>
+							<td class="listClasses-header">
+							</td>
+						</tr>
+						<logic:iterate id="curricularCourseScope" name="curricularCourseScopesList">
+							<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>
+							<bean:define id="infoCurricularSemester" name="curricularCourseScope" property="infoCurricularSemester"/>
+							<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
+						<tr>
+							<td class="listClasses">
+								<html:radio property="curricularCourseScopeId" idName="curricularCourseScope" value="idInternal" />		
+							</td>
+							<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
+							</td>
+							<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
+							</td>	 			
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
+							</td>
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="praticalHours"/>
+							</td>
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="theoPratHours"/>
+							</td>
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="labHours"/>
+							</td>
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="maxIncrementNac"/>
+							</td>
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="minIncrementNac"/>
+							</td>
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="credits"/>
+							</td>
+							<td class="listClasses"><bean:write name="curricularCourseScope" property="weigth"/>
+							</td>
+							<td class="listClasses"><bean:write name="infoBranch" property="code"/>
+							</td>										
+							<td class="listClasses">
+								<html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+									<bean:message key="label.manager.edit.curricularCourseScope"/>
+								</html:link> /<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+													<bean:message key="label.manager.insert.curricularCourseScope.fromAnother"/>
+										  	</html:link>
+							</td>
+	 					</tr>
+	 				</logic:iterate>			
+				</table>
+				<html:submit onclick='<%=onclick.toString() %>'><bean:message key="label.manager.delete.selected.curricularCourseScopes"/></html:submit>
+			</html:form>
 		</logic:notEmpty>	 	
 	</logic:present>
 	

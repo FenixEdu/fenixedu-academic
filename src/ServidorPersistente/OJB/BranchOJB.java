@@ -11,7 +11,6 @@ import Dominio.Branch;
 import Dominio.IBranch;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -59,20 +58,10 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 			throw new ExistingPersistentException();
 	}
 
-	public Boolean delete(IBranch branch) throws ExcepcaoPersistencia {
-		try {
-			// check for related student curricular plans
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("branchKey", branch.getIdInternal());
-			List result = queryList(StudentCurricularPlan.class, criteria);
-			if(!result.isEmpty())
-				return new Boolean(false);
-			
-			super.delete(branch);
-			return new Boolean(true);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
+	public void delete(IBranch branch) throws ExcepcaoPersistencia {
+		
+		super.delete(branch);
+		
 	}
 
 //	public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia {

@@ -21,7 +21,7 @@ public interface ICursoPersistente extends IPersistentObject {
     ICurso readBySigla(String sigla) throws ExcepcaoPersistencia;
 	ICurso readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia;
     void lockWrite(ICurso degree) throws ExcepcaoPersistencia, ExistingPersistentException;
-    Boolean delete(ICurso degree) throws ExcepcaoPersistencia;
+    void delete(ICurso degree) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
 	public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia;

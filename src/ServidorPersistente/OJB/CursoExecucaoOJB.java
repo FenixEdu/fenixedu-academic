@@ -17,11 +17,7 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.CursoExecucao;
@@ -29,7 +25,6 @@ import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
-import Dominio.Turma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -59,17 +54,10 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 			throw new ExistingPersistentException();
 	}
 
-	public Boolean delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+	public void delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
         
-        //Check for related classes
-		Criteria crit = new Criteria();
-		crit.addEqualTo("keyExecutionDegree", executionDegree.getIdInternal());
-		List result = queryList(Turma.class, crit);
-		if (!result.isEmpty())
-			return new Boolean(false);
-
-		super.delete(executionDegree);
-		return new Boolean(true);
+        super.delete(executionDegree);
+		
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {

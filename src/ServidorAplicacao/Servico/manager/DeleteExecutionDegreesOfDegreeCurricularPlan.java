@@ -14,6 +14,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -41,27 +42,31 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+			ITurmaPersistente persistentClass = sp.getITurmaPersistente();
 
 			Iterator iter = executionDegreesIds.iterator();
 
 			Boolean result = new Boolean(true);
 			List undeletedExecutionDegreesYears = new ArrayList();
+			List classes;
 			Integer executionDegreeId;
 			ICursoExecucao executionDegree;
 
-			while (iter.hasNext()) {
+			while(iter.hasNext()) {
 
 				executionDegreeId = (Integer) iter.next();
 				CursoExecucao execDegree = new CursoExecucao();
 				execDegree.setIdInternal(executionDegreeId);
 				executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
-				if (executionDegree != null)
-					result = persistentExecutionDegree.delete(executionDegree);			
-				if(result.equals(new Boolean(false))) {
-					undeletedExecutionDegreesYears.add((String) executionDegree.getExecutionYear().getYear());	
+				if(executionDegree != null) {
+					classes = persistentClass.readByExecutionDegree(executionDegree);
+					if(classes.isEmpty())
+						persistentExecutionDegree.delete(executionDegree);
+					else
+						undeletedExecutionDegreesYears.add((String) executionDegree.getExecutionYear().getYear());			
 				}
-				result = new Boolean(true);
 			}	
+			
 			return undeletedExecutionDegreesYears;
 
 		} catch (ExcepcaoPersistencia e) {

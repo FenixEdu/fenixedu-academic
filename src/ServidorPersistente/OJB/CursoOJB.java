@@ -16,7 +16,6 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.Curso;
-import Dominio.DegreeCurricularPlan;
 import Dominio.ICurso;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
@@ -100,26 +99,9 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 	}
 
 
-	public Boolean delete(ICurso degree) throws ExcepcaoPersistencia{
-		try{
-				String oqlQuery =
-					"select degreeCurricularPlan from "
-						+ DegreeCurricularPlan.class.getName();
-				oqlQuery += " where degree.sigla = $1 ";
-				query.create(oqlQuery);
-				query.bind(degree.getSigla());
-				List result = (List) query.execute();
-				Boolean bool = new Boolean(true); 	
-					
-				if (result.isEmpty())
-					super.delete(degree);
-				else
-					bool = new Boolean(false);
-				
-				return bool ;			
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+	public void delete(ICurso degree) throws ExcepcaoPersistencia{
+		
+		super.delete(degree);
    
 	}
 		

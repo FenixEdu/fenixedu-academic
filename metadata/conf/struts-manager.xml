@@ -5,7 +5,7 @@
 <struts-config>
  
 		<!-- ========== Data Source Configuration =============================== -->
-	
+	 
 		<!-- ========== Form Bean Definitions ================================== -->
 		<form-beans type="org.apache.struts.action.ActionFormBean">  
 	
@@ -71,6 +71,7 @@
 				<form-property name="weight" type="java.lang.String" />
 				<form-property name="branchId" type="java.lang.String" />
 				<form-property name="curricularSemesterId" type="java.lang.String" />
+				<form-property name="curricularCourseScopeId" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -675,8 +676,20 @@
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
     </action>
     
-    
-    <!--FALTA EXCEPCES PARA AS QUE SE SEGUEM-->
+    <!-- Action for deleting a curricular course scope --> 
+    <action 
+      	path="/deleteCurricularCourseScope"
+      	name="curricularCourseScopeForm"
+      	input="/readCurricularCourse.do"
+      	scope="request"
+      	type="ServidorApresentacao.Action.manager.DeleteCurricularCourseScopeAction">
+      	<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+         	       key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+    </action>
+
+	<!--FALTA EXCEPCES PARA AS QUE SE SEGUEM-->
     <action path="/readExecutionPeriods"
           input="mainPageInput.do"
               type="ServidorApresentacao.Action.manager.ReadExecutionPeriodsAction"

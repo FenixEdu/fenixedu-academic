@@ -13,6 +13,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
+import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -42,11 +43,12 @@ public class DeleteBranches implements IServico {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentBranch persistentBranch = sp.getIPersistentBranch();
+			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
 
 			Iterator iter = internalIds.iterator();
 
-			Boolean result = new Boolean(true);
 			List undeletedCodes = new ArrayList();
+			List studentCurricularPlans;
 			Integer internalId;
 			IBranch branch;
 			IBranch iterBranch = new Branch();
@@ -55,11 +57,13 @@ public class DeleteBranches implements IServico {
 				internalId = (Integer) iter.next();
 				iterBranch.setIdInternal(internalId);
 				branch = (IBranch) persistentBranch.readByOId(iterBranch, false);
-				if(branch != null)
-					result = persistentBranch.delete(branch);			
-				if(result.equals(new Boolean(false)))				
-					undeletedCodes.add((String) branch.getCode());
-				result = new Boolean(true);	
+				if(branch != null) {
+					studentCurricularPlans = persistentStudentCurricularPlan.readByBranch(branch);
+					if(studentCurricularPlans.isEmpty())
+						persistentBranch.delete(branch);
+					else
+						undeletedCodes.add((String) branch.getCode());	
+				}	
 			}
 			
 			return undeletedCodes;

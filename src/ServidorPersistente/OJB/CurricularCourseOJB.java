@@ -1,7 +1,6 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -9,7 +8,6 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
@@ -124,32 +122,10 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExistingPersistentException();
 	}
 
-	public Boolean delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		// Check for related ExecutionCourses
-		List result = curricularCourse.getAssociatedExecutionCourses();
-
-		if (!result.isEmpty())
-			return new Boolean(false);
-
-		// Delete related scopes
-
-		result = curricularCourse.getScopes();
-		if (result != null) {
-			if (!result.isEmpty()) {
-				Iterator iter = result.iterator();
-				CurricularCourseScopeOJB scopeOJB = new CurricularCourseScopeOJB();
-				while (iter.hasNext()) {
-					try {
-
-						scopeOJB.delete((CurricularCourseScope) iter.next());
-					} catch (ExcepcaoPersistencia ex) {
-						throw ex;
-					}
-				}
-			}
-		}
+	public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+		
 		super.delete(curricularCourse);
-		return new Boolean(true);
+		
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {

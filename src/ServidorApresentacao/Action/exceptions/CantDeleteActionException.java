@@ -22,6 +22,10 @@ public class CantDeleteActionException  extends FenixActionException {
 	public CantDeleteActionException(Object[] values, Throwable cause) {
 		super(key, values, cause);
 	}
+	
+	public CantDeleteActionException(String text) {
+		super(text);
+	}
     
 
 	/**

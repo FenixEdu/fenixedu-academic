@@ -33,7 +33,7 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @param cursoExecucao
 	 * @throws ExcepcaoPersistencia
 	 */
-	public Boolean delete(ICursoExecucao cursoExecucao)
+	public void delete(ICursoExecucao cursoExecucao)
 		throws ExcepcaoPersistencia;
 
 	/**

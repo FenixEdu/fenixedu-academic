@@ -13,6 +13,8 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.IBranch;
+import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -103,5 +105,21 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 
 	public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state)
 		throws ExcepcaoPersistencia;
+		
+	/**
+	 * 
+	 * @param branch
+     * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByBranch(IBranch branch) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param branch
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 
 }

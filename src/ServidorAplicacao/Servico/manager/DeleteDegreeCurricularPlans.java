@@ -12,7 +12,11 @@ import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentBranch;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -41,24 +45,46 @@ public class DeleteDegreeCurricularPlans implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
+			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			IPersistentBranch persistentBranch = sp.getIPersistentBranch();
+			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
 
 			Iterator iter = degreeCurricularPlansIds.iterator();
 
-			Boolean result = new Boolean(true);
 			List undeletedDegreeCurricularPlansNames = new ArrayList();
+			List executionDegrees, curricularCourses, branches, studentCurricularPlans;
 			Integer degreeCurricularPlanId;
 			IDegreeCurricularPlan degreeCurricularPlan;
 
-			while (iter.hasNext()) {
+			while(iter.hasNext()) {
 
 				degreeCurricularPlanId = (Integer) iter.next();
 				degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
-				if (degreeCurricularPlan != null)
-					result = persistentDegreeCurricularPlan.deleteDegreeCurricularPlan(degreeCurricularPlan);			
-				if(result.equals(new Boolean(false)))				
-					undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
-				result = new Boolean(true);
-			}	
+				if(degreeCurricularPlan != null) {
+					executionDegrees = persistentExecutionDegree.readByDegreeCurricularPlan(degreeCurricularPlan);
+					if(!executionDegrees.isEmpty())
+						undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
+					else {
+						curricularCourses = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+						if(!curricularCourses.isEmpty())
+							undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
+						else {
+							branches = persistentBranch.readByDegreeCurricularPlan(degreeCurricularPlan);
+							if(!branches.isEmpty())
+								undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
+							else {
+								studentCurricularPlans = persistentStudentCurricularPlan.readByDegreeCurricularPlan(degreeCurricularPlan);
+								if(!studentCurricularPlans.isEmpty())
+									undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());
+								else
+									persistentDegreeCurricularPlan.deleteDegreeCurricularPlan(degreeCurricularPlan);			
+							}
+						}
+					}
+				}
+			}
+				
 			return undeletedDegreeCurricularPlansNames;
 
 		} catch (ExcepcaoPersistencia e) {

@@ -8,12 +8,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.CurricularCourseScopeOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -41,26 +44,41 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
 			Iterator iter = curricularCoursesIds.iterator();
 
-			Boolean result = new Boolean(true);
 			List undeletedCurricularCourses = new ArrayList();
+			List executionCourses, scopes;
 			Integer curricularCourseId;
 			ICurricularCourse curricularCourse;
 
-			while (iter.hasNext()) {
+			while(iter.hasNext()) {
 
 				curricularCourseId = (Integer) iter.next();
 				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
-				if(curricularCourse != null)
-					result = persistentCurricularCourse.delete(curricularCourse);			
-				if(result.equals(new Boolean(false))) {
-					undeletedCurricularCourses.add((String) curricularCourse.getName());		
-					undeletedCurricularCourses.add((String) curricularCourse.getCode());
+				if(curricularCourse != null) {
+					executionCourses = curricularCourse.getAssociatedExecutionCourses();
+					if(executionCourses.isEmpty()) {
+						scopes = curricularCourse.getScopes();
+						if (scopes != null) {
+									if(!scopes.isEmpty()) {
+										Iterator iterator = scopes.iterator();
+										CurricularCourseScopeOJB scopeOJB = new CurricularCourseScopeOJB();
+										while(iterator.hasNext()) {
+											scopeOJB.delete((CurricularCourseScope) iterator.next());
+										}
+									}
+						}
+						persistentCurricularCourse.delete(curricularCourse);
+					}
+					else {
+						undeletedCurricularCourses.add((String) curricularCourse.getName());		
+						undeletedCurricularCourses.add((String) curricularCourse.getCode());
+					}
 				}
-				result = new Boolean(true);
-			}	
+			}
+				
 			return undeletedCurricularCourses;
 
 		} catch (ExcepcaoPersistencia e) {

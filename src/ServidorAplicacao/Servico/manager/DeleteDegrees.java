@@ -9,6 +9,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -38,21 +39,24 @@ public class DeleteDegrees implements IServico {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ICursoPersistente persistentDegree = sp.getICursoPersistente();
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
 
 			Iterator iter = degreesInternalIds.iterator();
+			List degreeCurricularPlans;
 
-            Boolean result = new Boolean(true);
 			List undeletedDegreesNames = new ArrayList();
 
 			while (iter.hasNext()) {
 
 				Integer internalId = (Integer) iter.next();
 				ICurso degree = persistentDegree.readByIdInternal(internalId);
-				if (degree != null)
-					result = persistentDegree.delete(degree);			
-				if(result.equals(new Boolean(false)))				
-					undeletedDegreesNames.add((String) degree.getNome());
-				result = new Boolean(true);	
+				if (degree != null) {
+					degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegree(degree);
+					if(degreeCurricularPlans.isEmpty())
+						persistentDegree.delete(degree);
+					else
+						undeletedDegreesNames.add((String) degree.getNome());			
+				}	
 			}
 			
 			return undeletedDegreesNames;

@@ -20,7 +20,7 @@ public interface IPersistentBranch extends IPersistentObject {
 	public IBranch readBranchByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia;
     public ArrayList readAll() throws ExcepcaoPersistencia;
     public void lockWrite(IBranch branch) throws ExcepcaoPersistencia, ExistingPersistentException;
-    public Boolean delete(IBranch branch) throws ExcepcaoPersistencia;
+    public void delete(IBranch branch) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 	
 	

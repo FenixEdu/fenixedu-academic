@@ -11,12 +11,18 @@ package ServidorPersistente.OJB;
  * @author  Nuno Nunes & Joana Mota
  */
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.Enrolment;
+import Dominio.IBranch;
+import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -194,6 +200,29 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+	
+	public List readByBranch(IBranch branch) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("branchKey", branch.getIdInternal());
+		return queryList(StudentCurricularPlan.class, criteria);
+	}
+	
+	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
+		List enrolments = queryList(Enrolment.class, criteria);
+		List studentCurricularPlans = new ArrayList();
+		Integer studentCurricularPlanId;
+		IStudentCurricularPlan helpStudentCurricularPlan = new StudentCurricularPlan();
+		Iterator iter = enrolments.iterator();
+		while(iter.hasNext()) {
+			studentCurricularPlanId = ((IEnrolment) iter.next()).getStudentCurricularPlan().getIdInternal();
+			helpStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan, false);
+			studentCurricularPlans.add(studentCurricularPlan);
+		}
+		return studentCurricularPlans;
 	}
 
 	public List readByUsername(String username) throws ExcepcaoPersistencia {
