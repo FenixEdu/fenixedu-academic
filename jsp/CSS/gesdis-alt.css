@@ -1,0 +1,313 @@
+/*  -------------------------------------
+	GESDIS CSS - ALTERNATE | 21.03.2003
+	------------------------------------- */
+
+/*****************************************
+ 	propriedades gerais
+ *****************************************/
+
+body {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: #fff;
+	}
+
+p 	{
+	font: 11px/1.5em Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	margin-top: 0;
+	margin-bottom: 1em;
+	background-color: transparent;
+	}
+
+/* Nome da disciplina */
+h1 {
+	font: 22px "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #333;
+	text-align: center;
+	margin: 2em 0 1.5em;
+	background-color: transparent;
+	}
+
+/* Tópicos */	
+h2 {
+	font: 13px "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #900;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	background-color: transparent;
+	}
+	
+/* Menu - lado direito */	
+h3 {
+	font: 11px  Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #fff;
+	padding: 0.5em;
+	background-color: #bca679;
+	}
+	
+/* Sub-tópicos */
+h4	{
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #999;
+	margin: 0;
+	padding-bottom: 0.2em;
+	background-color: transparent;
+	}
+
+
+/******************************************
+	links - geral
+*******************************************/
+
+a, a:visited	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #900;
+	text-decoration: underline;
+	}
+
+a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #900;
+	text-decoration: none;
+	}
+
+/******************************************
+ 	elementos de estrutura e posicionamento
+ *******************************************/
+
+#container {
+	margin: 0;
+	border: 0;
+	}
+
+#principal {
+	width: 100%;
+	margin: 0;
+	padding: 2.5em 5em 2.5em 5em;
+	border: 0;
+	vertical-align: top;
+	background-color: #fff;
+	}
+
+#header {
+	text-align: right;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: transparent;
+	}
+
+#barraist {
+	text-align: center;
+	}
+
+#barraist img {
+	margin: 0;
+	padding: 10px 10px 0px 10px;
+	border: 0;
+	}
+	
+#barranav {
+	width: 180px;
+	margin: 0;
+	border: 0;
+	background-color: #fff9cc;
+	}
+
+#anuncios {
+	margin: 0;
+	padding: 0;
+	border: 1px solid #333;
+	/* background-color: #bca679; */
+	background-color: #fff9cc;
+	}
+#anuncios a, a:visited	{
+	color: #333;
+	text-decoration: none;
+	}
+
+#anuncios a:hover {
+	color: #333;
+	text-decoration: underline;
+	}
+/*
+#anuncios {
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #ccc;
+	}
+*/
+
+#nav ul {
+	margin: 0;
+	padding: 0;
+	}
+
+#nav ul li {
+	list-style-type: none;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	margin: 0 2px 0 2px;
+	}
+
+
+/******************************************
+ 	links para menu de navegação
+ *******************************************/	
+ 
+#nav ul li a:link, ul li a:visited {
+	display: block;
+	color: #666;
+	text-indent: 5px;
+	text-decoration: none;
+	padding: 5px 0 5px 0;
+	border-bottom: 1px solid #ccc;
+	width: 180px;
+	voice-family: "\"}\""; 
+  	voice-family:inherit;
+	width: 176px;
+	} 
+
+	
+#nav ul li a:hover {
+	text-decoration: none;
+	color: #fff;
+	background-color: #333;
+	}
+
+.selected	{
+	color: #666;
+	text-indent: 5px;
+	padding: 5px 0 5px 0;
+	background-color: #ccc;
+	}
+	
+/******************************************
+ 	seccao
+ *******************************************/	
+
+dd	{
+	padding: 5px 0 5px 0;
+	}
+	
+dd a:link, dd a:visited {
+	color: #666;
+	text-decoration: none;
+	}
+	
+dd a:hover {
+	color: #900;
+	text-decoration: underline;
+	}
+
+/******************************************
+ 	citação (opcional)
+ *******************************************/
+
+.citation	{
+	width: 100%;
+	}
+
+.citation p	{
+	width: 100%;
+	font: 11px/16px Georgia, "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #666;
+	padding: 0 2em 0.2em 2em;
+	margin: 0;
+	border: 0;
+	background-color: transparent;
+	}
+
+p.citation-author	{
+	font-style: italic;
+	padding-bottom: 2em;
+	}
+
+/******************************************
+ 	anúncios
+ *******************************************/
+
+.ultAnuncio {
+	font: 11px/16px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	text-align: left;
+	padding: 20px;
+	background-color: transparent;
+	}
+
+/*
+.ultAnuncio {
+	font: 11px/16px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	padding: 20px;
+	background-color: transparent;
+	}
+*/
+.ultAnuncioAviso {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #ccc;
+	padding: 5px 20px 5px;
+	border-bottom: 1px solid #333;
+	background-color: #333;
+	}
+
+/*
+.ultAnuncioAviso {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+	font-weight: bold;
+	padding: 5px 30px 5px;
+	border-bottom: 1px solid #ccc;
+	background-color: #ccc;
+	}
+*/
+
+.mais-anuncio	{
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	text-align: right;
+	background-color: transparent;
+	}
+
+.mais-anuncio a:link, a:active, a:visited	{
+	color: #fff;
+	text-decoration: underline;
+	background-color: transparent;
+	}
+	
+.mais-anuncio a:hover	{
+	color: #fff;
+	text-decoration: none;
+	background-color: transparent;
+	}
+
+/******************************************
+ 	contacto do professor(a)
+ *******************************************/
+
+p.contacto {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+	margin: 0;
+	padding: 0 10px 0 10px;
+	background-color: transparent;
+	}
+
+/******************************************
+ 	post - date
+ *******************************************/
+ 
+ .post-date	{
+ 	display: inline;
+ 	color: #999;
+ 	}
