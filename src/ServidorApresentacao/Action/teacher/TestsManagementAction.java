@@ -1213,10 +1213,9 @@ public class TestsManagementAction extends FenixDispatchAction {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer distributedTestId = getCodeFromRequest(request,
                 "distributedTestCode");
-        String path = getServlet().getServletContext().getRealPath("/");
         SiteView siteView = null;
         try {
-            Object[] args = { executionCourseId, distributedTestId, path};
+            Object[] args = { executionCourseId, distributedTestId};
             siteView = (SiteView) ServiceUtils.executeService(userView,
                     "ReadMetadatasByDistributedTest", args);
         } catch (FenixServiceException e) {

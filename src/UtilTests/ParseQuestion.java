@@ -53,8 +53,6 @@ public class ParseQuestion extends DefaultHandler {
 
     private String responseId = new String();
 
-    private Integer responseValue;
-
     private boolean question = false, option = false, response = false,
             feedback = false;
 

@@ -25,8 +25,6 @@ public class TestQuestionChangesType extends FenixUtil
 
     private Integer type;
 
-    private String typeString;
-
     public TestQuestionChangesType() {
     }
 

@@ -34,14 +34,11 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadMetadatas implements IService {
 
-	private String path = new String();
 
 	public ReadMetadatas() {
 	}
 
-	public SiteView run(Integer executionCourseId, String order, String asc,
-			String path) throws FenixServiceException {
-		this.path = path.replace('\\', '/');
+	public SiteView run(Integer executionCourseId, String order, String asc) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB
 					.getInstance();

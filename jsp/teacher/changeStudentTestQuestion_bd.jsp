@@ -71,10 +71,10 @@ function selectStudents() {
 		<td><b><bean:message key="label.deleteVariation"/></b></td>
 	</tr>
 	<tr><td></td>
-		<td><bean:message key="label.manager.yes"/></td><td><html:radio property="deleteVariation" value="true" onclick="selectDelete()"/></td>
+		<td><bean:message key="button.yes"/></td><td><html:radio property="deleteVariation" value="true" onclick="selectDelete()"/></td>
 	</tr>
 	<tr><td></td>
-		<td><bean:message key="label.manager.no"/></td><td><html:radio property="deleteVariation" value="false"/></td>
+		<td><bean:message key="button.no"/></td><td><html:radio property="deleteVariation" value="false"/></td>
 	</tr>
 </table>
 <br/>

@@ -104,7 +104,7 @@ public class CreateExercise implements IService {
             ParseQuestion parse = new ParseQuestion();
             try {
                 infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(),
-                        infoQuestion, path);
+                        infoQuestion, this.path);
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }

@@ -22,9 +22,9 @@ public class TestScope extends DomainObject implements ITestScope
 	public TestScope(IDomainObject object)
 	{
 		super();
-		this.domainObject = object;
-		this.className = object.getClass().getName();
-		this.keyClass = object.getIdInternal();
+		setDomainObject(object);
+		setClassName(object.getClass().getName());
+		setKeyClass(object.getIdInternal());
 	}
 
 	public TestScope(Integer idInternal)

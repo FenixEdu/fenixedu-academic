@@ -33,14 +33,13 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadMetadatasByDistributedTest implements IService {
 
-	private String path = new String();
+	
 
 	public ReadMetadatasByDistributedTest() {
 	}
 
-	public SiteView run(Integer executionCourseId, Integer distributedTestId,
-			String path) throws FenixServiceException {
-		this.path = path.replace('\\', '/');
+	public SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+	
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB
 					.getInstance();

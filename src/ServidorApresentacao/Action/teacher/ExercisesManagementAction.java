@@ -604,9 +604,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         SiteView siteView = null;
         String order = request.getParameter("order");
         String asc = request.getParameter("asc");
-        String path = getServlet().getServletContext().getRealPath("/");
         try {
-            Object[] args = { executionCourseId, order, asc, path};
+            Object[] args = { executionCourseId, order, asc};
             siteView = (SiteView) ServiceUtils.executeService(userView,
                     "ReadMetadatas", args);
         } catch (FenixServiceException e) {
@@ -630,9 +629,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         SiteView siteView = null;
         String order = request.getParameter("order");
         String asc = request.getParameter("asc");
-        String path = getServlet().getServletContext().getRealPath("/");
         try {
-            Object[] args = { executionCourseId, order, asc, path};
+            Object[] args = { executionCourseId, order, asc};
             siteView = (SiteView) ServiceUtils.executeService(userView,
                     "ReadMetadatas", args);
         } catch (FenixServiceException e) {
@@ -768,9 +766,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                 .getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer metadataId = getCodeFromRequest(request, "exerciseCode");
-        String path = getServlet().getServletContext().getRealPath("/");
         try {
-            Object[] args = { executionCourseId, metadataId, path};
+            Object[] args = { executionCourseId, metadataId};
             ServiceUtils.executeService(userView, "DeleteExercise", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

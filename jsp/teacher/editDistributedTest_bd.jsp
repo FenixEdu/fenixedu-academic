@@ -128,10 +128,10 @@ function getIndex(input){
 		<td><b><bean:message key="message.imsFeedback"/></b></td>
 	</tr>
 	<tr>
-		<td></td><td><bean:message key="option.manager.true"/></td><td><html:radio property="imsFeedback" value="true" onclick="selectImsFeedback()"/></td>
+		<td></td><td><bean:message key="button.yes"/></td><td><html:radio property="imsFeedback" value="true" onclick="selectImsFeedback()"/></td>
 	</tr>
 	<tr>
-		<td></td><td><bean:message key="option.manager.false"/></td><td><html:radio property="imsFeedback" value="false" /></td>
+		<td></td><td><bean:message key="button.no"/></td><td><html:radio property="imsFeedback" value="false" /></td>
 	</tr>
 </table>
 <br/>

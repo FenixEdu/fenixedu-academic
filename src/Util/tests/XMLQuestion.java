@@ -31,8 +31,6 @@ public class XMLQuestion extends FenixUtil {
 
     private String mattext = "mattext";
 
-    private String responseLabel = "response_label";
-
     //////////////////////////
     private String start = "<?xml version=\"1.0\" encoding=\"Latin1\"?>\n<!DOCTYPE questestinterop SYSTEM \"file:/qtiasiv1p2.dtd\">\n<questestinterop>\n<item ident=\"xxx\">\n";
 

@@ -56,7 +56,7 @@
         </form-bean>
         <form-bean name="questionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="questionValue" type="java.lang.String"/>
-            <form-property name="formula" type="java.lang.String" initial="2"/>
+            <form-property name="formula" type="java.lang.String" initial="1"/>
             <form-property name="testCode" type="java.lang.String"/>
             <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="questionOrder" type="java.lang.String"/>
