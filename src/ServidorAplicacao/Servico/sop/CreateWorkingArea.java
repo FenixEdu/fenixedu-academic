@@ -16,6 +16,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PeriodState;
 /**
  * @author Luis Crus & Sara Ribeiro
@@ -58,15 +59,6 @@ public class CreateWorkingArea implements IServico {
 			IPersistentExecutionYear executionYearDAO =
 				sp.getIPersistentExecutionYear();
 
-			System.out.println(
-				"infoExecutionPeriodToExportDataFrom.getName():"
-					+ infoExecutionPeriodToExportDataFrom.getName());
-			System.out.println(
-				"infoExecutionPeriodToExportDataFrom.getYear():"
-					+ infoExecutionPeriodToExportDataFrom
-						.getInfoExecutionYear()
-						.getYear());
-
 			IExecutionPeriod executionPeriodToExportDataFrom =
 				executionPeriodDAO.readBySemesterAndExecutionYear(
 					infoExecutionPeriodToExportDataFrom.getSemester(),
@@ -76,10 +68,7 @@ public class CreateWorkingArea implements IServico {
 							.getYear()));
 
 			if (executionPeriodToExportDataFrom == null) {
-				// error - invalid execution period to export data from.
-				System.out.println(
-					"Failled reading executionPeriodToExportDataFrom!");
-				return result;
+				throw new InvalidExecutionPeriod();
 			}
 
 			IExecutionYear executionYearOfWorkingArea =
@@ -133,8 +122,11 @@ public class CreateWorkingArea implements IServico {
 			workingArea.setState(new PeriodState(PeriodState.OPEN));
 
 			// first make sure it doesn't exist.
-			executionPeriodDAO.writeExecutionPeriod(workingArea);
-			System.out.println("Created working area.");
+			try {
+				executionPeriodDAO.writeExecutionPeriod(workingArea);
+			} catch (ExistingPersistentException ex) {
+				throw new ExistingExecutionPeriod();
+			}
 
 			result = new Boolean(true);
 		} catch (ExcepcaoPersistencia ex) {
@@ -142,6 +134,95 @@ public class CreateWorkingArea implements IServico {
 		}
 
 		return result;
+	}
+
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class InvalidExecutionPeriod extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private InvalidExecutionPeriod() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private InvalidExecutionPeriod(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private InvalidExecutionPeriod(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private InvalidExecutionPeriod(Throwable cause) {
+			super(cause);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private InvalidExecutionPeriod(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+	}
+
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class ExistingExecutionPeriod extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private ExistingExecutionPeriod() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private ExistingExecutionPeriod(int errorType) {
+			super(errorType);
+		}
+
+
+		/**
+		 * @param message
+		 */
+		private ExistingExecutionPeriod(String message) {
+			super(message);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private ExistingExecutionPeriod(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private ExistingExecutionPeriod(Throwable cause) {
+			super(cause);
+		}
+
 	}
 
 }

@@ -22,8 +22,12 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ExecutionPeriodComparator;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.sop.CreateWorkingArea.ExistingExecutionPeriod;
+import ServidorAplicacao.Servico.sop.CreateWorkingArea.InvalidExecutionPeriod;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -144,6 +148,14 @@ public class ManageWorkingAreaDA extends FenixDispatchAction {
 					userView,
 					"CreateWorkingArea",
 					argsCreateWorkingArea);
+		} catch (InvalidExecutionPeriod ex) {
+			throw new InvalidArgumentsActionException(
+				"O periodo indicado para importar os dados",
+				ex);
+		} catch (ExistingExecutionPeriod ex) {
+			throw new ExistingActionException(
+				"A área de trabalho indicada",
+				ex);
 		} catch (FenixServiceException ex) {
 			throw new FenixActionException(
 				"Problemas a criar a área de trabalho.",

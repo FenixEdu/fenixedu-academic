@@ -199,6 +199,10 @@ public class ExecutionPeriodOJB
 		Integer semester,
 		IExecutionYear year)
 		throws ExcepcaoPersistencia {
+		if (year == null) {
+			return null;
+		}
+		
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("semester", semester);
 		criteria.addEqualTo("executionYear.year", year.getYear());
