@@ -49,7 +49,6 @@
 				<form-property name="branchId" type="java.lang.String" />
 				<form-property name="curricularSemesterId" type="java.lang.String" />
 				<form-property name="executionCourseId" type="java.lang.String" />
-			
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -477,32 +476,36 @@
     <!-- Action for associating execution courses to a curricular course -->
           <action path="/readExecutionPeriodToAssociateExecutionCoursesAction"
               type="ServidorApresentacao.Action.manager.ReadExecutionPeriodToAssociateExecutionCoursesAction"
-              parameter="method"
-              scope="request"
-              >
+              scope="request">
           <forward name="viewExecutionPeriods" path="df.page.read-execution-periods"/>
       </action>
       
       <!-- Action... -->
-      <action path="/readExecutionCoursesToAssociateCurricularCourseAction"
+     <!-- <action path="/readExecutionCoursesToAssociateCurricularCourseAction"
               type="ServidorApresentacao.Action.manager.ReadExecutionCoursesToAssociateCurricularCourseAction"
-              parameter="method"
-              scope="request"
-              >
+             scope="request"
+             validate="true" >
           <forward name="viewExecutionCourses" path="df.page.read-execution-courses"/>
-      </action>
+      </action>-->
       
       <!-- Action... -->
       <action 
-      	path="/associateExecutionCourseToCurricularCourse"
+      	path="/associateExecutionCoursesToCurricularCourse"
       	name="curricularCourseForm"
-      	input="/readExecutionCourseToAssociateCurricularCourse.do"
+      	input="/associateExecutionCoursesToCurricularCourse.do?method=prepare&amp;page=0"
       	scope="request"
-      	type="ServidorApresentacao.Action.manager.AssociateExecutionCourseToCurricularCourseAction">
+      	parameter="method"
+      	type="ServidorApresentacao.Action.manager.AssociateExecutionCoursesToCurricularCourseAction"
+      	validate="true">
       	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	           	      
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/> 
+       <forward name="readAvailableExecutionPeriods" path="/readExecutionPeriodToAssociateExecutionCoursesAction.do"/>   
+       <forward name="viewExecutionCoursesToAssociate" path="df.page.read-execution-courses"/>  	           	      
     </action>
     
     <!-- Action for dissociating an execution course  -->
