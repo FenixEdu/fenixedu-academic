@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -32,6 +33,7 @@ import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
@@ -320,16 +322,13 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
 			roomKey = new RoomKey(roomName);
 
-			Integer objectCode = null;
-			String objectCodeString = request.getParameter("objectCode");
-			if (objectCodeString == null) {
-				objectCodeString = (String) request.getAttribute("objectCode");
-			}
-			objectCode = new Integer(objectCodeString);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+			Integer infoExecutionPeriodOID = infoExecutionPeriod.getIdInternal();
+
 
 			ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
 
-			Object[] args = { bodyComponent, roomKey, objectCode };
+			Object[] args = { bodyComponent, roomKey, infoExecutionPeriodOID/*objectCode*/ };
 
 			try {
 				SiteView siteView =
@@ -338,7 +337,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 						"RoomSiteComponentService",
 						args);
 
-				request.setAttribute("objectCode", objectCode);
 				request.setAttribute("siteView", siteView);
 
 		} catch (NonExistingServiceException e) {

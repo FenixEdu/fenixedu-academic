@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -22,6 +21,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.ShiftKey;
 import ServidorAplicacao.GestorServicos;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
@@ -29,7 +29,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
  * @author João Mota
  *
  */
-public class ViewShiftTimeTableAction extends Action {
+public class ViewShiftTimeTableAction extends FenixContextAction {
 
 	/**
 	 * Constructor for ViewClassTimeTableAction.

@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
 </br>
@@ -12,9 +13,7 @@
 		
 <logic:present name="siteView" property="component" >
 	<bean:define id="component" name="siteView" property="component"/>
-	<bean:define id="ePName" name="component" property="infoExecutionPeriodName"/>
-	<bean:define id="eYName" name="component" property="infoExecutionYearName" />
-	
+
 			<table align="center" width="95%" cellspacing='1' cellpadding='1'>
 					<tr >
 						<td class="listClasses-header" width="20%" rowspan="2">
@@ -64,7 +63,7 @@
 							</td>
 							
 							<td class="listClasses">
-								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />'>
+								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td>
@@ -75,7 +74,7 @@
 										<bean:define id="className" name="infoClass" property="nome" toScope="request"/>
 										<bean:define id="degreeInitials" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" toScope="request"/>
 										<bean:define id="nameDegreeCurricularPlan" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.name" toScope="request"/>
-										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?className=<%= request.getAttribute("className").toString() %>&amp;ePName=<bean:write name="ePName" />&amp;eYName=<bean:write name="eYName" />&amp;degreeInitials=<%= request.getAttribute("degreeInitials").toString() %>&amp;nameDegreeCurricularPlan=<%= request.getAttribute("nameDegreeCurricularPlan").toString() %>">
+										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?className=<%= request.getAttribute("className").toString() %>&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>&amp;degreeInitials=<%= request.getAttribute("degreeInitials").toString() %>&amp;nameDegreeCurricularPlan=<%= request.getAttribute("nameDegreeCurricularPlan").toString() %>">
 											<bean:write name="infoClass" property="nome" /> <br/>
 										</a>
 								</logic:iterate>

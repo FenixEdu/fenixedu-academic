@@ -15,14 +15,14 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class ViewPublishedMarksAction extends FenixDispatchAction {
+public class ViewPublishedMarksAction extends FenixContextDispatchAction {
 
 	public ActionForward viewPublishedMarks(
 		ActionMapping mapping,
