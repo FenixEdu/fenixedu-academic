@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.struts.util.LabelValueBean;
 
 import Dominio.IExecutionYear;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -35,7 +36,7 @@ public class ReadExecutionYears implements IServico {
 		return "ReadExecutionYears";
 	}
 	
-	public ArrayList run() {
+	public ArrayList run() throws FenixServiceException {
                         
 	  ArrayList result = new ArrayList();
 	  try {
@@ -52,7 +53,7 @@ public class ReadExecutionYears implements IServico {
 		}
 
 	  } catch (ExcepcaoPersistencia ex) {
-	  	throw new RuntimeException(ex);
+	  	throw new FenixServiceException(ex);
 	  }
     
 	  return result;
