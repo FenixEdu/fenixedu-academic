@@ -69,6 +69,9 @@ public class AssociateCurricularCoursesToExecutionCourse implements IServico
 				}
 
 				List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                if (curricularCourses==null) {
+                    curricularCourses = new ArrayList();
+                }
 				List curricularCoursesToAssociate = new ArrayList();
 				Iterator iter = curricularCourseIds.iterator();
 				while (iter.hasNext())
@@ -86,6 +89,9 @@ public class AssociateCurricularCoursesToExecutionCourse implements IServico
 						throw new NonExistingServiceException("noCurricularCourse");
 					}
 					List executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                    if (executionCourses==null) {
+                        executionCourses = new ArrayList();
+                    }
 					if(!curricularCourses.contains(curricularCourse) && !executionCourses.contains(executionCourse)) {
 						curricularCoursesToAssociate.add(curricularCourse);
 						executionCourses.add(executionCourse);
