@@ -1,5 +1,8 @@
 package ServidorAplicacao.Servicos;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+
 import junit.framework.TestCase;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -24,25 +27,39 @@ public class TestCaseServicos extends TestCase {
 			dbAcessPoint = new dbaccess();
 			dbAcessPoint.openConnection();
 			dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-			dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+			
+			dbAcessPoint.loadDataBase(getDataSetFilePath());
+			
 			dbAcessPoint.closeConnection();
+			PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			persistenceBroker.clearCache();
 		} catch (Exception ex) {
 			System.out.println("Setup failed: " + ex);
 		}
 
 		_gestor = GestorServicos.manager();
 		String argsAutenticacao[] = { "user", "pass" };
-		String argsAutenticacao2[] = { "4", "a" };
+		String argsAutenticacao2[] = { "julia", "pass" };
 		try {
 			_userView = (IUserView) _gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
-			System.out.println("Servico no executado: " + ex);
+			
+			System.out.println("Servico não executado: " + ex);
+			fail("Authenticating userview");
 		}
 		try {
 			_userView2 = (IUserView) _gestor.executar(null, "Autenticacao", argsAutenticacao2);
 		} catch (Exception ex) {
-			System.out.println("Servico no executado: " + ex);
+			System.out.println("Servico não executado: " + ex);
+			fail("Authenticating userview2");
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	protected String getDataSetFilePath() {
+		return "etc/testDataSet.xml";
 	}
 
 	protected void tearDown() {
