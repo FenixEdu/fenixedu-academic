@@ -112,4 +112,9 @@ public class EnrolmentValidationResult {
 	public void setSucess(boolean sucess) {
 		this.sucess = sucess;
 	}
+	
+	public void reset(){
+		this.message.clear();
+		this.sucess = true;
+	}
 }
