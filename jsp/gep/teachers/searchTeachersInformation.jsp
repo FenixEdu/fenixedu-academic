@@ -9,7 +9,7 @@
 	<table class="listClasses" width="100%">
 		<tr>
 			<td>
-				<p align="left"><bean:message key="label.gep.coursesInformation.chooseExecutionDegree"
+				<p align="left"><bean:message key="label.gep.teachersInformation.chooseExecutionDegree"
 				  							  bundle="GEP_RESOURCES"/>:</p>
 			</td>
 		</tr>

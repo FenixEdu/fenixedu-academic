@@ -74,7 +74,7 @@
 						</html:link>
 					</td>
 					<td class="listClasses">
-						<html:link page="/courseInformation.do?method=read" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+						<html:link page="/courseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
 							<bean:message key ="label.courseInformation.view" />
 						</html:link>
 					</td>

@@ -470,13 +470,12 @@
 		</action>	
 		
 	  <!-- Course Information -->
-      <action type="ServidorApresentacao.Action.gesdis.CourseInformationAction"
+      <action type="ServidorApresentacao.Action.gesdis.ViewCourseInformationAction"
       		path="/courseInformation"
       		name="courseInformationForm"
-      		parameter="method"
       		scope="request"
       		validate="true"
-      		input="/courseInformation.do?method=read">
+      		input="/courseInformation.do">
 		<forward name="successfull-read" path="view-course-information"/>
 	  </action>	
 	  
