@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.degreeAdministrativeOffice;
+package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules;
 
 import DataBeans.InfoCurricularCourse;
 import ServidorAplicacao.IServico;

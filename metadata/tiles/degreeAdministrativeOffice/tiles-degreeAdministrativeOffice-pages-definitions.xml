@@ -3,7 +3,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="df.page.main" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/welcomeScreen.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/commons/welcomeScreen.jsp"/>
 	</definition>
 
 	<definition name="df.page.chooseStudentAndDegreeTypeWithRules" extends="definition.degreeAdministrativeOffice.masterPage">
@@ -14,19 +14,19 @@
 	</definition>
 
 	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
-		<put name="body" value="/degreeAdministrativeOffice/student/acceptEnrolment.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolment.jsp"/>
 	</definition>
 	<definition name="df.page.showAvailableCurricularCourses" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
-		<put name="body" value="/degreeAdministrativeOffice/student/showAvailableCurricularCourses.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCourses.jsp"/>
 	</definition>
 	<definition name="df.page.verifyEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
-		<put name="body" value="/degreeAdministrativeOffice/student/verifyEnrolment.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/verifyEnrolment.jsp"/>
 	</definition>
 
 	<definition name="df.page.concreteOptionalList" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
-		<put name="body" value="/degreeAdministrativeOffice/student/concreteOptionalList.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/concreteOptionalList.jsp"/>
 	</definition>
 	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
-		<put name="body" value="/degreeAdministrativeOffice/student/searchOptionalCurricularCourses.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/searchOptionalCurricularCourses.jsp"/>
 	</definition>
 </tiles-definitions>
