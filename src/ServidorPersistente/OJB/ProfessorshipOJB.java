@@ -12,6 +12,7 @@ import org.odmg.QueryException;
 
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.Professorship;
@@ -200,8 +201,19 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
     public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
     {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-		criteria.addEqualTo("executionCourse.keyExecutionPeriod", executionPeriod.getIdInternal());
+		criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+		criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriod.getIdInternal());
+        return queryList(Professorship.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionYear(Dominio.ITeacher, Dominio.IExecutionYear)
+     */
+    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionYear.getIdInternal());
         return queryList(Professorship.class, criteria);
     }
 }

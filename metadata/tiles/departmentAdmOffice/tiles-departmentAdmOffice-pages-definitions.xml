@@ -2,83 +2,91 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="index" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/index.jsp"></put>
-	</definition>
-
-	<definition name="search-for-shift-management" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="search-for-shift-management-body"/>
-	</definition>
-	<definition name="search-for-shift-management-body" extends="teacher-search-form-layout">
-		<put name="searchInfo" value="label.search.for.shift.management"/>
-	</definition>
-
-	<definition name="show-teacher-professorships" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/showTeacherProfessorships.jsp"/>
-	</definition>
-	<definition name="show-shift-professorships-percentages" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/showShiftProfessorshipsPercentages.jsp"/>
-	</definition>
-
-
-	<definition name="search-for-support-lessons-management" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="search-for-support-lessons-management-body"/>
-	</definition>
-	<definition name="search-for-support-lessons-management-body" extends="teacher-search-form-layout">
-		<put name="searchInfo" value="label.search.for.support-lessons.management"/>
-	</definition>
-	<definition name="show-teacher-professorships-for-support-lessons-management" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/supportLessons/showTeacherProfessorshipsForSupportLessonsManagement.jsp"/>
-	</definition>
-	<definition name="show-teacher-execution-course-support-lessons" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/supportLessons/showProfessorshipSupportLessons.jsp"/>
-	</definition>
-	<definition name="edit-support-lesson" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/supportLessons/editSupportLesson.jsp"/>
-	</definition>
-	
-	<definition name="search-for-dfp-student-management" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="search-for-dfp-student-management-body"/>
-	</definition>
-	<definition name="search-for-dfp-student-management-body" extends="teacher-search-form-layout">
-		<put name="searchInfo" value="label.search.for.degree-final-project-student.management"/>
-	</definition>
-	<definition name="show-teacher-dfp-students" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/degreeFinalProject/showTeacherDfpStudents.jsp"/>
-	</definition>
-
-	<definition name="search-for-institution-working-time-management" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="search-for-institution-working-time-management-body"/>
-	</definition>
-	<definition name="search-for-institution-working-time-management-body" extends="teacher-search-form-layout">
-		<put name="searchInfo" value="label.search.for.institution-working-time.management"/>
-	</definition>
-
-	<definition name="list-teacher-institution-working-time" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/workingTime/manageTeacherWorkingTime.jsp"/>
-	</definition>
-	<definition name="edit-teacher-institution-working-time" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/workingTime/editTeacherInstitutionWorkingTime.jsp"/>
-	</definition>
-
-	<definition name="listDepartmentTeachers" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/listDeparmentTeachers.jsp"/>
-	</definition>
-
-	<definition name="searchForTeacherCreditsSheet" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="searchForTeacherCreditsSheetBody"/>
-	</definition>
-	<definition name="searchForTeacherCreditsSheetBody" extends="teacher-search-form-layout">
-		<put name="searchInfo" value="label.search.for.teacherCreditsSheet"/>
-	</definition>
-	<definition name="showTeacherCreditsSheet" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/credits/showTeacherCreditsSheet.jsp"/>
-	</definition>
-
-	<definition name="createProfessorship" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"/>
-	</definition>
-
-
-
+    <definition name="index" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/departmentAdmOffice/index.jsp"></put>
+    </definition>
+    <definition name="search-for-teacherExecutionCourseAssociation-management" 
+        extends="departmentAdmOffice.masterPage">
+        <put name="body" value="search-for-teacherExecutionCourseAssociation-body"/>
+    </definition>
+    <definition name="search-for-teacherExecutionCourseAssociation-body" 
+        extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.teacherExecutionCourseAssociation.management"/>
+    </definition>
+    <definition name="show-teacher-professorships-for-management" 
+        extends="departmentAdmOffice.masterPage" >
+        <put name="body" 
+            value="/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp"/>
+    </definition>
+    <definition name="search-for-shift-management" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="search-for-shift-management-body"/>
+    </definition>
+    <definition name="search-for-shift-management-body" extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.shift.management"/>
+    </definition>
+    <definition name="show-teacher-professorships" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/departmentAdmOffice/teacher/showTeacherProfessorships.jsp"/>
+    </definition>
+    <definition name="show-shift-professorships-percentages" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/departmentAdmOffice/teacher/showShiftProfessorshipsPercentages.jsp"/>
+    </definition>
+    <definition name="search-for-support-lessons-management" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="search-for-support-lessons-management-body"/>
+    </definition>
+    <definition name="search-for-support-lessons-management-body" extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.support-lessons.management"/>
+    </definition>
+    <definition name="show-teacher-professorships-for-support-lessons-management" 
+        extends="departmentAdmOffice.masterPage">
+        <put name="body" 
+            value="/departmentAdmOffice/teacher/supportLessons/showTeacherProfessorshipsForSupportLessonsManagement.jsp"/>
+    </definition>
+    <definition name="show-teacher-execution-course-support-lessons" 
+        extends="departmentAdmOffice.masterPage">
+        <put name="body" 
+            value="/departmentAdmOffice/teacher/supportLessons/showProfessorshipSupportLessons.jsp"/>
+    </definition>
+    <definition name="edit-support-lesson" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/departmentAdmOffice/teacher/supportLessons/editSupportLesson.jsp"/>
+    </definition>
+    <definition name="search-for-dfp-student-management" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="search-for-dfp-student-management-body"/>
+    </definition>
+    <definition name="search-for-dfp-student-management-body" extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.degree-final-project-student.management"/>
+    </definition>
+    <definition name="show-teacher-dfp-students" extends="departmentAdmOffice.masterPage">
+        <put name="body" 
+            value="/departmentAdmOffice/teacher/degreeFinalProject/showTeacherDfpStudents.jsp"/>
+    </definition>
+    <definition name="search-for-institution-working-time-management" 
+        extends="departmentAdmOffice.masterPage">
+        <put name="body" value="search-for-institution-working-time-management-body"/>
+    </definition>
+    <definition name="search-for-institution-working-time-management-body" 
+        extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.institution-working-time.management"/>
+    </definition>
+    <definition name="list-teacher-institution-working-time" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/departmentAdmOffice/teacher/workingTime/manageTeacherWorkingTime.jsp"/>
+    </definition>
+    <definition name="edit-teacher-institution-working-time" extends="departmentAdmOffice.masterPage">
+        <put name="body" 
+            value="/departmentAdmOffice/teacher/workingTime/editTeacherInstitutionWorkingTime.jsp"/>
+    </definition>
+    <definition name="listDepartmentTeachers" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/departmentAdmOffice/teacher/listDeparmentTeachers.jsp"/>
+    </definition>
+    <definition name="searchForTeacherCreditsSheet" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="searchForTeacherCreditsSheetBody"/>
+    </definition>
+    <definition name="searchForTeacherCreditsSheetBody" extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.teacherCreditsSheet"/>
+    </definition>
+    <definition name="showTeacherCreditsSheet" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/credits/showTeacherCreditsSheet.jsp"/>
+    </definition>
+    <definition name="createProfessorship" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"/>
+    </definition>
 </tiles-definitions>

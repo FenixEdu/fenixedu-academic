@@ -8,11 +8,14 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDepartment;
+import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDepartment;
 import Dominio.IPessoa;
+import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -20,23 +23,24 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jpvl
  */
-public class ReadDepartmentByUser implements IService
+public class ReadDepartmentByTeacher implements IService
 {
-    public ReadDepartmentByUser()
-    {
-    }
+    public ReadDepartmentByTeacher() {}
 
-    public InfoDepartment run(String username) throws FenixServiceException
+
+    public InfoDepartment run(InfoTeacher infoTeacher) throws FenixServiceException
     {
         InfoDepartment infoDepartment = null;
-
+        
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa person = personDAO.lerPessoaPorUsername(username);
-            List departmentList = person.getManageableDepartmentCredits();
-            infoDepartment = Cloner.copyIDepartment2InfoDepartment((IDepartment) departmentList.get(0));
+            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
+            
+            ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+            
+            IDepartment department = departmentDAO.readByTeacher(teacher);
+            infoDepartment = Cloner.copyIDepartment2InfoDepartment(department);
         }
         catch (ExcepcaoPersistencia e)
         {

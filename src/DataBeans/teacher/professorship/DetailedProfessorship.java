@@ -18,6 +18,7 @@ import DataBeans.InfoProfessorship;
 public class DetailedProfessorship
 {
     private InfoProfessorship infoProfessorship;
+    private Boolean responsibleFor;
     private List executionCourseCurricularCoursesList;
     /**
 	 * @return Returns the executionCourseCurricularCoursesList.
@@ -65,5 +66,19 @@ public class DetailedProfessorship
             }
         }
         return infoDegreeList;
+    }
+    /**
+     * @return Returns the responsibleFor.
+     */
+    public Boolean getResponsibleFor()
+    {
+        return this.responsibleFor;
+    }
+    /**
+     * @param responsibleFor The responsibleFor to set.
+     */
+    public void setResponsibleFor(Boolean responsibleFor)
+    {
+        this.responsibleFor = responsibleFor;
     }
 }

@@ -400,4 +400,14 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         return queryList(ExecutionCourse.class, criteria, true);
     }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionCourseIds(java.util.List)
+     */
+    public List readByExecutionCourseIds(List executionCourseIds) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addIn("idInternal", executionCourseIds);
+        return queryList(ExecutionCourse.class, criteria);
+    }
 }

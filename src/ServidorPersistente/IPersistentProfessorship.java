@@ -9,6 +9,7 @@ import java.util.List;
 
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -51,6 +52,12 @@ public interface IPersistentProfessorship extends IPersistentObject
      * @param executionPeriod
      * @return
      */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;;
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    /**
+     * @param teacher
+     * @param executionYear
+     * @return
+     */
+    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear) throws ExcepcaoPersistencia;
 
 }

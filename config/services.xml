@@ -3377,6 +3377,24 @@
         </filterChains>
     </service>
     <service>
+        <name>ReadDetailedTeacherProfessorshipsByExecutionYear</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionYear</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+  <service>
+        <name>UpdateTeacherExecutionYearResponsabilities</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.professorship.UpdateTeacherExecutionYearResponsabilities</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CreditsServiceWithTeacherIdArgumentAuthorization"/>            
+        </filterChains>
+    </service>    
+
+    <service>
         <name>ReadProfessorshipSupportLessons</name>
         <implementationClass>
             ServidorAplicacao.Servico.teacher.professorship.ReadProfessorshipSupportLessons</implementationClass>
@@ -3519,6 +3537,14 @@
         <isTransactional>true</isTransactional>
         <filterChains/>
     </service>
+    <service>
+        <name>ReadDepartmentByTeacher</name>
+        <implementationClass>ServidorAplicacao.Servico.department.ReadDepartmentByTeacher</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    
     <service>
         <name>ReadExamsByStudent</name>
         <implementationClass>ServidorAplicacao.Servico.student.ReadExamsByStudent</implementationClass>

@@ -71,7 +71,15 @@
             <form-property name="responsibleFor" type="java.lang.Boolean" initial="false"/>
             <form-property name="executionDegreeId" type="java.lang.String"/>
             <form-property name="executionYearId" type="java.lang.String"/>
+            <form-property name="executionPeriodId" type="java.lang.String"/>            
             <form-property name="executionCourseId" type="java.lang.String"/>
+        </form-bean>
+        <form-bean name="teacherExecutionCourseResponsabilities" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="idInternal" type="java.lang.Integer" />
+            <form-property name="teacherId" type="java.lang.Integer" />
+            <form-property  name="executionYearId" type="java.lang.Integer" />
+            <form-property name="executionCourseResponsability" type="java.lang.Integer[]" />
         </form-bean>
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
@@ -90,6 +98,66 @@
         <action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
             <forward name="Success" path="index"/>
         </action>
+        <!-- ======= USE CASE: Associate teacher to executionCourse ================= -->
+        <action path="/teacherSearchForExecutionCourseAssociation" input="search-for-shift-management" 
+            name="teacherSearchForm" scope="request" parameter="method" 
+            type="ServidorApresentacao.Action.framework.SearchAction" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="FindTeachersService"/>
+            <set-property property="objectAttribute" value="infoTeacher"/>
+            <set-property property="listAttribute" value="infoTeacherList"/>
+            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
+            <forward name="search-form" path="search-for-teacherExecutionCourseAssociation-management"/>
+            <forward name="list-one" path="/showTeacherProfessorshipsForManagement.do"/>
+            <forward name="list-many" path=""/>
+        </action>
+
+        <action path="/showTeacherProfessorshipsForManagement" input="show-teacher-professorships-for-management" 
+            name="teacherExecutionCourseResponsabilities" scope="request" 
+            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
+            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+                key="message.teacher-not-belong-to-department" 
+                path="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0"/>
+            <forward name="list-professorships" path="show-teacher-professorships-for-management"/>
+        </action>        
+        
+       <action path="/updateTeacherExecutionYearExecutionCourseResponsabilities" input="show-teacher-professorships-for-management" 
+            name="teacherExecutionCourseResponsabilities" scope="request" 
+            type="ServidorApresentacao.Action.teacher.professorship.UpdateTeacherExecutionCourseResponsabilitiesAction">
+            <forward name="successfull-update" path="/showTeacherProfessorshipsForManagement.do"/>
+        </action>          
+            <!-- ====================== USE CASE: Remove Professorship ========================== -->
+        <action path="/removeProfessorship" 
+            input="/showTeacherProfessorshipsForManagement.do" 
+            name="teacherExecutionCourseForm" scope="request" parameter="method" 
+            type="ServidorApresentacao.Action.teacher.professorship.RemoveProfessorshipAction">
+            <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingShiftProfessorship" 
+                key="message.existing.shiftProfessorship" 
+                path="/showTeacherProfessorshipsForManagement.do"/>
+            <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingSupportLesson" 
+                key="message.existing.supportLesson" 
+                path="/showTeacherProfessorshipsForManagement.do"/>
+                
+            <exception type="ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException" 
+                key="message.professorship.isResponsibleFor" 
+                path="/showTeacherProfessorshipsForManagement.do"/>
+            <forward name="successfull-delete" 
+                path="/showTeacherProfessorshipsForManagement.do"/>
+        </action>
+        <!-- ======================================================================== -->
+        <!-- ====================== USE CASE: Insert Professorship ========================== -->
+        <action path="/createProfessorship" 
+            input="/createProfessorship?method=showExecutionDegreeExecutionCourses" 
+            name="teacherExecutionCourseForm" scope="request" parameter="method" 
+            type="ServidorApresentacao.Action.teacher.professorship.CreateProfessorshipDispatchAction">
+            <forward name="first-step" path="createProfessorship"/>
+            <forward name="second-step" path="createProfessorship"/>
+            <forward name="third-step" path="createProfessorship"/>
+            <forward name="final-step" 
+                path="/teacherSearchForExecutionCourseAssociation.do?method=doSearch&amp;page=1"/>
+        </action>
+        <!-- ======================================================================== -->
+        
         <!-- =======  USE CASE : Edit Teacher execution course professor ship =========== -->
         <action path="/teacherSearchForShiftManagement" input="search-for-shift-management" 
             name="teacherSearchForm" scope="request" parameter="method" 
@@ -105,7 +173,7 @@
         </action>
         <action path="/showTeacherProfessorships" input="show-teacher-professorships" 
             name="objectOIDForm" scope="request" 
-            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsAction">
+            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
             <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForShiftManagement.do?method=searchForm&amp;page=0"/>
@@ -149,7 +217,7 @@
         </action>
         <action path="/showTeacherProfessorshipsForSupportLessonsManagement" 
             input="show-teacher-professorships" name="professorshipForm" scope="request" 
-            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsAction">
+            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
             <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForSupportLessonsManagement.do?method=searchForm&amp;page=0"/>
@@ -347,36 +415,6 @@
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
         <!-- =======================================================================  -->
-        <!-- ====================== USE CASE: Insert Professorship ========================== -->
-        <action path="/createProfessorship" 
-            input="/createProfessorship?method=showExecutionDegreeExecutionCourses" 
-            name="teacherExecutionCourseForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.teacher.professorship.CreateProfessorshipDispatchAction">
-            <forward name="first-step" path="createProfessorship"/>
-            <forward name="second-step" path="createProfessorship"/>
-            <forward name="final-step" 
-                path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
-        </action>
-        <!-- ======================================================================== -->
-        <!-- ====================== USE CASE: Remove Professorship ========================== -->
-        <action path="/removeProfessorship" 
-            input="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1" 
-            name="teacherExecutionCourseForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.teacher.professorship.RemoveProfessorshipAction">
-            <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingShiftProfessorship" 
-                key="message.existing.shiftProfessorship" 
-                path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
-            <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingSupportLesson" 
-                key="message.existing.supportLesson" 
-                path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
-                
-            <exception type="ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException" 
-                key="message.professorship.isResponsibleFor" 
-                path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
-            <forward name="successfull-delete" 
-                path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
-        </action>
-        <!-- ======================================================================== -->
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>

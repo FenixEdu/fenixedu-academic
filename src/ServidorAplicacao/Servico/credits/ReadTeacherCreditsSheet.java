@@ -25,9 +25,11 @@ import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import Dominio.IShiftProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.ITeacher;
+import Dominio.ResponsibleFor;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import ServidorAplicacao.IServico;
@@ -35,6 +37,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -332,8 +335,11 @@ public class ReadTeacherCreditsSheet implements IServico
     private List readDetailedProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        IPersistentResponsibleFor responsibleForDAO =sp.getIPersistentResponsibleFor();
         
         List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+        final List responsibleFors = responsibleForDAO.readByTeacher(teacher);
+        
 		List detailedProfessorshipList = (List) CollectionUtils.collect(professorshipList,
 				 new Transformer()
 				 {
@@ -347,7 +353,13 @@ public class ReadTeacherCreditsSheet implements IServico
 						 List executionCourseCurricularCoursesList = getInfoCurricularCourses(
 								 professorship.getExecutionCourse());
 
+
 						 DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
+						 
+						 IResponsibleFor responsibleFor = new ResponsibleFor();
+						 responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
+						 responsibleFor.setTeacher(professorship.getTeacher());
+						 detailedProfessorship.setResponsibleFor(Boolean.valueOf(responsibleFors.contains(responsibleFor)));
 
 						 detailedProfessorship.setInfoProfessorship(infoProfessorShip);
 						 detailedProfessorship.setExecutionCourseCurricularCoursesList(

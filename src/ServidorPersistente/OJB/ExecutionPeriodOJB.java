@@ -1210,7 +1210,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionYear", executionYear.getIdInternal());
+        criteria.addEqualTo("executionYear.idInternal", executionYear.getIdInternal());
         return queryList(ExecutionPeriod.class, criteria);
     }
 

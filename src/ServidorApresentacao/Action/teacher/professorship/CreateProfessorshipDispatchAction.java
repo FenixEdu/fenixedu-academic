@@ -18,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
@@ -38,11 +39,11 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
         DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
         Integer teacherNumber = Integer
                 .valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
-        
+
         Boolean responsibleFor = (Boolean) teacherExecutionCourseForm.get("responsibleFor");
-        
-        Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get(
-                "executionCourseId"));
+
+        Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm
+                .get("executionCourseId"));
 
         InfoProfessorship infoProfessorship = new InfoProfessorship();
 
@@ -78,44 +79,77 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
         Object[] arguments = {null, TipoCurso.LICENCIATURA_OBJ};
         List executionDegrees = (List) executeService(
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", request, arguments);
-        
-        Collections.sort(executionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+
+        Collections.sort(executionDegrees,
+                new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
         return executionDegrees;
     }
 
-    private void prepareFirstStep(HttpServletRequest request) throws FenixServiceException
+    /**
+	 * @param teacherExecutionCourseForm
+	 * @param request
+	 */
+    private void prepareConstants(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
+            throws FenixServiceException
     {
-        List executionDegrees = getExecutionDegrees(request);
+        Integer teacherNumber = Integer
+                .valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
 
+        Object[] arguments = {teacherNumber};
+        InfoTeacher infoTeacher = (InfoTeacher) executeService("ReadTeacherByNumber", request, arguments);
+
+        InfoExecutionYear executionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear",
+                request, null);
+        request.setAttribute("executionYear", executionYear);
+
+        request.setAttribute("infoTeacher", infoTeacher);
+    }
+
+    private void prepareFirstStep(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
+            throws FenixServiceException
+    {
+        prepareConstants(teacherExecutionCourseForm, request);
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
+        List executionPeriodList = (List) executeService("ReadExecutionPeriodsByExecutionYear", request,
+                new Object[]{infoExecutionYear});
+        request.setAttribute("executionPeriodList", executionPeriodList);
+
+    }
+
+    private void prepareSecondStep(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
+            throws FenixServiceException
+    {
+        prepareFirstStep(teacherExecutionCourseForm, request);
+        List executionDegrees = getExecutionDegrees(request);
         request.setAttribute("executionDegrees", executionDegrees);
     }
 
-    private void prepareSecondStep(ActionForm form, HttpServletRequest request)
+    private void prepareThirdStep(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
             throws FenixServiceException
     {
-        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
-
-        Integer executionDegreeId = Integer.valueOf((String) teacherExecutionCourseForm.get(
-                "executionDegreeId"));
-
-        Object[] arguments = {executionDegreeId, null};
+        prepareSecondStep(teacherExecutionCourseForm, request);
+        Integer executionDegreeId = Integer.valueOf((String) teacherExecutionCourseForm
+                .get("executionDegreeId"));
+        Integer executionPeriodId = Integer.valueOf((String) teacherExecutionCourseForm
+                .get("executionPeriodId"));
+        Object[] arguments = {executionDegreeId, executionPeriodId};
 
         List executionCourses = (List) executeService("ReadExecutionCoursesByExecutionDegree", request,
                 arguments);
-		Collections.sort(executionCourses, new BeanComparator("nome"));        
+
+        Collections.sort(executionCourses, new BeanComparator("nome"));
+
         request.setAttribute("executionCourses", executionCourses);
     }
-
     public ActionForward showExecutionDegreeExecutionCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-		DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
-		prepareConstants(teacherExecutionCourseForm, request);
-        prepareFirstStep(request);
+        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+        prepareFirstStep(teacherExecutionCourseForm, request);
 
-        prepareSecondStep(form, request);
+        prepareThirdStep(teacherExecutionCourseForm, request);
 
-        return mapping.findForward("second-step");
+        return mapping.findForward("third-step");
     }
 
     /*
@@ -128,21 +162,23 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-		DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
-        prepareConstants(teacherExecutionCourseForm, request);
-        prepareFirstStep(request);
-        return mapping.findForward("first-step");
+        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+        prepareSecondStep(teacherExecutionCourseForm, request);
+        return mapping.findForward("second-step");
     }
 
-    /**
-     * @param teacherExecutionCourseForm
-     * @param request
-     */
-    private void prepareConstants(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request) throws FenixServiceException
+    public ActionForward showExecutionYearExecutionPeriods(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
-        Object [] arguments = {teacherNumber};
-        InfoTeacher infoTeacher = (InfoTeacher) executeService("ReadTeacherByNumber", request, arguments);
-        request.setAttribute("infoTeacher", infoTeacher);
+        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+
+        prepareFirstStep(teacherExecutionCourseForm, request);
+
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
+        List executionPeriodList = (List) executeService("ReadExecutionPeriodsByExecutionYear", request,
+                new Object[]{infoExecutionYear});
+        request.setAttribute("executionPeriodList", executionPeriodList);
+
+        return mapping.findForward("second-step");
     }
 }

@@ -7,6 +7,11 @@
 		<strong>&raquo; <bean:message key="link.group.teacher.title"/></strong>
 		<ul>
 			<li>
+				<html:link page="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0">
+					<bean:message key="link.teacherExecutionCourseAssociation"/>
+				</html:link>
+			</li>
+			<li>
 				<html:link page="/teacherSearchForShiftManagement.do?method=searchForm&amp;page=0">
 					<bean:message key="link.lessons"/>
 				</html:link>

@@ -13,15 +13,16 @@
 	</html:link></i>)
 </p>
 
-<logic:notEmpty name="detailedProfessorshipList" >	
+<logic:notEmpty name="detailedProfessorshipList" >
 	<h2><bean:message key="label.teacher.professorships"/></h2>
-		<table width="100%"cellpadding="0" border="0">
+		<table width="100%"cellpadding="5" border="0">
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.execution-course.acronym" />
-				</td>
 				<td class="listClasses-header" style="text-align:left"><bean:message key="label.execution-course.name" />
 				</td>
 				<td class="listClasses-header" style="text-align:left"><bean:message key="label.execution-course.degrees" />
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.execution-course.responsibleFor" />
 				</td>
 				<td class="listClasses-header"><bean:message key="label.execution-period" />
 				</td>
@@ -30,11 +31,6 @@
 				<bean:define id="professorship" name="detailedProfessorship" property="infoProfessorship"/>
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
 				<tr>
-					<td class="listClasses">
-						<html:link page="<%= executionCourseLink %>" paramId="<%= paramId %>" paramName="infoExecutionCourse" paramProperty="idInternal">
-							<bean:write name="infoExecutionCourse" property="sigla"/>
-						</html:link>
-					</td>			
 					<td class="listClasses" style="text-align:left">
 						<html:link page="<%= executionCourseLink %>" paramId="<%= paramId %>" paramName="infoExecutionCourse" paramProperty="idInternal">
 							<bean:write name="infoExecutionCourse" property="nome"/>
@@ -50,11 +46,18 @@
 							</logic:notEqual>
 						</logic:iterate>
 					</td>
+					<td class='listClasses'>
+						<logic:equal name="detailedProfessorship" property="responsibleFor" value="true">
+							<bean:message key="label.yes"/>
+						</logic:equal>
+						<logic:notEqual name="detailedProfessorship" property="responsibleFor" value="true">
+							<bean:message key="label.no"/>						
+						</logic:notEqual>
+					</td>
 					<td class="listClasses">
 						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>&nbsp;-&nbsp;
 						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>
 					</td>
-					
 				</tr>
 			</logic:iterate>
 	 	</table>

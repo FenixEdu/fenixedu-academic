@@ -7,6 +7,7 @@
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/><br />
+	<b><bean:message key="label.executionYear" /> </b> <bean:write name="executionYear" property="year" /> <br />
 	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)
@@ -20,18 +21,28 @@
 	<html:hidden property="teacherNumber"/>
 	<html:hidden property="method" value="createProfessorship"/>	
 
-	<h2>
-		<span class="emphasis-box">1</span> <i><bean:message key="label.professorship.chooseExecutionDegree"/></i>
-	</h2>
-	<html:select property="executionDegreeId" onchange="this.form.method.value='showExecutionDegreeExecutionCourses';this.form.submit();">
-		<option></option>
-		<html:options collection="executionDegrees" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" property="idInternal"/>
-	</html:select>
 
+	<h2>
+		<span class="emphasis-box">1</span> <i><bean:message key="label.professorship.chooseExecutionPeriod"/></i>
+	</h2>
+	<html:select property="executionPeriodId" onchange="this.form.method.value='showExecutionDegrees';this.form.submit();">
+		<option></option>
+		<html:options collection="executionPeriodList" labelProperty="name" property="idInternal"/>
+	</html:select>
+	
+	<logic:present name="executionDegrees">
+		<h2>
+			<span class="emphasis-box">2</span> <i><bean:message key="label.professorship.chooseExecutionDegree"/></i>
+		</h2>
+		<html:select property="executionDegreeId" onchange="this.form.method.value='showExecutionDegreeExecutionCourses';this.form.submit();">
+			<option></option>
+			<html:options collection="executionDegrees" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" property="idInternal"/>
+		</html:select>
+	</logic:present>
 	
 	<logic:present name="executionCourses">
 		<h2>
-			<span class="emphasis-box">2</span> <i><bean:message key="label.professorship.chooseExecutionCourse"/></i>
+			<span class="emphasis-box">3</span> <i><bean:message key="label.professorship.chooseExecutionCourse"/></i>
 		</h2>
 		<html:select property="executionCourseId">
 			<option></option>		

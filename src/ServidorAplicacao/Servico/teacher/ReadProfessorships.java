@@ -17,11 +17,14 @@ import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
+import Dominio.ResponsibleFor;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -34,19 +37,23 @@ public class ReadProfessorships implements IService
     public ReadProfessorships()
     {
     }
-    
+
     public List run(IUserView userView) throws FenixServiceException
     {
         try
         {
             ISuportePersistente persistentSuport;
             persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentResponsibleFor responsibleForDAO = persistentSuport
+                    .getIPersistentResponsibleFor();
+
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
             IPersistentTeacher teacherDAO = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
 
             List professorships = persistentProfessorship.readByTeacher(teacher);
+            final List responsibleFors = responsibleForDAO.readByTeacher(teacher);
 
             List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                     new Transformer()
@@ -57,15 +64,23 @@ public class ReadProfessorships implements IService
                             IProfessorship professorship = (IProfessorship) input;
                             InfoProfessorship infoProfessorShip = Cloner
                                     .copyIProfessorship2InfoProfessorship(professorship);
+                            IResponsibleFor responsibleFor = new ResponsibleFor();
 
-                            List executionCourseCurricularCoursesList = getInfoCurricularCourses(
-                                    professorship.getExecutionCourse());
+                            responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
+                            responsibleFor.setTeacher(professorship.getTeacher());
+
+                            
+
+                            List executionCourseCurricularCoursesList = getInfoCurricularCourses(professorship
+                                    .getExecutionCourse());
 
                             DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
+                            detailedProfessorship.setResponsibleFor(Boolean.valueOf(responsibleFors.contains(responsibleFor)));
+                            
                             detailedProfessorship.setInfoProfessorship(infoProfessorShip);
-                            detailedProfessorship.setExecutionCourseCurricularCoursesList(
-                                    executionCourseCurricularCoursesList);
+                            detailedProfessorship
+                                    .setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
 
                             return detailedProfessorship;
                         }
@@ -82,8 +97,7 @@ public class ReadProfessorships implements IService
                                         {
                                             ICurricularCourse curricularCourse = (ICurricularCourse) input;
                                             InfoCurricularCourse infoCurricularCourse = Cloner
-                                                    .copyCurricularCourse2InfoCurricularCourse(
-                                                            curricularCourse);
+                                                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                                             return infoCurricularCourse;
                                         }
                                     });
