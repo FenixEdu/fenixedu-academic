@@ -54,13 +54,7 @@ public class ReadDegreeService implements IServico {
 	if (degree == null){
 				return null;
 			}
-//	try {
-//		sp = SuportePersistenteOJB.getInstance();
-//		degree = sp.getICursoPersistente().readByIdInternal(idInternal);
-//	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-//		throw new NonExistingServiceException(excepcaoPersistencia);
-//	}
-//	  
+
 			infoDegree = Cloner.copyIDegree2InfoDegree(degree);
 	  
 	return infoDegree;

@@ -1,19 +1,26 @@
 /*
- * Created on 23/Jul/2003
+ * Created on 25/Jul/2003
  */
 package ServidorAplicacao.Servicos.manager;
 
+import DataBeans.InfoDegree;
+import DataBeans.util.Cloner;
+import Dominio.ICurso;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author lmac1
  */
-public class ReadDegreesServiceTest extends TestCaseReadServices {
+public class ReadDegreeServiceTest extends TestCaseReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadDegreesServiceTest(String testName) {
+	 public ReadDegreeServiceTest(String testName) {
 		super(testName);
 			}
 
@@ -21,32 +28,31 @@ public class ReadDegreesServiceTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	 protected String getNameOfServiceToBeTested() {
-		return "ReadDegreesService";
+		return "ReadDegreeService";
 	   }
        
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
 
-//	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-//		return null;
-//	}
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		Object[] args = { new Integer(5)};
+		return args;
+	}
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		return null;
+		Object[] args = { new Integer(9)};
+		return args;
 	}
 
    /* (non-Javadoc)
 	* @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	*/
 	protected int getNumberOfItemsToRetrieve() {
-		return 5;
+		return 1;
 	}
         
 	/* (non-Javadoc)
@@ -54,8 +60,24 @@ public class ReadDegreesServiceTest extends TestCaseReadServices {
 		 */
 		 
 	protected Object getObjectToCompare() {			
-		return null;
+
+		ICurso degree = null;
+		try {
+					
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+			ICursoPersistente persistentDegree = sp.getICursoPersistente();
+			degree = persistentDegree.readByIdInternal(new Integer(9));
+		    sp.confirmarTransaccao();
+			
+		}catch (ExcepcaoPersistencia exception) {
+				exception.printStackTrace(System.out);
+				fail("Using services at getObjectToCompare()!");
+			  }
+			InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degree);
+		return infoDegree;
 	}
+	
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseServicos#getArgsForAuthorizedUser()
 	 */

@@ -56,12 +56,12 @@ public class ReadDegreeAction extends FenixAction  {
 				}catch(FenixServiceException e){
 					throw new FenixActionException(e);
 			    }
-			    //Caso em que se tenta ler 1 curso que já não existe na base de dados
+			    //Caso em que se tenta ler 1 curso que não existe na base de dados
 				if(degree==null){
 					try {
 							List degrees = null;
-							GestorServicos serviceManager = GestorServicos.manager();
-							degrees = (List) serviceManager.executar(
+//							GestorServicos serviceManager = GestorServicos.manager();
+							degrees = (List) manager.executar(
 							userView,
 							"ReadDegreesService",
 							null);
@@ -69,7 +69,7 @@ public class ReadDegreeAction extends FenixAction  {
 							request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
 							ActionErrors actionErrors = new ActionErrors();
 							ActionError error = new ActionError("message.nonExistingDegree");
-							actionErrors.add("message.existingDegreeCode", error);
+						    actionErrors.add("message.nonExistingDegree", error);
 							saveErrors(request, actionErrors);
 					} catch (FenixServiceException e) {
 								throw new FenixActionException(e);

@@ -38,7 +38,9 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-		return null;
+		String[] result = {"message.nonExistingDegree"};		
+//		result.add("message.nonExistingDegree");
+		return result;
 	}
 
 	/**
@@ -117,18 +119,3 @@ public class ReadDegreeActionTest extends TestCasePresentationManagerPortal{
 
 }
 
-//ISuportePersistente persistentSupport = null;
-//Integer persistentId = null;
-//try {
-//					
-//		persistentSupport = SuportePersistenteOJB.getInstance();
-//		persistentSupport.iniciarTransaccao();			
-//		persistentId = persistentSupport.getICursoPersistente().;
-//		persistentSupport.confirmarTransaccao();
-//
-//	}catch (ExcepcaoPersistencia exception) {
-//				  exception.printStackTrace(System.out);
-//				  fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
-//				}
-//Integer id = new Integer("9");	
-//String requestAttributtes = id.toString();
