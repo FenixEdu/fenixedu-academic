@@ -21,6 +21,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import DataBeans.TypeLessonAndInfoShift;
+import DataBeans.util.Cloner;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
@@ -67,14 +68,19 @@ public class ReadOtherCoursesWithShifts implements IServico {
     return "ReadOtherCoursesWithShifts";
   }
 
+
+/**
+ * 
+ * @author tfc130
+ * :FIXME: é preciso dar outras voltas... Isto assim ficou mal depois das
+ * alterações
+ */
   public Object run(InfoStudent infoStudent) {
 	List infoCoursesWithShifts = new ArrayList();
 	
     try {
-    	IStudent student = new Student();
-    	// Alternatly to the following 2 line, the username could be set.
-    	student.setDegreeType(infoStudent.getDegreeType());
-		student.setNumber(infoStudent.getNumber());
+    	IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
+
 		IStudentCurricularPlan sCP = new StudentCurricularPlan();
 		sCP.setStudent(student);
 		sCP.setCurrentState(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
@@ -105,27 +111,33 @@ public class ReadOtherCoursesWithShifts implements IServico {
 		}
 
 		for(int i = 0; i < ldE.size(); i++) {
-			IDisciplinaExecucao disciplinaExecucao = (DisciplinaExecucao) ldE.get(i);
+			IDisciplinaExecucao disciplinaExecucao = (IDisciplinaExecucao) ldE.get(i);
 			
-			InfoDegree iD = new InfoDegree();
-			iD.setNome(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getNome());
-			iD.setSigla(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getSigla());
+			InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(disciplinaExecucao);
 			
-			InfoExecutionDegree iED = new InfoExecutionDegree();
-			iED.setAnoLectivo(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
-			iED.setInfoLicenciatura(iD);
+//			InfoDegree iD = new InfoDegree();
+//			iD.setNome(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getNome());
+//			iD.setSigla(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getSigla());
 			
-			InfoExecutionCourse iEC = new InfoExecutionCourse();
-			iEC.setNome(disciplinaExecucao.getNome());
-			iEC.setSigla(disciplinaExecucao.getSigla());
-			iEC.setPrograma(disciplinaExecucao.getPrograma());
-			iEC.setInfoLicenciaturaExecucao(iED);
+//			InfoExecutionDegree iED = new InfoExecutionDegree();
+//			iED.setAnoLectivo(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
+//			iED.setInfoLicenciatura(iD);
+//			
+//			InfoExecutionCourse iEC = new InfoExecutionCourse();
+//			iEC.setNome(disciplinaExecucao.getNome());
+//			iEC.setSigla(disciplinaExecucao.getSigla());
+//			iEC.setPrograma(disciplinaExecucao.getPrograma());
+//			iEC.setInfoLicenciaturaExecucao(iED);
 
 
 //////////			
 			ICurso degree = new Curso();
 			degree.setSigla(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getSigla());
 			ICursoExecucao executionCoure = new CursoExecucao();
+//			executionCoure.setExecutionYear();
+//			executionCoure.setCurricularPlan();
+			
+			
 			executionCoure.setAnoLectivo(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
 			executionCoure.setCurso(degree);
 			IDisciplinaExecucao executionDegree = new DisciplinaExecucao();
@@ -183,15 +195,11 @@ public class ReadOtherCoursesWithShifts implements IServico {
 							.readByStudentIdAndShiftType(
 							infoStudent.getNumber(),
 							(TipoAula) typesOfShifts.get(k),
-							iEC.getNome());
+							infoExecutionCourse.getNome());
 					InfoShift infoShift = null;
 					if (shift != null)
-						infoShift =
-							new InfoShift(
-								shift.getNome(),
-								shift.getTipo(),
-								shift.getLotacao(),
-								iEC);
+						infoShift = Cloner.copyIShift2InfoShift(shift);
+
 					TypeLessonAndInfoShift pair =
 						new TypeLessonAndInfoShift(
 							(TipoAula) typesOfShifts.get(k),
@@ -200,7 +208,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 				}
 				InfoCourseExecutionAndListOfTypeLessonAndInfoShift pairDeShiftList =
 					new InfoCourseExecutionAndListOfTypeLessonAndInfoShift(
-						iEC,
+						infoExecutionCourse,
 						pairList);
 				infoCoursesWithShifts.add(pairDeShiftList);
 			}

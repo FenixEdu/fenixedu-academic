@@ -1,9 +1,12 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -39,30 +42,21 @@ public class ReadShiftsByTypeFromExecutionCourse implements IServico {
 		return "ReadShiftsByTypeFromExecutionCourse";
 	}
 
-	public Object run(InfoExecutionCourse iDE, TipoAula type) {
-		ArrayList shifts = new ArrayList();
+	public List run(InfoExecutionCourse iDE, TipoAula type) {
+		List shifts = new ArrayList();
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ArrayList dshifts =
-				sp.getITurnoPersistente().readByDisciplinaExecucaoAndType(
-					iDE.getSigla(),
-					iDE.getInfoLicenciaturaExecucao().getAnoLectivo(),
-					iDE
-						.getInfoLicenciaturaExecucao()
-						.getInfoLicenciatura()
-						.getSigla(),
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(iDE);
+			List dshifts =
+				sp.getITurnoPersistente().readByExecutionCourseAndType(
+						executionCourse,
 						 type.getTipo());
 
 			if (dshifts != null)
 				for (int i = 0; i < dshifts.size(); i++) {
 					ITurno dshift = (ITurno) dshifts.get(i);
-					InfoShift shift =
-						new InfoShift(
-							dshift.getNome(),
-							dshift.getTipo(),
-							dshift.getLotacao(),
-							iDE);
+					InfoShift shift = Cloner.copyIShift2InfoShift(dshift);
 					shifts.add(shift);
 				}
 		} catch (ExcepcaoPersistencia e) {

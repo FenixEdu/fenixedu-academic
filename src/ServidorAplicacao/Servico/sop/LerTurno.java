@@ -7,18 +7,9 @@ package ServidorAplicacao.Servico.sop;
  * @version
  **/
 
-import org.apache.commons.beanutils.BeanUtils;
-
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
-import Dominio.DisciplinaExecucao;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
@@ -52,32 +43,14 @@ public class LerTurno implements IServico {
 	public Object run(ShiftKey keyTurno) {
 
 		InfoShift infoTurno = null;
-
+		
 		try {
+		
+		
+		
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-			ICursoExecucao executionDegree = new CursoExecucao();
-			ICurso degree = new Curso();
-			InfoExecutionCourse infoExecutionCourse =
-				keyTurno.getInfoExecutionCourse();
-			try {
-				BeanUtils.copyProperties(executionCourse, infoExecutionCourse);
-				BeanUtils.copyProperties(
-					executionDegree,
-					infoExecutionCourse.getInfoLicenciaturaExecucao());
-				BeanUtils.copyProperties(
-					degree,
-					infoExecutionCourse
-						.getInfoLicenciaturaExecucao()
-						.getInfoLicenciatura());
-			} catch (Exception e) {
-				e.printStackTrace(System.out);
-				throw new RuntimeException(e.getMessage());
-			}
-
-			executionCourse.setLicenciaturaExecucao(executionDegree);
-			executionDegree.setCurso(degree);
+		
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
 
 			ITurno turno =
 				sp.getITurnoPersistente().readByNameAndExecutionCourse(
@@ -85,41 +58,7 @@ public class LerTurno implements IServico {
 					executionCourse);
 
 			if (turno != null) {
-				InfoDegree infoLicenciatura =
-					new InfoDegree(
-						turno
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getCurso()
-							.getSigla(),
-						turno
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getCurso()
-							.getNome());
-				InfoExecutionDegree infoLicenciaturaExecucao =
-					new InfoExecutionDegree(
-						turno
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getAnoLectivo(),
-						infoLicenciatura);
-				InfoExecutionCourse infoDisciplinaExecucao =
-					new InfoExecutionCourse(
-						turno.getDisciplinaExecucao().getNome(),
-						turno.getDisciplinaExecucao().getSigla(),
-						turno.getDisciplinaExecucao().getPrograma(),
-						infoLicenciaturaExecucao,
-						turno.getDisciplinaExecucao().getTheoreticalHours(),
-						turno.getDisciplinaExecucao().getPraticalHours(),
-						turno.getDisciplinaExecucao().getTheoPratHours(),
-						turno.getDisciplinaExecucao().getLabHours());
-				infoTurno =
-					new InfoShift(
-						turno.getNome(),
-						turno.getTipo(),
-						turno.getLotacao(),
-						infoDisciplinaExecucao);
+				infoTurno = Cloner.copyIShift2InfoShift(turno);
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();

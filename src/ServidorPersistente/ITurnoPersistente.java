@@ -28,7 +28,7 @@ public interface ITurnoPersistente extends IPersistentObject{
     public ArrayList readByDisciplinaExecucao(String sigla, String anoLectivo, String siglaLicenciatura) throws ExcepcaoPersistencia;
 	
 	
-	public ArrayList readByDisciplinaExecucaoAndType(String sigla, String anoLectivo, String siglaLicenciatura,Integer type) throws ExcepcaoPersistencia;
+	public List readByExecutionCourseAndType(IDisciplinaExecucao executionCourse, Integer type) throws ExcepcaoPersistencia;
 	
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 }

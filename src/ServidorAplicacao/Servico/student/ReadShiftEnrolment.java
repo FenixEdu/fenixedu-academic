@@ -14,16 +14,14 @@ package ServidorAplicacao.Servico.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import DataBeans.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
-import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import DataBeans.TypeLessonAndInfoShift;
+import DataBeans.util.Cloner;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
@@ -63,7 +61,11 @@ public class ReadShiftEnrolment implements IServico {
   public final String getNome() {
     return "ReadShiftEnrolment";
   }
-
+/**
+ * :FIXME: Isto ficou depois das alterações é preciso dar outras voltas... :(
+ * @param infoStudent
+ * @return Object
+ */
   public Object run(InfoStudent infoStudent) {
   	InfoShiftEnrolment infoShiftSignup = null;
     ArrayList infoSignupWithShift = new ArrayList();
@@ -77,33 +79,22 @@ public class ReadShiftEnrolment implements IServico {
 		IDisciplinaExecucao de = frequent.getDisciplinaExecucao();
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		InfoDegree infoDegree = new InfoDegree();
 		
-		try{
-			BeanUtils.copyProperties(infoDegree, de.getLicenciaturaExecucao().getCurso());
-			BeanUtils.copyProperties(infoExecutionDegree, de.getLicenciaturaExecucao());
-			infoExecutionDegree.setInfoLicenciatura(infoDegree);
-		} catch (Exception ignored){}
-		
-		
+				
 		 
-		InfoExecutionCourse ide = new InfoExecutionCourse(de.getNome(),
-		                                                        de.getSigla(),
-		                                                        de.getPrograma(),
-		                                                        infoExecutionDegree,
-		                                                        de.getTheoreticalHours(),
-		                                                        de.getPraticalHours(),
-		                                                        de.getTheoPratHours(),
-		                                                        de.getLabHours());
+		InfoExecutionCourse ide = Cloner.copyIExecutionCourse2InfoExecutionCourse(de);
 
 
 		ICurso degree = new Curso();
 		degree.setSigla(de.getLicenciaturaExecucao().getCurso().getSigla());
+
 		ICursoExecucao executionCoure = new CursoExecucao();
 		executionCoure.setAnoLectivo(de.getLicenciaturaExecucao().getAnoLectivo());
 		executionCoure.setCurso(degree);
+
 		IDisciplinaExecucao executionDegree = new DisciplinaExecucao();
 		executionDegree.setSigla(de.getSigla());
+
 		ITurno shift1 = new Turno();
 		shift1.setDisciplinaExecucao(executionDegree);
 		

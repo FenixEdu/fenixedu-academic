@@ -286,31 +286,26 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	public ArrayList readByDisciplinaExecucaoAndType(
-		String sigla,
-		String anoLectivo,
-		String siglaLicenciatura,
+	public List readByExecutionCourseAndType(
+		IDisciplinaExecucao executionCourse,
 		Integer type)
 		throws ExcepcaoPersistencia {
 		try {
-			ArrayList turnos = new ArrayList();
 			String oqlQuery = "select turnos from " + Turno.class.getName();
 			oqlQuery += " where disciplinaExecucao.sigla = $1";
 			oqlQuery
-				+= " and disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2";
+				+= " and disciplinaExecucao.executionPeriod.name = $2";
 			oqlQuery
-				+= " and disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3";
+				+= " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
 			oqlQuery += " and tipo = $4";
 			query.create(oqlQuery);
-			query.bind(sigla);
-			query.bind(anoLectivo);
-			query.bind(siglaLicenciatura);
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 			query.bind(type);
 			List result = (List) query.execute();
 			lockRead(result);
-			for (int i = 0; i != result.size(); i++)
-				turnos.add((ITurno) (result.get(i)));
-			return turnos;
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

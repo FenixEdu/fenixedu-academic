@@ -238,9 +238,10 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 					while (iterator2.hasNext()) {
 						ICurricularCourse curricularCourse =
 							(ICurricularCourse) iterator2.next();
-						if (curricularCourse
-							.getCurricularYear()
-							.equals(anoCurricular) &&
+							
+//						System.out.println(curricularCourse.getDegreeCurricularPlan().getCurso());
+							
+						if (curricularCourse.getCurricularYear().equals(anoCurricular) &&
 							curricularCourse.getDegreeCurricularPlan().getCurso().equals(executionDegree.getCurricularPlan().getCurso())){
 							resultList.add(disciplinaExecucao);
 							break;

@@ -10,8 +10,10 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
+import DataBeans.InfoPerson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
+import DataBeans.InfoStudent;
 import Dominio.Aula;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
@@ -24,12 +26,16 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ISala;
+import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
+import Dominio.Pessoa;
 import Dominio.PlanoCurricularCurso;
 import Dominio.Sala;
+import Dominio.Student;
 import Dominio.Turma;
 import Dominio.Turno;
 
@@ -397,6 +403,29 @@ public abstract class Cloner {
 		copyObjectProperties(infoShift, shift);
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 		return infoShift;
+	}
+	/**
+	 * Method copyInfoStudent2IStudent.
+	 * @param infoStudent
+	 * @return IStudent
+	 */
+	public static IStudent copyInfoStudent2IStudent(InfoStudent infoStudent) {
+		IStudent student = new Student();
+		IPessoa person = Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
+		copyObjectProperties(student, infoStudent);
+		student.setPerson(person);
+		
+		return student;
+	}
+	/**
+	 * Method copyInfoPerson2IPerson.
+	 * @param infoPerson
+	 * @return IPessoa
+	 */
+	private static IPessoa copyInfoPerson2IPerson(InfoPerson infoPerson) {
+		IPessoa person = new Pessoa();
+		copyObjectProperties(person, infoPerson);
+		return person;
 	}
 
 }

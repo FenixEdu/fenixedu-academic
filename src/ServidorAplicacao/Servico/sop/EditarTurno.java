@@ -11,15 +11,8 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import org.apache.commons.beanutils.BeanUtils;
-
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
-import Dominio.DisciplinaExecucao;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
@@ -61,27 +54,7 @@ public class EditarTurno implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Copia infoExecutionCourse para DisciplinaExecucao
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-			ICursoExecucao executionDegree = new CursoExecucao();
-			ICurso degree = new Curso();
-			InfoExecutionCourse infoExecutionCourse = shiftToEdit.getInfoDisciplinaExecucao();
-			try {
-				BeanUtils.copyProperties(executionCourse, infoExecutionCourse);
-				BeanUtils.copyProperties(
-					executionDegree,
-					infoExecutionCourse.getInfoLicenciaturaExecucao());
-				BeanUtils.copyProperties(
-					degree,
-					infoExecutionCourse
-						.getInfoLicenciaturaExecucao()
-						.getInfoLicenciatura());
-			} catch (Exception e) {
-				e.printStackTrace(System.out);
-				throw new RuntimeException(e.getMessage());
-			}
-
-			executionCourse.setLicenciaturaExecucao(executionDegree);
-			executionDegree.setCurso(degree);
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(shiftToEdit.getInfoDisciplinaExecucao());
 			// fim da cópia 
 						
 			turno =
@@ -89,12 +62,10 @@ public class EditarTurno implements IServico {
 					shiftToEdit.getNome(),
 					executionCourse);
 			if (turno != null) {
-				System.out.println("*************************************Vou editar!");
 				turno.setNome(turnoNova.getNome());
 				turno.setTipo(turno.getTipo());
 				turno.setLotacao(turnoNova.getLotacao());
 				sp.getITurnoPersistente().lockWrite(turno);
-				System.out.println("**************************************Consegui editar!");
 				result = true;
 			}
 		} catch (ExcepcaoPersistencia ex) {
