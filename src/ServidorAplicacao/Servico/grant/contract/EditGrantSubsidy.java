@@ -66,7 +66,7 @@ public class EditGrantSubsidy extends EditDomainObjectService
 		IGrantContract grantContract = new GrantContract();
 		grantContract.setIdInternal(infoGrantSubsidy.getInfoGrantContract().getIdInternal());
 		grantSubsidy.setGrantContract(grantContract);
-		domainObjectLocked = (IDomainObject) grantSubsidy;
+		domainObjectLocked = grantSubsidy;
 		/*
 		 * If this is a active subsidy, set all others to state 0 (Desactive)
 		 */

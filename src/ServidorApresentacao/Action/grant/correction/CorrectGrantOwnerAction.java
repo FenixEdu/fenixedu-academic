@@ -95,15 +95,14 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction
 			//Verify if the new person is already a grant owner
 			InfoGrantOwner newInfoGrantOwner = (InfoGrantOwner)infoPersonList.get(0);
 			InfoPerson oldInfoPerson = null; 
-			if(newInfoGrantOwner.getIdInternal() != null)
-			{
+			
+			if(newInfoGrantOwner.getIdInternal() != null) {
 				return setError(request,mapping,"errors.grant.correction.personAlreadyGrantOwner",null,null);
-			}
-			else
-			{
-				oldInfoPerson = infoGrantOwner.getPersonInfo();
-				infoGrantOwner.setPersonInfo(newInfoGrantOwner.getPersonInfo());
-			}
+			} 
+			
+			oldInfoPerson = infoGrantOwner.getPersonInfo();
+			infoGrantOwner.setPersonInfo(newInfoGrantOwner.getPersonInfo());
+			
 			
 			//Change username of the old person if is a "b***" to INA(NumeroDocumentoIdentificacao)
 			if(oldInfoPerson.getUsername().charAt(0) == 'B')

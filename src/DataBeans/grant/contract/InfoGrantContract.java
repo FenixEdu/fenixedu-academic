@@ -30,10 +30,10 @@ public class InfoGrantContract extends InfoObject {
      * If not, the contract is active and running.
      */
     public boolean getEndContractMotiveSet() {
-        if (endContractMotive == null || endContractMotive.equals(""))
+        if (endContractMotive == null || endContractMotive.equals("")) {
             return false;
-        else
-            return true;
+        }
+        return true; 
     }
 
     /**

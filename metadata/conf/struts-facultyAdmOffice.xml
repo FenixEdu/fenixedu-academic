@@ -251,14 +251,14 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 
-			<form-bean name="listGrantOwnerByCriteriaForm" 
+			<form-bean name="listGrantContractByCriteriaForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="spanNumber" type="java.lang.Integer"/>
 				<form-property name="numberOfElementsInSpan" type="java.lang.Integer"/>
 				<form-property name="totalElements" type="java.lang.Integer"/>
 				<form-property name="orderBy" type="java.lang.String"/>
 				<form-property name="ascendingOrder" type="java.lang.Boolean"/>
-				
+				<!-- Criteria -->
 				<form-property name="filterType" type="java.lang.Integer"/>
 				<form-property name="beginContract" type="java.lang.String"/>
 				<form-property name="endContract" type="java.lang.String"/>
@@ -697,16 +697,16 @@
    			<forward name="show-grant-owner" path="showGrantOwner"/>
     </action>
 
-    <!-- ================ USE CASE: LIST GRANT OWNER BY CRITERIA ====================== -->
-	<action path="/listGrantOwnerByCriteria" 
-			input="/listGrantOwnerByCriteria.do?page=0&amp;method=prepareListGrantOwnerByCriteria"
-			name="listGrantOwnerByCriteriaForm" 
+    <!-- ================ USE CASE: LIST GRANT CONTRACT BY CRITERIA ====================== -->
+	<action path="/listGrantContractByCriteria" 
+			input="/listGrantContractByCriteria.do?page=0&amp;method=actionStart"
+			name="listGrantContractByCriteriaForm" 
 			scope="request"
    			parameter="method"
 		    validate="true"
-   			type="ServidorApresentacao.Action.grant.list.ListGrantOwnerByCriteriaAction">
+   			type="ServidorApresentacao.Action.grant.list.ListGrantContractByCriteriaAction">
    			<forward name="select-criteria" path="selectCriteria"/>
-   			<forward name="list-byCriteria-grant-owner" path="listGrantOwnerByCriteria"/>
+   			<forward name="list-byCriteria-grant-contract" path="listGrantContractByCriteria"/>
    			<forward name="show-grant-owner" path="showGrantOwner"/>
     </action>
 

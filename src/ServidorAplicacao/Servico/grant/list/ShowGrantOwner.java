@@ -55,8 +55,6 @@ public class ShowGrantOwner implements IService
 			IGrantOwner grantOwner, ISuportePersistente sp) throws FenixServiceException
 	{
 		List listInfoListGrantContracts = new ArrayList();
-		List contractRegimes = null;
-		List infoContractRegimes = new ArrayList();
 		try
 		{
 			//set grantOwner info

@@ -2270,8 +2270,8 @@
         </filterChains>
     </service>
     <service>
-        <name>ListGrantOwnerByCriteria</name>
-        <implementationClass>ServidorAplicacao.Servico.grant.list.ListGrantOwnerByCriteria</implementationClass>
+        <name>ListGrantContractByCriteria</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.list.ListGrantContractByCriteria</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

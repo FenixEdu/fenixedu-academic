@@ -84,8 +84,7 @@
             </td>
             <td class="listClasses">
 	            <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
-	            <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.idInternal"/>
-	            <html:link page='<%= "/editGrantInsurance.do?method=prepareEditGrantInsuranceForm&amp;idContract=" + idContract + "&amp;idGrantOwner=" + idGrantOwner %>' > 
+	            <html:link page='<%= "/editGrantInsurance.do?method=prepareEditGrantInsuranceForm&amp;idContract=" + idContract %>' > 
 	                <bean:message key="link.grant.insurance.edit" />
 	            </html:link>        
 			</td>

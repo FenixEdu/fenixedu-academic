@@ -1,20 +1,17 @@
 package ServidorPersistente.OJB.grant.owner;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.grant.IPersistentGrantOwner;
 import Util.TipoDocumentoIdentificacao;
+
 
 /**
  * @author Barbosa
@@ -51,7 +48,7 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         List grantOwnerList = null;
         Criteria criteria = new Criteria();
         criteria.addLike("person.nome", personName);
-        grantOwnerList = (List) queryList(GrantOwner.class, criteria);
+        grantOwnerList = queryList(GrantOwner.class, criteria);
         return grantOwnerList;
     }
 
@@ -70,7 +67,8 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         Integer maxGrantOwnerNumber = new Integer(0);
 
         Criteria criteria = new Criteria();
-        grantOwner = (IGrantOwner) queryList(GrantOwner.class, criteria, "number", false).get(0);
+        criteria.addOrderBy("number", false);
+        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
         if (grantOwner != null)
             maxGrantOwnerNumber = grantOwner.getNumber();
         return maxGrantOwnerNumber;
@@ -93,12 +91,11 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
     }
 
     private List readBySpanAndCriteria(Integer spanNumber,
-            Integer numberOfElementsInSpan, Query query)
-            throws ExcepcaoPersistencia {
+            Integer numberOfElementsInSpan, Criteria criteria) {
         
         List result = new ArrayList();
 
-        Iterator iter = readIteratorByCriteria(query);
+        Iterator iter = readIteratorByCriteria(GrantOwner.class, criteria);
 
         int begin = (spanNumber.intValue() - 1) * numberOfElementsInSpan.intValue();
         int end = begin + numberOfElementsInSpan.intValue();
@@ -119,37 +116,9 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
     public List readAllGrantOwnersBySpan(Integer spanNumber,
             Integer numberOfElementsInSpan, String orderBy)
             throws ExcepcaoPersistencia {
-        QueryByCriteria queryByCriteria = new QueryByCriteria(GrantOwner.class, null);
-        queryByCriteria.addOrderBy(orderBy, true);
-        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,queryByCriteria);
-    }
-    
-    public List readAllGrantOwnersBySpanAndCriteria(String orderBy, Boolean justActiveContracts, Boolean justDesactiveContracts, Date beginContract, Date endContract, Integer spanNumber, Integer numberOfElementsInSpan) 
-            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        
-        criteria.addEqualTo("contractRegimes.state", new Integer(1));
-        
-        if(justActiveContracts != null && justActiveContracts.booleanValue()) { 
-            criteria.addGreaterOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
-            criteria.addEqualTo("endContractMotive","");
-        }
-        
-        if(justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-            criteria.addLessOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
-            criteria.addNotEqualTo("endContractMotive","");
-        }
-        
-        if(beginContract != null) {
-            criteria.addGreaterOrEqualThan("contractRegimes.dateBeginContract",beginContract);
-        } 
-        if(endContract != null) {
-            criteria.addLessOrEqualThan("contractRegimes.dateEndContract",endContract);
-        }
-        QueryByCriteria queryByCriteria = new QueryByCriteria(GrantOwner.class, criteria);
-        queryByCriteria.addOrderBy(orderBy, true);
-
-        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,queryByCriteria);        
+        criteria.addOrderBy(orderBy, true);
+        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria);
     }
 
 }

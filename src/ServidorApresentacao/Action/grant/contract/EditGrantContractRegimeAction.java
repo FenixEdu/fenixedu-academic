@@ -137,10 +137,8 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction
                     return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
                     		infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
                 }
-                else
-                {
-                	infoGrantContractRegime.setInfoTeacher(infoTeacher);
-                }
+
+                infoGrantContractRegime.setInfoTeacher(infoTeacher);
             }
 
             if(infoGrantContractRegime.getState().equals(new Integer(-1))) //If is a new Regime

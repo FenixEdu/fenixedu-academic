@@ -69,7 +69,7 @@ public class EditGrantInsurance extends EditDomainObjectService {
 		grantContract.setIdInternal(infoGrantInsurance.getInfoGrantContract().getIdInternal());
 		
 		grantInsurance.setGrantContract(grantContract);
-		domainObjectLocked = (IDomainObject) grantInsurance;	
+		domainObjectLocked = grantInsurance;	
 		
 		try
 		{

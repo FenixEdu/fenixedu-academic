@@ -212,8 +212,7 @@ public class GrantContractRegime extends DomainObject implements
     public boolean getContractRegimeActive() {
     	if(this.dateEndContract.after(Calendar.getInstance().getTime())){
     		return true;
-    	} else {
-    		return false;
     	}
+  		return false;
     }    
 }

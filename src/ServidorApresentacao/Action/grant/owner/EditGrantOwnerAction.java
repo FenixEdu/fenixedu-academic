@@ -200,15 +200,13 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 			return setError(request, mapping, "errors.grant.owner.bd.read", null, null);
 		}
 
-		if (infoGrantOwner != null)
-		{
-			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
-			return mapping.findForward("manage-grant-owner");
-		}
-		else
+		if (infoGrantOwner == null)
 		{
 			return setError(request, mapping, "errors.grant.owner.readafterwrite", null, null);
 		}
+
+		request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
+		return mapping.findForward("manage-grant-owner");
 	}
 
 	/*

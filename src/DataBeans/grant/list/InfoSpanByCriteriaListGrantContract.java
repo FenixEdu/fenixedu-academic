@@ -10,7 +10,7 @@ import java.util.Date;
  * @author Barbosa
  * @author Pica
  */
-public class InfoSpanByCriteriaListGrantOwner extends InfoSpanListGrantOwner {
+public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner {
 
     private Boolean justActiveContract;
     private Boolean justDesactiveContract;

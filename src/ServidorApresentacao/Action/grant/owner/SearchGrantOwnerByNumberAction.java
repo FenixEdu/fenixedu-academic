@@ -47,14 +47,12 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction
 			return setError(request, mapping, "errors.grant.unrecoverable","search-unSuccesfull",null);
 		}
 
-		if (!infoGrantOwnerList.isEmpty())
-		{
-			request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);
-			return mapping.findForward("search-succesfull");
-		}
-		else
+		if (infoGrantOwnerList.isEmpty())
 		{
 			return setError(request, mapping, "errors.grant.owner.not.found","search-unSuccesfull",null);
 		}
+
+		request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);
+		return mapping.findForward("search-succesfull");
 	}	
 }

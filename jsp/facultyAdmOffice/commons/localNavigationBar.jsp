@@ -54,7 +54,14 @@
 		    </html:link>
 		</li>
 	</ul>
-
+	<ul>
+	<li>
+		<html:link page="/listGrantContractByCriteria.do?method=actionStart">
+	    	<bean:message key="link.grant.owner.list.byCriteria"/>
+	    </html:link>
+	</li>
+	</ul>
+	
 	<br/>
 	<strong>&raquo; <bean:message key="link.grant.correction"/></strong>	
 	<ul>

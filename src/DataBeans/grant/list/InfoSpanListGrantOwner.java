@@ -84,17 +84,17 @@ public class InfoSpanListGrantOwner extends InfoObject {
     {
         if(this.totalElements != null && 
            this.numberOfElementsInSpan != null && 
-           !this.numberOfElementsInSpan.equals(new Integer(0)))
+           !this.numberOfElementsInSpan.equals(new Integer(0))) {
             return new Integer((this.totalElements.intValue() / this.numberOfElementsInSpan.intValue()) + 1);
-        else
-            return new Integer(-1);
+        }
+        return new Integer(-1);
     }
     public boolean hasBeforeSpan()
     {
-        if(this.spanNumber.intValue() > 1)
+        if(this.spanNumber.intValue() > 1) {
             return true;
-        else
-            return false;
+        }
+        return false;
     }
     public Integer getBeforeSpan()
     {
@@ -102,10 +102,10 @@ public class InfoSpanListGrantOwner extends InfoObject {
     }
     public boolean hasAfterSpan()
     {
-        if(this.spanNumber.intValue() < getNumberOfSpans().intValue())
+        if(this.spanNumber.intValue() < getNumberOfSpans().intValue()) {
             return true;
-        else
-            return false;
+        }
+        return false;
     }
     public Integer getAfterSpan()
     {

@@ -61,10 +61,8 @@ public class ListGrantOwnerAction extends FenixDispatchAction
 		    infoSpanListGrantOwner.setSpanNumber(spanNumber);
 		    return listGrantOwner(mapping, request, form,response, infoSpanListGrantOwner);
 		}
-		else
-		{
-			return setError(request,mapping,"errors.grant.unrecoverable","list-grant-owner",null);
-		}
+		//If fails the if, than throw error
+		return setError(request,mapping,"errors.grant.unrecoverable","list-grant-owner",null);
 	}
 	
 	public ActionForward prepareListGrantOwner(
@@ -96,16 +94,13 @@ public class ListGrantOwnerAction extends FenixDispatchAction
 
 		    //Read the grant owners
 			Object[] args = { infoSpanListGrantOwner };
-			List listGrantOwners = (List) ServiceUtils.executeService(userView, "ListGrantOwners", args);
+
+			Object[] result = (Object[]) ServiceUtils.executeService(userView, "ListGrantOwners", args);
+			List listGrantOwners = (List) result[0];
+			infoSpanListGrantOwner = (InfoSpanListGrantOwner) result[1];
 			
 			if(listGrantOwners != null && listGrantOwners.size() != 0)
 			{
-			    if(listGrantOwners.size() > infoSpanListGrantOwner.getNumberOfElementsInSpan().intValue())
-			    {
-			        infoSpanListGrantOwner = (InfoSpanListGrantOwner)listGrantOwners.get(listGrantOwners.size() - 1);
-			        listGrantOwners.remove(listGrantOwners.size() - 1);
-			    }
-			    
 				//Setting the request
 			    DynaValidatorForm listForm = (DynaValidatorForm) form;
 			    setForm(listForm, infoSpanListGrantOwner);

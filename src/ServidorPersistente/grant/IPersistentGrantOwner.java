@@ -4,7 +4,6 @@ package ServidorPersistente.grant;
  * @author  Barbosa
  * @author  Pica
  */
-import java.util.Date;
 import java.util.List;
 
 import Dominio.grant.owner.IGrantOwner;
@@ -21,6 +20,5 @@ public interface IPersistentGrantOwner extends IPersistentObject{
 	public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
     public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan, String orderBy) throws ExcepcaoPersistencia;
-    public List readAllGrantOwnersBySpanAndCriteria(String orderBy, Boolean justActiveContracts, Boolean justDesactiveContracts, Date beginContract, Date endContract, Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
     public Integer countAll();
 }

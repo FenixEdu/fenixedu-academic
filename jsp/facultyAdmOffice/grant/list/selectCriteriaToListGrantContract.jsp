@@ -5,7 +5,7 @@
 
 <strong><p align="center"><bean:message key="label.list.byCriteria"/></p></strong><br/>
 
-<html:form action="/listGrantOwnerByCriteria" style="display:inline">
+<html:form action="/listGrantContractByCriteria" style="display:inline">
 
 	<%-- Presenting errors --%>
 	<logic:messagesPresent>
@@ -14,7 +14,7 @@
 	</span><br/>
 	</logic:messagesPresent>
 
-	<html:hidden property="method" value="prepareListGrantOwnerByCriteria"/>
+	<html:hidden property="method" value="prepareListGrantContractByCriteria"/>
 	<html:hidden property="page" value="1"/>
 	
 	<html:hidden property="spanNumber" value="1"/>
@@ -30,7 +30,7 @@
 							<bean:message key="label.list.byCriteria.grant.owner.radio.all"/>:&nbsp;
 						</td>
 						<td>
-							<html:radio name="listGrantOwnerByCriteriaForm" property="filterType"  value="1"/>
+							<html:radio name="listGrantContractByCriteriaForm" property="filterType"  value="1"/>
 						</td>
 		           </tr>
 				   <tr>
@@ -38,7 +38,7 @@
 							<bean:message key="label.list.byCriteria.grant.owner.radio.justActive"/>:&nbsp;
 						</td>
 						<td>
-							<html:radio name="listGrantOwnerByCriteriaForm" property="filterType"  value="2"/>
+							<html:radio name="listGrantContractByCriteriaForm" property="filterType"  value="2"/>
 						</td>
                    </tr>
 				   <tr>
@@ -46,7 +46,7 @@
 							<bean:message key="label.list.byCriteria.grant.owner.radio.justDesactive"/>:&nbsp;
 						</td>
 						<td>
-							<html:radio name="listGrantOwnerByCriteriaForm" property="filterType"  value="3"/>			
+							<html:radio name="listGrantContractByCriteriaForm" property="filterType"  value="3"/>			
 			            </td>
 					</tr>
 				</table>

@@ -28,7 +28,14 @@ public class ListGrantOwners implements IService {
     public ListGrantOwners() {
     }
 
-    public List run(InfoSpanListGrantOwner infoSpanListGrantOwner)
+	/**
+	 * Query the grant owner by criteria of grant contract
+	 * @returns an array of objects
+	 *    object[0] List of result
+	 *    object[1] IndoSpanListGrantOwner
+	 */
+
+    public Object[] run(InfoSpanListGrantOwner infoSpanListGrantOwner)
             throws FenixServiceException {
         //Read the grant owners ordered by span
         List grantOwnerBySpan = null;
@@ -41,24 +48,22 @@ public class ListGrantOwners implements IService {
                     infoSpanListGrantOwner.getNumberOfElementsInSpan(),
                     propertyOrderBy(infoSpanListGrantOwner.getOrderBy()));
 
-            List result = null;
+            List listGrantOwner = null;
             if (grantOwnerBySpan != null && grantOwnerBySpan.size() != 0) {
-                result = new ArrayList();
+                listGrantOwner = new ArrayList();
                 
                 //For each Grant Owner construct the info list object.
                 for (int i = 0; i < grantOwnerBySpan.size(); i++) {
                     IGrantOwner grantOwner = (IGrantOwner) grantOwnerBySpan.get(i);
-                    result.add(convertToInfoListGrantOwnerByOrder(grantOwner));
+                    listGrantOwner.add(convertToInfoListGrantOwnerByOrder(grantOwner));
                 }
             }
 
-            if(infoSpanListGrantOwner.getTotalElements() == null)
-            {
+            if(infoSpanListGrantOwner.getTotalElements() == null) {
                 //Setting the search attributes
                 infoSpanListGrantOwner.setTotalElements(persistentGrantOwner.countAll());
-                result.add(infoSpanListGrantOwner);
             }
-            
+            Object[] result = { listGrantOwner, infoSpanListGrantOwner };
             return result;
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());

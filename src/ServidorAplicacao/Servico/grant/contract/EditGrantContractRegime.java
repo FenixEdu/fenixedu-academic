@@ -7,7 +7,6 @@ package ServidorAplicacao.Servico.grant.contract;
 import java.util.List;
 
 import DataBeans.InfoObject;
-import DataBeans.InfoTeacher;
 import DataBeans.grant.contract.InfoGrantContractRegime;
 import DataBeans.grant.contract.InfoGrantInsurance;
 import DataBeans.util.Cloner;
@@ -112,7 +111,6 @@ public class EditGrantContractRegime extends EditDomainObjectService
 						.getIdInternal());
 				IGrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
 						.readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
-				InfoTeacher infoTeacher = null;
 				persistentGrantOrientationTeacher.simpleLockWrite(grantOrientationTeacher);
 				//If grantOrientationTeacher is filled in grantContractRegime
 				if (infoGrantContractRegime.getInfoTeacher() != null)

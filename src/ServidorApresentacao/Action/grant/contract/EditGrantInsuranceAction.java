@@ -40,13 +40,11 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm grantInsuranceForm = (DynaValidatorForm) form;
 		
-		Integer idGrantOwner = null;
 		Integer idContract = null;
 		try
 		//Probably a validation error
 		{
 			idContract = new Integer(request.getParameter("idContract"));
-			idGrantOwner = new Integer(request.getParameter("idGrantOwner"));
 		}
 		catch (Exception e)
 		{

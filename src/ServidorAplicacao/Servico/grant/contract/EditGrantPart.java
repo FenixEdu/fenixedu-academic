@@ -91,7 +91,7 @@ public class EditGrantPart extends EditDomainObjectService {
             } else
                 throw new InvalidGrantPaymentEntityException();
 
-            domainObjectToLock = (IDomainObject) grantPart;
+            domainObjectToLock = grantPart;
         } catch (Exception e) {
             throw new FenixServiceException(e.getMessage());
         }
@@ -111,7 +111,7 @@ public class EditGrantPart extends EditDomainObjectService {
             } else
                 throw new InvalidPartResponsibleTeacherException();
 
-            domainObjectToLock = (IDomainObject) grantPart;
+            domainObjectToLock = grantPart;
         } catch (InvalidPartResponsibleTeacherException e) {
             throw new InvalidPartResponsibleTeacherException();
         } catch (Exception e) {
