@@ -2,109 +2,139 @@ package DataBeans;
 
 import java.util.List;
 
+import Dominio.ICurricularSemester;
+
 /**
  * @author dcs-rjao
- *
+ * 
  * 19/Mar/2003
  */
 
 public class InfoCurricularSemester extends InfoObject {
 
-	private Integer semester;
-	private InfoCurricularYear infoCurricularYear;
-	//	private List associatedInfoCurricularCourses;
-	private List infoScopes;
+    private Integer semester;
 
-	public InfoCurricularSemester() {
-		setSemester(null);
-		//		setAssociatedInfoCurricularCourses(null);
-		setInfoScopes(null);
-		setInfoCurricularYear(null);
-	}
+    private InfoCurricularYear infoCurricularYear;
 
-	public InfoCurricularSemester(Integer semester, InfoCurricularYear curricularYear) {
-		this();
-		setSemester(semester);
-		setInfoCurricularYear(curricularYear);
-	}
+    //	private List associatedInfoCurricularCourses;
+    private List infoScopes;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoCurricularSemester) {
-			InfoCurricularSemester infoCurricularSemester = (InfoCurricularSemester) obj;
-			resultado =
-				(this.getSemester().equals(infoCurricularSemester.getSemester())
-					&& (this.getInfoCurricularYear().equals(infoCurricularSemester.getInfoCurricularYear())));
-		}
-		return resultado;
-	}
+    public InfoCurricularSemester() {
+        setSemester(null);
+        //		setAssociatedInfoCurricularCourses(null);
+        setInfoScopes(null);
+        setInfoCurricularYear(null);
+    }
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += "semester = " + this.getSemester() + "; ";
-		result += "infoCurricularYear = " + this.getInfoCurricularYear() + "; ";
-		result += "idInternal = " + this.getIdInternal() + "]";
-		return result;
-	}
+    public InfoCurricularSemester(Integer semester,
+            InfoCurricularYear curricularYear) {
+        this();
+        setSemester(semester);
+        setInfoCurricularYear(curricularYear);
+    }
 
-	//	/**
-	//	 * @return List
-	//	 */
-	//	public List getAssociatedInfoCurricularCourses() {
-	//		return associatedInfoCurricularCourses;
-	//	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoCurricularSemester) {
+            InfoCurricularSemester infoCurricularSemester = (InfoCurricularSemester) obj;
+            resultado = (this.getSemester().equals(
+                    infoCurricularSemester.getSemester()) && (this
+                    .getInfoCurricularYear().equals(infoCurricularSemester
+                    .getInfoCurricularYear())));
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return ICurricularYear
-	 */
-	public InfoCurricularYear getInfoCurricularYear() {
-		return infoCurricularYear;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "semester = " + this.getSemester() + "; ";
+        result += "infoCurricularYear = " + this.getInfoCurricularYear() + "; ";
+        result += "idInternal = " + this.getIdInternal() + "]";
+        return result;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getSemester() {
-		return semester;
-	}
+    //	/**
+    //	 * @return List
+    //	 */
+    //	public List getAssociatedInfoCurricularCourses() {
+    //		return associatedInfoCurricularCourses;
+    //	}
 
-	//	/**
-	//	 * Sets the associatedInfoCurricularCourses.
-	//	 * @param associatedInfoCurricularCourses The associatedInfoCurricularCourses to set
-	//	 */
-	//	public void setAssociatedInfoCurricularCourses(List associatedCurricularCourses) {
-	//		this.associatedInfoCurricularCourses = associatedCurricularCourses;
-	//	}
+    /**
+     * @return ICurricularYear
+     */
+    public InfoCurricularYear getInfoCurricularYear() {
+        return infoCurricularYear;
+    }
 
-	/**
-	 * Sets the infoCurricularYear.
-	 * @param infoCurricularYear The infoCurricularYear to set
-	 */
-	public void setInfoCurricularYear(InfoCurricularYear curricularYear) {
-		this.infoCurricularYear = curricularYear;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getSemester() {
+        return semester;
+    }
 
-	/**
-	 * Sets the semester.
-	 * @param semester The semester to set
-	 */
-	public void setSemester(Integer semester) {
-		this.semester = semester;
-	}
+    //	/**
+    //	 * Sets the associatedInfoCurricularCourses.
+    //	 * @param associatedInfoCurricularCourses The
+    // associatedInfoCurricularCourses to set
+    //	 */
+    //	public void setAssociatedInfoCurricularCourses(List
+    // associatedCurricularCourses) {
+    //		this.associatedInfoCurricularCourses = associatedCurricularCourses;
+    //	}
 
-	/**
-	 * @return List
-	 */
-	public List getInfoScopes() {
-		return infoScopes;
-	}
+    /**
+     * Sets the infoCurricularYear.
+     * 
+     * @param infoCurricularYear
+     *            The infoCurricularYear to set
+     */
+    public void setInfoCurricularYear(InfoCurricularYear curricularYear) {
+        this.infoCurricularYear = curricularYear;
+    }
 
-	/**
-	 * Sets the infoScopes.
-	 * @param infoScopes The infoScopes to set
-	 */
-	public void setInfoScopes(List infoScopes) {
-		this.infoScopes = infoScopes;
-	}
+    /**
+     * Sets the semester.
+     * 
+     * @param semester
+     *            The semester to set
+     */
+    public void setSemester(Integer semester) {
+        this.semester = semester;
+    }
 
+    /**
+     * @return List
+     */
+    public List getInfoScopes() {
+        return infoScopes;
+    }
+
+    /**
+     * Sets the infoScopes.
+     * 
+     * @param infoScopes
+     *            The infoScopes to set
+     */
+    public void setInfoScopes(List infoScopes) {
+        this.infoScopes = infoScopes;
+    }
+
+    public void copyFromDomain(ICurricularSemester curricularSemester) {
+        super.copyFromDomain(curricularSemester);
+        if (curricularSemester != null) {
+            setSemester(curricularSemester.getSemester());
+        }
+    }
+
+    public static InfoCurricularSemester newInfoFromDomain(
+            ICurricularSemester curricularSemester) {
+        InfoCurricularSemester infoCurricularSemester = null;
+        if (curricularSemester != null) {
+            infoCurricularSemester = new InfoCurricularSemester();
+            infoCurricularSemester.copyFromDomain(curricularSemester);
+        }
+        return infoCurricularSemester;
+    }
 }
