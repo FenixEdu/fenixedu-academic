@@ -98,7 +98,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
                 else
                     hasPrevious = true;
 
-                oqlQuery.append(" edificio = \"").append(edificio).append("\"");
+                oqlQuery.append(" building.name = \"").append(edificio).append("\"");
             }
 
             if (piso != null) {
@@ -182,20 +182,20 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     public List readForRoomReservation() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
-        //        criteria.addNotLike("edificio", "Tagus%");
-        //        criteria.addNotLike("edificio", "Local%");
+        //        criteria.addNotLike("building.name", "Tagus%");
+        //        criteria.addNotLike("building.name", "Local%");
         return queryList(Room.class, criteria);
     }
 
     public List readByPavillion(String pavillion) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("edificio", pavillion);
+        criteria.addEqualTo("building.name", pavillion);
         return queryList(Room.class, criteria);
     }
 
     public List readByPavillions(List pavillionsName) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addIn("edificio", pavillionsName);
+        criteria.addIn("building.name", pavillionsName);
         return queryList(Room.class, criteria);
     }
 
