@@ -68,7 +68,6 @@ public class LoadDBForCurricularCourseEnrollmentTest {
 
         cleanDB();
         loadDB();
-        clearCache();
     }
 
     private static void cleanDB() throws ExcepcaoPersistencia {
@@ -168,12 +167,12 @@ public class LoadDBForCurricularCourseEnrollmentTest {
         obj.closeConnection();
     }
 
-    private static void clearCache() throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-        persistenceDAO.iniciarTransaccao();
-        persistenceDAO.clearCache();
-        persistenceDAO.confirmarTransaccao();
-    }
+//    private static void clearCache() throws ExcepcaoPersistencia {
+//        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+//        persistenceDAO.iniciarTransaccao();
+//        persistenceDAO.clearCache();
+//        persistenceDAO.confirmarTransaccao();
+//    }
 
     public void openConnection() throws Exception {
         if (this.connection == null) {

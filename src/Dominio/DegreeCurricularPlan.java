@@ -294,7 +294,7 @@ public class DegreeCurricularPlan extends DomainObject implements
             ICurricularCourse curricularCourse = curricularCourseScope
                     .getCurricularCourse();
 
-            if (curricularCourses.contains(curricularCourse)) {
+            if (!curricularCourses.contains(curricularCourse)) {
                 curricularCourses.add(curricularCourse);
             }
         }
