@@ -14,6 +14,7 @@ import java.util.List;
 
 import DataBeans.InfoClass;
 import Dominio.ITurma;
+import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.Turma;
 import Dominio.Turno;
@@ -64,9 +65,14 @@ public class RemoveShifts implements IServico {
 					(ITurno) sp.getITurnoPersistente().readByOID(
 						Turno.class,
 						(Integer) shiftOIDs.get(i));
-				sp.getITurnoPersistente().lockWrite(shift);
+				ITurmaTurno classShift = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(
+										schoolClass,
+										shift);
 
-				shift.getAssociatedClasses().remove(schoolClass);
+				if (classShift != null) {
+					sp.getITurmaTurnoPersistente().delete(classShift);
+				}
+
 			}
 
 			result = true;
