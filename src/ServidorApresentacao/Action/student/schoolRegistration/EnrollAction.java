@@ -59,12 +59,21 @@ public class EnrollAction extends FenixAction {
         Integer phone = (Integer) totalForm.get("phone");
         Integer mobile = (Integer) totalForm.get("mobile");
         String email = (String) totalForm.get("email");
+        Boolean availableEmail = (Boolean) totalForm.get("availableEmail"); 
         String webAddress = (String) totalForm.get("webAddress");
+        Boolean availableWebAdress = (Boolean) totalForm.get("availableWebAdress"); 
         String contributorNumber = (String) totalForm.get("contributorNumber");
         String occupation = (String) totalForm.get("occupation");
         String password = (String) totalForm.get("password");
         String maritalStatus = (String) totalForm.get("maritalStatus");
       
+        System.out.println("A PRIMEIRA CHECKBOX TEM: " + availableEmail);
+        System.out.println("A SEGUNDA CHECKBOX TEM: " + availableWebAdress);
+        if(availableEmail == null)
+            availableEmail = new Boolean(false);
+        if(availableWebAdress == null)
+            availableWebAdress = new Boolean(false);
+        
         InfoPerson infoPerson = new InfoPerson();
         Calendar EmissionDateOfDocumentId = Calendar.getInstance();
         Calendar ExpirationDateOfDocumentId = Calendar.getInstance();
@@ -91,7 +100,9 @@ public class EnrollAction extends FenixAction {
         infoPerson.setTelefone(phone.toString());
         infoPerson.setTelemovel(mobile.toString());
         infoPerson.setEmail(email);
+        infoPerson.setAvailableEmail(availableEmail);
         infoPerson.setEnderecoWeb(webAddress);
+        infoPerson.setAvailableWebSite(availableWebAdress);
         infoPerson.setNumContribuinte(contributorNumber);
         infoPerson.setProfissao(occupation);
         infoPerson.setPassword(password);    
