@@ -1,8 +1,6 @@
 
 package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import middleware.middlewareDomain.MWAluno;

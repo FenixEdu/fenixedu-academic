@@ -3,7 +3,7 @@ package middleware.marks;
 import java.util.Calendar;
 import java.util.Date;
 
-import Dominio.Employee;
+import Dominio.IEmployee;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -62,8 +62,8 @@ public class RowMarksFile {
 		setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
 	}
 
-	private Employee readEmployee(IPessoa person) {
-		Employee employee = null;
+	private IEmployee readEmployee(IPessoa person) {
+		IEmployee employee = null;
 		IPersistentEmployee persistentEmployee;
 		try {
 			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();

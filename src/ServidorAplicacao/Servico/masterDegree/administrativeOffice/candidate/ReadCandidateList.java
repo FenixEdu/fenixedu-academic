@@ -21,7 +21,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.SituationName;
 import Util.Specialization;
-import Util.State;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

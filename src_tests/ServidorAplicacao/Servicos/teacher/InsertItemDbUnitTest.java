@@ -1,16 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import java.io.FileInputStream;
-import java.sql.DriverManager;
 import ServidorAplicacao.Servicos.ServiceTestCase;
-
-import org.dbunit.DatabaseTestCase;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-
-import java.sql.Connection;
 
 public class InsertItemDbUnitTest extends ServiceTestCase {
 
@@ -24,6 +14,14 @@ public class InsertItemDbUnitTest extends ServiceTestCase {
 	
 	public void testSuccessfullInsertItem() {
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

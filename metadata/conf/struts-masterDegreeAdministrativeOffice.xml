@@ -461,9 +461,7 @@
             <form-property name="page" type="java.lang.Integer" />
    	        <form-property name="currentState" type="java.lang.String"/>
    	        <form-property name="credits" type="java.lang.String"/>
-   	        <form-property name="courseType" type="java.lang.String"/>
-   	        <form-property name="enrolmentID" type="java.lang.String"/>
-   	        <form-property name="size" type="java.lang.Integer" />
+   	        <form-property name="extraCurricularCourses" type="java.lang.String[]"/>
       </form-bean>
      
 
@@ -1599,6 +1597,7 @@
 	 		 scope="request"
 	 		 validate="false" >
 	 		<forward name="editStudentCurricularCoursePlan" path="df.page.editStudentCurricularCoursePlan"/>
+			<forward name="ShowStudentCurricularCoursePlan" path="/showStudentCurricularCoursePlan.do"/>					
 	 </action>
 	 <action  type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.EditStudentCurricularCoursePlan"
 	 		 path="/alterStudentCurricularPlan"		 
@@ -1607,6 +1606,7 @@
 	 		 scope="request"
 	 		 validate="false" >
 	 		<forward name="editStudentCurricularCoursePlan" path="df.page.editStudentCurricularCoursePlan"/>
+	 		<forward name="ShowStudentCurricularCoursePlan" path="/showStudentCurricularCoursePlan.do"/>
 	 </action>
 
     </action-mappings>

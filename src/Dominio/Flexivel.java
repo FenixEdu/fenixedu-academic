@@ -14,11 +14,10 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 
-import Util.FormataCalendar;
-import constants.assiduousness.Constants;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoConfirmarForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoForm;
+import constants.assiduousness.Constants;
 
 /**
  *

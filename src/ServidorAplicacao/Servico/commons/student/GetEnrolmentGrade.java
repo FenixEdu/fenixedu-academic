@@ -7,7 +7,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
-import Dominio.Employee;
+import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import ServidorAplicacao.IServico;
@@ -72,7 +72,7 @@ public class GetEnrolmentGrade implements IServico {
 				try {
 					if (String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()) != null
 						|| String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()).length() > 0) {
-						Employee employee = readEmployee(enrolmentEvaluation.getEmployee().getIdInternal().intValue());
+						IEmployee employee = readEmployee(enrolmentEvaluation.getEmployee().getIdInternal().intValue());
 						enrolmentEvaluation.setEmployee(employee);
 						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 					}
@@ -108,7 +108,7 @@ public class GetEnrolmentGrade implements IServico {
 				if (latestEvaluation.getEmployee() != null) {
 					if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
 						|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-						Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+						IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
 						latestEvaluation.setEmployee(employee);
 						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 					}
@@ -139,7 +139,7 @@ public class GetEnrolmentGrade implements IServico {
 					if (latestEvaluation.getEmployee() != null) {
 						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
 							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-							Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+							IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
 							latestEvaluation.setEmployee(employee);
 							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
@@ -163,7 +163,7 @@ public class GetEnrolmentGrade implements IServico {
 					if (latestEvaluation.getEmployee() != null) {
 						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
 							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-							Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+							IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
 							latestEvaluation.setEmployee(employee);
 							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
@@ -183,7 +183,7 @@ public class GetEnrolmentGrade implements IServico {
 					if (previousEvaluation.getEmployee() != null) {
 						if (String.valueOf(previousEvaluation.getEmployee().getIdInternal()) != null
 							|| String.valueOf(previousEvaluation.getEmployee().getIdInternal()).length() > 0) {
-							Employee employee = readEmployee(previousEvaluation.getEmployee().getIdInternal().intValue());
+							IEmployee employee = readEmployee(previousEvaluation.getEmployee().getIdInternal().intValue());
 							latestEvaluation.setEmployee(employee);
 							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
@@ -201,7 +201,7 @@ public class GetEnrolmentGrade implements IServico {
 					if (latestEvaluation.getEmployee() != null) {
 						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
 							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-							Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+							IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
 							latestEvaluation.setEmployee(employee);
 							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
@@ -221,7 +221,7 @@ public class GetEnrolmentGrade implements IServico {
 			if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
 				|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
 				try {
-					Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+					IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
 					latestEvaluation.setEmployee(employee);
 					infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 				} catch (ExcepcaoPersistencia e) {
@@ -232,8 +232,8 @@ public class GetEnrolmentGrade implements IServico {
 		return infolatestEvaluation;
 	}
 
-	private Employee readEmployee(int id) throws ExcepcaoPersistencia {
-		Employee employee = null;
+	private IEmployee readEmployee(int id) throws ExcepcaoPersistencia {
+		IEmployee employee = null;
 		IPersistentEmployee persistentEmployee;
 		try {
 			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();

@@ -10,12 +10,12 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.equivalence.InfoCurricularCourseScopeGrade;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import DataBeans.util.Cloner;
-import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEquivalenceRestriction;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourseScope;
+import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IEnrolmentEquivalenceRestriction;
@@ -154,7 +154,7 @@ public class ConfirmEquivalence implements IServico {
 		try {
 			IUserView userView = infoEquivalenceContext.getResponsible();
 			IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
-			Employee employee = readEmployee(pessoa);
+			IEmployee employee = readEmployee(pessoa);
 
 			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 			enrolmentEvaluation.setEnrolment(newEnrolment);
@@ -175,8 +175,8 @@ public class ConfirmEquivalence implements IServico {
 		}
 	}
 
-	private Employee readEmployee(IPessoa person) {
-		Employee employee = null;
+	private IEmployee readEmployee(IPessoa person) {
+		IEmployee employee = null;
 		IPersistentEmployee persistentEmployee;
 		try {
 			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();

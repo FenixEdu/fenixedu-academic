@@ -11,9 +11,12 @@
 <span class="error"><html:errors/></span>
 
 <h2 align="left"><bean:message key="title.studentCurricularPlan"/></h2>
-<bean:define id="idInternal">/alterStudentCurricularPlan.do?method=edit&studentCurricularPlanId=<bean:write name="studentCurricularPlan" property="idInternal"/></bean:define>
 
-<html:form action='<%= pageContext.findAttribute("idInternal").toString() %>'>
+
+<html:form action="/alterStudentCurricularPlan">
+<html:hidden property="method" value="edit"/>
+<bean:define id="idInternal" name="studentCurricularPlan" property="idInternal"/>
+<html:hidden property="studentCurricularPlanId" value="<%= idInternal.toString() %>"/>
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
 		<td>
@@ -128,7 +131,7 @@
 								</td>
 								<td>
 									<bean:define  id="idEnrolment" name="infoEnrolment" property="idInternal"/>
-									<html:checkbox property="courseType"  value='<%= pageContext.findAttribute("idEnrolment").toString() %>'/>&nbsp;
+									<html:multibox property="extraCurricularCourses"><bean:write name="infoEnrolment" property="idInternal"/> </html:multibox >&nbsp;
 								</td>
 							</tr>		
 						</logic:iterate>

@@ -6,14 +6,14 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.Employee;
+import Dominio.IEmployee;
 
 /**
  * @author jpvl
  */
 public interface IPersistentEmployee extends IPersistentObject {
-	public Employee readByNumber(Integer number) throws ExcepcaoPersistencia;
-	public Employee readByIdInternal(int idInternal) throws ExcepcaoPersistencia;
-	public Employee readByPerson(int keyPerson) throws ExcepcaoPersistencia;
+	public IEmployee readByNumber(Integer number) throws ExcepcaoPersistencia;
+	public IEmployee readByIdInternal(int idInternal) throws ExcepcaoPersistencia;
+	public IEmployee readByPerson(int keyPerson) throws ExcepcaoPersistencia;
 	public List readHistoricByKeyEmployee(int keyEmployee) throws ExcepcaoPersistencia;
 }

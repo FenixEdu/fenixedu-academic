@@ -5,6 +5,10 @@ package ServidorApresentacao
 	.student
 	.studentCurricularPlan;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +19,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
@@ -39,7 +44,8 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 		DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
 		Integer studentCurricularPlanId =
 			new Integer(getFromRequest("studentCurricularPlanId", request));
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Object args[] = { studentCurricularPlanId };
 
@@ -73,6 +79,23 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 			"credits",
 			String.valueOf(infoStudentCurricularPlan.getGivenCredits()));
 
+		String[] formValues =
+			new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
+		int i = 0;
+		for (Iterator iter =
+			infoStudentCurricularPlan.getInfoEnrolments().iterator();
+			iter.hasNext();
+			) {
+			Object enrollment =iter.next();
+			if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
+				Integer enrollmentId =
+				((InfoEnrolmentInExtraCurricularCourse)enrollment).getIdInternal();
+			formValues[i] = enrollmentId.toString();
+			}  
+			i++;
+		}
+		DynaActionForm coursesForm = (DynaActionForm) form;
+		coursesForm.set("extraCurricularCourses", formValues);
 		return mapping.findForward("editStudentCurricularCoursePlan");
 	}
 
@@ -88,56 +111,50 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 
 		String studentCurricularPlanIdString =
 			request.getParameter("studentCurricularPlanId");
+		String[] extraCurricularCoursesArray =
+			(String[]) editStudentCurricularPlanForm.get("extraCurricularCourses");
 
-		String[] courseType = request.getParameterValues("courseType");
 		String currentState =
 			(String) editStudentCurricularPlanForm.get("currentState");
 		Double credits =
 			Double.valueOf(
 				(String) editStudentCurricularPlanForm.get("credits"));
 
-		studentCurricularPlanIdString =
-			(String) request.getAttribute("studentCurricularPlanId");
-
 		Integer studentCurricularPlanId =
 			new Integer(studentCurricularPlanIdString);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan =
-			new InfoStudentCurricularPlan();
-		infoStudentCurricularPlan.setIdInternal(
-			new Integer(studentCurricularPlanIdString));
+		List extraCurricularCourses = new ArrayList();
 
-		infoStudentCurricularPlan.setCurrentState(
-			new StudentCurricularPlanState(currentState));
-		infoStudentCurricularPlan.setGivenCredits(credits);
-
+		for (int i = 0; i < extraCurricularCoursesArray.length; i++) {
+			extraCurricularCourses.add(
+				new Integer(extraCurricularCoursesArray[i]));
+			
+		}
 		Object args[] =
 			{
 				userView,
-				studentCurricularPlanIdString,
+				studentCurricularPlanId,
 				currentState,
 				credits,
-				courseType };
+				extraCurricularCourses };
 
 		GestorServicos gestor = GestorServicos.manager();
 
 		try {
-			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) gestor.executar(
+			 gestor.executar(
 					userView,
-					"EditPosGradStudentCurricularPlans",
+					"EditPosGradStudentCurricularPlanStateAndCredits",
 					args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
+		
 		request.setAttribute(
-			"student",
-			infoStudentCurricularPlan.getInfoStudent());
-		request.setAttribute(
-			"studentCurricularPlan",
-			infoStudentCurricularPlan);
+			"studentCurricularPlanId",
+			studentCurricularPlanId);
 
 		return mapping.findForward("ShowStudentCurricularCoursePlan");
 	}

@@ -288,7 +288,8 @@ public abstract class Cloner {
 	private static void copyObjectProperties(Object destination, Object source) {
 		if (source != null)
 			try {
-				BeanUtils.copyProperties(destination, source);
+				
+			BeanUtils.copyProperties(destination, source);
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException(e);

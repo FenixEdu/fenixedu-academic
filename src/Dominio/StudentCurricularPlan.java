@@ -18,7 +18,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	protected IStudent student;
 	protected IBranch branch;
 	protected IDegreeCurricularPlan degreeCurricularPlan;
-	protected Employee employee; 
+	protected IEmployee employee; 
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
 	protected List enrolments;
@@ -46,6 +46,13 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		setBranch(branch);
 		setStartDate(startDate);
 		setCurrentState(currentState);
+	}
+
+	/**
+	 * @param studentCurricularPlanId
+	 */
+	public StudentCurricularPlan(Integer studentCurricularPlanId) {
+		setIdInternal(studentCurricularPlanId);
 	}
 
 	public boolean equals(Object obj) {
@@ -295,14 +302,14 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	/**
 	 * @return
 	 */
-	public Employee getEmployee() {
+	public IEmployee getEmployee() {
 		return employee;
 	}
 
 	/**
 	 * @param employee
 	 */
-	public void setEmployee(Employee employee) {
+	public void setEmployee(IEmployee employee) {
 		this.employee = employee;
 	}
 

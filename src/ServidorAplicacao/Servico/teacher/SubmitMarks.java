@@ -19,12 +19,12 @@ import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEvaluation;
@@ -265,7 +265,7 @@ public class SubmitMarks implements IServico {
 			//employee logged
 			IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
 			IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
-			Employee employee = readEmployee(pessoa);
+			IEmployee employee = readEmployee(pessoa);
 			enrolmentEvaluation.setEmployee(employee);
 			//enrolmentEvaluation.setEmployeeKey(new Integer(funcionario.getCodigoInterno()));
 
@@ -289,8 +289,8 @@ public class SubmitMarks implements IServico {
 		}
 	}
 
-	private Employee readEmployee(IPessoa person) {
-		Employee employee = null;
+	private IEmployee readEmployee(IPessoa person) {
+		IEmployee employee = null;
 		IPersistentEmployee persistentEmployee;
 		try {
 			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();

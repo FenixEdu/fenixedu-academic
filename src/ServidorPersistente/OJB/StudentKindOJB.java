@@ -2,10 +2,7 @@
 
 package ServidorPersistente.OJB;
 
-import java.util.List;
-
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.IStudentKind;
 import Dominio.StudentKind;

@@ -36,7 +36,7 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.student.state" /></b>
-			<bean:write name="studentCurricularPlan" property="currentState" />
+			<bean:write name="studentCurricularPlan" property="currentState.stringPt" />
 		</td>						
 	</tr>	
 	<tr>

@@ -15,7 +15,6 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;

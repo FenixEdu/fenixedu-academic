@@ -11,6 +11,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Employee;
 import Dominio.EmployeeHistoric;
+import Dominio.IEmployee;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
 
@@ -19,19 +20,19 @@ import ServidorPersistente.IPersistentEmployee;
  */
 public class EmployeeOJB extends ObjectFenixOJB implements IPersistentEmployee {
 
-	public Employee readByNumber(Integer number) throws ExcepcaoPersistencia {
+	public IEmployee readByNumber(Integer number) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("employeeNumber", number);
 		return (Employee) queryObject(Employee.class, criteria);
 	}
 
-	public Employee readByIdInternal(int idInternal) throws ExcepcaoPersistencia {
+	public IEmployee readByIdInternal(int idInternal) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("idInternal", new Integer(String.valueOf(idInternal)));
 		return (Employee) queryObject(Employee.class, criteria);
 	}
 
-	public Employee readByPerson(int keyPerson) throws ExcepcaoPersistencia {
+	public IEmployee readByPerson(int keyPerson) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyPerson", new Integer(String.valueOf(keyPerson)));
 		return (Employee) queryObject(Employee.class, criteria);

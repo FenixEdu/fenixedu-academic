@@ -14,10 +14,10 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Department;
-import Dominio.Employee;
 import Dominio.EmployeeHistoric;
 import Dominio.ICostCenter;
 import Dominio.IDepartment;
+import Dominio.IEmployee;
 import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
@@ -175,7 +175,7 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 	private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
 		IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
 		
-		Employee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
+		IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
 		employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal().intValue()));
 		
 		employee.fillEmployeeHistoric();

@@ -98,6 +98,34 @@ public class StudentCurricularPlanState {
 		}
 		return valueS;
 	}
+	
+	public String getStringPt() {
+			int value = this.state.intValue();
+			String valueS = null;
+			switch (value) {
+				case ACTIVE :
+					valueS = "Activo";
+					break;
+				case CONCLUDED :
+					valueS = "Concluído";
+					break;
+				case INCOMPLETE :
+					valueS = "Incompleto";
+					break;
+				case SCHOOLPARTCONCLUDED :
+					valueS = "Parte Escolar Concluída";
+					break;
+				case INACTIVE :
+					valueS = "Inactivo";
+					break;
+				default:
+					break;
+			}
+			return valueS;
+		}
+	
+	
+	
 	public static ArrayList toArrayList() {
 			ArrayList result = new ArrayList();
 			result.add(new LabelValueBean(StudentCurricularPlanState.ACTIVE_STRING, StudentCurricularPlanState.ACTIVE_STRING));

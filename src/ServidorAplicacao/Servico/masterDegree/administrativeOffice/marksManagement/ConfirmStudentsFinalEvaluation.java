@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import Dominio.CurricularCourse;
-import Dominio.Employee;
 import Dominio.ICurricularCourse;
+import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
@@ -68,7 +68,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 
 			//			employee
 			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			Employee employee = readEmployee(person);
+			IEmployee employee = readEmployee(person);
 
 			ICurricularCourse curricularCourse = new CurricularCourse();
 			curricularCourse.setIdInternal(curricularCourseCode);
@@ -107,7 +107,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		return Boolean.TRUE;
 	}
 
-	private void updateEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation, IPersistentEnrolment persistentEnrolment, Employee employee, IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
+	private void updateEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation, IPersistentEnrolment persistentEnrolment, IEmployee employee, IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
 		persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationElem);
 		
 		enrolmentEvaluationElem.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
@@ -137,8 +137,8 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		enrolmentToEdit.setEnrolmentState(newEnrolmentState);
 	}
 
-	private Employee readEmployee(IPessoa person) {
-		Employee employee = null;
+	private IEmployee readEmployee(IPessoa person) {
+		IEmployee employee = null;
 		IPersistentEmployee persistentEmployee;
 		try {
 			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();

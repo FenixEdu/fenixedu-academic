@@ -212,7 +212,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		HttpSession session = getSession();
 		InfoSite infoSite = new InfoSite(infoExecutionCourse);		
 		session.setAttribute(SessionConstants.INFO_SITE, infoSite);
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { infoExecutionCourse, null };
 		GestorServicos gestor = GestorServicos.manager();
 		ArrayList references = null;

@@ -7,11 +7,11 @@ import java.util.List;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
-import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
@@ -93,7 +93,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 			}
 			//		employee
 			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			Employee employee = readEmployee(person);
+			IEmployee employee = readEmployee(person);
 
 			//			curricular Course Scope
 			ICurricularCourse curricularCourse = new CurricularCourse();
@@ -180,8 +180,8 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 		return infoEvaluationsWithError;
 	}
 
-	private Employee readEmployee(IPessoa person) {
-		Employee employee = null;
+	private IEmployee readEmployee(IPessoa person) {
+		IEmployee employee = null;
 		IPersistentEmployee persistentEmployee;
 		try {
 			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();

@@ -25,7 +25,7 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public Integer getEnrolledCourses();
 	public List getEnrolments();
 	public Double getClassification();
-	public Employee getEmployee();
+	public IEmployee getEmployee();
 	public Date getWhen();
     
     
@@ -41,6 +41,6 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public void setCompletedCourses(Integer integer);
 	public void setEnrolledCourses(Integer integer);
 	public void setClassification(Double double1);
-	public void setEmployee(Employee funcionario);
+	public void setEmployee(IEmployee funcionario);
 	public void setWhen(Date date);
 }
