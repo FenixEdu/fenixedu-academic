@@ -283,13 +283,6 @@
              
 	</action>
 
-	<!-- access to alternative site -->
-	<action 
-		type="ServidorApresentacao.Action.publico.AccessAlternativeSiteAction" 
-		path="/accessAlternativeSite">
-        <forward name="AlternativeSite" path="/alternativeSite.jsp" />       
-	</action>
-
 	<!-- access to objectives -->
 	<action 
 		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction" 
