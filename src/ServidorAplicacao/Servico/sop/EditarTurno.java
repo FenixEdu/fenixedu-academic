@@ -21,7 +21,6 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
-import Dominio.ITurnoAula;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -114,9 +113,7 @@ public class EditarTurno implements IServico {
 				(ITurno) sp.getITurnoPersistente().readByOID(
 					Turno.class,
 					infoShiftOld.getIdInternal());
-			shiftLessons =
-				(List) sp.getITurnoAulaPersistente().readLessonsByShift(
-					shift);
+			shiftLessons = shift.getAssociatedLessons();
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
@@ -124,7 +121,7 @@ public class EditarTurno implements IServico {
 		// 2. Count shift total duration
 		double shiftDuration = 0;
 		for (int i = 0; i < shiftLessons.size(); i++) {
-			IAula lesson = ((ITurnoAula) shiftLessons.get(i)).getAula();
+			IAula lesson = ((IAula) shiftLessons.get(i));
 			shiftDuration
 				+= (getLessonDurationInMinutes(lesson).doubleValue() / 60);
 		}
