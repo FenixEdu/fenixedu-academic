@@ -52,13 +52,13 @@ public class CategoryOJB
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see ServidorPersistente.teacher.IPersistentCategory#readCategoryByName(java.lang.String)
+	 * @see ServidorPersistente.teacher.IPersistentCategory#readCategoryByCode(java.lang.String)
 	 */
-	public ICategory readCategoryByName(String name)
+	public ICategory readCategoryByCode(String code)
 		throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("name", name);
+		criteria.addEqualTo("code", code);
 		return (ICategory) queryObject(Category.class, criteria);
 	}
 
