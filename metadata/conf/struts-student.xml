@@ -22,6 +22,10 @@
       		<form-property name="method" type="java.lang.String"/>
 	      	<form-property name="shifts" type="java.lang.Integer[]"/>
 	      	<form-property name="class" type="java.lang.String"/>
+
+		<form-property name="degree" type="java.lang.String"/>
+		<form-property name="course" type="java.lang.String[]"/>
+		<form-property name="wantedCourse" type="java.lang.String[]"/>
       </form-bean>
       
 <!--
@@ -151,7 +155,8 @@
           handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
                            
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=initializeEnrolment"/>
-              
+	      
+        <forward name="selectCourses" path="show-courses-by-degree"/>
         <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
         <forward name="showAvailableShifts" path="show-available-shifts"/>
         <forward name="validateAndConfirmShiftEnrolment" path="validate-confirm-shift-enrolment"/>
