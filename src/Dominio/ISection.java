@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public interface ISection {
 	
+	Integer getInternalCode();
 	String getName();
 	Integer getSectionOrder();
 	Date getLastModifiedDate();
@@ -19,6 +20,7 @@ public interface ISection {
 //	List getInferiorSections();
 //	List getItems();
     
+    void setInternalCode(Integer internalCode);
 	void setName(String name);
 	void setSectionOrder(Integer order);
 	void setLastModifiedDate(Date lastModifiedDate);
