@@ -46,13 +46,13 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 		}
 	}
 	public ITeacher readTeacherByUsernamePB(String user) throws ExcepcaoPersistencia {
-		ITeacher teacher = new Teacher();
-		IPessoa person = new Pessoa();
-		person.setUsername(user);
-		teacher.setPerson(person);
-		teacher = (ITeacher) readDomainObjectByCriteria(teacher);
-		return teacher;
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("person.username", user);
+		
+		return (ITeacher) queryObject(Teacher.class, criteria);
 	}
+	
 	public ITeacher readTeacherByNumber(Integer teacherNumber) throws ExcepcaoPersistencia {
 		try {
 			ITeacher teacher = null;

@@ -220,4 +220,16 @@ create table GROUP_PROPERTIES (
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (NAME,KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
-   
+
+#----------------------------
+# Table structure for CourseReport
+#----------------------------
+drop table if exists COURSE_REPORT;
+create table COURSE_REPORT (
+   ID_INTERNAL int(11) unsigned not null auto_increment,   
+   KEY_EXECUTION_COURSE int(11) unsigned not null ,
+   REPORT text,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXECUTION_COURSE))
+   type=InnoDB comment="InnoDB free: 372736 kB";
+      

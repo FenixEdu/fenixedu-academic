@@ -90,7 +90,8 @@ drop table if exists TEACHER;
 create table TEACHER (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    TEACHER_NUMBER int(10) unsigned,
-   KEY_PERSON int(11) unsigned  not null, 
+   KEY_PERSON int(11) unsigned  not null,
+   KEY_CATEGORY int(11) unsigned, 
    primary key (ID_INTERNAL),
    UNIQUE KEY U1 (TEACHER_NUMBER,KEY_PERSON))
    type=InnoDB comment="InnoDB free: 372736 kB";

@@ -155,15 +155,12 @@ public class ResponsibleForOJB
 		ITeacher teacher,
 		IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+		criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
 
-		IResponsibleFor responsibleFor = new ResponsibleFor();
-		responsibleFor.setExecutionCourse(executionCourse);
-		responsibleFor.setTeacher(teacher);
-		responsibleFor =
-			(IResponsibleFor) readDomainObjectByCriteria(responsibleFor);
-
-		return responsibleFor;
-
+		return (IResponsibleFor) queryObject(ResponsibleFor.class, criteria);
 	}
 
 }

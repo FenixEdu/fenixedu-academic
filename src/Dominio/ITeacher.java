@@ -3,6 +3,8 @@
  */
 package Dominio;
 
+import Dominio.teacher.ICategory;
+
 
 /**
  *
@@ -13,9 +15,11 @@ public interface ITeacher extends IDomainObject {
     public Integer getTeacherNumber();
 
 	public IPessoa getPerson();
+	public ICategory getCategory();
 	
 
     public void setTeacherNumber(Integer number);
 	public void setPerson(IPessoa person);
+	public void setCategory(ICategory category);
 	
 }

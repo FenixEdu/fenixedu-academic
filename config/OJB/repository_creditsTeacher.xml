@@ -61,7 +61,27 @@
       </reference-descriptor>
       <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
          <foreignkey field-ref="keyExecutionPeriod"/>
-      </reference-descriptor>    
+      </reference-descriptor> 
+    </class-descriptor>
+      
+<!-- Definitions for Dominio.teacher.Category -->
+   <class-descriptor class="Dominio.teacher.Category" table="CATEGORY">
+      <field-descriptor name="idInternal" 
+      					column="ID_INTERNAL" 
+      					jdbc-type="INTEGER"
+      					primarykey="true" 
+      					autoincrement="true"/>
+      					
+      <field-descriptor name="code" 
+      					column="CODE" 
+      					jdbc-type="VARCHAR"/>
+      <field-descriptor name="longName" 
+      					column="LONG_NAME" 
+      					jdbc-type="VARCHAR"/>
+      <field-descriptor name="shortName" 
+      					column="SHORT_NAME" 
+      					jdbc-type="VARCHAR"/>
+      
    </class-descriptor>
 
 

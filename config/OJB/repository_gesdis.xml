@@ -791,4 +791,28 @@
 	
 	</reference-descriptor>
 </class-descriptor>
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.gesdis.CourseReport -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.gesdis.CourseReport" table="COURSE_REPORT">
+    <field-descriptor name="idInternal"
+        			  column="ID_INTERNAL"
+        			  jdbc-type="INTEGER"
+        			  primarykey="true"
+			          autoincrement="true"/>
+    <field-descriptor name="keyExecutionCourse"
+    				  column="KEY_EXECUTION_COURSE"
+    				  jdbc-type="INTEGER"/>
+	<field-descriptor name="report"
+					  column="REPORT"
+					  jdbc-type="LONGVARCHAR"/>
+	<reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         proxy="false"
+    >
+	  <foreignkey field-ref="keyExecutionCourse"/>
+    </reference-descriptor> 
+</class-descriptor>
 <!-- Mapping of User defined classes ends here -->

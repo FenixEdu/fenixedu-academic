@@ -419,6 +419,17 @@
          <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>       
 
+	  <field-descriptor
+         name="keyCategory"
+         column="KEY_CATEGORY"
+         jdbc-type="INTEGER"/>
+
+      <reference-descriptor
+         name="category"
+         class-ref="Dominio.teacher.Category"
+         proxy="false">
+         <foreignkey field-ref="keyCategory"/>
+      </reference-descriptor>       
      
     	
    </class-descriptor>

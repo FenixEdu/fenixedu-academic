@@ -54,9 +54,9 @@ import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
-import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
+import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -120,6 +120,9 @@ import ServidorPersistente.OJB.Seminaries.CaseStudyOJB;
 import ServidorPersistente.OJB.Seminaries.EquivalencyOJB;
 import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
+import ServidorPersistente.OJB.gesdis.CourseReportOJB;
+import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
+import ServidorPersistente.OJB.teacher.CategoryOJB;
 import ServidorPersistente.Seminaries.IPersistentSeminary;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
@@ -127,8 +130,9 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
+import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantOwner;
-import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
+import ServidorPersistente.teacher.IPersistentCategory;
 
 public class SuportePersistenteOJB implements ISuportePersistente {
 	Implementation _odmg = null;
@@ -721,5 +725,13 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public IPersistentDegreeInfo getIPersistentDegreeInfo() {
 		return new DegreeInfoOJB();
+	}
+	
+	public IPersistentCourseReport getIPersistentCourseReport() {
+		return new CourseReportOJB();
+	}
+	
+	public IPersistentCategory getIPersistentCategory() {
+		return new CategoryOJB();
 	}
 }

@@ -7,6 +7,8 @@ package DataBeans;
 
 import java.util.List;
 
+import DataBeans.teacher.*;
+
 
 /**
  * @author João Mota
@@ -15,6 +17,7 @@ public class InfoTeacher extends InfoObject{
 
 	private Integer teacherNumber;
 	private InfoPerson infoPerson;
+	private InfoCategory infoCategory;
 	private List professorShipsExecutionCourses;
 	private List responsibleForExecutionCourses;
 
@@ -91,11 +94,27 @@ public class InfoTeacher extends InfoObject{
 	}
 
 	/**
+	 * 
+	 * @return InfoCategory 
+	 */
+	public InfoCategory getInfoCategory() {
+		return infoCategory;
+	}
+	
+	/**
 	 * Sets the person.
 	 * @param person The person to set
 	 */
 	public void setInfoPerson(InfoPerson person) {
 		this.infoPerson = person;
+	}
+	
+	/**
+	 * Sets the category.
+	 * @param category
+	 */
+	public void setInfoCategory(InfoCategory category) {
+		this.infoCategory = category;
 	}
     
 	public boolean equals(Object obj) {
