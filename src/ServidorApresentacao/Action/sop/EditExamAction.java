@@ -11,22 +11,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException;
+import ServidorApresentacao.Action.sop.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.Season;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class EditExamAction extends FenixAction {
+public class EditExamAction extends FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -61,7 +63,22 @@ public class EditExamAction extends FenixAction {
 			examDate.set(Calendar.MONTH, month.intValue());
 			examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 
-			InfoViewExamByDayAndShift infoViewOldExam =  (InfoViewExamByDayAndShift) session.getAttribute(SessionConstants.INFO_EXAMS_KEY);
+			//InfoViewExamByDayAndShift infoViewOldExam =  (InfoViewExamByDayAndShift) session.getAttribute(SessionConstants.INFO_EXAMS_KEY);
+			ContextUtils.setExecutionCourseContext(request);
+			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+
+			System.out.println("infoExecutionCourse= " + infoExecutionCourse);
+			
+			Season oldExamsSeason = new Season( new Integer(request.getParameter("oldExamSeason")) );
+			
+			Object args[] =
+			{ infoExecutionCourse.getSigla(), oldExamsSeason, infoExecutionCourse.getInfoExecutionPeriod() };
+			InfoViewExamByDayAndShift infoViewOldExam =
+				(InfoViewExamByDayAndShift) ServiceUtils.executeService(
+					userView,
+					"ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
+					args);
+			System.out.println("infoViewOldExam" + infoViewOldExam);
 
 			// Create an exam with season, examDateAndTime and executionCourse
 			Object argsCreateExam[] = { examDate, examTime, season, infoViewOldExam};
@@ -74,7 +91,8 @@ public class EditExamAction extends FenixAction {
 			}
 			
 
-			String input = (String) session.getAttribute("input");
+			String input = (String) request.getParameter("input");
+			System.out.println("input=" + input);
 			return mapping.findForward(input);
 	}
 

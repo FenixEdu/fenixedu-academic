@@ -14,6 +14,7 @@ import org.apache.commons.collections.Predicate;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
 import Util.Season;
 
@@ -103,6 +104,30 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		return strBuffer;
 	}
 
+	private String getCurricularYearsArgs() {
+		String result = "";
+
+		List curricularYears = examsMap.getCurricularYears();
+		for (int i = 0; i < curricularYears.size(); i++) {
+			if (curricularYears.get(i).equals(new Integer(1))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=1"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(2))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=2"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(3))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=3"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(4))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=4"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(5))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=5"; 
+			}
+		}
+		return result;
+	}
+	
 	private void renderExecutionCourseListForYear(
 		StringBuffer strBuffer,
 		Integer year) {
@@ -125,6 +150,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 					strBuffer.append(
 						"<a href='viewExamsMap.do?method=create&amp;indexExecutionCourse="
 							+ i
+							+ "&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="
+							+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+							+ "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "="
+							+ examsMap.getInfoExecutionDegree().getIdInternal()
+							+ getCurricularYearsArgs()
 							+ "'>");
 				}
 
@@ -357,7 +387,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			strBuffer.append("<td ").append("class='").append(classCSS).append(
 				"'>");
 			strBuffer.append(
-				examsMapSlotContentRenderer.renderDayLabel(examsMapSlot));
+				examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap));
 			strBuffer.append("</td>");
 		}
 	}

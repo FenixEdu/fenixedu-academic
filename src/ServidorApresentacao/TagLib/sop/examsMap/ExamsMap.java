@@ -11,6 +11,7 @@ import java.util.List;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoRoomExamsMap;
 
 /**
@@ -22,6 +23,7 @@ public class ExamsMap {
 	private List days;
 	private List curricularYears;
 	private List executionCourses;
+	private InfoExecutionDegree infoExecutionDegree;
 
 	/**
 		 * @param infoRoomExamsMap
@@ -73,6 +75,8 @@ public class ExamsMap {
 	}
 
 	public ExamsMap(InfoExamsMap infoExamsMap) {
+		setInfoExecutionDegree(infoExamsMap.getInfoExecutionDegree());
+		
 		Calendar firstDayOfSeason = infoExamsMap.getStartSeason1();
 		Calendar lastDayOfSeason = infoExamsMap.getEndSeason2();
 
@@ -319,6 +323,20 @@ public class ExamsMap {
 	 */
 	private void setExecutionCourses(List list) {
 		executionCourses = list;
+	}
+
+	/**
+	 * @return Returns the infoExecutionDegree.
+	 */
+	public InfoExecutionDegree getInfoExecutionDegree() {
+		return infoExecutionDegree;
+	}
+
+	/**
+	 * @param infoExecutionDegree The infoExecutionDegree to set.
+	 */
+	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
+		this.infoExecutionDegree = infoExecutionDegree;
 	}
 
 }

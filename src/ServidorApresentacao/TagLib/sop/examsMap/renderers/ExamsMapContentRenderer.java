@@ -6,9 +6,12 @@
 package ServidorApresentacao.TagLib.sop.examsMap.renderers;
 
 import java.util.Calendar;
+import java.util.List;
 
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.TagLib.sop.examsMap.ExamsMap;
 import ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot;
 
 /**
@@ -16,7 +19,10 @@ import ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot;
  */
 public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
-	public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot) {
+	private ExamsMap examsMap;
+	
+	public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap) {
+		this.examsMap = examsMap;
 		StringBuffer strBuffer = new StringBuffer();
 
 		strBuffer.append(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH));
@@ -70,6 +76,13 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 								.getYear()
 							+ "&amp;season="
 							+ infoExam.getSeason().getseason()
+							+ "&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="
+							+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+							+ "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "="
+							+ examsMap.getInfoExecutionDegree().getIdInternal()
+							+ "&amp;" + SessionConstants.EXECUTION_COURSE_OID + "="
+							+ infoExecutionCourse.getIdInternal()
+							+ getCurricularYearsArgs()
 							+ "'>");
 
 					if (isOnValidWeekDay) {
@@ -218,4 +231,28 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 		return strBuffer;
 	}
 
+	private String getCurricularYearsArgs() {
+		String result = "";
+
+		List curricularYears = examsMap.getCurricularYears();
+		for (int i = 0; i < curricularYears.size(); i++) {
+			if (curricularYears.get(i).equals(new Integer(1))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=1"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(2))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=2"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(3))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=3"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(4))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=4"; 
+			}
+			if (curricularYears.get(i).equals(new Integer(5))) {
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=5"; 
+			}
+		}
+		return result;
+	}
+	
 }

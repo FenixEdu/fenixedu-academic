@@ -30,18 +30,24 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixExecutionDegreeAndCurricularYearsContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
+import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.Season;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ViewExamsMapDA extends FenixDispatchAction {
+public class ViewExamsMapDA
+	extends FenixExecutionDegreeAndCurricularYearsContextDispatchAction {
 
 	public ActionForward view(
 		ActionMapping mapping,
@@ -52,42 +58,45 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-			List curricularYears =
-				(List) request.getAttribute(
-					SessionConstants.CURRICULAR_YEARS_LIST);
-
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) request.getAttribute(
-					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-
-			Object[] args =
-				{ infoExecutionDegree, curricularYears, infoExecutionPeriod };
-			InfoExamsMap infoExamsMap;
-			try {
-				infoExamsMap =
-					(InfoExamsMap) gestor.executar(
-						userView,
-						"ReadExamsMap",
-						args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException(e);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-
+			InfoExamsMap infoExamsMap = getExamsMap(request);
 			request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 		} else {
 			throw new FenixActionException();
 		}
 
 		return mapping.findForward("viewExamsMap");
+	}
+
+	private InfoExamsMap getExamsMap(HttpServletRequest request)
+		throws FenixActionException {
+		GestorServicos gestor = GestorServicos.manager();
+		IUserView userView =
+			(IUserView) request.getSession().getAttribute(
+				SessionConstants.U_VIEW);
+
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) request.getAttribute(
+				SessionConstants.EXECUTION_DEGREE);
+
+		List curricularYears =
+			(List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+
+		Object[] args =
+			{ infoExecutionDegree, curricularYears, infoExecutionPeriod };
+		InfoExamsMap infoExamsMap;
+		try {
+			infoExamsMap =
+				(InfoExamsMap) gestor.executar(userView, "ReadExamsMap", args);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException(e);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		return infoExamsMap;
 	}
 
 	public ActionForward create(
@@ -99,9 +108,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 
 		HttpSession session = request.getSession(false);
 
-		InfoExamsMap infoExamsMap =
-			(InfoExamsMap) request.getAttribute(
-				SessionConstants.INFO_EXAMS_MAP);
+		InfoExamsMap infoExamsMap = getExamsMap(request);
 
 		Integer indexExecutionCourse =
 			new Integer(request.getParameter("indexExecutionCourse"));
@@ -113,12 +120,30 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
 		request.setAttribute(
-			SessionConstants.CURRICULAR_YEAR_KEY,
-			curricularYear);
+			SessionConstants.CURRICULAR_YEAR_OID,
+			curricularYear.toString());
+		ContextUtils.setCurricularYearContext(request);
 
 		request.setAttribute(
 			SessionConstants.EXECUTION_COURSE_KEY,
 			infoExecutionCourse);
+		request.setAttribute(
+			SessionConstants.EXECUTION_COURSE_OID,
+			infoExecutionCourse.getIdInternal().toString());
+
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) request.getAttribute(
+				SessionConstants.EXECUTION_DEGREE);
+		request.setAttribute(
+			SessionConstants.EXECUTION_DEGREE_OID,
+			infoExecutionDegree.getIdInternal().toString());
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+		request.setAttribute(
+			SessionConstants.EXECUTION_PERIOD_OID,
+			infoExecutionPeriod.getIdInternal().toString());
 
 		return mapping.findForward("createExam");
 	}
@@ -138,7 +163,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+				SessionConstants.EXECUTION_PERIOD);
 
 		String executionCourseInitials =
 			request.getParameter("executionCourseInitials");
@@ -199,6 +224,29 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		request.setAttribute(
 			SessionConstants.INFO_EXAMS_KEY,
 			infoViewExamByDayAndShift);
+			infoViewExamByDayAndShift.getInfoExam().getSeason().getseason();
+
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) request.getAttribute(
+				SessionConstants.EXECUTION_DEGREE);
+		request.setAttribute(
+			SessionConstants.EXECUTION_DEGREE_OID,
+			infoExecutionDegree.getIdInternal().toString());
+
+		request.setAttribute(
+			SessionConstants.EXECUTION_PERIOD_OID,
+			infoExecutionPeriod.getIdInternal().toString());
+
+		request.setAttribute(
+			SessionConstants.EXECUTION_COURSE,
+			infoViewExamByDayAndShift.getInfoExecutionCourses().get(0));
+		request.setAttribute(
+			SessionConstants.EXECUTION_COURSE_OID,
+			((InfoExecutionCourse) infoViewExamByDayAndShift.getInfoExecutionCourses().get(0)).getIdInternal().toString());		
+
+		request.setAttribute(
+			SessionConstants.NEXT_PAGE,
+			"viewExamsMap");
 
 		request.setAttribute("input", "viewExamsMap");
 

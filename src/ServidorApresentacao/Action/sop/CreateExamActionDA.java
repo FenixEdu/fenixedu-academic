@@ -15,18 +15,17 @@ import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
-import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.Season;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class CreateExamActionDA extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+public class CreateExamActionDA extends FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,
@@ -98,14 +97,14 @@ public class CreateExamActionDA extends FenixExecutionCourseAndExecutionDegreeAn
 			// Create an exam with season, examDateAndTime and executionCourse
 			Object argsCreateExam[] = { examDate, examTime, season, executionCourse};
 			try {
-				System.out.println("Calling create exam service.");
 				ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
-				System.out.println("Completed create exam service.");
 			} catch (ExistingServiceException ex) {
 				throw new ExistingActionException("O exame", ex);
 			}
 
-			String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
+			String nextPage = request.getParameter("nextPage");
+			//request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+			//String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
 
 			if (nextPage != null) {
 				System.out.println("returning to next page forward");

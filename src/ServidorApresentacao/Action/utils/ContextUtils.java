@@ -160,8 +160,62 @@ public class ContextUtils {
 	/**
 	 * @param request
 	 */
+	public static void setCurricularYearsContext(HttpServletRequest request) {
+		List curricularYearsB =
+			(List) request.getAttribute(
+				SessionConstants.CURRICULAR_YEARS_LIST);
+		
+		String curricularYears_1 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_1);
+		String curricularYears_2 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_2);
+		String curricularYears_3 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_3);
+		String curricularYears_4 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_4);
+		String curricularYears_5 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_5);
+		if (curricularYears_1 == null) {
+			curricularYears_1= request.getParameter(SessionConstants.CURRICULAR_YEARS_1);
+		}
+		if (curricularYears_2 == null) {
+			curricularYears_2= request.getParameter(SessionConstants.CURRICULAR_YEARS_2);
+		}
+		if (curricularYears_3 == null) {
+			curricularYears_3= request.getParameter(SessionConstants.CURRICULAR_YEARS_3);
+		}
+		if (curricularYears_4 == null) {
+			curricularYears_4= request.getParameter(SessionConstants.CURRICULAR_YEARS_4);
+		}
+		if (curricularYears_5 == null) {
+			curricularYears_5= request.getParameter(SessionConstants.CURRICULAR_YEARS_5);
+		}
+
+		List curricularYears = new ArrayList();
+
+		if (curricularYears_1 != null) {
+			curricularYears.add(new Integer(curricularYears_1));
+		}
+		if (curricularYears_2 != null) {
+			curricularYears.add(new Integer(curricularYears_2));
+		}
+		if (curricularYears_3 != null) {
+			curricularYears.add(new Integer(curricularYears_3));
+		}
+		if (curricularYears_4 != null) {
+			curricularYears.add(new Integer(curricularYears_4));
+		}
+		if (curricularYears_5 != null) {
+			curricularYears.add(new Integer(curricularYears_5));
+		}
+		
+		request.setAttribute(
+			SessionConstants.CURRICULAR_YEARS_LIST,
+			curricularYears);
+	}
+
+	/**
+	 * @param request
+	 */
 	public static void setExecutionCourseContext(HttpServletRequest request) {
-				String executionCourseOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_COURSE_OID);
+		System.out.println("Setting execution course context.");
+		
+		String executionCourseOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_COURSE_OID);
 		if (executionCourseOIDString == null) {
 						executionCourseOIDString = request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
 		}

@@ -6,4 +6,5 @@
   <tiles:put name="navLocal" value="/sop/commonNavLocalExamsSop.jsp" />
   <tiles:put name="body" value="/sop/viewExamsMap_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+  <tiles:put name="context" value="/commons/contextExecutionDegreeAndCurricularYears.jsp" />
 </tiles:insert>

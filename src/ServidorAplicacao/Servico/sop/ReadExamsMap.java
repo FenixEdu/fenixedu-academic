@@ -62,23 +62,26 @@ public class ReadExamsMap implements IServico {
 		// Object to be returned
 		InfoExamsMap infoExamsMap = new InfoExamsMap();
 
+		// Set Execution Degree
+		infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
+		
 		// Set List of Curricular Years
 		infoExamsMap.setCurricularYears(curricularYears);
 
 		// Exam seasons hardcoded because this information
 		// is not yet available from the database
 		Calendar startSeason1 = Calendar.getInstance();
-		startSeason1.set(Calendar.YEAR, 2003);
-		startSeason1.set(Calendar.MONTH, Calendar.JUNE);
-		startSeason1.set(Calendar.DAY_OF_MONTH, 23);
+		startSeason1.set(Calendar.YEAR, 2004);
+		startSeason1.set(Calendar.MONTH, Calendar.JANUARY);
+		startSeason1.set(Calendar.DAY_OF_MONTH, 5);
 		startSeason1.set(Calendar.HOUR_OF_DAY, 0);
 		startSeason1.set(Calendar.MINUTE, 0);
 		startSeason1.set(Calendar.SECOND, 0);
 		startSeason1.set(Calendar.MILLISECOND, 0);
 		Calendar endSeason2 = Calendar.getInstance();
-		endSeason2.set(Calendar.YEAR, 2003);
-		endSeason2.set(Calendar.MONTH, Calendar.JULY);
-		endSeason2.set(Calendar.DAY_OF_MONTH, 26);
+		endSeason2.set(Calendar.YEAR, 2004);
+		endSeason2.set(Calendar.MONTH, Calendar.FEBRUARY);
+		endSeason2.set(Calendar.DAY_OF_MONTH, 14);
 		endSeason2.set(Calendar.HOUR_OF_DAY, 0);
 		endSeason2.set(Calendar.MINUTE, 0);
 		endSeason2.set(Calendar.SECOND, 0);
@@ -89,8 +92,8 @@ public class ReadExamsMap implements IServico {
 			.getInfoDegree()
 			.getSigla()
 			.equals("LEEC")) {
-			startSeason1.set(Calendar.DAY_OF_MONTH, 16);
-			endSeason2.set(Calendar.DAY_OF_MONTH, 19);
+			startSeason1.set(Calendar.DAY_OF_MONTH, 5);
+			endSeason2.set(Calendar.DAY_OF_MONTH, 14);
 		}
 
 		// Set Exam Season info

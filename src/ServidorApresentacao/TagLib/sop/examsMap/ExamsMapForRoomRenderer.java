@@ -114,7 +114,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 			strBuffer.append("<td ").append("class='").append(classCSS).append(
 				"'>");
 			strBuffer.append(
-				examsMapSlotContentRenderer.renderDayLabel(examsMapSlot));
+				examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap));
 			strBuffer.append("</td>");
 		}
 	}

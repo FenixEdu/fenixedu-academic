@@ -4,16 +4,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<jsp:include page="contextExecutionDegree.jsp"/>
+<jsp:include page="context.jsp"/>
 
-<logic:present name="<%= SessionConstants.CURRICULAR_YEAR %>" scope="request">
-	<bean:define id="curricularYear"
-				 name="<%= SessionConstants.CURRICULAR_YEAR %>"
+<logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request">
+	<bean:define id="executionDegree"
+				 name="<%= SessionConstants.EXECUTION_DEGREE %>"
 				 toScope="request"
 				 scope="request"/>
-	<bean:define id="curricularYearOID"
+	<bean:define id="executionDegreeOID"
 				 type="java.lang.Integer"
-				 name="curricularYear"
+				 name="executionDegree"
 				 property="idInternal"
 				 toScope="request"
 				 scope="request"/>

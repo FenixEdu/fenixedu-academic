@@ -23,6 +23,7 @@ public class InfoExamsMap {
 	Calendar endSeason1;
 	Calendar startSeason2;
 	Calendar endSeason2;
+	InfoExecutionDegree infoExecutionDegree;
 
 	public InfoExamsMap() {
 		super();
@@ -122,6 +123,20 @@ public class InfoExamsMap {
 	 */
 	public void setStartSeason2(Calendar calendar) {
 		startSeason2 = calendar;
+	}
+
+	/**
+	 * @return Returns the infoExecutionDegree.
+	 */
+	public InfoExecutionDegree getInfoExecutionDegree() {
+		return infoExecutionDegree;
+	}
+
+	/**
+	 * @param infoExecutionDegree The infoExecutionDegree to set.
+	 */
+	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
+		this.infoExecutionDegree = infoExecutionDegree;
 	}
 
 }

@@ -79,7 +79,11 @@ public class Season {
     public java.lang.Integer getseason() {
         return season;
     }
-    
+
+	public java.lang.Integer getSeason() {
+		return season;
+	}
+
     /** Setter for property season.
      * @param season New value of property season.
      *

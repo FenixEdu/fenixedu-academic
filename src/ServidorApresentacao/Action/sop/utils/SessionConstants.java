@@ -217,6 +217,11 @@ public abstract class SessionConstants {
 	//    SOP Constants - For Exams
 	// -------------------------------------------------------------------------------
 	public static final String CURRICULAR_YEARS_LIST        = "curricularYearsList";
+	public static final String CURRICULAR_YEARS_1           = "curricularYearsArray_1";
+	public static final String CURRICULAR_YEARS_2           = "curricularYearsArray_2";
+	public static final String CURRICULAR_YEARS_3           = "curricularYearsArray_3";
+	public static final String CURRICULAR_YEARS_4           = "curricularYearsArray_4";
+	public static final String CURRICULAR_YEARS_5           = "curricularYearsArray_5";
 	public static final String EXAM_DATEANDTIME       		= "examDateAndTime";
 	public static final String EXAM_DATEANDTIME_STR   		= "examDateAndTimeString";
 	public static final String INFO_EXAMS_KEY         		= "INFO_EXAMS_KEY";

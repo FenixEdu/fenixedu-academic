@@ -31,9 +31,9 @@ public abstract class FenixExecutionCourseAndExecutionDegreeAndCurricularYearCon
 		HttpServletResponse response)
 		throws Exception {
 
-		ActionForward actionForward = super.execute(mapping, actionForm, request, response);
-
 		ContextUtils.setExecutionCourseContext(request);
+		
+		ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
 		return actionForward; 
 	}
