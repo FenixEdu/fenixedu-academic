@@ -72,15 +72,15 @@
 	</definition>
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 
-		extends="definition.sop.foto">
+		extends="definition.sop.curriculumHistoric">
 		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
 	</definition>
 	<definition name="show-active-curricular-scopes" 
-		extends="definition.sop.foto">
+		extends="definition.sop.curriculumHistoric">
 		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
 	</definition>
 	<definition name="view-curriculum-historic" 
-		extends="definition.sop.foto">
+		extends="definition.sop.curriculumHistoric">
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>
 	<!-- ========== EXECUTION COURSE MERGE ========== -->
