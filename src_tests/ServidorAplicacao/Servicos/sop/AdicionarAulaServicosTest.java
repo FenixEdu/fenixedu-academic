@@ -79,34 +79,7 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 		return true;
 	}
 
-	// write existing turnoAula
-	public void testCreateExistingTurnoAula() {
-
-		DiaSemana diaSemana = null;
-		Calendar inicio = null;
-		Calendar fim = null;
-		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-		inicio = Calendar.getInstance();
-		inicio.set(Calendar.HOUR_OF_DAY, 12);
-		inicio.set(Calendar.MINUTE, 30);
-		inicio.set(Calendar.SECOND, 0);
-		fim = Calendar.getInstance();
-		fim.set(Calendar.HOUR_OF_DAY, 13);
-		fim.set(Calendar.MINUTE, 0);
-		fim.set(Calendar.SECOND, 0);
-
-		this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
-		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
-			fail("testCreateExistingTurnoAula:");
-		} catch (Exception ex) {
-			assertNull("testCreateExistingTurnoAula", result);
-		}
-	}
-
+	
 	// write new non-existing turnoAula
 	public void testCreateNonExistingTurnoAula() {
 
@@ -122,8 +95,9 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 		fim.set(Calendar.HOUR_OF_DAY, 9);
 		fim.set(Calendar.MINUTE, 30);
 		fim.set(Calendar.SECOND, 0);
-
+		
 		this.ligarSuportePersistente("turno2", diaSemana, inicio, fim);
+		
 		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
 
 		Object result = null;
@@ -220,6 +194,33 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 	      	fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
 	      }
 	}
+//	write existing turnoAula
+	 public void testCreateExistingTurnoAula() {
+
+		 DiaSemana diaSemana = null;
+		 Calendar inicio = null;
+		 Calendar fim = null;
+		 diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+		 inicio = Calendar.getInstance();
+		 inicio.set(Calendar.HOUR_OF_DAY, 12);
+		 inicio.set(Calendar.MINUTE, 30);
+		 inicio.set(Calendar.SECOND, 0);
+		 fim = Calendar.getInstance();
+		 fim.set(Calendar.HOUR_OF_DAY, 13);
+		 fim.set(Calendar.MINUTE, 0);
+		 fim.set(Calendar.SECOND, 0);
+
+		 this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
+		 Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
+
+		 Object result = null;
+		 try {
+			 result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
+			 fail("testCreateExistingTurnoAula:");
+		 } catch (Exception ex) {
+			 assertNull("testCreateExistingTurnoAula", result);
+		 }
+	 }
 
 	private void ligarSuportePersistente(String nomeTurno, DiaSemana diaSemana, Calendar inicio, Calendar fim) {
 
