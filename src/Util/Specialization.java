@@ -27,7 +27,7 @@ public class Specialization {
     public static final String MESTRADO_STRING = "Mestrado";
     public static final String INTEGRADO_STRING = "Integrado";
     public static final String ESPECIALIZACAO_STRING = "Especialização";
-	public static final String DEFAULT = "[Escolha um Tipo de Graduação]";
+	public static final String DEFAULT = "";
     
     
     private Integer specialization;
