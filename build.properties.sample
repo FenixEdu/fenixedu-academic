@@ -2,11 +2,15 @@
 # General Configuration
 #------------------------------------------------------------------------------
 #
+#   htttp.host: host where the application will run
+#   http.port: port on which the application will be available
 #   app.name: name of the application
 #   application: application to install. Valid options are: extranet, intranet
 #   index.html.link: initial page to be displayed from applications root
 #   login.page: absolute path to the login page
 #
+htttp.host=localhost
+http.port=8080
 app.name=ciapl
 application=extranet
 

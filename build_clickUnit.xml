@@ -45,7 +45,11 @@
                 </fileset>
             </classpath>
         </sql>
-        <delete file="${roleback.filename}"/>
+    	<get src="http://${htttp.host}:${http.port}/${app.name}/manager/manageCache.do?method=clearCache"
+    		dest="${roleback.filename}"/>
+    	<get src="http://${htttp.host}:${http.port}/${app.name}/manager/manageCache.do?method=clearResponseCache"
+    		dest="${roleback.filename}"/>
+    	<antcall target="delete-artifacts"/>
     </target>
 
 </project>
