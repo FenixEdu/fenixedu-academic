@@ -135,6 +135,14 @@ a:hover {
 	border-right-color: #CCCCCC;
 	padding: 20px;
 }
+.navlateral ul {
+	list-style-type: square;
+	}
+	
+.navlateral li {
+	text-indent: 10px;
+	margin: 5px 0 5px 0;
+	}
 .bodycontent {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;

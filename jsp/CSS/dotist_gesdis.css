@@ -161,14 +161,12 @@ a:hover {
 	}
 	
 .navlateral ul {
-	margin:0;
-	padding-left: 10px;
+	list-style-type: square;
 	}
 	
 .navlateral li {
-	list-style-type: square;
 	text-indent: 10px;
-	height: 20px;
+	margin: 5px 0 5px 0;
 	}
 	
 .bodycontent {
@@ -177,28 +175,6 @@ a:hover {
 	line-height: 16px;
 	color: #333333;
 	padding: 20px;
-	}
-
-
-/********************************************
-	navLateral links
-********************************************/
-
-.navlateral a:link {
-	color: #333;
-	text-decoration: none;
-	background-color:transparent;
-	}
-	
-.navlateral a:visited {
-	color: #333;
-	text-decoration: none;
-	background-color:transparent;
-	}
-	
-.navlateral a:hover {
-	color: #333;
-	background-color: #ccc;
 	}
 
 /**********************************************
@@ -282,8 +258,7 @@ a:hover {
 .listClasses-header	{
 	background-color: #ccc;
 	font-weight: bold;
-	padding: 0 0 0 20px;
-	text-align: left;
+	text-align: center;
 	height: 30px;
 	}
 

@@ -1,4 +1,4 @@
-/* dotist  Gesdids Administracao CSS - 11.04.2003 */
+/* dotist  Person - 11.04.2003 */
 
 /**************************************** 
 	Global Text Proprieties 
@@ -161,14 +161,12 @@ a:hover {
 	}
 	
 .navlateral ul {
-	margin:0;
-	padding-left: 10px;
+	list-style-type: square;
 	}
 	
 .navlateral li {
-	list-style-type: square;
 	text-indent: 10px;
-	height: 20px;
+	margin: 5px 0 5px 0;
 	}
 	
 .bodycontent {

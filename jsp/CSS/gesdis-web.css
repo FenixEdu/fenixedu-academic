@@ -361,18 +361,18 @@ p.contacto {
 	height: 30px;
 	width: 100px;
 }
-.listClasses {
+.listClasses	{
 	background-color: #EBECED;
+	border: 1px solid #ccc;
 	text-align: center;
-	width: 190px;
 	height: 30px;
-}
+	}
 .listClasses-header	{
-	background-color: #CCC;
+	background-color: #ccc;
 	font-weight: bold;
 	text-align: center;
 	height: 30px;
-}
+	}
 .tall-td {
 	height: 30px;
 	vertical-align: middle;

@@ -18,7 +18,7 @@ table {
 	}
 
 h1	{
-	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #fff;
 	background-color: transparent;
 	}
@@ -158,6 +158,20 @@ a:hover {
 	color: #333333;
 	padding: 20px;
 	}
+	
+/**********************************************
+	 navlateral list
+***********************************************/	
+
+.navlateral ul {
+	list-style-type: square;
+	}
+	
+.navlateral li {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	margin: 5px 0 5px 0;
+	}
 
 /**********************************************
 	 FORMS Classes: inputs
@@ -186,9 +200,8 @@ a:hover {
 }
 
 .inputbuttonSmall {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
 	background-color: #b5bdd6;
 	}
 
@@ -200,9 +213,7 @@ a:hover {
 	background-color: #EBECED;
 	vertical-align: middle;
 	padding-left: 10px;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #333333;
+	border-bottom: 1px solid #ccc;
 	width: 15px;
 	}
 	
@@ -210,9 +221,7 @@ a:hover {
 	background-color: #EBECED;
 	vertical-align: middle;
 	padding: 10px 10px;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #333333;
+	border-bottom: 1px solid #ccc;
 	}
 	
 .infoselected {
@@ -254,8 +263,7 @@ a:hover {
 .listClasses-header	{
 	background-color: #ccc;
 	font-weight: bold;
-	padding: 0 0 0 20px;
-	text-align: left;
+	text-align: center;
 	height: 30px;
 	}
 
@@ -281,3 +289,5 @@ a:hover {
 	color: #333;
 	background-color: transparent;
 	}
+	
+.multibox {	width: 10px;}
