@@ -726,6 +726,14 @@
 			<arg0 key="label.masterDegree.administrativeOffice.workLocationName" />
 		</field>
 	</form>
+	<form name="chooseStudentGratuityForm">
+		<field property="studentNumber" depends="integer, required" page="1">
+	        <arg0 key="label.student.number" />
+		</field>
+	  	<field property="specialization" depends="required" page="1">
+        	<arg0 key="label.specialization" />
+      	</field>
+    </form>
 	
   </formset>
 

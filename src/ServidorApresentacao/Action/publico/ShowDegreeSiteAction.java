@@ -296,13 +296,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		{
 			Object[] args = { degreeId };
 
+			System.out.println("Planos curriculares: (a tratar)");
 			List infoDegreeCurricularPlanList = null;
 			try
 			{
 				infoDegreeCurricularPlanList =
 					(List) ServiceManagerServiceFactory.executeService(
 						null,
-						"ReadDegreeCurricularPlansByDegree",
+						"ReadPublicDegreeCurricularPlansByDegree",
 						args);
 			}
 			catch (FenixServiceException e)
@@ -311,7 +312,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 				saveErrors(request, errors);
 				return (new ActionForward(mapping.getInput()));
 			}
-
+			System.out.println("Planos curriculares: " + infoDegreeCurricularPlanList.size());
 			//order the list by state and next by begin date
 			ComparatorChain comparatorChain = new ComparatorChain();
 			comparatorChain.addComparator(new BeanComparator("state.degreeState"));

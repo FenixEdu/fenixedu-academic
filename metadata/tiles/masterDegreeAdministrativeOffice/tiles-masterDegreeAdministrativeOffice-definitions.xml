@@ -36,4 +36,8 @@
 		<put name="navLocal" value="/posGraduacao/externalPerson/externalPersonMenu.jsp"/>
 	</definition>
 	
+	<definition name="definition.masterDegreeAdministrativeOffice.gratuity" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="navLocal" value="/posGraduacao/gratuity/gratuityMenu.jsp"/>
+	</definition>
+	
 </tiles-definitions>

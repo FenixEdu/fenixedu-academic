@@ -109,9 +109,10 @@ public class FeriadoRelacional implements IFeriadoPersistente
 
         try
         {
+        	java.sql.Date diaSQL = new java.sql.Date(dia.getTime());
             PreparedStatement sql =
                 UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE data = ?");
-            sql.setDate(1, new java.sql.Date(dia.getTime()));
+            sql.setDate(1, diaSQL);
 
             ResultSet resultadoQuery = sql.executeQuery();
             if (resultadoQuery.next())
@@ -127,7 +128,7 @@ public class FeriadoRelacional implements IFeriadoPersistente
                     UtilRelacional.prepararComando(
                         "SELECT * FROM ass_FERIADO "
                             + "WHERE SUBSTRING(data, 6, 10) = SUBSTRING(?, 6, 10) AND tipoFeriado <> 'MOVEL'");
-                sql.setString(1, dia.toString().substring(0, 10));
+                sql.setString(1, diaSQL.toString().substring(0, 10));
 
                 resultadoQuery = sql.executeQuery();
                 if (resultadoQuery.next())

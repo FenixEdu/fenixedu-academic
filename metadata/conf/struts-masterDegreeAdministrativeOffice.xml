@@ -586,6 +586,15 @@
 	  		<form-property name="name" type="java.lang.String" />
 	  </form-bean> 
 
+	<!-- Bean for Gratuity Section  -->
+      <form-bean name="chooseStudentGratuityForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="studentNumber" type="java.lang.Integer"/>
+            <form-property name="specialization" type="java.lang.Integer"/>
+       </form-bean>
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2034,6 +2043,30 @@
 	<forward name="viewReimbursementGuide" path="df.page.viewReimbursementGuide"/>
 	<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
 	</action>
+	
+	<!-- ++++++++++++++++++++++++++++++Gratuity Section+++++++++++++++++++++++++++++++++++++++++++++ -->
+	<action path="/gratuitySection"
+	type="ServidorApresentacao.Action.commons.VoidAction"
+	parameter="method"
+	>
+		<forward name="Success" path="firstPageGratuitySection"/>
+	</action>
+	
+	<action path="/chooseStudent"
+	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
+	parameter="method"
+	>
+		<forward name="chooseStudent" path="chooseStudent"/>
+	</action>
+	
+	<action path="/prepareInsertExemption"
+	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
+	parameter="method"
+	name="chooseStudentGratuityForm"
+	>
+		<forward name="insertExemption" path="insertExemption"/>
+	</action>
+      
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

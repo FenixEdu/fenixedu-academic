@@ -70,4 +70,11 @@
 		<put name="body" value="/posGraduacao/externalPerson/editWorkLocation_success.jsp"/>
 	</definition>
 	
+	<!-- Gratuity Section -->
+	<definition name="firstPageGratuitySection" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/welcomeScreen.jsp"/>
+	</definition>     
+	<definition name="chooseStudent" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/chooseStudent.jsp"/>
+	</definition>	
 </tiles-definitions>

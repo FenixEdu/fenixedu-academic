@@ -5034,13 +5034,13 @@
         <filterChains/>
     </service>
     <service>
-        <name>ReadDegreeCurricularPlansByDegree</name>
+        <name>ReadPublicDegreeCurricularPlansByDegree</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.publico.ReadDegreeCurricularPlansByDegree</implementationClass>
+            ServidorAplicacao.Servico.manager.ReadDegreeCurricularPlansByDegree</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
-    </service>
+    </service>    
     <service>
         <name>ReadActiveDegreeCurricularPlanByID</name>
         <implementationClass> 
