@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servico.student.schoolRegistration;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -60,8 +59,7 @@ public class SchoolRegistration implements IService {
         
         IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber,TipoCurso.LICENCIATURA_OBJ);        
         IDegreeCurricularPlan dcp = scp.getDegreeCurricularPlan();
-        List curricularCourses = new ArrayList();
-        //= dcp.getCurricularCoursesByYearAndSemesterAndBranch(1,new Integer(1),scp.getBranch());
+        List curricularCourses = dcp.getCurricularCoursesByYearAndSemesterAndBranch(1,new Integer(1),scp.getBranch());
 
         WriteEnrollment we = new WriteEnrollment();
         for(int iter=0; iter<curricularCourses.size(); iter++)
