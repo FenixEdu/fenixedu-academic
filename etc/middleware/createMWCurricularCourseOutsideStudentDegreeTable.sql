@@ -1,5 +1,5 @@
-drop table if exists MW_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE;
-create table MW_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE(
+drop table if exists mw_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE;
+create table mw_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE(
   courseCode varchar(10) NOT NULL default '',
   degreeCode integer(20) NOT NULL default 0,
   keyCurricularCourse integer(11) NOT NULL default 0,

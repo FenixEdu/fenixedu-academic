@@ -219,6 +219,7 @@ public class UpdateStudentEnrolments
 							curricularCourse = getCurricularCourseFromAnotherDegree(mwEnrolment, sp);
 							if (curricularCourse == null)
 							{
+								ReportEnrolment.addReplicatedCurricularCourses(mwEnrolment.getCoursecode(), curricularCourses);
 								continue;
 							}
 						} else
@@ -251,7 +252,7 @@ public class UpdateStudentEnrolments
 			IFrequenta attend = updateAttend(curricularCourse, enrolment, mwEnrolment, sp);
 			if (attend == null)
 			{
-//				System.out.println("Student " + mwEnrolment.getNumber() + " has no Attend for " + mwEnrolment.getCoursecode() + " from Degree " + mwEnrolment.getDegreecode());
+				ReportEnrolment.addAttendNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 				continue;
 			}
 		}
