@@ -59,13 +59,11 @@ public class UpdateStudentEnrolments
 	private static int enrolmentWritten = 0;
 	private static int curricularCoursesNotFound = 0;
 	private static int curricularCourseScopesNotFound = 0;
-//	private static int executionCoursesNotFound = 0;
 	private static int attendsNotFound = 0;
 	private static int attendsUpdated = 0;
 
 	public static void main(String args[]) throws Exception
 	{
-
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWAluno persistentAluno = mws.getIPersistentMWAluno();
 		IPersistentMWEnrolment persistentEnrolment = mws.getIPersistentMWEnrolment();
@@ -83,12 +81,9 @@ public class UpdateStudentEnrolments
 		while (iterator.hasNext())
 		{
 			MWAluno oldStudent = (MWAluno) iterator.next();
-
 			try
 			{
-
 				sp.iniciarTransaccao();
-				//				sp.clearCache();
 				// Read The middleware Enrolments
 				oldStudent.setEnrolments(persistentEnrolment.readByStudentNumber(oldStudent.getNumber()));
 				UpdateStudentEnrolments.updateStudentEnrolment(oldStudent, sp);
@@ -97,24 +92,13 @@ public class UpdateStudentEnrolments
 			{}
 		}
 
-		//		System.out.println("Done !");
-		//		System.out.println("Curricular Courses Not Found : " + curricularCoursesNotFound);
-		//		System.out.println("Curricular Course Scopes Not Found : " + curricularCourseScopesNotFound);
-		//		System.out.println("Enrolments Not Written : " + enrolmentNotWritten);
-		//		System.out.println("Enrolments Written : " + enrolmentWritten);
-		//		System.out.println("Execution Courses Not Found : " + executionCoursesNotFound);
-		//		System.out.println("Attends Not Found : " + attendsNotFound);
-		//		System.out.println("Attends Updated : " + attendsUpdated);
-
 		ReportEnrolment.report(new PrintWriter(System.out, true));
 	}
 
 	public static void updateStudentEnrolment(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception
 	{
-
 		try
 		{
-
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
 			// Read Fenix Student
@@ -126,8 +110,7 @@ public class UpdateStudentEnrolments
 				return;
 			}
 
-			IStudentCurricularPlan studentCurricularPlan =
-				sp.getIStudentCurricularPlanPersistente().readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 
 			if (studentCurricularPlan == null)
 			{
@@ -175,7 +158,6 @@ public class UpdateStudentEnrolments
 		Iterator iterator = enrolments2Write.iterator();
 		while (iterator.hasNext())
 		{
-
 			final MwEnrolment mwEnrolment = (MwEnrolment) iterator.next();
 
 			// Get the Degree Of the Student
@@ -205,23 +187,16 @@ public class UpdateStudentEnrolments
 
 			if (curricularCourses.size() != 1)
 			{
-
 				// if the result size is greater than 1 then check if the Branch Code match in Any
 				if (curricularCourses.size() > 1)
 				{
-					System.out.println(
-						"Several Curricular Courses with Code found "
-							+ mwEnrolment.getCoursecode()
-							+ " found for Degree "
-							+ mwEnrolment.getDegreecode());
-
+					System.out.println("Several Curricular Courses with Code found " + mwEnrolment.getCoursecode() + " found for Degree " + mwEnrolment.getDegreecode());
 					curricularCoursesNotFound++;
 					enrolmentNotWritten++;
-
 					return;
 				} else
 				{ // size == 0
-					//					Try to read by CourseCode Only (this will assume that all the Degree Curricular Plan name ends with "2003/2004"
+					// Try to read by CourseCode Only (this will assume that all the Degree Curricular Plan name ends with "2003/2004"
 					IPersistentCurricularCourse curricularCourseDAO = sp.getIPersistentCurricularCourse();
 					curricularCourses = curricularCourseDAO.readbyCourseCode(StringUtils.trim(mwEnrolment.getCoursecode()));
 
@@ -243,29 +218,18 @@ public class UpdateStudentEnrolments
 						}
 					} else
 					{
-
 						ReportEnrolment.addCurricularCourseNotFound(mwEnrolment.getCoursecode(),
 							mwEnrolment.getDegreecode().toString(),
 							mwEnrolment.getNumber().toString());
-//						System.out.println(
-//							"No Curricular Courses Found in others degrees. Curricular Course ["
-//								+ mwEnrolment.getCoursecode()
-//								+ "] Enrolment Degree ["
-//								+ mwEnrolment.getDegreecode()
-//								+ "]");
-						curricularCoursesNotFound++;
-						enrolmentNotWritten++;
-
 						return;
 					}
 				}
 			} else // curricularCourses.size() == 1
-				{
+			{
 				curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 			}
 
 			// Get the Curricular Course Scope
-
 			ICurricularCourseScope curricularCourseScope =
 				getCurricularCourseScopeToEnrollIn(studentCurricularPlan, mwEnrolment, curricularCourse, branch, sp);
 
@@ -280,7 +244,7 @@ public class UpdateStudentEnrolments
 			IFrequenta attend = updateAttend(curricularCourse, executionPeriod, enrolment, mwEnrolment, sp);
 			if (attend == null)
 			{
-				//				System.out.println("Student " + mwEnrolment.getNumber() + " has no Attend for " + mwEnrolment.getCoursecode() + " from Degree " + mwEnrolment.getDegreecode());
+//				System.out.println("Student " + mwEnrolment.getNumber() + " has no Attend for " + mwEnrolment.getCoursecode() + " from Degree " + mwEnrolment.getDegreecode());
 				attendsNotFound++;
 				return;
 
@@ -307,13 +271,10 @@ public class UpdateStudentEnrolments
 		IFrequenta attend = null;
 		if (executionCourse == null)
 		{
-
 			ReportEnrolment.addExecutionCourseNotFound(
 				mwEnrolment.getCoursecode(),
 				mwEnrolment.getDegreecode().toString(),
 				mwEnrolment.getNumber().toString());
-			//				System.out.println("No Execution Found for Curricular Course " + mwEnrolment.getCoursecode());
-			//				executionCoursesNotFound++;
 		} else
 		{
 			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
@@ -378,7 +339,6 @@ public class UpdateStudentEnrolments
 		List attendList = attendDAO.readByStudentNumberInCurrentExecutionPeriod(mwEnrolment.getNumber());
 		List attendsWithCurricularCourseCode = (List) CollectionUtils.select(attendList, new Predicate()
 		{
-
 			public boolean evaluate(Object input)
 			{
 				IFrequenta attend = (IFrequenta) input;
@@ -405,18 +365,6 @@ public class UpdateStudentEnrolments
 				((IFrequenta) attendsWithCurricularCourseCode.get(0)).getDisciplinaExecucao().getAssociatedCurricularCourses();
 
 			curricularCourse = (ICurricularCourse) associatedCurricularCourses.get(0);
-			//								System.out.println("AQUI encontrei" + associatedCurricularCourses.size());
-			//								
-			//								System.out.println("\tCadeira:"+ mwEnrolment.getCoursecode());
-			//								
-			//								Iterator iterator2 = associatedCurricularCourses.iterator();
-			//								List aux = new ArrayList();
-			//								while (iterator2.hasNext())
-			//								{
-			//									ICurricularCourse curricularCourse2 = (ICurricularCourse) iterator2.next();
-			//									aux.add(curricularCourse2.getName() + ";"+curricularCourse2.getDegreeCurricularPlan().getName() + ";"+curricularCourse2.getCode());
-			//								}
-			//								System.out.println("\t"+aux);
 		} else
 		{
 			ReportEnrolment.addFoundCurricularCourseInOtherDegrees(
@@ -452,7 +400,6 @@ public class UpdateStudentEnrolments
 			return (ICurricularCourseScope) curricularCourseScopes.get(0);
 		}
 
-
 		curricularCourseScopes =
 			curricularCourseScopeDAO.readByCurricularCourseAndYearAndSemester(
 				curricularCourse,
@@ -464,12 +411,10 @@ public class UpdateStudentEnrolments
 		{
 
 			// Try to read by Course and Year only
-
 			curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourseAndYear(curricularCourse, mwEnrolment.getCurricularcourseyear());
 
 			if ((curricularCourseScopes == null) || (curricularCourseScopes.isEmpty()))
 			{
-
 				// Se a disciplina da inscricao nao e do curso do aluno e nao conseguimos encontrar: 
 				//  - por ano e semestre
 				//  - por ano
@@ -492,27 +437,10 @@ public class UpdateStudentEnrolments
 						mwEnrolment.getCurricularcourseyear().toString(),
 						mwEnrolment.getCurricularcoursesemester().toString(),
 						mwEnrolment.getBranchcode().toString());
-//					System.out.println(
-//						"Error Reading Curricular Course Scope !! No Scopes found for this Curricular Course and Year and then by Course and Semester.");
-//					System.out.println("Numero do Aluno " + mwEnrolment.getNumber());
-//					System.out.println("Codigo Curso " + mwEnrolment.getDegreecode());
-//					System.out.println("Codigo Disciplina " + mwEnrolment.getCoursecode());
-//					System.out.println("Codigo Ramo " + mwEnrolment.getBranchcode());
-//					System.out.println("Ano Curricular " + mwEnrolment.getCurricularcourseyear());
-//					System.out.println("Semestre Disciplina " + mwEnrolment.getCurricularcoursesemester());
-//					System.out.println("Curricular Course ID " + curricularCourse.getIdInternal());
-//					System.out.println("---------");
-
-					curricularCourseScopesNotFound++;
-					enrolmentNotWritten++;
-
 					return null;
 				}
 			} else
 			{
-
-				//					System.out.println("Scopes " + curricularCourseScopes.size());
-
 				// See if a Scope exists for this branch
 				curricularCourseScope = findScopeForBranch(curricularCourseScopes, branch);
 
@@ -535,7 +463,6 @@ public class UpdateStudentEnrolments
 				}
 
 				// If still we cannot find a scope ...
-
 				if (curricularCourseScope == null)
 				{
 					System.out.println("Error Reading Curricular Course Scope after finding scopes by Curricular Course and Year!! ");
@@ -591,7 +518,6 @@ public class UpdateStudentEnrolments
 			}
 
 			// If still we cannot find a scope ...
-
 			if (curricularCourseScope == null)
 			{
 				System.out.println("Error Reading Curricular Course Scope after finding scopes by Curricular Course, Year and Semester!! ");
@@ -620,11 +546,8 @@ public class UpdateStudentEnrolments
 	 */
 	private static boolean hasDiferentDegrees(List curricularCourses)
 	{
-
 		int numberOfDegrees = CollectionUtils.getCardinalityMap(curricularCourses).size();
-
 		return (numberOfDegrees > 1);
-
 	}
 
 	/**
@@ -725,7 +648,7 @@ public class UpdateStudentEnrolments
 		while (iterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if (//				(enrolment.getCurricularCourseScope().getBranch().equals(branch)
+			if (
 			 (enrolment
 				.getCurricularCourseScope()
 				.getCurricularCourse()
@@ -733,9 +656,7 @@ public class UpdateStudentEnrolments
 				.equalsIgnoreCase(
 					StringUtils.trim(
 						mwEnrolment
-							.getCoursecode())) //				&& (enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan))
-			//				&& (enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().equals(mwEnrolment.getCurricularcourseyear())
-			//				&& (enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().equals(mwEnrolment.getCurricularcoursesemester()))
+							.getCoursecode()))
 				&& (enrolment.getExecutionPeriod().equals(executionPeriod))))
 			{
 				return true;
@@ -775,7 +696,6 @@ public class UpdateStudentEnrolments
 			}
 
 			// Delete EnrolmentEvalutaion
-
 			Iterator evaluations = enrolment.getEvaluations().iterator();
 			while (evaluations.hasNext())
 			{
@@ -830,7 +750,6 @@ public class UpdateStudentEnrolments
 			MwEnrolment mwEnrolment = (MwEnrolment) iterator.next();
 
 			// To read an mw_Enrolment we need the student number, the Course Code, the Semester and the enrolment year
-
 			if ((mwEnrolment.getNumber().equals(enrolment.getStudentCurricularPlan().getStudent().getNumber()))
 				&& (StringUtils
 					.trim(mwEnrolment.getCoursecode())
@@ -838,9 +757,8 @@ public class UpdateStudentEnrolments
 						enrolment
 							.getCurricularCourseScope()
 							.getCurricularCourse()
-							.getCode())) //				&& (mwEnrolment.getCurricularcoursesemester().equals(enrolment.getExecutionPeriod().getSemester()))
-			//				&& (enrolment.getExecutionPeriod().getExecutionYear().getYear().startsWith(mwEnrolment.getEnrolmentyear().toString()))) {
-			)
+							.getCode()))
+				)
 			{
 				return true;
 			}
@@ -895,19 +813,16 @@ public class UpdateStudentEnrolments
 	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp)
 		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
 	{
-
 		IBranch branch = null;
 
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
 
 		// Get the old BRanch
-
 		sp.clearCache();
 		MWBranch mwbranch = persistentBranch.readByDegreeCodeAndBranchCode(degreeCode, branchCode);
 
 		// Get the new one		
-
 		if (mwbranch == null)
 		{
 			System.out.println("Curso " + degreeCode);
