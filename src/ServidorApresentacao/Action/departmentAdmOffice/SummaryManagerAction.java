@@ -205,7 +205,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 			return showSummaries(mapping, form, request, response);
 		}
 		
-		Object args[] = { objectCode, teacherNumber };
+		Object args[] = { teacherNumber, objectCode };
 		SiteView siteView = null;
 		try {
 			siteView = (SiteView) ServiceManagerServiceFactory.executeService(userView,
