@@ -87,7 +87,7 @@ public class ReadExamsMapServiceTest extends TestCaseRequeiersAuthorizationServi
 		try {
 			callServiceWithAuthorizedUserView();
 		} catch (FenixServiceException e) {
-			fail("");
+			fail("Unexpected exception: " + e);
 		}
 
 		Calendar startSeason1 = Calendar.getInstance();
