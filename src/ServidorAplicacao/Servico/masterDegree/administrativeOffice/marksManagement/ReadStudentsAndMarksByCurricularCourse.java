@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
@@ -57,10 +58,11 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		return "ReadStudentsAndMarksByCurricularCourse";
 	}
 
-	public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode) throws FenixServiceException {
+	public InfoSiteEnrolmentEvaluation run(/*String year, */
+	Integer curricularCourseCode) throws FenixServiceException {
 
 		List enrolmentEvaluations = null;
-		InfoTeacher infoTeacher = null;
+		InfoTeacher infoTeacher = new InfoTeacher();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
@@ -69,29 +71,43 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-			System.out.println("entrei");
 			//	get curricular course to obtain curricularCourseScope
 			ICurricularCourse curricularCourse = new CurricularCourse();
 			curricularCourse.setIdInternal(curricularCourseCode);
 			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-			System.out.println("li curricularcourse: " + curricularCourse.getName());
 
 			//	get curricularCourseScope for enrolmentEvaluation
 			ICurricularCourseScope curricularCourseScope =
 				persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourse(curricularCourse);
-			System.out.println("li curricularcoursescope: " + curricularCourseScope.getIdInternal());
+
+			//			this becomes necessary to use criteria
+			InfoCurricularCourseScope infoCurricularCourseScope =
+				Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+			ICurricularCourseScope curricularCourseScopeForCriteria =
+				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
 
 			IEnrolment enrolment = new Enrolment();
-			enrolment.setCurricularCourseScope(curricularCourseScope);
+			enrolment.setCurricularCourseScope(curricularCourseScopeForCriteria);
 			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluations = persistentEnrolmentEvaluation.readAll();
-//			.readByCriteria(enrolmentEvaluation);
-			System.out.println("li avaliacoes: ");
+			enrolmentEvaluations = persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluation);
+			
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 				IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
 				ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 				infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+				
+			} else {
+				List enrolments = persistentEnrolment.readByCriteria(enrolment);
+				
+				enrolmentEvaluations = new ArrayList();
+				ListIterator iterEnrolments = enrolments.listIterator();
+				while (iterEnrolments.hasNext()) {
+					IEnrolment element = (IEnrolment) iterEnrolments.next();
+					IEnrolmentEvaluation enrolmentEvaluation2 = new EnrolmentEvaluation();
+					enrolmentEvaluation2.setEnrolment(element);
+					enrolmentEvaluations.add(enrolmentEvaluation2);
+				}
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
@@ -99,7 +115,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-		System.out.println("antes de criar a lista");
+		System.out.println("antes de criar a lista ");
 
 		List infoEnrolmentEvaluations = new ArrayList();
 		if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {

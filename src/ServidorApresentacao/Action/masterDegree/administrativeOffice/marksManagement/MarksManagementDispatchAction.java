@@ -32,44 +32,6 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class MarksManagementDispatchAction extends DispatchAction {
 
-	public ActionForward chooseMasterDegree(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-
-		if (session != null) {
-
-			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
-
-			// Get the Degree List			
-			Object args[] = { executionYear };
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();
-			ArrayList degreeList = null;
-			try {
-				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
-			} catch (NonExistingServiceException e) {
-				ActionErrors errors = new ActionErrors();
-				errors.add("nonExisting", new ActionError("message.public.notfound.degrees", executionYear));
-				saveErrors(request, errors);
-				return mapping.getInputForward();
-
-		}catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-			request.setAttribute("executionYear", executionYear);
-			request.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
-
-			return mapping.findForward("ChooseMasterDegree");
-		} else
-			throw new Exception();
-
-	}
-
 	public ActionForward chooseCurricularCourse(
 		ActionMapping mapping,
 		ActionForm form,
@@ -80,15 +42,15 @@ public class MarksManagementDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		MessageResources messages = getResources(request);
 
-		String executionYear = (String) request.getParameter("executionYear");
+		String executionYear = getFromRequest("executionYear", request);
 
-		DynaActionForm chooseMasterDegreeForm = (DynaActionForm) form;
-		String degree = (String) chooseMasterDegreeForm.get("degree");
+		String degree = getFromRequest("degree", request);
 
+		request.setAttribute("jspTitle", request.getParameter("jspTitle"));
 		request.setAttribute("executionYear", executionYear);
 		request.setAttribute("degree", degree);
 
-		// Get the Execution Course List			
+		// Get the Curricular Course List			
 		Object args[] = { executionYear, degree };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
@@ -141,4 +103,12 @@ public class MarksManagementDispatchAction extends DispatchAction {
 
 		return mapping.findForward("ShowMarksManagementMenu");
 	}
+	private String getFromRequest(String parameter, HttpServletRequest request) {
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null) {
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		return parameterString;
+	}
+
 }

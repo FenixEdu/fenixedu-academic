@@ -47,8 +47,9 @@
     </table>    
  	<br />
 	<bean:message key="label.masterDegree.administrativeOffice.responsibleTeacher" />:
-	<html:text name="infoSiteEnrolmentEvaluation" property="infoTeacher.teacherNumber" size="4"/>
-
+	<html:text property="teacherNumber" size="4"/>
+	<br /><br />
+	
 	<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
 	<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
 	<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />

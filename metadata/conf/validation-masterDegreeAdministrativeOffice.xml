@@ -277,6 +277,12 @@
       </field>
     </form>
 
+   <!-- validation for marks Submission -->
+    <form name="marksSubmissionForm">
+	  <field property="teacherNumber" depends="required" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
+      </field>
+    </form>
 
   </formset>
 </form-validation>

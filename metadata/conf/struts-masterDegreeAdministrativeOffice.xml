@@ -75,7 +75,7 @@
       </form-bean>
 
 
-	  <!-- Bean for The Choosing of a Guide -->
+	  <!-- Generic Bean for The Choosing of a Year -->
       <form-bean name="chooseExecutionYearForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
@@ -84,6 +84,14 @@
          <form-property name="executionYear" type="java.lang.String" />
       </form-bean>      
 
+      <!-- Generic Bean to Choose a Master Degree -->
+      <form-bean name="chooseMasterDegreeForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="masterDegree" type="java.lang.String" />
+      </form-bean>
 
 		<!-- Bean for The Creation of a Guide -->
 	    <form-bean name="createGuideForm" 
@@ -236,7 +244,7 @@
             <form-property name="curricularCourseCode" type="java.lang.Integer" />
       </form-bean>
 
-	  <!-- Bean for The Choosing of a Year -->
+	  <!-- Bean for The Choosing of a Student -->
       <form-bean name="studentNumberForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
@@ -331,15 +339,6 @@
 	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
       </action>    
  
- 	  <action path="/marksSection"
-		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
-			  >
-	         <forward name="Success" path="/marksManagement/indexMarksManagement.jsp"/> 
-      </action>
-      
-    
-      
       <!-- action definition -->
       
       
@@ -756,8 +755,34 @@
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
-	         <forward name="ChooseSuccess" path="/marksManagementDispatchAction.do?method=chooseMasterDegree"/> 
+	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToManageMarks.do?method=prepareChooseMasterDegree"/> 
       </action>
+
+      <!-- Choose Master Degree To Manage Marks -->
+      <action path="/chooseMasterDegreeToManageMarks"
+      		  input="/marksManagement/chooseMasterDegreeToManageMarks.jsp"
+		      attribute="chooseMasterDegreeForm"
+		      name="chooseMasterDegreeForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/marksManagement/chooseMasterDegreeToManageMarks.jsp"/>  
+	         <forward name="ChooseSuccess" 
+				path="/marksManagementDispatchAction.do?method=chooseCurricularCourse"/> 
+	         	<!-- path="/chooseCurricularCourseToManageMarks.do?method=prepareChooseCurricularCourse"/> -->
+      </action>
+
+      <!-- Choose CurricularCourse To Manage Marks -->
+      <action path="/chooseCurricularCourseToManageMarks"
+      		  input="chooseCurricularCourse.jsp"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>  
+	         <forward name="ChooseSuccess" path="/marksSubmission.do?method=prepare"/> 
+      </action>
+
 
       <action path="/marksManagementDispatchAction"
       		  input="/marksManagement/chooseMasterDegree.jsp"
@@ -773,7 +798,8 @@
 	         <forward name="ChooseCurricularCourse" path="/marksManagement/chooseCurricularCourse.jsp"/> 
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 
 	         
-      </action>
+      </action> 
+      
       <action path="/changeMarkDispatchAction"
       		  input="/marksManagement/showMarksManagementMenu.jsp"
       	      name="studentNumberForm"

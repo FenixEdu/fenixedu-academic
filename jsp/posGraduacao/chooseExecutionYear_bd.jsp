@@ -16,8 +16,6 @@
 <span class="error"><html:errors/></span>
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
 <html:form action="<%=path%>">
-	<input type="hidden" value="chooseExecutionYear" name="method"/>
-	<html:hidden property="page" value="1"/>
     <bean:define id="executionYearList" name="<%= SessionConstants.EXECUTION_YEAR_LIST %>" scope="request" />
 	<table>
        <!-- ExecutionYear -->
@@ -29,6 +27,11 @@
          </td>
        </tr>
 	</table>
-<br />
-<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
+	<br />
+
+	<input type="hidden" value="chooseExecutionYear" name="method"/>
+	<html:hidden property="page" value="1"/>
+	<html:hidden property="jspTitle" value="<%= pageContext.findAttribute("jspTitle").toString() %>" />
+
+	<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
 </html:form>

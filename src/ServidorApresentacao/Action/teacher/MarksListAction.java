@@ -196,6 +196,5 @@ public class MarksListAction extends DispatchAction {
 			parameterCode = new Integer(parameterCodeString);
 		}
 		return parameterCode;
-
 	}
 }
