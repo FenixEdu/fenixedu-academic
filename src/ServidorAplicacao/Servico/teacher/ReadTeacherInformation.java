@@ -108,7 +108,7 @@ public class ReadTeacherInformation implements IServico
             List professionalCareers =
                 persistentCareer.readAllByTeacherAndCareerType(
                     teacher,
-                    new CareerType(CareerType.PROFESSIONAL));
+                    CareerType.PROFESSIONAL);
             List infoProfessionalCareers = new ArrayList();
             iter = professionalCareers.iterator();
             while (iter.hasNext())
@@ -123,7 +123,7 @@ public class ReadTeacherInformation implements IServico
             List teachingCareers =
                 persistentCareer.readAllByTeacherAndCareerType(
                     teacher,
-                    new CareerType(CareerType.TEACHING));
+                    CareerType.TEACHING);
             List infoTeachingCareers = new ArrayList();
             iter = teachingCareers.iterator();
             while (iter.hasNext())
@@ -151,7 +151,7 @@ public class ReadTeacherInformation implements IServico
             {
                 IExternalActivity externalActivity = (IExternalActivity) iter.next();
                 InfoExternalActivity infoExternalActivity =
-                    Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+                    (InfoExternalActivity) Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
                 infoExternalActivities.add(infoExternalActivity);
             }
             infoSiteTeacherInformation.setInfoExternalActivities(infoExternalActivities);
@@ -165,7 +165,7 @@ public class ReadTeacherInformation implements IServico
                 IProfessorship professorShip = (IProfessorship) iter.next();
                 IDisciplinaExecucao executionCourse = professorShip.getExecutionCourse();
                 InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    (InfoExecutionCourse) Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
                 infoExecutionCourses.add(infoExecutionCourse);
             }
             infoSiteTeacherInformation.setInfoExecutionCourses(infoExecutionCourses);
