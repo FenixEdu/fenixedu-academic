@@ -111,9 +111,6 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 		IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
-//		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-		IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
 
 		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
@@ -126,57 +123,10 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				EnrolmentState.ENROLED,
 				executionPeriod);
 
-		List commonAreasCurricularCourses = new ArrayList();
+		List baseAreasCurricularCourses = getBaseAreasCurricularCourses(enrollmentsWithAprovedState, enrollmentsWithEnrolledState);
 
-		List commonBranches =
-			branchDAO.readAllByDegreeCurricularPlanAndBranchType(
-				studentCurricularPlan.getDegreeCurricularPlan(),
-				BranchType.COMMON_BRANCH);
-
-//		Iterator iterator = commonBranches.iterator();
-//		while (iterator.hasNext())
-//		{
-//			IBranch commonArea = (IBranch) iterator.next();
-//			List groups = curricularCourseGroupDAO.readByBranchAndAreaType(commonArea, AreaType.BASE_OBJ);
-//			Iterator iterator2 = groups.iterator();
-//			while (iterator2.hasNext())
-//			{
-//				ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
-//				commonAreasCurricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
-//			}
-//		}
-//
-//		selectDesiredCurricularCourses(enrollmentsWithAprovedState, commonAreasCurricularCourses);
-//		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, commonAreasCurricularCourses);
-//		selectDesiredCurricularCourses(commonAreasCurricularCourses, executionPeriod.getSemester());
-
-		Iterator iterator = commonBranches.iterator();
-		while (iterator.hasNext())
-		{
-			IBranch commonArea = (IBranch) iterator.next();
-			List commonAreaCurricularCourses =
-			curricularCourseDAO.readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(
-					studentCurricularPlan.getDegreeCurricularPlan(),
-					commonArea,
-					executionPeriod.getSemester());
-			commonAreasCurricularCourses.addAll(commonAreaCurricularCourses);
-		}
-
-		selectDesiredCurricularCourses(enrollmentsWithAprovedState, commonAreasCurricularCourses);
-		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, commonAreasCurricularCourses);
-		
-		List areas = branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
-		List finalAreas = new ArrayList();
-		iterator = areas.iterator();
-		while (iterator.hasNext())
-		{
-			IBranch area = (IBranch) iterator.next();
-			if (!area.getBranchType().equals(BranchType.COMMON_BRANCH))
-			{
-				finalAreas.add(area);
-			}
-		}
-		studentEnrolmentContext.setAreas(finalAreas);
+		List areas = getSpecializationAndSecundaryAreas();
+		studentEnrolmentContext.setAreas(areas);
 
 		if (studentCurricularPlan.getBranch() != null)
 		{
@@ -192,7 +142,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		acumulatedEnrolments.addAll(enrollmentsWithAprovedState);
 		acumulatedEnrolments.addAll(enrollmentsWithEnrolledState);
 		List acumulatedCurricularCourses = new ArrayList();
-		iterator = acumulatedEnrolments.iterator();
+		Iterator iterator = acumulatedEnrolments.iterator();
 		while (iterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
@@ -204,9 +154,81 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		this.studentEnrolmentContext.setStudentApprovedEnrollments(enrollmentsWithAprovedState);
 		this.studentEnrolmentContext.setStudentCurrentSemesterEnrollments(enrollmentsWithEnrolledState);
 		this.studentEnrolmentContext.setStudentCurricularPlan(this.studentCurricularPlan);
-		this.studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(commonAreasCurricularCourses);
+		this.studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(baseAreasCurricularCourses);
 	}
 
+	/**
+	 * @return SpecializationAndSecundaryAreas
+	 * @throws ExcepcaoPersistencia
+	 */
+	private List getSpecializationAndSecundaryAreas() throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
+		List areas = branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
+		List finalAreas = new ArrayList();
+		Iterator iterator = areas.iterator();
+		while (iterator.hasNext())
+		{
+			IBranch area = (IBranch) iterator.next();
+			if (!area.getBranchType().equals(BranchType.COMMON_BRANCH))
+			{
+				finalAreas.add(area);
+			}
+		}
+		return finalAreas;
+	}
+
+	/**
+	 * @param enrollmentsWithAprovedState
+	 * @param enrollmentsWithEnrolledState
+	 * @return BaseAreasCurricularCourses
+	 * @throws ExcepcaoPersistencia
+	 */
+	private List getBaseAreasCurricularCourses(
+		List enrollmentsWithAprovedState,
+		List enrollmentsWithEnrolledState)
+		throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+		IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
+		
+		List baseAreasCurricularCourses = new ArrayList();
+
+		List baseBranches =
+			branchDAO.readAllByDegreeCurricularPlanAndBranchType(
+				studentCurricularPlan.getDegreeCurricularPlan(),
+				BranchType.COMMON_BRANCH);
+
+		Iterator iterator = baseBranches.iterator();
+		while (iterator.hasNext())
+		{
+			IBranch baseArea = (IBranch) iterator.next();
+			List groups = curricularCourseGroupDAO.readByBranchAndAreaType(baseArea, AreaType.BASE_OBJ);
+			Iterator iterator2 = groups.iterator();
+			while (iterator2.hasNext())
+			{
+				ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
+				baseAreasCurricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
+			}
+		}
+
+		selectDesiredCurricularCourses(enrollmentsWithAprovedState, baseAreasCurricularCourses);
+		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, baseAreasCurricularCourses);
+//		selectDesiredCurricularCourses(commonAreasCurricularCourses, executionPeriod.getSemester());
+
+		return baseAreasCurricularCourses;
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param studentApprovedEnrollments
+	 * @param studentCurrentSemesterEnrollments
+	 * @param executionPeriod
+	 * @return finalListOfCurricularCourses
+	 * @throws ExcepcaoPersistencia
+	 */
 	private List leecAlgorithm(
 		IStudentCurricularPlan studentCurricularPlan,
 		List studentApprovedEnrollments,
@@ -229,7 +251,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				this.studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled());
 		
 		List studentCurrentSemesterEnrollmentsFromSpecializationAndSecundaryAreas =
-		selectCurricularCoursesFromSpecializationAndSecundaryAreas(
+			selectCurricularCoursesFromSpecializationAndSecundaryAreas(
 				studentCurrentSemesterEnrollments,
 				this.studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled());
 		
@@ -492,12 +514,6 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		HashMap creditsInSecundaryAreaGroups,
 		HashMap clashingGroups)
 	{
-//		para cada par clashing
-//		se o grupo especialização termina associa ao outro grupo e retira de creditsInScientificAreas
-//		caso contrário se o grupo de secindária termina associa ao outro grupo e retira de creditsInScientificAreas
-//		caso contrário se o valor do grupo1 + o valor do grupo2 + os créditos desta área científica são igual à soma
-//		dos MAX então faz as contas do papel
-
 		if (!clashingGroups.entrySet().isEmpty())
 		{
 			Iterator iterator = clashingGroups.entrySet().iterator();
@@ -1005,10 +1021,13 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			areaType = AreaType.SECONDARY_OBJ;
 		}
 
-		ICurricularCourseGroup curricularCourseGroup =
+		if (creditsInAreaGroups != null && branch != null && areaType != null)
+		{
+			ICurricularCourseGroup curricularCourseGroup =
 			curricularCourseGroupDAO.readByBranchAndCurricularCourseAndAreaType(branch, curricularCourse, areaType);
 
-		sumInHashMap(creditsInAreaGroups, curricularCourseGroup.getIdInternal(), curricularCourseCredits);
+			sumInHashMap(creditsInAreaGroups, curricularCourseGroup.getIdInternal(), curricularCourseCredits);
+		}
 	}
 
 	/**
@@ -1122,14 +1141,14 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 */
 	private List selectCurricularCoursesFromSpecializationAndSecundaryAreas(
 		List enrollments,
-		List commonAreasCurricularCourses)
+		List baseAreasCurricularCourses)
 	{
 		List enrollmentsToKeep = new ArrayList();
 		Iterator iterator = enrollments.iterator();
 		while(iterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if (!commonAreasCurricularCourses.contains(enrolment.getCurricularCourse()))
+			if (!baseAreasCurricularCourses.contains(enrolment.getCurricularCourse()))
 			{
 				if (!enrollmentsToKeep.contains(enrolment))
 				{
