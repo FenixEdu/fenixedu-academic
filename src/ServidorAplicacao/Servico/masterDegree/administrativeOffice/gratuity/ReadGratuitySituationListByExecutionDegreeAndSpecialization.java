@@ -134,7 +134,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 					InfoGratuitySituation infoGratuitySituation =
 						Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
-					System.out.println(infoGratuitySituation);
+					//System.out.println(infoGratuitySituation);
 					//find gratuity's payed value
 					calculateGratuityPayedValue(sp, infoGratuitySituation);
 
