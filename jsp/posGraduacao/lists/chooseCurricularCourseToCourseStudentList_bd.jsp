@@ -13,7 +13,7 @@
 <logic:present name="curricularCourses">
 	<bean:message key="title.masterDegree.administrativeOffice.chooseCurricularCourse" />
 	<br /><br />
-	<bean:define id="path" value="/listStudentsByCourse" />
+	<bean:define id="path" value="/chooseCurricularCourseToCourseStudentList" />
 	<table>
 		<!-- CurricularCourse -->
 		<logic:iterate id="curricularCourseElem" name="curricularCourses">

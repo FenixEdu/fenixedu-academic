@@ -79,7 +79,6 @@ public class ReadCurricularCoursesByDegree implements IServico {
 					}
 				}));
 				
-
 				infoCurricularCourses.add(infoCurricularCourse);
 			}
 

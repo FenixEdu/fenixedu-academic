@@ -59,9 +59,6 @@ public class StudentListDispatchAction extends DispatchAction {
 			result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
 
 			} catch (NotAuthorizedException e) {
-				
-				System.out.println("NAO AUTORIZADO");
-				
 				return mapping.findForward("NotAuthorized");
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("error.exception.noStudents", "");
@@ -101,6 +98,9 @@ public class StudentListDispatchAction extends DispatchAction {
 	  BeanComparator nameComparator = new BeanComparator("name");
       Collections.sort(result, nameComparator);
 
+
+
+
 	  request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
 	  request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 
@@ -108,6 +108,4 @@ public class StudentListDispatchAction extends DispatchAction {
 	  
 	  return mapping.findForward("ShowCourseList");
 	}
-  
-			
 }

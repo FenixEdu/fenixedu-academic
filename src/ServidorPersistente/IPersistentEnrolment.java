@@ -2,6 +2,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
@@ -37,5 +38,13 @@ public interface IPersistentEnrolment extends IPersistentObject {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;  
+	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param curricularCourse
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia ;  
 }

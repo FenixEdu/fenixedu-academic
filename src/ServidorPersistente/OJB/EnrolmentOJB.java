@@ -6,6 +6,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Enrolment;
+import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
@@ -409,10 +410,20 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia {
 		   		   
 	   Criteria crit = new Criteria();
-	   crit.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourseScope.getCurricularCourse().getIdInternal());
+	   crit.addEqualTo("curricularCourseScope.idInternal", curricularCourseScope.getIdInternal());
    
 	   return (List) queryList(Enrolment.class, crit);
 
 	}
+	
+	
+	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+		   		   
+	Criteria crit = new Criteria();
+	crit.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
+   
+	return (List) queryList(Enrolment.class, crit);
+
+ }
 
 }

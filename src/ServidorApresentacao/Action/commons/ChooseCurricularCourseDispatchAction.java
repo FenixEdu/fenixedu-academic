@@ -108,6 +108,43 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		return mapping.findForward("ChooseSuccess");
 	}
 
+	public ActionForward chooseCurricularCourseByID(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		HttpSession session = request.getSession();
+
+
+		request.setAttribute("courseID", getFromRequest("courseID", request));
+
+		//		parameters necessary to write in jsp
+		request.setAttribute("curricularCourse", getFromRequest("curricularCourse", request));
+		request.setAttribute("executionYear", getFromRequest("executionYear", request));
+		request.setAttribute("degree", getFromRequest("degree", request));
+
+	
+		Integer courseID = new Integer(getFromRequest("courseID", request));
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		GestorServicos serviceManager = GestorServicos.manager();
+
+
+		List studentList = null;
+		try {
+			Object args[] = { userView, courseID };
+			studentList = (List) serviceManager.executar(userView, "ReadStudentListByCurricularCourse", args);
+		} catch (NotAuthorizedException e){
+			return mapping.findForward("NotAuthorized");
+		} catch (NonExistingServiceException e) {
+			ActionErrors errors = new ActionErrors();
+			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
+			saveErrors(request, errors);
+			return mapping.findForward("NoStudents");
+		}
+
+		request.setAttribute("enrolment_list", studentList);
+
+		return mapping.findForward("ChooseSuccess");
+	}
+
 	private String getFromRequest(String parameter, HttpServletRequest request) {
 		String parameterString = request.getParameter(parameter);
 		if (parameterString == null) {
