@@ -15,8 +15,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import DataBeans.gesdis.AnnouncementView;
-import DataBeans.gesdis.SiteView;
+import DataBeans.gesdis.InfoAnnouncement;
+import DataBeans.gesdis.InfoSite;
 import Dominio.IAnnouncement;
 import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;
@@ -45,7 +45,7 @@ public class DeleteAnnouncement implements IServico {
 
 	}
 
-	public void run(SiteView siteView, AnnouncementView announcementView)
+	public void run(InfoSite siteView, InfoAnnouncement announcementView)
 		throws FenixServiceException {
 
 		try {

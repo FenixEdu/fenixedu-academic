@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.gesdis.SectionView;
-import DataBeans.gesdis.TeacherView;
+import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoTeacher;
 
 
 
@@ -19,7 +19,7 @@ public class ViewUtils {
 		Iterator iter = sections.iterator();
 		
 		while (iter.hasNext()) {
-			SectionView section = (SectionView) iter.next();
+			InfoSection section = (InfoSection) iter.next();
 			ArrayList sonNode = (ArrayList) fatherNode.clone();
 			sonNode.add(section.getName());
 			result.add(sonNode);
@@ -34,16 +34,16 @@ public class ViewUtils {
 		Iterator iter = teachers.iterator();
 		
 		while (iter.hasNext()) {
-			TeacherView teacher =  (TeacherView) iter.next();
+			InfoTeacher teacher =  (InfoTeacher) iter.next();
 			result.add(teacher.getNome());
 		}
 		return result;
 	}
 	
-    public static List buildQualifiedName(SectionView sectionView) {
+    public static List buildQualifiedName(InfoSection sectionView) {
 		ArrayList name = new ArrayList();
 		
-		SectionView tmpSection = sectionView;
+		InfoSection tmpSection = sectionView;
 		
 		while (tmpSection != null) {
 			name.add(0, tmpSection.getName());

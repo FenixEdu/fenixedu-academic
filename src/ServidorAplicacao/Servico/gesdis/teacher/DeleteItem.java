@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.SectionView;
-import DataBeans.gesdis.SiteView;
+import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IItem;
@@ -45,8 +45,8 @@ public class DeleteItem implements IServico {
 	}
 
 	public void run(
-		SiteView siteView,
-		SectionView sectionView,
+		InfoSite siteView,
+		InfoSection sectionView,
 		InfoExecutionCourse infoExecutionCourse,
 		String itemName)
 		throws FenixServiceException {

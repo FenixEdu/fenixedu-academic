@@ -6,8 +6,8 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import DataBeans.gesdis.SectionView;
-import DataBeans.gesdis.SiteView;
+import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IItem;
@@ -31,7 +31,7 @@ public class DeleteSection implements IServico {
 	public final String getNome() {
 		return "gesdis.teacher.DeleteSection";
 	}
-	public String run(SiteView siteView, SectionView sectionView)
+	public String run(InfoSite siteView, InfoSection sectionView)
 		throws FenixServiceException {
 
 		IPersistentSite persistentSite;
