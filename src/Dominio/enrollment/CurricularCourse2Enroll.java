@@ -17,6 +17,7 @@ public class CurricularCourse2Enroll implements Serializable {
     
     private ICurricularCourse curricularCourse;
     private CurricularCourseEnrollmentType enrollmentType;
+    private Integer accumulatedWeight;
     
     
 
@@ -59,5 +60,17 @@ public class CurricularCourse2Enroll implements Serializable {
     public void setEnrollmentType(
             CurricularCourseEnrollmentType enrollmentRuleType) {
         this.enrollmentType = enrollmentRuleType;
+    }
+    /**
+     * @return Returns the accumulatedWeight.
+     */
+    public Integer getAccumulatedWeight() {
+        return accumulatedWeight;
+    }
+    /**
+     * @param accumulatedWeight The accumulatedWeight to set.
+     */
+    public void setAccumulatedWeight(Integer accumulatedWeight) {
+        this.accumulatedWeight = accumulatedWeight;
     }
 }

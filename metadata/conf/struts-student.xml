@@ -9,12 +9,7 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
-	  <!-- Dynamic-FormBean para EscolherCertidao -->
-<!--      <form-bean name="escolherCertidaoForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="certidao" type="java.lang.String"/>
-      </form-bean> -->
+	  
       
       <form-bean name="studentShiftEnrolmentForm"
       			type="org.apache.struts.validator.DynaValidatorForm"

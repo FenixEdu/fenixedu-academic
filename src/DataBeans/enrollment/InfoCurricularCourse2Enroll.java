@@ -20,6 +20,7 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
     private InfoCurricularCourse infoCurricularCourse;
 
     private CurricularCourseEnrollmentType enrollmentType;
+    private Integer accumulatedWeight;
 
     /**
      * @return Returns the enrollmentRuleType.
@@ -57,6 +58,7 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
         if (curricularCourse2Enroll != null) {
             setEnrollmentType(curricularCourse2Enroll
                     .getEnrollmentType());
+            setAccumulatedWeight(curricularCourse2Enroll.getAccumulatedWeight());
         }
     }
 
@@ -70,4 +72,16 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
         return infoCurricularCourse2Enroll;
     }
 
+    /**
+     * @return Returns the accumulatedWeight.
+     */
+    public Integer getAccumulatedWeight() {
+        return accumulatedWeight;
+    }
+    /**
+     * @param accumulatedWeight The accumulatedWeight to set.
+     */
+    public void setAccumulatedWeight(Integer accumulatedWeight) {
+        this.accumulatedWeight = accumulatedWeight;
+    }
 }

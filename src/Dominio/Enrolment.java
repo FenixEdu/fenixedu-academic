@@ -30,6 +30,7 @@ public class Enrolment extends DomainObject implements IEnrollment
 	private String ojbConcreteClass;
     private Date creationDate;
     private EnrollmentCondition condition;
+    private Integer accumulatedWeight;
 
 	public Enrolment()
 	{
@@ -252,4 +253,16 @@ public class Enrolment extends DomainObject implements IEnrollment
 	{
 		this.condition = condition;
 	}
+    /**
+     * @return Returns the accumulatedWeight.
+     */
+    public Integer getAccumulatedWeight() {
+        return accumulatedWeight;
+    }
+    /**
+     * @param accumulatedWeight The accumulatedWeight to set.
+     */
+    public void setAccumulatedWeight(Integer accumulatedWeight) {
+        this.accumulatedWeight = accumulatedWeight;
+    }
 }

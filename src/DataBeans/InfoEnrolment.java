@@ -20,6 +20,20 @@ public class InfoEnrolment extends InfoObject {
 	// to be used to keep the actual enrolment evaluation
 	private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
 	private List infoEvaluations;
+	private Integer accumulatedWeight;
+	
+    /**
+     * @return Returns the accumulatedWeight.
+     */
+    public Integer getAccumulatedWeight() {
+        return accumulatedWeight;
+    }
+    /**
+     * @param accumulatedWeight The accumulatedWeight to set.
+     */
+    public void setAccumulatedWeight(Integer accumulatedWeight) {
+        this.accumulatedWeight = accumulatedWeight;
+    }
 	public InfoEnrolment() {
 	}
 	public InfoEnrolment(InfoStudentCurricularPlan infoStudentCurricularPlan,
@@ -146,23 +160,24 @@ public class InfoEnrolment extends InfoObject {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	public void copyFromDomain(IEnrollment enrolment) {
-		super.copyFromDomain(enrolment);
-		if (enrolment != null) {
-			setCreationDate(enrolment.getCreationDate());
-			setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-			setEnrolmentState(enrolment.getEnrolmentState());
+	public void copyFromDomain(IEnrollment enrollment) {
+		super.copyFromDomain(enrollment);
+		if (enrollment != null) {
+			setCreationDate(enrollment.getCreationDate());
+			setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
+			setEnrolmentState(enrollment.getEnrolmentState());
+			setAccumulatedWeight(enrollment.getAccumulatedWeight());
 		}
 	}
-	public static InfoEnrolment newInfoFromDomain(IEnrollment enrolment) {
+	public static InfoEnrolment newInfoFromDomain(IEnrollment enrollment) {
 		InfoEnrolment infoEnrolment = null;
-		if (enrolment != null) {
-			if (enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
+		if (enrollment != null) {
+			if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
 				infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
-				infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolment);
+				infoEnrolment = InfoEnrolment.newInfoFromDomain(enrollment);
 			} else {
 				infoEnrolment = new InfoEnrolment();
-				infoEnrolment.copyFromDomain(enrolment);
+				infoEnrolment.copyFromDomain(enrollment);
 			}
 		}
 		return infoEnrolment;
