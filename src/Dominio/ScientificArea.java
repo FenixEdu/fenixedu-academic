@@ -47,13 +47,13 @@ public class ScientificArea extends DomainObject implements IScientificArea {
 
     public boolean equals(Object obj)
     {
-        boolean resultado = false;
+        boolean result = false;
         if (obj instanceof IScientificArea)
         {
 			IScientificArea scientificArea = (IScientificArea) obj;
 
-            resultado = scientificArea.getName().equals(getName());            
+            result = scientificArea.getName().equals(getName());            
         }
-		return false;
+		return result;
     }
 }
