@@ -6,7 +6,9 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
 import DataBeans.InfoGratuitySituation;
 import DataBeans.util.Cloner;
+import Dominio.GratuityValues;
 import Dominio.IGratuitySituation;
+import Dominio.IGratuityValues;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
@@ -21,15 +23,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *
  */
-public class ReadGratuitySituationByStudentCurricularPlan implements IServico
+public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues implements IServico
 {
 
-    private static ReadGratuitySituationByStudentCurricularPlan servico = new ReadGratuitySituationByStudentCurricularPlan();
+    private static ReadGratuitySituationByStudentCurricularPlanByGratuityValues servico = new ReadGratuitySituationByStudentCurricularPlanByGratuityValues();
 
     /**
 	 * The singleton access method of this class.
 	 */
-    public static ReadGratuitySituationByStudentCurricularPlan getService()
+    public static ReadGratuitySituationByStudentCurricularPlanByGratuityValues getService()
     {
         return servico;
     }
@@ -37,7 +39,7 @@ public class ReadGratuitySituationByStudentCurricularPlan implements IServico
     /**
 	 * The actor of this class.
 	 */
-    private ReadGratuitySituationByStudentCurricularPlan()
+    private ReadGratuitySituationByStudentCurricularPlanByGratuityValues()
     {
     }
 
@@ -47,10 +49,10 @@ public class ReadGratuitySituationByStudentCurricularPlan implements IServico
 
     public final String getNome()
     {
-        return "ReadGratuitySituationByStudentCurricularPlan";
+        return "ReadGratuitySituationByStudentCurricularPlanByGratuityValues";
     }
 
-    public Object run(Integer studentCurricularPlanID) throws FenixServiceException
+    public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID) throws FenixServiceException
     {
     	ISuportePersistente sp = null;
     	IGratuitySituation gratuitySituation = null;
@@ -62,8 +64,10 @@ public class ReadGratuitySituationByStudentCurricularPlan implements IServico
 			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 			studentCurricularPlan.setIdInternal(studentCurricularPlanID);
 						
-			gratuitySituation = persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlan(studentCurricularPlan);
+			IGratuityValues gratuityValues = new GratuityValues();
+			gratuityValues.setIdInternal(gratuityValuesID);
 			
+			gratuitySituation = persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(studentCurricularPlan, gratuityValues);			
     	} catch (ExcepcaoPersistencia e) {
     		e.printStackTrace();
 			throw new FenixServiceException("error.impossible.insertExemptionGratuity");			

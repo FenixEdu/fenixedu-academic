@@ -350,8 +350,8 @@ public class InsertGratuityData implements IService
 						(IStudentCurricularPlan) iterator.next();
 
 					IGratuitySituation gratuitySituation =
-						persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlan(
-							studentCurricularPlan);
+						persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+							studentCurricularPlan, gratuityValues);
 
 					if (gratuitySituation == null)
 					{

@@ -208,15 +208,58 @@ public class ExemptionGratuityAction extends DispatchAction
 		}
 		request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
 
+		//read gratuity values of the execution course
+		InfoGratuityValues infoGratuityValues = null;
+		Object args3[] =
+		{ infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear };
+		try
+		{
+			infoGratuityValues =
+			(InfoGratuityValues) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear",
+					args3);
+		}
+		catch (FenixServiceException fenixServiceException)
+		{
+			fenixServiceException.printStackTrace();
+			errors.add(
+					"noGratuitySituation",
+					new ActionError("error.impossible.insertExemptionGratuity"));
+			errors.add(
+					"noGratuityValues",
+					new ActionError(
+							"error.impossible.problemsWithDegree",
+							infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
+			saveErrors(request, errors);
+			return mapping.findForward("chooseStudent");
+		}
+		//if infoGratuityValues is null than it will be informed to the user
+		//that this degree hasn't gratuity values defined
+		if (infoGratuityValues == null)
+		{
+			request.setAttribute("noGratuityValues", "true");
+			errors.add(
+					"noGratuityValues",
+					new ActionError(
+							"error.impossible.noGratuityValues"));
+			saveErrors(request, errors);
+			return mapping.findForward("chooseStudent");
+		}
+		else
+		{
+			request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
+		}
+		
 		//read gratuity situation of the student
 		InfoGratuitySituation infoGratuitySituation = null;
-		Object args2[] = { studentCurricularPlanID };
+		Object args2[] = { studentCurricularPlanID, infoGratuityValues.getIdInternal() };
 		try
 		{
 			infoGratuitySituation =
 				(InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ReadGratuitySituationByStudentCurricularPlan",
+					"ReadGratuitySituationByStudentCurricularPlanByGratuityValues",
 					args2);
 		}
 		catch (FenixServiceException fenixServiceException)
@@ -234,43 +277,7 @@ public class ExemptionGratuityAction extends DispatchAction
 			request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
 		}
 
-		//read gratuity values of the execution course
-		InfoGratuityValues infoGratuityValues = null;
-		Object args3[] =
-			{ infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear };
-		try
-		{
-			infoGratuityValues =
-				(InfoGratuityValues) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear",
-					args3);
-		}
-		catch (FenixServiceException fenixServiceException)
-		{
-			fenixServiceException.printStackTrace();
-			errors.add(
-				"noGratuitySituation",
-				new ActionError("error.impossible.insertExemptionGratuity"));
-			errors.add(
-				"noGratuityValues",
-				new ActionError(
-					"error.impossible.problemsWithDegree",
-					infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
-			saveErrors(request, errors);
-			return mapping.findForward("chooseStudent");
-		}
-		//if infoGratuityValues is null than it will be informed to the user
-		//that this degree hasn't gratuity values defined
-		if (infoGratuityValues == null)
-		{
-			request.setAttribute("noGratuityValues", "true");
-		}
-		else
-		{
-			request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
-		}
-
+		
 		DynaActionForm exemptionGrauityForm = (DynaActionForm) actionForm;
 		fillForm(infoGratuitySituation, request, exemptionGrauityForm);
 

@@ -5387,9 +5387,9 @@
         </filterChains>
     </service>
     <service>
-    	<name>ReadGratuitySituationByStudentCurricularPlan</name>
+    	<name>ReadGratuitySituationByStudentCurricularPlanByGratuityValues</name>
     	<description>Retrieves gratuity situation associated with this student</description>
-        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlan 
+        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlanByGratuityValues
     	</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>

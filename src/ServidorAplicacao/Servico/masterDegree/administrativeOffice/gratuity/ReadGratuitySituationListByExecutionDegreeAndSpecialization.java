@@ -139,7 +139,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					calculateGratuityPayedValue(sp, infoGratuitySituation);
 
 					//find gratuity's total value with exemption
-					calculateGratuityTotalValue(sp, infoGratuitySituation);
+					calculateGratuityRemainingValue(sp, infoGratuitySituation);
 
 					fillSituationType(infoGratuitySituation);
 
@@ -253,11 +253,11 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	 * @param sp
 	 * @param infoGratuitySituation
 	 */
-	private void calculateGratuityTotalValue(
+	private void calculateGratuityRemainingValue(
 		ISuportePersistente sp,
 		InfoGratuitySituation infoGratuitySituation) throws Exception
 	{
-
+		//first find the total value that it will be pay
 		if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
 			&& (infoGratuitySituation
 				.getInfoStudentCurricularPlan()
@@ -322,8 +322,14 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
 			double newValue =
 			infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount;
+		
 			infoGratuitySituation.setRemainingValue(new Double(newValue));
 		}
+		
+		//now find the remaining value to pay
+		double remainingValue = infoGratuitySituation.getRemainingValue().doubleValue() - infoGratuitySituation.getPayedValue().doubleValue();
+		infoGratuitySituation.setRemainingValue(new Double(remainingValue));
+		
 	}
 
 	private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception
@@ -331,18 +337,18 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 		//infoGratuitySituation.getRemainingValue() contains the total value that a student has to
 		// payed.
 		if (infoGratuitySituation.getRemainingValue().longValue()
-			> infoGratuitySituation.getPayedValue().longValue())
+			> 0)
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.DEBTOR);
 		}
 		else if (
-			infoGratuitySituation.getRemainingValue().equals(infoGratuitySituation.getPayedValue()))
+			infoGratuitySituation.getRemainingValue().longValue() == 0)
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.REGULARIZED);
 		}
 		else if (
 			infoGratuitySituation.getRemainingValue().longValue()
-				< infoGratuitySituation.getPayedValue().longValue())
+				< 0)
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.CREDITOR);
 		}
