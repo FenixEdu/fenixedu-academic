@@ -86,6 +86,7 @@
     column="codigoInterno"
     jdbc-type="INTEGER"
     primarykey="true"
+    autoincrement="true"
   />
   <field-descriptor id="1"
     name="chavePessoa"
