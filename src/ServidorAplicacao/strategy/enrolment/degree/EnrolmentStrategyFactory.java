@@ -79,13 +79,13 @@ public class EnrolmentStrategyFactory {
 		IStudent student = enrolmentContext.getStudent();
 		
 		// gets actual student curricular plan 
-		IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+		IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 		
 		
-		List studentCurricularPlanCurricularCourses = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses(); 
+		List studentCurricularPlanCurricularCourses = studentActiveCurricularPlan.getDegreeCurricularPlan().getCurricularCourses(); 
 		
 		
-		final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
+		final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentActiveCurricularPlan);
 		
 		final List studentEnrolmentsWithStateApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate (){
 
@@ -121,6 +121,7 @@ public class EnrolmentStrategyFactory {
 		enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(computeCurricularCoursesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
 		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
 		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
+		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		return enrolmentContext;
 	}
 
