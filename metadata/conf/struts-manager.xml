@@ -44,9 +44,21 @@
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-  <!-- page fronting actions -->
-      <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/managerMainPage.jsp"/>
+    <!-- page fronting actions -->
+    <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/mainPage.jsp"/>
+  
+    <!--<action	path="/index"
+            type="ServidorApresentacao.Action.manager.ReadDegreesAction">    
+            <forward name="readDegrees" path="/readDegrees.jsp"/>          
+	</action>-->
      
+   
+	 <!-- Action for reading all degrees -->
+      <action path="/readDegrees"
+             input="mainPage.jsp"
+      	      type="ServidorApresentacao.Action.manager.ReadDegreesAction">
+      	  <forward name="readDegrees" path="/readDegrees.jsp"/>      	      
+      </action>
 	
 
 	</action-mappings>

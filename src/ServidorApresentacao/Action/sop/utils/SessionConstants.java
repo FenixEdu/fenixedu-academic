@@ -34,6 +34,13 @@ public abstract class SessionConstants {
 	public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";	
 	public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";	
 
+
+     //	-------------------------------------------------------------------------------
+	 //    GesDis Constants - For Manager
+	 // -------------------------------------------------------------------------------
+	public static final String INFO_DEGREES_LIST = "Lista de licenciaturas";
+	
+	
 	// -------------------------------------------------------------------------------
 	//    GesDis Constants - For GesDis
 	// -------------------------------------------------------------------------------

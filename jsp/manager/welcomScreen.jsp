@@ -1,0 +1,1 @@
+Bem vindo &agrave p&aacutegina de Ger&ecircncia
