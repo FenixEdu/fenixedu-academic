@@ -113,7 +113,7 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/teacher/accessAnnouncementManagementAction";
+		return "/accessAnnouncementManagementAction";
 	}
 
 	/**
