@@ -9,6 +9,8 @@ package ServidorPersistente;
  * Window>Preferences>Java>Code Generation.
  */
 
+import java.util.List;
+
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
 
@@ -18,4 +20,5 @@ public interface IPersistentBibliographicReference {
     public void lockWrite(IBibliographicReference  bibliographicReference) throws ExcepcaoPersistencia;
     public void delete(IBibliographicReference bibliographicReference ) throws ExcepcaoPersistencia ;
     public void deleteAll() throws ExcepcaoPersistencia;  	
+	public List readBibliographicReference(IDisciplinaExecucao executionCourse)throws ExcepcaoPersistencia;
 }
