@@ -4,12 +4,16 @@
  */
 package ServidorPersistente.teacher.professorship;
 
+import java.util.Date;
 import java.util.List;
 
+import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.ISupportLesson;
+import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
+import Util.DiaSemana;
 
 /**
  * @author jpvl
@@ -24,5 +28,15 @@ public interface IPersistentSupportLesson extends IPersistentObject
      * @return
      */
     ISupportLesson readByUnique(ISupportLesson lesson)  throws ExcepcaoPersistencia;
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param weekDay
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia;
 
 }

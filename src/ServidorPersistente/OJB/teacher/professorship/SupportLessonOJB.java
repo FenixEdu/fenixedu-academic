@@ -4,16 +4,20 @@
  */
 package ServidorPersistente.OJB.teacher.professorship;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.ISupportLesson;
+import Dominio.ITeacher;
 import Dominio.SupportLesson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
+import Util.DiaSemana;
 
 /**
  * @author jpvl
@@ -46,6 +50,39 @@ public class SupportLessonOJB extends ObjectFenixOJB implements IPersistentSuppo
         criteria.addEqualTo("startTime", supportLesson.getStartTime());
         criteria.addEqualTo("endTime", supportLesson.getEndTime());
         return (ISupportLesson) queryObject(SupportLesson.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readOverlappingPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod, Util.DiaSemana, java.util.Date, java.util.Date)
+     */
+    public List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia
+    {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod.getIdInternal());
+		criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
+		criteria.addEqualTo("weekDay", weekDay);
+		
+		Criteria startCriteria = new Criteria();
+		startCriteria.addGreaterThan("startTime", startTime);
+		startCriteria.addLessThan("startTime", endTime);
+		
+		Criteria endCriteria = new Criteria();
+		endCriteria.addGreaterThan("endTime", startTime);
+		endCriteria.addLessThan("startTime", endTime);
+
+		Criteria equalCriteria = new Criteria();
+		equalCriteria.addEqualTo("startTime", startTime);
+		equalCriteria.addEqualTo("endTime", endTime);
+		
+		Criteria timeCriteria = new Criteria();
+		timeCriteria.addOrCriteria(startCriteria);
+		timeCriteria.addOrCriteria(endCriteria);
+		timeCriteria.addOrCriteria(equalCriteria);
+
+		
+		criteria.addAndCriteria(timeCriteria);
+		
+		return queryList(SupportLesson.class, criteria);
     }
 
 }

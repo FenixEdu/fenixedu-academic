@@ -1,8 +1,12 @@
 /*
  * Created on 19/Mai/2003 by jpvl
- *
+ *  
  */
 package ServidorPersistente.OJB.teacher.professorship;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
@@ -11,6 +15,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 
 import Dominio.IExecutionCourse;
+import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.IShiftProfessorship;
@@ -20,109 +25,151 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.DiaSemana;
 
 /**
  * @author jpvl
  */
-public class ShiftProfessorshipOJB
-	extends ObjectFenixOJB
-	implements IPersistentShiftProfessorship {
+public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistentShiftProfessorship
+{
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorPersistente.IPersistentTeacherShiftPercentage#readByUnique(Dominio.IShiftProfessorship)
 	 */
-	public IShiftProfessorship readByUnique(IShiftProfessorship teacherShiftPercentage)
-		throws ExcepcaoPersistencia {
-		IShiftProfessorship teacherShiftPercentageFromBD = null;
+    public IShiftProfessorship readByUnique(IShiftProfessorship teacherShiftPercentage)
+            throws ExcepcaoPersistencia
+    {
+        IShiftProfessorship teacherShiftPercentageFromBD = null;
 
-		PersistenceBroker broker =
-			((HasBroker) odmg.currentTransaction()).getBroker();
+        PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker();
 
-		Criteria criteria = new Criteria();
+        Criteria criteria = new Criteria();
 
-		IExecutionCourse executionCourse =
-			teacherShiftPercentage.getShift().getDisciplinaExecucao();
+        IExecutionCourse executionCourse = teacherShiftPercentage.getShift().getDisciplinaExecucao();
 
-		criteria.addEqualTo(
-			"shift.nome",
-			teacherShiftPercentage.getShift().getNome());
+        criteria.addEqualTo("shift.nome", teacherShiftPercentage.getShift().getNome());
 
-		criteria.addEqualTo(
-			"shift.disciplinaExecucao.sigla",
-			executionCourse.getSigla());
-		criteria.addEqualTo(
-			"shift.disciplinaExecucao.executionPeriod.name",
-			executionCourse.getExecutionPeriod().getName());
-		criteria.addEqualTo(
-			"shift.disciplinaExecucao.executionPeriod.executionYear.year",
-			executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        criteria.addEqualTo("shift.disciplinaExecucao.sigla", executionCourse.getSigla());
+        criteria.addEqualTo("shift.disciplinaExecucao.executionPeriod.name", executionCourse
+                .getExecutionPeriod().getName());
+        criteria.addEqualTo("shift.disciplinaExecucao.executionPeriod.executionYear.year",
+                executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
-		ITeacher teacher =
-			teacherShiftPercentage.getProfessorship().getTeacher();
+        ITeacher teacher = teacherShiftPercentage.getProfessorship().getTeacher();
 
-		criteria.addEqualTo(
-			"professorShip.teacher.teacherNumber",
-			teacher.getTeacherNumber());
-		criteria.addEqualTo(
-			"professorShip.teacher.person.username",
-			teacher.getPerson().getUsername());
-		criteria.addEqualTo(
-			"professorShip.executionCourse.sigla",
-			executionCourse.getSigla());
-		criteria.addEqualTo(
-			"professorShip.executionCourse.executionPeriod.name",
-			executionCourse.getExecutionPeriod().getName());
-		criteria.addEqualTo(
-			"professorShip.executionCourse.executionPeriod.executionYear.year",
-			executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        criteria.addEqualTo("professorShip.teacher.teacherNumber", teacher.getTeacherNumber());
+        criteria.addEqualTo("professorShip.teacher.person.username", teacher.getPerson().getUsername());
+        criteria.addEqualTo("professorShip.executionCourse.sigla", executionCourse.getSigla());
+        criteria.addEqualTo("professorShip.executionCourse.executionPeriod.name", executionCourse
+                .getExecutionPeriod().getName());
+        criteria.addEqualTo("professorShip.executionCourse.executionPeriod.executionYear.year",
+                executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
-		Query queryPB =
-			new QueryByCriteria(ShiftProfessorship.class, criteria);
-		teacherShiftPercentageFromBD =
-			(IShiftProfessorship) broker.getObjectByQuery(queryPB);
-		return teacherShiftPercentageFromBD;
-	}
+        Query queryPB = new QueryByCriteria(ShiftProfessorship.class, criteria);
+        teacherShiftPercentageFromBD = (IShiftProfessorship) broker.getObjectByQuery(queryPB);
+        return teacherShiftPercentageFromBD;
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorPersistente.IPersistentObject#lockWrite(java.lang.Object)
 	 */
-	public void lockWrite(Object obj) throws ExcepcaoPersistencia {
-		if (obj instanceof IShiftProfessorship) {
+    public void lockWrite(Object obj) throws ExcepcaoPersistencia
+    {
+        if (obj instanceof IShiftProfessorship)
+        {
 
-			IShiftProfessorship teacherShiftPercentageToWrite =
-				(IShiftProfessorship) obj;
+            IShiftProfessorship teacherShiftPercentageToWrite = (IShiftProfessorship) obj;
 
-			IShiftProfessorship teacherShiftPercentageFromBD =
-				this.readByUnique(teacherShiftPercentageToWrite);
-			// If department is not in database, then write it.
-			if (teacherShiftPercentageFromBD == null){
-				super.lockWrite(teacherShiftPercentageToWrite);
-			}else if (// else If the department is mapped to the database, then write any existing changes.
-				teacherShiftPercentageFromBD.getIdInternal().equals(
-					teacherShiftPercentageToWrite.getIdInternal())) {
-				super.lockWrite(teacherShiftPercentageToWrite);
+            IShiftProfessorship teacherShiftPercentageFromBD = this.readByUnique(
+                    teacherShiftPercentageToWrite);
+            // If department is not in database, then write it.
+            if (teacherShiftPercentageFromBD == null)
+            {
+                super.lockWrite(teacherShiftPercentageToWrite);
+            }
+            else if (// else If the department is mapped to the database, then write any existing
+					   // changes.
+            teacherShiftPercentageFromBD.getIdInternal()
+                    .equals(teacherShiftPercentageToWrite.getIdInternal()))
+            {
+                super.lockWrite(teacherShiftPercentageToWrite);
 
-			} else { // else Throw an already existing exception
-				throw new ExistingPersistentException();
-			}
-		}
-	}
+            }
+            else
+            { // else Throw an already existing exception
+                throw new ExistingPersistentException();
+            }
+        }
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorPersistente.IPersistentTeacherShiftPercentage#delete(Dominio.IShiftProfessorship)
 	 */
-	public void delete(IShiftProfessorship teacherShiftPercentage) throws ExcepcaoPersistencia {
-		super.delete(teacherShiftPercentage);
-	}
+    public void delete(IShiftProfessorship teacherShiftPercentage) throws ExcepcaoPersistencia
+    {
+        super.delete(teacherShiftPercentage);
+    }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorshipAndShift(Dominio.IProfessorship, Dominio.ITurno)
-     */
-    public IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, ITurno shift) throws ExcepcaoPersistencia
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorshipAndShift(Dominio.IProfessorship,
+	 *          Dominio.ITurno)
+	 */
+    public IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, ITurno shift)
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyProfessorship", professorship.getIdInternal());
         criteria.addEqualTo("keyShift", shift.getIdInternal());
         return (IShiftProfessorship) queryObject(ShiftProfessorship.class, criteria);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentShiftProfessorship#readOverlappingPeriod(Dominio.ITeacher,
+	 *          Dominio.IExecutionPeriod, Util.DiaSemana, java.util.Date, java.util.Date)
+	 */
+    public List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod,
+            DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod
+                .getIdInternal());
+        criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("shift.associatedLessons.diaSemana", weekDay);
+        criteria.addEqualTo("percentage", new Double(100));
+
+        Calendar startTimeCalendar = Calendar.getInstance();
+        startTimeCalendar.setTime(startTime);
+        Calendar endTimeCalendar = Calendar.getInstance();
+        endTimeCalendar.setTime(endTime);
+        
+        Criteria startCriteria = new Criteria();
+        startCriteria.addGreaterThan("shift.associatedLessons.inicio", startTimeCalendar);
+		startCriteria.addLessThan("shift.associatedLessons.inicio", endTimeCalendar);
+
+        Criteria endCriteria = new Criteria();
+		endCriteria.addGreaterThan("shift.associatedLessons.fim", startTimeCalendar);
+		endCriteria.addLessThan("shift.associatedLessons.fim", endTimeCalendar);
+        
+        Criteria equalCriteria = new Criteria();
+        equalCriteria.addEqualTo("shift.associatedLessons.inicio", startTimeCalendar);
+        equalCriteria.addEqualTo("shift.associatedLessons.fim", endTimeCalendar);
+        Criteria timeCriteria = new Criteria();
+        timeCriteria.addOrCriteria(startCriteria);
+		timeCriteria.addOrCriteria(endCriteria);
+		timeCriteria.addOrCriteria(equalCriteria);
+
+        criteria.addAndCriteria(timeCriteria);
+
+        return queryList(ShiftProfessorship.class, criteria);
     }
 }
