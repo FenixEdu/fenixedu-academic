@@ -7,8 +7,8 @@ import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoSection;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSection;
+import DataBeans.InfoSite;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 

@@ -8,7 +8,7 @@ package ServidorApresentacao.TagLib.publico.sectionMenu;
 
 import java.util.List;
 
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoSection;
 
 /**
  * @author jmota

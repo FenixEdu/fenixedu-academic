@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import DataBeans.InfoPerson;
-import DataBeans.gesdis.InfoSite;
-import DataBeans.gesdis.InfoTeacher;
+import DataBeans.InfoSite;
+import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IPessoa;

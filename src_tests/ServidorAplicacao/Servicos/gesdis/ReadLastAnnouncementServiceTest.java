@@ -5,8 +5,8 @@ import java.util.Calendar;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.gesdis.InfoAnnouncement;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoAnnouncement;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;

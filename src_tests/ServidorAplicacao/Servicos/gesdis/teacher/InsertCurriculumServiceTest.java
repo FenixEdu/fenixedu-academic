@@ -8,8 +8,8 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
 
 import java.util.HashMap;
 
+import DataBeans.InfoCurriculum;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoCurriculum;
 import DataBeans.util.Cloner;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;

@@ -5,7 +5,7 @@ package ServidorAplicacao.Servicos.gesdis;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;

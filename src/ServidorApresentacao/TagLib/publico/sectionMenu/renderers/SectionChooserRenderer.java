@@ -6,7 +6,7 @@
  */
 package ServidorApresentacao.TagLib.publico.sectionMenu.renderers;
 
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoSection;
 
 /**
  * @author Ivo Brandão

@@ -12,7 +12,7 @@ import java.util.Map;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 

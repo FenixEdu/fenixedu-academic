@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
-import DataBeans.gesdis.InfoSection;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSection;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;

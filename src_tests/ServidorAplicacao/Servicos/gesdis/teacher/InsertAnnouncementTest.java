@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import ServidorAplicacao.Servicos.TestCaseCreateServices;
 
 public class InsertAnnouncementTest extends TestCaseCreateServices {

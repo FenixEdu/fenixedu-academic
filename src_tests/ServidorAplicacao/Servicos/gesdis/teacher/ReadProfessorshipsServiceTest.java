@@ -7,7 +7,7 @@
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
 import DataBeans.InfoPerson;
-import DataBeans.gesdis.InfoTeacher;
+import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IPessoa;
 import ServidorAplicacao.Servicos.TestCaseReadServices;

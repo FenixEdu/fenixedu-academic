@@ -9,7 +9,7 @@ package ServidorApresentacao.TagLib.publico.sectionMenu;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoSection;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionChooserRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuContentRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer;

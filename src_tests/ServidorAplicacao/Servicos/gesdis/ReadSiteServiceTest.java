@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;

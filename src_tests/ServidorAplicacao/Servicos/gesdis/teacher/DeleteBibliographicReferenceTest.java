@@ -6,8 +6,8 @@
  */
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
+import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoBibliographicReference;
 import DataBeans.util.Cloner;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;

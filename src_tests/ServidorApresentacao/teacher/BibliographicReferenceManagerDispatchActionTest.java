@@ -13,11 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoBibliographicReference;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;

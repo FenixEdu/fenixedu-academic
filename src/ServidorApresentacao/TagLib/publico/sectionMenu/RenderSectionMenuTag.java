@@ -15,7 +15,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.struts.util.MessageResources;
 
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoSection;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuContentRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer;
 

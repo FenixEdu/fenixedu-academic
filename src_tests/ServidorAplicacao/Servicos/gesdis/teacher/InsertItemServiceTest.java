@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.gesdis.InfoItem;
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoItem;
+import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISection;

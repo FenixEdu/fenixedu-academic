@@ -16,11 +16,11 @@ import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoAnnouncement;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.gesdis.InfoAnnouncement;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 
 public class DeleteAnnouncementTest extends TestCaseDeleteAndEditServices {

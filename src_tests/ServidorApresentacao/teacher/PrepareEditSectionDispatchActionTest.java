@@ -11,8 +11,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import DataBeans.gesdis.InfoSection;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSection;
+import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;

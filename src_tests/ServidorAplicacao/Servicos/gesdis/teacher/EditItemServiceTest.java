@@ -6,9 +6,9 @@
  */
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
-import DataBeans.gesdis.InfoCurriculum;
-import DataBeans.gesdis.InfoItem;
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoCurriculum;
+import DataBeans.InfoItem;
+import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;

@@ -7,7 +7,7 @@
 package ServidorApresentacao.TagLib.publico.sectionMenu.renderers;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import DataBeans.gesdis.InfoSection;
+import DataBeans.InfoSection;
 
 /**
  * @author jmota
