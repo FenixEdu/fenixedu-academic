@@ -61,8 +61,6 @@ public class Autenticacao implements IServico {
 			ex.printStackTrace(System.out);
 			throw new FenixServiceException(ex.getMessage());
 		}
-		System.out.println("AQUI:::::::::::::::::::::::");
-		System.out.println("Pessoa == null?"+(pessoa==null));
 		if (pessoa != null && PasswordEncryptor.areEquals(pessoa.getPassword(), password)) {
 			Collection roles = new ArrayList();
 			Iterator rolesIterator = pessoa.getPersonRoles().iterator();
@@ -74,7 +72,6 @@ public class Autenticacao implements IServico {
 			UserView userView = new UserView(pessoa.getUsername(), roles);
 			return userView;
 		} else
-			System.out.println("AQUI2:::::::::::::::::::::::");		
 			throw new ExcepcaoAutenticacao("Autenticacao incorrecta");
 	}
 }
