@@ -92,7 +92,8 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 					}
 					request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
 				}
-				
+				DynaActionForm dynaForm = (DynaActionForm) form;
+				dynaForm.set("tempExamMap", "true");
 				return mapping.findForward("insertExecutionDegree");
 	}
 

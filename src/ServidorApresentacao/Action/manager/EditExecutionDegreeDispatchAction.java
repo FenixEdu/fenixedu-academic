@@ -105,10 +105,10 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		}
 		
 		Boolean tempExamMap = oldInfoExecutionDegree.getTemporaryExamMap();
-		if(tempExamMap != null)
+//		if(tempExamMap != null)
 			dynaForm.set("tempExamMap", tempExamMap.toString());
-		else
-			dynaForm.set("tempExamMap", "");
+//		else
+//			dynaForm.set("tempExamMap", "");
 		dynaForm.set("coordinatorId", oldInfoExecutionDegree.getInfoCoordinator().getIdInternal().toString());
 		dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getIdInternal().toString());
 
