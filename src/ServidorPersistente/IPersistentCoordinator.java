@@ -14,6 +14,6 @@ import Dominio.ITeacher;
  */
 public interface IPersistentCoordinator extends IPersistentObject {
 
-	public List readDegreesByCoordinator(ITeacher teacher)
+	public List readExecutionDegreesByTeacher(ITeacher teacher)
 			throws ExcepcaoPersistencia;	
 }

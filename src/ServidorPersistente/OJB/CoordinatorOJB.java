@@ -8,7 +8,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Coordinator;
 import Dominio.ICoordinator;
-import Dominio.ICurso;
+import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCoordinator;
@@ -25,7 +25,7 @@ public class CoordinatorOJB
 	extends ObjectFenixOJB
 	implements IPersistentCoordinator {
 
-	public List readDegreesByCoordinator(ITeacher teacher)
+	public List readExecutionDegreesByTeacher(ITeacher teacher)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
@@ -34,19 +34,17 @@ public class CoordinatorOJB
 			return null;
 		}
 		Iterator iter = coordinators.iterator();
-		List degrees = new ArrayList();
+		List executionDegrees = new ArrayList();
 		while (iter.hasNext()) {
 			ICoordinator coordinator = (ICoordinator) iter.next();
-			ICurso degree =
+			ICursoExecucao executionDegree =
 				coordinator
-					.getExecutionDegree()
-					.getCurricularPlan()
-					.getDegree();
-			if (!degrees.contains(degree)) {
-				degrees.add(degree);
+					.getExecutionDegree();
+			if (!executionDegrees.contains(executionDegree)) {
+				executionDegrees.add(executionDegree);
 			}
 		}
-		return degrees;
+		return executionDegrees;
 	}
 
 }
