@@ -38,45 +38,36 @@ public class EditCurricularCourseScope implements IServico {
 	public final String getNome() {
 		return "EditCurricularCourseScope";
 	}
-	
 
 	public void run(Integer oldCurricularCourseScopeId, InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
 
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		ICurricularCourseScope oldCurricularCourseScope = null;
-//		boolean result = false;
-		
+
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			IPersistentBranch persistentBranch = ps.getIPersistentBranch();
 			IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
-			persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();			
-			
+			persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
+
 			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
 			curricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
-			
+
 			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
-//			ICurricularCourse curricularCourse = oldCurricularCourseScope.getCurricularCourse();	
-				
-						
+
 			Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
-		
+
 			IBranch branch = new Branch();
 			branch.setIdInternal(branchId);
 			IBranch newBranch = (IBranch) persistentBranch.readByOId(branch, false);
-	
+
 			Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
-		
+
 			ICurricularSemester curricularSemester = new CurricularSemester();
 			curricularSemester.setIdInternal(curricularSemesterId);
 			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(curricularSemester, false);
-		
-			
-		
-			if(oldCurricularCourseScope != null) {
-				
-//				ICurricularCourseScope newCurricularCourseScope = 
-//									persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, newCurricularSemester, newBranch );
+
+			if (oldCurricularCourseScope != null) {
 
 				oldCurricularCourseScope.setCredits(newInfoCurricularCourseScope.getCredits());
 				oldCurricularCourseScope.setTheoreticalHours(newInfoCurricularCourseScope.getTheoreticalHours());
@@ -86,27 +77,28 @@ public class EditCurricularCourseScope implements IServico {
 				oldCurricularCourseScope.setMaxIncrementNac(newInfoCurricularCourseScope.getMaxIncrementNac());
 				oldCurricularCourseScope.setMinIncrementNac(newInfoCurricularCourseScope.getMinIncrementNac());
 				oldCurricularCourseScope.setWeigth(newInfoCurricularCourseScope.getWeigth());
-				
+
 				oldCurricularCourseScope.setBranch(newBranch);
 				//it already includes the curricular year
 				oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
-					
-				
+
 				try {
 					persistentCurricularCourseScope.lockWrite(oldCurricularCourseScope);
 				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException("O âmbito do "+newCurricularSemester.getCurricularYear().getYear()+"º ano/ "+newCurricularSemester.getSemester()+"º semestre, do ramo"+newBranch.getCode(), ex);
+					throw new ExistingServiceException(
+						"O âmbito do "
+							+ newCurricularSemester.getCurricularYear().getYear()
+							+ "º ano/ "
+							+ newCurricularSemester.getSemester()
+							+ "º semestre, do ramo"
+							+ newBranch.getCode(),
+						ex);
 				}
-				
-//				result = true;
+
 			}
-		
-			
-//			return new Boolean(result);
-			
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
 	}
 }
-

@@ -46,8 +46,6 @@ public class EditCurricularCourse implements IServico {
 			
 			String newName = newInfoCurricularCourse.getName();
 			String newCode = newInfoCurricularCourse.getCode();
-	
-//			ICurricularCourse newCurricularCourse = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(degreeCPId, newName, newCode);
 		
 			if(oldCurricularCourse != null) {
 				
@@ -56,7 +54,6 @@ public class EditCurricularCourse implements IServico {
 				oldCurricularCourse.setType(newInfoCurricularCourse.getType());
 				oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
 				oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
-				
 				
 				try {
 					persistentCurricularCourse.lockWrite(oldCurricularCourse);

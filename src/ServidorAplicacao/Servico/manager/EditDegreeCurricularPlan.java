@@ -36,7 +36,6 @@ public class EditDegreeCurricularPlan implements IServico {
 	public final String getNome() {
 		return "EditDegreeCurricularPlan";
 	}
-	
 
 	public void run(Integer oldDegreeCPId, InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException {
 
@@ -45,46 +44,22 @@ public class EditDegreeCurricularPlan implements IServico {
 		IDegreeCurricularPlan oldDegreeCP = null;
 		ICursoPersistente persistentDegree = null;
 
-		
 		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-				persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
-				oldDegreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(oldDegreeCPId), false);
-				
-				List degreeCurricularPlans = persistentDegreeCurricularPlan.readAll();
-			 	degreeCurricularPlans.remove((IDegreeCurricularPlan)oldDegreeCP);
-				
-				persistentDegree = persistentSuport.getICursoPersistente();
-				Integer degreeId =oldDegreeCP.getDegree().getIdInternal();
-				degree = persistentDegree.readByIdInternal(degreeId);	
-			
-			
-				String newName = newInfoDegreeCP.getName();
-			
-			
-//				List errors = new ArrayList(2);
-//				errors.add(null);
-//				errors.add(null);
-//				
-//				if(newName.compareToIgnoreCase(oldDegreeCP.getName())==0)
-//					errors = null;
-//				else
-//					int modified = 0; 
-//				
-//					Iterator iter = degreeCurricularPlans.iterator();
-//					while(iter.hasNext()) {
-//						IDegreeCurricularPlan degreeCurricularPlanIter = (IDegreeCurricularPlan) iter.next();
-//						if(newName.compareToIgnoreCase(degreeCurricularPlanIter.getName())==0){
-//							modified++;
-//							errors.set(0, newName);
-//						}
-//					}
-//
-//					if(modified == 0) {
-//						errors = null; 
-					
-					if(oldDegreeCP != null){
-						try {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
+			oldDegreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(oldDegreeCPId), false);
+
+			List degreeCurricularPlans = persistentDegreeCurricularPlan.readAll();
+			degreeCurricularPlans.remove((IDegreeCurricularPlan) oldDegreeCP);
+
+			persistentDegree = persistentSuport.getICursoPersistente();
+			Integer degreeId = oldDegreeCP.getDegree().getIdInternal();
+			degree = persistentDegree.readByIdInternal(degreeId);
+
+			String newName = newInfoDegreeCP.getName();
+
+			if (oldDegreeCP != null) {
+				try {
 
 					oldDegreeCP.setName(newName);
 					oldDegreeCP.setDegree(degree);
@@ -96,19 +71,14 @@ public class EditDegreeCurricularPlan implements IServico {
 					oldDegreeCP.setNeededCredits(newInfoDegreeCP.getNeededCredits());
 					oldDegreeCP.setMarkType(newInfoDegreeCP.getMarkType());
 					oldDegreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
-					
-					persistentDegreeCurricularPlan.write(oldDegreeCP);
-					} catch (ExistingPersistentException ex) {
-						throw new ExistingServiceException("O Plano curricular de nome "+newName, ex);
-					}
-		
-					
-					}
 
-//				}
-							
-//				return errors;
-			
+					persistentDegreeCurricularPlan.write(oldDegreeCP);
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException("O Plano curricular de nome " + newName, ex);
+				}
+
+			}
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

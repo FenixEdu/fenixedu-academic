@@ -43,10 +43,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-		//			Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 		Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
-		//			Integer degreeId = new Integer(request.getParameter("degreeId"));
-		//			
 		InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
 		Object args[] = { curricularCourseScopeId };
@@ -57,7 +54,6 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
-//		System.out.println("11111111111111111111111111111VELHO CURRICULAR COURSEScope" + oldInfoCurricularCourseScope);
 
 		if (oldInfoCurricularCourseScope.getTheoreticalHours() != null)
 			dynaForm.set("theoreticalHours", oldInfoCurricularCourseScope.getTheoreticalHours().toString());
@@ -84,8 +80,6 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			dynaForm.set("weight", oldInfoCurricularCourseScope.getWeigth().toString());
 
 		Object[] args1 = { degreeCurricularPlanId };
-
-		//				GestorServicos manager = GestorServicos.manager();
 		List result = null;
 		try {
 			result = (List) manager.executar(userView, "ReadBranchesByDegreeCurricularPlan", args1);
@@ -93,7 +87,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		//				creation of bean of InfoBranches for use in jsp
+		//	creation of bean of InfoBranches for use in jsp
 		ArrayList branchesList = new ArrayList();
 		if (result != null) {
 			InfoBranch infoBranch;
@@ -104,28 +98,26 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 				value = infoBranch.getIdInternal().toString();
 				label = infoBranch.getCode() + " - " + infoBranch.getName();
 				branchesList.add(new LabelValueBean(label, value));
-			}	
+			}
 			dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
 			request.setAttribute("branchesList", branchesList);
-		
-		
+
 		}
 
-		
-
 		dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
-		
+
 		return mapping.findForward("editCurricularCourseScope");
 	}
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException/*,ExistingActionException*/ {
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException /*,ExistingActionException*/ {
 
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-	    Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+		Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 
 		InfoCurricularCourseScope newInfoCurricularCourseScope = new InfoCurricularCourseScope();
 
@@ -195,29 +187,16 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			newInfoCurricularCourseScope.setCredits(credits);
 		}
 
-		Object args[] = { oldCurricularCourseScopeId, newInfoCurricularCourseScope};
+		Object args[] = { oldCurricularCourseScopeId, newInfoCurricularCourseScope };
 		GestorServicos manager = GestorServicos.manager();
-//		Boolean serviceResult = null;
 
 		try {
 			manager.executar(userView, "EditCurricularCourseScope", args);
-		}  catch (ExistingServiceException e) {
-				   throw new ExistingActionException(e.getMessage(), e);
-			   }
-catch (FenixServiceException fenixServiceException) {
-	throw new FenixActionException(fenixServiceException.getMessage());
-}
-	
-//		if (serviceResult != null) {
-//			ActionErrors actionErrors = new ActionErrors();
-//			ActionError error = null;
-//			if (serviceResult.get(0) != null) {
-//				error = new ActionError("message.existingCurricularCourseScope", serviceResult.get(0), serviceResult.get(1), serviceResult.get(2));
-//				actionErrors.add("message.existingCurricularCourseScope", error);
-//			}
-//			saveErrors(request, actionErrors);
-//		}
-
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e.getMessage(), e);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
 		request.setAttribute("infoCurricularCourseScope", newInfoCurricularCourseScope);
 
 		return mapping.findForward("readCurricularCourse");

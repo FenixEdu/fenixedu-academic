@@ -29,88 +29,59 @@ import Util.TipoCurso;
 
 public class EditDegreeDispatchAction extends FenixDispatchAction {
 
+	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-	public ActionForward prepareEdit(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-		
-			HttpSession session = request.getSession(false);
-			DynaActionForm readDegreeForm = (DynaActionForm) form;
-			
-			UserView userView =
-				(UserView) session.getAttribute(SessionConstants.U_VIEW);
-				
-			Integer degreeId = new Integer(request.getParameter("degreeId"));
-			
-			InfoDegree oldInfoDegree = null;
+		HttpSession session = request.getSession(false);
+		DynaActionForm readDegreeForm = (DynaActionForm) form;
 
-			Object args[] = { degreeId };
-			GestorServicos manager = GestorServicos.manager();
-			
-			try {
-					oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(fenixServiceException.getMessage());
-			}
-			
-			TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
-	
-			readDegreeForm.set("name", (String) oldInfoDegree.getNome());
-			readDegreeForm.set("code", (String) oldInfoDegree.getSigla());
-			readDegreeForm.set("degreeType", degreeType.getTipoCurso());
-//			request.setAttribute("degreeId", degreeId);
-			return mapping.findForward("editDegree");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer degreeId = new Integer(request.getParameter("degreeId"));
+
+		InfoDegree oldInfoDegree = null;
+
+		Object args[] = { degreeId };
+		GestorServicos manager = GestorServicos.manager();
+
+		try {
+			oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 
-	public ActionForward edit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-	
+		TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
+
+		readDegreeForm.set("name", (String) oldInfoDegree.getNome());
+		readDegreeForm.set("code", (String) oldInfoDegree.getSigla());
+		readDegreeForm.set("degreeType", degreeType.getTipoCurso());
+		return mapping.findForward("editDegree");
+	}
+
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
 		HttpSession session = request.getSession(false);
-			
+
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-		DynaActionForm editDegreeForm = (DynaActionForm) form;	
-		Integer oldDegreeId = new Integer(request.getParameter("degreeId"));	
+
+		DynaActionForm editDegreeForm = (DynaActionForm) form;
+		Integer oldDegreeId = new Integer(request.getParameter("degreeId"));
 		String code = (String) editDegreeForm.get("code");
 		String name = (String) editDegreeForm.get("name");
 		Integer degreeTypeInt = (Integer) editDegreeForm.get("degreeType");
-		
+
 		TipoCurso degreeType = new TipoCurso(degreeTypeInt);
 		InfoDegree newInfoDegree = new InfoDegree(code, name, degreeType);
-		
+
 		Object args[] = { oldDegreeId, newInfoDegree };
 		GestorServicos manager = GestorServicos.manager();
-	
-		
+
 		try {
 			manager.executar(userView, "EditDegree", args);
-		}catch (ExistingServiceException e) {
-				   throw new ExistingActionException(e.getMessage(), e);
-			   }
-catch (FenixServiceException fenixServiceException) {
-	throw new FenixActionException(fenixServiceException.getMessage());
-}
-//		if(serviceResult != null) {
-//			ActionErrors actionErrors = new ActionErrors();
-//			ActionError error = null;
-//			if(serviceResult.get(0) != null) {
-//				error = new ActionError("message.existingDegreeCode", serviceResult.get(0));
-//				actionErrors.add("message.existingDegreeCode", error);
-//			}	
-//			if(serviceResult.get(1) != null) {
-//				error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
-//				actionErrors.add("message.existingDegreeName", error);
-//			}			
-//			saveErrors(request, actionErrors);
-//		}
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e.getMessage(), e);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
 		return mapping.findForward("readDegrees");
-	}				
+	}
 }
-

@@ -30,9 +30,6 @@
     	<html:option key="option.editDegreeCP.concluded" value="3"/>
     	</html:select>
 		</td>
-	<td>
-		<span class="error"><html:errors property="state" /></span>
-	</td>
 </tr>
 			
 <tr>
