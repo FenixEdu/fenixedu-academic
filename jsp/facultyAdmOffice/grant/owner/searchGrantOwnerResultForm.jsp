@@ -27,7 +27,9 @@
 		&nbsp;
 	</td>
 	<td>
-		<bean:write name="actualPage"/>/<bean:write name="numberOfPages"/>
+        <logic:present name="actualPage">            
+    		<bean:write name="actualPage"/>/<bean:write name="numberOfPages"/>
+        </logic:present>
 	</td>
 	<td>
 		&nbsp;
