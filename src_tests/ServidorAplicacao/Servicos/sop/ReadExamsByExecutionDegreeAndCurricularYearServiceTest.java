@@ -1,6 +1,5 @@
 /*
  * ReadExamsByDayAndBeginningServiceTest.java
- * JUnit based test
  *
  * Created on 2003/03/29
  */

@@ -37,7 +37,7 @@ public class InfoViewExamByDayAndShift {
 	public boolean equals(Object obj) {
 		if (obj instanceof InfoViewExamByDayAndShift) {
 			InfoViewExamByDayAndShift examObj = (InfoViewExamByDayAndShift) obj;
-			return this.getInfoExam().equals(examObj.getInfoExam());
+			return this.getInfoExam().getSeason().equals(examObj.getInfoExam().getSeason());
 		}
 
 		return false;

@@ -1,6 +1,5 @@
 /*
- * ReadExamsDegreeAndCurricularYearListServiceTest.java
- * JUnit based test
+ * ReadExamsMapServiceTest.java
  *
  * Created on 2003/04/02
  */
@@ -20,6 +19,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 
@@ -29,6 +29,7 @@ public class ReadExamsMapServiceTest
 		InfoDegree infoDegree = null;
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 		InfoExecutionYear infoExecutionYear = null;
+		InfoExecutionPeriod infoExecutionPeriod = null;
 		InfoExecutionDegree infoExecutionDegree = null;
 		List curricularYears = null;
 		
@@ -66,17 +67,8 @@ public class ReadExamsMapServiceTest
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
-		infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
-		infoExecutionYear = new InfoExecutionYear("2002/2003");
-		infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
-		curricularYears = new ArrayList();
-		curricularYears.add(new Integer(1));
-		curricularYears.add(new Integer(3));
-		curricularYears.add(new Integer(5));
-		
-		Object[] result = { infoExecutionDegree, curricularYears };
-		return result;
+		// Service always returns a result.
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -86,13 +78,14 @@ public class ReadExamsMapServiceTest
 		infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
 		infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
 		infoExecutionYear = new InfoExecutionYear("2002/2003");
+		infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
 		infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
 		curricularYears = new ArrayList();
 		curricularYears.add(new Integer(1));
 		curricularYears.add(new Integer(3));
 		curricularYears.add(new Integer(5));
 
-		Object[] result = { infoExecutionDegree, curricularYears };
+		Object[] result = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
 		return result;
 	}
 
@@ -100,7 +93,7 @@ public class ReadExamsMapServiceTest
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
 	protected int getNumberOfItemsToRetrieve() {
-		return 0;
+		return 1;
 	}
 
 	/* (non-Javadoc)
@@ -109,6 +102,10 @@ public class ReadExamsMapServiceTest
 	protected Object getObjectToCompare() {
 		InfoExamsMap infoExamsMap = new InfoExamsMap();
 		infoExamsMap.setCurricularYears(curricularYears);
+		List infoExecutionCourses = new ArrayList();
+		infoExecutionCourses.add("1");
+		infoExecutionCourses.add("2");
+		infoExamsMap.setExecutionCourses(infoExecutionCourses);
 		
 		return infoExamsMap;
 	}

@@ -23,10 +23,21 @@ public class InfoExamsMap {
 	Calendar endSeason1;
 	Calendar startSeason2;
 	Calendar endSeason2;
-	
 
 	public InfoExamsMap() {
 		super();
+	}
+
+	public boolean equals(Object obj) {
+		if (obj instanceof InfoExamsMap) {
+			InfoExamsMap infoExamsMap = (InfoExamsMap) obj;
+			return this.getExecutionCourses().size()
+				== infoExamsMap.getExecutionCourses().size()
+				&& this.getCurricularYears().size()
+					== infoExamsMap.getCurricularYears().size();
+		}
+
+		return false;
 	}
 
 	/**

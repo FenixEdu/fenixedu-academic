@@ -1,6 +1,5 @@
 /*
  * ReadExamsByDayAndBeginningServiceTest.java
- * JUnit based test
  *
  * Created on 2003/03/19
  */
@@ -79,9 +78,9 @@ public class ReadExamsByDayAndBeginningServiceTest
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 		beginning = Calendar.getInstance();
 		beginning.set(Calendar.YEAR, 2003);
-		beginning.set(Calendar.MONTH, Calendar.MARCH);
-		beginning.set(Calendar.DAY_OF_MONTH, 19);
-		beginning.set(Calendar.HOUR_OF_DAY, 9);
+		beginning.set(Calendar.MONTH, Calendar.JUNE);
+		beginning.set(Calendar.DAY_OF_MONTH, 26);
+		beginning.set(Calendar.HOUR_OF_DAY, 13);
 		beginning.set(Calendar.MINUTE, 0);
 		beginning.set(Calendar.SECOND, 0);
 
