@@ -294,6 +294,7 @@
 				dynamic="true">
     		<form-property name="page" type="java.lang.Integer" initial="0"/> 
     		<form-property name="name" type="java.lang.String"/>
+            <form-property type="java.lang.Integer" name="groupId"/>
             <form-property type="java.lang.Integer" name="branchId"/>
             <form-property type="java.lang.Integer" name="areaType"/>
             <form-property type="java.lang.Integer" name="minimumValue"/>
@@ -1329,7 +1330,9 @@
 		<forward name="viewGroups" path="viewCurricularCourseGroups"/>
         <forward path="viewInsertAreaCurricularCourseGroup" name="viewInsertAreaCurricularCourseGroup"/>
         <forward path="viewInsertOptionalCurricularCourseGroup" name="viewInsertOptionalCurricularCourseGroup"/>
-        
+        <forward path="editCurricularCourseGroup" name="edit">
+            
+        </forward>
      </action>
         <action path="/manageCurricularCourseGroup"
 		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCoursesGroupManagementDispatchAction"

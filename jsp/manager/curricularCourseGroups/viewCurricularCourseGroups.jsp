@@ -17,7 +17,7 @@
 	</tr>
 	<logic:iterate id="group" name="curricularCourseGroups">
 	<tr>
-		<td class="listClasses"><html:link page="/manageCurricularCourseGroup.do?method=prepareEditCurricularCourseGroup" paramId="groupId" paramName="group" paramProperty="idInternal"> <bean:write name="group" property="name"/></html:link></td>
+		<td class="listClasses"><html:link page='<%= "/manageCurricularCourseGroups.do?method=prepareEditCurricularCourseGroup&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>' paramId="groupId" paramName="group" paramProperty="idInternal"> <bean:write name="group" property="name"/></html:link></td>
 		<td class="listClasses"><bean:write name="group" property="infoBranch.name"/></td>
 		<td class="listClasses"><bean:message name="group" property="type"/></td>
 		<td class="listClasses"><html:link page="/manageCurricularCourseGroup.do?method=manageCourses" paramId="groupId" paramName="group" paramProperty="idInternal"><bean:message key="label.curricularCourseGroup.manage.courses"/></html:link></td>

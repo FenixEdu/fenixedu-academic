@@ -6914,6 +6914,15 @@
         </filterChains>
         <isTransactional>true</isTransactional>
     </service>
+    <service>
+        <name>ReadCurricularCourseGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.ReadCurricularCourseGroup</implementationClass>
+        <description>Retrieves a Curricular Course GRoup</description>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+        <isTransactional>true</isTransactional>
+    </service>    
 	<service>
         <name>ReadPrecedencesFromDegreeCurricularPlan</name>
         <implementationClass>ServidorAplicacao.Servico.manager.precedences.ReadPrecedencesFromDegreeCurricularPlan</implementationClass>

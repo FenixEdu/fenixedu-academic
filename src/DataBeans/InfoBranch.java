@@ -42,16 +42,7 @@ public class InfoBranch extends InfoObject {
         setCode(code);
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoBranch) {
-            InfoBranch branch = (InfoBranch) obj;
-            resultado = this.getInfoDegreeCurricularPlan().equals(
-                    branch.getInfoDegreeCurricularPlan())
-                    && this.getCode().equals(branch.getCode());
-        }
-        return resultado;
-    }
+   
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";

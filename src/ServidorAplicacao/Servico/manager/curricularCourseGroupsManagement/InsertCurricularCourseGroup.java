@@ -7,6 +7,7 @@ package ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.AreaCurricularCourseGroup;
 import Dominio.Branch;
+import Dominio.CurricularCourseGroup;
 import Dominio.IBranch;
 import Dominio.ICurricularCourseGroup;
 import Dominio.OptionalCurricularCourseGroup;
@@ -31,19 +32,30 @@ public class InsertCurricularCourseGroup implements IService {
     public InsertCurricularCourseGroup() {
     }
 
-    public void run(String name, Integer branchId, Integer minimumValue, Integer maximumValue,
-            Integer areaType, String className) throws FenixServiceException {
+    public void run(Integer groupId, String name, Integer branchId, Integer minimumValue,
+            Integer maximumValue, Integer areaType, String className) throws FenixServiceException {
 
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
             IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
                     .getIPersistentCurricularCourseGroup();
+
             IBranch branch = (IBranch) persistentBranch.readByOID(Branch.class, branchId);
-            if (branch==null){
+            if (branch == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            ICurricularCourseGroup curricularCourseGroup = getInstance(className);
+            ICurricularCourseGroup curricularCourseGroup = null;
+            if (groupId != null) {
+                curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
+                        .readByOID(CurricularCourseGroup.class, groupId);
+                if (curricularCourseGroup == null) {
+                    throw new InvalidArgumentsServiceException();
+                }
+            } else {
+
+                curricularCourseGroup = getInstance(className);
+            }
 
             persistentCurricularCourseGroup.simpleLockWrite(curricularCourseGroup);
             curricularCourseGroup.setBranch(branch);

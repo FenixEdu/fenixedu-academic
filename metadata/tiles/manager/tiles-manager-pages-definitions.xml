@@ -342,4 +342,8 @@
 		<put name="body" value="/manager/curricularCourseGroups/viewCurricularCourses.jsp" />
         <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
 	</definition>
+    <definition name="editCurricularCourseGroup" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/curricularCourseGroups/editCurricularCourseGroup.jsp" />
+        <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
 </tiles-definitions>
