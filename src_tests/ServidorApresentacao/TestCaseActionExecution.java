@@ -7,9 +7,9 @@
 package ServidorApresentacao;
 
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import ServidorAplicacao.GestorServicos;
@@ -59,7 +59,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 		doTest(	getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
 				getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
-				getSuccessfulForward(), getExistingAttributesListToVerifyInSuccessfulExecution(),
+				getSuccessfulForward(), getSuccessfulForwardPath(),
+				getExistingAttributesListToVerifyInSuccessfulExecution(),
 				getNonExistingAttributesListToVerifyInSuccessfulExecution() );
 	}
 
@@ -67,7 +68,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 		doTest(	(Map) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
 				(Map) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
-				getUnsuccessfulForward(), (Map) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
+				getUnsuccessfulForward(), getUnsuccessfulForwardPath(), 
+				(Map) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
 				(Map) getNonExistingAttributesListToVerifyInUnsuccessfulExecution()	);
 	}
    
@@ -79,7 +81,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param nonExistingAttributesList
 	 */
 	protected void doTest(Map itemsToPutInRequest, Map itemsToPutInSession, String forward,
-	Map existingAttributesList, Map nonExistingAttributesList) {
+	String forwardPath, Map existingAttributesList, Map nonExistingAttributesList) {
 
 		String pathOfAction = getRequestPathInfoPathAction();
 		String nameOfAction = getRequestPathInfoNameAction();
@@ -113,7 +115,6 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 		}
 
 		if( (pathOfAction != null) && (nameOfAction != null) &&
-//			(itemsToPutInSession != null) && (itemsToPutInRequest != null) &&
 			(forward != null) ) {
 //			perform
 			actionPerform();
@@ -141,6 +142,36 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 				}
 			}
 		}
+
+		if( (pathOfAction != null) && (nameOfAction != null) &&
+			(forwardPath != null) ) {
+//			perform
+			actionPerform();
+//			checks for errors
+			verifyNoActionErrors();
+//			checks forward
+			verifyForwardPath(forwardPath);
+
+//			CurricularYearAndSemesterAndInfoExecutionDegree ctx = SessionUtils.getContext(getRequest());
+//			assertNotNull("Context is null!", ctx);
+
+			Set keys = null;
+			Iterator keysIterator = null;
+			if(existingAttributesList != null) {
+				keys = existingAttributesList.keySet();
+				keysIterator = keys.iterator();
+			} else if(nonExistingAttributesList != null) {
+				keys = nonExistingAttributesList.keySet();
+				keysIterator = keys.iterator();
+			}
+			if(keys != null) {
+				while(keysIterator.hasNext()) {
+					Integer key = (Integer) keysIterator.next();
+					verifyScopeAttributes(key.intValue(), (List) existingAttributesList.get(key), (List) nonExistingAttributesList.get(key));
+				}
+			}
+		}
+		
    }
 
 	/**
@@ -216,7 +247,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
 	 * the action successfuly.
-	 * The Map must be an Map and it's keys must be the form fiel names
+	 * The Map must be an Map and it's keys must be the form field names
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
@@ -227,7 +258,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
 	 * the action unsuccessfuly.
-	 * The Map must be an Map and it's keys must be the form fiel names
+	 * The Map must be an Map and it's keys must be the form field names
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
@@ -309,6 +340,20 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * This method must return a string identifying the forward when the action executes unsuccessfuly.
 	 */
 	protected String getUnsuccessfulForward() {
+		return null;
+	}
+
+	/**
+	 * This method must return a string identifying the forward path when the action executes successfuly.
+	 */
+	protected String getSuccessfulForwardPath() {
+		return null;
+	}
+
+	/**
+	 * This method must return a string identifying the forward path when the action executes unsuccessfuly.
+	 */
+	protected String getUnsuccessfulForwardPath() {
 		return null;
 	}
 
