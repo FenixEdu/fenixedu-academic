@@ -17,7 +17,7 @@ import DataBeans.InfoRoom;
 import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.DiaSemana;
 import Util.TipoAula;

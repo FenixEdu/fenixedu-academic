@@ -24,7 +24,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class AuthenticationStudentFormAction extends FenixAction {

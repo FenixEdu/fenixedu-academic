@@ -9,7 +9,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.base.FenixAction;
 
 /**
  * @author Ricardo Nortadas

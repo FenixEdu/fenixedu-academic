@@ -13,7 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
-import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;

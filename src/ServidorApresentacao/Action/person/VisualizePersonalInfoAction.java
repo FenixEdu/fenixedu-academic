@@ -26,7 +26,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
-public class VisualizePersonalInfoAction extends ServidorApresentacao.Action.FenixAction {
+public class VisualizePersonalInfoAction extends ServidorApresentacao.Action.base.FenixAction {
 	
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,

@@ -13,7 +13,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**

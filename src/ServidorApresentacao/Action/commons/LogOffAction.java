@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class LogOffAction extends ServidorApresentacao.Action.FenixAction {
+public class LogOffAction extends ServidorApresentacao.Action.base.FenixAction {
 
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,

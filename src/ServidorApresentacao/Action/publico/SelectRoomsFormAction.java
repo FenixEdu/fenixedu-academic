@@ -14,7 +14,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
-import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 

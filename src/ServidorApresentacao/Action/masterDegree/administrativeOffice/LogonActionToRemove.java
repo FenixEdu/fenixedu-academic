@@ -22,7 +22,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class LogonActionToRemove extends ServidorApresentacao.Action.FenixAction {
+public class LogonActionToRemove extends ServidorApresentacao.Action.base.FenixAction {
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 								  HttpServletRequest request,
