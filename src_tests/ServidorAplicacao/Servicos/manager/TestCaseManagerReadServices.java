@@ -25,9 +25,9 @@ public abstract class TestCaseManagerReadServices extends TestCaseReadServices {
 
 		if(args != null) {
 
-			Object result;
+//			Object result;  result =
 			try {
-					result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+					 _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
 					
 			} catch (NonExistingServiceException ex) {
 				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());

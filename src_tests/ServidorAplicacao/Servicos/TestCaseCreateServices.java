@@ -47,6 +47,7 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 					fail("testUnsuccessfulExecutionsOfCreateService");
 				} catch (Exception ex) {
 					assertNull("testUnsuccessfulExecutionsOfCreateService", result);
+					System.out.println("EXCEPCAO"+ex);
 					System.out.println("testUnsuccessfulExecutionsOfCreateService [" + key + "] was SUCCESSFULY run by class: " + this.getClass().getName());
 				}
 			}
@@ -80,6 +81,7 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 		if(args != null) {
 			Object result = null;
 			try {
+				System.out.println("USER_VIEW"+_userView);
 				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
 				assertEquals("testSuccessfulExecutionOfCreateService", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 				System.out.println("testSuccessfulExecutionOfCreateService was SUCCESSFULY run by class: " + this.getClass().getName());

@@ -44,9 +44,9 @@ public class InsertDegree implements IServico {
 			
 				String code = infoDegree.getSigla();
 				String name = infoDegree.getNome();
-//				TipoCurso type = infoDegree.getTipoCurso();
+				TipoCurso type = infoDegree.getTipoCurso();
 
-				ICurso degree = new Curso(code, name, infoDegree.getTipoCurso());
+				ICurso degree = new Curso(code, name, type);
 	
 				persistentDegree.lockWrite(degree);
 
