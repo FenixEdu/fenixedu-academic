@@ -506,10 +506,10 @@
 
 <b><bean:message key="label.grant.contract.information"/></b><br>
 <logic:present name="infoListGrantContractList">
-   	
     <logic:iterate id="infoListGrantContract" name="infoListGrantContractList">
 	<br/><br/>
     <%-- Contract --%>
+    <logic:present name="infoListGrantContract" property="infoGrantContract">
 	<table border="1">
 	<tr>
 		<td>
@@ -842,6 +842,8 @@
 </td>
 </tr>
 </table>
+</logic:present>
+
   </logic:iterate> <%-- Grant Contract --%>
 </table>
 

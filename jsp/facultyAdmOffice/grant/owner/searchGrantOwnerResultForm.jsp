@@ -52,7 +52,7 @@
 		</td>
 		<td class="listClasses-header" colspan="2">
 			<bean:message key="label.grant.owner.documentidentification"/>
-		</td>		
+		</td>
 		<td class="listClasses-header">
 			&nbsp;<%-- blank --%>
 		</td>				
@@ -78,6 +78,7 @@
 	</tr>
 	<%-- Table with result of search --%>
 	<logic:iterate id="infoGrantOwner" name="infoGrantOwnerList">
+		<logic:present name="infoGrantOwner" property="personInfo">
 		<tr>
 			<td class="listClasses">
 				<bean:write name="infoGrantOwner" property="personInfo.nome"/>
@@ -117,6 +118,7 @@
 				</logic:notPresent>
 			</td>
 		</tr>
+		</logic:present>
 	</logic:iterate>
 </table>
 <br/>

@@ -5,8 +5,8 @@
 
 <tiles-definitions>
 	<definition name="facultyAdmOffice.masterPage" extends="df.layout.two-column">
-	  <put name="title" value=".IST - Secretaria de Pessoal Docente" />
-	  <put name="serviceName" value="Secretaria de Pessoal Docente" />
+	  <put name="title" value=".IST - Secção de Pessoal Docente e Investigador" />
+	  <put name="serviceName" value="Secção de Pessoal Docente e Investigador" />
 	  <put name="navLocal" value="/facultyAdmOffice/commons/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  <put name="body-context" value=""/>
