@@ -5574,9 +5574,16 @@
 		<name>StartMigrationProcess</name>
 		<implementationClass>ServidorAplicacao.Servico.manager.migration.StartMigrationProcess</implementationClass>
 		<description/>
-		<isTransactional>false</isTransactional>
+		<isTransactional>true</isTransactional>
 		<filterChains/>
 	</service>
+    <service>
+        <name>ClearCacheForMigrationProcess</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.ClearCache</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
 	<service>
         <name>ReadPerson</name>
         <description>Reads a Person by OID</description>

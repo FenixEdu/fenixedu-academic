@@ -32,6 +32,15 @@ public class StartMigrationProcessAction extends Action
 		
 		try
 		{
+			ServiceUtils.executeService(userView, "ClearCacheForMigrationProcess", null);
+		}
+		catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+
+		try
+		{
 			ServiceUtils.executeService(userView, "StartMigrationProcess", args);
 		}
 		catch (FenixServiceException e)

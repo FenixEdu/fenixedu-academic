@@ -422,7 +422,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			while(iteratorScopes.hasNext())
 			{
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
-				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
+				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+					&& curricularCourseScope.getEndDate() == null)
 				{
 					courseIsToMantain = true;
 				}

@@ -454,7 +454,7 @@ public class ReportEnrolment
 				while(iterator7.hasNext()) {
 					ICurso degree = (ICurso) iterator7.next();
 					out.println("");
-					out.print(degree.getNome() + "\t\t         ");
+					out.print("\t\t         " + degree.getNome());
 				}
 				out.println("");
 			}

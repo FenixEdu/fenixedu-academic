@@ -1,11 +1,12 @@
 package ServidorAplicacao.Servico.manager.migration;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
-import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments;
-import middleware.studentMigration.enrollments.UpdateStudentEnrolments;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IPessoa;
 import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
@@ -26,53 +27,32 @@ public class StartMigrationProcess implements IService
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentSuport.iniciarTransaccao();
+//			persistentSuport.iniciarTransaccao();
 			IPessoa person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername("L45438");
-			persistentSuport.confirmarTransaccao();
+//			persistentSuport.confirmarTransaccao();
 
 			if (person != null && person.getPassword().equals(password))
 			{
-				Properties properties = new Properties();
-				properties.load(StartMigrationProcess.class.getResourceAsStream("/migrationLog.properties"));
-				String fileNameTemp1 = properties.getProperty("update.past.enrollments.log.file.name");
-				String fileNameTemp2 = properties.getProperty("update.current.enrollments.log.file.name");
-//				String fileNameTemp3 = properties.getProperty("give.all.equivalences.log.file.name");
-//				String fileNameTemp4 = properties.getProperty("give.leec.equivalences.log.file.name");
-				
-				Date date = new Date();
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTimeInMillis(date.getTime());
-				int day = calendar.get(Calendar.DAY_OF_MONTH);
-				int month = calendar.get(Calendar.MONTH);
-				int year = calendar.get(Calendar.YEAR);
-				String action = null;
-				if (Boolean.valueOf(flag).booleanValue())
-				{
-					action = "recordsToAdd";
-				} else
-				{
-					action = "recordsToRemove";
-				}
+				List fileNames = getFileNames(Boolean.valueOf(flag).booleanValue());
 
-				String fileName1 = fileNameTemp1 + "_" + year + "_" + month + "_" + day + "_" + action + ".txt";
-				String fileName2 = fileNameTemp2 + "_" + year + "_" + month + "_" + day + "_" + action + ".txt";
+				String fileName1 = (String) fileNames.get(0);
+				String fileName2 = (String) fileNames.get(1);
 				
 				if (method.equals("pastCurriculum"))
 				{
-					String args[] = { flag, "true", fileName1 };
-					CreateAndUpdateAllStudentsPastEnrolments.main(args);
-//					CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans instance =
-//						new CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans();
-//					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName1);
+//					String args[] = { flag, "true", fileName1 };
+//					CreateAndUpdateAllStudentsPastEnrolments.main(args);
+					CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans instance =
+						new CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans();
+					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName1);
 				} else if (method.equals("thisSemester"))
 				{
-					String args[] = { flag, "true", fileName2 };
-					UpdateStudentEnrolments.main(args);
-//					CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans instance =
-//						new CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans();
-//					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName2);
+//					String args[] = { flag, "true", fileName2 };
+//					UpdateStudentEnrolments.main(args);
+					CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans instance =
+						new CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans();
+					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName2);
 				}
-//				persistentSuport.confirmarTransaccao();
 			} else
 			{
 				throw new ExcepcaoAutenticacao("Autenticacao incorrecta");
@@ -83,4 +63,45 @@ public class StartMigrationProcess implements IService
 			throw new FenixServiceException(e);
 		}
 	}
+
+	/**
+	 * @param recordsToAdd
+	 * @return List of file names
+	 * @throws IOException
+	 */
+	private List getFileNames(boolean recordsToAdd) throws IOException
+	{
+		Properties properties = new Properties();
+		properties.load(StartMigrationProcess.class.getResourceAsStream("/migrationLog.properties"));
+		String fileNameTemp1 = properties.getProperty("update.past.enrollments.log.file.name");
+		String fileNameTemp2 = properties.getProperty("update.current.enrollments.log.file.name");
+		
+		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(date.getTime());
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		int month = calendar.get(Calendar.MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int minute = calendar.get(Calendar.MINUTE);
+		String action = null;
+		if (recordsToAdd)
+		{
+			action = "recordsToAdd";
+		} else
+		{
+			action = "recordsToRemove";
+		}
+
+		String concat = "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + action + ".txt";
+		String fileName1 = fileNameTemp1 + concat;
+		String fileName2 = fileNameTemp2 + concat;
+		
+		List result = new ArrayList();
+		result.add(0, fileName1);
+		result.add(1, fileName2);
+		
+		return result;
+	}
+
 }
