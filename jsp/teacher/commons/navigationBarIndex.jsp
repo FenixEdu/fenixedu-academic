@@ -7,11 +7,8 @@
   	</html:link>
   </li>
   <li>
-  	<html:link page='/manageCredits.do?page=0&amp;method=prepare'>
+  	<html:link page='/creditsManagement.do?page=0&amp;method=prepare'>
   		<bean:message key="link.manage.credits"/>
   	</html:link>
   </li>
-  <%--
-<%= "/executionCourseShiftsPercentageManager.do?method=show&amp;executionCourseInternalCode=" + executionCourseIdInternal.toString() %>'>Administração de créditos</html:link>  
-  --%>
 </ul>
