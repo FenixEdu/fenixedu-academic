@@ -61,7 +61,11 @@ public class GetEnrolmentGrade implements IServico {
 		// if there's only one evaluation ...
 		if (enrolmentEvaluations.size() == 1){
 			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
-			enrolmentEvaluation.setGrade((new Integer(enrolmentEvaluation.getGrade())).toString());
+			
+			try {
+				enrolmentEvaluation.setGrade((new Integer(enrolmentEvaluation.getGrade())).toString());	
+			} catch(NumberFormatException e) {
+			}
 			return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 		}
 
