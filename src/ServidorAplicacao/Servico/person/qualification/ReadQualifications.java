@@ -21,15 +21,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  */
 
-public class ReadPersonQualifications implements IServico
+public class ReadQualifications implements IServico
 {
 
-	private static ReadPersonQualifications service = new ReadPersonQualifications();
+	private static ReadQualifications service = new ReadQualifications();
 
 	/**
 	 * The singleton access method of this class.
 	 */
-	public static ReadPersonQualifications getService()
+	public static ReadQualifications getService()
 	{
 		return service;
 	}
@@ -37,7 +37,7 @@ public class ReadPersonQualifications implements IServico
 	/**
 	 * The constructor of this class.
 	 */
-	private ReadPersonQualifications()
+	private ReadQualifications()
 	{
 	}
 
