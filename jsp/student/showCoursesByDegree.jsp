@@ -47,8 +47,8 @@ function removeFromList(listField) {
          for (var i = 0; i < listField.length; i++) {
             // Put everything except the selected one into the array
             if ( i < selected) { replaceTextArray[i] = listField.options[i].text; }
-            if ( i > selected ) { replaceTextArray[i-1] = listField.options[i].text; }
             if ( i < selected) { replaceValueArray[i] = listField.options[i].value; }
+            if ( i > selected ) { replaceTextArray[i-1] = listField.options[i].text; }           
             if ( i > selected ) { replaceValueArray[i-1] = listField.options[i].value; }
          }
          listField.length = replaceTextArray.length;  // Shorten the input list
@@ -66,7 +66,16 @@ function selectAll() {
   while( i < document.studentShiftEnrolmentForm.wantedCourse.options.length ) {
     document.studentShiftEnrolmentForm.wantedCourse.options[i].selected = true;
     i+=1;
-  }
+  } 
+}
+
+function selectFirst() {
+  var i = 0;
+  document.studentShiftEnrolmentForm.wantedCourse.multiple=true;
+  while( i < 1 ) {
+    document.studentShiftEnrolmentForm.wantedCourse.options[i].selected = true;
+    i+=1;
+  } 
 }
 
 //-->
@@ -143,7 +152,7 @@ onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';select
       <br/>
       <input type=button 
       value="Remover Disciplina" 
-      onclick="removeFromList(wantedCourse);"
+      onclick="removeFromList(wantedCourse);selectFirst();"
       />
     </TD>
   </TR>
