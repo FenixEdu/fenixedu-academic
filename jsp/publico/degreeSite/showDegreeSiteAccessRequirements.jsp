@@ -21,11 +21,7 @@
 	<div class="clear"></div> 
 	
 	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
-	<!-- ANO LECTIVO -->
-	<logic:notEmpty name="schoolYear">
-	  <h2><span class="redbox"><bean:write name="schoolYear" /></span>
-  </logic:notEmpty>  
-  <span class="greytxt">&nbsp;<bean:message key="label.accessRequirements"/></span></h2>
+	<h2><span class="greytxt">&nbsp;<bean:message key="label.accessRequirements"/></span></h2>
   <br>
 
 	<!-- NOME(S) DA PROVA(S) DE INGRESSO -->

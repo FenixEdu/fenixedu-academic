@@ -35,11 +35,7 @@
 <div class="clear"></div> 
 <h1><bean:write name="infoDegree" property="tipoCurso" />&nbsp<bean:write name="infoDegree" property="nome" /></h1>
 
-<!-- ANO LECTIVO -->
-<logic:notEmpty name="schoolYear">
-  <h2><span class="redbox"><bean:write name="schoolYear" /></span>
-	<span class="greytxt">&nbsp;<bean:write name="infoCurricularCourse" property="name" /></span></h2>
-</logic:notEmpty>  
+<h2><span class="greytxt">&nbsp;<bean:write name="infoCurricularCourse" property="name" /></span></h2>
 <br />
 
 
@@ -58,7 +54,7 @@
 					<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
 					<p>
 					<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() %>" target="_blank" >
-						<bean:write name="infoExecutionCourse" property="nome" />
+						<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
 					</html:link>
 					<br />
 					</p>
