@@ -27,7 +27,7 @@
 					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.subject"/></strong> <bean:write name="advisory" property="subject"/><td>
 				</tr>
 				<tr>
-					<td colspan="3" style="background: #EBECED; padding: 5px 0 10px 10px; border-bottom: 1px solid #333;"><bean:write name="advisory" property="message"/></td>
+					<td colspan="3" style="background: #EBECED; padding: 5px 0 10px 10px; border-bottom: 1px solid #333;"><bean:write name="advisory" property="message" filter="false" /></td>
 				</tr>
 			</logic:equal>
 			<logic:notEqual name="advisory" property="idInternal" value="<%= activeAdvisory.toString() %>">
