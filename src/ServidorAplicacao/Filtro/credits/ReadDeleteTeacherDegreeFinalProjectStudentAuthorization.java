@@ -6,6 +6,7 @@ package ServidorAplicacao.Filtro.credits;
 
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 
@@ -28,15 +29,14 @@ public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization
 	 * 
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
-    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
+    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
         IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
                 .getIPersistentTeacherDegreeFinalProjectStudent();
 
         ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) teacherDegreeFinalProjectStudentDAO
-                .readByOId(new TeacherDegreeFinalProjectStudent(teacherDegreeFinalProjectStudentId),
-                        false);
+                .readByOID(TeacherDegreeFinalProjectStudent.class, teacherDegreeFinalProjectStudentId, false);
         return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher()
                 .getIdInternal() : null;
     }

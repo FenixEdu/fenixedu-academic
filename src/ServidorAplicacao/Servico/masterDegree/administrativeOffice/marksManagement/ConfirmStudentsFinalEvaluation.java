@@ -78,10 +78,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
             IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = readEmployee(person);
 
-            ICurricularCourse curricularCourse = new CurricularCourse();
-            curricularCourse.setIdInternal(curricularCourseCode);
-            curricularCourse =
-                (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
+            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, curricularCourseCode, false);
 
             List enrolments = null;
             if (yearString != null)

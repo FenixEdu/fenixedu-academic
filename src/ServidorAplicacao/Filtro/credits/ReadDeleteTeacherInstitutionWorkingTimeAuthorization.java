@@ -6,6 +6,7 @@ package ServidorAplicacao.Filtro.credits;
 
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 
@@ -28,14 +29,14 @@ public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization
 	 * 
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
-    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
+    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         Integer teacherInstitutionWorkingTime = (Integer) arguments[0];
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
                 .getIPersistentTeacherInstitutionWorkingTime();
 
         ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) teacherInstitutionWorkingTimeDAO
-                .readByOId(new TeacherInstitutionWorkTime(teacherInstitutionWorkingTime), false);
+                .readByOID(TeacherInstitutionWorkTime.class, teacherInstitutionWorkingTime, false);
         return teacherInstitutionWorkTime != null ? teacherInstitutionWorkTime.getTeacher()
                 .getIdInternal() : null;
     }

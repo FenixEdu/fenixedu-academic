@@ -56,7 +56,7 @@ public class ReadStudentEnrolmentEvaluation implements IServico
     public InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) throws FenixServiceException
     {
 
-        IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+        IEnrolmentEvaluation enrolmentEvaluation = null;
         InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
         InfoEnrolment infoEnrolment = new InfoEnrolment();
         InfoTeacher infoTeacher = new InfoTeacher();
@@ -67,11 +67,9 @@ public class ReadStudentEnrolmentEvaluation implements IServico
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation =
                 sp.getIPersistentEnrolmentEvaluation();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            enrolmentEvaluation.setIdInternal(studentEvaluationCode);
             enrolmentEvaluation =
-                (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOId(
-                    enrolmentEvaluation,
-                    false);
+                (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOID(
+                    EnrolmentEvaluation.class, studentEvaluationCode, false);
             //			get curricularCourseScope for enrolmentEvaluation
 //            ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
 //            curricularCourseScope.setIdInternal(

@@ -47,9 +47,7 @@ public class ReadCurricularCourseByIdInternal implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-			ICurricularCourse curricularCourse = new CurricularCourse();
-			curricularCourse.setIdInternal(curricularCourseCode);
-			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
+			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, curricularCourseCode, false);
 
 			infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
 		} catch (ExcepcaoPersistencia ex) {

@@ -66,9 +66,8 @@ public class ReadStudentMarksByCurricularCourse implements IService
 			ICurricularCourse curricularCourse = new CurricularCourse();
 			curricularCourse.setIdInternal(curricularCourseID);
 			curricularCourse =
-				(ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
-					curricularCourse,
-					false);
+				(ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
+					CurricularCourse.class ,curricularCourseID, false);
 
 			final ICurricularCourse curricularCourseTemp = curricularCourse;
 
@@ -173,11 +172,8 @@ public class ReadStudentMarksByCurricularCourse implements IService
 						{
 							if (enrolmentEvaluation.getEmployee() != null)
 							{
-								IPessoa person = new Pessoa();
-								person.setIdInternal(
-									enrolmentEvaluation.getEmployee().getPerson().getIdInternal());
 								IPessoa person2 =
-									(IPessoa) sp.getIPessoaPersistente().readByOId(person, false);
+									(IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class, enrolmentEvaluation.getEmployee().getPerson().getIdInternal(), false);
 								infoEnrolmentEvaluation.setInfoEmployee(
 									Cloner.copyIPerson2InfoPerson(person2));
 							}

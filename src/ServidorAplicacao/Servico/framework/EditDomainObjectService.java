@@ -101,7 +101,7 @@ public abstract class EditDomainObjectService implements IService {
                 if ((value != null)
                         && (Beans.isInstanceOf(value, IDomainObject.class))) {
                     IDomainObject o = po
-                            .readByOId((IDomainObject) value, false);
+                            .readByOID(value.getClass(), ((IDomainObject) value).getIdInternal(), false);
                     PropertyUtils.setProperty(newDomainObject, entry.getKey()
                             .toString(), o);
                 }
@@ -210,8 +210,8 @@ public abstract class EditDomainObjectService implements IService {
         // if the editing means alter unique keys or the there is no unique
         // then read by oid to get the object from database.
         if (objectFromDatabase == null && !isNew(objectToEdit)) {
-            objectFromDatabase = getIPersistentObject(sp).readByOId(
-                    objectToEdit, false);
+            objectFromDatabase = getIPersistentObject(sp).readByOID(objectToEdit.getClass(),
+                    objectToEdit.getIdInternal(), false);
             // if the object still null then the object doesn't exist.
             if (objectFromDatabase == null) { throw new NonExistingServiceException(
                     "Object doesn't exist!"); }
