@@ -167,7 +167,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         }
         if (infoClassEnrollmentDetails == null
                 || infoClassEnrollmentDetails.getInfoClassList().size() == 0) {
-            errors.add("error", new ActionError("errors.impossible.operation"));
+            errors.add("error", new ActionError("error.message.no.classes.for.reserve"));
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
