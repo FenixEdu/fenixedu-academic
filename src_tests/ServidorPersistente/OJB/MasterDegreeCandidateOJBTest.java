@@ -164,7 +164,6 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
     
     public void testReadNonExistingMasterDegreeCandidate() {
         System.out.println("- Test 2 : Read non-existing Master Degree Candidate");
-        IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         
         try {
             persistentSupport.iniciarTransaccao();
@@ -378,7 +377,6 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
    
     public void testDeleteAllMasterDegreeCandidates() {
         System.out.println("- Test 7 : Delete All Master Degree Candidates");
-        IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         try {
             persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.deleteAll();
@@ -541,10 +539,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
 	public void testReadByExecutionYear(){
 		System.out.println("- Test 12 : Read By Execution Year");
-		ICurso masterDegreeTemp = null;
 		IExecutionYear executionYear = null;
-		ICursoExecucao executionDegree = null;
-		IDegreeCurricularPlan degreeCurricularPlan = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();
