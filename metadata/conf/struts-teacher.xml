@@ -184,6 +184,7 @@
             <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="save" type="java.lang.Integer" initial="0"/>
             <form-property name="anotherDateVisible" type="java.lang.String" initial=""/>            
+            <form-property name="byTeacher" type="java.lang.String"/>
         </form-bean>
         <!-- evaluation form-->
         <form-bean name="evaluationForm" type="org.apache.struts.validator.DynaValidatorForm" 
