@@ -9,7 +9,6 @@ import java.util.ListIterator;
 import java.util.Locale;
 
 import Dominio.Horario;
-import Dominio.HorarioTipo;
 import Dominio.IStrategyHorarios;
 import Dominio.IStrategyJustificacoes;
 import Dominio.Justificacao;
@@ -48,7 +47,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 	private ArrayList _listaParamJustificacoes = null;
 
 	private Horario _horario = null;
-	private HorarioTipo _horarioTipo = null;
 
 	private long _saldoPrimEscalao = 0;
 	private long _saldoSegEscalao = 0;
@@ -67,7 +65,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 	private Calendar _calendarioConsulta = null;
 	private Timestamp _dataInicio = null;
 	private Timestamp _dataFim = null;
-	private Date _dataAssiduidade = null;
 
 	private boolean _mesInjustificado = false;
 	private boolean _diasInjustificados = false;
