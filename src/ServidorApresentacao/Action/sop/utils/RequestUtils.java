@@ -44,6 +44,6 @@ public abstract class RequestUtils {
 		if (indexOf != -1)
 			return (InfoExecutionCourse) executionCourseList.get(indexOf);
 		else
-			return null;
+			throw new IllegalArgumentException("Not find executionCourse!");
 	}
 }
