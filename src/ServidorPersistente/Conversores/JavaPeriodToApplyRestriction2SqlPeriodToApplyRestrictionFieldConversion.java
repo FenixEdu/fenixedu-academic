@@ -30,10 +30,7 @@ public class JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConver
                 throw new IllegalArgumentException(this.getClass().getName()
                         + ": Illegal PeriodToApplyRestriction!(" + source + ")");
             }
-        } else {
-            throw new IllegalArgumentException("Illegal PeriodToApplyRestriction!("
-                    + source + ")");
-        }
+        } 
         return periodToApplyRestriction;
 
     }
