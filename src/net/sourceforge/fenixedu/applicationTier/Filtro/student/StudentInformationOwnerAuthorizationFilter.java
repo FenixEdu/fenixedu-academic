@@ -34,7 +34,7 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
 
         if (id == null || id.getRoles() == null
                 || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                || !curriculumOwner(id, request.getArguments())) {
+                || !curriculumOwner(id, request.getServiceParameters().parametersArray())) {
             throw new NotAuthorizedFilterException();
         }
     }

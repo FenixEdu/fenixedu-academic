@@ -26,7 +26,7 @@ public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
-        Integer finalDegreeWorkProposalOID = (Integer) request.getArguments()[0];
+        Integer finalDegreeWorkProposalOID = (Integer) request.getServiceParameters().parametersArray()[0];
         if (finalDegreeWorkProposalOID != null) {
             ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport

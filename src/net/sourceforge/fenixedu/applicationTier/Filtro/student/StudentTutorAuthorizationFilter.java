@@ -53,7 +53,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter
             }
             else
             {
-                messageException = studentTutor(id, request.getArguments());
+                messageException = studentTutor(id, request.getServiceParameters().parametersArray());
                 if (messageException != null)
                     throw new NotAuthorizedFilterException(messageException);
             }

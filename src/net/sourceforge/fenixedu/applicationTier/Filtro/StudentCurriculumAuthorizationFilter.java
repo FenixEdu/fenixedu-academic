@@ -54,7 +54,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
-        String messageException = hasProvilege(id, request.getArguments());
+        String messageException = hasProvilege(id, request.getServiceParameters().parametersArray());
         if ((id == null) || (id.getRoles() == null) || (!containsRole(id.getRoles()))
                 || (messageException != null)) {
             throw new NotAuthorizedFilterException(messageException);

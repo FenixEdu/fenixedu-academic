@@ -50,7 +50,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
         }
         else
         {
-            messageException = curricularPlanOwner(id, request.getArguments());
+            messageException = curricularPlanOwner(id, request.getServiceParameters().parametersArray());
             if (messageException != null)
                 throw new NotAuthorizedFilterException(messageException);
         }

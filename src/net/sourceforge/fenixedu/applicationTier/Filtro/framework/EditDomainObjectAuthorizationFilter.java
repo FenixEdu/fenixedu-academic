@@ -29,7 +29,7 @@ public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationB
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
             Exception {
         try {
-            Object[] arguments = request.getArguments();
+            Object[] arguments = request.getServiceParameters().parametersArray();
             IUserView id = (IUserView) request.getRequester();
             Integer idInternal = ((InfoObject) arguments[1]).getIdInternal();
             boolean isNew = (idInternal == null) || idInternal.equals(new Integer(0));

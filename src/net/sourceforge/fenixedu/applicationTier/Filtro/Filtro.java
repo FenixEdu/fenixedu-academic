@@ -24,7 +24,7 @@ abstract public class Filtro extends AccessControlFilter
     }
 
     protected Object[] getServiceCallArguments(ServiceRequest request) {
-        return request.getArguments();
+        return request.getServiceParameters().parametersArray();
     }
     
 }

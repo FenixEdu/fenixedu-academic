@@ -33,7 +33,7 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
             Exception {
         super.execute(request, response);
 
-        Integer testId = (Integer) request.getArguments()[1];
+        Integer testId = (Integer) request.getServiceParameters().parametersArray()[1];
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
         IPersistentDistributedTest distributedTestDAO = sp.getIPersistentDistributedTest();

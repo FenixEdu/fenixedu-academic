@@ -38,7 +38,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
-        String messageException = hasPrevilege(id, request.getArguments());
+        String messageException = hasPrevilege(id, request.getServiceParameters().parametersArray());
 
         if (messageException != null) {
             throw new NotAuthorizedException(messageException);
