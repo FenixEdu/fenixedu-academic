@@ -72,11 +72,18 @@ public class InfoSitePublications extends DataTranferObject implements ISiteComp
 	 * @return Returns the infoPublications (both cientific and didatic)
 	 */
 	public List getInfoPublications() {
+		try {
 	    List publications = new ArrayList();
-	    publications.addAll(infoCientificPublications);
-	    publications.addAll(infoDidaticPublications);
+	    if (infoCientificPublications != null && infoCientificPublications.size()>0)
+	    	publications.addAll(infoCientificPublications);
+	    if (infoDidaticPublications != null && infoDidaticPublications.size()>0)
+	    	publications.addAll(infoDidaticPublications);
 	    //publications.addAll(infoUndeterminedPublications);
-	    return infoPublications = publications;
+	    infoPublications = publications;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	    return infoPublications;
 	}
 
 	/**

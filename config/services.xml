@@ -3299,6 +3299,24 @@
     </service>
     
 	<!-- Carlos Pereira & Francisco Passos -->
+	<service>
+        <name>InsertPublication</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.InsertPublication</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>EditarPublication</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.EditarPublication</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
     <service>
         <name>ReadPublicationByInternalId</name>
         <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationByInternalId</implementationClass>
@@ -3393,15 +3411,6 @@
         </filterChains>
     </service>
 	<service>
-		<name>EditPublication</name>
-		<implementationClass>ServidorAplicacao.Servico.publication.EditPublication</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="PublicationAuthorAuthorization"/>
-		</filterChains>
-	</service>
-	<service>
         <name>ReadPublicationSubtypes</name>
         <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationSubtypes</implementationClass>
         <description/>
@@ -3440,6 +3449,24 @@
     <service>
         <name>ReadAuthorPublications</name>
         <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorPublications</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorsByName</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorsByName</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorById</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorById</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3494,6 +3521,15 @@
     <service>
         <name>ReadAuthorByKeyPerson</name>
         <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorByKeyPerson</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorByPersonId</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorByPersonId</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
