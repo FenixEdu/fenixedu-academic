@@ -16,7 +16,6 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
-import Dominio.Enrolment;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
@@ -236,14 +235,22 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	public List readEnrolmentByCurricularCourse(Integer curricularCourseId) throws ExcepcaoPersistencia {
-				
-				Criteria crit = new Criteria();
-				crit.addEqualTo("curricularCourseScopeKey", curricularCourseId);
-				List result = queryList(Enrolment.class, crit);
-				if (!result.isEmpty())
-					return null;
-				else
-					return result;
-	}
+	
+//	//APAGAR
+//	public List readEnrolmentsByCurricularCourseScopeAndExecutionPeriod(Integer curricularCourseScopeId, Integer executionPeriodId )throws ExcepcaoPersistencia {
+//				
+//				Criteria crit = new Criteria();
+//				crit.addEqualTo("curricularCourseScopeKey", curricularCourseScopeId);
+//				crit.addEqualTo("keyExecutionPeriod", executionPeriodId);
+//				List result = queryList(Enrolment.class, crit);
+//				if (!result.isEmpty())
+//					return null;
+//				
+//				return result;
+//	}
+
+//qd receber do servico ver qd eh null
+
+ 
+
 }

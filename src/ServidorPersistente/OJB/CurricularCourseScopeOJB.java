@@ -146,7 +146,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentCurricularCourseScope#readCurricularCourseScopeByCurricularCourse(Dominio.ICurricularCourse)
 	 */
-	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+	public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
 		try {
 				ICurricularCourseScope curricularCourseScope = null;
 				String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
@@ -174,10 +174,10 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 					throw ex;
 				}
 
-				if ((result != null) && (result.size() != 0)) {
-					curricularCourseScope = (ICurricularCourseScope) result.get(0);
-				}
-				return curricularCourseScope;
+//				if ((result != null) && (result.size() != 0)) {
+//					curricularCourseScope = (I curricularCourseScopelarCourseScope) result.get(0);
+//				}
+				return result;
 
 			} catch (QueryException ex) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

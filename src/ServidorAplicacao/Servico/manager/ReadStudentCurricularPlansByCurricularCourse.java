@@ -8,11 +8,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
+import Dominio.CurricularCourse;
+import Dominio.Enrolment;
+import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -50,12 +56,97 @@ public class ReadStudentCurricularPlansByCurricularCourse implements IServico {
 	List allStudentCurricularPlans = new ArrayList();
 	try {
 			sp = SuportePersistenteOJB.getInstance();
-			List enrolmentsList = sp.getIStudentCurricularPlanPersistente().readEnrolmentByCurricularCourse(curricularCourseId);
+			ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(new CurricularCourse(curricularCourseId), false);
+			IPersistentEnrolment persistentEnrolment = (IPersistentEnrolment) sp.getIPersistentEnrolment();
 			
-			Iterator iter = enrolmentsList.iterator();
-			IStudentCurricularPlan studentCurricularPlan;
+//TODO redefinir este read
+//			
+////read curricularCourseScopesIds
+//			List curricularCourseScopeList = (List) sp.getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourse(curricularCourse);
+//			Iterator scopes = curricularCourseScopeList.iterator();
+//			
+//			List executionCourseList = curricularCourse.getAssociatedExecutionCourses(); 
+//			Iterator iter1 = executionCourseList.iterator();
+//			
+//			List enrolmentsList = new ArrayList();
+//			
+////		read executionPeriodsIds
+//			while(scopes.hasNext()){
+//				Integer curricularCourseScopeId = ((ICurricularCourseScope) scopes.next()).getIdInternal();
+//
+//				
+//				while(iter1.hasNext()){
+//					Integer executionPeriodId = ((IDisciplinaExecucao) iter1.next()).getExecutionPeriod().getIdInternal();
+//			
+//					List enrolments = sp.getIStudentCurricularPlanPersistente().readEnrolmentsByCurricularCourseScopeAndExecutionPeriod(curricularCourseScopeId, executionPeriodId );
+//					enrolmentsList.add(enrolments);
+//									}
+//			
+//			
+//			}
+//			
+////	agora tenho os enrolments
+//			
+//			
+//			
+//			
 			
-			while(iter.hasNext()){			
+	/*****************************************************************/			
+			
+			
+			
+		
+	//read curricularCourseScopesIds
+		List curricularCourseScopeList = (List) sp.getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourse(curricularCourse);
+		List curricularCourseScopesIds = new ArrayList(curricularCourseScopeList.size());
+		Iterator scopes = curricularCourseScopeList.iterator();
+			
+		while(scopes.hasNext()){
+			Integer curricularCourseScopeId = ((ICurricularCourseScope) scopes.next()).getIdInternal();
+			curricularCourseScopesIds.add(curricularCourseScopeId);
+		}
+
+//		read executionPeriodsIds
+		List executionCourseList = curricularCourse.getAssociatedExecutionCourses(); 
+		List executionPeriodsIds = new ArrayList(executionCourseList.size());
+		Iterator iter1 = executionCourseList.iterator();
+		Integer executionPeriodId;
+		 
+		while(iter1.hasNext()){
+			executionPeriodId = ((IDisciplinaExecucao) iter1.next()).getExecutionPeriod().getIdInternal();
+			executionPeriodsIds.add(executionPeriodId);
+		}
+							  
+			
+		List enrolmentsIds =
+			persistentEnrolment.readEnrolmentsByExecutionPeriodsAndCurricularCourseScopes(
+	                                                                                  curricularCourseScopesIds, 
+											                                          executionPeriodsIds);
+			
+		Iterator idsIter = enrolmentsIds.iterator();
+		IEnrolment enrolment = null;
+		IEnrolment enrolmentAux = null;
+		List enrolmentsList = new ArrayList(enrolmentsIds.size());
+			
+//este read so sai daqui se copiarmos o que ta dentro do metodo readByOId para o nosso
+//readEnrolmentsByExecutionPeriodsAndCurricularCourseScopes
+
+		while(idsIter.hasNext()){ 
+			enrolmentAux = new Enrolment();
+			enrolmentAux.setIdInternal((Integer) idsIter.next());				
+			enrolment = (IEnrolment) persistentEnrolment.readByOId(enrolmentAux, false);
+			enrolmentsList.add(enrolment);
+		}
+			
+			
+			
+	 /**************************************************************/
+			
+			
+		Iterator iter = enrolmentsList.iterator();
+		IStudentCurricularPlan studentCurricularPlan;
+		
+			while(iter.hasNext()){			//1 enrolment tem mts studentCurricularPlans
 				studentCurricularPlan = ((IEnrolment) iter.next()).getStudentCurricularPlan();
 				allStudentCurricularPlans.add(studentCurricularPlan);
 			}
