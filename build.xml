@@ -223,6 +223,7 @@
                 	<include name="**/*Test.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/AllTests.java"/>
+                    <exclude name="**/BaseEnrolmentRuleTest.java.java"/>
                     <exclude name="**/BaseEnrolmentRestrictionOJBTest.java"/>
                     <exclude name="**/ReadSectionsServiceTest.java"/>
                 </fileset>
@@ -254,6 +255,7 @@
                     
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
+                    <exclude name="**/BaseEnrolmentRuleTest.java.java"/>
                     <exclude name="**/SessionUtilsTest.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/MasterDegree/**/*.java"/>
@@ -371,6 +373,7 @@
                 <fileset dir="${src.tests}">
                     <!--<include name="**/*Test.java"/>-->
                     <include name="**/ReadCurricularCourseListOfExecutionCourseTest.java"/>
+                    <exclude name="**/BaseEnrolmentRuleTest.java.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
