@@ -68,7 +68,7 @@ public class EditSectionServiceTest extends TestCaseDeleteAndEditServices {
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"PO",
 					"2002/2003",
-					"LEEC");
+					"MEEC");
 
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			ISite site = persistentSite.readByExecutionCourse(executionCourse);
