@@ -33,7 +33,7 @@ insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 2, 1);
 -- (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD, START_DATE, END_DATE) 
 -- -----------------------------
 delete from ENROLMENT_PERIOD;
-insert into ENROLMENT_PERIOD values (1, 1, 9, SYSDATE(), '2010-01-10');
+insert into ENROLMENT_PERIOD values (1, 1, 1, SYSDATE(), '2010-01-10');
 
 -- Isto e para sair
 delete from EXECUTION_PERIOD;

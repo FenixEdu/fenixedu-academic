@@ -609,7 +609,7 @@
 			url="jdbc:mysql://localhost/ciapl" 
 			userid="root" password="" 
 			encoding="${encoding}" 
-			src="${sql}/test-data_inscricoes_LERCI.sql"
+			src="${sql}/test-data_inscricoes_LEQ.sql"
 		/>
 	</target>
 
