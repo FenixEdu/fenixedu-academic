@@ -111,59 +111,59 @@ public class ReadGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
     /*
      * Read a GrantType Successfull
      */
-//    public void testReadGrantTypeSuccessfull() {
-//        try {
-//            String[] args = getAuthenticatedAndAuthorizedUser();
-//            IUserView id = authenticateUser(args);
-//            Object[] args2 = getAuthorizeArguments();
-//
-//            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory
-//                    .executeService(id, getNameOfServiceToBeTested(), args2);
-//
-//            //Check the read result
-//            Integer grantTypeId = new Integer(1);
-//            if (!result.getIdInternal().equals(grantTypeId))
-//                    fail("Reading a GrantType Successfull: invalid grant type read!");
-//
-//            //Verify unchanged database
-//            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-//            System.out
-//                    .println("testReadGrantTypeSuccessfull was SUCCESSFULY runned by: "
-//                            + getNameOfServiceToBeTested());
-//        } catch (FenixServiceException e) {
-//            fail("Reading a GrantType " + e);
-//        } catch (Exception e) {
-//            fail("Reading a GrantType " + e);
-//        }
-//    }
+    public void testReadGrantTypeSuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArguments();
+
+            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
+
+            //Check the read result
+            Integer grantTypeId = new Integer(1);
+            if (!result.getIdInternal().equals(grantTypeId))
+                    fail("Reading a GrantType Successfull: invalid grant type read!");
+
+            //Verify unchanged database
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out
+                    .println("testReadGrantTypeSuccessfull was SUCCESSFULY runned by: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading a GrantType " + e);
+        } catch (Exception e) {
+            fail("Reading a GrantType " + e);
+        }
+    }
 
     /*
      * Read a GrantType Unsuccessfull
      */
-//    public void testReadGrantTypeUnsuccessfull() {
-//        try {
-//            String[] args = getAuthenticatedAndAuthorizedUser();
-//            IUserView id = authenticateUser(args);
-//            Object[] args2 = getUnauthorizeArguments();
-//
-//            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory
-//                    .executeService(id, getNameOfServiceToBeTested(), args2);
-//
-//            //Check the read result
-//            if (result != null)
-//                    fail("Reading a GrantType Unsuccessfull: grant type should not exist!");
-//
-//            //Verify unchanged database
-//            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-//            System.out
-//                    .println("testReadGrantTypeUnsuccessfull was SUCCESSFULY runned by: "
-//                            + getNameOfServiceToBeTested());
-//        } catch (FenixServiceException e) {
-//            fail("Reading a GrantType Unsuccessfull " + e);
-//        } catch (Exception e) {
-//            fail("Reading a GrantType Unsuccessfull " + e);
-//        }
-//    }
+    public void testReadGrantTypeUnsuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getUnauthorizeArguments();
+
+            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
+
+            //Check the read result
+            if (result != null)
+                    fail("Reading a GrantType Unsuccessfull: grant type should not exist!");
+
+            //Verify unchanged database
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out
+                    .println("testReadGrantTypeUnsuccessfull was SUCCESSFULY runned by: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading a GrantType Unsuccessfull " + e);
+        } catch (Exception e) {
+            fail("Reading a GrantType Unsuccessfull " + e);
+        }
+    }
 
     
 }

@@ -4,18 +4,17 @@
  */
 package ServidorAplicacao.Servicos.grant.contract;
 
-import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoTeacher;
 import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantPart;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import DataBeans.grant.contract.InfoGrantSubsidy;
-import DataBeans.grant.contract.InfoGrantType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import framework.factory.ServiceManagerServiceFactory;
 
 
 /**
@@ -250,24 +249,24 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
     /*
      * Grant Part Edition Unsuccessfull: existing grant type
      */
-//    public void testEditGrantPartUnsuccessfull() {
-//        try {
-//            String[] args = getAuthenticatedAndAuthorizedUser();
-//            IUserView id = authenticateUser(args);
-//            Object[] args2 = getUnauthorizeArguments(true);
-//
-//            ServiceManagerServiceFactory.executeService(id,
-//                    getNameOfServiceToBeTested(), args2);
-//        } catch (ExistingServiceException e) {
-//            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-//            System.out
-//                    .println(getNameOfServiceToBeTested()
-//                            + " was SUCCESSFULY runned by test: testEditGrantPartUnsuccessfull");
-//        } catch (FenixServiceException e) {
-//            fail("Editing a GrantPart unsuccessfull " + e);
-//        } catch (Exception e) {
-//            fail("Editing a GrantPart unsuccessfull " + e);
-//        }
-//    }
+    public void testEditGrantPartUnsuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getUnauthorizeArguments(true);
+
+            ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
+        } catch (ExistingServiceException e) {
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out
+                    .println(getNameOfServiceToBeTested()
+                            + " was SUCCESSFULY runned by test: testEditGrantPartUnsuccessfull");
+        } catch (FenixServiceException e) {
+            fail("Editing a GrantPart unsuccessfull " + e);
+        } catch (Exception e) {
+            fail("Editing a GrantPart unsuccessfull " + e);
+        }
+    }
 
 }

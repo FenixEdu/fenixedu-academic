@@ -143,29 +143,9 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction
                 	infoGrantContractRegime.setInfoTeacher(infoTeacher);
                 }
             }
-            
-			/*
-			 * If this is a new contract regime, than desactivate all other regime's and set this
-			 * as the contract regime active
-			 */
-			if(infoGrantContractRegime.getState().equals(new Integer(-1)))
-			{
-				//Read Active Contract Regimes
-				Object[] argActiveRegime = { infoGrantContractRegime.getInfoGrantContract().getIdInternal(), new Integer(1) };
-				List infoGrantActiveRegimeList = (List) ServiceUtils.executeService(userView, "ReadGrantContractRegimeByContractAndState", argActiveRegime);
-				
-				//Desactivate them
-				for(int i = 0; i < infoGrantActiveRegimeList.size(); i++)
-				{
-					InfoGrantContractRegime infoGrantRegimeTemp = (InfoGrantContractRegime) infoGrantActiveRegimeList.get(i);
-					infoGrantRegimeTemp.setState(new Integer(0));
-					Object[] argTemp = { infoGrantRegimeTemp};			
-					ServiceUtils.executeService(userView, "EditGrantContractRegime", argTemp);
-				}
-			}
-			
-			//Active this regime
-			infoGrantContractRegime.setState(new Integer(1));
+
+            if(infoGrantContractRegime.getState().equals(new Integer(-1))) //If is a new Regime
+            	infoGrantContractRegime.setState(new Integer(1)); //Active this regime
 
 			//Save the regime
 			Object[] args = { infoGrantContractRegime};			

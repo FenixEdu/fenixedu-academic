@@ -191,7 +191,6 @@ public class EditGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
     /*
      * Grant Type Edition Successfull
      */
-    //TODO: could not prepare for commit.. object has been modified by someone else???????
     public void testEditGrantTypeSuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();

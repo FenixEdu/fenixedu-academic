@@ -55,99 +55,13 @@ public class EditGrantContract extends EditDomainObjectService
 		return sp.getIPersistentGrantContract();
 	}
 
-//	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-//		throws ExcepcaoPersistencia
-//	{
-//		IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
-//		IGrantContract grantContract = (IGrantContract) domainObject;
-//
-//		return pgc.readGrantContractByNumberAndGrantOwner(
-//			grantContract.getContractNumber(),
-//			grantContract.getGrantOwner().getIdInternal());
-//	}
-
-//	protected void checkIfGrantTeacherPeriodConflict(
-//		IGrantContract grantContract,
-//		InfoGrantContract infoGrantContract,
-//		ISuportePersistente sp)
-//		throws FenixServiceException
-//	{
-//		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
-//		try
-//		{
-//			//check that new ORIENTATION period does NOT CONFLICT with any other
-//			IPersistentGrantOrientationTeacher got = sp.getIPersistentGrantOrientationTeacher();
-//			IGrantOrientationTeacher orientationTeacher =
-//				got.readActualGrantOrientationTeacherByContract(
-//					grantContract,
-//					infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
-//
-//			if ((orientationTeacher != null)
-//				&& (beginOrientationDate.before(orientationTeacher.getEndDate())))
-//				throw new GrantOrientationTeacherPeriodConflictException();
-//
-//		}
-//		catch (ExcepcaoPersistencia e)
-//		{
-//			throw new FenixServiceException();
-//		}
-//	}
-
-//	protected void checkIfGrantTeacherPeriodWithinContractPeriod(InfoGrantContract infoGrantContract)
-//		throws FenixServiceException
-//	{
-//		Date beginContractDate = infoGrantContract.getDateBeginContract();
-//		Date endContractDate = infoGrantContract.getDateEndContract();
-//		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
-//		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
-//
-//		//check if ORIENTATION period is WITHIN contract period
-//		if (!((beginOrientationDate.after(beginContractDate)
-//			|| beginContractDate.equals(beginOrientationDate))
-//			&& (endOrientationDate.before(endContractDate) || endContractDate.equals(endOrientationDate))))
-//			throw new GrantOrientationTeacherPeriodNotWithinContractPeriodException();
-//	}
-
 	protected void doBeforeLock(
 		IDomainObject domainObjectToLock,
 		InfoObject infoObject,
 		ISuportePersistente sp)
 		throws FenixServiceException
 	{
-//		InfoGrantContract infoGrantContract = (InfoGrantContract) infoObject;
-
-//		Date beginContractDate = infoGrantContract.getDateBeginContract();
-//		Date endContractDate = infoGrantContract.getDateEndContract();
-//		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
-//		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
-
-		try
-		{
-			//check that endDate is after beginDate (GrantContract)
-//			if (endContractDate.before(beginContractDate))
-//				throw new GrantContractEndDateBeforeBeginDateException();
-			
-			//check that endDate is after beginDate (GrantOrientationTeacher)
-//			if (endOrientationDate.before(beginOrientationDate))
-//				throw new GrantOrientationTeacherEndDateBeforeBeginDateException();
-
-			//TODO: DOES THIS VERIFICATION REALLY NEEDS TO BE DONE??
-			//TODO (pica): comentei isto já que a secretaria deve poder alterar para os valores que
-			// quiserem
-			//... perguntar depois na reuniao se isto é necessário ou nao
-			//if (!isNew(grantContract))
-			//	checkIfGrantTeacherPeriodConflict(grantContract, infoGrantContract, sp);
-
-			//checkIfGrantTeacherPeriodWithinContractPeriod(infoGrantContract);
-			checkIfGrantTeacherRelationExists(domainObjectToLock, infoObject, sp);
-
-		}
-		catch (Exception e)
-		{
-			if (e instanceof FenixServiceException)
-				throw (FenixServiceException) e;
-			throw new FenixServiceException();
-		}
+		checkIfGrantTeacherRelationExists(domainObjectToLock, infoObject, sp);
 	}
 
 	protected void checkIfGrantTeacherRelationExists(
@@ -218,10 +132,8 @@ public class EditGrantContract extends EditDomainObjectService
 		IPersistentTeacher pt)
 		throws FenixServiceException
 	{
-		//TODO.. esta mal!! ele tem é que ir ler o GrantOrientationTeacher associado ao
-		//contrato e nao o professor!!!!
-
-		
+		//When creating a New Contract its needed to verify if the teacher 
+		//chosen for orientator really exists
 		InfoTeacher infoTeacher = new InfoTeacher();
 		ITeacher teacher = new Teacher();
 		try

@@ -5,7 +5,6 @@
 package ServidorApresentacao.Action.grant.contract;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -129,27 +128,9 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 			InfoGrantSubsidy infoGrantSubsidy = populateInfoFromForm(editGrantSubsidyForm);
 			IUserView userView = SessionUtils.getUserView(request);
 			
-			/*
-			 * If this is a new subsidy, than desactivate all active subsidies and set this
-			 * subsidy active
-			 */
-			if(infoGrantSubsidy.getState().equals(new Integer(-1)))
+			if(infoGrantSubsidy.getState().equals(new Integer(-1))) //If is a new Subsidy
 			{
-				//Read Active Subsidies
-				Object[] argActiveSubsidy = { infoGrantSubsidy.getInfoGrantContract().getIdInternal(), new Integer(1) };
-				List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService(userView, "ReadAllGrantSubsidiesByGrantContractAndState", argActiveSubsidy);
-				
-				//Desactivate them
-				for(int i = 0; i < infoGrantActiveSubsidyList.size(); i++)
-				{
-					InfoGrantSubsidy infoGrantSubsidyTemp = (InfoGrantSubsidy) infoGrantActiveSubsidyList.get(i);
-					infoGrantSubsidyTemp.setState(new Integer(0));
-					Object[] argTemp = {infoGrantSubsidyTemp};			
-					ServiceUtils.executeService(userView, "EditGrantSubsidy", argTemp);
-				}
-	
-				//Active this subsidy
-				infoGrantSubsidy.setState(new Integer(1));
+				infoGrantSubsidy.setState(new Integer(1)); //Active this subsidy
 			}
 			
 			//Save the subsidy

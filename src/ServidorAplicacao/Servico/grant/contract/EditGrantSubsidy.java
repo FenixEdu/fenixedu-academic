@@ -2,7 +2,10 @@
  * Created on 22/Jan/2004
  *  
  */
+
 package ServidorAplicacao.Servico.grant.contract;
+
+import java.util.List;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantSubsidy;
@@ -18,57 +21,82 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
-
 /**
  * @author Barbosa
  * @author Pica
  */
 public class EditGrantSubsidy extends EditDomainObjectService
 {
+
 	/**
 	 * The constructor of this class.
 	 */
 	public EditGrantSubsidy()
 	{
 	}
-
 	protected IDomainObject clone2DomainObject(InfoObject infoObject)
 	{
 		return Cloner.copyInfoGrantSubsidy2IGrantSubsidy((InfoGrantSubsidy) infoObject);
 	}
-
 	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
 	{
 		return sp.getIPersistentGrantSubsidy();
 	}
-
 	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
+			throws ExcepcaoPersistencia
 	{
 		IPersistentGrantSubsidy pgs = sp.getIPersistentGrantSubsidy();
 		IGrantSubsidy grantSubsidy = (IGrantSubsidy) domainObject;
-
-		return pgs.readByOID(GrantSubsidy.class,grantSubsidy.getIdInternal());
+		return pgs.readByOID(GrantSubsidy.class, grantSubsidy.getIdInternal());
 	}
-    
-    /* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject, DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
+	 *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
 	 */
-	protected void doAfterLock(
-		IDomainObject domainObjectLocked,
-		InfoObject infoObject,
-		ISuportePersistente sp)
+	protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
+			ISuportePersistente sp) throws FenixServiceException
 	{
-		
-        IGrantSubsidy grantSubsidy = (IGrantSubsidy) domainObjectLocked;
-        InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
-        IGrantContract grantContract = new GrantContract();
-        
-        grantContract.setIdInternal(infoGrantSubsidy.getInfoGrantContract().getIdInternal());
-        grantSubsidy.setGrantContract(grantContract);
-        domainObjectLocked = (IDomainObject) grantSubsidy;
+		/*
+		 * In case of a new Subsidy, the Contract associated needs to be set.
+		 */
+		IGrantSubsidy grantSubsidy = (IGrantSubsidy) domainObjectLocked;
+		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
+		IGrantContract grantContract = new GrantContract();
+		grantContract.setIdInternal(infoGrantSubsidy.getInfoGrantContract().getIdInternal());
+		grantSubsidy.setGrantContract(grantContract);
+		domainObjectLocked = (IDomainObject) grantSubsidy;
+		/*
+		 * If this is a active subsidy, set all others to state 0 (Desactive)
+		 */
+		if (grantSubsidy.getState().equals(new Integer(1)))
+		{
+			try
+			{
+				IPersistentGrantSubsidy persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
+				List activeSubsidy = persistentGrantSubsidy.readAllSubsidiesByGrantContractAndState(
+						grantSubsidy.getGrantContract().getIdInternal(), new Integer(1));
+				if (activeSubsidy != null && activeSubsidy.size() != 0)
+				{
+					//Desactivate the Subsidy
+					for (int i = 0; i < activeSubsidy.size(); i++)
+					{
+						IGrantSubsidy grantSubsidyTemp = (IGrantSubsidy) activeSubsidy.get(i);
+						if (!grantSubsidyTemp.equals(grantSubsidy))
+						{
+							persistentGrantSubsidy.simpleLockWrite(grantSubsidyTemp);
+							grantSubsidyTemp.setState(new Integer(0));
+						}
+					}
+				}
+			}
+			catch (ExcepcaoPersistencia persistentException)
+			{
+				throw new FenixServiceException(persistentException.getMessage());
+			}
+		}
 	}
-    
 	public void run(InfoGrantSubsidy infoGrantSubsidy) throws FenixServiceException
 	{
 		super.run(new Integer(0), infoGrantSubsidy);
