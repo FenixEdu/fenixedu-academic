@@ -95,10 +95,6 @@ public class EditObjectives implements IServico
             {
                 curriculum = new Curriculum();
 
-                persistentCurriculum.simpleLockWrite(curriculum);
-
-                curriculum.setCurricularCourse(curricularCourse);
-
                 Calendar today = Calendar.getInstance();
                 curriculum.setLastModificationDate(today.getTime());
             }
@@ -109,6 +105,8 @@ public class EditObjectives implements IServico
             if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
                 && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate()))
             {
+            	persistentCurriculum.simpleLockWrite(curriculum);
+            	
                 // let's edit curriculum
                 curriculum.setCurricularCourse(curricularCourse);
                 curriculum.setGeneralObjectives(infoCurriculumNew.getGeneralObjectives());
