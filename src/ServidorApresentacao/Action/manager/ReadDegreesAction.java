@@ -17,9 +17,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;

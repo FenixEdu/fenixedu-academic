@@ -12,10 +12,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoDegree;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.CantDeleteActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;

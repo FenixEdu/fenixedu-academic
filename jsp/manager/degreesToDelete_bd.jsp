@@ -10,7 +10,7 @@
 	<br>
 	<br>
 	<h3><bean:message key="label.manager.select.degrees" /></h3>
-<form name="input" action="html_form_action.asp" method="get">
+<form name="input" action="deleteDegree.do" method="get">
 
 		<table width="50%"cellpadding="0" border="0">
 			<tr>
@@ -20,8 +20,7 @@
 				</td>
 				<td class="listClasses-header"><bean:message key="label.manager.degree.name" />
 				</td>
-				<td class="listClasses-header">
-				</td>
+				
 			</tr>
 				<% int index = 0; %>	 
 				<logic:iterate name="<%= SessionConstants.INFO_DEGREES_LIST %>" id="degree" >
@@ -30,18 +29,18 @@
 				
 				<td class="listClasses"><input type="checkbox" property="sigla">
 				</td>
-				<td class="listClasses"><html:link page="/readDegree.do" indexId="index" indexed="true"><bean:write name="degree" property="sigla"/></html:link>
+				<td class="listClasses"><bean:write name="degree" property="sigla"/>
 				</td>			
-				<td class="listClasses"><html:link page="/readDegree.do" indexId="index" indexed="true"><bean:write name="degree" property="nome"/></html:link>
+				<td class="listClasses"><bean:write name="degree" property="nome"/>
 				</td>
-				<td class="listClasses"><html:link page="/deleteDegree.do" indexId="index" indexed="true"><bean:message key="label.manager.deleteDegree" /></html:link>
-				</td>
+				
 				
 			</tr>
 	 			<% index++; %>	
 				</logic:iterate>
 	 	</table>
-	 	
+	 	<br>
+	 <br>	
 <input type="submit" value="Submit">
 
 </form> 
