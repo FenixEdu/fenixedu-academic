@@ -1,14 +1,18 @@
 package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
+import middleware.persistentMiddlewareSupport.IPersistentMWAreaSecundariaIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWAreasEspecializacaoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseScope;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
+import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaGrupoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciasIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWGruposIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWStudentClass;
 import middleware.persistentMiddlewareSupport.IPersistentMWTipoEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
@@ -105,5 +109,30 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	public IPersistentMWTipoEquivalenciaIleec getIPersistentMWTipoEquivalenciaIleec()
 	{
 		return new MWTipoEquivalenciaIleecOJB();
+	}
+	
+	public IPersistentMWGruposIleec getIPersistentMWGruposILeec()
+	{
+		return new MWGruposIleecOJB();
+	}
+
+	public IPersistentMWAreasEspecializacaoIleec getIPersistentMWAreasEspecializacaoIleec()
+	{
+		return new MWAreasEspecializacaoIleecOJB();
+	}
+
+	public IPersistentMWAreaSecundariaIleec getIPersistentMWAreaSecundariaIleec()
+	{
+		return new MWAreaSecundariaIleecOJB();
+	}
+	
+	public IPersistentMWDisciplinasIleec getIPersistentMWDisciplinaIleec()
+	{
+		return new MWDisciplinaIleecOJB();
+	}
+	
+	public IPersistentMWDisciplinaGrupoIleec getIPersistentMWDisciplinaGrupoIleec()
+	{
+		return new MWDisciplinaGrupoIleecOJB();
 	}
 }

@@ -24,6 +24,11 @@ public interface IPersistentMiddlewareSupport {
 	public IPersistentMWDegreeTranslation getIPersistentMWDegreeTranslation();
 	public IPersistentMWCurricularCourseOutsideStudentDegree getIPersistentMWCurricularCourseOutsideStudentDegree();
 	public IPersistentMWUniversity getIPersistentMWUniversity();
+	public IPersistentMWGruposIleec getIPersistentMWGruposILeec();
+	public IPersistentMWAreasEspecializacaoIleec getIPersistentMWAreasEspecializacaoIleec();
+	public IPersistentMWAreaSecundariaIleec getIPersistentMWAreaSecundariaIleec();
+	public IPersistentMWDisciplinaIleec getIPersistentMWDisciplinaIleec();
+	public IPersistentMWDisciplinaGrupoIleec getIPersistentMWDisciplinaGrupoIleec();
 	public IPersistentMWEquivalenciasIleec getIPersistentMWEquivalenciasIleec();
 	public IPersistentMWDisciplinasIleec getIPersistentMWDisciplinasIleec();
 	public IPersistentMWTipoEquivalenciaIleec getIPersistentMWTipoEquivalenciaIleec();

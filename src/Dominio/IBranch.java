@@ -16,10 +16,15 @@ public interface IBranch extends IDomainObject {
 	public List getScopes();
 	public IDegreeCurricularPlan getDegreeCurricularPlan();
 	public String getAcronym();
+	public Integer getSecondaryCredits();
+	public Integer getSpecializationCredits();
 
 	public void setCode(String code);
 	public void setName(String name);
 	public void setScopes(List scopes);
 	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
 	public void setAcronym(String acronym);
+	public void setSecondaryCredits(Integer secondaryCredits);
+	public void setSpecializationCredits(Integer specializationCredits);
+	
 }
