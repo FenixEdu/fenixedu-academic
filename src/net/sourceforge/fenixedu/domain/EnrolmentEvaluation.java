@@ -204,6 +204,9 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
             return 1;
         } else if (enrolmentEvaluation.getObservation() != null
                 && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION)) {
+            if(this.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)){
+                return compareForEqualStates(myEnrolmentState,otherEnrolmentState,otherGrade,otherWhenAltered);
+            }
             return -1;
         } else if (myEnrolmentState.equals(otherEnrolmentState)) {
             return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade,
