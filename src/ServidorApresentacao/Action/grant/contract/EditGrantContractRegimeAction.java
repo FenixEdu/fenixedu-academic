@@ -78,7 +78,6 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                     grantContractRegimeForm.set("state", new Integer(-1));
                     if (infoGrantContract.getGrantCostCenterInfo()!=null){                         
 	                    grantContractRegimeForm.set("grantCostCenterId",infoGrantContract.getGrantCostCenterInfo().getIdInternal());
-	                  
 	                    grantContractRegimeForm.set ("keyCostCenterNumber",infoGrantContract.getGrantCostCenterInfo().getNumber());
 	                    grantContractRegimeForm.set ("designation",infoGrantContract.getGrantCostCenterInfo().getDesignation());
                     }
@@ -151,16 +150,20 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                 infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); //Active
             }
             //Verify the cost center
-            if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {
+            if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {          	
+            	if (infoGrantContractRegime.getGrantCostCenterInfo().getNumber().length() != 0){
                 InfoGrantCostCenter infoGrantCostCenter = null;
                 Object[] argsCostCenter = { infoGrantContractRegime.getGrantCostCenterInfo().getNumber() };
+                
                 infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(userView, "ReadCostCenterByNumber",
                 		argsCostCenter);
                 if (infoGrantCostCenter == null) {
                     return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher",
                             null, infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
                 }
+             
                 infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
+            	}
             }
 
             if (infoGrantContractRegime.getState().equals(new Integer(-1))) {
