@@ -301,7 +301,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 	public List newEnrolmentList(IEnrolment enrolmentList)
 	{
-		Object result = null;
+		
 		List newEnrolmentList = new ArrayList();
 
 		List aux = enrolmentList.getEvaluations();
