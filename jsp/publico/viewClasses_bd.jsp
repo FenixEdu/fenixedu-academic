@@ -4,28 +4,28 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <logic:present name="publico.infoClasses" scope="session">
-<table>
+<table align="center">
 		<tr>
-			<th>
+			<th class="listClasses-header">
 				<bean:message key="property.name"/>
 			</th>
-			<th>
+			<th class="listClasses-header">
 				<bean:message key="property.context.semester"/>
-			</th>
-				<th>
+			</td>
+			<th class="listClasses-header">
 				<bean:message key="property.context.curricular.year"/> 
 			</th>
 		</tr>		
-	<logic:iterate id="classview" name="publico.infoClasses" scope="session"	>
+	<logic:iterate id="classview" name="publico.infoClasses" scope="session">
 		<tr>
-			<td><html:link page="/viewClassTimeTable.do" paramId="className" paramName="classview" paramProperty="nome">
+			<td class="listClasses"><html:link page="/viewClassTimeTable.do" paramId="className" paramName="classview" paramProperty="nome">
 			<jsp:getProperty name="classview" property="nome"/>
 			</html:link>
 			</td>
-			<td>
+			<td class="listClasses">
 			<bean:write name="classview" property="infoExecutionPeriod.name"/>
 			</td>
-			<td>
+			<td class="listClasses">
 			<jsp:getProperty name="classview" property="anoCurricular"/>
 			</td>
 		</tr>	
@@ -34,7 +34,7 @@
 </logic:present>
 <logic:notPresent name="publico.infoClasses" scope="session">
 <table align="center" border="0" cellpadding="0" cellspacing="0">
-			<tr align="center">
+			<tr>
 				<td>
 					<span class="error"><bean:message key="message.public.notfound.classes"/></span>
 				</td>
