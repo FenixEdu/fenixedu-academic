@@ -1,3 +1,7 @@
+/**
+ * Depricated... this file is to be eliminated.
+ */
+
 package ServidorApresentacao.Action.publico;
 
 import java.util.List;

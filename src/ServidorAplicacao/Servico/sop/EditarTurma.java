@@ -11,7 +11,6 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import DataBeans.ClassKey;
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;

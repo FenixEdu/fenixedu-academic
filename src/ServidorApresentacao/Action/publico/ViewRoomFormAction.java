@@ -11,8 +11,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author tfc130
@@ -34,6 +37,23 @@ public class ViewRoomFormAction extends FenixAction {
 			InfoRoom infoRoom =	(InfoRoom) infoRooms.get(((Integer) indexForm.get("index")).intValue());
 			session.removeAttribute("publico.infoRoom");
 			session.setAttribute("publico.infoRoom", infoRoom);
+
+
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) session.getAttribute(
+					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
+			Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
+
+			List lessons =
+				(List) ServiceUtils.executeService(
+					null,
+					"LerAulasDeSalaEmSemestre",
+					argsReadLessons);
+			
+			if (lessons != null) {
+				session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
+			}
 			  
 			return mapping.findForward("Sucess");
 		} else
