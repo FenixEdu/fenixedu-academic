@@ -54,7 +54,6 @@ import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSiteTeachers;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
-import Dominio.CurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -73,7 +72,6 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
 import Util.EnrolmentGroupPolicyType;
 import Util.TipoAula;
@@ -495,7 +493,7 @@ public class TeacherAdministrationViewerDispatchAction
 			evaluationForm.set("evaluationElements",((InfoCurriculum) siteView.getComponent()).getEvaluationElements());
 			evaluationForm.set("evaluationElementsEn",((InfoCurriculum) siteView.getComponent()).getEvaluationElementsEn());
 		}
-		
+		request.setAttribute("curricularCourseCode",curricularCourseCode);
 		return mapping.findForward("editEvaluationMethod");
 	}
 
@@ -1907,9 +1905,7 @@ public class TeacherAdministrationViewerDispatchAction
 			ActionError error = null;
 			// Create an ACTION_ERROR 
 			error = new ActionError("errors.invalid.insert.studentGroupShift");
-			actionErrors.add(
-				"errors.invalid.edit.studentGroupShift",
-				error);
+			actionErrors.add("errors.invalid.edit.studentGroupShift", error);
 			saveErrors(request, actionErrors);
 			return prepareCreateStudentGroup(mapping, form, request, response);
 		} else {
