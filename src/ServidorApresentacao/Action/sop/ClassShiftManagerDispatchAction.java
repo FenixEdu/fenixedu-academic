@@ -63,11 +63,6 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 			session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
 			session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
-			
-
-			//			/* TO REMOVE */
-			//			session.setAttribute(SessionConstants.CLASS_VIEW, classView);
-
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 			throw e;
