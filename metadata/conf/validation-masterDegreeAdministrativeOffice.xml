@@ -28,6 +28,7 @@
 			</field>
 		</form>
 
+	<!--
 		<form name="getStudentByNumberAndDegreeTypeForm">
 			<field property="degreeType" depends="required,integer" page="1">
 				<arg0 key="error.no.degree.type.selected" resource="true"/>
@@ -40,15 +41,6 @@
 			</field>
 		</form>
 		
-		<form name="getStudentByNumberAndDegreeTypeForThesisForm">
-			<field property="degreeType" depends="required,integer" page="1">
-				<arg0 key="error.no.degree.type.selected" resource="true"/>
-			</field>
-			<field property="studentNumber" depends="required,integer" page="1">
-				<arg0 key="error.no.student.selected" resource="true"/>
-			</field>
-		</form>
-
 		<form name="getDegreeAndCurricularSemesterAndCurricularYearForm">
 			<field property="infoExecutionDegree" depends="required,integer" page="1">
 				<arg0 key="error.no.degree.selected" resource="true"/>
@@ -77,6 +69,32 @@
 					</var>
 			</field>
 			
+		</form>
+	-->
+
+		<!-- ****************** Enrollment Without Rules **************************** -->
+		<form name="curricularCoursesEnrollmentWithoutRuleForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+			<field property="executionYear" depends="required" page="1">
+				<arg0 key="label.executionYear" resource="true"/>
+			</field>
+			<field property="degreeType" depends="required,integer" page="1">
+				<arg0 key="label.degree.type" resource="true"/>
+			</field>	
+			<field property="executionDegree" depends="required" page="2">
+				<arg0 key="label.degree.name" resource="true"/>
+			</field>		
+		</form>
+
+		<form name="getStudentByNumberAndDegreeTypeForThesisForm">
+			<field property="degreeType" depends="required,integer" page="1">
+				<arg0 key="error.no.degree.type.selected" resource="true"/>
+			</field>
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="error.no.student.selected" resource="true"/>
+			</field>
 		</form>
 
     <!-- validation for the Create Candidate Form -->

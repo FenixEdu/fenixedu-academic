@@ -9,7 +9,21 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
-      
+
+		<!-- ******************* Enrollment Without Rule**************** -->
+		<form-bean name="curricularCoursesEnrollmentWithoutRuleForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="studentNumber" type="java.lang.String"/>			
+			<form-property name="executionYear" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="executionDegree" type="java.lang.String"/>
+			<form-property name="curricularYears" type="java.lang.Integer[]"/>
+			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
+			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="unenrollments" type="java.lang.Integer[]"/>			
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+    <!--
 		<form-bean name="getStudentByNumberAndDegreeTypeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
@@ -17,7 +31,7 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="executionPeriodOID" type="java.lang.String"/>
 		</form-bean>
-		
+	-->
 		<form-bean name="getStudentByNumberAndDegreeTypeForThesisForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
@@ -32,6 +46,7 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
 
+	<!--
 		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
@@ -47,6 +62,7 @@
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>
 		</form-bean>
+	-->
 
 		<form-bean name="seeStudentAndCurricularPlansForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
@@ -682,7 +698,6 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
-      <!--<action path="/enrollment" forward="/enrollment/chooseStudentForEnrollment.jsp"/>-->
 
 		<action	type="ServidorApresentacao.Action.commons.VoidAction"
 				path="/equivalence"
@@ -690,7 +705,7 @@
 				validate="false">
 			<forward name="Success" path="/equivalence/chooseStudentForManualEquivalence.jsp"/>
 		</action>
-		
+
 		<action	name="getStudentByNumberForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareStudentDataForManualEquivalenceDispatchAction"
 				path="/prepareStudentDataForManualEquivalence"
@@ -702,6 +717,7 @@
 			<forward name="error" path="/equivalence.do"/>
 		</action>
 
+	<!--
 		<action	type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareExecutionPeriodForEnrolmentContextAction"
 				path="/enrollment"
 				scope="request"
@@ -720,21 +736,6 @@
 			<forward name="error" path="/enrollment/chooseStudentForEnrollment.jsp"/>
 		</action>
 		
-		<action	name="getStudentByNumberAndDegreeTypeForThesisForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.PrepareStudentDataForThesisOperationsDispatchAction"
-				path="/prepareStudentForMasterDegreeThesisAndProof"
-				input="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp?page=2"
-				parameter="method"
-				scope="request"
-				validate="true">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<forward name="success" path="/thesis/indexThesis.jsp"/>
-			<forward name="createThesis" path="/thesis/indexCreateThesis.jsp"/>
-			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
-		</action>
-
 		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareEnrolmentContextDispatchAction"
 				path="/prepareEnrolmentContext"
@@ -761,6 +762,38 @@
 			<forward name="verifyEnrolment" path="/enrollment/verifyEnrollment.jsp"/>
 			<forward name="acceptEnrolment" path="/enrollment/acceptEnrollment.jsp"/>
 			<forward name="error" path="/prepareStudentForEnrollment.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=0"/>
+		</action>
+	-->
+
+      	<!-- ****************** Enrollment Without Rules **************************** -->
+		<action path="/courseEnrolmentWithoutRulesManagerDA"
+			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
+			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=2"
+			name="curricularCoursesEnrollmentWithoutRuleForm"
+			scope="request"
+			parameter="method">
+			<forward name="prepareEnrollmentChooseStudentWithoutRules" path="df.page.prepareEnrollmentChooseStudentWithoutRules"/>			
+			<forward name="curricularCourseEnrollmentList" path="df.page.curricularCourseEnrollmentList"/>
+			<forward name="readCurricularCourseEnrollmentList" path="/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments"/>
+			<forward name="choosesForEnrollment" path="df.page.choosesForEnrollment"/>
+			<forward name="showCurricularCourseToEnroll" path="df.page.showCurricularCourseToEnroll"/>
+			<forward name="globalEnrolment" path="/globalEnrolment.do"/>
+			<forward name="exit" path="/index.do"/>
+		</action>		
+
+		<action	name="getStudentByNumberAndDegreeTypeForThesisForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.PrepareStudentDataForThesisOperationsDispatchAction"
+				path="/prepareStudentForMasterDegreeThesisAndProof"
+				input="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp?page=2"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="success" path="/thesis/indexThesis.jsp"/>
+			<forward name="createThesis" path="/thesis/indexCreateThesis.jsp"/>
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 		</action>
 
       <action path="/printGuidePage"
@@ -1007,7 +1040,6 @@
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-             
 	         <forward name="PrepareSuccess" path="/createCandidate.jsp"/>  
 	         <forward name="CreateSuccess" path="/createCandidateSuccess.jsp"/>  
       </action>

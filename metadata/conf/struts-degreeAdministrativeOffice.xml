@@ -299,7 +299,7 @@
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
 			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
-			input="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"
+			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
 			parameter="method">
