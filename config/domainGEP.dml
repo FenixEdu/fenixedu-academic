@@ -216,132 +216,131 @@ class Dominio.inquiries.OldInquiriesCoursesRes {
 
 
 
-relation ??? {
-	Dominio.Teacher playsRole ??? {
-		multiplicity ???;
+relation TeacherCategory {
+	Dominio.Teacher playsRole teacher {
+		multiplicity *;
 	}
 	Dominio.teacher.Category playsRole category;
 }
 
-relation ??? {
-	Dominio.teacher.TeachingCareer playsRole ??? {
-		multiplicity ???;
+relation TeachingCareerCategory {
+	Dominio.teacher.TeachingCareer playsRole teachingCareer {
+		multiplicity *;
 	}
 	Dominio.teacher.Category playsRole category;
 }
 
 
 
-relation ??? {
-	Dominio.teacher.OldPublication playsRole ??? {
-		multiplicity ???;
+relation TeacherOldPublication {
+	Dominio.teacher.OldPublication playsRole oldPublication {
+		multiplicity *;
 	}
 	Dominio.Teacher playsRole teacher;
 }
 
 
 
-relation ??? {
-	Dominio.gesdis.CourseReport playsRole ??? {
-		multiplicity ???;
+relation ExecutionCourseReport {
+	Dominio.gesdis.CourseReport playsRole report {
+		multiplicity 1;
 	}
 	Dominio.ExecutionCourse playsRole executionCourse;
 }
 
 
 
-relation ??? {
-	Dominio.gesdis.StudentCourseReport playsRole ??? {
-		multiplicity ???;
+relation CurricularCourseStudentReport {
+	Dominio.gesdis.StudentCourseReport playsRole studentReport {
+		multiplicity 1;
 	}
 	Dominio.CurricularCourse playsRole curricularCourse;
 }
 
 
 
-relation ??? {
-	Dominio.gesdis.CourseHistoric playsRole ??? {
-		multiplicity ???;
+relation CurricularCourseHistoric {
+	Dominio.gesdis.CourseHistoric playsRole historic {
+		multiplicity 1;
 	}
 	Dominio.CurricularCourse playsRole curricularCourse;
 }
 
 
 
-relation ??? {
-	Dominio.student.Delegate playsRole ??? {
-		multiplicity ???;
+relation DelegateStudent {
+	Dominio.student.Delegate playsRole delegate {
+		multiplicity *;
 	}
 	Dominio.Student playsRole student;
 }
 
-relation ??? {
-	Dominio.student.Delegate playsRole ??? {
-		multiplicity ???;
+relation DelegateExecutionYear {
+	Dominio.student.Delegate playsRole delegate {
+		multiplicity *;
 	}
 	Dominio.ExecutionYear playsRole executionYear;
 }
 
-relation ??? {
-	Dominio.student.Delegate playsRole ??? {
-		multiplicity ???;
+relation DelegateDegree {
+	Dominio.student.Delegate playsRole delegate {
+		multiplicity *;
 	}
-	Dominio.Curso playsRole degree;
+	Dominio.Degree playsRole degree;
 }
 
 
 
-relation ??? {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
-		multiplicity ???;
+relation OldInquiriesTeachersResTeacher {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeacherRes {
+		multiplicity *;
 	}
 	Dominio.Teacher playsRole teacher;
 }
 
-relation ??? {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
-		multiplicity ???;
+relation OldInquiriesTeachersResExecutionPeriod {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+		multiplicity *;
 	}
 	Dominio.ExecutionPeriod playsRole executionPeriod;
 }
 
-relation ??? {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
-		multiplicity ???;
+relation OldInquiriesTeachersResDegree {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+		multiplicity *;
 	}
-	Dominio.Curso playsRole degree;
+	Dominio.Degree playsRole degree;
 }
 
 
 
-relation ??? {
-	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
-		multiplicity ???;
+relation OldInquiriesSummaryDegree {
+	Dominio.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+		multiplicity *;
 	}
-	Dominio.Curso playsRole degree;
+	Dominio.Degree playsRole degree;
 }
 
-relation ??? {
-	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-}
-
-
-
-relation ??? {
-	Dominio.inquiries.OldInquiriesCoursesRes playsRole ??? {
-		multiplicity ???;
+relation OldInquiriesSummaryExecutionPeriod {
+	Dominio.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+		multiplicity *;
 	}
 	Dominio.ExecutionPeriod playsRole executionPeriod;
 }
 
-relation ??? {
-	Dominio.inquiries.OldInquiriesCoursesRes playsRole ??? {
-		multiplicity ???;
+
+
+relation OldInquiriesCoursesResExecutionPeriod {
+	Dominio.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+		multiplicity *;
 	}
-	Dominio.Curso playsRole degree;
+	Dominio.ExecutionPeriod playsRole executionPeriod;
 }
 
+relation OldInquiriesCoursesResDegree {
+	Dominio.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+		multiplicity *;
+	}
+	Dominio.Degree playsRole degree;
+}
 
