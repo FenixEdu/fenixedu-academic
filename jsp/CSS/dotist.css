@@ -11,25 +11,28 @@ body {
 	color: #333333;
 	text-align: left;
 	margin: 0px;
-}
+	}
+
 table {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333333;
 	background-color: transparent;
-}
+	}
+
 h1	{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #FFFFFF;
 	background-color: transparent;
-}
+	}
+
 h2	{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #003366;
 	background-color: transparent;
-}
+	}
 
 /******************************************
 	Global Links Proprieties
@@ -39,24 +42,27 @@ a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: underline;
-}
+	}
+
 a:active {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #00427b;
 	background-color: transparent;
-}
+	}
+
 a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #00427b;
 	background-color: transparent;
-}
+	}
+
 a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: none;
-}
+	}
 
 /******************************************
 	NavGeral Links Proprieties
@@ -66,22 +72,25 @@ a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	text-decoration: none;
-}
+	}
+
 .navopgeral a:active {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	text-decoration: none;
-}
+	}
+	
 .navopgeral a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 	text-decoration: none;
-}
+	}
+
 .navopgeral a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: transparent;
 	color: #B5BDD6;
-}
+	}
 
 /********************************************
 	Structural & Templating Classes
@@ -89,7 +98,8 @@ a:hover {
 
 .centerContent {
 	text-align: center;
-}
+	}
+	
 .header {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 14px;
@@ -97,7 +107,8 @@ a:hover {
 	background-color: #FF9933;
 	padding-right: 20px;
 	padding-left: 20px;
-}
+	}
+
 .footer {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -107,14 +118,16 @@ a:hover {
 	border-top-width: 4px;
 	border-top-style: solid;
 	border-top-color: #FF9933;
-}
+	}
+	
 .navbargeral {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
 	background-color: #003366;
 	text-align: center;
-}
+	}
+	
 .navopgeral {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -125,7 +138,8 @@ a:hover {
 	border-right-width: 1px;
 	border-right-style: solid;
 	border-right-color: #b5bdd6;
-}
+	}
+
 .navlateral {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -134,14 +148,15 @@ a:hover {
 	border-right-style: solid;
 	border-right-color: #CCCCCC;
 	padding: 20px;
-}
+	}
+
 .bodycontent {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	line-height: 16px;
 	color: #333333;
 	padding: 20px;
-}
+	}
 
 /**********************************************
 	 FORMS Classes: inputs
@@ -153,25 +168,20 @@ a:hover {
 	font-weight: bold;
 	color: #CC0000;
 	background-color: #FFFFCC;
-}
+	}
+	
 .inputlist {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333333;
-}
-.inputbutton {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	background-color: #b5bdd6;
-	width: 100px;
-}
+	}
+
 .inputbuttonSmall {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333333;
 	background-color: #b5bdd6;
-}
+	}
 
 /*****************************************************************
 	TABLE Classes: Info TD + Info TD with Icons + ListClasses
@@ -185,7 +195,8 @@ a:hover {
 	border-bottom-style: dotted;
 	border-bottom-color: #333333;
 	width: 15px;
-}
+	}
+	
 .infoop {
 	background-color: #EBECED;
 	vertical-align: middle;
@@ -193,23 +204,37 @@ a:hover {
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 	border-bottom-color: #333333;
-}
+	}
+	
 .infoselected {
 	background-color: #FFFFCC;
 	padding: 10px 20px;
 	border-width: 1px;
 	border-style: dotted;
 	border-color: #333333;
-}
-.formTD{
+	}
+	
+.formTD	{
 	text-align: left;
 	height: 30px;
 	width: 100px;
-}
-.listClasses{
-background-color: #EBECED;
-border: 1px solid #666666;
-text-align: center;
-width: 150px;
-height: 30px;
-}
+	}
+	
+.listClasses	{
+	background-color: #EBECED;
+	border: 1px solid #ccc;
+	text-align: center;
+	height: 30px;
+	}
+	
+.listClasses-header	{
+	background-color: #ccc;
+	font-weight: bold;
+	padding: 0 0 0 20px;
+	text-align: left;
+	height: 30px;
+	}
+
+.tall-td {
+	height: 50px;
+	}
