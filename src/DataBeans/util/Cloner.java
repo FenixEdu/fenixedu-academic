@@ -126,6 +126,7 @@ import Dominio.ITurno;
 import Dominio.Item;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
+import Dominio.Professorship;
 import Dominio.Sala;
 import Dominio.Section;
 import Dominio.Site;
@@ -133,6 +134,7 @@ import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Dominio.StudentGroupInfo;
 import Dominio.Teacher;
+import Dominio.TeacherShiftPercentage;
 import Dominio.Turma;
 import Dominio.Turno;
 import Util.State;
@@ -1912,13 +1914,13 @@ public abstract class Cloner {
 		
 		copyObjectProperties(infoTeacherShiftPercentage, teacherShiftPercentage);
 
-		infoTeacherShiftPercentage.setInfoProfesorShip(infoProfessorShip);
+		infoTeacherShiftPercentage.setInfoProfessorship(infoProfessorShip);
 		infoTeacherShiftPercentage.setInfoShift(infoShift);
 				
 		return infoTeacherShiftPercentage;
 	}
 	
-	private static InfoProfessorShip copyIProfessorShip2InfoProfessorShip(IProfessorship professorship) {
+	public static InfoProfessorShip copyIProfessorShip2InfoProfessorShip(IProfessorship professorship) {
 		InfoProfessorShip infoProfessorShip = new InfoProfessorShip();
 		
 		InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(professorship.getTeacher());
@@ -1930,5 +1932,38 @@ public abstract class Cloner {
 		infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 					
 		return infoProfessorShip;	
+	}
+	
+	public static ITeacherShiftPercentage copyInfoTeacherPercentage2ITeacherShiftPercentage(InfoTeacherShiftPercentage infoTeacherShiftPercentage) {		
+		InfoShift infoShift = infoTeacherShiftPercentage.getInfoShift();
+		InfoProfessorShip infoProfessorShip = infoTeacherShiftPercentage.getInfoProfessorship();
+		
+		ITeacherShiftPercentage teacherShiftPercentage = new TeacherShiftPercentage();
+		IProfessorship professorship = Cloner.copyInfoProfessorShip2IProfessorShip(infoProfessorShip);
+		ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+		
+		copyObjectProperties(teacherShiftPercentage, infoTeacherShiftPercentage);
+		
+		teacherShiftPercentage.setPercentage(infoTeacherShiftPercentage.getPercentage());
+		teacherShiftPercentage.setShift(shift);
+		teacherShiftPercentage.setProfessorShip(professorship);
+		
+		return teacherShiftPercentage;
+	}
+	
+	public static IProfessorship copyInfoProfessorShip2IProfessorShip(InfoProfessorShip infoProfessorShip) {
+		InfoExecutionCourse infoExecutionCourse = infoProfessorShip.getInfoExecutionCourse();
+		InfoTeacher infoTeacher = infoProfessorShip.getInfoTeacher();
+		
+		IProfessorship professorship = new Professorship();
+		IDisciplinaExecucao disciplinaExecucao = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+		ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+		
+		copyObjectProperties(professorship, infoProfessorShip);
+		
+		professorship.setExecutionCourse(disciplinaExecucao);
+		professorship.setTeacher(teacher);
+					
+		return professorship;
 	}
 }
