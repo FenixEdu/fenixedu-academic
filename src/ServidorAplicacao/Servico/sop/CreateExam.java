@@ -1,5 +1,5 @@
 /*
- * CriarAula.java
+ * CreateExam.java
  *
  * Created on 2003/03/26
  */
