@@ -47,10 +47,10 @@
   </dl>
  <ul> 
 
-<li><html:link page="/viewTimeTable.do">
+<li><html:link page="<%= "/viewTimeTable.do" + "?exeCode=" + pageContext.findAttribute("executionCourseName") + "&amp;ePName=" + pageContext.findAttribute("executionPeriodName") + "&amp;eYName=" + pageContext.findAttribute("executionYearYear") %>">
 		<bean:message key="link.executionCourse.timeTable"/>
 </html:link></li>
-<li><html:link page="/viewExecutionCourseShifts.do">
+<li><html:link page="<%= "/viewExecutionCourseShifts.do" + "?exeCode=" + pageContext.findAttribute("executionCourseName") + "&amp;ePName=" + pageContext.findAttribute("executionPeriodName") + "&amp;eYName=" + pageContext.findAttribute("executionYearYear") %>">
 		<bean:message key="link.executionCourse.shifts"/>
 </html:link></li>
 </ul>
