@@ -54,6 +54,16 @@
 	  		<jsp:include page="./certificateTemplate8.jsp" flush="true" />
 	  		<jsp:include page="./certificateTemplate10.jsp" flush="true" />
 				</logic:present>
+				<logic:present name="<%= SessionConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE%>">	
+			<jsp:include page="./certificateTemplate14.jsp" flush="true" />	
+			<jsp:include page="./certificateTemplate10.jsp" flush="true" />		
+  			<jsp:include page="./certificateTemplate13.jsp" flush="true" />
+				</logic:present>
+				<logic:present name="<%= SessionConstants.FINAL_RESULT_DEGREE_SIMPLE%>">
+	  		<jsp:include page="./certificateTemplate12.jsp" flush="true" />
+	  		<jsp:include page="./certificateTemplate13.jsp" flush="true" />
+				</logic:present>
+				
 	</p>
 	<p>
 			<logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST%>">

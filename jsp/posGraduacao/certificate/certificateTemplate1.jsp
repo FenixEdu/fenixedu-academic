@@ -8,4 +8,4 @@
  <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomePai"/> e de
  <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomeMae"/> natural de
  <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.freguesiaNaturalidade"/> de nacionalidade
- <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nacionalidade"/>
+ <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nacionalidade"/>,
