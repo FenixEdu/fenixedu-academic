@@ -19,11 +19,11 @@
 <logic:iterate id="infoTeachingCareer" name="infoSiteTeachingCareers" property="infoCareers">
 <tr>
 	<td>
-		<bean:write name="infoTeachingCareer" property="begin-Year" />-
-		<bean:write name="infoTeachingCareer" property="end-Year" />
+		<bean:write name="infoTeachingCareer" property="beginYear" />-
+		<bean:write name="infoTeachingCareer" property="endYear" />
 	</td>
 	<td>
-		<bean:write name="infoTeachingCareer" property="category.longName" />
+		<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
 	</td>
 	<td>
 		<bean:write name="infoTeachingCareer" property="courseOrPosition" />
@@ -52,7 +52,10 @@
 </logic:iterate>
 </table>
 <div class="gen-button">
-	<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0">
+	<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0&amp;careerType=Teaching" 
+			   paramId="teacherId" 
+			   paramName="infoSiteTeachingCareers" 
+			   paramProperty="infoTeacher.idInternal" >
 		<bean:message key="message.teachingCareer.insert" />
 	</html:link>
 </div>
@@ -64,11 +67,6 @@
 	<html:submit styleClass="inputbutton" property="confirm">
 		<bean:message key="button.continue"/>
 	</html:submit>
-	</td>
-	<td>
-		<html:reset styleClass="inputbutton">
-		<bean:message key="button.seeInformation"/>
-	</html:reset>
 	</td>
 </tr>
 </table>

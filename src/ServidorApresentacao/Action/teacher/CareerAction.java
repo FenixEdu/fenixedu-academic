@@ -4,6 +4,8 @@
  */
 package ServidorApresentacao.Action.teacher;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
@@ -16,7 +18,11 @@ import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
 import DataBeans.teacher.InfoProfessionalCareer;
 import DataBeans.teacher.InfoTeachingCareer;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.CareerType;
 
 /**
@@ -93,8 +99,8 @@ public class CareerAction extends CRUDActionByOID
             DynaActionForm dynaForm = (DynaActionForm) form;
 
             dynaForm.set("careerId", infoCareer.getIdInternal());
-            dynaForm.set("beginYear", infoCareer.getBeginYear());
-            dynaForm.set("endYear", infoCareer.getEndYear());
+            dynaForm.set("beginYear", infoCareer.getBeginYear().toString());
+            dynaForm.set("endYear", infoCareer.getEndYear().toString());
             CareerType careerType = infoCareer.getCareerType();
             dynaForm.set("careerType", careerType.getName());
 
@@ -117,5 +123,13 @@ public class CareerAction extends CRUDActionByOID
         {
             e.printStackTrace();
         }
+    }
+    
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form, HttpServletRequest request) throws FenixServiceException
+    {
+        IUserView userView = SessionUtils.getUserView(request);
+        List categories = (List) ServiceUtils.executeService(userView, "ReadCategories", new Object[]{});
+        
+        request.setAttribute("categories", categories);
     }
 }

@@ -4,6 +4,10 @@
  */
 package ServidorAplicacao.Servico.framework;
 
+import java.beans.Beans;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.apache.commons.beanutils.PropertyUtils;
 
 import DataBeans.InfoObject;
@@ -46,6 +50,7 @@ public abstract class EditDomainObjectService implements IServico
                 newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
                 persistentObject.simpleLockWrite(newDomainObject);
                 PropertyUtils.copyProperties(newDomainObject, oldDomainObject);
+                fillAssociatedObjects(newDomainObject, persistentObject);
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -57,6 +62,33 @@ public abstract class EditDomainObjectService implements IServico
             throw new FenixServiceException(e);
         }
 
+    }
+
+    /**
+	 * @param newDomainObject
+	 * @param sp
+	 */
+    private void fillAssociatedObjects(IDomainObject newDomainObject, IPersistentObject po) throws FenixServiceException
+    {
+        try
+        {
+            Map propertiesMap = PropertyUtils.describe(newDomainObject);
+            Iterator iterator = propertiesMap.entrySet().iterator();
+            while (iterator.hasNext())
+            {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                Object value = entry.getValue();
+
+                if ((value != null) && (Beans.isInstanceOf(value, IDomainObject.class)))
+                {
+                    IDomainObject o = po.readByOId((IDomainObject) value, false);
+                    PropertyUtils.setProperty(newDomainObject, entry.getKey().toString(), o);
+                }
+            }
+        } catch (Exception e)
+        {
+            throw new FenixServiceException(e.getMessage());
+        }
     }
 
     /**

@@ -7,11 +7,6 @@
 <h2><bean:message key="title.teacherInformation"/></h2>
 
 <logic:present name="infoSiteTeacherInformation"> 
-	<html:form action="/teacherInformation">
-		<html:hidden property="teacherId"/>
-		<html:hidden property="weeklyOcupationId"/>
-		<html:hidden property="serviceProviderRegimeId"/>
-		<html:hidden property="method" value="edit"/>
 		<table>
 			<tr>
 				<td><bean:message key="message.teacherInformation.name" />
@@ -46,11 +41,6 @@
 			</tr>
 			</logic:iterate>
 		</table>
-			<div class="gen-button">
-				<html:link page="<%= "/readQualifications.do"%>">
-					<bean:message key="label.teacherInformation.manage" />
-				</html:link>
-			</div>
 		<br />
 		<p class="infoop"><span class="emphasis-box">2</span>
 		<bean:message key="message.teacherInformation.teachingCareer" /></p>
@@ -70,11 +60,6 @@
 			</tr>
 			</logic:iterate>
 		</table>
-		<div class="gen-button">
-			<html:link page="<%= "/readCareers.do?careerType=Teaching&amp;page=0" %>">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>
 		<br />
 		<p class="infoop"><span class="emphasis-box">3</span>
 		<bean:message key="message.teacherInformation.professionalCareer" /></p>
@@ -97,11 +82,6 @@
 				</tr>
 			</logic:iterate>
 		</table>
-		<div class="gen-button">
-			<html:link page="/readCareers.do?careerType=Professional&amp;page=0">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>
 		<br />
 		<p class="infoop"><span class="emphasis-box">4</span>
 			<bean:message key="message.teacherInformation.serviceRegime" />
@@ -111,12 +91,9 @@
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 			<tr>
 				<td>
-					<logic:iterate id="providerRegimeType" name="providerRegimeTypeList" scope="request">
-						<bean:message name="providerRegimeType" property="name" bundle="ENUMERATION_RESOURCES"/>
-						<html:radio property="serviceProviderRegimeTypeName"
-								idName="providerRegimeType"
-								value="name"/><br />
-					</logic:iterate>
+					<bean:message name="infoSiteTeacherInformation" 
+								  property="infoServiceProviderRegime.providerRegimeType.name" 
+								  bundle="ENUMERATION_RESOURCES"/>
 				</td>
 			</tr>
 		</table>
@@ -130,11 +107,6 @@
 			<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
 				<bean:write name="infoExternalActivity" property="activity" />
 			</logic:iterate>
-		<div class="gen-button">
-			<html:link page="/readExternalActivities.do">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>
 		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
 			<bean:message key="message.teacherInformation.numberOfPublications" /></p>
@@ -188,11 +160,6 @@
 				</tr>
 			</logic:iterate>
 		</table>--%>
-	<%--<div class="gen-button"> <!-- VER ESTE LINK -->
-			<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>--%>
 		<br />
 		<p class="infoop"><span class="emphasis-box">8</span>
 			<bean:message key="message.teacherInformation.cientificPublications" /></p>
@@ -209,11 +176,6 @@
 			</tr>
 			</logic:iterate>
 		</table>--%>
-		<%--<div class="gen-button">
-				<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-					<bean:message key="label.teacherInformation.manage" />
-				</html:link>
-			</div>--%>
 		<br />
 		<p class="infoop"><span class="emphasis-box">9</span>
 			<bean:message key="message.teacherInformation.lectureCourses" />
@@ -288,9 +250,15 @@
 		<%-- 	VER CREDITOS	
 			<td class="listClasses"><bean:write name="" property="" /></td>
 			<td class="listClasses"><bean:write name="" property="" /></td> --%>
-			<td class="listClasses"><html:text property="research" /></td>
-			<td class="listClasses"><html:text property="management" /></td>
-			<td class="listClasses"><html:text property="other" /></td>
+			<td class="listClasses">
+				<bean:write name="infoSiteTeacherInformation" property="infoWeeklyOcupation.research" />
+			</td>
+			<td class="listClasses">
+				<bean:write name="infoSiteTeacherInformation" property="infoWeeklyOcupation.management" />
+			</td>
+			<td class="listClasses">
+				<bean:write name="infoSiteTeacherInformation" property="infoWeeklyOcupation.other" />
+			</td>
 		</tr>
 		</table>
 		<br />
@@ -312,21 +280,4 @@
 				</td>
 			</tr>
 		</table>
-		<h3>
-			<table>
-				<tr align="center">	
-					<td>
-						<html:submit styleClass="inputbutton" property="confirm">
-							<bean:message key="button.save"/>
-						</html:submit>
-					</td>
-					<td>
-						<html:reset styleClass="inputbutton">
-							<bean:message key="label.clear"/>
-						</html:reset>
-					</td>
-				</tr>
-			</table>
-		</h3>
-	</html:form>
 </logic:present>

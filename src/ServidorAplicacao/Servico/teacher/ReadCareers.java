@@ -4,12 +4,13 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
-import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoSiteCareers;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
@@ -64,22 +65,24 @@ public class ReadCareers implements IServico
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
             IPersistentCareer persistentCareer = persistentSuport.getIPersistentCareer();
             List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
 
-            List result = new ArrayList();
-            Iterator iter = careers.iterator();
-            while (iter.hasNext())
+            List result = (List) CollectionUtils.collect(careers, new Transformer()
             {
-                ICareer career = (ICareer) iter.next();
-                InfoCareer infoCareer = Cloner.copyICareer2InfoCareer(career);
-                result.add(infoCareer);
-            }
+                public Object transform(Object o)
+                {
+                    ICareer career = (ICareer) o;
+                    return Cloner.copyICareer2InfoCareer(career);
+                }
+            });
 
             InfoSiteCareers bodyComponent = new InfoSiteCareers();
             bodyComponent.setInfoCareers(result);
             bodyComponent.setCareerType(careerType);
+            bodyComponent.setInfoTeacher(infoTeacher);
 
             SiteView siteView = new SiteView(bodyComponent);
             return siteView;

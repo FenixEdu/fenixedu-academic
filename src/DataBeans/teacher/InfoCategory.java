@@ -17,24 +17,66 @@ import DataBeans.InfoObject;
  */
 public class InfoCategory extends InfoObject {
 
-	private String name;
+    private String shortName;
+    private String longName;
+    private String code;
 
 	public InfoCategory() {
 	}
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return Returns the code.
+     */
+    public String getCode()
+    {
+        return code;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param code The code to set.
+     */
+    public void setCode(String code)
+    {
+        this.code = code;
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoCategory) {
-			resultado = getName().equals(((InfoCategory) obj).getName());
-		}
-		return resultado;
-	}
+    /**
+     * @return Returns the longName.
+     */
+    public String getLongName()
+    {
+        return longName;
+    }
+
+    /**
+     * @param longName The longName to set.
+     */
+    public void setLongName(String longName)
+    {
+        this.longName = longName;
+    }
+
+    /**
+     * @return Returns the shortName.
+     */
+    public String getShortName()
+    {
+        return shortName;
+    }
+
+    /**
+     * @param shortName The shortName to set.
+     */
+    public void setShortName(String shortName)
+    {
+        this.shortName = shortName;
+    }
+
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoCategory) {
+            resultado = getCode().equals(((InfoCategory) obj).getCode());
+        }
+        return resultado;
+    }
 }

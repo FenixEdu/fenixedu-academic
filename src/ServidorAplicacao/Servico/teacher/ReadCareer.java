@@ -11,6 +11,7 @@ import Dominio.IDomainObject;
 import Dominio.teacher.Career;
 import Dominio.teacher.ICareer;
 import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.IPersistentCareer;
@@ -58,7 +59,7 @@ public class ReadCareer extends ReadDomainObjectService
 	 * 
 	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
 	 */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;

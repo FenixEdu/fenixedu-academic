@@ -12,15 +12,15 @@
 <bean:message key="message.professionalCareer.management" /></p>
 <bean:message key="message.professionalCareer.managementInsertExplanation" />
 <bean:message key="message.professionalCareer.managementCleanExplanation" />
-<bean:message key="message.professionalCareer.managementInsertCareerProExplanation" />
+<bean:message key="message.professionalCareer.managementInsertCareerExplanation" />
 <bean:message key="message.professionalCareer.managementSaveExplanation" />
 <bean:message key="message.professionalCareer.managementSeeExplanation" />
 <table border="1">
 <logic:iterate id="infoProfessionalCareer" name="infoSiteProfessionalCareers" property="infoCareers">
 <tr>
 	<td>
-		<bean:write name="infoProfessionalCareer" property="begin-Year" />-
-		<bean:write name="infoProfessionalCareer" property="end-Year" />
+		<bean:write name="infoProfessionalCareer" property="beginYear" />-
+		<bean:write name="infoProfessionalCareer" property="endYear" />
 	</td>
 	<td>
 		<bean:write name="infoProfessionalCareer" property="entity" />
@@ -52,7 +52,10 @@
 </logic:iterate>
 </table>
 <div class="gen-button">
-	<html:link page="/professionalCareer.do?method=prepareEdit&amp;page=0">
+	<html:link page="/professionalCareer.do?method=prepareEdit&amp;page=0&amp;careerType=Professional" 
+			   paramId="teacherId" 
+			   paramName="infoSiteProfessionalCareers" 
+			   paramProperty="infoTeacher.idInternal" >
 		<bean:message key="message.professionalCareer.insert" />
 	</html:link>
 </div>
@@ -64,11 +67,6 @@
 	<html:submit styleClass="inputbutton" property="confirm">
 		<bean:message key="button.continue"/>
 	</html:submit>
-	</td>
-	<td>
-		<html:reset styleClass="inputbutton">
-		<bean:message key="button.seeInformation"/>
-	</html:reset>
 	</td>
 </tr>
 </table>

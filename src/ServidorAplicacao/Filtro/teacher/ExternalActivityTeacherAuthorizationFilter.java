@@ -60,13 +60,14 @@ public class ExternalActivityTeacherAuthorizationFilter extends AuthorizationByR
     {
         try
         {
+            boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0))); 
+            
             if (((id != null
                 && id.getRoles() != null
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
                 || (id == null)
                 || (id.getRoles() == null)
-                || ((arguments[0] != null)
-                    && (!externalActivityBelongsToTeacher(id, (Integer) arguments[0]))))
+                || (!isNew && (!externalActivityBelongsToTeacher(id, (Integer) arguments[0]))))
             {
                 throw new NotAuthorizedException();
             }

@@ -41,6 +41,7 @@ public class ExternalActivityAction extends CRUDActionByOID
 
         InfoExternalActivity infoExternalActivity = new InfoExternalActivity();
         infoExternalActivity.setIdInternal(externalActivityId);
+        infoExternalActivity.setActivity(activity);
         infoExternalActivity.setInfoTeacher(infoTeacher);
 
         return infoExternalActivity;
@@ -59,13 +60,15 @@ public class ExternalActivityAction extends CRUDActionByOID
         ActionForm form,
         HttpServletRequest request)
     {
+
+        
         super.populateFormFromInfoObject(mapping, infoObject, form, request);
 
         InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoObject;
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         InfoTeacher infoTeacher = infoExternalActivity.getInfoTeacher();
-        dynaForm.set("professionalCareerId", infoExternalActivity.getIdInternal());
+        dynaForm.set("externalActivityId", infoExternalActivity.getIdInternal());
         dynaForm.set("activity", infoExternalActivity.getActivity());
         dynaForm.set("teacherId", infoTeacher.getIdInternal());
     }

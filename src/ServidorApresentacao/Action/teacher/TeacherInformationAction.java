@@ -61,7 +61,7 @@ public class TeacherInformationAction extends DispatchAction
         InfoWeeklyOcupation infoWeeklyOcupation = getInfoWeeklyOcupationFromForm(form);
         Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation };
         ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
-        return mapping.findForward("successfull-edit");
+        return read(mapping, form, request, response);
     }
 
     /**
@@ -154,9 +154,9 @@ public class TeacherInformationAction extends DispatchAction
             ProviderRegimeType providerRegimeType = infoServiceProviderRegime.getProviderRegimeType();
             dynaForm.set("serviceProviderRegimeTypeName", providerRegimeType == null ? null : providerRegimeType.getName());
             dynaForm.set("weeklyOcupationId", infoWeeklyOcupation.getIdInternal());
-            dynaForm.set("management", infoWeeklyOcupation.getManagement());
-            dynaForm.set("research", infoWeeklyOcupation.getResearch());
-            dynaForm.set("other", infoWeeklyOcupation.getOther());
+            dynaForm.set("management", infoWeeklyOcupation.getManagement().toString());
+            dynaForm.set("research", infoWeeklyOcupation.getResearch().toString());
+            dynaForm.set("other", infoWeeklyOcupation.getOther().toString());
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -216,7 +216,7 @@ public class TeacherInformationAction extends DispatchAction
         InfoSiteTeacherInformation infoSiteTeacherInformation =
             readInfoSiteTeacherInformation(mapping, form, request);
         setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
-        return mapping.findForward("sucessfull-read");
+        return mapping.findForward("successfull-read");
     }
 
     /**

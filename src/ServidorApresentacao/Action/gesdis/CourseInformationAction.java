@@ -60,7 +60,6 @@ public class CourseInformationAction extends DispatchAction
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
         Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport };
         ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
-        //return mapping.findForward("successfull-edit");
         return read(mapping, form, request, response);
     }
 

@@ -21,7 +21,7 @@ public class InfoTeachingCareer extends InfoCareer
      */
     public InfoTeachingCareer()
     {
-        setCareerType(CareerType.PROFESSIONAL);
+        setCareerType(CareerType.TEACHING);
     }
 
     /**

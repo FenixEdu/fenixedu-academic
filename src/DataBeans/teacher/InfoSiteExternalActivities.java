@@ -8,6 +8,7 @@ import java.util.List;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
+import DataBeans.InfoTeacher;
 
 /**
  * @author Leonor Almeida
@@ -18,6 +19,7 @@ public class InfoSiteExternalActivities extends InfoObject implements ISiteCompo
 {
 
 	private List infoExternalActivities;
+    private InfoTeacher infoTeacher;
     
     public InfoSiteExternalActivities()
     {
@@ -38,4 +40,20 @@ public class InfoSiteExternalActivities extends InfoObject implements ISiteCompo
     {
         this.infoExternalActivities = infoExternalActivities;
     }
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher()
+    {
+        return infoTeacher;
+    }
+
+    /**
+     * @param infoTeacher The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher)
+    {
+        this.infoTeacher = infoTeacher;
+    }
+
 }

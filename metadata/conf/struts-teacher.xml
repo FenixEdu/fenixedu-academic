@@ -400,12 +400,13 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
 			<form-property name="careerId" type="java.lang.Integer" initial="0" />
-			<form-property name="beginYear" type="java.lang.Integer" />
-			<form-property name="endYear" type="java.lang.Integer" />
+			<form-property name="beginYear" type="java.lang.String" />
+			<form-property name="endYear" type="java.lang.String" />
 			<form-property name="type" type="java.lang.Integer" />			
 			<form-property name="entity" type="java.lang.String" />
 			<form-property name="function" type="java.lang.String" />
-			<form-property name="teacherId" type="java.lang.String"	/>
+			<form-property name="teacherId" type="java.lang.Integer" />
+			<form-property name="careerType" type="java.lang.String"/>
 		</form-bean>
 		
 		<!-- TEACHING CAREER FORM -->
@@ -417,8 +418,9 @@
 			<form-property name="endYear" type="java.lang.String" />
 			<form-property name="type" type="java.lang.Integer" />
 			<form-property name="courseOrPosition" type="java.lang.String" />
-			<form-property name="categoryId" type="java.lang.Integer" /> <!-- FALTA VER ISTO -->
-			<form-property name="teacherId" type="java.lang.String"	/>
+			<form-property name="categoryId" type="java.lang.Integer" />
+			<form-property name="teacherId" type="java.lang.Integer" />
+			<form-property name="careerType" type="java.lang.String"/>
 		</form-bean>
 		
 		<!-- READ CAREERS FORM -->
@@ -434,7 +436,7 @@
 			dynamic="true">
 			<form-property name="externalActivityId" type="java.lang.Integer" initial="0" />
 			<form-property name="activity" type="java.lang.String" />
-			<form-property name="teacherId" type="java.lang.String"	/>
+			<form-property name="teacherId" type="java.lang.Integer" />
 		</form-bean>
 		
 		<!-- TEACHER INFORMATION FORM  -->
@@ -1348,7 +1350,6 @@
       		scope="request"
       		input="/courseInformation.do?page=0&amp;method=prepareEdit">
 		<forward name="show-form" path="course-information-management"/> 
-		<!--<forward name="successfull-edit" path="view-course-information"/> -->
 		<forward name="successfull-read" path="view-course-information"/>
 	  </action>
       
@@ -1364,11 +1365,11 @@
       	<set-property property="deleteService" value="DeleteCareer" />
       	<set-property property="readService" value="ReadCareer" />
       	<set-property property="oidProperty" value="careerId" />
-      	<forward name="show-form" path="..."/> 
-		<forward name="successfull-edit" path="..."/> 
-		<forward name="successfull-read" path="..."/>
-		<forward name="successfull-delete" path="..."/>
-		
+      	<set-property property="requestAttribute" value="infoProfessionalCareer" />      	
+      	<forward name="show-form" path="edit-professional-career"/> 
+		<forward name="successfull-edit" path="/readCareers.do?careerType=Professional&amp;page=0"/> 
+		<forward name="successfull-read" path="/readCareers.do?careerType=Professional&amp;page=0"/>
+		<forward name="successfull-delete" path="/readCareers.do?careerType=Professional&amp;page=0"/>
 	  </action>
 
       <!-- Teaching Career -->
@@ -1383,10 +1384,11 @@
       	<set-property property="deleteService" value="DeleteCareer" />
       	<set-property property="readService" value="ReadCareer" />
       	<set-property property="oidProperty" value="careerId" />
-      	<forward name="show-form" path="..."/> 
-		<forward name="successfull-edit" path="..."/> 
-		<forward name="successfull-read" path="..."/>
-		<forward name="successfull-delete" path="..."/>
+    	<set-property property="requestAttribute" value="infoTeachingCareer" />
+      	<forward name="show-form" path="edit-teaching-career"/> 
+		<forward name="successfull-edit" path="/readCareers.do?careerType=Teaching&amp;page=0"/> 
+		<forward name="successfull-read" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
+		<forward name="successfull-delete" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
 	  </action>
 	  
 	  <!-- Read Careers -->
@@ -1410,17 +1412,18 @@
 	  	<set-property property="deleteService" value="DeleteExternalActivity" />
 	  	<set-property property="readService" value="ReadExternalActivity" />
 	  	<set-property property="oidProperty" value="externalActivityId" />
-      	<forward name="show-form" path="..."/> 
-		<forward name="successfull-edit" path="..."/> 
-		<forward name="successfull-read" path="..."/>
-		<forward name="successfull-delete" path="..."/>
+    	<set-property property="requestAttribute" value="infoExternalActivity" />
+      	<forward name="show-form" path="edit-external-activity"/> 
+		<forward name="successfull-edit" path="/readExternalActivities.do?page=0"/> 
+		<forward name="successfull-read" path="/readExternalActivities.do?page=0"/>
+		<forward name="successfull-delete" path="/readExternalActivities.do?page=0"/>
 	  </action>
 	  
 	  <!-- Read External Activities -->
 	  <action type="ServidorApresentacao.Action.teacher.ReadExternalActivitiesAction"
 	  		path="/readExternalActivities"
 	  		scope="request">
-	  	<forward name="show-form" path="..."/>
+	  	<forward name="show-form" path="view-external-activities"/>
 	  </action>	  	
 	  
 	  <!-- Teacher Information -->
@@ -1431,7 +1434,6 @@
 	  		scope="request"
 	  		input="/teacherInformation.do?page=0&amp;method=prepareEdit">
 	  	<forward name="show-form" path="teacher-information-management"/> 
-		<forward name="successfull-edit" path="view-teacher-information"/> 
 		<forward name="successfull-read" path="view-teacher-information"/>
 	  </action>
 	  

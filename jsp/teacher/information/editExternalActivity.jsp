@@ -4,24 +4,28 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
-<logic:present name="siteView"> 
-<html:form action="/teacherInformation">
-<bean:define id="siteTeacherInformation" name="siteView" property="component"/>
+<html:form action="/externalActivity">
 <br/>
-<h3><bean:message key="message.externalActivities.editCareer" /></h3>
+<h3>
+<logic:present name="infoExternalActivity">
+<bean:message key="message.externalActivities.edit" />
+</logic:present>
+<logic:notPresent name="infoExternalCareer">
+<bean:message key="message.externalActivities.insert" />
+</logic:notPresent>
+</h3>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.externalActivities.managementEdit" /></p>
-
-<html:form action="/editActivity">
-	<%--<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="editActivity"/>
-	<html:hidden property="objectCode"/>--%>
+	<html:hidden property="page" value="1"/>
+	<html:hidden property="externalActivityId"/>
+	<html:hidden property="teacherId"/>
+	<html:hidden property="method" value="edit"/>
 <table>
 	<tr>
 		<td><bean:message key="message.externalActivities.activity" /></td>
 	</tr>
 	<tr>
-		<td><html:text property="activity"/></td>
+		<td><html:textarea property="activity" cols="100%" rows="4"/></td>
 	<tr/>
 </table>
 <br/>

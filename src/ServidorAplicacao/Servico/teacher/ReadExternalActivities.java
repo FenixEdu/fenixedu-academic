@@ -4,12 +4,13 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
-import DataBeans.teacher.InfoExternalActivity;
 import DataBeans.teacher.InfoSiteExternalActivities;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
@@ -63,21 +64,24 @@ public class ReadExternalActivities implements IServico
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
-            IPersistentExternalActivity persistentExternalActivity = persistentSuport.getIPersistentExternalActivity();
+            IPersistentExternalActivity persistentExternalActivity =
+                persistentSuport.getIPersistentExternalActivity();
             List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
 
-            List result = new ArrayList();
-            Iterator iter = externalActivities.iterator();
-            while (iter.hasNext())
+            List result = (List) CollectionUtils.collect(externalActivities, new Transformer()
             {
-                IExternalActivity externalActivity = (IExternalActivity) iter.next();
-                InfoExternalActivity infoExternalActivity = Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
-                result.add(infoExternalActivity);
-            }
+                public Object transform(Object o)
+                {
+                    IExternalActivity externalActivity = (IExternalActivity) o;
+                    return Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+                }
+            });
 
             InfoSiteExternalActivities bodyComponent = new InfoSiteExternalActivities();
-            bodyComponent.setInfoExternalActivities(externalActivities);
+            bodyComponent.setInfoExternalActivities(result);
+            bodyComponent.setInfoTeacher(infoTeacher);
 
             SiteView siteView = new SiteView(bodyComponent);
             return siteView;

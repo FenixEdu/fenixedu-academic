@@ -59,12 +59,14 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
     {
         try
         {
+            boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0))); 
+            
             if (((id != null
                 && id.getRoles() != null
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
                 || (id == null)
                 || (id.getRoles() == null)
-                || ((arguments[0] != null) && (!careerBelongsToTeacher(id, (Integer) arguments[0]))))
+                || ((!isNew) && (!careerBelongsToTeacher(id, (Integer) arguments[0]))))
             {
                 throw new NotAuthorizedException();
             }

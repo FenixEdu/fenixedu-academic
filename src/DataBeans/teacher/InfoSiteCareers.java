@@ -8,6 +8,7 @@ import java.util.List;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
+import DataBeans.InfoTeacher;
 import Util.CareerType;
 
 /**
@@ -20,6 +21,7 @@ public class InfoSiteCareers extends InfoObject implements ISiteComponent
 
     private List infoCareers;
     private CareerType careerType;
+    private InfoTeacher infoTeacher;
 
     public InfoSiteCareers()
     {
@@ -58,4 +60,20 @@ public class InfoSiteCareers extends InfoObject implements ISiteComponent
     {
         this.infoCareers = infoCareers;
     }
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher()
+    {
+        return infoTeacher;
+    }
+
+    /**
+     * @param infoTeacher The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher)
+    {
+        this.infoTeacher = infoTeacher;
+    }
+
 }
