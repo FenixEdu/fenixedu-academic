@@ -12,14 +12,13 @@
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
 			<b><bean:message key="label.student.enrollment.number"/></b>&nbsp;
-			<logic:present name="studentName">
-				<ben:write name="studentName" />				
+			<logic:present name="studentNumber">
+				<bean:write name="studentNumber" />
 			</logic:present>
 			&nbsp;
-			<logic:present name="studentNumber">
-				<ben:write name="studentNumber" />
+			<logic:present name="studentName">
+				<bean:write name="studentName" />				
 			</logic:present>
-			
 			<br/>
 			<b><bean:message key="label.executionYear" /></b>&nbsp;
 			<logic:present name="executionYear">

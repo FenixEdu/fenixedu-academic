@@ -8,9 +8,12 @@
 
 
 <logic:present name="infoStudentEnrolmentContext">
-
-<bean:define id="infoEnrollmentsWithStateEnrolled" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" />
-<bean:size id="enrollmentsSize" name="infoEnrollmentsWithStateEnrolled" />
-<bean:write name="enrollmentsSize" />
-
+	<bean:define id="infoEnrollmentsWithStateEnrolled" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" />
+	
+	<strong><bean:message key="message.student.enrolled.curricularCourses" /></strong>
+	<br /><br />
+	<logic:iterate id="infoEnrollment" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" >
+		<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
+		<br />
+	</logic:iterate>
 </logic:present>

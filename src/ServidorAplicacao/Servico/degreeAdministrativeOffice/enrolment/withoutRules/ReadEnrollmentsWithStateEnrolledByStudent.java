@@ -4,8 +4,10 @@
  */
 package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
@@ -37,6 +39,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 
 	public Object run(InfoStudent infoStudent, TipoCurso degreeType) throws FenixServiceException
 	{
+		System.out.println("ReadEnrollmentsWithStateEnrolledByStudent");
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 		try
 		{
@@ -99,7 +102,8 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 				return Cloner.copyIEnrolment2InfoEnrolment(enrolment);
 			}
 		});
-
+		Collections.sort(infoEnrollments, new BeanComparator(("infoCurricularCourse.name")));
+		
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
 		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		infoStudentEnrolmentContext.setStudentInfoEnrollmentsWithStateEnrolled(infoEnrollments);
