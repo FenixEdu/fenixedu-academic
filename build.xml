@@ -208,27 +208,19 @@
                 <pathelement path="${tests.classes}"/>
                 <pathelement path="${webapp}"/>
                 <pathelement path="${sql}"/>
-                <fileset dir="${lib}">
+                <fileset dir="$webapp.lib}">
                     <include name="**/*.jar"/>
-                </fileset>
-                <fileset dir="${libs.web}">
-                    <include name="**/*.jar"/>
-                    <exclude name="commons-beanutils.jar;commons-collections.jar;commons-lang.jar;commons-logging.jar;commons-pool.jar;jdbc2_0-stdext.jar"/>
                 </fileset>
             </classpath>
 
 		  <formatter type="xml"/>
 
-<!--		  <test name="my.test.TestCase" haltonfailure="no" todir="${reports.tests}" outfile="resultTEST">
-		    <formatter type="xml"/>
-		  </test>
--->
             <batchtest fork="yes" todir="${reports.tests}">
                 <fileset dir="${src.tests}">
                 	<include name="**/*Test.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/AllTests.java"/>
-                    
+
                     <exclude name="**/ReadSectionsServiceTest.java"/>
                 </fileset>
             </batchtest>
