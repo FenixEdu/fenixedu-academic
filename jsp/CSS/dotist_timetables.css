@@ -3,6 +3,19 @@
 	color: #FFFFFF;
 	text-decoration: bold;
 }
+.horarioHeader_blank{
+	font-size: 11px;
+	font-weight: bold;
+	color: #333333;
+	text-align: center;	
+	background-color: #999999;
+	height: 20px;
+	border-color: #000000;
+	border-left-width: 2px;
+	border-left-style: solid;
+	border-top-width: 2px;
+	border-top-style: solid;
+}
 
 .horarioHeader_first {
 	font-size: 11px;
@@ -19,7 +32,6 @@
 	border-right-style: solid;
 	border-top-width: 2px;
 	border-top-style: solid;
-
 }
 
 .horarioHeader {
@@ -128,6 +140,14 @@
 	border-color: #000000;
 	border-right-width: 2px;
 	border-right-style: solid;
+}
+
+.slot_start_end_right_last{
+	border-color: #000000;
+	border-right-width: 2px;
+	border-right-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
 }
 
 .slot_start_end_right{
