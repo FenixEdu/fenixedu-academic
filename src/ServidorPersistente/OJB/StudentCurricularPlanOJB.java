@@ -157,10 +157,13 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		}
 	}
 
-	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber, TipoCurso degreeType, Specialization specialization)
+	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(
+		Integer studentNumber,
+		TipoCurso degreeType,
+		Specialization specialization)
 		throws ExcepcaoPersistencia {
 		try {
-			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan ();
+			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
 			oqlQuery += " where student.number = $1";
 			oqlQuery += " and student.degreeType = $2";
@@ -201,13 +204,13 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
+
 	public List readByBranch(IBranch branch) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("branchKey", branch.getIdInternal());
 		return queryList(StudentCurricularPlan.class, criteria);
 	}
-	
+
 	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
@@ -216,7 +219,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		Integer studentCurricularPlanId;
 		IStudentCurricularPlan helpStudentCurricularPlan = new StudentCurricularPlan();
 		Iterator iter = enrolments.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			studentCurricularPlanId = ((IEnrolment) iter.next()).getStudentCurricularPlan().getIdInternal();
 			helpStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan, false);
@@ -245,34 +248,30 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 	}
 
 	public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
-			Criteria crit = new Criteria();
-			crit.addEqualTo("student.number",number);
-			crit.addEqualTo("student.degreeType",degreeType);
-			return queryList(StudentCurricularPlan.class,crit);
+		Criteria crit = new Criteria();
+		crit.addEqualTo("student.number", number);
+		crit.addEqualTo("student.degreeType", degreeType);
+		return queryList(StudentCurricularPlan.class, crit);
+
+	}
+	//modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 24/Set/2003
+	/**
+	 * 
+	 * Service rewritten by Naat & Sana to correct bug that cause the returning 
+	 * of an empty StudentCurricular when a student does not have an active version.
+	 * The new version now uses Persistence Broker criteria API
+	 */
+	public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		
+		criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
+		criteria.addEqualTo("student.number", number);
+		criteria.addEqualTo("student.degreeType", degreeType);
+		
+		IStudentCurricularPlan storedStudentCurricularPlan = (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
+		
+		return storedStudentCurricularPlan;
 		
 	}
-    //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 24/Set/2003 
-    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
-        try {
-            IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-            String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-            oqlQuery += " where student.number = $1" ;
-            oqlQuery += " and student.degreeType = $2 ";
-            oqlQuery += " and currentState = $3";
 
-            query.create(oqlQuery);
-            query.bind(number);
-            query.bind(degreeType);
-            query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
-            
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                studentCurricularPlan = (IStudentCurricularPlan) result.get(0);
-            return studentCurricularPlan;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }    
-    
 }
