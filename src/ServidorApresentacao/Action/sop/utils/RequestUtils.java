@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
@@ -50,14 +51,14 @@ public abstract class RequestUtils {
 
 	public static final InfoExecutionCourse getExecutionCourseFromRequest(HttpServletRequest request)
 		throws FenixActionException {
-			InfoExecutionCourse infoExecutionCourse = null;
+		InfoExecutionCourse infoExecutionCourse = null;
 		try {
 			InfoExecutionPeriod infoExecutionPeriod =
 				getExecutionPeriodFromRequest(request);
 			String code = request.getParameter("exeCode");
-			Object[] args = {  infoExecutionPeriod,code };
-			infoExecutionCourse = (InfoExecutionCourse)
-				 ServiceUtils.executeService(
+			Object[] args = { infoExecutionPeriod, code };
+			infoExecutionCourse =
+				(InfoExecutionCourse) ServiceUtils.executeService(
 					null,
 					"ReadExecutionCourse",
 					args);
@@ -113,5 +114,21 @@ public abstract class RequestUtils {
 			System.out.println("there is a link missing the ePName parameter");
 		}
 		return infoExecutionPeriod;
+	}
+
+	public static final InfoSite getSiteFromRequest(HttpServletRequest request)
+		throws FenixActionException {
+		InfoSite infoSite = null;
+		
+		try {
+			InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
+			Object[] args= {infoExecutionCourse	};
+			infoSite = (InfoSite) ServiceUtils.executeService(null,"ReadSite",args);
+			
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		return infoSite;
 	}
 }
