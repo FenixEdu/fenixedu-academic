@@ -7,14 +7,14 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
-import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.enrolment.degree.ChangeEnrolmentStateFromTemporarilyToEnroled;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
@@ -23,7 +23,7 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.ISuportePersistente;
@@ -35,28 +35,14 @@ import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
 /**
- * @author David Santos
- * 16/Jun/2003
+ * @author David Santos 16/Jun/2003
  */
 
-public class ConfirmActualEnrolmentWithoutRules implements IServico
+public class ConfirmActualEnrolmentWithoutRules implements IService
 {
 
-    private static ConfirmActualEnrolmentWithoutRules _servico =
-        new ConfirmActualEnrolmentWithoutRules();
-
-    public static ConfirmActualEnrolmentWithoutRules getService()
+    public ConfirmActualEnrolmentWithoutRules()
     {
-        return _servico;
-    }
-
-    private ConfirmActualEnrolmentWithoutRules()
-    {
-    }
-
-    public final String getNome()
-    {
-        return "ConfirmActualEnrolmentWithoutRules";
     }
 
     public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext)
@@ -73,7 +59,8 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico
                 writeTemporaryEnrolment(enrolmentContext);
                 enrolmentContext.getEnrolmentValidationResult().setSucessMessage(
                     EnrolmentValidationResult.SUCCESS_ENROLMENT);
-            } catch (ExcepcaoPersistencia e)
+            }
+            catch (ExcepcaoPersistencia e)
             {
                 e.printStackTrace();
                 throw new FenixServiceException(e);
@@ -86,20 +73,23 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico
     {
         ISuportePersistente sp = null;
         IPersistentEnrolment persistentEnrolment = null;
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
-
+        IPersistentCurricularCourse persistentCurricularCourse = null;
         try
         {
             sp = SuportePersistenteOJB.getInstance();
             persistentEnrolment = sp.getIPersistentEnrolment();
-            persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 
-            // FIXME [DAVID]: De futuro passar a ler todos os enrolments do plano curricular e periodo de execução que vem no enrolmentContext.
+            persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+
+            // FIXME [DAVID]: De futuro passar a ler todos os enrolments do
+            // plano curricular e periodo de execução que vem no
+            // enrolmentContext.
             List studentEnrolments =
                 persistentEnrolment.readAllByStudentCurricularPlan(
                     enrolmentContext.getStudentActiveCurricularPlan());
 
-            // List of all enrolments with state 'enrolled' and 'temporarily enrolled'.
+            // List of all enrolments with state 'enrolled' and 'temporarily
+            // enrolled'.
             List studentEnroledAndTemporarilyEnroledEnrolments =
                 (List) CollectionUtils.select(studentEnrolments, new Predicate()
             {
@@ -109,7 +99,7 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico
                     return (
                         enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
                             || enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED))
-                        && !enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(
+                        && !enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.OPTIONAL_COURSE_OBJ);
                 }
             });
@@ -135,45 +125,43 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico
             iterator = enrolmentContext.getActualEnrolments().iterator();
             while (iterator.hasNext())
             {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+                ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
                 IEnrolment enrolment =
-                    persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(
+                    persistentEnrolment.readByStudentCurricularPlanAndCurricularCourse(
                         enrolmentContext.getStudentActiveCurricularPlan(),
-                        curricularCourseScope);
+                        curricularCourse);
 
                 if (enrolment == null)
                 {
-
-                    ICurricularCourseScope curricularCourseScopeToWrite =
-                        persistentCurricularCourseScope
-                            .readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
-                            curricularCourseScope.getCurricularCourse(),
-                            curricularCourseScope.getCurricularSemester(),
-                            curricularCourseScope.getBranch(),
-                            null);
+                    ICurricularCourse curricularCourse2Write =
+                        (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, true);
 
                     enrolment = new Enrolment();
-                    enrolment.setCurricularCourseScope(curricularCourseScopeToWrite);
+                    persistentEnrolment.simpleLockWrite(enrolment);
+                    enrolment.setCurricularCourse(curricularCourse2Write);
                     enrolment.setExecutionPeriod(enrolmentContext.getExecutionPeriod());
                     enrolment.setStudentCurricularPlan(
                         enrolmentContext.getStudentActiveCurricularPlan());
                     enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
                     enrolment.setEnrolmentState(EnrolmentState.ENROLED);
-                    persistentEnrolment.lockWrite(enrolment);
+
                     ChangeEnrolmentStateFromTemporarilyToEnroled.createAttend(enrolment);
                     ChangeEnrolmentStateFromTemporarilyToEnroled.createEnrolmentEvaluation(enrolment);
-                } else
+                }
+                else
                 {
                     persistentEnrolment.lockWrite(enrolment);
                     enrolment.setEnrolmentState(EnrolmentState.ENROLED);
                 }
             }
-        } catch (ExistingPersistentException e1)
+        }
+        catch (ExistingPersistentException e1)
         {
             e1.printStackTrace();
             throw e1;
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace();
             throw e;
@@ -195,7 +183,6 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico
             {
                 IEnrolment enrolment = (IEnrolment) iterator.next();
                 if (enrolment
-                    .getCurricularCourseScope()
                     .getCurricularCourse()
                     .getDegreeCurricularPlan()
                     .getDegree()
@@ -210,7 +197,8 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico
             while (iterator.hasNext())
             {
                 IEnrolment enrolment = (IEnrolment) iterator.next();
-                if (toRemoveList.contains(enrolment.getCurricularCourseScope()))
+
+                if (toRemoveList.contains(enrolment.getCurricularCourse()))
                 {
                     result.remove(enrolment);
                 }

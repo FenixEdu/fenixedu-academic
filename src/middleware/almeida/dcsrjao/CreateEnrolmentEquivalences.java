@@ -377,7 +377,7 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 		if (newEnrolment == null) {
 
 			newEnrolment = new Enrolment();
-			newEnrolment.setCurricularCourseScope(curricularCourseScope);
+//			newEnrolment.setCurricularCourseScope(curricularCourseScope);
 			newEnrolment.setExecutionPeriod(executionPeriod);
 			newEnrolment.setStudentCurricularPlan(newStudentCurricularPlan);
 			newEnrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);

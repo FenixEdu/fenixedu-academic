@@ -143,8 +143,7 @@ public class CurricularCourseGroup extends DomainObject implements ICurricularCo
 			ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) obj;
 			result =
 				curricularCourseGroup.getBranch().equals(this.getBranch()) &&
-				curricularCourseGroup.getMaximumCredits().equals(this.getMaximumCredits()) &&
-				curricularCourseGroup.getMinimumCredits().equals(this.getMinimumCredits());
+				curricularCourseGroup.getIdInternal().equals(this.getIdInternal());
 		}
 		return result;
 	}

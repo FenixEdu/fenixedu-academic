@@ -538,4 +538,22 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
         this.scientificArea = scientificArea;
     }
 
+    public ICurricularYear getCurricularYearByBranch(IBranch branch)
+    {
+    	if(this.getScopes().size() == 1)
+    	{
+    	return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
+    	} else
+    	{
+    		Iterator iterator = this.getScopes().iterator();
+    		while(iterator.hasNext())
+    		{
+    			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+    			if(curricularCourseScope.getBranch().equals(branch))
+    			{
+    				return curricularCourseScope.getCurricularSemester().getCurricularYear();
+	}
+}    	}
+    	return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester().getCurricularYear();
+    }
 }

@@ -2465,6 +2465,7 @@ public abstract class Cloner
 
         IStudent student = Cloner.copyInfoStudent2IStudent(infoStudentCurricularPlan.getInfoStudent());
         IBranch branch = Cloner.copyInfoBranch2IBranch(infoStudentCurricularPlan.getInfoBranch());
+        IBranch secundaryBranch = Cloner.copyInfoBranch2IBranch(infoStudentCurricularPlan.getInfoSecundaryBranch());
         IDegreeCurricularPlan degreeCurricularPlan =
             Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
                 infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
@@ -2480,6 +2481,7 @@ public abstract class Cloner
 
         studentCurricularPlan.setStudent(student);
         studentCurricularPlan.setBranch(branch);
+        studentCurricularPlan.setSecundaryBranch(secundaryBranch);
         studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
 
         return studentCurricularPlan;
@@ -2497,6 +2499,7 @@ public abstract class Cloner
 
         InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(studentCurricularPlan.getStudent());
         InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(studentCurricularPlan.getBranch());
+        InfoBranch infoSecundaryBranch = Cloner.copyIBranch2InfoBranch(studentCurricularPlan.getSecundaryBranch());
         InfoDegreeCurricularPlan infoDegreeCurricularPlan =
             Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
                 studentCurricularPlan.getDegreeCurricularPlan());
@@ -2512,6 +2515,7 @@ public abstract class Cloner
 
         infoStudentCurricularPlan.setInfoStudent(infoStudent);
         infoStudentCurricularPlan.setInfoBranch(infoBranch);
+        infoStudentCurricularPlan.setInfoSecundaryBranch(infoSecundaryBranch);
         infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
         return infoStudentCurricularPlan;
@@ -2531,13 +2535,13 @@ public abstract class Cloner
         InfoStudentCurricularPlan infoStudentCurricularPlan =
             Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(
                 enrolment.getStudentCurricularPlan());
-        //InfoCurricularCourse infoCurricularCourse =
-        // Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
+        InfoCurricularCourse infoCurricularCourse =
+         Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
         InfoExecutionPeriod infoExecutionPeriod =
             (InfoExecutionPeriod) Cloner.get(enrolment.getExecutionPeriod());
-        InfoCurricularCourseScope infoCurricularCourseScope =
-            Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-                enrolment.getCurricularCourseScope());
+//        InfoCurricularCourseScope infoCurricularCourseScope =
+//            Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+//                enrolment.getCurricularCourseScope());
 
         List infoEnrolmentEvaluationsList = new ArrayList();
         List enrolmentEvaluationsList = enrolment.getEvaluations();
@@ -2574,8 +2578,8 @@ public abstract class Cloner
 
         copyObjectProperties(infoEnrolment, enrolment);
 
-        //          infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
-        infoEnrolment.setInfoCurricularCourseScope(infoCurricularCourseScope);
+        infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
+        //infoEnrolment.setInfoCurricularCourseScope(infoCurricularCourseScope);
         infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
         infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
         infoEnrolment.setInfoEvaluations(infoEnrolmentEvaluationsList);
@@ -2597,11 +2601,11 @@ public abstract class Cloner
         IStudentCurricularPlan studentCurricularPlan =
             Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(
                 infoEnrolment.getInfoStudentCurricularPlan());
-        //      ICurricularCourse curricularCourse =
-        // Cloner.copyInfoCurricularCourse2CurricularCourse(infoEnrolment.getInfoCurricularCourse());
-        ICurricularCourseScope curricularCourseScope =
-            Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(
-                infoEnrolment.getInfoCurricularCourseScope());
+        ICurricularCourse curricularCourse =
+         Cloner.copyInfoCurricularCourse2CurricularCourse(infoEnrolment.getInfoCurricularCourse());
+//        ICurricularCourseScope curricularCourseScope =
+//            Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(
+//                infoEnrolment.getInfoCurricularCourseScope());
         IExecutionPeriod executionPeriod =
             Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoEnrolment.getInfoExecutionPeriod());
 
@@ -2637,8 +2641,8 @@ public abstract class Cloner
 
         copyObjectProperties(enrolment, infoEnrolment);
 
-        enrolment.setCurricularCourseScope(curricularCourseScope);
-        //      enrolment.setCurricularCourse(curricularCourse);
+        //enrolment.setCurricularCourseScope(curricularCourseScope);
+        enrolment.setCurricularCourse(curricularCourse);
         enrolment.setExecutionPeriod(executionPeriod);
         enrolment.setStudentCurricularPlan(studentCurricularPlan);
         enrolment.setEvaluations(enrolmentEvaluationsList);
@@ -3136,9 +3140,12 @@ public abstract class Cloner
         candidateEnrolment.setMasterDegreeCandidate(
             Cloner.copyInfoMasterDegreeCandidate2IMasterDegreCandidate(
                 infoCandidateEnrolment.getInfoMasterDegreeCandidate()));
-        candidateEnrolment.setCurricularCourseScope(
-            Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(
-                infoCandidateEnrolment.getInfoCurricularCourseScope()));
+//        candidateEnrolment.setCurricularCourseScope(
+//            Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(
+//                infoCandidateEnrolment.getInfoCurricularCourseScope()));
+		candidateEnrolment.setCurricularCourse(
+			Cloner.copyInfoCurricularCourse2CurricularCourse(
+				infoCandidateEnrolment.getInfoCurricularCourse()));
 
         return candidateEnrolment;
     }
@@ -3151,9 +3158,12 @@ public abstract class Cloner
     {
 
         InfoCandidateEnrolment infoCandidateEnrolment = new InfoCandidateEnrolment();
-        infoCandidateEnrolment.setInfoCurricularCourseScope(
-            Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-                candidateEnrolment.getCurricularCourseScope()));
+//        infoCandidateEnrolment.setInfoCurricularCourseScope(
+//            Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+//                candidateEnrolment.getCurricularCourseScope()));
+		infoCandidateEnrolment.setInfoCurricularCourse(
+			Cloner.copyCurricularCourse2InfoCurricularCourse(
+				candidateEnrolment.getCurricularCourse()));
         infoCandidateEnrolment.setInfoMasterDegreeCandidate(
             Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(
                 candidateEnrolment.getMasterDegreeCandidate()));

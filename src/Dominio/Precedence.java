@@ -1,134 +1,148 @@
-/*
- * Created on 2/Abr/2003 by jpvl
- *
- */
 package Dominio;
 
 import java.util.List;
 
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 import Util.PrecedenceScopeToApply;
 
 /**
+ * 
  * @author jpvl
+ * @author David Santos in Jan 27, 2004
  */
-public class Precedence extends DomainObject implements IPrecedence {
+
+public class Precedence extends DomainObject implements IPrecedence
+{
 	private Integer keyCurricularCourse;
 	private ICurricularCourse curricularCourse;
 	private List restrictions;
 	private PrecedenceScopeToApply precedenceScopeToApply;
-	/**
-	 * 
-	 */
-	public Precedence() {
+
+	public Precedence()
+	{
 		super();
 	}
 
 	/**
-	 * @return
+	 * @return Returns the curricularCourse.
 	 */
-	public ICurricularCourse getCurricularCourse() {
+	public ICurricularCourse getCurricularCourse()
+	{
 		return curricularCourse;
 	}
 
 	/**
-	 * @return
+	 * @param curricularCourse The curricularCourse to set.
 	 */
-	public Integer getKeyCurricularCourse() {
+	public void setCurricularCourse(ICurricularCourse curricularCourse)
+	{
+		this.curricularCourse = curricularCourse;
+	}
+
+	/**
+	 * @return Returns the keyCurricularCourse.
+	 */
+	public Integer getKeyCurricularCourse()
+	{
 		return keyCurricularCourse;
 	}
 
 	/**
-	 * @return
+	 * @param keyCurricularCourse The keyCurricularCourse to set.
 	 */
-	public List getRestrictions() {
-		return restrictions;
-	}
-
-	/**
-	 * @param course
-	 */
-	public void setCurricularCourse(ICurricularCourse course) {
-		curricularCourse = course;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setKeyCurricularCourse(Integer keyCurricularCourse) {
+	public void setKeyCurricularCourse(Integer keyCurricularCourse)
+	{
 		this.keyCurricularCourse = keyCurricularCourse;
 	}
 
 	/**
-	 * @param list
+	 * @return Returns the precedenceScopeToApply.
 	 */
-	public void setRestrictions(List restrictionList) {
-		restrictions = restrictionList;
+	public PrecedenceScopeToApply getPrecedenceScopeToApply()
+	{
+		return precedenceScopeToApply;
 	}
 
-    /* (non-Javadoc)
-	 * @see Dominio.IPrecedence#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
+	/**
+	 * @param precedenceScopeToApply The precedenceScopeToApply to set.
 	 */
-	public boolean evaluate(EnrolmentContext enrolmentContext) {
+	public void setPrecedenceScopeToApply(PrecedenceScopeToApply precedenceScopeToApply)
+	{
+		this.precedenceScopeToApply = precedenceScopeToApply;
+	}
+
+	/**
+	 * @return Returns the restrictions.
+	 */
+	public List getRestrictions()
+	{
+		return restrictions;
+	}
+
+	/**
+	 * @param restrictions The restrictions to set.
+	 */
+	public void setRestrictions(List restrictions)
+	{
+		this.restrictions = restrictions;
+	}
+
+	/**
+	 * @param studentEnrolmentContext
+	 * @return true/false
+	 */
+	public boolean evaluate(StudentEnrolmentContext studentEnrolmentContext)
+	{
 		List restrictions = getRestrictions();
 		boolean evaluate = true;
-		// made and of all restrictions
-		for (int i = 0; i < restrictions.size() && evaluate; i++){
+
+		for (int i = 0; i < restrictions.size() && evaluate; i++)
+		{
 			IRestriction restriction = (IRestriction) restrictions.get(i);
-			evaluate = restriction.evaluate(enrolmentContext);
+			evaluate = restriction.evaluate(studentEnrolmentContext);
 		}
 		return evaluate;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object obj) {
+
+	public boolean equals(Object obj)
+	{
 		boolean result = false;
-		if ((obj != null) && (this.getClass().equals(obj.getClass()))){
+		if ((obj != null) && (this.getClass().equals(obj.getClass())))
+		{
 			IPrecedence precedence = (IPrecedence) obj;
 			result = this.getCurricularCourse().equals(precedence.getCurricularCourse());
-			if (result){
+			if (result)
+			{
 				List precedenceRestrictions = precedence.getRestrictions();
-				if (precedenceRestrictions != null){
-					for (int i = 0; i < precedenceRestrictions.size() && result; i++){
+				if (precedenceRestrictions != null)
+				{
+					for (int i = 0; i < precedenceRestrictions.size() && result; i++)
+					{
 						IRestriction restriction = (IRestriction) precedenceRestrictions.get(i);
 						result = this.getRestrictions().contains(restriction);
 					}
-				}else{
+				} else
+				{
 					result = this.getRestrictions() == null;
 				}
-				
+
 			}
 		}
 		return result;
 	}
 
-	public String toString(){
+	public String toString()
+	{
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("Precedence:\n");
 		stringBuffer.append(this.getCurricularCourse()).append("\n");
 		List restrictions = this.getRestrictions();
-		for (int i = 0; i < restrictions.size(); i++) {
+		for (int i = 0; i < restrictions.size(); i++)
+		{
 			IRestriction restriction = (IRestriction) restrictions.get(i);
-			stringBuffer.append(restriction).append("\n");			
+			stringBuffer.append(restriction).append("\n");
 		}
 		stringBuffer.append("---------\n");
 		return stringBuffer.toString();
 	}
-	/**
-	 * @return
-	 */
-	public PrecedenceScopeToApply getPrecedenceScopeToApply() {
-		return precedenceScopeToApply;
-	}
-
-	/**
-	 * @param apply
-	 */
-	public void setPrecedenceScopeToApply(PrecedenceScopeToApply apply) {
-		precedenceScopeToApply = apply;
-	}
-
 }

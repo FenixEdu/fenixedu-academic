@@ -27,7 +27,7 @@ public class migrateILeecScientificAreas
 
     public static void main(String[] args)
     {
-    	System.out.println("INICIO");
+        System.out.println("INICIO");
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -46,12 +46,16 @@ public class migrateILeecScientificAreas
                 MWAreaCientificaIleec areaCientificaIleec = (MWAreaCientificaIleec) iter.next();
                 String scientificAreaName = areaCientificaIleec.getNome();
 
-                IScientificArea scientificArea = new ScientificArea();
+                IScientificArea scientificArea = psa.readByName(scientificAreaName);
 
-                psa.simpleLockWrite(scientificArea);
+                if (scientificArea == null)
+                {
+                    scientificArea = new ScientificArea();
 
-                scientificArea.setName(scientificAreaName);
+                    psa.simpleLockWrite(scientificArea);
 
+                    scientificArea.setName(scientificAreaName);
+                }
             }
 
             sp.confirmarTransaccao();

@@ -39,5 +39,11 @@
 					</var>
 			</field>
 		</form>
+		<!--
+		<form name="curricularCoursesEnrollmentForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>-->
 	</formset>
 </form-validation>

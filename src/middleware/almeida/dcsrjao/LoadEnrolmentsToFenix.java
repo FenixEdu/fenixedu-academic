@@ -282,7 +282,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 
 	private IEnrolment processNewEnrolment(Almeida_enrolment almeida_enrolment) {
 		IEnrolment enrolment = new Enrolment();
-		enrolment.setCurricularCourseScope(this.curricularCourseScope);
+//		enrolment.setCurricularCourseScope(this.curricularCourseScope);
 		enrolment.setExecutionPeriod(this.executionPeriod);
 		enrolment.setStudentCurricularPlan(this.oldStudentCurricularPlan);
 		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
@@ -405,7 +405,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		enrolmentEvaluation.setEnrolment(enrolment);
 		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); //		}
 		
-		//FIXME [DAVID]: As datas estão mal migradas
+		//FIXME: As datas estão mal migradas
 		if (almeida_enrolment.getDatexa() != null) {
 			Calendar newCalendar = Calendar.getInstance();
 			int year = 0;

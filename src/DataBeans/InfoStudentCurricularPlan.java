@@ -36,6 +36,7 @@ public class InfoStudentCurricularPlan
 	protected InfoPerson infoEmployee;
 	protected String observations;
 	protected List infoEnrolments;
+	protected InfoBranch infoSecundaryBranch;
 
 	/**
 	 * @return
@@ -310,6 +311,22 @@ public class InfoStudentCurricularPlan
 	 */
 	public void setObservations(String observations) {
 		this.observations = observations;
+	}
+
+	/**
+	 * @return Returns the infoSecundaryBranch.
+	 */
+	public InfoBranch getInfoSecundaryBranch()
+	{
+		return infoSecundaryBranch;
+	}
+
+	/**
+	 * @param infoSecundaryBranch The infoSecundaryBranch to set.
+	 */
+	public void setInfoSecundaryBranch(InfoBranch infoSecundaryBranch)
+	{
+		this.infoSecundaryBranch = infoSecundaryBranch;
 	}
 
 }

@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoFinalResult;
@@ -45,8 +45,12 @@ import framework.factory.ServiceManagerServiceFactory;
 public class ChooseFinalResultInfoAction extends DispatchAction
 {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                    HttpServletResponse response) throws Exception
+    public ActionForward prepare(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -65,8 +69,12 @@ public class ChooseFinalResultInfoAction extends DispatchAction
 
     }
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                    HttpServletResponse response) throws Exception
+    public ActionForward choose(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -107,9 +115,12 @@ public class ChooseFinalResultInfoAction extends DispatchAction
 
             try
             {
-                Object args[] = {infoStudent, new Specialization(graduationType)};
-                infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                                .executeService(userView, "CreateDeclaration", args);
+                Object args[] = { infoStudent, new Specialization(graduationType)};
+                infoStudentCurricularPlan =
+                    (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+                        userView,
+                        "CreateDeclaration",
+                        args);
 
             }
             catch (NonExistingServiceException e)
@@ -126,9 +137,12 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                 InfoFinalResult infoFinalResult = null;
                 try
                 {
-                    Object args[] = {infoStudentCurricularPlan};
-                    infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory.executeService(
-                                    userView, "FinalResult", args);
+                    Object args[] = { infoStudentCurricularPlan };
+                    infoFinalResult =
+                        (InfoFinalResult) ServiceManagerServiceFactory.executeService(
+                            userView,
+                            "FinalResult",
+                            args);
                 }
                 catch (FenixServiceException e)
                 {
@@ -142,9 +156,12 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                 {
                     try
                     {
-                        Object args[] = {infoStudentCurricularPlan, EnrolmentState.APROVED};
-                        enrolmentList = (List) ServiceManagerServiceFactory.executeService(
-                                        userView, "GetEnrolmentList", args);
+                        Object args[] = { infoStudentCurricularPlan, EnrolmentState.APROVED };
+                        enrolmentList =
+                            (List) ServiceManagerServiceFactory.executeService(
+                                userView,
+                                "GetEnrolmentList",
+                                args);
 
                     }
                     catch (NonExistingServiceException e)
@@ -159,16 +176,19 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                     else
                     {
                         //check the last exam date
-//                        InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+                        //                        InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 
                         String conclusionDate = null;
 
                         Date endOfScholarshipDate = null;
                         try
                         {
-                            Object argsTemp[] = {infoStudentCurricularPlan};
-                            endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService(
-                                            userView, "GetEndOfScholarshipDate", argsTemp);
+                            Object argsTemp[] = { infoStudentCurricularPlan };
+                            endOfScholarshipDate =
+                                (Date) ServiceManagerServiceFactory.executeService(
+                                    userView,
+                                    "GetEndOfScholarshipDate",
+                                    argsTemp);
 
                         }
                         catch (FenixServiceException e)
@@ -181,21 +201,21 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                         conclusionDate = DateFormat.getDateInstance().format(dateConclusion);
                         //String dataAux = null;
                         Object result = null;
-//                        Iterator iterator = enrolmentList.iterator();
-//                        int i = 0;
-//                        while (iterator.hasNext())
-//                        {
-//                            result = iterator.next();
-//                            infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) (((InfoEnrolment) result)
-//                                            .getInfoEvaluations().get(i));
-//                            //                            dataAux =
-//                            //                                DateFormat.getDateInstance().format(
-//                            //                                    infoEnrolmentEvaluation.getExamDate());
-//                            /*
-//                             * if (conclusionDate.compareTo(dataAux) == -1) {
-//                             * conclusionDate = dataAux;
-//                             */
-//                        }
+                        //                        Iterator iterator = enrolmentList.iterator();
+                        //                        int i = 0;
+                        //                        while (iterator.hasNext())
+                        //                        {
+                        //                            result = iterator.next();
+                        //                            infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) (((InfoEnrolment) result)
+                        //                                            .getInfoEvaluations().get(i));
+                        //                            //                            dataAux =
+                        //                            //                                DateFormat.getDateInstance().format(
+                        //                            //                                    infoEnrolmentEvaluation.getExamDate());
+                        //                            /*
+                        //                             * if (conclusionDate.compareTo(dataAux) == -1) {
+                        //                             * conclusionDate = dataAux;
+                        //                             */
+                        //                        }
                         List newEnrolmentList = new ArrayList();
                         //get the last enrolmentEvaluation
                         Iterator iterator1 = enrolmentList.iterator();
@@ -204,13 +224,21 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                         {
                             result = iterator1.next();
                             InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
-                            InfoCurricularCourseScope infoCurricularCourseScope = infoEnrolment2
-                                            .getInfoCurricularCourseScope();
-                            sum = sum
-                                            + Double.parseDouble(String
-                                                            .valueOf(infoCurricularCourseScope
-                                                                            .getInfoCurricularCourse()
-                                                                            .getCredits()));
+                            //                            InfoCurricularCourseScope infoCurricularCourseScope = infoEnrolment2
+                            //                                            .getInfoCurricularCourseScope();
+                            //                            sum = sum
+                            //                                            + Double.parseDouble(String
+                            //                                                            .valueOf(infoCurricularCourseScope
+                            //                                                                            .getInfoCurricularCourse()
+                            //                                                                            .getCredits()));
+
+                            InfoCurricularCourse infoCurricularCourse =
+                                infoEnrolment2.getInfoCurricularCourse();
+                            sum =
+                                sum
+                                    + Double.parseDouble(
+                                        String.valueOf(infoCurricularCourse.getCredits()));
+
                             List aux = infoEnrolment2.getInfoEvaluations();
 
                             if (aux.size() > 1)
@@ -219,18 +247,18 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                                 Collections.sort(aux, dateComparator);
                                 Collections.reverse(aux);
                             }
-                            InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux
-                                            .get(0);
+                            InfoEnrolmentEvaluation latestEvaluation =
+                                (InfoEnrolmentEvaluation) aux.get(0);
                             infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
                             newEnrolmentList.add(infoEnrolment2);
 
                         }
                         if (!infoStudentCurricularPlan.getGivenCredits().equals(new Double(0)))
                         {
-                            sum = sum
-                                            + Double.parseDouble(String
-                                                            .valueOf(infoStudentCurricularPlan
-                                                                            .getGivenCredits()));
+                            sum =
+                                sum
+                                    + Double.parseDouble(
+                                        String.valueOf(infoStudentCurricularPlan.getGivenCredits()));
                             session.setAttribute("givenCredits", "POR ATRIBUIÇÃO DE CRÉDITOS");
                         }
                         session.setAttribute("total", String.valueOf(sum));
@@ -239,7 +267,9 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                         try
                         {
                             ServiceManagerServiceFactory.executeService(
-                                            userView, "ReadCurrentExecutionYear", null);
+                                userView,
+                                "ReadCurrentExecutionYear",
+                                null);
 
                         }
                         catch (RuntimeException e)
@@ -248,21 +278,23 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                         }
                         Locale locale = new Locale("pt", "PT");
                         Date date = new Date();
-                        String anoLectivo = ((InfoEnrolment) newEnrolmentList.get(0))
-                                        .getInfoExecutionPeriod().getInfoExecutionYear().getYear();
-                        String formatedDate = "Lisboa, "
-                                        + DateFormat.getDateInstance(DateFormat.LONG, locale).format(
-                                                        date);
+                        String anoLectivo =
+                            ((InfoEnrolment) newEnrolmentList.get(0))
+                                .getInfoExecutionPeriod()
+                                .getInfoExecutionYear()
+                                .getYear();
+                        String formatedDate =
+                            "Lisboa, "
+                                + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 
                         session.setAttribute(
-                                        SessionConstants.INFO_STUDENT_CURRICULAR_PLAN,
-                                        infoStudentCurricularPlan);
+                            SessionConstants.INFO_STUDENT_CURRICULAR_PLAN,
+                            infoStudentCurricularPlan);
                         session.setAttribute(SessionConstants.DATE, formatedDate);
                         if (infoStudentCurricularPlan.getInfoBranch().getName().length() != 0)
-                                        session.setAttribute(
-                                                        SessionConstants.INFO_BRANCH,
-                                                        infoStudentCurricularPlan.getInfoBranch()
-                                                                        .getName());
+                            session.setAttribute(
+                                SessionConstants.INFO_BRANCH,
+                                infoStudentCurricularPlan.getInfoBranch().getName());
                         session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, anoLectivo);
                         session.setAttribute(SessionConstants.ENROLMENT_LIST, newEnrolmentList);
                         session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);

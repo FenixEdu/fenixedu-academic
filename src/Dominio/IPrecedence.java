@@ -1,43 +1,62 @@
-/*
- * Created on 2/Abr/2003 by jpvl
- *
- */
 package Dominio;
 
 import java.util.List;
 
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+
+
+import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 import Util.PrecedenceScopeToApply;
 
 /**
  * @author jpvl
+ * @author David Santos in Jan 27, 2004
  */
 public interface IPrecedence extends IDomainObject
 {
 	/**
-	 * @return
+	 * @return Returns the curricularCourse.
 	 */
-	public abstract ICurricularCourse getCurricularCourse();
-	/**
-	 * @return
-	 */
-	public abstract List getRestrictions();
-	/**
-	 * @param course
-	 */
-	public abstract void setCurricularCourse(ICurricularCourse course);
-	/**
-	 * @param list
-	 */
-	public abstract void setRestrictions(List restrictionList);
+	public ICurricularCourse getCurricularCourse();
 
 	/**
-	 * If restriction list as two restriction A and B: this method returns (A ^ B).
-	 * @param curricularCoursesDone
-	 * @return
+	 * @param curricularCourse The curricularCourse to set.
 	 */
-	public abstract boolean evaluate(EnrolmentContext enrolmentContext);
+	public void setCurricularCourse(ICurricularCourse curricularCourse);
 
+	/**
+	 * @return Returns the keyCurricularCourse.
+	 */
+	public Integer getKeyCurricularCourse();
+
+	/**
+	 * @param keyCurricularCourse The keyCurricularCourse to set.
+	 */
+	
+	public void setKeyCurricularCourse(Integer keyCurricularCourse);
+
+	/**
+	 * @return Returns the precedenceScopeToApply.
+	 */
 	public PrecedenceScopeToApply getPrecedenceScopeToApply();
-	public void setPrecedenceScopeToApply(PrecedenceScopeToApply apply);
+
+	/**
+	 * @param precedenceScopeToApply The precedenceScopeToApply to set.
+	 */
+	public void setPrecedenceScopeToApply(PrecedenceScopeToApply precedenceScopeToApply);
+
+	/**
+	 * @return Returns the restrictions.
+	 */
+	public List getRestrictions();
+
+	/**
+	 * @param restrictions The restrictions to set.
+	 */
+	public void setRestrictions(List restrictions);
+
+	/**
+	 * @param studentEnrolmentContext
+	 * @return true/false
+	 */
+	public boolean evaluate(StudentEnrolmentContext studentEnrolmentContext);
 }

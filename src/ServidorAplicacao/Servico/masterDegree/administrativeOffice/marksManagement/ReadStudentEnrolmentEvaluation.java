@@ -8,16 +8,13 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
-import Dominio.CurricularCourseScope;
 import Dominio.EnrolmentEvaluation;
-import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -69,8 +66,6 @@ public class ReadStudentEnrolmentEvaluation implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation =
                 sp.getIPersistentEnrolmentEvaluation();
-            IPersistentCurricularCourseScope persistentCurricularCourseScope =
-                sp.getIPersistentCurricularCourseScope();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             enrolmentEvaluation.setIdInternal(studentEvaluationCode);
             enrolmentEvaluation =
@@ -78,13 +73,13 @@ public class ReadStudentEnrolmentEvaluation implements IServico
                     enrolmentEvaluation,
                     false);
             //			get curricularCourseScope for enrolmentEvaluation
-            ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-            curricularCourseScope.setIdInternal(
-                enrolmentEvaluation.getEnrolment().getCurricularCourseScope().getIdInternal());
-            curricularCourseScope =
-                (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(
-                    curricularCourseScope,
-                    false);
+//            ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+//            curricularCourseScope.setIdInternal(
+//                enrolmentEvaluation.getEnrolment().getCurricularCourseScope().getIdInternal());
+//            curricularCourseScope =
+//                (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(
+//                    curricularCourseScope,
+//                    false);
 
             //			ICurricularCourseScope curricularCourseScopeForCriteria =
             //				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);

@@ -2835,7 +2835,8 @@
     <service>
         <name>SelectOptionalCurricularCourse</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse</implementationClass>
+            ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse
+            </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3848,8 +3849,8 @@
     </service>
     <service>
         <name>SelectOptionalCurricularCourseWithRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.SelectOptionalCurricularCourseWithRules</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse 
+            </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3859,7 +3860,7 @@
     <service>
         <name>ShowAvailableCurricularCoursesForOptionWithRules</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.ShowAvailableCurricularCoursesForOptionWithRules</implementationClass>
+            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCoursesForOption</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3869,7 +3870,7 @@
     <service>
         <name>ShowAvailableCurricularCoursesWithRules</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.ShowAvailableCurricularCoursesWithRules</implementationClass>
+            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCourses</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3879,7 +3880,7 @@
     <service>
         <name>ShowAvailableDegreesForOptionWithRules</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.ShowAvailableDegreesForOptionWithRules</implementationClass>
+            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableDegreesForOption</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3889,7 +3890,7 @@
     <service>
         <name>ValidateActualEnrolmentWithRules</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.ValidateActualEnrolmentWithRules</implementationClass>
+            ServidorAplicacao.Servico.enrolment.degree.ValidateActualEnrolment</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4018,8 +4019,8 @@
     </service>
     <service>
         <name>SelectOptionalCurricularCourseWithoutRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.SelectOptionalCurricularCourseWithoutRules</implementationClass>
+        <implementationClass> ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse
+            </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5484,6 +5485,13 @@
         <filterChains/>
     </service>
     <service>
+		<name>StartMigrationProcess</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.migration.StartMigrationProcess</implementationClass>
+		<description/>
+		<isTransactional>false</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
         <name>ReadPerson</name>
         <description>Reads a Person by OID</description>
         <implementationClass>ServidorAplicacao.Servico.person.ReadPerson</implementationClass>
@@ -5517,4 +5525,18 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>          
+<service>
+    	<name>ShowAvailableCurricularCourses</name>
+    	<description>Returns information about student enrollments in curricular courses</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>  
+    <service>
+    	<name>DeleteEnrolment</name>
+    	<description>Deletes enrolment of student in a curricular course</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrolment</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>  
 </serviceDefinitions>

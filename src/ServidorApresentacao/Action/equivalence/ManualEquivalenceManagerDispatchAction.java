@@ -1,7 +1,6 @@
 package ServidorApresentacao.Action.equivalence;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -18,12 +15,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
-import DataBeans.equivalence.InfoCurricularCourseScopeGrade;
+import DataBeans.equivalence.InfoCurricularCourseGrade;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -33,12 +30,11 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author David Santos
- * 9/Jul/2003
+ * @author David Santos 9/Jul/2003
  */
 
 public class ManualEquivalenceManagerDispatchAction
-    extends TransactionalDispatchAction /*DispatchAction*/
+    extends TransactionalDispatchAction /* DispatchAction */
 {
 
     private final String[] forwards =
@@ -74,11 +70,13 @@ public class ManualEquivalenceManagerDispatchAction
                 Object args[] = { infoStudentOID };
                 infoStudent =
                     (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByOID", args);
-            } catch (FenixServiceException e)
+            }
+            catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);
             }
-        } else
+        }
+        else
         {
             equivalenceForm.set("studentOID", infoStudent.getIdInternal());
         }
@@ -94,9 +92,9 @@ public class ManualEquivalenceManagerDispatchAction
                 "GetListsOfCurricularCoursesForEquivalence",
                 args);
 
-        ManualEquivalenceManagerDispatchAction.sort(
-            infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence(),
-            infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence());
+        //        ManualEquivalenceManagerDispatchAction.sort(
+        //            infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence(),
+        //            infoEquivalenceContext.getInfoCurricularCoursesToGetEquivalence());
 
         session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
         this.initializeForm(infoEquivalenceContext, (DynaActionForm) form);
@@ -138,7 +136,8 @@ public class ManualEquivalenceManagerDispatchAction
         if (infoEquivalenceContext.isSuccess())
         {
             return mapping.findForward(forwards[1]);
-        } else
+        }
+        else
         {
             this.saveErrorsFromInfoEquivalenceContext(request, infoEquivalenceContext);
             return mapping.findForward(forwards[0]);
@@ -178,7 +177,8 @@ public class ManualEquivalenceManagerDispatchAction
         {
             session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
             return mapping.findForward(forwards[2]);
-        } else
+        }
+        else
         {
             this.saveErrorsFromInfoEquivalenceContext(request, infoEquivalenceContext);
             return mapping.findForward(forwards[1]);
@@ -275,20 +275,20 @@ public class ManualEquivalenceManagerDispatchAction
 
         List infoEnrolmentsToGiveEquivalence =
             infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence();
-        List infoCurricularCourseScopesToGetEquivalence =
-            infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence();
+        List infoCurricularCoursesToGetEquivalence =
+            infoEquivalenceContext.getInfoCurricularCoursesToGetEquivalence();
 
         Integer[] curricularCoursesToGiveEquivalence =
             new Integer[infoEnrolmentsToGiveEquivalence.size()];
         Integer[] curricularCoursesToGetEquivalence =
-            new Integer[infoCurricularCourseScopesToGetEquivalence.size()];
+            new Integer[infoCurricularCoursesToGetEquivalence.size()];
 
         for (int i = 0; i < infoEnrolmentsToGiveEquivalence.size(); i++)
         {
             curricularCoursesToGiveEquivalence[i] = null;
         }
 
-        for (int i = 0; i < infoCurricularCourseScopesToGetEquivalence.size(); i++)
+        for (int i = 0; i < infoCurricularCoursesToGetEquivalence.size(); i++)
         {
             curricularCoursesToGetEquivalence[i] = null;
         }
@@ -302,10 +302,10 @@ public class ManualEquivalenceManagerDispatchAction
         DynaActionForm equivalenceForm)
     {
 
-        List chosenInfoCurricularCourseScopesToGetEquivalence =
-            infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence();
+        List chosenInfoCurricularCoursesToGetEquivalence =
+            infoEquivalenceContext.getInfoCurricularCoursesToGetEquivalence();
 
-        int size = chosenInfoCurricularCourseScopesToGetEquivalence.size();
+        int size = chosenInfoCurricularCoursesToGetEquivalence.size();
 
         String[] grades = new String[size];
 
@@ -337,9 +337,7 @@ public class ManualEquivalenceManagerDispatchAction
         {
             equivalenceForm.set(
                 "curricularCoursesToGetEquivalence",
-                new Integer[infoEquivalenceContext
-                    .getInfoCurricularCourseScopesToGetEquivalence()
-                    .size()]);
+                new Integer[infoEquivalenceContext.getInfoCurricularCoursesToGetEquivalence().size()]);
         }
 
         Integer[] curricularCoursesToGiveEquivalence =
@@ -348,7 +346,7 @@ public class ManualEquivalenceManagerDispatchAction
             (Integer[]) equivalenceForm.get("curricularCoursesToGetEquivalence");
 
         List chosenInfoEnrolmentsToGiveEquivalence = new ArrayList();
-        List chosenInfoCurricularCourseScopesToGetEquivalence = new ArrayList();
+        List chosenInfoCurricularCoursesToGetEquivalence = new ArrayList();
 
         if (curricularCoursesToGiveEquivalence != null)
         {
@@ -372,17 +370,17 @@ public class ManualEquivalenceManagerDispatchAction
         {
             for (int i = 0; i < curricularCoursesToGetEquivalence.length; i++)
             {
-                Integer curricularCourseScopeIndex = curricularCoursesToGetEquivalence[i];
-                if (curricularCourseScopeIndex != null)
+                Integer curricularCourseIndex = curricularCoursesToGetEquivalence[i];
+                if (curricularCourseIndex != null)
                 {
-                    InfoCurricularCourseScope infoCurricularCourseScope =
-                        (InfoCurricularCourseScope) infoEquivalenceContext
-                            .getInfoCurricularCourseScopesToGetEquivalence()
+                    InfoCurricularCourse infoCurricularCourse =
+                        (InfoCurricularCourse) infoEquivalenceContext
+                            .getInfoCurricularCoursesToGetEquivalence()
                             .get(
-                            curricularCourseScopeIndex.intValue());
-                    if (infoCurricularCourseScope != null)
+                            curricularCourseIndex.intValue());
+                    if (infoCurricularCourse != null)
                     {
-                        chosenInfoCurricularCourseScopesToGetEquivalence.add(infoCurricularCourseScope);
+                        chosenInfoCurricularCoursesToGetEquivalence.add(infoCurricularCourse);
                     }
                 }
             }
@@ -390,8 +388,8 @@ public class ManualEquivalenceManagerDispatchAction
 
         infoEquivalenceContext.setChosenInfoEnrolmentsToGiveEquivalence(
             chosenInfoEnrolmentsToGiveEquivalence);
-        infoEquivalenceContext.setChosenInfoCurricularCourseScopesToGetEquivalence(
-            chosenInfoCurricularCourseScopesToGetEquivalence);
+        infoEquivalenceContext.setChosenInfoCurricularCoursesToGetEquivalence(
+            chosenInfoCurricularCoursesToGetEquivalence);
 
         return infoEquivalenceContext;
     }
@@ -406,27 +404,25 @@ public class ManualEquivalenceManagerDispatchAction
             (InfoEquivalenceContext) session.getAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
 
         String[] grades = (String[]) equivalenceForm.get("grades");
-        List chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade = new ArrayList();
+        List chosenInfoCurricularCoursesToGetEquivalenceWithGrade = new ArrayList();
         for (int i = 0; i < grades.length; i++)
         {
             //			if( (grades[i] != null) && (!grades[i].equals("")) ) {
             if (grades[i] != null)
             {
-                List chosenInfoCurricularCourseScopesToGetEquivalence =
-                    infoEquivalenceContext.getChosenInfoCurricularCourseScopesToGetEquivalence();
-                InfoCurricularCourseScope infoCurricularCourseScope =
-                    (InfoCurricularCourseScope) chosenInfoCurricularCourseScopesToGetEquivalence.get(i);
-                InfoCurricularCourseScopeGrade infoCurricularCourseScopeGrade =
-                    new InfoCurricularCourseScopeGrade();
-                infoCurricularCourseScopeGrade.setInfoCurricularCourseScope(infoCurricularCourseScope);
-                infoCurricularCourseScopeGrade.setGrade(grades[i]);
-                chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade.add(
-                    infoCurricularCourseScopeGrade);
+                List chosenInfoCurricularCoursesToGetEquivalence =
+                    infoEquivalenceContext.getChosenInfoCurricularCoursesToGetEquivalence();
+                InfoCurricularCourse infoCurricularCourse =
+                    (InfoCurricularCourse) chosenInfoCurricularCoursesToGetEquivalence.get(i);
+                InfoCurricularCourseGrade infoCurricularCourseGrade = new InfoCurricularCourseGrade();
+                infoCurricularCourseGrade.setInfoCurricularCourse(infoCurricularCourse);
+                infoCurricularCourseGrade.setGrade(grades[i]);
+                chosenInfoCurricularCoursesToGetEquivalenceWithGrade.add(infoCurricularCourseGrade);
             }
         }
 
-        infoEquivalenceContext.setChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade(
-            chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade);
+        infoEquivalenceContext.setChosenInfoCurricularCoursesToGetEquivalenceWithGrade(
+            chosenInfoCurricularCoursesToGetEquivalenceWithGrade);
 
         return infoEquivalenceContext;
     }
@@ -451,29 +447,33 @@ public class ManualEquivalenceManagerDispatchAction
         saveErrors(request, actionErrors);
     }
 
-    public static void sort(List listOfEnrolments, List listOfCurricularCourseScopes)
+    public static void sort(List listOfEnrolments, List listOfCurricularCourses)
     {
 
-        ComparatorChain comparatorChain1 = new ComparatorChain();
-        comparatorChain1.addComparator(
-            new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"));
-        comparatorChain1.addComparator(
-            new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester"));
-        comparatorChain1.addComparator(
-            new BeanComparator("infoCurricularCourseScope.infoCurricularCourse.name"));
-        if (listOfEnrolments != null)
-        {
-            Collections.sort(listOfEnrolments, comparatorChain1);
-        }
+//        ComparatorChain comparatorChain1 = new ComparatorChain();
+//        comparatorChain1.addComparator(
+//            new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"));
+//        comparatorChain1.addComparator(
+//            new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester"));
+//        comparatorChain1.addComparator(
+//            new BeanComparator("infoCurricularCourseScope.infoCurricularCourse.name"));
+//        if (listOfEnrolments != null)
+//        {
+//            Collections.sort(listOfEnrolments, comparatorChain1);
+//        }
 
-        ComparatorChain comparatorChain2 = new ComparatorChain();
-        comparatorChain2.addComparator(
-            new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-        comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-        comparatorChain2.addComparator(new BeanComparator("infoCurricularCourse.name"));
-        if (listOfCurricularCourseScopes != null)
-        {
-            Collections.sort(listOfCurricularCourseScopes, comparatorChain2);
-        }
+        //        ComparatorChain comparatorChain2 = new ComparatorChain();
+        //        comparatorChain2.addComparator(
+        //            new
+        // BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+        //        comparatorChain2.addComparator(new
+        // BeanComparator("infoCurricularSemester.semester"));
+        //        comparatorChain2.addComparator(new
+        // BeanComparator("infoCurricularCourse.name"));
+//        if (listOfCurricularCourses != null)
+//        {
+//            //  Collections.sort(listOfCurricularCourseScopes,
+//            // comparatorChain2);
+//        }
     }
 }

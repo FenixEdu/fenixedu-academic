@@ -2,6 +2,7 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
+
 <tiles-definitions>
 	<definition name="facultyAdmOffice.masterPage" extends="df.layout.two-column">
 	  <put name="title" value=".IST - Secretaria de Pessoal Docente" />

@@ -101,8 +101,8 @@
 						<logic:iterate id="infoEnrolment" name="studentCurricularPlan" property="infoEnrolments">
 							<tr>	
 								<td>
-									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.code" />&nbsp;
-									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name" />
+									<bean:write name="infoEnrolment" property="infoCurricularCourse.code" />&nbsp;
+									<bean:write name="infoEnrolment" property="infoCurricularCourse.name" />
 								</td>
 								<td>
 									<%if (infoEnrolment instanceof InfoEnrolmentInOptionalCurricularCourse) { %>

@@ -2,39 +2,39 @@ package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRu
 
 import java.util.List;
 
-import ServidorAplicacao.IServico;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 
 /**
- * @author David Santos
- * 16/Jun/2003
+ * @author David Santos 16/Jun/2003
  */
 
-public class ValidateActualEnrolmentWithoutRules implements IServico {
+public class ValidateActualEnrolmentWithoutRules implements IService
+{
 
-	private static ValidateActualEnrolmentWithoutRules _servico = new ValidateActualEnrolmentWithoutRules();
+    public ValidateActualEnrolmentWithoutRules()
+    {
+    }
 
-	public static ValidateActualEnrolmentWithoutRules getService() {
-		return _servico;
-	}
+    public InfoEnrolmentContext run(
+        InfoEnrolmentContext infoEnrolmentContext,
+        List erolmentsToRemoveList)
+        throws FenixServiceException
+    {
+        List currentEnroloments = infoEnrolmentContext.getActualEnrolment();
 
-	private ValidateActualEnrolmentWithoutRules() {
-	}
-
-	public final String getNome() {
-		return "ValidateActualEnrolmentWithoutRules";
-	}
-
-	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext, List erolmentsToRemoveList) throws FenixServiceException{
-		List currentEnroloments = infoEnrolmentContext.getActualEnrolment();
-
-		if( ((currentEnroloments == null) || (currentEnroloments.isEmpty())) && ((erolmentsToRemoveList == null) || (erolmentsToRemoveList.isEmpty())) ) {
-			infoEnrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.NO_CURRICULAR_COURSES_TO_ENROLL);
-		} else {
-			infoEnrolmentContext.getEnrolmentValidationResult().setSucess(true);
-		}
-		return infoEnrolmentContext;
-	}
+        if (((currentEnroloments == null) || (currentEnroloments.isEmpty()))
+            && ((erolmentsToRemoveList == null) || (erolmentsToRemoveList.isEmpty())))
+        {
+            infoEnrolmentContext.getEnrolmentValidationResult().setErrorMessage(
+                EnrolmentValidationResult.NO_CURRICULAR_COURSES_TO_ENROLL);
+        }
+        else
+        {
+            infoEnrolmentContext.getEnrolmentValidationResult().setSucess(true);
+        }
+        return infoEnrolmentContext;
+    }
 }

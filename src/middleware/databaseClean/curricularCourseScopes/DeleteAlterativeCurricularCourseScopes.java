@@ -14,9 +14,7 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.CurricularCourseScope;
-import Dominio.Enrolment;
 import Dominio.ICurricularCourseScope;
-import Dominio.IEnrolment;
 
 /**
  * @author Nuno Correia
@@ -80,29 +78,29 @@ public class DeleteAlterativeCurricularCourseScopes {
 					continue;
 
 				ccScopes++;
-				criteria = new Criteria();
-				criteria.addEqualTo("curricularCourseScopeKey", alternativeCCScope.getIdInternal());
-				query = new QueryByCriteria(Enrolment.class, criteria);
-
-				List enrolmentList = (List) broker.getCollectionByQuery(query);
-
 				broker.delete(alternativeCCScope);
 
-				if ((enrolmentList != null) || (!enrolmentList.isEmpty())) {
-
-					Iterator enrolmentIterator = enrolmentList.iterator();
-					while (enrolmentIterator.hasNext()) {
-
-						IEnrolment enrolment = (Enrolment) enrolmentIterator.next();
-
-						if (enrolment != null) {
-
-							changedEnrolments++;
-							enrolment.setCurricularCourseScope(ccs);
-							broker.store(enrolment);
-						}
-					}
-				}
+//				criteria = new Criteria();
+//				criteria.addEqualTo("curricularCourseScopeKey", alternativeCCScope.getIdInternal());
+//				query = new QueryByCriteria(Enrolment.class, criteria);
+//
+//				List enrolmentList = (List) broker.getCollectionByQuery(query);
+//
+//				if ((enrolmentList != null) || (!enrolmentList.isEmpty())) {
+//
+//					Iterator enrolmentIterator = enrolmentList.iterator();
+//					while (enrolmentIterator.hasNext()) {
+//
+//						IEnrolment enrolment = (Enrolment) enrolmentIterator.next();
+//
+//						if (enrolment != null) {
+//
+//							changedEnrolments++;
+//							enrolment.setCurricularCourseScope(ccs);
+//							broker.store(enrolment);
+//						}
+//					}
+//				}
 			}
 		}
 		catch (PersistenceBrokerException pbe) {

@@ -8,10 +8,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.ISuportePersistente;
@@ -20,83 +20,127 @@ import Util.EnrolmentState;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 3/Abr/2003
  * 
- * This rule should be used when the intention is to check,
- * if there is a curricular course from a previous year that the student cannot be enrolled in,
- * and remove all the curricular courses from that year beyond.
+ * This rule should be used when the intention is to check, if there is a
+ * curricular course from a previous year that the student cannot be enrolled
+ * in, and remove all the curricular courses from that year beyond.
  */
 
-public class EnrolmentFilterCurricularYearPrecedence implements IEnrolmentRule {
+public class EnrolmentFilterCurricularYearPrecedence //implements IEnrolmentRule
+{
 
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
+    public EnrolmentContext apply(EnrolmentContext enrolmentContext)
+    {
 
-		List curricularCoursesNeverEnroled = null;
-		try {
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-			final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan());
-			final List studentEnrolmentsWithStateDiferentOfTemporarilyEnroled = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
-				public boolean evaluate(Object obj) {
-					IEnrolment enrolment = (IEnrolment) obj;
-					return !enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED);
-				}
-			});
-			List correspondingCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateDiferentOfTemporarilyEnroled, new Transformer() {
-				public Object transform(Object obj) {
-					IEnrolment enrolment = (IEnrolment) obj;
-					return enrolment.getCurricularCourseScope().getCurricularCourse();
-				}
-			});
-			curricularCoursesNeverEnroled = new ArrayList();
-			curricularCoursesNeverEnroled.addAll(enrolmentContext.getCurricularCoursesFromStudentCurricularPlan());
-			curricularCoursesNeverEnroled.removeAll(correspondingCurricularCourses);
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new IllegalStateException("Cannot read from database");
-		}
+        List curricularCoursesNeverEnroled = null;
+        try
+        {
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
+            final List studentEnrolments =
+                persistentEnrolment.readAllByStudentCurricularPlan(
+                    enrolmentContext.getStudentActiveCurricularPlan());
+            final List studentEnrolmentsWithStateDiferentOfTemporarilyEnroled =
+                (List) CollectionUtils.select(studentEnrolments, new Predicate()
+            {
+                public boolean evaluate(Object obj)
+                {
+                    IEnrolment enrolment = (IEnrolment) obj;
+                    return !enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED);
+                }
+            });
+            List correspondingCurricularCourses =
+                (
+                    List) CollectionUtils
+                        .collect(
+                            studentEnrolmentsWithStateDiferentOfTemporarilyEnroled,
+                            new Transformer()
+            {
+                public Object transform(Object obj)
+                {
+                    IEnrolment enrolment = (IEnrolment) obj;
+                    return enrolment.getCurricularCourse();
+                }
+            });
+            curricularCoursesNeverEnroled = new ArrayList();
+            curricularCoursesNeverEnroled.addAll(
+                enrolmentContext.getCurricularCoursesFromStudentCurricularPlan());
+            curricularCoursesNeverEnroled.removeAll(correspondingCurricularCourses);
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+            throw new IllegalStateException("Cannot read from database");
+        }
 
-		List curricularCoursesScopesNeverEnroled = EnrolmentContextManager.computeScopesOfCurricularCourses(curricularCoursesNeverEnroled);
+       
 
-// ------------------------------------------------------------
-// NOTE [DAVID]: Este pedaço de código é uma maneira de filtrar pelo ramo e semestre de modo a tornar esta regra independente.
-		List finalSpanBackup = new ArrayList();
-		finalSpanBackup.addAll(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesScopesNeverEnroled);
+        // ------------------------------------------------------------
+        // NOTE [DAVID]: Este pedaço de código é uma maneira de filtrar pelo
+        // ramo e semestre de modo a tornar esta regra independente.
+        List finalSpanBackup = new ArrayList();
+        finalSpanBackup.addAll(enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled());
+        enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(curricularCoursesNeverEnroled);
 
-		IEnrolmentRule enrolmentRule = null;
-		enrolmentRule = new EnrolmentFilterBranchRule();
-		enrolmentContext = enrolmentRule.apply(enrolmentContext);
-		enrolmentRule = new EnrolmentFilterSemesterRule();
-		enrolmentContext = enrolmentRule.apply(enrolmentContext);
-		
-		curricularCoursesScopesNeverEnroled = new ArrayList();
-		curricularCoursesScopesNeverEnroled.addAll(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(finalSpanBackup);
-// ------------------------------------------------------------
+//        IEnrolmentRule enrolmentRule = null;
+//        enrolmentRule = new EnrolmentFilterBranchRule();
+//        enrolmentContext = enrolmentRule.apply(enrolmentContext);
+//        enrolmentRule = new EnrolmentFilterSemesterRule();
+//        enrolmentContext = enrolmentRule.apply(enrolmentContext);
 
-		List aux = new ArrayList();
-		Iterator iterator1 = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
-		while (iterator1.hasNext()) {
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator1.next();
-			int year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue();
-			Iterator iterator2 = curricularCoursesScopesNeverEnroled.iterator();
-			while (iterator2.hasNext()) {
-				ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) iterator2.next();
-				// If there is a curricular course from a previous year that the student cannot be enrolled in,
-				// we have to remove all the curricular courses from that year beyond.
-				if(
-					(curricularCourseScope2.getCurricularSemester().getCurricularYear().getYear().intValue() < year) &&
-					(!enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().contains(curricularCourseScope2)) &&
-					(!enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().contains(curricularCourseScope2))
-				) {
-					aux.add(curricularCourseScope);
-					break;
-				}
-			}
-		}
-		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(aux);
-		return enrolmentContext;
-	}
+        curricularCoursesNeverEnroled = new ArrayList();
+        curricularCoursesNeverEnroled.addAll(
+            enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled());
+        enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(finalSpanBackup);
+        // ------------------------------------------------------------
+
+        List aux = new ArrayList();
+        Iterator iterator1 = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().iterator();
+        while (iterator1.hasNext())
+        {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
+            ICurricularCourseScope leastScope = getMinimumScope(curricularCourse);
+            Iterator iterator2 = curricularCoursesNeverEnroled.iterator();
+            while (iterator2.hasNext())
+            {
+                ICurricularCourse curricularCourse2 = (ICurricularCourse) iterator2.next();
+                ICurricularCourseScope lestScope2Compare = getMinimumScope(curricularCourse2);
+                if (lestScope2Compare.getCurricularSemester().getCurricularYear().getYear().intValue()
+                    < leastScope.getCurricularSemester().getCurricularYear().getYear().intValue()
+                    && (!enrolmentContext
+                        .getFinalCurricularCoursesSpanToBeEnrolled()
+                        .contains(curricularCourse2))
+                    && (!enrolmentContext
+                        .getCurricularCoursesAutomaticalyEnroled()
+                        .contains(curricularCourse2)))
+                {
+                    aux.add(curricularCourse);
+                    break;
+                }
+
+            }
+        }
+        enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().removeAll(aux);
+        return enrolmentContext;
+    }
+
+    private ICurricularCourseScope getMinimumScope(ICurricularCourse curricularCourse)
+    {
+        List scopes = curricularCourse.getScopes();
+        Iterator iter = scopes.iterator();
+        ICurricularCourseScope scope = null;
+        while (iter.hasNext())
+        {
+            ICurricularCourseScope scope2Compare = (ICurricularCourseScope) iter.next();
+            if (scope == null
+                || (scope.getCurricularSemester().getCurricularYear().getYear().intValue()
+                    > scope2Compare.getCurricularSemester().getCurricularYear().getYear().intValue()))
+            {
+                scope = scope2Compare;
+            }
+        }
+        return scope;
+    }
 }

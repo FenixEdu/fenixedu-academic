@@ -1,13 +1,31 @@
 package DataBeans.equivalence;
 
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 
-public class InfoCurricularCourseScopeGrade {
+public class InfoCurricularCourseGrade {
 
 	private InfoCurricularCourseScope infoCurricularCourseScope;
+	private InfoCurricularCourse infoCurricularCourse;
 	private String grade;
 
-	public InfoCurricularCourseScopeGrade() {
+    /**
+     * @return
+     */
+    public InfoCurricularCourse getInfoCurricularCourse()
+    {
+        return infoCurricularCourse;
+    }
+
+    /**
+     * @param infoCurricularCourse
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse)
+    {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
+
+	public InfoCurricularCourseGrade() {
 	}
 
 	/**
@@ -18,6 +36,7 @@ public class InfoCurricularCourseScopeGrade {
 	}
 
 	/**
+     * @deprecated
 	 * @return
 	 */
 	public InfoCurricularCourseScope getInfoCurricularCourseScope() {
@@ -32,6 +51,7 @@ public class InfoCurricularCourseScopeGrade {
 	}
 
 	/**
+     * @deprecated
 	 * @param scope
 	 */
 	public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope) {
@@ -40,7 +60,7 @@ public class InfoCurricularCourseScopeGrade {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
-		result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
+		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
 		result += "grade = " + this.grade + "]\n";
 		return result;
 	}

@@ -32,17 +32,21 @@ public final class EnrolmentContext {
 	private EnrolmentValidationResult enrolmentValidationResult;
 	private ICurso chosenOptionalDegree;
 	private ICurricularCourseScope chosenOptionalCurricularCourseScope;
+    private ICurricularCourse chosenOptionalCurricularCourse;
 
 	private List enrolmentsAprovedByStudent;
 	private List actualEnrolments;
 	private List curricularCoursesFromStudentCurricularPlan;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
+    private List finalCurricularCoursesSpanToBeEnrolled;
 	private List curricularCoursesScopesAutomaticalyEnroled;
+    private List curricularCoursesAutomaticalyEnroled;
 
 	private List degreesForOptionalCurricularCourses;
 	private List optionalCurricularCoursesToChooseFromDegree;
 	private List optionalCurricularCoursesEnrolments;
-	
+   
+    
 	protected EnrolmentContext() {
 		super();
 		actualEnrolments = new ArrayList();
@@ -62,7 +66,7 @@ public final class EnrolmentContext {
 					return true;
 				}
 			} else {
-				if (enrolment.getCurricularCourseScope().getCurricularCourse().equals(curricularCourse)) {
+				if (enrolment.getCurricularCourse().equals(curricularCourse)) {
 					return true;
 				}
 			}
@@ -86,10 +90,15 @@ public final class EnrolmentContext {
 		this.student = student;
 	}
 
+    /**
+     * @deprecated
+     */
 	public List getFinalCurricularCoursesScopesSpanToBeEnrolled() {
 		return finalCurricularCoursesScopesSpanToBeEnrolled;
 	}
-
+    /**
+     * @deprecated
+     */
 	public void setFinalCurricularCoursesScopesSpanToBeEnrolled(List list) {
 		finalCurricularCoursesScopesSpanToBeEnrolled = list;
 	}
@@ -171,6 +180,7 @@ public final class EnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return List
 	 */
 	public List getCurricularCoursesScopesAutomaticalyEnroled() {
@@ -178,6 +188,7 @@ public final class EnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * Sets the curricularCoursesScopesAutomaticalyEnroled.
 	 * @param curricularCoursesScopesAutomaticalyEnroled The curricularCoursesScopesAutomaticalyEnroled to set
 	 */
@@ -246,6 +257,7 @@ public final class EnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return ICurricularCourse
 	 */
 	public ICurricularCourseScope getChosenOptionalCurricularCourseScope() {
@@ -253,6 +265,7 @@ public final class EnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * Sets the chosenOptionalCurricularCourseScope.
 	 * @param chosenOptionalCurricularCourseScope The chosenOptionalCurricularCourseScope to set
 	 */
@@ -274,5 +287,55 @@ public final class EnrolmentContext {
 	public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
 		this.executionPeriod = executionPeriod;
 	}
+
+    
+
+    /**
+     * @return Returns the finalCurricularCoursesSpanToBeEnrolled.
+     */
+    public List getFinalCurricularCoursesSpanToBeEnrolled()
+    {
+        return finalCurricularCoursesSpanToBeEnrolled;
+    }
+
+    /**
+     * @param finalCurricularCoursesSpanToBeEnrolled The finalCurricularCoursesSpanToBeEnrolled to set.
+     */
+    public void setFinalCurricularCoursesSpanToBeEnrolled(List finalCurricularCoursesSpanToBeEnrolled)
+    {
+        this.finalCurricularCoursesSpanToBeEnrolled = finalCurricularCoursesSpanToBeEnrolled;
+    }
+
+    /**
+     * @return Returns the curricularCoursesAutomaticalyEnroled.
+     */
+    public List getCurricularCoursesAutomaticalyEnroled()
+    {
+        return curricularCoursesAutomaticalyEnroled;
+    }
+
+    /**
+     * @param curricularCoursesAutomaticalyEnroled The curricularCoursesAutomaticalyEnroled to set.
+     */
+    public void setCurricularCoursesAutomaticalyEnroled(List curricularCoursesAutomaticalyEnroled)
+    {
+        this.curricularCoursesAutomaticalyEnroled = curricularCoursesAutomaticalyEnroled;
+    }
+
+    /**
+     * @return Returns the chosenOptionalCurricularCourse.
+     */
+    public ICurricularCourse getChosenOptionalCurricularCourse()
+    {
+        return chosenOptionalCurricularCourse;
+    }
+
+    /**
+     * @param chosenOptionalCurricularCourse The chosenOptionalCurricularCourse to set.
+     */
+    public void setChosenOptionalCurricularCourse(ICurricularCourse chosenOptionalCurricularCourse)
+    {
+        this.chosenOptionalCurricularCourse = chosenOptionalCurricularCourse;
+    }
 
 }

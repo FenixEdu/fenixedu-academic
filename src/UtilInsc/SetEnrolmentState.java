@@ -135,9 +135,9 @@ public class SetEnrolmentState {
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if(enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) enrolment;
-				System.out.println("CURRICULAR COURSE: [" + enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse().getName() + " -> " + enrolmentInOptionalCurricularCourse.getCurricularCourseForOption().getName() + "] STATE: [" + SetEnrolmentStateIO.showEnrolmentState(enrolmentInOptionalCurricularCourse.getEnrolmentState()) + "]");
+				System.out.println("CURRICULAR COURSE: [" + enrolmentInOptionalCurricularCourse.getCurricularCourse().getName() + " -> " + enrolmentInOptionalCurricularCourse.getCurricularCourseForOption().getName() + "] STATE: [" + SetEnrolmentStateIO.showEnrolmentState(enrolmentInOptionalCurricularCourse.getEnrolmentState()) + "]");
 			} else {
-				System.out.println("CURRICULAR COURSE: [" + enrolment.getCurricularCourseScope().getCurricularCourse().getName() + "] STATE: [" + SetEnrolmentStateIO.showEnrolmentState(enrolment.getEnrolmentState()) + "]");
+				System.out.println("CURRICULAR COURSE: [" + enrolment.getCurricularCourse().getName() + "] STATE: [" + SetEnrolmentStateIO.showEnrolmentState(enrolment.getEnrolmentState()) + "]");
 			}
 			try {
 				persistentEnrolment.lockWrite(enrolment);

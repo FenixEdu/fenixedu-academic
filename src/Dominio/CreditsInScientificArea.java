@@ -6,7 +6,7 @@ package Dominio;
  * Jan 14, 2004
  */
 
-public class CreditsInSpecificScientificArea extends DomainObject implements ICreditsInSpecificScientificArea
+public class CreditsInScientificArea extends DomainObject implements ICreditsInScientificArea
 {
 	private Integer studentCurricularPlanKey;
 	private Integer scientificAreaKey;
@@ -17,14 +17,14 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	private IScientificArea scientificArea;
 	private IEnrolment enrolment;
 
-	public CreditsInSpecificScientificArea()
+	public CreditsInScientificArea()
 	{
 	}
 
 	public boolean equals(Object obj) {
 		boolean result = false;
-		if (obj instanceof ICreditsInSpecificScientificArea) {
-			ICreditsInSpecificScientificArea creditsInSpecificScientificArea = (ICreditsInSpecificScientificArea) obj;
+		if (obj instanceof ICreditsInScientificArea) {
+			ICreditsInScientificArea creditsInSpecificScientificArea = (ICreditsInScientificArea) obj;
 			result =
 				this.getEnrolment().equals(creditsInSpecificScientificArea.getEnrolment()) &&
 				this.getStudentCurricularPlan().equals(creditsInSpecificScientificArea.getStudentCurricularPlan()) &&
@@ -36,7 +36,7 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	public String toString() {
 		String result = "scientificArea: [" + this.getScientificArea().getName();
 		result += "] student: [" + this.getStudentCurricularPlan().getStudent().getNumber().toString();
-		result += "] course: [" + this.getEnrolment().getCurricularCourseScope().getCurricularCourse().getName() + "]";
+		result += "] course: [" + this.getEnrolment().getCurricularCourse().getName() + "]";
 		return result;
 	}
 

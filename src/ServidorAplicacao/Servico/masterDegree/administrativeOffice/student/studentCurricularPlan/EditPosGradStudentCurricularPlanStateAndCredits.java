@@ -105,8 +105,10 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 						if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
 							auxEnrolment = new EnrolmentInExtraCurricularCourse();
 							auxEnrolment.setIdInternal(enrolment.getIdInternal());
-							auxEnrolment.setCurricularCourseScope(
-								enrolment.getCurricularCourseScope());
+							//auxEnrolment.setCurricularCourseScope(
+							//	enrolment.getCurricularCourseScope());
+							auxEnrolment.setCurricularCourse(
+								enrolment.getCurricularCourse());								
 							auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
 							auxEnrolment.setStudentCurricularPlan(
 								enrolment.getStudentCurricularPlan());
@@ -127,8 +129,10 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 
 							auxEnrolment = new Enrolment();
 							auxEnrolment.setIdInternal(enrolment.getIdInternal());
-							auxEnrolment.setCurricularCourseScope(
-								enrolment.getCurricularCourseScope());
+							//auxEnrolment.setCurricularCourseScope(
+							//	enrolment.getCurricularCourseScope());
+							auxEnrolment.setCurricularCourse(
+								enrolment.getCurricularCourse());
 							auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
 							auxEnrolment.setStudentCurricularPlan(
 								enrolment.getStudentCurricularPlan());

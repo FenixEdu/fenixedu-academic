@@ -2,11 +2,11 @@ package ServidorAplicacao.Servico.manager.executionCourseManagement;
 
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -17,81 +17,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /*
  * 
- * @author Fernanda Quitério
- * 23/Dez/2003
+ * @author Fernanda Quitério 23/Dez/2003
  */
 
-public class DissociateCurricularCourseByExecutionCourseId implements IServico {
+public class DissociateCurricularCourseByExecutionCourseId implements IService
+{
 
-	private static DissociateCurricularCourseByExecutionCourseId _servico = new DissociateCurricularCourseByExecutionCourseId();
+    
 
-	/**
-	  * The actor of this class.
-	  **/
+    public DissociateCurricularCourseByExecutionCourseId()
+    {
 
-	private DissociateCurricularCourseByExecutionCourseId() {
+    }
 
-	}
+   
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "DissociateCurricularCourseByExecutionCourseId";
-	}
+    public Object run(Integer executionCourseId, Integer curricularCourseId)
+        throws FenixServiceException
+    {
 
-	/**
-	 * Returns the _servico.
-	 * @return DissociateCurricularCourseByExecutionCourseId
-	 */
-	public static DissociateCurricularCourseByExecutionCourseId getService() {
-		return _servico;
-	}
+        try
+        {
+            List executionCourseList = null;
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-	public Object run(
-		Integer executionCourseId,
-		Integer curricularCourseId) throws FenixServiceException {
+            if (executionCourseId == null)
+            {
+                throw new FenixServiceException("nullExecutionCourseId");
+            }
+            if (curricularCourseId == null)
+            {
+                throw new FenixServiceException("nullCurricularCourseId");
+            }
 
-		try {
-			List executionCourseList = null;
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-			IPersistentCurricularCourse persistentCurricularCourse  =sp.getIPersistentCurricularCourse();
-			
-			if(executionCourseId == null) {
-				throw new FenixServiceException("nullExecutionCourseId");
-			}
-			if(curricularCourseId == null) {
-				throw new FenixServiceException("nullCurricularCourseId");
-			}
-			
-			IExecutionCourse executionCourse = new ExecutionCourse();
-			executionCourse.setIdInternal(executionCourseId);
-			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, true);
-			if(executionCourse == null) {
-				throw new NonExistingServiceException("noExecutionCourse");
-			}
-			
-			ICurricularCourse curricularCourse = new CurricularCourse();
-			curricularCourse.setIdInternal(curricularCourseId);
-			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-			if(curricularCourse == null) {
-				throw new NonExistingServiceException("noCurricularCourse");
-			}
-			
-			List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-			List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-			
-			if(!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
-				executionCourses.remove(executionCourse);
-				curricularCourses.remove(curricularCourse);
-				executionCourse.setAssociatedCurricularCourses(curricularCourses);
-				curricularCourse.setAssociatedExecutionCourses(executionCourses);
-			}
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-		}
-		
-		return Boolean.TRUE;
-	}
+            IExecutionCourse executionCourse = new ExecutionCourse();
+            executionCourse.setIdInternal(executionCourseId);
+            executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, true);
+            if (executionCourse == null)
+            {
+                throw new NonExistingServiceException("noExecutionCourse");
+            }
+
+            ICurricularCourse curricularCourse = new CurricularCourse();
+            curricularCourse.setIdInternal(curricularCourseId);
+            curricularCourse =
+                (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
+            if (curricularCourse == null)
+            {
+                throw new NonExistingServiceException("noCurricularCourse");
+            }
+
+            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+            List executionCourses = curricularCourse.getAssociatedExecutionCourses();
+
+            if (!executionCourses.isEmpty() && !curricularCourses.isEmpty())
+            {
+                executionCourses.remove(executionCourse);
+                curricularCourses.remove(curricularCourse);
+                executionCourse.setAssociatedCurricularCourses(curricularCourses);
+                curricularCourse.setAssociatedExecutionCourses(executionCourses);
+            }
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+        }
+
+        return Boolean.TRUE;
+    }
 }

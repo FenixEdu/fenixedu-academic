@@ -42,6 +42,18 @@
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>
 		</form-bean>
+		
+		<!-- ******************* LEEC Enrollment **************** -->
+		<form-bean name="curricularCoursesEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="specializationArea" type="java.lang.String"/>
+			<form-property name="secondaryArea" type="java.lang.String"/>
+			<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
+			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
+			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================ -->
@@ -99,6 +111,8 @@
 				parameter="method"
 				scope="request"
 				validate="false">
+			<forward name="df.page.prepareLEECEnrolmentChooseStudent" path="df.page.prepareLEECEnrolmentChooseStudent"/>
+			
 			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithRules"/>
 			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithoutRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithoutRules"/>
 			<forward name="chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules"/>
@@ -217,6 +231,24 @@
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
 			<forward name="error" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=0"/>
 		</action>
+		
+		<!-- ****************** LEEC Enrollment **************************** -->
+		<action	path="/curricularCoursesEnrollment"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
+				name="curricularCoursesEnrollmentForm"				
+				parameter="method"
+				scope="request"
+				validate="true"
+				input="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent">
+				
+			   <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+    			    key="ServidorApresentacao.Action.exceptions.FenixActionException"
+        			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+				
+			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareEnrollmentChooseStudent"/>
+			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
+		</action>
+		
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

@@ -8,20 +8,17 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import Dominio.ICurricularCourseScope;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IStudent;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
@@ -33,110 +30,125 @@ import Util.EnrolmentState;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 9/Abr/2003
  */
-public class ShowAvailableCurricularCourses implements IServico {
+public class ShowAvailableCurricularCourses implements IService
+{
 
-	private static ShowAvailableCurricularCourses _servico =
-		new ShowAvailableCurricularCourses();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ShowAvailableCurricularCourses getService() {
-		return _servico;
-	}
-
-	/**
+    /**
 	 * The actor of this class.
-	 **/
-	private ShowAvailableCurricularCourses() {
-	}
+	 */
+    public ShowAvailableCurricularCourses()
+    {
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ShowAvailableCurricularCourses";
-	}
-
-	/**
+    /**
 	 * @param infoStudent
 	 * @param infoDegree
 	 * @return EnrolmentContext
 	 * @throws FenixServiceException
 	 */
-	public InfoEnrolmentContext run(IUserView userView)
-		throws FenixServiceException {
+    public InfoEnrolmentContext run(IUserView userView) throws FenixServiceException
+    {
 
-		try {
+        try
+        {
 
-			ISuportePersistente persistentSupport =	SuportePersistenteOJB.getInstance();
-			IPersistentStudent studentDAO =	persistentSupport.getIPersistentStudent();
-			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
+            IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
 
-			IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
-			IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student));
+            IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
+////            IEnrolmentStrategy strategy =
+////                enrolmentStrategyFactory.getEnrolmentStrategyInstance(
+////                    EnrolmentContextManager.initialEnrolmentContext(student));
+////
+////            EnrolmentContext enrolmentContext = strategy.getAvailableCurricularCourses();
+//
+//            return EnrolmentContextManager.getInfoEnrolmentContext(
+//                updateActualEnrolment(enrolmentContext));
 
-			EnrolmentContext enrolmentContext =	strategy.getAvailableCurricularCourses();
+            return null;
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            ex.printStackTrace(System.out);
+            throw new FenixServiceException(ex);
+        }
+        catch (IllegalStateException ex)
+        {
+            ex.printStackTrace(System.out);
+            throw new FenixServiceException(ex);
+        }
+//        catch (OutOfCurricularCourseEnrolmentPeriod e)
+//        {
+//            throw e;
+//        }
+    }
 
-			return EnrolmentContextManager.getInfoEnrolmentContext(updateActualEnrolment(enrolmentContext));
+    private EnrolmentContext updateActualEnrolment(EnrolmentContext enrolmentContext)
+        throws ExcepcaoPersistencia
+    {
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace(System.out);
-			throw new FenixServiceException(ex);
-		} catch (IllegalStateException ex) {
-			ex.printStackTrace(System.out);
-			throw new FenixServiceException(ex);
-		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
-			throw e;
-		}
-	}
+        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-	private EnrolmentContext updateActualEnrolment(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
+        IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-		ISuportePersistente persistentSupport =	SuportePersistenteOJB.getInstance();
+        final List temporarilyEnrolments =
+            persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+                enrolmentContext.getStudentActiveCurricularPlan(),
+                EnrolmentState.TEMPORARILY_ENROLED);
 
-		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		
-		final List temporarilyEnrolments = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-				enrolmentContext.getStudentActiveCurricularPlan(),
-				EnrolmentState.TEMPORARILY_ENROLED);
+        final List enrolmentsInOptionalCurricularCourses =
+            (List) CollectionUtils.select(temporarilyEnrolments, new Predicate()
+        {
+            public boolean evaluate(Object obj)
+            {
+                if (obj instanceof IEnrolmentInOptionalCurricularCourse)
+                {
+                    IEnrolmentInOptionalCurricularCourse enrolment =
+                        (IEnrolmentInOptionalCurricularCourse) obj;
+                    return enrolment.getCurricularCourse().getType().equals(
+                        new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE));
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        });
 
-		final List enrolmentsInOptionalCurricularCourses = (List) CollectionUtils.select(temporarilyEnrolments, new Predicate() {
-			public boolean evaluate(Object obj) {
-				if(obj instanceof IEnrolmentInOptionalCurricularCourse) {
-					IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) obj;
-					return enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE));
-				} else {
-					return false;
-				}
-			}
-		});
-		
+        final List enrolmentsNotInOptionalCurricularCourses =
+            (List) CollectionUtils.subtract(
+                temporarilyEnrolments,
+                enrolmentsInOptionalCurricularCourses);
 
-		final List enrolmentsNotInOptionalCurricularCourses = (List) CollectionUtils.subtract(temporarilyEnrolments, enrolmentsInOptionalCurricularCourses);
+        List notOptionalCurricularCoursesTemporarilyEnroled =
+            (List) CollectionUtils.collect(enrolmentsNotInOptionalCurricularCourses, new Transformer()
+        {
+            public Object transform(Object obj)
+            {
+                IEnrolment enrolment = (IEnrolment) obj;
+                return (enrolment.getCurricularCourse());
+            }
+        });
 
+        Iterator iterator = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().iterator();
+        List noOptionalCourses = new ArrayList();
+        while (iterator.hasNext())
+        {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+            if (notOptionalCurricularCoursesTemporarilyEnroled.contains(curricularCourse))
+            {
+                noOptionalCourses.add(curricularCourse);
+            }
+        }
+        enrolmentContext.setActualEnrolments(noOptionalCourses);
+        enrolmentContext.getActualEnrolments().addAll(
+            enrolmentContext.getCurricularCoursesAutomaticalyEnroled());
+        enrolmentContext.setOptionalCurricularCoursesEnrolments(enrolmentsInOptionalCurricularCourses);
 
-		List notOptionalCurricularCoursesTemporarilyEnroled = (List) CollectionUtils.collect(enrolmentsNotInOptionalCurricularCourses, new Transformer() {
-			public Object transform(Object obj) {
-				IEnrolment enrolment = (IEnrolment) obj;
-				return (enrolment.getCurricularCourseScope().getCurricularCourse());
-			}
-		});
-
-		Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
-		List noOptionalCourseScopes = new ArrayList();
-		while (iterator.hasNext()) {
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			if (notOptionalCurricularCoursesTemporarilyEnroled.contains(curricularCourseScope.getCurricularCourse())) {
-				noOptionalCourseScopes.add(curricularCourseScope);
-			}
-		}
-		enrolmentContext.setActualEnrolments(noOptionalCourseScopes);
-		enrolmentContext.getActualEnrolments().addAll(enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled());
-		enrolmentContext.setOptionalCurricularCoursesEnrolments(enrolmentsInOptionalCurricularCourses);
-		
-		return enrolmentContext;
-	}
+        return enrolmentContext;
+    }
 }

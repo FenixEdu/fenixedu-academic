@@ -214,15 +214,16 @@ public class ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA
                     if (curricularCourse != null)
                     {
 
-                        criteria = new Criteria();
-                        criteria.addEqualTo(
-                            "curricularCourse.idInternal",
-                            curricularCourse.getIdInternal());
-                        query = new QueryByCriteria(CurricularCourseScope.class, criteria);
-                        ICurricularCourseScope curricularCourseScope =
-                            (CurricularCourseScope) broker.getObjectByQuery(query);
-
-                        deleteDuplicateEnrolments(enrolmentACurricularCourseList, curricularCourseScope);
+//                        criteria = new Criteria();
+//                        criteria.addEqualTo(
+//                            "curricularCourse.idInternal",
+//                            curricularCourse.getIdInternal());
+//                        query = new QueryByCriteria(CurricularCourseScope.class, criteria);
+//                        ICurricularCourseScope curricularCourseScope =
+//                            (CurricularCourseScope) broker.getObjectByQuery(query);
+//
+//                        deleteDuplicateEnrolments(enrolmentACurricularCourseList, curricularCourseScope);
+                        deleteDuplicateEnrolments(enrolmentACurricularCourseList, curricularCourse);
                     }
                 }
             }
@@ -238,11 +239,9 @@ public class ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA
 
     }
 
-    private static void deleteDuplicateEnrolments(
-        List enrolmentACurricularCourseList,
-        ICurricularCourseScope curricularCourseScope)
+//    private static void deleteDuplicateEnrolments(List enrolmentACurricularCourseList, ICurricularCourseScope curricularCourseScope)
+    private static void deleteDuplicateEnrolments(List enrolmentACurricularCourseList, ICurricularCourse curricularCourse)
     {
-
         PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
         try
@@ -251,9 +250,8 @@ public class ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA
             broker.beginTransaction();
 
             Criteria criteria = new Criteria();
-            criteria.addEqualTo(
-                "curricularCourseScope.idInternal",
-                curricularCourseScope.getIdInternal());
+//            criteria.addEqualTo("curricularCourseScope.idInternal", curricularCourseScope.getIdInternal());
+            criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
             //criteria.addEqualTo("keyExecutionPeriod", currentExecutionPeriod.getIdInternal());
             Query query = new QueryByCriteria(Enrolment.class, criteria);
             List enrolmentCurricularCourseList = (List) broker.getCollectionByQuery(query);
@@ -265,7 +263,8 @@ public class ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA
                 while (enrolmentsIterator.hasNext())
                 {
                     IEnrolment enrolment = (Enrolment) enrolmentsIterator.next();
-                    enrolment.setCurricularCourseScope(curricularCourseScope);
+//                    enrolment.setCurricularCourseScope(curricularCourseScope);
+                    enrolment.setCurricularCourse(curricularCourse);
                     broker.store(enrolment);
                     changedEnrolments++;
                 }
@@ -281,22 +280,18 @@ public class ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA
                     IEnrolment enrolmentA = (Enrolment) enrolmentsAIterator.next();
 
                     criteria = new Criteria();
-                    criteria.addEqualTo(
-                        "curricularCourseScope.idInternal",
-                        curricularCourseScope.getIdInternal());
-                    criteria.addEqualTo(
-                        "keyExecutionPeriod",
-                        enrolmentA.getExecutionPeriod().getIdInternal());
-                    criteria.addEqualTo(
-                        "studentCurricularPlan.idInternal",
-                        enrolmentA.getStudentCurricularPlan().getIdInternal());
+//                    criteria.addEqualTo("curricularCourseScope.idInternal", curricularCourseScope.getIdInternal());
+                    criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+                    criteria.addEqualTo("keyExecutionPeriod", enrolmentA.getExecutionPeriod().getIdInternal());
+                    criteria.addEqualTo("studentCurricularPlan.idInternal", enrolmentA.getStudentCurricularPlan().getIdInternal());
                     query = new QueryByCriteria(Enrolment.class, criteria);
                     IEnrolment enrolment = (Enrolment) broker.getObjectByQuery(query);
 
                     if (enrolment == null)
                     {
                         changedEnrolments++;
-                        enrolmentA.setCurricularCourseScope(curricularCourseScope);
+//                        enrolmentA.setCurricularCourseScope(curricularCourseScope);
+                        enrolmentA.setCurricularCourse(curricularCourse);
                         broker.store(enrolmentA);
                     }
                     else

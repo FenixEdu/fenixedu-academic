@@ -18,7 +18,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * that can be enrolled as an optional course.
  */
 
-public class EnrolmentFilterAllOptionalDegreesRule implements IEnrolmentRule {
+public class EnrolmentFilterAllOptionalDegreesRule //implements IEnrolmentRule
+{
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		List degreesList = null;

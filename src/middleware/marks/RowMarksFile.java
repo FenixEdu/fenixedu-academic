@@ -57,21 +57,18 @@ public class RowMarksFile
         setCurricularYear(
             enrolmentEvaluation
                 .getEnrolment()
-                .getCurricularCourseScope()
-                .getCurricularSemester()
-                .getCurricularYear()
+                .getCurricularCourse()
+                .getCurricularYearByBranch(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch())
                 .getYear());
         setCurricularSemester(
             enrolmentEvaluation
                 .getEnrolment()
-                .getCurricularCourseScope()
-                .getCurricularSemester()
+                .getExecutionPeriod()
                 .getSemester());
         setCurricularSeason(new Integer(0));
         setCourseCode(
             enrolmentEvaluation
                 .getEnrolment()
-                .getCurricularCourseScope()
                 .getCurricularCourse()
                 .getCode());
         setMark(enrolmentEvaluation.getGrade());
@@ -96,21 +93,18 @@ public class RowMarksFile
         setCurricularYear(
             enrolmentEvaluation
                 .getEnrolment()
-                .getCurricularCourseScope()
-                .getCurricularSemester()
-                .getCurricularYear()
+                .getCurricularCourse()
+                .getCurricularYearByBranch(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch())
                 .getYear());
         setCurricularSemester(
             enrolmentEvaluation
                 .getEnrolment()
-                .getCurricularCourseScope()
-                .getCurricularSemester()
-                .getSemester());
+                .getExecutionPeriod()
+        		.getSemester());
         setCurricularSeason(new Integer(0));
         setCourseCode(
             enrolmentEvaluation
                 .getEnrolment()
-                .getCurricularCourseScope()
                 .getCurricularCourse()
                 .getCode());
         setMark(enrolmentEvaluation.getGrade());

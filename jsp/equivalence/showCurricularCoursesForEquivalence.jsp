@@ -7,29 +7,29 @@
 
 <bean:define id="infoEquivalenceContext" name="<%= SessionConstants.EQUIVALENCE_CONTEXT_KEY %>" scope="session"/>
 <bean:define id="infoEnrolmentsToGiveEquivalence" name="infoEquivalenceContext" property="infoEnrolmentsToGiveEquivalence"/>
-<bean:define id="infoCurricularCourseScopesToGetEquivalence" name="infoEquivalenceContext" property="infoCurricularCourseScopesToGetEquivalence"/>
+<bean:define id="infoCurricularCoursesToGetEquivalence" name="infoEquivalenceContext" property="infoCurricularCoursesToGetEquivalence"/>
 <bean:size id="sizeEnrolmentsToGiveEquivalence" name="infoEquivalenceContext" property="infoEnrolmentsToGiveEquivalence"/>
-<bean:size id="sizeCurricularCourseScopesToGetEquivalence" name="infoEquivalenceContext" property="infoCurricularCourseScopesToGetEquivalence"/>
+<bean:size id="sizeCurricularCoursesToGetEquivalence" name="infoEquivalenceContext" property="infoCurricularCoursesToGetEquivalence"/>
 
 <h2 align="center"><bean:message key="tilte.manual.equivalence"/></h2>
 
 <logic:equal name="sizeEnrolmentsToGiveEquivalence" value="0">
-	<bean:define id="noCurricularCourseScopes">
+	<bean:define id="noCurricularCourses">
 		<bean:message key="message.no.curricular.courses.to.give.equivalence"/>
 	</bean:define>
 </logic:equal>
 
-<logic:equal name="sizeCurricularCourseScopesToGetEquivalence" value="0">
-	<bean:define id="noCurricularCourseScopes">
+<logic:equal name="sizeCurricularCoursesToGetEquivalence" value="0">
+	<bean:define id="noCurricularCourses">
 		<bean:message key="message.no.curricular.courses.to.get.equivalence"/>
 	</bean:define>
 </logic:equal>
 
-<logic:present name="noCurricularCourseScopes">
-	<bean:write name="noCurricularCourseScopes" filter="false"/>
+<logic:present name="noCurricularCourses">
+	<bean:write name="noCurricularCourses" filter="false"/>
 </logic:present>
 
-<logic:notPresent name="noCurricularCourseScopes">
+<logic:notPresent name="noCurricularCourses">
 	<b><bean:message key="label.second.step.equivalence"/></b>
 	<br/>
 	<br/>
@@ -67,15 +67,10 @@
 									</bean:define>
 									<html:link page="<%= pageContext.findAttribute("link").toString() %>" transaction="true">
 										<%--<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/><br/>(<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>)--%>
-										<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+										<bean:write name="infoEnrolment" property="infoCurricularCourse.name"/>
 									</html:link>
 								</td>
-								<td align="center">
-									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
-								</td>
-								<td align="center">
-									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
-								</td>
+								
 							</tr>
 						</logic:iterate>
 					</table>
@@ -88,20 +83,15 @@
 							<th align="center"><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></th>
 							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
 						</tr>
-						<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourseScopesToGetEquivalence" indexId="index">
+						<logic:iterate id="infoCurricularCourse" name="infoCurricularCoursesToGetEquivalence" indexId="index">
 							<tr>
 								<td align="center">
 									<html:multibox property="curricularCoursesToGetEquivalence"><bean:write name="index"/></html:multibox>
 								</td>
 								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/>
+									<bean:write name="infoCurricularCourse" property="name"/>
 								</td>
-								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>
-								</td>
-								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>
-								</td>
+								
 							</tr>
 						</logic:iterate>
 					</table>

@@ -88,4 +88,5 @@ public interface ICurricularCourse extends IDomainObject {
 	public Boolean getBasic();
 	
 	public IScientificArea getScientificArea();
+	public ICurricularYear getCurricularYearByBranch(IBranch branch);
 }

@@ -317,7 +317,6 @@ public class CreateAndUpdateAllPastCurriculums
 			curricularCourse.setCode(StringUtils.trim(courseCode));
 			curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
 			curricularCourse.setName(curricularCourseName);
-			// NOTE [DAVID]: Verficar se pode usar o valor do tipo de disciplina que vem no ficheiro do Almeida.
 			curricularCourse.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
 
 			curricularCourse.setUniversity(null);

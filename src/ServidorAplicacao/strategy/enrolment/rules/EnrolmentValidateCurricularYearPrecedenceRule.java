@@ -29,7 +29,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * curricular years.
  */
 
-public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolmentRule {
+public class EnrolmentValidateCurricularYearPrecedenceRule //implements IEnrolmentRule
+{
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		
@@ -54,7 +55,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 			while (iterator.hasNext()) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
 //				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse());
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse(), false);
+				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(enrolmentInOptionalCurricularCourse.getCurricularCourse(), false);
 				year2 =  ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getCurricularSemester().getCurricularYear().getYear().intValue();
 				if (year2 > year) {
 					year = year2;
@@ -71,7 +72,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 		List curricularCoursesOfOption = (List) CollectionUtils.collect(enrolmentContext.getOptionalCurricularCoursesEnrolments(), new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return (enrolment.getCurricularCourseScope().getCurricularCourse());
+				return (enrolment.getCurricularCourse());
 			}
 		});
 

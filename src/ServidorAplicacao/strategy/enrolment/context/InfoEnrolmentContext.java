@@ -3,6 +3,7 @@ package ServidorAplicacao.strategy.enrolment.context;
 import java.util.List;
 import java.util.Map;
 
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -25,12 +26,17 @@ public class InfoEnrolmentContext {
 	private EnrolmentValidationResult enrolmentValidationResult;
 	private InfoDegree chosenOptionalInfoDegree;
 	private InfoCurricularCourseScope infoChosenOptionalCurricularCourseScope;
+    private InfoCurricularCourse infoChosenOptionalCurricularCourse;
+    
 
 	private Map acumulatedEnrolments;
 
 	private List actualEnrolment;
 	private List infoFinalCurricularCoursesScopesSpanToBeEnrolled;
+    private List infoFinalCurricularCoursesSpanToBeEnrolled;
+    
 	private List infoCurricularCoursesScopesAutomaticalyEnroled;
+    private List infoCurricularCoursesAutomaticalyEnroled;
 	private List infoDegreesForOptionalCurricularCourses;
 	private List optionalInfoCurricularCoursesToChooseFromDegree;
 	private List infoEnrolmentsAprovedByStudent;
@@ -86,6 +92,7 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return List
 	 */
 	public List getInfoFinalCurricularCoursesScopesSpanToBeEnrolled() {
@@ -116,6 +123,7 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * Sets the infoFinalCurricularCoursesScopesSpanToBeEnrolled.
 	 * @param infoFinalCurricularCoursesScopesSpanToBeEnrolled The infoFinalCurricularCoursesScopesSpanToBeEnrolled to set
 	 */
@@ -177,6 +185,7 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return List
 	 */
 	public List getInfoCurricularCoursesScopesAutomaticalyEnroled() {
@@ -184,6 +193,7 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * Sets the infoCurricularCoursesScopesAutomaticalyEnroled.
 	 * @param infoCurricularCoursesScopesAutomaticalyEnroled The infoCurricularCoursesScopesAutomaticalyEnroled to set
 	 */
@@ -267,6 +277,7 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return InfoCurricularCourse
 	 */
 	public InfoCurricularCourseScope getInfoChosenOptionalCurricularCourseScope() {
@@ -274,6 +285,7 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
+     * @deprecated
 	 * Sets the infoChosenOptionalCurricularCourseScope.
 	 * @param infoChosenOptionalCurricularCourseScope The infoChosenOptionalCurricularCourseScope to set
 	 */
@@ -295,5 +307,53 @@ public class InfoEnrolmentContext {
 	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
 		this.infoExecutionPeriod = infoExecutionPeriod;
 	}
+
+    /**
+     * @return Returns the infoFinalCurricularCoursesSpanToBeEnrolled.
+     */
+    public List getInfoFinalCurricularCoursesSpanToBeEnrolled()
+    {
+        return infoFinalCurricularCoursesSpanToBeEnrolled;
+    }
+
+    /**
+     * @param infoFinalCurricularCoursesSpanToBeEnrolled The infoFinalCurricularCoursesSpanToBeEnrolled to set.
+     */
+    public void setInfoFinalCurricularCoursesSpanToBeEnrolled(List infoFinalCurricularCoursesSpanToBeEnrolled)
+    {
+        this.infoFinalCurricularCoursesSpanToBeEnrolled = infoFinalCurricularCoursesSpanToBeEnrolled;
+    }
+
+    /**
+     * @return Returns the infoCurricularCoursesAutomaticalyEnroled.
+     */
+    public List getInfoCurricularCoursesAutomaticalyEnroled()
+    {
+        return infoCurricularCoursesAutomaticalyEnroled;
+    }
+
+    /**
+     * @param infoCurricularCoursesAutomaticalyEnroled The infoCurricularCoursesAutomaticalyEnroled to set.
+     */
+    public void setInfoCurricularCoursesAutomaticalyEnroled(List infoCurricularCoursesAutomaticalyEnroled)
+    {
+        this.infoCurricularCoursesAutomaticalyEnroled = infoCurricularCoursesAutomaticalyEnroled;
+    }
+
+    /**
+     * @return Returns the infoChosenOptionalCurricularCourse.
+     */
+    public InfoCurricularCourse getInfoChosenOptionalCurricularCourse()
+    {
+        return infoChosenOptionalCurricularCourse;
+    }
+
+    /**
+     * @param infoChosenOptionalCurricularCourse The infoChosenOptionalCurricularCourse to set.
+     */
+    public void setInfoChosenOptionalCurricularCourse(InfoCurricularCourse infoChosenOptionalCurricularCourse)
+    {
+        this.infoChosenOptionalCurricularCourse = infoChosenOptionalCurricularCourse;
+    }
 
 }

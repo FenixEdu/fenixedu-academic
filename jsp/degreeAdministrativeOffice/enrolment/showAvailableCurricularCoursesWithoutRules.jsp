@@ -7,7 +7,7 @@
 <bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" scope="session"/>
 <bean:define id="studentNumber" name="infoEnrolmentContext" property="infoStudent.number"/>
 <bean:define id="degreeName" name="infoEnrolmentContext" property="chosenOptionalInfoDegree.nome"/>
-<bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled"/>
+<bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesSpanToBeEnrolled"/>
 <bean:size id="sizeAprovedAndEnroled" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent"/>
 
 <logic:notEqual name="sizeAprovedAndEnroled" value="0">
@@ -26,22 +26,22 @@
 		<logic:iterate id="infoEnrolment" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent" indexId="index">
 			<tr>
 				<td>
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+					<bean:write name="infoEnrolment" property="infoCurricularCourse.name"/>
 				</td>
 				<td align="center">
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
+					<%--<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>--%>
 				</td>
 				<td align="center">
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
+					<%--<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>--%>
 				</td>
-				<logic:notEqual name="infoEnrolment" property="infoCurricularCourseScope.infoBranch.name" value="">
+				<%--<logic:notEqual name="infoEnrolment" property="infoCurricularCourseScope.infoBranch.name" value="">
         			<td align="center">
         				<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoBranch.name"/>
         			</td>
 				</logic:notEqual>
 				<logic:equal name="infoEnrolment" property="infoCurricularCourseScope.infoBranch.name" value="">
         			<td align="center">&nbsp;</td>
-				</logic:equal>
+				</logic:equal> --%>
 				<td align="center">
 					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
 						<bean:message key="message.enrolment.state.aproved"/>
@@ -82,7 +82,7 @@
 				<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 				<td align="center"><u><bean:message key="label.curricular.course.branch"/></u></td>
 			</tr>
-			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
+			<logic:iterate id="curricularCourse" name="infoEnrolmentContext" property="infoFinalCurricularCoursesSpanToBeEnrolled" indexId="index">
 				<tr>
 					<td>
 						<html:multibox property='<%= "curricularCourses[" + index +"]" %>'>
@@ -91,22 +91,22 @@
 						</html:multibox>
 					</td>
 					<td>
-						<bean:write name="curricularScope" property="infoCurricularCourse.name"/>
+						<bean:write name="curricularCourse" property="name"/>
 					</td>
 					<td align="center">
-						<bean:write name="curricularScope" property="infoCurricularSemester.infoCurricularYear.year"/>
+					<%--	<bean:write name="curricularCourse" property="infoCurricularSemester.infoCurricularYear.year"/>--%>
 					</td>
 					<td align="center">
-						<bean:write name="curricularScope" property="infoCurricularSemester.semester"/>
+					<%--	<bean:write name="curricularScope" property="infoCurricularSemester.semester"/> --%>
 					</td>
-					<logic:notEqual name="curricularScope" property="infoBranch.name" value="">
+					<%--<logic:notEqual name="curricularScope" property="infoBranch.name" value="">
     					<td align="center">
     						<bean:write name="curricularScope" property="infoBranch.name"/>
     					</td>
 					</logic:notEqual>
     				<logic:equal name="curricularScope" property="infoBranch.name" value="">
             			<td align="center">&nbsp;</td>
-    				</logic:equal>
+    				</logic:equal> --%>
 				</tr>
 			</logic:iterate>
 		</table>

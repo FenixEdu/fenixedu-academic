@@ -130,8 +130,10 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 		persistentSupport = SuportePersistenteOJB.getInstance();
 		frequentaPersistente = persistentSupport.getIFrequentaPersistente();
 		try {
+			
+			//TODO Este método vai passar a ser invocado da Classe que cria e apaga enrolments (feita pelo David)
 			IStudent student = enrolment.getStudentCurricularPlan().getStudent();
-			IExecutionCourse executionCourse = (IExecutionCourse) enrolment.getCurricularCourseScope().getCurricularCourse().getAssociatedExecutionCourses().get(0);
+			IExecutionCourse executionCourse = (IExecutionCourse) enrolment.getCurricularCourse().getAssociatedExecutionCourses().get(0);
 
 			IFrequenta frequenta = frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 

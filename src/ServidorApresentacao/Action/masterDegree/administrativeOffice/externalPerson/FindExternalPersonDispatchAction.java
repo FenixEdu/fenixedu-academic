@@ -6,11 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-
-import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * 
@@ -43,12 +39,6 @@ public class FindExternalPersonDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		IUserView userView = SessionUtils.getUserView(request);
-
-		DynaActionForm insertExternalPersonForm = (DynaActionForm) form;
-
-
-
 		return mapping.findForward("success");
 	}
 

@@ -10,13 +10,15 @@ package DataBeans;
 public class InfoCandidateEnrolment  extends InfoObject{
 	private InfoMasterDegreeCandidate infoMasterDegreeCandidate;
 	private InfoCurricularCourseScope infoCurricularCourseScope;
+	private InfoCurricularCourse infoCurricularCourse;
 	
+
 	public InfoCandidateEnrolment() {
 	}
 
-	public InfoCandidateEnrolment(InfoMasterDegreeCandidate infoMasterDegreeCandidate, InfoCurricularCourseScope infoCurricularCourseScope) {
+	public InfoCandidateEnrolment(InfoMasterDegreeCandidate infoMasterDegreeCandidate, InfoCurricularCourse infoCurricularCourse) {
 		setInfoMasterDegreeCandidate(infoMasterDegreeCandidate);
-		setInfoCurricularCourseScope(infoCurricularCourseScope);
+		setInfoCurricularCourse(infoCurricularCourse);
 	}
 
 	public boolean equals(Object obj) {
@@ -24,7 +26,7 @@ public class InfoCandidateEnrolment  extends InfoObject{
 		if (obj instanceof InfoCandidateEnrolment) {
 			InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) obj;
 			result = getInfoMasterDegreeCandidate().equals(infoCandidateEnrolment.getInfoMasterDegreeCandidate())
-				&& getInfoCurricularCourseScope().equals(infoCandidateEnrolment.getInfoCurricularCourseScope());
+				&& getInfoCurricularCourse().equals(infoCandidateEnrolment.getInfoCurricularCourse());
 		}
 		return result;
 	}
@@ -33,13 +35,14 @@ public class InfoCandidateEnrolment  extends InfoObject{
 		String result = "[CANDIDATE_ENROLMENT";
 		result += ", codInt=" + getIdInternal();
 		result += ", infoMasterDegreeCandidate=" + infoMasterDegreeCandidate;
-		result += ", infoCurricularCourseScope=" + infoCurricularCourseScope;
+		result += ", infoCurricularCourse=" + infoCurricularCourse;
 		result += "]";
 		return result;
 	}
 
 	/**
 	 * @return
+	 * @deprecated
 	 */
 	public InfoCurricularCourseScope getInfoCurricularCourseScope() {
 		return infoCurricularCourseScope;
@@ -54,6 +57,7 @@ public class InfoCandidateEnrolment  extends InfoObject{
 
 	/**
 	 * @param course
+	 * @deprecated
 	 */
 	public void setInfoCurricularCourseScope(InfoCurricularCourseScope courseScope) {
 		infoCurricularCourseScope = courseScope;
@@ -64,6 +68,22 @@ public class InfoCandidateEnrolment  extends InfoObject{
 	 */
 	public void setInfoMasterDegreeCandidate(InfoMasterDegreeCandidate candidate) {
 		infoMasterDegreeCandidate = candidate;
+	}
+	
+	/**
+	 * @return
+	 */
+	public InfoCurricularCourse getInfoCurricularCourse()
+	{
+		return infoCurricularCourse;
+	}
+
+	/**
+	 * @param infoCurricularCourse
+	 */
+	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse)
+	{
+		this.infoCurricularCourse = infoCurricularCourse;
 	}
 
 }

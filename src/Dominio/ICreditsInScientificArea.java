@@ -5,7 +5,7 @@ package Dominio;
  * Jan 14, 2004
  */
 
-public interface ICreditsInSpecificScientificArea
+public interface ICreditsInScientificArea
 {
 	public IEnrolment getEnrolment();
 	public void setEnrolment(IEnrolment enrolment);

@@ -9,11 +9,20 @@ import ServidorAplicacao.IUserView;
 
 public class InfoEquivalenceContext {
 	private List infoEnrolmentsToGiveEquivalence;
+    private List infoCurricularCoursesToGetEquivalence;   
+   
 	private List infoCurricularCourseScopesToGetEquivalence;
+   
+    
 	private List chosenInfoEnrolmentsToGiveEquivalence;
 	private List chosenInfoCurricularCourseScopesToGetEquivalence;
+    private List chosenInfoCurricularCoursesToGetEquivalence;
+    
 	private List chosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade;
+    private List chosenInfoCurricularCoursesToGiveEquivalenceWithGrade;
+    
 	private List chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade;
+    private List chosenInfoCurricularCoursesToGetEquivalenceWithGrade;
 	private List errorMessages;
 	private InfoExecutionPeriod currentInfoExecutionPeriod;
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
@@ -24,6 +33,7 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return
 	 */
 	public List getInfoCurricularCourseScopesToGetEquivalence() {
@@ -31,6 +41,7 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @param list
 	 */
 	public void setInfoCurricularCourseScopesToGetEquivalence(List list) {
@@ -66,6 +77,7 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return
 	 */
 	public List getChosenInfoCurricularCourseScopesToGetEquivalence() {
@@ -73,6 +85,7 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @param list
 	 */
 	public void setChosenInfoCurricularCourseScopesToGetEquivalence(List list) {
@@ -160,6 +173,7 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return
 	 */
 	public List getChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade() {
@@ -167,6 +181,7 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @param list
 	 */
 	public void setChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade(List list) {
@@ -174,6 +189,7 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @return
 	 */
 	public List getChosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade() {
@@ -181,10 +197,77 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
+     * @deprecated
 	 * @param list
 	 */
 	public void setChosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade(List list) {
 		chosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade = list;
 	}
+
+    /**
+     * @return Returns the chosenInfoCurricularCoursesToGetEquivalence.
+     */
+    public List getChosenInfoCurricularCoursesToGetEquivalence()
+    {
+        return chosenInfoCurricularCoursesToGetEquivalence;
+    }
+
+    /**
+     * @param chosenInfoCurricularCoursesToGetEquivalence The chosenInfoCurricularCoursesToGetEquivalence to set.
+     */
+    public void setChosenInfoCurricularCoursesToGetEquivalence(List chosenInfoCurricularCoursesToGetEquivalence)
+    {
+        this.chosenInfoCurricularCoursesToGetEquivalence = chosenInfoCurricularCoursesToGetEquivalence;
+    }
+
+    /**
+     * @return Returns the chosenInfoCurricularCoursesToGetEquivalenceWithGrade.
+     */
+    public List getChosenInfoCurricularCoursesToGetEquivalenceWithGrade()
+    {
+        return chosenInfoCurricularCoursesToGetEquivalenceWithGrade;
+    }
+
+    /**
+     * @param chosenInfoCurricularCoursesToGetEquivalenceWithGrade The chosenInfoCurricularCoursesToGetEquivalenceWithGrade to set.
+     */
+    public void setChosenInfoCurricularCoursesToGetEquivalenceWithGrade(List chosenInfoCurricularCoursesToGetEquivalenceWithGrade)
+    {
+        this.chosenInfoCurricularCoursesToGetEquivalenceWithGrade =
+            chosenInfoCurricularCoursesToGetEquivalenceWithGrade;
+    }
+
+    /**
+     * @return Returns the chosenInfoCurricularCoursesToGiveEquivalenceWithGrade.
+     */
+    public List getChosenInfoCurricularCoursesToGiveEquivalenceWithGrade()
+    {
+        return chosenInfoCurricularCoursesToGiveEquivalenceWithGrade;
+    }
+
+    /**
+     * @param chosenInfoCurricularCoursesToGiveEquivalenceWithGrade The chosenInfoCurricularCoursesToGiveEquivalenceWithGrade to set.
+     */
+    public void setChosenInfoCurricularCoursesToGiveEquivalenceWithGrade(List chosenInfoCurricularCoursesToGiveEquivalenceWithGrade)
+    {
+        this.chosenInfoCurricularCoursesToGiveEquivalenceWithGrade =
+            chosenInfoCurricularCoursesToGiveEquivalenceWithGrade;
+    }
+
+    /**
+     * @return Returns the infoCurricularCoursesToGetEquivalence.
+     */
+    public List getInfoCurricularCoursesToGetEquivalence()
+    {
+        return infoCurricularCoursesToGetEquivalence;
+    }
+
+    /**
+     * @param infoCurricularCoursesToGetEquivalence The infoCurricularCoursesToGetEquivalence to set.
+     */
+    public void setInfoCurricularCoursesToGetEquivalence(List infoCurricularCoursesToGetEquivalence)
+    {
+        this.infoCurricularCoursesToGetEquivalence = infoCurricularCoursesToGetEquivalence;
+    }
 
 }

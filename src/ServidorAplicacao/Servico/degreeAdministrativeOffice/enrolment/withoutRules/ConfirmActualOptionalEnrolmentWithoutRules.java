@@ -6,18 +6,16 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.enrolment.degree.ChangeEnrolmentStateFromTemporarilyToEnroled;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -30,24 +28,11 @@ import Util.EnrolmentState;
  * @author David Santos
  */
 
-public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico
+public class ConfirmActualOptionalEnrolmentWithoutRules implements IService
 {
 
-    private static ConfirmActualOptionalEnrolmentWithoutRules _servico =
-        new ConfirmActualOptionalEnrolmentWithoutRules();
-
-    public static ConfirmActualOptionalEnrolmentWithoutRules getService()
+    public ConfirmActualOptionalEnrolmentWithoutRules()
     {
-        return _servico;
-    }
-
-    private ConfirmActualOptionalEnrolmentWithoutRules()
-    {
-    }
-
-    public final String getNome()
-    {
-        return "ConfirmActualOptionalEnrolmentWithoutRules";
     }
 
     public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext)
@@ -58,7 +43,8 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico
         try
         {
             this.writeTemporaryEnrolment(enrolmentContext);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }
@@ -69,19 +55,17 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico
     {
         ISuportePersistente sp = null;
         IPersistentEnrolment persistentEnrolment = null;
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
-
         try
         {
             sp = SuportePersistenteOJB.getInstance();
             persistentEnrolment = sp.getIPersistentEnrolment();
-            persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 
             List studentEnrolments =
                 persistentEnrolment.readAllByStudentCurricularPlan(
                     enrolmentContext.getStudentActiveCurricularPlan());
 
-            // List of all enrolments in optional curricular courses with state 'enrolled' and 'temporarily enrolled'.
+            // List of all enrolments in optional curricular courses with state
+			// 'enrolled' and 'temporarily enrolled'.
             List studentEnroledAndTemporarilyEnroledOptionalEnrolments =
                 (List) CollectionUtils.select(studentEnrolments, new Predicate()
             {
@@ -91,7 +75,7 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico
                     return (
                         enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
                             || enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED))
-                        && enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(
+                        && enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.OPTIONAL_COURSE_OBJ);
                 }
             });
@@ -116,31 +100,29 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico
                     (IEnrolmentInOptionalCurricularCourse) iterator.next();
 
                 IEnrolmentInOptionalCurricularCourse enrolment =
-                    (
-                        IEnrolmentInOptionalCurricularCourse) persistentEnrolment
-                            .readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
-                        enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(),
-                        enrolmentInOptionalCurricularCourse.getCurricularCourseScope(),
-                        enrolmentInOptionalCurricularCourse.getExecutionPeriod());
+                    //				(IEnrolmentInOptionalCurricularCourse)
+					// persistentEnrolment
+        //						.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
+        //					enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(),
+        //					enrolmentInOptionalCurricularCourse.getCurricularCourseScope(),
+        //					enrolmentInOptionalCurricularCourse.getExecutionPeriod());
+
+    (
+        IEnrolmentInOptionalCurricularCourse) persistentEnrolment
+            .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+        enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(),
+        enrolmentInOptionalCurricularCourse.getCurricularCourse(),
+        enrolmentInOptionalCurricularCourse.getExecutionPeriod());
 
                 ICurricularCourse chosenCurricularCourseForOption =
                     enrolmentInOptionalCurricularCourse.getCurricularCourseForOption();
 
+                //PROBLEMAS NO IF!!
                 if (enrolment == null)
                 {
-                    ICurricularCourseScope optionalCurricularCourseScopeChosen =
-                        enrolmentInOptionalCurricularCourse.getCurricularCourseScope();
 
-                    ICurricularCourseScope optionalCurricularCourseScopeToWrite =
-                        persistentCurricularCourseScope
-                            .readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
-                            optionalCurricularCourseScopeChosen.getCurricularCourse(),
-                            optionalCurricularCourseScopeChosen.getCurricularSemester(),
-                            optionalCurricularCourseScopeChosen.getBranch(),
-                            null);
-
-                    enrolmentInOptionalCurricularCourse.setCurricularCourseScope(
-                        optionalCurricularCourseScopeToWrite);
+                    enrolmentInOptionalCurricularCourse.setCurricularCourse(
+                        chosenCurricularCourseForOption);
                     enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(
                         chosenCurricularCourseForOption);
                     enrolmentInOptionalCurricularCourse.setExecutionPeriod(
@@ -155,18 +137,21 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico
                         enrolmentInOptionalCurricularCourse);
                     ChangeEnrolmentStateFromTemporarilyToEnroled.createEnrolmentEvaluation(
                         enrolmentInOptionalCurricularCourse);
-                } else
+                }
+                else
                 {
                     persistentEnrolment.lockWrite(enrolment);
                     enrolment.setCurricularCourseForOption(chosenCurricularCourseForOption);
                     enrolment.setEnrolmentState(EnrolmentState.ENROLED);
                 }
             }
-        } catch (ExistingPersistentException e1)
+        }
+        catch (ExistingPersistentException e1)
         {
             e1.printStackTrace();
             throw e1;
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace();
             throw e;

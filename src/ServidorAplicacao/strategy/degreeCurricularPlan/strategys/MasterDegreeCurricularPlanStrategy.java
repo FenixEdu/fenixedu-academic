@@ -52,7 +52,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))&&
 				(!(enrolment instanceof IEnrolmentInExtraCurricularCourse))){
 
-				studentCredits += enrolment.getCurricularCourseScope().getCurricularCourse().getCredits().floatValue(); 
+				studentCredits += enrolment.getCurricularCourse().getCredits().floatValue(); 
 			}
 		}
 		

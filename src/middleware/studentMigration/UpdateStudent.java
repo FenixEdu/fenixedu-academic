@@ -38,6 +38,7 @@ import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
 /**
+ * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
@@ -180,30 +181,7 @@ public class UpdateStudent
 		studentCurricularPlan.setStudent(student);
 	}
 
-	/**
-	 * @param studentList
-	 * @return boolean 
-	 */
-	private static boolean hasMasterDegree(List studentList, ISuportePersistente sp) throws Throwable
-	{
-		Iterator iterator = studentList.iterator();
-		while(iterator.hasNext())
-		{
-			IStudent student = (IStudent) iterator.next();
-			
-			List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente().readAllFromStudent(student.getNumber().intValue());
-			Iterator iterator2 = studentCurricularPlanList.iterator();
-			while(iterator2.hasNext())
-			{
-				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator2.next();
-				if (studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+	
 
 	/**
 	 * @param mwStudent

@@ -8,13 +8,14 @@
 		class="Dominio.MasterDegreeCandidate"
 		table="MASTER_DEGREE_CANDIDATE"
 	>
+	
 	  <field-descriptor id="1"
 	     name="idInternal"    
 	     column="ID_INTERNAL"  
 	     jdbc-type="INTEGER"
 	     primarykey="true"
 	     autoincrement="true"
-	  />
+	   />
 
 	  <field-descriptor id="2"
 	     name="personKey"
@@ -680,11 +681,18 @@
            jdbc-type="INTEGER"
         />
 		
-		<field-descriptor 
+	<!--	<field-descriptor 
            name="curricularCourseScopeKey"
            column="KEY_CURRICULAR_COURSE_SCOPE"
            jdbc-type="INTEGER"
+        />-->
+
+		<field-descriptor 
+           name="curricularCourseKey"
+           column="KEY_CURRICULAR_COURSE"
+           jdbc-type="INTEGER"
         />
+        
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -699,13 +707,19 @@
           <foreignkey field-ref="masterDegreeCandidateKey"/>
        </reference-descriptor>
 		
-        <reference-descriptor
+       <!-- <reference-descriptor
          	name="curricularCourseScope"
          	class-ref="Dominio.CurricularCourseScope"
       	  >
           <foreignkey field-ref="curricularCourseScopeKey"/>
-         </reference-descriptor>
+         </reference-descriptor>-->
  
+         <reference-descriptor
+         	name="curricularCourse"
+         	class-ref="Dominio.CurricularCourse"
+      	  >
+          <foreignkey field-ref="curricularCourseKey"/>
+         </reference-descriptor>
   </class-descriptor>
  
  

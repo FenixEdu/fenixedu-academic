@@ -10,20 +10,30 @@ import java.util.ListIterator;
  */
 public class InfoSiteStudents implements ISiteComponent {
 
-	private InfoCurricularCourseScope infoCurricularCourseScope;
+//	private InfoCurricularCourseScope infoCurricularCourseScope;
+	private InfoCurricularCourse infoCurricularCourse;
 	private List students;
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
+//		if (objectToCompare instanceof InfoSiteStudents
+//			&& (((((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope() != null
+//				&& this.getInfoCurricularCourseScope() != null
+//				&& ((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope().equals(this.getInfoCurricularCourseScope()))
+//				|| ((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope() == null
+//				&& this.getInfoCurricularCourseScope() == null))) {
+//			result = true;
+//		}
+
 		if (objectToCompare instanceof InfoSiteStudents
-			&& (((((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope() != null
-				&& this.getInfoCurricularCourseScope() != null
-				&& ((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope().equals(this.getInfoCurricularCourseScope()))
-				|| ((InfoSiteStudents) objectToCompare).getInfoCurricularCourseScope() == null
-				&& this.getInfoCurricularCourseScope() == null))) {
+				&& (((((InfoSiteStudents) objectToCompare).getInfoCurricularCourse() != null
+						&& this.getInfoCurricularCourse() != null
+						&& ((InfoSiteStudents) objectToCompare).getInfoCurricularCourse().equals(this.getInfoCurricularCourse()))
+						|| ((InfoSiteStudents) objectToCompare).getInfoCurricularCourse() == null
+						&& this.getInfoCurricularCourse() == null))) {
 			result = true;
 		}
-
+		
 		if (((InfoSiteStudents) objectToCompare).getStudents() == null && this.getStudents() == null) {
 			return true;
 		}
@@ -62,15 +72,31 @@ public class InfoSiteStudents implements ISiteComponent {
 	/**
 	 * @return
 	 */
-	public InfoCurricularCourseScope getInfoCurricularCourseScope() {
-		return infoCurricularCourseScope;
-	}
+//	public InfoCurricularCourseScope getInfoCurricularCourseScope() {
+//		return infoCurricularCourseScope;
+//	}
 
 	/**
 	 * @param scope
 	 */
-	public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope) {
-		infoCurricularCourseScope = scope;
+//	public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope) {
+//		infoCurricularCourseScope = scope;
+//	}
+
+	/**
+	 * @return Returns the infoCurricularCourse.
+	 */
+	public InfoCurricularCourse getInfoCurricularCourse()
+	{
+		return infoCurricularCourse;
+	}
+
+	/**
+	 * @param infoCurricularCourse The infoCurricularCourse to set.
+	 */
+	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse)
+	{
+		this.infoCurricularCourse = infoCurricularCourse;
 	}
 
 }

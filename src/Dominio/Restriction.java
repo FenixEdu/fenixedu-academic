@@ -1,52 +1,75 @@
-/*
- * Created on 2/Abr/2003 by jpvl
- *
- */
 package Dominio;
-
 
 /**
  * @author jpvl
+ * @author David Santos in Jan 27, 2004
  */
 
-public abstract class Restriction extends DomainObject implements IRestriction {
-
+public abstract class Restriction extends DomainObject implements IRestriction
+{
 	protected String ojbConcreteClass;
 	protected IPrecedence precedence;
-	protected Integer keyPrecedence; 
+	protected Integer keyPrecedence;
 
-	public Restriction() {
+	public Restriction()
+	{
 		super();
 		this.ojbConcreteClass = this.getClass().getName();
 	}
 
-	public Integer getKeyPrecedence() {
+	/**
+	 * @return Returns the keyPrecedence.
+	 */
+	public Integer getKeyPrecedence()
+	{
 		return keyPrecedence;
 	}
 
-	public String getOjbConcreteClass() {
+	/**
+	 * @param keyPrecedence The keyPrecedence to set.
+	 */
+	public void setKeyPrecedence(Integer keyPrecedence)
+	{
+		this.keyPrecedence = keyPrecedence;
+	}
+
+	/**
+	 * @return Returns the ojbConcreteClass.
+	 */
+	public String getOjbConcreteClass()
+	{
 		return ojbConcreteClass;
 	}
 
-	public IPrecedence getPrecedence() {
+	/**
+	 * @param ojbConcreteClass The ojbConcreteClass to set.
+	 */
+	public void setOjbConcreteClass(String ojbConcreteClass)
+	{
+		this.ojbConcreteClass = ojbConcreteClass;
+	}
+
+	/**
+	 * @return Returns the precedence.
+	 */
+	public IPrecedence getPrecedence()
+	{
 		return precedence;
 	}
 
-	public void setKeyPrecedence(Integer integer) {
-		keyPrecedence = integer;
-	}
-
-	public void setOjbConcreteClass(String string) {
-		ojbConcreteClass = string;
-	}
-
-	public void setPrecedence(IPrecedence precedence) {
+	/**
+	 * @param precedence The precedence to set.
+	 */
+	public void setPrecedence(IPrecedence precedence)
+	{
 		this.precedence = precedence;
 	}
 
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		boolean result = false;
-		if (obj instanceof IRestriction){
+		if (obj instanceof IRestriction)
+		{
 			IRestriction restriction = (IRestriction) obj;
 			result = restriction.getPrecedence().getCurricularCourse().equals(this.getPrecedence().getCurricularCourse());
 		}

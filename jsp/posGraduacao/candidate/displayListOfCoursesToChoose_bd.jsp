@@ -112,15 +112,15 @@
 	<%--							<html:multibox property='<%= "selection[" + index.intValue() + "]" %>'>
 	--%>						<html:multibox property="selection" >	
 	
-									<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.idInternal"/>
+									<bean:write name="candidateEnrolment" property="infoCurricularCourse.idInternal"/>
 								</html:multibox>
 							</td>
 							<td>
-								<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+								<bean:write name="candidateEnrolment" property="infoCurricularCourse.name"/>
 							</td>
-							<td>
+							<%--<td>
 								<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoBranch.name"/> <br/>
-							</td>
+							</td>--%>
 						</tr>
 					</logic:iterate>
 				</logic:present>
@@ -154,7 +154,7 @@
 		        						<logic:equal name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
 		        							<bean:define id="offset" value="1"/>
 		            						<html:multibox property="selection">
-		                						<bean:write name="curricularCourseScope" property="idInternal"/>
+		                						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
 		            						</html:multibox>
 		        						</logic:equal>
 		        						<logic:notEqual name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
@@ -167,7 +167,7 @@
 		            			<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="infoScopes" 
 		            						    offset="<%= new String(offset) %>" length="<%= String.valueOf(ccsSize.intValue() - Integer.parseInt(offset)) %>">
 		                						<html:multibox property="selection">
-		                    						<bean:write name="curricularCourseScope" property="idInternal"/>
+		                    						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
 		                						</html:multibox>
 		               							<bean:write name="curricularCourseScope" property="infoBranch.name"/> <br/>
 								</logic:iterate>	

@@ -28,6 +28,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	private Integer numerusClausus;
 	private String description;
 	private String descriptionEn;
+	private String enrollmentStrategyClassName;
 	
 	private List curricularCourses;
 	
@@ -268,4 +269,21 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
     {
         this.descriptionEn = descriptionEn;
     }
+
+    /**
+	 * @return Returns the enrollmentStrategyClassName.
+	 */
+	public String getEnrollmentStrategyClassName()
+	{
+		return enrollmentStrategyClassName;
+	}
+
+	/**
+	 * @param enrollmentStrategyClassName The enrollmentStrategyClassName to set.
+	 */
+	public void setEnrollmentStrategyClassName(String enrollmentStrategyClassName)
+	{
+		this.enrollmentStrategyClassName = enrollmentStrategyClassName;
+	}
+
 }

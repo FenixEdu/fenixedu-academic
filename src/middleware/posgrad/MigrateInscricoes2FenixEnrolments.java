@@ -18,19 +18,13 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
-import Dominio.CurricularSemester;
-import Dominio.CurricularYear;
-import Dominio.Curso;
-import Dominio.DegreeCurricularPlan;
 import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
-import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -70,7 +64,7 @@ public class MigrateInscricoes2FenixEnrolments {
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
-		IBranch branch = null;
+//		IBranch branch = null;
 		int inscricoesNotWritten = 0;
 		int enrolmentsWritten = 0;
 		int evaluationsWritten = 0;
@@ -156,73 +150,73 @@ public class MigrateInscricoes2FenixEnrolments {
 					throw new Exception("Error Reading Area Cientifica  [" + result.size() + "]");
 				}
 
-				Posgrad_area_cientifica posgrad_area_cientifica = (Posgrad_area_cientifica) result.get(0);
+//				Posgrad_area_cientifica posgrad_area_cientifica = (Posgrad_area_cientifica) result.get(0);
 
-				if ((posgrad_area_cientifica.getCodigointerno() == 37)
-					|| (posgrad_area_cientifica.getCodigointerno() == 17)
-					|| (posgrad_area_cientifica.getCodigointerno() == 86)) {
-					branch = getEmptyBranch(posgrad_area_cientifica, broker);
-				} else {
-					// Read Branch
-
-					criteria = new Criteria();
-					criteria.addEqualTo("id_internal", new Integer(String.valueOf(posgrad_area_cientifica.getCodigoInternoRamo())));
-					query = new QueryByCriteria(Branch.class, criteria);
-
-					result = (List) broker.getCollectionByQuery(query);
-
-					if (result.size() != 1) {
-						throw new Exception(
-							"Error Reading Branch " + posgrad_area_cientifica.getCodigoInternoRamo() + " [" + result.size() + "]");
-					}
-
-					branch = (IBranch) result.get(0);
-				}
-
-				// Read Curricular Year
-
-				criteria = new Criteria();
-				criteria.addEqualTo("year", new Integer(1));
-				query = new QueryByCriteria(CurricularYear.class, criteria);
-
-				result = (List) broker.getCollectionByQuery(query);
-
-				if (result.size() != 1) {
-					throw new Exception("Error Reading Curricular Year [" + result.size() + "]");
-				}
-
-				CurricularYear curricularYear = (CurricularYear) result.get(0);
-
-				// Read Curricular Semester
-
-				criteria = new Criteria();
-				criteria.addEqualTo("semester", new Integer(1));
-				criteria.addEqualTo("curricularYearKey", curricularYear.getIdInternal());
-				query = new QueryByCriteria(CurricularSemester.class, criteria);
-
-				result = (List) broker.getCollectionByQuery(query);
-
-				if (result.size() != 1) {
-					throw new Exception("Error Reading Curricular Course Scope [" + result.size() + "]");
-				}
-
-				CurricularSemester curricularSemester = (CurricularSemester) result.get(0);
-
-				// Read Curricular Course Scope
-
-				criteria = new Criteria();
-				criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
-				criteria.addEqualTo("branchKey", branch.getIdInternal());
-				query = new QueryByCriteria(CurricularCourseScope.class, criteria);
-
-				result = (List) broker.getCollectionByQuery(query);
-
-				if (result.size() != 1) {
-					throw new Exception("Error Reading Curricular Course Scope [" + result.size() + "]");
-				}
-
-				CurricularCourseScope curricularCourseScope = (CurricularCourseScope) result.get(0);
+//				if ((posgrad_area_cientifica.getCodigointerno() == 37)
+//					|| (posgrad_area_cientifica.getCodigointerno() == 17)
+//					|| (posgrad_area_cientifica.getCodigointerno() == 86)) {
+//					branch = getEmptyBranch(posgrad_area_cientifica, broker);
+//				} else {
+//					// Read Branch
+//
+//					criteria = new Criteria();
+//					criteria.addEqualTo("id_internal", new Integer(String.valueOf(posgrad_area_cientifica.getCodigoInternoRamo())));
+//					query = new QueryByCriteria(Branch.class, criteria);
+//
+//					result = (List) broker.getCollectionByQuery(query);
+//
+//					if (result.size() != 1) {
+//						throw new Exception(
+//							"Error Reading Branch " + posgrad_area_cientifica.getCodigoInternoRamo() + " [" + result.size() + "]");
+//					}
+//
+//					branch = (IBranch) result.get(0);
+//				}
+//
+//				// Read Curricular Year
+//
+//				criteria = new Criteria();
+//				criteria.addEqualTo("year", new Integer(1));
+//				query = new QueryByCriteria(CurricularYear.class, criteria);
+//
+//				result = (List) broker.getCollectionByQuery(query);
+//
+//				if (result.size() != 1) {
+//					throw new Exception("Error Reading Curricular Year [" + result.size() + "]");
+//				}
+//
+//				CurricularYear curricularYear = (CurricularYear) result.get(0);
+//
+//				// Read Curricular Semester
+//
+//				criteria = new Criteria();
+//				criteria.addEqualTo("semester", new Integer(1));
+//				criteria.addEqualTo("curricularYearKey", curricularYear.getIdInternal());
+//				query = new QueryByCriteria(CurricularSemester.class, criteria);
+//
+//				result = (List) broker.getCollectionByQuery(query);
+//
+//				if (result.size() != 1) {
+//					throw new Exception("Error Reading Curricular Course Scope [" + result.size() + "]");
+//				}
+//
+//				CurricularSemester curricularSemester = (CurricularSemester) result.get(0);
+//
+//				// Read Curricular Course Scope
+//
+//				criteria = new Criteria();
+//				criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+//				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
+//				criteria.addEqualTo("branchKey", branch.getIdInternal());
+//				query = new QueryByCriteria(CurricularCourseScope.class, criteria);
+//
+//				result = (List) broker.getCollectionByQuery(query);
+//
+//				if (result.size() != 1) {
+//					throw new Exception("Error Reading Curricular Course Scope [" + result.size() + "]");
+//				}
+//
+//				CurricularCourseScope curricularCourseScope = (CurricularCourseScope) result.get(0);
 
 				// Read Execution Year
 				criteria = new Criteria();
@@ -301,7 +295,8 @@ public class MigrateInscricoes2FenixEnrolments {
 
 				// Create Enrolment
 				IEnrolment enrolment = new Enrolment();
-				enrolment.setCurricularCourseScope(curricularCourseScope);
+//				enrolment.setCurricularCourseScope(curricularCourseScope);
+				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 				enrolment.setExecutionPeriod(executionPeriod);
 				boolean evaluationNeeded = false;
@@ -430,8 +425,8 @@ public class MigrateInscricoes2FenixEnrolments {
 			"keyExecutionPeriod",
 			new Integer(String.valueOf(((ExecutionPeriod) enrolment.getExecutionPeriod()).getIdInternal())));
 		criteria.addEqualTo(
-			"curricularCourseScopeKey",
-			new Integer(String.valueOf(((CurricularCourseScope) enrolment.getCurricularCourseScope()).getIdInternal())));
+			"curricularCourseKey",
+			new Integer(String.valueOf(((CurricularCourseScope) enrolment.getCurricularCourse()).getIdInternal())));
 		Query query = new QueryByCriteria(Enrolment.class, criteria);
 
 		List result = (List) broker.getCollectionByQuery(query);
@@ -490,62 +485,62 @@ public class MigrateInscricoes2FenixEnrolments {
 		return result;
 	}
 
-	private Branch getEmptyBranch(Posgrad_area_cientifica areaCientifica, PersistenceBroker broker) throws Exception {
-		// Read the Curso Mestrado 
-
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(areaCientifica.getCodigocursomestrado())));
-		Query query = new QueryByCriteria(Posgrad_curso_mestrado.class, criteria);
-		List result = (List) broker.getCollectionByQuery(query);
-
-		if (result.size() == 0) {
-			throw new Exception("Error Reading Curso Mestrado (" + areaCientifica.getCodigointerno() + ")");
-		}
-
-		Posgrad_curso_mestrado posgrad_curso_mestrado = (Posgrad_curso_mestrado) result.get(0);
-
-		// Get the Degree											
-
-		criteria = new Criteria();
-		criteria.addEqualTo("nome", posgrad_curso_mestrado.getNomemestrado());
-		criteria.addEqualTo("tipoCurso", new Integer(TipoCurso.MESTRADO));
-		query = new QueryByCriteria(Curso.class, criteria);
-		result = (List) broker.getCollectionByQuery(query);
-
-		if (result.size() == 0) {
-			throw new Exception("Error Reading Degree (" + areaCientifica.getCodigointerno() + ")");
-		}
-
-		Curso degree = (Curso) result.get(0);
-
-		// Get the Degree Curricular Plan
-
-		criteria = new Criteria();
-		criteria.addEqualTo("degreeKey", degree.getIdInternal());
-		query = new QueryByCriteria(DegreeCurricularPlan.class, criteria);
-		result = (List) broker.getCollectionByQuery(query);
-
-		if (result.size() == 0) {
-			throw new Exception("Error Reading Degree Curricular Plan (" + areaCientifica.getCodigointerno() + ")");
-		}
-
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0);
-
-		// Get the Branch
-
-		criteria = new Criteria();
-		criteria.addEqualTo("code", "");
-		criteria.addEqualTo("name", "");
-		criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
-		query = new QueryByCriteria(Branch.class, criteria);
-		result = (List) broker.getCollectionByQuery(query);
-
-		if (result.size() == 0) {
-			throw new Exception("Error Reading Branch (Curricular Plan Key: " + degreeCurricularPlan.getIdInternal() + ")");
-		}
-
-		return (Branch) result.get(0);
-
-	}
+//	private Branch getEmptyBranch(Posgrad_area_cientifica areaCientifica, PersistenceBroker broker) throws Exception {
+//		// Read the Curso Mestrado 
+//
+//		Criteria criteria = new Criteria();
+//		criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(areaCientifica.getCodigocursomestrado())));
+//		Query query = new QueryByCriteria(Posgrad_curso_mestrado.class, criteria);
+//		List result = (List) broker.getCollectionByQuery(query);
+//
+//		if (result.size() == 0) {
+//			throw new Exception("Error Reading Curso Mestrado (" + areaCientifica.getCodigointerno() + ")");
+//		}
+//
+//		Posgrad_curso_mestrado posgrad_curso_mestrado = (Posgrad_curso_mestrado) result.get(0);
+//
+//		// Get the Degree											
+//
+//		criteria = new Criteria();
+//		criteria.addEqualTo("nome", posgrad_curso_mestrado.getNomemestrado());
+//		criteria.addEqualTo("tipoCurso", new Integer(TipoCurso.MESTRADO));
+//		query = new QueryByCriteria(Curso.class, criteria);
+//		result = (List) broker.getCollectionByQuery(query);
+//
+//		if (result.size() == 0) {
+//			throw new Exception("Error Reading Degree (" + areaCientifica.getCodigointerno() + ")");
+//		}
+//
+//		Curso degree = (Curso) result.get(0);
+//
+//		// Get the Degree Curricular Plan
+//
+//		criteria = new Criteria();
+//		criteria.addEqualTo("degreeKey", degree.getIdInternal());
+//		query = new QueryByCriteria(DegreeCurricularPlan.class, criteria);
+//		result = (List) broker.getCollectionByQuery(query);
+//
+//		if (result.size() == 0) {
+//			throw new Exception("Error Reading Degree Curricular Plan (" + areaCientifica.getCodigointerno() + ")");
+//		}
+//
+//		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0);
+//
+//		// Get the Branch
+//
+//		criteria = new Criteria();
+//		criteria.addEqualTo("code", "");
+//		criteria.addEqualTo("name", "");
+//		criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
+//		query = new QueryByCriteria(Branch.class, criteria);
+//		result = (List) broker.getCollectionByQuery(query);
+//
+//		if (result.size() == 0) {
+//			throw new Exception("Error Reading Branch (Curricular Plan Key: " + degreeCurricularPlan.getIdInternal() + ")");
+//		}
+//
+//		return (Branch) result.get(0);
+//
+//	}
 
 }

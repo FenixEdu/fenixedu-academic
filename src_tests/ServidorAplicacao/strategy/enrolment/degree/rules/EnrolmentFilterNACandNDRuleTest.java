@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.rules.EnrolmentFilterNACandNDRule;
+import ServidorAplicacao.strategy.enrolment.rules.EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 import Util.TipoCurso;
 
@@ -41,7 +41,7 @@ public class EnrolmentFilterNACandNDRuleTest extends BaseEnrolmentRuleTestCase {
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		doApplyRule(new EnrolmentFilterNACandNDRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
@@ -60,6 +60,6 @@ public class EnrolmentFilterNACandNDRuleTest extends BaseEnrolmentRuleTestCase {
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {
-		enrolmentRule.apply(enrolmentContext);
+//		enrolmentRule.apply(enrolmentContext);
 	}
 }

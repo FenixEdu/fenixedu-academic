@@ -9,7 +9,7 @@
 		<put name="navLocal" value="/degreeAdministrativeOffice/commons/pgMainMenu.jsp"/>
 		<put name="body-context" value=""/>
 		<put name="body" value=""/>
-		<put name="footer" value="/degreeAdministrativeOffice/commons/copyrightDefault.jsp"/>
+		<put name="footer" value="/copyright.jsp"/>
 	</definition>
 
 <!-- **************************************************************************************************************************** -->

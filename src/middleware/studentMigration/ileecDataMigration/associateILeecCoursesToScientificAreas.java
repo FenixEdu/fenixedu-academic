@@ -28,7 +28,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class associateIleecCoursesToScientificAreas
+public class associateILeecCoursesToScientificAreas
 {
 
     public static void main(String[] args)
@@ -46,11 +46,12 @@ public class associateIleecCoursesToScientificAreas
             IDegreeCurricularPlan dcp =
                 (IDegreeCurricularPlan) pdcp.readByOID(DegreeCurricularPlan.class, new Integer(48));
             //48->dcp LEEC2003/2004
-
+            
             List curricularCourses = pcc.readCurricularCoursesByDegreeCurricularPlan(dcp);
+
             Iterator iterator = curricularCourses.iterator();
             while (iterator.hasNext())
-            {
+            {                
                 ICurricularCourse cc = (ICurricularCourse) iterator.next();
                 pcc.simpleLockWrite(cc);
 
@@ -87,7 +88,6 @@ public class associateIleecCoursesToScientificAreas
         try
         {
             MWDisciplinaIleec mwDiscIleec = pmwdi.readByCodigoDisciplina(curricularCourse.getCode());
-            System.out.println("O Codigo e: " + curricularCourse.getCode());
             Integer idScientificArea = mwDiscIleec.getIdAreaCientifica();
 
             MWAreaCientificaIleec mwAreaCientifIleec = mwaci.readById(idScientificArea);

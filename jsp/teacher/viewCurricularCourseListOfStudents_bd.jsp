@@ -2,11 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%--
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="Util.Data" %>
-
+--%>
 <logic:present name="siteView">
 <bean:define id="curricularCourses" name="siteView" property="component" type="DataBeans.InfoSiteAssociatedCurricularCourses"/>
     <span class="error"><html:errors/></span>
@@ -27,7 +28,8 @@
 	    	<logic:iterate id="scope" name="curricularCourse" property="infoScopes">
 	    		<tr>
 	    			<td>
-						<bean:define id="scopeCode" name="scope" property="idInternal"/>
+						<!--<bean:define id="scopeCode" name="scope" property="idInternal"/>-->
+						<bean:define id="scopeCode" name="curricularCourse" property="idInternal"/>
 						<bean:define id="ano" name="scope" property="infoCurricularSemester.infoCurricularYear.year" />
 						<bean:define id="semestre" name="scope" property="infoCurricularSemester.semester" />
 						

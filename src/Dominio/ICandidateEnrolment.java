@@ -10,10 +10,12 @@ package Dominio;
 public interface ICandidateEnrolment extends IDomainObject {
  
   
-  IMasterDegreeCandidate getMasterDegreeCandidate();
-  ICurricularCourseScope getCurricularCourseScope();
+  public IMasterDegreeCandidate getMasterDegreeCandidate();
+ 
+  public ICurricularCourse getCurricularCourse();
   
-  void setMasterDegreeCandidate (IMasterDegreeCandidate masterDegreeCandidate);
-  void setCurricularCourseScope(ICurricularCourseScope curricularCourseScope);
+  public void setMasterDegreeCandidate (IMasterDegreeCandidate masterDegreeCandidate);
+  
+  public void setCurricularCourse(ICurricularCourse curricularCourse);
   
 }

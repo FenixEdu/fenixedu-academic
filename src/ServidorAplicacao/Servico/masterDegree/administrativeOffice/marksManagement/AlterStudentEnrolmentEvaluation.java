@@ -149,8 +149,10 @@ public class AlterStudentEnrolmentEvaluation implements IServico
                                 EnrolmentState.NOT_EVALUATED);
                     }
                     IEnrolment enrolment = new Enrolment();
-                    enrolment.setCurricularCourseScope(
-                        iEnrolmentEvaluation.getEnrolment().getCurricularCourseScope());
+					enrolment.setCurricularCourse(
+						iEnrolmentEvaluation.getEnrolment().getCurricularCourse());
+                    //enrolment.setCurricularCourseScope(
+                    //    iEnrolmentEvaluation.getEnrolment().getCurricularCourseScope());
                     enrolment.setEnrolmentEvaluationType(
                         iEnrolmentEvaluation.getEnrolment().getEnrolmentEvaluationType());
                     enrolment.setExecutionPeriod(

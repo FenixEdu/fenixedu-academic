@@ -22,13 +22,13 @@
            	<logic:iterate id="candidateEnrolment" name="candidateEnrolments" >	
 	           	<tr>
 	           		<td>
-            			<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+            			<bean:write name="candidateEnrolment" property="infoCurricularCourse.name"/>
             		</td>
-	           		<td>
+	           		<%--<td>
             			<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoBranch.name"/>
-            		</td>
+            		</td>--%>
 	           		<td>
-            			<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.credits"/>
+            			<bean:write name="candidateEnrolment" property="infoCurricularCourse.credits"/>
 					</td>		
 				</tr>
 	       	</logic:iterate>

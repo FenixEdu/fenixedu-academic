@@ -7,6 +7,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CandidateEnrolment;
 import Dominio.ICandidateEnrolment;
+import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IMasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -26,6 +27,8 @@ public class CandidateEnrolmentOJB extends ObjectFenixOJB implements IPersistent
         super.delete(candidateEnrolment);
     }
 
+  
+  
     public List readByMDCandidate(IMasterDegreeCandidate masterDegreeCandidate)
         throws ExcepcaoPersistencia
     {
@@ -33,9 +36,11 @@ public class CandidateEnrolmentOJB extends ObjectFenixOJB implements IPersistent
         crit.addEqualTo("masterDegreeCandidate.idInternal", masterDegreeCandidate.getIdInternal());
         return queryList(CandidateEnrolment.class, crit);
 
-    }
 
-    public ICandidateEnrolment readByMDCandidateAndCurricularCourseScope(
+     
+        }
+
+   public ICandidateEnrolment readByMDCandidateAndCurricularCourseScope(
         IMasterDegreeCandidate masterDegreeCandidate,
         ICurricularCourseScope curricularCourseScope)
         throws ExcepcaoPersistencia
@@ -45,12 +50,28 @@ public class CandidateEnrolmentOJB extends ObjectFenixOJB implements IPersistent
         crit.addEqualTo("curricularCourseScope.idInternal", curricularCourseScope.getIdInternal());
         return (ICandidateEnrolment) queryObject(CandidateEnrolment.class, crit);
 
+      
+            }
+
+      
+
+    public ICandidateEnrolment readByMDCandidateAndCurricularCourse(
+        IMasterDegreeCandidate masterDegreeCandidate,
+        ICurricularCourse curricularCourse)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("masterDegreeCandidate.idInternal", masterDegreeCandidate.getIdInternal());
+        criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+        return (ICandidateEnrolment) queryObject(CandidateEnrolment.class, criteria);
     }
 
-    public void write(ICandidateEnrolment candidateEnrolment2Write) throws ExcepcaoPersistencia
+	
+      public void write(ICandidateEnrolment candidateEnrolment2Write) throws ExcepcaoPersistencia
     {
         ICandidateEnrolment candidateEnrolmentFromDB = null;
 
+  
         // If there is nothing to write, simply return.
         if (candidateEnrolment2Write == null)
         {
@@ -58,9 +79,11 @@ public class CandidateEnrolmentOJB extends ObjectFenixOJB implements IPersistent
         }
 
         candidateEnrolmentFromDB =
-            this.readByMDCandidateAndCurricularCourseScope(
+			//this.readByMDCandidateAndCurricularCourseScope(
+            this.readByMDCandidateAndCurricularCourse(
                 candidateEnrolment2Write.getMasterDegreeCandidate(),
-                candidateEnrolment2Write.getCurricularCourseScope());
+                //candidateEnrolment2Write.getCurricularCourseScope());
+				candidateEnrolment2Write.getCurricularCourse());
 
         if (candidateEnrolmentFromDB == null)
         {

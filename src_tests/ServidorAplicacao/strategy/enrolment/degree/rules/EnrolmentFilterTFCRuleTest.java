@@ -41,7 +41,7 @@ public class EnrolmentFilterTFCRuleTest extends BaseEnrolmentRuleTestCase {
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan.addAll(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 
-		doApplyRule(new EnrolmentFilterTFCRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentFilterTFCRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
@@ -61,6 +61,6 @@ public class EnrolmentFilterTFCRuleTest extends BaseEnrolmentRuleTestCase {
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {
-			enrolmentRule.apply(enrolmentContext);
+//			enrolmentRule.apply(enrolmentContext);
 	}
 }

@@ -123,6 +123,11 @@
     jdbc-type="LONGVARCHAR"
   />	  
       <field-descriptor
+		name="enrollmentStrategyClassName"
+		column="ENROLLMENT_STRATEGY_CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
+      <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
@@ -131,7 +136,7 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="Dominio.Curso"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -186,14 +191,14 @@
 	<reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</reference-descriptor>
 
 	<reference-descriptor
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 </class-descriptor>
@@ -308,13 +313,13 @@
     <reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	 </reference-descriptor>
 	 <reference-descriptor
 			name="scientificArea"
 			class-ref="Dominio.ScientificArea"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="keyScientificArea"/>
 	 </reference-descriptor>
 	<collection-descriptor
@@ -322,14 +327,14 @@
 			element-class-ref="Dominio.ExecutionCourse"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
 			auto-retrieve="true"
-			proxy="true">
+			proxy="false">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="scopes"
 			element-class-ref="Dominio.CurricularCourseScope"
-			proxy="true">
+			proxy="false">
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>    
 </class-descriptor>
@@ -434,39 +439,39 @@
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="studentKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="branch"
 			class-ref="Dominio.Branch"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
 <!--
 	<reference-descriptor
 			name="specializationBranch"
 			class-ref="Dominio.Branch"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="specializationBranchKey"/>
 	</reference-descriptor>
 -->
 	<reference-descriptor
 			name="secundaryBranch"
 			class-ref="Dominio.Branch"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="secundaryBranchKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="employee"
 			class-ref="Dominio.Employee"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -496,8 +501,8 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseScopeKey"
-		column="KEY_CURRICULAR_COURSE_SCOPE"
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -526,19 +531,19 @@
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
-			name="curricularCourseScope"
-			class-ref="Dominio.CurricularCourseScope"
-			proxy="false">
-		<foreignkey field-ref="curricularCourseScopeKey"/>
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 	<reference-descriptor 
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -568,8 +573,8 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseScopeKey"
-		column="KEY_CURRICULAR_COURSE_SCOPE"
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -598,19 +603,19 @@
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>      
 	<reference-descriptor
-			name="curricularCourseScope"
-			class-ref="Dominio.CurricularCourseScope"
-			proxy="false">
-		<foreignkey field-ref="curricularCourseScopeKey"/>
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 	<reference-descriptor 
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -626,7 +631,7 @@
 	<reference-descriptor
 			name="curricularCourseForOption"
 			class-ref="Dominio.CurricularCourse"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="curricularCourseForOptionKey"/>
 	</reference-descriptor>      
 </class-descriptor>
@@ -646,8 +651,8 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseScopeKey"
-		column="KEY_CURRICULAR_COURSE_SCOPE"
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -676,19 +681,19 @@
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
-			name="curricularCourseScope"
-			class-ref="Dominio.CurricularCourseScope"
-			proxy="false">
-		<foreignkey field-ref="curricularCourseScopeKey"/>
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 	<reference-descriptor 
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -753,7 +758,7 @@
 	<reference-descriptor
 			name="curricularYear"
 			class-ref="Dominio.CurricularYear"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="curricularYearKey"/>
 	</reference-descriptor>
 
@@ -836,7 +841,7 @@
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="Dominio.DegreeCurricularPlan"
-		proxy="false">
+		proxy="true">
 	<foreignkey field-ref="keyDegreeCurricularPlan"/>
    </reference-descriptor>
 
@@ -894,7 +899,7 @@
 	<reference-descriptor
 		name="enrolment"
 		class-ref="Dominio.Enrolment"
-		proxy="false">
+		proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>
     <collection-descriptor 
@@ -935,13 +940,13 @@
 	<reference-descriptor
 		name="enrolmentEquivalence"
 		class-ref="Dominio.EnrolmentEquivalence"
-		proxy="false">
+		proxy="true">
 		<foreignkey field-ref="enrolmentEquivalenceKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="equivalentEnrolment"
 		class-ref="Dominio.Enrolment"
-		proxy="false">
+		proxy="true">
 		<foreignkey field-ref="equivalentEnrolmentKey"/>
 	</reference-descriptor>
 </class-descriptor>
@@ -1044,19 +1049,19 @@
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="curricularSemester"
 			class-ref="Dominio.CurricularSemester"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="curricularSemesterKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="branch"
 			class-ref="Dominio.Branch"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
 </class-descriptor>
@@ -1131,13 +1136,13 @@
 	<reference-descriptor
 			name="possibleCurricularCourse"
 			class-ref="Dominio.CurricularCourse"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="possibleCurricularCourseKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="optionalCurricularCourse"
 			class-ref="Dominio.CurricularCourse"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="optionalCurricularCourseKey"/>
 	</reference-descriptor>
 </class-descriptor>
@@ -1223,21 +1228,21 @@
 	<reference-descriptor
 			name="personResponsibleForGrade"
 			class-ref="Dominio.Pessoa"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
 			name="employee"
 			class-ref="Dominio.Employee"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
 			name="enrolment"
 			class-ref="Dominio.Enrolment"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>
 </class-descriptor>
@@ -1313,13 +1318,13 @@
 	<reference-descriptor
 		name="equivalentCurricularCourse"
 		class-ref="Dominio.CurricularCourse"
-		proxy="false">
+		proxy="true">
 		<foreignkey field-ref="equivalentCurricularCourseKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="curricularCourseEquivalence"
 		class-ref="Dominio.CurricularCourseEquivalence"
-		proxy="false">
+		proxy="true">
 		<foreignkey field-ref="curricularCourseEquivalenceKey"/>
 	</reference-descriptor>
 </class-descriptor>
@@ -1404,7 +1409,7 @@
 	<reference-descriptor
 			name="branch"
 			class-ref="Dominio.Branch"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
 	<collection-descriptor
@@ -1461,9 +1466,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CreditsInSpecificScientificArea -->
+<!-- Definitions for Dominio.CreditsInScientificArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CreditsInSpecificScientificArea" table="CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA">
+<class-descriptor class="Dominio.CreditsInScientificArea" table="CREDITS_IN_SCIENTIFIC_AREA">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -1500,19 +1505,19 @@
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>		
 	<reference-descriptor
 			name="scientificArea"
 			class-ref="Dominio.ScientificArea"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="scientificAreaKey"/>
 	</reference-descriptor>		
 	<reference-descriptor
 			name="enrolment"
 			class-ref="Dominio.Enrolment"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>		
 </class-descriptor>
@@ -1552,13 +1557,13 @@
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>		
 	<reference-descriptor
 			name="enrolment"
 			class-ref="Dominio.Enrolment"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>		
 </class-descriptor>

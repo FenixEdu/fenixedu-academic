@@ -29,13 +29,26 @@ public class ReportAllPastEnrollmentMigration
 	private static int totalEnrollmentEvaluationsCreated = 0;
 	private static int totalCurricularCoursesCreated = 0;
 	private static int totalCurricularCourseScopesCreated = 0;
-
+	private static int totalEnrollmentsDeleted = 0;
+	private static int totalEnrollmentEvaluationsDeleted = 0;
+	
 	private static int unknownCurricularCoursesTimes = 0;
 	private static int unknownTeachersAndEmployeesTimes = 0;
 	private static int notCreatedEnrolmentEvaluationsTimes = 0;
 
 	// For debuging:
 	private static List classCastExceptions = new ArrayList();
+
+	
+	public static void addEnrollmentsDeleted()
+	{
+		ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted++;
+	}
+	
+	public static void addEnrollmentEvaluationsDeleted()
+	{
+		ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted++;
+	}
 
 	/**
 	 * @param mwStudent
@@ -247,6 +260,22 @@ public class ReportAllPastEnrollmentMigration
 		}
 	}
 
+//	/**
+//	 * @param out
+//	 * @return
+//	 */
+//	private static void printEnrollmentsAndEvaluationsDeleted(PrintWriter out)
+//	{
+//		if(ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted != 0)
+//		{
+//			out.println("\n[INFO] ENROLLMENTS DELETED: " + ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted);
+//		}
+//		if(ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted != 0)
+//		{
+//			out.println("\n[INFO] ENROLLMENT EVALUATIONS DELETED: " + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted);
+//		}
+//	}
+
 	/**
 	 * @param out
 	 */
@@ -261,12 +290,12 @@ public class ReportAllPastEnrollmentMigration
 		ReportAllPastEnrollmentMigration.printClassCastExceptions(out);
 
 		if(ReportAllPastEnrollmentMigration.totalEnrollmentsCreated > 0) {
-			out.println("\nTOTAL MIGRATED ENROLMENTS: " + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated);
+			out.println("[INFO] TOTAL MIGRATED ENROLMENTS: " + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated);
 		}
 
 		int totalEnrolmentsNotMigrated = ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes + ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes;
 		if(totalEnrolmentsNotMigrated > 0) {
-			out.println("\nTOTAL ENROLMENTS NOT MIGRADTED: " + totalEnrolmentsNotMigrated);
+			out.println("[INFO] TOTAL ENROLMENTS NOT MIGRADTED: " + totalEnrolmentsNotMigrated);
 		}
 
 		out.println("\n---------------------------------------------------------------------------");
@@ -284,9 +313,9 @@ public class ReportAllPastEnrollmentMigration
 		out.println("[INFO] Total Enrolments created: [" + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated + "].");
 		out.println("[INFO] Total EnrolmentEvaluations created: [" + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsCreated + "].");
 		out.println("[INFO] Total CurricularCourses created: [" + ReportAllPastEnrollmentMigration.totalCurricularCoursesCreated + "].");
-		out.println("[INFO] Total CurricularCourseScopes created: [" + ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated + "].");
-
-		out.close();
+//		out.println("[INFO] Total CurricularCourseScopes created: [" + ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated + "].");
+		out.println("[INFO] Total Enrolments deleted: [" + ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted + "]");
+		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted + "]");
 	}
 
 	/**

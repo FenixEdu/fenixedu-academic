@@ -28,12 +28,12 @@ public class ValidateActualOptionalEnrolmentWithouRules implements IServico {
 		return "ValidateActualOptionalEnrolmentWithouRules";
 	}
 
-	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext, List curricularCourseScopesToRemoveList) throws FenixServiceException{
+	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext, List curricularCourseToRemoveList) throws FenixServiceException{
 		infoEnrolmentContext.getEnrolmentValidationResult().reset();
 		List currentEnroloments = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
 
 		if( ( (currentEnroloments == null) || (currentEnroloments.isEmpty()) ) &&
-			( (curricularCourseScopesToRemoveList == null) || (curricularCourseScopesToRemoveList.isEmpty())) ) {
+			( (curricularCourseToRemoveList == null) || (curricularCourseToRemoveList.isEmpty())) ) {
 			infoEnrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.NO_OPTIONAL_CURRICULAR_COURSES_TO_ENROLL);
 		} else {
 			infoEnrolmentContext.getEnrolmentValidationResult().setSucess(true);

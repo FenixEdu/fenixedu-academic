@@ -9,7 +9,7 @@
 <!-- **************************************************************************************************************************** -->
 
 	<definition name="df.page.globalEnrolment" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/globalEenrolment.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/globalEnrolment.jsp"/>
 	</definition>
 
 <!-- **************************************************************************************************************************** -->
@@ -76,6 +76,14 @@
 	</definition>
 	<definition name="df.page.acceptOptionalEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptOptionalEnrolmentWithoutRules.jsp"/>
+	</definition>
+	
+<!-- ************************************** LEEC Enrollment **************************** -->
+	<definition name="df.page.prepareEnrollmentChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseStudent.jsp"/>
+	</definition>
+	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseCurricularCourses.jsp"/>
 	</definition>
 
 </tiles-definitions>

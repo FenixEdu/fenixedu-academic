@@ -56,6 +56,7 @@ import Util.StudentType;
 import Util.TipoCurso;
 
 /**
+ * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
@@ -231,7 +232,8 @@ public class RegisterCandidate implements IServico
 
                 IEnrolment enrolment = new Enrolment();
                 sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
-                enrolment.setCurricularCourseScope(candidateEnrolment.getCurricularCourseScope());
+                //enrolment.setCurricularCourseScope(candidateEnrolment.getCurricularCourseScope());
+				enrolment.setCurricularCourse(candidateEnrolment.getCurricularCourse());
                 enrolment.setEnrolmentEvaluationType(
                     new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL));
                 enrolment.setEnrolmentState(EnrolmentState.ENROLED);

@@ -1,19 +1,19 @@
 package ServidorAplicacao.strategy.enrolment.strategys;
 
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
- * @author dcs-rjao
- *
- * 3/Abr/2003
+ * @author David Santos in Jan 16, 2004
  */
-public interface IEnrolmentStrategy {
 
-	public EnrolmentContext getEnrolmentContext();
-	public void setEnrolmentContext(EnrolmentContext enrolmentContext);
+public interface IEnrolmentStrategy
+{
+	public StudentEnrolmentContext getStudentEnrolmentContext();
+	public void setStudentEnrolmentContext(StudentEnrolmentContext studentEnrolmentContext);
 
-	public EnrolmentContext getAvailableCurricularCourses();
-	public EnrolmentContext validateEnrolment();
-	public EnrolmentContext getOptionalCurricularCourses();
-	public EnrolmentContext getDegreesForOptionalCurricularCourses();
+	public StudentEnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia;
+	public StudentEnrolmentContext validateEnrolment();
+	public StudentEnrolmentContext getOptionalCurricularCourses();
+	public StudentEnrolmentContext getDegreesForOptionalCurricularCourses();
 }

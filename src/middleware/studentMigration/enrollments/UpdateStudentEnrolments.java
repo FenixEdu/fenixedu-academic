@@ -1,51 +1,47 @@
 package middleware.studentMigration.enrollments;
 
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWStudent;
-import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree;
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MWEnrolment;
+import middleware.middlewareDomain.MWStudent;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
-import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
-import middleware.studentMigration.enrollments.ReportEnrolment;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
-import Dominio.Frequenta;
-import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorAplicacao.Servico.enrolment.DeleteEnrolment;
+import ServidorAplicacao.Servico.enrolment.WriteEnrolment;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -60,110 +56,115 @@ import Util.TipoCurso;
 
 public class UpdateStudentEnrolments
 {
+	private static boolean NEW_ENROLMENTS = true;
+	private static boolean TO_FILE = true;
+
+	private static HashMap enrollmentsCreated = new HashMap();
+	private static HashMap enrollmentEvaluationsCreated = new HashMap();
 	private static IExecutionPeriod executionPeriod = null;
-
-	public static void main(String args[]) throws Exception
+	
+	private static PrintWriter out = null;
+	
+	public static void main(String args[])
 	{
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWAluno persistentMWAluno = mws.getIPersistentMWAluno();
-		IPersistentMWEnrolment persistentEnrolment = mws.getIPersistentMWEnrolment();
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
-		sp.iniciarTransaccao();
-
-		executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
-
-		Integer numberOfStudents = persistentMWAluno.countAll();
-		System.out.println("[INFO] Updating a total of [" + numberOfStudents.intValue() + "] student curriculums.");
-		sp.confirmarTransaccao();
-
-		int numberOfElementsInSpan = 100;
-		int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
-		numberOfSpans = numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
-
-		for (int span = 0; span < numberOfSpans; span++)
+	
+		UpdateStudentEnrolments.NEW_ENROLMENTS = Boolean.valueOf(args[0]).booleanValue();
+		UpdateStudentEnrolments.TO_FILE = Boolean.valueOf(args[1]).booleanValue();
+		
+		MWStudent oldStudent = null;
+		try
 		{
-			sp.iniciarTransaccao();
-			sp.clearCache();
-			System.out.println("[INFO] Reading MWStudents...");
-			List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-
-			sp.confirmarTransaccao();
-
-			System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
-
-			Iterator iterator = result.iterator();
-			while (iterator.hasNext())
+			out = new PrintWriter(System.out, true);
+			if (UpdateStudentEnrolments.TO_FILE)
 			{
-				MWStudent oldStudent = (MWStudent) iterator.next();
-				try
+				String fileName = args[2];
+				FileOutputStream file = new FileOutputStream(fileName);
+				out = new PrintWriter(file);
+			}
+			
+			IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+			IPersistentMWAluno persistentMWAluno = mws.getIPersistentMWAluno();
+			IPersistentMWEnrolment persistentEnrolment = mws.getIPersistentMWEnrolment();
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+	
+			sp.iniciarTransaccao();
+			executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+			Integer numberOfStudents = persistentMWAluno.countAll();
+			out.println("[INFO] UpdateStudentEnrolments");
+			out.println("[INFO] Updating a total of [" + numberOfStudents.intValue() + "] student curriculums.");
+			sp.confirmarTransaccao();
+	
+			int numberOfElementsInSpan = 100;
+			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
+			numberOfSpans = numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
+	
+			for (int span = 0; span < numberOfSpans; span++)
+			{
+				sp.iniciarTransaccao();
+				sp.clearCache();
+				out.println("[INFO] Reading MWStudents...");
+				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
+	
+				sp.confirmarTransaccao();
+	
+				out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
+	
+				Iterator iterator = result.iterator();
+				while (iterator.hasNext())
 				{
+					oldStudent = (MWStudent) iterator.next();
 					sp.iniciarTransaccao();
-					// Read all the MWEnrolments.
 					oldStudent.setEnrolments(persistentEnrolment.readByStudentNumber(oldStudent.getNumber()));
 					UpdateStudentEnrolments.updateStudentEnrolment(oldStudent, sp);
 					sp.confirmarTransaccao();
-				} catch (Exception e)
-				{
+					UpdateStudentEnrolments.enrollmentsCreated.clear();
+					UpdateStudentEnrolments.enrollmentEvaluationsCreated.clear();
 				}
 			}
+		} catch (Throwable e)
+		{
+			out.println("[ERROR 10] Exception migrating student [" + oldStudent.getNumber() + "] enrolments!");
+			out.println("[ERROR 10] Number: [" + oldStudent.getNumber() + "]");
+			out.println("[ERROR 10] Degree: [" + oldStudent.getDegreecode() + "]");
+			out.println("[ERROR 10] Branch: [" + oldStudent.getBranchcode() + "]");
+			e.printStackTrace(out);
 		}
-
-		ReportEnrolment.report(new PrintWriter(System.out, true));
+	
+		ReportEnrolment.report(out);
+		
+		out.close();
 	}
 
 	/**
 	 * @param oldStudent
 	 * @param sp
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static void updateStudentEnrolment(MWStudent oldStudent, ISuportePersistente sp) throws Exception
+	private static void updateStudentEnrolment(MWStudent oldStudent, ISuportePersistente sp) throws Throwable
 	{
-		try
+		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+
+		// Read Fenix Student.
+		IStudent student = persistentStudent.readByNumero(oldStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+
+		if (student == null)
 		{
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-
-			// Read Fenix Student.
-			IStudent student = persistentStudent.readByNumero(oldStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
-
-			if (student == null)
-			{
-				System.out.println("[ERROR 01] Cannot find Fenix student with number [" + oldStudent.getNumber() + "]!");
-				return;
-			}
-
-			IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
-
-			if (studentCurricularPlan == null)
-			{
-				System.out.println("[ERROR 02] Cannot find Fenix StudentCurricularPlan for student number [" + oldStudent.getNumber() + "]!");
-				return;
-			}
-
-			List studentEnrolments = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
-
-			// Find the Fenix Enrolments that must be deleted because they no longer exist.
-			List enrolments2Annul = getEnrolments2Annul(oldStudent, studentEnrolments, oldStudent.getEnrolments(), sp);
-
-			// Find the new Enrolments that must be writen to Fenix.
-			List enrolments2Write = getEnrolments2Write(studentEnrolments, oldStudent.getEnrolments(), studentCurricularPlan, sp);
-
-			// Delete the Enrolments.
-			annulEnrolments(enrolments2Annul, sp);
-
-			// Create the new ones.
-			writeEnrolments(enrolments2Write, studentCurricularPlan, oldStudent, sp);
-
-		} catch (Exception e)
-		{
-			System.out.println("[ERROR 10] Exception migrating student [" + oldStudent.getNumber() + "] enrolments!");
-			System.out.println("[ERROR 10] Number: [" + oldStudent.getNumber() + "]");
-			System.out.println("[ERROR 10] Degree: [" + oldStudent.getDegreecode() + "]");
-			System.out.println("[ERROR 10] Branch: [" + oldStudent.getBranchcode() + "]");
-			e.printStackTrace(System.out);
-			throw new Exception(e);
+			out.println("[ERROR 01] Cannot find Fenix student with number [" + oldStudent.getNumber() + "]!");
+			return;
 		}
 
+		IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+
+		if (studentCurricularPlan == null)
+		{
+			out.println("[ERROR 02] Cannot find Fenix StudentCurricularPlan for student number [" + oldStudent.getNumber() + "]!");
+			return;
+		}
+
+//		List studentEnrolments = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
+		List studentEnrolments = oldStudent.getEnrolments();
+
+		UpdateStudentEnrolments.writeEnrolments(studentEnrolments, studentCurricularPlan, oldStudent, sp);
 	}
 
 	/**
@@ -171,9 +172,9 @@ public class UpdateStudentEnrolments
 	 * @param studentCurricularPlan
 	 * @param oldStudent
 	 * @param sp
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static void writeEnrolments(List enrolments2Write, IStudentCurricularPlan studentCurricularPlan, MWStudent oldStudent, ISuportePersistente sp) throws Exception
+	private static void writeEnrolments(List enrolments2Write, IStudentCurricularPlan studentCurricularPlan, MWStudent oldStudent, ISuportePersistente sp) throws Throwable
 	{
 		Iterator iterator = enrolments2Write.iterator();
 		while (iterator.hasNext())
@@ -181,58 +182,31 @@ public class UpdateStudentEnrolments
 			final MWEnrolment mwEnrolment = (MWEnrolment) iterator.next();
 
 			// Get the Fenix DegreeCurricularPlan of the Student.
-			IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(mwEnrolment.getDegreecode(), studentCurricularPlan, sp);
+			IDegreeCurricularPlan degreeCurricularPlan = UpdateStudentEnrolments.getDegreeCurricularPlan(mwEnrolment.getDegreecode(), studentCurricularPlan, sp);
 
 			if (degreeCurricularPlan == null)
 			{
-				System.out.println("[ERROR 03.1] Degree Curricular Plan Not Found!");
+				out.println("[ERROR 03.1] Degree Curricular Plan Not Found!");
 				continue;
 			}
 
-			// Get the Fenix Branch (this can be the student's branch or the curricular course's
-			// branch).
-			IBranch branch = getBranch(mwEnrolment.getDegreecode(), mwEnrolment.getBranchcode(), degreeCurricularPlan, sp);
-
-			if (branch == null)
-			{
-				System.out.println("[ERROR 04.1] Branch Not Found!");
-				continue;
-			}
-
-			ICurricularCourse curricularCourse = getCurricularCourse(mwEnrolment, degreeCurricularPlan, sp, true);
+			ICurricularCourse curricularCourse = UpdateStudentEnrolments.getCurricularCourse(mwEnrolment, degreeCurricularPlan, sp, true);
 
 			if (curricularCourse == null)
 			{
 				continue;
 			}
 
-			// If we get to this point of the code we did find a CurricularCourse.
-			// Now we will try to get the CurricularCourseScope by the CurricularCourse
-			// previously found and the semester an year from MWEnrolment.
-			ICurricularCourseScope curricularCourseScope = getCurricularCourseScopeToEnrollIn(studentCurricularPlan, mwEnrolment, curricularCourse, branch, sp);
-
-			if (curricularCourseScope == null)
-			{
-				ReportEnrolment.addCurricularCourseScopeNotFound(
-					mwEnrolment.getCoursecode(),
-					mwEnrolment.getDegreecode().toString(),
-					mwEnrolment.getNumber().toString(),
-					mwEnrolment.getCurricularcourseyear().toString(),
-					mwEnrolment.getCurricularcoursesemester().toString(),
-					mwEnrolment.getBranchcode().toString());
-				continue;
-			}
-
-			if (!hasExecutionInGivenPeriod(curricularCourse, executionPeriod, mwEnrolment, sp))
+			if (!UpdateStudentEnrolments.hasExecutionInGivenPeriod(curricularCourse, executionPeriod, mwEnrolment, sp))
 			{
 				ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 				continue;
 			}
 
-			IEnrolment enrolment = createEnrolment(studentCurricularPlan, sp, curricularCourseScope);
+			IEnrolment enrolment = UpdateStudentEnrolments.createEnrolment(mwEnrolment, studentCurricularPlan, sp, curricularCourse);
 
 			// Update the corresponding Fenix Attend if it exists.
-			IFrequenta attend = updateAttend(curricularCourse, enrolment, mwEnrolment, sp);
+			IFrequenta attend = UpdateStudentEnrolments.updateAttend(curricularCourse, enrolment, mwEnrolment, sp);
 			if (attend == null)
 			{
 				// NOTE [DAVID]: This kind of report is only pesented the first time the migration
@@ -244,9 +218,9 @@ public class UpdateStudentEnrolments
 				// enrolment for this particular CurricularCourse will have already been created in the
 				// DB so this
 				// CurricularCourse is no longer considered for this execution of the process.
-				// NOTE [DAVID]: This is for information only.
+				// This is for information only.
 				ReportEnrolment.addAttendNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
-				createAttend(curricularCourse, enrolment, mwEnrolment, sp);
+				UpdateStudentEnrolments.createAttend(curricularCourse, enrolment, mwEnrolment, sp);
 			}
 		}
 	}
@@ -256,10 +230,10 @@ public class UpdateStudentEnrolments
 	 * @param enrolment
 	 * @param mwEnrolment
 	 * @param sp
-	 * @return @throws
-	 *         ExcepcaoPersistencia
+	 * @return
+	 * @throws Throwable
 	 */
-	private static IFrequenta updateAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
+	private static IFrequenta updateAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws Throwable
 	{
 		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		IFrequenta attend = null;
@@ -285,50 +259,242 @@ public class UpdateStudentEnrolments
 	/**
 	 * @param studentCurricularPlan
 	 * @param sp
-	 * @param curricularCourseScope
-	 * @return @throws
-	 *         ExcepcaoPersistencia
+	 * @param curricularCourse
+	 * @return
+	 * @throws Throwable
 	 */
-	private static IEnrolment createEnrolment(IStudentCurricularPlan studentCurricularPlan, ISuportePersistente sp, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia
+	private static IEnrolment createEnrolment(MWEnrolment mwEnrolment, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente sp, ICurricularCourse curricularCourse) throws Throwable
 	{
-		// Create the Enrolment.
-		IEnrolment enrolment = new Enrolment();
-		sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
-		enrolment.setCurricularCourseScope(curricularCourseScope);
-		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-		enrolment.setEnrolmentState(EnrolmentState.ENROLED);
-		enrolment.setExecutionPeriod(executionPeriod);
-		enrolment.setStudentCurricularPlan(studentCurricularPlan);
+		IEnrolment enrolment = UpdateStudentEnrolments.createAndUpdateEnrolment(mwEnrolment, studentCurricularPlan, curricularCourse, sp);
+		UpdateStudentEnrolments.createAndUpdateEnrolmentEvaluation(mwEnrolment, enrolment, sp);
+		return enrolment;
+	}
 
-		// Create The Enrolment Evaluation.
-		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-		sp.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+	/**
+	 * @param mwEnrolment
+	 * @param studentCurricularPlan
+	 * @param curricularCourse
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Throwable
+	 */
+	private static IEnrolment createAndUpdateEnrolment(MWEnrolment mwEnrolment, IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
 
-		enrolmentEvaluation.setCheckSum(null);
-		enrolmentEvaluation.setEmployee(null);
-		enrolmentEvaluation.setEnrolment(enrolment);
-		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-		enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-		enrolmentEvaluation.setExamDate(null);
-		enrolmentEvaluation.setGrade(null);
-		enrolmentEvaluation.setGradeAvailableDate(null);
-		enrolmentEvaluation.setObservation(null);
-		enrolmentEvaluation.setPersonResponsibleForGrade(null);
-		enrolmentEvaluation.setWhen(null);
+		IEnrolment enrolment = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(studentCurricularPlan, curricularCourse, executionPeriod);
+		
+		if (enrolment == null) {
 
-		ReportEnrolment.addEnrolmentMigrated();
+			IEnrolment enrolmentToObtainKey = new Enrolment();
+			enrolmentToObtainKey.setStudentCurricularPlan(studentCurricularPlan);
+			enrolmentToObtainKey.setCurricularCourse(curricularCourse);
+			enrolmentToObtainKey.setExecutionPeriod(executionPeriod);
+			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(enrolmentToObtainKey);
+
+			enrolment = (IEnrolment) UpdateStudentEnrolments.enrollmentsCreated.get(key);
+
+			if (enrolment == null) {
+				enrolment = new Enrolment();
+
+				fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolment);
+
+				enrolment.setCurricularCourse(curricularCourse);
+				enrolment.setExecutionPeriod(executionPeriod);
+				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				
+				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				
+				EnrolmentState enrolmentState = null;
+				if ( (mwEnrolment.getGrade() == null) || (mwEnrolment.getGrade().equals("")) )
+				{
+					enrolmentState = EnrolmentState.ENROLED;
+				} else
+				{
+					enrolmentState = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentStateByGrade(mwEnrolment);
+				}
+				enrolment.setEnrolmentState(enrolmentState);
+
+				UpdateStudentEnrolments.enrollmentsCreated.put(key, enrolment);
+				ReportEnrolment.addEnrolmentMigrated();
+			}
+		}
 
 		return enrolment;
 	}
 
 	/**
 	 * @param mwEnrolment
-	 * @param sp
-	 * @return @throws
-	 *         ExcepcaoPersistencia
+	 * @param enrolment
+	 * @param fenixPersistentSuport
+	 * @throws Throwable
 	 */
-	private static ICurricularCourse getCurricularCourseFromAnotherDegree(final MWEnrolment mwEnrolment, ISuportePersistente sp, IDegreeCurricularPlan degreeCurricularPlan)
-		throws ExcepcaoPersistencia, PersistentMiddlewareSupportException
+	private static void createAndUpdateEnrolmentEvaluation(MWEnrolment mwEnrolment, IEnrolment enrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
+
+		if ( (mwEnrolment.getGrade() == null) || (mwEnrolment.getGrade().equals("")) )
+		{
+			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+			fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+
+			enrolmentEvaluation.setCheckSum(null);
+			enrolmentEvaluation.setEmployee(null);
+			enrolmentEvaluation.setEnrolment(enrolment);
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+			enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+			enrolmentEvaluation.setExamDate(null);
+			enrolmentEvaluation.setGrade(null);
+			enrolmentEvaluation.setGradeAvailableDate(null);
+			enrolmentEvaluation.setObservation(null);
+			enrolmentEvaluation.setPersonResponsibleForGrade(null);
+			enrolmentEvaluation.setWhen(null);
+		} else
+		{
+			Date whenAltered = UpdateStudentEnrolments.getWhenAlteredDate(mwEnrolment);
+
+			String grade = CreateAndUpdateAllStudentsPastEnrolments.getAcurateGrade(mwEnrolment);
+
+			IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(enrolment, EnrolmentEvaluationType.NORMAL_OBJ, grade);
+			
+			IEnrolmentEvaluation enrolmentEvaluationToObtainKey = new EnrolmentEvaluation();
+			enrolmentEvaluationToObtainKey.setEnrolment(enrolment);
+			enrolmentEvaluationToObtainKey.setGrade(grade);
+			enrolmentEvaluationToObtainKey.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+			enrolmentEvaluationToObtainKey.setWhen(whenAltered);
+			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
+
+			if (enrolmentEvaluation == null) {
+				
+				enrolmentEvaluation = (IEnrolmentEvaluation) UpdateStudentEnrolments.enrollmentEvaluationsCreated.get(key);
+
+				if (enrolmentEvaluation == null) {
+					enrolmentEvaluation = new EnrolmentEvaluation();
+
+					fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+
+					enrolmentEvaluation.setEnrolment(enrolment);
+					enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+					enrolmentEvaluation.setGrade(grade);
+
+					UpdateStudentEnrolments.updateEnrollmentEvaluation(mwEnrolment, enrolment, fenixPersistentSuport, whenAltered, enrolmentEvaluation);
+
+					UpdateStudentEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
+
+					CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+					ReportEnrolment.addEnrolmentEvaluationMigrated();
+				} else {
+					if(UpdateStudentEnrolments.NEW_ENROLMENTS)
+					{
+						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+						UpdateStudentEnrolments.updateEnrollmentEvaluation(mwEnrolment, enrolment, fenixPersistentSuport, whenAltered, enrolmentEvaluation);
+						CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+					}
+				}
+			} else {
+				if(UpdateStudentEnrolments.NEW_ENROLMENTS)
+				{
+					UpdateStudentEnrolments.updateEnrollmentEvaluation(mwEnrolment, enrolment, fenixPersistentSuport, whenAltered, enrolmentEvaluation);
+					CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+				} else
+				{
+					if(enrolment.getEvaluations().size() == 1)
+					{
+						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+						ReportEnrolment.addEnrolmentEvaluationDeleted();
+						fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolment);
+						fenixPersistentSuport.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrolment.getIdInternal());
+						UpdateStudentEnrolments.cleanEnrollmentRelations(enrolment, fenixPersistentSuport);
+						ReportEnrolment.addEnrolmentDeleted();
+					} else if(enrolment.getEvaluations().size() > 1)
+					{
+						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+						ReportEnrolment.addEnrolmentEvaluationDeleted();
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param mwEnrolment
+	 * @return
+	 */
+	private static Date getWhenAlteredDate(MWEnrolment mwEnrolment)
+	{
+		Date whenAltered = null;
+		if (mwEnrolment.getExamdate() == null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(mwEnrolment.getEnrolmentyear().intValue(), 9, 1);
+			whenAltered = new Date(calendar.getTimeInMillis());
+		} else {
+			whenAltered = mwEnrolment.getExamdate();
+		}
+		long dateInLongFormat = whenAltered.getTime();
+		dateInLongFormat = dateInLongFormat + (mwEnrolment.getIdinternal().longValue() * 1000);
+		Date newDate = new Date(dateInLongFormat);
+		return newDate;
+	}
+
+	/**
+	 * @param mwEnrolment
+	 * @param enrolment
+	 * @param fenixPersistentSuport
+	 * @param newDate
+	 * @param enrolmentEvaluation
+	 * @throws Throwable
+	 */
+	private static void updateEnrollmentEvaluation(MWEnrolment mwEnrolment, IEnrolment enrolment, ISuportePersistente fenixPersistentSuport, Date newDate, IEnrolmentEvaluation enrolmentEvaluation) throws Throwable
+	{
+		if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+		{
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+		} else
+		{
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+		}
+		enrolmentEvaluation.setExamDate(mwEnrolment.getExamdate());
+		enrolmentEvaluation.setObservation(mwEnrolment.getRemarks());
+		enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
+		enrolmentEvaluation.setGradeAvailableDate(mwEnrolment.getExamdate());
+		enrolmentEvaluation.setWhen(newDate);
+		enrolmentEvaluation.setEmployee(CreateAndUpdateAllStudentsPastEnrolments.getEmployee(mwEnrolment, fenixPersistentSuport));
+		enrolmentEvaluation.setCheckSum(null);
+	}
+
+	/**
+	 * @param enrolment
+	 * @param fenixPersistentSuport
+	 * @throws Throwable
+	 */
+	private static void cleanEnrollmentRelations(IEnrolment enrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		DeleteEnrolment.deleteAttend(enrolment);
+//		IExecutionCourse executionCourse = fenixPersistentSuport.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(enrolment.getCurricularCourse(), executionPeriod);
+//		if (executionCourse == null)
+//		{
+//			return;
+//		}
+//
+//		IFrequenta attend = fenixPersistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(enrolment.getStudentCurricularPlan().getStudent(), executionCourse);
+//
+//		if (attend != null)
+//		{
+//			fenixPersistentSuport.getIFrequentaPersistente().simpleLockWrite(attend);
+//			attend.setEnrolment(null);
+//		}
+	}
+
+	/**
+	 * @param mwEnrolment
+	 * @param sp
+	 * @param degreeCurricularPlan
+	 * @return
+	 * @throws Throwable
+	 */
+	private static ICurricularCourse getCurricularCourseFromAnotherDegree(final MWEnrolment mwEnrolment, ISuportePersistente sp, IDegreeCurricularPlan degreeCurricularPlan) throws Throwable
 	{
 		ICurricularCourse curricularCourse = null;
 
@@ -346,7 +512,7 @@ public class UpdateStudentEnrolments
 
 			// If there is no correspondence yet, let us look if this CurricularCourse has only one
 			// ExecuitonCourse in the given period.
-		} else if (curricularCourseHasOnlyOneExecutionInGivenPeriod(executionPeriod, mwEnrolment, sp, degreeCurricularPlan))
+		} else if (UpdateStudentEnrolments.curricularCourseHasOnlyOneExecutionInGivenPeriod(executionPeriod, mwEnrolment, sp, degreeCurricularPlan))
 		{
 
 			// If there is only one ExecutionCourse for all the existing CurricularCourses then we can
@@ -417,118 +583,6 @@ public class UpdateStudentEnrolments
 	}
 
 	/**
-	 * @param studentCurricularPlan
-	 * @param mwEnrolment
-	 * @param curricularCourse
-	 * @param branch
-	 * @param sp
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
-	private static ICurricularCourseScope getCurricularCourseScopeToEnrollIn(
-		IStudentCurricularPlan studentCurricularPlan,
-		MWEnrolment mwEnrolment,
-		ICurricularCourse curricularCourse,
-		IBranch branch,
-		ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		IPersistentCurricularCourseScope curricularCourseScopeDAO = sp.getIPersistentCurricularCourseScope();
-
-		List curricularCourseScopes = null;
-		ICurricularCourseScope curricularCourseScope = null;
-
-		if (!curricularCourse.getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan()))
-		{
-			curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourse(curricularCourse);
-
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("curricularSemester.idInternal"));
-
-			if ((curricularCourseScopes != null) && (!curricularCourseScopes.isEmpty()))
-			{
-				Collections.sort(curricularCourseScopes, comparatorChain);
-				return (ICurricularCourseScope) curricularCourseScopes.get(0);
-			} else
-			{
-				return null;
-			}
-		}
-
-		curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourseAndYearAndSemester(curricularCourse, mwEnrolment.getCurricularcourseyear(), mwEnrolment.getCurricularcoursesemester());
-
-		if ((curricularCourseScopes == null) || (curricularCourseScopes.isEmpty()))
-		{
-			// Try to read by the CurricularCourse previously found and the year only.
-			curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourseAndYear(curricularCourse, mwEnrolment.getCurricularcourseyear());
-
-			if ((curricularCourseScopes == null) || (curricularCourseScopes.isEmpty()))
-			{
-				// The CurricularCourse is from the same Degree that the StudentCurricularPlan. If we
-				// cannot find it
-				// by year and semester than we'll try only by year and if still it can't be found we'll
-				// try only by semester.
-				curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourseAndSemester(curricularCourse, mwEnrolment.getCurricularcoursesemester());
-
-				if ((curricularCourseScopes != null) && (!curricularCourseScopes.isEmpty()))
-				{
-					curricularCourseScope = getActualScope(curricularCourseScopes, branch, studentCurricularPlan, curricularCourse);
-				}
-			} else
-			{
-				curricularCourseScope = getActualScope(curricularCourseScopes, branch, studentCurricularPlan, curricularCourse);
-			}
-
-		} else
-		{
-			curricularCourseScope = getActualScope(curricularCourseScopes, branch, studentCurricularPlan, curricularCourse);
-		}
-
-		return curricularCourseScope;
-	}
-
-	/**
-	 * @param curricularCourseScopes
-	 * @param branch
-	 * @param studentCurricularPlan
-	 * @param curricularCourse
-	 * @return
-	 */
-	private static ICurricularCourseScope getActualScope(List curricularCourseScopes, IBranch branch, IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse)
-	{
-
-		ICurricularCourseScope curricularCourseScope = null;
-
-		if (curricularCourseScopes.size() == 1)
-		{
-			curricularCourseScope = (ICurricularCourseScope) curricularCourseScopes.get(0);
-		} else
-		{
-
-			curricularCourseScope = findScopeForBranch(curricularCourseScopes, branch);
-
-			if (curricularCourseScope == null)
-			{
-				curricularCourseScope = findScopeForBranch(curricularCourseScopes, studentCurricularPlan.getBranch());
-			}
-
-			// null means Branch without name (tronco comum).
-			if (curricularCourseScope == null)
-			{
-				curricularCourseScope = findScopeForBranch(curricularCourseScopes, null);
-			}
-
-			// If we can't find a scope and the degree of the course is diferent from the student's,
-			// them we ignore the branch.
-			if ((curricularCourseScope == null) && (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().equals(curricularCourse.getDegreeCurricularPlan().getDegree())))
-			{
-				curricularCourseScope = (ICurricularCourseScope) curricularCourseScopes.get(0);
-			}
-		}
-		return curricularCourseScope;
-	}
-
-	/**
 	 * @param curricularCourses
 	 * @return
 	 */
@@ -539,209 +593,13 @@ public class UpdateStudentEnrolments
 	}
 
 	/**
-	 * @param curricularCourseScopes
-	 * @param branch
-	 * @return
-	 */
-	private static ICurricularCourseScope findScopeForBranch(List curricularCourseScopes, IBranch branch)
-	{
-		Iterator iterator = curricularCourseScopes.iterator();
-		while (iterator.hasNext())
-		{
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 
-			if (branch == null)
-			{
-				if (((curricularCourseScope.getBranch().getCode().equals("")) && (curricularCourseScope.getBranch().getName().equals(""))) /*
-																																		    * ||
-																																		    */
-					)
-				{
-					return curricularCourseScope;
-				}
-			} else
-			{
-				if (curricularCourseScope.getBranch().equals(branch))
-				{
-					return curricularCourseScope;
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @param studentEnrolments
-	 * @param oldEnrolments
-	 * @param studentCurricularPlan
-	 * @param sp
-	 * @return @throws
-	 *         Exception
-	 */
-	private static List getEnrolments2Write(List studentEnrolments, List oldEnrolments, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente sp) throws Exception
-	{
-		List result = new ArrayList();
-
-		Iterator oldEnrolmentIterator = oldEnrolments.iterator();
-
-		while (oldEnrolmentIterator.hasNext())
-		{
-			MWEnrolment mwEnrolment = (MWEnrolment) oldEnrolmentIterator.next();
-
-			// Get the Degree Of the Curricular Course.
-			IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(mwEnrolment.getDegreecode(), studentCurricularPlan, sp);
-
-			if (degreeCurricularPlan == null)
-			{
-				System.out.println("[ERROR 03.2] Degree Curricular Plan Not Found (getEnrolments2Write)!");
-				throw new Exception();
-			}
-
-			// Get The Branch for This Curricular Course.
-			IBranch branch = getBranch(mwEnrolment.getDegreecode(), mwEnrolment.getBranchcode(), degreeCurricularPlan, sp);
-
-			if (branch == null)
-			{
-				System.out.println("[ERROR 04.2] Branch Not Found (getEnrolments2Write)!");
-				throw new Exception();
-			}
-
-			// Check if The Enrolment exists.
-			if (!enrolmentExistsOnFenix(mwEnrolment, degreeCurricularPlan, branch, studentEnrolments, sp))
-			{
-				result.add(mwEnrolment);
-			}
-
-		}
-		return result;
-	}
-
-	/**
-	 * @param mwEnrolment
-	 * @param degreeCurricularPlan
-	 * @param branch
-	 * @param studentEnrolments
-	 * @param sp
-	 * @return
-	 */
-	private static boolean enrolmentExistsOnFenix(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, List studentEnrolments, ISuportePersistente sp)
-	{
-
-		Iterator iterator = studentEnrolments.iterator();
-		while (iterator.hasNext())
-		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if ((enrolment.getCurricularCourseScope().getCurricularCourse().getCode().equalsIgnoreCase(StringUtils.trim(mwEnrolment.getCoursecode()))
-				&& (enrolment.getExecutionPeriod().equals(executionPeriod))))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * @param enrolments2Annul
-	 * @param sp
-	 * @throws ExcepcaoPersistencia
-	 */
-	private static void annulEnrolments(List enrolments2Annul, ISuportePersistente sp) throws ExcepcaoPersistencia
-	{
-		Iterator iterator = enrolments2Annul.iterator();
-		while (iterator.hasNext())
-		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-
-			// Find the Attend.
-			IExecutionCourse executionCourse =
-				sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(enrolment.getCurricularCourseScope().getCurricularCourse(), executionPeriod);
-			if (executionCourse == null)
-			{
-				continue;
-			}
-			IFrequenta attend = sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(enrolment.getStudentCurricularPlan().getStudent(), executionCourse);
-
-			if (attend != null)
-			{
-				sp.getIFrequentaPersistente().simpleLockWrite(attend);
-				attend.setEnrolment(null);
-			}
-
-			// Delete EnrolmentEvalutaion.
-			Iterator evaluations = enrolment.getEvaluations().iterator();
-			while (evaluations.hasNext())
-			{
-				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) evaluations.next();
-				sp.getIPersistentEnrolmentEvaluation().delete(enrolmentEvaluation);
-			}
-
-			// Delete Enrolment.
-			sp.getIPersistentEnrolment().delete(enrolment);
-		}
-	}
-
-	/**
-	 * @param oldStudent
-	 * @param studentEnrolments
-	 * @param oldEnrolments
-	 * @param sp
-	 * @return @throws
-	 *         Exception
-	 */
-	private static List getEnrolments2Annul(MWStudent oldStudent, List studentEnrolments, List oldEnrolments, ISuportePersistente sp) throws Exception
-	{
-		List result = new ArrayList();
-
-		Iterator fenixEnrolments = studentEnrolments.iterator();
-
-		while (fenixEnrolments.hasNext())
-		{
-			IEnrolment enrolment = (IEnrolment) fenixEnrolments.next();
-
-			// Check if The Enrolment exists on the old System.
-			if (!enrolmentExistsOnAlmeidaServer(enrolment, oldEnrolments, sp))
-			{
-				result.add(enrolment);
-			}
-		}
-
-		return result;
-	}
-
-	/**
-	 * @param enrolment
-	 * @param oldEnrolments
-	 * @param sp
-	 * @return
-	 */
-	private static boolean enrolmentExistsOnAlmeidaServer(IEnrolment enrolment, List oldEnrolments, ISuportePersistente sp)
-	{
-		Iterator iterator = oldEnrolments.iterator();
-		while (iterator.hasNext())
-		{
-			MWEnrolment mwEnrolment = (MWEnrolment) iterator.next();
-
-			// To read an MWEnrolment we need the student number, the Course Code, the Semester and the
-			// enrolment year.
-			if ((mwEnrolment.getNumber().equals(enrolment.getStudentCurricularPlan().getStudent().getNumber()))
-				&& (StringUtils.trim(mwEnrolment.getCoursecode()).equals(enrolment.getCurricularCourseScope().getCurricularCourse().getCode())))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * @param degreeCode
 	 * @param studentCurricularPlan
 	 * @param sp
-	 * @return @throws
-	 *         PersistentMiddlewareSupportException
-	 * @throws ExcepcaoPersistencia
+	 * @throws Throwable
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente sp)
-		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente sp) throws Throwable
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws.getIPersistentMWDegreeTranslation();
@@ -753,13 +611,13 @@ public class UpdateStudentEnrolments
 
 		if (executionDegree == null)
 		{
-			System.out.println("[ERROR 06] the degree has no execution in [" + executionPeriod.getExecutionYear().getYear() + "]!");
+			out.println("[ERROR 06] the degree has no execution in [" + executionPeriod.getExecutionYear().getYear() + "]!");
 			return null;
 		} else
 		{
 			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
 			{
-				System.out.println("[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
+				out.println("[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
 				return studentCurricularPlan.getDegreeCurricularPlan();
 			} else
 			{
@@ -769,56 +627,13 @@ public class UpdateStudentEnrolments
 	}
 
 	/**
-	 * @param degreeCode
-	 * @param branchCode
-	 * @param degreeCurricularPlan
-	 * @param sp
-	 * @return @throws
-	 *         PersistentMiddlewareSupportException
-	 * @throws ExcepcaoPersistencia
-	 */
-	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp)
-		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
-	{
-		IBranch branch = null;
-
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
-
-		// Get the MWBranch.
-		sp.clearCache();
-		MWBranch mwbranch = persistentBranch.readByDegreeCodeAndBranchCode(degreeCode, branchCode);
-
-		// Get the Fenix Branch.
-		if (mwbranch == null)
-		{
-			System.out.println("[ERROR 08] the middleware Branch [" + branchCode + "] from degree [" + degreeCode + "] cannot be found!");
-		}
-
-		String realBranchCode = new String(mwbranch.getDegreecode().toString() + mwbranch.getBranchcode().toString() + mwbranch.getOrientationcode().toString());
-		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
-
-		if (branch == null)
-		{
-			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
-		}
-
-		if (branch == null)
-		{
-			System.out.println("[ERROR 09] the Fenix Branch [" + mwbranch.getDescription() + "] from degree [" + degreeCurricularPlan.getName() + "] cannot be found!");
-		}
-
-		return branch;
-	}
-
-	/**
 	 * @param curricularCourse
 	 * @param enrolment
 	 * @param mwEnrolment
 	 * @param sp
-	 * @throws ExcepcaoPersistencia
+	 * @throws Throwable
 	 */
-	private static void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
+	private static void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws Throwable
 	{
 		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 
@@ -826,17 +641,17 @@ public class UpdateStudentEnrolments
 		{
 			// NOTE [DAVID]: This error report can be added here even if it was added before in the
 			// updateAttend() method
-			// because this addition wont repeat same occurrences.
-			// NOTE [DAVID]: This should not happen at this point.
+			// because this addition wont repeat same occurrences. This should not happen at this point.
 			ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 		} else
 		{
 			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
-			IFrequenta attend = new Frequenta();
-			sp.getIFrequentaPersistente().simpleLockWrite(attend);
-			attend.setAluno(student);
-			attend.setDisciplinaExecucao(executionCourse);
-			attend.setEnrolment(enrolment);
+//			IFrequenta attend = new Frequenta();
+//			sp.getIFrequentaPersistente().simpleLockWrite(attend);
+//			attend.setAluno(student);
+//			attend.setDisciplinaExecucao(executionCourse);
+//			attend.setEnrolment(enrolment);
+			WriteEnrolment.createAttend(student, curricularCourse, executionPeriod, enrolment);
 			// NOTE [DAVID]: This is for information only.
 			ReportEnrolment.addCreatedAttend(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 		}
@@ -847,10 +662,10 @@ public class UpdateStudentEnrolments
 	 * @param executionPeriod
 	 * @param mwEnrolment
 	 * @param sp
-	 * @return @throws
-	 *         ExcepcaoPersistencia
+	 * @return
+	 * @throws Throwable
 	 */
-	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
+	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp) throws Throwable
 	{
 		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		if (executionCourse == null)
@@ -866,11 +681,11 @@ public class UpdateStudentEnrolments
 	 * @param executionPeriod
 	 * @param mwEnrolment
 	 * @param sp
-	 * @return @throws
-	 *         ExcepcaoPersistencia
+	 * @param degreeCurricularPlan
+	 * @return
+	 * @throws Throwable
 	 */
-	private static boolean curricularCourseHasOnlyOneExecutionInGivenPeriod(IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp, IDegreeCurricularPlan degreeCurricularPlan)
-		throws ExcepcaoPersistencia
+	private static boolean curricularCourseHasOnlyOneExecutionInGivenPeriod(IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp, IDegreeCurricularPlan degreeCurricularPlan) throws Throwable
 	{
 		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 		List curricularCourses =
@@ -908,7 +723,15 @@ public class UpdateStudentEnrolments
 		}
 	}
 
-	private static ICurricularCourse getCurricularCourse(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp, boolean solveSomeProblems) throws Exception
+	/**
+	 * @param mwEnrolment
+	 * @param degreeCurricularPlan
+	 * @param sp
+	 * @param solveSomeProblems
+	 * @return
+	 * @throws Throwable
+	 */
+	private static ICurricularCourse getCurricularCourse(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp, boolean solveSomeProblems) throws Throwable
 	{
 		String courseCode = null;
 		if (solveSomeProblems)
@@ -929,7 +752,7 @@ public class UpdateStudentEnrolments
 		{
 			if (curricularCourses.size() > 1)
 			{
-				System.out.println("[ERROR 05] Several Fenix CurricularCourses with code [" + courseCode + "] were found for Degree [" + mwEnrolment.getDegreecode() + "]!");
+				out.println("[ERROR 05] Several Fenix CurricularCourses with code [" + courseCode + "] were found for Degree [" + mwEnrolment.getDegreecode() + "]!");
 				return null;
 			} else // size == 0
 				{
@@ -980,6 +803,9 @@ public class UpdateStudentEnrolments
 	// -----------------------------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------------------------------------------------------------------------------------
 
+	/**
+	 * @param mwEnrolment
+	 */
 	private static String getRealCurricularCourseCodeForCodesAZx(MWEnrolment mwEnrolment)
 	{
 		if (mwEnrolment.getCoursecode().equals("AZ2") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)

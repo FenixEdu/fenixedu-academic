@@ -1,13 +1,13 @@
 package ServidorAplicacao.strategy.enrolment.rules;
 
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 
 /**
- * @author dcs-rjao
- *
- * 3/Abr/2003
+ * @author David Santos in Jan 16, 2004
  */
-public interface IEnrolmentRule {
 
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext);
+public interface IEnrolmentRule
+{
+//	public EnrolmentContext apply(EnrolmentContext enrolmentContext);
+	public StudentEnrolmentContext apply(StudentEnrolmentContext studentEnrolmentContext);
 }

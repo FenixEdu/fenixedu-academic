@@ -49,7 +49,6 @@ public class CreateFile
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation)obj;
                         return enrolmentEvaluation
                             .getEnrolment()
-                            .getCurricularCourseScope()
                             .getCurricularCourse()
                             .equals(
                             curricularCourse);

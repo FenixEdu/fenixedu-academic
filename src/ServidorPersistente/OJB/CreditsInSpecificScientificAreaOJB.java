@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.CreditsInSpecificScientificArea;
+import Dominio.CreditsInScientificArea;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCreditsInSpecificScientificArea;
@@ -19,6 +19,6 @@ public class CreditsInSpecificScientificAreaOJB extends ObjectFenixOJB implement
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-		return queryList(CreditsInSpecificScientificArea.class, criteria);
+		return queryList(CreditsInScientificArea.class, criteria);
 	}
 }

@@ -3,7 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <logic:present role="grantOwnerManager">
-	<%-- GRANT OWNER MANAGEMENT APPLICATIONS --%>
+	<%-- GRANT OWNER MANAGEMENT APPLICATIONS  --%>
+	
 	<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
 	<ul>
 		<li>

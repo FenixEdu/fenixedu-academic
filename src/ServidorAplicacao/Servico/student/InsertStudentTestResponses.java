@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
@@ -19,7 +20,6 @@ import Dominio.IStudent;
 import Dominio.IStudentTestLog;
 import Dominio.IStudentTestQuestion;
 import Dominio.StudentTestLog;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentTestLog;
@@ -32,24 +32,21 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class InsertStudentTestResponses implements IServico
-{
-	private static InsertStudentTestResponses service = new InsertStudentTestResponses();
+
+public class InsertStudentTestResponses implements IService {
+	
 	private String path = new String();
 
-	public static InsertStudentTestResponses getService()
-	{
-		return service;
-	}
+	
+	
 
-	public String getNome()
-	{
-		return "InsertStudentTestResponses";
-	}
-
-	public boolean run(String userName, Integer distributedTestId, String[] options, String path)
-		throws FenixServiceException
-	{
+	
+	public boolean run(
+		String userName,
+		Integer distributedTestId,
+		String[] options,
+		String path)
+		throws FenixServiceException {
 		List infoStudentTestQuestionList = new ArrayList();
 		this.path = path.replace('\\', '/');
 		try
@@ -178,4 +175,12 @@ public class InsertStudentTestResponses implements IServico
 		}
 		return false;
 	}
+    /**
+     * 
+     */
+    public InsertStudentTestResponses()
+    {
+     
+    }
+
 }

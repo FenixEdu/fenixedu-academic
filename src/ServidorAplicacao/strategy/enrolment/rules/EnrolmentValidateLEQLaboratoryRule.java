@@ -20,7 +20,8 @@ import Util.CurricularCourseType;
  * from the LEQ degree.
  */
 
-public class EnrolmentValidateLEQLaboratoryRule implements IEnrolmentRule {
+public class EnrolmentValidateLEQLaboratoryRule //implements IEnrolmentRule
+{
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 

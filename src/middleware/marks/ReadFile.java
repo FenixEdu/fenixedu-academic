@@ -211,7 +211,7 @@ public class ReadFile extends LoadDataFile {
 		IEnrolment enrolment = readEnrolment(studentCurricularPlan, curricularCourseScope, executionPeriod);
 		if (enrolment == null) {
 			enrolment = new Enrolment();
-			enrolment.setCurricularCourseScope(curricularCourseScope);
+//			enrolment.setCurricularCourseScope(curricularCourseScope);
 			enrolment.setExecutionPeriod(executionPeriod);
 			enrolment.setEnrolmentEvaluationType(readEvaluationType(almeida_enrolment.getEpoca()));
 			enrolment.setEnrolmentState(readStateEnrolment(almeida_enrolment));

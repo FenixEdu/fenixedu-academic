@@ -1,123 +1,171 @@
 package ServidorAplicacao.strategy.enrolment.strategys;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-
-import Dominio.ICurricularCourseScope;
-import Dominio.IExecutionCourse;
-import Dominio.IExecutionPeriod;
-import Dominio.IPossibleCurricularCourseForOptionalCurricularCourse;
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author dcs-rjao
- *
- * 3/Abr/2003
+ * @author David Santos in Jan 16, 2004
  */
-public abstract class EnrolmentStrategy implements IEnrolmentStrategy {
 
-	private EnrolmentContext enrolmentContext = null;
+public abstract class EnrolmentStrategy implements IEnrolmentStrategy
+{
 
-	public EnrolmentContext getEnrolmentContext() {
-		return enrolmentContext;
-	}
+    protected StudentEnrolmentContext studentEnrolmentContext = null;
 
-	public void setEnrolmentContext(EnrolmentContext enrolmentContext) {
-		this.enrolmentContext = enrolmentContext;
-	}
+    /**
+     * @return Returns the studentEnrolmentContext.
+     */
+    public StudentEnrolmentContext getStudentEnrolmentContext()
+    {
+    	return studentEnrolmentContext;
+    }
 
-	protected EnrolmentContext filterByExecutionCourses(EnrolmentContext enrolmentContext) {
+    /**
+     * @param studentEnrolmentContext The studentEnrolmentContext to set.
+     */
+    public void setStudentEnrolmentContext(StudentEnrolmentContext studentEnrolmentContext)
+    {
+    	this.studentEnrolmentContext = studentEnrolmentContext;
+    }
 
-		final IExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-		
-		List curricularCoursesToRemove = new ArrayList();
-		// FIXME [DAVID]: Não se pode filtar as opções porque elas não têm EXECUTION_COURSE associados
-		Iterator spanIterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
-		while (spanIterator.hasNext()) {
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) spanIterator.next();
-			List executionCourseList = curricularCourseScope.getCurricularCourse().getAssociatedExecutionCourses(); 
-				
-			final List executionCourseInExecutionPeriod = (List) CollectionUtils.select(executionCourseList, new Predicate() {
-				public boolean evaluate(Object obj) {
-					IExecutionCourse disciplinaExecucao = (IExecutionCourse) obj;
-					return disciplinaExecucao.getExecutionPeriod().equals(executionPeriod);
-				}
-			});
-				
-			if(executionCourseInExecutionPeriod.isEmpty()){
-				curricularCoursesToRemove.add(curricularCourseScope);
-			} else {
-				executionCourseInExecutionPeriod.clear();
-			}
-		}
+    public abstract StudentEnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia;
 
-		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(curricularCoursesToRemove);
-		
-		return enrolmentContext;
-	}
+    public abstract StudentEnrolmentContext validateEnrolment();
 
-	protected EnrolmentContext filterBySemester(EnrolmentContext enrolmentContext) {
-		List curricularCoursesFromActualExecutionPeriod = new ArrayList();
+    public abstract StudentEnrolmentContext getOptionalCurricularCourses();
 
-		Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
-		while (iterator.hasNext()) {
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			if (curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) {
-				curricularCoursesFromActualExecutionPeriod.add(curricularCourseScope);
-			}
-		}
+    public abstract StudentEnrolmentContext getDegreesForOptionalCurricularCourses();
 
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesFromActualExecutionPeriod);
-		return enrolmentContext;
-	}
+//    protected EnrolmentContext filterByExecutionCourses(EnrolmentContext enrolmentContext)
+//    {
+//
+//        final IExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+//
+//        List curricularCoursesToRemove = new ArrayList();
+//        // Não se pode filtar as opções porque elas não têm
+//        // EXECUTION_COURSE associados
+//        Iterator spanIterator = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().iterator();
+//        while (spanIterator.hasNext())
+//        {
+//            ICurricularCourse curricularCourse = (ICurricularCourse) spanIterator.next();
+//            List executionCourseList = curricularCourse.getAssociatedExecutionCourses();
+//
+//            final List executionCourseInExecutionPeriod =
+//                (List) CollectionUtils.select(executionCourseList, new Predicate()
+//            {
+//                public boolean evaluate(Object obj)
+//                {
+//                    IExecutionCourse executionCourse = (IExecutionCourse) obj;
+//                    return executionCourse.getExecutionPeriod().equals(executionPeriod);
+//                }
+//            });
+//
+//            if (executionCourseInExecutionPeriod.isEmpty())
+//            {
+//                curricularCoursesToRemove.add(curricularCourse);
+//            }
+//            else
+//            {
+//                executionCourseInExecutionPeriod.clear();
+//            }
+//        }
+//
+//        enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().removeAll(
+//            curricularCoursesToRemove);
+//
+//        return enrolmentContext;
+//    }
+//
+//    protected EnrolmentContext filterBySemester(EnrolmentContext enrolmentContext)
+//    {
+//        List curricularCoursesFromActualExecutionPeriod = new ArrayList();
+//
+//        Iterator iterator = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().iterator();
+//        while (iterator.hasNext())
+//        {
+//            ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+//            if (hasSemester(curricularCourse.getScopes(), enrolmentContext.getSemester()))
+//            {
+//                curricularCoursesFromActualExecutionPeriod.add(curricularCourse);
+//            }
+//        }
+//
+//        enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(
+//            curricularCoursesFromActualExecutionPeriod);
+//        return enrolmentContext;
+//    }
+//
+//    protected EnrolmentContext filterScopesOfCurricularCoursesToBeChosenForOptionalCurricularCourses(EnrolmentContext enrolmentContext)
+//    {
+//
+//        try
+//        {
+//            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+//            IPersistentPossibleCurricularCourseForOptionalCurricularCourse persistentPossibleCurricularCourseForOptionalCurricularCourse =
+//                sp.getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+//
+//            List possibleCurricularCoursesForOptionalCurricularCourseList =
+//                persistentPossibleCurricularCourseForOptionalCurricularCourse
+//                    .readAllByDegreeCurricularPlan(
+//                    enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan());
+//            List possibleCurricularCourses =
+//                (
+//                    List) CollectionUtils
+//                        .collect(
+//                            possibleCurricularCoursesForOptionalCurricularCourseList,
+//                            new Transformer()
+//            {
+//                public Object transform(Object obj)
+//                {
+//                    IPossibleCurricularCourseForOptionalCurricularCourse possibleCurricularCourseForOptionalCurricularCourse =
+//                        (IPossibleCurricularCourseForOptionalCurricularCourse) obj;
+//                    return possibleCurricularCourseForOptionalCurricularCourse
+//                        .getPossibleCurricularCourse();
+//                }
+//            });
+//
+//            List curricularCoursesToRemove = new ArrayList();
+//            Iterator iterator = enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled().iterator();
+//            while (iterator.hasNext())
+//            {
+//                ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+//                if (possibleCurricularCourses != null)
+//                {
+//                    if (possibleCurricularCourses.contains(curricularCourse))
+//                    {
+//                        curricularCoursesToRemove.add(curricularCourse);
+//                    }
+//                }
+//            }
+//
+//            List finalSpan =
+//                (List) CollectionUtils.subtract(
+//                    enrolmentContext.getFinalCurricularCoursesSpanToBeEnrolled(),
+//                    curricularCoursesToRemove);
+//            enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(finalSpan);
+//        }
+//        catch (ExcepcaoPersistencia e)
+//        {
+//        }
+//
+//        return enrolmentContext;
+//    }
+//
+//    /**
+//	 * @param scopes
+//	 * @param integer
+//	 * @return
+//	 */
+//    public boolean hasSemester(List scopes, Integer integer)
+//    {
+//        boolean result = false;
+//        Iterator iter = scopes.iterator();
+//        while (iter.hasNext() && !result)
+//        {
+//            ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
+//            result = scope.getCurricularSemester().getSemester().equals(integer);
+//        }
+//        return result;
+//    }
 
-	protected EnrolmentContext filterScopesOfCurricularCoursesToBeChosenForOptionalCurricularCourses(EnrolmentContext enrolmentContext) {
-
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentPossibleCurricularCourseForOptionalCurricularCourse persistentPossibleCurricularCourseForOptionalCurricularCourse = sp.getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
-
-			List possibleCurricularCoursesForOptionalCurricularCourseList = persistentPossibleCurricularCourseForOptionalCurricularCourse.readAllByDegreeCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan());
-			List possibleCurricularCourses = (List) CollectionUtils.collect(possibleCurricularCoursesForOptionalCurricularCourseList, new Transformer() {
-				public Object transform(Object obj) {
-					IPossibleCurricularCourseForOptionalCurricularCourse possibleCurricularCourseForOptionalCurricularCourse = (IPossibleCurricularCourseForOptionalCurricularCourse) obj;
-					return possibleCurricularCourseForOptionalCurricularCourse.getPossibleCurricularCourse();
-				}
-			});
-
-			List curricularCourseScopesToRemove = new ArrayList();
-			Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
-			while(iterator.hasNext()) {
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-				if(possibleCurricularCourses != null) {
-					if(possibleCurricularCourses.contains(curricularCourseScope.getCurricularCourse())) {
-						curricularCourseScopesToRemove.add(curricularCourseScope);
-					}
-				}
-			}
-
-			List finalSpan = (List) CollectionUtils.subtract(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), curricularCourseScopesToRemove);
-			enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(finalSpan);
-		} catch (ExcepcaoPersistencia e) {
-		}
-
-		return enrolmentContext;
-	}
-
-	public abstract EnrolmentContext getAvailableCurricularCourses();
-
-	public abstract EnrolmentContext validateEnrolment();
-
-	public abstract EnrolmentContext getOptionalCurricularCourses();
-
-	public abstract EnrolmentContext getDegreesForOptionalCurricularCourses();
 }

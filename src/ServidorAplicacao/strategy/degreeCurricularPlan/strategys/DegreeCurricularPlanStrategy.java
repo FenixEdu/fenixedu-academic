@@ -88,7 +88,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)) &&
-				(!enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
+				(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
 				if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)){
 					
 					Iterator evaluations = enrolment.getEvaluations().iterator();
@@ -127,7 +127,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)) &&
-				(!enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
+				(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
 				if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)){
 					
 					Iterator evaluations = enrolment.getEvaluations().iterator();
@@ -138,7 +138,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 						try {
 							if (new Integer(enrolmentEvaluation.getGrade()).intValue() > enrolmentMark){
 								enrolmentMark = new Integer(enrolmentEvaluation.getGrade()).intValue();
-								enrolmentWeight = enrolment.getCurricularCourseScope().getCurricularCourse().getCredits().floatValue();		
+								enrolmentWeight = enrolment.getCurricularCourse().getCredits().floatValue();		
 							}
 						} catch (NumberFormatException e) {
 							// This mark will not count for the average

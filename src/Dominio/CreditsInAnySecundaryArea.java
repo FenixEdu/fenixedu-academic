@@ -32,7 +32,7 @@ public class CreditsInAnySecundaryArea extends DomainObject implements ICreditsI
 
 	public String toString() {
 		String result = "student: [" + this.getStudentCurricularPlan().getStudent().getNumber().toString();
-		result += "] course: [" + this.getEnrolment().getCurricularCourseScope().getCurricularCourse().getName() + "]";
+		result += "] course: [" + this.getEnrolment().getCurricularCourse().getName() + "]";
 		return result;
 	}
 

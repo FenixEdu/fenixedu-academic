@@ -5,12 +5,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWStudent;
-import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MWEnrolment;
+import middleware.middlewareDomain.MWStudent;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
-import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
@@ -18,11 +16,7 @@ import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddl
 
 import org.apache.commons.lang.StringUtils;
 
-import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
-import Dominio.ICurricularSemester;
-import Dominio.ICurricularYear;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
@@ -31,11 +25,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurricularCourseScope;
-import ServidorPersistente.IPersistentCurricularSemester;
-import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -193,33 +183,33 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 	 * @return
 	 * @throws Throwable
 	 */
-	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
-	{
-		IBranch branch = null;
-		
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWBranch persistentMWBranch = mws.getIPersistentMWBranch();
-		IPersistentBranch persistentBranch = fenixPersistentSuport.getIPersistentBranch();
-
-		MWBranch mwBranch = persistentMWBranch.readByDegreeCodeAndBranchCode(degreeCode, branchCode);
-
-		if (mwBranch != null) {
-			String realBranchCode = null;
-
-			if (mwBranch.getDescription().startsWith("CURSO DE ")) {
-				realBranchCode = new String("");
-			} else {
-				realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
-			}
-
-			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
-
-		} else {
-			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(degreeCode, branchCode, degreeCurricularPlan, persistentBranch);
-		}
-
-		return branch;
-	}
+//	private static IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+//	{
+//		IBranch branch = null;
+//		
+//		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+//		IPersistentMWBranch persistentMWBranch = mws.getIPersistentMWBranch();
+//		IPersistentBranch persistentBranch = fenixPersistentSuport.getIPersistentBranch();
+//
+//		MWBranch mwBranch = persistentMWBranch.readByDegreeCodeAndBranchCode(degreeCode, branchCode);
+//
+//		if (mwBranch != null) {
+//			String realBranchCode = null;
+//
+//			if (mwBranch.getDescription().startsWith("CURSO DE ")) {
+//				realBranchCode = new String("");
+//			} else {
+//				realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
+//			}
+//
+//			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
+//
+//		} else {
+//			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(degreeCode, branchCode, degreeCurricularPlan, persistentBranch);
+//		}
+//
+//		return branch;
+//	}
 
 	/**
 	 * @param mwStudent
@@ -249,25 +239,26 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 				continue;
 			}
 
-			ICurricularCourseScope curricularCourseScope = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getCurricularCourseScope(mwEnrolment, curricularCourse, /*studentCurricularPlan, */degreeCurricularPlan, fenixPersistentSuport);
-			if (curricularCourseScope == null) {
-				System.out.print("[ERROR 506] Couldn't find Fenix CurricularCourseScope for data: ");
-				System.out.print("Student Number - [" + mwEnrolment.getNumber() + "], ");
-				System.out.print("Course Code - [" + mwEnrolment.getCoursecode() + "], ");
-				System.out.print("Degree Code - [" + mwEnrolment.getDegreecode() + "], ");
-				System.out.print("Branch Code - [" + mwEnrolment.getBranchcode() + "], ");
-				System.out.print("Curricular Year - [" + mwEnrolment.getCurricularcourseyear() + "], ");
-				System.out.print("Curricular Semester - [" + mwEnrolment.getCurricularcoursesemester() + "], ");
-				System.out.println("Enrolment Year: [" + mwEnrolment.getEnrolmentyear() + "]!");
-				continue;
-			}
+//			ICurricularCourseScope curricularCourseScope = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getCurricularCourseScope(mwEnrolment, curricularCourse, /*studentCurricularPlan, */degreeCurricularPlan, fenixPersistentSuport);
+//			if (curricularCourseScope == null) {
+//				System.out.print("[ERROR 506] Couldn't find Fenix CurricularCourseScope for data: ");
+//				System.out.print("Student Number - [" + mwEnrolment.getNumber() + "], ");
+//				System.out.print("Course Code - [" + mwEnrolment.getCoursecode() + "], ");
+//				System.out.print("Degree Code - [" + mwEnrolment.getDegreecode() + "], ");
+//				System.out.print("Branch Code - [" + mwEnrolment.getBranchcode() + "], ");
+//				System.out.print("Curricular Year - [" + mwEnrolment.getCurricularcourseyear() + "], ");
+//				System.out.print("Curricular Semester - [" + mwEnrolment.getCurricularcoursesemester() + "], ");
+//				System.out.println("Enrolment Year: [" + mwEnrolment.getEnrolmentyear() + "]!");
+//				continue;
+//			}
 
 
 			IExecutionPeriod executionPeriod = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getExecutionPeriodForThisMWEnrolment(mwEnrolment, fenixPersistentSuport);
 
 			EnrolmentEvaluationType enrolmentEvaluationType = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getEvaluationType(mwEnrolment);
 
-			IEnrolment enrolment = enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(studentCurricularPlan, curricularCourseScope, executionPeriod);
+//			IEnrolment enrolment = enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(studentCurricularPlan, curricularCourseScope, executionPeriod);
+			IEnrolment enrolment = enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(studentCurricularPlan, curricularCourse, executionPeriod);
 			if (enrolment == null) {
 				System.out.print("[ERROR 507] Couldn't find Fenix Enrolment for data: ");
 				System.out.print("Student Number - [" + mwEnrolment.getNumber() + "], ");
@@ -350,37 +341,37 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 	 * @return
 	 * @throws Throwable
 	 */
-	private static ICurricularCourseScope getCurricularCourseScope(MWEnrolment mwEnrolment, ICurricularCourse curricularCourse, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
-	{
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = fenixPersistentSuport.getIPersistentCurricularCourseScope();
-		IPersistentCurricularSemester persistentCurricularSemester = fenixPersistentSuport.getIPersistentCurricularSemester();
-		IPersistentCurricularYear persistentCurricularYear = fenixPersistentSuport.getIPersistentCurricularYear();
-		
-		IBranch branch = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getBranch(mwEnrolment.getDegreecode(), mwEnrolment.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
-		if (branch == null) {
-			branch = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getBranch(mwEnrolment.getDegreecode(), new Integer(0), degreeCurricularPlan, fenixPersistentSuport);
-			if (branch == null) {
-				System.out.println("[ERROR 510] No record of Branch with code: [" + mwEnrolment.getBranchcode() + "] for Degree with code: [" + mwEnrolment.getDegreecode() + "]!");
-				return null;
-			}
-		}
-
-		ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(mwEnrolment.getCurricularcourseyear());
-		if (curricularYear == null) {
-			System.out.println("[ERROR 511] Can't find in Fenix DB CurricularYear with year [" + mwEnrolment.getCurricularcourseyear() + "]!");
-			return null;
-		}
-
-		ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(mwEnrolment.getCurricularcoursesemester(), curricularYear);
-		if (curricularSemester == null) {
-			System.out.println("[ERROR 512] Can't find in Fenix DB CurricularSemester with semester [" + mwEnrolment.getCurricularcoursesemester() + "] and year [" + curricularYear.getYear() + "]!");
-			return null;
-		}
-
-		ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
-
-		return curricularCourseScope;
-	}
+//	private static ICurricularCourseScope getCurricularCourseScope(MWEnrolment mwEnrolment, ICurricularCourse curricularCourse, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+//	{
+//		IPersistentCurricularCourseScope persistentCurricularCourseScope = fenixPersistentSuport.getIPersistentCurricularCourseScope();
+//		IPersistentCurricularSemester persistentCurricularSemester = fenixPersistentSuport.getIPersistentCurricularSemester();
+//		IPersistentCurricularYear persistentCurricularYear = fenixPersistentSuport.getIPersistentCurricularYear();
+//		
+//		IBranch branch = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getBranch(mwEnrolment.getDegreecode(), mwEnrolment.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
+//		if (branch == null) {
+//			branch = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getBranch(mwEnrolment.getDegreecode(), new Integer(0), degreeCurricularPlan, fenixPersistentSuport);
+//			if (branch == null) {
+//				System.out.println("[ERROR 510] No record of Branch with code: [" + mwEnrolment.getBranchcode() + "] for Degree with code: [" + mwEnrolment.getDegreecode() + "]!");
+//				return null;
+//			}
+//		}
+//
+//		ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(mwEnrolment.getCurricularcourseyear());
+//		if (curricularYear == null) {
+//			System.out.println("[ERROR 511] Can't find in Fenix DB CurricularYear with year [" + mwEnrolment.getCurricularcourseyear() + "]!");
+//			return null;
+//		}
+//
+//		ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(mwEnrolment.getCurricularcoursesemester(), curricularYear);
+//		if (curricularSemester == null) {
+//			System.out.println("[ERROR 512] Can't find in Fenix DB CurricularSemester with semester [" + mwEnrolment.getCurricularcoursesemester() + "] and year [" + curricularYear.getYear() + "]!");
+//			return null;
+//		}
+//
+//		ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+//
+//		return curricularCourseScope;
+//	}
 
 	/**
 	 * @param mwEnrolment

@@ -86,7 +86,7 @@ public class GetAllAvailableCurricularCoursesForCoordinatorEquivalence implement
 						public boolean evaluate(Object obj) {
 							IEnrolment enrolment = (IEnrolment) obj;
 //System.out.println(enrolment);
-							return !enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(studentActiveCurricularPlan.getDegreeCurricularPlan());
+							return !enrolment.getCurricularCourse().getDegreeCurricularPlan().equals(studentActiveCurricularPlan.getDegreeCurricularPlan());
 						}
 					});
 

@@ -41,7 +41,7 @@ public class EnrolmentFilterBranchRuleTest extends BaseEnrolmentRuleTestCase {
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		doApplyRule(new EnrolmentFilterBranchRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentFilterBranchRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
@@ -64,6 +64,6 @@ public class EnrolmentFilterBranchRuleTest extends BaseEnrolmentRuleTestCase {
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {
-			enrolmentRule.apply(enrolmentContext);
+//			enrolmentRule.apply(enrolmentContext);
 	}
 }

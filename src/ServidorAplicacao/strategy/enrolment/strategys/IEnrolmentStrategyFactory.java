@@ -1,12 +1,12 @@
 package ServidorAplicacao.strategy.enrolment.strategys;
 
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+import Dominio.IStudentCurricularPlan;
 
 /**
- * @author dcs-rjao
- *
- * 15/Abr/2003
+ * @author David Santos in Jan 16, 2004
  */
-public interface IEnrolmentStrategyFactory {
-	public IEnrolmentStrategy getEnrolmentStrategyInstance(EnrolmentContext enrolmentContext);
+
+public interface IEnrolmentStrategyFactory
+{
+	public IEnrolmentStrategy getEnrolmentStrategyInstance(IStudentCurricularPlan studentCurricularPlan);
 }

@@ -212,7 +212,7 @@ public class LoadCourseEnrolments extends DataFileLoader
                     IFrequenta attendCriteria = new Frequenta();
 
                     ICurricularCourse curricularCourse =
-                        enrolment.getCurricularCourseScope().getCurricularCourse();
+                        enrolment.getCurricularCourse();
 
                     IExecutionCourse executionCourse =
                         iDisciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura(

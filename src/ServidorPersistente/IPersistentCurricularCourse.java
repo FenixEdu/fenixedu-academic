@@ -46,4 +46,5 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 
  	public List readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(String courseCode, TipoCurso degreeType, DegreeCurricularPlanState degreeCurricularPlanState) throws ExcepcaoPersistencia;
 	public List readbyCourseNameAndDegreeCurricularPlan(String curricularCourseName, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+	public List readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, Integer semester) throws ExcepcaoPersistencia;
 }

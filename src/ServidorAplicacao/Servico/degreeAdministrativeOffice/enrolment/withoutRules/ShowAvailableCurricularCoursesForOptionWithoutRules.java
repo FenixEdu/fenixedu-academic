@@ -177,7 +177,7 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 		List aprovedAndEnroledStudentCurricularCourses = (List) CollectionUtils.collect(aprovedAndEnroledStudentEnrolments, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getCurricularCourseScope().getCurricularCourse();
+				return enrolment.getCurricularCourse();
 			}
 		});
 

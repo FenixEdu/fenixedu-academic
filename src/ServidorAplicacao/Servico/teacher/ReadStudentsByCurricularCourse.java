@@ -11,9 +11,9 @@ import DataBeans.InfoSiteStudents;
 import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.CurricularCourseScope;
+import Dominio.CurricularCourse;
 import Dominio.ExecutionCourse;
-import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
@@ -25,7 +25,7 @@ import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -67,12 +67,13 @@ public class ReadStudentsByCurricularCourse implements IServico
         return _servico;
     }
 
-    public Object run( Integer executionCourseCode, Integer scopeCode ) throws ExcepcaoInexistente,
+    public Object run( Integer executionCourseCode, Integer courseCode ) throws ExcepcaoInexistente,
                     FenixServiceException
     {
         List infoStudentList = null;
         ISite site = null;
-        ICurricularCourseScope curricularCourseScope = null;
+//        ICurricularCourseScope curricularCourseScope = null;
+        ICurricularCourse curricularCourse = null;
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -83,25 +84,34 @@ public class ReadStudentsByCurricularCourse implements IServico
             IPersistentSite persistentSite = sp.getIPersistentSite();
             site = persistentSite.readByExecutionCourse(executionCourse);
 
-            if (scopeCode == null)
+            if (courseCode == null)
             {
                 infoStudentList = getAllAttendingStudents(sp, executionCourse);
             }
             else
             {
-                curricularCourseScope = new CurricularCourseScope();
-                curricularCourseScope.setIdInternal(scopeCode);
+//                curricularCourseScope = new CurricularCourseScope();
+//                curricularCourseScope.setIdInternal(scopeCode);
                 
-                infoStudentList = getCurricularCourseScopeStudents(curricularCourseScope, sp);
+                curricularCourse = new CurricularCourse();
+                curricularCourse.setIdInternal(courseCode);
+                
+//                infoStudentList = getCurricularCourseScopeStudents(curricularCourseScope, sp);
+                infoStudentList = getCurricularCourseStudents(curricularCourse, sp);
+                
+//                IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+//                                .getIPersistentCurricularCourseScope();
+//                curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
+//                                .readByOId(curricularCourseScope, false);
 
-                IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
-                                .getIPersistentCurricularCourseScope();
-                curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
-                                .readByOId(curricularCourseScope, false);
-
+                IPersistentCurricularCourse persistentCurricularCourse = sp
+                .getIPersistentCurricularCourse();
+                curricularCourse = (ICurricularCourse) persistentCurricularCourse
+                .readByOId(curricularCourse, false);
             }
 
-            TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site, curricularCourseScope);
+//            TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site, curricularCourseScope);
+            TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site, curricularCourse);
             return siteView;
             
         }
@@ -115,12 +125,14 @@ public class ReadStudentsByCurricularCourse implements IServico
 
     }
 
-    private List getCurricularCourseScopeStudents( ICurricularCourseScope curricularCourseScope, ISuportePersistente sp ) throws ExcepcaoPersistencia
+//    private List getCurricularCourseScopeStudents( ICurricularCourseScope curricularCourseScope, ISuportePersistente sp ) throws ExcepcaoPersistencia
+    private List getCurricularCourseStudents( ICurricularCourse curricularCourse, ISuportePersistente sp ) throws ExcepcaoPersistencia
     {
         List infoStudentList;
         IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 
-        List enrolments = persistentEnrolment.readByCurricularCourseScope(curricularCourseScope);
+//        List enrolments = persistentEnrolment.readByCurricularCourseScope(curricularCourseScope);
+        List enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse);
 
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer()
         {
@@ -156,16 +168,16 @@ public class ReadStudentsByCurricularCourse implements IServico
         return infoStudentList;
     }
 
-    private TeacherAdministrationSiteView createSiteView( List infoStudentList, ISite site, ICurricularCourseScope curricularCourseScope ) throws FenixServiceException
+//    private TeacherAdministrationSiteView createSiteView( List infoStudentList, ISite site, ICurricularCourseScope curricularCourseScope ) throws FenixServiceException
+    private TeacherAdministrationSiteView createSiteView( List infoStudentList, ISite site, ICurricularCourse curricularCourse) throws FenixServiceException
     {
         InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
         infoSiteStudents.setStudents(infoStudentList);
 
-        if (curricularCourseScope != null)
+        if (curricularCourse != null)
         {
-            infoSiteStudents
-                            .setInfoCurricularCourseScope(Cloner
-                                            .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope));
+//            infoSiteStudents.setInfoCurricularCourseScope(Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope));
+            infoSiteStudents.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
         }
         TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
         ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,

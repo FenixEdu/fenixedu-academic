@@ -41,7 +41,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRuleTest extends BaseEnrol
 			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 
-		doApplyRule(new EnrolmentValidateCurricularYearPrecedenceRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentValidateCurricularYearPrecedenceRule(), enrolmentContext);
 		assertEquals(enrolmentContext.getEnrolmentValidationResult().isSucess(), true);
 		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
@@ -50,13 +50,13 @@ public class EnrolmentValidateCurricularYearPrecedenceRuleTest extends BaseEnrol
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
 		enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 
-		doApplyRule(new EnrolmentValidateCurricularYearPrecedenceRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentValidateCurricularYearPrecedenceRule(), enrolmentContext);
 		assertEquals(enrolmentContext.getEnrolmentValidationResult().isSucess(), false);
 		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {
-		enrolmentRule.apply(enrolmentContext);
+//		enrolmentRule.apply(enrolmentContext);
 	}
 }

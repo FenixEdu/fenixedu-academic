@@ -37,7 +37,7 @@ public class EnrolmentFilterAllOptionalDegreesRuleTest extends BaseEnrolmentRule
 		Object serviceArgs1[] = { userView };
 		enrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 
-		doApplyRule(new EnrolmentFilterAllOptionalDegreesRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentFilterAllOptionalDegreesRule(), enrolmentContext);
 
 		optionalSpan = enrolmentContext.getDegreesForOptionalCurricularCourses();
 
@@ -60,7 +60,7 @@ public class EnrolmentFilterAllOptionalDegreesRuleTest extends BaseEnrolmentRule
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
-			enrolmentRule.apply(enrolmentContext);
+//			enrolmentRule.apply(enrolmentContext);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);

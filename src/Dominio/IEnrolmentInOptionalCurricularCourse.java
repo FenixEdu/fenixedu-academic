@@ -1,9 +1,3 @@
-/*
- * Created on 22/Abr/2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package Dominio;
 
 /**
@@ -11,9 +5,10 @@ package Dominio;
  *
  * 22/Abr/2003
  */
-public interface IEnrolmentInOptionalCurricularCourse extends IEnrolment {
-	ICurricularCourse getCurricularCourseForOption();
-	Integer getCurricularCourseForOptionKey();
-	void setCurricularCourseForOption(ICurricularCourse curricularCourseForOption);
-	void setCurricularCourseForOptionKey(Integer curricularCourseForOptionKey);
+public interface IEnrolmentInOptionalCurricularCourse extends IEnrolment
+{
+	public ICurricularCourse getCurricularCourseForOption();
+	public Integer getCurricularCourseForOptionKey();
+	public void setCurricularCourseForOption(ICurricularCourse curricularCourseForOption);
+	public void setCurricularCourseForOptionKey(Integer curricularCourseForOptionKey);
 }

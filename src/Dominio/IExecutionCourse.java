@@ -6,7 +6,6 @@
 
 package Dominio;
 
-import java.io.Serializable;
 import java.util.List;
 
 import fileSuport.INode;
@@ -14,7 +13,7 @@ import fileSuport.INode;
 /**
  * @author Nuno Nunes & Joana Mota
  */
-public interface IExecutionCourse extends Serializable, IDomainObject, INode
+public interface IExecutionCourse extends  IDomainObject, INode
 {
     public String getNome();
     public void setNome(java.lang.String nome);

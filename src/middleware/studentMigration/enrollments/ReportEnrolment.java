@@ -37,7 +37,10 @@ public class ReportEnrolment
 	private static HashMap curricularCourses = new HashMap();
 	private static HashMap degrees = new HashMap();
 	private static int enrolmentsMigrated = 0;
-
+	private static int enrolmentEvaluationsMigrated = 0;
+	private static int enrolmentsDeleted = 0;
+	private static int enrolmentEvaluationsDeleted = 0;
+	
 	// For control:
 	private static boolean smallReport = true;
 
@@ -284,9 +287,24 @@ public class ReportEnrolment
 	/**
 	 *
 	 */
+	public static void addEnrolmentDeleted()
+	{
+		enrolmentsDeleted++;
+	}
+
+	public static void addEnrolmentEvaluationMigrated()
+	{
+		enrolmentEvaluationsMigrated++;
+	}
+
 	public static void addEnrolmentMigrated()
 	{
 		enrolmentsMigrated++;
+	}
+
+	public static void addEnrolmentEvaluationDeleted()
+	{
+		enrolmentEvaluationsDeleted++;
 	}
 
 //	------------------------------------------------------------------------------------------------------------------------------
@@ -298,6 +316,12 @@ public class ReportEnrolment
 	 */
 	public static void report(PrintWriter out)
 	{
+		out.println("[INFO] DONE!");
+		out.println("[INFO] Total Enrolments created: [" + ReportEnrolment.enrolmentsMigrated + "].");
+		out.println("[INFO] Total EnrolmentEvaluations created: [" + ReportEnrolment.enrolmentEvaluationsMigrated + "].");
+		out.println("[INFO] Total Enrolments deleted: [" + ReportEnrolment.enrolmentsDeleted + "]");
+		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportEnrolment.enrolmentEvaluationsDeleted + "]");
+		
 		out.println("\n---------------------------------------------------------------------------");
 		out.println("\n------------------------------ CASOS DE ERRO ------------------------------");
 		out.println("\n---------------------------------------------------------------------------");
@@ -462,8 +486,6 @@ public class ReportEnrolment
 				out.println("\t" + key + " - " + value);
 			}
 		}
-		
-		out.close();
 	}
 
 //	------------------------------------------------------------------------------------------------------------------------------

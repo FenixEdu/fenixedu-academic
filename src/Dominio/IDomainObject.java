@@ -5,12 +5,14 @@
  */
 package Dominio;
 
+import java.io.Serializable;
+
 /**
  * @author João Mota
  * 
  *  
  */
-public interface IDomainObject
+public interface IDomainObject extends Serializable
 {
 	public Integer getIdInternal();
 	public void setIdInternal(Integer idInternal);

@@ -119,7 +119,7 @@ public class CreateAndUpdateAttendsForAllMasterDegreeStudents
 		IPersistentExecutionCourse persistentExecutionCourse = fenixPersistentSuport.getIPersistentExecutionCourse();
 		IFrequentaPersistente persistentAttend = fenixPersistentSuport.getIFrequentaPersistente();
 
-		ICurricularCourse curricularCourse = enrolment.getCurricularCourseScope().getCurricularCourse();
+		ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 		IExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
 		
 		if (executionPeriod.getState().equals(PeriodState.CURRENT))

@@ -383,5 +383,92 @@
 			</classpath>
 		</java>
 	</target>
+<!-- ********************************************************************* -->
+	<target name="update-LEEC-degree-curricular-plan-for-enrollement" depends="load-ileec-data" description="">
+		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+			<fileset dir="${sql}">
+				<include name="middleware/ileec/updateLEECDegreeCurricularPlanForEnrollement.sql"/>
+			</fileset>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="migrate-ileec-scientific-areas" depends="compile-proj, load-ileec-data">
+		<java classname="middleware.studentMigration.ileecDataMigration.migrateILeecScientificAreas" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>	
+
+	<target name="associate-ileecCourses-toScientificAreas" depends="compile-proj, load-ileec-data">
+		<java classname="middleware.studentMigration.ileecDataMigration.associateILeecCoursesToScientificAreas" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="migrate-IleecGroups-Data" depends="compile-proj, load-ileec-data">
+		<java classname="middleware.studentMigration.ileecDataMigration.migrateILeecGroupsData" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="migrate-precedence-by-number-curricular-courses" depends="compile-proj, load-ileec-data">
+		<java classname="middleware.studentMigration.ileecDataMigration.migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="migrate-precedence-by-curricular-courses" depends="compile-proj, load-ileec-data">
+		<java classname="middleware.studentMigration.ileecDataMigration.migrateILeecPrecedenceDataByCurricularCourse" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="migrate-all-ileec-data" depends="compile-proj, load-ileec-data, update-LEEC-degree-curricular-plan-for-enrollement, migrate-ileec-scientific-areas, associate-ileecCourses-toScientificAreas, migrate-IleecGroups-Data, migrate-precedence-by-number-curricular-courses, migrate-precedence-by-curricular-courses">
+	</target>
+
 	<!-- ********************************************************************* -->
 </project>

@@ -1,6 +1,5 @@
 package Dominio;
 
-import Util.EnrolmentState;
 
 /**
  * @author dcs-rjao
@@ -8,64 +7,71 @@ import Util.EnrolmentState;
  * 24/Mar/2003
  */
 
-public class EnrolmentInOptionalCurricularCourse extends Enrolment implements IEnrolmentInOptionalCurricularCourse {
-
+public class EnrolmentInOptionalCurricularCourse extends Enrolment implements IEnrolmentInOptionalCurricularCourse
+{
 	private Integer curricularCourseForOptionKey;
 	private ICurricularCourse curricularCourseForOption;
 
-	public EnrolmentInOptionalCurricularCourse() {
+	public EnrolmentInOptionalCurricularCourse()
+	{
 		super();
 	}
 
-	public EnrolmentInOptionalCurricularCourse(
-		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourseScope curricularCourseScope,
-		EnrolmentState state,
-		ICurricularCourse curricularCourseForOption) {
-		super(studentCurricularPlan, curricularCourseScope, state);
-		setCurricularCourseForOption(curricularCourseForOption);
-	}
-
-	public String toString() {
-		String result = super.toString();
-		result += "curricularCourseForOption = " + this.curricularCourseForOption + "; ";
-		return result;
-	}
 	/**
-	 * @return ICurricularCourse
+	 * @return Returns the curricularCourseForOption.
 	 */
-	public ICurricularCourse getCurricularCourseForOption() {
+	public ICurricularCourse getCurricularCourseForOption()
+	{
 		return curricularCourseForOption;
 	}
 
 	/**
-	 * @return Integer
+	 * @param curricularCourseForOption The curricularCourseForOption to set.
 	 */
-	public Integer getCurricularCourseForOptionKey() {
-		return curricularCourseForOptionKey;
-	}
-
-	/**
-	 * Sets the curricularCourseForOption.
-	 * @param curricularCourseForOption The curricularCourseForOption to set
-	 */
-	public void setCurricularCourseForOption(ICurricularCourse curricularCourseForOption) {
+	public void setCurricularCourseForOption(ICurricularCourse curricularCourseForOption)
+	{
 		this.curricularCourseForOption = curricularCourseForOption;
 	}
 
 	/**
-	 * Sets the curricularCourseForOptionKey.
-	 * @param curricularCourseForOptionKey The curricularCourseForOptionKey to set
+	 * @return Returns the curricularCourseForOptionKey.
 	 */
-	public void setCurricularCourseForOptionKey(Integer curricularCourseForOptionKey) {
+	public Integer getCurricularCourseForOptionKey()
+	{
+		return curricularCourseForOptionKey;
+	}
+
+	/**
+	 * @param curricularCourseForOptionKey The curricularCourseForOptionKey to set.
+	 */
+	public void setCurricularCourseForOptionKey(Integer curricularCourseForOptionKey)
+	{
 		this.curricularCourseForOptionKey = curricularCourseForOptionKey;
 	}
 
-	
 	/* (non-Javadoc)
 	 * @see Dominio.IEnrolment#getRealCurricularCourse()
 	 */
-	public ICurricularCourse getRealCurricularCourse() {
+	public ICurricularCourse getRealCurricularCourse()
+	{
 		return this.getCurricularCourseForOption();
+	}
+
+	public String toString() {
+		String result = super.toString();
+		result += "curricularCourseForOption = " + this.getCurricularCourseForOption() + "; ";
+		return result;
+	}
+
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
+
+		if (obj instanceof IEnrolment) {
+			IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) obj;
+			
+			result = super.equals(enrolment) && this.getCurricularCourseForOption().equals(enrolment.getCurricularCourseForOption());
+		}
+		return result;
 	}
 }

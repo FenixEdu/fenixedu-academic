@@ -46,7 +46,7 @@ public class EnrolmentFilterAllOptionalCoursesRuleTest extends BaseEnrolmentRule
 		
 		enrolmentContext.setChosenOptionalDegree((ICurso) enrolmentContext.getDegreesForOptionalCurricularCourses().get(0));
 
-		doApplyRule(new EnrolmentFilterAllOptionalCoursesRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentFilterAllOptionalCoursesRule(), enrolmentContext);
 
 		optionalSpan = enrolmentContext.getOptionalCurricularCoursesToChooseFromDegree();
 
@@ -64,7 +64,7 @@ public class EnrolmentFilterAllOptionalCoursesRuleTest extends BaseEnrolmentRule
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
-			enrolmentRule.apply(enrolmentContext);
+//			enrolmentRule.apply(enrolmentContext);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);

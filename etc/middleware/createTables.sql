@@ -86,25 +86,25 @@ create table mw_AVERAGE(
 -- primary key (number, numberOfCoursesEnrolled)
 
 
-drop table if exists mw_ENROLMENT_AUXILIARY_TABLE_1;
-create table mw_ENROLMENT_AUXILIARY_TABLE_1(
-	number integer(11), 
-	enrolmentYear integer(11), 
-	curricularCourseYear integer(11),
-	curricularCourseSemester integer(11),
-	season integer(11), 
-	courseCode varchar(11),
-	degreeCode integer(11),
-	branchCode integer(11),
-	grade varchar(10),
-	teacherNumber integer(11),
-	examDate date,
-	universityCode varchar(10),
-	remarks varchar(255),
-	ACK_OPT_LOCK int(11) not null default '1',
-	idinternal integer(11) not null auto_increment,
-	primary key (idInternal),
-)type= InnoDB;
+-- drop table if exists mw_ENROLMENT_AUXILIARY_TABLE_1;
+-- create table mw_ENROLMENT_AUXILIARY_TABLE_1(
+-- 	number integer(11), 
+-- 	enrolmentYear integer(11), 
+-- 	curricularCourseYear integer(11),
+-- 	curricularCourseSemester integer(11),
+-- 	season integer(11), 
+-- 	courseCode varchar(11),
+-- 	degreeCode integer(11),
+-- 	branchCode integer(11),
+-- 	grade varchar(10),
+-- 	teacherNumber integer(11),
+-- 	examDate date,
+-- 	universityCode varchar(10),
+-- 	remarks varchar(255),
+-- 	ACK_OPT_LOCK int(11) not null default '1',
+-- 	idinternal integer(11) not null auto_increment,
+-- 	primary key (idInternal),
+-- )type= InnoDB;
 
 
 

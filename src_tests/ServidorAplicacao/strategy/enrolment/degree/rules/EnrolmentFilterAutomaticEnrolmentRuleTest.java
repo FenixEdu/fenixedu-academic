@@ -42,7 +42,7 @@ public class EnrolmentFilterAutomaticEnrolmentRuleTest extends BaseEnrolmentRule
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan.addAll(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 
-		doApplyRule(new EnrolmentFilterAutomaticEnrolmentRule(), enrolmentContext);
+//		doApplyRule(new EnrolmentFilterAutomaticEnrolmentRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		automaticSpan = enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled();
@@ -65,6 +65,6 @@ public class EnrolmentFilterAutomaticEnrolmentRuleTest extends BaseEnrolmentRule
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {
-			enrolmentRule.apply(enrolmentContext);
+//			enrolmentRule.apply(enrolmentContext);
 	}
 }

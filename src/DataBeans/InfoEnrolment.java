@@ -13,11 +13,11 @@ import Util.EnrolmentState;
 public class InfoEnrolment extends InfoObject
 {
     private InfoStudentCurricularPlan infoStudentCurricularPlan;
-    //	private InfoCurricularCourse infoCurricularCourse;
+   	private InfoCurricularCourse infoCurricularCourse;
     private InfoExecutionPeriod infoExecutionPeriod;
     private EnrolmentState enrolmentState;
     private EnrolmentEvaluationType enrolmentEvaluationType;
-    private InfoCurricularCourseScope infoCurricularCourseScope;
+    //private InfoCurricularCourseScope infoCurricularCourseScope;
 
     // to be used to keep the actual enrolment evaluation
     private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
@@ -35,7 +35,8 @@ public class InfoEnrolment extends InfoObject
         InfoExecutionPeriod infoExecutionPeriod)
     {
         this();
-        setInfoCurricularCourseScope(infoCurricularCourseScope);
+        //setInfoCurricularCourseScope(infoCurricularCourseScope);
+		setInfoCurricularCourse(infoCurricularCourse);
         setInfoStudentCurricularPlan(infoStudentCurricularPlan);
         setEnrolmentState(state);
         setInfoExecutionPeriod(infoExecutionPeriod);
@@ -51,9 +52,9 @@ public class InfoEnrolment extends InfoObject
 
             resultado =
                 this.getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan()) &&
-                //						this.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse()) &&
-    this.getInfoCurricularCourseScope().equals(enrolment.getInfoCurricularCourseScope())
-        && this.getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod());
+                this.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse()) &&
+    			//this.getInfoCurricularCourseScope().equals(enrolment.getInfoCurricularCourseScope())
+         this.getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod());
         }
         return resultado;
     }
@@ -64,17 +65,17 @@ public class InfoEnrolment extends InfoObject
         result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
         result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
         result += "state = " + this.enrolmentState + "; ";
-        //		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
-        result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
+      	result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
+        //result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
         result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
         result += "infoEvaluations = " + this.infoEvaluations + "]\n";
 
         return result;
     }
 
-    //	public InfoCurricularCourse getInfoCurricularCourse() {
-    //		return infoCurricularCourse;
-    //	}
+	public InfoCurricularCourse getInfoCurricularCourse() {
+		return infoCurricularCourse;
+	}
 
     /**
 	 * @return InfoExecutionPeriod
@@ -100,9 +101,9 @@ public class InfoEnrolment extends InfoObject
         return enrolmentState;
     }
 
-    //	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-    //		this.infoCurricularCourse = infoCurricularCourse;
-    //	}
+	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+		this.infoCurricularCourse = infoCurricularCourse;
+	}
 
     /**
 	 * Sets the infoExecutionPeriod.
@@ -157,15 +158,15 @@ public class InfoEnrolment extends InfoObject
         infoEvaluations = list;
     }
 
-    public InfoCurricularCourseScope getInfoCurricularCourseScope()
-    {
-        return infoCurricularCourseScope;
-    }
-
-    public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope)
-    {
-        infoCurricularCourseScope = scope;
-    }
+//    public InfoCurricularCourseScope getInfoCurricularCourseScope()
+//    {
+//        return infoCurricularCourseScope;
+//    }
+//
+//    public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope)
+//    {
+//        infoCurricularCourseScope = scope;
+//    }
 
     /**
 	 * @return InfoEnrolmentEvaluation

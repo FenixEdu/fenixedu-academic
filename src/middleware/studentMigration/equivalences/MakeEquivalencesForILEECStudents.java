@@ -10,11 +10,9 @@ import java.util.Map;
 
 import middleware.middlewareDomain.MWAreaCientificaIleec;
 import middleware.middlewareDomain.MWDegreeTranslation;
-import middleware.middlewareDomain.MWDisciplinaIleec;
 import middleware.middlewareDomain.MWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaCientificaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
-import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
@@ -23,14 +21,13 @@ import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnr
 import org.apache.commons.beanutils.BeanComparator;
 
 import Dominio.CreditsInAnySecundaryArea;
-import Dominio.CreditsInSpecificScientificArea;
+import Dominio.CreditsInScientificArea;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEvaluation;
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
@@ -45,7 +42,6 @@ import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
 import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
 import ServidorPersistente.IPersistentCreditsInSpecificScientificArea;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
@@ -132,7 +128,7 @@ public class MakeEquivalencesForILEECStudents
 		System.out.println("[INFO] Total EnrolmentEvaluations created: [" + MakeEquivalencesForILEECStudents.totalEnrollmentEvaluationsCreated + "].");
 		System.out.println("[INFO] Total Equivalences created: [" + MakeEquivalencesForILEECStudents.totalEnrolmentEquivalencesCreated + "].");
 		System.out.println("[INFO] Total CreditsInAnySecundaryArea created: [" + MakeEquivalencesForILEECStudents.totalCreditsInAnySecundaryArea + "].");
-		System.out.println("[INFO] Total CreditsInSpecificScientificArea created: [" + MakeEquivalencesForILEECStudents.totalCreditsInSpecificScientificArea + "].");
+		System.out.println("[INFO] Total CreditsInScientificArea created: [" + MakeEquivalencesForILEECStudents.totalCreditsInSpecificScientificArea + "].");
 
 		MakeEquivalencesForILEECStudents.printReport(new PrintWriter(System.out, true));
 
@@ -262,13 +258,14 @@ public class MakeEquivalencesForILEECStudents
 						continue;
 					}
 					
-					ICurricularCourseScope newCurricularCourseScope = MakeEquivalencesForILEECStudents.getCurricularCourseScope(enrolment, newCurricularCourse, fenixPersistentSuport);
-					if(newCurricularCourseScope == null)
-					{
-						continue;
-					}
+//					ICurricularCourseScope newCurricularCourseScope = MakeEquivalencesForILEECStudents.getCurricularCourseScope(enrolment, newCurricularCourse, fenixPersistentSuport);
+//					if(newCurricularCourseScope == null)
+//					{
+//						continue;
+//					}
 					
-					IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolment, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+//					IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolment, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+					IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolment, newCurricularCourse, currentStudentCurricularPlan, fenixPersistentSuport);
 					if(enrolmentWriten == null)
 					{
 						continue;
@@ -291,11 +288,11 @@ public class MakeEquivalencesForILEECStudents
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 
 		IPersistentMWEquivalenciaIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
-		IPersistentMWDisciplinaIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
+//		IPersistentMWDisciplinaIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
 		IPersistentCurricularCourse curricularCourseDAO = fenixPersistentSuport.getIPersistentCurricularCourse();
 
 		IDegreeCurricularPlan currentDegreeCurricularPlan = MakeEquivalencesForILEECStudents.getDegreeCurricularPlan(new Integer(MakeEquivalencesForILEECStudents.DEGREE_CODE), fenixPersistentSuport);
-		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourseScope().getCurricularCourse();
+		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourse();
 		ICurricularCourse newCurricularCourse = null;
 
 		MWEquivalenciaIleec mwEquivalenciaIleec = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(new Integer(MakeEquivalencesForILEECStudents.CREDITS_COURSE_TO_COURSE), oldCurricularCourse.getCode());
@@ -322,8 +319,9 @@ public class MakeEquivalencesForILEECStudents
 			}
 		} else
 		{
-			MWDisciplinaIleec mwDisciplinaIleec = mwDisciplinasIleecDAO.readByCodigoDisciplina(mwEquivalenciaIleec.getCodigoDisciplinaCurriculoActual());
-			System.out.println("[ERROR 405] Cannot find Fenix CurricularCourse with code [" + mwEquivalenciaIleec.getCodigoDisciplinaCurriculoActual() + "] and name [" + mwDisciplinaIleec.getNome() + "] for Degree [" + currentDegreeCurricularPlan.getDegree().getNome() + "]!");
+//			MWDisciplinaIleec mwDisciplinaIleec = mwDisciplinasIleecDAO.readByCodigoDisciplina(mwEquivalenciaIleec.getCodigoDisciplinaCurriculoActual());
+//			System.out.println("[ERROR 405] Cannot find Fenix CurricularCourse with code [" + mwEquivalenciaIleec.getCodigoDisciplinaCurriculoActual() + "] and name [" + mwDisciplinaIleec.getNome() + "] for Degree [" + currentDegreeCurricularPlan.getDegree().getNome() + "]!");
+			System.out.println("[ERROR 405] Cannot find Fenix CurricularCourse with code [" + mwEquivalenciaIleec.getCodigoDisciplinaCurriculoActual() + "] for Degree [" + currentDegreeCurricularPlan.getDegree().getNome() + "]!");
 			return null;
 		}
 		
@@ -336,81 +334,81 @@ public class MakeEquivalencesForILEECStudents
 	 * @return
 	 * @throws Throwable
 	 */
-	private static ICurricularCourseScope getCurricularCourseScope(IEnrolment oldEnrolment, ICurricularCourse newCurricularCourse, ISuportePersistente fenixPersistentSuport) throws Throwable
-	{
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-
-		IPersistentMWDisciplinaIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = fenixPersistentSuport.getIPersistentCurricularCourseScope();
-		
-		Integer year = null;
-		Integer semester = null;
-		List result = null;
-
-		MWDisciplinaIleec mwDisciplinaIleec = mwDisciplinasIleecDAO.readByCodigoDisciplina(newCurricularCourse.getCode());
-		if(mwDisciplinaIleec == null)
-		{
-			return null;
-		}
-
-		if(mwDisciplinaIleec.getAnoCurricular().intValue() == 0)
-		{
-			year = new Integer(4);
-			result = persistentCurricularCourseScope.readByCurricularCourseAndYear(newCurricularCourse, year);
-			if ((result == null) || (result.isEmpty()))
-			{
-				year = new Integer(5);
-				result = persistentCurricularCourseScope.readByCurricularCourseAndYear(newCurricularCourse, year);
-				if ((result == null) || (result.isEmpty()))
-				{
-					year = oldEnrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear();
-					result = persistentCurricularCourseScope.readByCurricularCourseAndYear(newCurricularCourse, year);
-					if ((result == null) || (result.isEmpty()))
-					{
-						System.out.println("[ERROR 406] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + newCurricularCourse.getCode() + "] and name [" + newCurricularCourse.getName() + "] in period [year: " + mwDisciplinaIleec.getAnoCurricular().toString() + " semester: " + mwDisciplinaIleec.getSemestre().toString() + "]!");
-						return null;
-					}
-				}
-			}
-		} else
-		{
-			year = mwDisciplinaIleec.getAnoCurricular();
-		}
-
-		if(mwDisciplinaIleec.getSemestre().intValue() == 3)
-		{
-			semester = new Integer(1);
-			result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
-			if ((result == null) || (result.isEmpty()))
-			{
-				semester = new Integer(2);
-				result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
-				if ((result == null) || (result.isEmpty()))
-				{
-					semester = oldEnrolment.getCurricularCourseScope().getCurricularSemester().getSemester();
-					result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
-					if ((result == null) || (result.isEmpty()))
-					{
-						System.out.println("[ERROR 407] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + newCurricularCourse.getCode() + "] and name [" + newCurricularCourse.getName() + "] in period [year: " + mwDisciplinaIleec.getAnoCurricular().toString() + " semester: " + mwDisciplinaIleec.getSemestre().toString() + "]!");
-						return null;
-					}
-				}
-			}
-		} else
-		{
-			semester = mwDisciplinaIleec.getSemestre();
-		}
-
-		result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
-		if ((result == null) || (result.isEmpty()))
-		{
-			System.out.println("[ERROR 408] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + newCurricularCourse.getCode() + "] and name [" + newCurricularCourse.getName() + "] in period [year: " + mwDisciplinaIleec.getAnoCurricular().toString() + " semester: " + mwDisciplinaIleec.getSemestre().toString() + "]!");
-			return null;
-		} else
-		{
-			return (ICurricularCourseScope) result.get(0);
-		}
-	}
+//	private static ICurricularCourseScope getCurricularCourseScope(IEnrolment oldEnrolment, ICurricularCourse newCurricularCourse, ISuportePersistente fenixPersistentSuport) throws Throwable
+//	{
+//		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+//
+//		IPersistentMWDisciplinaIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
+//		IPersistentCurricularCourseScope persistentCurricularCourseScope = fenixPersistentSuport.getIPersistentCurricularCourseScope();
+//		
+//		Integer year = null;
+//		Integer semester = null;
+//		List result = null;
+//
+//		MWDisciplinaIleec mwDisciplinaIleec = mwDisciplinasIleecDAO.readByCodigoDisciplina(newCurricularCourse.getCode());
+//		if(mwDisciplinaIleec == null)
+//		{
+//			return null;
+//		}
+//
+//		if(mwDisciplinaIleec.getAnoCurricular().intValue() == 0)
+//		{
+//			year = new Integer(4);
+//			result = persistentCurricularCourseScope.readByCurricularCourseAndYear(newCurricularCourse, year);
+//			if ((result == null) || (result.isEmpty()))
+//			{
+//				year = new Integer(5);
+//				result = persistentCurricularCourseScope.readByCurricularCourseAndYear(newCurricularCourse, year);
+//				if ((result == null) || (result.isEmpty()))
+//				{
+//					year = oldEnrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear();
+//					result = persistentCurricularCourseScope.readByCurricularCourseAndYear(newCurricularCourse, year);
+//					if ((result == null) || (result.isEmpty()))
+//					{
+//						System.out.println("[ERROR 406] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + newCurricularCourse.getCode() + "] and name [" + newCurricularCourse.getName() + "] in period [year: " + mwDisciplinaIleec.getAnoCurricular().toString() + " semester: " + mwDisciplinaIleec.getSemestre().toString() + "]!");
+//						return null;
+//					}
+//				}
+//			}
+//		} else
+//		{
+//			year = mwDisciplinaIleec.getAnoCurricular();
+//		}
+//
+//		if(mwDisciplinaIleec.getSemestre().intValue() == 3)
+//		{
+//			semester = new Integer(1);
+//			result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
+//			if ((result == null) || (result.isEmpty()))
+//			{
+//				semester = new Integer(2);
+//				result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
+//				if ((result == null) || (result.isEmpty()))
+//				{
+//					semester = oldEnrolment.getCurricularCourseScope().getCurricularSemester().getSemester();
+//					result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
+//					if ((result == null) || (result.isEmpty()))
+//					{
+//						System.out.println("[ERROR 407] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + newCurricularCourse.getCode() + "] and name [" + newCurricularCourse.getName() + "] in period [year: " + mwDisciplinaIleec.getAnoCurricular().toString() + " semester: " + mwDisciplinaIleec.getSemestre().toString() + "]!");
+//						return null;
+//					}
+//				}
+//			}
+//		} else
+//		{
+//			semester = mwDisciplinaIleec.getSemestre();
+//		}
+//
+//		result = persistentCurricularCourseScope.readByCurricularCourseAndYearAndSemester(newCurricularCourse, year, semester);
+//		if ((result == null) || (result.isEmpty()))
+//		{
+//			System.out.println("[ERROR 408] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + newCurricularCourse.getCode() + "] and name [" + newCurricularCourse.getName() + "] in period [year: " + mwDisciplinaIleec.getAnoCurricular().toString() + " semester: " + mwDisciplinaIleec.getSemestre().toString() + "]!");
+//			return null;
+//		} else
+//		{
+//			return (ICurricularCourseScope) result.get(0);
+//		}
+//	}
 
 	/**
 	 * @param enrolmentToGiveEquivalence
@@ -466,7 +464,7 @@ public class MakeEquivalencesForILEECStudents
 
 		IPersistentMWEquivalenciaIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
 
-		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourseScope().getCurricularCourse();
+		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourse();
 		IStudent student = oldEnrolment.getStudentCurricularPlan().getStudent();
 		Integer equivalenceType = new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA);
 
@@ -521,10 +519,10 @@ public class MakeEquivalencesForILEECStudents
 
 			List cases = null;
 			
-			if(equivalenceType.intValue() == 2)
+			if(equivalenceType.intValue() == MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA)
 			{
 				cases = (List) MakeEquivalencesForILEECStudents.creditEquivalencesType2.get(key);
-			} else if(equivalenceType.intValue() == 5)
+			} else if(equivalenceType.intValue() == MakeEquivalencesForILEECStudents.CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA)
 			{
 				cases = (List) MakeEquivalencesForILEECStudents.creditEquivalencesType5.get(key);
 			}
@@ -540,10 +538,10 @@ public class MakeEquivalencesForILEECStudents
 				}
 			}
 			
-			if(equivalenceType.intValue() == 2)
+			if(equivalenceType.intValue() == MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA)
 			{
 				cases = (List) MakeEquivalencesForILEECStudents.creditEquivalencesType2.put(key, cases);
-			} else if(equivalenceType.intValue() == 5)
+			} else if(equivalenceType.intValue() == MakeEquivalencesForILEECStudents.CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA)
 			{
 				cases = (List) MakeEquivalencesForILEECStudents.creditEquivalencesType5.put(key, cases);
 			}
@@ -648,7 +646,7 @@ public class MakeEquivalencesForILEECStudents
 	{
 		boolean result = false;
 
-		ICurricularCourse curricularCourse = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(enrolment.getCurricularCourseScope().getCurricularCourse(), currentStudentCurricularPlan.getDegreeCurricularPlan(), fenixPersistentSuport);
+		ICurricularCourse curricularCourse = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(enrolment.getCurricularCourse(), currentStudentCurricularPlan.getDegreeCurricularPlan(), fenixPersistentSuport);
 		if(curricularCourse == null)
 		{
 			result = false;
@@ -676,10 +674,10 @@ public class MakeEquivalencesForILEECStudents
 		while (iterator.hasNext())
 		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if(enrolment.getCurricularCourseScope().getCurricularCourse().getCode().equals("SE") && enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+			if(enrolment.getCurricularCourse().getCode().equals("SE") && enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			{
 				enrolmentInSE = enrolment;
-			} else if(enrolment.getCurricularCourseScope().getCurricularCourse().getCode().equals("SH") && enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+			} else if(enrolment.getCurricularCourse().getCode().equals("SH") && enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			{
 				enrolmentInSH = enrolment;
 			}
@@ -693,10 +691,11 @@ public class MakeEquivalencesForILEECStudents
 
 			ICurricularCourse newCurricularCourse = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(curricularCourseCriteria, currentStudentCurricularPlan.getDegreeCurricularPlan(), fenixPersistentSuport);
 
-			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
+//			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
 
-			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
-
+//			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourse, currentStudentCurricularPlan, fenixPersistentSuport);
+			
 			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSE, enrolmentWriten, fenixPersistentSuport);
 			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSH, enrolmentWriten, fenixPersistentSuport);
 			
@@ -712,9 +711,10 @@ public class MakeEquivalencesForILEECStudents
 
 			ICurricularCourse newCurricularCourse = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(curricularCourseCriteria, currentStudentCurricularPlan.getDegreeCurricularPlan(), fenixPersistentSuport);
 
-			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
+//			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
 
-			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+//			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourse, currentStudentCurricularPlan, fenixPersistentSuport);
 
 			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSE, enrolmentWriten, fenixPersistentSuport);
 
@@ -742,19 +742,22 @@ public class MakeEquivalencesForILEECStudents
 	 * @return
 	 * @throws Throwable
 	 */
-	protected static IEnrolment writeEnrollment(IEnrolment enrolment, ICurricularCourseScope curricularCourseScope, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+//	protected static IEnrolment writeEnrollment(IEnrolment enrolment, ICurricularCourseScope curricularCourseScope, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	protected static IEnrolment writeEnrollment(IEnrolment enrolment, ICurricularCourse curricularCourse, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
 
 		IExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
 
-		IEnrolment enrolmentToWrite = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(currentStudentCurricularPlan, curricularCourseScope, executionPeriod);
-
+//		IEnrolment enrolmentToWrite = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(currentStudentCurricularPlan, curricularCourseScope, executionPeriod);
+		IEnrolment enrolmentToWrite = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(currentStudentCurricularPlan, curricularCourse, executionPeriod);
+		
 		if (enrolmentToWrite == null)
 		{
 			IEnrolment enrolmentToObtainKey = new Enrolment();
 			enrolmentToObtainKey.setStudentCurricularPlan(currentStudentCurricularPlan);
-			enrolmentToObtainKey.setCurricularCourseScope(curricularCourseScope);
+//			enrolmentToObtainKey.setCurricularCourseScope(curricularCourseScope);
+			enrolmentToObtainKey.setCurricularCourse(curricularCourse);
 			enrolmentToObtainKey.setExecutionPeriod(executionPeriod);
 			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(enrolmentToObtainKey);
 
@@ -766,7 +769,8 @@ public class MakeEquivalencesForILEECStudents
 
 				fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolmentToWrite);
 
-				enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
+//				enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
+				enrolmentToWrite.setCurricularCourse(curricularCourse);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
 				enrolmentToWrite.setEnrolmentState(enrolment.getEnrolmentState());
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
@@ -937,7 +941,7 @@ public class MakeEquivalencesForILEECStudents
 
 			if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
 			{
-				List enrolmentsInSameCourse = enrolmentDAO.readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourseScope().getCurricularCourse(), enrolment.getExecutionPeriod());
+				List enrolmentsInSameCourse = enrolmentDAO.readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourse(), enrolment.getExecutionPeriod());
 
 				if(enrolmentsInSameCourse != null || !enrolmentsInSameCourse.isEmpty())
 				{
@@ -996,7 +1000,7 @@ public class MakeEquivalencesForILEECStudents
 		IPersistentCreditsInSpecificScientificArea creditsInSpecificScientificAreaDAO = fenixPersistentSuport.getIPersistentCreditsInSpecificScientificArea();
 		IPersistentScientificArea scientificAreaDAO = fenixPersistentSuport.getIPersistentScientificArea();
 
-		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourseScope().getCurricularCourse();
+		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourse();
 
 		MWEquivalenciaIleec mwEquivalenciaIleec = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA), oldCurricularCourse.getCode());
 		if(mwEquivalenciaIleec == null)
@@ -1007,7 +1011,7 @@ public class MakeEquivalencesForILEECStudents
 				return Boolean.FALSE;
 			} else
 			{
-				CreditsInSpecificScientificArea creditsInSpecificScientificArea = new CreditsInSpecificScientificArea();
+				CreditsInScientificArea creditsInSpecificScientificArea = new CreditsInScientificArea();
 				creditsInSpecificScientificAreaDAO.simpleLockWrite(creditsInSpecificScientificArea);
 				creditsInSpecificScientificArea.setEnrolment(oldEnrolment);
 				creditsInSpecificScientificArea.setGivenCredits(new Integer(MakeEquivalencesForILEECStudents.GIVEN_CREDITS));

@@ -14,6 +14,7 @@ import Dominio.CurricularCourseGroup;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
+import Dominio.IScientificArea;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
 import Util.AreaType;
@@ -30,12 +31,12 @@ public class CurricularCourseGroupOJB extends ObjectFenixOJB implements IPersist
 	{
 	}
 
-	public ICurricularCourseGroup readByBranchAndAreaType(IBranch branch, AreaType areaType) throws ExcepcaoPersistencia
+	public List readByBranchAndAreaType(IBranch branch, AreaType areaType) throws ExcepcaoPersistencia
 	{
-		Criteria crit = new Criteria();
-		crit.addEqualTo("keyBranch", branch.getIdInternal());
-		crit.addEqualTo("areaType", areaType);
-		return (ICurricularCourseGroup) queryObject(CurricularCourseGroup.class, crit);
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyBranch", branch.getIdInternal());
+		criteria.addEqualTo("areaType", areaType);
+		return queryList(CurricularCourseGroup.class, criteria);
 	}
 
     public List readByBranch(IBranch branch) throws ExcepcaoPersistencia
@@ -45,11 +46,29 @@ public class CurricularCourseGroupOJB extends ObjectFenixOJB implements IPersist
 		return queryList(CurricularCourseGroup.class, criteria);
     }
 
-    public ICurricularCourseGroup readByBranchAndCurricularCourse(IBranch branch, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
+    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(
+		IBranch branch,
+		ICurricularCourse curricularCourse,
+		AreaType areaType)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
+		criteria.addEqualTo("curricularCourses.idInternal", curricularCourse.getIdInternal());
+		criteria.addEqualTo("areaType", areaType);
+		return (ICurricularCourseGroup) queryObject(CurricularCourseGroup.class, criteria);
+	}
+
+	public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(
+		IBranch branch,
+		IScientificArea scientificArea,
+		AreaType areaType)
+		throws ExcepcaoPersistencia
     {
     	Criteria criteria = new Criteria();
     	criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
-    	criteria.addEqualTo("curricularCourses.idInternal", curricularCourse.getIdInternal());
+    	criteria.addEqualTo("scientificAreas.idInternal", scientificArea.getIdInternal());
+    	criteria.addEqualTo("areaType", areaType);
     	return (ICurricularCourseGroup) queryObject(CurricularCourseGroup.class, criteria);
     }
 

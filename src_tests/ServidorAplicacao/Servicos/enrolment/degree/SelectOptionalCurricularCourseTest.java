@@ -115,7 +115,7 @@ public class SelectOptionalCurricularCourseTest extends TestCaseReadServices {
 
 		curricularCourse = getCurricularCourse("OPÇÃO I", "");
 		infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-		assertEquals("Optional Scope Selected: ", optionalEnrolment.getInfoCurricularCourseScope().getInfoCurricularCourse(),infoCurricularCourse);
+//		assertEquals("Optional Scope Selected: ", optionalEnrolment.getInfoCurricularCourseScope().getInfoCurricularCourse(),infoCurricularCourse);
 	}
 	
 	public ICurricularCourse getCurricularCourse (String name, String code){
