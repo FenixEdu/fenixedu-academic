@@ -42,7 +42,7 @@ public class ReadCurrentExecutionPeriod implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+            infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
         }
         catch (ExcepcaoPersistencia ex)
         {

@@ -73,7 +73,7 @@ public class ReadCurrentExecutionPeriodTest extends TestCaseServicos {
 			e.printStackTrace();
 			fail("Reading execution period using persistent layer!");
 		}
-		InfoExecutionPeriod expectedInfoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(expectedIExecutionPeriod);
+		InfoExecutionPeriod expectedInfoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(expectedIExecutionPeriod);
 		assertEquals(expectedInfoExecutionPeriod, executionPeriod);
 	}
 }

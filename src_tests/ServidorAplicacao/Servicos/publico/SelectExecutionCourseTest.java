@@ -147,7 +147,7 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 			
 							
 			this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);			
-			this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+			this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 			this.curricularYear = new Integer(1);
 
 			if (!hasExecutionCourses) {

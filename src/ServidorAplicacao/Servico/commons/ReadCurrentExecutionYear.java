@@ -39,7 +39,7 @@ public class ReadCurrentExecutionYear implements IServico {
 		
 		IExecutionYear executionYear= persistentExecutionYear.readCurrentExecutionYear();
 		
-		infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
+		infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
 
 	  } catch (ExcepcaoPersistencia ex) {
 	  	throw new RuntimeException(ex);

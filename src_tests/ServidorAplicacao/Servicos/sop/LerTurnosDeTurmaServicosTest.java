@@ -135,7 +135,7 @@ public class LerTurnosDeTurmaServicosTest extends TestCaseReadServices {
 			}
 		
 			this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
-			this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);			
+			this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);			
 
 			sp.confirmarTransaccao();
 

@@ -78,7 +78,7 @@ public class ReadExecutionYearServiceTest extends TestCaseReadServices {
 			} catch (ExcepcaoPersistencia e) {
 				System.out.println("failed setting up the test data");
 			}
-		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
+		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
 		
 		return infoExecutionYear;
 	

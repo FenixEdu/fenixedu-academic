@@ -165,7 +165,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest
 */
 			this.degreeInitials = degree.getSigla();
 			this.nameDegreeCurricularPlan = degreeCurricularPlan.getName();
-			this.infoExecutionYear =  Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
+			this.infoExecutionYear =  (InfoExecutionYear) Cloner.get(executionYear);
 
 
 			if (!exists)

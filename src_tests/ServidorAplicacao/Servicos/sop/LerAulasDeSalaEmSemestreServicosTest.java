@@ -108,7 +108,7 @@ public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices {
 				this.infoRoom = new InfoRoom(new String("Ga4"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
 			}
 			
-			this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(iep);
+			this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(iep);
 
 			sp.confirmarTransaccao();
 

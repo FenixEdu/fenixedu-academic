@@ -421,7 +421,7 @@ public abstract class EnrolmentContextManager {
 
 		InfoDegree infoDegree = getInfoDegree(enrolmentContext.getChosenOptionalDegree());
 		
-		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(enrolmentContext.getExecutionPeriod());
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(enrolmentContext.getExecutionPeriod());
 		
 		InfoCurricularCourseScope infoChosenCurricularCourseScope = null;
 		if(enrolmentContext.getChosenOptionalCurricularCourseScope() != null) {

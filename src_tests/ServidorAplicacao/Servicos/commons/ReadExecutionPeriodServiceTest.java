@@ -66,7 +66,7 @@ public class ReadExecutionPeriodServiceTest extends TestCaseReadServices {
 			} catch (ExcepcaoPersistencia e) {
 				System.out.println("failed setting up the test data");
 			}
-		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
+		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
 		Object[] args = {"2º Semestre",infoExecutionYear};
 		return args;
 	}
@@ -105,7 +105,7 @@ public class ReadExecutionPeriodServiceTest extends TestCaseReadServices {
 			} catch (ExcepcaoPersistencia e) {
 				System.out.println("failed setting up the test data");
 			}
-			InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 		return infoExecutionPeriod;
 	}
 

@@ -46,7 +46,7 @@ public class ReadExecutionPeriodByOID implements IServico {
 		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 		IExecutionPeriod executionPeriod =(IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, oid);
 		if ( executionPeriod != null) {
-			result=Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+			result = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 		}
 	  } catch (ExcepcaoPersistencia ex) {
 	  	throw new FenixServiceException(ex);

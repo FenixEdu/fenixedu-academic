@@ -164,7 +164,7 @@ public class ReadExecutionCourseTest
 				disciplinaExecucaoPersistente.deleteExecutionCourse(executionCourse);
 
 			this.infoExecutionPeriod =
-				Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+				(InfoExecutionPeriod) Cloner.get(executionPeriod);
 			this.code = executionCourse.getSigla();
 
 			sp.confirmarTransaccao();

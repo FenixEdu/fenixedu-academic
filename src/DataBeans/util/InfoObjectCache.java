@@ -4,7 +4,9 @@
  */
 package DataBeans.util;
 
-import org.apache.commons.collections.FastHashMap;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ojb.broker.Identity;
 
 import DataBeans.InfoObject;
@@ -17,12 +19,12 @@ import Dominio.IDomainObject;
 public class InfoObjectCache
 {
 
-	private static FastHashMap infoObjectTable;
+	private static Map infoObjectTable;
 
 	static
 	{
-		infoObjectTable = new FastHashMap(2800);
-		infoObjectTable.setFast(true);
+		infoObjectTable = new HashMap();
+		//infoObjectTable.setFast(true);
 	}
 
 	public static String getKey(Identity identity)

@@ -1,5 +1,7 @@
 package DataBeans.util;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -185,21 +187,37 @@ public abstract class Cloner
 		InfoObject infoObject = InfoObjectCache.lookup(key);
 		if (infoObject == null)
 		{
-			infoObject = copy((IExecutionCourse) domainObject);
+			Class[] parameters = { domainObject.getClass() };
+			Object[] args = { domainObject };
+			try
+			{
+				Method method = Cloner.class.getDeclaredMethod("copy", parameters);
+				infoObject = (InfoObject) method.invoke(Cloner.class, args);
+			}
+			catch (SecurityException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (NoSuchMethodException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (IllegalArgumentException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (IllegalAccessException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (InvocationTargetException e)
+			{
+				throw new RuntimeException(e);
+			}
 			InfoObjectCache.cache(key, infoObject);
 		}
 		return infoObject;
 	}
-
-//	/**
-//	 * @param domainObject
-//	 * @return
-//	 */
-//	private static InfoObject copy(IDomainObject domainObject)
-//	{
-//		// TODO : what do we do here???
-//		return null;
-//	}
 
 	public static ITurno copyInfoShift2Shift(InfoShift infoShift)
 	{
@@ -231,12 +249,12 @@ public abstract class Cloner
 		return executionCourse;
 	}
 
-	//public static InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IExecutionCourse executionCourse)
-	private static InfoExecutionCourse copy(IExecutionCourse executionCourse)
+	// DO NOT DELETE - this is used locally through introspection!!!
+	private static InfoExecutionCourse copy(ExecutionCourse executionCourse)
 	{
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
+			(InfoExecutionPeriod) Cloner.get(executionCourse.getExecutionPeriod());
 
 		if (infoExecutionPeriod != null)
 		{
@@ -317,7 +335,7 @@ public abstract class Cloner
 	{
 		InfoLesson infoLesson = new InfoLesson();
 		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copy(lesson.getDisciplinaExecucao());
+			(InfoExecutionCourse) Cloner.get(lesson.getDisciplinaExecucao());
 
 		InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
 
@@ -359,7 +377,7 @@ public abstract class Cloner
 		InfoShift infoShift = new InfoShift();
 
 		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copy(shift.getDisciplinaExecucao());
+			(InfoExecutionCourse) Cloner.get(shift.getDisciplinaExecucao());
 
 		List infoLessonList =
 			(List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer()
@@ -399,7 +417,7 @@ public abstract class Cloner
 		InfoExecutionDegree infoExecutionDegree =
 			Cloner.copyIExecutionDegree2InfoExecutionDegree(classD.getExecutionDegree());
 		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(classD.getExecutionPeriod());
+			(InfoExecutionPeriod) Cloner.get(classD.getExecutionPeriod());
 
 		copyObjectProperties(infoClass, classD);
 
@@ -413,12 +431,13 @@ public abstract class Cloner
 	 * @param iExecutionPeriod
 	 * @return InfoExecutionPeriod
 	 */
-
-	public static InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod executionPeriod)
+	//public static InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod executionPeriod)
+	// DO NOT DELETE - this is used locally through introspection!!!
+	private static InfoExecutionPeriod copy(ExecutionPeriod executionPeriod)
 	{
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 		InfoExecutionYear infoExecutionYear =
-			Cloner.copyIExecutionYear2InfoExecutionYear(executionPeriod.getExecutionYear());
+			(InfoExecutionYear) Cloner.get(executionPeriod.getExecutionYear());
 
 		copyObjectProperties(infoExecutionPeriod, executionPeriod);
 
@@ -487,7 +506,7 @@ public abstract class Cloner
 			Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
 				executionDegree.getCurricularPlan());
 		InfoExecutionYear infoExecutionYear =
-			Cloner.copyIExecutionYear2InfoExecutionYear(executionDegree.getExecutionYear());
+			(InfoExecutionYear) Cloner.get(executionDegree.getExecutionYear());
 		try
 		{
 			BeanUtils.copyProperties(infoExecutionDegree, executionDegree);
@@ -537,7 +556,9 @@ public abstract class Cloner
 	 * @param infoExecutionYear
 	 * @return IExecutionYear
 	 */
-	public static InfoExecutionYear copyIExecutionYear2InfoExecutionYear(IExecutionYear executionYear)
+	//public static InfoExecutionYear copyIExecutionYear2InfoExecutionYear(IExecutionYear executionYear)
+	// DO NOT DELETE - this is used locally through introspection!!!
+	private static InfoExecutionYear copy(ExecutionYear executionYear)
 	{
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
 		copyObjectProperties(infoExecutionYear, executionYear);
@@ -644,7 +665,7 @@ public abstract class Cloner
 			return null;
 		InfoShift infoShift = new InfoShift();
 		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copy(shift.getDisciplinaExecucao());
+			(InfoExecutionCourse) Cloner.get(shift.getDisciplinaExecucao());
 		List infoLessonList =
 			(List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer()
 		{
@@ -1169,7 +1190,7 @@ public abstract class Cloner
 	{
 		InfoBibliographicReference infoBibliographicReference = new InfoBibliographicReference();
 		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copy(bibliographicReference.getExecutionCourse());
+			(InfoExecutionCourse) Cloner.get(bibliographicReference.getExecutionCourse());
 		copyObjectProperties(infoBibliographicReference, bibliographicReference);
 		infoBibliographicReference.setInfoExecutionCourse(infoExecutionCourse);
 		return infoBibliographicReference;
@@ -1216,7 +1237,7 @@ public abstract class Cloner
 		InfoSite infoSite = new InfoSite();
 
 		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copy(site.getExecutionCourse());
+			(InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
 
 		//		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
 		//					site.getInitialSection());
@@ -1641,7 +1662,7 @@ public abstract class Cloner
 	{
 		InfoCourseReport infoCourseReport = new InfoCourseReport();
 		InfoExecutionCourse infoExecutionCourse =
-			copy(courseReport.getExecutionCourse());
+			(InfoExecutionCourse) get(courseReport.getExecutionCourse());
 		copyObjectProperties(infoCourseReport, courseReport);
 
 		infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
@@ -2198,7 +2219,7 @@ public abstract class Cloner
 		//InfoCurricularCourse infoCurricularCourse =
 		// Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
 		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(enrolment.getExecutionPeriod());
+			(InfoExecutionPeriod) Cloner.get(enrolment.getExecutionPeriod());
 		InfoCurricularCourseScope infoCurricularCourseScope =
 			Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
 				enrolment.getCurricularCourseScope());
@@ -2477,7 +2498,7 @@ public abstract class Cloner
 		InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(professorship.getTeacher());
 
 		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copy(professorship.getExecutionCourse());
+			(InfoExecutionCourse) Cloner.get(professorship.getExecutionCourse());
 
 		copyObjectProperties(infoProfessorShip, professorship);
 
@@ -2565,7 +2586,7 @@ public abstract class Cloner
 
 		IExecutionPeriod executionPeriod = creditsTeacher.getExecutionPeriod();
 		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+			(InfoExecutionPeriod) Cloner.get(executionPeriod);
 
 		InfoCredits infoCreditsTeacher = new InfoCredits();
 		copyObjectProperties(infoCreditsTeacher, creditsTeacher);
@@ -2636,7 +2657,7 @@ public abstract class Cloner
 
 			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 			infoExecutionCourse =
-				Cloner.copy(frequenta.getDisciplinaExecucao());
+				(InfoExecutionCourse) Cloner.get(frequenta.getDisciplinaExecucao());
 
 			InfoEnrolment infoEnrolment = null;
 			if (frequenta.getEnrolment() != null)
@@ -2744,7 +2765,7 @@ public abstract class Cloner
 		InfoSummary infoSummary = new InfoSummary();
 		copyObjectProperties(infoSummary, summary);
 		InfoExecutionCourse infoExecutionCourse =
-			copy(summary.getExecutionCourse());
+			(InfoExecutionCourse) get(summary.getExecutionCourse());
 		infoSummary.setInfoExecutionCourse(infoExecutionCourse);
 		return infoSummary;
 	}
@@ -2850,7 +2871,7 @@ public abstract class Cloner
 		infoGroupProperties.setProjectDescription(groupProperties.getProjectDescription());
 
 		infoExecutionCourse =
-			copy(groupProperties.getExecutionCourse());
+			(InfoExecutionCourse) get(groupProperties.getExecutionCourse());
 		infoGroupProperties.setInfoExecutionCourse(infoExecutionCourse);
 		return infoGroupProperties;
 	}
@@ -3154,7 +3175,7 @@ public abstract class Cloner
 		InfoMetadata infoMetadata = new InfoMetadata();
 		copyObjectProperties(infoMetadata, metadata);
 		InfoExecutionCourse infoExecutionCourse =
-			copy(metadata.getExecutionCourse());
+			(InfoExecutionCourse) get(metadata.getExecutionCourse());
 		infoMetadata.setInfoExecutionCourse(infoExecutionCourse);
 		return infoMetadata;
 	}
@@ -3172,7 +3193,7 @@ public abstract class Cloner
 		InfoTest infoTest = new InfoTest();
 		copyObjectProperties(infoTest, test);
 		InfoExecutionCourse infoExecutionCourse =
-			copy(test.getExecutionCourse());
+			(InfoExecutionCourse) get(test.getExecutionCourse());
 		infoTest.setInfoExecutionCourse(infoExecutionCourse);
 		return infoTest;
 	}
@@ -3196,7 +3217,7 @@ public abstract class Cloner
 		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
 		copyObjectProperties(infoDistributedTest, distributedTest);
 		InfoExecutionCourse infoExecutionCourse =
-			copy(distributedTest.getExecutionCourse());
+			(InfoExecutionCourse) get(distributedTest.getExecutionCourse());
 		infoDistributedTest.setInfoExecutionCourse(infoExecutionCourse);
 		return infoDistributedTest;
 	}
@@ -3696,7 +3717,7 @@ public abstract class Cloner
 
 		InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
 		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copy(evaluationMethod.getExecutionCourse());
+			(InfoExecutionCourse) Cloner.get(evaluationMethod.getExecutionCourse());
 
 		copyObjectProperties(infoEvaluationMethod, evaluationMethod);
 
@@ -4110,8 +4131,8 @@ public abstract class Cloner
 		InfoTeacher infoTeacher =
 			Cloner.copyITeacher2InfoTeacher(teacherDegreeFinalProjectStudent.getTeacher());
 		InfoExecutionYear infoExecutionYear =
-			Cloner.copyIExecutionYear2InfoExecutionYear(
-				teacherDegreeFinalProjectStudent.getExecutionYear());
+			(InfoExecutionYear) Cloner.get(
+					teacherDegreeFinalProjectStudent.getExecutionYear());
 		InfoStudent infoStudent =
 			Cloner.copyIStudent2InfoStudent(teacherDegreeFinalProjectStudent.getStudent());
 
@@ -4176,8 +4197,8 @@ public abstract class Cloner
 		InfoTeacher infoTeacher =
 			Cloner.copyITeacher2InfoTeacher(teacherInstitutionWorkTime.getTeacher());
 		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
-				teacherInstitutionWorkTime.getExecutionPeriod());
+			(InfoExecutionPeriod) Cloner.get(
+					teacherInstitutionWorkTime.getExecutionPeriod());
 
 		InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime =
 			new InfoTeacherInstitutionWorkTime();
@@ -4232,7 +4253,7 @@ public abstract class Cloner
 		InfoExecutionCourse infoExecutionCourse = null;
 		if (executionCourse != null)
 		{
-			infoExecutionCourse = Cloner.copy(executionCourse);
+			infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 		}
 		else
 		{
