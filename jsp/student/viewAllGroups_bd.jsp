@@ -5,10 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
+
+
 <logic:present name="infoSiteGroupsByShiftList">
 	<logic:empty name="infoSiteGroupsByShiftList">
 	<h2><bean:message key="message.infoSiteGroupsByShiftList.not.available" /></h2>
 	</logic:empty>
+	<h2><span class="error"><html:errors/></span></h2>
 	
 <table border="0" style="text-align: left;">
 	<tbody>
@@ -16,7 +19,7 @@
 	<logic:iterate id="infoSiteGroupsByShift" name="infoSiteGroupsByShiftList" >
      <tr>
      	<td>
-        <br>
+<br>
         <h2>
         	<bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>
 			<bean:write name="infoShift" property="nome"/></h2>
@@ -40,14 +43,14 @@
 					
                		<td class="listClasses">
                	
-               			<html:link page="/enrollment.do">
-               				<b><bean:message key="link.enrollment"/></b></html:link>
+               			<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+               				<b><bean:message key="link.enrolment"/></b></html:link>
                 	</td>
                	
                		<td class="listClasses">
                	
-                    	<html:link page="/removeEnrollment.do">
-               				<b><bean:message key="link.removeEnrollment"/></b></html:link>
+                    	<html:link page="/removeEnrolment.do">
+               				<b><bean:message key="link.removeEnrolment"/></b></html:link>
                 	</td>
                 
              	</td>
@@ -56,17 +59,10 @@
             	</logic:iterate>
             </tbody>
 			</table>   
-   
-            
-    
-                
-                
-                
             </td>
             </tr>
             </logic:iterate>
             <br>
-            <span class="error"><html:errors/></span>
         </tbody>
 </table>
 </logic:present>
