@@ -38,6 +38,7 @@ public class SearchGrantOwnerByNumberAction extends DispatchAction
 		DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
 		String idGrantOwner = (String) searchGrantOwnerForm.get("idGrantOwner");
 
+        //Run the service
 		Integer arg = new Integer(idGrantOwner);
 		Object[] args = { null, null, null, arg };
 		IUserView userView = SessionUtils.getUserView(request);
@@ -47,7 +48,8 @@ public class SearchGrantOwnerByNumberAction extends DispatchAction
 		{
 			request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);
 			return mapping.findForward("search-succesfull");
-		} else
+		} 
+        else
 		{
 			ActionErrors errors = new ActionErrors();
 			String notMessageKey = "errors.grant.owner.not.found";

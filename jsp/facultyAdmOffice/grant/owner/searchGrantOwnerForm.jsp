@@ -50,7 +50,7 @@
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.idInternal"/>:&nbsp;</td>
-			<td><html:text property="idGrantOwner"/></td>
+			<td><html:text property="idGrantOwner"/>*</td>
 		</tr>
 	</table>
 	
