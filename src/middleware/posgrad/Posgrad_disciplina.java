@@ -18,6 +18,7 @@ public class Posgrad_disciplina
   private String tipo;
   private String optativa;
   private Integer codigoCurricularCourse;
+  private Integer semestre;
 
   public long getCodigocursomestrado()
   {
@@ -53,75 +54,96 @@ public class Posgrad_disciplina
     return  " [codigoCursoMestrado] " + codigocursomestrado + " [codigoInterno] " + codigointerno + " [nome] " + nome;
 
   }
-/**
- * @return
- */
-public Double getCreditos() {
-	return creditos;
-}
+  
+  
+  
+  
+  
+	/**
+	 * @return
+	 */
+	public Double getCreditos() {
+		return creditos;
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getSigla() {
+		return sigla;
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getTipo() {
+		return tipo;
+	}
+	
+	/**
+	 * @param double1
+	 */
+	public void setCreditos(Double double1) {
+		creditos = double1;
+	}
+	
+	/**
+	 * @param string
+	 */
+	public void setSigla(String string) {
+		sigla = string;
+	}
+	
+	/**
+	 * @param string
+	 */
+	public void setTipo(String string) {
+		tipo = string;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Integer getCodigoCurricularCourse() {
+		return codigoCurricularCourse;
+	}
+	
+	/**
+	 * @param integer
+	 */
+	public void setCodigoCurricularCourse(Integer integer) {
+		codigoCurricularCourse = integer;
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getOptativa() {
+		return optativa;
+	}
+	
+	/**
+	 * @param string
+	 */
+	public void setOptativa(String string) {
+		optativa = string;
+	}
 
-/**
- * @return
- */
-public String getSigla() {
-	return sigla;
-}
+	
 
-/**
- * @return
- */
-public String getTipo() {
-	return tipo;
-}
-
-/**
- * @param double1
- */
-public void setCreditos(Double double1) {
-	creditos = double1;
-}
-
-/**
- * @param string
- */
-public void setSigla(String string) {
-	sigla = string;
-}
-
-/**
- * @param string
- */
-public void setTipo(String string) {
-	tipo = string;
-}
-
-/**
- * @return
- */
-public Integer getCodigoCurricularCourse() {
-	return codigoCurricularCourse;
-}
-
-/**
- * @param integer
- */
-public void setCodigoCurricularCourse(Integer integer) {
-	codigoCurricularCourse = integer;
-}
-
-/**
- * @return
- */
-public String getOptativa() {
-	return optativa;
-}
-
-/**
- * @param string
- */
-public void setOptativa(String string) {
-	optativa = string;
-}
+	/**
+	 * @return
+	 */
+	public Integer getSemestre() {
+		return semestre;
+	}
+	
+	/**
+	 * @param semestre
+	 */
+	public void setSemestre(Integer semestre) {
+		this.semestre = semestre;
+	}
 
 }
 

@@ -119,7 +119,9 @@ public class PriceOJB extends ObjectFenixOJB implements IPersistentPrice {
 		criteria.addAndCriteria(criteriaDocs);
 		Query query = new QueryByCriteria(Price.class,criteria);
 		
-		return  (List) broker.getCollectionByQuery(query);
+		List result =  (List) broker.getCollectionByQuery(query);
+		System.out.println("Encontrei" + result.size());
+		return result;
 
-			 }
+	}
 }

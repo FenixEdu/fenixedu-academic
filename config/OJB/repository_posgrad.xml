@@ -496,6 +496,12 @@
     column="optativa"
     jdbc-type="VARCHAR"
   />
+
+  <field-descriptor id="11"
+    name="semestre"
+    column="semestre"
+    jdbc-type="INTEGER"
+  />
   
   
 </class-descriptor>

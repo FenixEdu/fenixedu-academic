@@ -1,5 +1,6 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
+import DataBeans.InfoFinalResult;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -41,5 +42,15 @@ public interface IDegreeCurricularPlanStrategy {
 	 * @return The Student's Average
 	 */
 	public Double calculateStudentWeightedAverage(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+
+
+	/**
+	 * 
+	 * @param studentCurricularPlan
+	 * @param infoFinalResult
+	 * @throws ExcepcaoPersistencia
+	 */
+	public void calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan, InfoFinalResult infoFinalResult) throws ExcepcaoPersistencia;
+
 
 }

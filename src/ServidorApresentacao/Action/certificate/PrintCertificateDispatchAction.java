@@ -236,15 +236,27 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							while(iterator.hasNext()) {	
 								result = iterator.next();
 								infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
-								dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
-								if (conclusionDate.compareTo(dataAux) == -1){
-									conclusionDate = dataAux;
-								}		
+//								dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
+//								if (conclusionDate.compareTo(dataAux) == -1){
+//									conclusionDate = dataAux;
+//								}		
 								if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
 									extraEnrolment.add(result);		
 								else
 									normalEnrolment.add(result);			 
 							}			
+							
+							Object argsAux[] = {infoStudentCurricularPlan};
+							Date date = null;
+							try {
+								date = (Date) serviceManager.executar(userView, "GetEndOfScholarshipDate", argsAux);
+
+							} catch (NonExistingServiceException e) {
+								throw new NonExistingActionException("Inscrição", e);
+							}
+							
+							conclusionDate = DateFormat.getDateInstance().format(date);
+							
 							
 							session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
 							session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);						

@@ -1,7 +1,9 @@
 
-package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.enrolment;
+package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.certificate;
 
-import DataBeans.InfoFinalResult;
+import java.util.Date;
+import java.util.List;
+
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.IStudentCurricularPlan;
@@ -10,61 +12,55 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class FinalResult implements IServico {
+public class GetEndOfScholarshipDate implements IServico {
 
-	private static FinalResult servico = new FinalResult();
+	private static GetEndOfScholarshipDate servico = new GetEndOfScholarshipDate();
     
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static FinalResult getService() {
+	public static GetEndOfScholarshipDate getService() {
 		return servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private FinalResult() { 
+	private GetEndOfScholarshipDate() { 
 	}
 
 	/**
 	 * Returns The Service Name */
 
 	public final String getNome() {
-		return "FinalResult";
+		return "GetEndOfScholarshipDate";
 	}
 
-	public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, Exception {
+	
+	public Date run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
 
-
-		boolean result = false;
-
-
+			ISuportePersistente sp = null;
+			List certificates = null;
+			
+			
 		IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
 
 		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
 		
 		IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
-
-
-		// verify if the school part is concluded
-		result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
-
-		if (result){
-			InfoFinalResult infoFinalResult = new InfoFinalResult();
-			
-			masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan, infoFinalResult);
-
-
-			return infoFinalResult;	
-		}	
-
-		return null;
+	
+	
+		return masterDegreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan);
+	
+	
 	}
+	
 }

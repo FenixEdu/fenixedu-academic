@@ -675,6 +675,10 @@
   	          scope="request"
               type="ServidorApresentacao.Action.certificate.PrintCertificateDispatchAction"
 			  >
+			  
+     		 <exception type="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
+	            key="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
+	            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
       </action>
       

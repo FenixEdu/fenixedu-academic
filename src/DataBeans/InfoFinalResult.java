@@ -9,8 +9,11 @@ public class InfoFinalResult {
     private String averageWeighted;
 //  Média simples 
     private String averageSimple;
+
 //  Média final
     private String finalAverage;
+    
+    
 //        
     public InfoFinalResult() { }    
     
@@ -31,6 +34,8 @@ public class InfoFinalResult {
     	}
     	return result;
     }
+
+
 
 
 

@@ -18,7 +18,13 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
+import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.ISite;
+import Dominio.Site;
 import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 import Util.TipoCurso;
@@ -190,6 +196,34 @@ public class MigrateDisciplina2Fenix {
 				coursesWritten++;
 				curricularCourse2Convert.setCodigoCurricularCourse(curricularCourse2Write.getIdInternal());
 				broker.store(curricularCourse2Convert);
+				
+				
+				
+				// Execution Course for the public site
+				IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+				executionCourse.setLabHours(curricularCourse2Write.getLabHours());
+				executionCourse.setTheoPratHours(curricularCourse2Write.getTheoPratHours());
+				executionCourse.setTheoreticalHours(curricularCourse2Write.getTheoreticalHours());
+				executionCourse.setPraticalHours(curricularCourse2Write.getPraticalHours());
+				executionCourse.setNome(curricularCourse2Write.getName());
+				executionCourse.setSigla(curricularCourse2Write.getCode());
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("name", "2 Semestre");
+				query = new QueryByCriteria(ExecutionPeriod.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+				
+				if (result.size() != 1) {
+					throw new Exception("Error Migrating Curricular Course " + curricularCourse2Convert.getNome());
+				}
+				
+				executionCourse.setExecutionPeriod((IExecutionPeriod) result.get(0));
+				broker.store(executionCourse);
+				
+				ISite site = new Site();
+				site.setExecutionCourse(executionCourse);
+				broker.store(site);
+				
 				broker.commitTransaction();
 				
 			}
