@@ -213,7 +213,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		throws FenixServiceException {
 		Object[] args2 = { infoExecCourse };
 		InfoSite site = (InfoSite) manager.executar(null, "ReadSite", args2);
-		RequestUtils.setSiteToRequest(request, site);
+		RequestUtils.setSiteFirstPageToRequest(request, site);
 		return site;
 	}
 
