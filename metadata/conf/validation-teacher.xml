@@ -776,7 +776,7 @@
 			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>
 		</field>
 		<field property="coResponsableTeacherNumber" depends="integer" page="1">
-			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>
+			<arg0 key="finalWorkInformationForm.coresponsableNumber" resource="true"/>
 		</field>
 	</form>
 

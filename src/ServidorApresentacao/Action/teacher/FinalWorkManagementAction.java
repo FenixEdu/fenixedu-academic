@@ -392,7 +392,12 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 					"ReadTeacherByNumber",
 					args);
 			if (infoTeacher == null) {
-				throw new FenixActionException("Unable to identify user as a teacher.");
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add(
+					"finalWorkInformationForm.unexistingTeacher",
+					new ActionError("finalWorkInformationForm.unexistingTeacher"));
+				saveErrors(request, actionErrors);
+				return mapping.getInputForward();
 			}
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
