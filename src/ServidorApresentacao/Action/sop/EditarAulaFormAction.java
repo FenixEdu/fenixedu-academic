@@ -47,91 +47,95 @@ public class EditarAulaFormAction extends FenixAction {
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 
-			//DynaActionForm editarAulasForm = (DynaActionForm) sessao.getAttribute("criarAulaForm");
+			
 
-			IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
-			InfoLesson iAulaAntiga =
-				(InfoLesson) sessao.getAttribute("infoAula");
-
-			Calendar inicio = Calendar.getInstance();
-			inicio.set(
-				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String)editarAulaForm.get("horaInicio")));
-			inicio.set(
-				Calendar.MINUTE,
-				Integer.parseInt((String)editarAulaForm.get("minutosInicio")));
-			inicio.set(Calendar.SECOND, 0);
-			Calendar fim = Calendar.getInstance();
-			fim.set(
-				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String)editarAulaForm.get("horaFim")));
-			fim.set(
-				Calendar.MINUTE,
-				Integer.parseInt((String)editarAulaForm.get("minutosFim")));
-			fim.set(Calendar.SECOND, 0);
-			//int i = ((Integer) editarAulaForm.get("indexDisciplinaExecucao")).intValue() - 1;
-			InfoRoom infoSala = new InfoRoom();
-			infoSala.setNome((String) editarAulaForm.get("nomeSala"));
-
-			RoomKey kSalaAntiga =
-				new RoomKey(iAulaAntiga.getInfoSala().getNome());
-
-			KeyLesson kAulaAntiga =
-				new KeyLesson(
-					iAulaAntiga.getDiaSemana(),
-					iAulaAntiga.getInicio(),
-					iAulaAntiga.getFim(),
-					kSalaAntiga);
-			InfoLesson iAula =
-				new InfoLesson(
-					new DiaSemana(new Integer((String) editarAulaForm.get("diaSemana"))),
-					inicio,
-					fim,
-					new TipoAula(new Integer((String) editarAulaForm.get("tipoAula"))),
-					infoSala,
-					iAulaAntiga.getInfoDisciplinaExecucao());
-			//      	                            (InfoExecutionCourse) ((ArrayList) sessao.getAttribute("infoDisciplinasExecucao")).get(i));
-
-			Object argsCriarAula[] = { kAulaAntiga, iAula };
-
-			InfoLessonServiceResult result =
-				(InfoLessonServiceResult) gestor.executar(
-					userView,
-					"EditarAula",
-					argsCriarAula);
-
-			InfoExecutionCourse iDE =
-				(InfoExecutionCourse) sessao.getAttribute(
-					"infoDisciplinaExecucao");
-			Object argsLerAulas[] = new Object[1];
-			argsLerAulas[0] = iDE;
-			ArrayList infoAulas =
-				(ArrayList) gestor.executar(
-					userView,
-					"LerAulasDeDisciplinaExecucao",
-					argsLerAulas);
-
-			sessao.removeAttribute("listaAulas");
-			if (infoAulas != null && !infoAulas.isEmpty())
-				sessao.setAttribute("listaAulas", infoAulas);
-
-			//	  Integer indexAula = (Integer) sessao.getAttribute("indexAula");
-			//	  ArrayList infoAulas = (ArrayList) sessao.getAttribute("listaAulas");
-			//	  infoAulas.set(indexAula.intValue(), iAula);
-			sessao.removeAttribute("indexAula");
-
-			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
-
-			if (actionErrors.isEmpty()) {
-				sessao.removeAttribute("infoAula");
-				return mapping.findForward("Sucesso");
-			} else {
-				saveErrors(request, actionErrors);
-				return mapping.getInputForward();
+			try {
+				IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+				GestorServicos gestor = GestorServicos.manager();
+				InfoLesson iAulaAntiga =
+					(InfoLesson) sessao.getAttribute("infoAula");
+				
+				Calendar inicio = Calendar.getInstance();
+				inicio.set(
+					Calendar.HOUR_OF_DAY,
+					Integer.parseInt((String)editarAulaForm.get("horaInicio")));
+				inicio.set(
+					Calendar.MINUTE,
+					Integer.parseInt((String)editarAulaForm.get("minutosInicio")));
+				inicio.set(Calendar.SECOND, 0);
+				Calendar fim = Calendar.getInstance();
+				fim.set(
+					Calendar.HOUR_OF_DAY,
+					Integer.parseInt((String)editarAulaForm.get("horaFim")));
+				fim.set(
+					Calendar.MINUTE,
+					Integer.parseInt((String)editarAulaForm.get("minutosFim")));
+				fim.set(Calendar.SECOND, 0);
+				
+				InfoRoom infoSala = new InfoRoom();
+				infoSala.setNome((String) editarAulaForm.get("nomeSala"));
+				
+				RoomKey kSalaAntiga =
+					new RoomKey(iAulaAntiga.getInfoSala().getNome());
+				
+				KeyLesson kAulaAntiga =
+					new KeyLesson(
+						iAulaAntiga.getDiaSemana(),
+						iAulaAntiga.getInicio(),
+						iAulaAntiga.getFim(),
+						kSalaAntiga);
+				InfoLesson iAula =
+					new InfoLesson(
+						new DiaSemana(new Integer((String) editarAulaForm.get("diaSemana"))),
+						inicio,
+						fim,
+						new TipoAula(new Integer((String) editarAulaForm.get("tipoAula"))),
+						infoSala,
+						iAulaAntiga.getInfoDisciplinaExecucao());
+				
+				Object argsEditarAula[] = { kAulaAntiga, iAula };
+				
+				InfoLessonServiceResult result =
+					(InfoLessonServiceResult) gestor.executar(
+						userView,
+						"EditarAula",
+						argsEditarAula);
+				
+				InfoExecutionCourse iDE =
+					(InfoExecutionCourse) sessao.getAttribute(
+						"infoDisciplinaExecucao");
+				Object argsLerAulas[] = new Object[1];
+				argsLerAulas[0] = iDE;
+				ArrayList infoAulas =
+					(ArrayList) gestor.executar(
+						userView,
+						"LerAulasDeDisciplinaExecucao",
+						argsLerAulas);
+				
+				sessao.removeAttribute("listaAulas");
+				if (infoAulas != null && !infoAulas.isEmpty())
+					sessao.setAttribute("listaAulas", infoAulas);
+				
+				
+				sessao.removeAttribute("indexAula");
+				
+				ActionErrors actionErrors = getActionErrors(result, inicio, fim);
+				
+				if (actionErrors.isEmpty()) {
+					sessao.removeAttribute("infoAula");
+					return mapping.findForward("Sucesso");
+				} else {
+					
+					saveErrors(request, actionErrors);
+					return mapping.getInputForward();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
 			}
 
 		} else
+		
 			throw new Exception();
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
