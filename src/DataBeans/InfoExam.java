@@ -122,4 +122,37 @@ public class InfoExam {
 		infoExecutionCourse = course;
 	}
 
+	public String getDate() {
+		String result = String.valueOf(getDay().get(Calendar.DAY_OF_MONTH));
+		result += "/";
+		result += String.valueOf(getDay().get(Calendar.MONTH)+1);
+		result += "/";
+		result += String.valueOf(getDay().get(Calendar.YEAR));
+		return result;
+	}
+	
+	public String getBeginningHour(){
+		String result = format(String.valueOf(getBeginning().get(Calendar.HOUR_OF_DAY)));
+				result += ":";
+				result += format(String.valueOf(getBeginning().get(Calendar.MINUTE)));
+		return result;
+	}
+	
+	/**
+	 * @param string
+	 * @return
+	 */
+	private String format(String string) {
+		if (string.length()==1){
+			string= "0"+string;
+		}
+		return string;
+	}
+
+	public String getEndHour(){
+			String result = format(String.valueOf(getEnd().get(Calendar.HOUR_OF_DAY)));
+					result += ":";
+					result += format(String.valueOf(getEnd().get(Calendar.MINUTE)));
+			return result;
+		}
 }
