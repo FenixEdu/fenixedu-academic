@@ -1452,15 +1452,13 @@ public class TeacherAdministrationViewerDispatchAction
 		lessonTypeValues.add(new Integer(2));
 		lessonTypeValues.add(new Integer(3));
 		lessonTypeValues.add(new Integer(4));
-		lessonTypeValues.add(new Integer(5));
-		lessonTypeValues.add(new Integer(6));
+		
 		List lessonTypeNames = new ArrayList();
 		lessonTypeNames.add("Teórica");
 		lessonTypeNames.add("Prática");
 		lessonTypeNames.add("Teórico-Prática");
 		lessonTypeNames.add("Laboratorial");
-		lessonTypeNames.add("Dúvidas");
-		lessonTypeNames.add("Reserva");
+	
 		request.setAttribute("lessonTypeValues", lessonTypeValues);
 		request.setAttribute("lessonTypeNames", lessonTypeNames);
 		return mapping.findForward("insertSummary");
@@ -1577,15 +1575,15 @@ public class TeacherAdministrationViewerDispatchAction
 		lessonTypeValues.add(new Integer(2));
 		lessonTypeValues.add(new Integer(3));
 		lessonTypeValues.add(new Integer(4));
-		lessonTypeValues.add(new Integer(5));
-		lessonTypeValues.add(new Integer(6));
+		
+		
 		List lessonTypeNames = new ArrayList();
 		lessonTypeNames.add("Teórica");
 		lessonTypeNames.add("Prática");
 		lessonTypeNames.add("Teórico-Prática");
 		lessonTypeNames.add("Laboratorial");
-		lessonTypeNames.add("Dúvidas");
-		lessonTypeNames.add("Reserva");
+		
+	
 
 		Integer summaryType =
 			((InfoSiteSummary) siteView.getComponent())

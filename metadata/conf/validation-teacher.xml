@@ -4,7 +4,7 @@
   <formset>
    
    <!-- validation for summaryForm -->
-   <form name="summariesManager">
+   <form name="summaryForm">
    
    	<field property="summaryDate" depends="required,mask,date" page="1" >
    		<msg name="date" key="errors.invalid.date"/>
@@ -39,7 +39,7 @@
      	
    </form>
    
-   <form name="summariesManager1">
+   <form name="summaryForm1">
    
    	<field property="summaryDateFormatted" depends="required,mask,date" page="1" >
    		<msg name="date" key="errors.invalid.date"/>

@@ -60,16 +60,16 @@
 				</td>
 			
 				<td class="listClasses">
-					<logic:notEmpty name="student"  property="infoPerson.email">
+				<%--	<logic:notEmpty name="student"  property="infoPerson.email"> --%>
 					<bean:define id="mail" name="student" property="infoPerson.email"/>
 					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="student" property="infoPerson.email"/></html:link>
-					</logic:notEmpty>
+				<%--	</logic:notEmpty>
 					<logic:empty name="student"  property="infoPerson.email">
 					&nbsp;
-					</logic:empty>
+					</logic:empty> --%>
 				</td>
 			</tr>
-			<logic:notEmpty name="student"  property="infoPerson.email">
+		<%--	<logic:notEmpty name="student"  property="infoPerson.email"> --%>
 			<bean:define id="aux" name="mailingList"/>
 			<logic:lessThan name="aux" value="1">
 				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
@@ -77,7 +77,7 @@
 			<logic:greaterThan name="aux" value="0">
 				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
 			</logic:greaterThan>
-			</logic:notEmpty>
+	<%--			</logic:notEmpty> --%>
     	</logic:iterate>
 		
     </table>   
