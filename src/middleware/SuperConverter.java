@@ -597,7 +597,7 @@ public static void main(String args[]) throws Exception{
 		
 		criteria = new Criteria();
 		criteria.addEqualTo("keyRole", role.getIdInternal());
-		criteria.addEqualTo("keyPerson", person.getCodigoInterno());
+		criteria.addEqualTo("keyPerson", person.getIdInternal());
 		
 		query = new QueryByCriteria(PersonRole.class, criteria);
 		result = (List) broker.getCollectionByQuery(query);
@@ -661,7 +661,7 @@ public static void main(String args[]) throws Exception{
 					
 					// A classe funcionario ainda usa os codigos internos por isso temos de procurar pelos codigos internos
 					Pessoa personTemp = (Pessoa) person2Write;
-					criteria.addEqualTo("chavePessoa", personTemp.getCodigoInterno());
+					criteria.addEqualTo("chavePessoa", personTemp.getIdInternal());
 					query = new QueryByCriteria(Funcionario.class,criteria);
 					result = (List) broker.getCollectionByQuery(query);
 					

@@ -122,14 +122,14 @@ public class ServicoSeguroActualizarFuncionarios {
 					criteria = new Criteria();
 					query = null;
 			
-					criteria.addEqualTo("chavePessoa", person.getCodigoInterno());
+					criteria.addEqualTo("chavePessoa", person.getIdInternal());
 					query = new QueryByCriteria(Funcionario.class,criteria);
 					resultFuncionario = (List) broker.getCollectionByQuery(query);	
 					
 					if (resultFuncionario.size() == 0){
 						funcionario2Write = new Funcionario();
 						funcionario2Write.setNumeroMecanografico(numeroMecanografico.intValue());
-						funcionario2Write.setChavePessoa(person.getCodigoInterno().intValue());
+						funcionario2Write.setChavePessoa(person.getIdInternal().intValue());
 						
 						IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
 						if (personRole == null){

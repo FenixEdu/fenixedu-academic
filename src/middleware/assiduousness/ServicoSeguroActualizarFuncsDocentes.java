@@ -120,7 +120,7 @@ public class ServicoSeguroActualizarFuncsDocentes {
 			query = null;
 			
 			criteria.addEqualTo("teacherNumber", numeroMecanografico);
-			criteria.addEqualTo("keyPerson", person.getCodigoInterno());
+			criteria.addEqualTo("keyPerson", person.getIdInternal());
 			query = new QueryByCriteria(Teacher.class,criteria);
 			List resultTeacher = (List) broker.getCollectionByQuery(query);	
 

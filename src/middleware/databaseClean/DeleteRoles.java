@@ -66,7 +66,7 @@ public class DeleteRoles {
 				criteria = new Criteria();
 				query = null;
 				
-				criteria.addEqualTo("chavePessoa", person.getCodigoInterno());
+				criteria.addEqualTo("chavePessoa", person.getIdInternal());
 				query = new QueryByCriteria(Funcionario.class,criteria);
 				List result = (List) broker.getCollectionByQuery(query);
 				
@@ -85,7 +85,7 @@ public class DeleteRoles {
 				criteria = new Criteria();
 				query = null;
 				
-				criteria.addEqualTo("personKey", person.getCodigoInterno());
+				criteria.addEqualTo("personKey", person.getIdInternal());
 				query = new QueryByCriteria(Student.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);	
 				
@@ -104,7 +104,7 @@ public class DeleteRoles {
 				criteria = new Criteria();
 				query = null;
 				
-				criteria.addEqualTo("keyPerson", person.getCodigoInterno());
+				criteria.addEqualTo("keyPerson", person.getIdInternal());
 				query = new QueryByCriteria(Teacher.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);
 				

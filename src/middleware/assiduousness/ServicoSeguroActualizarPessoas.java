@@ -135,11 +135,11 @@ public class ServicoSeguroActualizarPessoas {
 			// Password Backup
 			
 			String password = new String(person2Write.getPassword());
-			Integer internalCode = new Integer(person2Write.getCodigoInterno().intValue());
+			Integer internalCode = new Integer(person2Write.getIdInternal().intValue());
 			
 			BeanUtils.copyProperties(person2Write, person2Convert);
 
-			person2Write.setCodigoInterno(internalCode);
+			person2Write.setIdInternal(internalCode);
 			person2Write.setPassword(password);
 		} catch(Exception e){
 			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());

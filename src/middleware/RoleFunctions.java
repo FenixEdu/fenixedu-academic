@@ -132,7 +132,7 @@ System.out.println(newRole.getRole().getRoleType());
 		
 		criteria = new Criteria();
 		criteria.addEqualTo("keyRole", role.getIdInternal());
-		criteria.addEqualTo("keyPerson", person.getCodigoInterno());
+		criteria.addEqualTo("keyPerson", person.getIdInternal());
 		
 		query = new QueryByCriteria(PersonRole.class, criteria);
 		result = (List) broker.getCollectionByQuery(query);

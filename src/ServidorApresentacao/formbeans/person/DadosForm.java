@@ -378,7 +378,7 @@ public final class DadosForm extends ActionForm {
     }
     
     public void setForm(Pessoa pessoa) {
-        setCodigoInterno(pessoa.getCodigoInterno().intValue());
+        setCodigoInterno(pessoa.getIdInternal().intValue());
         setNumeroDocumentoIdentificacao(pessoa.getNumeroDocumentoIdentificacao());
         setTipoDocumentoIdentificacao(String.valueOf(pessoa.getTipoDocumentoIdentificacao()));
         setLocalEmissaoDocumentoIdentificacao(pessoa.getLocalEmissaoDocumentoIdentificacao());
@@ -447,7 +447,7 @@ public final class DadosForm extends ActionForm {
             pessoa.setEnderecoWeb(getEnderecoInternet());
         
         if ("Criar".equals(getAction())) {
-            pessoa.setCodigoInterno(new Integer(getCodigoInterno()));
+            pessoa.setIdInternal(new Integer(getCodigoInterno()));
             pessoa.setNumeroDocumentoIdentificacao(getNumeroDocumentoIdentificacao());
             pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(getTipoDocumentoIdentificacao()));
             pessoa.setLocalEmissaoDocumentoIdentificacao(getLocalEmissaoDocumentoIdentificacao());

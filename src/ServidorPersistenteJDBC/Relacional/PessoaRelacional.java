@@ -67,7 +67,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 						+ "MARITAL_STATUS = ? "
 						+ "WHERE ID_INTERNAL = ? ");
 
-			sql.setInt(1, pessoa.getCodigoInterno().intValue());
+			sql.setInt(1, pessoa.getIdInternal().intValue());
 			sql.setString(2, pessoa.getNumeroDocumentoIdentificacao());
 			sql.setString(3, pessoa.getLocalEmissaoDocumentoIdentificacao());
 			if (pessoa.getDataEmissaoDocumentoIdentificacao() != null) {
@@ -116,7 +116,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 			sql.setInt(31, pessoa.getTipoDocumentoIdentificacao().getTipo().intValue());
 			sql.setInt(32, pessoa.getSexo().getSexo().intValue());
 			sql.setInt(33, pessoa.getEstadoCivil().getEstadoCivil().intValue());
-			sql.setInt(34, pessoa.getCodigoInterno().intValue());
+			sql.setInt(34, pessoa.getIdInternal().intValue());
 
 			sql.executeUpdate();
 			sql.close();
@@ -159,7 +159,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 
 			sql.setInt(1, 0);
 			sql.setInt(2, chaveRole);
-			sql.setInt(3, pessoa.getCodigoInterno().intValue());
+			sql.setInt(3, pessoa.getIdInternal().intValue());
 
 			sql.executeUpdate();
 			sql.close();
@@ -186,7 +186,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 						+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, MD5(?), ?, ?, ?, ?, ?)");
 
-			sql.setInt(1, pessoa.getCodigoInterno().intValue());
+			sql.setInt(1, pessoa.getIdInternal().intValue());
 			sql.setString(2, pessoa.getNumeroDocumentoIdentificacao());
 			sql.setString(3, pessoa.getLocalEmissaoDocumentoIdentificacao());
 			if (pessoa.getDataEmissaoDocumentoIdentificacao() != null) {

@@ -186,12 +186,12 @@ public class LoadStudents extends LoadDataFile {
 			//System.out.println("A Pessoa " + almeida_aluno.getNome() + " já existe.");
 						
 			criteria = new Criteria();
-			criteria.addEqualTo("codigoInterno",((Pessoa)person2Write).getCodigoInterno());
+			criteria.addEqualTo("codigoInterno",((Pessoa)person2Write).getIdInternal());
 			result = query(Funcionario.class, criteria);
 
 			if (result.size() == 0) {
 				criteria = new Criteria();
-				criteria.addEqualTo("internalCode",((Pessoa)person2Write).getCodigoInterno());
+				criteria.addEqualTo("internalCode",((Pessoa)person2Write).getIdInternal());
 				criteria.addEqualTo("degreeType",new TipoCurso(TipoCurso.MESTRADO));				
 				result = query(Student.class, criteria);
 				if (result.size() == 0) {

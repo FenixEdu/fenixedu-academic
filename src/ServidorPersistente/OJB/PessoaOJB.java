@@ -45,13 +45,13 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 		// else If the person is mapped to the database, then write any existing changes.
 		else if ((personFromDB1 != null) &&
 				 (personToWrite instanceof Pessoa) && 
-				 (((Pessoa) personFromDB1).getCodigoInterno().equals(((Pessoa) personToWrite).getCodigoInterno())))
+				 (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal())))
 
 					super.lockWrite(personToWrite);
 			
 		else if ((personFromDB2 != null) &&
 				 (personToWrite instanceof Pessoa) && 
-				 (((Pessoa) personFromDB2).getCodigoInterno().equals(((Pessoa) personToWrite).getCodigoInterno())))
+				 (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal())))
 					super.lockWrite(personToWrite);
 			
 			

@@ -230,7 +230,13 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 */
 	public IFrequenta readFrequenta(IStudent student, IDisciplinaExecucao disciplinaExecucao) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("aluno.internalCode", ((Student) student).getInternalCode());
+		criteria.addEqualTo(
+			"aluno.internalCode",
+			((Student) student).getIdInternal());
+			criteria.addEqualTo(
+				"disciplinaExecucao.idInternal",
+				((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
+		criteria.addEqualTo("aluno.internalCode", ((Student) student).getIdInternal());
 		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
 		List result = query(Frequenta.class, criteria);
 		if (result.size() == 1) {
@@ -353,7 +359,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IStudentCurricularPlan readStudentCurricularPlanByUnique(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, StudentCurricularPlanState studentCurricularPlanState) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("student.internalCode", student.getInternalCode());
+		criteria.addEqualTo("student.internalCode", student.getIdInternal());
 		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
 		criteria.addEqualTo("branch.internalID", branch.getInternalID());
 		criteria.addEqualTo("currentState", studentCurricularPlanState);
