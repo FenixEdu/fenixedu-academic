@@ -5068,7 +5068,7 @@
     <service>
         <name>ReadActiveDegreeCurricularPlanByExecutionDegreeCode</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.coordinator.ReadActiveDegreeCurricularPlanByExecutionDegreeCode</implementationClass>
+            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.ReadActiveDegreeCurricularPlanByExecutionDegreeCode</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5078,7 +5078,7 @@
     <service>
         <name>ReadDegreeCurricularPlanHistoryByExecutionDegreeCode</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.coordinator.ReadDegreeCurricularPlanHistoryByExecutionDegreeCode</implementationClass>
+            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.ReadDegreeCurricularPlanHistoryByExecutionDegreeCode</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5088,7 +5088,7 @@
     <service>
         <name>ReadCurrentCurriculumByCurricularCourseCode</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.coordinator.ReadCurrentCurriculumByCurricularCourseCode</implementationClass>
+            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.ReadCurrentCurriculumByCurricularCourseCode</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5098,7 +5098,7 @@
     <service>
         <name>ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.coordinator.ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName</implementationClass>
+            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5126,7 +5126,7 @@
     <service>
         <name>EditCurriculumForCurricularCourse</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.coordinator.EditCurriculumForCurricularCourse</implementationClass>
+            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.EditCurriculumForCurricularCourse</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

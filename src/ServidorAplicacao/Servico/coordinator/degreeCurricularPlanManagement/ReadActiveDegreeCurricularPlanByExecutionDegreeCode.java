@@ -1,10 +1,11 @@
-package ServidorAplicacao.Servico.coordinator;
+package ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.List;
 
 import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
+import ServidorAplicacao.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;

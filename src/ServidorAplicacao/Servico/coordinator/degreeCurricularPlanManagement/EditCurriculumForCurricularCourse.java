@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.coordinator;
+package ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.Calendar;
 

@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.coordinator;
+package ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,10 +7,11 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.InfoCurriculum;
+import DataBeans.InfoCurriculumWithInfoCurricularCourse;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.util.Cloner;
+import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -126,11 +127,6 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName
                     }
 
                 }
-                //                curriculumExecutionYear.getCurricularCourse().setScopes(allCurricularCourseScopes);
-
-                //selects execution courses for current execution period
-                //                curriculumExecutionYear.getCurricularCourse().setAssociatedExecutionCourses(
-                //                    allExecutionCourses);
 
                 infoCurriculum = createInfoCurriculum(curriculumExecutionYear,
                         persistentExecutionCourse, allCurricularCourseScopes,
@@ -146,29 +142,34 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName
             IPersistentExecutionCourse persistentExecutionCourse,
             List allCurricularCourseScopes, List allExecutionCourses)
             throws ExcepcaoPersistencia {
-        InfoCurriculum infoCurriculum;
-        infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+        //CLONER
+        //InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+        InfoCurriculum infoCurriculum  =InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
 
         List scopes = new ArrayList();
         CollectionUtils.collect(allCurricularCourseScopes, new Transformer() {
             public Object transform(Object arg0) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                InfoCurricularCourseScope infoCurricularCourseScope = Cloner
-                        .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-                return infoCurricularCourseScope;
+                //CLONER
+                //return Cloner
+                //        .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+                        .newInfoFromDomain(curricularCourseScope);
             }
         }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
         List infoExecutionCourses = new ArrayList();
-        //        List executionCourses =
-        // curriculum.getCurricularCourse().getAssociatedExecutionCourses();
         Iterator iterExecutionCourses = allExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses
                     .next();
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            //CLONER
+            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+            //        .get(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(executionCourse);
+            
             infoExecutionCourse.setHasSite(persistentExecutionCourse
                     .readSite(executionCourse.getIdInternal()));
             infoExecutionCourses.add(infoExecutionCourse);

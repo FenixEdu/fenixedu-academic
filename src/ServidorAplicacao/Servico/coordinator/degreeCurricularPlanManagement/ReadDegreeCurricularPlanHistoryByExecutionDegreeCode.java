@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.coordinator;
+package ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,8 +8,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -111,10 +111,12 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
         ICursoExecucao executionDegree,
         List allCurricularCourses)
     {
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-        infoDegreeCurricularPlan =
-            Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-                executionDegree.getCurricularPlan());
+        //CLONER
+        //InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+        //  Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
+        //    executionDegree.getCurricularPlan());
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+        .newInfoFromDomain(executionDegree.getCurricularPlan());
 
         List allInfoCurricularCourses = new ArrayList();
         
@@ -129,40 +131,24 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
                     public Object transform(Object arg0)
                     {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                        return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-                            curricularCourseScope);
+                        //CLONER
+                        //return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+                        //curricularCourseScope);
+                        return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+                        .newInfoFromDomain(curricularCourseScope);
                     }
                 }, allInfoCurricularCourseScopes);
 
-                InfoCurricularCourse infoCurricularCourse =
-                    Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                //CLONER
+                //InfoCurricularCourse infoCurricularCourse =
+                //    Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+                .newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes(allInfoCurricularCourseScopes);
                 return infoCurricularCourse;
             }
         }, allInfoCurricularCourses);
         
-//        CollectionUtils.transform(allCurricularCourses, new Transformer()
-//        {
-//            public Object transform(Object arg0)
-//            {
-//                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-//                CollectionUtils.transform(curricularCourse.getScopes(), new Transformer()
-//                {
-//                    public Object transform(Object arg0)
-//                    {
-//                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-//                        return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-//                            curricularCourseScope);
-//                    }
-//                });
-//
-//                InfoCurricularCourse infoCurricularCourse =
-//                    Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-//                infoCurricularCourse.setInfoScopes(curricularCourse.getScopes());
-//                return infoCurricularCourse;
-//            }
-//        });
-
         infoDegreeCurricularPlan.setCurricularCourses(allInfoCurricularCourses);
         return infoDegreeCurricularPlan;
     }
