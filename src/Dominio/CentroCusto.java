@@ -5,12 +5,17 @@ package Dominio;
  * @author  Fernanda Quitério & Tania Pousão
  */
 
-public class CentroCusto {
+public class CentroCusto implements ICostCenter {
   private int codigoInterno;
   private String sigla;
   private String departamento;
   private String seccao1;
   private String seccao2;
+  
+  /**
+   * Ojb needs this ctor. 
+   */
+  public CentroCusto() {}
   
   public CentroCusto(int codigoInterno, String sigla, String departamento, String seccao1, String seccao2) {
     this.codigoInterno = codigoInterno;
