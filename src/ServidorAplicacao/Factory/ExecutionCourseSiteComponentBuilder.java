@@ -396,14 +396,7 @@ public class ExecutionCourseSiteComponentBuilder
         component.setMail(site.getMail());
         component.setSections(infoSectionsList);
         InfoExecutionCourse executionCourse;
-		try
-		{
-			executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
+		executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
 		component.setExecutionCourse(executionCourse);
         return component;
     }
@@ -1035,14 +1028,7 @@ public class ExecutionCourseSiteComponentBuilder
 
         component.setAssociatedCurricularCourses(infoCurricularCourseList);
         InfoExecutionCourse executionCourse;
-		try
-		{
-			executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
+		executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
 		component.setInfoExecutionCourse(executionCourse);
         component.setInfoShiftsWithAssociatedClassesList(infoShiftsWithAssociatedClassesList);
 

@@ -9,9 +9,6 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.ojb.broker.Identity;
-
-import pt.utl.ist.berserk.storage.exceptions.StorageException;
 
 import DataBeans.InfoAdvisory;
 import DataBeans.InfoAnnouncement;
@@ -172,8 +169,6 @@ import Dominio.teacher.TeachingCareer;
 import Dominio.teacher.WeeklyOcupation;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EvaluationType;
 import Util.State;
 
@@ -185,21 +180,13 @@ public abstract class Cloner
 {
 
 	public static InfoObject get(IDomainObject domainObject)
-		throws ExcepcaoPersistencia
 	{
-		Identity key = null;
-		try
-		{
-			key = new Identity(domainObject, SuportePersistenteOJB.getInstance().currentBroker());
-		}
-		catch (StorageException e)
-		{
-			throw new ExcepcaoPersistencia(e.toString(), e);
-		}
+		String key = InfoObjectCache.getKey(domainObject);
 		InfoObject infoObject = InfoObjectCache.lookup(key);
 		if (infoObject == null)
 		{
 			infoObject = copy((IExecutionCourse) domainObject);
+			InfoObjectCache.cache(key, infoObject);
 		}
 		return infoObject;
 	}
@@ -251,12 +238,12 @@ public abstract class Cloner
 		InfoExecutionPeriod infoExecutionPeriod =
 			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
 
-		copyObjectProperties(infoExecutionCourse, executionCourse);
-
 		if (infoExecutionPeriod != null)
 		{
 			infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		}
+
+		copyObjectProperties(infoExecutionCourse, executionCourse);
 
 		infoExecutionCourse.setNumberOfAttendingStudents(
 			new Integer(

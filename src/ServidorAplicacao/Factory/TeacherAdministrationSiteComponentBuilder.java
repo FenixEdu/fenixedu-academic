@@ -351,15 +351,8 @@ public class TeacherAdministrationSiteComponentBuilder
         component.setInitialStatement(site.getInitialStatement());
         component.setIntroduction(site.getIntroduction());
         component.setIdInternal(site.getIdInternal());
-        try
-		{
-			component.setInfoExecutionCourse(
-			    (InfoExecutionCourse) Cloner.get(site.getExecutionCourse()));
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
+		component.setInfoExecutionCourse(
+		    (InfoExecutionCourse) Cloner.get(site.getExecutionCourse()));
         component.setStyle(site.getStyle());
 
         return component;

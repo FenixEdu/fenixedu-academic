@@ -216,14 +216,7 @@ public class ReadTeacherInformation implements IServico
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse;
-				try
-				{
-					infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-				}
-				catch (ExcepcaoPersistencia e)
-				{
-					throw new RuntimeException(e);
-				}
+				infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 				infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
@@ -285,14 +278,7 @@ public class ReadTeacherInformation implements IServico
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse;
-				try
-				{
-					infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-				}
-				catch (ExcepcaoPersistencia e)
-				{
-					throw new RuntimeException(e);
-				}
+				infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 				infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }

@@ -120,19 +120,12 @@ public class ReadAllRoomsExamsMap implements IServico {
 	private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
 		public Object transform(Object exam) {
 			InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
-			try
-			{
-				infoExam.setInfoExecutionCourse(
-					(InfoExecutionCourse) Cloner.get(
-						(IExecutionCourse) ((IExam) exam)
-							.getAssociatedExecutionCourses()
-							.get(
-							0)));
-			}
-			catch (ExcepcaoPersistencia e)
-			{
-				throw new RuntimeException(e);
-			}
+			infoExam.setInfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
+					(IExecutionCourse) ((IExam) exam)
+						.getAssociatedExecutionCourses()
+						.get(
+						0)));
 			return infoExam;
 		}
 	};

@@ -114,14 +114,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             {
                 public Object transform(Object arg0)
                 {
-                    try
-					{
-						return Cloner.get((IExecutionCourse) arg0);
-					}
-					catch (ExcepcaoPersistencia e)
-					{
-						throw new RuntimeException();
-					}
+					return Cloner.get((IExecutionCourse) arg0);
                 }
             });
             return infoExecutionCourses;

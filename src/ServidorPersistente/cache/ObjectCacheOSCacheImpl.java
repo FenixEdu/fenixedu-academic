@@ -71,7 +71,7 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 	{
 		try
 		{
-			InfoObjectCache.remove(oid);
+			InfoObjectCache.remove(InfoObjectCache.getKey(oid));
 			admin.flushEntry(oid.toString());
 			CacheLog.incrementRemoves();
 		}

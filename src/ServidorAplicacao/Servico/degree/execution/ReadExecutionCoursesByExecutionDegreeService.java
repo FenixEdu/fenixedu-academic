@@ -97,15 +97,8 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService
                         {
                             IExecutionCourse executionCourse = (IExecutionCourse) input;
                             InfoExecutionCourse infoExecutionCourse;
-							try
-							{
-								infoExecutionCourse = (InfoExecutionCourse) Cloner
-										        .get(executionCourse);
-							}
-							catch (ExcepcaoPersistencia e)
-							{
-								throw new RuntimeException();
-							}
+							infoExecutionCourse = (InfoExecutionCourse) Cloner
+									        .get(executionCourse);
 							return infoExecutionCourse;
                         }
                     });
