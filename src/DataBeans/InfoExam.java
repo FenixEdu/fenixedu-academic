@@ -183,11 +183,6 @@ public class InfoExam {
 		return string;
 	}
 
-	public String getEndHour(){
-			String result = format(String.valueOf(getEnd().get(Calendar.HOUR_OF_DAY)));
-					result += ":";
-					result += format(String.valueOf(getEnd().get(Calendar.MINUTE)));
-			return result;
-		}
+
 
 }
