@@ -380,6 +380,7 @@ public class UpdateStudentEnrolments
 				IFrequenta attend = (IFrequenta) input;
 
 				String courseCode = mwEnrolment.getCoursecode();
+				
 				List associatedCurricularCourses = attend.getDisciplinaExecucao().getAssociatedCurricularCourses();
 				Iterator iterator = associatedCurricularCourses.iterator();
 				while (iterator.hasNext())
@@ -438,16 +439,22 @@ public class UpdateStudentEnrolments
 	{
 		boolean sameDegree = true;
 		IPersistentCurricularCourseScope curricularCourseScopeDAO = sp.getIPersistentCurricularCourseScope();
-		List curricularCourseScopes =
+
+		List curricularCourseScopes = null;
+
+		if (!curricularCourse.getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan()))
+		{
+			curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourse(curricularCourse);	
+			return (ICurricularCourseScope) curricularCourseScopes.get(0);
+		}
+
+
+		curricularCourseScopes =
 			curricularCourseScopeDAO.readByCurricularCourseAndYearAndSemester(
 				curricularCourse,
 				mwEnrolment.getCurricularcourseyear(),
 				mwEnrolment.getCurricularcoursesemester());
 		ICurricularCourseScope curricularCourseScope = null;
-		if (!curricularCourse.getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan()))
-		{
-			return (ICurricularCourseScope) curricularCourseScopes.get(0);
-		}
 
 		if ((curricularCourseScopes == null) || (curricularCourseScopes.isEmpty()))
 		{
