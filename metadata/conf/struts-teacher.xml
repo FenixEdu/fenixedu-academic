@@ -142,20 +142,8 @@
         <forward name="showAnnouncements" path="/announcementManagement.jsp" />
         
         <forward name="insertAnnouncement" path="/insertAnnouncement.jsp" />
-		<forward name="editAnnouncement" path="/editAnnouncement.do" />
+		<forward name="editAnnouncement" path="/editAnnouncement.jsp" />
 		<forward name="deleteAnnouncement" path="/deleteAnnouncement.jsp" />
-	</action>
-
-	<!-- input of actions for edit announcement -->
-	<action name="insertAnnouncementForm"
-    	type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
-		scope="session"
-		parameter="method"
-		input="/editAnnouncement.jsp"
-        path="/editAnnouncement"
-		validate="false">
-
-		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction.do"/>	            
 	</action>
 
 	<!-- ExceptionHandling -->   

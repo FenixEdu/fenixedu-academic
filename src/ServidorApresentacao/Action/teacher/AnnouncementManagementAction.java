@@ -63,6 +63,13 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = request.getSession(false);
 
+			List announcements = (List) session.getAttribute("Announcements");
+			String announcementIndex = (String) request.getParameter("index");
+			Integer index = new Integer(announcementIndex);
+			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
+			request.setAttribute("title", infoAnnouncement.getTitle());
+			request.setAttribute("information", infoAnnouncement.getInformation());
+
 			return mapping.findForward("editAnnouncement");
 	}
 
@@ -75,13 +82,13 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 
 			DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
 			String newTitle = (String) insertAnnouncementForm.get("title");
-			String information = (String) insertAnnouncementForm.get("information");
+			String newInformation = (String) insertAnnouncementForm.get("information");
 
 			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) session.getAttribute("Announcement");
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			Object args[] = { infoSite, infoAnnouncement, newTitle, information };
+			Object args[] = { infoSite, infoAnnouncement, newTitle, newInformation };
 			GestorServicos manager = GestorServicos.manager();
 			manager.executar(userView, "EditAnnouncement", args);                        
 
@@ -108,7 +115,6 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 			List announcements = (List) session.getAttribute("Announcements");
 			String announcementIndex = (String) request.getParameter("index");
 			Integer index = new Integer(announcementIndex);
-			
 			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
 
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
