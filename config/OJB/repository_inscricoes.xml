@@ -1168,6 +1168,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
+<!--
 <class-descriptor class="Dominio.CurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
 	<field-descriptor
 		name="idInternal"
@@ -1213,7 +1214,7 @@
 	</collection-descriptor>
 	
 </class-descriptor>
-
+-->
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.University -->
