@@ -126,6 +126,7 @@ public class EditLesson implements IServico {
 					//aula = (IAula) aulaPersistente.readByOId(aula, true);
 					aula = (IAula) aulaPersistente.readByOID(Aula.class, aula.getIdInternal());
 					aulaPersistente.simpleLockWrite(aula);
+					aulaPersistente.simpleLockWrite(shift);
 					aula.setDiaSemana(aulaNova.getDiaSemana());
 					aula.setInicio(aulaNova.getInicio());
 					aula.setFim(aulaNova.getFim());
