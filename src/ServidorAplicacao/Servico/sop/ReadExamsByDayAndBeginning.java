@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import DataBeans.InfoExam;
-import DataBeans.InfoRoom;
 import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
@@ -83,6 +82,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
 				tempInfoExam = Cloner.copyIExam2InfoExam(tempExam);
 				tempInfoDegrees = new ArrayList();
 				tempInfoExecutionCourses = new ArrayList();
+				int totalNumberStudentsForExam = 0;
 
 				if (tempExam.getAssociatedExecutionCourses() != null) {
 					for(int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++ ) {
@@ -97,14 +97,15 @@ public class ReadExamsByDayAndBeginning implements IServico {
 							tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
 						}
 
-						// determine number of students attending course
+						// determine number of students attending course and exam
 						numberStudentesAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(executionCourse);
-						totalNumberStudents += numberStudentesAttendingCourse.intValue(); 
+						totalNumberStudents += numberStudentesAttendingCourse.intValue();
+						totalNumberStudentsForExam += numberStudentesAttendingCourse.intValue();
 					}
 				}
 
 				// add exam and degree info to result list
-				infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoExecutionCourses, tempInfoDegrees, numberStudentesAttendingCourse));
+				infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoExecutionCourses, tempInfoDegrees, new Integer(totalNumberStudentsForExam)));
 			}
 			
 			infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);
