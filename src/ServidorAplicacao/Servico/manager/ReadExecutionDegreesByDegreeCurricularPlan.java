@@ -54,6 +54,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IServico {
 			sp = SuportePersistenteOJB.getInstance();
 			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(new DegreeCurricularPlan(idDegreeCurricularPlan), false);
 			allExecutionDegrees = sp.getICursoExecucaoPersistente().readByDegreeCurricularPlan(degreeCurricularPlan);
+			
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}

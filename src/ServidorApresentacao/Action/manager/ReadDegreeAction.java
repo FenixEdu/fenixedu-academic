@@ -44,7 +44,8 @@ public class ReadDegreeAction extends FenixAction {
 		InfoDegree degree = null;
 
 		try {
-			degree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
+				degree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
+				
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("O curso", e);
 		} catch (FenixServiceException fenixServiceException) {
@@ -55,7 +56,8 @@ public class ReadDegreeAction extends FenixAction {
 		List degreeCurricularPlans = null;
 
 		try {
-			degreeCurricularPlans = (List) manager.executar(userView, "ReadDegreeCurricularPlansByDegree", args);
+				degreeCurricularPlans = (List) manager.executar(userView, "ReadDegreeCurricularPlansByDegree", args);
+				
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

@@ -48,12 +48,13 @@ public class ReadDegree implements IServico {
 	try {
 			sp = SuportePersistenteOJB.getInstance();
 			degree = sp.getICursoPersistente().readByIdInternal(idInternal);
+			
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
    
        
-	if (degree == null) {
+	if(degree == null) {
 		throw new NonExistingServiceException();
 	}
 

@@ -4,13 +4,12 @@
 package ServidorAplicacao.Servicos.manager;
 
 import DataBeans.InfoDegree;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 /**
  * @author lmac1
  */
 
-public class ReadDegreeServiceTest extends TestCaseReadServices {
+public class ReadDegreeServiceTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
@@ -23,7 +22,7 @@ public class ReadDegreeServiceTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	 protected String getNameOfServiceToBeTested() {
-		return "ReadDegreeService";
+		return "ReadDegree";
 	 }
        
 	/* (non-Javadoc)
@@ -32,7 +31,7 @@ public class ReadDegreeServiceTest extends TestCaseReadServices {
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		Object[] args = { new Integer(5) };
 		return args;
-	}
+	}	
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
@@ -41,13 +40,6 @@ public class ReadDegreeServiceTest extends TestCaseReadServices {
 		Object[] args = { new Integer(9) };
 		return args;
 	}
-
-   /* (non-Javadoc)
-	* @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	*/
-	protected int getNumberOfItemsToRetrieve() {
-		return 0;
-	}
         
    /* (non-Javadoc)
 	* @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
@@ -55,16 +47,4 @@ public class ReadDegreeServiceTest extends TestCaseReadServices {
 	protected Object getObjectToCompare() {			
 		return new InfoDegree("MEEC", "Engenharia Electrotecnica e de Computadores");
 	}
-	
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServicos#getArgsForAuthorizedUser()
-	 */
-	protected String[] getArgsForAuthorizedUser() {
-		return new String[] {"manager", "pass", getApplication()};
-	}
-	
-	protected boolean needsAuthorization() {
-		return true;
-	}
-
 }
