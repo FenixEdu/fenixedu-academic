@@ -17,7 +17,8 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId="  + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId="  + request.getAttribute("degreeCurricularPlanId")%>"  paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
+	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
+	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
 </ul>
 
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>

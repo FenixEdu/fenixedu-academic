@@ -88,10 +88,9 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
 				}						
-			
+
 //				Collections.sort(curricularCourseScopes, new BeanComparator("name"));
 					
-
 				request.setAttribute("executionCoursesList", executionCourses);
 				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("curricularCourseId", curricularCourseId);
