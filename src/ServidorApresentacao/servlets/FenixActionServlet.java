@@ -26,10 +26,9 @@ public class FenixActionServlet extends ActionServlet {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 
 //		System.out.println("Requested URI:" + request.getRequestURI());
-//		System.out.println("Session is new?" + session.isNew());
 //		System.out.println("Session is null?" + (session == null));
 		String uri = request.getRequestURI();
 		if ((session == null
