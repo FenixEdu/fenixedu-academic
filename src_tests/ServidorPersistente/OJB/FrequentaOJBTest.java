@@ -26,6 +26,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 public class FrequentaOJBTest extends TestCaseOJB {
@@ -145,10 +146,13 @@ public class FrequentaOJBTest extends TestCaseOJB {
       persistentSupport.iniciarTransaccao();
       persistentAttend.lockWrite(attend);
       persistentSupport.confirmarTransaccao();
-      fail("testCreateExistingFrequenta");
-    } catch (ExcepcaoPersistencia ex) {
-      //all is ok
-    }
+      fail("testCreateExistingFrequenta: Expected an Exception");
+    } catch (ExistingPersistentException ex) {
+    	//all is ok
+    	assertNotNull("testCreateExistingFrequenta", ex);
+  	} catch (ExcepcaoPersistencia ex) {
+		fail("testCreateExistingFrequenta: Unexpected Exception");
+  	}
   }
 
 //  // write new non-existing frequenta

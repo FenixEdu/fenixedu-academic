@@ -15,10 +15,11 @@ import java.util.List;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IFrequentaPersistente extends IPersistentObject {
     public IFrequenta readByAlunoAndDisciplinaExecucao(IStudent aluno, IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia;
-    public void lockWrite(IFrequenta frequenta) throws ExcepcaoPersistencia;
+    public void lockWrite(IFrequenta frequenta) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 

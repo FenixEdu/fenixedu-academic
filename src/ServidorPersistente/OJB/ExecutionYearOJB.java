@@ -13,6 +13,7 @@ import Dominio.ExecutionYear;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * Created on 11/Fev/2003
@@ -74,14 +75,31 @@ public class ExecutionYearOJB
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionYear#writeExecutionYear(Dominio.IExecutionYear)
 	 */
-	public boolean writeExecutionYear(IExecutionYear executionYear) {
-		try {
-			super.lockWrite(executionYear);
-			return true;
-		} catch (ExcepcaoPersistencia e) {
-			return false;
-		}
+	public void writeExecutionYear(IExecutionYear executionYearToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
 
+			IExecutionYear executionYearFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (executionYearToWrite == null)
+			return;
+
+		// Read execution Year from database.
+		executionYearFromDB =
+			this.readExecutionYearByName(executionYearToWrite.getYear());
+
+		// If execution Year is not in database, then write it.
+		if (executionYearFromDB == null)
+			super.lockWrite(executionYearToWrite);
+		// else If the execution Year is mapped to the database, then write any existing changes.
+		else if (
+			(executionYearToWrite instanceof ExecutionYear)
+				&& ((ExecutionYear) executionYearFromDB).getInternalCode().equals(
+					((ExecutionYear) executionYearToWrite).getInternalCode())) {
+			super.lockWrite(executionYearToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
 	}
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionYear#deleteAll()

@@ -3,6 +3,7 @@ package ServidorPersistente;
 import java.util.ArrayList;
 
 import Dominio.IExecutionYear;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * Created on 11/Fev/2003
@@ -27,7 +28,7 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 	 * @param executionYear
 	 * @return boolean
 	 */
-	public boolean writeExecutionYear(IExecutionYear executionYear);
+	public void writeExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia, ExistingPersistentException;
 	/**
 	 * 
 	 * @return boolean

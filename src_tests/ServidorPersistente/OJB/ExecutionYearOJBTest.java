@@ -20,6 +20,7 @@ import junit.framework.TestSuite;
 import Dominio.ExecutionYear;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class ExecutionYearOJBTest extends TestCaseOJB {
 	public ExecutionYearOJBTest(java.lang.String testName) {
@@ -72,8 +73,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			executionYear = new ExecutionYear("2000");
 			persistentExecutionYear.writeExecutionYear(executionYear);
 			persistentSupport.confirmarTransaccao();
-			
-			
+
 			persistentSupport.iniciarTransaccao();
 			executionYear = null;
 			// Check Insert	
@@ -92,10 +92,12 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			executionYear = new ExecutionYear("2002/2003");
 			persistentExecutionYear.writeExecutionYear(executionYear);
 			persistentSupport.confirmarTransaccao();
-			fail("Espected Error");
-	   } catch (ExcepcaoPersistencia ex) {
+			fail("Write Existing: Expected an Excpetion");
+	   	} catch (ExistingPersistentException ex) {
 			// All is ok
-	   }
+		} catch (ExcepcaoPersistencia ex) {
+			 fail("Write Existing: Unexpected Exception");
+		}
 	}
 	
 	public void testDelete(){
