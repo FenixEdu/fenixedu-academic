@@ -431,7 +431,7 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
 	/* (non-Javadoc)
 	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#countAll()
 	 */
-	public Integer countAll() throws ExcepcaoPersistencia
+	public Integer countAll()
 	{
 		return new Integer(count(Student.class, new Criteria()));
 	}
