@@ -102,7 +102,7 @@ public class EditarAulaFormActionTest extends TestCaseActionExecution {
 		addRequestParameter("minutosFim","30");
 		addRequestParameter("tipoAula",	(new Integer(TipoAula.TEORICA)).toString());
 		addRequestParameter("courseInitials","TFCI");
-		addRequestParameter("nomeSala", "GA1");
+		addRequestParameter("nomeSala", "GA2");
 	}
 
 	private void prepareUnsuccessfulRequest_InterceptingLesson() {
@@ -114,7 +114,7 @@ public class EditarAulaFormActionTest extends TestCaseActionExecution {
 		addRequestParameter("minutosFim","0");
 		addRequestParameter("tipoAula",	(new Integer(TipoAula.TEORICA)).toString());
 		addRequestParameter("courseInitials","TFCI");
-		addRequestParameter("nomeSala", "GA1");
+		addRequestParameter("nomeSala", "GA2");
 	}
 
 	private void prepareUnsuccessfulRequest_InvalidTimeInterval() {
@@ -129,11 +129,17 @@ public class EditarAulaFormActionTest extends TestCaseActionExecution {
 		addRequestParameter("nomeSala", "GA1");
 	}
 
-	public void testUnsuccessfulExecutionOfAction() {
+	public void testUnsuccessfulExecutionOfActionExistingLesson() {
 		prepareUnsuccessfulRequest_ExistingLesson();
 		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), null, getUnsuccessfulForwardPath(), null, null, getActionErrors_ExistingLesson());
+	}
+
+	public void testUnsuccessfulExecutionOfActionInterceptingLesson() {
 		prepareUnsuccessfulRequest_InterceptingLesson();
 		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), null, getUnsuccessfulForwardPath(), null, null, getActionErrors_InterceptingLesson());				
+	}
+
+	public void testUnsuccessfulExecutionOfAction() {
 		prepareUnsuccessfulRequest_InvalidTimeInterval();
 		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), null, getUnsuccessfulForwardPath(), null, null, getActionErrors_InvalidTimeInterval());				
 	}
