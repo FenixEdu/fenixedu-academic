@@ -54,11 +54,11 @@ public class AccessBibliographyAction extends FenixAction {
 		
 			
 
-			if(references.size() == 0) {
+			
 				request.setAttribute(
 								"BibliographicReferences",
 								references);			
-			}		
+					
 		
 			RequestUtils.setExecutionCourseToRequest(request,infoExecutionCourse);
 			RequestUtils.setSiteToRequest(request,infoSite);

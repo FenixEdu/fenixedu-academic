@@ -56,12 +56,12 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
+      <action path="/naoAutorizado" forward="/error.jsp"/>
    	  <action path="/naoExecutado" forward="/error.jsp"/>
 
       <!-- page fronting actions -->
       <action path="/autenticacao" forward="/autenticacao.jsp" />
-      <action path="/naoExistente" forward="/naoExistente.jsp" />
+      <action path="/naoExistente" forward="/error.jsp" />
 
 
 

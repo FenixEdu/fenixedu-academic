@@ -10,7 +10,7 @@
 	<h2><bean:message key="message.bibliography.not.available"/></h2>
 </logic:empty>	
 <logic:notEmpty name="BibliographicReferences" >
-<table border="0" style="text-align: left;">
+<table >
 	<tbody>
 		<tr>
         	<td>                               
@@ -22,27 +22,43 @@
             <logic:iterate id="bibliographicReference" name="BibliographicReferences">
                 <logic:notEqual name="bibliographicReference" property="optional" value="true">
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.title" />
+                    	</td>
                         <td>                                               
                             <bean:write name="bibliographicReference" property="title"/>
                         </td>
                     </tr>
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.authors" />
+                    	</td>
                         <td>
                             <bean:write name="bibliographicReference" property="authors"/>
                         </td>
                     </tr>
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.reference" />
+                    	</td>
                         <td>
                             <bean:write name="bibliographicReference" property="reference"/>
                         </td>
                     </tr>
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.year" />
+                    	</td>
                         <td>
                             <bean:write name="bibliographicReference" property="year"/>                            
                         </td>
                     </tr>
+                    <tr>
+                    </tr>
+                     <tr>
+                    </tr>
                 </logic:notEqual>
-                </br>
+               
             </logic:iterate>
             
             <tr>
@@ -56,24 +72,40 @@
              <logic:iterate id="bibliographicReference" name="BibliographicReferences">
                 <logic:notEqual name="bibliographicReference" property="optional" value="false">
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.title" />
+                    	</td>
                         <td>                            
                             <bean:write name="bibliographicReference" property="title"/>
                         </td>
                     </tr>
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.authors" />
+                    	</td>
                         <td>
                             <bean:write name="bibliographicReference" property="authors"/>
                         </td>
                     </tr>
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.reference" />
+                    	</td>
                         <td>
                             <bean:write name="bibliographicReference" property="reference"/>
                         </td>
                     </tr>
                     <tr>
+                    	<td>
+                    		<bean:message key="label.bibliography.year" />
+                    	</td>
                         <td>
                             <bean:write name="bibliographicReference" property="year"/>                            
                         </td>
+                    </tr>
+                      <tr>
+                    </tr>
+                     <tr>
                     </tr>
                 </logic:notEqual>
             </logic:iterate>
