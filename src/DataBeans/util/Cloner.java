@@ -31,11 +31,13 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoFrequenta;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.InfoGuideSituation;
 import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
+import DataBeans.InfoMark;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
@@ -76,6 +78,7 @@ import Dominio.Evaluation;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
+import Dominio.Frequenta;
 import Dominio.Guide;
 import Dominio.GuideEntry;
 import Dominio.GuideSituation;
@@ -105,10 +108,12 @@ import Dominio.IEvaluation;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IFrequenta;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IGuideSituation;
 import Dominio.IItem;
+import Dominio.IMark;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.IPrice;
@@ -125,6 +130,7 @@ import Dominio.ITeacherShiftPercentage;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Item;
+import Dominio.Mark;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
 import Dominio.Price;
@@ -1770,7 +1776,76 @@ public abstract class Cloner {
 
 		return infoCreditsTeacher;
 	}
+	
+	
+	/**
+	 * 
+	 * @param mark
+	 * @return
+	 */
+	public static InfoMark copyIMark2InfoMark(IMark mark) {
+		InfoMark infoMark = new InfoMark();
+		InfoFrequenta infoFrequenta = new InfoFrequenta();
+		infoFrequenta = copyIFrequenta2InfoFrequenta(mark.getFrequenta());
+		InfoExam infoExam = new InfoExam();
+		infoExam = copyIExam2InfoExam(mark.getExam());
+		
+		copyObjectProperties(infoMark, mark);
+		infoMark.setInfoFrequenta(infoFrequenta);
+		infoMark.setInfoExam(infoExam);
 
+		return infoMark;
+	}
+	/**
+	 * 
+	 * @param infoMark
+	 * @return IMark
+	 */
+	public static IMark copyInfoMark2IMark(InfoMark infoMark) {
+		IMark mark = new Mark();
+
+		copyObjectProperties(mark, infoMark);
+		mark.setExam((IExam)infoMark.getInfoExam());
+		mark.setFrequenta((IFrequenta)infoMark.getInfoFrequenta());
+		return mark;
+	}
+	/**
+	 * 
+	 * @param IFrquenta
+	 * @return InfoFrequenta
+	 */
+	
+	public static InfoFrequenta copyIFrequenta2InfoFrequenta(IFrequenta frequenta) {
+		InfoFrequenta infoFrequenta = new InfoFrequenta();
+		InfoStudent infoStudent = new InfoStudent();
+		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+		InfoEnrolment infoEnrolment = new InfoEnrolment();
+		infoStudent = Cloner.copyIStudent2InfoStudent(frequenta.getAluno());
+		infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(frequenta.getDisciplinaExecucao());		
+		infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(frequenta.getEnrolment());
+		
+		copyObjectProperties(infoFrequenta, frequenta);
+
+		infoFrequenta.setAluno(infoStudent);
+		infoFrequenta.setDisciplinaExecucao(infoExecutionCourse);
+		infoFrequenta.setEnrolment(infoEnrolment);
+
+		return infoFrequenta;
+	}
+	/**
+	 * 
+	 * @param infoFrequenta
+	 * @return IFrequenta
+	 */
+	public static IFrequenta copyInfoFrequenta2IFrequenta(InfoFrequenta infoFrequenta) {
+		IFrequenta frequenta = new Frequenta();
+		copyObjectProperties(frequenta, infoFrequenta);
+		frequenta.setAluno((IStudent)infoFrequenta.getAluno());
+		frequenta.setDisciplinaExecucao((IDisciplinaExecucao)infoFrequenta.getDisciplinaExecucao());
+		frequenta.setEnrolment((IEnrolment)infoFrequenta.getEnrolment());
+		
+		return frequenta;
+	}
 
 	/**
 	 * 

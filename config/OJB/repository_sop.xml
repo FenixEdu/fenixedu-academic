@@ -487,6 +487,61 @@
 	</collection-descriptor> 
    </class-descriptor>
 
+<!-- Definitions for Dominio.Mark -->
+   <class-descriptor
+   	  class="Dominio.Mark"
+   	  table="MARK"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+       <field-descriptor
+	     name="mark"
+	     column="MARK"
+	     jdbc-type="VARCHAR"
+	  />
+	   <field-descriptor
+	     name="publishedMark"
+	     column="PUBLISHED_MARK"
+	     jdbc-type="VARCHAR"
+	  />
+      <field-descriptor
+         name="keyAttend"
+         column="KEY_ATTEND"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyExam"
+         column="KEY_EXAM"
+         jdbc-type="INTEGER"
+      />
+     
+      <reference-descriptor
+         name="attend"
+         class-ref="Dominio.Frequenta"
+         proxy="true"
+      >
+         <foreignkey field-ref="keyAttend"/>
+      </reference-descriptor> 
+      
+      <reference-descriptor
+         name="exam"
+         class-ref="Dominio.Exam"
+         proxy="true"
+      >
+         <foreignkey field-ref="keyExam"/>
+      </reference-descriptor> 
+      
+   </class-descriptor> 
+
+
+
+
+
 <!-- Definitions for Dominio.ExamExecutionCourse -->
    <class-descriptor
    	  class="Dominio.ExamExecutionCourse"
