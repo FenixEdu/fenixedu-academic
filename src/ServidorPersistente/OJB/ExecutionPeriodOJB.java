@@ -538,6 +538,7 @@ public class ExecutionPeriodOJB
 				executionPeriodToImportDataTo.getExecutionYear());
 			executionDegreeToCreate.setIdInternal(null);
 			executionDegreeToCreate.setTemporaryExamMap(new Boolean(true));
+			executionDegreeToCreate.setKeyCampus(new Integer(1));
 
 			try {
 				// It's Ok to just write it with no verification because:
