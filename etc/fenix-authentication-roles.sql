@@ -46,11 +46,12 @@ create table PERSON (
 #----------------------------------
 drop table if exists ROLE;
 create table ROLE(
-  ID_INTERNAL int(11) not null,
-  ROLE_NAME enum('PERSON','TIME_TABLE_MANAGER','TEACHER','STUDENT') not null,
+  ID_INTERNAL int(11) not null auto_increment,
+  ROLE_TYPE int (11) not null,
   PORTAL_ACTION varchar(100),
+  PORTAL_ACTION_NAME_PROPERTY varchar(100),
   PRIMARY KEY (ID_INTERNAL),
-  UNIQUE U1 (ROLE_NAME)
+  UNIQUE U1 (ROLE_TYPE)
 )type=InnoDB;
 
 #----------------------------------
@@ -58,36 +59,12 @@ create table ROLE(
 #----------------------------------
 drop table if exists PERSON_ROLE;
 create table PERSON_ROLE(
-  ID_INTERNAL int(11) not null,
+  ID_INTERNAL int(11) not null auto_increment,
   KEY_ROLE int(11) not null,
   KEY_PERSON int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
   UNIQUE U1 (KEY_ROLE, KEY_PERSON)
 )type=InnoDB;
-
-#----------------------------------
-# Table structure for table SERVICE
-#----------------------------------
-drop table if exists SERVICE;
-create table SERVICE(
-  ID_INTERNAL int(11) not null,
-  SERVICE_NAME varchar(100) not null,
-  PRIMARY KEY (ID_INTERNAL),
-  UNIQUE U1 (SERVICE_NAME)
-)type=InnoDB;
-
-#----------------------------------
-# Table structure for table SERVICE_ROLE
-#----------------------------------
-drop table if exists SERVICE_ROLE;
-create table SERVICE_ROLE(
-  ID_INTERNAL int(11) not null,
-  KEY_ROLE int(11) not null,
-  KEY_SERVICE int(11) not null,
-  PRIMARY KEY (ID_INTERNAL),
-  UNIQUE U1 (KEY_ROLE, KEY_SERVICE)
-)type=InnoDB;
-
 
 #----------------------------------
 # Table structure for table student
