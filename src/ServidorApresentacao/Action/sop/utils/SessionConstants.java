@@ -14,6 +14,10 @@ package ServidorApresentacao.Action.sop.utils;
  * 
  */
 public abstract class SessionConstants {
+	
+
+	
+
 	public static final String CONTEXT_PREFIX = "context.";
 
 	public static final String CONTEXT_KEY =
@@ -53,5 +57,18 @@ public abstract class SessionConstants {
 	public static final String REQUEST_CONTEXT="request_context";
 	
 	public static final String SESSION_IS_VALID="session_is_valid";
+	
+	//gesdis constants
+	public static final String INFO_SITE="info_site";
+	
+	public static final String EXECUTION_COURSE_CURRICULUM= "execution_course_curriculum";
+	
+	public static final String INFO_SITE_ANNOUNCEMENT= "info_site_announcement";
+	
+	public static final String INFO_SITE_SECTION= "info_site_section";
+	
+	public static final String INFO_SITE_ITEM= "info_site_item";
+	
+	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
 	
 }
