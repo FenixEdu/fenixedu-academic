@@ -65,7 +65,14 @@
 		<tr>
 			<td class="listClasses"><bean:write name="infoExamStudentRoom" property="infoStudent.number"/></td>
 			<td class="listClasses"><bean:write name="infoExamStudentRoom" property="infoStudent.infoPerson.nome"/></td>
-			<td class="listClasses"><bean:write name="infoExamStudentRoom" property="infoRoom.nome"/></td>			
+			<td class="listClasses">
+				<logic:present name="infoExamStudentRoom" property="infoRoom">
+					<bean:write name="infoExamStudentRoom" property="infoRoom.nome"/>			
+				</logic:present>
+				<logic:notPresent name="infoExamStudentRoom" property="infoRoom">
+					&nbsp;
+				</logic:notPresent>
+			</td>
 		</tr>
 	</logic:iterate>
 </logic:notEqual> 
