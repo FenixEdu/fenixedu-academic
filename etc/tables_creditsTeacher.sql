@@ -39,7 +39,7 @@ create table CREDITS_MANAGER_DEPARTMENT (
    primary key (ID_INTERNAL),
    unique U1 (KEY_PERSON, KEY_DEPARTMENT))
    type=InnoDB;
-
+   
 ----------------------------
 -- Table structure for CATEGORY
 ----------------------------
@@ -52,3 +52,35 @@ create table CATEGORY (
    primary key (ID_INTERNAL),
    unique U1 (CODE))
    type=InnoDB;
+
+
+-- DEGREE FINAL PROJECT TABLES
+
+drop table if exists DEGREE_FINAL_PROJECT;
+create table DEGREE_FINAL_PROJECT (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EXECUTION_YEAR int(11) not null,   
+   TITLE varchar(255),
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXECUTION_YEAR, TITLE))type=InnoDB;
+   
+drop table if exists DEGREE_FINAL_PROJECT_ORIENTATION;
+create table DEGREE_FINAL_PROJECT_ORIENTATION (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_DEGREE_FINAL_PROJECT int(11) not null,
+   KEY_TEACHER int(11) not null,
+   CO_ORIENTATION bit default '0',
+   PERCENTAGE double (3,2),
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_DEGREE_FINAL_PROJECT,KEY_TEACHER)
+ )type=InnoDB;
+
+drop table if exists STUDENT_CURRICULAR_PLAN_DEGREE_FINAL_PROJECT;
+create table STUDENT_CURRICULAR_PLAN_DEGREE_FINAL_PROJECT (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_DEGREE_FINAL_PROJECT int(11),
+   KEY_STUDENT_CURRICULAR_PLAN int (11),
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_DEGREE_FINAL_PROJECT, KEY_STUDENT_CURRICULAR_PLAN)
+)type=InnoDB;
+   

@@ -11,6 +11,7 @@
     <property environment="env"/>
 
 	<property file="build.properties"/>
+	
 
     <!--Directorios com codigo fonte-->
     <property name="src" location="src" /> 
@@ -389,7 +390,7 @@
 		    <replacefilter
 		    	token="@2WEEKS_BEFORE@"
 		    	value="${2weeks_before}"/>
-		</replace>	
+		</replace>
 		
     </target>
 
@@ -533,7 +534,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-               	<include name="**/ExamRoomDistributionTest.java"/> 
+               	<include name="**/Upgrade*.java"/> 
  	 <!--             	<include name="**/ReadExamsByStudentTest.java"/> 
                <include name="**/ReadPublishedMarksByExamTest.java"/> 
                 	
@@ -991,7 +992,6 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	<target name="validate-xml">
 	
 		<xmlvalidate warn="false" failonerror="false">
-				<fileset dir="${sql}" includes="testDataSetEnrolmentContextManager.xml"/>
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
