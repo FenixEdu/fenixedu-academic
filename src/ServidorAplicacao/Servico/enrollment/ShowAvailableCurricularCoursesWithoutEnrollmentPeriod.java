@@ -86,7 +86,9 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
         List curricularCourses2Enroll = studentCurricularPlan
                 .getCurricularCoursesToEnroll(executionPeriod);
 
-        infoStudentEnrolmentContext.setCurricularCourses2Enroll(getInfoCurricularCoursesToEnrollFromCurricularCourses(studentCurricularPlan, executionPeriod, curricularCourses2Enroll));
+        infoStudentEnrolmentContext
+                .setCurricularCourses2Enroll(getInfoCurricularCoursesToEnrollFromCurricularCourses(
+                        studentCurricularPlan, executionPeriod, curricularCourses2Enroll));
 
         Collections.sort(infoStudentEnrolmentContext.getCurricularCourses2Enroll(), new Comparator() {
 
@@ -117,22 +119,22 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
      * @param curricularCourses2Enroll
      * @return
      */
-    protected List getInfoCurricularCoursesToEnrollFromCurricularCourses(final IStudentCurricularPlan studentCurricularPlan, final IExecutionPeriod executionPeriod, List curricularCourses2Enroll) {
-        return (List) CollectionUtils.collect(
-                curricularCourses2Enroll, new Transformer() {
+    protected List getInfoCurricularCoursesToEnrollFromCurricularCourses(
+            final IStudentCurricularPlan studentCurricularPlan, final IExecutionPeriod executionPeriod,
+            List curricularCourses2Enroll) {
+        return (List) CollectionUtils.collect(curricularCourses2Enroll, new Transformer() {
 
-                    public Object transform(Object arg0) {
-                        InfoCurricularCourse2Enroll infoCurricularCourse = InfoCurricularCourse2EnrollWithInfoCurricularCourse
-                                .newInfoFromDomain((CurricularCourse2Enroll) arg0);
+            public Object transform(Object arg0) {
+                InfoCurricularCourse2Enroll infoCurricularCourse = InfoCurricularCourse2EnrollWithInfoCurricularCourse
+                        .newInfoFromDomain((CurricularCourse2Enroll) arg0);
 
-                        infoCurricularCourse.setCurricularYear(InfoCurricularYear
-                                .newInfoFromDomain(((CurricularCourse2Enroll) arg0)
-                                        .getCurricularCourse().getCurricularYearByBranchAndSemester(
-                                                studentCurricularPlan.getBranch(),
-                                                executionPeriod.getSemester())));
-                        return infoCurricularCourse;
-                    }
-                });
+                infoCurricularCourse.setCurricularYear(InfoCurricularYear
+                        .newInfoFromDomain(((CurricularCourse2Enroll) arg0).getCurricularCourse()
+                                .getCurricularYearByBranchAndSemester(studentCurricularPlan.getBranch(),
+                                        executionPeriod.getSemester())));
+                return infoCurricularCourse;
+            }
+        });
     }
 
     /**

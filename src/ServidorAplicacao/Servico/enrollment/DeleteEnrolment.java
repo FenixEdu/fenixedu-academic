@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.enrollment;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author David Santos Jan 26, 2004
+ * @author João Mota Jul 23, 2004
  */
 public class DeleteEnrolment implements IService {
     public DeleteEnrolment() {
@@ -47,11 +49,33 @@ public class DeleteEnrolment implements IService {
                     .getIPersistentEnrolmentEvaluation();
             IPersistentRestrictionByCurricularCourse persistentRestriction = persistentSuport
                     .getIPersistentRestrictionByCurricularCourse();
-            IEnrollment enrollment = (IEnrollment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
+            final IEnrollment enrollment1 = (IEnrollment) enrolmentDAO.readByOID(Enrolment.class,
+                    enrolmentID);
 
-            if (enrollment != null) {
+            List enrollments2Delete = new ArrayList();
+            List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()
+                    .getAllStudentEnrolledEnrollmentsInExecutionPeriod(enrollment1.getExecutionPeriod());
+            List finalEnrollments2Delete = new ArrayList();
+            enrollments2Delete.addAll(CollectionUtils.select(
+                    studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
+
+                        public boolean evaluate(Object arg0) {
+                            IEnrollment enrollment2 = (IEnrollment) arg0;
+                            return enrollment2.getCurricularCourse()
+                                    .getCurricularYearByBranchAndSemester(
+                                            enrollment2.getStudentCurricularPlan().getBranch(),
+                                            enrollment2.getExecutionPeriod().getSemester()).getYear()
+                                    .intValue() > enrollment1.getCurricularCourse()
+                                    .getCurricularYearByBranchAndSemester(
+                                            enrollment1.getStudentCurricularPlan().getBranch(),
+                                            enrollment1.getExecutionPeriod().getSemester()).getYear()
+                                    .intValue();
+                        }
+                    }));
+
+            if (enrollment1 != null) {
                 List restrictions = persistentRestriction.readByCurricularCourseAndRestrictionClass(
-                        enrollment.getCurricularCourse(),
+                        enrollment1.getCurricularCourse(),
 
                         RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class);
                 if (restrictions != null) {
@@ -59,12 +83,10 @@ public class DeleteEnrolment implements IService {
                     while (iter.hasNext()) {
                         final IRestrictionByCurricularCourse restriction = (RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
                                 .next();
-                        if (enrollment.getStudentCurricularPlan().isCurricularCourseEnrolled(
+                        if (enrollment1.getStudentCurricularPlan().isCurricularCourseEnrolled(
                                 restriction.getPrecedence().getCurricularCourse())) {
                             IEnrollment enrollment2Delete = (IEnrollment) CollectionUtils.find(
-                                    enrollment.getStudentCurricularPlan()
-                                            .getAllStudentEnrolledEnrollmentsInExecutionPeriod(
-                                                    enrollment.getExecutionPeriod()), new Predicate() {
+                                    studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
 
                                         public boolean evaluate(Object arg0) {
                                             IEnrollment enrollment = (IEnrollment) arg0;
@@ -72,12 +94,20 @@ public class DeleteEnrolment implements IService {
                                                     restriction.getPrecedence().getCurricularCourse());
                                         }
                                     });
-                            deleteEnrollment(enrolmentDAO, enrolmentEvaluationDAO, enrollment2Delete);
+                            if (!finalEnrollments2Delete.contains(enrollment2Delete)) {
+                                finalEnrollments2Delete.add(enrollment2Delete);
+                            }
                         }
                     }
                 }
-                deleteEnrollment(enrolmentDAO, enrolmentEvaluationDAO, enrollment);
             }
+            finalEnrollments2Delete.add(enrollment1);
+            finalEnrollments2Delete.addAll(enrollments2Delete);
+            Iterator iter = finalEnrollments2Delete.iterator();
+            while (iter.hasNext()) {
+                deleteEnrollment(enrolmentDAO, enrolmentEvaluationDAO, (IEnrollment) iter.next());
+            }
+
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException(e);

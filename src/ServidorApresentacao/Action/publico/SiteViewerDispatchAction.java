@@ -14,7 +14,6 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -457,9 +456,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         }
         // input 
         
-		InfoExecutionPeriod infoExecutionPeriod =
-		   (InfoExecutionPeriod) request.getAttribute(
-			   SessionConstants.EXECUTION_PERIOD);
 		InfoExecutionDegree infoExecutionDegree =
 		   (InfoExecutionDegree) request.getAttribute(
 		   SessionConstants.EXECUTION_DEGREE);
@@ -468,7 +464,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 				  infoExecutionDegree = (InfoExecutionDegree)session.getAttribute(SessionConstants.EXECUTION_DEGREE);
 			  }
 	    
-			  Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
 			  Integer degreeId = getFromRequest("degreeID", request);
 			  if (degreeId == null )
 				  degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
@@ -618,10 +613,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 		return parameterCode;
 	}
 	private void setFromRequest(HttpServletRequest request) {
-		InfoExecutionPeriod infoExecutionPeriod =
-				  (InfoExecutionPeriod) request.getAttribute(
-					  SessionConstants.EXECUTION_PERIOD);
-			   InfoExecutionDegree infoExecutionDegree =
+		InfoExecutionDegree infoExecutionDegree =
 						  (InfoExecutionDegree) request.getAttribute(
 							  SessionConstants.EXECUTION_DEGREE);
 			   if (infoExecutionDegree == null) {
@@ -637,7 +629,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 			
 				   request.setAttribute("shift",shift);
 	
-			   Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
 			   Integer degreeId = getFromRequest("degreeID", request);
 			   if (degreeId == null )
 				   degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();

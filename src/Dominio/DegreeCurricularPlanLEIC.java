@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-
 /**
  * @author David Santos in Jun 25, 2004
  */
@@ -33,17 +32,21 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlan implements ID
 
         int curricularCoursesSize = degreeCurricularPlan.getCurricularCourses().size();
         for (int i = 0; i < curricularCoursesSize; i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) degreeCurricularPlan.getCurricularCourses().get(i);
-            
+            ICurricularCourse curricularCourse = (ICurricularCourse) degreeCurricularPlan
+                    .getCurricularCourses().get(i);
+
             int curricularCourseScopesSize = curricularCourse.getScopes().size();
             for (int j = 0; j < curricularCourseScopesSize; j++) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(j);
-                if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() == 5) {
+                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
+                        .getScopes().get(j);
+                if ((curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
+                        .intValue() == 5)
+                        && (!curricularCourses.contains(curricularCourse))) {
                     curricularCourses.add(curricularCourse);
                 }
             }
         }
-        
+
         return curricularCourses;
     }
 }
