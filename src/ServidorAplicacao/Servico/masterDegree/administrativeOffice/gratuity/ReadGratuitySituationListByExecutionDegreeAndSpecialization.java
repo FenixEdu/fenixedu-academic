@@ -15,6 +15,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoGratuitySituation;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
@@ -148,13 +149,17 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					if (gratuitySituationType == null
 						|| infoGratuitySituation.getSituationType().equals(gratuitySituationType))
 					{
-						infoGratuitySituationList.add(infoGratuitySituation);
+						if (verifySpecializationOfThisYear(infoGratuitySituation, executionYear))
+						{
+							infoGratuitySituationList.add(infoGratuitySituation);
 
-						//add all value for find the total
-						totalPayedValue =
-							totalPayedValue + infoGratuitySituation.getPayedValue().doubleValue();
-						totalRemaingValue =
-							totalRemaingValue + infoGratuitySituation.getRemainingValue().doubleValue();
+							//add all value for find the total
+							totalPayedValue =
+								totalPayedValue + infoGratuitySituation.getPayedValue().doubleValue();
+							totalRemaingValue =
+								totalRemaingValue
+									+ infoGratuitySituation.getRemainingValue().doubleValue();
+						}
 					}
 				}
 			}
@@ -182,6 +187,33 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	}
 
 	/**
+	 * @param infoGratuitySituation
+	 * @return
+	 */
+	private boolean verifySpecializationOfThisYear(
+		InfoGratuitySituation infoGratuitySituation,
+		IExecutionYear executionYear)
+	{
+		boolean result = false;
+		List enrolmentsList = infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments();
+		InfoExecutionPeriod executionPeriodEnrollment = null;
+		if (enrolmentsList != null && enrolmentsList.size() > 0)
+		{
+			executionPeriodEnrollment = ((InfoEnrolment) enrolmentsList.get(0)).getInfoExecutionPeriod();
+			if (executionPeriodEnrollment.getInfoExecutionYear() != null
+				&& executionPeriodEnrollment.getInfoExecutionYear().getYear() != null
+				&& executionPeriodEnrollment.getInfoExecutionYear().getYear().equals(
+					executionYear.getYear()))
+			{
+				result = true;
+			}
+		} else {
+			result = true; //hasn't enrolments, but appear in list		
+		}
+		return result;
+	}
+
+	/**
 	 * Clone the enrolments´s list
 	 * 
 	 * @param list
@@ -197,17 +229,14 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			while (iterator.hasNext())
 			{
 				IEnrolment enrolment = (IEnrolment) iterator.next();
-
 				infoEnrolments.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));
 			}
 		}
 		return infoEnrolments;
-	}
-
-	/**
-	 * @param sp
-	 * @param infoGratuitySituation
-	 */
+	} /**
+	   * @param sp
+	   * @param infoGratuitySituation
+	   */
 	private void calculateGratuityPayedValue(
 		ISuportePersistente sp,
 		InfoGratuitySituation infoGratuitySituation)
@@ -233,24 +262,19 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				return infoGuide;
 			}
 		});
-
 		addPayedGuide(infoGratuitySituation, infoGuideList);
-	}
-
-	/**
-	 * @param infoGuideList
-	 * @return
-	 */
+	} /**
+	   * @param infoGuideList
+	   * @return
+	   */
 	private void addPayedGuide(InfoGratuitySituation infoGratuitySituation, List infoGuideList)
 		throws Exception
 	{
 		double payedValue = 0;
-
 		ListIterator iterator = infoGuideList.listIterator();
 		while (iterator.hasNext())
 		{
 			InfoGuide infoGuide = (InfoGuide) iterator.next();
-
 			List infoGuideEntriesList = infoGuide.getInfoGuideEntries();
 			if (infoGuideEntriesList != null && infoGuideEntriesList.size() >= 0)
 			{
@@ -258,7 +282,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				while (iteratorGuideEntries.hasNext())
 				{
 					InfoGuideEntry infoGuideEntry = (InfoGuideEntry) iteratorGuideEntries.next();
-
 					if (infoGuideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE))
 					{
 						payedValue = payedValue + infoGuideEntry.getPrice().doubleValue();
@@ -272,18 +295,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 		}
 
 		infoGratuitySituation.setPayedValue(new Double(payedValue));
-	}
-
-	/**
-	 * @param sp
-	 * @param infoGratuitySituation
-	 */
+	} /**
+	   * @param sp
+	   * @param infoGratuitySituation
+	   */
 	private void calculateGratuityRemainingValue(
 		ISuportePersistente sp,
 		InfoGratuitySituation infoGratuitySituation)
 		throws Exception
-	{
-		//first find the total value that it will be pay
+	{ //first find the total value that it will be pay
 		if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
 			&& (infoGratuitySituation
 				.getInfoStudentCurricularPlan()
@@ -307,7 +327,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				&& infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments().size() > 0)
 			{
 				if (infoGratuitySituation.getInfoGratuityValues().getCourseValue() != null
-				&& infoGratuitySituation.getInfoGratuityValues().getCourseValue().doubleValue() != 0)
+					&& infoGratuitySituation.getInfoGratuityValues().getCourseValue().doubleValue() != 0)
 				{
 					infoGratuitySituation.setRemainingValue(
 						new Double(
@@ -316,7 +336,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 									.getInfoStudentCurricularPlan()
 									.getInfoEnrolments()
 									.size()));
-
 				}
 				else
 				{
@@ -339,9 +358,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			{
 				infoGratuitySituation.setRemainingValue(new Double(0));
 			}
-		}
-
-		//discount exemption
+		} //discount exemption
 		if (infoGratuitySituation.getExemptionPercentage() != null
 			&& infoGratuitySituation.getExemptionPercentage().doubleValue() > 0)
 		{
@@ -350,11 +367,8 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
 			double newValue =
 				infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount;
-
 			infoGratuitySituation.setRemainingValue(new Double(newValue));
-		}
-
-		//now find the remaining value to pay
+		} //now find the remaining value to pay
 		double remainingValue =
 			infoGratuitySituation.getRemainingValue().doubleValue()
 				- infoGratuitySituation.getPayedValue().doubleValue();
@@ -362,8 +376,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	}
 
 	private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception
-	{
-		//infoGratuitySituation.getRemainingValue() contains the total value that a student has to
+	{ //infoGratuitySituation.getRemainingValue() contains the total value that a student has to
 		// payed.
 		if (infoGratuitySituation.getRemainingValue().longValue() > 0)
 		{
