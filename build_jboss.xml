@@ -211,7 +211,7 @@
     		description="Compile application server"
     		depends="prepare-app-server">
 		<javac destdir="${build.app-server}"
-               extdirs="${lib}"
+               extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
@@ -338,7 +338,7 @@
     		description="Compile web client"
     		depends="prepare-web-client">
 		<javac destdir="${build.web-client.webinf.classes}"
-               extdirs="${lib}"
+               extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
@@ -357,6 +357,7 @@
        		<include name="ServidorAplicacao/Servico/UserView.java"/>
        		<include name="ServidorAplicacao/Servico/exceptions/FenixServiceException.java"/>
        		-->
+       		<include name="ServidorAplicacao/logging/*.java"/>
        		<include name="ServidorApresentacao/**/*.java"/>
        		<include name="Util/**/*.java"/>
        		<include name="UtilInsc/**/*.java"/>
