@@ -6,14 +6,18 @@
  */
 package middleware.almeida;
 
+import java.util.Date;
 import java.util.StringTokenizer;
 
+import Dominio.Branch;
 import Dominio.Enrolment;
 import Dominio.Frequenta;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
+import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
@@ -75,8 +79,24 @@ public class LoadInscricoes extends LoadDataFile {
 			readCurricularCourse(almeida_inscricoes);
 		IExecutionPeriod executionPeriod = null;
 		IDisciplinaExecucao disciplinaExecucao = null;
+
 		if (curricularCourse != null) {
 			executionPeriod = readActiveExecutionPeriod();
+
+			IEnrolment enrolment = null;
+//				persistentObjectOJB.readEnrolment(
+//					studentCurricularPlan,
+//					curricularCourse,
+//					executionPeriod);
+			if (enrolment == null) {
+				enrolment = new Enrolment(
+					studentCurricularPlan,
+					curricularCourse,
+					new EnrolmentState(EnrolmentState.ENROLED),
+					executionPeriod);
+					writeElement(enrolment);
+			}
+
 			disciplinaExecucao =
 				readExecutionCourse(curricularCourse, executionPeriod);
 
@@ -90,23 +110,19 @@ public class LoadInscricoes extends LoadDataFile {
 					+ "\n";
 				//writeElement(almeida_inscricoes);
 				numberUntreatableElements++;
+			} else {
+				IFrequenta frequenta = null;
+//					persistentObjectOJB.readFrequenta(
+//						studentCurricularPlan.getStudent(),
+//						disciplinaExecucao);
+				if (frequenta == null) {
+					frequenta = new Frequenta(
+						studentCurricularPlan.getStudent(),
+						disciplinaExecucao);
+					writeElement(frequenta);
+				}
 			}
 		}
-
-		Enrolment enrolment =
-			new Enrolment(
-				studentCurricularPlan,
-				curricularCourse,
-				new EnrolmentState(EnrolmentState.ENROLED),
-				executionPeriod);
-
-		Frequenta frequenta =
-			new Frequenta(
-				studentCurricularPlan.getStudent(),
-				disciplinaExecucao);
-
-		writeElement(enrolment);
-		writeElement(frequenta);
 	}
 
 	/**
@@ -144,7 +160,7 @@ public class LoadInscricoes extends LoadDataFile {
 
 		// Log the ones that don't exist in his database!
 		if (almeida_disc == null) {
-			//writeElement(almeida_inscricoes);
+			writeElement(almeida_inscricoes);
 			numberUntreatableElements++;
 		} else {
 			// Read our corresponding curricular couse
@@ -184,9 +200,11 @@ public class LoadInscricoes extends LoadDataFile {
 					persistentObjectOJB.readDegreeCurricularPlan(
 						new Integer("" + almeida_inscricoes.getCurso())),
 					getBranch(almeida_inscricoes),
-					null,
+					new Date(),
 					new StudentCurricularPlanState(
 						StudentCurricularPlanState.ACTIVE));
+			studentCurricularPlan.setBranch(new Branch());
+			writeElement(studentCurricularPlan);
 		}
 
 		return studentCurricularPlan;

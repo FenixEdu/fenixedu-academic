@@ -6,6 +6,7 @@
  */
 package middleware.almeida;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -39,7 +40,10 @@ public class PersistentObjectOJB {
 	}
 
 	public void lockWrite(Object obj) {
-		broker.store(obj);
+		try {
+			broker.store(obj);
+		} catch (org.apache.ojb.broker.PersistenceBrokerSQLException ex) {
+		}
 	}
 
 	public List query(Class classToQuery, Criteria criteria) {

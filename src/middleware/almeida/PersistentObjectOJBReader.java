@@ -13,11 +13,15 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.CurricularCourse;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
+import Dominio.Enrolment;
 import Dominio.ExecutionPeriod;
+import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
+import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Student;
@@ -140,11 +144,8 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		IExecutionPeriod executionPeriod) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo(
-			"associatedCurricularCourses.name",
-			curricularCourse.getName());
-		criteria.addEqualTo(
-			"associatedCurricularCourses.degreeCurricularPlan.degree.nome",
-			curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
+			"associatedCurricularCourses.idInternal",
+			((CurricularCourse) curricularCourse).getIdInternal());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 		criteria.addEqualTo(
 			"executionPeriod.name.executionYear.year",
@@ -169,6 +170,55 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		List result = query(ExecutionPeriod.class, criteria);
 		if (result.size() == 1) {
 			return (IExecutionPeriod) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param curricularCourse
+	 * @param executionPeriod
+	 * @return
+	 */
+	public IEnrolment readEnrolment(
+		IStudentCurricularPlan studentCurricularPlan,
+		ICurricularCourse curricularCourse,
+		IExecutionPeriod executionPeriod) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"studentCurricularPlan.internalCode",
+			((StudentCurricularPlan) studentCurricularPlan).getInternalCode());
+			criteria.addEqualTo(
+				"curricularCourse.idInternal",
+				((CurricularCourse) curricularCourse).getIdInternal());
+			criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+			criteria.addEqualTo(
+				"executionPeriod.name.executionYear.year",
+				executionPeriod.getExecutionYear().getYear());
+		List result = query(Enrolment.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolment) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param student
+	 * @param disciplinaExecucao
+	 * @return
+	 */
+	public IFrequenta readFrequenta(IStudent student, IDisciplinaExecucao disciplinaExecucao) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"aluno.internalCode",
+			((Student) student).getInternalCode());
+			criteria.addEqualTo(
+				"disciplinaExecucao.idInternal",
+				((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
+		List result = query(Frequenta.class, criteria);
+		if (result.size() == 1) {
+			return (IFrequenta) result.get(0);
 		} else {
 			return null;
 		}
