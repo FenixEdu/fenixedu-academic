@@ -8,6 +8,7 @@
 <span class="error"><html:errors/></span>
 <html:form action="/viewAllRoomsSchedulesDA">
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
 	<html:hidden property="method" value="list"/>
     <table width="100%">
     	<tr>

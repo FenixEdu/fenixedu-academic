@@ -11,19 +11,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
  */
-public class ViewAllRoomsSchedulesDA  extends DispatchAction {
+public class ViewAllRoomsSchedulesDA  extends FenixContextDispatchAction {
 	
 	public ActionForward choose(
 		ActionMapping mapping,
@@ -37,9 +35,6 @@ public class ViewAllRoomsSchedulesDA  extends DispatchAction {
 			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-			InfoExecutionPeriod infoExecutionPeriod =
-				setExecutionContext(request);
 
 			/* Criar o bean de pavilhoes */				
 			List pavillionsNamesList = new ArrayList();
@@ -86,7 +81,7 @@ public class ViewAllRoomsSchedulesDA  extends DispatchAction {
 			DynaActionForm chooseViewAllRoomsSchedulesContextForm =
 				(DynaActionForm) form;
 				
-			InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
 			List pavillions = new ArrayList();
 			pavillions.add("Pavilhão Central");
@@ -145,32 +140,5 @@ public class ViewAllRoomsSchedulesDA  extends DispatchAction {
 			throw new Exception();
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
-	
-	/**
-	 * Method setExecutionContext.
-	 * @param request
-	 */
-	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		if (infoExecutionPeriod == null) {
-			IUserView userView = SessionUtils.getUserView(request);
-			infoExecutionPeriod =
-				(InfoExecutionPeriod) ServiceUtils.executeService(
-					userView,
-					"ReadCurrentExecutionPeriod",
-					new Object[0]);
-
-			request.setAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				infoExecutionPeriod);
-		}
-		return infoExecutionPeriod;
-	}
-	
 	
 }

@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
@@ -21,14 +20,14 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
  */
-public class ViewAllClassesSchedulesDA extends DispatchAction {
+public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 
 	public ActionForward choose(
 		ActionMapping mapping,
@@ -43,8 +42,8 @@ public class ViewAllClassesSchedulesDA extends DispatchAction {
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			InfoExecutionPeriod infoExecutionPeriod =
-				setExecutionContext(request);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+//				setExecutionContext(request);
 			/* Cria o form bean com as licenciaturas em execucao.*/
 			Object argsLerLicenciaturas[] =
 				{ infoExecutionPeriod.getInfoExecutionYear()};
@@ -84,8 +83,8 @@ public class ViewAllClassesSchedulesDA extends DispatchAction {
 			DynaActionForm chooseViewAllClassesSchedulesContextForm =
 				(DynaActionForm) form;
 
-			InfoExecutionPeriod infoExecutionPeriod =
-				setExecutionContext(request);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+//				setExecutionContext(request);
 
 			Object argsLerLicenciaturas[] =
 				{ infoExecutionPeriod.getInfoExecutionYear()};
@@ -142,31 +141,6 @@ public class ViewAllClassesSchedulesDA extends DispatchAction {
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
 
-	/**
-	 * Method setExecutionContext.
-	 * @param request
-	 */
-	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		if (infoExecutionPeriod == null) {
-			IUserView userView = SessionUtils.getUserView(request);
-			infoExecutionPeriod =
-				(InfoExecutionPeriod) ServiceUtils.executeService(
-					userView,
-					"ReadCurrentExecutionPeriod",
-					new Object[0]);
-
-			request.setAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				infoExecutionPeriod);
-		}
-		return infoExecutionPeriod;
-	}
 
 	private boolean duplicateInfoDegree(
 		List executionDegreeList,

@@ -9,6 +9,7 @@
 <html:form action="/viewAllClassesSchedulesDA">
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="list"/>
+	<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
 	<bean:define id="infoExecutionDegreesList" name="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" scope="request"/>
 	<html:hidden property="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" value="infoExecutionDegreesList"/>
     <table width="100%">
