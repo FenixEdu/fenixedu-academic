@@ -86,8 +86,7 @@ public class InfoClass implements Serializable {
 	public String toString() {
 		String result = "[INFOTURMA";
 		result += ", nome=" + _name;
-		result += ", semestre=" + _semestre;
-		result += ", infoLicenciatura=" + _infoLicenciatura;
+		result += ", semestre=" + _semestre + infoExecutionDegree.toString() + infoExecutionPeriod.toString();
 		result += "]";
 		return result;
 	}

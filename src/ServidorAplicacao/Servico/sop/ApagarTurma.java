@@ -46,8 +46,7 @@ public class ApagarTurma implements IServico {
 
 	public Object run(InfoClass infoClass) {
 
-		ITurma turma1 = null;
-		ITurma turma2 = null;
+		ITurma turma = null;
 		boolean result = false;
 
 		try {
@@ -55,12 +54,14 @@ public class ApagarTurma implements IServico {
 			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
 			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree());
 
-			turma1 = sp.getITurmaPersistente().readByExecutionPeriodAndClassNameAndExecutionDegree(executionPeriod, infoClass.getNome(), executionDegree);
-			sp.getITurmaPersistente().delete(turma1);
-			turma2 = sp.getITurmaPersistente().readByExecutionPeriodAndClassNameAndExecutionDegree(executionPeriod, infoClass.getNome(), executionDegree);
-
-			if( (turma1!= null) && (turma2 == null) ) {
-				result = true;
+			turma = sp.getITurmaPersistente().readByExecutionPeriodAndClassNameAndExecutionDegree(executionPeriod, infoClass.getNome(), executionDegree);
+			try {
+				if(turma != null) {
+					sp.getITurmaPersistente().delete(turma);
+					result = true;
+				}
+			} catch(ExcepcaoPersistencia ex1) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex1);
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
