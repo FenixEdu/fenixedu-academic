@@ -18,6 +18,7 @@ import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.mapping.ActionMappingForAuthentication;
 
 /**
  * @author jorge
@@ -33,12 +34,14 @@ public class AuthenticationAction extends FenixAction {
 		IUserView userView = null;
 		try {
 			DynaActionForm authenticationForm = (DynaActionForm) form;
+			ActionMappingForAuthentication authenticationMapping = (ActionMappingForAuthentication) mapping;
 
 			GestorServicos gestor = GestorServicos.manager();
 			Object argsAutenticacao[] =
 				{
 					authenticationForm.get("username"),
-					authenticationForm.get("password")};
+					authenticationForm.get("password"),
+					authenticationMapping.getApplication()};
 
 			userView =
 				(IUserView) gestor.executar(
