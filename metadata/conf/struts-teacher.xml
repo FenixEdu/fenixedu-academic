@@ -19,16 +19,10 @@
 	 <!-- examEnrollment form -->
    	<form-bean name="examEnrollmentForm"
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">        
-        <form-property name="beginDay" type="java.lang.String" />
-        <form-property name="beginMonth" type="java.lang.String" />
-        <form-property name="beginYear" type="java.lang.String" />
-        <form-property name="beginHour" type="java.lang.String" />
-        <form-property name="beginMinutes" type="java.lang.String" />
-        <form-property name="endDay" type="java.lang.String" />
-        <form-property name="endMonth" type="java.lang.String" />
-        <form-property name="endYear" type="java.lang.String" />
-        <form-property name="endHour" type="java.lang.String" />
-        <form-property name="endMinutes" type="java.lang.String" />
+        <form-property name="enrollmentBeginDayFormatted" type="java.lang.String" />
+        <form-property name="enrollmentBeginTimeFormatted" type="java.lang.String" />
+        <form-property name="enrollmentEndDayFormatted" type="java.lang.String" />
+        <form-property name="enrollmentEndTimeFormatted" type="java.lang.String" />
      </form-bean>    	
 	 
      <!--curriculum forms --> 
@@ -439,17 +433,9 @@
        <forward name="viewExams" path="/viewExams.jsp"/>
 	</action>
 	
-	<action 
-		path="/examEnrollmentManager"
-		parameter="method"
-		scope="request"
-		type="ServidorApresentacao.Action.teacher.ExamEnrollmentDispatchAction"
-        >
-       <forward name="prepareEditExamEnrollment" path="/viewExamEnrollment.jsp"/>
-	</action>
 	
 	<action 
-		input="/examEnrollmentManager.do?method=prepareEditExamEnrollment"
+		input="/viewExams.do"
 		name="examEnrollmentForm"
 		path="/examEnrollmentEditionManager"
 		parameter="method"

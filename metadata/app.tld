@@ -383,4 +383,24 @@
     </attribute>
   
   </tag>
+  
+</tag>
+
+	<!-- OptionsTag: Tânia & Fernanda da Assiduidade -->
+	
+	<!-- Date Tag: formats a calendar into something of the format DD/mm/yyyy ! João Mota-->
+  <tag>
+  
+    <name>date</name>
+    <tagclass>ServidorApresentacao.TagLib.commons.DateTag</tagclass>
+    <bodycontent>empty</bodycontent>
+
+    <attribute>
+      <name>calendar</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>  
+  
 </taglib>

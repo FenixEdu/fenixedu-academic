@@ -72,19 +72,21 @@ public class ReadExams implements IServico {
 				
 				sp = SuportePersistenteOJB.getInstance();
 				IDisciplinaExecucaoPersistente persistentExecutionCourse=sp.getIDisciplinaExecucaoPersistente();
+
+				
 				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
 				if (executionCourse ==null){
 					throw new NonExistingServiceException();
 				}
 				List infoExams=new ArrayList();
 				List exams = null;
+				
 				if (executionCourse!=null){ exams = executionCourse.getAssociatedExams();
 				
 				Iterator iter = exams.iterator();
 				while (iter.hasNext()) {
 					infoExams.add(Cloner.copyIExam2InfoExam((IExam) iter.next()));
 				}
-				
 				
 				}
 				return infoExams;

@@ -20,9 +20,12 @@ public class InfoExam {
 	protected Calendar beginning;
 	protected Calendar end;
 	protected Season season;
-	
+	protected Calendar enrollmentBeginDay;
+	protected Calendar enrollmentEndDay;
+	protected Calendar enrollmentBeginTime;
+	protected Calendar enrollmentEndTime;
 	protected List associatedRooms;
-	
+
 	private Integer idInternal;
 
 	// The following variable serves the purpose of indicating the
@@ -35,23 +38,33 @@ public class InfoExam {
 	public InfoExam() {
 	}
 
-	public InfoExam(Calendar day, Calendar beginning, Calendar end, Season season) {
+	public InfoExam(
+		Calendar day,
+		Calendar beginning,
+		Calendar end,
+		Season season) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
 		this.setSeason(season);
 	}
 
-
 	public String toString() {
 		return "[INFOEXAM:"
-			+ " day= '"             + this.getDay()             + "'"
-			+ " beginning= '"       + this.getBeginning()       + "'"
-			+ " end= '"				+ this.getEnd()       + "'"
-			+ " season= '"          + this.getSeason()          + "'"
+			+ " day= '"
+			+ this.getDay()
+			+ "'"
+			+ " beginning= '"
+			+ this.getBeginning()
+			+ "'"
+			+ " end= '"
+			+ this.getEnd()
+			+ "'"
+			+ " season= '"
+			+ this.getSeason()
+			+ "'"
 			+ "";
 	}
-
 
 	/**
 	 * @return Calendar
@@ -97,7 +110,6 @@ public class InfoExam {
 	public void setEnd(Calendar end) {
 		this.end = end;
 	}
-
 
 	/**
 	 * @return
@@ -155,40 +167,143 @@ public class InfoExam {
 		idInternal = internal;
 	}
 
-
 	public String getDate() {
-		if (getDay()==null){
+		if (getDay() == null) {
 			return "0/0/0";
 		}
 		String result = String.valueOf(getDay().get(Calendar.DAY_OF_MONTH));
 		result += "/";
-		result += String.valueOf(getDay().get(Calendar.MONTH)+1);
+		result += String.valueOf(getDay().get(Calendar.MONTH) + 1);
 		result += "/";
 		result += String.valueOf(getDay().get(Calendar.YEAR));
 		return result;
 	}
-	
-	public String getBeginningHour(){
-		if (getBeginning()==null){
+
+	public String getBeginningHour() {
+		if (getBeginning() == null) {
 			return "00:00";
 		}
-		String result = format(String.valueOf(getBeginning().get(Calendar.HOUR_OF_DAY)));
-				result += ":";
-				result += format(String.valueOf(getBeginning().get(Calendar.MINUTE)));
+		String result =
+			format(String.valueOf(getBeginning().get(Calendar.HOUR_OF_DAY)));
+		result += ":";
+		result += format(String.valueOf(getBeginning().get(Calendar.MINUTE)));
 		return result;
 	}
-	
+
 	/**
 	 * @param string
 	 * @return
 	 */
 	private String format(String string) {
-		if (string.length()==1){
-			string= "0"+string;
+		if (string.length() == 1) {
+			string = "0" + string;
 		}
 		return string;
 	}
 
+	private String format(int i) {
+		String string = "" + i;
+		if (i < 10 && 0 <= i) {
+			string = "0" + string;
+		}
+		return string;
+	}
 
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginDay() {
+		return enrollmentBeginDay;
+	}
 
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndDay() {
+		return enrollmentEndDay;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginDay(Calendar calendar) {
+		enrollmentBeginDay = calendar;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndDay(Calendar calendar) {
+		enrollmentEndDay = calendar;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginTime() {
+		return enrollmentBeginTime;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndTime() {
+		return enrollmentEndTime;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginTime(Calendar calendar) {
+		enrollmentBeginTime = calendar;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndTime(Calendar calendar) {
+		enrollmentEndTime = calendar;
+	}
+
+	public String dateFormatter(Calendar calendar) {
+		String result = "";
+		if (calendar != null) {
+
+			result += calendar.get(Calendar.DAY_OF_MONTH);
+			result += "/";
+			result += calendar.get(Calendar.MONTH) + 1;
+			result += "/";
+			result += calendar.get(Calendar.YEAR);
+		}
+		return result;
+	}
+
+	public String timeFormatter(Calendar calendar) {
+		String result = "";
+		if (calendar != null) {
+
+			result += calendar.get(Calendar.HOUR_OF_DAY);
+			result += ":";
+			if (calendar.get(Calendar.MINUTE)<10){
+				result += calendar.get(Calendar.MINUTE);
+				result += "0";
+			}else{
+				result += calendar.get(Calendar.MINUTE);
+			}
+		}
+		return result;
+	}
+
+	public String getEnrollmentBeginDayFormatted() {
+		return dateFormatter(getEnrollmentBeginDay());
+	}
+	public String getEnrollmentEndDayFormatted() {
+		return dateFormatter(getEnrollmentEndDay());
+	}
+	public String getEnrollmentBeginTimeFormatted() {
+		return timeFormatter(getEnrollmentBeginTime());
+	}
+	public String getEnrollmentEndTimeFormatted() {
+		return timeFormatter(getEnrollmentEndTime());
+	}
 }

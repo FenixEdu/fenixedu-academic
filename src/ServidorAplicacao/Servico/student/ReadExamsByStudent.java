@@ -14,13 +14,11 @@ import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
-import Dominio.IExamEnrollment;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.utils.ExamsNotEnrolledPredicate;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExamEnrollment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -65,8 +63,7 @@ public class ReadExamsByStudent implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IStudent student =
 				(IStudent) sp.getIPersistentStudent().readByUsername(username);
-			IPersistentExamEnrollment persistentExamEnrollment =
-				sp.getIPersistentExamEnrollment();
+
 			if (student != null) {
 				List examsEnrolled = student.getExamsEnrolled();
 
@@ -74,10 +71,7 @@ public class ReadExamsByStudent implements IServico {
 				while (iter1.hasNext()) {
 					IExam exam = (IExam) iter1.next();
 
-					IExamEnrollment examEnrollment =
-						persistentExamEnrollment.readIExamEnrollmentByExam(
-							exam);
-					if (isInDate(examEnrollment)) {
+					if (isInDate(exam)) {
 						InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 						infoExam.setInfoExecutionCourse(
 							Cloner.copyIExecutionCourse2InfoExecutionCourse(
@@ -100,18 +94,16 @@ public class ReadExamsByStudent implements IServico {
 							.getDisciplinaExecucao()
 							.getAssociatedExams());
 				}
-				
+
 				CollectionUtils.filter(
 					examsToEnroll,
 					new ExamsNotEnrolledPredicate(examsEnrolled));
-				
+
 				Iterator iter3 = examsToEnroll.iterator();
 				while (iter3.hasNext()) {
 					IExam exam = (IExam) iter3.next();
-					IExamEnrollment examEnrollment =
-						persistentExamEnrollment.readIExamEnrollmentByExam(
-							exam);
-					if (examEnrollment != null && isInDate(examEnrollment)) {
+
+					if (isInDate(exam)) {
 						InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 						infoExam.setInfoExecutionCourse(
 							Cloner.copyIExecutionCourse2InfoExecutionCourse(
@@ -128,7 +120,7 @@ public class ReadExamsByStudent implements IServico {
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 		}
-		
+
 		ISiteComponent component =
 			new InfoStudentSiteExams(infoExamsToEnroll, infoExamsEnrolled);
 		SiteView siteView = new SiteView(component);
@@ -140,13 +132,32 @@ public class ReadExamsByStudent implements IServico {
 	 * @param examEnrollment
 	 * @return
 	 */
-	private boolean isInDate(IExamEnrollment examEnrollment) {
-
-		return (
-			Calendar.getInstance().getTimeInMillis()
-				< examEnrollment.getEndDate().getTimeInMillis()
-				&& Calendar.getInstance().getTimeInMillis()
-					> examEnrollment.getBeginDate().getTimeInMillis());
+	private boolean isInDate(IExam exam) {
+		if (exam.getEnrollmentBeginDay() == null
+			|| exam.getEnrollmentEndDay() == null
+			|| exam.getEnrollmentBeginTime() == null
+			|| exam.getEnrollmentEndTime() == null) {
+			return false;
+		} else {
+		Calendar begin = Calendar.getInstance();
+		begin.set(Calendar.YEAR,exam.getEnrollmentBeginDay().get(Calendar.YEAR));
+		begin.set(Calendar.MONTH,exam.getEnrollmentBeginDay().get(Calendar.MONTH));
+		begin.set(Calendar.DAY_OF_MONTH,exam.getEnrollmentBeginDay().get(Calendar.DAY_OF_MONTH));
+		begin.set(Calendar.HOUR_OF_DAY,exam.getEnrollmentBeginTime().get(Calendar.HOUR_OF_DAY));
+		begin.set(Calendar.MINUTE,exam.getEnrollmentBeginTime().get(Calendar.MINUTE));
+		
+		Calendar end = Calendar.getInstance();
+		end.set(Calendar.YEAR,exam.getEnrollmentEndDay().get(Calendar.YEAR));
+		end.set(Calendar.MONTH,exam.getEnrollmentEndDay().get(Calendar.MONTH));
+		end.set(Calendar.DAY_OF_MONTH,exam.getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
+		end.set(Calendar.HOUR_OF_DAY,exam.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
+		end.set(Calendar.MINUTE,exam.getEnrollmentEndTime().get(Calendar.MINUTE));
+			return (
+				Calendar.getInstance().getTimeInMillis()
+					< end.getTimeInMillis()
+					&& Calendar.getInstance().getTimeInMillis()
+						> begin.getTimeInMillis());
+		}
 	}
 
 }

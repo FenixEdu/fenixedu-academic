@@ -21,6 +21,10 @@ public class Exam extends DomainObject implements IExam {
 	protected List associatedExecutionCourses;
 	protected List associatedRooms;
 	protected List studentsEnrolled;
+	protected Calendar enrollmentBeginDay;
+	protected Calendar enrollmentBeginTime;
+	protected Calendar enrollmentEndDay;
+	protected Calendar enrollmentEndTime;
 
 	public Exam() {}
 
@@ -151,6 +155,62 @@ public class Exam extends DomainObject implements IExam {
 	 */
 	public void setStudentsEnrolled(List list) {
 		studentsEnrolled = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginDay() {
+		return enrollmentBeginDay;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndDay() {
+		return enrollmentEndDay;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginDay(Calendar calendar) {
+		enrollmentBeginDay = calendar;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndDay(Calendar calendar) {
+		enrollmentEndDay = calendar;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentBeginTime() {
+		return enrollmentBeginTime;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEnrollmentEndTime() {
+		return enrollmentEndTime;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentBeginTime(Calendar calendar) {
+		enrollmentBeginTime = calendar;
+	}
+
+	/**
+	 * @param calendar
+	 */
+	public void setEnrollmentEndTime(Calendar calendar) {
+		enrollmentEndTime = calendar;
 	}
 
 }

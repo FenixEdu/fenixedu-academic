@@ -16,7 +16,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -30,121 +29,6 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepareEditExamEnrollment(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-
-	
-		IUserView userView = SessionUtils.getUserView(request);
-
-		Integer examIdInternal = new Integer(request.getParameter("examCode"));
-		Integer disciplinaExecucaoIdInternal =
-			new Integer(request.getParameter("objectCode"));
-
-		Object args[] = { disciplinaExecucaoIdInternal, examIdInternal };
-
-		SiteView siteView = null;
-		try {
-			siteView =
-				(SiteView) ServiceUtils.executeService(
-					userView,
-					"ReadExamEnrollment",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		request.setAttribute("examCode", examIdInternal);
-		System.out.println("objectCode->" + disciplinaExecucaoIdInternal);
-		request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
-
-		request.setAttribute("siteView", siteView);
-		return mapping.findForward("prepareEditExamEnrollment");
-
-	}
-
-	public ActionForward insertExamEnrollment(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		DynaActionForm examEnrollmentForm = (DynaActionForm) form;
-
-	
-		IUserView userView = SessionUtils.getUserView(request);
-
-		Integer examIdInternal = new Integer(request.getParameter("examCode"));
-		Integer disciplinaExecucaoIdInternal =
-			new Integer(request.getParameter("objectCode"));
-
-		Integer beginDay =
-			new Integer((String) examEnrollmentForm.get("beginDay"));
-		Integer beginMonth =
-			new Integer((String) examEnrollmentForm.get("beginMonth"));
-		Integer beginYear =
-			new Integer((String) examEnrollmentForm.get("beginYear"));
-		Integer beginHour =
-			new Integer((String) examEnrollmentForm.get("beginHour"));
-		Integer beginMinutes =
-			new Integer((String) examEnrollmentForm.get("beginMinutes"));
-
-		Integer endDay = new Integer((String) examEnrollmentForm.get("endDay"));
-		Integer endMonth =
-			new Integer((String) examEnrollmentForm.get("endMonth"));
-		Integer endYear =
-			new Integer((String) examEnrollmentForm.get("endYear"));
-		Integer endHour =
-			new Integer((String) examEnrollmentForm.get("endHour"));
-		Integer endMinutes =
-			new Integer((String) examEnrollmentForm.get("endMinutes"));
-
-		Calendar beginDate = Calendar.getInstance();
-		beginDate.set(
-			beginYear.intValue(),
-			beginMonth.intValue() - 1,
-			beginDay.intValue(),
-			beginHour.intValue(),
-			beginMinutes.intValue());
-
-		Calendar endDate = Calendar.getInstance();
-		endDate.set(
-			endYear.intValue(),
-			endMonth.intValue() - 1,
-			endDay.intValue(),
-			endHour.intValue(),
-			endMinutes.intValue());
-
-		if (!verifyDates(beginDate, endDate)) {
-			setErrorMessage(request, "error.endDate.sooner.beginDate");
-			return mapping.getInputForward();
-		}
-
-		Object args[] =
-			{
-				disciplinaExecucaoIdInternal,
-				examIdInternal,
-				beginDate,
-				endDate };
-
-		try {
-			ServiceUtils.executeService(userView, "InsertExamEnrollment", args);
-		} catch (InvalidTimeIntervalServiceException e) {
-			setErrorMessage(request, "error.endDate.sooner.examDate");
-			return mapping.getInputForward();
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		request.setAttribute("examCode", examIdInternal);
-		request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
-
-		return mapping.findForward("viewExams");
-	}
-
 	public ActionForward editExamEnrollment(
 		ActionMapping mapping,
 		ActionForm form,
@@ -153,53 +37,65 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 		DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
-		
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer examIdInternal = new Integer(request.getParameter("examCode"));
 		Integer disciplinaExecucaoIdInternal =
 			new Integer(request.getParameter("objectCode"));
 
-		
+		String enrollmentBeginDay =
+			(String) examEnrollmentForm.get("enrollmentBeginDayFormatted");
+		String enrollmentBeginHour =
+			(String) examEnrollmentForm.get("enrollmentBeginTimeFormatted");
+		String enrollmentEndDay =
+			(String) examEnrollmentForm.get("enrollmentEndDayFormatted");
+		String enrollmentEndHour =
+			(String) examEnrollmentForm.get("enrollmentEndTimeFormatted");
 
-		Integer beginDay =
-			new Integer((String) examEnrollmentForm.get("beginDay"));
-		Integer beginMonth =
-			new Integer((String) examEnrollmentForm.get("beginMonth"));
-		Integer beginYear =
-			new Integer((String) examEnrollmentForm.get("beginYear"));
-		Integer beginHour =
-			new Integer((String) examEnrollmentForm.get("beginHour"));
-		Integer beginMinutes =
-			new Integer((String) examEnrollmentForm.get("beginMinutes"));
-
-		Integer endDay = new Integer((String) examEnrollmentForm.get("endDay"));
-		Integer endMonth =
-			new Integer((String) examEnrollmentForm.get("endMonth"));
-		Integer endYear =
-			new Integer((String) examEnrollmentForm.get("endYear"));
-		Integer endHour =
-			new Integer((String) examEnrollmentForm.get("endHour"));
-		Integer endMinutes =
-			new Integer((String) examEnrollmentForm.get("endMinutes"));
-
+		String[] enrollmentBeginDayArray = enrollmentBeginDay.split("/");
+		String[] enrollmentBeginHourArray = enrollmentBeginHour.split(":");
+		String[] enrollmentEndDayArray = enrollmentEndDay.split("/");
+		String[] enrollmentEndHourArray = enrollmentEndHour.split(":");
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(
-			beginYear.intValue(),
-			beginMonth.intValue() - 1,
-			beginDay.intValue(),
-			beginHour.intValue(),
-			beginMinutes.intValue());
+			Calendar.YEAR,
+			new Integer(enrollmentBeginDayArray[2]).intValue());
+		beginDate.set(
+			Calendar.MONTH,
+			new Integer(enrollmentBeginDayArray[1]).intValue()-1);
+		beginDate.set(
+			Calendar.DAY_OF_MONTH,
+			new Integer(enrollmentBeginDayArray[0]).intValue());
+
+		Calendar beginTime = Calendar.getInstance();
+		beginTime.set(
+			Calendar.HOUR_OF_DAY,
+			new Integer(enrollmentBeginHourArray[0]).intValue());
+		beginTime.set(
+			Calendar.MINUTE,
+			new Integer(enrollmentBeginHourArray[1]).intValue());
 
 		Calendar endDate = Calendar.getInstance();
-		endDate.set(
-			endYear.intValue(),
-			endMonth.intValue() - 1,
-			endDay.intValue(),
-			endHour.intValue(),
-			endMinutes.intValue());
 
-		if (!verifyDates(beginDate, endDate)) {
+		endDate.set(
+			Calendar.YEAR,
+			new Integer(enrollmentEndDayArray[2]).intValue());
+		endDate.set(
+			Calendar.MONTH,
+			new Integer(enrollmentEndDayArray[1]).intValue()-1);
+		endDate.set(
+			Calendar.DAY_OF_MONTH,
+			new Integer(enrollmentEndDayArray[0]).intValue());
+
+		Calendar endTime = Calendar.getInstance();
+		endTime.set(
+			Calendar.HOUR_OF_DAY,
+			new Integer(enrollmentEndHourArray[0]).intValue());
+		endTime.set(
+			Calendar.MINUTE,
+			new Integer(enrollmentEndHourArray[1]).intValue());
+
+		if (!verifyDates(beginDate, beginTime, endDate, endTime)) {
 			setErrorMessage(request, "error.endDate.sooner.beginDate");
 			return mapping.getInputForward();
 		}
@@ -209,7 +105,9 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 				disciplinaExecucaoIdInternal,
 				examIdInternal,
 				beginDate,
-				endDate };
+				endDate,
+				beginTime,
+				endTime };
 
 		try {
 			ServiceUtils.executeService(userView, "EditExamEnrollment", args);
@@ -226,9 +124,26 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("viewExams");
 	}
 
-	private boolean verifyDates(Calendar begin, Calendar end) {
+	private boolean verifyDates(
+		Calendar beginDay,
+		Calendar beginTime,
+		Calendar endDay,
+		Calendar endTime) {
+		Calendar begin = Calendar.getInstance();
+		begin.set(Calendar.YEAR, beginDay.get(Calendar.YEAR));
+		begin.set(Calendar.MONTH, beginDay.get(Calendar.MONTH));
+		begin.set(Calendar.DAY_OF_MONTH, beginDay.get(Calendar.DAY_OF_MONTH));
+		begin.set(Calendar.HOUR_OF_DAY, beginTime.get(Calendar.HOUR_OF_DAY));
+		begin.set(Calendar.MINUTE, beginTime.get(Calendar.MINUTE));
 
-		return begin.getTimeInMillis() < end.getTimeInMillis();
+		Calendar end = Calendar.getInstance();
+		end.set(Calendar.YEAR, endDay.get(Calendar.YEAR));
+		end.set(Calendar.MONTH, endDay.get(Calendar.MONTH));
+		end.set(Calendar.DAY_OF_MONTH, endDay.get(Calendar.DAY_OF_MONTH));
+		end.set(Calendar.HOUR_OF_DAY, endTime.get(Calendar.HOUR_OF_DAY));
+		end.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
+
+		return  begin.getTimeInMillis() < end.getTimeInMillis();
 	}
 
 	private void setErrorMessage(HttpServletRequest request, String message) {

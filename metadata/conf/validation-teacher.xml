@@ -6,100 +6,49 @@
    
     <!-- validation for the examEnrollment form -->
    <form name="examEnrollmentForm">
-   	<field property="beginDay" depends="required,integer">
-   		<arg0 key="message.beginDay" resource="true"/>
+   	<field property="enrollmentBeginDayFormatted" depends="required,mask,date">
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.enrollmentBeginDay" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)</var-value>
+        </var>
    	</field>
-   	<field property="beginMonth" depends="required,integer">
-   		<arg0 key="message.beginMonth" resource="true"/>
+   	<field property="enrollmentBeginTimeFormatted" depends="required,date">
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.enrollmentBeginHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
    	</field>
-   	<field property="beginYear" depends="required,integer,validateDate">
-   		<arg0 key="message.beginYear" resource="true"/>
+   	<field property="enrollmentEndDayFormatted" depends="required,mask,date">
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.enrollmentEndDay" resource="true"/>
    		 <var>
-                     <var-name>month</var-name>
-                     <var-value>beginMonth</var-value>
-                  </var>
-                  <var>
-                     <var-name>day</var-name>
-                     <var-value>beginDay</var-value>
-                  </var>
-                   <var>
-                     <var-name>year</var-name>
-                     <var-value>beginYear</var-value>
-                  </var>
-   	</field>
-   	<field property="beginHour" depends="required,integer,range">
-   		<arg0 key="message.beginHour" resource="true"/>
-   		 <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
         </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>23</var-value>
+         <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)</var-value>
         </var>
    	</field>
-   	<field property="beginMinutes" depends="required,integer,range">
-   		<arg0 key="message.beginMinutes" resource="true"/>
-   		 <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>59</var-value>
+   	<field property="enrollmentEndTimeFormatted" depends="required,date">
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.enrollmentEndHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
         </var>
    	</field>
-   	<field property="endDay" depends="required,integer">
-   		<arg0 key="message.endDay" resource="true"/>
-   	</field>
-   	<field property="endMonth" depends="required,integer">
-   		<arg0 key="message.endMonth" resource="true"/>
-   	</field>
-   	<field property="endYear" depends="required,integer,validateDate">
-   		<arg0 key="message.endYear" resource="true"/>
-   		 <var>
-                     <var-name>month</var-name>
-                     <var-value>endMonth</var-value>
-                  </var>
-                  <var>
-                     <var-name>day</var-name>
-                     <var-value>endDay</var-value>
-                  </var>
-                   <var>
-                     <var-name>year</var-name>
-                     <var-value>endYear</var-value>
-                  </var>
-   	</field>
-   	<field property="endHour" depends="required,integer,range">
-   		<arg0 key="message.endHour" resource="true"/>
-   		 <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>23</var-value>
-        </var>
-   	</field>
-   	<field property="endMinutes" depends="required,integer,range">
-   		<arg0 key="message.endMinutes" resource="true"/>
-   		 <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>59</var-value>
-        </var>
-   	</field>
+
    	
    </form>
    

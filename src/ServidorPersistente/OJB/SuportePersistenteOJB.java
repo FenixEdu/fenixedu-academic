@@ -48,7 +48,6 @@ import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentExam;
-import ServidorPersistente.IPersistentExamEnrollment;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -331,10 +330,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse() {
 		return new ExamExecutionCourseOJB();
 	}
-
-	public IPersistentExamEnrollment getIPersistentExamEnrollment() {
-			return new ExamEnrollmentOJB();
-		}
 
 	public IPersistentBranch getIPersistentBranch() {
 		return new BranchOJB();
