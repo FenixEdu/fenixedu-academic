@@ -23,7 +23,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.ClassKey;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -208,11 +207,14 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		throws Exception {
 
 		DynaValidatorForm classForm = (DynaValidatorForm) form;
+		HttpSession session = request.getSession();
 		String className = getClassName(classForm);
 		IUserView userView = SessionUtils.getUserView(request);
 
-		ClassKey keyClass = new ClassKey(className);
-		Object argsApagarTurma[] = { keyClass };
+		InfoClass infoClass = getInfoTurma(userView, className, session);
+
+//		ClassKey keyClass = new ClassKey(className);
+		Object argsApagarTurma[] = { infoClass };
 		ServiceUtils.executeService(userView, "ApagarTurma", argsApagarTurma);
 
 		return mapping.findForward("listClasses");
