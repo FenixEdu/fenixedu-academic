@@ -6,6 +6,7 @@ package Dominio;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import Util.Season;
 
@@ -21,6 +22,9 @@ public class Exam extends DomainObject implements IExam {
 	protected IDisciplinaExecucao executionCourse;
 
 	private Integer keyExecutionCourse;
+
+	protected List associatedExecutionCourses;
+
 
 	public Exam() {}
 
@@ -148,6 +152,20 @@ public class Exam extends DomainObject implements IExam {
 	 */
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedExecutionCourses() {
+		return associatedExecutionCourses;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedExecutionCourses(List list) {
+		associatedExecutionCourses = list;
 	}
 
 }

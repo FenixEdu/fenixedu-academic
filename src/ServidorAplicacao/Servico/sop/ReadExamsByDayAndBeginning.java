@@ -21,6 +21,7 @@ import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
@@ -66,6 +67,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
 			InfoExam tempInfoExam = null;
 			List tempAssociatedCurricularCourses = null;
 			ICurso tempDegree = null;
+			List tempInfoExecutionCourses = null;
 			List tempInfoDegrees = null;
 			Integer numberStudentesAttendingCourse = null;
 			int totalNumberStudents = 0;
@@ -78,21 +80,28 @@ public class ReadExamsByDayAndBeginning implements IServico {
 				// prepare exam info
 				tempExam = (IExam) exams.get(i);
 				tempInfoExam = Cloner.copyIExam2InfoExam(tempExam);
-				
-				// prepare degrees associated with exam
 				tempInfoDegrees = new ArrayList();
-				tempAssociatedCurricularCourses = tempExam.getExecutionCourse().getAssociatedCurricularCourses();
-				for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {
-					tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(j)).getDegreeCurricularPlan().getDegree();
-					tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+				tempInfoExecutionCourses = new ArrayList();
+
+				for(int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++ ) {
+					IDisciplinaExecucao executionCourse =
+						(IDisciplinaExecucao) tempExam.getAssociatedExecutionCourses().get(k);
+					tempInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+
+					// prepare degrees associated with exam
+					tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
+					for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {
+						tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(j)).getDegreeCurricularPlan().getDegree();
+						tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+					}
+
+					// determine number of students attending course
+					numberStudentesAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(executionCourse);
+					totalNumberStudents += numberStudentesAttendingCourse.intValue(); 
 				}
 
-				// determine number of students attending course
-				numberStudentesAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(tempExam.getExecutionCourse());
-				totalNumberStudents += numberStudentesAttendingCourse.intValue(); 
-
 				// add exam and degree info to result list
-				infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoDegrees, numberStudentesAttendingCourse));
+				infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoExecutionCourses, tempInfoDegrees, numberStudentesAttendingCourse));
 			}
 			
 			infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);

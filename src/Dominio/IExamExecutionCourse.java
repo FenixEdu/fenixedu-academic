@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.List;
+
 
 /**
  *   29/Mar/2003

@@ -16,6 +16,7 @@ import java.util.List;
 public class InfoViewExamByDayAndShift {
 
 	protected InfoExam infoExam;
+	protected List infoExecutionCourses;
 	protected List infoDegrees;
 	protected Integer numberStudentesAttendingCourse;
 
@@ -24,9 +25,11 @@ public class InfoViewExamByDayAndShift {
 
 	public InfoViewExamByDayAndShift(
 		InfoExam infoExam,
+		List infoExecutionCourses,
 		List infoDegrees,
 		Integer numberStudentesAttendingCourse) {
 		this.setInfoExam(infoExam);
+		this.setInfoExecutionCourses(infoExecutionCourses);
 		this.setInfoDegrees(infoDegrees);
 		this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
 	}
@@ -88,6 +91,20 @@ public class InfoViewExamByDayAndShift {
 	 */
 	public void setNumberStudentesAttendingCourse(Integer integer) {
 		numberStudentesAttendingCourse = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoExecutionCourses() {
+		return infoExecutionCourses;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoExecutionCourses(List list) {
+		infoExecutionCourses = list;
 	}
 
 }

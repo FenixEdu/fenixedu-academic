@@ -47,6 +47,10 @@
 			<tr align="center">
 				<td>
 					<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.nome"/>
+					- - - - -
+					<logic:iterate id="infoExecutionCourse" name="infoViewExam" property="infoExecutionCourses">
+						<bean:write name="infoExecutionCourse" property="name"/> <br/>
+					</logic:iterate>					
 				</td>
 				<td>
 					<logic:iterate id="infoDegree" name="infoViewExam" property="infoDegrees">

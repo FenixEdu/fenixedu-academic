@@ -88,6 +88,7 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 							null,
 							new InfoExecutionCourse()),
 						null,
+						null,
 						null);
 						
 				if (infoExamsOfExecutionCourse.size() == 1) {

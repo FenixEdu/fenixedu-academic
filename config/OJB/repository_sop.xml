@@ -400,6 +400,17 @@
       >
          <foreignkey field-ref="keyExecutionCourse"/>
       </reference-descriptor>      
+	<collection-descriptor
+			name="associatedExecutionCourses"
+			element-class-ref="Dominio.DisciplinaExecucao"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			>
+		<fk-pointing-to-this-class column="KEY_EXAM"/>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
+	</collection-descriptor>
    </class-descriptor>
 
 <!-- Definitions for Dominio.ExamExecutionCourse -->
@@ -435,7 +446,7 @@
          class-ref="Dominio.DisciplinaExecucao"
       >
          <foreignkey field-ref="keyExecutionCourse"/>
-      </reference-descriptor> 
+      </reference-descriptor>
    </class-descriptor>
 
 <!-- Mapping of User defined classes ends here -->

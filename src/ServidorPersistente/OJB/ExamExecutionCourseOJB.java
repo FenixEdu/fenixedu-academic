@@ -10,6 +10,8 @@ package ServidorPersistente.OJB;
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -61,6 +63,27 @@ public class ExamExecutionCourseOJB
 			String oqlQuery = "select all from " + ExamExecutionCourse.class.getName();
 			oqlQuery += " order by executionCourse.sigla asc, exam.season asc";
 			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	// TODO : method not yet tested
+	public List readBy(Date day, Calendar beginning)
+		throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select examexecutioncourse from " + ExamExecutionCourse.class.getName();
+			oqlQuery += " where exam.day = $1";
+			oqlQuery += " and exam.beginning = $2";
+			oqlQuery += " order by executionCourse.sigla asc, exam.season asc";
+
+			query.create(oqlQuery);
+			query.bind(day);
+			query.bind(beginning);
+
 			List result = (List) query.execute();
 			lockRead(result);
 			return result;
