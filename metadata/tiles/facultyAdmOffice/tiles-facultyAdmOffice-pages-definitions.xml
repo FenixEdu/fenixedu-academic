@@ -26,4 +26,15 @@
 	<definition name="editGrantContractForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantContractForm.jsp"></put>
 	</definition>
+	<definition name="manageGrantContract" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantContract.jsp"></put>
+	</definition>
+	<definition name="manageGrantQualification" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/qualification/manageGrantQualification.jsp"></put>
+	</definition>
+	<definition name="editGrantQualificationForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/qualification/editGrantQualificationForm.jsp"></put>
+	</definition>
+
+	
 </tiles-definitions>

@@ -27,7 +27,7 @@
 			<bean:message key="label.grant.owner.idInternal"/>
 		</td>
 		<td class="listClasses-header">
-			<bean:message key="label.grant.owner.infoperson.fiscalCode"/>
+			<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>
 		</td>
 		<td class="listClasses-header">
 			<bean:message key="label.grant.owner.infoperson.documentId"/>
@@ -44,31 +44,28 @@
 			<td class="listClasses">
 				<bean:write name="infoGrantOwner" property="personInfo.nome"/>
 			</td>
-			<td class="listClasses">
+			<td class="listClasses">&nbsp;
 				<logic:present name="infoGrantOwner" property="grantOwnerNumber">
 					<bean:write name="infoGrantOwner" property="grantOwnerNumber"/>
 				</logic:present>
-				<logic:notPresent name="infoGrantOwner" property="grantOwnerNumber">
-					---
-				</logic:notPresent>
 			</td>
-			<td class="listClasses">
+			<td class="listClasses">&nbsp;
 				<bean:write name="infoGrantOwner" property="personInfo.numContribuinte"/>
 			</td>
-			<td class="listClasses">
+			<td class="listClasses">&nbsp;
 				<bean:write name="infoGrantOwner" property="personInfo.numeroDocumentoIdentificacao"/>
 			</td>
-			<td class="listClasses">
+			<td class="listClasses">&nbsp;
 				<bean:write name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao"/>
 			</td>
-			<td class="listClasses">
+			<td class="listClasses">&nbsp;
 				<%-- Person is a Grant Owner already --%>
 				<logic:present name="infoGrantOwner" property="grantOwnerNumber">
 					<html:link page="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"
 						       paramId="idInternal"
 						       paramName="infoGrantOwner"
 						       paramProperty="idInternal"> 
-						<bean:message key="label.grant.owner.edit" />
+						<bean:message key="link.manage.grant.owner" />
 					</html:link>
 				</logic:present>
 				<%-- Person is not a Grant Owner --%>
@@ -87,5 +84,7 @@
 
 <br/><br/>
 
-Caso queira criar uma nova pessoa bolseira clique
-<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">aqui.</html:link>
+<bean:message key="message.grant.owner.creation"/>:&nbsp;
+<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
+	<bean:message key="label.grant.owner.create"/>
+</html:link>

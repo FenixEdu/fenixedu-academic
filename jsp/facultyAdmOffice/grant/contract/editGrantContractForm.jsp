@@ -3,9 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <strong><p align="center"><bean:message key="label.grant.contract.edition"/></p></strong>
-<table class="listClasses" align="center">
-<tr><td><bean:message key="message.grant.editionHelp"/></td></tr></table>
-<br/><br/>
+<br/>
 <html:form action="/editGrantContract" style="display:inline">
 	<%-- Presenting errors --%>
 	<logic:messagesPresent>
@@ -91,8 +89,8 @@
 </html:form>
 			</td>
 			<td>
-				<html:form action="/manageGrantOwner" style="display:inline">
-				<html:hidden property="method" value="prepareManageGrantOwnerForm"/>
+				<html:form action="/manageGrantContract" style="display:inline">
+				<html:hidden property="method" value="prepareManageGrantContractForm"/>
 				<html:hidden property="page" value="1"/>
 				<html:hidden property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
 					<html:submit styleClass="inputbutton" style="display:inline">

@@ -189,13 +189,24 @@
 
     <!-- ===================== USE CASE: MANAGE GRANT OWNER ============================== -->
 	<action path="/manageGrantOwner" 
-			input="/editGrantOwner.do?page=0&amp;method=prepareManageGrantOwnerForm" 
+			input="/manageGrantOwner.do?page=0&amp;method=prepareManageGrantOwnerForm" 
 			name="voidForm" 
 			scope="request"
    			parameter="method"
    			type="ServidorApresentacao.Action.grant.owner.ManageGrantOwnerAction">
   			<forward name="manage-grant-owner" path="manageGrantOwner"/> 
     </action>
+
+    <!-- ===================== USE CASE: MANAGE GRANT OWNER ============================== -->
+	<action path="/manageGrantContract" 
+			input="/manageGrantContract.do?page=0&amp;method=prepareManageGrantContractForm" 
+			name="voidForm" 
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantContractAction">
+  			<forward name="manage-grant-contract" path="manageGrantContract"/> 
+    </action>
+
 
     <!-- ===================== USE CASE: EDIT GRANT CONTRACT ============================== -->
 	<action path="/editGrantContract" 
@@ -205,9 +216,33 @@
    			parameter="method"
    			type="ServidorApresentacao.Action.grant.contract.EditGrantContractAction">
   			<forward name="edit-grant-contract" path="editGrantContractForm"/>
-  			<forward name="manage-grant-owner" path="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"/>
+  			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
   			<forward name="search-main-page" path="/searchGrantOwner.do?page=0&amp;method=searchForm"/>
     </action>
+
+    <!-- ===================== USE CASE: MANAGE GRANT QUALIFICATION ============================== -->
+	<action path="/manageGrantQualification" 
+			input="/manageGrantQualification.do?page=0&amp;method=prepareManageGrantQualificationForm" 
+			name="voidForm" 
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.qualification.ManageGrantQualificationAction">
+  			<forward name="manage-grant-qualification" path="manageGrantQualification"/> 
+    </action>
+
+    <!-- ===================== USE CASE: EDIT GRANT QUALIFICATION ============================== -->
+	<action path="/editGrantQualification" 
+			input="/editGrantQualification.do?page=0&amp;method=prepareEditGrantQualificationForm" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.qualification.EditGrantQualificationAction">
+  			<forward name="edit-grant-qualification" path="editGrantQualificationForm"/>
+  			<forward name="manage-grant-qualification" path="/manageGrantQualification.do?method=prepareManageGrantQualificationForm"/>
+    </action>
+
+
+
     <!-- ================================================================================= -->
 
 

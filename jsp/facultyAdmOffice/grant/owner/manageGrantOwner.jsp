@@ -3,10 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+
 <strong><p align="center"><bean:message key="label.grant.owner.management"/></p></strong>
-<table class="listClasses" align="center">
-	<tr><td><bean:message key="message.grant.owner.managementHelp"/></td></tr></table>
-<br/><br/>
+<br/>
 <table>
 	<tr>
 		<td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td>
@@ -395,94 +394,23 @@
 	</html:submit> 
 </html:form>
 
-<br/>
+<hr/>
 
-<%--  CONTRATOS --%>	
-<p><b><bean:message key="label.grant.contract.information"/></b></p>
+<%-- Gerir contractos --%>
+<strong><bean:message key="label.grant.contract.manage"/>:&nbsp;</strong>
+<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+<html:link page='<%= "/manageGrantContract.do?method=prepareManageGrantContractForm&amp;idInternal=" +  idGrantOwner.toString() %>' > 
+	<bean:message key="label.grant.contract.edit" />
+</html:link>		
 	
-<logic:present name="infoGrantContractList">
-	<table border="0" cellspacing="1" cellpadding="1">
-	<%-- Table with contract description rows --%>
-	<tr>
-		<td class="listClasses-header">
-			<bean:message key="label.grant.contract.number"/>
-		</td>
-		<td class="listClasses-header">
-			<bean:message key="label.grant.contract.beginDate"/>
-		</td>
-		<td class="listClasses-header">
-			<bean:message key="label.grant.contract.endDate"/>
-		</td>
-		<td class="listClasses-header">
-			<bean:message key="label.grant.contract.type"/>
-		</td>
-		<td class="listClasses-header">
-			<bean:message key="label.grant.contract.responsibleTeacher"/>
-		</td>
-		<td class="listClasses-header"></td>
-	</tr>	
-	<%-- Table with result of search --%>
-	<logic:iterate id="infoGrantContract" name="infoGrantContractList">
-		<tr>
-			<td class="listClasses">
-				<bean:write name="infoGrantContract" property="contractNumber"/>
-			</td>
-			<td class="listClasses">
-				<logic:present name="infoGrantContract" property="dateBeginContract">
-					<dt:format pattern="yyyy-MM-dd">
-						<bean:write name="infoGrantContract" property="dateBeginContract.time"/>
-					</dt:format>
-				</logic:present>
-				<logic:notPresent name="infoGrantContract" property="dateBeginContract.time">
-					---
-				</logic:notPresent>
-			</td>
-			<td class="listClasses">
-				<logic:present name="infoGrantContract" property="dateEndContract">
-					<dt:format pattern="yyyy-MM-dd">
-						<bean:write name="infoGrantContract" property="dateEndContract.time"/>
-					</dt:format>
-				</logic:present>
-				<logic:notPresent name="infoGrantContract" property="dateEndContract.time">
-					---
-				</logic:notPresent>
-				
-			</td>
-			<td class="listClasses">
-				<bean:write name="infoGrantContract" property="grantTypeInfo.name"/>
-			</td>		
-			<td class="listClasses">
-				<logic:present name="infoGrantContract" property="grantResponsibleTeacherInfo">
-					<bean:write name="infoGrantContract" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.nome"/>
-				</logic:present>
-				<logic:notPresent name="infoGrantContract" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.nome">
-					---
-				</logic:notPresent>
-			</td>
-			<td class="listClasses">
-					<bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
-					<html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idContract=" + idContract %>' > 
-						<bean:message key="label.grant.contract.edit" />
-					</html:link>		
-			</td>		
-		</tr>
-	</logic:iterate>
-	</table>
-</logic:present>
-	
-<%-- If there are no contracts --%>
-<logic:notPresent name="infoGrantContractList">
-	<p align="center"><bean:message key="message.grant.contract.nonExistentContracts" /></p>
-</logic:notPresent>
-	
-<br/>
+<hr/>
+<%-- Gerir qualificações --%>
+<strong><bean:message key="label.grant.qualification.manage"/>:&nbsp;</strong>
+<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+<bean:define id="idPerson" name="infoGrantOwner" property="personInfo.idInternal"/>
+<html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;idInternal=" +  idGrantOwner.toString() + "&amp;idInternalPerson=" + idPerson.toString() %>' > 
+	<bean:message key="button.edit" />
+</html:link>		
 
-<html:form action="/editGrantContract">
-	<html:hidden property="method" value="prepareEditGrantContractForm"/>
-	
-	<bean:define id="idInternal" name="infoGrantOwner" property="idInternal"/>
-	<html:hidden property="idInternal" value='<%= idInternal.toString() %>'/>		
-	<html:submit styleClass="inputbutton">
-		<bean:message key="button.createNewContract"/>
-	</html:submit> 
-</html:form>
+
+

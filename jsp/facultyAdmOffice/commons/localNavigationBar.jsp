@@ -8,7 +8,7 @@
 	<ul>
 		<li>
 			<html:link page="/searchGrantOwner.do?method=searchForm">
-		    	<bean:message key="link.manage.grant.owner"/>
+		    	<bean:message key="link.search.grant.owner"/>
 		    </html:link>
 		</li>
 	</ul>

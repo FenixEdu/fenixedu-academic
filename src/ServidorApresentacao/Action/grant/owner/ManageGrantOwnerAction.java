@@ -4,8 +4,6 @@
 
 package ServidorApresentacao.Action.grant.owner;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,10 +41,6 @@ public class ManageGrantOwnerAction extends DispatchAction
             idInternal = new Integer(request.getParameter("idInternal"));
         else if ((Integer)request.getAttribute("idInternal") != null)
         	idInternal = (Integer)request.getAttribute("idInternal");
-        {	
-            //TODO... erro.. o id do grant owner é null
-        	System.out.println("erro 100!!!");
-        }
 
         //Run the service
         Object[] args = { idInternal };
@@ -60,14 +54,6 @@ public class ManageGrantOwnerAction extends DispatchAction
         	System.out.println("erro 200!!!");
         }
         request.setAttribute("infoGrantOwner", infoGrantOwner);
-
-        //Read contracts od grant owner
-        List infoGrantContractList =
-            (List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
-
-        //If they exist put them on request
-        if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
-            request.setAttribute("infoGrantContractList", infoGrantContractList);
 
         return mapping.findForward("manage-grant-owner");
     }

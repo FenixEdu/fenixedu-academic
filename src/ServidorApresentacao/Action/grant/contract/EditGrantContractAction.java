@@ -191,7 +191,7 @@ public class EditGrantContractAction extends DispatchAction
 
 		request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
 
-		return mapping.findForward("manage-grant-owner");
+		return mapping.findForward("manage-grant-contract");
 	}
 
 	/*
