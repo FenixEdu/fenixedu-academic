@@ -41,6 +41,8 @@ import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.TipoCurso;
 
+
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
@@ -56,7 +58,7 @@ public class UpdateStudentEnrolments {
 	private static int attendsNotFound = 0;
 	private static int attendsUpdated = 0;
 	
-
+ 
 
 
 	public static void main(String args[]) throws Exception {
