@@ -2,6 +2,7 @@ package middleware.studentMigration;
 
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +21,10 @@ import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
@@ -257,16 +262,21 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 					System.out.println("[ERROR 205] No record of Branch with code: [" + mwStudent.getBranchcode() + "] for Degree with code: [" + mwStudent.getDegreecode() + "]!");
 					return null;
 				}
-			
+
+				ComparatorChain comparatorChain = new ComparatorChain();
+				comparatorChain.addComparator(new BeanComparator("enrolmentyear"));
+				Collections.sort(mwStudent.getEnrolments(), comparatorChain);
+				MWEnrolment mwEnrolment = (MWEnrolment) mwStudent.getEnrolments().get(0);
+				Date startDate = CreateAndUpdateAllStudentsPastEnrolments.getExecutionPeriodForThisMWEnrolment(mwEnrolment, fenixPersistentSuport).getBeginDate();
+
 				studentCurricularPlan = new StudentCurricularPlan();
 
 				persistentStudentCurricularPlan.simpleLockWrite(studentCurricularPlan);
 
 				studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
 				studentCurricularPlan.setCurrentState(StudentCurricularPlanState.PAST_OBJ);
-				studentCurricularPlan.setStartDate(new Date());
+				studentCurricularPlan.setStartDate(startDate);
 				studentCurricularPlan.setStudent(student);
-			
 				studentCurricularPlan.setBranch(branch);
 
 				studentCurricularPlan.setClassification(null);
@@ -518,17 +528,19 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 */
 	private static IEnrolment createAndUpdateEnrolment(MWEnrolment mwEnrolment, IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		EnrolmentEvaluationType enrolmentEvaluationType = CreateAndUpdateAllStudentsPastEnrolments.getEvaluationType(mwEnrolment);
-
 		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
 		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
-		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
-		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();
+//		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
+//		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();
 
-		String executionYearName = mwEnrolment.getEnrolmentyear().intValue() + "/" + (mwEnrolment.getEnrolmentyear().intValue() + 1);
-		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
-		String executionPeriodName = mwEnrolment.getCurricularcoursesemester() + " Semestre";
-		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
+//		String executionYearName = mwEnrolment.getEnrolmentyear().intValue() + "/" + (mwEnrolment.getEnrolmentyear().intValue() + 1);
+//		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
+//		String executionPeriodName = mwEnrolment.getCurricularcoursesemester() + " Semestre";
+//		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
+
+		IExecutionPeriod executionPeriod = CreateAndUpdateAllStudentsPastEnrolments.getExecutionPeriodForThisMWEnrolment(mwEnrolment, fenixPersistentSuport);
+
+		EnrolmentEvaluationType enrolmentEvaluationType = CreateAndUpdateAllStudentsPastEnrolments.getEvaluationType(mwEnrolment);
 
 		IEnrolment enrolment = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(studentCurricularPlan, curricularCourseScope, executionPeriod);
 
@@ -891,5 +903,18 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			calendar.get(Calendar.YEAR) + "-" +
 			calendar.get(Calendar.MONTH) + "-" +
 			calendar.get(Calendar.DAY_OF_MONTH); 
+	}
+
+	private static IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Exception
+	{
+		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
+		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();
+	
+		String executionYearName = mwEnrolment.getEnrolmentyear().intValue() + "/" + (mwEnrolment.getEnrolmentyear().intValue() + 1);
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
+		String executionPeriodName = mwEnrolment.getCurricularcoursesemester() + " Semestre";
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
+		
+		return executionPeriod;
 	}
 }
