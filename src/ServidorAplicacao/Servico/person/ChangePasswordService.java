@@ -76,12 +76,6 @@ public class ChangePasswordService implements IServico {
 			throw new InvalidPasswordServiceException("Invalid Existing Password!");
 		} else {
 			// Change the Password
-			try {
-				personDAO.escreverPessoa(person);
-			} catch (ExcepcaoPersistencia e) {
-				e.printStackTrace();
-				throw new FenixServiceException(e);
-			}
 			person.setPassword(PasswordEncryptor.encryptPassword(newPassword));
 		}
 	}

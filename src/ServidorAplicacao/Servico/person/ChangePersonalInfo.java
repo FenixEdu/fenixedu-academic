@@ -75,18 +75,6 @@ public class ChangePersonalInfo implements IServico {
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person !!");	
 
-			try {
-				sp.getIPessoaPersistente().escreverPessoa(person);
-			} catch (ExcepcaoPersistencia ex) {
-			  System.out.println("*************************************************************************************+");
-			  ex.printStackTrace(System.out);
-			  System.out.println("*************************************************************************************+");
-			  FenixServiceException newEx = new FenixServiceException("Persistence layer error " + ex);
-			  newEx.fillInStackTrace();
-			  throw newEx;
-			}
-
-
 		// Get new Country
 		ICountry nationality = null;
 		if ((newInfoPerson.getInfoPais() == null) || (newInfoPerson.getInfoPais().getNationality().length() == 0))
