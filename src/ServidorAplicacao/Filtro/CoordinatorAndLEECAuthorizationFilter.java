@@ -1,12 +1,8 @@
-package ServidorAplicacao.Filtro;
-
-/**
- * This class is responsible for verifying if a given user has the authorization to run a service with
- * certain attributes.
- * 
- * @author Nuno Nunes & Joana Mota
- * @version
+/*
+ * Created on 2/Fev/2004
+ *  
  */
+package ServidorAplicacao.Filtro;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -20,6 +16,10 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 
+/**
+ * @author Tânia Pousão
+ *  
+ */
 public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
@@ -111,6 +111,6 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
 		}
 		
 		//curso de LEEC
-		return degreeCode.equals("LEEC");
+		return new String("LEEC").equals(degreeCode);
 	}
 }
