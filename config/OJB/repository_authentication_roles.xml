@@ -392,6 +392,32 @@
          jdbc-type="INTEGER"
       />
       <field-descriptor
+      	name="keyRegistrationYear"
+      	column="KEY_REGISTRATION_YEAR"
+      	jdbc-type="INTEGER"      	
+      />
+      <field-descriptor
+         name="payedTuition"
+         column="PAYED_TUITION"
+         jdbc-type="BIT"
+      />
+      <field-descriptor
+         name="enrollmentForbidden"
+         column="ENROLLMENT_FORBIDDEN"
+         jdbc-type="BIT"
+      />
+      <field-descriptor
+         name="entryPhase"
+         column="ENTRY_PHASE"
+         jdbc-type="INTEGER"
+         conversion="ServidorPersistente.Conversores.EntryPhase2SqlEntryPhaseFieldConversion"         
+      />
+      <field-descriptor
+      	name="keyRegistrationYear"
+      	column="KEY_REGISTRATION_YEAR"
+      	jdbc-type="INTEGER"      	
+      />
+      <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
@@ -409,6 +435,12 @@
 			class-ref="Dominio.StudentKind"
 			proxy="false">
 		<foreignkey field-ref="studentKindKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="registrationYear"
+			class-ref="Dominio.ExecutionYear"
+			proxy="true">
+		<foreignkey field-ref="keyRegistrationYear"/>
 	</reference-descriptor>
      
    </class-descriptor>

@@ -1,6 +1,7 @@
 package Dominio;
 
 import Util.AgreementType;
+import Util.EntryPhase;
 import Util.StudentState;
 import Util.TipoCurso;
 
@@ -16,12 +17,15 @@ public class Student extends DomainObject implements IStudent {
 	protected StudentState state;
 	protected TipoCurso degreeType;
 	private IStudentKind studentKind;
-    private AgreementType agreementType;
-	
+    private AgreementType agreementType;	
 	private Integer personKey;
 	private Integer studentKindKey;
 	private IPessoa person;
-	
+    private IExecutionYear registrationYear;
+    private Integer keyRegistrationYear;
+    private EntryPhase entryPhase;
+    private Boolean payedTuition;
+    private Boolean enrollmentForbidden;
 	
 	public Student(Integer idInternal){
 		setIdInternal(idInternal);
@@ -199,5 +203,65 @@ public class Student extends DomainObject implements IStudent {
     public void setAgreementType(AgreementType agreementType)
     {
         this.agreementType = agreementType;
+    }
+    /**
+     * @return Returns the entryPhase.
+     */
+    public EntryPhase getEntryPhase() {
+        return entryPhase;
+    }
+    /**
+     * @param entryPhase The entryPhase to set.
+     */
+    public void setEntryPhase(EntryPhase entryPhase) {
+        this.entryPhase = entryPhase;
+    }
+    /**
+     * @return Returns the keyRegistrationYear.
+     */
+    public Integer getKeyRegistrationYear() {
+        return keyRegistrationYear;
+    }
+    /**
+     * @param keyRegistrationYear The keyRegistrationYear to set.
+     */
+    public void setKeyRegistrationYear(Integer keyRegistrationYear) {
+        this.keyRegistrationYear = keyRegistrationYear;
+    }
+    /**
+     * @return Returns the payedTuition.
+     */
+    public Boolean getPayedTuition() {
+        return payedTuition;
+    }
+    /**
+     * @param payedTuition The payedTuition to set.
+     */
+    public void setPayedTuition(Boolean payedTuition) {
+        this.payedTuition = payedTuition;
+    }
+    /**
+     * @return Returns the registrationYear.
+     */
+    public IExecutionYear getRegistrationYear() {
+        return registrationYear;
+    }
+    /**
+     * @param registrationYear The registrationYear to set.
+     */
+    public void setRegistrationYear(IExecutionYear registrationYear) {
+        this.registrationYear = registrationYear;
+    }
+    /**
+     * @return Returns the forbiddenEnrollment.
+     */
+    public Boolean getEnrollmentForbidden() {
+        return enrollmentForbidden;
+    }
+    /**
+     * @param forbiddenEnrollment The forbiddenEnrollment to set.
+     */
+    public void setEnrollmentForbidden(Boolean forbiddenEnrollment) {
+        this.enrollmentForbidden = forbiddenEnrollment;
     }
 }
