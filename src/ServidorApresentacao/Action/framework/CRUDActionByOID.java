@@ -51,6 +51,8 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 
  * 
  * 
+ * 
+ * 
  * Methods availables are: <br>
  * 
  * <pre>
@@ -59,6 +61,8 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 	<b>delete</b> <br>
  *     <b>read</b>
  * </pre>
+ * 
+ * 
  * 
  * 
  * 
@@ -128,7 +132,7 @@ public class CRUDActionByOID extends DispatchAction
         throws Exception
     {
         CRUDMapping crudMapping = (CRUDMapping) mapping;
-        InfoObject infoObject = getInfoObjectFromForm(form, crudMapping);
+        InfoObject infoObject = populateInfoObjectFromForm(form, crudMapping);
         Object[] args = { getOIDProperty(crudMapping, form), infoObject };
         ServiceUtils.executeService(
             SessionUtils.getUserView(request),
@@ -143,7 +147,7 @@ public class CRUDActionByOID extends DispatchAction
 	 * @param form
 	 * @return InfoObject created
 	 */
-    protected InfoObject getInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
+    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
         throws FenixActionException
     {
         InfoObject infoObject;
@@ -170,7 +174,10 @@ public class CRUDActionByOID extends DispatchAction
 
                 if (propertyTokenizer.countTokens() == 1)
                 {
-                    BeanUtils.copyProperty(infoObject, formProperty, entry.getValue());
+                    if (PropertyUtils.isWriteable(infoObject, formProperty))
+                    {
+                        BeanUtils.copyProperty(infoObject, formProperty, entry.getValue());
+                    }
                 } else
                 {
                     Object value = null;
@@ -183,10 +190,19 @@ public class CRUDActionByOID extends DispatchAction
                         if (value == null)
                         {
                             value = propertyDescriptor.getPropertyType().newInstance();
-                            PropertyUtils.setProperty(infoObject, property, value);
+                            if (PropertyUtils.isWriteable(infoObject, property))
+                            {
+                                PropertyUtils.setProperty(infoObject, property, value);
+                            } else
+                            {
+                                break;
+                            }
                         } else
                         {
-                            PropertyUtils.setProperty(value, property, entry.getValue());
+                            if (PropertyUtils.isWriteable(value, property))
+                            {
+                                PropertyUtils.setProperty(value, property, entry.getValue());
+                            }
                         }
                     }
                 }
@@ -257,9 +273,12 @@ public class CRUDActionByOID extends DispatchAction
             {
                 Map.Entry entry = (Map.Entry) iterator.next();
                 String formProperty = (String) entry.getKey();
-                String string = formProperty.replace('#', '.');
-                Object value = PropertyUtils.getProperty(infoObject, string);
-                BeanUtils.copyProperty(form, formProperty, value);
+                String beanProperty = formProperty.replace('#', '.');
+                if (PropertyUtils.isReadable(infoObject, beanProperty))
+                {
+                    Object value = PropertyUtils.getProperty(infoObject, beanProperty);
+                    BeanUtils.copyProperty(form, formProperty, value);
+                }
             }
         } catch (Exception e1)
         {

@@ -14,11 +14,13 @@
 <bean:message key="message.externalActivities.managementCleanExplanation" />
 <bean:message key="message.externalActivities.managementInsertActExplanation" />
 <bean:message key="message.externalActivities.managementSaveExplanation" />
-<table border="1" style="margin-top:10px">
+<table border="0" style="margin-top:10px" cellspacing="1" cellpadding="5" width="100%">
 <logic:iterate id="infoExternalActivity" name="infoSiteExternalActivities" property="infoExternalActivities">
 <tr>
-	<td><bean:write name="infoExternalActivity" property="activity" /></td>
-	<td>
+	<td class="listClasses" style="text-align:left" width="60%">
+		<pre><bean:write name="infoExternalActivity" property="activity" /></pre>
+	</td>
+	<td class="listClasses"> 
 		<div class="gen-button">
 		<%--					   paramId="externalActivityId" --%>
 			<html:link page="/externalActivity.do?method=prepareEdit&amp;page=0" 
@@ -29,7 +31,7 @@
 			</html:link>
 		</div>
 	</td>
-	<td>
+	<td class="listClasses">
 		<div class="gen-button">
 			<html:link page="/externalActivity.do?method=delete&amp;page=0" 
 					   paramId="idInternal" 

@@ -166,7 +166,7 @@ public class InfoLesson extends InfoObject
         return result;
     }
 
-    public String getLessonDurationString()
+    public String getLessonDuration()
     {
         int hours = this._fim.get(Calendar.HOUR_OF_DAY) - this._inicio.get(Calendar.HOUR_OF_DAY);
         int minutes = this._fim.get(Calendar.MINUTE) - this._inicio.get(Calendar.MINUTE);
@@ -179,8 +179,19 @@ public class InfoLesson extends InfoObject
         return hours + ":" + minutes;
     }
 
-    public Double getLessonDuration()
+    public Double getTotalDuration()
     {
+        Double numberOfLessons = null;
+
+        if (this._tipo.equals(new TipoAula(TipoAula.TEORICA)))
+            numberOfLessons = this._infoDisciplinaExecucao.getTheoreticalHours();
+        if (this._tipo.equals(new TipoAula(TipoAula.PRATICA)))
+            numberOfLessons = this._infoDisciplinaExecucao.getPraticalHours();
+        if (this._tipo.equals(new TipoAula(TipoAula.LABORATORIAL)))
+            numberOfLessons = this._infoDisciplinaExecucao.getLabHours();
+        if (this._tipo.equals(new TipoAula(TipoAula.TEORICO_PRATICA)))
+            numberOfLessons = this._infoDisciplinaExecucao.getTheoPratHours();
+
         int hours = this._fim.get(Calendar.HOUR_OF_DAY) - this._inicio.get(Calendar.HOUR_OF_DAY);
         int minutes = this._fim.get(Calendar.MINUTE) - this._inicio.get(Calendar.MINUTE);
 
@@ -188,8 +199,8 @@ public class InfoLesson extends InfoObject
         {
             minutes *= -1;
         }
-
-        return new Double(hours + (minutes/60));
+        double totalDuration = ((hours * numberOfLessons.doubleValue()) + ((minutes * numberOfLessons.doubleValue()) / 60));
+        return new Double(totalDuration);
     }
 
     public String toString()

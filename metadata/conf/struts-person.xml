@@ -72,6 +72,7 @@
       <form-bean name="qualificationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
+     	<form-property name="page" type="java.lang.Integer"/>
         <form-property name="idInternal" type="java.lang.Integer" initial="0"/>
         <form-property name="mark" type="java.lang.String" />
         <form-property name="year" type="java.lang.String" />
@@ -177,10 +178,11 @@
 	  <!-- Action to manage a Qualification -->
    	  <action path="/qualificationForm"
 		   	  name="qualificationForm"
-		   	  input="/qualificationForm?method=prepareEdit&amp;page=0"
+		   	  input="/qualificationForm.do?method=prepareEdit&amp;page=0"
    	          type="ServidorApresentacao.Action.framework.CRUDActionByOID"
    	          parameter="method"
    	          scope="request"
+   	          validate="true"
    	          className="ServidorApresentacao.mapping.framework.CRUDMapping"> 
 		<set-property property="editService" value="EditQualification"/>
  		<set-property property="deleteService" value="DeleteQualification"/>

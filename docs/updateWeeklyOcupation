@@ -1,2 +1,0 @@
-alter table WEEKLY_OCUPATION ADD LECTURE integer(10);
-alter table WEEKLY_OCUPATION ADD SUPPORT integer(10);

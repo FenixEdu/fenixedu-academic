@@ -141,24 +141,24 @@
 		<!-- VER-->
 		<tr>
 			<td class="listClasses-header"><bean:message key="message.courseInformation.evaluatedStudents" /></td>
-			<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedStudents"/></td>--%>
+			<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedStudents"/></td>
 		</tr>
 		<tr>
 			<td class="listClasses-header"><bean:message key="message.courseInformation.approvedStudents" /></td>
-			<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedStudents"/></td>--%>
+			<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedStudents"/></td>
 		</tr>
 		<tr>
 			<td class="listClasses-header"><bean:message key="message.courseInformation.evaluatedPerEnrolled" /></td>
 			<!-- VER ONDE SE FAZEM AS CONTAS-->
-			<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedPerEnrolled"/></td>--%>
+			<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedPerEnrolled"/></td>
 		</tr>
 		<tr>
 			<td class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEvaluated" /></td>
-			<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEvaluated"/></td>--%>
+			<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEvaluated"/></td>
 		</tr>
 		<tr>
 			<td class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEnrolled" /></td>
-			<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEnrolled"/></td>--%>
+			<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEnrolled"/></td>
 		</tr>
 	</table>--%>
 	<br />

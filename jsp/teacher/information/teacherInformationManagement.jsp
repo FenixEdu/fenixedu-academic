@@ -8,6 +8,10 @@
 
 <logic:present name="infoSiteTeacherInformation"> 
 	<html:form action="/teacherInformation">
+		<span class="error">
+			<html:errors/>
+		</span>
+		<br />
 		<html:hidden property="teacherId"/>
 		<html:hidden property="weeklyOcupationId"/>
 		<html:hidden property="serviceProviderRegimeId"/>
@@ -20,6 +24,7 @@
 		<html:hidden property="editorBookPublicationsNumberId"/>
 		<html:hidden property="articlesChaptersPublicationsNumberId"/>
 		<html:hidden property="method" value="edit"/>
+		<html:hidden property="page" value="1"/>
 		<table>
 			<tr>
 				<td width="70%"><bean:message key="message.teacherInformation.name" />

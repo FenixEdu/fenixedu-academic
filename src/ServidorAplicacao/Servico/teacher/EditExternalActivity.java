@@ -59,10 +59,4 @@ public class EditExternalActivity extends EditDomainObjectService
             Cloner.copyInfoExternalActivity2IExternalActivity((InfoExternalActivity) infoObject);
         return externalActivity;
     }
-    
-    protected boolean canCreate(IDomainObject newDomainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
-        return true;
-    }
 }

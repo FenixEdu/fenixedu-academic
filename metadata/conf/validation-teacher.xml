@@ -558,9 +558,105 @@
     <!-- validation for the courseInformationForm -->
     <form name="courseInformationForm">
       <field property="report" depends="required" page="1">
-      	<arg0 key="message.courseInformationReport" resource="true"/>
+      	<arg0 key="label.courseInformation.report" />
       </field>
     </form>
     
+    <form name="teacherInformationForm">
+    	<field property="serviceProviderRegimeTypeName" depends="required" page="1" >
+    		<arg0 key="label.teacherInformation.providerRegimeType" />
+		</field>
+    	<field property="research" depends="required,integer" page="1" >
+    		<arg0 key="label.teacherInformation.research" />
+		</field>    	
+    	<field property="management" depends="required,integer" page="1" >
+    		<arg0 key="label.teacherInformation.management" />
+		</field>
+    	<field property="lecture" depends="required,integer" page="1" >
+    		<arg0 key="label.teacherInformation.lecture" />
+		</field>
+    	<field property="support" depends="required,integer" page="1" >
+    		<arg0 key="label.teacherInformation.support" />
+		</field>
+    	<field property="other" depends="required,integer" page="1" >
+    		<arg0 key="label.teacherInformation.other" />
+		</field>
+		<field property="degreeStudentsNumber" depends="required,integer" page="1">
+			<arg0 key="label.teacherInformation.studentsNumber"/>
+		</field>
+		<field property="degreeDescription" depends="required" page="1">
+			<arg0 key="label.teacherInformation.description"/>
+		</field>
+		<field property="masterStudentsNumber" depends="required,integer" page="1">
+			<arg0 key="label.teacherInformation.studentsNumber"/>
+		</field>
+		<field property="masterDescription" depends="required" page="1">
+			<arg0 key="label.teacherInformation.description"/>
+		</field>
+		<field property="phdStudentsNumber" depends="required,integer" page="1">
+			<arg0 key="label.teacherInformation.studentsNumber"/>
+		</field>
+		<field property="phdDescription" depends="required" page="1">
+			<arg0 key="label.teacherInformation.description"/>
+		</field>
+		<field property="comunicationNational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="comunicationInternational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>	 	
+ 		<field property="magArticleNational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="magArticleInternational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="authorBookNational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="authorBookInternational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="editorBookNational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="editorBookInternational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="articlesChaptersNational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+ 		<field property="articlesChaptersInternational" depends="required,integer" page="1">
+		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
+	 	</field>
+	</form>
+	
+	<form name="teachingCareerForm">
+		<field property="beginYear" depends="required,integer" page="1">
+			<arg0 key="label.career.year"/>
+		</field>
+		<field property="endYear" depends="required,integer" page="1">
+			<arg0 key="label.career.year"/>
+		</field>		
+		<field property="courseOrPosition" depends="required" page="1">
+			<arg0 key="label.teachingCareer.courseOrPosition"/>
+		</field>
+	</form>
+	
+	<form name="professionalCareerForm">
+		<field property="beginYear" depends="required,integer" page="1">
+			<arg0 key="label.career.year"/>
+		</field>
+		<field property="endYear" depends="required,integer" page="1">
+			<arg0 key="label.career.year"/>
+		</field>		
+		<field property="entity" depends="required" page="1">
+			<arg0 key="label.professionalCareer.entity"/>
+		</field>
+		<field property="function" depends="required" page="1">
+			<arg0 key="label.professionalCareer.function"/>
+		</field>
+	</form>
+
   </formset>
 </form-validation>

@@ -17,6 +17,9 @@
 </h3>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.teachingCareer.managementEdit" /></p>
+	<span class="error">
+		<html:errors/>
+	</span>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="edit"/>
 	<html:hidden property="idInternal"/>

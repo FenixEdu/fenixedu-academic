@@ -97,8 +97,10 @@ public class QualificationManagerAuthorizationFilter extends Filtro
                     && isGrantOwner(infoqualification))
                     valid = true;
 
-                if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
+                /*if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
                     && isOwnQualification(id.getUtilizador(), infoqualification))
+                    valid = true;*/
+                if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
                     valid = true;
 
                 if (!valid)

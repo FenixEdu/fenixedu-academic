@@ -37,13 +37,14 @@ public abstract class EditDomainObjectService implements IServico
             if (canCreate(oldDomainObject, sp))
             {
                 /**
-                 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
-                 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
-                 * Without this two lines the test above doesn't run.
-                 */
+				 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
+				 * 
+				 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
+				 *      Without this two lines the test above doesn't run.
+				 */
                 sp.confirmarTransaccao();
                 sp.iniciarTransaccao();
-                /************************************************************************************************/
+                /** ********************************************************************************************* */
 
                 IDomainObject newDomainObject = (IDomainObject) oldDomainObject.getClass().newInstance();
                 newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
@@ -66,7 +67,8 @@ public abstract class EditDomainObjectService implements IServico
 	 * @param newDomainObject
 	 * @param sp
 	 */
-    private void fillAssociatedObjects(IDomainObject newDomainObject, IPersistentObject po) throws FenixServiceException
+    private void fillAssociatedObjects(IDomainObject newDomainObject, IPersistentObject po)
+        throws FenixServiceException
     {
         try
         {
@@ -99,27 +101,30 @@ public abstract class EditDomainObjectService implements IServico
         throws ExcepcaoPersistencia
     {
         IDomainObject existingDomainObject = readObjectByUnique(newDomainObject, sp);
-
-        if (!isNew(newDomainObject)
-            && ((existingDomainObject != null)
-                && (newDomainObject.getIdInternal().equals(existingDomainObject.getIdInternal())))
-            || ((existingDomainObject == null) && isNew(newDomainObject)))
-            return true;
-        return false;
+        /**
+		 * não é novo e existe na bb e os ids são iguais || não existe na bd e é novo || não é novo e
+		 * não existe na bd
+		 */
+        return (
+            !isNew(newDomainObject)
+                && ((existingDomainObject != null)
+                    && (newDomainObject.getIdInternal().equals(existingDomainObject.getIdInternal())))
+                || ((existingDomainObject == null) && isNew(newDomainObject))
+                || ((!isNew(newDomainObject) && (existingDomainObject == null))));
     }
 
     /**
-     * @param sp
-     * @return
-     */
+	 * @param sp
+	 * @return
+	 */
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
         throws ExcepcaoPersistencia;
 
-    /* Checks if the internalId of the object is null or 0
-    * 
-    * @param domainObject
-    * @return
-    */
+    /*
+	 * Checks if the internalId of the object is null or 0
+	 * 
+	 * @param domainObject @return
+	 */
     protected boolean isNew(IDomainObject domainObject)
     
     {
@@ -128,22 +133,23 @@ public abstract class EditDomainObjectService implements IServico
     }
 
     /**
-     * This method invokes the Cloner to convert from InfoObject to IDomainObject
-     * 
-     * @param infoObject
-     * @return
-     */
+	 * This method invokes the Cloner to convert from InfoObject to IDomainObject
+	 * 
+	 * @param infoObject
+	 * @return
+	 */
     protected abstract IDomainObject clone2DomainObject(InfoObject infoObject);
 
     /**
-     * This method invokes a persistent method to read an IDomainObject from database
-     * 
-     * @param domainObject
-     * @return
-     */
+	 * This method invokes a persistent method to read an IDomainObject from database
+	 * 
+	 * @param domainObject
+	 * @return By default returns null. When there is no unique in domainObject the object that we want
+	 *         to create never exists.
+	 */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
-        return domainObject;
+        return null;
     }
 }

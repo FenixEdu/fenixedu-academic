@@ -6,11 +6,15 @@
 <h2><bean:message key="title.courseInformation"/></h2>
 <logic:present name="siteView"> 
 	<html:form action="/courseInformation">
-		<bean:define id="siteCourseInformation" name="siteView" property="component"/>
-		<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
-		<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
-		<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
-		<br/>
+	<span class="error">
+		<html:errors/>
+	</span>
+	<br />
+	<bean:define id="siteCourseInformation" name="siteView" property="component"/>
+	<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
+	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
+	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
+	<br/>
 		<table>
 		<tr>
 			<td>
@@ -41,7 +45,7 @@
 			  		<bean:message key="message.courseInformation.optional" />
 			  	</logic:equal>
 			  	<!-- VER -->
-			 <%--<bean:message key="message.courseInformation.courseSemesterOrAnual" />&nbsp;
+			 	<%--<bean:message key="message.courseInformation.courseSemesterOrAnual" />&nbsp;
 					 	<bean:write name="curricularCourse" property="curricularCourseExecutionScope.type" />--%>
 			</logic:iterate>
 			</td>
@@ -50,10 +54,10 @@
 		<tr>
 			<td>
 				<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
-				<bean:message key="message.courseInformation.responsibleForTheCourse" />
-				&nbsp;<bean:write name="infoTeacher" property="infoPerson.nome" />,
-				<bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" />
-				&nbsp; <bean:write name="infoTeacher" property="infoCategory.longName" />
+					<bean:message key="message.courseInformation.responsibleForTheCourse" />
+					&nbsp;<bean:write name="infoTeacher" property="infoPerson.nome" />,
+					<bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" />
+					&nbsp; <bean:write name="infoTeacher" property="infoCategory.longName" />
 				</logic:iterate>
 			</td>
 			<td></td>
@@ -72,75 +76,26 @@
 				<td class="listClasses-header"><bean:message key="message.courseInformation.totalDuration"/></td>
 			</tr>
 			<logic:iterate id="infoLesson" name="siteCourseInformation" property="infoLessons">
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="T">
-				<bean:define id="hasT" value="whatever"/>
 				<tr>
-					<td class="listClasses"><bean:message key="message.courseInformation.typeClassTeoricas"/></td>
-					<td class="listClasses"><bean:write name="executionCourse" property="theoreticalHours"/></td>
-					<td class="listClasses"><bean:write name="infoLesson" property="lessonDurationString"/></td>
-				    <!-- VER -->
-					<td class="listClasses"><%--<bean:write name="infoLesson" property="totalDurationTeoricas"/>--%></td>
+					<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="T">
+						<td class="listClasses"><bean:message key="message.courseInformation.typeClassTeoricas"/></td>
+						<td class="listClasses"><bean:write name="executionCourse" property="theoreticalHours"/></td>
+					</logic:equal>
+					<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="P">
+						<td class="listClasses"><bean:message key="message.courseInformation.typeClassPraticas"/></td>
+						<td class="listClasses"><bean:write name="executionCourse" property="praticalHours"/></td>
+					</logic:equal>
+					<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="TP">
+						<td class="listClasses"><bean:message key="message.courseInformation.typeClassTeoPrat"/></td>
+						<td class="listClasses"><bean:write name="executionCourse" property="theoPratHours"/></td>
+					</logic:equal>
+					<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="L">
+						<td class="listClasses"><bean:message key="message.courseInformation.typeClassLab"/></td>
+						<td class="listClasses"><bean:write name="executionCourse" property="labHours"/></td>
+					</logic:equal>
+					<td class="listClasses"><bean:write name="infoLesson" property="lessonDuration"/></td>
+					<td class="listClasses"><bean:write name="infoLesson" property="totalDuration"/></td>
 				</tr>
-				</logic:equal>
-				<logic:notPresent name="hasT">
-					<tr>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0,0</td>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0</td>
-					</tr>
-				</logic:notPresent>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="P">
-				<bean:define id="hasP" value="whatever"/>
-				<tr>
-					<td class="listClasses"><bean:message key="message.courseInformation.typeClassPraticas"/></td>
-					<td class="listClasses"><bean:write name="executionCourse" property="praticalHours"/></td>
-					<td class="listClasses"><bean:write name="infoLesson" property="lessonDurationString"/></td>
-					<td class="listClasses"><%--<bean:write name="typePraticas" property="totalDurationPraticas"/>--%></td>
-				</tr>
-				</logic:equal>
-				<logic:notPresent name="hasP">
-					<tr>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0,0</td>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0</td>
-					</tr>
-				</logic:notPresent>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="TP">
-				<bean:define id="hasTP" value="whatever"/>
-				<tr>
-					<td class="listClasses"><bean:message key="message.courseInformation.typeClassTeoPrat"/></td>
-					<td class="listClasses"><bean:write name="executionCourse" property="theoPratHours"/></td>
-					<td class="listClasses"><bean:write name="infoLesson" property="lessonDurationString"/></td>
-					<%--<td class="listClasses"><bean:write name="typeTeoPrat" property="totalDurationTeoPrat"/></td>--%>
-				</tr>
-				</logic:equal>
-				<logic:notPresent name="hasTP">
-					<tr>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0,0</td>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0</td>
-					</tr>
-				</logic:notPresent>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="L">
-				<bean:define id="hasL" value="whatever"/>
-				<tr>
-					<td class="listClasses"><bean:message key="message.courseInformation.typeClassLab"/></td>
-					<td class="listClasses"><bean:write name="executionCourse" property="labHours"/></td>
-					<td class="listClasses"><bean:write name="infoLesson" property="lessonDurationString"/></td>
-					<td class="listClasses"><%--<bean:write name="typeLab" property="totalDurationLab"/>--%></td>
-				</tr>
-				</logic:equal>
-				<logic:notPresent name="hasL">
-					<tr>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0,0</td>
-						<td class="listClasses">0</td>
-						<td class="listClasses">0</td>
-					</tr>
-				</logic:notPresent>
 			</logic:iterate>
 		</table>
 		<br />
@@ -182,24 +137,24 @@
 			<!-- VER-->
 			<tr>
 				<td class="listClasses-header"><bean:message key="message.courseInformation.evaluatedStudents" /></td>
-				<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedStudents"/></td>--%>
+				<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedStudents"/></td>
 			</tr>
 			<tr>
 				<td class="listClasses-header"><bean:message key="message.courseInformation.approvedStudents" /></td>
-				<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedStudents"/></td>--%>
+				<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedStudents"/></td>
 			</tr>
 			<tr>
 				<td class="listClasses-header"><bean:message key="message.courseInformation.evaluatedPerEnrolled" /></td>
 				<!-- VER ONDE SE FAZEM AS CONTAS-->
-				<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedPerEnrolled"/></td>--%>
+				<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedPerEnrolled"/></td>
 			</tr>
 			<tr>
 				<td class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEvaluated" /></td>
-				<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEvaluated"/></td>--%>
+				<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEvaluated"/></td>
 			</tr>
 			<tr>
 				<td class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEnrolled" /></td>
-				<%--<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEnrolled"/></td>--%>
+				<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEnrolled"/></td>
 			</tr>
 		</table>--%>
 		<br />
@@ -207,12 +162,12 @@
 		<bean:message key="message.courseInformation.courseObjectives" /></p>
 		<table border="0" cellspacing="1" style="margin-top:10px">
 			<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
-			<tr>
-				<td> <bean:write name="infoCurriculum" property="generalObjectives"/></td>
-			</tr>
-			<tr>
-				<td> <bean:write name="infoCurriculum" property="operacionalObjectives"/></td>
-			</tr>
+				<tr>
+					<td><bean:write name="infoCurriculum" property="generalObjectives"/></td>
+				</tr>
+				<tr>
+					<td><bean:write name="infoCurriculum" property="operacionalObjectives"/></td>
+				</tr>
 			</logic:iterate>
 		</table>
 		<br />
@@ -220,9 +175,9 @@
 		<bean:message key="message.courseInformation.courseProgram" /></p>
 		<table border="0" cellspacing="1" style="margin-top:10px">
 			<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
-			<tr>
-				<td> <bean:write name="infoCurriculum" property="program"/></td>
-			</tr>
+				<tr>
+					<td><bean:write name="infoCurriculum" property="program"/></td>
+				</tr>
 			</logic:iterate>
 		</table>
 		<br />
@@ -273,9 +228,9 @@
 		<p class="infoop"><span class="emphasis-box">8</span>
 		<bean:message key="message.courseInformation.courseSupportLessons" /></p>
 		<table border="0" cellspacing="1" style="margin-top:10px">
-		<tr>
-			<%--<td> <bean:write name="siteCourseInformation" property="courseSupportLessons"/></td>--%>
-		</tr>
+			<tr>
+				<%--<td> <bean:write name="siteCourseInformation" property="courseSupportLessons"/></td>--%>
+			</tr>
 		</table>
 		<br/>
 		<p class="infoop"><span class="emphasis-box">9</span>
@@ -294,6 +249,7 @@
 			<html:hidden property="executionPeriodId" /> 
 			<html:hidden property="executionYearId" />
 			<html:hidden property="method" value="edit"/>
+			<html:hidden property="page" value="1"/>
 			<%--<tr align="center">	
 				<td>
 				<html:submit styleClass="inputbutton" property="confirm">

@@ -168,5 +168,22 @@
         <arg0 key="label.person.nationality" />
       </field>
     </form>
+    
+     <!-- validation for the Edit Qualification form -->
+    <form name="qualificationForm">
+      <field property="mark" depends="integer" page="1">
+      	<arg0 key="label.qualification.mark" />
+  	  </field>
+      <field property="year" depends="required,integer" page="1">
+      	<arg0 key="label.qualification.year" />
+  	  </field>
+      <field property="school" depends="required" page="1">
+      	<arg0 key="label.qualification.school" />
+  	  </field>
+  	  <field property="title" depends="required" page="1">
+      	<arg0 key="label.qualification.title" />
+  	  </field>	    
+    </form>
+    
   </formset>
 </form-validation>

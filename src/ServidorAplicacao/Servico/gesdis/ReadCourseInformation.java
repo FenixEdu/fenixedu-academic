@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoLesson;
 import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.gesdis.InfoCourseReport;
@@ -45,6 +49,7 @@ import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
+import Util.TipoAula;
 
 /**
  * @author Leonor Almeida
@@ -128,7 +133,7 @@ public class ReadCourseInformation implements IServico
             infoSiteCourseInformation.setInfoBibliographicReferences(infoBibliographicReferences);
 
             List infoLessons = getInfoLessons(executionCourse, sp);
-            infoSiteCourseInformation.setInfoLessons(infoLessons);
+            infoSiteCourseInformation.setInfoLessons(getFilteredLessons(infoLessons));
 
             IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
             ICourseReport courseReport =
@@ -160,6 +165,60 @@ public class ReadCourseInformation implements IServico
         {
             throw new FenixServiceException(e);
         }
+    }
+
+    /**
+     * Filter all the lessons to remove duplicates entries of lessons with the same type
+     * @param infoLessons
+     * @return
+     */
+    private List getFilteredLessons(List infoLessons)
+    {
+        List filteredInfoLessons = new ArrayList();
+        Object obj = CollectionUtils.find(infoLessons, new Predicate()
+        {
+            public boolean evaluate(Object o)
+            {
+                InfoLesson infoLesson = (InfoLesson) o;
+                return infoLesson.getTipo().equals(new TipoAula(TipoAula.TEORICA));
+            }
+        });
+        if (obj != null)
+            filteredInfoLessons.add(obj);
+
+        obj = CollectionUtils.find(infoLessons, new Predicate()
+        {
+            public boolean evaluate(Object o)
+            {
+                InfoLesson infoLesson = (InfoLesson) o;
+                return infoLesson.getTipo().equals(new TipoAula(TipoAula.PRATICA));
+            }
+        });
+        if (obj != null)
+            filteredInfoLessons.add(obj);
+
+        obj = CollectionUtils.find(infoLessons, new Predicate()
+        {
+            public boolean evaluate(Object o)
+            {
+                InfoLesson infoLesson = (InfoLesson) o;
+                return infoLesson.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL));
+            }
+        });
+        if (obj != null)
+            filteredInfoLessons.add(obj);
+
+        obj = CollectionUtils.find(infoLessons, new Predicate()
+        {
+            public boolean evaluate(Object o)
+            {
+                InfoLesson infoLesson = (InfoLesson) o;
+                return infoLesson.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA));
+            }
+        });
+        if (obj != null)
+            filteredInfoLessons.add(obj);
+        return filteredInfoLessons;
     }
 
     /**

@@ -395,6 +395,7 @@
 		<form-bean name="courseInformationForm"
 			type="org.apache.struts.validator.DynaValidatorForm" 
 			dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="courseReportId" type="java.lang.Integer" initial="0" />
 			<form-property name="report" type="java.lang.String" />
 			<form-property name="executionCourseId" type="java.lang.Integer" />
@@ -406,6 +407,7 @@
 		<form-bean name="professionalCareerForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
 			<form-property name="beginYear" type="java.lang.String" />
 			<form-property name="endYear" type="java.lang.String" />			
@@ -418,6 +420,7 @@
 		<form-bean name="teachingCareerForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>			
 			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
 			<form-property name="beginYear" type="java.lang.String" />
 			<form-property name="endYear" type="java.lang.String" />	
@@ -437,6 +440,7 @@
 		<form-bean name="externalActivityForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
 			<form-property name="activity" type="java.lang.String" />
 			<form-property name="infoTeacher#idInternal" type="java.lang.Integer" />
@@ -446,6 +450,7 @@
 		<form-bean name="teacherInformationForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="weeklyOcupationId" type="java.lang.Integer" initial="0"/>
 			<form-property name="serviceProviderRegimeId" type="java.lang.Integer" initial="0" />
 			<form-property name="serviceProviderRegimeTypeName" type="java.lang.String" />
@@ -1382,6 +1387,7 @@
       		name="courseInformationForm"
       		parameter="method"
       		scope="request"
+      		validate="true"
       		input="/courseInformation.do?page=0&amp;method=prepareEdit">
 		<forward name="show-form" path="course-information-management"/> 
 		<forward name="successfull-read" path="view-course-information"/>
@@ -1393,6 +1399,7 @@
       		name="professionalCareerForm"
       		parameter="method"
       		scope="request"
+      		validate="true"
       		input="/professionalCareer.do?page=0&amp;method=prepareEdit"
       		className="ServidorApresentacao.mapping.framework.CRUDMapping">
       	<set-property property="editService" value="EditCareer" />
@@ -1413,6 +1420,7 @@
       		name="teachingCareerForm"
       		parameter="method"
       		scope="request"
+      		validate="true"
       		input="/teachingCareer.do?page=0&amp;method=prepareEdit"
       		className="ServidorApresentacao.mapping.framework.CRUDMapping">
       	<set-property property="editService" value="EditCareer" />
@@ -1469,6 +1477,7 @@
 	  		name="teacherInformationForm"
 	  		parameter="method"
 	  		scope="request"
+	  		validate="true"
 	  		input="/teacherInformation.do?page=0&amp;method=prepareEdit">
 	  	<forward name="show-form" path="teacher-information-management"/> 
 		<forward name="successfull-read" path="view-teacher-information"/>

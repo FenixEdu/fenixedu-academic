@@ -51,6 +51,8 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="research" column="RESEARCH" jdbc-type="INTEGER"/>
     <field-descriptor name="management" column="MANAGEMENT" jdbc-type="INTEGER"/>
+    <field-descriptor name="lecture" column="LECTURE" jdbc-type="INTEGER"/>
+    <field-descriptor name="support" column="SUPPORT" jdbc-type="INTEGER"/>
     <field-descriptor name="other" column="OTHER" jdbc-type="INTEGER"/>
     <field-descriptor name="lastModificationDate" 
     				  column="LAST_MODIFICATION_DATE" 
