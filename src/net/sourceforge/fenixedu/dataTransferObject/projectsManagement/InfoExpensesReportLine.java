@@ -146,91 +146,91 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         return 8;
     }
 
-    public void getHeaderToExcel(HSSFSheet sheet) {
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("Id Mov");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue("Membro");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 2);
         cell.setCellValue("Rúbrica");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue("Tipo");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 4);
         cell.setCellValue("Data");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 5);
         cell.setCellValue("Descrição");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 6);
         cell.setCellValue("Valor");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 7);
         cell.setCellValue("Iva");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 8);
         cell.setCellValue("Total");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
-    public void getLineToExcel(HSSFSheet sheet) {
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(getMovementId());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getMember());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 2);
         cell.setCellValue(Double.parseDouble(getRubric().toString()));
-        cell.setCellStyle(ExcelStyle.INTEGER_STYLE);
+        cell.setCellStyle(excelStyle.getIntegerStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getType());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 4);
         cell.setCellValue(getDate());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 5);
         cell.setCellValue(getDescription());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 6);
         cell.setCellValue(getValue().doubleValue());
         if (getValue().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 7);
         cell.setCellValue(getTax().doubleValue());
         if (getTax().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 8);
         cell.setCellValue(getTotal().doubleValue());
         if (getTotal().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
     }
 
-    public void getTotalLineToExcel(HSSFSheet sheet) {
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell.setCellValue("TOTAL");
         for (int i = 6; i <= 8; i++) {
             CellReference cellRef1 = new CellReference(1, i);
             CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), i);
             cell = row.createCell((short) i);
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
             cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
         }
     }
-  
+
     public Double getValue(int column) {
         switch (column) {
         case 6:

@@ -137,150 +137,150 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
         return null;
     }
 
-    public void getHeaderToExcel(HSSFSheet sheet) {
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
     }
 
-    public void getLineToExcel(HSSFSheet sheet) {
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("Id Mov");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue("Rúbrica");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 2);
         cell.setCellValue("Tipo");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue("Data");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 4);
         cell.setCellValue("Descrição");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 5);
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 6);
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 7);
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 4, row.getRowNum(), (short) 7));
         cell = row.createCell((short) 8);
         cell.setCellValue("Total");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
         cell.setCellValue(getParentMovementId());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(Double.parseDouble(getParentRubricId().toString()));
-        cell.setCellStyle(ExcelStyle.INTEGER_STYLE);
+        cell.setCellStyle(excelStyle.getIntegerStyle());
         cell = row.createCell((short) 2);
         cell.setCellValue(getParentType());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getParentDate());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 4);
         cell.setCellValue(getParentDescription());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 5);
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 6);
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 7);
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 4, row.getRowNum(), (short) 7));
         cell = row.createCell((short) 8);
         cell.setCellValue(getParentValue().doubleValue());
         if (getParentValue().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         double totalJustified = 0;
         if (movements.size() != 0) {
             row = sheet.createRow(sheet.getLastRowNum() + 1);
-            ((IReportLine) movements.get(0)).getHeaderToExcel(sheet);
+            ((IReportLine) movements.get(0)).getHeaderToExcel(sheet, excelStyle);
             for (int i = 0; i < movements.size(); i++) {
-                ((IReportLine) movements.get(i)).getLineToExcel(sheet);
+                ((IReportLine) movements.get(i)).getLineToExcel(sheet, excelStyle);
                 totalJustified = FormatDouble.round(totalJustified + ((InfoMovementReportLine) movements.get(i)).getTotal().doubleValue());
             }
         }
         row = sheet.createRow(sheet.getLastRowNum() + 2);
         cell = row.createCell((short) 0);
         cell.setCellValue("Total:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
         cell.setCellValue(getParentValue().doubleValue());
         if (getParentValue().doubleValue() <= 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
         cell.setCellValue("Total Executado/Justificado:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
         cell.setCellValue(totalJustified);
         if (totalJustified < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
         cell.setCellValue("Por Executar/Justificar:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
         double forJustify = FormatDouble.round(getParentValue().doubleValue() - totalJustified);
         cell.setCellValue(forJustify);
         if (forJustify < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         row = sheet.createRow(sheet.getLastRowNum() + 1);
     }
 
-    public void getTotalLineToExcel(HSSFSheet sheet) {
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("Resumo");
-        cell.setCellStyle(ExcelStyle.TITLE_STYLE);
+        cell.setCellStyle(excelStyle.getTitleStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) getNumberOfColumns()));
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
         cell.setCellValue("Total:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
         CellReference cellRef1 = new CellReference(1, 8);
         CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), 8);
-        cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+        cell.setCellStyle(excelStyle.getDoubleStyle());
         cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
         cell.setCellValue("Executados/Justificados:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
         cellRef1 = new CellReference(1, 7);
         cellRef2 = new CellReference(((short) row.getRowNum() - 1), 7);
-        cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+        cell.setCellStyle(excelStyle.getDoubleStyle());
         cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
 
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         cell = row.createCell((short) 0);
         cell.setCellValue("Por Executar/Justificar:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         sheet.addMergedRegion(new Region(row.getRowNum(), (short) 0, row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
         cellRef1 = new CellReference(sheet.getLastRowNum() - 2, 3);
         cellRef2 = new CellReference(sheet.getLastRowNum() - 1, 3);
-        cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+        cell.setCellStyle(excelStyle.getDoubleStyle());
         cell.setCellFormula(cellRef1.toString() + "-" + cellRef2.toString());
 
     }

@@ -179,120 +179,120 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
         return 11;
     }
 
-    public void getHeaderToExcel(HSSFSheet sheet) {
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("NºProj");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue("Acrónimo");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 2);
         cell.setCellValue("Unid Expl");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue("Tipo");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 4);
         cell.setCellValue("Orçamento");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 5);
         cell.setCellValue("Máximo Financiável");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 6);
         cell.setCellValue("Receita");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 7);
         cell.setCellValue("Despesa");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 8);
         cell.setCellValue("Adiantamentos por Justificar");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 9);
         cell.setCellValue("Saldo Tesouraria");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 10);
         cell.setCellValue("Cabimentos por Executar");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
         cell = row.createCell((short) 11);
         cell.setCellValue("Saldo Orçamental (*)");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
+        cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
-    public void getLineToExcel(HSSFSheet sheet) {
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(Double.parseDouble(getProjectCode().toString()));
-        cell.setCellStyle(ExcelStyle.INTEGER_STYLE);
+        cell.setCellStyle(excelStyle.getIntegerStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getAcronym());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 2);
         cell.setCellValue(Double.parseDouble(getExplorationUnit().toString()));
-        cell.setCellStyle(ExcelStyle.INTEGER_STYLE);
+        cell.setCellStyle(excelStyle.getIntegerStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getType());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell = row.createCell((short) 4);
         cell.setCellValue(getBudget().doubleValue());
         if (getBudget().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 5);
         cell.setCellValue(getMaxFinance().doubleValue());
         if (getMaxFinance().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 6);
         cell.setCellValue(getRevenue().doubleValue());
         if (getRevenue().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 7);
         cell.setCellValue(getExpense().doubleValue());
         if (getExpense().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 8);
         cell.setCellValue(getAdiantamentosPorJustificar().doubleValue());
         if (getAdiantamentosPorJustificar().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 9);
         cell.setCellValue(getTreasuryBalance().doubleValue());
         if (getTreasuryBalance().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 10);
         cell.setCellValue(getCabimentoPorExecutar().doubleValue());
         if (getCabimentoPorExecutar().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
         cell = row.createCell((short) 11);
         cell.setCellValue(getBudgetBalance().doubleValue());
         if (getBudgetBalance().doubleValue() < 0)
-            cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
         else
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
     }
 
-    public void getTotalLineToExcel(HSSFSheet sheet) {
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
+        cell.setCellStyle(excelStyle.getStringStyle());
         cell.setCellValue("TOTAL");
         for (int i = 4; i <= 11; i++) {
             CellReference cellRef1 = new CellReference(1, i);
             CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), i);
             cell = row.createCell((short) i);
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
+            cell.setCellStyle(excelStyle.getDoubleStyle());
             cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
         }
     }

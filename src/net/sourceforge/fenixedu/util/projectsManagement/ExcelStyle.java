@@ -17,21 +17,21 @@ import org.apache.poi.hssf.util.HSSFColor;
  */
 public class ExcelStyle extends FenixUtil {
 
-    public static HSSFCellStyle TITLE_STYLE;
+    private HSSFCellStyle titleStyle;
 
-    public static HSSFCellStyle HEADER_STYLE;
+    private HSSFCellStyle headerStyle;
 
-    public static HSSFCellStyle STRING_STYLE;
+    private HSSFCellStyle stringStyle;
 
-    public static HSSFCellStyle DOUBLE_STYLE;
+    private HSSFCellStyle doubleStyle;
 
-    public static HSSFCellStyle DOUBLE_NEGATIVE_STYLE;
+    private HSSFCellStyle doubleNegativeStyle;
 
-    public static HSSFCellStyle INTEGER_STYLE;
+    private HSSFCellStyle integerStyle;
 
-    public static HSSFCellStyle LABEL_STYLE;
+    private HSSFCellStyle labelStyle;
 
-    public static HSSFCellStyle VALUE_STYLE;
+    private HSSFCellStyle valueStyle;
 
     public ExcelStyle(HSSFWorkbook wb) {
         setTitleStyle(wb);
@@ -52,7 +52,7 @@ public class ExcelStyle extends FenixUtil {
         font.setFontHeightInPoints((short) 10);
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        TITLE_STYLE = style;
+        titleStyle = style;
     }
 
     private void setHeaderStyle(HSSFWorkbook wb) {
@@ -69,7 +69,7 @@ public class ExcelStyle extends FenixUtil {
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        HEADER_STYLE = style;
+        headerStyle = style;
     }
 
     private void setStringStyle(HSSFWorkbook wb) {
@@ -79,7 +79,7 @@ public class ExcelStyle extends FenixUtil {
         font.setFontHeightInPoints((short) 8);
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        STRING_STYLE = style;
+        stringStyle = style;
     }
 
     private void setDoubleStyle(HSSFWorkbook wb) {
@@ -90,7 +90,7 @@ public class ExcelStyle extends FenixUtil {
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
         style.setDataFormat(wb.createDataFormat().getFormat("#,##0.00"));
-        DOUBLE_STYLE = style;
+        doubleStyle = style;
     }
 
     private void setDoubleNegativeStyle(HSSFWorkbook wb) {
@@ -102,7 +102,7 @@ public class ExcelStyle extends FenixUtil {
         style.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
         style.setDataFormat(wb.createDataFormat().getFormat("#,##0.00"));
         font.setColor(HSSFColor.RED.index);
-        DOUBLE_NEGATIVE_STYLE = style;
+        doubleNegativeStyle = style;
     }
 
     private void setIntegerStyle(HSSFWorkbook wb) {
@@ -113,7 +113,7 @@ public class ExcelStyle extends FenixUtil {
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         style.setDataFormat(wb.createDataFormat().getFormat("#"));
-        INTEGER_STYLE = style;
+        integerStyle = style;
     }
 
     private void setLabelStyle(HSSFWorkbook wb) {
@@ -124,7 +124,7 @@ public class ExcelStyle extends FenixUtil {
         font.setFontHeightInPoints((short) 8);
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        LABEL_STYLE = style;
+        labelStyle = style;
     }
 
     private void setValueStyle(HSSFWorkbook wb) {
@@ -135,7 +135,39 @@ public class ExcelStyle extends FenixUtil {
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
         style.setWrapText(true);
-        VALUE_STYLE = style;
+        valueStyle = style;
+    }
+
+    public HSSFCellStyle getDoubleNegativeStyle() {
+        return doubleNegativeStyle;
+    }
+
+    public HSSFCellStyle getDoubleStyle() {
+        return doubleStyle;
+    }
+
+    public HSSFCellStyle getHeaderStyle() {
+        return headerStyle;
+    }
+
+    public HSSFCellStyle getIntegerStyle() {
+        return integerStyle;
+    }
+
+    public HSSFCellStyle getLabelStyle() {
+        return labelStyle;
+    }
+
+    public HSSFCellStyle getStringStyle() {
+        return stringStyle;
+    }
+
+    public HSSFCellStyle getTitleStyle() {
+        return titleStyle;
+    }
+
+    public HSSFCellStyle getValueStyle() {
+        return valueStyle;
     }
 
 }

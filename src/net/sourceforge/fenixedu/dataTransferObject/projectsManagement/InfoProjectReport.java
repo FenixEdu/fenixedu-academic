@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
@@ -51,30 +51,30 @@ public class InfoProjectReport extends DataTranferObject {
     public void getReportToExcel(IUserView userView, HSSFWorkbook wb, ReportType reportType) {
         HSSFSheet sheet = wb.createSheet(reportType.getReportLabel());
         sheet.setGridsPrinted(false);
-
+        ExcelStyle excelStyle = new ExcelStyle(wb);
         HSSFRow row = sheet.createRow((short) 0);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(reportType.getReportLabel());
-        cell.setCellStyle(ExcelStyle.TITLE_STYLE);
+        cell.setCellStyle(excelStyle.getTitleStyle());
 
         if (infoProject != null) {
-            sheet = infoProject.getProjectInformationToExcel(sheet);
+            sheet = infoProject.getProjectInformationToExcel(sheet, excelStyle);
         } else {
             row = sheet.createRow((short) 2);
             cell = row.createCell((short) 0);
             cell.setCellValue("Coordenador:");
-            cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+            cell.setCellStyle(excelStyle.getLabelStyle());
             cell = row.createCell((short) 1);
             cell.setCellValue(userView.getFullName());
-            cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+            cell.setCellStyle(excelStyle.getValueStyle());
             row = sheet.createRow((short) 3);
             cell = row.createCell((short) 0);
             cell.setCellValue("Data:");
-            cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+            cell.setCellStyle(excelStyle.getLabelStyle());
             cell = row.createCell((short) 1);
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'às' HH:mm");
             cell.setCellValue(formatter.format(new Date()));
-            cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+            cell.setCellStyle(excelStyle.getValueStyle());
         }
 
         sheet.addMergedRegion(new Region(0, (short) 0, 0, (short) ((IReportLine) lines.get(0)).getNumberOfColumns()));
@@ -85,19 +85,19 @@ public class InfoProjectReport extends DataTranferObject {
         int lastRowNum = sheet.getLastRowNum() + 2;
         if (lines != null && lines.size() > 0) {
             row = sheet.createRow(lastRowNum);
-            ((IReportLine) lines.get(0)).getHeaderToExcel(sheet);
+            ((IReportLine) lines.get(0)).getHeaderToExcel(sheet, excelStyle);
             lastRowNum++;
             for (int i = 0; i < lines.size(); i++) {
-                ((IReportLine) lines.get(i)).getLineToExcel(sheet);
+                ((IReportLine) lines.get(i)).getLineToExcel(sheet, excelStyle);
             }
-            ((IReportLine) lines.get(0)).getTotalLineToExcel(sheet);
+            ((IReportLine) lines.get(0)).getTotalLineToExcel(sheet, excelStyle);
         }
 
         row = sheet.createRow((short) sheet.getLastRowNum() + 2);
         row.setHeight((short) 0x349);
         cell = row.createCell((short) 0);
         cell.setCellValue(reportType.getReportNote());
-        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        cell.setCellStyle(excelStyle.getValueStyle());
         sheet.addMergedRegion(new Region(sheet.getLastRowNum(), (short) 0, sheet.getLastRowNum(), (short) ((IReportLine) lines.get(0))
                 .getNumberOfColumns()));
     }

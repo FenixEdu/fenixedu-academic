@@ -158,43 +158,43 @@ public class InfoProject extends DataTranferObject {
         return infoProject;
     }
 
-    public HSSFSheet getProjectInformationToExcel(HSSFSheet sheet) {
+    public HSSFSheet getProjectInformationToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
         HSSFRow row = sheet.createRow((short) 2);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("Acrónimo:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getTitle());
-        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 3);
         cell = row.createCell((short) 0);
         cell.setCellValue("Projecto Nº:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getProjectCode());
-        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 4);
         cell = row.createCell((short) 0);
         cell.setCellValue("Tipo:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getType().getLabel() + " - " + getType().getValue());
-        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 5);
         cell = row.createCell((short) 0);
         cell.setCellValue("Coordenador:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         cell.setCellValue(getCoordinatorName());
-        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        cell.setCellStyle(excelStyle.getValueStyle());
         row = sheet.createRow((short) 6);
         cell = row.createCell((short) 0);
         cell.setCellValue("Data:");
-        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 1);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'às' HH:mm");
         cell.setCellValue(formatter.format(new Date()));
-        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        cell.setCellStyle(excelStyle.getValueStyle());
         return sheet;
     }
 

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.ICabimentosReportLine;
+import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
@@ -77,13 +78,13 @@ public class InfoCabimentosReportLine extends DataTranferObject implements IRepo
         return null;
     }
 
-    public void getHeaderToExcel(HSSFSheet sheet) {
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
     }
 
-    public void getLineToExcel(HSSFSheet sheet) {
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
     }
 
-    public void getTotalLineToExcel(HSSFSheet sheet) {
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
     }
 
     public int getNumberOfColumns() {
