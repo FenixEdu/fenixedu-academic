@@ -8,22 +8,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author CIIST
@@ -41,7 +41,7 @@ public class InsertSectionAction extends FenixAction {
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         InfoSection parentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 

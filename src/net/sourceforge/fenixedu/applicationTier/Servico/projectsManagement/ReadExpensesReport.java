@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoAdiantamentosReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCabimentosReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoExpensesReport;
@@ -40,7 +39,7 @@ public class ReadExpensesReport implements IService {
     public ReadExpensesReport() {
     }
 
-    public InfoExpensesReport run(InfoExpensesReport infoReport, UserView userView, ReportType reportType, Integer projectCode, String rubric)
+    public InfoExpensesReport run(InfoExpensesReport infoReport, IUserView userView, ReportType reportType, Integer projectCode, String rubric)
             throws ExcepcaoPersistencia {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -48,7 +48,7 @@ public class SendSmsDispatchAction extends FenixDispatchAction {
 
         try {
             infoPerson = (InfoPerson) ServiceUtils
-                    .executeService(userView, "ReadPersonByUsername", args);
+                    .executeService(userView, "ReadPersonByUserview", args);
         } catch (FenixServiceException e1) {
             throw new FenixActionException();
         }

@@ -3,8 +3,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
@@ -28,7 +28,7 @@ public class ChangePasswordService implements IService {
     public ChangePasswordService() {
     }
 
-    public void run(UserView userView, String oldPassword, String newPassword)
+    public void run(IUserView userView, String oldPassword, String newPassword)
             throws ExcepcaoInexistente, FenixServiceException, InvalidPasswordServiceException,
             ExistingPersistentException, ExcepcaoPersistencia {
 

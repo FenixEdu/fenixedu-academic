@@ -14,14 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -36,14 +31,18 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoic
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -56,7 +55,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = this.getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         TeacherAdministrationSiteView siteView = null;
         Integer objectCode = null;
         // Integer shiftID = null;
@@ -97,7 +96,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixServiceException, FenixFilterException {
         HttpSession session = this.getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         TeacherAdministrationSiteView siteView = null;
         Object argsReadPerson[] = { userView.getUtilizador() };
         InfoPerson infoPerson = null;
@@ -266,7 +265,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException,
             FenixFilterException {
         HttpSession session = this.getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = null;
         Integer shiftID = null;
         Integer groupCode = null;

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
@@ -49,7 +49,7 @@ public class SchoolRegistration implements IService {
         super();
     }
 
-    public Boolean run(UserView userView, HashMap answers, InfoPerson infoPerson,
+    public Boolean run(IUserView userView, HashMap answers, InfoPerson infoPerson,
             InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();

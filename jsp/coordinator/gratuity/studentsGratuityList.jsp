@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
-<%@ page import="net.sourceforge.fenixedu.util.RoleType" %>
+<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 <%@ page import="java.lang.String" %>
 
 

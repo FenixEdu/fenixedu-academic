@@ -17,6 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -26,17 +37,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-
 public class ShowStudentsEnrolledInExamAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -44,7 +44,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String executionCourseCodeString = request.getParameter("objectCode");
         Integer executionCourseCode = new Integer(executionCourseCodeString);

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -7,15 +8,18 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 /**
  * @author jorge
  */
-public interface IUserView {
-    /* Acrecentado por Fernanda Quitério & Tania Pousão */
-    String getUtilizador();
+public interface IUserView extends Serializable {
+
+    public String getUtilizador();
 
     public String getFullName();
 
-    Collection getRoles();
+	public Collection getRoles();
 
-    ICandidateView getCandidateView();
+	public ICandidateView getCandidateView();
 
-    boolean hasRoleType(RoleType roleType);
+    boolean hasRoleType(final RoleType roleType);
+
+	public void setCandidateView(ICandidateView candidateView);
+
 }

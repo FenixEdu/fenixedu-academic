@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
@@ -29,7 +29,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadProjectAccesses implements IService {
 
-    public List run(UserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ITeacher personCoordinator = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
         if (personCoordinator == null)
@@ -51,7 +51,7 @@ public class ReadProjectAccesses implements IService {
         return infoProjectAcessesList;
     }
 
-    public List run(UserView userView, String username) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(IUserView userView, String username) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         ITeacher personTeacher = sp.getIPersistentTeacher().readTeacherByUsername(username);

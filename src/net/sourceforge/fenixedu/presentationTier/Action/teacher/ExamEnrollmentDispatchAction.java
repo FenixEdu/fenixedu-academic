@@ -10,6 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -17,22 +32,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 /**
  * @author Tânia Nunes
@@ -49,7 +48,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -97,7 +96,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 

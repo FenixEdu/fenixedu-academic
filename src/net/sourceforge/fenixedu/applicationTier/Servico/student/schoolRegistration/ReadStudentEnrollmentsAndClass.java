@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
@@ -42,7 +42,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
 
     }
 
-    public List run(UserView userView) throws ExcepcaoPersistencia {
+    public List run(IUserView userView) throws ExcepcaoPersistencia {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 

@@ -16,6 +16,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -25,14 +28,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.MockUserView;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -128,7 +128,7 @@ public class ShowStudentGroupInfo extends Action {
                                                 .next();
                                         result += studentInfo.getNumber();
                                         Object[] args = {
-                                                new UserView(studentInfo.getUsername(), new ArrayList()),
+                                                new MockUserView(studentInfo.getUsername(), new ArrayList()),
                                                 TipoCurso.LICENCIATURA_OBJ };
                                         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
                                         try {

@@ -11,6 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -24,21 +39,6 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-
 /**
  * @author Tânia Pousão
  *  
@@ -50,7 +50,7 @@ public class MarksListAction extends DispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
@@ -85,7 +85,7 @@ public class MarksListAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
@@ -126,7 +126,7 @@ public class MarksListAction extends DispatchAction {
         Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object[] args = { infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null,
                 evaluationCode, null };
         TeacherAdministrationSiteView siteView = null;
@@ -168,7 +168,7 @@ public class MarksListAction extends DispatchAction {
         }
 
         Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         try {
             ServiceUtils.executeService(userView, "PublishMarks", args);
         } catch (FenixServiceException e) {
@@ -189,7 +189,7 @@ public class MarksListAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -296,7 +296,7 @@ public class MarksListAction extends DispatchAction {
             HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 

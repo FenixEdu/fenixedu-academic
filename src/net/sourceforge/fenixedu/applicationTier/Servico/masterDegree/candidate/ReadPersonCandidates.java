@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -36,7 +36,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPersonCandidates implements IService {
 
-    public Object run(UserView userView) throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
 

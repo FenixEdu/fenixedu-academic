@@ -13,6 +13,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
+import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.TipoCurso;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -26,33 +53,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
-import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Correia

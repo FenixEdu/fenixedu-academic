@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.sms;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSentServiceException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -24,7 +24,7 @@ public class CreateSentSms implements IService {
     public CreateSentSms() {
     }
 
-    public void run(UserView userView, Date startDate, Date endDate, Integer destinationNumber,
+    public void run(IUserView userView, Date startDate, Date endDate, Integer destinationNumber,
             String message) throws FenixServiceException {
 
         throw new SmsNotSentServiceException("error.person.sendSms");

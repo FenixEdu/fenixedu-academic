@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -65,7 +65,7 @@ public class ProcessSibsPaymentFile implements IService {
      * @param fileEntries
      * @throws FenixServiceException
      */
-    public void run(String filename, List fileEntries, UserView userView) throws FenixServiceException {
+    public void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException {
 
         try {
 
@@ -103,7 +103,7 @@ public class ProcessSibsPaymentFile implements IService {
      * @param userView
      */
     private void buildTransactionsAndStoreFile(ISuportePersistente sp, ISibsPaymentFile sibsPaymentFile,
-            UserView userView) throws ExcepcaoPersistencia {
+            IUserView userView) throws ExcepcaoPersistencia {
 
         IPersistentSibsPaymentFile sibsPaymentFileDAO = sp.getIPersistentSibsPaymentFile();
         sibsPaymentFileDAO.simpleLockWrite(sibsPaymentFile);

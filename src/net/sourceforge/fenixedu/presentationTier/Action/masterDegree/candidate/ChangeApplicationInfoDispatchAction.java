@@ -226,7 +226,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
             InfoPerson infoPerson = null;
             try {
                 infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadPersonByUsername", args);
+                        "ReadPersonByUserview", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }

@@ -18,15 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.apache.util.Base64;
-
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudents;
@@ -40,10 +34,6 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.InfoShiftComparatorByLessonType;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -59,6 +49,15 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
+import org.apache.util.Base64;
 
 /**
  * @author Susana Fernandes
@@ -487,7 +486,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward prepareDistributeTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer testCode = getCodeFromRequest(request, "testCode");
 
@@ -564,7 +563,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward chooseShifts(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer testCode = getCodeFromRequest(request, "testCode");
         List shifts = null;
@@ -584,7 +583,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward chooseStudents(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer testCode = getCodeFromRequest(request, "testCode");
         TeacherAdministrationSiteView siteView = null;
@@ -606,7 +605,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward distributeTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer testCode = getCodeFromRequest(request, "testCode");
         String testInformation = request.getParameter("testInformation");
@@ -683,7 +682,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showDistributedTests(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Object[] args = { objectCode };
         SiteView siteView = null;
@@ -699,7 +698,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward prepareEditDistributedTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         Object[] args = { objectCode, distributedTestCode };
@@ -768,7 +767,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward chooseAddShifts(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         List shifts = null;
@@ -788,7 +787,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward chooseAddStudents(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         List students = null;
@@ -809,7 +808,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward editDistributedTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         String testInformation = request.getParameter("testInformation");
@@ -933,7 +932,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward prepareDeleteDistributedTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         Object[] args = { objectCode, distributedTestCode };
@@ -953,7 +952,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward deleteDistributedTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         Object[] args = { objectCode, distributedTestCode };
@@ -972,7 +971,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showStudentTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         Integer studentCode = getCodeFromRequest(request, "studentCode");
@@ -1026,7 +1025,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showStudentTestLog(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         Integer studentCode = getCodeFromRequest(request, "studentCode");
@@ -1054,7 +1053,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showTestMarks(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         Object[] args = { objectCode, distributedTestCode };
@@ -1074,7 +1073,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showTestMarksStatistics(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         //        String path = getServlet().getServletContext().getRealPath("/");
@@ -1095,7 +1094,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showTestStatistics(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         String path = getServlet().getServletContext().getRealPath("/");
@@ -1115,7 +1114,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward downloadTestMarks(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
         String result = null;
@@ -1264,7 +1263,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward chooseTestSimulationOptions(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer testCode = getCodeFromRequest(request, "testCode");
         request.setAttribute("objectCode", objectCode);

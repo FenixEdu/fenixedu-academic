@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
@@ -143,7 +142,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoSiteNew.setMail(mail);
         infoSiteNew.setInitialStatement(initialStatement);
         infoSiteNew.setIntroduction(introduction);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, infoSiteNew };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditCustomizationOptions", args);
@@ -207,7 +206,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.getInputForward();
         }
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, title, information };
         try {
             ServiceManagerServiceFactory.executeService(userView, "CreateAnnouncement", args);
@@ -276,7 +275,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return prepareEditAnnouncement(mapping, form, request, response);
         }
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, announcementCode, newTitle, newInformation };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditAnnouncementService", args);
@@ -297,7 +296,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         Integer announcementCode = new Integer(announcementCodeString);
         Integer objectCode = getObjectCode(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, announcementCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
@@ -343,7 +342,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         //Filter if the cteacher is responsibles for the execution course
         Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode };
@@ -401,7 +400,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoCurriculumNew.setOperacionalObjectivesEn((String) objectivesForm
                 .get("operacionalObjectivesEn"));
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador() };
         
@@ -440,7 +439,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         //Filter if the cteacher is responsibles for the execution course
         Object args[] = { userView.getUtilizador(), objectCode, curricularCourseCode };
@@ -488,7 +487,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoCurriculumNew.setProgram((String) programForm.get("program"));
         infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador() };
         
         try {
@@ -589,7 +588,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         Object args[] = { objectCode, evaluationMethodCode, infoEvaluationMethod };
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
             
@@ -619,7 +618,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         //		Object args[] = { objectCode, curricularCourseCode,
         // infoCurriculumNew };
         //
-        //		UserView userView = (UserView)
+        //		IUserView userView = (IUserView)
         // session.getAttribute(SessionConstants.U_VIEW);
         //		GestorServicos serviceManager = GestorServicos.manager();
         //		try {
@@ -671,7 +670,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String reference = (String) insertBibliographicReferenceForm.get("reference");
         String year = (String) insertBibliographicReferenceForm.get("year");
         Boolean optional = new Boolean((String) insertBibliographicReferenceForm.get("optional"));
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, title, authors, reference, year, optional };
         try {
             ServiceManagerServiceFactory.executeService(userView, "CreateBibliographicReference", args);
@@ -725,7 +724,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         //		}
         Object args[] = { objectCode, bibliographicReferenceCode, title, authors, reference, year,
                 optional };
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
         } catch (FenixServiceException e) {
@@ -746,7 +745,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         Integer bibliographicReferenceCode = new Integer(bibliographicReferenceCodeString);
         Integer objectCode = getObjectCode(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, bibliographicReferenceCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
@@ -767,7 +766,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     
     private String getUsername(HttpServletRequest request) throws InvalidSessionActionException {
         HttpSession session = getSession(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String username = userView.getUtilizador();
         return username;
     }
@@ -788,7 +787,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
         Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, teacherNumber };
         try {
             ServiceManagerServiceFactory.executeService(userView, "AssociateTeacher", args);
@@ -811,7 +810,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         Integer teacherCode = new Integer(teacherCodeString);
         Integer objectCode = getObjectCode(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, teacherCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteTeacher", args);
@@ -887,7 +886,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String sectionName = (String) dynaForm.get("name");
         Integer order = Integer.valueOf((String) dynaForm.get("sectionOrder"));
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, sectionCode, sectionName, order };
         try {
             ServiceManagerServiceFactory.executeService(userView, "InsertSection", args);
@@ -916,7 +915,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String sectionName = (String) sectionForm.get("name");
         Integer order = (Integer) sectionForm.get("sectionOrder");
         order = new Integer(order.intValue() - 1);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object editionArgs[] = { objectCode, sectionCode, sectionName, order };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
@@ -936,7 +935,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer superiorSectionCode = getSuperiorSectionCode(request);
         Integer sectionCode = getSectionCode(request);
         Integer objectCode = getObjectCode(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object deleteSectionArguments[] = { objectCode, sectionCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteSection",
@@ -1097,7 +1096,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setName(itemName);
         newInfoItem.setInformation(information);
         newInfoItem.setUrgent(new Boolean(urgentString));
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, sectionCode, newInfoItem };
         try {
             ServiceManagerServiceFactory.executeService(userView, "InsertItem", args);
@@ -1145,7 +1144,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setName(name);
         newInfoItem.setItemOrder(itemOrder);
         newInfoItem.setUrgent(urgent);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object editItemArgs[] = { objectCode, itemCode, newInfoItem };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditItem", editItemArgs);
@@ -1162,7 +1161,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpSession session = request.getSession(false);
         Integer itemCode = getItemCode(request);
         Integer objectCode = getObjectCode(request);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object deleteItemArguments[] = { objectCode, itemCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteItem", deleteItemArguments);
@@ -1256,7 +1255,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = getSession(request);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {
@@ -1294,7 +1293,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         Object[] args = {objectCode};
         
@@ -1378,7 +1377,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -1419,7 +1418,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -1464,7 +1463,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -1517,7 +1516,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
@@ -1596,7 +1595,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         HttpSession session = request.getSession(false);
         DynaActionForm insertGroupPropertiesForm = (DynaActionForm) form;
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String name = (String) insertGroupPropertiesForm.get("name");
         String projectDescription = (String) insertGroupPropertiesForm.get("projectDescription");
         String maximumCapacityString = (String) insertGroupPropertiesForm.get("maximumCapacity");
@@ -1879,7 +1878,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                 enrolmentEndDay.set(Calendar.SECOND, 0);
             }
         }
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
         infoGroupProperties.setIdInternal(groupPropertiesCode);
         infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
@@ -2028,7 +2027,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         Integer objectCode = getObjectCode(request);
         
@@ -2096,7 +2095,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
         Integer objectCode = getObjectCode(request);
@@ -2152,7 +2151,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
@@ -2193,7 +2192,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         HttpSession session = request.getSession(false);
         session.removeAttribute("insertStudentGroupForm");
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesString);
@@ -2232,7 +2231,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -2309,7 +2308,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         
         String groupPropertiesString = request.getParameter("groupPropertiesCode");
@@ -2359,7 +2358,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String groupPropertiesString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesString);
         
@@ -2392,7 +2391,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String groupPropertiesString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesString);
         
@@ -2495,7 +2494,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         DynaActionForm editStudentGroupForm = (DynaActionForm) form;
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String oldShiftString = request.getParameter("shiftCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
@@ -2631,7 +2630,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -2705,7 +2704,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -2756,7 +2755,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
@@ -2801,7 +2800,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupProperties = new Integer(groupPropertiesCodeString);
@@ -2833,7 +2832,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -2899,7 +2898,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
@@ -2959,7 +2958,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
@@ -3050,7 +3049,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -3098,7 +3097,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -3142,7 +3141,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -3176,7 +3175,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -3218,7 +3217,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String attendsSetCodeString = request.getParameter("attendsSetCode");
         Integer attendsSetCode = new Integer(attendsSetCodeString);
@@ -3259,7 +3258,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String attendsSetCodeString = request.getParameter("attendsSetCode");
         Integer attendsSetCode = new Integer(attendsSetCodeString);
@@ -3296,7 +3295,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     throws FenixActionException, FenixFilterException
     {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String attendsSetCodeString = request.getParameter("attendsSetCode");
         Integer attendsSetCode = new Integer(attendsSetCodeString);
@@ -3329,7 +3328,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         HttpSession session = request.getSession(false);
         
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -3373,7 +3372,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         ISiteComponent firstPageComponent = new InfoSiteFirstPage();
         Integer objectCode = getObjectCode(request);
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
         String goalExecutionCourseIdString = request.getParameter("goalExecutionCourseId");

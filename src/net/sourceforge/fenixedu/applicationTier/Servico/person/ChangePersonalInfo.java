@@ -12,8 +12,8 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -31,7 +31,7 @@ public class ChangePersonalInfo implements IService {
     public ChangePersonalInfo() {
     }
 
-    public UserView run(UserView userView, InfoPerson newInfoPerson) throws ExcepcaoInexistente,
+    public IUserView run(IUserView userView, InfoPerson newInfoPerson) throws ExcepcaoInexistente,
             FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;

@@ -9,23 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Ivo Brandão
@@ -37,7 +37,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
         InfoSection currentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
@@ -90,7 +90,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
         order = new Integer(order.intValue() - 1);
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
         InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 
@@ -152,7 +152,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
         DynaActionForm sectionForm = (DynaValidatorForm) form;
         Integer index = (Integer) sectionForm.get("sectionIndex");
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         List allSections = (List) session.getAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
 
@@ -211,7 +211,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
         return mapping.findForward("viewSite");
     }
 
-    private List removeDaughters(UserView userView, InfoSite infoSite, InfoSection infoSection,
+    private List removeDaughters(IUserView userView, InfoSite infoSite, InfoSection infoSection,
             List allSections) throws FenixActionException, FenixFilterException {
 
         List sections = new ArrayList();

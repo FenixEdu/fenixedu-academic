@@ -11,14 +11,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.struts.Globals;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
-
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
@@ -26,15 +22,19 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumbe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.ProviderRegimeType;
 import net.sourceforge.fenixedu.util.PublicationType;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.struts.Globals;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.actions.DispatchAction;
 
 /**
  * @author Leonor Almeida

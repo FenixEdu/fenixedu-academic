@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -32,7 +32,7 @@ public class ReadCoordinatedDegrees implements IService {
     public ReadCoordinatedDegrees() {
     }
 
-    public List run(UserView userView) throws ExcepcaoInexistente, FenixServiceException {
+    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
 

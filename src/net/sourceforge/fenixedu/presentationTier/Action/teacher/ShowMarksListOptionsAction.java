@@ -4,20 +4,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão
@@ -30,7 +30,7 @@ public class ShowMarksListOptionsAction extends DispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer executionCourseCode = null;
         String executionCourseCodeString = request.getParameter("objectCode");

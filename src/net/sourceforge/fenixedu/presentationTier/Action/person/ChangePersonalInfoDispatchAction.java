@@ -93,7 +93,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
         Object changeArgs[] = { userView };
         Object result = null;
         try {
-            result = ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername",
+            result = ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUserview",
                     changeArgs);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.sms.InfoSentSms;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -32,7 +32,7 @@ public class ReadSentSmsByPerson implements IService {
     public ReadSentSmsByPerson() {
     }
 
-    public List run(UserView userView) throws FenixServiceException {
+    public List run(IUserView userView) throws FenixServiceException {
 
         try {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();

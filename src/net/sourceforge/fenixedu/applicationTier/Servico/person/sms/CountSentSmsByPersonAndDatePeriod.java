@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.sms;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsLimitReachedServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
@@ -34,7 +34,7 @@ public class CountSentSmsByPersonAndDatePeriod implements IService {
     public CountSentSmsByPersonAndDatePeriod() {
     }
 
-    public Integer run(UserView userView, Date startDate, Date endDate) throws FenixServiceException {
+    public Integer run(IUserView userView, Date startDate, Date endDate) throws FenixServiceException {
 
         try {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();

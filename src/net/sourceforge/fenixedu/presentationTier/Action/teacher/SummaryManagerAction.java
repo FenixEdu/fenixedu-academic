@@ -17,9 +17,9 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.commons.HtmlValidator;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -44,8 +44,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import net.sourceforge.fenixedu.commons.HtmlValidator;
 
 /**
  * @author Tânia Pousão
@@ -167,7 +165,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
         Integer objectCode = getObjectCode(request);
         request.setAttribute("objectCode", objectCode);

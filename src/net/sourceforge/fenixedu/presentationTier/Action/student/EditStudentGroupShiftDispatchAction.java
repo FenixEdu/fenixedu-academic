@@ -12,18 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -31,10 +21,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author asnr and scpo
@@ -52,7 +52,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
     {
 
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -192,7 +192,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
 
         DynaActionForm editStudentGroupForm = (DynaActionForm) form;
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");

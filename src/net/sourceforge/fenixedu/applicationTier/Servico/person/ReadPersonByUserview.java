@@ -12,6 +12,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -22,12 +23,13 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadPersonByUsername implements IService {
+public class ReadPersonByUserview implements IService {
 
-    public Object run(String username) throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
 
+        String username = new String(userView.getUtilizador());
         IPerson person = null;
 
         try {
@@ -40,11 +42,13 @@ public class ReadPersonByUsername implements IService {
             throw newEx;
         }
 
-        if (person == null)
+        if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");
+        }
 
         InfoPerson infoPerson = InfoPersonWithInfoCountryAndAdvisories.newInfoFromDomain(person);
 
         return infoPerson;
     }
+
 }

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.RoleType" %>
+<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 <% boolean masterDegreeUser = false; %>

@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
@@ -86,7 +86,7 @@ public class SubmitMarks implements IServico {
     }
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, Date evaluationDate,
-            UserView userView) throws FenixServiceException {
+            IUserView userView) throws FenixServiceException {
         enrolmentEvaluationTableByDegree = new MultiHashMap();
         improvmentEnrolmentEvaluationTableByDegree = new MultiHashMap();
         notEnrolled = new ArrayList();
@@ -143,7 +143,7 @@ public class SubmitMarks implements IServico {
         }
     }
 
-    private void separateAttends(UserView userView,
+    private void separateAttends(IUserView userView,
             IExecutionCourse executionCourse, List attendList, IEvaluation evaluation,
             Date evaluationDate, IEmployee employee, ITeacher teacher) throws FenixServiceException {
 
@@ -200,7 +200,7 @@ public class SubmitMarks implements IServico {
         }
     }
 
-    private IEnrolmentEvaluation getEnrolmentEvaluation(UserView userView,
+    private IEnrolmentEvaluation getEnrolmentEvaluation(IUserView userView,
             IExecutionCourse executionCourse, IEnrollment enrolment, Date evaluationDate, IEmployee employee, ITeacher teacher, IMark mark, EnrolmentEvaluationType enrolmentEvaluationType) throws FenixServiceException {
         
         IEnrolmentEvaluation newEnrolmentEvaluation = null;
@@ -277,7 +277,7 @@ public class SubmitMarks implements IServico {
         return mark;
     }
 
-    private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolment(UserView userView,
+    private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolment(IUserView userView,
             IExecutionCourse executionCourse, IEnrollment enrolment, Date evaluationDate,
             String publishedMark, IEmployee employee, ITeacher teacher, EnrolmentEvaluationType enrolmentEvaluationType) throws FenixServiceException {
         ISuportePersistente sp;

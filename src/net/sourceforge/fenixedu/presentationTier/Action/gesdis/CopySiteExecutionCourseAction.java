@@ -12,6 +12,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.PeriodState;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -26,28 +47,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author mrsp and jdnf
@@ -318,7 +317,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
 
         HttpSession session = getSession(request);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {

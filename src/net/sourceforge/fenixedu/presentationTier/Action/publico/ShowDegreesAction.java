@@ -8,20 +8,20 @@ import java.util.ListIterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão Created on 9/Out/2003

@@ -40,8 +40,11 @@ public class AuthenticationAction extends FenixAction {
             DynaActionForm authenticationForm = (DynaActionForm) form;
             ActionMappingForAuthentication authenticationMapping = (ActionMappingForAuthentication) mapping;
 
-            Object argsAutenticacao[] = { authenticationForm.get("username"),
-                    authenticationForm.get("password"), authenticationMapping.getApplication() };
+			final String username = (String) authenticationForm.get("username");
+			final String password = (String) authenticationForm.get("password");
+			final String application = authenticationMapping.getApplication();
+			final String requestURL = request.getRequestURL().toString();
+            Object argsAutenticacao[] = { username, password, application, requestURL };
 
             userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
                     argsAutenticacao);

@@ -13,14 +13,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ExamRoomDistribution;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExamExecutionCourses;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ExamRoomDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 

@@ -300,7 +300,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		
 		Integer[] authorsId = (Integer[]) insertPublicationForm.get("authorsId");
 		if (authorsId.length == 0) {
-			InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUsername", new Object[] { userView });
+			InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUserview", new Object[] { userView });
 			InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorByPersonId", new Object[] { userView.getUtilizador() });
 
 			Integer[] newAuthorsId = new Integer[1];

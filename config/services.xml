@@ -9,7 +9,7 @@
     </service>
     <service>
         <name>Autenticacao</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Authenticate</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -2411,10 +2411,16 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
-    
     <service>
         <name>ReadPersonByUsername</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>ReadPersonByUserview</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUserview</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>

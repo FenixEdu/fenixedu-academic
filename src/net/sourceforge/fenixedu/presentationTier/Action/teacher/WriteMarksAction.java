@@ -12,6 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -20,21 +34,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.upload.FormFile;
-
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 /**
  * @author Tânia Pousão
@@ -172,7 +171,7 @@ public class WriteMarksAction extends DispatchAction {
 
     private void prepareInputForward(HttpServletRequest request, HttpSession session,
             Integer objectCode, Integer evaluationCode) throws FenixActionException, FenixFilterException {
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ISiteComponent commonComponent = new InfoSiteCommon();
         Object[] args = { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 

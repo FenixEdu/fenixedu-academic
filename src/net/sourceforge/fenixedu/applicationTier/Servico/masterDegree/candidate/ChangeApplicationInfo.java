@@ -17,9 +17,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.ICandidateView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.CandidateView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -39,14 +39,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ChangeApplicationInfo implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ChangeApplicationInfo() {
-    }
-
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
-            InfoPerson infoPerson, UserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+            InfoPerson infoPerson, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         IMasterDegreeCandidate existingMasterDegreeCandidate = null;

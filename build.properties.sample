@@ -116,6 +116,19 @@ slide.config=/home/marvin/workspace/fenix_head/build/standalone/ciapl/WEB-INF/cl
 #
 #
 #------------------------------------------------------------------------------
+# Allowed Roles Configuration
+#------------------------------------------------------------------------------
+#
+filter.hostnames= localhost
+filter.hostname.localhost=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
+	MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
+	MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, \
+    GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER
+#
+#
+#------------------------------------------------------------------------------
 # FTP Configuration's
 #------------------------------------------------------------------------------
 #
@@ -277,3 +290,18 @@ roleback.filename=/tmp/roleback.sql
 #------------------------------------------------------------------------------
 # End of build.properties.sample file
 #------------------------------------------------------------------------------
+
+
+## Characters that can't be used directly in ant build files
+line.seperator=\n
+character.lessthan=<
+character.dollar=$
+
+## Complex constructions that contain characters that's can't
+## be used directly in ant build files
+allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-8859-15"?>\n \
+		\t<project default="generate-properties-file" name="Auto-Generated-Build-File">\n \
+			\t\t<property file="build.properties"/>\n \
+			\t\t<target name="generate-properties-file"> \n\n
+allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
+allowed-roles.newline.instruction=${line.seperator}

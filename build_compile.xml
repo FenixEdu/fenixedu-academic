@@ -400,9 +400,50 @@
 		<echo level="info" message="Processing of ${dml.definition.file} finished."/>
 	</target>
 
+    <target name="write-filter-hostnames-configuration-file">
+    	<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
+    	<delete file="${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties"/>
+    	<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
+		<concat destfile=".authenticationServiceHostnamesFiltering.properties.xml">
+			${filter.hostnames}
+			<filterchain>
+				<tokenfilter>
+					<ignoreblank/>
+					<trim/>
+					<replacestring from="," to="${line.seperator}"/>
+				</tokenfilter>
+				<prefixlines prefix="@filter.hostname."/>
+				<prefixlines prefix="file='${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties'>"/>
+				<prefixlines prefix="append='true' "/>
+				<prefixlines prefix="${character.lessthan}echo "/>
+				<tokenfilter>
+					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+					<replaceregex pattern="(.*)"
+						flags="s"
+						replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
+				</tokenfilter>
+				<tokenfilter>
+					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+					<replaceregex pattern="@(.*)@"
+						flags="s"
+						replace="\1=${character.dollar}{\1}"/>
+				</tokenfilter>
+				<tokenfilter>
+					<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
+					<replaceregex pattern="(.*)"
+						flags="s"
+						replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
+				</tokenfilter>
+				<escapeunicode/>
+			</filterchain>
+		</concat>
+		<ant antfile=".authenticationServiceHostnamesFiltering.properties.xml"/>
+    	<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
+	</target>
+
     <target name="compile"
     		description="Compile application"
-    		depends="prepare, generate">
+    		depends="prepare, write-filter-hostnames-configuration-file, generate">
 		<javac destdir="${build.home.webinf.classes}"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"

@@ -32,7 +32,7 @@ public final class MainPage extends Action {
         Object[] args = { userView };
         try {
             InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView,
-                    "ReadPersonByUsername", args);
+                    "ReadPersonByUserview", args);
             if (infoPerson.getInfoAdvisories() == null || infoPerson.getInfoAdvisories().isEmpty()) {
                 infoPerson.setInfoAdvisories(new ArrayList());
             } else {

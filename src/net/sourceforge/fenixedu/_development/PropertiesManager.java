@@ -30,7 +30,7 @@ public class PropertiesManager {
         super();
     }
 
-    protected static void loadProperties(final Properties properties, final String fileName) throws IOException {
+    public static void loadProperties(final Properties properties, final String fileName) throws IOException {
         final InputStream inputStream = instance.getClass().getResourceAsStream(fileName);
         if (inputStream != null) {
             properties.load(inputStream);

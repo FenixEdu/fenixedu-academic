@@ -11,22 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author PTRLV
@@ -58,7 +58,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, title, authors, reference, year, optional };
         try {
             ServiceManagerServiceFactory.executeService(userView, "InsertBibliographicReference", args);
@@ -111,7 +111,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         Object args[] = { infoExecutionCourse, infoBibliographicReference, infoBibliographicReferenceNew };
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
         } catch (FenixServiceException e) {
@@ -150,7 +150,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) bibliographicReferences
                 .get(index.intValue());
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, infoBibliographicReference };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
@@ -179,7 +179,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, null };
         List references = null;
         try {

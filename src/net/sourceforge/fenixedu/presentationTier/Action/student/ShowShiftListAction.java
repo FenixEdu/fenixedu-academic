@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.dataTransferObject.TypeLessonAndInfoShift;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.TipoAula;

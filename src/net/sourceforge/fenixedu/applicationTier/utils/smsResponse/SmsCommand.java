@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.fenixedu.dataTransferObject.ISmsDTO;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.SmsCommandConfigurationException;
-import net.sourceforge.fenixedu.util.sms.SmsCommandAuthenticationType;
+import net.sourceforge.fenixedu.dataTransferObject.ISmsDTO;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.util.sms.SmsCommandAuthenticationType;
 
 /**
  * 
@@ -325,7 +325,7 @@ public class SmsCommand {
 
         try {
 
-            UserView userView = null;
+            IUserView userView = null;
             if (this.smsCommandAuthenticationType.equals(SmsCommandAuthenticationType.NONE) == false) {
 
                 VariableInformation password = (VariableInformation) this.variablesInformation
@@ -342,17 +342,8 @@ public class SmsCommand {
                     authenticationArgs[0] = matcher.group(username.getVariablePosition());
 
                 }
-                /*
-                 * else {
-                 * 
-                 * //we have to authenticate using msisdn and password Object[]
-                 * argsReadUsername = { senderMsisdn }; String username =
-                 * (String) ServiceManagerServiceFactory.executeService(null,
-                 * "ReadUsernameByMobilePhone", argsReadUsername);
-                 * authenticationArgs[1] = username; }
-                 */
-                authenticationArgs[2] = Autenticacao.EXTRANET;
-                userView = (UserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                authenticationArgs[2] = Authenticate.EXTRANET;
+                userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
                         authenticationArgs);
 
             }

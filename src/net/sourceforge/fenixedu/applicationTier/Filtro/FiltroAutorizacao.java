@@ -10,7 +10,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -19,15 +19,9 @@ public class FiltroAutorizacao extends Filtro {
     public FiltroAutorizacao() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView requester = getRemoteUser(request);
-        if (requester == null || !(requester instanceof UserView)) {
+        if (requester == null || !(Authenticate.isValidUserView(requester))) {
             throw new NotAuthorizedFilterException("Invalid user ID");
         }
 

@@ -40,7 +40,7 @@ public class VisualizePersonalInfoAction extends FenixAction {
         args[0] = userView;
 
         infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
-                "ReadPersonByUsername", args);
+                "ReadPersonByUserview", args);
 
         request.removeAttribute("personalInfo");
 
