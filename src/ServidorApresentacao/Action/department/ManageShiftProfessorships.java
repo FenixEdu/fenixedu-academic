@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -58,13 +59,13 @@ public class ManageShiftProfessorships extends DispatchAction
             String percentage = (String) entry.getValue();
             if ((percentage != null) && (!percentage.equals("")))
             {
-                
-                DecimalFormat df = new DecimalFormat();
-                
-                percentage = percentage.replace(',', df.getDecimalFormatSymbols().getDecimalSeparator());
-				percentage = percentage.replace('.', df.getDecimalFormatSymbols().getDecimalSeparator());
 
-				InfoShiftProfessorship infoShiftProfessorship = new InfoShiftProfessorship();
+                DecimalFormat df = new DecimalFormat();
+
+                percentage = percentage.replace(',', df.getDecimalFormatSymbols().getDecimalSeparator());
+                percentage = percentage.replace('.', df.getDecimalFormatSymbols().getDecimalSeparator());
+
+                InfoShiftProfessorship infoShiftProfessorship = new InfoShiftProfessorship();
                 infoShiftProfessorship.setInfoShift(new InfoShift(shiftIdInternal));
                 infoShiftProfessorship.setInfoProfessorship(infoProfessorShip);
                 infoShiftProfessorship.setPercentage(Double.valueOf(percentage));
@@ -74,46 +75,42 @@ public class ManageShiftProfessorships extends DispatchAction
         return infoShiftProfessorshipList;
     }
 
-//    private ActionForward getForward(ActionMapping mapping, Integer teacherOID)
-//    {
-//        ActionForward forward = new ActionForward();
-//        ActionForward acceptSuccess = mapping.findForward("acceptSuccess");
-//        String path = acceptSuccess.getPath();
-//
-//        if (path.indexOf('?') == -1)
-//        {
-//            path += "?";
-//        }
-//        else
-//        {
-//            path += "&amp;";
-//        }
-//        forward.setPath(path + "teacherOID=" + teacherOID);
-//        forward.setContextRelative(acceptSuccess.getContextRelative());
-//        forward.setName(acceptSuccess.getName());
-//
-//        return forward;
-//    }
-
+    //    private ActionForward getForward(ActionMapping mapping, Integer teacherOID)
+    //    {
+    //        ActionForward forward = new ActionForward();
+    //        ActionForward acceptSuccess = mapping.findForward("acceptSuccess");
+    //        String path = acceptSuccess.getPath();
+    //
+    //        if (path.indexOf('?') == -1)
+    //        {
+    //            path += "?";
+    //        }
+    //        else
+    //        {
+    //            path += "&amp;";
+    //        }
+    //        forward.setPath(path + "teacherOID=" + teacherOID);
+    //        forward.setContextRelative(acceptSuccess.getContextRelative());
+    //        forward.setName(acceptSuccess.getName());
+    //
+    //        return forward;
+    //    }
     /**
 	 * @param teacherExecutionCourseProfessorshipShiftsDTO
 	 * @param executionCourseProfessorshipShiftForm
 	 * @param request
 	 */
     private void populateForm(
-        TeacherExecutionCourseProfessorshipShiftsDTO teacherExecutionCourseProfessorshipShiftsDTO,
-        DynaActionForm teacherExecutionCourseProfessorshipShiftForm,
-        HttpServletRequest request)
+            TeacherExecutionCourseProfessorshipShiftsDTO teacherExecutionCourseProfessorshipShiftsDTO,
+            DynaActionForm teacherExecutionCourseProfessorshipShiftForm, HttpServletRequest request)
     {
-        teacherExecutionCourseProfessorshipShiftForm.set(
-            "teacherId",
-            teacherExecutionCourseProfessorshipShiftsDTO.getInfoTeacher().getIdInternal());
-        teacherExecutionCourseProfessorshipShiftForm.set(
-            "executionCourseId",
-            teacherExecutionCourseProfessorshipShiftsDTO.getInfoExecutionCourse().getIdInternal());
+        teacherExecutionCourseProfessorshipShiftForm.set("teacherId",
+                teacherExecutionCourseProfessorshipShiftsDTO.getInfoTeacher().getIdInternal());
+        teacherExecutionCourseProfessorshipShiftForm.set("executionCourseId",
+                teacherExecutionCourseProfessorshipShiftsDTO.getInfoExecutionCourse().getIdInternal());
 
-        List infoShiftPercentageList =
-            teacherExecutionCourseProfessorshipShiftsDTO.getInfoShiftPercentageList();
+        List infoShiftPercentageList = teacherExecutionCourseProfessorshipShiftsDTO
+                .getInfoShiftPercentageList();
         Iterator iterator = infoShiftPercentageList.iterator();
         HashMap teacherPercentageMap = new HashMap();
         while (iterator.hasNext())
@@ -124,15 +121,14 @@ public class ManageShiftProfessorships extends DispatchAction
             List infoShiftProfessorshipList = infoShiftPercentage.getInfoShiftProfessorshipList();
             for (int i = 0; i < infoShiftProfessorshipList.size(); i++)
             {
-                InfoShiftProfessorship infoShiftProfessorship =
-                    (InfoShiftProfessorship) infoShiftProfessorshipList.get(i);
+                InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoShiftProfessorshipList
+                        .get(i);
                 InfoTeacher infoTeacher = infoShiftProfessorship.getInfoProfessorship().getInfoTeacher();
 
                 if (infoTeacher.equals(teacherExecutionCourseProfessorshipShiftsDTO.getInfoTeacher()))
                 {
-                    teacherPercentageMap.put(
-                        idInternalString,
-                        String.valueOf(infoShiftProfessorship.getPercentage()));
+                    teacherPercentageMap.put(idInternalString, String.valueOf(infoShiftProfessorship
+                            .getPercentage()));
                 }
             }
         }
@@ -140,27 +136,23 @@ public class ManageShiftProfessorships extends DispatchAction
 
     }
 
-    public ActionForward processForm(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward processForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
         DynaActionForm teacherExecutionCourseShiftProfessorshipForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
-        HashMap teacherPercentageMap =
-            (HashMap) teacherExecutionCourseShiftProfessorshipForm.get("teacherPercentageMap");
+        HashMap teacherPercentageMap = (HashMap) teacherExecutionCourseShiftProfessorshipForm.get(
+                "teacherPercentageMap");
 
         Integer teacherId = (Integer) teacherExecutionCourseShiftProfessorshipForm.get("teacherId");
-        Integer executionCourseId =
-            (Integer) teacherExecutionCourseShiftProfessorshipForm.get("executionCourseId");
+        Integer executionCourseId = (Integer) teacherExecutionCourseShiftProfessorshipForm.get(
+                "executionCourseId");
 
         InfoTeacher infoTeacher = new InfoTeacher(teacherId);
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(executionCourseId);
 
         List shiftProfessorshipList = buildShiftProfessorshipList(infoTeacher, teacherPercentageMap);
-        Object args[] = { infoTeacher, infoExecutionCourse, shiftProfessorshipList };
+        Object args[] = {infoTeacher, infoExecutionCourse, shiftProfessorshipList};
         ServiceUtils.executeService(userView, "AcceptTeacherExecutionCourseShiftPercentage", args);
         return mapping.findForward("successfull-edit");
     }
@@ -172,39 +164,41 @@ public class ManageShiftProfessorships extends DispatchAction
 	 *          org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
 	 *          javax.servlet.http.HttpServletResponse)
 	 */
-    public ActionForward showForm(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
         DynaActionForm teacherExecutionCourseShiftProfessorshipForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer teacherId = (Integer) teacherExecutionCourseShiftProfessorshipForm.get("teacherId");
-        Integer executionCourseId =
-            (Integer) teacherExecutionCourseShiftProfessorshipForm.get("executionCourseId");
+        Integer executionCourseId = (Integer) teacherExecutionCourseShiftProfessorshipForm.get(
+                "executionCourseId");
 
-        TeacherExecutionCourseProfessorshipShiftsDTO teacherExecutionCourseProfessorshipShiftsDTO =
-            (TeacherExecutionCourseProfessorshipShiftsDTO) ServiceUtils.executeService(
-                userView,
-                "ReadTeacherExecutionCourseProfessorshipShifts",
-                new Object[] { new InfoTeacher(teacherId), new InfoExecutionCourse(executionCourseId)});
+        TeacherExecutionCourseProfessorshipShiftsDTO teacherExecutionCourseProfessorshipShiftsDTO = (TeacherExecutionCourseProfessorshipShiftsDTO) ServiceUtils
+                .executeService(userView, "ReadTeacherExecutionCourseProfessorshipShifts",
+                        new Object[]{new InfoTeacher(teacherId),
+                            new InfoExecutionCourse(executionCourseId)});
 
-        Collections.sort(
-            teacherExecutionCourseProfessorshipShiftsDTO.getInfoShiftPercentageList(),
-            new BeanComparator("shift.tipo.tipo"));
+        Collections.sort(teacherExecutionCourseProfessorshipShiftsDTO.getInfoShiftPercentageList(),
+                new BeanComparator("shift.tipo.tipo"));
+        if (!hasErrors(request))
+        {
+            populateForm(teacherExecutionCourseProfessorshipShiftsDTO,
+                    teacherExecutionCourseShiftProfessorshipForm, request);
+        }
 
-        populateForm(
-            teacherExecutionCourseProfessorshipShiftsDTO,
-            teacherExecutionCourseShiftProfessorshipForm,
-            request);
-
-        request.setAttribute(
-            "teacherExecutionCourseProfessorshipShifts",
-            teacherExecutionCourseProfessorshipShiftsDTO);
+        request.setAttribute("teacherExecutionCourseProfessorshipShifts",
+                teacherExecutionCourseProfessorshipShiftsDTO);
         return mapping.findForward("show-form");
+    }
+
+    /**
+	 * @param request
+	 * @return
+	 */
+    private boolean hasErrors(HttpServletRequest request)
+    {
+        return request.getAttribute(Globals.ERROR_KEY) != null;
     }
 
 }
