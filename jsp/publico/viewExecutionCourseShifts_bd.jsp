@@ -22,37 +22,33 @@
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 
-	<center> <font color='#034D7A' size='5'> <b>
-		<bean:message key="title.viewExecutionCourse.shifts"/>
-		<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="nome"/>
-	</center> </b> </font>
-
+	
 	</br>
 	</br>
 	<logic:present name="publico.infoShifts" scope="session">
-			<table align="center" border='1' cellpadding='10'>
-					<tr align="center">
-						<td rowspan="2">
+			<table align="center" cellspacing='0' cellpadding='10'>
+					<tr class="timeTable_line" align="center">
+						<td class="degreetablestd" rowspan="2">
 							<bean:message key="property.turno"/>
 						</td>
-						<td colspan="4">
+						<td class="degreetablestd" colspan="4">
 							<bean:message key="property.lessons"/>
 						</td>
-						<td rowspan="2">
+						<td class="degreetablestd" rowspan="2">
 							<bean:message key="property.classes"/>
 						</td>
 					</tr>
-					<tr>
-						<td>
+					<tr class="timeTable_line">
+						<td class="degreetablestd">
 							<bean:message key="property.lesson.weekDay"/>
 						</td>
-						<td>
+						<td class="degreetablestd">
 							<bean:message key="property.lesson.beginning"/>
 						</td>
-						<td>
+						<td class="degreetablestd">
 							<bean:message key="property.lesson.end"/>
 						</td>
-						<td>
+						<td class="degreetablestd">
 							<bean:message key="property.lesson.room"/>
 						</td>
 					</tr>
@@ -64,26 +60,26 @@
                        <% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
-						<tr>
-							<td rowspan="<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>">
+						<tr >
+							<td  class="degreetablestd" rowspan="<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>">
 									<bean:write name="infoShift" property="infoShift.nome"/>
 							</td>
-							<td>
+							<td class="degreetablestd">
 							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 							</td>
-							<td>
+							<td class="degreetablestd">
 								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 							</td>
-							<td>
+							<td class="degreetablestd">
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>								
 							</td>
-							<td>
+							<td class="degreetablestd">
 								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td>
 
-							<td rowspan=<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>>
+							<td  class="degreetablestd" rowspan=<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>>
 								<logic:iterate id="infoClass" name="infoShift" property="infoClasses">
 
 										<bean:define id="className" name="infoClass" property="nome" toScope="request"/>
@@ -103,21 +99,21 @@
                        <% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
-						<tr>
-							<td>
+						<tr >
+							<td class="degreetablestd">
 							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 							</td>
-							<td>
+							<td class="degreetablestd">
 								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 							</td>
-							<td>
+							<td class="degreetablestd">
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
-							<td>
+							<td class="degreetablestd">
 								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
-							</td>
+							</td class="degreetablestd">
 						</tr>
 					</logic:iterate>
 

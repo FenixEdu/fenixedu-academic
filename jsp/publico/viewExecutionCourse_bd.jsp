@@ -21,15 +21,14 @@
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 	<logic:present name="publico.infoCurricularCourses" scope="session">
-			<table align="left" class="container" width="90%">
+			<table  cellpadding="2" width="90%">
 			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
 				<tr class="timeTable_line" >
-					<td class="degreetables">
+					<td class="degreetablestd">
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>-
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-						</td>
-					
-					</tr>
+					</td>					
+				</tr>
 				</logic:iterate>
 			</table>	
 			<br/>	
@@ -46,7 +45,8 @@
       </table>		
       <br/>
       <br/>
-	</logic:present>		
+	</logic:present>	
+		
  <logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" scope="session">		
         <table id="anuncios" align="center" cellspacing="0" width="90%">
           <tr>
