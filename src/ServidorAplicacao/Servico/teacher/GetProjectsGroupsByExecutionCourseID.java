@@ -77,7 +77,7 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico
                     for (Iterator attendaciesIterator= attendacies.iterator(); attendaciesIterator.hasNext();)
 					{
 						IFrequenta attendacy = ((StudentGroupAttend) attendaciesIterator.next()).getAttend();
-                        IStudent student = (IStudent) persistentStudent.readByOID(Student.class,attendacy.getChaveAluno());
+                        IStudent student = (IStudent) persistentStudent.readByOID(Student.class,attendacy.getAluno().getIdInternal());
                         students.add(student);
                         
 					}
