@@ -41,6 +41,7 @@ public class EditarAulaFormActionTest extends TestCasePresentation {
 	public void testSuccessfulEditarAula() {
 		// define mapping de origem
 		setRequestPathInfo("", "/editarAulaForm");
+		
 		// Preenche campos do formulario
 		addRequestParameter(
 			"diaSemana",
@@ -59,7 +60,9 @@ public class EditarAulaFormActionTest extends TestCasePresentation {
 		addRequestParameter(
 			"courseInitials",
 			"TFCI");
-		addRequestParameter("nomeSala", "sala1");
+			
+		addRequestParameter("nomeSala", "Ga3");
+
 		// coloca credenciais na sessao
 		HashSet privilegios = new HashSet();
 		privilegios.add("EditarAula");
@@ -103,11 +106,11 @@ public class EditarAulaFormActionTest extends TestCasePresentation {
 		// invoca acção
 		actionPerform();
 
-		// verifica reencaminhamento
-		verifyForward("Sucesso");
-
 		//verifica ausencia de erros
 		verifyNoActionErrors();
+
+		// verifica reencaminhamento
+		verifyForward("Sucesso");
 	}
 	public void testUnsuccessfulEditarAula() {
 		setRequestPathInfo("", "/editarAulaForm");
