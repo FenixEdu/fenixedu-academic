@@ -11,14 +11,17 @@ import org.apache.commons.collections.CollectionUtils;
 import Dominio.CreditsInAnySecundaryArea;
 import Dominio.CreditsInScientificArea;
 import Dominio.CurricularCourseGroup;
+import Dominio.Enrolment;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
+import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IScientificArea;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ScientificArea;
+import ServidorAplicacao.Servico.enrolment.WriteEnrolment;
 import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentApplyPrecedencesRule;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule;
@@ -39,6 +42,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.BranchType;
 import Util.CurricularCourseType;
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
 /**
@@ -59,33 +63,9 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	
 	public StudentEnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia
 	{
-		prepareCurricularCoursesForEnrollment();
-		
-		if (this.studentHasSpecializationArea && this.studentHasSecundaryArea)
-		{
-			List specializationAndSecundaryAreaCurricularCourses = leecAlgorithm(
-				studentCurricularPlan,
-				this.getStudentEnrolmentContext().getStudentApprovedEnrollments(),
-				this.getStudentEnrolmentContext().getStudentCurrentSemesterEnrollments(),
-				this.getStudentEnrolmentContext().getExecutionPeriod());
-			
-			List finalCurricularCoursesWhereStudentCanBeEnrolled =
-				studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled();
-
-			finalCurricularCoursesWhereStudentCanBeEnrolled.addAll(specializationAndSecundaryAreaCurricularCourses);
-
-			finalCurricularCoursesWhereStudentCanBeEnrolled.addAll(getOptionalAndTFCCurricularCourses(studentEnrolmentContext));
-
-			studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(
-				finalCurricularCoursesWhereStudentCanBeEnrolled);
-		}
-
-		IEnrolmentRule enrolmentRule = new EnrolmentApplyPrecedencesRule();
-		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
-		enrolmentRule = new EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule();
-		setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
-		
-		return studentEnrolmentContext;
+		computeAvailableCurricularCourses();
+		automaticalyEnrollInMandatoryCurricularCourses();
+		return this.studentEnrolmentContext;
 	}
 
 	public StudentEnrolmentContext validateEnrolment()
@@ -101,6 +81,38 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	public StudentEnrolmentContext getDegreesForOptionalCurricularCourses()
 	{
 		return null;
+	}
+
+	/**
+	 * @throws ExcepcaoPersistencia
+	 */
+	private void computeAvailableCurricularCourses() throws ExcepcaoPersistencia
+	{
+		prepareCurricularCoursesForEnrollment();
+		
+		if (this.studentHasSpecializationArea && this.studentHasSecundaryArea)
+		{
+			List specializationAndSecundaryAreaCurricularCourses = leecAlgorithm(
+					studentCurricularPlan,
+					this.getStudentEnrolmentContext().getStudentApprovedEnrollments(),
+					this.getStudentEnrolmentContext().getStudentCurrentSemesterEnrollments(),
+					this.getStudentEnrolmentContext().getExecutionPeriod());
+			
+			List finalCurricularCoursesWhereStudentCanBeEnrolled =
+			studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled();
+
+			finalCurricularCoursesWhereStudentCanBeEnrolled.addAll(specializationAndSecundaryAreaCurricularCourses);
+
+			finalCurricularCoursesWhereStudentCanBeEnrolled.addAll(getOptionalAndTFCCurricularCourses(studentEnrolmentContext));
+
+			studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(
+					finalCurricularCoursesWhereStudentCanBeEnrolled);
+		}
+
+		IEnrolmentRule enrolmentRule = new EnrolmentApplyPrecedencesRule();
+		this.setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
+		enrolmentRule = new EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule();
+		this.setStudentEnrolmentContext(enrolmentRule.apply(getStudentEnrolmentContext()));
 	}
 
 	/**
@@ -125,7 +137,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				EnrolmentState.ENROLED,
 				executionPeriod);
 
-		List baseAreasCurricularCourses = getBaseAreasCurricularCourses(enrollmentsWithAprovedState, enrollmentsWithEnrolledState);
+		List baseAreasCurricularCourses =
+			getBaseAreasCurricularCourses(enrollmentsWithAprovedState, enrollmentsWithEnrolledState, executionPeriod);
 
 		if (studentCurricularPlan.getBranch() != null)
 		{
@@ -164,7 +177,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 */
 	private List getBaseAreasCurricularCourses(
 		List enrollmentsWithAprovedState,
-		List enrollmentsWithEnrolledState)
+		List enrollmentsWithEnrolledState,
+		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -193,7 +207,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 		selectDesiredCurricularCourses(enrollmentsWithAprovedState, baseAreasCurricularCourses);
 		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, baseAreasCurricularCourses);
-//		selectDesiredCurricularCourses(baseAreasCurricularCourses, executionPeriod.getSemester());
+		selectDesiredCurricularCourses(baseAreasCurricularCourses, executionPeriod.getSemester());
 
 		return baseAreasCurricularCourses;
 	}
@@ -359,7 +373,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			finalListOfCurricularCourses.addAll(intersection);
 			selectDesiredCurricularCourses(enrollmentsWithAprovedState, finalListOfCurricularCourses);
 			selectDesiredCurricularCourses(enrollmentsWithEnrolledState, finalListOfCurricularCourses);
-//			selectDesiredCurricularCourses(finalListOfCurricularCourses, semester);
+			selectDesiredCurricularCourses(finalListOfCurricularCourses, semester);
 		}
 		return finalListOfCurricularCourses;
 	}
@@ -387,31 +401,31 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 * @param curricularCoursesToRemoveFrom
 	 * @param semester
 	 */
-//	private void selectDesiredCurricularCourses(List curricularCoursesToRemoveFrom, Integer semester)
-//	{
-//		List curricularCoursesToRemove = new ArrayList();
-//		Iterator iterator = curricularCoursesToRemoveFrom.iterator();
-//		while(iterator.hasNext())
-//		{
-//			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-//			List scopes = curricularCourse.getScopes();
-//			boolean courseIsToMantain = false;
-//			Iterator iteratorScopes = scopes.iterator();
-//			while(iteratorScopes.hasNext())
-//			{
-//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
-//				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
-//				{
-//					courseIsToMantain = true;
-//				}
-//			}
-//			if (!courseIsToMantain)
-//			{
-//				curricularCoursesToRemove.add(curricularCourse);
-//			}
-//		}
-//		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
-//	}
+	private void selectDesiredCurricularCourses(List curricularCoursesToRemoveFrom, Integer semester)
+	{
+		List curricularCoursesToRemove = new ArrayList();
+		Iterator iterator = curricularCoursesToRemoveFrom.iterator();
+		while(iterator.hasNext())
+		{
+			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+			List scopes = curricularCourse.getScopes();
+			boolean courseIsToMantain = false;
+			Iterator iteratorScopes = scopes.iterator();
+			while(iteratorScopes.hasNext())
+			{
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
+				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
+				{
+					courseIsToMantain = true;
+				}
+			}
+			if (!courseIsToMantain)
+			{
+				curricularCoursesToRemove.add(curricularCourse);
+			}
+		}
+		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
+	}
 	
 	/**
 	 * @param studentCurricularPlan
@@ -1211,6 +1225,87 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		optionalAndTFCCurricularCourses.addAll(result);
 		
 		return optionalAndTFCCurricularCourses;
+	}
+
+	/**
+	 * @throws ExcepcaoPersistencia
+	 */
+	private void automaticalyEnrollInMandatoryCurricularCourses() throws ExcepcaoPersistencia
+	{
+		List curricularCourses =
+			getMandatoryCurricularCourses(this.studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled());
+
+		int maxCourses =
+			this.studentEnrolmentContext.getStudentCurricularPlan().getStudent().getStudentKind().getMaxCoursesToEnrol().intValue();
+
+		if (curricularCourses != null && !curricularCourses.isEmpty() && curricularCourses.size() <= maxCourses)
+		{
+			IStudentCurricularPlan studentCurricularPlan = this.studentEnrolmentContext.getStudentCurricularPlan();
+			IExecutionPeriod executionPeriod = this.studentEnrolmentContext.getExecutionPeriod();
+
+			Iterator iterator = curricularCourses.iterator();
+			while (iterator.hasNext())
+			{
+				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+				writeEnrollment(studentCurricularPlan, executionPeriod, curricularCourse);
+			}
+			computeAvailableCurricularCourses();
+		}
+	}
+
+	/**
+	 * @param curricularCourses
+	 * @return mandatoryCurricularCourses
+	 */
+	private List getMandatoryCurricularCourses(List curricularCourses)
+	{
+		List mandatoryCurricularCourses = new ArrayList();
+		if (curricularCourses != null && !curricularCourses.isEmpty())
+		{
+			Iterator iterator = curricularCourses.iterator();
+			while (iterator.hasNext())
+			{
+				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+				
+				if (curricularCourse.getMandatory().booleanValue())
+				{
+					mandatoryCurricularCourses.add(curricularCourse);
+				}
+			}
+		}
+		return mandatoryCurricularCourses;
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param executionPeriod
+	 * @param curricularCourse
+	 */
+	private void writeEnrollment(
+		IStudentCurricularPlan studentCurricularPlan,
+		IExecutionPeriod executionPeriod,
+		ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
+		
+		IEnrolment enrolment =
+			enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+				studentCurricularPlan,
+				curricularCourse,
+				executionPeriod);
+		
+		if (enrolment == null)
+		{
+			enrolment = new Enrolment();
+			enrolmentDAO.simpleLockWrite(enrolment);
+			enrolment.setCurricularCourse(curricularCourse);
+			enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+			enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+			enrolment.setExecutionPeriod(executionPeriod);
+			enrolment.setStudentCurricularPlan(studentCurricularPlan);
+			WriteEnrolment.createAttend(enrolment);
+		}
 	}
 
 }

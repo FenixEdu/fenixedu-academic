@@ -217,7 +217,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico
     }
 
     private Date getLastEvaluationDate(String yearString, ICurricularCourse curricularCourse)
-        throws ExcepcaoPersistencia, NonExistingServiceException
+//        throws ExcepcaoPersistencia, NonExistingServiceException
     {
 
         Date lastEvaluationDate = null;
@@ -363,7 +363,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico
                             if (enrolmentEvaluation.getEmployee() != null)
                             {
                                 IPessoa person = new Pessoa();
-                                person.setIdInternal(enrolmentEvaluation.getEmployee().getKeyPerson());
+                                person.setIdInternal(enrolmentEvaluation.getEmployee().getPerson().getIdInternal());
                                 IPessoa person2 =
                                     (IPessoa) sp.getIPessoaPersistente().readByOId(person, false);
                                 infoEnrolmentEvaluation.setInfoEmployee(

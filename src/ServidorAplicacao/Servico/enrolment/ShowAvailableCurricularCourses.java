@@ -1,14 +1,8 @@
 package ServidorAplicacao.Servico.enrolment;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.Enrolment;
-import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
 import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
@@ -22,15 +16,12 @@ import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
 import Util.TipoCurso;
 
 /**
@@ -100,7 +91,6 @@ public class ShowAvailableCurricularCourses implements IService
 		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
 		IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(studentCurricularPlan);
 		StudentEnrolmentContext studentEnrolmentContext = strategy.getAvailableCurricularCourses();
-		automaticalyEnrollInMandatoryCurricularCourses(studentEnrolmentContext);
 
 		return InfoStudentEnrolmentContext.cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(
 			studentEnrolmentContext);
@@ -173,76 +163,6 @@ public class ShowAvailableCurricularCourses implements IService
 		IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
 
 		return executionPeriodDAO.readActualExecutionPeriod();
-	}
-
-	/**
-	 * @param studentEnrolmentContext
-	 * @throws ExcepcaoPersistencia
-	 */
-	private void automaticalyEnrollInMandatoryCurricularCourses(StudentEnrolmentContext studentEnrolmentContext)
-		throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-		
-		IStudentCurricularPlan studentCurricularPlan = studentEnrolmentContext.getStudentCurricularPlan();
-		IExecutionPeriod executionPeriod = studentEnrolmentContext.getExecutionPeriod();
-
-		List curricularCourses =
-			getMandatoryCurricularCourses(studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled());
-		
-		if (curricularCourses != null && !curricularCourses.isEmpty())
-		{
-			List enrollmentsToAdd = new ArrayList();
-			Iterator iterator = curricularCourses.iterator();
-			while (iterator.hasNext())
-			{
-				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				IEnrolment enrolment =
-					enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-						studentCurricularPlan,
-						curricularCourse,
-						executionPeriod);
-				
-				if (enrolment == null)
-				{
-					enrolment = new Enrolment();
-					enrolmentDAO.simpleLockWrite(enrolment);
-					enrolment.setCurricularCourse(curricularCourse);
-					enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-					enrolment.setEnrolmentState(EnrolmentState.ENROLED);
-					enrolment.setExecutionPeriod(executionPeriod);
-					enrolment.setStudentCurricularPlan(studentCurricularPlan);
-					enrollmentsToAdd.add(enrolment);
-				}
-			}
-			
-			studentEnrolmentContext.getStudentCurrentSemesterEnrollments().addAll(enrollmentsToAdd);
-			studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().removeAll(curricularCourses);
-		}
-	}
-
-	/**
-	 * @param curricularCourses
-	 * @return mandatoryCurricularCourses
-	 */
-	private List getMandatoryCurricularCourses(List curricularCourses)
-	{
-		List mandatoryCurricularCourses = new ArrayList();
-		if (curricularCourses != null && !curricularCourses.isEmpty())
-		{
-			Iterator iterator = curricularCourses.iterator();
-			while (iterator.hasNext())
-			{
-				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				
-				if (curricularCourse.getMandatory().booleanValue())
-				{
-					mandatoryCurricularCourses.add(curricularCourse);
-				}
-			}
-		}
-		return mandatoryCurricularCourses;
 	}
 
 }

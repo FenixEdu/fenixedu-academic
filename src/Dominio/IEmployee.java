@@ -16,7 +16,6 @@ public interface IEmployee extends IDomainObject{
 	public IPessoa getPerson();
 	public EmployeeHistoric getEmployeeHistoric();
 	public List getHistoricList();
-	public Integer getKeyPerson();
 	public void setEmployeeNumber(Integer number);
 	public void setWorkingHours(Integer workingHours);
 	public void setAntiquity(Date antiquity);	
