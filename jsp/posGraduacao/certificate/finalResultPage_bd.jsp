@@ -18,7 +18,7 @@
 	<tr>
  		<td><p>O Aluno nº <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> - <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b><p/></td>
     <tr>
- 		<td>concluiu a parte escolar do curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> acima indicado, constituída pelas seguintes desciplinas e classificações:<br /><br /></td>
+ 		<td>concluiu a parte escolar do curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> acima indicado, constituída pelas seguintes disciplinas e classificações:<br /><br /></td>
  	</tr> 
  </table>	
  <table width="90%" cellspacing="0">
