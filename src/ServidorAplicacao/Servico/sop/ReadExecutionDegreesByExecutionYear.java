@@ -15,6 +15,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -44,7 +45,7 @@ public class ReadExecutionDegreesByExecutionYear implements IServico {
     return "ReadExecutionDegreesByExecutionYear";
   }
 
-  public List run(InfoExecutionYear infoExecutionYear) {
+  public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException{
                         
     ArrayList infoExecutionDegreeList = null;
 
@@ -66,8 +67,7 @@ public class ReadExecutionDegreesByExecutionYear implements IServico {
       }
       
     } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-      throw new RuntimeException(ex);
+      throw new FenixServiceException(ex);
     }
     return infoExecutionDegreeList;
   }
