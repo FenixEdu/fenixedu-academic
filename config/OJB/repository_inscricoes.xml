@@ -341,6 +341,11 @@
 		jdbc-type="INTEGER"
 	/>    
 	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>    
+	<field-descriptor
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
@@ -358,6 +363,12 @@
 			proxy="false">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
+	<reference-descriptor name="executionPeriod"
+		class-ref="Dominio.ExecutionPeriod" proxy="false">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+	
+	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
