@@ -9,8 +9,10 @@ package Dominio;
  * @author jpvl
  */
 abstract public class DomainObject implements IDomainObject {
+
 	private Integer idInternal;
-	
+	private Integer ackOptLock;
+
 	public DomainObject() {
 	}
 	
@@ -33,6 +35,16 @@ abstract public class DomainObject implements IDomainObject {
 		this.idInternal = idInternal;
 	}
 
+	public Integer getAckOptLock()
+	{
+		return ackOptLock;
+	}
+
+	public void setAckOptLock(Integer ackOptLock)
+	{
+		this.ackOptLock = ackOptLock;
+	}
+        
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
