@@ -19,7 +19,7 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 		super(testName);
 	}
 
-//	editing existing object with several situations
+//	test unsucessful execution of service in several situations
 	public void testUnsuccessfulExecutionsOfService() {
 
 		HashMap hashMap = getArgumentListOfServiceToBeTestedUnsuccessfuly();  
@@ -47,7 +47,7 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 	}
 
 
-//	edit existing object
+
 	public void testUnsuccessfulExecutionOfService() {
 
 		Object[] args = getArgumentsOfServiceToBeTestedUnsuccessfuly();
@@ -64,7 +64,7 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 		}
 	}
 	
-//	create non-existing object
+
 	public void testSuccessfulExecutionOfService() {
 
 		Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();

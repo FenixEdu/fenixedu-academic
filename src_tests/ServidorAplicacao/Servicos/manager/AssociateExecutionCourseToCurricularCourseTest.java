@@ -20,14 +20,14 @@ public class AssociateExecutionCourseToCurricularCourseTest extends TestCaseMana
  	
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 				
-		Object[] args = {new Integer(33), new Integer(14), new Integer(1) };
+		Object[] args = {new Integer(24), new Integer(1), new Integer(1) };
 		return args;
 	}
 
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		
-		Object[] args = {new Integer(33), new Integer(14), new Integer(2) };
+		Object[] args = {new Integer(24), new Integer(23), new Integer(1) };
 		return args;
 	}
 }

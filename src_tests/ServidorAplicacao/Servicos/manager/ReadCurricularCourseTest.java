@@ -3,11 +3,7 @@
  */
 package ServidorAplicacao.Servicos.manager;
 
-import DataBeans.InfoBranch;
 import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoCurricularSemester;
-import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 
@@ -15,17 +11,17 @@ import DataBeans.InfoDegreeCurricularPlan;
  * @author lmac1
  */
 
-public class ReadCurricularCourseScopeServiceTest extends TestCaseManagerReadServices {
+public class ReadCurricularCourseTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadCurricularCourseScopeServiceTest(String testName) {
+	 public ReadCurricularCourseTest(String testName) {
 		super(testName);
 	 }
 
 	 protected String getNameOfServiceToBeTested() {
-		return "ReadCurricularCourseScope";
+		return "ReadCurricularCourse";
 	 }
        
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
@@ -34,7 +30,7 @@ public class ReadCurricularCourseScopeServiceTest extends TestCaseManagerReadSer
 	}	
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(12) };
+		Object[] args = { new Integer(1) };
 		return args;
 	}
          
@@ -49,19 +45,6 @@ public class ReadCurricularCourseScopeServiceTest extends TestCaseManagerReadSer
 		infoCurricularCourse.setName("Analise Matematica I");
 		infoCurricularCourse.setCode("AMI");
 		
-		InfoBranch infoBranch = new InfoBranch();
-		infoBranch.setCode("C");
-		infoBranch.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		
-		InfoCurricularYear infoCurricularYear = new InfoCurricularYear(new Integer(1));
-		
-		InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester(new Integer(1), infoCurricularYear);
-		
-		InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
-		infoCurricularCourseScope.setInfoBranch(infoBranch);
-		infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
-		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
-		
-		return infoCurricularCourseScope;
+		return infoCurricularCourse;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Created on 2/Set/2003
+ * Created on 1/Set/2003
  */
 package ServidorAplicacao.Servicos.manager;
 
@@ -8,21 +8,21 @@ package ServidorAplicacao.Servicos.manager;
  * @author lmac1
  */
 
-public class ReadExecutionCoursesByCurricularCourseServiceTest extends TestCaseManagerReadServices {
+public class ReadExecutionDegreesByDegreeCurricularPlanTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadExecutionCoursesByCurricularCourseServiceTest(String testName) {
+	 public ReadExecutionDegreesByDegreeCurricularPlanTest(String testName) {
 		super(testName);
 	 }
 
 	 protected String getNameOfServiceToBeTested() {
-		return "ReadExecutionCoursesByCurricularCourse";
+		return "ReadExecutionDegreesByDegreeCurricularPlan";
 	 }
 		
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(14) };
+		Object[] args = { new Integer(1) };
 		return args;
 	}
 		

@@ -10,9 +10,9 @@ import java.util.List;
  * @author lmac1
  */
 
-public class DeleteExecutionDegreesOfDegreeCurricularPlanServiceTest extends TestCaseManagerDeleteServices {
+public class DeleteExecutionDegreesOfDegreeCurricularPlanTest extends TestCaseManagerDeleteServices {
 
-	public DeleteExecutionDegreesOfDegreeCurricularPlanServiceTest(String testName) {
+	public DeleteExecutionDegreesOfDegreeCurricularPlanTest(String testName) {
 		super(testName);
 	}
 		

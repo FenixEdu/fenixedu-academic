@@ -9,12 +9,12 @@ import DataBeans.InfoDegree;
  * @author lmac1
  */
 
-public class ReadDegreeServiceTest extends TestCaseManagerReadServices {
+public class ReadDegreeTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadDegreeServiceTest(String testName) {
+	 public ReadDegreeTest(String testName) {
 		super(testName);
 	 }
 

@@ -1,5 +1,5 @@
 /*
- * Created on 23/Jul/2003
+ * Created on 1/Set/2003
  */
 package ServidorAplicacao.Servicos.manager;
 
@@ -7,20 +7,20 @@ package ServidorAplicacao.Servicos.manager;
  * @author lmac1
  */
 
-public class ReadDegreesServiceTest extends TestCaseManagerReadServices {
+public class ReadAllTeachersTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadDegreesServiceTest(String testName) {
+	 public ReadAllTeachersTest(String testName) {
 		super(testName);
 	 }
 
 	 protected String getNameOfServiceToBeTested() {
-		return "ReadDegrees";
+		return "ReadAllTeachers";
 	 }
 
 	protected int getNumberOfItemsToRetrieve() {
-		return 5;
+		return 7;
 	}
 }

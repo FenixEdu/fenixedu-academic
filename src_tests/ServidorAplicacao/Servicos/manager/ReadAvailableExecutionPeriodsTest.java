@@ -9,12 +9,12 @@ import java.util.List;
 /**
  * @author lmac1
  */
-public class ReadAvailableExecutionPeriodsServiceTest extends TestCaseManagerReadServices {
+public class ReadAvailableExecutionPeriodsTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadAvailableExecutionPeriodsServiceTest(String testName) {
+	 public ReadAvailableExecutionPeriodsTest(String testName) {
 		super(testName);
 	 }
 

@@ -5,24 +5,22 @@ package ServidorAplicacao.Servicos.manager;
 
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionYear;
 
 /**
  * @author lmac1
  */
 
-public class ReadExecutionDegreeServiceTest extends TestCaseManagerReadServices {
+public class ReadDegreeCurricularPlanTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadExecutionDegreeServiceTest(String testName) {
+	 public ReadDegreeCurricularPlanTest(String testName) {
 		super(testName);
 	 }
 
 	 protected String getNameOfServiceToBeTested() {
-		return "ReadExecutionDegree";
+		return "ReadDegreeCurricularPlan";
 	 }
        
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
@@ -31,7 +29,7 @@ public class ReadExecutionDegreeServiceTest extends TestCaseManagerReadServices 
 	}	
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(11) };
+		Object[] args = { new Integer(1) };
 		return args;
 	}
         	 
@@ -39,10 +37,6 @@ public class ReadExecutionDegreeServiceTest extends TestCaseManagerReadServices 
 		
 		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
 		
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
-		
-		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
-				
-		return new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
+		return new InfoDegreeCurricularPlan("plano1", infoDegree);
 	}
 }

@@ -8,12 +8,12 @@ package ServidorAplicacao.Servicos.manager;
  * @author lmac1
  */
 
-public class ReadBranchesByDegreeCurricularPlanServiceTest extends TestCaseManagerReadServices {
+public class ReadBranchesByDegreeCurricularPlanTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadBranchesByDegreeCurricularPlanServiceTest(String testName) {
+	 public ReadBranchesByDegreeCurricularPlanTest(String testName) {
 		super(testName);
 	 }
 

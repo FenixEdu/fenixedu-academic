@@ -10,12 +10,12 @@ import DataBeans.InfoExecutionYear;
 /**
  * @author lmac1
  */
-public class ReadExecutionCourseServiceTest extends TestCaseManagerReadServices {
+public class ReadExecutionCourseTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadExecutionCourseServiceTest(String testName) {
+	 public ReadExecutionCourseTest(String testName) {
 		super(testName);
 	 }
 

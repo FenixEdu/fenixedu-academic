@@ -8,25 +8,25 @@ package ServidorAplicacao.Servicos.manager;
  * @author lmac1
  */
 
-public class ReadCurricularCoursesByDegreeCurricularPlanServiceTest extends TestCaseManagerReadServices {
+public class ReadExecutionCoursesByCurricularCourseTest extends TestCaseManagerReadServices {
 	    
 	/**
 	 * @param testName
 	 */
-	 public ReadCurricularCoursesByDegreeCurricularPlanServiceTest(String testName) {
+	 public ReadExecutionCoursesByCurricularCourseTest(String testName) {
 		super(testName);
 	 }
 
 	 protected String getNameOfServiceToBeTested() {
-		return "ReadCurricularCoursesByDegreeCurricularPlan";
+		return "ReadExecutionCoursesByCurricularCourse";
 	 }
 		
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(1) };
+		Object[] args = { new Integer(14) };
 		return args;
 	}
 		
 	protected int getNumberOfItemsToRetrieve() {
-		return 13;
+		return 1;
 	}
 }
