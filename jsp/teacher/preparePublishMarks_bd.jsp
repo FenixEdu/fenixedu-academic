@@ -9,6 +9,11 @@
 <br />
 
 <logic:present name="siteView">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop"><bean:message key="label.publish.information" /></td>
+		</tr>
+	</table>
 
 <html:form action="/marksList">
 <html:hidden property="page" value="1"/>	

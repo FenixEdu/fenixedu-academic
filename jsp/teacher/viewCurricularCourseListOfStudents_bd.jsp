@@ -10,7 +10,7 @@
 <logic:present name="siteView">
 <bean:define id="curricularCourses" name="siteView" property="component" type="DataBeans.InfoSiteAssociatedCurricularCourses"/>
     <span class="error"><html:errors/></span>
-    	
+
     <table>        
     	<logic:iterate id="curricularCourse" name="curricularCourses" property="associatedCurricularCourses" indexId="index" > 
     		<logic:equal name="index" value="0">

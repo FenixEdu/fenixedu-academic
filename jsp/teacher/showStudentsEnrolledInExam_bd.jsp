@@ -9,6 +9,12 @@
 <bean:define id="exam" name="component" property="infoExam"/>
 <bean:define id="executionCourseCode"  name="siteView" property="commonComponent.executionCourse.idInternal"/>
 <bean:define id="examCode"  name="exam" property="idInternal"/>
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop"><bean:message key="label.studentsEnrolled.information" /></td>
+		</tr>
+	</table>
+
 <br/>
 <table cellspacing="1" border="0">
 	<tr>
