@@ -44,11 +44,13 @@
          column="EXAM_CAPACITY"
          jdbc-type="INTEGER"
       />
+<!--
 	<collection-descriptor
 			name="associatedExams"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			element-class-ref="Dominio.Exam"
 			indirection-table="EXAM_ROOM"
+			proxy="true"
 			auto-retrieve="true"
 			auto-update="false"
 			auto-delete="false"
@@ -56,6 +58,7 @@
 		<fk-pointing-to-this-class column="KEY_ROOM"/>
 		<fk-pointing-to-element-class column="KEY_EXAM"/>
 	</collection-descriptor>
+-->
    </class-descriptor>
 
 <!-- Definitions for Dominio.Turma -->
@@ -424,6 +427,7 @@
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.DisciplinaExecucao"
 			indirection-table="EXAM_EXECUTION_COURSE"
+			proxy="true"
 			auto-retrieve="true"
 			auto-update="false"
 			auto-delete="false"
@@ -436,6 +440,7 @@
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			element-class-ref="Dominio.Sala"
 			indirection-table="EXAM_ROOM"
+			proxy="true"
 			auto-retrieve="true"
 			auto-update="false"
 			auto-delete="false"

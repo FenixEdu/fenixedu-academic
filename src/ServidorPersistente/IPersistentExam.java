@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import Dominio.IExam;
+import Dominio.IExecutionPeriod;
+import Dominio.ISala;
 
 /**
  *
@@ -20,4 +22,5 @@ public interface IPersistentExam extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
     public void delete(IExam exam) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
+	public List readBy(ISala room, IExecutionPeriod executionPeriod)  throws ExcepcaoPersistencia;
 }

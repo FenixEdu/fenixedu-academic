@@ -48,8 +48,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 			if (curicularYear.equals(year1) || curicularYear.equals(year2)) {
 				boolean isOnValidWeekDay = onValidWeekDay(infoExam);
-				
-				InfoExecutionCourse infoExecutionCourse = infoExam.getInfoExecutionCourse();
+
+				InfoExecutionCourse infoExecutionCourse =
+					infoExam.getInfoExecutionCourse();
 				String courseInitials =
 					infoExam.getInfoExecutionCourse().getSigla();
 
@@ -58,8 +59,15 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						"<a href='viewExamsMap.do?method=edit"
 							+ "&amp;executionCourseInitials="
 							+ infoExecutionCourse.getSigla()
-							+ "&amp;ePName="+infoExecutionCourse.getInfoExecutionPeriod().getName()
-							+ "&amp;eYName="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
+							+ "&amp;ePName="
+							+ infoExecutionCourse
+								.getInfoExecutionPeriod()
+								.getName()
+							+ "&amp;eYName="
+							+ infoExecutionCourse
+								.getInfoExecutionPeriod()
+								.getInfoExecutionYear()
+								.getYear()
 							+ "&amp;season="
 							+ infoExam.getSeason().getseason()
 							+ "'>");
@@ -70,7 +78,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						strBuffer.append(
 							"<font color='red'>" + courseInitials + "</font>");
 					}
-					
+
 				} else if (typeUser.equals("public")) {
 					strBuffer.append(
 						"<a href='viewSite.do?method=firstPage&amp;objectCode="
@@ -92,8 +100,6 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 							"<font color='red'>" + hoursText + "</font>");
 					}
 				}
-
-				
 
 				strBuffer.append("<br />");
 			}
@@ -171,6 +177,41 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 			default :
 				return "Error";
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer#renderDayContents(ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot, java.lang.String)
+	 */
+	public StringBuffer renderDayContents(
+		ExamsMapSlot examsMapSlot,
+		String typeUser) {
+		StringBuffer strBuffer = new StringBuffer();
+
+		for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
+			InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
+			InfoExecutionCourse infoExecutionCourse =
+				infoExam.getInfoExecutionCourse();
+			String courseInitials =
+				infoExam.getInfoExecutionCourse().getSigla();
+
+			strBuffer.append("<font color='red'>" + courseInitials);
+
+			if (infoExam.getBeginning() != null) {
+				String hoursText =
+					infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "H";
+
+				strBuffer.append(" às ");
+				strBuffer.append(hoursText);
+			}
+
+			strBuffer.append("</font>");
+
+			strBuffer.append("<br />");
+		}
+
+		strBuffer.append("<br />");
+
+		return strBuffer;
 	}
 
 }

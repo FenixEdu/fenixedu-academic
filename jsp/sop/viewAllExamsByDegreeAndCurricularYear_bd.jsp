@@ -9,9 +9,6 @@
 
 <logic:present name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
 	<logic:iterate id="infoViewAllExams" name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
-<!-- ******************************************************************************-->
-<!--     PRINT OF EXAMS TABLE FOR ONE EXECUTION DEGREE AND ONE CURRICULAR YEAR     -->
-<!-- ******************************************************************************-->		
 		<h2><bean:message key="title.exams.list"/></h2>
 	 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
@@ -20,7 +17,7 @@
 						<bean:define id="infoDegree" name="infoViewAllExams" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree" />
 				  		<jsp:getProperty name="infoDegree" property="tipoCurso" /> em 
 						<jsp:getProperty name="infoDegree" property="nome" />
-						<br/>
+						<br />
 					   	<bean:define id="curricularYear" name="infoViewAllExams" property="curricularYear"/>
 						<bean:message key="label.year" arg0="<%= curricularYear.toString() %>" /> -	
 						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="name" scope="session"/> -
@@ -29,7 +26,7 @@
 				</td>
 			</tr>
 		</table>
-	    <br/><br/>
+	    <br /><br />
 	    <span class="error"><html:errors/></span>
 		<logic:notPresent name="infoViewAllExams" property="infoExecutionCourseAndExamsList">
 			<table align="center"  cellpadding='0' cellspacing='0'>
@@ -39,7 +36,6 @@
 					</td>
 				</tr>
 			</table>
-			<br style="page-break-before:always;">			
 		</logic:notPresent>
 
 		<logic:present name="infoViewAllExams" property="infoExecutionCourseAndExamsList">		
@@ -75,7 +71,7 @@
 										<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam1.beginning">
 					                    	<% Integer iH = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
 					                    	<% Integer iM = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getBeginning().get(Calendar.MINUTE)); %>
-											<br/>
+											<br />
 											<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 										</logic:notEmpty>
 								</logic:notEmpty>
@@ -84,7 +80,7 @@
 								</logic:empty>
 								
 								<logic:notEmpty name="infoExecutionCourseAndExams" property ="infoExam1.associatedRooms">
-									<br/>
+									<br />
 									<logic:iterate id="room" name="infoExecutionCourseAndExams" property ="infoExam1.associatedRooms">
 										<bean:write name="room" property="nome"/>
 									</logic:iterate>
@@ -103,7 +99,7 @@
 									<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam2.beginning">
 				                    	<% Integer iH = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
 				                    	<% Integer iM = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getBeginning().get(Calendar.MINUTE)); %>
-										<br/>
+										<br />
 										<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 									</logic:notEmpty>
 								</logic:notEmpty>
@@ -111,7 +107,7 @@
 									<bean:message key="message.exam.not.scheduled"/>
 								</logic:empty>
 								<logic:notEmpty name="infoExecutionCourseAndExams" property ="infoExam2.associatedRooms">
-									<br/>
+									<br />
 									<logic:iterate id="room" name="infoExecutionCourseAndExams" property ="infoExam2.associatedRooms">
 										<bean:write name="room" property="nome"/>
 									</logic:iterate>
@@ -124,8 +120,7 @@
 					</tr>
 				</logic:iterate>
 			</table>
-			<br style="page-break-before:always;">
 		</logic:present>		
-<!-- ******************************************************************************-->
+		<br style="page-break-before:always;" />
 	</logic:iterate>
 </logic:present>

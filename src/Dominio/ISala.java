@@ -21,7 +21,7 @@ public interface ISala {
   public TipoSala getTipo();
   public Integer getCapacidadeNormal();
   public Integer getCapacidadeExame();
-  public List getAssociatedExams();
+  //public List getAssociatedExams();
 
   public void setNome(String nome);
   public void setEdificio(String edificio);
@@ -29,5 +29,5 @@ public interface ISala {
   public void setTipo(TipoSala tipo);
   public void setCapacidadeNormal(Integer capacidadeNormal);
   public void setCapacidadeExame(Integer capacidadeExame); 
-  public void setAssociatedExams(List exams);
+  //public void setAssociatedExams(List exams);
 }

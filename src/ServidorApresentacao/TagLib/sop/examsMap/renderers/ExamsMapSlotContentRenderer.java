@@ -13,4 +13,5 @@ import ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot;
 public interface ExamsMapSlotContentRenderer {
 	public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot);
 	public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2, String typeUser);
+	public StringBuffer renderDayContents(ExamsMapSlot slot, String user);
 }

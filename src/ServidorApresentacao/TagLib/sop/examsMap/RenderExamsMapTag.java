@@ -13,6 +13,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.struts.util.MessageResources;
 
 import DataBeans.InfoExamsMap;
+import DataBeans.InfoRoomExamsMap;
 import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapContentRenderer;
 import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
 
@@ -32,28 +33,49 @@ public class RenderExamsMapTag extends TagSupport {
 	public int doStartTag() throws JspException {
 		// Obtain InfoExamMap
 		InfoExamsMap infoExamsMap = null;
+		InfoRoomExamsMap infoRoomExamsMap = null;
+		ExamsMap examsMap = null;
+		IExamsMapRenderer renderer = null;
 		String typeUser = "";
 
 		try {
 			infoExamsMap = (InfoExamsMap) pageContext.findAttribute(name);
 			typeUser = user;
+			examsMap = new ExamsMap(infoExamsMap);
+			renderer =
+				new ExamsMapRenderer(
+					examsMap,
+					this.examsMapSlotContentRenderer,
+					typeUser);
 		} catch (ClassCastException e) {
 			infoExamsMap = null;
 		}		
-		if (infoExamsMap == null) {
+		try {
+			infoRoomExamsMap = (InfoRoomExamsMap) pageContext.findAttribute(name);
+			typeUser = user;
+			examsMap = new ExamsMap(infoRoomExamsMap);
+			renderer =
+				new ExamsMapForRoomRenderer(
+					examsMap,
+					this.examsMapSlotContentRenderer,
+					typeUser);
+		} catch (ClassCastException e) {
+			infoRoomExamsMap = null;
+		}
+		if (infoExamsMap == null && infoRoomExamsMap == null) {
 			throw new JspException(
 				messages.getMessage("generateExamsMap.infoExamsMap.notFound", name));
 		}
 		
 		// Generate Map from infoExamsMap
 		JspWriter writer = pageContext.getOut();
-		ExamsMap examsMap = new ExamsMap(infoExamsMap);
+		//ExamsMap examsMap = new ExamsMap(infoExamsMap);
 
-		ExamsMapRenderer renderer =
-			new ExamsMapRenderer(
-				examsMap,
-				this.examsMapSlotContentRenderer,
-				typeUser);
+//		ExamsMapRenderer renderer =
+//			new ExamsMapRenderer(
+//				examsMap,
+//				this.examsMapSlotContentRenderer,
+//				typeUser);
 		
 		try {
 			writer.print(renderer.render());

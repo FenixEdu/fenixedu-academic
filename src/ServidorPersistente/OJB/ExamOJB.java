@@ -10,6 +10,7 @@ package ServidorPersistente.OJB;
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,11 +21,12 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
-import Dominio.CursoExecucao;
 import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
+import Dominio.IExecutionPeriod;
+import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 
@@ -108,6 +110,30 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + Exam.class.getName();
 		super.deleteAll(oqlQuery);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentExam#readBy(Dominio.ISala, Dominio.IExecutionPeriod)
+	 */
+	public List readBy(ISala room, IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("associatedRooms.nome", room.getNome());
+		criteria.addEqualTo(
+			"associatedExecutionCourses.executionPeriod.name",
+			executionPeriod.getName());
+		criteria.addEqualTo(
+			"associatedExecutionCourses.executionPeriod.executionYear.year",
+			executionPeriod.getExecutionYear().getYear());
+		List examsWithRepetition = queryList(Exam.class, criteria);
+		List examsWithoutRepetition = new ArrayList();
+		for (int i = 0; i < examsWithRepetition.size(); i++) {
+			IExam exam = (IExam) examsWithRepetition.get(i);
+			if (!examsWithoutRepetition.contains(exam)) {
+				examsWithoutRepetition.add(exam);
+			}
+		}
+		return examsWithoutRepetition;
 	}
 
 }

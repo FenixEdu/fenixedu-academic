@@ -23,7 +23,7 @@ import Util.Season;
  * 
 */
 
-public class ExamsMapRenderer {
+public class ExamsMapRenderer implements IExamsMapRenderer {
 
 	private String[] daysOfWeek =
 		{ "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" };

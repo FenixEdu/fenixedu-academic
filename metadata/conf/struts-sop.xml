@@ -936,23 +936,45 @@
     </action>
 
       <action path="/consultRoomsForExams"
-              type="ServidorApresentacao.Action.publico.PrepareConsultRoomsFormAction"
-              parameter="method"
-              >
-          <forward name="Sucess" path="/consultRoomsForExams.jsp"/>
+              type="ServidorApresentacao.Action.sop.ConsultRoomsForExamDA"
+              scope="request"
+		      parameter="method">
+          <forward name="Search Rooms" path="/searchRoomsForExams.jsp"/>
       </action>
 
       <action attribute="roomForm"
-              input="/consultRooms.jsp"
+              input="/searchRoomsForExams.jsp"
               name="roomForm"
-              path="/chooseRoomsForm"
+              path="/chooseRoomToViewForExams"
               scope="request"
-              validate="true"
-              type="ServidorApresentacao.Action.sop.SelectRoomsFormAction">
-        <forward name="Sucess" path="/chooseRoom.jsp"/>
+              type="ServidorApresentacao.Action.sop.SelectRoomsFormAction"
+              validate="false">
+        <forward name="Sucess" path="/listRoomsForExams.jsp" />
       </action>
-      
-      
+
+      <action attribute="indexForm"
+      		  input="/listRoomsForExams.jsp"
+              name="indexForm"
+              path="/selectRoomToViewForExams"
+              scope="session"
+              type="ServidorApresentacao.Action.sop.ManipularSalasAction">
+        <exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+         	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />
+		<forward name="VerSala" path="/viewRoomForExams.do" />
+      </action>
+
+      <action attribute="indexForm"
+              input="/manipularSalas.jsp"
+              name="indexForm"
+      		  path="/viewRoomForExams"
+              scope="session"
+              validate="true"
+              type="ServidorApresentacao.Action.sop.ViewRoomForExamsFormAction">
+          <forward name="Sucess" path="/viewRoomForExams.jsp"/>
+      </action>
+
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"
 				input="/siteViewerError.jsp"
