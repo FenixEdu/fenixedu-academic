@@ -1,11 +1,17 @@
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoTeacher;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import DataBeans.CreditsView;
+import DataBeans.InfoProfessorShip;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.util.Cloner;
 import Dominio.Credits;
 import Dominio.ICredits;
 import Dominio.IExecutionPeriod;
+import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IServico;
@@ -13,6 +19,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCreditsTeacher;
 import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -38,12 +45,14 @@ public class ReadCreditsTeacher implements IServico {
 		return "ReadCreditsTeacher";
 	}
 
-	public Object run(Integer teacherOID) throws FenixServiceException {
-		InfoCredits infoCreditsTeacher = null;
+	public CreditsView run(Integer teacherOID) throws FenixServiceException {
+		CreditsView creditsView = new CreditsView();
 	
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
+			
+			IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+			
 			//teacher
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			ITeacher teacher = new Teacher();
@@ -61,17 +70,41 @@ public class ReadCreditsTeacher implements IServico {
 			//read teacher's credits
 			IPersistentCreditsTeacher creditsTeacherDAO = sp.getIPersistentCreditsTeacher();
 			ICredits creditsTeacher = creditsTeacherDAO.readByUnique(creditsTeacherExample);
-			
+			InfoCredits infoCredits;		
 			if (creditsTeacher != null) {
-				infoCreditsTeacher = Cloner.copyICreditsTeacher2InfoCreditsTeacher(creditsTeacher);
+				infoCredits = Cloner.copyICreditsTeacher2InfoCreditsTeacher(creditsTeacher);
 			}else  {
-				infoCreditsTeacher = Cloner.copyICreditsTeacher2InfoCreditsTeacher(creditsTeacherExample);
+				infoCredits = Cloner.copyICreditsTeacher2InfoCreditsTeacher(creditsTeacherExample);
 			}
+			
+			
+			creditsView.setInfoCredits(infoCredits);
+			readProfessorShips(creditsView, teacher, professorshipDAO);
+			
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException();
 		} 
-		return infoCreditsTeacher;
+		return creditsView;
 		
+	}
+
+	/**
+	 * @param infoCreditsTeacher
+	 * @param teacher
+	 */
+	private void readProfessorShips(CreditsView creditsView, ITeacher teacher, IPersistentProfessorship professorshipDAO) throws ExcepcaoPersistencia {
+		List professorships =
+			professorshipDAO.readByTeacher(teacher);
+		Iterator iter = professorships.iterator();
+		List infoProfessorshipList = new ArrayList();
+		
+		while (iter.hasNext()) {
+			IProfessorship professorship = (IProfessorship) iter.next();
+			InfoProfessorShip infoProfessorShip = Cloner.copyIProfessorShip2InfoProfessorShip(professorship);
+			infoProfessorShip.getInfoExecutionCourse().getNome();
+			infoProfessorshipList.add(infoProfessorShip);
+		}
+		creditsView.setInfoProfessorshipList(infoProfessorshipList);
 	}
 }
