@@ -13,7 +13,7 @@ package Dominio;
 
 public class Item implements IItem {
 
-	private int internalCode;
+	private Integer internalCode;
 	protected String information;
 	protected String name;
 	protected Integer order;
@@ -70,9 +70,9 @@ public class Item implements IItem {
 	}
 
 	/**
-	 * @return int
+	 * @return Integer
 	 */
-	public int getInternalCode() {
+	public Integer getInternalCode() {
 		return internalCode;
 	}
 
@@ -123,7 +123,7 @@ public class Item implements IItem {
 	 * Sets the internalCode.
 	 * @param internalCode The internalCode to set
 	 */
-	public void setInternalCode(int internalCode) {
+	public void setInternalCode(Integer internalCode) {
 		this.internalCode = internalCode;
 	}
 
