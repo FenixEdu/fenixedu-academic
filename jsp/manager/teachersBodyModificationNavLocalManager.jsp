@@ -47,7 +47,7 @@
 </strong></p>
 
 <%--
-<p><strong>&raquo; Gest&atilde;o de Previlégios</strong></p>
+<p><strong>&raquo; Gest&atilde;o de Privilégios</strong></p>
 <ul>
   <li>Criar Role</html:link></li>
   <li>Atribuir Roles</li>

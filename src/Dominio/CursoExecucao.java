@@ -25,7 +25,6 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	
 	//added by Tânia Pousão
 	private List coordinatorsList;
-	private ITeacher coordinator;//to remove
 	
 	private Boolean temporaryExamMap;
 	
@@ -149,13 +148,6 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	/**
 	 * @return
 	 */
-	public ITeacher getCoordinator() {
-		return coordinator;
-	}
-
-	/**
-	 * @return
-	 */
 	public IDegreeCurricularPlan getDegreeCurricularPlan() {
 		return degreeCurricularPlan;
 	}
@@ -165,13 +157,6 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	 */
 	public Integer getKeyCoordinator() {
 		return keyCoordinator;
-	}
-
-	/**
-	 * @param teacher
-	 */
-	public void setCoordinator(ITeacher teacher) {
-		coordinator = teacher;
 	}
 
 	/**

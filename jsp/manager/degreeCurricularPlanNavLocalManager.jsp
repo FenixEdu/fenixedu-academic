@@ -54,7 +54,7 @@
 
 <p><strong>&raquo;
 	<html:link page="/manageRoles.do?method=prepare">
-		Gest&atilde;o de Previlégios
+		Gest&atilde;o de Privilégios
 	</html:link>
 </strong></p>
 
@@ -65,7 +65,7 @@
 </p>
 
 <%--
-<p><strong>&raquo; Gest&atilde;o de Previlégios</strong></p>
+<p><strong>&raquo; Gest&atilde;o de Privilégios</strong></p>
 <ul>
   <li>Criar Role</html:link></li>
   <li>Atribuir Roles</li>

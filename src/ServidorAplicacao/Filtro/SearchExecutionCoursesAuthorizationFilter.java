@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
+import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
@@ -121,9 +122,18 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
 				
 				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 				
-				if (executionDegree.getCoordinator().equals(teacher)) {
+				//modified by Tânia Pousão
+				ICoordinator coordinator =
+				sp.getIPersistentCoordinator().readCoordinatorByTeacherAndExecutionDegree(
+						teacher,
+						executionDegree);
+				if (coordinator != null)
+				{
 					return true;
-				}
+				}				
+//				if (executionDegree.getCoordinator().equals(teacher)) {
+//					return true;
+//				}
 				
 			} catch (Exception e) {
 				return false;

@@ -43,74 +43,92 @@ import Util.MarkType;
 import Util.TipoCurso;
 
 /**
- * @author David Santos
- * 11/Jun/2003
+ * @author David Santos 11/Jun/2003
  */
 
-public class GenerateExtraData {
+public class GenerateExtraData
+{
 
 	private static final int MAX = 5;
 
-	private static ISuportePersistente persistentSupport =	null;
+	private static ISuportePersistente persistentSupport = null;
 
-	public static void main(String[] args) {
-		
+	public static void main(String[] args)
+	{
+
 		System.out.println("PROCESS STARTED...");
 
-// APAGO TODAS AS EXECUTION_COURSE PORQUE VOU ESCREVELAS DE RAIZ:
+		// APAGO TODAS AS EXECUTION_COURSE PORQUE VOU ESCREVELAS DE RAIZ:
 		turnOnPersistentSuport();
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+		IPersistentExecutionCourse persistentExecutionCourse =
+			persistentSupport.getIPersistentExecutionCourse();
 		persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
 		turnOffPersistentSuport();
 
-// APAGO TODOS OS EXECUTION_DEGREE PORQUE VOU ESCREVELOS DE RAIZ:
+		// APAGO TODOS OS EXECUTION_DEGREE PORQUE VOU ESCREVELOS DE RAIZ:
 		turnOnPersistentSuport();
-		ICursoExecucaoPersistente persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
-		try {
+		ICursoExecucaoPersistente persistentExecutionDegree =
+			persistentSupport.getICursoExecucaoPersistente();
+		try
+		{
 			persistentExecutionDegree.deleteAll();
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
 		turnOffPersistentSuport();
 
 		turnOnPersistentSuport();
 		List curricularCoursesList = null;
-		try {
-			IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
+		try
+		{
+			IPersistentCurricularCourse persistentCurricularCourse =
+				persistentSupport.getIPersistentCurricularCourse();
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+				persistentSupport.getIPersistentDegreeCurricularPlan();
 			DegreeCurricularPlan degreeCurricularPlanCriteria = new DegreeCurricularPlan();
 			degreeCurricularPlanCriteria.setIdInternal(new Integer(1));
-			IDegreeCurricularPlan oldDegreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
-			curricularCoursesList = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(oldDegreeCurricularPlan);
+			IDegreeCurricularPlan oldDegreeCurricularPlan =
+				(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(
+					degreeCurricularPlanCriteria);
+			curricularCoursesList =
+				persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(
+					oldDegreeCurricularPlan);
 
 			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 			ITeacher teacherCriteria = new Teacher();
 			teacherCriteria.setIdInternal(new Integer(1));
 			ITeacher teacher = (ITeacher) persistentTeacher.readByOId(teacherCriteria, true);
-			IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+			IPersistentExecutionYear persistentExecutionYear =
+				persistentSupport.getIPersistentExecutionYear();
 			IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 			ICursoExecucao executionDegree = new CursoExecucao();
-			executionDegree.setCoordinator(teacher);
+
+			//executionDegree.setCoordinator(teacher);
 			executionDegree.setCurricularPlan(oldDegreeCurricularPlan);
 			executionDegree.setExecutionYear(executionYear);
 			executionDegree.setTemporaryExamMap(new Boolean(true));
 			persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
 			persistentExecutionDegree.lockWrite(executionDegree);
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
 		turnOffPersistentSuport();
 
 		Iterator iterator = curricularCoursesList.iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext())
+		{
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 			generateExecutionCourse(curricularCourse);
 		}
 
+		for (int i = 1; i <= GenerateExtraData.MAX; i++)
+		{
 
-		for(int i = 1; i <= GenerateExtraData.MAX; i++) {
-
-// ESCREVO O DEGREE:
+			// ESCREVO O DEGREE:
 			turnOnPersistentSuport();
 			ICurso degree = new Curso();
 			degree.setDegreeCurricularPlans(null);
@@ -119,20 +137,26 @@ public class GenerateExtraData {
 			degree.setSigla("CDT " + i);
 			degree.setTipoCurso(TipoCurso.LICENCIATURA_OBJ);
 			ICursoPersistente persistentdegree = persistentSupport.getICursoPersistente();
-			try {
+			try
+			{
 				persistentdegree.lockWrite(degree);
-			} catch (ExcepcaoPersistencia e) {
+			}
+			catch (ExcepcaoPersistencia e)
+			{
 				e.printStackTrace(System.out);
 			}
 			turnOffPersistentSuport();
 
-// ESCREVO O DEGREE_CURRICULARR_PLAN:
+			// ESCREVO O DEGREE_CURRICULARR_PLAN:
 			turnOnPersistentSuport();
 			persistentdegree = persistentSupport.getICursoPersistente();
 			ICurso degree2 = null;
-			try {
+			try
+			{
 				degree2 = (ICurso) persistentdegree.readDomainObjectByCriteria(degree);
-			} catch (ExcepcaoPersistencia e) {
+			}
+			catch (ExcepcaoPersistencia e)
+			{
 				e.printStackTrace(System.out);
 			}
 			IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
@@ -146,21 +170,30 @@ public class GenerateExtraData {
 			degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE_OBJ);
 			degreeCurricularPlan.setMarkType(MarkType.TYPE20_OBJ);
 			degreeCurricularPlan.setNeededCredits(new Double(0));
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
-			try {
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+				persistentSupport.getIPersistentDegreeCurricularPlan();
+			try
+			{
 				persistentDegreeCurricularPlan.lockWrite(degreeCurricularPlan);
-			} catch (ExcepcaoPersistencia e) {
+			}
+			catch (ExcepcaoPersistencia e)
+			{
 				e.printStackTrace(System.out);
 			}
 			turnOffPersistentSuport();
 
-// ESCREVO O BRANCH:
+			// ESCREVO O BRANCH:
 			turnOnPersistentSuport();
 			persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 			IDegreeCurricularPlan degreeCurricularPlan2 = null;
-			try {
-				degreeCurricularPlan2 = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlan);
-			} catch (ExcepcaoPersistencia e) {
+			try
+			{
+				degreeCurricularPlan2 =
+					(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(
+						degreeCurricularPlan);
+			}
+			catch (ExcepcaoPersistencia e)
+			{
 				e.printStackTrace(System.out);
 			}
 			IBranch branch = new Branch();
@@ -169,30 +202,39 @@ public class GenerateExtraData {
 			branch.setScopes(null);
 			branch.setDegreeCurricularPlan(degreeCurricularPlan2);
 			IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
-			try {
+			try
+			{
 				persistentBranch.lockWrite(branch);
-			} catch (ExcepcaoPersistencia e) {
+			}
+			catch (ExcepcaoPersistencia e)
+			{
 				e.printStackTrace(System.out);
 			}
 			turnOffPersistentSuport();
-			
-// ESCREVO O EXECUTION_DEGREE:
+
+			// ESCREVO O EXECUTION_DEGREE:
 			turnOnPersistentSuport();
 			persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
-			IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+			IPersistentExecutionYear persistentExecutionYear =
+				persistentSupport.getIPersistentExecutionYear();
 			persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
 			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-			try {
-				degreeCurricularPlan2 = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlan);
+			try
+			{
+				degreeCurricularPlan2 =
+					(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(
+						degreeCurricularPlan);
 				IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 				ITeacher teacher = persistentTeacher.readByNumber(new Integer(1));
 				ICursoExecucao executionDegree = new CursoExecucao();
-				executionDegree.setCoordinator(teacher);
+				//executionDegree.setCoordinator(teacher);
 				executionDegree.setCurricularPlan(degreeCurricularPlan2);
 				executionDegree.setExecutionYear(executionYear);
 				executionDegree.setTemporaryExamMap(new Boolean(true));
 				persistentExecutionDegree.lockWrite(executionDegree);
-			} catch (ExcepcaoPersistencia e1) {
+			}
+			catch (ExcepcaoPersistencia e1)
+			{
 				e1.printStackTrace(System.out);
 			}
 			turnOffPersistentSuport();
@@ -203,50 +245,75 @@ public class GenerateExtraData {
 		System.out.println("PROCESS ENDED!");
 	}
 
-	private static void turnOnPersistentSuport() {
-		try {
-			persistentSupport =	SuportePersistenteOJB.getInstance();
+	private static void turnOnPersistentSuport()
+	{
+		try
+		{
+			persistentSupport = SuportePersistenteOJB.getInstance();
 			persistentSupport.iniciarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
 	}
 
-	private static void turnOffPersistentSuport() {
-		try {
+	private static void turnOffPersistentSuport()
+	{
+		try
+		{
 			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
 	}
 
-	private static void generateCurricularCourses(IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, int i) {
+	private static void generateCurricularCourses(
+		IDegreeCurricularPlan degreeCurricularPlan,
+		IBranch branch,
+		int i)
+	{
 		List curricularCoursesList = null;
 		IDegreeCurricularPlan degreeCurricularPlan2 = null;
 		IBranch branch2 = null;
 
 		turnOnPersistentSuport();
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
+		IPersistentCurricularCourse persistentCurricularCourse =
+			persistentSupport.getIPersistentCurricularCourse();
+		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+			persistentSupport.getIPersistentDegreeCurricularPlan();
 		IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
-		try {
+		IPersistentCurricularCourseScope persistentCurricularCourseScope =
+			persistentSupport.getIPersistentCurricularCourseScope();
+		try
+		{
 			DegreeCurricularPlan degreeCurricularPlanCriteria = new DegreeCurricularPlan();
 			degreeCurricularPlanCriteria.setIdInternal(new Integer(1));
-			IDegreeCurricularPlan oldDegreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
-			curricularCoursesList = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(oldDegreeCurricularPlan);
-			degreeCurricularPlan2 = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlan);
+			IDegreeCurricularPlan oldDegreeCurricularPlan =
+				(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(
+					degreeCurricularPlanCriteria);
+			curricularCoursesList =
+				persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(
+					oldDegreeCurricularPlan);
+			degreeCurricularPlan2 =
+				(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(
+					degreeCurricularPlan);
 			branch2 = (IBranch) persistentBranch.readDomainObjectByCriteria(branch);
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
 		turnOffPersistentSuport();
 
 		Iterator iterator1 = curricularCoursesList.iterator();
-		while(iterator1.hasNext()) {
+		while (iterator1.hasNext())
+		{
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-			
-// ESCREVO A CURRICULAR_COURSE:
+
+			// ESCREVO A CURRICULAR_COURSE:
 			turnOnPersistentSuport();
 			ICurricularCourse curricularCourseToWrite = new CurricularCourse();
 			curricularCourseToWrite.setAssociatedExecutionCourses(null);
@@ -256,12 +323,13 @@ public class GenerateExtraData {
 			curricularCourseToWrite.setScopes(null);
 			curricularCourseToWrite.setBasic(new Boolean(true));
 
-//			curricularCourseToWrite.setLabHours(curricularCourse.getLabHours());
-//			curricularCourseToWrite.setPraticalHours(curricularCourse.getPraticalHours());
-//			curricularCourseToWrite.setTheoPratHours(curricularCourse.getTheoPratHours());
-//			curricularCourseToWrite.setTheoreticalHours(curricularCourse.getTheoreticalHours());
+			//			curricularCourseToWrite.setLabHours(curricularCourse.getLabHours());
+			//			curricularCourseToWrite.setPraticalHours(curricularCourse.getPraticalHours());
+			//			curricularCourseToWrite.setTheoPratHours(curricularCourse.getTheoPratHours());
+			//			curricularCourseToWrite.setTheoreticalHours(curricularCourse.getTheoreticalHours());
 			curricularCourseToWrite.setCode(curricularCourse.getCode() + i);
-			curricularCourseToWrite.setCurricularCourseExecutionScope(curricularCourse.getCurricularCourseExecutionScope());
+			curricularCourseToWrite.setCurricularCourseExecutionScope(
+				curricularCourse.getCurricularCourseExecutionScope());
 			curricularCourseToWrite.setDegreeCurricularPlan(degreeCurricularPlan2);
 			curricularCourseToWrite.setMandatory(curricularCourse.getMandatory());
 			curricularCourseToWrite.setName(curricularCourse.getName() + i);
@@ -269,21 +337,25 @@ public class GenerateExtraData {
 			curricularCourseToWrite.setUniversity(curricularCourse.getUniversity());
 
 			persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-			try {
+			try
+			{
 				persistentCurricularCourse.lockWrite(curricularCourseToWrite);
-			} catch (ExcepcaoPersistencia e) {
+			}
+			catch (ExcepcaoPersistencia e)
+			{
 				e.printStackTrace(System.out);
 			}
 			turnOffPersistentSuport();
 
-// ESCREVO A EXECUTION_COURSE:
+			// ESCREVO A EXECUTION_COURSE:
 			generateExecutionCourse(curricularCourseToWrite);
 
 			Iterator iterator2 = curricularCourse.getScopes().iterator();
-			while(iterator2.hasNext()) {
+			while (iterator2.hasNext())
+			{
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
 
-// ESCREVO O CURRICULAR_COURSE_SCOPE:
+				// ESCREVO O CURRICULAR_COURSE_SCOPE:
 				turnOnPersistentSuport();
 				ICurricularCourseScope curricularCourseScopeToWrite = new CurricularCourseScope();
 				curricularCourseScopeToWrite.setIdInternal(null);
@@ -291,25 +363,35 @@ public class GenerateExtraData {
 				curricularCourseScopeToWrite.setPraticalHours(null);
 				curricularCourseScopeToWrite.setTheoPratHours(null);
 				curricularCourseScopeToWrite.setTheoreticalHours(null);
-				
-				curricularCourseScopeToWrite.setMaxIncrementNac(curricularCourseScope.getMaxIncrementNac());
-				curricularCourseScopeToWrite.setMinIncrementNac(curricularCourseScope.getMinIncrementNac());
+
+				curricularCourseScopeToWrite.setMaxIncrementNac(
+					curricularCourseScope.getMaxIncrementNac());
+				curricularCourseScopeToWrite.setMinIncrementNac(
+					curricularCourseScope.getMinIncrementNac());
 				curricularCourseScopeToWrite.setWeigth(curricularCourseScope.getWeigth());
 				curricularCourseScopeToWrite.setBeginDate(Calendar.getInstance());
-				curricularCourseScopeToWrite.setEndDate(null);		
+				curricularCourseScopeToWrite.setEndDate(null);
 				curricularCourseScopeToWrite.setEctsCredits(curricularCourseScope.getEctsCredits());
-				try {
+				try
+				{
 					persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-					ICurricularCourse curricularCourse2 = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseToWrite);
+					ICurricularCourse curricularCourse2 =
+						(ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(
+							curricularCourseToWrite);
 
 					curricularCourseScopeToWrite.setBranch(branch2);
 					curricularCourseScopeToWrite.setCurricularCourse(curricularCourse2);
-					curricularCourseScopeToWrite.setCurricularSemester(curricularCourseScope.getCurricularSemester());
-				
+					curricularCourseScopeToWrite.setCurricularSemester(
+						curricularCourseScope.getCurricularSemester());
+
 					persistentCurricularCourseScope.lockWrite(curricularCourseScopeToWrite);
-				} catch (ExistingPersistentException e1) {
+				}
+				catch (ExistingPersistentException e1)
+				{
 					e1.printStackTrace(System.out);
-				} catch (ExcepcaoPersistencia e1) {
+				}
+				catch (ExcepcaoPersistencia e1)
+				{
 					e1.printStackTrace(System.out);
 				}
 				turnOffPersistentSuport();
@@ -317,15 +399,21 @@ public class GenerateExtraData {
 		}
 	}
 
-	private static void generateExecutionCourse(ICurricularCourse curricularCourse) {
+	private static void generateExecutionCourse(ICurricularCourse curricularCourse)
+	{
 
-		if(curricularCourse.getCode().equals("")) {
+		if (curricularCourse.getCode().equals(""))
+		{
 			turnOnPersistentSuport();
-			IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-			try {
+			IPersistentCurricularCourse persistentCurricularCourse =
+				persistentSupport.getIPersistentCurricularCourse();
+			try
+			{
 				persistentCurricularCourse.lockWrite(curricularCourse);
 				curricularCourse.setCode(curricularCourse.getName());
-			} catch (ExcepcaoPersistencia e) {
+			}
+			catch (ExcepcaoPersistencia e)
+			{
 				e.printStackTrace(System.out);
 			}
 			turnOffPersistentSuport();
@@ -333,39 +421,52 @@ public class GenerateExtraData {
 
 		turnOnPersistentSuport();
 
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-		
+		IPersistentCurricularCourse persistentCurricularCourse =
+			persistentSupport.getIPersistentCurricularCourse();
+		IPersistentExecutionCourse persistentExecutionCourse =
+			persistentSupport.getIPersistentExecutionCourse();
+		IPersistentExecutionPeriod persistentExecutionPeriod =
+			persistentSupport.getIPersistentExecutionPeriod();
+
 		ICurricularCourse curricularCourseToAssociate = null;
 		IExecutionPeriod executionPeriod = null;
-		try {
-			curricularCourseToAssociate = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(curricularCourse.getDegreeCurricularPlan().getIdInternal(), curricularCourse.getName(), curricularCourse.getCode());
+		try
+		{
+			curricularCourseToAssociate =
+				persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
+					curricularCourse.getDegreeCurricularPlan().getIdInternal(),
+					curricularCourse.getName(),
+					curricularCourse.getCode());
 			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
-		
+
 		IExecutionCourse executionCourse = new ExecutionCourse();
 		executionCourse.setAssociatedExams(null);
 		executionCourse.setComment(null);
 		executionCourse.setIdInternal(null);
 
-//		executionCourse.setTheoreticalHours(curricularCourseToAssociate.getTheoreticalHours());
-//		executionCourse.setTheoPratHours(curricularCourseToAssociate.getTheoPratHours());
+		//		executionCourse.setTheoreticalHours(curricularCourseToAssociate.getTheoreticalHours());
+		//		executionCourse.setTheoPratHours(curricularCourseToAssociate.getTheoPratHours());
 		executionCourse.setSigla(curricularCourseToAssociate.getCode());
-//		executionCourse.setPraticalHours(curricularCourseToAssociate.getPraticalHours());
+		//		executionCourse.setPraticalHours(curricularCourseToAssociate.getPraticalHours());
 		executionCourse.setNome(curricularCourseToAssociate.getName());
-//		executionCourse.setLabHours(curricularCourseToAssociate.getLabHours());
+		//		executionCourse.setLabHours(curricularCourseToAssociate.getLabHours());
 		executionCourse.setExecutionPeriod(executionPeriod);
-		
+
 		List associatedCurricularCourses = new ArrayList();
 		associatedCurricularCourses.add(curricularCourseToAssociate);
 		executionCourse.setAssociatedCurricularCourses(associatedCurricularCourses);
-		
-		try {
+
+		try
+		{
 			persistentExecutionCourse.lockWrite(executionCourse);
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
 

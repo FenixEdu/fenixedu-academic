@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoRole;
+import Dominio.ICoordinator;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.ITeacher;
 import Dominio.MasterDegreeCandidate;
@@ -120,9 +121,18 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
 					return false;
 				}
 
-				if (!masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher)){
+				//modified by Tânia Pousão
+				ICoordinator coordinator =
+				sp.getIPersistentCoordinator().readCoordinatorByTeacherAndExecutionDegree(
+						teacher,
+						masterDegreeCandidate.getExecutionDegree());
+				if (coordinator == null)
+				{
 					return false;
 				}
+				//if (!masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher)){
+					//return false;
+				//}
 
 				return true;				
 				

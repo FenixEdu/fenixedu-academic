@@ -97,7 +97,8 @@ public class EditExecutionDegree implements IServico
             if (teacher == null)
                 throw new NonExistingServiceException("message.non.existing.teacher", null);
 
-            oldExecutionDegree.setCoordinator(teacher);
+            //oldExecutionDegree.setCoordinator(teacher);
+            
             oldExecutionDegree.setCampus(campus);
             persistentExecutionDegree.lockWrite(oldExecutionDegree);
 

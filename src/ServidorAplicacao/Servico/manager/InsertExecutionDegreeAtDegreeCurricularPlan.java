@@ -103,7 +103,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico
                 throw new NonExistingServiceException("message.non.existing.teacher", null);
 
             ICursoExecucao executionDegree = new CursoExecucao();
-            executionDegree.setCoordinator(coordinator);
+            //executionDegree.setCoordinator(coordinator);
             executionDegree.setCurricularPlan(degreeCurricularPlan);
             executionDegree.setExecutionYear(executionYear);
             executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());

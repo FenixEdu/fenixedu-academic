@@ -784,7 +784,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         if (queryObject(CursoExecucao.class, criteria) == null)
         {
 
-            executionDegreeToCreate.setCoordinator(executionDegreeToTransfer.getCoordinator());
+            //executionDegreeToCreate.setCoordinator(executionDegreeToTransfer.getCoordinator());
+        	executionDegreeToCreate.setCoordinatorsList(executionDegreeToTransfer.getCoordinatorsList());
             executionDegreeToCreate.setCurricularPlan(executionDegreeToTransfer.getCurricularPlan());
             executionDegreeToCreate.setDegreeCurricularPlan(
                 executionDegreeToTransfer.getDegreeCurricularPlan());
