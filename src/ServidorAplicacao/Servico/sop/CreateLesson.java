@@ -12,8 +12,12 @@ package ServidorAplicacao.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  **/
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.ojb.broker.accesslayer.ListProxy;
 
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
@@ -28,6 +32,7 @@ import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.Turno;
+import Dominio.TurnoAula;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -110,8 +115,6 @@ public class CreateLesson implements IServico {
 
 			if (result.isSUCESS() && resultB) {
 				try {
-					sp.getIAulaPersistente().lockWrite(aula);
-
 					ITurno shift =
 						(ITurno) sp.getITurnoPersistente().readByOID(
 							Turno.class,
@@ -120,8 +123,15 @@ public class CreateLesson implements IServico {
 					InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
 
 					if (infoShiftServiceResult.isSUCESS()) {
-						sp.getITurnoPersistente().lockWrite(shift);
-						shift.getAssociatedLessons().add(aula);
+						IAula aula2 = new Aula();
+						sp.getIAulaPersistente().simpleLockWrite(aula2);
+						try {
+							BeanUtils.copyProperties(aula2, aula);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						sp.getITurnoPersistente().simpleLockWrite(shift);
+						shift.getAssociatedLessons().add(aula2);
 					} else {
 						throw new InvalidLoadException(infoShiftServiceResult.toString());
 					}
