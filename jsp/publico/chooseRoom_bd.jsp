@@ -9,7 +9,7 @@
   <h2><bean:message key="title.chooseRoom"/></h2>
   <br/>
   <span class="error"><html:errors/></span>	
-			<html:form action="/viewRoom.do" method="GET">
+		<html:form action="/viewRoom.do" method="GET">
 
 			<html:hidden name="roomForm" property="name"/>
 			<html:hidden name="roomForm" property="building"/>
@@ -18,21 +18,36 @@
 			<html:hidden name="roomForm" property="capacityNormal"/>
 			<html:hidden name="roomForm" property="capacityExame"/>
 
-			<table border='0' cellpadding='10' cellspacing='0'>		
-			<logic:iterate id="infoRoom" name="publico.infoRooms" indexId="i_index">
-			<bean:define id="i" value="i_index" />
+			<table border='0' cellpadding='10' cellspacing='1' width="60%">		
                 <tr>
-                    <td>
+                    <td class="listClasses-header" width="10%">&nbsp;</td>
+                    <td class="listClasses-header" width="15%">Nome</td>
+                    <td class="listClasses-header" width="10%">Tipo</td>                    
+                    <td class="listClasses-header">Capacidade Normal</td>
+
+                </tr>
+			
+			<logic:iterate id="infoRoom" name="publico.infoRooms" indexId="infoRoomIndex" >
+                <tr>
+                    <td class="listClasses">
 	                    <html:radio idName="infoRoom" property="roomName" value="nome"/>
                     </td>
-                    <td>
+                    <td class="listClasses">
 	                    <bean:write name="infoRoom" property="nome"/>
+                    </td>
+                    <td class="listClasses">
+	                    <bean:write name="infoRoom" property="tipo"/>
+                    </td>
+                    
+                    <td class="listClasses">
+                    	<bean:write name="infoRoom" property="capacidadeNormal"/>
                     </td>
                 </tr>
 			</logic:iterate>
 		</table>
 		<br/>
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<bean:define id="infoExecutionPeriodCode" name="objectCode" />
+		<html:hidden property="objectCode" value="<%= infoExecutionPeriodCode.toString() %>" />
 		<html:hidden  property="method" value="roomViewer" />	
 		<html:submit styleClass="inputbutton">
 			<bean:message key="label.choose"/>
