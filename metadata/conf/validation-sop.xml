@@ -231,7 +231,7 @@
         <arg0 key="property.course"/>
       </field>
 
-      <field property="nomeSala" depends="required">
+      <field property="nomeSala" depends="required" page="2">
         <arg0 key="property.aula.sala"/>
       </field>
     </form>
@@ -350,7 +350,7 @@
       <field property="building" depends="required">
         <arg0 key="property.room.building" />
       </field>
-      <field property="floor" depends="required">
+      <field property="floor" depends="required, integer">
         <arg0 key="property.room.floor"/>
       </field>
       <field property="type" depends="required, integer, range">
