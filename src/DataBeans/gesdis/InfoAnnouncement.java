@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  * @author Ivo Brandão
  */
 
-public class InfoAnnouncement {
+public class InfoAnnouncement implements Comparable{
 
 	private String title;
 	private Timestamp creationDate;
@@ -128,4 +128,16 @@ public class InfoAnnouncement {
 		this.title = title;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object arg0) {
+		if (getCreationDate().after(((InfoAnnouncement)arg0).getCreationDate())){
+			return -1;
+		}
+		else{ if (getCreationDate().before(((InfoAnnouncement)arg0).getCreationDate())){
+			return 1;
+		}else {		return 0; } 
+	}
+	}
 }
