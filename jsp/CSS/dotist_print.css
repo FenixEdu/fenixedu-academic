@@ -17,14 +17,15 @@ table {
 	}
 
 h2	{
-	font: bold 12pt "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: bold 16pt "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: black;
 	}
 
 h3 {
 	font: bold 12pt "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: black;
+	color: grey;
 	}
+
 
 /******************************************
 	Global Links Proprieties
@@ -158,7 +159,21 @@ a:visited {
 .tall-td {
 	height: 50pt;
 	}
+
+.ects_headertable {
+	border: 1px solid #666;
+	}
+
+.ects_headertable td {
+	color: #333;
+	padding: 5px;
+	background:#EBECED;
+	}
 	
+table#ects {
+	page-break-after: always;
+	}
+
 /*****************************************************************
 	Assiduidade - layout verbete
 ******************************************************************/

@@ -22,6 +22,29 @@
 			</tr>
 		</table>
 	</logic:present>
+	<br />
+	<logic:present name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listCoursesInformation.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listCoursesInformation.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list" bundle="GEP_RESOURCES"/>
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:present>
 	<h2>
 		<bean:message key="link.gep.executionCoursesInformation"
 					  bundle="GEP_RESOURCES"/>
@@ -47,9 +70,6 @@
 			</td>
 			<td class="listClasses-header">
 				<bean:message key="label.gep.courseInformation.basic" bundle="GEP_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
-				<bean:message key="label.gep.courseInformation.responsible" bundle="GEP_RESOURCES"/>
 			</td>
 			<td class="listClasses-header">
 				<bean:message key="label.gep.courseInformation.professorships" bundle="GEP_RESOURCES"/>
@@ -103,16 +123,16 @@
 				       			</logic:notEqual>
 				       		</td>
 							<td class="listClasses" >&nbsp;
-								<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
-									<bean:write name="infoTeacher" property="infoPerson.nome" />
-									<br />
-								</logic:iterate>
-							</td>
-							<td class="listClasses" >&nbsp;
+								<ul>
 								<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoLecturingTeachers">
-									<bean:write name="infoTeacher" property="infoPerson.nome" />
-									<br />
+									<li><bean:write name="infoTeacher" property="infoPerson.nome" />
+									 <% if (
+								    	 ((DataBeans.gesdis.InfoSiteCourseInformation)infoSiteCourseInformation).getInfoResponsibleTeachers().contains(infoTeacher)
+								    	 ){%>
+								    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 
+									</li>
 								</logic:iterate>
+								</ul>
 							</td>
 							<td class="listClasses" >&nbsp;
 								<logic:present name="infoSiteCourseInformation" property="lastModificationDate"> 
@@ -208,14 +228,16 @@
 	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
 	<br/>
 	<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%
-	<%-- <logic:present name="infoExecutionDegree">
+	<br />
+	<br />
+	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
 				<html:link page="/listCoursesInformation.do?method=doSearch&amp;basic=basic" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list" />
+					<bean:message key="label.list" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 		</logic:present>
@@ -225,25 +247,9 @@
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list" />
+					<bean:message key="label.list" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>
 		</logic:notPresent>
 	</logic:present>
-	<logic:notPresent name="infoExecutionDegree">
-		<logic:present name="basic">
-			<div class="button">
-				<html:link page="/listCoursesInformation.do?method=doSearch&amp;executionDegreeId=all&amp;basic=basic" target="_blank">
-					<bean:message key="label.list" />
-				</html:link>
-			</div>
-		</logic:present>
-		<logic:notPresent name="basic">
-			<div class="button">
-				<html:link page="/listCoursesInformation.do?method=doSearch&amp;executionDegreeId=all" target="_blank">
-					<bean:message key="label.list" />
-				</html:link>
-			</div>
-		</logic:notPresent>
-	</logic:notPresent>--%>
 </logic:present>
