@@ -17,7 +17,7 @@ public class Professorship extends DomainObject implements IProfessorship {
 	private Integer keyTeacher;
 	private Integer keyExecutionCourse;
 	private List associatedTeacherShiftPercentage;
-	private Float credits;
+	private Double credits;
 	/**
 	 * 
 	 */
@@ -119,7 +119,7 @@ public class Professorship extends DomainObject implements IProfessorship {
     /* (non-Javadoc)
      * @see Dominio.IProfessorship#getCredits()
      */
-    public Float getCredits()
+    public Double getCredits()
     {
         return credits;
     }
@@ -127,7 +127,7 @@ public class Professorship extends DomainObject implements IProfessorship {
     /* (non-Javadoc)
      * @see Dominio.IProfessorship#setCredits(java.lang.Float)
      */
-    public void setCredits(Float credits)
+    public void setCredits(Double credits)
     {
         this.credits = credits;
     }

@@ -11,7 +11,7 @@ public class InfoProfessorShip extends InfoObject
 {
     protected InfoTeacher infoTeacher;
     protected InfoExecutionCourse infoExecutionCourse;
-    private Float credits;
+    private Double credits;
     /**
 	 * @return
 	 */
@@ -47,7 +47,7 @@ public class InfoProfessorShip extends InfoObject
     /**
 	 * @return Returns the credits.
 	 */
-    public Float getCredits()
+    public Double getCredits()
     {
         return this.credits;
     }
@@ -56,7 +56,7 @@ public class InfoProfessorShip extends InfoObject
 	 * @param credits
 	 *                   The credits to set.
 	 */
-    public void setCredits(Float credits)
+    public void setCredits(Double credits)
     {
         this.credits = credits;
     }

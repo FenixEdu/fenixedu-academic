@@ -15,8 +15,8 @@ public interface IProfessorship extends IDomainObject
 {
     public ITeacher getTeacher();
     public IDisciplinaExecucao getExecutionCourse();
-    public Float getCredits();
-    public void setCredits(Float credits);
+    public Double getCredits();
+    public void setCredits(Double credits);
 
     public void setTeacher(ITeacher teacher);
     public void setExecutionCourse(IDisciplinaExecucao executionCourse);
