@@ -14,7 +14,6 @@ import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IDomainObject;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.ITeacherShiftPercentage;
