@@ -49,35 +49,37 @@
 		<mkdir dir="${build.home.webinf.libs}"/>
 		<mkdir dir="${build.home}/images/logs"/>
 
-		<parallel>
-			<copy todir="${build.home}">
-				<fileset dir="${web-content}" >
-					<include name="**/*.*"/>
-					<exclude name="WEB-INF//*.*"/>
-				</fileset>
-			</copy>
+		<sequential>
+			<parallel>
+				<copy todir="${build.home}">
+					<fileset dir="${web-content}" >
+						<include name="**/*.*"/>
+						<exclude name="WEB-INF//*.*"/>
+					</fileset>
+				</copy>
 
-			<copy todir="${build.home.webinf.classes}">
-				<fileset dir="${config}"/>
-			</copy>
+				<copy todir="${build.home.webinf.classes}">
+					<fileset dir="${config}"/>
+				</copy>
 
-			<copy todir="${build.home.webinf}">
-				<fileset dir="${config.web}" >
-					<include name="**/*.*"/>
-				</fileset>
-			</copy>
+				<copy todir="${build.home.webinf}">
+					<fileset dir="${config.web}" >
+						<include name="**/*.*"/>
+					</fileset>
+				</copy>
 
-			<copy todir="${build.home.webinf.libs}">
-				<fileset dir="${lib}" >
-					<include name="*.jar"/>
-					<exclude name="servlet.jar"/>
-					<exclude name="jta.jar"/>
-				</fileset>
-			</copy>
-		</parallel>
+				<copy todir="${build.home.webinf.libs}">
+					<fileset dir="${lib}" >
+						<include name="*.jar"/>
+						<exclude name="servlet.jar"/>
+						<exclude name="jta.jar"/>
+					</fileset>
+				</copy>
+			</parallel>
 
-		<!-- Replace tokens in configuration files with local config -->
-		<antcall target="replace-property-values"/>
+			<!-- Replace tokens in configuration files with local config -->
+			<antcall target="replace-property-values"/>
+		</sequential>
 	</target>
 
 	<target name="replace-property-values">
