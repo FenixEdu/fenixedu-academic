@@ -90,12 +90,15 @@
     jdbc-type="CHAR"
   />
 
+
+
 	<reference-descriptor
 			name="middlewarePerson"
 			class-ref="middleware.middlewareDomain.MWPessoa"
 			proxy="false">
 		<foreignkey field-ref="documentidnumber"/>
 	</reference-descriptor>
+
 
 
 </class-descriptor>
@@ -476,3 +479,19 @@
 
 </class-descriptor>
 
+
+<class-descriptor class="middleware.middlewareDomain.MWDegreeTranslation"  table="mw_DEGREE_TRANSLATION">
+	<field-descriptor name="degreecode" column="DEGREE_CODE" jdbc-type="INTEGER"/>
+	<field-descriptor name="keyDegree" column="KEY_DEGREE" jdbc-type="INTEGER"/>
+	<reference-descriptor name="degree"class-ref="Dominio.Curso" proxy="false">
+		<foreignkey field-ref="keyDegree"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWStudentClass"  table="mw_DEGREE_TRANSLATION">
+	<field-descriptor name="studentNumber" column="STUDENT_NUMBER" jdbc-type="VARCHAR"/>
+	<field-descriptor name="studentName" column="STUDENT_NAME" jdbc-type="VARCHAR"/>
+	<field-descriptor name="degreeCode" column="DEGREE_CODE" jdbc-type="INTEGER"/>	
+	<field-descriptor name="className" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+	<field-descriptor name="average" column="AVERAGE" jdbc-type="FLOAT"/>
+</class-descriptor>
