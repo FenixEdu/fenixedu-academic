@@ -1,6 +1,6 @@
 /*
  * Created on Oct 30, 2003
- *
+ *  
  */
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice;
 
@@ -10,12 +10,12 @@ import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceTestCase;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
 {
@@ -26,8 +26,8 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
     protected IUserView userViewNotAuthorized = null;
 
     /**
-     * @param name
-     */
+	 * @param name
+	 */
     public AdministrativeOfficeBaseTest(String name)
     {
         super(name);
@@ -63,17 +63,29 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
     }
 
     /**
-     * @param strings
-     * @return
-     */
+	 * @param strings
+	 * @return
+	 */
     private IUserView authenticateUser(String[] args)
     {
-        SuportePersistenteOJB.resetInstance();
+
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            sp.clearCache();
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            fail("Cache cleaning failed!" + ex);
+            return null;
+        }
+        //SuportePersistenteOJB.resetInstance();
 
         try
         {
             return (IUserView) gestor.executar(null, "Autenticacao", args);
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             fail("Authenticating User!" + ex);
             return null;
@@ -90,11 +102,13 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
                 getServiceArgumentsForNotAuthenticatedUser());
             fail("testNotAuthenticatedExecution did not throw NotAuthorizedException");
 
-        } catch (NotAuthorizedException ex)
+        }
+        catch (NotAuthorizedException ex)
         {
             //ok
 
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             ex.printStackTrace();
             fail("testNotAuthenticatedExecution " + ex.getMessage());
@@ -112,11 +126,13 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
                 getServiceArgumentsForNotAuthorizedUser());
             fail("testNotAuthorizedExecution did not throw NotAuthorizedException");
 
-        } catch (NotAuthorizedException ex)
+        }
+        catch (NotAuthorizedException ex)
         {
             //ok
 
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             ex.printStackTrace();
             fail("testNotAuthenticatedExecution " + ex.getMessage());
