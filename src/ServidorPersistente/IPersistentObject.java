@@ -30,17 +30,6 @@ public interface IPersistentObject {
 	 * @throws ExcepcaoPersistencia when can't lock object.
 	 */
 	void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia;
-	/**
-	 * Reads an object using from Database using it's unique.
-	 * @param domainObject
-	 * @param lockWrite
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public IDomainObject readByUnique(
-		IDomainObject domainObject,
-		boolean lockWrite)
-		throws IllegalArgumentException;
 
 	public IDomainObject readByOID(Class classToQuery, Integer oid)
 		throws ExcepcaoPersistencia;
