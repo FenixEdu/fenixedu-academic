@@ -78,7 +78,7 @@
 		<forward name="logoff" path="/logoff.do" contextRelative="true"/>
 
 		<forward name="enrolment" path="/globalEnrolment.do"/>
-		<forward name="equivalence" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence"/>
+		<forward name="equivalenceForDegreeAdministrativeOffice" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence"/>
 
 		<forward name="index" path="/index.do" redirect="true"/>
 		<forward name="globalOutOfPeriod" path="definition.out.of.period" redirect="true"/>

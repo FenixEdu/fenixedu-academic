@@ -34,7 +34,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 	
-	private final String[] forwards = { "showCurricularCoursesForEquivalence", "verifyCurricularCoursesForEquivalence", "acceptCurricularCoursesForEquivalence", "begin", "home" };
+	private final String[] forwards = { "showCurricularCoursesForEquivalence", "verifyCurricularCoursesForEquivalence", "acceptCurricularCoursesForEquivalence", "begin" };
 
 	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 

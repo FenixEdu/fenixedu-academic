@@ -41,11 +41,14 @@
 	<!-- ========== Global Forward Definitions ============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
 		<forward name="enrolment" path="/degreeAdministrativeOffice/globalEnrolment.do" contextRelative="true"/>
-		<forward name="equivalence" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
-		
+		<forward name="equivalenceForDegreeAdministrativeOffice" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
+
+		<forward name="candidateSection" path="/coordinator/candidateSection.do" contextRelative="true"/>
+		<forward name="studentSection" path="/coordinator/studentSection.do" contextRelative="true"/>
+		<forward name="equivalenceForCoordinator" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
+
 		<forward name="ciaplIndex" path="/index.do" contextRelative="true"/>
 		<forward name="logoff" path="/logoff.do" contextRelative="true"/>
-
 		<forward name="index" path="/index.do" redirect="true"/>
 	</global-forwards>
 
@@ -88,7 +91,7 @@
 			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForCoordinatorEquivalence"/>
-			<forward name="begin" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
+			<forward name="begin" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
 		</action>
 	</action-mappings>
 

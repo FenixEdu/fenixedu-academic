@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoStudent;
+import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
 import Dominio.ICursoExecucao;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -58,17 +59,22 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			ICursoExecucaoPersistente persitentExecutionDegree = sp.getICursoExecucaoPersistente();
 
-			IStudent student = this.readStudent(arguments[0], sp);
-			IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
-			ITeacher teacher = persistentTeacher.readTeacherByUsername(requester.getUtilizador());
-			List executionDegreeList = persitentExecutionDegree.readByTeacher(teacher);
+			if( (arguments[0] instanceof InfoStudent) || (arguments[0] instanceof Integer) ) {
+				IStudent student = this.readStudent(arguments[0], sp);
+				IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+				ITeacher teacher = persistentTeacher.readTeacherByUsername(requester.getUtilizador());
+				List executionDegreeList = persitentExecutionDegree.readByTeacher(teacher);
 
-			Iterator iterator = executionDegreeList.iterator();
-			while(iterator.hasNext()) {
-				ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-				if(executionDegree.getCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())) {
-					authorizedRequester = true;
+				Iterator iterator = executionDegreeList.iterator();
+				while(iterator.hasNext()) {
+					ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
+					if(executionDegree.getCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())) {
+						authorizedRequester = true;
+						break;
+					}
 				}
+			} else if(arguments[0] instanceof InfoEquivalenceContext) {
+				authorizedRequester = true;
 			}
 		}
 

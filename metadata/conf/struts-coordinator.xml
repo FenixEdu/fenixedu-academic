@@ -38,6 +38,10 @@
       <forward name="Coordinator" path="/indexCoordinator.jsp" contextRelative="true" redirect="true" />
       <forward name="firstPage" path="/index.do"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+
+		<forward name="candidateSection" path="/candidateSection.do"/>
+		<forward name="studentSection" path="/studentSection.do"/>
+		<forward name="equivalenceForCoordinator" path="/equivalence.do?method=begin"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -142,6 +146,16 @@
 	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
 	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/>
 	  </action>
+
+
+		<action	type="ServidorApresentacao.Action.equivalence.PrepareManualEquivalenceForCoordinatorDispatchAction"
+				path="/equivalence"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<forward name="begin" path="/equivalence/showAllAvailableCurricularCoursesForEquivalence.jsp"/>
+			<forward name="show" path="/equivalence/manualEquivalenceManagerForCoordinator.do?method=show" contextRelative="true"/>
+		</action>
 
     </action-mappings>
     

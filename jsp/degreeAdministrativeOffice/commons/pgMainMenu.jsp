@@ -5,6 +5,6 @@
 		<html:link forward="enrolment"><bean:message key="link.student.enrolment"/></html:link>
 	</li>
 	<li>
-		<html:link forward="equivalence"><bean:message key="link.manual.equivalence"/></html:link>
+		<html:link forward="equivalenceForDegreeAdministrativeOffice"><bean:message key="link.manual.equivalence"/></html:link>
 	</li>
 </ul>     
