@@ -269,7 +269,8 @@ public class ServicoSeguroActualizarPessoas
 								"INA" + pessoaFromDB.getNumeroDocumentoIdentificacao());
 
 							IRole role = RoleFunctions.readRole(RoleType.EMPLOYEE, broker);
-							if (role != null && pessoaFromDB.getPersonRoles() != null
+							if (role != null
+								&& pessoaFromDB.getPersonRoles() != null
 								&& pessoaFromDB.getPersonRoles().size() > 0
 								&& pessoaFromDB.getPersonRoles().contains(role))
 							{
@@ -277,7 +278,8 @@ public class ServicoSeguroActualizarPessoas
 							}
 
 							role = RoleFunctions.readRole(RoleType.TEACHER, broker);
-							if (role != null && pessoaFromDB.getPersonRoles() != null
+							if (role != null
+								&& pessoaFromDB.getPersonRoles() != null
 								&& pessoaFromDB.getPersonRoles().size() > 0
 								&& pessoaFromDB.getPersonRoles().contains(role))
 							{
@@ -285,7 +287,8 @@ public class ServicoSeguroActualizarPessoas
 							}
 
 							role = RoleFunctions.readRole(RoleType.PERSON, broker);
-							if (role != null && pessoaFromDB.getPersonRoles() != null
+							if (role != null
+								&& pessoaFromDB.getPersonRoles() != null
 								&& pessoaFromDB.getPersonRoles().size() == 1
 								&& pessoaFromDB.getPersonRoles().contains(role))
 							{
@@ -322,8 +325,8 @@ public class ServicoSeguroActualizarPessoas
 				System.out.println("Inactive person: " + counter);
 			}
 
-			//close databases
 			broker.commitTransaction();
+			broker.clearCache();
 		}
 		System.out.println("  Done !");
 	}

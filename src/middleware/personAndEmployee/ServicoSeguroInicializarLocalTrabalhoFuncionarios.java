@@ -159,6 +159,7 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 			}			
 		}
 		broker.commitTransaction();
+		broker.clearCache();
 		
 		System.out.println("New Employees with  Working Place Cost Center: " + newEmployees);
 		System.out.println("  Done !");

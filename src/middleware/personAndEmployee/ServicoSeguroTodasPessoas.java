@@ -89,7 +89,7 @@ public class ServicoSeguroTodasPessoas
 				try
 				{
 					servico._pessoa = (Pessoa) iterador.next();
-					System.out.println("-->Le Pessoa: " + servico._pessoa.getNome());
+					//System.out.println("-->Le Pessoa: " + servico._pessoa.getNome());
 
 					personFilter(limpaNaturalidades, servico._pessoa);
 
@@ -124,7 +124,7 @@ public class ServicoSeguroTodasPessoas
 						RoleFunctions.readPersonRole(person2Write, RoleType.PERSON, broker);
 					if (personRole == null)
 					{
-						IRole role = RoleFunctions.readRole(RoleType.PERSON, broker);												
+						IRole role = RoleFunctions.readRole(RoleType.PERSON, broker);
 						if (role == null)
 						{
 							throw new Exception("Role Desconhecido !!!");
@@ -160,6 +160,7 @@ public class ServicoSeguroTodasPessoas
 			//close databases
 			DB.confirmarTransaccao();
 			broker.commitTransaction();
+			broker.clearCache();
 		}
 		System.out.println("New persons added : " + newPersons);
 		System.out.println("New Roles added : " + newRoles);

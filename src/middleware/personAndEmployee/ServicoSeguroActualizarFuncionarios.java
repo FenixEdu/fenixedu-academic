@@ -221,6 +221,7 @@ public class ServicoSeguroActualizarFuncionarios
 			broker.delete(person);
 		}
 		broker.commitTransaction();
+		broker.clearCache();
 
 		System.out.println("Persons removed : " + unusedPersons.size());
 		System.out.println("New Funcionarios added : " + newEmployees);

@@ -109,29 +109,32 @@ public class ServicoSeguroPessoasInactivas
 							pessoaFromDB.setUsername(
 								"INA" + pessoaFromDB.getNumeroDocumentoIdentificacao());
 							IRole role = RoleFunctions.readRole(RoleType.EMPLOYEE, broker);
-							if (role != null && pessoaFromDB.getPersonRoles() != null
-									&& pessoaFromDB.getPersonRoles().size() > 0
-									&& pessoaFromDB.getPersonRoles().contains(role))
+							if (role != null
+								&& pessoaFromDB.getPersonRoles() != null
+								&& pessoaFromDB.getPersonRoles().size() > 0
+								&& pessoaFromDB.getPersonRoles().contains(role))
 							{
 								pessoaFromDB.getPersonRoles().remove(role);
 							}
 
 							role = RoleFunctions.readRole(RoleType.TEACHER, broker);
-							if (role != null && pessoaFromDB.getPersonRoles() != null
-									&& pessoaFromDB.getPersonRoles().size()  > 0
-									&& pessoaFromDB.getPersonRoles().contains(role))
+							if (role != null
+								&& pessoaFromDB.getPersonRoles() != null
+								&& pessoaFromDB.getPersonRoles().size() > 0
+								&& pessoaFromDB.getPersonRoles().contains(role))
 							{
 								pessoaFromDB.getPersonRoles().remove(role);
 							}
-							
+
 							role = RoleFunctions.readRole(RoleType.PERSON, broker);
-							if (role != null && pessoaFromDB.getPersonRoles() != null
-									&& pessoaFromDB.getPersonRoles().size() == 1
-									&& pessoaFromDB.getPersonRoles().contains(role))
+							if (role != null
+								&& pessoaFromDB.getPersonRoles() != null
+								&& pessoaFromDB.getPersonRoles().size() == 1
+								&& pessoaFromDB.getPersonRoles().contains(role))
 							{
 								pessoaFromDB.getPersonRoles().remove(role);
 							}
-							
+
 							broker.store(pessoaFromDB);
 
 							// The employee correspont to the person
@@ -166,8 +169,8 @@ public class ServicoSeguroPessoasInactivas
 				System.out.println("Inactivei " + counter + " pessoas.");
 			}
 
-			
 			broker.commitTransaction();
+			broker.clearCache();
 		}
 	}
 }

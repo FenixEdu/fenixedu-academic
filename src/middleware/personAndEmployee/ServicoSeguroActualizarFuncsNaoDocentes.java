@@ -188,6 +188,7 @@ public class ServicoSeguroActualizarFuncsNaoDocentes
 		}
 
 		broker.commitTransaction();
+		broker.clearCache();
 
 		System.out.println("New Funcionarios Nao Docentes added : " + newEmployees);
 		System.out.println("New Roles added : " + newRoles);

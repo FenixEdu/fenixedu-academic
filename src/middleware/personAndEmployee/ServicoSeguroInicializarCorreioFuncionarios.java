@@ -159,6 +159,8 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 			}
 		}
 		broker.commitTransaction();
+		broker.clearCache();
+		
 		
 		System.out.println("New Employees with  Mailing Cost Center: " + newEmployees);
 		System.out.println("  Done !");

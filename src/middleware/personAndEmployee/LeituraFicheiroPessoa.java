@@ -22,6 +22,7 @@ import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import Util.EstadoCivil;
+import Util.RandomStringGenerator;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
@@ -105,7 +106,7 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB
 				try
 				{
 					pessoa = recuperarPessoa(linhaFicheiro, delimitador);
-					System.out.println("-->Adiciona Pessoa à lista: " + pessoa.getNome());
+					//System.out.println("-->Adiciona Pessoa à lista: " + pessoa.getNome());
 					listaPessoas.add(pessoa);
 				}
 				catch (Exception exception)
@@ -279,7 +280,7 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB
 	
 		pessoa.setUsername(numeroDocumentoIdentificacao);
 
-		pessoa.setPassword(PasswordEncryptor.encryptPassword(numeroDocumentoIdentificacao));
+		pessoa.setPassword(PasswordEncryptor.encryptPassword(RandomStringGenerator.getRandomStringGenerator(8)));
 
 		ICountry country = FormatPersonUtils.formataNacionalidadeCompleta(stringTokenizer.nextToken().trim());
 		pessoa.setPais(country);

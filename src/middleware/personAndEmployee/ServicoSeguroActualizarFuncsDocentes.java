@@ -221,6 +221,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 			}
 		}
 		broker.commitTransaction();
+		broker.clearCache();
 
 		System.out.println("New Teachers added : " + newTeachers);
 		System.out.println("New Roles added : " + newRoles);
