@@ -3,6 +3,7 @@ package DataBeans.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -17,6 +18,7 @@ import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoEnrolmentContext;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -32,6 +34,7 @@ import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
+import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoBibliographicReference;
 import DataBeans.gesdis.InfoCurriculum;
@@ -91,6 +94,7 @@ import Dominio.ISala;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -101,9 +105,11 @@ import Dominio.Sala;
 import Dominio.Section;
 import Dominio.Site;
 import Dominio.Student;
+import Dominio.StudentCurricularPlan;
 import Dominio.Teacher;
 import Dominio.Turma;
 import Dominio.Turno;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 
 /**
  * @author jpvl
@@ -356,7 +362,7 @@ public abstract class Cloner {
 		InfoDegree infoDegree = new InfoDegree();
 		try {
 			BeanUtils.copyProperties(infoDegree, degree);
-			
+
 			// FIXME : See InfoDegree variables for root cause.
 			if (degree != null && degree.getTipoCurso() != null) {
 				infoDegree.setDegreeType(degree.getTipoCurso().toString());
@@ -656,7 +662,7 @@ public abstract class Cloner {
 		section.setSuperiorSection(fatherSection);
 		section.setSite(site);
 		section.setInternalCode(infoSection.getInternalCode());
-		
+
 		//		section.setInferiorSections(inferiorSections);
 		//		section.setItems(items);
 
@@ -671,8 +677,7 @@ public abstract class Cloner {
 	 **/
 
 	public static InfoSection copyISection2InfoSection(ISection section) {
-		
-		
+
 		InfoSection infoSection = new InfoSection();
 
 		InfoSection fatherInfoSection = null;
@@ -692,12 +697,12 @@ public abstract class Cloner {
 		copyObjectProperties(infoSection, section);
 
 		infoSection.setSuperiorInfoSection(fatherInfoSection);
-		infoSection.setInfoSite(infoSite);		
+		infoSection.setInfoSite(infoSite);
 		infoSection.setInternalCode(section.getInternalCode());
-		
+
 		//		infoSection.setInferiorInfoSections(inferiorInfoSections);
 		//		infoSection.setInfoItems(infoItems);
-		
+
 		return infoSection;
 
 	}
@@ -730,23 +735,20 @@ public abstract class Cloner {
 	*/
 
 	public static List copyListISections2ListInfoSections(List listISections) {
-		
+
 		List listInfoSections = new ArrayList(listISections.size());
 		Iterator iterListISections = listISections.iterator();
-		
-		
-		
+
 		while (iterListISections.hasNext()) {
-			
+
 			ISection section = (ISection) iterListISections.next();
-				
+
 			InfoSection infoSection = Cloner.copyISection2InfoSection(section);
-			
+
 			listInfoSections.add(infoSection);
-			
-			
+
 		}
-		
+
 		return listInfoSections;
 	}
 
@@ -1024,15 +1026,15 @@ public abstract class Cloner {
 		guide.setContributor(Cloner.copyInfoContributor2IContributor(infoGuide.getInfoContributor()));
 		guide.setPerson(Cloner.copyInfoPerson2IPerson(infoGuide.getInfoPerson()));
 		guide.setExecutionDegree(Cloner.copyInfoExecutionDegree2ExecutionDegree(infoGuide.getInfoExecutionDegree()));
-		
-		if (infoGuide.getInfoGuideEntries() != null){
+
+		if (infoGuide.getInfoGuideEntries() != null) {
 			Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
 			List guideEntries = new ArrayList();
-			while(iterator.hasNext()) {
-				guideEntries.add(Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator.next())); 
+			while (iterator.hasNext()) {
+				guideEntries.add(Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator.next()));
 			}
 
-			guide.setGuideEntries(guideEntries);			
+			guide.setGuideEntries(guideEntries);
 		}
 
 		return guide;
@@ -1045,16 +1047,16 @@ public abstract class Cloner {
 	 */
 	public static InfoGuide copyIGuide2InfoGuide(IGuide guide) {
 
-		InfoGuide infoGuide= new InfoGuide();
+		InfoGuide infoGuide = new InfoGuide();
 		copyObjectProperties(infoGuide, guide);
 		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(guide.getContributor()));
 		infoGuide.setInfoPerson(Cloner.copyIPerson2InfoPerson(guide.getPerson()));
 		infoGuide.setInfoExecutionDegree(Cloner.copyIExecutionDegree2InfoExecutionDegree(guide.getExecutionDegree()));
-		
+
 		List infoGuideEntries = new ArrayList();
 		if (guide.getGuideEntries() != null) {
 			Iterator iterator = guide.getGuideEntries().iterator();
-			while (iterator.hasNext()){
+			while (iterator.hasNext()) {
 				infoGuideEntries.add(Cloner.copyIGuideEntry2InfoGuideEntry((IGuideEntry) iterator.next()));
 			}
 		}
@@ -1070,7 +1072,7 @@ public abstract class Cloner {
 	public static InfoGuideEntry copyIGuideEntry2InfoGuideEntry(IGuideEntry guideEntry) {
 		InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
 		copyObjectProperties(infoGuideEntry, guideEntry);
-//		infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideEntry.getGuide()));
+		//		infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideEntry.getGuide()));
 		return infoGuideEntry;
 	}
 
@@ -1082,10 +1084,9 @@ public abstract class Cloner {
 	public static IGuideEntry copyInfoGuideEntry2IGuideEntry(InfoGuideEntry infoGuideEntry) {
 		IGuideEntry guideEntry = new GuideEntry();
 		copyObjectProperties(guideEntry, infoGuideEntry);
-//		guideEntry.setGuide(Cloner.copyInfoGuide2IGuide(infoGuideEntry.getInfoGuide()));
+		//		guideEntry.setGuide(Cloner.copyInfoGuide2IGuide(infoGuideEntry.getInfoGuide()));
 		return guideEntry;
 	}
-
 
 	/**
 	 * 
@@ -1252,7 +1253,7 @@ public abstract class Cloner {
 	 * @return InfoCurricularCourseScope
 	 */
 
-	public static InfoCurricularCourseScope copyCurricularCourseScope2InfoCurricularCourseScope(ICurricularCourseScope curricularCourseScope) {
+	public static InfoCurricularCourseScope copyICurricularCourseScope2InfoCurricularCourseScope(ICurricularCourseScope curricularCourseScope) {
 
 		InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
 
@@ -1371,5 +1372,97 @@ public abstract class Cloner {
 		return infoCurricularYear;
 	}
 
+	/**
+		 * @author dcs-rjao
+		 * @param copyInfoStudentCurricularPlan2IStudentCurricularPlan
+		 * @return IStudentCurricularPlan
+		 */
+	public static IStudentCurricularPlan copyInfoStudentCurricularPlan2IStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
+
+		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+
+		IStudent student = Cloner.copyInfoStudent2IStudent(infoStudentCurricularPlan.getInfoStudent());
+		IBranch branch = Cloner.copyInfoBranch2IBranch(infoStudentCurricularPlan.getInfoBranch());
+		IDegreeCurricularPlan degreeCurricularPlan =
+			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
+
+		try {
+			BeanUtils.copyProperties(studentCurricularPlan, infoStudentCurricularPlan);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		studentCurricularPlan.setStudent(student);
+		studentCurricularPlan.setBranch(branch);
+		studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
+
+		return studentCurricularPlan;
+	}
+
+	/**
+			 * @author dcs-rjao
+			 * @param copyIStudentCurricularPlan2InfoStudentCurricularPlan
+			 * @return InfoStudentCurricularPlan
+			 */
+	public static InfoStudentCurricularPlan copyIStudentCurricularPlan2InfoStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+
+		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+
+		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(studentCurricularPlan.getStudent());
+		InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(studentCurricularPlan.getBranch());
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
+
+		try {
+			BeanUtils.copyProperties(infoStudentCurricularPlan, studentCurricularPlan);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		infoStudentCurricularPlan.setInfoStudent(infoStudent);
+		infoStudentCurricularPlan.setInfoBranch(infoBranch);
+		infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+		return infoStudentCurricularPlan;
+	}
+
+	/**
+		 * @author dcs-rjao
+		 * @param copyEnrolmentContext2InfoEnrolmentContext
+		 * @return InfoEnrolmentContext
+		 */
+	public static InfoEnrolmentContext copyEnrolmentContext2InfoEnrolmentContext(EnrolmentContext enrolmentContext) {
+
+		InfoEnrolmentContext infoEnrolmentContext = new InfoEnrolmentContext();
+
+		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(enrolmentContext.getStudent());
+		InfoStudentCurricularPlan infoStudentActiveCurricularPlan =
+			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan());
+
+		List infoCurricularCourseScopeList = new ArrayList();
+		List curricularCourseScopeList = null;
+
+		curricularCourseScopeList = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
+		if (curricularCourseScopeList != null && !curricularCourseScopeList.isEmpty()) {
+			ListIterator iterator = curricularCourseScopeList.listIterator();
+			while (iterator.hasNext()) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+				InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+				infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+			}
+		}
+
+		try {
+			BeanUtils.copyProperties(infoEnrolmentContext, enrolmentContext);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		infoEnrolmentContext.setInfoStudent(infoStudent);
+		infoEnrolmentContext.setInfoStudentActiveCurricularPlan(infoStudentActiveCurricularPlan);
+		infoEnrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(infoCurricularCourseScopeList);
+		
+		return infoEnrolmentContext;
+	}
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 }

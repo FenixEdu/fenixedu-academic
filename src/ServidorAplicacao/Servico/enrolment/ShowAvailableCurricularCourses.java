@@ -1,8 +1,10 @@
 package ServidorAplicacao.Servico.enrolment;
 
+import DataBeans.InfoEnrolmentContext;
 import Dominio.IStudent;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
@@ -12,6 +14,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import DataBeans.util.Cloner;
 
 /**
  * @author dcs-rjao
@@ -47,9 +50,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 	 * @return EnrolmentContext
 	 * @throws FenixServiceException
 	 */
-	public EnrolmentContext run(UserView userView) throws FenixServiceException {
-
-		
+	public InfoEnrolmentContext run(IUserView userView) throws FenixServiceException {
 		
 		try {
 			IEnrolmentStrategy strategy = null;
@@ -57,15 +58,17 @@ public class ShowAvailableCurricularCourses implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent studentDAO = sp.getIPersistentStudent();
 
-			IStudent student = studentDAO.readByUsername(userView.getUtilizador());
+			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
+
 			//FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
 			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(student, new Integer(1));
 			
 			strategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
 			
 			enrolmentContext = strategy.getAvailableCurricularCourses();
-			// FIXME can't this object because this object has references to persistent layer... return info's instead
-			return enrolmentContext;
+			
+			InfoEnrolmentContext infoEnrolmentContext = Cloner.copyEnrolmentContext2InfoEnrolmentContext(enrolmentContext);
+			return infoEnrolmentContext;
 
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());

@@ -34,7 +34,10 @@ public class InfoCurricularCourseScope implements Serializable {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "]";
+		result += "CurricularCourse = " + this.infoCurricularCourse + "; ";
+		result += "CurricularSemester = " + this.infoCurricularSemester+ "]";
+		result += "Branch = " + this.infoBranch + "]\n";
+		
 		return result;
 	}
 	/**
