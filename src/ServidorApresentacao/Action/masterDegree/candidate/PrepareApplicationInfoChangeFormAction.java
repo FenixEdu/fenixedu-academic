@@ -45,6 +45,7 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
                                 HttpServletResponse response)
     throws Exception {
 
+		// FIXME: Verificar o que acontece com campos nao preenchidos na BD
 
 	    DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
 
@@ -76,22 +77,30 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		  changePersonalInfoForm.set("maritalStatus", masterDegreeCandidate.getMaritalStatus());
 		  
 		  Calendar birthDate = Calendar.getInstance();
-		  birthDate.setTime(masterDegreeCandidate.getBirth());
-		  changePersonalInfoForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH)).toString());
+		  if (masterDegreeCandidate.getBirth() == null){
+			  changePersonalInfoForm.set("birthDay", Data.OPTION_DEFAULT.toString());
+			  changePersonalInfoForm.set("birthMonth", Data.OPTION_DEFAULT.toString());
+			  changePersonalInfoForm.set("birthYear", Data.OPTION_DEFAULT.toString());
+		  } else {
+			  birthDate.setTime(masterDegreeCandidate.getBirth());
+			  changePersonalInfoForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH)).toString());
+			  changePersonalInfoForm.set("birthMonth", new Integer(birthDate.get(Calendar.MONTH)).toString());
+			  changePersonalInfoForm.set("birthYear", new Integer(birthDate.get(Calendar.YEAR)).toString());
+		  }
 		  
-		  changePersonalInfoForm.set("birthMonth", new Integer(birthDate.get(Calendar.MONTH)).toString());
-		  changePersonalInfoForm.set("birthYear", new Integer(birthDate.get(Calendar.YEAR)).toString());
-
+		  		  
 		  Calendar identificationDocumentIssueDate = Calendar.getInstance();
-		  identificationDocumentIssueDate.setTime(masterDegreeCandidate.getIdentificationDocumentIssueDate());
-		  
-		  changePersonalInfoForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate.get(Calendar.DAY_OF_MONTH)).toString());
+		  if (masterDegreeCandidate.getIdentificationDocumentIssueDate() == null){
+			  changePersonalInfoForm.set("idIssueDateDay", Data.OPTION_DEFAULT.toString());
+			  changePersonalInfoForm.set("idIssueDateMonth", Data.OPTION_DEFAULT.toString());
+			  changePersonalInfoForm.set("idIssueDateYear", Data.OPTION_DEFAULT.toString());
+		  } else {
+			  identificationDocumentIssueDate.setTime(masterDegreeCandidate.getIdentificationDocumentIssueDate());
+			  changePersonalInfoForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate.get(Calendar.DAY_OF_MONTH)).toString());
+			  changePersonalInfoForm.set("idIssueDateMonth", new Integer(identificationDocumentIssueDate.get(Calendar.MONTH)).toString());
+			  changePersonalInfoForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate.get(Calendar.YEAR)).toString());
+		  }
 
-		  changePersonalInfoForm.set("idIssueDateMonth", new Integer(identificationDocumentIssueDate.get(Calendar.MONTH)).toString());
-		  changePersonalInfoForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate.get(Calendar.YEAR)).toString());
-		  
-		  
-		  
 		  changePersonalInfoForm.set("fatherName", masterDegreeCandidate.getFatherName()); 
 		  changePersonalInfoForm.set("motherName", masterDegreeCandidate.getMotherName()); 
 		  changePersonalInfoForm.set("nationality", masterDegreeCandidate.getNationality());

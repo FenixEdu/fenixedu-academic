@@ -10,19 +10,34 @@ public class Data {
   private int _mes;
   private int _ano;
  
-  private static String january = "Janeiro";
-  private static String february = "Fevereiro";
-  private static String march = "Março";
-  private static String april = "Abril";
-  private static String may = "Maio";
-  private static String june = "Junho";
-  private static String july = "Julho";
-  private static String august = "Agosto";
-  private static String setember = "Setembro";
-  private static String october = "Outubro";
-  private static String november = "Novembro";
-  private static String december = "Dezembro";
+  public static String JANUARY_STRING = "Janeiro";
+  public static String FEBRUARY_STRING = "Fevereiro";
+  public static String MARCH_STRING = "Março";
+  public static String APRIL_STRING = "Abril";
+  public static String MAY_STRING = "Maio";
+  public static String JUNE_STRING = "Junho";
+  public static String JULY_STRING = "Julho";
+  public static String AUGUST_STRING = "Agosto";
+  public static String SETEMBER_STRING = "Setembro";
+  public static String OCTOBER_STRING = "Outubro";
+  public static String NOVEMBER_STRING = "Novembro";
+  public static String DECEMBER_STRING = "Dezembro";
+  public static String OPTION_STRING = "Escolha uma opção";
   
+  public static Integer JANUARY = new Integer(0);
+  public static Integer FEBRUARY = new Integer(1);
+  public static Integer MARCH = new Integer(2);
+  public static Integer APRIL = new Integer(3);
+  public static Integer MAY = new Integer(4);
+  public static Integer JUNE = new Integer(5);
+  public static Integer JULY = new Integer(6);
+  public static Integer AUGUST = new Integer(7);
+  public static Integer SETEMBER = new Integer(8);
+  public static Integer OCTOBER = new Integer(9);
+  public static Integer NOVEMBER = new Integer(10);
+  public static Integer DECEMBER = new Integer(11);
+  public static Integer OPTION_DEFAULT = new Integer(-1);
+
 
   /* Construtores */
 
@@ -71,7 +86,7 @@ public class Data {
   
   public static ArrayList getMonthDays() {
 	ArrayList result = new ArrayList();
-	
+	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
 	for (int i = 1; i<=31; i++)
 		result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
 	return result;	
@@ -80,19 +95,19 @@ public class Data {
 
   public static ArrayList getMonths() {
 	ArrayList result = new ArrayList();
-	
-	result.add(new LabelValueBean(Data.january, "0"));
-	result.add(new LabelValueBean(Data.february, "1"));
-	result.add(new LabelValueBean(Data.march, "2"));
-	result.add(new LabelValueBean(Data.april, "3"));
-	result.add(new LabelValueBean(Data.may, "4"));
-	result.add(new LabelValueBean(Data.june, "5"));
-	result.add(new LabelValueBean(Data.july, "6"));
-	result.add(new LabelValueBean(Data.august, "7"));
-	result.add(new LabelValueBean(Data.setember, "8"));
-	result.add(new LabelValueBean(Data.october, "9"));
-	result.add(new LabelValueBean(Data.november, "10"));
-	result.add(new LabelValueBean(Data.december, "11"));
+	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
+	result.add(new LabelValueBean(Data.JANUARY_STRING, Data.JANUARY.toString()));
+	result.add(new LabelValueBean(Data.FEBRUARY_STRING, Data.FEBRUARY.toString()));
+	result.add(new LabelValueBean(Data.MARCH_STRING, Data.MARCH.toString()));
+	result.add(new LabelValueBean(Data.APRIL_STRING, Data.APRIL.toString()));
+	result.add(new LabelValueBean(Data.MAY_STRING, Data.MAY.toString()));
+	result.add(new LabelValueBean(Data.JUNE_STRING, Data.JUNE.toString()));
+	result.add(new LabelValueBean(Data.JULY_STRING, Data.JULY.toString()));
+	result.add(new LabelValueBean(Data.AUGUST_STRING, Data.AUGUST.toString()));
+	result.add(new LabelValueBean(Data.SETEMBER_STRING, Data.SETEMBER.toString()));
+	result.add(new LabelValueBean(Data.OCTOBER_STRING, Data.OCTOBER.toString()));
+	result.add(new LabelValueBean(Data.NOVEMBER_STRING, Data.NOVEMBER.toString()));
+	result.add(new LabelValueBean(Data.DECEMBER_STRING, Data.DECEMBER.toString()));
 	return result;	
   }
 
@@ -101,7 +116,8 @@ public class Data {
 	ArrayList result = new ArrayList();
 	Calendar date = Calendar.getInstance();
 	
-	
+	result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
+
 	for (int i = date.get(Calendar.YEAR); i>1900; i--)
 		result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
 	return result;	
