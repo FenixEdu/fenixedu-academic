@@ -150,6 +150,10 @@ a:hover {
 	color: #333;
 	text-decoration: underline;
 	}
+#nav {
+	width: 180px;
+	}
+
 #nav ul {
 	margin: 0;
 	padding: 0;
