@@ -74,7 +74,45 @@
 			<td width="10">
 			</td>
 			<td>
-				<html:form action="/manageShifts.do?method=listShifts&amp;page=0">
+				<html:form action="/manageShifts">
+					<html:hidden property="method" value="listShifts"/>
+					<html:hidden property="page" value="0"/>
+
+					<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+							 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+					<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+							 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+					<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+							 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+
+					<html:submit styleClass="inputbutton">
+						<bean:message key="label.lesson.create"/>
+					</html:submit>			
+				</html:form>
+			</td>
+			<td width="10">
+			</td>
+			<td>
+				<html:form action="/manageShifts">
+					<html:hidden property="method" value="listShifts"/>
+					<html:hidden property="page" value="0"/>
+
+					<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+							 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+					<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+							 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+					<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+							 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+
+					<html:submit styleClass="inputbutton">
+						<bean:message key="label.classes"/>
+					</html:submit>			
+				</html:form>
+			</td>
+			<td width="10">
+			</td>
+			<td>
+				<html:form action="/manageShifts">
 					<html:hidden property="method" value="listShifts"/>
 					<html:hidden property="page" value="0"/>
 

@@ -41,12 +41,35 @@
 	        </td>
 		</tr>
 		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
+			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
+			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
 			<tr align="center">
 				<td class="listClasses">
 					<bean:write name="infoShift" property="infoDisciplinaExecucao.sigla"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoShift" property="nome"/>
+               		<html:link page="<%= "/manageShift.do?method=prepareEditShift&amp;page=0&amp;"
+               							+ SessionConstants.SHIFT_OID
+			  							+ "="
+               				   			+ pageContext.findAttribute("infoShiftOID")
+               				   			+ "&amp;"
+			  							+ SessionConstants.EXECUTION_COURSE_OID
+  										+ "="
+  										+ pageContext.findAttribute("infoExecutionCourseOID")
+               				   			+ "&amp;"
+			  							+ SessionConstants.EXECUTION_PERIOD_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionPeriodOID")
+  										+ "&amp;"
+  										+ SessionConstants.CURRICULAR_YEAR_OID
+			  							+ "="
+  										+ pageContext.findAttribute("curricularYearOID")
+  										+ "&amp;"
+			  							+ SessionConstants.EXECUTION_DEGREE_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionDegreeOID") %>">
+						<bean:write name="infoShift" property="nome"/>
+					</html:link>
 				</td>
               	<td class="listClasses">
               		<bean:write name="infoShift" property="tipo"/>

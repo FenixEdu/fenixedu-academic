@@ -45,9 +45,11 @@ public class ReadShiftByOID implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 			ITurno shift = (ITurno) shiftDAO.readByOID(Turno.class, oid);
+
 			if (shift != null) {
 				result = Cloner.copyIShift2InfoShift(shift);
 			}
+			
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}

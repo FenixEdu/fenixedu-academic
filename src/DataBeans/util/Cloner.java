@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
@@ -212,9 +214,22 @@ public abstract class Cloner {
 			Cloner.copyIExecutionCourse2InfoExecutionCourse(
 				shift.getDisciplinaExecucao());
 
+		List infoLessonList =
+			(
+				List) CollectionUtils
+					.collect(shift.getAssociatedLessons(), new Transformer() {
+			public Object transform(Object arg0) {
+				return copyILesson2InfoLesson((IAula) arg0);
+			}
+		});
+
+		System.out.println("infoLessonList.size= " + infoLessonList.size());
+
 		copyObjectProperties(infoShift, shift);
 
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+
+		infoShift.setInfoLessons(infoLessonList);
 
 		return infoShift;
 	}
@@ -452,10 +467,21 @@ public abstract class Cloner {
 		InfoExecutionCourse infoExecutionCourse =
 			Cloner.copyIExecutionCourse2InfoExecutionCourse(
 				shift.getDisciplinaExecucao());
+		List infoLessonList =
+			(
+				List) CollectionUtils
+					.collect(shift.getAssociatedLessons(), new Transformer() {
+			public Object transform(Object arg0) {
+				return copyILesson2InfoLesson((IAula) arg0);
+			}
+		});
+
 		copyObjectProperties(infoShift, shift);
 		infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 		infoShift.setIdInternal(shift.getIdInternal());
+		infoShift.setInfoLessons(infoLessonList);
+
 		return infoShift;
 	}
 	/**

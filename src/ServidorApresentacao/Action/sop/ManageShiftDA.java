@@ -13,7 +13,11 @@ import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -33,6 +37,23 @@ public class ManageShiftDA
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		InfoShift infoShiftToEdit =
+			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+
+		/* Fill out form to be edited with shifts original values */
+		DynaActionForm editShiftForm = (DynaActionForm) form;
+		//if (editShiftForm.get("courseInitials") == null) {
+			editShiftForm.set(
+				"courseInitials",
+				infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
+		//}
+		//if (editShiftForm.get("nome") == null) {
+			editShiftForm.set("nome", infoShiftToEdit.getNome());
+		//}
+		//if (editShiftForm.get("tipoAula") == null) {
+			editShiftForm.set("tipoAula", infoShiftToEdit.getTipo().getTipo());
+		//}
 
 		/* Place list of execution courses in request */
 		SessionUtils.getExecutionCourses(request);
@@ -54,7 +75,8 @@ public class ManageShiftDA
 
 		DynaActionForm editShiftForm = (DynaActionForm) form;
 
-		InfoShift infoShiftOld = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+		InfoShift infoShiftOld =
+			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
 		InfoShift infoShiftNew = new InfoShift();
 		infoShiftNew.setIdInternal(infoShiftOld.getIdInternal());
@@ -81,7 +103,9 @@ public class ManageShiftDA
 			throw new ExistingActionException("O Turno", ex);
 		}
 
-		request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourseNew);
+		request.setAttribute(
+			SessionConstants.EXECUTION_COURSE,
+			infoExecutionCourseNew);
 
 		request.setAttribute(SessionConstants.SHIFT, infoShiftNew);
 
