@@ -20,24 +20,23 @@
 </logic:notPresent>
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
-<logic:present name="publico.infoCurricularCourses" scope="session">
-			<table align="center" cellspacing="0" cellpadding="0" width="90%" >
-						
-				<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
-					<tr class="timeTable_line" align="center">
-						
-						<td class="horariosHoras_first">
+	<logic:present name="publico.infoCurricularCourses" scope="session">
+			<table align="left" class="container" width="90%">
+			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
+				<tr class="timeTable_line" >
+					<td class="degreetables">
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>-
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 						</td>
-						
-						
+					
 					</tr>
 				</logic:iterate>
 			</table>	
+			<br/>	
 			<br/>		
-	</logic:present>		
- <logic:present name="<%= SessionConstants.INFO_SITE %>" property="initialStatement">
+	</logic:present>
+			
+ 	<logic:present name="<%= SessionConstants.INFO_SITE %>" property="initialStatement">
 	<table cellspacing="0" width="90%">
         <tr>
           <td class="citation">

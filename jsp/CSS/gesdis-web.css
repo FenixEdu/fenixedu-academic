@@ -95,6 +95,7 @@ a:hover {
 #container {
 	margin: 0;
 	border: 0;
+	
 	}
 
 #principal {
@@ -178,7 +179,7 @@ a:hover {
 
 
 /******************************************
- 	links para menu de navegação
+ 	links para menu de navega?ão
  *******************************************/	
  
 #nav ul li a:link, ul li a:visited {
@@ -377,3 +378,25 @@ p.contacto {
 	padding: 20px;
 	border-top: 4px solid #999;
 	}
+	
+	
+/**********************************************
+	Licenciaturas
+***********************************************/
+	
+.degreetables {
+	font-size: 11px;
+	color: #333333;
+	background-color: #CCCCCC;
+	text-align: center;
+	height: 20px;
+	border-color: #000000;
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-left-width: 2px;
+	border-left-style: solid;
+	border-right-width: 2px;
+	border-right-style: solid;	
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+}	
