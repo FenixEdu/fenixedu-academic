@@ -1,0 +1,246 @@
+class Dominio.ExecutionCourse {
+	String nome;
+	Double theoreticalHours;
+	String sigla;
+	Integer ackOptLock;
+	Double labHours;
+	Integer idInternal;
+	Integer keyExecutionPeriod;
+	Double praticalHours;
+	String comment;
+	Double theoPratHours;
+}
+
+
+class Dominio.GroupPropertiesExecutionCourse {
+	Integer keySenderExecutionCourse;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keySenderPerson;
+	Integer keyExecutionCourse;
+	Integer keyReceiverPerson;
+	Integer keyGroupProperties;
+}
+
+
+class Dominio.GroupProperties {
+	String projectDescription;
+	Integer idInternal;
+	Integer keyAttendsSet;
+	Integer maximumCapacity;
+	Integer groupMaximumNumber;
+	Integer ackOptLock;
+	Integer idealCapacity;
+	Integer minimumCapacity;
+	String name;
+}
+
+
+class Dominio.AttendsSet {
+	Integer ackOptLock;
+	Integer idInternal;
+	String name;
+	Integer keyGroupProperties;
+}
+
+class Dominio.AttendInAttendsSet {
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyAttend;
+	Integer keyAttendsSet;
+}
+
+
+class Dominio.Frequenta {
+	Integer chaveDisciplinaExecucao;
+	Integer chaveAluno;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyEnrolment;
+}
+
+
+class Dominio.StudentGroup {
+	Integer keyShift;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer groupNumber;
+	Integer keyAttendsSet;
+}
+
+
+class Dominio.Turno {
+	String nome;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer chaveDisciplinaExecucao;
+	Integer availabilityFinal;
+	Integer lotacao;
+}
+
+class Dominio.StudentGroupAttend {
+	Integer keyStudentGroup;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyAttend;
+}
+
+
+
+
+
+
+relation sendProposal {
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole senderExecutionCourse;
+}
+
+
+
+relation goalExecutionCourse {
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+
+--->>relation ??? {
+	Dominio.ExecutionCourse playsRole senderExecutionCourse
+
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+}
+
+
+relation permission {
+	Dominio.AttendsSet playsRole attendsSet;
+	Dominio.GroupProperties playsRole groupProperties;
+}
+
+//relation ??? {
+//	Dominio.GroupProperties playsRole attendInAttendsSet {
+//		multiplicity *;
+//	}
+//	Dominio.AttendsSet playsRole attendsSet;
+//}
+
+
+
+relation belongsTo {
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+	Dominio.GroupProperties playsRole groupProperties;
+}
+
+
+//relation ??? {
+//	Dominio.GroupProperties playsRole ??? {
+//		multiplicity ???;
+//	}
+//	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+//		multiplicity *;
+//	}
+//}
+
+
+--->>relation answerExportProposal {
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+	Dominio.Pessoa playsRole receiverPerson;
+}
+
+
+--->>relation makeExportProposal {
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+	Dominio.Pessoa playsRole senderPerson;
+}
+
+relation studentGroupBelongsToGroupProperties {
+	Dominio.StudentGroup playsRole studentGroups {
+		multiplicity *;
+	}
+	Dominio.AttendsSet playsRole attendsSet;
+}
+
+
+//relation ??? {
+//	Dominio.AttendsSet playsRole ??? {
+//		multiplicity ???;
+//	}
+//	Dominio.StudentGroup playsRole studentGroups {
+//		multiplicity *;
+//	}
+//}
+
+
+relation attendsSetHasAttend {
+	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+		multiplicity *;
+	}
+	Dominio.AttendsSet playsRole attendsSet;
+}
+
+
+//relation ??? {
+//	Dominio.AttendsSet playsRole ??? {
+//		multiplicity ???;
+//	}
+//	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+//		multiplicity *;
+//	}
+//}
+
+
+relation attendBelongsToAttendsSet {
+	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+		multiplicity *;
+	}
+	Dominio.Frequenta playsRole attend;
+}
+
+
+//relation ??? {
+//	Dominio.Frequenta playsRole ??? {
+//		multiplicity ???;
+//	}
+//	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+//		multiplicity *;
+//	}
+//}
+
+
+
+//Não há a collection de nenhum dos lados nos objectos do Dominio!!!
+------>>relation ??? {
+	Dominio.StudentGroupAttend playsRole attendInAttendsSet {
+		multiplicity *;
+	}
+	Dominio.Frequenta playsRole attend;
+}
+
+//Não há a collection de nenhum dos lados nos objectos do Dominio!!!
+------>>relation ??? {
+	Dominio.StudentGroupAttend playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.StudentGroup playsRole studentGroup;
+}
+
+//Não há a collection de nenhum dos lados nos objectos do Dominio!!!
+------>>relation ??? {
+	Dominio.StudentGroup playsRole associatedShiftProfessorship {
+		multiplicity *;
+	}
+	Dominio.Turno playsRole shift;
+}
+
+
+
