@@ -240,10 +240,11 @@
     manager implementation used for key generation. All
     sequence manager implementations shipped with OJB
     you will find under org.apache.ojb.broker.util.sequence
-    If no sequence-manager is defined, OJB use the default one.
+    If no sequence-manager is defined, OJB use a default one.
+    For configuration examples please consult documentation.
 
     Use the attribute element to pass implementation specific
-    properties.
+    properties. This depends on the used implementation class.
 -->
 <!ELEMENT sequence-manager (documentation?, attribute*)>
 
@@ -252,31 +253,8 @@
     of the desired sequence manager implementation - it is mandatory
     when using the sequence-manager element.
     All sequence manager implementations you find will under
-    org.apache.ojb.broker.util.sequence package named as SequenceManagerXXXImpl
-
-    Sequence Manager implementations
-
-    1. className="org.apache.ojb.broker.util.sequence.SequenceManagerHighLowImpl"
-    High/Low sequence manager implementation. This is OJB's default sequence manager.
-
-    2. className=org.apache.ojb.broker.util.sequence.SequenceManagerInMemoryImpl
-    InMemory-sequence manager implementation.
-    This is the fastest standard sequence manager implementation, but
-    has some limitations:
-    - do not use in client/server mode
-    - do not use in clustered environments
-    - do not use if other entities generate id's for the persistent objects
-
-    3. className=org.apache.ojb.broker.util.sequence.SequenceManagerNextValImpl
-    Use database based sequence generation. Check your DB for support, add
-    a extent aware 'sequence-name' attribute to your autoincrement field
-    descriptors. If no sequence-name was found by the implementation,
-    an extent aware sequence name is build by it's own.
-
-    4. className=org.apache.ojb.broker.util.sequence.SequenceManagerSeqNextValImpl
-    A database sequence based High/Low implementation. See 3. for more informantion.
-    Limitations:
-    - do not use when other applications use the database sequence ditto
+    org.apache.ojb.broker.util.sequence package named as SequenceManagerXXXImpl.
+    For configuration examples please consult documentation.
 -->
 <!ATTLIST sequence-manager
     className                       CDATA #REQUIRED
@@ -304,7 +282,9 @@
 <!ELEMENT class-descriptor
 	((documentation?, extent-class+, attribute*) |
 	(documentation?, extent-class*, field-descriptor+,
-	 reference-descriptor*, collection-descriptor*, attribute*))>
+	 reference-descriptor*, collection-descriptor*,
+     index-descriptor*, attribute*))>
+
 
 <!--
 	The class attribute contains the full qualified name of the specified class.
@@ -329,10 +309,20 @@
 	This class will be used as the RowReader implementation used to
 	materialize instances of the persistent class.
 
-
-
 	The accept-locks attribute specifies whether implicit locking should
 	propagate to this class.  Currently relevant for the ODMG layer only.
+
+	The optional initialization-method specifies a no-argument instance
+	method that is invoked after reading an instnace from a database row.
+	It can be used to do initialization and validations.
+
+	The optional factory-method specifies a static no-argument method
+	that is to be used instead of a no argument constructor.
+	Important note: this feature is not yet implemented.
+	
+	The refresh attribute can be set to true to force OJB to refresh
+	instances when loaded from cache. It's set to false by default.
+
   -->
 <!ATTLIST class-descriptor
 	class ID #REQUIRED
@@ -344,6 +334,9 @@
 	row-reader CDATA #IMPLIED
     extends IDREF #IMPLIED
 	accept-locks (true | false) "true"
+	initialization-method CDATA #IMPLIED
+	factory-method CDATA #IMPLIED
+	refresh (true | false) "false"
 >
 
 
@@ -411,6 +404,12 @@
 	used for optimistic locking. can only be set for TIMESTAMP and INTEGER
 	columns.
 
+	The updatelock attribute is set to false if the persistent attribute is
+	used for optimistic locking AND the dbms should update the lock column
+    itself. The default is true which means that when locking is true then
+    OJB will update the locking fields. Can only be set for TIMESTAMP and INTEGER
+	columns.
+
 	The default-fetch attribute specifies whether the persistent attribute
 	belongs to the JDO default fetch group.
 
@@ -426,8 +425,16 @@
 	The precision attribute can be used to specify a precision setting, if
 	required by the jdbc-type of the underlying database column.
 
-	The scale attribute can be used to specify a sclae setting, if
+	The scale attribute can be used to specify a scale setting, if
 	required by the jdbc-type of the underlying database column.
+
+	The access attribute specifies the accessibility of the field.
+	"readonly" marks fields that are not to modified. "readwrite" marks
+	fields that may be read and written to. "anonymous" marks anonymous fields.
+	An anonymous field has a database representation (column) but no
+	corresponding Java attribute. Hence the name of such a field does not
+	refer to a Java attribute of the class, but is used as a unique
+	identifier only.
 
   -->
 <!ATTLIST field-descriptor
@@ -445,11 +452,13 @@
 	autoincrement (true | false) "false"
     sequence-name CDATA #IMPLIED
 	locking (true | false) "false"
+	update-lock (true | false) "true"
 	default-fetch (true | false) "false"
 	conversion CDATA #IMPLIED
 	length CDATA #IMPLIED
 	precision CDATA #IMPLIED
 	scale CDATA #IMPLIED
+	access (readonly | readwrite | anonymous) "readwrite"
 >
 
 
@@ -684,3 +693,19 @@
 <!ATTLIST query-customizer
 	class CDATA #REQUIRED
 >
+
+<!--
+    An index-descriptor describes an index by listing its columns.  It may be
+    unique or not.
+-->
+<!ELEMENT index-descriptor (documentation?, index-column+)>
+<!ATTLIST index-descriptor
+    name CDATA #REQUIRED
+    unique (true | false) "false">
+
+<!--
+    An index-column is just the name of a column in an index.
+-->
+<!ELEMENT index-column (documentation?)>
+<!ATTLIST index-column
+    name CDATA #REQUIRED>
