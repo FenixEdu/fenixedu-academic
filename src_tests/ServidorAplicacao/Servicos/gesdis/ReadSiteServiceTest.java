@@ -49,7 +49,6 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 
 	}
