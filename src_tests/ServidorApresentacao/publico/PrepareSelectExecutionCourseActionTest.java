@@ -48,12 +48,13 @@ public class PrepareSelectExecutionCourseActionTest
 			new CurricularYearAndSemesterAndInfoExecutionDegree();
          ctx.setAnoCurricular(new Integer(1));
          ctx.setSemestre(new Integer(1));
+         
          InfoExecutionDegree infoExecDegree = new InfoExecutionDegree();
-         infoExecDegree.setAnoLectivo("2002/03"); 
+          
 		 InfoDegree infoDegree = new InfoDegree();
 		 infoDegree.setNome("nomeqq");
 		 infoDegree.setSigla("siglaqq");
-		 infoExecDegree.setInfoLicenciatura(infoDegree);
+		 
 		 ctx.setInfoLicenciaturaExecucao(infoExecDegree);
 		 getSession().setAttribute(SessionConstants.CONTEXT_KEY,ctx);
 		 

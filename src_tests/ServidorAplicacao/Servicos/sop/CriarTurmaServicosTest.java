@@ -11,9 +11,10 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import junit.framework.*;
-import ServidorAplicacao.Servicos.*;
-import DataBeans.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import DataBeans.util.Cloner;
+import ServidorAplicacao.Servicos.TestCaseServicos;
 
 public class CriarTurmaServicosTest extends TestCaseServicos {
     public CriarTurmaServicosTest(java.lang.String testName) {
@@ -41,9 +42,7 @@ public class CriarTurmaServicosTest extends TestCaseServicos {
   // write new existing turma
   public void testUnauthorizedCreateTurma() {
     Object argsCriarTurma[] = new Object[1];
-    InfoDegree iL = new InfoDegree(_curso1.getSigla(),
-                                               _curso1.getNome());
-    argsCriarTurma[0] = new InfoClass(new String("turma1"),  new Integer(1),new Integer(1), iL);
+    argsCriarTurma[0] = Cloner.copyClass2InfoClass(_turma1);
     
     Object result = null; 
       try {
@@ -57,9 +56,7 @@ public class CriarTurmaServicosTest extends TestCaseServicos {
   // write new existing turma
   public void testCreateExistingTurma() {
     Object argsCriarTurma[] = new Object[1];
-    InfoDegree iL = new InfoDegree(_curso1.getSigla(),
-                                               _curso1.getNome());
-    argsCriarTurma[0] = new InfoClass(new String("turma1"),  new Integer(1),new Integer(1), iL);
+    argsCriarTurma[0] = Cloner.copyClass2InfoClass(_turma1);
     
     Object result = null; 
       try {
@@ -73,9 +70,8 @@ public class CriarTurmaServicosTest extends TestCaseServicos {
   // write new non-existing turma
   public void testCreateNonExistingTurma() {
     Object argsCriarTurma[] = new Object[1];
-    InfoDegree iL = new InfoDegree(_curso1.getSigla(),
-                                               _curso1.getNome());
-    argsCriarTurma[0] = new InfoClass(new String("turma2"),  new Integer(1),new Integer(1), iL);
+
+    argsCriarTurma[0] = Cloner.copyClass2InfoClass(_turma2);
     
     Object result = null; 
       try {
