@@ -2,6 +2,21 @@
 <!-- @validation.doctype@ -->
 <form-validation>
   <formset>
+    
+    <!-- validation for upload Form -->
+   	<form name="fileForm">
+   		<field property="theFile" depends="required,mask" >
+   		
+   		<arg0 key="errors.fileRequired" resource="true"/>
+   		<msg name="mask" key="errors.fileNameInvalid"/>
+   		 <var>
+           <var-name>mask</var-name>
+           <var-value>(^&)*</var-value>
+        </var>
+  	 </field>
+  	</form>
+   
+   
    
    <!-- validation for testsForm -->
    <form name="testForm">

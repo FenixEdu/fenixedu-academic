@@ -1194,6 +1194,7 @@
       <action path="/fileUpload" 
       		  name="fileForm"	
  			  parameter="method"
+ 			  validate="true"
               type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">	 
             <forward  name="viewSection" path="/viewSection.jsp"/> 
             <forward  name="uploadItemFile" path="/uploadItemFile.jsp"/>  	 
