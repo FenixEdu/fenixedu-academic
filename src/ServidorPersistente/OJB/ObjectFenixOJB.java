@@ -70,7 +70,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 		db = odmg.getDatabase(null);
 		if (db == null) {
-			System.out.println("Openiing a new database connection in Object Fenix!!!");
+			System.out.println(
+				"Opening a new database connection in Object Fenix!!!");
 			db = odmg.newDatabase();
 			try {
 				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
@@ -213,18 +214,76 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	}
 
-	public IDomainObject readByOId(IDomainObject obj)
-		throws ExcepcaoPersistencia {
-		PersistenceBroker broker =
-			((HasBroker) odmg.currentTransaction()).getBroker();
+	/**
+	 * @see IPersistentObject#readByOId(IDomainObject, boolean)
+	 */
+	public IDomainObject readByOId(IDomainObject obj, boolean lockWrite) {
+
+		tx = odmg.currentTransaction();
+		PersistenceBroker broker = ((HasBroker) tx).getBroker();
 
 		Identity identity = new Identity(obj, broker);
-		IDomainObject result =
+		IDomainObject domainObject =
 			(IDomainObject) broker.getObjectByIdentity(identity);
-		tx = odmg.currentTransaction();
-		tx.lock(result, Transaction.READ);
 
-		return result;
+		if (domainObject == null) {
+			return null;
+		}
+
+		if (lockWrite) {
+			tx.lock(domainObject, Transaction.WRITE);
+		} else {
+			tx.lock(domainObject, Transaction.READ);
+		}
+		return domainObject;
+	}
+
+	public IDomainObject readByUnique(
+		IDomainObject domainObject,
+		boolean lockWrite)
+		throws IllegalArgumentException {
+		List uniqueProperties = domainObject.getUniqueProperties();
+		Criteria criteria = new Criteria();
+
+		for (int propertyIndex = 0;
+			propertyIndex < uniqueProperties.size();
+			propertyIndex++) {
+			String propertyName = (String) uniqueProperties.get(propertyIndex);
+			Object propertyValue = null;
+			try {
+				propertyValue =
+					PropertyUtils.getNestedProperty(domainObject, propertyName);
+			} catch (IllegalAccessException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			} catch (InvocationTargetException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			} catch (NoSuchMethodException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+			criteria.addEqualTo(propertyName, propertyValue);
+		}
+
+		PersistenceBroker pb =
+			((HasBroker) odmg.currentTransaction()).getBroker();
+		Query queryCriteria =
+			new QueryByCriteria(domainObject.getClass(), criteria);
+		List list = (List) pb.getCollectionByQuery(queryCriteria);
+
+		if (list.size() > 1) {
+			throw new IllegalArgumentException("Not unique configured!");
+		} else {
+			IDomainObject objectReaded = null;
+			if (!list.isEmpty()) {
+				objectReaded = (IDomainObject) list.get(0);
+				Transaction tx = odmg.currentTransaction();
+				if (lockWrite == true) {
+					tx.lock(objectReaded, Transaction.WRITE);
+				} else {
+					tx.lock(objectReaded, Transaction.READ);
+				}
+			}
+			return objectReaded;
+		}
 	}
 
 	public Object readDomainObjectByCriteria(Object obj)
