@@ -2,15 +2,14 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<!-- page="/fenixLayoutStudent_2col_photo.jsp"-->
 	<definition name="definition.student.masterPage" extends="df.layout.two-column-photo">
 	  <put name="title" value=".IST - portalEstudante" />
 	  <put name="serviceName" value="Portal do Estudante" />	
 	  <put name="navGeral" value=" " />
-	  <put name="photos" value="/student/commonEntrPhotosStudent.jsp" />
+	  <put name="photos" value="/student/commons/commonEntrPhotosStudent.jsp" />
 	  <put name="context-body" value=" "/>
-	  <put name="body" value="/student/main_bd.jsp" />
-	  <put name="footer" value="/student/commonFooterStudent.jsp" />
+	  <put name="body" value=" " />
+	  <put name="footer" value="/student/commons/commonFooterStudent.jsp" />
 	</definition>
 	<definition name="definition.student.curricular.course.enrolment" extends="definition.student.masterPage">
 		<put name="body-context" value="/student/enrolmentContext.jsp"/>
