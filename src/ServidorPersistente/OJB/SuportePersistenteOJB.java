@@ -57,7 +57,6 @@ import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
-import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExamStudentRoom;
@@ -501,12 +500,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new PersistentRestriction();
 	}
 
-/**
- * @deprecated
- */
-	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
-		return new EvaluationMethodOJB();
-	}
+
+	
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
 		return new PersistentEnrolmentPeriod();
