@@ -22,6 +22,7 @@ import org.odmg.Transaction;
 
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDepartamentoPersistente;
@@ -320,6 +321,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new BranchOJB();
 	}
 	
+	public IPersistentCurricularYear getIPersistentCurricularYear() {
+		return new CurricularYearOJB();
+	}
+
 	public IPersistentContributor getIPersistentContributor() {
 		return new ContributorOJB();
 	}

@@ -61,5 +61,7 @@ public interface ISuportePersistente {
 	public IPersistentExam getIPersistentExam();
 	
 	public IPersistentBranch getIPersistentBranch();
+	
+	public IPersistentCurricularYear getIPersistentCurricularYear();
 	public IPersistentContributor getIPersistentContributor();
 }
