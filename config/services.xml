@@ -3258,7 +3258,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="PublicationOwnerAuthorization"/>
+            <chain name="PublicationAuthorAuthorization"/>
         </filterChains>
     </service>
     
@@ -3296,7 +3296,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="PublicationOwnerAuthorization"/>
+            <chain name="PublicationAuthorAuthorization"/>
         </filterChains>
     </service>
 	<service>
