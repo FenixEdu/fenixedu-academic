@@ -2,7 +2,7 @@
  * Created on 13/Fev/2004
  *  
  */
-package ServidorAplicacao.Servico.enrolment.shift;
+package ServidorAplicacao.Servico.enrollment.shift;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudent;

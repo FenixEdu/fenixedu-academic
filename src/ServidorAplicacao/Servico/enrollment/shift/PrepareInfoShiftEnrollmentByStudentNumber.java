@@ -2,7 +2,7 @@
  * Created on 10/Fev/2004
  *  
  */
-package ServidorAplicacao.Servico.enrolment.shift;
+package ServidorAplicacao.Servico.enrollment.shift;
 
 import java.util.ArrayList;
 import java.util.Iterator;

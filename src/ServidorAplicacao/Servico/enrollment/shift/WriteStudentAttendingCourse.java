@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.enrolment.shift;
+package ServidorAplicacao.Servico.enrollment.shift;
 
 import java.util.Iterator;
 import java.util.List;
