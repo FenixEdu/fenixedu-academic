@@ -137,7 +137,7 @@ public class ReportAllPastEnrollmentMigration
 				Iterator iterator2 = mwEnrolmentCasesList.iterator();
 				while (iterator2.hasNext()) {
 					MWEnrolment mwEnrolment = (MWEnrolment) iterator2.next();
-					out.println("\t\t" + mwEnrolment.toFlatString());
+					out.println("\t" + mwEnrolment.toFlatString());
 				}
 			}
 			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes);
@@ -163,7 +163,7 @@ public class ReportAllPastEnrollmentMigration
 				Iterator iterator2 = mwEnrolmentCasesList.iterator();
 				while (iterator2.hasNext()) {
 					MWEnrolment mwEnrolment = (MWEnrolment) iterator2.next();
-					out.println("\t\t" + mwEnrolment.toFlatString());
+					out.println("\t" + mwEnrolment.toFlatString());
 				}
 			}
 			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes);

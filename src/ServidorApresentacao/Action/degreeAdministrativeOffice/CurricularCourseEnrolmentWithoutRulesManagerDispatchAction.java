@@ -54,14 +54,14 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		InfoStudent infoStudent = super.getInfoStudent(request, form, userView);
 
 		List listOfChosenCurricularYears = (List) request.getAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY);
-//		List listOfChosenCurricularSemesters = (List) request.getAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY);
+		List listOfChosenCurricularSemesters = (List) request.getAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY);
 		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.DEGREE);
 
 //		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		Integer executionPeriodOID = (Integer) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
 		InfoExecutionPeriod infoExecutionPeriod = PrepareStudentDataForEnrolmentWithoutRulesDispatchAction.getExecutionPeriod(request, executionPeriodOID);
 
-		Object args[] = { infoStudent, infoExecutionPeriod, infoExecutionDegree/*, listOfChosenCurricularSemesters*/, listOfChosenCurricularYears };
+		Object args[] = { infoStudent, infoExecutionPeriod, infoExecutionDegree, listOfChosenCurricularSemesters, listOfChosenCurricularYears };
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		try {

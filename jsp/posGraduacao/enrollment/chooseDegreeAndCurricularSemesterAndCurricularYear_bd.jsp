@@ -6,7 +6,7 @@
 
 <bean:define id="infoExecutionDegreesNamesList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>
 <bean:define id="yearsList" name="<%= SessionConstants.ENROLMENT_YEAR_LIST_KEY %>" scope="request"/>
-<%--<bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>--%>
+<bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>
 <bean:define id="infoStudent" name="<%= SessionConstants.STUDENT %>"  scope="request"/>
 <bean:define id="studentOID" name="infoStudent"  property="idInternal"/>
 <bean:define id="executionPeriodOID" name="<%= SessionConstants.EXECUTION_PERIOD_OID %>" scope="request"/>
@@ -57,7 +57,7 @@
 			</tr>
 		</logic:iterate>
 	</table>
-<%--
+
 	<br/>
 	<br/>
 	<bean:message key="label.choose.semester"/>
@@ -75,7 +75,7 @@
 			</tr>
 		</logic:iterate>
 	</table>
---%>
+
 	<br/>
 	<br/>
 	<html:submit styleClass="inputbutton">

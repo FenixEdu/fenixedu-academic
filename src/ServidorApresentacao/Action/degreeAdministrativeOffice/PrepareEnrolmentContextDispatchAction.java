@@ -31,7 +31,7 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction
 {
 
     private static final int MAX_CURRICULAR_YEARS = 5;
-    //	private static final int MAX_CURRICULAR_SEMESTERS = 2;
+    private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
     private final String[] forwards = { "showAvailableCurricularCourses", "home", "error" };
 
@@ -47,15 +47,15 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction
 
         Integer infoExecutionDegreeID = this.getChosenInfoExecutionDegreeIndex(form);
 
-        //		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreesList.get(infoExecutionDegreeIndex.intValue());
+//		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreesList.get(infoExecutionDegreeIndex.intValue());
         InfoExecutionDegree infoExecutionDegree =
             this.getChosenInfoExecutionDegree(infoExecutionDegreesList, infoExecutionDegreeID);
 
         List listOfChosenCurricularYears = this.getListOfChosenCurricularYears(form);
-        //		List listOfChosenCurricularSemesters = this.getListOfChosenCurricularSemesters(form);
+		List listOfChosenCurricularSemesters = this.getListOfChosenCurricularSemesters(form);
 
         request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, listOfChosenCurricularYears);
-        //		request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, listOfChosenCurricularSemesters);
+		request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, listOfChosenCurricularSemesters);
         request.setAttribute(SessionConstants.DEGREE, infoExecutionDegree);
 
         request.setAttribute("studentOID", this.getStudentOID(form));
@@ -158,28 +158,28 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction
         return result;
     }
 
-    //	private List getListOfChosenCurricularSemesters(ActionForm form) {
-    //
-    //		DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
-    //		List result = new ArrayList();
-    //
-    //		if(getDegreeAndCurricularSemesterAndCurricularYearForm.get("curricularSemesters") == null) {
-    //			getDegreeAndCurricularSemesterAndCurricularYearForm.set("curricularSemesters", new Integer[PrepareEnrolmentContextDispatchAction.MAX_CURRICULAR_SEMESTERS]);
-    //		}
-    //
-    //		Integer[] curricularSemesters = (Integer[]) getDegreeAndCurricularSemesterAndCurricularYearForm.get("curricularSemesters");
-    //
-    //		if(curricularSemesters != null) {
-    //			for(int i = 0; i < curricularSemesters.length; i++) {
-    //				Integer curricularSemester = curricularSemesters[i];
-    //				if(curricularSemester != null) {
-    //					Integer realSemester = new Integer(curricularSemester.intValue() + 1);
-    //					result.add(realSemester);
-    //				}
-    //			}
-    //		}
-    //		return result;
-    //	}
+	private List getListOfChosenCurricularSemesters(ActionForm form) {
+	
+		DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
+		List result = new ArrayList();
+	
+		if(getDegreeAndCurricularSemesterAndCurricularYearForm.get("curricularSemesters") == null) {
+			getDegreeAndCurricularSemesterAndCurricularYearForm.set("curricularSemesters", new Integer[PrepareEnrolmentContextDispatchAction.MAX_CURRICULAR_SEMESTERS]);
+		}
+	
+		Integer[] curricularSemesters = (Integer[]) getDegreeAndCurricularSemesterAndCurricularYearForm.get("curricularSemesters");
+	
+		if(curricularSemesters != null) {
+			for(int i = 0; i < curricularSemesters.length; i++) {
+				Integer curricularSemester = curricularSemesters[i];
+				if(curricularSemester != null) {
+					Integer realSemester = new Integer(curricularSemester.intValue() + 1);
+					result.add(realSemester);
+				}
+			}
+		}
+		return result;
+	}
 
     private Integer getStudentOID(ActionForm form) throws FenixActionException
     {

@@ -635,7 +635,7 @@ public abstract class EnrolmentContextManager {
 		return enrolmentContext;
 	}
 
-	public static EnrolmentContext initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(IStudent student, IExecutionPeriod executionPeriod, ICursoExecucao executionDegree/*, List listOfChosenCurricularSemesters*/, List listOfChosenCurricularYears) throws ExcepcaoPersistencia {
+	public static EnrolmentContext initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(IStudent student, IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, List listOfChosenCurricularSemesters, List listOfChosenCurricularYears) throws ExcepcaoPersistencia {
 		EnrolmentContext enrolmentContext = new EnrolmentContext();
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
@@ -681,8 +681,8 @@ public abstract class EnrolmentContextManager {
 				Iterator iterator2 = curricularCourse.getScopes().iterator();
 				while(iterator2.hasNext()) {
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
-					if(	/*listOfChosenCurricularSemesters.contains(curricularCourseScope.getCurricularSemester().getSemester()) &&*/
-						executionPeriod.getSemester().equals(curricularCourseScope.getCurricularSemester().getSemester()) &&
+					if(	listOfChosenCurricularSemesters.contains(curricularCourseScope.getCurricularSemester().getSemester()) &&
+//						executionPeriod.getSemester().equals(curricularCourseScope.getCurricularSemester().getSemester()) &&
 						listOfChosenCurricularYears.contains(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()) ) {
 						curricularCoursesScopesFromDegreeCurricularPlan.add(curricularCourseScope);
 					}
@@ -724,14 +724,14 @@ public abstract class EnrolmentContextManager {
 		studentEnrolmentsWithStateAprovedAndEnrolled.addAll(aprovedStudentEnrolments);
 //		studentEnrolmentsWithStateAprovedAndEnrolled.addAll(studentEnrolmentsWithStateEnrolled);
 
-//		final List listOfChosenCurricularSemesters2 = listOfChosenCurricularSemesters;
+		final List listOfChosenCurricularSemesters2 = listOfChosenCurricularSemesters;
 		final List listOfChosenCurricularYears2 = listOfChosenCurricularYears;
 		List studentEnrolmentsWithStateAprovedAndEnrolledForSelectedDegree = (List) CollectionUtils.select(studentEnrolmentsWithStateAprovedAndEnrolled, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return	enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan) &&
-//						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
-						executionPeriod2.getSemester().equals(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+//						executionPeriod2.getSemester().equals(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
 						listOfChosenCurricularYears2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear());
 			}
 		});
@@ -740,8 +740,8 @@ public abstract class EnrolmentContextManager {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return	enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan) &&
-//						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
-						executionPeriod2.getSemester().equals(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+//						executionPeriod2.getSemester().equals(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
 						listOfChosenCurricularYears2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear());
 			}
 		});

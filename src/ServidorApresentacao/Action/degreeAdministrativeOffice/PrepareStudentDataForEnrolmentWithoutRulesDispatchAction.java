@@ -85,7 +85,7 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 			request.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList, degreeType));
 
 			request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, this.generateCurricularYearList());
-//			request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, this.generateCurricularSemesterList());
+			request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, this.generateCurricularSemesterList());
 
 			return mapping.findForward(forwards[0]);
 		} else {
@@ -119,12 +119,12 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 		return years;
 	}
 
-//	private List generateCurricularSemesterList() {
-//		List years = new ArrayList();
-//		years.add("label.first.semester");
-//		years.add("label.second.semester");
-//		return years;
-//	}
+	private List generateCurricularSemesterList() {
+		List years = new ArrayList();
+		years.add("label.first.semester");
+		years.add("label.second.semester");
+		return years;
+	}
 
 	private List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList, Integer degreeType) {
 		ArrayList result = null;

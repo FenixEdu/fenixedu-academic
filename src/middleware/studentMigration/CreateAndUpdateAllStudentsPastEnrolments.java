@@ -101,14 +101,14 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	
 			System.out.println("[INFO] Total number of student curriculums to update [" + numberOfStudents + "].");
 
-			int numberOfElementsInSpan = 500;
+			int numberOfElementsInSpan = 100;
 			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
 			numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 			
 			for (int span = 0; span < numberOfSpans; span++) {
 				fenixPersistentSuport.iniciarTransaccao();
 //				fenixPersistentSuport.clearCache();
-//				System.gc();
+				System.gc();
 	
 				System.out.println("[INFO] Reading MWStudents...");
 				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
@@ -146,9 +146,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 					CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
 					CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.clear();
 					CreateAndUpdateAllStudentsPastEnrolments.curricularCourseScopesCreated.clear();
-
-					fenixPersistentSuport.clearCache();
-					System.gc();
 				}
 			}
 		} catch (Throwable e) {

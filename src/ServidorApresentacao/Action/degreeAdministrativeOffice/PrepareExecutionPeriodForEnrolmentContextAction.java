@@ -52,7 +52,8 @@ public class PrepareExecutionPeriodForEnrolmentContextAction extends Action {
 			Iterator iterator = infoExecutionPeriodsList.iterator();
 			while(iterator.hasNext()) {
 				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) iterator.next();
-				result.add(new LabelValueBean(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - " + infoExecutionPeriod.getName(), infoExecutionPeriod.getIdInternal().toString()));
+//				result.add(new LabelValueBean(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - " + infoExecutionPeriod.getName(), infoExecutionPeriod.getIdInternal().toString()));
+				result.add(new LabelValueBean(infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
 			}
 		}
 		PrepareExecutionPeriodForEnrolmentContextAction.sort(result);
