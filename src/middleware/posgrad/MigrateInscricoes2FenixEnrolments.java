@@ -9,6 +9,7 @@ package middleware.posgrad;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
@@ -58,11 +59,11 @@ public class MigrateInscricoes2FenixEnrolments {
 	public static void main(String args[]) throws Exception{
 		MigrateInscricoes2FenixEnrolments migrateAreasCientificas2FenixBrach = new MigrateInscricoes2FenixEnrolments();
 		
-		migrateAreasCientificas2FenixBrach.broker.beginTransaction();
-		migrateAreasCientificas2FenixBrach.broker.clearCache();
+//		migrateAreasCientificas2FenixBrach.broker.beginTransaction();
+//		migrateAreasCientificas2FenixBrach.broker.clearCache();
 		migrateAreasCientificas2FenixBrach.migratePosgradInscricoes2FenixEnrolment();
 		
-		migrateAreasCientificas2FenixBrach.broker.commitTransaction();
+//		migrateAreasCientificas2FenixBrach.broker.commitTransaction();
 	}
 
 	private void migratePosgradInscricoes2FenixEnrolment() throws Exception{
@@ -79,13 +80,17 @@ public class MigrateInscricoes2FenixEnrolments {
 		
 		try {
 			System.out.print("Reading PosGrad Inscricoes ...");
-			List inscricoes = getInscricoes();
+			List inscricoes = getInscricoes(broker);
 			System.out.println("  Done !");
 			
 			System.out.println("Migrating " + inscricoes.size() + " Inscricoes to Fenix Enrolment ...");
 			Iterator iterator = inscricoes.iterator();
 			while(iterator.hasNext()){
-				 inscricao = (Posgrad_disc_area_aluno) iterator.next();
+				broker.beginTransaction();
+				
+				
+				broker.clearCache();
+				inscricao = (Posgrad_disc_area_aluno) iterator.next();
 			
 			
 				// Invalid Enrolments
@@ -98,10 +103,9 @@ public class MigrateInscricoes2FenixEnrolments {
 					(inscricao.getCodigoareadisciplina() == 127) ||
 					(inscricao.getCodigoareadisciplina() == 893)){
 						inscricoesNotWritten++;
+						broker.commitTransaction();
 						continue;
 					}
-				
-			
 				
 				// Read Disciplina Area
 				
@@ -327,13 +331,22 @@ public class MigrateInscricoes2FenixEnrolments {
 					enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				}
 				
-				broker.store(enrolment);			
+				
+				// Check of enrolment already Exists
+				IEnrolment enrolment2Write = getEnrolment2Write(enrolment, broker);
+
+				broker.store(enrolment2Write);			
 				enrolmentsWritten++;
 
+				broker.commitTransaction();
 
 				if (evaluationNeeded){
+					broker.beginTransaction();
+
+					broker.clearCache();
+					
 					IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-					enrolmentEvaluation.setEnrolment(enrolment);
+					enrolmentEvaluation.setEnrolment(enrolment2Write);
 					enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
 					enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.NORMAL_OBJ);
 					enrolmentEvaluation.setExamDate(inscricao.getDataexame());
@@ -372,8 +385,15 @@ public class MigrateInscricoes2FenixEnrolments {
 					
 					enrolmentEvaluation.setPersonResponsibleForGrade(person);
 
-					broker.store(enrolmentEvaluation);
+
+					// Check if the grade Already Exists
+
+					IEnrolmentEvaluation enrolmentEvaluation2Write = getEnrolmentEvaluation2Write(enrolmentEvaluation, broker);
+
+					broker.store(enrolmentEvaluation2Write);
 					evaluationsWritten++;
+
+					broker.commitTransaction();
 				}
 			}
 				
@@ -388,11 +408,70 @@ public class MigrateInscricoes2FenixEnrolments {
 			throw new Exception("Error Migrating Inscricao " + inscricao.getCodigointerno() , e);
 		}
 	}
+	
+	
+	
+	private IEnrolment getEnrolment2Write(IEnrolment enrolment, PersistenceBroker broker) throws Exception {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlanKey", new Integer(String.valueOf(((StudentCurricularPlan) enrolment.getStudentCurricularPlan()).getInternalCode())));
+		criteria.addEqualTo("keyExecutionPeriod", new Integer(String.valueOf(((ExecutionPeriod) enrolment.getExecutionPeriod()).getIdInternal())));
+		criteria.addEqualTo("curricularCourseScopeKey", new Integer(String.valueOf(((CurricularCourseScope) enrolment.getCurricularCourseScope()).getIdInternal())));
+		Query query = new QueryByCriteria(Enrolment.class,criteria);
 
-	private List getInscricoes() throws Exception {
+		List result = (List) broker.getCollectionByQuery(query);		
+
+		if (result.size() == 0) {
+//			System.out.println("Nao encontrei o Enrolment");
+			return enrolment;
+		} else if (result.size() == 1) {
+//			System.out.println("Encontrei o enrolment");
+			Enrolment enrolmentFromDatabase = (Enrolment) result.get(0); 
+			Integer idInternal = enrolmentFromDatabase.getInternalID();
+			BeanUtils.copyProperties(enrolmentFromDatabase, enrolment);
+			enrolmentFromDatabase.setInternalID(idInternal);
+			return enrolmentFromDatabase;
+		}
+		
+		throw new Exception("More than one Enrolment Matching Criteria." + enrolment);
+	}
+	
+	
+	private IEnrolmentEvaluation getEnrolmentEvaluation2Write(IEnrolmentEvaluation enrolmentEvaluation, PersistenceBroker broker) throws Exception{
+		
+		Criteria criteria = new Criteria();
+		
+//		System.out.println(((Enrolment) enrolmentEvaluation.getEnrolment()).getInternalID());
+		
+		
+		criteria.addEqualTo("enrolmentEvaluationType", enrolmentEvaluation.getEnrolmentEvaluationType().getType());
+		criteria.addEqualTo("enrolmentKey", new Integer(String.valueOf(((Enrolment) enrolmentEvaluation.getEnrolment()).getInternalID())));
+		Query query = new QueryByCriteria(EnrolmentEvaluation.class,criteria);
+
+		List result = (List) broker.getCollectionByQuery(query);		
+
+		if (result.size() == 0) {
+			return enrolmentEvaluation;
+		} else if (result.size() == 1) {
+			EnrolmentEvaluation enrolmentEvaluationFromDatabase = (EnrolmentEvaluation) result.get(0); 
+			Integer idInternal = enrolmentEvaluationFromDatabase.getIdInternal();
+			BeanUtils.copyProperties(enrolmentEvaluationFromDatabase, enrolmentEvaluation);
+			enrolmentEvaluationFromDatabase.setIdInternal(idInternal);
+			return enrolmentEvaluationFromDatabase;
+		}
+		
+		throw new Exception("More than one Enrolment Evaluation Matching Criteria." + enrolmentEvaluation);		
+	}
+
+	private List getInscricoes(PersistenceBroker broker) throws Exception {
+		broker.beginTransaction();
+		broker.clearCache();
 		Criteria criteria = new Criteria();
 		QueryByCriteria query = new QueryByCriteria(Posgrad_disc_area_aluno.class, criteria);
-		return (List) broker.getCollectionByQuery(query);
+		
+		List result = (List) broker.getCollectionByQuery(query); 
+		broker.commitTransaction();
+		return result;
 	}
 
 
