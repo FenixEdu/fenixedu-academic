@@ -1,6 +1,7 @@
 package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
+import middleware.persistentMiddlewareSupport.IPersistentMWAreaCientificaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaSecundariaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaEspecializacaoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
@@ -135,4 +136,9 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	{
 		return new MWDisciplinaGrupoIleecOJB();
 	}
+	
+	public IPersistentMWAreaCientificaIleec getIPersistentMWAreaCientificaIleec()
+	{
+		return new MWAreaCientificaIleecOJB();
+	}	
 }

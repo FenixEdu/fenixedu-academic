@@ -235,5 +235,6 @@ public interface ISuportePersistente
     
 	//Nuno Correia & Ricardo Rodrigues
 	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
+	public IPersistentScientificArea getIPersistentScientificArea();
   
 }

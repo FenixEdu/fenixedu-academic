@@ -16,6 +16,14 @@ public class ScientificArea extends DomainObject implements IScientificArea {
 
     private String name;
 
+	public ScientificArea(){}
+	
+	public ScientificArea(String name)
+	{
+		setName(name);
+	}
+
+
     /**
      * @return
      */

@@ -47,6 +47,8 @@ public interface ICurricularCourse extends IDomainObject {
 	public void setUniversity(IUniversity code);
 	public void setBasic(Boolean basic);
 	
+	public void setScientificArea(IScientificArea scientificArea);
+	
 		
 	
 	public boolean curricularCourseIsMandatory();
@@ -84,4 +86,6 @@ public interface ICurricularCourse extends IDomainObject {
 	public IUniversity getUniversity();
 	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester);
 	public Boolean getBasic();
+	
+	public IScientificArea getScientificArea();
 }
