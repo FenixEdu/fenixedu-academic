@@ -28,6 +28,7 @@ import ServidorApresentacao.Action.framework.SearchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.mapping.framework.SearchActionMapping;
+import Util.TipoCurso;
 
 /**
  * @author Leonor Almeida
@@ -223,7 +224,7 @@ public class SearchCoursesInformationAction extends SearchAction {
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
                 "ReadCurrentExecutionYear", new Object[] {});
 
-        Object[] args = { infoExecutionYear, null };
+        Object[] args = { infoExecutionYear, TipoCurso.LICENCIATURA_OBJ };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(userView,
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
         Collections.sort(infoExecutionDegrees, new Comparator() {
