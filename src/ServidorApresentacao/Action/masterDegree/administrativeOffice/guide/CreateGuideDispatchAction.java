@@ -270,8 +270,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			
 			// We need to check if the Guide has been payd 
 			if ((requesterType.equals(GuideRequester.CANDIDATE_STRING)) &&
-				(situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))) 
-
+				(situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))) {
 
 				// The Candidate will now have a new Situation
 						
@@ -285,8 +284,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				if ((newInfoGuide.getInfoPerson().getPassword() == null) || (newInfoGuide.getInfoPerson().getPassword().length() == 0)){
 					// Generate the password
 					password = RandomStringGenerator.getRandomStringGenerator(8);
-					newInfoGuide.getInfoPerson().setPassword(password);					
-
+					newInfoGuide.getInfoPerson().setPassword(password);
 
 					// Write the Person
 					try {
@@ -305,8 +303,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}
-				} 
-				
+				}
+			} 
 			session.removeAttribute(SessionConstants.GUIDE);
 			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
 	

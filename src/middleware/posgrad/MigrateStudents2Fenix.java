@@ -225,9 +225,7 @@ public class MigrateStudents2Fenix {
 					
 					
 					if ((student2Convert.getCreditos() != null) && (student2Convert.getCreditos().length() != 0)){
-						System.out.println(student2Convert.getCreditos());
 						studentCurricularPlan.setGivenCredits(new Double(student2Convert.getCreditos()));
-						System.out.println("-> " + studentCurricularPlan.getGivenCredits());
 					}
 					 
 					broker.store(studentCurricularPlan);
