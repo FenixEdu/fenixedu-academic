@@ -1,7 +1,6 @@
 #----------------------------
 # Table structure for MASTER_DEGREE_CANDIDATE
 #----------------------------
-
 drop table if exists MASTER_DEGREE_CANDIDATE;
 create table MASTER_DEGREE_CANDIDATE (
    INTERNAL_CODE integer(11) not null auto_increment,
