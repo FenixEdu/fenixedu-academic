@@ -16,7 +16,11 @@ public class Branch extends DomainObject implements IBranch {
 	private String code;
 	private List scopes;
 	private IDegreeCurricularPlan degreeCurricularPlan;
+	//added by Nuno Correia e Ricardo Rodrigues
 	private String acronym;
+	private Integer specializationCredits;
+	private Integer secondaryCredits;
+
 
 	public Branch() {
 		setName(null);
@@ -156,6 +160,38 @@ public class Branch extends DomainObject implements IBranch {
 
 	public String getAcronym() {
 		return acronym;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Integer getSecondaryCredits()
+	{
+		return secondaryCredits;
+	}
+
+	/**
+	 * @param secondaryCredits
+	 */
+	public void setSecondaryCredits(Integer secondaryCredits)
+	{
+		this.secondaryCredits = secondaryCredits;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getSpecializationCredits()
+	{
+		return specializationCredits;
+	}
+
+	/**
+	 * @param specializationCredits
+	 */
+	public void setSpecializationCredits(Integer specializationCredits)
+	{
+		this.specializationCredits = specializationCredits;
 	}
 
 }
