@@ -306,8 +306,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                 request.setAttribute("forHidden", "true");
                 Integer lessonSelected = new Integer(request.getParameter("lesson"));
                 findNextSummaryDate(request, infoSummary, lessonSelected);
-                request.setAttribute("datesVisible", "true");
-                
+                                request.setAttribute("datesVisible", "true");
             } else {
                 request.setAttribute("forHidden", "false");
                 request.setAttribute("datesVisible", "false");
@@ -341,8 +340,9 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                     calendar.add(Calendar.DATE, 7);
                     dates.add(calendar.getTime());                         
                     request.setAttribute("dates", dates);
-                } else
+                } else {
                     request.setAttribute("datesVisible", "false");
+                }
                 
                 break;
             }
