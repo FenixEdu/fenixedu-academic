@@ -16,11 +16,17 @@
 <bean:define id="infoSiteTeachers" name="siteView" property="component"/>
 <bean:define id="teachersList" name="infoSiteTeachers" property="infoTeachers"/>
 <bean:define id="isResponsible" name="infoSiteTeachers" property="isResponsible"/>
+
+<logic:equal name="isResponsible" value="true">
+	<html:link page="<%= "/teacherManagerDA.do?method=prepareAssociateTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") %>"><bean:message key="link.addTeacher"/></html:link>
+</logic:equal>
 <table>
 	<tr>
 		<td width="150" class="listClasses-header"><bean:message key="label.teacherNumber" /></td>
-		<td width="250" class="listClasses-header"><bean:message key="label.name" /></td>		
-		<td width="250" class="listClasses-header"><bean:message key="message.edit" /></td>    
+		<td width="250" class="listClasses-header"><bean:message key="label.name" /></td>			
+		<logic:equal name="isResponsible" value="true">
+			<td width="250" class="listClasses-header"><bean:message key="message.edit" /></td>    
+		</logic:equal>
 	</tr>	
 	<logic:iterate id="infoTeacher" name="teachersList">
 	<tr>
@@ -31,7 +37,7 @@
 			<td class="listClasses">
 				<html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherCode=" + teacherCode %>">
 					<bean:message key="link.removeTeacher"/>
-				</html:link> / <html:link page="<%= "/teacherManagerDA.do?method=prepareAssociateTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") %>"><bean:message key="link.addTeacher"/></html:link>
+				</html:link>
 			</td>
 		</logic:equal>
 	</tr>
