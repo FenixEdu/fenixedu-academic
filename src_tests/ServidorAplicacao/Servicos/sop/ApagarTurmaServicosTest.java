@@ -22,7 +22,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.Turma;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -33,7 +33,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ApagarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
+public class ApagarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 	
 	private InfoClass infoClass = null;
 	
@@ -66,6 +66,28 @@ public class ApagarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
 		return "ApagarTurma";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		this.ligarSuportePersistente(true);
+		Object argsDeleteTurma[] = {this.infoClass};
+
+		return argsDeleteTurma;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this.ligarSuportePersistente(false);
+		Object argsDeleteTurma[] = {this.infoClass};
+
+		return argsDeleteTurma;
+	}
+/*
 	// delete existing turma
 	public void testDeleteExistingTurma() {
 
@@ -95,7 +117,7 @@ public class ApagarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testDeleteNonExistingTurma");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

@@ -17,10 +17,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseDeleteServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import Util.DiaSemana;
 
-public class ApagarAulaServicosTest extends TestCaseDeleteServices {
+public class ApagarAulaServicosTest extends TestCaseDeleteAndEditServices {
 
 	public ApagarAulaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -52,7 +52,7 @@ public class ApagarAulaServicosTest extends TestCaseDeleteServices {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
@@ -78,7 +78,7 @@ public class ApagarAulaServicosTest extends TestCaseDeleteServices {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 

@@ -22,7 +22,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.Turma;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -33,7 +33,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class EditarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
+public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 	
 	private InfoClass infoClass = null;
 
@@ -66,6 +66,44 @@ public class EditarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
 		return "EditarTurma";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		this. ligarSuportePersistente(true);
+
+		Object argsEditarTurma[] = new Object[2];
+		argsEditarTurma[0] = this.infoClass;
+		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
+		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+		newInfoClass.setAnoCurricular(new Integer(2));
+		newInfoClass.setSemestre(new Integer(2));
+		newInfoClass.setNome("turmaXPTO");
+		argsEditarTurma[1] = newInfoClass;
+
+		return argsEditarTurma;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this. ligarSuportePersistente(false);
+
+		Object argsEditarTurma[] = new Object[2];
+		argsEditarTurma[0] = this.infoClass;
+		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
+		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+		newInfoClass.setAnoCurricular(new Integer(2));
+		newInfoClass.setSemestre(new Integer(2));
+		newInfoClass.setNome("turmaXPTO");
+		argsEditarTurma[1] = newInfoClass;
+
+		return argsEditarTurma;
+	}
+/*
 	// edit existing turma
 	public void testEditExistingTurma() {
 
@@ -111,7 +149,7 @@ public class EditarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testEditNonExistingTurma");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

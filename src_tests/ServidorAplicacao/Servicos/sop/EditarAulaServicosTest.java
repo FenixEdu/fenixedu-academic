@@ -54,6 +54,21 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		super.tearDown();
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "EditarAula";
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#needsAuthorization()
+	 */
+	// TODO This class must extend class TestCaseCreateServices so this method will be gonne
+	protected boolean needsAuthorization() {
+		return true;
+	}
+
 	// edit new existing aula
 	public void testEditExistingAula() {
 		InfoRoom infoSala =
@@ -197,12 +212,4 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				fail("testEditNonExistingAula");
 			}
 		}
-
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "EditarAula";
-	}
-
 }

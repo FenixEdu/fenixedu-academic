@@ -22,7 +22,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.Turma;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -33,7 +33,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class CriarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
+public class CriarTurmaServicosTest extends TestCaseCreateServices {
 	
 	private InfoClass infoClass = null;
 
@@ -66,6 +66,30 @@ public class CriarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
 		return "CriarTurma";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		this. ligarSuportePersistente(false);
+
+		Object argsCriarTurma[] = { this.infoClass };
+
+		return argsCriarTurma;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this. ligarSuportePersistente(true);
+
+		Object argsCriarTurma[] = { this.infoClass };
+
+		return argsCriarTurma;
+	}
+/*
 	// write existing turma
 	public void testCreateExistingTurma() {
 
@@ -97,7 +121,7 @@ public class CriarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testCreateNonExistingTurma");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

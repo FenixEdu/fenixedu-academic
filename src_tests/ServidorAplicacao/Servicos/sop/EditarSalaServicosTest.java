@@ -15,10 +15,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import Util.TipoSala;
 
-public class EditarSalaServicosTest extends TestCaseNeedAuthorizationServices {
+public class EditarSalaServicosTest extends TestCaseDeleteAndEditServices {
 
 	public EditarSalaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -49,6 +49,30 @@ public class EditarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 		return "EditarSala";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		Object argsEditarSala[] = new Object[2];
+		argsEditarSala[0] = new RoomKey("Ga1");
+		argsEditarSala[1] = new InfoRoom(new String("Ga1"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(150), new Integer(25));
+
+		return argsEditarSala;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		Object argsEditarSala[] = new Object[2];
+		argsEditarSala[0] = new RoomKey("Ga4");
+		argsEditarSala[1] = new InfoRoom(new String("Ga4"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
+
+		return argsEditarSala;
+	}
+/*
 	// edit existing sala
 	public void testEditExistingSala() {
 
@@ -80,4 +104,5 @@ public class EditarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testEditNonExistingSala");
 		}
 	}
+*/
 }

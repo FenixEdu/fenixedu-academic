@@ -14,9 +14,9 @@ package ServidorAplicacao.Servicos.sop;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 
-public class ApagarSalaServicosTest extends TestCaseNeedAuthorizationServices {
+public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 
 	public ApagarSalaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -47,6 +47,28 @@ public class ApagarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 		return "ApagarSala";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		Object argsDeleteSala[] = new Object[1];
+		argsDeleteSala[0] = new RoomKey(new String("Ga3"));
+
+		return argsDeleteSala;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		Object argsDeleteSala[] = new Object[1];
+		argsDeleteSala[0] = new RoomKey(new String("Ga4"));
+
+		return argsDeleteSala;
+	}
+/*
 	// delete existing sala
 	public void testDeleteExistingSala() {
 
@@ -76,7 +98,7 @@ public class ApagarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testDeleteNonExistingSala");
 		}
 	}
-
+*/
 	// delete existing sala with associations
 	public void testDeleteExistingSalaWithAssociations() {
 

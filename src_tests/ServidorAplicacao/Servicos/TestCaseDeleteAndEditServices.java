@@ -6,9 +6,9 @@ package ServidorAplicacao.Servicos;
  * Created on 24/Fev/2003
  */
 
-public abstract class TestCaseDeleteServices extends TestCaseNeedAuthorizationServices {
+public abstract class TestCaseDeleteAndEditServices extends TestCaseNeedAuthorizationServices {
 
-	public TestCaseDeleteServices(String testName) {
+	public TestCaseDeleteAndEditServices(String testName) {
 		super(testName);
 	}
 	

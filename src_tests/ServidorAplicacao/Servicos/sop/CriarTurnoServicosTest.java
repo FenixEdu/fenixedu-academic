@@ -20,7 +20,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurno;
 import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -30,7 +30,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class CriarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
+public class CriarTurnoServicosTest extends TestCaseCreateServices {
 	
 	private InfoShift infoShift = null;
 
@@ -63,6 +63,30 @@ public class CriarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 		return "CriarTurno";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		this.ligarSuportePersistente(false);
+
+		Object argsCriarTurno[] = { this.infoShift };
+
+		return argsCriarTurno;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this.ligarSuportePersistente(true);
+
+		Object argsCriarTurno[] = { this.infoShift };
+
+		return argsCriarTurno;
+	}
+/*
 	// write existing turno
 	public void testCreateExistingTurno() {
 
@@ -94,7 +118,7 @@ public class CriarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testCreateNonExistingTurno");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

@@ -22,7 +22,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurno;
 import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -32,7 +32,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class ApagarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
+public class ApagarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 	
 	private InfoShift infoShift = null;
 
@@ -65,6 +65,30 @@ public class ApagarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 		return "ApagarTurno";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		this.ligarSuportePersistente(true);
+
+		Object argsDeleteTurno[] = { new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao()) };
+
+		return argsDeleteTurno;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this.ligarSuportePersistente(false);
+
+		Object argsDeleteTurno[] = { new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao()) };
+
+		return argsDeleteTurno;
+	}
+/*
 	// delete existing turno
 	public void testDeleteExistingTurno() {
 
@@ -96,7 +120,7 @@ public class ApagarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testDeleteNonExistingTurno");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

@@ -15,10 +15,10 @@ package ServidorAplicacao.Servicos.sop;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRoom;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import Util.TipoSala;
 
-public class CriarSalaServicosTest extends TestCaseNeedAuthorizationServices {
+public class CriarSalaServicosTest extends TestCaseCreateServices {
 
 	public CriarSalaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -50,13 +50,27 @@ public class CriarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
-	// TODO This class must extend class TestCaseCreateServices so this method will be gonne
-	protected boolean needsAuthorization() {
-		return true;
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		Object argsCriarSala[] = new Object[1];
+		argsCriarSala[0] = new InfoRoom(new String("Ga4"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
+
+		return argsCriarSala;
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		Object argsCriarSala[] = new Object[1];
+		argsCriarSala[0] = new InfoRoom(new String("Ga1"), new String("Pavilhilhão Central"), new Integer(0), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
+
+		return argsCriarSala;
+	}
+/*
 	// write existing sala
 	public void testCreateExistingSala() {
 		Object argsCriarSala[] = new Object[1];
@@ -84,4 +98,5 @@ public class CriarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testCreateNonExistingSala");
 		}
 	}
+*/
 }
