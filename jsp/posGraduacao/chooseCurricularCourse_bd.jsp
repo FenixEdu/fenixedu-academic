@@ -29,8 +29,8 @@
 				<logic:iterate id="scopeElem" name="curricularCourseElem" property="infoScopes">
 				<tr>
 					<td>
-						<bean:define id="scopeCode" name="scopeElem" property="idInternal"/>
-						<html:link page="<%= path + ".do?method=chooseCurricularCourse&amp;scopeCode=" + scopeCode + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") %>">
+						<bean:define id="scopeCode" name="curricularCourseElem" property="idInternal"/>
+						<html:link page="<%= path + ".do?method=chooseCurricularCourseByID&amp;courseID=" + scopeCode + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") %>">
 							<bean:write name="curricularCourseElem" property="name"/>
 						</html:link>
 					</td>

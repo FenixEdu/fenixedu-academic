@@ -349,7 +349,7 @@
       
        <field property="examDateYear"
                depends="validateDate" page="1">
-                  <arg0 key="label.person.birth" />
+                  <arg0 key="label.exam" />
                   <var>
                      <var-name>month</var-name>
                      <var-value>examDateMonth</var-value>
@@ -361,7 +361,7 @@
         </field>
         <field property="gradeAvailableDateYear"
                depends="validateDate" page="1">
-                  <arg0 key="label.person.birth" />
+                  <arg0 key="label.gradeAvailableDate" />
                   <var>
                      <var-name>month</var-name>
                      <var-value>gradeAvailableDateMonth</var-value>

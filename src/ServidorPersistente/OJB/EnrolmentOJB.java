@@ -406,6 +406,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
 	
 	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia {
 		   		   

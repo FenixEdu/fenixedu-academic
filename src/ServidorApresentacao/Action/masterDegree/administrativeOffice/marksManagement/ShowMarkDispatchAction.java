@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoEnrolment;
-import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -56,14 +55,14 @@ public class ShowMarkDispatchAction extends DispatchAction {
 		// Get students List			
 		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] = {userView,curricularCourseCode};
+		Object args[] = {userView,curricularCourseCode,executionYear};
 		GestorServicos serviceManager = GestorServicos.manager();
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		List listEnrolmentEvaluation = null;
 		
 		try {
 		 listEnrolmentEvaluation =
-				(List) serviceManager.executar(userView, "ReadStudentListByCurricularCourse", args);
+				(List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);
 		} catch (NotAuthorizedException e){
 			return mapping.findForward("NotAuthorized");
 		} catch (NonExistingServiceException e) {
@@ -73,7 +72,7 @@ public class ShowMarkDispatchAction extends DispatchAction {
 			return mapping.findForward("NoStudents");
 		}
 
-System.out.println(((InfoEnrolment)listEnrolmentEvaluation.get(0)).getEnrolmentState().getName());
+System.out.println(((InfoEnrolment)listEnrolmentEvaluation.get(0)));
 
 		request.setAttribute("studentList", listEnrolmentEvaluation);
 		return mapping.findForward("displayStudentList");

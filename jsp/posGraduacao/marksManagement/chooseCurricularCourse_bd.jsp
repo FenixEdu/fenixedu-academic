@@ -12,7 +12,8 @@
 <span class="error"><html:errors/></span>
 <logic:present name="curricularCourses">
 	<bean:message key="title.masterDegree.administrativeOffice.chooseCurricularCourse" />
-	<html:form action="/marksManagementDispatchAction?method=showMarksManagementMenu">
+	<html:form action="/marksManagementDispatchAction.do?method=showMarksManagementMenu">
+	
 		<table>
     	<!-- Curricular Course -->
     		<tr>

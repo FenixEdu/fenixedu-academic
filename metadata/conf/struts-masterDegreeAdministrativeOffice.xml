@@ -967,7 +967,24 @@
 			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 
 			 <forward name="editStudentMark" path="/marksManagement/editStudentMark.jsp"/> 
 			 <forward name="chooseCurricularCourse" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>
+     		 <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 
       </action>
+      
+      <action path="/showMarkDispatchAction"
+      		  input="/marksManagement/showMarksManagementMenu.jsp"
+      	      name="studentNumberForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ShowMarkDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="displayStudentList" path="/marksManagement/displayStudentList.jsp"/> 
+	         <forward name="NoStudents" path="/chooseMasterDegreeToCourseStudentList.do?method=chooseMasterDegree"/>  
+      		 <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 
+      </action>
+      
       <action path="/marksSubmission"
       		  input="/marksSubmission.do?method=prepare&amp;page=0"
       	      name="marksSubmissionForm"

@@ -25,11 +25,13 @@
 	 <logic:present name="Label.MarkChange">
 		<b><bean:message key="label.masterDegree.administrativeOffice.changeSuccess"  /></b>
 	</logic:present>
-	<table>   
-		<tr span align="left">
-		 <td ><bean:message key="label.student" />:<b><bean:write name="studentNumber" />&nbsp;-&nbsp;<bean:write name="name" /></b>
+	<table width="100%">   
+		<tr>
+		 <td align="rigth"><bean:message key="label.student" />:<b><bean:write name="studentNumber" />&nbsp;-&nbsp;<bean:write name="name" /></b>
 		 </td>
 		 </tr>
+	</table>   
+	<table>   
 		<tr>
 		<td class="listClasses-header"><b>
 			<bean:message key="label.mark"  />

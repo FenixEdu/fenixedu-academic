@@ -27,6 +27,7 @@ public interface IPersistentEnrolment extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
 	public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 	public List readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	
 
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 	public List readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeList(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
