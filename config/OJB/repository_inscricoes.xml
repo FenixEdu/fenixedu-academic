@@ -264,6 +264,11 @@
 		column="KEY_UNIVERSITY"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="keyScientificArea"
+		column="KEY_SCIENTIFIC_AREA"
+		jdbc-type="INTEGER"
+	/>
 	<reference-descriptor
 			name="university"
 			class-ref="Dominio.University"
@@ -276,12 +281,18 @@
 			proxy="true">
 		<foreignkey field-ref="departmentCourseKey"/> 
 	</reference-descriptor>
-   <reference-descriptor
+    <reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="false">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
-	</reference-descriptor>
+	 </reference-descriptor>
+	 <reference-descriptor
+			name="scientificArea"
+			class-ref="Dominio.ScientificArea"
+			proxy="false">
+		<foreignkey field-ref="keyScientificArea"/>
+	 </reference-descriptor>
 	<collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.ExecutionCourse"
@@ -1235,6 +1246,7 @@
     column="id_internal"
     jdbc-type="INTEGER"
     primarykey="true"
+	autoincrement="true"
   />
   <field-descriptor 
     name="name"
