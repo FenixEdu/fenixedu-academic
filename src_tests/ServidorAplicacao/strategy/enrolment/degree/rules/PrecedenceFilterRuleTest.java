@@ -19,7 +19,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class PrecedenceFilterRuleTest extends BaseEnrolmentRuleTest {
+public class PrecedenceFilterRuleTest extends BaseEnrolmentRuleTestCase {
 
 	private dbaccess dbAcessPoint;
 

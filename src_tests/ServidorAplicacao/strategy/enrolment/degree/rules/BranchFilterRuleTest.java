@@ -20,7 +20,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class BranchFilterRuleTest extends BaseEnrolmentRuleTest {
+public class BranchFilterRuleTest extends BaseEnrolmentRuleTestCase {
 
 	private dbaccess dbAcessPoint;
 
@@ -33,26 +33,34 @@ public class BranchFilterRuleTest extends BaseEnrolmentRuleTest {
 		return suite;
 	}
 
+	protected String getDataSetFilePath() {
+		return "etc/testEnrolmentDataSet.xml";
+	}
+	
 	public void testApplyBranchRule() {
 		List finalSpan = new ArrayList();
 		List initialSpan = null;
 
-		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(3), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
+		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
 		doApplyRule(new EnrolmentFilterBranchRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		assertEquals("Inital span Size:", true, initialSpan.size() == 6);
-		assertEquals("Final span size:", true, finalSpan.size() == 5);
+		assertEquals("Inital span Size:", true, initialSpan.size() == 60);
+		assertEquals("Final span size:", true, finalSpan.size() == 40);
 		assertEquals("Contains assertion!", true, initialSpan.containsAll(finalSpan));
 
-		ICurricularCourse curricularCourse = getCurricularCourse("Analise Matematica I", "AMI");
+		ICurricularCourse curricularCourse = getCurricularCourse("SISTEMAS OPERATIVOS", "");
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, finalSpan.contains(curricularCourseScope));
 
-		curricularCourse = getCurricularCourse("Fisica III", "FIII");
+		curricularCourse = getCurricularCourse("ELECTRÓNICA I", "");
+		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
+		assertEquals(true, finalSpan.contains(curricularCourseScope));
+
+		curricularCourse = getCurricularCourse("INTERFACES PESSOA-MÁQUINA", "");
 		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, !finalSpan.contains(curricularCourseScope));
 

@@ -7,8 +7,12 @@ package ServidorAplicacao.strategy.enrolment.degree.rules;
 import junit.framework.TestCase;
 import Dominio.ICurricularCourse;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
+import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -20,9 +24,13 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-abstract public class BaseEnrolmentRuleTest extends TestCase {
+abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 	private dbaccess dbAcessPoint;
 	protected ISuportePersistente sp;
+
+	protected GestorServicos gestor = GestorServicos.manager();
+	protected IUserView userView = new UserView("user", null);
+
 	
 	protected void setUp() {
 		try {
@@ -87,5 +95,25 @@ abstract public class BaseEnrolmentRuleTest extends TestCase {
 	}
 
 	
+	protected void autentication() {
+		String argsAutenticacao[] = { "user", "pass" };
+		try {
+			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	protected EnrolmentContext executeService(String serviceName, Object[] serviceArgs) {
+		try {
+			Object result = null;
+			result = gestor.executar(userView, serviceName, serviceArgs);
+			return EnrolmentContextManager.getEnrolmentContext((InfoEnrolmentContext) result);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
 	
 }

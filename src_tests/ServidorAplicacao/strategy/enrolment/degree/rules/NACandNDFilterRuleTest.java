@@ -20,7 +20,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class NACandNDFilterRuleTest extends BaseEnrolmentRuleTest {
+public class NACandNDFilterRuleTest extends BaseEnrolmentRuleTestCase {
 
 	private dbaccess dbAcessPoint;
 
@@ -33,26 +33,30 @@ public class NACandNDFilterRuleTest extends BaseEnrolmentRuleTest {
 		return suite;
 	}
 
+	protected String getDataSetFilePath() {
+		return "etc/testEnrolmentDataSet.xml";
+	}
+	
 	public void testApplyNACandNDRule() {
 		List finalSpan = new ArrayList();
 		List initialSpan = null;
 
-		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(3), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
+		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
 		doApplyRule(new EnrolmentFilterNACandNDRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		assertEquals("Inital span Size:", true, initialSpan.size() == 6);
-		assertEquals("Final span size:", true, finalSpan.size() == 5);
+		assertEquals("Inital span Size:", initialSpan.size(), 60);
+		assertEquals("Final span Size:", finalSpan.size(), 12);
 		assertEquals("Contains assertion!", true, initialSpan.containsAll(finalSpan));
 
-		ICurricularCourse curricularCourse = getCurricularCourse("Analise Matematica I", "AMI");
+		ICurricularCourse curricularCourse = getCurricularCourse("FÍSICA II", "");
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, finalSpan.contains(curricularCourseScope));
 
-		curricularCourse = getCurricularCourse("Analise Matematica III", "AMIII");
+		curricularCourse = getCurricularCourse("TRABALHO FINAL DE CURSO I", "");
 		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, !finalSpan.contains(curricularCourseScope));
 

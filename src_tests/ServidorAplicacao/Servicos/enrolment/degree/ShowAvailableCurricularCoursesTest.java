@@ -1,6 +1,5 @@
 package ServidorAplicacao.Servicos.enrolment.degree;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
@@ -53,7 +52,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 	}
 
 	protected int getNumberOfItemsToRetrieve() {
-		return 4;
+		return 0;
 	}
 
 	protected Object getObjectToCompare() {
@@ -61,12 +60,10 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testEnrolmentServicesLERCIDataSet.xml";
+		return "etc/testEnrolmentDataSet.xml";
 	}
 	
 	public void testShowAvailableCurricularCoursesServiceRun() {
-
-		List finalSpan = new ArrayList();
 
 		Object args[] = {_userView, new Integer(1)};
 		InfoEnrolmentContext result = null;
@@ -77,20 +74,27 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 			fail("Execution of service!");
 		}
 
-		finalSpan = result.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
+		List finalSpan = result.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
+		List automaticSpan = result.getInfoCurricularCoursesScopesEnroledByStudent();
 
-		assertEquals("Final span size:",  this.getNumberOfItemsToRetrieve(), finalSpan.size());
+		assertEquals("Final span size:",  6, finalSpan.size());
+		assertEquals("Automatic span size:",  5, automaticSpan.size());
 
 		ICurricularCourse curricularCourse = getCurricularCourse("SISTEMAS OPERATIVOS", "");
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
 		assertEquals(true, finalSpan.contains(infoCurricularCourseScope));
 
-		curricularCourse = getCurricularCourse("BASES DE DADOS", "");
+		curricularCourse = getCurricularCourse("ÁLGEBRA LINEAR", "QN");
+		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
+		infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+		assertEquals(true, automaticSpan.contains(infoCurricularCourseScope));
+
+		curricularCourse = getCurricularCourse("TRABALHO FINAL DE CURSO I", "");
 		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
 		assertEquals(true, !finalSpan.contains(curricularCourseScope));
-
+		assertEquals(true, !automaticSpan.contains(curricularCourseScope));
 	}
 
 	public ICurricularCourse getCurricularCourse (String name, String code){

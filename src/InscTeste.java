@@ -27,7 +27,7 @@ public class InscTeste {
 		
 		autentication();
 
-		Object serviceArgs1[] = { userView, new Integer(2)};
+		Object serviceArgs1[] = { userView, new Integer(1)};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
 
