@@ -5,7 +5,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoEnrolment" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
-<%@ page import="DataBeans.InfoEnrolment" %>
+<%@ page import="DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
 
 <span class="error"><html:errors/></span>
 
@@ -105,8 +105,9 @@
 									<bean:write name="infoEnrolment" property="infoCurricularCourse.name" />
 								</td>
 								<td>
-									
-									<% if (infoEnrolment instanceof InfoEnrolmentInExtraCurricularCourse) { %>
+									<%if (infoEnrolment instanceof InfoEnrolmentInOptionalCurricularCourse) { %>
+										<bean:message key="label.enrolment.type.optional" />
+									<%} else if (infoEnrolment instanceof InfoEnrolmentInExtraCurricularCourse) { %>
 										<bean:message key="label.enrolment.type.extra" />
 									<%} else { %> 										
 										<bean:message key="label.enrolment.type.normal" />

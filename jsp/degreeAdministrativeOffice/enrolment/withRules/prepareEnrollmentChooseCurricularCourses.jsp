@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.CurricularCourseType, DataBeans.InfoEnrolment" %>
+<%@ page import="Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse, DataBeans.enrollment.InfoCurricularCourse2Enroll" %>
 
 <script type="text/javascript" language="JavaScript">
 <!--
@@ -154,12 +154,23 @@
 			<tr>
 				<td class="listClasses">
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
-					<logic:equal name="enrollmentElem" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
-						
-					</logic:equal>
+					<%--<logic:equal name="enrollmentElem" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
+						<% if (pageContext.findAttribute("enrollmentElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
+							<logic:notEmpty name="enrollmentElem" property="infoCurricularCourseForOption">
+								-&nbsp;<bean:write name="enrollmentElem" property="infoCurricularCourseForOption.name"/>
+							</logic:notEmpty>
+							<logic:empty name="enrollmentElem" property="infoCurricularCourseForOption">
+								-&nbsp;<bean:message key="message.not.regular.optional.enrollment"/>
+							</logic:empty>
+						<% } %>
+					</logic:equal>--%>
 				</td>
 				<td  class="listClasses">
-					<bean:message name="enrollmentElem" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
+					<% if (pageContext.findAttribute("enrollmentElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
+						<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>
+					<% } else { %>
+						<bean:message name="enrollmentElem" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
+					<% } %>
 				</td>				
 				<td class="listClasses">
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.enrollmentWeigth"/>
@@ -193,6 +204,7 @@
 		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></a></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
+		<bean:define id="curricularCourses2Enroll" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll"/>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll">
 			<bean:define id="curricularCourseIndex" name="curricularCourse" property="infoCurricularCourse.idInternal"/>
 			<bean:define id="onclick">
@@ -203,7 +215,13 @@
 					<bean:write name="curricularCourse" property="infoCurricularCourse.name"/>
 				</td>
 				<td class="listClasses">
-					<bean:message name="curricularCourse" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
+					<% if ( ((InfoCurricularCourse2Enroll) curricularCourses2Enroll).isOptionalCurricularCourse() ) {%>
+						<html:hidden property="isOptional" value="true"/>
+						<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>
+					<% } else { %>
+						<html:hidden property="isOptional" value="false"/>
+						<bean:message name="enrollmentElem" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
+					<% } %>
 				</td>
 				<td class="listClasses">
 					<bean:write name="curricularCourse" property="infoCurricularCourse.enrollmentWeigth"/>

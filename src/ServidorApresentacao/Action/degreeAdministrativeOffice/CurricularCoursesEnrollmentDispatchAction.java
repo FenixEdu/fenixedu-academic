@@ -366,10 +366,13 @@ public class CurricularCoursesEnrollmentDispatchAction extends
                                 return string.split("-")[1];
                             }
                         })).get(0)).intValue());
+
+        String isOptional = (String) enrollmentForm.get("isOptional");
+
         if (toEnroll.size() == 1) {
             Integer executionDegreeId = getExecutionDegree(request);
             Object[] args = { executionDegreeId, studentCurricularPlanId,
-                    toEnroll.get(0), null, enrollmentType ,null};
+                    toEnroll.get(0), null, enrollmentType ,isOptional};
             try {
                 ServiceManagerServiceFactory.executeService(userView,
                         "WriteEnrollment", args);

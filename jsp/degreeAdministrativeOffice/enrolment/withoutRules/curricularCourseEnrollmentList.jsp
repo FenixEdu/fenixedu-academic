@@ -40,9 +40,6 @@
 					<tr>
 						<td class="listClasses">
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
-							<logic:equal name="infoEnrollment" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
-							
-							</logic:equal>
 						</td>
 						<td class="listClasses">
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>

@@ -18,6 +18,7 @@
 			<form-property name="executionYear" type="java.lang.String"/>
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="isOptional" type="java.lang.String"/>
 		</form-bean>
 
 		<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
