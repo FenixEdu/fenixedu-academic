@@ -52,13 +52,13 @@ public class UnEnrollStudentInExam implements IServico {
 
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			IStudent student = persistentStudent.readByUsername(username);
+			IPersistentExam persistentExam = sp.getIPersistentExam();
 
-			if (student != null) {
-				IPersistentExam persistentExam = sp.getIPersistentExam();
+			IExam exam = new Exam();
+			exam.setIdInternal(examId);
+			exam = (IExam) persistentExam.readByOId(exam, true);
 
-				IExam exam = new Exam();
-				exam.setIdInternal(examId);
-				exam = (IExam) persistentExam.readByOId(exam, true);
+			if (student != null && exam != null) {
 				if (!validUnEnrollment(exam)) {
 					throw new notAuthorizedServiceDeleteException();
 				}
@@ -90,25 +90,30 @@ public class UnEnrollStudentInExam implements IServico {
 	 * @return
 	 */
 	private boolean validUnEnrollment(IExam exam) {
-		Calendar enrollmentEnd = Calendar.getInstance();
-		enrollmentEnd.set(
-			Calendar.DAY_OF_MONTH,
-			exam.getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
-		enrollmentEnd.set(
-			Calendar.MONTH,
-			exam.getEnrollmentEndDay().get(Calendar.MONTH));
-		enrollmentEnd.set(
-			Calendar.YEAR,
-			exam.getEnrollmentEndDay().get(Calendar.YEAR));
-		enrollmentEnd.set(
-			Calendar.HOUR_OF_DAY,
-			exam.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
-		enrollmentEnd.set(
-			Calendar.MINUTE,
-			exam.getEnrollmentEndTime().get(Calendar.MINUTE));
-		Calendar now = Calendar.getInstance();
-		if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
-			return true;
+		if (exam.getEnrollmentEndDay() != null
+			&& exam.getEnrollmentEndTime() != null) {
+			Calendar enrollmentEnd = Calendar.getInstance();
+			enrollmentEnd.set(
+				Calendar.DAY_OF_MONTH,
+				exam.getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
+			enrollmentEnd.set(
+				Calendar.MONTH,
+				exam.getEnrollmentEndDay().get(Calendar.MONTH));
+			enrollmentEnd.set(
+				Calendar.YEAR,
+				exam.getEnrollmentEndDay().get(Calendar.YEAR));
+			enrollmentEnd.set(
+				Calendar.HOUR_OF_DAY,
+				exam.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
+			enrollmentEnd.set(
+				Calendar.MINUTE,
+				exam.getEnrollmentEndTime().get(Calendar.MINUTE));
+			Calendar now = Calendar.getInstance();
+			if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
