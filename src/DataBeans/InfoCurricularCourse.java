@@ -90,6 +90,7 @@ public class InfoCurricularCourse implements Serializable {
 	/**
 	 * Returns the curricularYear.
 	 * @return Integer
+	 * @deprecated
 	 */
 	public Integer getCurricularYear() {
 		return curricularYear;
@@ -114,6 +115,7 @@ public class InfoCurricularCourse implements Serializable {
 	/**
 	 * Returns the semester.
 	 * @return Integer
+	 * @deprecated
 	 */
 	public Integer getSemester() {
 		return semester;
@@ -146,6 +148,7 @@ public class InfoCurricularCourse implements Serializable {
 	/**
 	 * Sets the curricularYear.
 	 * @param curricularYear The curricularYear to set
+	 * @deprecated
 	 */
 	public void setCurricularYear(Integer curricularYear) {
 		this.curricularYear = curricularYear;
@@ -170,6 +173,7 @@ public class InfoCurricularCourse implements Serializable {
 	/**
 	 * Sets the semester.
 	 * @param semester The semester to set
+	 * @deprecated
 	 */
 	public void setSemester(Integer semester) {
 		this.semester = semester;

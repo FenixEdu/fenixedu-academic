@@ -29,6 +29,7 @@ public class SelectSemesterAction extends FenixAction {
 		SessionUtils.validSessionVerification(request, mapping);			
 
 		HttpSession session = request.getSession(false);
+//	TODO: No futuro os periodos (semestres) devem ser lidos da base de dados.
 		if (session != null) {
 			/* No futuro, os tipos de salas devem ser lidos da BD */
 			ArrayList types = new ArrayList();
