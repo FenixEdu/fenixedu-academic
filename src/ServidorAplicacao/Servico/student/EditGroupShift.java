@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.student;
 
 import Dominio.IFrequenta;
+import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -14,7 +15,11 @@ import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -84,6 +89,13 @@ public class EditGroupShift implements IServico {
 			if (studentGroupAttend == null)
 				throw new InvalidSituationServiceException();
 
+			IGroupProperties groupProperties = studentGroup.getGroupProperties();
+			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+			
+			boolean result = strategy.checkNumberOfGroups(groupProperties, shift);
+			if(!result)
+				throw new InvalidChangeServiceException();
 			
 			studentGroup.setShift(shift);
 			persistentStudentGroup.lockWrite(studentGroup);

@@ -24,6 +24,7 @@ import DataBeans.InfoShift;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -49,7 +50,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 		Integer shiftCode = new Integer(shiftCodeString);
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		Object[] args1 = { null,null, studentGroupCode, userView.getUtilizador(), new Integer(4)};
+		Object[] args1 = { null, null, studentGroupCode, userView.getUtilizador(), new Integer(4)};
 		try {
 			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
 
@@ -166,6 +167,15 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 				error = new ActionError("errors.editStudentGroupShift.notEnroled");
 				actionErrors.add("errors.editStudentGroupShift.notEnroled", error);
 				saveErrors(request, actionErrors);
+				return mapping.findForward("viewStudentGroupInformation");
+
+			} catch (InvalidChangeServiceException e) {
+				ActionErrors actionErrors3 = new ActionErrors();
+				ActionError error3 = null;
+				// Create an ACTION_ERROR 
+				error3 = new ActionError("errors.editStudentGroupShift.allShiftsFull");
+				actionErrors3.add("errors.editStudentGroupShift.allShiftsFull", error3);
+				saveErrors(request, actionErrors3);
 				return mapping.findForward("viewStudentGroupInformation");
 
 			} catch (FenixServiceException e) {
