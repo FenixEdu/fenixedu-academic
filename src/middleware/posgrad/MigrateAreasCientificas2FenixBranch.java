@@ -6,9 +6,11 @@
  */
 package middleware.posgrad;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
@@ -25,28 +27,28 @@ import Util.TipoCurso;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class MigrateAreasCientificas2FenixBrach {
+public class MigrateAreasCientificas2FenixBranch {
 
 
 	PersistenceBroker broker = null;
 	
 	
-	public MigrateAreasCientificas2FenixBrach() {
+	public MigrateAreasCientificas2FenixBranch() {
 		broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 	}
 
 
 	public static void main(String args[]) throws Exception{
-		MigrateAreasCientificas2FenixBrach migrateAreasCientificas2FenixBrach = new MigrateAreasCientificas2FenixBrach();
+		MigrateAreasCientificas2FenixBranch migrateAreasCientificas2FenixBrach = new MigrateAreasCientificas2FenixBranch();
 		
 		migrateAreasCientificas2FenixBrach.broker.beginTransaction();
 		migrateAreasCientificas2FenixBrach.broker.clearCache();
-		migrateAreasCientificas2FenixBrach.migratePosgradAreaCientifica2FenixBrach();
+		migrateAreasCientificas2FenixBrach.migratePosgradAreaCientifica2FenixBranch();
 		
 		migrateAreasCientificas2FenixBrach.broker.commitTransaction();
 	}
 
-	private void migratePosgradAreaCientifica2FenixBrach() throws Exception{
+	private void migratePosgradAreaCientifica2FenixBranch() throws Exception{
 		IBranch branch2Write = null;
 		Posgrad_area_cientifica areaCientifica = null;
 		List result = null;
@@ -64,7 +66,7 @@ public class MigrateAreasCientificas2FenixBrach {
 			while(iterator.hasNext()){
 				areaCientifica = (Posgrad_area_cientifica) iterator.next();
 				
-				// Delete unwanted Courses
+				// Delete unwanted Areas Cientificas
 				if (areaCientifica.getNome().equals("DISCIPLINAS DE ESCOLHA LIVRE") ||
 					areaCientifica.getNome().equals("DISCIPLINAS PROPEDÊUTICAS") ||
 					(areaCientifica.getCodigocursomestrado() == 15) ||
@@ -119,12 +121,12 @@ public class MigrateAreasCientificas2FenixBrach {
 				int numOfChars = 1;
 				
 				// Check if Branch Exists
-				
+			
 				boolean writableBranch = false;
 				while(writableBranch == false){
 
 					// Check if Branch Exists				
-										
+									
 					criteria = new Criteria();
 					branch2Write.setCode(NameUtils.generateCode(areaCientifica.getNome(), ++numOfChars));
 					criteria.addEqualTo("code", branch2Write.getCode());
@@ -135,11 +137,17 @@ public class MigrateAreasCientificas2FenixBrach {
 					if (result.size() == 0)
 						writableBranch = true;
 				}
-				broker.store(branch2Write);
+
+
+				if (areaCientifica.getCodigocursomestrado() == 14) {
+					createTransportationBranch((Branch) branch2Write, broker);					
+				} else {
+					broker.store(branch2Write);
 				
-				areaCientifica.setCodigoInternoRamo(branch2Write.getInternalID());
-				broker.store(areaCientifica);
-				
+					areaCientifica.setCodigoInternoRamo(branch2Write.getInternalID());
+					broker.store(areaCientifica);
+					
+				}
 			}
 			System.out.println("  Done !");
 
@@ -157,8 +165,31 @@ public class MigrateAreasCientificas2FenixBrach {
 		QueryByCriteria query = new QueryByCriteria(Posgrad_area_cientifica.class, criteria);
 		return (List) broker.getCollectionByQuery(query);
 	}
+	
+	private void createTransportationBranch(Branch branch2Write, PersistenceBroker broker) throws IllegalAccessException, InvocationTargetException {
+		Branch branchAux = new Branch();
+		BeanUtils.copyProperties(branchAux, branch2Write);
+		
+		branchAux.setInternalID(null);
+		branchAux.setName(branch2Write.getName() + " (Perfil A)");
+		branchAux.setCode(branch2Write.getCode() + " (A)");
+		broker.store(branchAux);
+		
+		branchAux = new Branch();
+		BeanUtils.copyProperties(branchAux, branch2Write);
+		
+		branchAux.setInternalID(null);
+		branchAux.setName(branch2Write.getName() + " (Perfil B)");
+		branchAux.setCode(branch2Write.getCode() + " (B)");
+		broker.store(branchAux);
+		
+		branchAux = new Branch();
+		BeanUtils.copyProperties(branchAux, branch2Write);
 
-
-
-
+		branchAux.setInternalID(null);
+		branchAux.setName(branch2Write.getName() + " (Perfil C)");
+		branchAux.setCode(branch2Write.getCode() + " (C)");
+		broker.store(branchAux);
+		
+	}
 }

@@ -143,7 +143,7 @@ public class MigrateDisciplina2Fenix {
 				// Read The Credits
 
 				curricularCourse2Write.setCredits(curricularCourse2Convert.getCreditos());
-				curricularCourse2Write.setMandatory(checkIfMandatory(curricularCourse2Convert));
+				curricularCourse2Write.setMandatory(Boolean.FALSE);
 				
 				curricularCourse2Write.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
 				curricularCourse2Write.setDegreeCurricularPlan(degreeCurricularPlan);

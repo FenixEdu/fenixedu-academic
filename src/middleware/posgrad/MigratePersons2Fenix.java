@@ -51,7 +51,9 @@ public class MigratePersons2Fenix {
 		Query query = null;
 		Criteria criteria = null;
 		int personsWritten = 0;
+		int personsNotWritten = 0;
 		int rolesWritten = 0;
+		
 		
 		try {
 			System.out.print("A Ler Pessoas de Pos-Graduacao ...");
@@ -66,8 +68,11 @@ public class MigratePersons2Fenix {
 				person2Write = new Pessoa();
 				// Remove the PosGrad User
 				
-				if ((person2Convert.getUsername().equalsIgnoreCase("posgrad2002")) && (person2Convert.getPassword().equalsIgnoreCase("aplica2002")))
+				if ((person2Convert.getUsername().equalsIgnoreCase("posgrad2002")) && (person2Convert.getPassword().equalsIgnoreCase("aplica2002"))){
+					personsNotWritten++;
 					continue;
+				}
+					
 
 				// Verificar o Tipo de Documento
 				TipoDocumentoIdentificacao identificationDocumentType = null;
@@ -92,7 +97,7 @@ public class MigratePersons2Fenix {
 					person2Write = (IPessoa) result.get(0);
 					
 					System.out.println("A Pessoa " + person2Write.getNome() + " ja existe.");
-					
+					personsNotWritten++;
 					// Verificar se a Pessoa e um Funcionario
 					criteria = new Criteria();
 					
@@ -117,6 +122,7 @@ public class MigratePersons2Fenix {
 				broker.store(person2Write);				
 			}
 			System.out.println("   Persons Written : " + personsWritten);
+			System.out.println("   Persons NOT Written : " + personsNotWritten);
 			System.out.println("   Roles Written : " + rolesWritten);
 			System.out.println("   Success !");
 		
@@ -152,9 +158,9 @@ public class MigratePersons2Fenix {
 					person2Write.setSexo(new Sexo(Sexo.MASCULINO));
 				else if (person2Convert.getSexo().equalsIgnoreCase("feminino"))
 					person2Write.setSexo(new Sexo(Sexo.FEMININO));
-				else {
-					System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no SEXO. (Encontrado: " + person2Convert.getSexo() + ")");
-				} 
+//				else {
+//					System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no SEXO. (Encontrado: " + person2Convert.getSexo() + ")");
+//				} 
 			}						
 			// Verificar o Estado Civil
 			if (person2Convert.getEstadocivil() != null) {
@@ -170,9 +176,10 @@ public class MigratePersons2Fenix {
 					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.SEPARADO));
 				} else if (person2Convert.getEstadocivil().equalsIgnoreCase("união de facto")){
 					person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.UNIAO_DE_FACTO));
-				} else {
-					System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no ESTADO CIVIL. (encontrado: " + person2Convert.getEstadocivil() + ")");
 				} 
+//				else {
+//					System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no ESTADO CIVIL. (encontrado: " + person2Convert.getEstadocivil() + ")");
+//				} 
 			}
 			
 			person2Write.setNascimento(person2Convert.getNascimento());

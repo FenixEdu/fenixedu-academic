@@ -42,9 +42,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 		migrateDisciplina2Fenix.broker.beginTransaction();
 		migrateDisciplina2Fenix.broker.clearCache();
 		migrateDisciplina2Fenix.migrateDisciplinaArea2FenixScopes();
-
-//		migrateDisciplina2Fenix.migrateTransportesDiscArea2FenixScopes();
-		
+	
 		migrateDisciplina2Fenix.broker.commitTransaction();
 	}
 
@@ -89,9 +87,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 					areaCientifica.getNome().equals("DISCIPLINAS PROPEDÊUTICAS") ||
 					(areaCientifica.getCodigocursomestrado() == 15) ||
 					(areaCientifica.getCodigocursomestrado() == 31) ||
-					(areaCientifica.getCodigocursomestrado() == 50) ||
-					// Transportes will be addressed seperatly 
-					(areaCientifica.getCodigocursomestrado() == 14)) {
+					(areaCientifica.getCodigocursomestrado() == 50)) {
 						discAreasIgnored++;
 						continue;
 				}
@@ -173,6 +169,10 @@ public class MigrateDisciplinaArea2FenixScopes {
 					curricularCourseScope.setMinIncrementNac(new Integer(1));
 					curricularCourseScope.setWeigth(new Integer(1));
 					curricularCourseScope.setCurricularSemester((ICurricularSemester) iteratorCurricularSemester.next());
+					curricularCourseScope.setPraticalHours(new Double(0));
+					curricularCourseScope.setTheoPratHours(new Double(0));
+					curricularCourseScope.setTheoreticalHours(new Double(0));
+					curricularCourseScope.setLabHours(new Double(0));
 					
 					scopesWritten++;
 					broker.store(curricularCourseScope);
