@@ -45,8 +45,7 @@ public final class SessionUtils {
 
 	public static IUserView getUserView(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-
-		return (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		return session != null ? (IUserView) session.getAttribute(SessionConstants.U_VIEW) : null;
 	}
 
 	public static List getExecutionCourses(HttpServletRequest request)
