@@ -9,8 +9,8 @@
 	<p><bean:message key="label.have"/>
 	<span class="emphasis"><bean:write name="numberAdvisories"/></span>
 	<bean:message key="label.advisories"/></p>
-<table width="90%" cellspacing="0" cellpadding="0" style="border: 1px solid #333;">
 	<logic:notEqual name="numberAdvisories" value="0">
+	<table width="90%" cellspacing="0" cellpadding="0" style="border: 1px solid #333;">
 		<tr>
 			<td colspan="3" style="background: #333; color:#fff; padding: 5px 0 5px 10px;"><strong>AVISOS</strong></td>
 		</tr>
@@ -38,7 +38,7 @@
 				</tr>	
 			</logic:notEqual>
 		</logic:iterate>
+	</table>
 	</logic:notEqual>
 </logic:present>
-</table>
 <p>Bem-vindo à sua área pessoal.<br /> Poderá visualizar e alterar a sua informação pessoal, proceder à alteração da sua password ler os avisos que lhe são enviados pelos orgãos de gestão da escola.</p>
