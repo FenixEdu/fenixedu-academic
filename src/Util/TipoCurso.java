@@ -42,7 +42,7 @@ public class TipoCurso {
         this.tipoCurso = tipoCurso;
     }
 
-	public TipoCurso(String tipoCurso) {
+	public TipoCurso(String tipoCurso){
 		if (tipoCurso.equals(TipoCurso.LICENCIATURA_STRING)) this.tipoCurso = new Integer(TipoCurso.LICENCIATURA);
 		if (tipoCurso.equals(TipoCurso.MESTRADO_STRING)) this.tipoCurso = new Integer(TipoCurso.MESTRADO);
 		if (tipoCurso.equals(TipoCurso.MESTRADO_INTEGRADO_STRING)) this.tipoCurso = new Integer(TipoCurso.MESTRADO_INTEGRADO);
@@ -74,7 +74,7 @@ public class TipoCurso {
         boolean resultado = false;
         if (obj instanceof TipoCurso) {
             TipoCurso tipo = (TipoCurso)obj;
-            resultado = getTipoCurso().equals(tipo.getTipoCurso());
+            resultado = (getTipoCurso() != null) && (getTipoCurso().equals(tipo.getTipoCurso()));
         }
         return resultado;
     }
