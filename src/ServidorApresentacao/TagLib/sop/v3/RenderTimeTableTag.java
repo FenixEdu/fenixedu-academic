@@ -13,17 +13,65 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.struts.util.MessageResources;
 
+import DataBeans.InfoCurricularYear;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoLesson;
-import ServidorApresentacao.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
-import ServidorApresentacao.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.colorPickers
+	.ClassTimeTableColorPicker;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.colorPickers
+	.ExecutionCourseTimeTableColorPicker;
 import ServidorApresentacao.TagLib.sop.v3.colorPickers.RoomTimeTableColorPicker;
-import ServidorApresentacao.TagLib.sop.v3.renderers.ClassTimeTableLessonContentRenderer;
-import ServidorApresentacao.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
-import ServidorApresentacao.TagLib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
-import ServidorApresentacao.TagLib.sop.v3.renderers.RoomTimeTableLessonContentRenderer;
-import ServidorApresentacao.TagLib.sop.v3.renderers.ShiftTimeTableLessonContentRenderer;
-import ServidorApresentacao.TagLib.sop.v3.renderers.SopClassTimeTableLessonContentRenderer;
-import ServidorApresentacao.TagLib.sop.v3.renderers.SopRoomTimeTableLessonContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.renderers
+	.ClassTimeTableLessonContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.renderers
+	.ClassTimeTableWithoutLinksLessonContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.renderers
+	.ExecutionCourseTimeTableLessonContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.renderers
+	.RoomTimeTableLessonContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.renderers
+	.ShiftTimeTableLessonContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.renderers
+	.SopClassTimeTableLessonContentRenderer;
+import ServidorApresentacao
+	.TagLib
+	.sop
+	.v3
+	.renderers
+	.SopRoomTimeTableLessonContentRenderer;
 
 public final class RenderTimeTableTag extends TagSupport {
 
@@ -35,14 +83,13 @@ public final class RenderTimeTableTag extends TagSupport {
 	private final Integer endTimeTableHour = new Integer(24);
 
 	private final Integer slotSizeMinutes = new Integer(30);
-	
 
 	//private final int HORA_MINIMA = 8;
 	//private final int HORA_MAXIMA = 24;
 
 	// Factor de divisão das celulas.
 	//private final int COL_SPAN_FACTOR = 24;
-	
+
 	private ColorPicker colorPicker;
 
 	// Nome do atributo que contém a lista de aulas.
@@ -51,6 +98,10 @@ public final class RenderTimeTableTag extends TagSupport {
 	// Mensagens de erro.
 	protected static MessageResources messages =
 		MessageResources.getMessageResources("ApplicationResources");
+
+	private InfoCurricularYear infoCurricularYear = null;
+	private InfoExecutionDegree infoExecutionDegree = null;
+
 
 	public String getName() {
 		return (this.name);
@@ -61,6 +112,19 @@ public final class RenderTimeTableTag extends TagSupport {
 	}
 
 	public int doStartTag() throws JspException {
+
+		try {
+			infoCurricularYear =
+				(InfoCurricularYear) pageContext.findAttribute(
+					SessionConstants.CURRICULAR_YEAR);
+			infoExecutionDegree =
+				(InfoExecutionDegree) pageContext.findAttribute(
+					SessionConstants.EXECUTION_DEGREE);
+		} catch (ClassCastException e) {
+			infoCurricularYear = null;
+			infoExecutionDegree = null;
+		}
+
 		setLessonSlotRendererAndColorPicker();
 		// Obtem a lista de aulas.
 		ArrayList infoLessonList = null;
@@ -83,7 +147,8 @@ public final class RenderTimeTableTag extends TagSupport {
 				lessonSlotContentRenderer,
 				this.slotSizeMinutes,
 				this.startTimeTableHour,
-				this.endTimeTableHour, colorPicker);
+				this.endTimeTableHour,
+				colorPicker);
 
 		try {
 			writer.print(renderer.render());
@@ -112,8 +177,8 @@ public final class RenderTimeTableTag extends TagSupport {
 				(endTimeTableHour.intValue() - startTimeTableHour.intValue())
 					* (60 / slotSizeMinutes.intValue()));
 
-//		System.out.println("Numero de horas:" + numberOfHours);
-//		System.out.println("Numero de dias:" + numberOfDays);
+		//		System.out.println("Numero de horas:" + numberOfHours);
+		//		System.out.println("Numero de dias:" + numberOfDays);
 		TimeTable timeTable =
 			new TimeTable(
 				numberOfHours,
@@ -152,12 +217,12 @@ public final class RenderTimeTableTag extends TagSupport {
 			if (!listaAuxiliar.contains(subtitleEntry))
 				listaAuxiliar.add(subtitleEntry);
 		}
-		
+
 		if (listaAuxiliar.size() > 1) {
 			Collections.sort(listaAuxiliar);
 			result.append(
 				"<br/><b>Legenda:</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
-			for (int i = 0; i < listaAuxiliar.size(); i ++ ) {
+			for (int i = 0; i < listaAuxiliar.size(); i++) {
 				SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
 				boolean oddElement = (i % 2 == 1);
 				if (!oddElement) {
@@ -165,7 +230,8 @@ public final class RenderTimeTableTag extends TagSupport {
 				}
 				result.append("<td style='vertical-align:top'><b>");
 				result.append(elem.getKey());
-				result.append("</b></td><td  style='vertical-align:top'>-</td><td wrap='wrap'>");
+				result.append(
+					"</b></td><td  style='vertical-align:top'>-</td><td wrap='wrap'>");
 				result.append(elem.getValue());
 				result.append("</td>");
 				if (oddElement) {
@@ -173,7 +239,7 @@ public final class RenderTimeTableTag extends TagSupport {
 				}
 			}
 			if (listaAuxiliar.size() % 2 == 1) {
-				result.append("<td colspan='3'>&nbsp;</td></tr>");		
+				result.append("<td colspan='3'>&nbsp;</td></tr>");
 			}
 			result.append("</table>");
 
@@ -218,7 +284,7 @@ public final class RenderTimeTableTag extends TagSupport {
 
 			case TimeTableType.SOP_CLASS_TIMETABLE :
 				this.lessonSlotContentRenderer =
-					new SopClassTimeTableLessonContentRenderer();
+					new SopClassTimeTableLessonContentRenderer(infoExecutionDegree, infoCurricularYear);
 				this.colorPicker = new ClassTimeTableColorPicker();
 				break;
 
@@ -233,7 +299,7 @@ public final class RenderTimeTableTag extends TagSupport {
 					new ClassTimeTableWithoutLinksLessonContentRenderer();
 				this.colorPicker = new ClassTimeTableColorPicker();
 				break;
-			
+
 			default :
 				this.lessonSlotContentRenderer =
 					new ClassTimeTableLessonContentRenderer();
