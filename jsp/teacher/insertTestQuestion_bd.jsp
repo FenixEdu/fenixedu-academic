@@ -1,9 +1,7 @@
 <%@ page language="java" %>
-<%@ page import="javax.swing.ImageIcon" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
 <table>
 	<tr>
 		<td class="infoop"><bean:message key="message.showExercice.information" /></td>

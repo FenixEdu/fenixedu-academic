@@ -15,14 +15,17 @@ import DataBeans.InfoPaymentPhase;
 import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
+import Dominio.GratuitySituation;
 import Dominio.GratuityValues;
 import Dominio.ICursoExecucao;
+import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
 import Dominio.IPaymentPhase;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
+import ServidorPersistente.IPersistentGratuitySituation;
 import ServidorPersistente.IPersistentGratuityValues;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import framework.factory.ServiceManagerServiceFactory;
@@ -69,7 +72,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 		infoEmployee.setPerson(infoPerson);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		infoExecutionDegree.setIdInternal(new Integer(76));
+		infoExecutionDegree.setIdInternal(new Integer(30));
 		
 		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
 		infoGratuityValues.setIdInternal(new Integer(111));
@@ -98,7 +101,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 		infoEmployee.setPerson(infoPerson);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		infoExecutionDegree.setIdInternal(new Integer(76));
+		infoExecutionDegree.setIdInternal(new Integer(30));
 		
 		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
 		infoGratuityValues.setIdInternal(new Integer(111));
@@ -128,7 +131,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 		infoEmployee.setPerson(infoPerson);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		infoExecutionDegree.setIdInternal(new Integer(76));
+		infoExecutionDegree.setIdInternal(new Integer(30));
 		
 		List infoPaymentPhases = new ArrayList();
 		InfoPaymentPhase infoPaymentPhase = new InfoPaymentPhase();
@@ -158,7 +161,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 		infoPaymentPhases.add(infoPaymentPhase);
 		
 		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
-		infoGratuityValues.setIdInternal(new Integer(111));
+		infoGratuityValues.setIdInternal(null);
 		infoGratuityValues.setAnualValue(new Double(650));
 		infoGratuityValues.setCreditValue(new Double(50));
 		infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
@@ -182,7 +185,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 		infoEmployee.setPerson(infoPerson);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		infoExecutionDegree.setIdInternal(new Integer(28));
+		infoExecutionDegree.setIdInternal(new Integer(29));
 		
 		List infoPaymentPhases = new ArrayList();
 		InfoPaymentPhase infoPaymentPhase = new InfoPaymentPhase();
@@ -212,7 +215,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 		infoPaymentPhases.add(infoPaymentPhase);
 		
 		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
-		infoGratuityValues.setIdInternal(new Integer(222));
+		infoGratuityValues.setIdInternal(new Integer(4));
 		infoGratuityValues.setAnualValue(new Double(650));
 		infoGratuityValues.setCreditValue(new Double(50));
 		infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
@@ -240,9 +243,9 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 			
 			ICursoExecucao executionDegree = new CursoExecucao();
-			executionDegree.setIdInternal(new Integer(76));
+			executionDegree.setIdInternal(new Integer(30));
 			
-			IGratuityValues gratuityValues = persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
+			IGratuityValues gratuityValues = (IGratuityValues) persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
 
 			InfoGratuityValues infoGratuityValuesDB = cloneGratuityValues(gratuityValues);
 			
@@ -263,6 +266,9 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 			assertEquals(infoGratuityValues.getStartPayment(), infoGratuityValuesDB.getStartPayment());
 			assertEquals(infoGratuityValues.getWhen(), infoGratuityValuesDB.getWhen());
 			
+			
+			IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
+			IGratuitySituation gratuitySituation = new GratuitySituation();
 			System.out.println(
 					"testInsertGratuityDataInsertSuccessfull was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
 
