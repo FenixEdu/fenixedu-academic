@@ -59,22 +59,18 @@ public class ReadStudentsByExecutionDegreeAndExecutionYear implements IServico {
 				//Get the Actual Execution Year
 				IExecutionYear executionYear = null;
 				executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
-//System.out.println("=================ano: " + executionYear);		
 
 				// Get the Actual Execution Degree
 				ICursoExecucao executionDegree = null;
 				executionDegree = sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(executionDegreeString, executionYear);
-//System.out.println("=================curso: " + executionDegree);		
 
 				// Get the Degree Curricular Plan
 				IDegreeCurricularPlan degreeCurricularPlan = null;
 				degreeCurricularPlan = executionDegree.getCurricularPlan();
-//System.out.println("=================degreeCurrPlan: " + degreeCurricularPlan);				
 
 				//Get the List of Student Curricular Plans from the Degree Curricular Plan
 				List studentCurricularPlanList = null;
 				studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente().readByDegreeCurricularPlan(degreeCurricularPlan);
-//System.out.println("=================a lista dos Student Curricular Plans tem tamanho " + studentCurricularPlanList.size());
 				if(studentCurricularPlanList == null || studentCurricularPlanList.size() == 0){
 					throw new NonExistingServiceException();
 				}
@@ -88,7 +84,6 @@ public class ReadStudentsByExecutionDegreeAndExecutionYear implements IServico {
 				final List enrolmentsList = new ArrayList();
 				List enrolments1 = new ArrayList();
 				List enrolments2 = new ArrayList();
-//System.out.println("=================vou entrar no ciclo");
 				while(iterator.hasNext()) {	
 					
 					// Each Student Curricular Plan 
@@ -97,17 +92,10 @@ public class ReadStudentsByExecutionDegreeAndExecutionYear implements IServico {
 					// Read the enrolments for the first executionPeriod
 					enrolments1 = sp.getIPersistentEnrolment().readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(singleSCP, executionPeriod1); 
 					enrolmentsList.addAll(enrolments1);
-//System.out.println("=================tenho os do 1o");
 					// Read the enrolments for the second executionPeriod
 					enrolments2 = sp.getIPersistentEnrolment().readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(singleSCP, executionPeriod2);
 					enrolmentsList.addAll(enrolments2);
-//System.out.println("=================tenho os do 2o");
 				}
-//System.out.println("================= a grande lista: size " + enrolmentsList.size());
-				
-//System.out.println("=================vou filtrar...");
-			
-			
 					//Now it is necessary to filter the list 'enrolmentsList' for distinct entries
 					distinctEnrolments = (List) CollectionUtils.select(enrolmentsList, new Predicate (){
 						private List auxList = new ArrayList();

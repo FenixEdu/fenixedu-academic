@@ -12,9 +12,8 @@ import Util.MarkType;
  * 19/Mar/2003
  */
 
-public class DegreeCurricularPlan implements IDegreeCurricularPlan {
+public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricularPlan {
 
-	private Integer idInternal;
 	private Integer degreeKey;
 	
 	private ICurso degree;
@@ -67,7 +66,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.idInternal + "; ";
+		result += "idInternal = " + getIdInternal() + "; ";
 		result += "name = " + this.name + "; ";
 		result += "initialDate = " + this.initialDate + "; ";
 		result += "endDate = " + this.endDate + "; ";
@@ -109,13 +108,6 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		this.neededCredits = neededCredits;
 	}
 
-	/**
-	 * Returns the idInternal.
-	 * @return Integer
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
 
 	/**
 	 * Returns the degreeKey.
@@ -141,13 +133,6 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		return name;
 	}
 
-	/**
-	 * Sets the idInternal.
-	 * @param idInternal The idInternal to set
-	 */
-	public void setIdInternal(Integer codigoInterno) {
-		this.idInternal = codigoInterno;
-	}
 
 	/**
 	 * Sets the degreeKey.

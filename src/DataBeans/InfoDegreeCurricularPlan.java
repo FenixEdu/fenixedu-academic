@@ -11,7 +11,7 @@ import Util.DegreeCurricularPlanState;
  * 19/Mar/2003
  */
 
-public class InfoDegreeCurricularPlan implements Serializable {
+public class InfoDegreeCurricularPlan extends InfoObject implements Serializable {
 
 	private InfoDegree infoDegree;
 	private String name;

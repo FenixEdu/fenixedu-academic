@@ -96,6 +96,7 @@ public abstract class SessionConstants {
 	public static final String MASTER_DEGREE_CANDIDATE_LIST = "master_degree_candidate_list";
 	public static final String MASTER_DEGREE_CANDIDATE_QUERY = "master_degree_candidate_query";
 	public static final String MASTER_DEGREE_CANDIDATE_ACTION = "master_degree_candidate_action";
+	public static final String MASTER_DEGREE_CURRICULAR_PLAN_LIST = "master_degree_curricular_plan_list";
 	public static final String ACTION = "action";
 	public static final String CONTRIBUTOR_LIST = "contributor_list";
 	public static final String UNEXISTING_CONTRIBUTOR = "unexisting_contributor";

@@ -350,11 +350,15 @@
       <!-- List All Master Degrees -->
 	  <action path="/listMasterDegrees"
 		      parameter="method"
+		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.MasterDegreeListingDispatchAction"
 			  >
-	         <forward name="DisplayMasterDegreeList" path="/student/displayStudentListByDegree.jsp"/> 
+	         <forward name="DisplayMasterDegreeList" path="/student/displayMasterDegrees.jsp"/>
+	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
+	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
 	  </action>
 	  
+  
 <!-- ////////////////// CHECK UTILITY ON STUDENTS LISTINGS BEFORE DELETING ///////////////////// -->
       <!-- action to choose a Execution Year List the students by degree -->
 <!--      <action attribute="chooseExecutionYearForm"

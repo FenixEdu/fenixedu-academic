@@ -33,7 +33,7 @@
         	<bean:define id="guideLink">
         		<bean:write name="link"/><bean:write name="guide" property="year"/><%= "&" %>number=<bean:write name="guide" property="number"/>
         	</bean:define>
-        	
+      	
         	<logic:iterate id="guideSituation" name="guide" property="infoGuideSituations">
                 <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { %>
                 	<tr>

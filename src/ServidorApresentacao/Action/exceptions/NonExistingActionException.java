@@ -16,8 +16,12 @@ public class NonExistingActionException extends FenixActionException {
 	public static String key = "error.exception.nonExisting";
 	
 	public NonExistingActionException(String value) {
-			super(key, value);
-		}
+		super(key, value);
+	}
+
+	public NonExistingActionException(String key, String value) {
+		super(key, value);
+	}
 
 	public NonExistingActionException(Throwable cause) {
 		

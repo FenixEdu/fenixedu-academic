@@ -12,7 +12,7 @@ import Util.MarkType;
  * 19/Mar/2003
  */
 
-public interface IDegreeCurricularPlan {
+public interface IDegreeCurricularPlan extends IDomainObject {
 
 	public String getName();
 	public Integer getIdInternal();

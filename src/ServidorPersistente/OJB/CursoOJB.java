@@ -149,7 +149,8 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 		try {
 			ICurso degree = null;
 			String oqlQuery = "select curso from " + Curso.class.getName();
-			oqlQuery += " where tipoCurso = $1 ";
+			oqlQuery += " where tipoCurso = $1 "
+							+ " order by nome asc";
 			query.create(oqlQuery);
 			query.bind(degreeType);
 			List result = (List) query.execute();

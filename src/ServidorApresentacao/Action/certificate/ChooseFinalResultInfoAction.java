@@ -160,7 +160,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						int i = 0;
 						while(iterator.hasNext()) {	
 							result = iterator.next();
-							infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
+							infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) (((InfoEnrolment) result).getInfoEvaluations().get(i));	
 							dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
 							if (conclusionDate.compareTo(dataAux) == -1){
 								conclusionDate = dataAux;
