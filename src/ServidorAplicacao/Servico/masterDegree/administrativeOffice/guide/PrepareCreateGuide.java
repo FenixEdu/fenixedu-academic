@@ -184,11 +184,14 @@ public class PrepareCreateGuide implements IServico {
 			try {
 				IExecutionYear executionYear = new ExecutionYear(infoExecutionDegree.getInfoExecutionYear().getYear());
 				student = sp.getIPersistentStudent().readByNumero(number,TipoCurso.MESTRADO_OBJ);
+				if (student == null) 
+				 throw new NonExistingServiceException("O Aluno", null);
 				
 				studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(),
 										TipoCurso.MESTRADO_OBJ);
 
 			} catch (ExcepcaoPersistencia ex) {
+				
 				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 				newEx.fillInStackTrace();
 				throw newEx;
