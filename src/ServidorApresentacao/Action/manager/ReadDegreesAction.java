@@ -37,7 +37,6 @@ public class ReadDegreesAction extends FenixAction {
 			try {
 		
 		List degrees = null;
-				//Object args1[]={};
 				GestorServicos serviceManager = GestorServicos.manager();
 				degrees = (List) serviceManager.executar(
 				userView,

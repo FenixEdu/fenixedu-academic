@@ -1,12 +1,8 @@
 /*
  * Created on 15/Mai/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorApresentacao.Action.manager;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +23,6 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author lmac1
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class ReadDegreeAction extends FenixAction  {
 	
@@ -46,8 +39,8 @@ public class ReadDegreeAction extends FenixAction  {
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		        List infoDegrees =
-					(List) session.getAttribute(SessionConstants.INFO_DEGREES_LIST);
+//		        List infoDegrees =
+//					(List) session.getAttribute(SessionConstants.INFO_DEGREES_LIST);
 
 				Integer internalId = (Integer)readDegreeForm.get("idInternal");
 

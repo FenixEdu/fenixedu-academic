@@ -26,18 +26,6 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
 
-<!-- type="org.apache.struts.validator.DynaValidatorForm"
-	<form-property name="page" type="java.lang.Integer" initial="0"/>
-	
-	
-	type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-					dynamic="true"> 
-	isto do form bean de cima	
-	<form-property name="tipoCurso" type="java.lang.Integer" />
-				-->
-
-
-
 		<form-bean name="readDegreeForm"
 					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 					dynamic="true">        

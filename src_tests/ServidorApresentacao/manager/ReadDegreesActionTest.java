@@ -6,18 +6,12 @@ package ServidorApresentacao.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import DataBeans.util.Cloner;
-import Dominio.ICurso;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationManagerPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author lmac1
@@ -87,6 +81,7 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 	}
 
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		
 		return null;
 	}
 
@@ -100,25 +95,11 @@ public class ReadDegreesActionTest extends TestCasePresentationManagerPortal{
 
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		Map result = new HashMap();
-		try{
-		ISuportePersistente persistentSuport =
-						SuportePersistenteOJB.getInstance();
 
-		List persistentDegrees = persistentSuport.getICursoPersistente().readAll();
-		
-		Iterator iterator = persistentDegrees.iterator();
-		List infoDegrees = new ArrayList();
-		
-		while (iterator.hasNext())
-		infoDegrees.add( Cloner.copyIDegree2InfoDegree((ICurso) iterator.next()) );
-
-		
-		result.put(SessionConstants.INFO_DEGREES_LIST, infoDegrees);
-		}catch (ExcepcaoPersistencia exception) {
-				  exception.printStackTrace(System.out);
-				  fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
-				}
-
+		List requestAttributtes = new ArrayList(1);
+		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
+		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
+	
 		return result;
 	}
 
