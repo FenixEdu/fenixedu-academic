@@ -128,8 +128,8 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
 		request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, infoMasterDegreeProofVersion.getAttachedCopiesNumber());
 		request.setAttribute(SessionConstants.PROOF_DATE, proofDate);
 		request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
-		request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, infoMasterDegreeThesisDataVersion.getInfoResponsibleEmployee());
-		request.setAttribute(SessionConstants.LAST_MODIFICATION, infoMasterDegreeThesisDataVersion.getLastModification());
+		request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, infoMasterDegreeProofVersion.getInfoResponsibleEmployee());
+		request.setAttribute(SessionConstants.LAST_MODIFICATION, infoMasterDegreeProofVersion.getLastModification());
 
 		return mapping.findForward("start");
 
