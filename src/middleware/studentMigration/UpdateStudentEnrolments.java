@@ -199,7 +199,7 @@ public class UpdateStudentEnrolments
 				continue;
 			}
 
-			ICurricularCourse curricularCourse = getCurricularCourse(mwEnrolment, degreeCurricularPlan, sp);
+			ICurricularCourse curricularCourse = getCurricularCourse(mwEnrolment, degreeCurricularPlan, sp, true);
 
 			if (curricularCourse == null)
 			{
@@ -929,12 +929,17 @@ public class UpdateStudentEnrolments
 		}
 	}
 
-	public static ICurricularCourse getCurricularCourse(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws Exception
+	public static ICurricularCourse getCurricularCourse(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp, boolean solveSomeProblems) throws Exception
 	{
+		String courseCode = null;
+		if (solveSomeProblems) {
+			courseCode = getRealCurricularCourseCodeForCodesAZx(mwEnrolment);
+		}
+
 		// Get the list of Fenix CurricularCourses with that code for the selected DegreeCurricularPlan.
 		List curricularCourses =
 			sp.getIPersistentCurricularCourse().readbyCourseCodeAndDegreeCurricularPlan(
-				StringUtils.trim(mwEnrolment.getCoursecode()),
+				StringUtils.trim(courseCode),
 				degreeCurricularPlan);
 
 		ICurricularCourse curricularCourse = null;
@@ -982,5 +987,28 @@ public class UpdateStudentEnrolments
 			curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 		}
 		return curricularCourse;
+	}
+
+// ----------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------- METHODS TO SOLVE SPECIFIC PROBLEMS ---------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
+
+	public static String getRealCurricularCourseCodeForCodesAZx(MWEnrolment mwEnrolment)
+	{
+		if (mwEnrolment.getCoursecode().equals("AZ2") && mwEnrolment.getCurricularcoursesemester().intValue() == 2) {
+			return "QN";
+		} else if (mwEnrolment.getCoursecode().equals("AZ3") && mwEnrolment.getCurricularcoursesemester().intValue() == 2) {
+			return "PY";
+		} else if (mwEnrolment.getCoursecode().equals("AZ4") && mwEnrolment.getCurricularcoursesemester().intValue() == 1) {
+			return "P5";
+		} else if (mwEnrolment.getCoursecode().equals("AZ5") && mwEnrolment.getCurricularcoursesemester().intValue() == 2) {
+			return "UN";
+		} else if (mwEnrolment.getCoursecode().equals("AZ6") && mwEnrolment.getCurricularcoursesemester().intValue() == 1) {
+			return "U8";
+		} else {
+			return mwEnrolment.getCoursecode();
+		}
 	}
 }
