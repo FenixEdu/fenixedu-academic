@@ -29,9 +29,15 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
             IItem item = null;
             String oqlQuery = "select sectionItem from " + Item.class.getName();
             oqlQuery += " where section.name = $1 and name = $2";
+			oqlQuery +=	" and section.site.executionCourse.code = $3";
+			oqlQuery += " and section.site.executionCourse.executionPeriod.name = $4";
+			oqlQuery += " and section.site.executionCourse.executionPeriod.executionYear.year = $5";
             query.create(oqlQuery);
             query.bind(section.getName());
             query.bind(name);
+            query.bind(section.getSite().getExecutionCourse().getSigla());
+			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getName());
+			query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
             List result = (List) query.execute();
             lockRead(result);
             if (result.size() != 0)
@@ -48,8 +54,14 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
 				IItem item = null;
 				String oqlQuery = "select sectionItem from " + Item.class.getName();
 				oqlQuery += " where section.name = $1 " ; 
+				oqlQuery +=	" and section.site.executionCourse.code = $2";
+				oqlQuery += " and section.site.executionCourse.executionPeriod.name = $3";
+				oqlQuery += " and section.site.executionCourse.executionPeriod.executionYear.year = $4";
 				query.create(oqlQuery);
 				query.bind(section.getName());
+				query.bind(section.getSite().getExecutionCourse().getSigla());
+				query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getName());
+				query.bind(section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 				List result = (List) query.execute();
 				lockRead(result);
 				return result;
