@@ -36,4 +36,9 @@
 		<zip destfile="deploy/${app.name}.war" basedir="build/standalone"/>
     </target>
 
+    <target name="compile-proj"
+    		description="Compiles standalone application">
+		<ant antfile="build_jboss.xml" target="compile-standalone"/>
+    </target>
+
 </project>
