@@ -183,6 +183,12 @@
 
     <!-- Include all elements that Tomcat exposes to applications -->
     <pathelement location="${env.CATALINA_HOME}/common/classes"/>
+    <fileset dir="${basedir}/lib">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${basedir}/lib_web">
+      <include name="*.jar"/>
+    </fileset>
     <fileset dir="${env.CATALINA_HOME}/common/endorsed">
       <include name="*.jar"/>
     </fileset>
@@ -191,12 +197,6 @@
     </fileset>
     <pathelement location="${env.CATALINA_HOME}/shared/classes"/>
     <fileset dir="${env.CATALINA_HOME}/shared/lib">
-      <include name="*.jar"/>
-    </fileset>
-    <fileset dir="${basedir}/lib">
-      <include name="*.jar"/>
-    </fileset>
-    <fileset dir="${basedir}/lib_web">
       <include name="*.jar"/>
     </fileset>
 
