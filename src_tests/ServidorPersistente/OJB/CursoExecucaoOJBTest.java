@@ -66,7 +66,9 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
   public void testCreateNonExistingCursoExecucao() {
     try {
     	_suportePersistente.iniciarTransaccao();
-		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano2");
+    	ICurso degree = cursoPersistente.readBySigla("LEEC");
+    	assertNotNull(degree);
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano2", degree);
 		assertNotNull(degreeCurricularPlan);
 		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 		assertNotNull(executionYear);
@@ -86,7 +88,10 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
   public void testCreateExistingCursoExecucao() {
 	try {
 		_suportePersistente.iniciarTransaccao();
-		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano1");
+		ICurso degree = cursoPersistente.readBySigla("LEIC");
+		assertNotNull(degree);
+
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
 		assertNotNull(degreeCurricularPlan);
 		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 		assertNotNull(executionYear);
@@ -112,7 +117,10 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 
 	try {
 		_suportePersistente.iniciarTransaccao();
-		degreeCurricularPlan1 = planoCurricularCursoPersistente.readByName("plano1");
+		ICurso degree = cursoPersistente.readBySigla("LEIC");
+		assertNotNull(degree);
+
+		degreeCurricularPlan1 = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
 		assertNotNull(degreeCurricularPlan1);
 		
 		executionYear1 = persistentExecutionYear.readExecutionYearByName("2002/2003");
@@ -146,7 +154,10 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
   	
     try {
 		_suportePersistente.iniciarTransaccao();
-		degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano1");
+		ICurso degree = cursoPersistente.readBySigla("LEIC");
+		assertNotNull(degree);
+
+		degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
 		assertNotNull(degreeCurricularPlan);
 		executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 		assertNotNull(executionYear);

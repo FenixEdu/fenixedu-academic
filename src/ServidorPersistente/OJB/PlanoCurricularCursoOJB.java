@@ -48,27 +48,6 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
         super.lockWrite(planoCurricularCurso);
     }
     
-    
-    public IPlanoCurricularCurso lerPlanoCurricularPorNomeSiglaCurso(String nome, String sigla, ICurso curso) throws ExcepcaoPersistencia {
-        try {
-            IPlanoCurricularCurso de = null;
-            String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
-            oqlQuery += " where nome = $1 and sigla = $2 and curso.sigla = $3";
-            query.create(oqlQuery);
-            query.bind(nome);
-            query.bind(sigla);
-            query.bind(curso.getSigla());
-
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if (result.size() != 0)
-                de = (IPlanoCurricularCurso) result.get(0);
-            return de;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
-    
     public void apagarPlanoCurricularPorNomeESigla(String nome, String sigla) throws ExcepcaoPersistencia {
         try {
             String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
@@ -127,14 +106,17 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
     }
     
     
-    public IPlanoCurricularCurso readByName(String name) throws ExcepcaoPersistencia{
+    public IPlanoCurricularCurso readByNameAndDegree(String name, ICurso degree)throws ExcepcaoPersistencia{
 		try {
 			IPlanoCurricularCurso de = null;
 
 			String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
-			oqlQuery += " where name = $1 ";
+			oqlQuery += " where name = $1 "
+					 + " and curso.sigla = $2 ";
+			
 			query.create(oqlQuery);
 			query.bind(name);
+			query.bind(degree.getSigla());
 
 			List result = (List) query.execute();
 			super.lockRead(result);

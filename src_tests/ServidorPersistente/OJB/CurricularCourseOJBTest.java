@@ -13,6 +13,7 @@ import junit.framework.TestSuite;
 
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
+import Dominio.ICurso;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IPlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -50,7 +51,11 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         try {
             _suportePersistente.iniciarTransaccao();
             departmentCourse = disciplinaDepartamentoPersistente.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
-            degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano1");
+            
+			ICurso degree = cursoPersistente.readBySigla("LEIC");
+			assertNotNull(degree);
+            
+            degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
             _suportePersistente.confirmarTransaccao();        	
         } catch(ExcepcaoPersistencia ex) {
             fail("testWriteCurricularCourse");
