@@ -96,7 +96,7 @@ public class ExecutionPeriod implements IExecutionPeriod {
 		String result = "[EXECUTION_PERIOD";
 		result += ", internalCode=" + internalCode;
 		result += ", name=" + name;
-		result += ", executionYear=" + executionYear;
+		result += ", executionYear=" + getExecutionYear();
 		result += "]";
 		return result;
 	}
