@@ -13,11 +13,13 @@ package middleware.persistentMiddlewareSupport;
 
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
+import Dominio.ICurso;
 import ServidorPersistente.ExcepcaoPersistencia;
 
 
 public interface IPersistentMWDegreeTranslation  {
     
     public MWDegreeTranslation readByDegreeCode(Integer degreeCode) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+	public MWDegreeTranslation readByDegree(ICurso degree) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
 	
 }
