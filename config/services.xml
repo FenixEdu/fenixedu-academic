@@ -6002,7 +6002,7 @@
     </service>
  	<service>
         <name>EditOtherTypeCreditLineService</name>
-        <implementationClass>ServidorAplicacao.Servico.credits.EditOtherTypeCreditLineService</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.credits.otherTypeCreditLine.EditOtherTypeCreditLineService</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -6012,7 +6012,7 @@
  	<service>
         <name>DeleteOtherTypeCreditLineService</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.credits.DeleteOtherTypeCreditLineService</implementationClass>
+            ServidorAplicacao.Servico.credits.otherTypeCreditLine.DeleteOtherTypeCreditLineService</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -6021,7 +6021,7 @@
     </service>  
  	<service>
         <name>ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService</name>
-        <implementationClass>ServidorAplicacao.Servico.credits.ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.credits.otherTypeCreditLine.ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -6030,13 +6030,80 @@
     </service>  
  	<service>
         <name>ReadOtherTypeCreditLineByOidService</name>
-        <implementationClass>ServidorAplicacao.Servico.credits.ReadOtherTypeCreditLineByOidService</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.credits.otherTypeCreditLine.ReadOtherTypeCreditLineByOidService</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
         	<chain name="CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization"/>
         </filterChains>
     </service>
+ 	<service>
+        <name>ReadTeacherServiceExemptions</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.serviceExemption.ReadTeacherServiceExemptionsService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+ 	<service>
+        <name>EditServiceExemptionService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.serviceExemption.EditServiceExemptionCreditLineService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+ 	<service>
+        <name>ReadServiceExemptionByOidService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.serviceExemption.ReadServiceExemptionCreditLineByOidService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+ 	<service>
+        <name>DeleteServiceExemptionService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.serviceExemption.DeleteServiceExemptionCreditLineService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    
+ 	<service>
+        <name>ReadTeacherManagementPositions</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.managementPosition.ReadTeacherManagementPositionsService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+ 	<service>
+        <name>EditManagementPositionService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.managementPosition.EditManagementPositionCreditLineService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+ 	<service>
+        <name>ReadManagementPositionByOidService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.managementPosition.ReadManagementPositionCreditLineByOidService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+ 	<service>
+        <name>DeleteManagementPositionService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.managementPosition.DeleteManagementPositionCreditLineService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>    
+    
+    
     <service>
         <name>ReadStudentByNumberAndAllDegreeTypes</name>
         <implementationClass> 
