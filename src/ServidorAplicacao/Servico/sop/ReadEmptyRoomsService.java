@@ -25,124 +25,135 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jpvl
  */
-public class ReadEmptyRoomsService implements IService {
-	
-	public ReadEmptyRoomsService() {
-	}
+public class ReadEmptyRoomsService implements IService
+{
 
-	
+    public ReadEmptyRoomsService()
+    {
+    }
 
-	public Object run(
-		InfoRoom infoRoom,
-		InfoLesson infoLesson,
-		InfoExecutionPeriod infoExecutionPeriod)
-		throws FenixServiceException {
+    public Object run(InfoRoom infoRoom, InfoLesson infoLesson,
+            InfoExecutionPeriod infoExecutionPeriod)
+            throws FenixServiceException
+    {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-			ISalaPersistente roomDAO = sp.getISalaPersistente();
+            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+            ISalaPersistente roomDAO = sp.getISalaPersistente();
 
-			// Check is time interval is valid
+            // Check is time interval is valid
 
-			if (!validTimeInterval(infoLesson)) {
-				throw new InvalidTimeInterval();
-			}
+            if (!validTimeInterval(infoLesson)) { throw new InvalidTimeInterval(); }
 
-			// Read all Rooms with a capacity
-			List roomList =
-				roomDAO.readSalas(
-					null,
-					null,
-					null,
-					null,
-					infoRoom.getCapacidadeNormal(),
-					null);
+            // Read all Rooms with a capacity
+            List roomList = roomDAO.readSalas(null, null, null, null, 
+            //					infoRoom.getCapacidadeNormal()
+                    null, null);
 
-			Iterator roomListIterator = roomList.iterator();
+            Iterator roomListIterator = roomList.iterator();
 
-			List infoRoomList = new ArrayList();
+            List infoRoomList = new ArrayList();
 
-			while (roomListIterator.hasNext()) {
-				ISala element = (ISala) roomListIterator.next();
-				try {
-					InfoRoom infoRoomElement =
-						Cloner.copyRoom2InfoRoom(element);
-					infoRoomList.add(infoRoomElement);
-				} catch (IllegalArgumentException e) {
-					// ignored
-				}
-			}
-			// remove predicate
-			infoRoomList =
-				(List) CollectionUtils.select(
-					infoRoomList,
-					new RoomLessonPredicate());
+            while (roomListIterator.hasNext())
+            {
+                ISala element = (ISala) roomListIterator.next();
+                try
+                {
+                    InfoRoom infoRoomElement = Cloner
+                            .copyRoom2InfoRoom(element);
+                    infoRoomList.add(infoRoomElement);
+                }
+                catch (IllegalArgumentException e)
+                {
+                    // ignored
+                }
+            }
+            // remove predicate
+            infoRoomList = (List) CollectionUtils.select(infoRoomList,
+                    new RoomLessonPredicate());
 
-			IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-            
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionPeriod);
-			
-			//List lessonList = lessonDAO.readLessonsInPeriod(lesson);
-			List lessonList =
-				lessonDAO.readLessonsInBroadPeriodInAnyRoom(lesson,executionPeriod);
+            IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 
-			Iterator lessonIterator = lessonList.iterator();
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-			/* remove lesson's rooms from room list */
-			while (lessonIterator.hasNext()) {
-				IAula lessonAux = (IAula) lessonIterator.next();
-				InfoLesson infoLessonAux =
-					Cloner.copyILesson2InfoLesson(lessonAux);
-				if (infoLesson.getIdInternal() != null && !infoLesson.getIdInternal().equals(infoLessonAux.getIdInternal())) {
-					infoRoomList.remove(infoLessonAux.getInfoSala());
-				} else if (infoLesson.getIdInternal() == null) {
-					infoRoomList.remove(infoLessonAux.getInfoSala());
-				}
-			}
-			return infoRoomList;
+            //List lessonList = lessonDAO.readLessonsInPeriod(lesson);
+            List lessonList = lessonDAO.readLessonsInBroadPeriodInAnyRoom(
+                    lesson, executionPeriod);
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            Iterator lessonIterator = lessonList.iterator();
 
-	private class RoomLessonPredicate implements Predicate {
-		public RoomLessonPredicate() {
-		}
-		/**
-		 * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-		 */
-		public boolean evaluate(Object listElement) {
-			InfoRoom infoRoom = (InfoRoom) listElement;
-			return !infoRoom.getNome().endsWith(".");
-		}
-	}
+            /* remove lesson's rooms from room list */
+            while (lessonIterator.hasNext())
+            {
+                IAula lessonAux = (IAula) lessonIterator.next();
+                InfoLesson infoLessonAux = Cloner
+                        .copyILesson2InfoLesson(lessonAux);
+                if (infoLesson.getIdInternal() != null
+                        && !infoLesson.getIdInternal().equals(
+                                infoLessonAux.getIdInternal()))
+                {
+                    System.out.println(infoLessonAux.getInfoSala());
+                    infoRoomList.remove(infoLessonAux.getInfoSala());
+                }
+                else if (infoLesson.getIdInternal() == null)
+                {
+                    infoRoomList.remove(infoLessonAux.getInfoSala());
+                }
+            }
+            return infoRoomList;
 
-	private boolean validTimeInterval(InfoLesson lesson) {
-		boolean result = true;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+    }
 
-		if (lesson.getInicio().getTime().getTime()
-			>= lesson.getFim().getTime().getTime()) {
-			result = false;
-		}
+    private class RoomLessonPredicate implements Predicate
+    {
+        public RoomLessonPredicate()
+        {
+        }
 
-		return result;
-	}
+        /**
+         * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
+         */
+        public boolean evaluate(Object listElement)
+        {
+            InfoRoom infoRoom = (InfoRoom) listElement;
+            return !infoRoom.getNome().endsWith(".");
+        }
+    }
 
-	/**
-	 */
-	public class InvalidTimeInterval extends FenixServiceException {
+    private boolean validTimeInterval(InfoLesson lesson)
+    {
+        boolean result = true;
 
-		/**
-		 * 
-		 */
-		InvalidTimeInterval() {
-			super();
-		}
+        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime()
+                .getTime())
+        {
+            result = false;
+        }
 
-	}
+        return result;
+    }
+
+    /**
+     */
+    public class InvalidTimeInterval extends FenixServiceException
+    {
+
+        /**
+         * 
+         */
+        InvalidTimeInterval()
+        {
+            super();
+        }
+
+    }
 }

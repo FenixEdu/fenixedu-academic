@@ -95,15 +95,15 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
     }
 
     /**
-	 * Reads all salas that with certains properties. The properties are
-	 * specified by the arguments of this method. If an argument is null, then
-	 * the sala can have any value concerning that argument. In what concerns
-	 * the capacidadeNormal and capacidadeExame, this two arguments specify the
-	 * minimal value that a sala can have in order to be selected.
-	 * 
-	 * @return a list with all salas that satisfy the conditions specified by
-	 *         the non-null arguments.
-	 */
+     * Reads all salas that with certains properties. The properties are
+     * specified by the arguments of this method. If an argument is null, then
+     * the sala can have any value concerning that argument. In what concerns
+     * the capacidadeNormal and capacidadeExame, this two arguments specify the
+     * minimal value that a sala can have in order to be selected.
+     * 
+     * @return a list with all salas that satisfy the conditions specified by
+     *         the non-null arguments.
+     */
     public List readSalas(
         String nome,
         String edificio,
@@ -255,10 +255,10 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
         return queryList(Sala.class, criteria);
     }
     /**
-	 * Returns a class list
-	 * 
-	 * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)
-	 */
+     * Returns a class list
+     * 
+     * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)
+     */
     public List readByShift(ITurno group) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
