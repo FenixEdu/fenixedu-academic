@@ -7,6 +7,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import Dominio.grant.contract.IGrantInsurance;
+import Util.CalendarUtil;
 
 
 /**
@@ -25,6 +26,9 @@ public class InfoGrantInsurance extends InfoObject {
     private InfoGrantContract infoGrantContract;
     private InfoGrantPaymentEntity infoGrantPaymentEntity;
 
+    public InfoGrantInsurance() {
+        super();
+    }
     /**
      * @return Returns the infoGrantContract.
      */
@@ -36,9 +40,6 @@ public class InfoGrantInsurance extends InfoObject {
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
         this.infoGrantContract = infoGrantContract;
-    }
-    public InfoGrantInsurance() {
-        super();
     }
 	/**
 	 * @return Returns the dateBeginInsurance.
@@ -124,24 +125,28 @@ public class InfoGrantInsurance extends InfoObject {
     	}
     	return infoGrantInsurance;
     }
-
-	public Double getDayValueOfInsurance()
-	{
-		return new Double(dayValueOfInsurance);
-	}
+    
+    public static Double getDayValueOfInsurance() {
+    	return new Double(dayValueOfInsurance);
+    }
 
 	/**
 	 * If the date begin and date end is set, calculates the number of
 	 * days and multiply by the constant value 'dayValueOfInsurance'
 	 */
-	public Double calculateTotalValue() {
-		if(dateBeginInsurance != null && dateEndInsurance != null && dateBeginInsurance.before(dateEndInsurance)) {
-			// TODO Fazer as contas para descobrir o numero de dias
-			double numberOfDays = 0;
+	public static Double calculateTotalValue(Date dateBegin, Date dateEnd) {
+		if(dateBegin != null && dateEnd != null && dateBegin.before(dateEnd)) 
+		{
+			Integer daysBetweenDates = CalendarUtil.getNumberOfDaysBetweenDates(dateBegin,dateEnd);
+			double numberOfDays = daysBetweenDates.doubleValue();
 			
 			return new Double(numberOfDays * getDayValueOfInsurance().doubleValue());
 		}
 		return new Double(0);		
+	}
+	
+	public void setTotalValue() {
+		totalValue =  InfoGrantInsurance.calculateTotalValue(this.dateBeginInsurance, this.dateEndInsurance);
 	}
 
 	

@@ -9,6 +9,7 @@ import java.util.List;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import DataBeans.grant.contract.InfoGrantContractRegime;
+import DataBeans.grant.contract.InfoGrantInsurance;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
@@ -16,6 +17,7 @@ import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantContractRegime;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
+import Dominio.grant.contract.IGrantInsurance;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
@@ -23,6 +25,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.grant.IPersistentGrantContractRegime;
+import ServidorPersistente.grant.IPersistentGrantInsurance;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 /**
  * @author pica
@@ -135,7 +138,7 @@ public class EditGrantContractRegime extends EditDomainObjectService
 			}
 			
 			//Set all the others GrantContractRegime that are active to state
-			// 0 (desactive)
+			// 0 (inactive)
 			try
 			{
 				IPersistentGrantContractRegime persistentGrantContractRegime = sp
@@ -163,4 +166,38 @@ public class EditGrantContractRegime extends EditDomainObjectService
 			}
 		}
 	}
+		
+		/* @param objectLocked
+	     * @param infoObject
+	     * @param sp
+	     */
+	protected void doBeforeLock(IDomainObject domainObjectToLock,InfoObject infoObject, ISuportePersistente sp) throws FenixServiceException 
+	{
+		//IF grantRegime new endDate != grantRegime old endDate
+		InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
+		
+		if (infoGrantContractRegime.getState().equals(new Integer(1))) //Active Contract Regime
+		{
+			IGrantContractRegime grantContractRegime = (IGrantContractRegime) domainObjectToLock;
+			
+			try
+			{
+				if(!grantContractRegime.getDateEndContract().equals(infoGrantContractRegime.getDateEndContract()))
+				{
+					IPersistentGrantInsurance persistentGrantInsurance = sp.getIPersistentGrantInsurance();
+					IGrantInsurance grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(grantContractRegime.getGrantContract().getIdInternal());
+					persistentGrantInsurance.simpleLockWrite(grantInsurance);
+					grantInsurance.setDateEndInsurance(infoGrantContractRegime.getDateEndContract());
+					
+					grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance.getDateBeginInsurance(), grantInsurance.getDateEndInsurance()));
+				}
+			}
+			catch(ExcepcaoPersistencia e)
+			{
+				throw new FenixServiceException();
+			}
+		
+		}
+	}
 }
+

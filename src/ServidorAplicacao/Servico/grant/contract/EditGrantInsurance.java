@@ -63,7 +63,8 @@ public class EditGrantInsurance extends EditDomainObjectService {
 				infoGrantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
 			}
 			
-			infoGrantInsurance.setTotalValue(infoGrantInsurance.calculateTotalValue());
+			infoGrantInsurance.setTotalValue(); //Automatically calculate the value using date begin and
+												//date end of insurance.
 			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException();

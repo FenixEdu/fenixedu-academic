@@ -5,11 +5,13 @@
 package Util;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
 /**
  * @author Ana e Ricardo
+ * @author Barbosa e Pica
  *
  */
 public class CalendarUtil
@@ -50,5 +52,24 @@ public class CalendarUtil
 		return DateFormatUtils.format(time.getTime(), "HHmmss");
 	}
 
+	/*
+	 * 
+	 * @author Barbosa
+	 * @author Pica
+	 * 
+	 */
+	public static Integer getNumberOfDaysBetweenDates(Date beginDate,Date endDate)
+	{
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		
+		c1.setTime(beginDate);
+		c2.setTime(endDate);
+		
+		long timeBetweenInMillis = c2.getTimeInMillis() - c1.getTimeInMillis();
+		Integer numberDaysBetweenDates = new Integer(new Long(timeBetweenInMillis / (3600000 * 24)).intValue());
+		
+		return numberDaysBetweenDates;
+	}
 
  }
