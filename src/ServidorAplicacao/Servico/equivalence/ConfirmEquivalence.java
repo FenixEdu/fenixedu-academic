@@ -48,13 +48,6 @@ import Util.EnrolmentState;
 public class ConfirmEquivalence implements IServico {
 
 	private static ConfirmEquivalence service = new ConfirmEquivalence();
-	private ISuportePersistente persistentSupport = null;
-	private IPersistentEnrolment persistentEnrolment = null;
-	private IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = null;
-	private IPersistentEnrolmentEquivalenceRestriction persistentEnrolmentEquivalenceRestriction = null;
-	private IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = null;
-	private IPessoaPersistente pessoaPersistente = null;
-	private IFuncionarioPersistente funcionarioPersistente = null;
 
 	public static ConfirmEquivalence getService() {
 		return ConfirmEquivalence.service;
@@ -70,31 +63,29 @@ public class ConfirmEquivalence implements IServico {
 	public InfoEquivalenceContext run(InfoEquivalenceContext infoEquivalenceContext) throws FenixServiceException {
 
 		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-			persistentEnrolmentEquivalence = persistentSupport.getIPersistentEnrolmentEquivalence();
-			persistentEnrolmentEquivalenceRestriction = persistentSupport.getIPersistentEnrolmentEquivalenceRestriction();
-			persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
-			pessoaPersistente = persistentSupport.getIPessoaPersistente();
-
-			funcionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
-
-			//			IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = persistentSupport.getIPersistentEnrolmentEq();
+			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
+			IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = persistentSupport.getIPersistentEnrolmentEquivalence();
+			IPersistentEnrolmentEquivalenceRestriction persistentEnrolmentEquivalenceRestriction = persistentSupport.getIPersistentEnrolmentEquivalenceRestriction();
+			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
+			IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
+			SuportePersistente sp = SuportePersistente.getInstance();
+			IFuncionarioPersistente funcionarioPersistente = sp.iFuncionarioPersistente();
 
 			Iterator scopesToGetEquivalenceIterator = infoEquivalenceContext.getChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade().iterator();
 			while (scopesToGetEquivalenceIterator.hasNext()) {
 				InfoCurricularCourseScopeGrade infoCurricularCourseScopeGrade = (InfoCurricularCourseScopeGrade) scopesToGetEquivalenceIterator.next();
 
-				IEnrolment newEnrolment = createNewEnrolment(infoEquivalenceContext, infoCurricularCourseScopeGrade);
+				IEnrolment newEnrolment = createNewEnrolment(infoEquivalenceContext, infoCurricularCourseScopeGrade, persistentEnrolment);
 
-				createNewEnrolmentEvaluation(infoEquivalenceContext, newEnrolment, infoCurricularCourseScopeGrade);
+				createNewEnrolmentEvaluation(infoEquivalenceContext, newEnrolment, infoCurricularCourseScopeGrade, pessoaPersistente, funcionarioPersistente, persistentEnrolmentEvaluation,sp);
 
-				IEnrolmentEquivalence enrolmentEquivalence = createNewEnrolmentEquivalence(newEnrolment);
+				IEnrolmentEquivalence enrolmentEquivalence = createNewEnrolmentEquivalence(newEnrolment, persistentEnrolmentEquivalence);
 
 				Iterator infoEnrolmentsToGiveEquivalenceIterator = infoEquivalenceContext.getChosenInfoEnrolmentsToGiveEquivalence().iterator();
 				while (infoEnrolmentsToGiveEquivalenceIterator.hasNext()) {
 					InfoEnrolment infoEnrolmentToGiveEquivalence = (InfoEnrolment) infoEnrolmentsToGiveEquivalenceIterator.next();
-					createNewEnrolmentEquivalenceRestriction(enrolmentEquivalence, infoEnrolmentToGiveEquivalence);
+					createNewEnrolmentEquivalenceRestriction(enrolmentEquivalence, infoEnrolmentToGiveEquivalence, persistentEnrolmentEquivalenceRestriction);
 				}
 			}
 		} catch (ExistingPersistentException e1) {
@@ -106,9 +97,7 @@ public class ConfirmEquivalence implements IServico {
 		return infoEquivalenceContext;
 	}
 
-	private IEnrolmentEquivalenceRestriction createNewEnrolmentEquivalenceRestriction(
-		IEnrolmentEquivalence enrolmentEquivalence,
-		InfoEnrolment infoEnrolmentToGiveEquivalence)
+	private IEnrolmentEquivalenceRestriction createNewEnrolmentEquivalenceRestriction(IEnrolmentEquivalence enrolmentEquivalence, InfoEnrolment infoEnrolmentToGiveEquivalence, IPersistentEnrolmentEquivalenceRestriction persistentEnrolmentEquivalenceRestriction)
 		throws ExistingPersistentException, ExcepcaoPersistencia {
 		try {
 			IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction = new EnrolmentEquivalenceRestriction();
@@ -123,7 +112,7 @@ public class ConfirmEquivalence implements IServico {
 		}
 	}
 
-	private IEnrolmentEquivalence createNewEnrolmentEquivalence(IEnrolment newEnrolment) throws ExistingPersistentException, ExcepcaoPersistencia {
+	private IEnrolmentEquivalence createNewEnrolmentEquivalence(IEnrolment newEnrolment, IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence) throws ExistingPersistentException, ExcepcaoPersistencia {
 		try {
 			IEnrolmentEquivalence enrolmentEquivalence = new EnrolmentEquivalence();
 			enrolmentEquivalence.setEnrolment(newEnrolment);
@@ -139,13 +128,26 @@ public class ConfirmEquivalence implements IServico {
 	private IEnrolmentEvaluation createNewEnrolmentEvaluation(
 		InfoEquivalenceContext infoEquivalenceContext,
 		IEnrolment newEnrolment,
-		InfoCurricularCourseScopeGrade infoCurricularCourseScopeGrade)
+		InfoCurricularCourseScopeGrade infoCurricularCourseScopeGrade,
+		IPessoaPersistente pessoaPersistente,
+		IFuncionarioPersistente funcionarioPersistente,
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
+		SuportePersistente spJdbc)
 		throws ExistingPersistentException, ExcepcaoPersistencia {
 		try {
 			IUserView userView = infoEquivalenceContext.getResponsible();
 			IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
+			try {
+				spJdbc.iniciarTransaccao();
+			} catch (Exception e1) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.BEGIN_TRANSACTION);
+			}
 			Funcionario funcionario = funcionarioPersistente.lerFuncionarioPorPessoa(pessoa.getIdInternal().intValue());
-
+			try {
+				spJdbc.confirmarTransaccao();
+			} catch (Exception e1) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.COMMIT_TRANSACTION);
+			}
 			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 			enrolmentEvaluation.setEnrolment(newEnrolment);
 			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
@@ -165,8 +167,7 @@ public class ConfirmEquivalence implements IServico {
 		}
 	}
 
-	private IEnrolment createNewEnrolment(InfoEquivalenceContext infoEquivalenceContext, InfoCurricularCourseScopeGrade infoCurricularCourseScopeGrade)
-		throws ExistingPersistentException, ExcepcaoPersistencia {
+	private IEnrolment createNewEnrolment(InfoEquivalenceContext infoEquivalenceContext, InfoCurricularCourseScopeGrade infoCurricularCourseScopeGrade, IPersistentEnrolment persistentEnrolment) throws ExistingPersistentException, ExcepcaoPersistencia {
 		IEnrolment newEnrolment;
 		try {
 			InfoCurricularCourseScope infoCurricularCourseScopeToEnrol = infoCurricularCourseScopeGrade.getInfoCurricularCourseScope();

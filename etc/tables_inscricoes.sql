@@ -203,7 +203,7 @@ create table ENROLMENT_EQUIVALENCE_RESTRICTION (
    KEY_ENROLMENT_EQUIVALENCE int(11) not null,
    KEY_EQUIVALENT_ENROLMENT int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_EQUIVALENT_ENROLMENT)
+   unique U1 (KEY_ENROLMENT_EQUIVALENCE, KEY_EQUIVALENT_ENROLMENT)
 )type=InnoDB;
 
 -- ----------------------------

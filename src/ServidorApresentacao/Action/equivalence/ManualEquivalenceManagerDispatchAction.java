@@ -76,12 +76,12 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 
 	public ActionForward verify(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
+
 		if (isCancelled(request)) {
 			return mapping.findForward(forwards[6]);
 		}
 		
-		super.validateToken(request, form, mapping, "error.transaction.equivalence");
-
 		DynaActionForm equivalenceForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
 
@@ -107,11 +107,11 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 
 	public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
+
 		if (isCancelled(request)) {
 			return mapping.findForward(forwards[0]);
 		}
-
-		super.validateToken(request, form, mapping, "error.transaction.equivalence");
 
 		HttpSession session = request.getSession();
 
@@ -136,11 +136,11 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 
 	public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
+
 		if (isCancelled(request)) {
 			return mapping.findForward(forwards[1]);
 		}
-
-		super.validateToken(request, form, mapping, "error.transaction.equivalence");
 
 		HttpSession session = request.getSession();
 
@@ -159,11 +159,11 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 
 	public ActionForward details(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
+
 		if (isCancelled(request)) {
 			return mapping.findForward(forwards[0]);
 		}
-
-		super.validateToken(request, form, mapping, "error.transaction.equivalence");
 
 		DynaActionForm equivalenceForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
