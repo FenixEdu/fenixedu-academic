@@ -16,6 +16,7 @@
 <li><html:link page="/searchProfessorships.do?method=prepareForm" >Consulta de Corpo Docente por Disciplina</html:link>
 <li><a HREF="http://fenix.ist.utl.pt/publico/index.do?method=prepare&page=0" TARGET="_top">Hor&aacute;rios, P&aacute;ginas das Disciplinas, Turmas e Salas</a>
 <li><a HREF="http://www.ist.utl.pt/pt/servicos/internos/lista.html">Lista Telef&oacute;nica</a> </li>
+<li><a HREF="https://fenix.ist.utl.pt/privado">Consulta de Alunos inscritos por Disciplina (necessita de autenticação)</a>
 <BR/>
 <BR/>
 <B>Aplica&ccedil;&otilde;es</b>
