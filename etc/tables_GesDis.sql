@@ -27,7 +27,7 @@ create table ANNOUNCEMENT (
 drop table if exists CURRICULUM;
 create table CURRICULUM (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_EXECUTION_COURSE int(11) not null default '0',
+   KEY_CURRICULAR_COURSE int(11) not null default '0',
    GENERAL_OBJECTIVES text,
    OPERACIONAL_OBJECTIVES text,
    PROGRAM text,
@@ -35,8 +35,8 @@ create table CURRICULUM (
    OPERACIONAL_OBJECTIVES_EN text,
    PROGRAM_EN text,
    primary key (ID_INTERNAL),
-   UNIQUE KEY U1(KEY_EXECUTION_COURSE))
-   type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
+   UNIQUE KEY U1(KEY_CURRICULAR_COURSE))
+   type=InnoDB ;
 
 #----------------------------
 # Table structure for item

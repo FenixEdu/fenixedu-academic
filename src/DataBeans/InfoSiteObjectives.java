@@ -5,6 +5,8 @@
  */
 package DataBeans;
 
+import java.util.List;
+
 /**
  * @author João Mota
  *
@@ -12,10 +14,26 @@ package DataBeans;
  */
 public class InfoSiteObjectives implements ISiteComponent {
 
+
+	private List infoCurriculums;
 	private String generalObjectives;
 	private String operacionalObjectives;
 	private String generalObjectivesEn;
 	private String operacionalObjectivesEn;
+
+	/**
+	 * @return
+	 */
+	public List getInfoCurriculums() {
+		return infoCurriculums;
+	}
+
+	/**
+	 * @param infoCurriculums
+	 */
+	public void setInfoCurriculums(List infoCurriculums) {
+		this.infoCurriculums = infoCurriculums;
+	}
 
 	/**
 	 * @see java.lang.Object#toString()

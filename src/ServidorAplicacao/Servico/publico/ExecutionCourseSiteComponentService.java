@@ -58,7 +58,8 @@ public class ExecutionCourseSiteComponentService implements IServico {
 		ISiteComponent bodyComponent,
 		Integer infoSiteCode,
 		Integer infoExecutionCourseCode,
-		Integer sectionIndex)
+		Integer sectionIndex,
+		Integer curricularCourseId)
 		throws FenixServiceException {
 		ExecutionCourseSiteView siteView = null;
 
@@ -82,8 +83,8 @@ public class ExecutionCourseSiteComponentService implements IServico {
 				site = persistentSite.readByExecutionCourse(executionCourse);
 			}
 			ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder.getInstance();
-			commonComponent = componentBuilder.getComponent(commonComponent, site, null, null);
-			bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, sectionIndex);
+			commonComponent = componentBuilder.getComponent(commonComponent, site, null, null,null);
+			bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, sectionIndex,curricularCourseId);
 
 			siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
 		} catch (ExcepcaoPersistencia e) {

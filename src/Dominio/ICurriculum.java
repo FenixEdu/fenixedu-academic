@@ -11,7 +11,7 @@ package Dominio;
  * @author  EP 15 - fjgc
  * @author João Mota
  */
-public interface ICurriculum {
+public interface ICurriculum extends IDomainObject{
 	String getGeneralObjectives();
 	String getOperacionalObjectives();
 	String getProgram();
@@ -19,7 +19,7 @@ public interface ICurriculum {
 	String getOperacionalObjectivesEn();
 	String getProgramEn();
 
-	IDisciplinaExecucao getExecutionCourse();
+	ICurricularCourse getCurricularCourse();
 
 	void setGeneralObjectives(String generalObjectives);
 	void setOperacionalObjectives(String operacionalObjectives);
@@ -27,6 +27,6 @@ public interface ICurriculum {
 	void setGeneralObjectivesEn(String generalObjectivesEn);
 	void setOperacionalObjectivesEn(String operacionalObjectivesEn);
 	void setProgramEn(String programEn);
-	void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	void setCurricularCourse(ICurricularCourse CurricularCourse);
 
 }

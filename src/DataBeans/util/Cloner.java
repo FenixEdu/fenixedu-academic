@@ -907,10 +907,10 @@ public abstract class Cloner {
 	public static InfoCurriculum copyICurriculum2InfoCurriculum(ICurriculum curriculum) {
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(curriculum.getExecutionCourse());
+		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curriculum.getCurricularCourse());
 
 		copyObjectProperties(infoCurriculum, curriculum);
-		infoCurriculum.setInfoExecutionCourse(infoExecutionCourse);
+		infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
 
 		return infoCurriculum;
 	}
@@ -923,10 +923,10 @@ public abstract class Cloner {
 	public static ICurriculum copyInfoCurriculum2ICurriculum(InfoCurriculum infoCurriculum) {
 		ICurriculum curriculum = new Curriculum();
 
-		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoCurriculum.getInfoExecutionCourse());
+		ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurriculum.getInfoCurricularCourse());
 
 		copyObjectProperties(curriculum, infoCurriculum);
-		curriculum.setExecutionCourse(executionCourse);
+		curriculum.setCurricularCourse(curricularCourse);
 
 		return curriculum;
 	}

@@ -9,27 +9,30 @@ package Dominio;
  * @author  EP 15 - fjgc
  * @author João Mota
  */
-public class Curriculum implements ICurriculum {
+public class Curriculum extends DomainObject implements ICurriculum {
 	protected String generalObjectives;
 	protected String operacionalObjectives;
 	protected String program;
 	protected String generalObjectivesEn;
 	protected String operacionalObjectivesEn;
 	protected String programEn;
-	protected IDisciplinaExecucao executionCourse;
-	private Integer internalCode;
-	private Integer keyExecutionCourse;
+	protected ICurricularCourse curricularCourse;
+	private Integer keyCurricularCourse;
 	/** Creates a new instance of Curriculum */
 	public Curriculum() {
 	}
-	public Curriculum(IDisciplinaExecucao executionCourse, String generalObjectives, String operacionalObjectives, String program) {
+	
+	public Curriculum(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
+	public Curriculum(ICurricularCourse curricularCourse, String generalObjectives, String operacionalObjectives, String program) {
 		setGeneralObjectives(generalObjectives);
 		setOperacionalObjectives(operacionalObjectives);
 		setProgram(program);
-		setExecutionCourse(executionCourse);
+		setCurricularCourse(curricularCourse);
 	}
 	public Curriculum(
-		IDisciplinaExecucao executionCourse,
+		ICurricularCourse curricularCourse,
 		String generalObjectives,
 		String operacionalObjectives,
 		String generalObjectivesEn,
@@ -38,24 +41,19 @@ public class Curriculum implements ICurriculum {
 		setOperacionalObjectives(operacionalObjectives);
 		setGeneralObjectivesEn(generalObjectivesEn);
 		setOperacionalObjectivesEn(operacionalObjectivesEn);
-		setExecutionCourse(executionCourse);
+		setCurricularCourse(curricularCourse);
 	}
-	public Curriculum(IDisciplinaExecucao executionCourse, String program, String programEn) {
+	public Curriculum(ICurricularCourse curricularCourse, String program, String programEn) {
 		setProgram(program);
 		setProgramEn(programEn);
-		setExecutionCourse(executionCourse);
+		setCurricularCourse(curricularCourse);
 	}
-	public Integer getInternalCode() {
-		return internalCode;
+	
+	public Integer getKeyCurricularCourse() {
+		return keyCurricularCourse;
 	}
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
-	}
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
-	public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-		this.keyExecutionCourse = keyExecutionCourse;
+	public void setKeyCurricularCourse(Integer keyExecutionCourse) {
+		this.keyCurricularCourse = keyExecutionCourse;
 	}
 	public String getGeneralObjectives() {
 		return generalObjectives;
@@ -66,8 +64,8 @@ public class Curriculum implements ICurriculum {
 	public String getProgram() {
 		return program;
 	}
-	public IDisciplinaExecucao getExecutionCourse() {
-		return executionCourse;
+	public ICurricularCourse getCurricularCourse() {
+		return curricularCourse;
 	}
 	public void setGeneralObjectives(String generalObjectives) {
 		this.generalObjectives = generalObjectives;
@@ -78,27 +76,27 @@ public class Curriculum implements ICurriculum {
 	public void setProgram(String program) {
 		this.program = program;
 	}
-	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
-		this.executionCourse = executionCourse;
+	public void setCurricularCourse(ICurricularCourse curricularCourse) {
+		this.curricularCourse = curricularCourse;
 	}
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof ICurriculum) {
 			ICurriculum curriculum = (ICurriculum) obj;
-			result = getExecutionCourse().equals(curriculum.getExecutionCourse());
+			result = getCurricularCourse().equals(curriculum.getCurricularCourse());
 		}
 		return result;
 	}
 	public String toString() {
 		String result = "[CURRICULUM";
-		result += "codigo interno" + getInternalCode();
+		result += "codigo interno" + getIdInternal();
 		result += "Objectivos Operacionais" + getOperacionalObjectives();
 		result += "Objectivos gerais" + getGeneralObjectives();
 		result += "programa" + getProgram();
 		result += "Objectivos Operacionais em Inglês" + getOperacionalObjectivesEn();
 		result += "Objectivos gerais em Inglês" + getGeneralObjectivesEn();
 		result += "programa em Inglês" + getProgramEn();
-		result += "execution course" + getExecutionCourse();
+		result += "curricular Course" + getCurricularCourse();
 		result += "]";
 		return result;
 	}

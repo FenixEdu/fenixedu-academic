@@ -103,7 +103,7 @@ public class ReadPublishedMarksByExam implements IServico {
 		infoSiteMarks.setMarksList(infoMarksList);
 		infoSiteMarks.setInfoEvaluation(infoEvaluation);
 		ExecutionCourseSiteComponentBuilder componentBuilder = new ExecutionCourseSiteComponentBuilder();
-		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null);
+		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null,null);
 
 		ExecutionCourseSiteView siteView = new ExecutionCourseSiteView(commonComponent, infoSiteMarks);
 

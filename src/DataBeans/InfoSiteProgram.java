@@ -5,14 +5,31 @@
  */
 package DataBeans;
 
+import java.util.List;
+
 /**
  * @author jmota
  * @author Fernanda Quitério
  * 
  */
 public class InfoSiteProgram implements ISiteComponent {
+	private List infoCurriculums;
 	private String program;
 	private String programEn;
+
+	/**
+	 * @return
+	 */
+	public List getInfoCurriculums() {
+		return infoCurriculums;
+	}
+
+	/**
+	 * @param infoCurriculums
+	 */
+	public void setInfoCurriculums(List infoCurriculums) {
+		this.infoCurriculums = infoCurriculums;
+	}
 
 	/**
 	 * @see java.lang.Object#toString()

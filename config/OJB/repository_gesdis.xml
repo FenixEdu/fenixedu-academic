@@ -334,15 +334,15 @@
 <class-descriptor class="Dominio.Curriculum"
                   table="CURRICULUM">
     <field-descriptor id="1"
-        name="internalCode"
+        name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
     />
     <field-descriptor id="2"
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
+        name="keyCurricularCourse"
+        column="KEY_CURRICULAR_COURSE"
         jdbc-type="INTEGER"
 	/>
 	<field-descriptor id="3"
@@ -379,11 +379,11 @@
         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	/>
     <reference-descriptor
-         name="executionCourse"
-         class-ref="Dominio.DisciplinaExecucao"
+         name="curricularCourse"
+         class-ref="Dominio.CurricularCourse"
          proxy="true"
     >
-	<foreignkey field-ref="keyExecutionCourse"/>
+	<foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
     
 </class-descriptor>

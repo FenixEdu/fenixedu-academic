@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %> 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<bean:define id="component" name="siteView" property="commonComponent"/>
+<bean:define id="curricularCourses" name="component" property="associatedDegrees" />
 <div id="nav">
 <h3><bean:message key="title.navigation.local"/></h3>	
 <ul>
@@ -20,25 +22,25 @@
 		<bean:message key="link.summaries.public"/>
 	</html:link>
 </li>
+<li>
+	<html:link page="<%= "/viewSite.do?method=bibliography&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
+				<bean:message key="link.bibliography"/>
+	</html:link>
+</li>
+<li>
+	<html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
+				<bean:message key="link.evaluationMethod"/>
+	</html:link>
+</li>
 <li> <a href="/" onclick="houdini('seccao');return false;"><bean:message key="label.curricular.information"/></a></li>
 </ul>
  <dl id="seccao" style="display: none;">
-            <dd><html:link page="<%= "/viewSite.do?method=objectives" + "&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
-				<bean:message key="link.objectives"/>
-				</html:link></dd>
-            <dd><html:link page="<%= "/viewSite.do?method=program" + "&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
-				<bean:message key="link.program"/>
-				</html:link></dd>
-		    	 <dd><html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
-				<bean:message key="link.evaluationMethod"/>
-				</html:link></dd>	
-			
-            <dd><html:link page="<%= "/viewSite.do?method=bibliography&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
-				<bean:message key="link.bibliography"/>
-				</html:link></dd>
-			<dd><html:link page="<%= "/viewSite.do?method=curricularCourses&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
-				<bean:message key="link.associatedCurricularCourses"/>
-				</html:link></dd>	
+<logic:iterate id="curricularCourse" name="curricularCourses">
+	<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
+ 	<dd><html:link page="<%= "/viewSite.do?method=curricularCourse&amp;objectCode=" + pageContext.findAttribute("objectCode")  +"&amp;ccCode=" +  pageContext.findAttribute("curricularCourseId")+ "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +  pageContext.findAttribute("eYName") %>">
+				<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>-<bean:write name="curricularCourse" property="name"/>
+	</html:link></dd>
+</logic:iterate>
   </dl>
  <ul> 
 

@@ -8,14 +8,14 @@ package DataBeans;
 /**
  * @author João Mota
  */
-public class InfoCurriculum {
+public class InfoCurriculum extends InfoObject{
 	protected String generalObjectives;
 	protected String operacionalObjectives;
 	protected String program;
 	protected String generalObjectivesEn;
 	protected String operacionalObjectivesEn;
 	protected String programEn;
-	protected InfoExecutionCourse infoExecutionCourse;
+	protected InfoCurricularCourse infoCurricularCourse;
 	/**
 	 * 
 	 */
@@ -23,8 +23,8 @@ public class InfoCurriculum {
 
 	}
 
-	public InfoCurriculum(InfoExecutionCourse infoExecutionCourse) {
-		setInfoExecutionCourse(infoExecutionCourse);
+	public InfoCurriculum(InfoCurricularCourse infoCurricularCourse) {
+		setInfoCurricularCourse(infoCurricularCourse);
 
 	}
 
@@ -35,8 +35,8 @@ public class InfoCurriculum {
 		String generalObjectivesEn,
 		String operacionalObjectivesEn,
 		String programEn,
-		InfoExecutionCourse infoExecutionCourse) {
-		setInfoExecutionCourse(infoExecutionCourse);
+		InfoCurricularCourse infoCurricularCourse) {
+		setInfoCurricularCourse(infoCurricularCourse);
 		setGeneralObjectives(generalObjectives);
 		setOperacionalObjectives(operacionalObjectives);
 		setProgram(program);
@@ -56,8 +56,8 @@ public class InfoCurriculum {
 	/**
 	 * @return InfoExecutionCourse
 	 */
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
+	public InfoCurricularCourse getInfoCurricularCourse() {
+		return infoCurricularCourse;
 	}
 
 	/**
@@ -83,11 +83,11 @@ public class InfoCurriculum {
 	}
 
 	/**
-	 * Sets the infoExecutionCourse.
-	 * @param infoExecutionCourse The infoExecutionCourse to set
+	 * Sets the infoCurricularCourse.
+	 * @param infoCurricularCourse The infoCurricularCourse to set
 	 */
-	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-		this.infoExecutionCourse = infoExecutionCourse;
+	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+		this.infoCurricularCourse = infoCurricularCourse;
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class InfoCurriculum {
 		boolean result = false;
 		if (obj instanceof InfoCurriculum) {
 			InfoCurriculum infoCurriculum = (InfoCurriculum) obj;
-			result = getInfoExecutionCourse().equals(
-						infoCurriculum.getInfoExecutionCourse());
+			result = getInfoCurricularCourse().equals(
+						infoCurriculum.getInfoCurricularCourse());
 		}
 		return result;
 	}
@@ -123,7 +123,7 @@ public class InfoCurriculum {
 		result += ", getGeneralObjectivesEn=" + getGeneralObjectivesEn();
 		result += ", getOperacionalObjectivesEn=" + getOperacionalObjectivesEn();
 		result += ", getProgramEn=" + getProgramEn();
-		result += ", getInfoExecutionCourse=" + getInfoExecutionCourse();
+		result += ", InfoCurricularCourse =" + getInfoCurricularCourse();
 		result += "]";
 		return result;
 	}

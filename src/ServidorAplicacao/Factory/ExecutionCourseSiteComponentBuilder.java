@@ -25,6 +25,7 @@ import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
@@ -37,6 +38,7 @@ import DataBeans.InfoSiteTimetable;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
+import Dominio.CurricularCourse;
 import Dominio.IAnnouncement;
 import Dominio.IAula;
 import Dominio.IBibliographicReference;
@@ -57,8 +59,11 @@ import Dominio.ITeacher;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBibliographicReference;
+import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
@@ -89,7 +94,8 @@ public class ExecutionCourseSiteComponentBuilder {
 		ISiteComponent component,
 		ISite site,
 		ISiteComponent commonComponent,
-		Integer sectionIndex)
+		Integer sectionIndex,
+		Integer curricularCourseId)
 		throws FenixServiceException {
 
 		// updateSite(executionYearName, executionPeriodName, executionCourseName);
@@ -135,8 +141,57 @@ public class ExecutionCourseSiteComponentBuilder {
 			return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
 		} else if (component instanceof InfoSiteSummaries) {
 			return getInfoSiteSummaries((InfoSiteSummaries) component, site);
-		}
+		}else if (component instanceof InfoSiteCurricularCourse) {
+		return getInfoSiteCurricularCourse((InfoSiteCurricularCourse) component, site,curricularCourseId);
+	}
 		return null;
+	}
+
+	/**
+	 * @param course
+	 * @param site
+	 * @return
+	 */
+	private ISiteComponent getInfoSiteCurricularCourse(InfoSiteCurricularCourse component, ISite site,Integer curricularCourseId) throws FenixServiceException {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseId);
+			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			curricularCourse=(ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse,false);
+			if (curricularCourse== null ){
+				throw new InvalidArgumentsServiceException();				
+			}
+			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+			InfoCurriculum infoCurriculum = null;
+			if (curriculum!=null){
+			infoCurriculum=Cloner.copyICurriculum2InfoCurriculum(curriculum);}
+			component.setInfoCurriculum(infoCurriculum);
+			InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+			List infoCurricularCourseScopes=new ArrayList();
+			List curricularCourseScopes = curricularCourse.getScopes();
+			Iterator iter = curricularCourseScopes.iterator();
+			while(iter.hasNext()){
+				ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
+				InfoCurricularCourseScope infoScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(scope);
+				infoCurricularCourseScopes.add(infoScope);
+				
+			}
+			infoCurricularCourse.setInfoScopes(infoCurricularCourseScopes);
+			component.setInfoCurricularCourse(infoCurricularCourse);
+			
+			
+			
+			
+			
+			return component;
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+				
+
+
+		
 	}
 
 	/**
@@ -237,7 +292,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		ISuportePersistente sp;
 		List allSections = null;
 		List infoSectionsList = null;
-	
+
 		List infoCurricularCourseList = null;
 		try {
 			// read sections	
@@ -434,15 +489,10 @@ public class ExecutionCourseSiteComponentBuilder {
 		ISite site)
 		throws FenixServiceException {
 		List infoCurricularCourseList = new ArrayList();
-		
 
-		
-		
-		
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
-			infoCurricularCourseList = readCurricularCourses(executionCourse);
-		
+		infoCurricularCourseList = readCurricularCourses(executionCourse);
 
 		component.setAssociatedCurricularCourses(infoCurricularCourseList);
 		return component;
@@ -503,8 +553,6 @@ public class ExecutionCourseSiteComponentBuilder {
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentBibliographicReference =
 					sp.getIPersistentBibliographicReference();
-
-			
 
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
@@ -574,15 +622,16 @@ public class ExecutionCourseSiteComponentBuilder {
 		throws FenixServiceException {
 		try {
 
-			ICurriculum curriculum = readCurriculum(site);
-
-			InfoCurriculum infoCurriculum = null;
-			if (curriculum != null) {
-				infoCurriculum =
+			List curriculums = readCurriculum(site);
+			Iterator iter = curriculums.iterator();
+			List infoCurriculums = new ArrayList();
+			while (iter.hasNext()) {
+				ICurriculum curriculum = (ICurriculum) iter.next();
+				InfoCurriculum infoCurriculum =
 					Cloner.copyICurriculum2InfoCurriculum(curriculum);
-				component.setProgram(infoCurriculum.getProgram());
+				infoCurriculums.add(infoCurriculum);
 			}
-
+			component.setInfoCurriculums(infoCurriculums);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
@@ -600,17 +649,16 @@ public class ExecutionCourseSiteComponentBuilder {
 		throws FenixServiceException {
 		try {
 
-			ICurriculum curriculum = readCurriculum(site);
-
-			InfoCurriculum infoCurriculum = null;
-			if (curriculum != null) {
-				infoCurriculum =
+			List curriculums = readCurriculum(site);
+			Iterator iter = curriculums.iterator();
+			List infoCurriculums = new ArrayList();
+			while (iter.hasNext()) {
+				ICurriculum curriculum = (ICurriculum) iter.next();
+				InfoCurriculum infoCurriculum =
 					Cloner.copyICurriculum2InfoCurriculum(curriculum);
-				component.setGeneralObjectives(
-					infoCurriculum.getGeneralObjectives());
-				component.setOperacionalObjectives(
-					infoCurriculum.getOperacionalObjectives());
+				infoCurriculums.add(infoCurriculum);
 			}
+			component.setInfoCurriculums(infoCurriculums);
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
@@ -618,19 +666,28 @@ public class ExecutionCourseSiteComponentBuilder {
 		return component;
 	}
 
-	private ICurriculum readCurriculum(ISite site)
-		throws ExcepcaoPersistencia {
-		ICurriculum curriculum = null;
+	private List readCurriculum(ISite site) throws ExcepcaoPersistencia {
+
 		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
 		ISuportePersistente sp;
 
 		sp = SuportePersistenteOJB.getInstance();
+		List curricularCourses =
+			executionCourse.getAssociatedCurricularCourses();
+		Iterator iter = curricularCourses.iterator();
+		List curriculums = new ArrayList();
+		while (iter.hasNext()) {
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) iter.next();
+			ICurriculum curriculum = null;
+			curriculum =
+				sp.getIPersistentCurriculum().readCurriculumByCurricularCourse(
+					curricularCourse);
+			curriculums.add(curriculum);
+		}
 
-		curriculum =
-			sp.getIPersistentCurriculum().readCurriculumByExecutionCourse(
-				executionCourse);
-		return curriculum;
+		return curriculums;
 	}
 
 	/**
@@ -738,7 +795,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
 		List responsibleDomainTeachersList = null;
-		
+
 		IPersistentResponsibleFor persistentResponsibleFor =
 			persistentSupport.getIPersistentResponsibleFor();
 		responsibleDomainTeachersList =

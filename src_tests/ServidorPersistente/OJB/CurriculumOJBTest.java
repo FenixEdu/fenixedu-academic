@@ -125,7 +125,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 		 } catch (ExcepcaoPersistencia ex) {
 			 fail("    -> Failed Reading Existing Curriculum");
 		 }
-		 assertTrue(curriculum.getExecutionCourse().equals(executionCourse));
+		 assertTrue(curriculum.getCurricularCourse().equals(executionCourse));
 		 assertTrue(curriculum.getGeneralObjectives().equals("bla"));
 		 assertTrue(curriculum.getOperacionalObjectives().equals("bla"));
 		 assertTrue(curriculum.getProgram().equals("bla"));
@@ -181,7 +181,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 		 } catch (ExcepcaoPersistencia ex) {
 			 fail("    -> Failed Reading Existing Curriculum");
 		 }
-		 assertTrue(curriculum.getExecutionCourse().equals(executionCourse));
+		 assertTrue(curriculum.getCurricularCourse().equals(executionCourse));
 		 assertTrue(curriculum.getGeneralObjectives().equals("bla"));
 		 assertTrue(curriculum.getOperacionalObjectives().equals("bla"));
 		 assertTrue(curriculum.getProgram().equals("bla"));

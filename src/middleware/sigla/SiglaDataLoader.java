@@ -211,7 +211,7 @@ public class SiglaDataLoader {
 
 					crit.addEqualTo(
 						"codigo_disc",
-					codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
+						codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
 					crit.addEqualTo(
 						"ano_lectivo",
 						fenixYearToSiglaYear(
@@ -274,7 +274,8 @@ public class SiglaDataLoader {
 			curriculum = (ICurriculum) broker.getObjectByQuery(query);
 			if (curriculum == null) {
 				curriculum = new Curriculum();
-				curriculum.setExecutionCourse(executionCourse);
+				//FIXME: curriculum now has curricularCourse
+				//curriculum.setExecutionCourse(executionCourse);
 			}
 			query = new QueryByCriteria(Evaluation.class, crit);
 
@@ -602,8 +603,6 @@ public class SiglaDataLoader {
 				+ siglaCurricularCourses.size());
 		return siglaCurricularCourses;
 	}
-
-
 
 	/**
 	 * @param string

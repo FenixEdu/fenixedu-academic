@@ -10,16 +10,17 @@
 				</td>
 			</tr>
 		</table>	
-<%--
-<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>">
-<jsp:include page="curriculumForm.jsp"/>
-</logic:notPresent>
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" > --%>
+
 	
 <logic:present name="siteView">
-<bean:define id="objectives" name="siteView" property="component"/>
+<bean:define id="component" name="siteView" property="component"/>
+<bean:define id="infoCurriculums" name="component" property="infoCurriculums"/>
+<logic:iterate id="objectives" name="infoCurriculums">
+
 
 <h2><bean:message key="title.objectives"/></h2>
+<h3><bean:write name="objectives" property="infoCurricularCourse.name"/></h3>
+<h3><bean:write name="objectives" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></h3>
 <table>
 	<tr>
 		<td><strong><bean:message key="label.generalObjectives" /></strong>
@@ -69,9 +70,12 @@
 	</logic:notEmpty>
 </table>
 <br />	
+<bean:define id="curriculumId" name="objectives" property="idInternal"/>
 <div class="gen-button">
-	<html:link page="<%= "/objectivesManagerDA.do?method=prepareEditObjectives&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+	<html:link page="<%= "/objectivesManagerDA.do?method=prepareEditObjectives&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;curriculumCode="+ pageContext.findAttribute("curriculumId")%>">
 		<bean:message key="button.edit"/>
 	</html:link>
 </div>
+</logic:iterate>
+
 </logic:present>

@@ -109,8 +109,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 		Integer teacherNumber= new Integer(teacherNumberString);	
 		Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
 		try {
-			Boolean result =
-				(Boolean) serviceManager.executar(
+			serviceManager.executar(
 					userView,
 					"RemoveTeacher",
 					args);
@@ -144,8 +143,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 			Integer teacherNumber= new Integer((String) teacherForm.get("teacherNumber"));	
 			Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
 			try {
-				Boolean result =
-					(Boolean) serviceManager.executar(
+				serviceManager.executar(
 						userView,
 						"AssociateTeacher",
 						args);

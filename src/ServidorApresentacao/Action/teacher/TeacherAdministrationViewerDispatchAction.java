@@ -55,7 +55,10 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
@@ -366,7 +369,10 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
-		readSiteView(request, objectivesComponent, null, null, null);
+		String curriculumIdString =
+			(String) request.getParameter("curriculumCode");
+		Integer curriculumId = new Integer(curriculumIdString);
+		readSiteView(request, objectivesComponent, null, curriculumId, null);
 
 		TeacherAdministrationSiteView siteView =
 			(TeacherAdministrationSiteView) request.getAttribute("siteView");
@@ -446,7 +452,10 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		ISiteComponent programComponent = new InfoSiteProgram();
-		readSiteView(request, programComponent, null, null, null);
+		String curriculumIdString =
+			(String) request.getParameter("curriculumCode");
+		Integer curriculumId = new Integer(curriculumIdString);
+		readSiteView(request, programComponent, null, curriculumId, null);
 
 		TeacherAdministrationSiteView siteView =
 			(TeacherAdministrationSiteView) request.getAttribute("siteView");
@@ -1430,8 +1439,11 @@ public class TeacherAdministrationViewerDispatchAction
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		Collections.sort(((InfoSiteSummaries)((ExecutionCourseSiteView)siteView).getComponent()).getInfoSummaries());
+
+		Collections.sort(
+			((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+				.getComponent())
+				.getInfoSummaries());
 
 		request.setAttribute("siteView", siteView);
 
@@ -1452,13 +1464,13 @@ public class TeacherAdministrationViewerDispatchAction
 		lessonTypeValues.add(new Integer(2));
 		lessonTypeValues.add(new Integer(3));
 		lessonTypeValues.add(new Integer(4));
-		
+
 		List lessonTypeNames = new ArrayList();
 		lessonTypeNames.add("Teórica");
 		lessonTypeNames.add("Prática");
 		lessonTypeNames.add("Teórico-Prática");
 		lessonTypeNames.add("Laboratorial");
-	
+
 		request.setAttribute("lessonTypeValues", lessonTypeValues);
 		request.setAttribute("lessonTypeNames", lessonTypeNames);
 		return mapping.findForward("insertSummary");
@@ -1489,7 +1501,7 @@ public class TeacherAdministrationViewerDispatchAction
 			(new Integer(dateTokens[0])).intValue());
 		summaryDate.set(
 			Calendar.MONTH,
-			(new Integer(dateTokens[1])).intValue()-1);
+			(new Integer(dateTokens[1])).intValue() - 1);
 		summaryDate.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
 
 		String[] hourTokens = summaryHourString.split(":");
@@ -1530,9 +1542,9 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			String executionCourseIdString = request.getParameter("objectCode");
-						Integer executionCourseId = new Integer(executionCourseIdString);
-		Object[] args = { executionCourseId,summaryId };
+		String executionCourseIdString = request.getParameter("objectCode");
+		Integer executionCourseId = new Integer(executionCourseIdString);
+		Object[] args = { executionCourseId, summaryId };
 
 		try {
 			ServiceUtils.executeService(userView, "DeleteSummary", args);
@@ -1555,9 +1567,9 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			String executionCourseIdString = request.getParameter("objectCode");
-				Integer executionCourseId = new Integer(executionCourseIdString);
-		Object[] args = { executionCourseId,summaryId };
+		String executionCourseIdString = request.getParameter("objectCode");
+		Integer executionCourseId = new Integer(executionCourseIdString);
+		Object[] args = { executionCourseId, summaryId };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -1575,15 +1587,12 @@ public class TeacherAdministrationViewerDispatchAction
 		lessonTypeValues.add(new Integer(2));
 		lessonTypeValues.add(new Integer(3));
 		lessonTypeValues.add(new Integer(4));
-		
-		
+
 		List lessonTypeNames = new ArrayList();
 		lessonTypeNames.add("Teórica");
 		lessonTypeNames.add("Prática");
 		lessonTypeNames.add("Teórico-Prática");
 		lessonTypeNames.add("Laboratorial");
-		
-	
 
 		Integer summaryType =
 			((InfoSiteSummary) siteView.getComponent())
@@ -1642,7 +1651,8 @@ public class TeacherAdministrationViewerDispatchAction
 			(new Integer(hourTokens[1])).intValue());
 
 		Object[] args =
-			{executionCourseId,
+			{
+				executionCourseId,
 				summaryId,
 				summaryDate,
 				summaryHour,

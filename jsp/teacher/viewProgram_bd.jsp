@@ -10,15 +10,14 @@
 				</td>
 			</tr>
 		</table>
-<%--
-<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>">	
-<jsp:include page="curriculumForm.jsp"/>
-</logic:notPresent>
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" > --%>
 
 <logic:present name="siteView">
-<bean:define id="program" name="siteView" property="component"/>
+<bean:define id="component" name="siteView" property="component"/>
+<bean:define id="infoCurriculums" name="component" property="infoCurriculums"/>
+<logic:iterate id="program" name="infoCurriculums">
 <h2><bean:message key="title.program"/></h2>
+<h3><bean:write name="program" property="infoCurricularCourse.name"/></h3>
+<h3><bean:write name="program" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></h3>
 <table>
 	<tr>
 		<td>
@@ -29,6 +28,8 @@
 <br/>	
 <logic:notEmpty name="program" property="programEn">
 <h2><bean:message key="title.program.eng"/></h2>
+<h3><bean:write name="program" property="infoCurricularCourse.name"/></h3>
+<h3><bean:write name="program" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></h3>
 <table>
 	<tr>
 		<td>
@@ -38,10 +39,11 @@
 </table>
 <br />	
 </logic:notEmpty>
-
+<bean:define id="curriculumId" name="program" property="idInternal"/>
 <div class="gen-button">
-	<html:link page="<%= "/programManagerDA.do?method=prepareEditProgram&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+	<html:link page="<%= "/programManagerDA.do?method=prepareEditProgram&amp;objectCode=" + pageContext.findAttribute("objectCode") +"&amp;curriculumCode="+ pageContext.findAttribute("curriculumId")%>">
 		<bean:message key="button.edit"/>
 	</html:link>
 </div>	 
+</logic:iterate>
 </logic:present>

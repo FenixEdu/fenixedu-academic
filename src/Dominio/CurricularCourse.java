@@ -35,6 +35,12 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 	private List associatedExecutionCourses;
 	private List scopes;
 
+
+	public CurricularCourse(Integer idInternal){
+		setIdInternal(idInternal);
+		
+	}
+
 	public CurricularCourse() {
 
 		setCode(null);

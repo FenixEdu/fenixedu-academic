@@ -8,13 +8,15 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
 
-public interface IPersistentCurriculum {
-    public ICurriculum readCurriculumByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+public interface IPersistentCurriculum extends IPersistentObject {
+	
+	public ICurriculum readCurriculumByCurricularCourse(ICurricularCourse curricularCourse)	throws ExcepcaoPersistencia;
     public void lockWrite(ICurriculum curriculum) throws ExcepcaoPersistencia;
     public void delete(ICurriculum curriculum) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 	public List readAll()throws ExcepcaoPersistencia;
+	
 }

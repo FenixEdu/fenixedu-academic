@@ -15,6 +15,7 @@ import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
+import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteMarks;
@@ -47,7 +48,7 @@ public class PublicTilesComponentController extends ControllerSupport {
 
 		SiteView siteView = (SiteView) request.getAttribute("siteView");
 		ISiteComponent component = siteView.getComponent();
-
+		
 		if (component instanceof InfoSiteFirstPage) {
 			tileContext.putAttribute(
 				"body",
@@ -58,6 +59,11 @@ public class PublicTilesComponentController extends ControllerSupport {
 
 		} else if (component instanceof InfoSiteAnnouncement) {
 			tileContext.putAttribute("body", "/publico/announcements_bd.jsp");
+		} else if (component instanceof InfoSiteCurricularCourse) {
+			
+			tileContext.putAttribute(
+				"body",
+				"/publico/viewCurricularCourse_bd.jsp");
 		} else if (component instanceof InfoSiteSummaries) {
 			tileContext.putAttribute("body", "/publico/summaries_bd.jsp");
 		} else if (component instanceof InfoSiteObjectives) {
