@@ -1,3 +1,6 @@
+/*
+ * Created on 30/Set/2003
+ */
 package ServidorApresentacao.Action.manager;
 
 import java.util.ArrayList;
@@ -26,41 +29,35 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class DeleteDegreesAction extends FenixAction {
+public class DeleteExecutionCoursesAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, 
-	                             ActionForm form,
-	                             HttpServletRequest request, 
-	                             HttpServletResponse response)
-		throws FenixActionException {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-			IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
+		IUserView userView = SessionUtils.getUserView(request);
+		DynaActionForm deleteForm = (DynaActionForm) form;
 
+		List internalIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
+
+		Object args[] = { internalIds };
 		
-		List degreesInternalIds = Arrays.asList((Integer[]) deleteDegreesForm.get("internalIds"));
-
-		Object args[] = { degreesInternalIds };
-		
-		List errorNames = new ArrayList();
+		List errorCodes = new ArrayList();
 
 		try {
-				errorNames = (List) ServiceUtils.executeService(userView, "DeleteDegrees", args);
+				errorCodes = (List) ServiceUtils.executeService(userView, "DeleteExecutionCourses", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 		
-		if (!errorNames.isEmpty()) {
+		if (!errorCodes.isEmpty()) {
 				ActionErrors actionErrors = new ActionErrors();
-				Iterator namesIter = errorNames.iterator();
+				Iterator codesIter = errorCodes.iterator();
 				ActionError error = null;
-				while (namesIter.hasNext()) {
-						// CRIO UM ACTION ERROR PARA CADA DEGREE
-						error = new ActionError("errors.invalid.delete.not.empty.degree", (String) namesIter.next());
-						actionErrors.add("errors.invalid.delete.not.empty.degree", error);
+				while (codesIter.hasNext()) {
+					error = new ActionError("errors.invalid.delete.not.empty.execution.course", (String) codesIter.next());
+					actionErrors.add("errors.invalid.delete.not.empty.execution.course", error);
 				}
 				saveErrors(request, actionErrors);
 		}
-		return mapping.findForward("readDegrees");
+		return mapping.findForward("readExecutionCourses");
 	}
 }

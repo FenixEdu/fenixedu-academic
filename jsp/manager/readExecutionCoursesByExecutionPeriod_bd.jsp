@@ -91,40 +91,53 @@
 		<b><bean:message key="list.title.execution.courses"/></b>
 		<br>
 		</br>
-		<table>
-			<tr>
-				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+		<html:form action="/deleteExecutionCourses" method="get">
+			<html:hidden property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
+			<bean:define id="onclick">
+				return confirm('<bean:message key="message.confirm.delete.execution.courses"/>')
+		    </bean:define>
+			<table>
+				<tr>
+					<td class="listClasses-header">	
 					</td>
-			</tr>
-			<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
-				<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>			
-				<tr>			
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+					</td>
+				</tr>
+				<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">		
+				<tr>
+					<td class="listClasses">
+						<html:multibox property="internalIds">
+							<bean:write name="infoExecutionCourse" property="idInternal"/>
+						</html:multibox>
+					</td>	
 					<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>
 					</td>
 					<td class="listClasses"><bean:write name="infoExecutionCourse" property="sigla"/>
 					</td>
 					<td class="listClasses"><bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
 					</td>
-				 <td class="listClasses">
-				 
-				 <bean:define id="hasSite" name="infoExecutionCourse" property="hasSite"/>
-					
+				 	<td class="listClasses">
+				 		<bean:define id="hasSite" name="infoExecutionCourse" property="hasSite"/>
 						<logic:equal name="hasSite" value="true">
-						<bean:message key="label.manager.yes"/>
+							<bean:message key="label.manager.yes"/>
 						</logic:equal>
 						<logic:notEqual name="hasSite" value="true">
-						<bean:message key="label.manager.no"/>
+							<bean:message key="label.manager.no"/>
 						</logic:notEqual>
-						</td>
+					</td>
 				</tr>
-			</logic:iterate>	
-		</table>
+				</logic:iterate>	
+			</table>
+			<html:submit onclick='<%=onclick.toString() %>'>
+   				<bean:message key="label.delete"/>
+  			</html:submit>
+		</html:form>
 	</logic:notPresent>
 </logic:notEmpty>
 
