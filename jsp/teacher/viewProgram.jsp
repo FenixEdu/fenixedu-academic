@@ -6,15 +6,12 @@
 
 <span class="error"><html:errors/></span>	
 <logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" scope="session">
-	<bean:message key="message.unavailableObjectives" />	
+	<bean:message key="message.unavailableProgram" />	
 </logic:notPresent>
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" scope="session">
-	<bean:message key="label.generalObjectives" />	
-	<bean:write name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives">
+	<bean:message key="label.program" />	
+	<bean:write name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program>
 	</bean:write>
-	<bean:message key="label.operacionalObjectives" />
-	<bean:write name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives">
-	</bean:write>
-	<html:submit property="method" value="editObjectives" titleKey="button.edit">
+	<html:submit property="method" value="editProgram" titleKey="button.edit">
 	</html:submit>
 </logic:present>
