@@ -1,10 +1,9 @@
 package ServidorPersistente.grant;
 
-import Dominio.grant.contract.IGrantSubsidy;
+import java.util.List;
+
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
-
-
 
 /**
  * @author Pica
@@ -12,5 +11,5 @@ import ServidorPersistente.IPersistentObject;
  */
 public interface IPersistentGrantSubsidy extends IPersistentObject
 {
-    public IGrantSubsidy readActualGrantSubsidyByContract(Integer grantContractId) throws ExcepcaoPersistencia;
+	public List readAllSubsidiesByGrantContract(Integer idContract) throws ExcepcaoPersistencia;
 }

@@ -5553,9 +5553,9 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadActualGrantSubsidyByGrantContract</name>
+        <name>ReadAllGrantSubsidiesByGrantContract</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.grant.contract.ReadActualGrantSubsidyByGrantContract</implementationClass>
+            ServidorAplicacao.Servico.grant.contract.ReadAllGrantSubsidiesByGrantContract</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

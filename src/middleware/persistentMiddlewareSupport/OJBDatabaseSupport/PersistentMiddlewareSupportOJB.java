@@ -21,6 +21,10 @@ import middleware.persistentMiddlewareSupport.IPersistentMWTipoEquivalenciaIleec
 import middleware.persistentMiddlewareSupport.IPersistentMWTreatedEnrollment;
 import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
+import middleware.persistentMiddlewareSupport.grant.IPersistentMWPersonOJB;
+import middleware.persistentMiddlewareSupport.grant.IPersistentMWTeacherOJB;
+import middleware.persistentMiddlewareSupport.grant.OJBDatabaseSuport.MWPersonOJB;
+import middleware.persistentMiddlewareSupport.grant.OJBDatabaseSuport.MWTeacherOJB;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -159,4 +163,14 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	{
 		return new MWPrecedenciaNumeroDisciplinasIleecOJB();
 	}
+    
+    //For the grant migration
+    public IPersistentMWPersonOJB getIPersistentMWPerson()
+    {
+    	return new MWPersonOJB();
+    }
+    public IPersistentMWTeacherOJB getIPersistentMWTeacher()
+    {
+    	return new MWTeacherOJB();
+    }
 }

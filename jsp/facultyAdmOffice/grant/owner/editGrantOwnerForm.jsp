@@ -28,15 +28,15 @@
 
 <table>
 	<tr>
-		<td colspan="2" ><b><bean:message key="label.grant.owner.information"/></b></td>
+		<td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td>
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.dateSendCGD"/>:&nbsp;</td>
-		<td><html:text property="dateSendCGD"/>&nbsp;<bean:message key="label.dateformat"/></td>
+		<td><html:text property="dateSendCGD" size="10"/>&nbsp;<bean:message key="label.dateformat"/></td>
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.cardCopyNumber"/>:&nbsp;</td>
-		<td><html:text property="cardCopyNumber"/></td>
+		<td><html:text property="cardCopyNumber" size="3"/></td>
 	</tr>
 </table>
 
@@ -69,7 +69,7 @@
 			<bean:message key="label.grant.owner.infoperson.idLocation"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idLocation"/>
+			<html:text property="idLocation" size="30"/>
 		</td>
 	</tr>
 	<tr>
@@ -77,7 +77,7 @@
 			<bean:message key="label.grant.owner.infoperson.idDate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idDate"/><bean:message key="label.requiredfield"/>
+			<html:text property="idDate" size="10"/><bean:message key="label.requiredfield"/>
 			&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
@@ -86,7 +86,7 @@
 			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idValidDate"/><bean:message key="label.requiredfield"/>
+			<html:text property="idValidDate" size="10"/><bean:message key="label.requiredfield"/>
 			&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
@@ -123,7 +123,7 @@
 			<bean:message key="label.grant.owner.infoperson.birthdate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="birthdate"/><bean:message key="label.requiredfield"/>
+			<html:text property="birthdate" size="10"/><bean:message key="label.requiredfield"/>
 			&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
@@ -148,7 +148,7 @@
 			<bean:message key="label.grant.owner.infoperson.districtBirth"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="districtBirth"/>
+			<html:text property="districtBirth" size="30"/>
 		</td>
 	</tr>
 	<tr>
@@ -156,7 +156,7 @@
 			<bean:message key="label.grant.owner.infoperson.parishOfBirth"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="parishOfBirth"/>
+			<html:text property="parishOfBirth" size="30"/>
 		</td>
 	</tr>
 	<tr>
@@ -164,7 +164,7 @@
 			<bean:message key="label.grant.owner.infoperson.districtSubBirth"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="districtSubBirth"/>
+			<html:text property="districtSubBirth" size="30"/>
 		</td>			
 	</tr>
 	<tr>
@@ -190,7 +190,7 @@
 			<bean:message key="label.grant.owner.infoperson.address"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="address"/>
+			<html:text property="address" size="70"/>
 		</td>
 	</tr>
 	<tr>
@@ -206,7 +206,7 @@
 			<bean:message key="label.grant.owner.infoperson.areaCode"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="areaCode"/>&nbsp;(1234-567)
+			<html:text property="areaCode" size="8"/>&nbsp;(1234-567)
 		</td>
 	</tr>
 	<tr>
@@ -222,7 +222,7 @@
 			<bean:message key="label.grant.owner.infoperson.addressParish"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="addressParish"/>
+			<html:text property="addressParish" size="30"/>
 		</td>
 	</tr>
 	<tr>
@@ -230,7 +230,7 @@
 			<bean:message key="label.grant.owner.infoperson.addressDistrictSub"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="addressDistrictSub"/>
+			<html:text property="addressDistrictSub" size="30"/>
 		</td>
 	</tr>
 	<tr>
@@ -238,7 +238,7 @@
 			<bean:message key="label.grant.owner.infoperson.addressDistrict"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="addressDistrict"/>
+			<html:text property="addressDistrict" size="30"/>
 		</td>
 	</tr>
 	<tr>
@@ -262,7 +262,7 @@
 			<bean:message key="label.grant.owner.infoperson.email"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="email"/>
+			<html:text property="email" size="60"/>
 		</td>
 	</tr>
 	<tr>
@@ -270,7 +270,7 @@
 			<bean:message key="label.grant.owner.infoperson.homepage"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="homepage"/>
+			<html:text property="homepage" size="60"/>
 		</td>
 	</tr>
 	<tr>
@@ -286,7 +286,7 @@
 			<bean:message key="label.grant.owner.infoperson.profession"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="profession"/>
+			<html:text property="profession" size="30"/>
 		</td>
 	</tr>
 	<tr>

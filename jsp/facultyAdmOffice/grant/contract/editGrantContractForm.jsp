@@ -30,7 +30,7 @@
 				<bean:message key="label.grant.contract.beginDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginContract"/>
+				<html:text property="dateBeginContract" size="10"/>
 				<bean:message key="label.requiredfield"/>&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -40,7 +40,7 @@
 				<bean:message key="label.grant.contract.endDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateEndContract"/>
+				<html:text property="dateEndContract" size="10"/>
 				<bean:message key="label.requiredfield"/>&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -60,7 +60,7 @@
 				<bean:message key="label.grant.contract.endMotive"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="endContractMotive"/>
+				<html:text property="endContractMotive" size="40"/>
 			</td>
 		</tr>	
 		<tr>
@@ -68,12 +68,11 @@
 				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantOrientationTeacher"/>
+				<html:text property="grantOrientationTeacher" size="10"/>
 				<bean:message key="label.requiredfield"/>
 				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>
-				
 			</td>
 		</tr>
 		<tr>
@@ -81,7 +80,7 @@
 				<bean:message key="label.grant.contract.dateSendDispatchCC"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateSendDispatchCC"/>
+				<html:text property="dateSendDispatchCC" size="10"/>
 				&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -91,7 +90,7 @@
 				<bean:message key="label.grant.contract.dateDispatchCC"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateDispatchCC"/>
+				<html:text property="dateDispatchCC"  size="10"/>
 				&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -101,7 +100,7 @@
 				<bean:message key="label.grant.contract.dateSendDispatchCD"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateSendDispatchCD"/>
+				<html:text property="dateSendDispatchCD" size="10"/>
 				&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -111,7 +110,7 @@
 				<bean:message key="label.grant.contract.dateDispatchCD"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateDispatchCD"/>
+				<html:text property="dateDispatchCD" size="10"/>
 				&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -121,7 +120,7 @@
 				<bean:message key="label.grant.contract.dateAcceptTerm"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateAcceptTerm"/>
+				<html:text property="dateAcceptTerm" size="10"/>
 				&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>

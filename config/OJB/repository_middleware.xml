@@ -784,4 +784,785 @@
       />
 </class-descriptor>
 
-<!-- ********************************************************************************************************************************************** -->
+<!-- ******************************************************************************************************** -->
+
+
+<!-- ****************  GRANTS Middleware mapping  ************** -->
+<!-- ****************   by Pica & Barbosa         ************** -->
+
+
+<!-- Grant Contract -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantContract"
+  table="mwgrant_contrato"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="contractNumber"
+    column="numeroContrato"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="dateBeginContract"
+    column="dataInicioContrato"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="dateEndContract"
+    column="dataFimContrato"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="endContractMotive"
+    column="motivoFimContrato"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="keyGrantOwner"
+    column="chaveBolseiro"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyGrantType"
+    column="chaveTipoBolsa"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyPaymentEntity"
+    column="chaveEntidadePagadora"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyGrantSubsidy"
+    column="chaveSubsidioActual"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyGrantOrientationTeacher"
+    column="chaveOrientadorActual"
+    jdbc-type="INTEGER"
+  />
+   <reference-descriptor
+			name="grantOwner"
+			class-ref="middleware.middlewareDomain.grant.MWGrantOwner"
+			proxy="false">
+		<foreignkey field-ref="keyGrantOwner"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="grantType"
+			class-ref="middleware.middlewareDomain.grant.MWGrantType"
+			proxy="false">
+		<foreignkey field-ref="keyGrantType"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="subsidy"
+			class-ref="middleware.middlewareDomain.grant.MWGrantSubsidy"
+			proxy="false">
+		<foreignkey field-ref="keyGrantSubsidy"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="paymentEntity"
+			class-ref="middleware.middlewareDomain.grant.MWGrantPaymentEntity"
+			proxy="false">
+		<foreignkey field-ref="keyPaymentEntity"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="orientationTeacher"
+			class-ref="middleware.middlewareDomain.grant.MWGrantOrientationTeacher"
+			proxy="false">
+		<foreignkey field-ref="keyGrantOrientationTeacher"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+<!-- Grant CostCenter -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantCostCenter"
+  table="mwgrant_centrocusto"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="number"
+    column="numero"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="designation"
+    column="designacao"
+    jdbc-type="VARCHAR"
+  />
+</class-descriptor> 
+
+<!-- Grant Course -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantCourse"
+  table="mwgrant_cursos"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="courseCode"
+    column="codigoCurso"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="sigla"
+    column="sigla"
+    jdbc-type="VARCHAR"
+  />
+    <field-descriptor
+    name="completeName"
+    column="nomeCompleto"
+    jdbc-type="VARCHAR"
+  />
+    <field-descriptor
+    name="shortName"
+    column="nomeAbreviado"
+    jdbc-type="VARCHAR"
+  />
+   <field-descriptor
+    name="area"
+    column="area"
+    jdbc-type="VARCHAR"
+  />
+</class-descriptor> 
+
+<!-- Grant Degree -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantDegree"
+  table="mwgrant_categorias"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="categoryCode"
+    column="codigoCategoria"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="categoryShort"
+    column="categoriaAbreviada"
+    jdbc-type="VARCHAR"
+  />
+    <field-descriptor
+    name="categoryLong"
+    column="categoriaLonga"
+    jdbc-type="VARCHAR"
+  />
+</class-descriptor> 
+
+<!-- Grant Orientation Teacher -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantOrientationTeacher"
+  table="mwgrant_orientacao"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="beginDate"
+    column="dataInicio"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="endDate"
+    column="dataFim"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="keyTeacher"
+    column="chaveDocente"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyContract"
+    column="chaveContrato"
+    jdbc-type="INTEGER"
+  />
+   <reference-descriptor
+			name="teacher"
+			class-ref="middleware.middlewareDomain.grant.MWTeacher"
+			proxy="false">
+		<foreignkey field-ref="keyTeacher"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="contract"
+			class-ref="middleware.middlewareDomain.grant.MWGrantContract"
+			proxy="false">
+		<foreignkey field-ref="keyContract"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+<!-- Grant Owner -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantOwner"
+  table="mwgrant_bolseiro"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="number"
+    column="numero"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="dateSendCGD"
+    column="dataEnvioCGD"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="cardCopyNumber"
+    column="numeroViaCartao"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyPerson"
+    column="chavePesoa"
+    jdbc-type="INTEGER"
+  />
+   <reference-descriptor
+			name="person"
+			class-ref="middleware.middlewareDomain.grant.MWPerson"
+			proxy="false">
+		<foreignkey field-ref="keyPerson"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+<!-- Grant Part -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantPart"
+  table="mwgrant_comparticipacao"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="percentage"
+    column="percentagem"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyGrantSubsidy"
+    column="chaveSubsidio"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyGrantPaymentEntity"
+    column="chaveEntidadePagadora"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyResponsibleTeacher"
+    column="chaveResponsavel"
+    jdbc-type="INTEGER"
+  />
+   <reference-descriptor
+			name="grantSubsidy"
+			class-ref="middleware.middlewareDomain.grant.MWGrantSubsidy"
+			proxy="false">
+		<foreignkey field-ref="keyGrantSubsidy"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="grantPaymentEntity"
+			class-ref="middleware.middlewareDomain.grant.MWGrantPaymentEntity"
+			proxy="false">
+		<foreignkey field-ref="keyGrantPaymentEntity"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="responsibleTeacher"
+			class-ref="middleware.middlewareDomain.grant.MWTeacher"
+			proxy="false">
+		<foreignkey field-ref="keyResponsibleTeacher"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+<!-- Grant Payment Entity -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantPaymentEntity"
+  table="mwgrant_entidadePagadora"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="keyCostCenter"
+    column="chaveCentroCusto"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyProject"
+    column="chaveProjecto"
+    jdbc-type="INTEGER"
+  />
+   <reference-descriptor
+			name="costCenter"
+			class-ref="middleware.middlewareDomain.grant.MWGrantCostCenter"
+			proxy="false">
+		<foreignkey field-ref="keyCostCenter"/>
+   </reference-descriptor>
+      <reference-descriptor
+			name="project"
+			class-ref="middleware.middlewareDomain.grant.MWGrantProject"
+			proxy="false">
+		<foreignkey field-ref="keyProject"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+<!-- Grant Project -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantProject"
+  table="mwgrant_projecto"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="number"
+    column="numeroProjecto"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="designation"
+    column="designacaoProjecto"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="keyTeacher"
+    column="chaveDocente"
+    jdbc-type="INTEGER"
+  />
+  <reference-descriptor
+			name="teacher"
+			class-ref="middleware.middlewareDomain.grant.MWTeacher"
+			proxy="false">
+		<foreignkey field-ref="keyTeacher"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+<!-- Grant Qualification -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantQualification"
+  table="mwgrant_habilitacao"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="date"
+    column="dataObtencao"
+    jdbc-type="DATE"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="mark"
+    column="classificacao"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="branch"
+    column="dominioRamo"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="specializationArea"
+    column="areaEspecializacao"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="school"
+    column="estabelecimentoObtencao"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="degreeRecognition"
+    column="reconhecimentoGrau"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="equivalenceDate"
+    column="dataEquivalencia"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="equivalenceSchool"
+    column="estabelecimentoEquivalencia"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="keyTitle"
+    column="chaveCursos"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyDegree"
+    column="chaveGrauAcademicos"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyPerson"
+    column="chavePessoa"
+    jdbc-type="INTEGER"
+  />
+  <reference-descriptor
+			name="title"
+			class-ref="middleware.middlewareDomain.grant.MWGrantCourse"
+			proxy="false">
+		<foreignkey field-ref="keyTitle"/>
+   </reference-descriptor>
+  <reference-descriptor
+			name="degree"
+			class-ref="middleware.middlewareDomain.grant.MWGrantDegree"
+			proxy="false">
+		<foreignkey field-ref="keyDegree"/>
+   </reference-descriptor>
+  <reference-descriptor
+			name="person"
+			class-ref="middleware.middlewareDomain.grant.MWPerson"
+			proxy="false">
+		<foreignkey field-ref="keyPerson"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+<!-- Grant Subsidy -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantSubsidy"
+  table="mwgrant_subsidio"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="valueFullName"
+    column="extenso"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="value"
+    column="valor"
+    jdbc-type="DOUBLE"
+  />
+  <field-descriptor
+    name="totalCost"
+    column="encargoTotal"
+    jdbc-type="DOUBLE"
+  />  
+  <field-descriptor
+    name="beginDate"
+    column="dataInicio"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="keyGrantContract"
+    column="chaveContrato"
+    jdbc-type="INTEGER"
+  />
+  <reference-descriptor
+			name="grantContract"
+			class-ref="middleware.middlewareDomain.grant.MWGrantContract"
+			proxy="false">
+		<foreignkey field-ref="keyGrantContract"/>
+   </reference-descriptor>
+</class-descriptor> 
+
+
+<!-- Grant Type -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWGrantType"
+  table="mwgrant_tipobolsa"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="name"
+    column="nome"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="sigla"
+    column="sigla"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="minimalPeriod"
+    column="periodoMinimo"
+    jdbc-type="INTEGER"
+  />  
+  <field-descriptor
+    name="maximumPeriod"
+    column="periodoMaximo"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="indicativeValue"
+    column="valorIndicativo"
+    jdbc-type="DOUBLE"
+  />
+  <field-descriptor
+    name="origem"
+    column="origem"
+    jdbc-type="VARCHAR"
+  />
+</class-descriptor>
+
+<!-- Teacher -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWTeacher"
+  table="mwgrant_migracao_docente"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="number"
+    column="numero"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="keyDepartment"
+    column="chaveDepartamento"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="degree"
+    column="grau"
+    jdbc-type="VARCHAR"
+  />  
+  <field-descriptor
+    name="category"
+    column="categoria"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="keyPerson"
+    column="chavePessoa"
+    jdbc-type="INTEGER"
+  />
+  <reference-descriptor
+			name="person"
+			class-ref="middleware.middlewareDomain.grant.MWPerson"
+			proxy="false">
+		<foreignkey field-ref="keyPerson"/>
+   </reference-descriptor>
+</class-descriptor>
+
+<!-- Person -->
+<class-descriptor 
+  class="middleware.middlewareDomain.grant.MWPerson"
+  table="mwgrant_migracao_pessoa"
+>
+  <field-descriptor
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+	primarykey="true"
+  />
+  <field-descriptor
+    name="numeroDocumentoIdentificacao"
+    column="numeroDocumentoIdentificacao"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="tipoDocumentoIdentificacao"
+    column="tipoDocumentoIdentificacao"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="localEmissaoDocumentoIdentificacao"
+    column="localEmissaoDocumentoIdentificacao"
+    jdbc-type="VARCHAR"
+  />  
+  <field-descriptor
+    name="dataEmissaoDocumentoIdentificacao"
+    column="dataEmissaoDocumentoIdentificacao"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="dataValidadeDocumentoIdentificacao"
+    column="dataValidadeDocumentoIdentificacao"
+    jdbc-type="DATE"
+  />
+  <field-descriptor
+    name="nome"
+    column="nome"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="sexo"
+    column="sexo"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="estadoCivil"
+    column="estadoCivil"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="nascimento"
+    column="nascimento"
+    jdbc-type="DATE"
+  />  
+  <field-descriptor
+    name="nomePai"
+    column="nomePai"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="nomeMae"
+    column="nomeMae"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="nacionalidade"
+    column="nacionalidade"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="freguesiaNaturalidade"
+    column="freguesiaNaturalidade"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="concelhoNaturalidade"
+    column="concelhoNaturalidade"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="distritoNaturalidade"
+    column="distritoNaturalidade"
+    jdbc-type="VARCHAR"
+  />  
+  <field-descriptor
+    name="morada"
+    column="morada"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="localidade"
+    column="localidade"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="codigoPostal"
+    column="codigoPostal"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="freguesiaMorada"
+    column="freguesiaMorada"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="concelhoMorada"
+    column="concelhoMorada"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="distritoMorada"
+    column="distritoMorada"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="telefone"
+    column="telefone"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="telemovel"
+    column="telemovel"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="email"
+    column="email"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="enderecoWeb"
+    column="enderecoWeb"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="numContribuinte"
+    column="numContribuinte"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="profissao"
+    column="profissao"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="username"
+    column="username"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="password"
+    column="password"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="nacionalidadeCompleta"
+    column="nacionalidadeCompleta"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
+    name="codigoFiscal"
+    column="codigoFiscal"
+    jdbc-type="VARCHAR"
+  />
+</class-descriptor>
+
+<!-- ****************  END OF  - GRANTS Middleware mapping -  END OF ************** -->
+<!-- ****************   by Pica & Barbosa         ************** -->
+
+<!-- ******************************************************************************************************** -->
+
+

@@ -35,7 +35,7 @@
 				<bean:message key="label.grant.project.designation"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="designation"/><bean:message key="label.requiredfield"/>
+				<html:text property="designation" size="80"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -43,7 +43,7 @@
 				<bean:message key="label.grant.project.responsibleTeacher.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="responsibleTeacherNumber"/><bean:message key="label.requiredfield"/>&nbsp;
+				<html:text property="responsibleTeacherNumber" size="10"/><bean:message key="label.requiredfield"/>&nbsp;
 				<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>

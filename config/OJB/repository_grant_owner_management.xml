@@ -497,11 +497,21 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	 <field-descriptor
+      <field-descriptor
+		name="dateBeginSubsidy"
+		column="DATE_BEGIN_SUBSIDY"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateEndSubsidy"
+		column="DATE_END_SUBSIDY"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
 		name="valueFullName"
 		column="VALUE_FULL_NAME"
 		jdbc-type="VARCHAR"
-	 />
+	  />
 	 <field-descriptor
 		name="value"
 		column="VALUE"

@@ -1,0 +1,1 @@
+select concat('insert into GRANT_PART values (', mwc.codigoInterno,',1,',mwc.percentagem,',',mwc.chaveSubsidio,',',mwc.chaveEntidadePagadora,',',mwc.chaveResponsavel,');') as "" from mwgrant_comparticipacao mwc;

@@ -2,6 +2,8 @@
 
 package middleware.persistentMiddlewareSupport;
 
+import middleware.persistentMiddlewareSupport.grant.IPersistentMWPersonOJB;
+import middleware.persistentMiddlewareSupport.grant.IPersistentMWTeacherOJB;
 
 
 
@@ -36,4 +38,7 @@ public interface IPersistentMiddlewareSupport {
 	public IPersistentMWAreaCientificaIleec getIPersistentMWAreaCientificaIleec();
 	public IPersistentMWPrecedenciaDisciplinaDisciplinaIleec getIPersistentMWPrecedenciaDisciplinaDisciplinaIleec();
 	public IPersistentMWPrecedenciaNumeroDisciplinasIleec getIPersistentMWPrecedenciaNumeroDisciplinas();
+    
+	public IPersistentMWPersonOJB getIPersistentMWPerson();
+    public IPersistentMWTeacherOJB getIPersistentMWTeacher();
 }

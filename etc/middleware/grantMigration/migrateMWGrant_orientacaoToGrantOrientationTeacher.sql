@@ -1,0 +1,1 @@
+select concat('insert into GRANT_ORIENTATION_TEACHER values (', mwo.codigoInterno,',1,',mwo.dataInicio,',',mwo.dataFim,',',mwo.chaveContrato,',',mwo.chaveDocente,');') as "" from mwgrant_orientacao mwo;

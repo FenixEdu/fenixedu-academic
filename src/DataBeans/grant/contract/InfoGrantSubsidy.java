@@ -3,6 +3,8 @@
  */
 package DataBeans.grant.contract;
 
+import java.util.Date;
+
 import DataBeans.InfoObject;
 
 /**
@@ -11,6 +13,8 @@ import DataBeans.InfoObject;
  */
 public class InfoGrantSubsidy extends InfoObject
 {
+    private Date dateBeginSubsidy;
+    private Date dateEndSubsidy;
 	private String valueFullName;
 	private Double value;
 	private Double totalCost;
@@ -83,6 +87,38 @@ public class InfoGrantSubsidy extends InfoObject
 	public void setValueFullName(String valueFullName)
 	{
 		this.valueFullName = valueFullName;
+	}
+
+	/**
+	 * @return Returns the dateBeginSubsidy.
+	 */
+	public Date getDateBeginSubsidy()
+	{
+		return dateBeginSubsidy;
+	}
+
+	/**
+	 * @param dateBeginSubsidy The dateBeginSubsidy to set.
+	 */
+	public void setDateBeginSubsidy(Date dateBeginSubsidy)
+	{
+		this.dateBeginSubsidy = dateBeginSubsidy;
+	}
+
+	/**
+	 * @return Returns the dateEndSubsidy.
+	 */
+	public Date getDateEndSubsidy()
+	{
+		return dateEndSubsidy;
+	}
+
+	/**
+	 * @param dateEndSubsidy The dateEndSubsidy to set.
+	 */
+	public void setDateEndSubsidy(Date dateEndSubsidy)
+	{
+		this.dateEndSubsidy = dateEndSubsidy;
 	}
 
 }

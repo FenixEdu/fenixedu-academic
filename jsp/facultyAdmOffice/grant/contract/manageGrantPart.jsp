@@ -92,12 +92,10 @@
 <br/><br/>
 
 <center>
-<html:form action="/editGrantSubsidy" style="display:inline">
-	<html:hidden property="method" value="prepareEditGrantSubsidyForm"/>
+<html:form action="/manageGrantSubsidy" style="display:inline">
+	<html:hidden property="method" value="prepareManageGrantSubsidyForm"/>
 	<html:hidden property="page" value="0"/>
 	<html:hidden property="idContract" value='<%= request.getAttribute("idContract").toString() %>'/>
-	<html:hidden property="idSubsidy" value='<%= request.getAttribute("idSubsidy").toString() %>'/>
-	<html:hidden property="idGrantOwner" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
 	<html:submit styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantSubsidy"/>
 	</html:submit>

@@ -27,7 +27,7 @@
 				<bean:message key="label.grant.qualification.degree"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="degree"/><bean:message key="label.requiredfield"/>
+				<html:text property="degree" size="40"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -35,7 +35,7 @@
 				<bean:message key="label.grant.qualification.title"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="title"/>
+				<html:text property="title" size="30"/>
 			</td>
 		</tr>
 		<tr>
@@ -43,7 +43,7 @@
 				<bean:message key="label.grant.qualification.school"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="school"/><bean:message key="label.requiredfield"/>
+				<html:text property="school" size="40"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -51,7 +51,7 @@
 				<bean:message key="label.grant.qualification.mark"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="mark"/>
+				<html:text property="mark" size="10"/>
 			</td>
 		</tr>
 		<tr>
@@ -59,7 +59,7 @@
 				<bean:message key="label.grant.qualification.qualificationDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="qualificationDate"/><bean:message key="label.requiredfield"/>
+				<html:text property="qualificationDate" size="10"/><bean:message key="label.requiredfield"/>
 				&nbsp;<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
@@ -68,7 +68,7 @@
 				<bean:message key="label.grant.qualification.branch"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="branch"/>
+				<html:text property="branch" size="30"/>
 			</td>
 		</tr>
 		<tr>
@@ -76,7 +76,7 @@
 				<bean:message key="label.grant.qualification.specializationArea"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="specializationArea"/>
+				<html:text property="specializationArea" size="30"/>
 			</td>
 		</tr>
 		<tr>
@@ -84,7 +84,7 @@
 				<bean:message key="label.grant.qualification.degreeRecognition"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="degreeRecognition"/>
+				<html:text property="degreeRecognition" size="40"/>
 			</td>
 		</tr>
 		<tr>
@@ -102,7 +102,7 @@
 				<bean:message key="label.grant.qualification.equivalenceSchool"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="equivalenceSchool"/>
+				<html:text property="equivalenceSchool" size="40"/>
 			</td>
 		</tr>
 		<tr>
@@ -110,7 +110,7 @@
 				<bean:message key="label.grant.qualification.equivalenceDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="equivalenceDate"/>&nbsp;<bean:message key="label.dateformat"/>
+				<html:text property="equivalenceDate" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 	</table>

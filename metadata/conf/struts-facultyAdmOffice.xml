@@ -20,7 +20,7 @@
 				<form-property name="executionPeriodId" type="java.lang.Integer"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
-
+			
 			<form-bean name="ManagementPositionForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="idInternal" type="java.lang.Integer"/>
@@ -156,7 +156,7 @@
 			<form-bean name="editGrantSubsidyForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="idGrantOwner" type="java.lang.Integer"/>
-				<form-property name="idGrantContract" type="java.lang.Integer"/>
+				<form-property name="idContract" type="java.lang.Integer"/>
 				<form-property name="idGrantSubsidy" type="java.lang.Integer"/>
 				<form-property name="value" type="java.lang.String"/>
 				<form-property name="valueFullName" type="java.lang.String"/>
@@ -241,7 +241,7 @@
 	   			type="ServidorApresentacao.Action.credits.managementPosition.ListTeacherManagementPositionsAction">
    			<forward name="successfull-read" path="listTeacherManagementPositions"/>
     	</action>
-    	
+
     <!-- == USE CASE: List Teacher Service Exemptions ========================================== -->	
 	   	<action path="/prepareServiceExemptionsManagement" 
 	   			input="/prepareServiceExemptionsManagement.do?method=searchForm&amp;page=0" 
@@ -412,9 +412,19 @@
    			validate="true"
    			type="ServidorApresentacao.Action.grant.contract.EditGrantSubsidyAction">
   			<forward name="edit-grant-subsidy" path="editGrantSubsidyForm"/>
-  			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
+  			<forward name="manage-grant-subsidy" path="/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm"/>
     </action>
 
+	<!-- ===================== USE CASE: MANAGE GRANT SUBSIDY ============================== -->
+	<action path="/manageGrantSubsidy" 
+			input="/manageGrantSubsidy.do?page=0&amp;method=prepareManageGrantSubsidyForm" 
+			name="voidForm" 
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantSubsidyAction">
+  			<forward name="manage-grant-subsidy" path="manageGrantSubsidy"/> 
+    </action>
+    
     <!-- ===================== USE CASE: MANAGE GRANT QUALIFICATION ============================== -->
 	<action path="/manageGrantQualification" 
 			input="/manageGrantQualification.do?page=0&amp;method=prepareManageGrantQualificationForm" 

@@ -42,10 +42,14 @@
 	            <bean:write name="infoGrantProject" property="designation"/>
             </td>
             <td class="listClasses">&nbsp;
-	            <bean:write name="infoGrantProject" property="infoResponsibleTeacher.teacherNumber"/>
+            	<logic:present name="infoGrantProject" property="infoResponsibleTeacher">
+		            <bean:write name="infoGrantProject" property="infoResponsibleTeacher.teacherNumber"/>
+		        </logic:present>
             </td>
             <td class="listClasses">&nbsp;
-	            <bean:write name="infoGrantProject" property="infoGrantCostCenter.number"/>
+               	<logic:present name="infoGrantProject" property="infoGrantCostCenter">
+		            <bean:write name="infoGrantProject" property="infoGrantCostCenter.number"/>
+		        </logic:present>
             </td>
             <td class="listClasses">
 		            <%-- Edit a Grant Project --%>

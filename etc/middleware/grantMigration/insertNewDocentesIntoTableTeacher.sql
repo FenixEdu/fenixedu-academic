@@ -1,0 +1,1 @@
+select concat('insert into TEACHER values(null,',numero,',',chavePessoa,',16,1);') as "" from mwgrant_migracao_docente where new_id_internal=0;

@@ -39,7 +39,9 @@
 	            <bean:write name="infoGrantCostCenter" property="designation"/>
             </td>
             <td class="listClasses">&nbsp;
-	            <bean:write name="infoGrantCostCenter" property="infoResponsibleTeacher.teacherNumber"/>
+               	<logic:present name="infoGrantCostCenter" property="infoResponsibleTeacher">
+		            <bean:write name="infoGrantCostCenter" property="infoResponsibleTeacher.teacherNumber"/>
+		        </logic:present>
             </td>
             <td class="listClasses">
 		            <%-- Edit a Grant CostCenter --%>

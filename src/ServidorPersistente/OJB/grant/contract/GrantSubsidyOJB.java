@@ -3,10 +3,11 @@
  */
 package ServidorPersistente.OJB.grant.contract;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.grant.contract.GrantSubsidy;
-import Dominio.grant.contract.IGrantSubsidy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
@@ -17,17 +18,17 @@ import ServidorPersistente.grant.IPersistentGrantSubsidy;
  */
 public class GrantSubsidyOJB extends ObjectFenixOJB implements IPersistentGrantSubsidy
 {
-    public GrantSubsidyOJB()
-    {
-    }
+	public GrantSubsidyOJB()
+	{
+	}
 
-    public IGrantSubsidy readActualGrantSubsidyByContract(Integer grantContractId) throws ExcepcaoPersistencia
-    {
-        IGrantSubsidy grantSubsidy = null;
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("grantContract.idInternal", grantContractId);
-        grantSubsidy = (IGrantSubsidy) queryObject(GrantSubsidy.class, criteria);
-        return grantSubsidy;
-    }
+	public List readAllSubsidiesByGrantContract(Integer idContract) throws ExcepcaoPersistencia
+	{
+		List subsidyList = null;
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("key_grant_contract", idContract);
+		criteria.addOrderBy("id_internal", false);
+		subsidyList = queryList(GrantSubsidy.class, criteria);
+		return subsidyList;
+	}
 }

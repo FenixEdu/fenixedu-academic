@@ -1,0 +1,1 @@
+select concat('insert into GRANT_CONTRACT values(',mwc.codigoInterno,',1,',mwc.numeroContrato,',',mwc.dataInicioContrato,',',mwc.dataFimContrato,',null,null,null,null,null,null,',mwc.chaveBolseiro,',',mwc.chaveTipoBolsa,');') as "" from mwgrant_contrato mwc;

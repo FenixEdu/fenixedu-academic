@@ -5,7 +5,7 @@
 <logic:present role="grantOwnerManager">
 	<%-- GRANT OWNER MANAGEMENT APPLICATIONS  --%>
 	
-	<%--<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
+	<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
 	<ul>
 		<li>
 			<html:link page="/searchGrantOwner.do?method=searchForm">
@@ -30,8 +30,22 @@
 		    </html:link>
 		</li>
 	</ul>
+	<ul>
+		<li>
+			<html:link page="/manageGrantCostCenter.do?method=prepareManageGrantCostCenter">
+		    	<bean:message key="link.manage.grant.costcenter"/>
+		    </html:link>
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<html:link page="/manageGrantProject.do?method=prepareManageGrantProject">
+		    	<bean:message key="link.manage.grant.project"/>
+		    </html:link>
+		</li>
+	</ul>
 	
-	<br/> --%>
+	<br/>
 	
 </logic:present>
 
@@ -39,36 +53,11 @@
 	<%-- TEACHER CREDITS MANAGEMENT APPLICATIONS --%>
 	<strong>&raquo; <bean:message key="link.group.creditsManagement.title"/></strong>
 	<ul>
-		<li>
-			<html:link page="/prepareManagementPositionsManagement.do?method=searchForm&amp;page=0" >
-				<bean:message key="link.managementPositions.management"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/prepareServiceExemptionsManagement.do?method=searchForm&amp;page=0" >
-				<bean:message key="link.serviceExemptions.management"/>
-			</html:link>
-		</li>
-	</ul>
-	<br />
-	<br />
-	&raquo;	As funcionalidades abaixo <br />estarão brevemente disponíveis.
-	<ul>
-		<li>
-		
-<%--			<html:link page="/prepareCreditsSheetView.do?method=searchForm&amp;page=0" > --%>
-				<bean:message key="link.creditsSheet.view"/>  
-<%--			</html:link> --%>
-		</li>
-	</ul>
-	<b>Relatórios</b>
-	<ul>
-		<li>
-			Cargos de gestão
-		</li>
-		<li>
-			Situações de não exercício
-		</li>
+			<li>
+				<html:link action="/teacherSearch?method=searchForm&amp;page=0" >
+					<bean:message key="link.teacher.credits.sheet.management"/>
+				</html:link>
+			</li>
 	</ul>
 </logic:present>
 

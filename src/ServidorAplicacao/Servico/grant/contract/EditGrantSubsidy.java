@@ -59,6 +59,7 @@ public class EditGrantSubsidy extends EditDomainObjectService
 		InfoObject infoObject,
 		ISuportePersistente sp)
 	{
+		
         IGrantSubsidy grantSubsidy = (IGrantSubsidy) domainObjectLocked;
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
         IGrantContract grantContract = new GrantContract();

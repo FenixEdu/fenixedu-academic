@@ -27,7 +27,7 @@
 	<html:hidden property="grantTypeName" value='<%= request.getAttribute("grantTypeName").toString() %>' />
 	
 	<%-- grant contract --%>
-	<html:hidden property="idGrantContract"/> 
+	<html:hidden property="idContract"/> 
 	
 	<%-- grant subsidy --%>
 	<html:hidden property="idGrantSubsidy"/>
@@ -49,7 +49,7 @@
 				<bean:message key="label.grant.subsidy.valueFullName"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="valueFullName"/>
+				<html:text property="valueFullName" size="50"/>
 			</td>
 		</tr>
 		<tr>
@@ -73,10 +73,10 @@
 </html:form>
 			</td>
 			<td>
-				<html:form action="/manageGrantContract" style="display:inline">
-				<html:hidden property="method" value="prepareManageGrantContractForm"/>
+				<html:form action="/manageGrantSubsidy" style="display:inline">
+				<html:hidden property="method" value="prepareManageGrantSubsidyForm"/>
 				<html:hidden property="page" value="1"/>
-				<html:hidden property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
+				<html:hidden property="idContract" value='<%= request.getAttribute("idContract").toString() %>'/>
 					<html:submit styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>
@@ -86,10 +86,3 @@
 	</table>
 	
 <br/><br/>
-
-<logic:present name="idSubsidy">
-	<bean:message key="message.grant.part.manage"/>:&nbsp;
-	<html:link page='<%= "/manageGrantPart.do?method=prepareManageGrantPart&amp;idSubsidy=" + request.getAttribute("idSubsidy").toString()%>'>
-	<bean:message key="link.manage.grant.part"/>
-	</html:link>
-</logic:present>

@@ -306,7 +306,7 @@ public class EditGrantPartAction extends FenixDispatchAction
 			//Adding a select project line to the list (presentation reasons)
 			GrantProject selectProject = new GrantProject();
 			selectProject.setIdInternal(new Integer(0));
-			selectProject.setDesignation("[Escolha um projecto]");
+			selectProject.setNumber("[Escolha um projecto]");
 			projectsList.add(0, selectProject);
 			request.setAttribute("projectsList", projectsList);
 		}

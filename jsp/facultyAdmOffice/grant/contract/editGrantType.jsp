@@ -26,7 +26,7 @@
 				<bean:message key="label.grant.type.name"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="name"/><bean:message key="label.requiredfield"/>
+				<html:text property="name" size="100"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -42,7 +42,7 @@
 				<bean:message key="label.grant.type.minPeriodDays"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="minPeriodDays"/>
+				<html:text property="minPeriodDays" size="10"/>
 			</td>
 		</tr>
 		<tr>
@@ -50,7 +50,7 @@
 				<bean:message key="label.grant.type.maxPeriodDays"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="maxPeriodDays"/>
+				<html:text property="maxPeriodDays" size="10"/>
 			</td>
 		</tr>
 		<tr>
@@ -67,7 +67,7 @@
 				<bean:message key="label.grant.type.source"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="source"/>
+				<html:text property="source" size="40"/>
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +75,7 @@
 				<bean:message key="label.grant.type.state"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="state"/>&nbsp;<bean:message key="label.dateformat"/>
+				<html:text property="state" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 	</table>

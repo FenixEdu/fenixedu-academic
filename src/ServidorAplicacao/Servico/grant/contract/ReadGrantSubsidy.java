@@ -7,6 +7,7 @@ package ServidorAplicacao.Servico.grant.contract;
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantSubsidy;
+import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
@@ -69,6 +70,10 @@ public class ReadGrantSubsidy extends ReadDomainObjectService
 						GrantContract.class,
 						infoGrantSubsidy.getInfoGrantContract().getIdInternal()));
 
+			//TODO... this section of code is temporary!!!!
+			if(infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
+				infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
+			
 			infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().setIdInternal(
 				infoGrantContract.getGrantOwnerInfo().getIdInternal());
 		}

@@ -33,7 +33,7 @@
             <bean:message key="label.grant.contract.beginDate"/>
         </td>
         <td class="listClasses-header">
-            <bean:message key="label.grant.contract.endDate"/>
+           	<bean:message key="label.grant.contract.endDate"/>
         </td>
         <td class="listClasses-header">
             <bean:message key="label.grant.contract.type"/>
@@ -56,7 +56,7 @@
                         <bean:write name="infoGrantContract" property="dateBeginContract.time"/>
                     </dt:format>
                 </logic:present>
-                <logic:notPresent name="infoGrantContract" property="dateBeginContract.time">
+                <logic:notPresent name="infoGrantContract" property="dateBeginContract">
                     ---
                 </logic:notPresent>
             </td>
@@ -66,7 +66,7 @@
                         <bean:write name="infoGrantContract" property="dateEndContract.time"/>
                     </dt:format>
                 </logic:present>
-                <logic:notPresent name="infoGrantContract" property="dateEndContract.time">
+                <logic:notPresent name="infoGrantContract" property="dateEndContract">
                     ---
                 </logic:notPresent>
                 
@@ -91,7 +91,7 @@
             <td class="listClasses">
                     <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
                     <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.idInternal"/>
-                    <html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idContract=" + idContract+"&idGrantOwner="+idGrantOwner %>' > 
+                    <html:link page='<%= "/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm&amp;idContract=" + idContract %>' > 
                         <bean:message key="link.manage.grant.subsidy" />
                     </html:link>        
             </td>

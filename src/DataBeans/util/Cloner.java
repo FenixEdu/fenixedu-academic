@@ -1157,12 +1157,14 @@ public abstract class Cloner
             infoGrantProject = new InfoGrantProject();
             copyObjectProperties(infoGrantProject, grantProject);
 
-            InfoTeacher infoResponsibleTeacher =
-                Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());
+			InfoTeacher infoResponsibleTeacher = null;
+			if(grantProject.getResponsibleTeacher() != null)
+				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());
             infoGrantProject.setInfoResponsibleTeacher(infoResponsibleTeacher);
 
-            InfoGrantCostCenter infoGrantCostCenter =
-                Cloner.copyIGrantCostCenter2InfoGrantCostCenter(grantProject.getGrantCostCenter());
+			InfoGrantCostCenter infoGrantCostCenter = null;
+			if(grantProject.getGrantCostCenter() != null)
+				infoGrantCostCenter = Cloner.copyIGrantCostCenter2InfoGrantCostCenter(grantProject.getGrantCostCenter());
             infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
         }
         return infoGrantProject;
@@ -1206,17 +1208,19 @@ public abstract class Cloner
      * @param grantCostCenter
      * @return InfoCostCenter
      */
-    public static InfoGrantCostCenter copyIGrantCostCenter2InfoGrantCostCenter(IGrantCostCenter grantCostCenter)
+	public static InfoGrantCostCenter copyIGrantCostCenter2InfoGrantCostCenter(
+			IGrantCostCenter grantCostCenter)
     {
         InfoGrantCostCenter infoGrantCostCenter = null;
+		InfoTeacher infoResponsibleTeacher = null;
 
         if (grantCostCenter != null)
         {
             infoGrantCostCenter = new InfoGrantCostCenter();
             copyObjectProperties(infoGrantCostCenter, grantCostCenter);
 
-            InfoTeacher infoResponsibleTeacher =
-                Cloner.copyITeacher2InfoTeacher(grantCostCenter.getResponsibleTeacher());
+			if(grantCostCenter.getResponsibleTeacher() != null)
+				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantCostCenter.getResponsibleTeacher());
             infoGrantCostCenter.setInfoResponsibleTeacher(infoResponsibleTeacher);
         }
         return infoGrantCostCenter;
@@ -2103,15 +2107,21 @@ public abstract class Cloner
      */
     public static InfoTeacher copyITeacher2InfoTeacher(ITeacher teacher)
     {
-        InfoTeacher infoTeacher = new InfoTeacher();
-        InfoPerson infoPerson = new InfoPerson();
-        InfoCategory infoCategory = new InfoCategory();
+		InfoTeacher infoTeacher = null;
+		InfoPerson infoPerson = null;
+		InfoCategory infoCategory = null;
+		
+		if (teacher != null)
+		{
+			infoTeacher = new InfoTeacher();
+			infoPerson = new InfoPerson();
+			infoCategory = new InfoCategory();
         infoPerson = copyIPerson2InfoPerson(teacher.getPerson());
         infoCategory = copyICategory2InfoCategory(teacher.getCategory());
         copyObjectProperties(infoTeacher, teacher);
         infoTeacher.setInfoPerson(infoPerson);
         infoTeacher.setInfoCategory(infoCategory);
-
+		}
         return infoTeacher;
     }
     /**

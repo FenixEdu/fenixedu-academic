@@ -1,0 +1,123 @@
+	--> This file represents the chronological order of the grants migration. <--
+
+###SETUP THE DATABASE#####
+	
+Run the sql file to create the tables of grants
+
+	mysql -u root -D fenix < createMWGrantTables.sql (etc\middleware\grantMigration)
+
+Run the sql file to  load the created tables 
+	
+	mysql -u root -D fenix < loadMWGrantTables.sql (etc\middleware\grantMigration)
+
+####CORRECT THE ORIGINAL DATABASE#####
+
+Make the corrections of the mail received
+
+	mysql -u root -D fenix < mailCorrectionsBD.sql (Docs\grant)
+	
+Corrrect teachers that refer the same person
+
+	mysql -u root -D fenix < teacherDuplicatePersonCorrections.sql (Docs\grant)
+	
+Correct duplicated (document id number) persons
+
+	mysql -u root -D fenix < correctDuplicateIDNumberEntriesInPessoa.sql (Docs\grant)
+	
+Delete teacher with no person associated
+
+	mysql -u root -D fenix < deleteTeachersWithoutPerson.sql (Docs\grant)
+	
+Corrections in old tables for the adjustement of the new uniques
+	
+	mysql -u root -D fenix < correctUniquesInOldTables.sql (Docs\grant)
+	
+Corrections of repeated projects
+
+	mysql -u root -D fenix < correctRepeatedProjects.sql (Docs\grant)
+	-->VERIFY AFTER THIS SCRIPT IF THERE AREN'T REPEATED PROJCTES...
+	
+Corrections of bad entries in entidade pagadora
+
+	mysql -u root -D fenix < correctDuplicatedEntriesInPaymentEntityOriginalTable.sql (Docs\grant)
+
+####MIGRATE THE DATABASE##############
+
+Migrate to an intermediate table the usefull persons
+
+	mysql -u root -D fenix < createLoadMWGrant_pessoa_auxiliar_table.sql (etc\middleware\grantMigration)
+
+Migrate to an intermediate table the usefull teachers
+
+	mysql -u root -D fenix < createLoadMWGrant_docente_auxiliar_table.sql (etc\middleware\grantMigration)
+	
+Migrate table bolseiros
+
+	mysql -u root -D fenix < migrateMWGrant_bolseiroToGrantOwner.sql | mysql fenix (etc\middleware\grantMigration)
+	
+Migrate table comparticipacao
+
+	mysql -u root -D fenix < migrateMWGrant_comparticipacaoToGrantPart.sql | mysql fenix (etc\middleware\grantMigration)
+
+Migrate table contrato
+
+	mysql -u root -D fenix < migrateMWGrant_contratoToGrantContract.sql | mysql fenix (etc\middleware\grantMigration)
+
+Migrate table orientacao
+
+	mysql -u root -D fenix < migrateMWGrant_orientacaoToGrantOrientationTeacher.sql | mysql fenix (etc\middleware\grantMigration)
+
+Migrate table tipo de bolsa
+
+	mysql -u root -D fenix < migrateMWGrant_tipobolsaToGrantType.sql | mysql fenix (etc\middleware\grantMigration)
+
+Migrate table subsidio
+
+	mysql -u root -D fenix < migrateMWGrant_subsidioToGrantSubsidy.sql | mysql fenix (etc\middleware\grantMigration)
+
+Migrate table entidadepagadora
+
+	mysql -u root -D fenix < migrateMWGrant_entidadepagadoraToGrantPaymentEntity.sql | mysql fenix (etc\middleware\grantMigration)
+
+
+#### Next step... run Java migration tools...
+
+	Run the method main in MigrateGrantOwner.java
+	
+	Check the log file to verify if everything is ok!!!
+
+### After the java migrations of persons is complete
+
+Migrate table docente
+
+Update as chaves para os professores que já existem na base de dados fenix
+	
+	mysql -u root -D fenix < updateTableMigracaoDocenteWithNewTeacherID.sql | mysql fenix (etc\middleware\grantMigration)
+
+Update dos roles de novos docente
+
+	mysql -u root -D fenix < insertMissingRolesForNewTeachers.sql | mysql fenix (etc\middleware\grantMigration)
+
+Inserir os novos professores
+
+	mysql -u root -D fenix < insertNewDocentesIntoTableTeacher.sql | mysql fenix (etc\middleware\grantMigration)	
+	
+Update as chaves para os professores que já existem na base de dados fenix
+
+	mysql -u root -D fenix < updateTableMigracaoDocenteWithNewTeacherID.sql | mysql fenix (etc\middleware\grantMigration)	
+
+Update das chaves que referem o teacher 
+
+	mysql -u root -D fenix < updateNewTeacherIDInTablesWithKeyTeacher.sql | mysql fenix (etc\middleware\grantMigration)
+	
+Update dos roles de Grant Owner
+
+	mysql -u root -D fenix < insertMissingRolesForNewGrantOwners.sql | mysql fenix (etc\middleware\grantMigration)
+
+
+################# ESTAMOS QUASE NO FINAL....
+
+Eliminar todos os vestigios da migração!!!
+
+	mysql -u root -D fenix < cleanAllGrantMigration.sql | mysql fenix (etc\middleware\grantMigration)
+	

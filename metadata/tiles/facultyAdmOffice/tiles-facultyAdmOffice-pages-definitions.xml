@@ -37,6 +37,9 @@
 	<definition name="editGrantSubsidyForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantSubsidy.jsp"></put>
 	</definition>
+	<definition name="manageGrantSubsidy" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantSubsidy.jsp"></put>
+	</definition>
 	<!-- GRANT QUALIFICATION -->
 	<definition name="manageGrantQualification" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/qualification/manageGrantQualification.jsp"></put>
@@ -69,7 +72,7 @@
 	<definition name="manageGrantProject" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantProject.jsp"></put>
 	</definition>
-	<definition name="editGrantProjectForm" extends="facultyAdmOffice.masterPage">
+		<definition name="editGrantProjectForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantProject.jsp"></put>
 	</definition>
 	

@@ -27,7 +27,7 @@
 				<bean:message key="label.grant.part.percentage"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="percentage"/><bean:message key="label.requiredfield"/>
+				<html:text property="percentage" size="5"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -36,7 +36,7 @@
 			</td>
 			<td>
 				<html:select property="project">
-					<html:options collection="projectsList" property="idInternal" labelProperty="designation"/>
+					<html:options collection="projectsList" property="idInternal" labelProperty="number"/>
 				</html:select>&nbsp;
 				<html:select property="costCenter">
 					<html:options collection="costCenterList" property="idInternal" labelProperty="designation"/>
@@ -48,7 +48,7 @@
 				<bean:message key="label.grant.part.responsibleTeacher.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="responsibleTeacherNumber"/>&nbsp;
+				<html:text property="responsibleTeacherNumber" size="10"/>&nbsp;
 				<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>

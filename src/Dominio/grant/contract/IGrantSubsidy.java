@@ -3,6 +3,8 @@
  */
 package Dominio.grant.contract;
 
+import java.util.Date;
+
 import Dominio.IDomainObject;
 
 /**
@@ -11,11 +13,15 @@ import Dominio.IDomainObject;
  */
 public interface IGrantSubsidy extends IDomainObject
 {
+	public Date getDateEndSubsidy();
+	public Date getDateBeginSubsidy();
 	public IGrantContract getGrantContract();
 	public Double getTotalCost();
 	public Double getValue();
 	public String getValueFullName();
-	
+
+	public void setDateBeginSubsidy(Date dateBeginSubsidy);
+	public void setDateEndSubsidy(Date dateEndSubsidy);
 	public void setGrantContract(IGrantContract grantContract);
 	public void setTotalCost(Double totalCost);
 	public void setValue(Double value);
