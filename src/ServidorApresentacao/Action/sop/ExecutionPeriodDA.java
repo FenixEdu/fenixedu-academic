@@ -57,7 +57,6 @@ public class ExecutionPeriodDA extends DispatchAction {
 		request.setAttribute(
 			SessionConstants.EXECUTION_PERIOD_LIST,
 			executionPeriodsLabelValueList);
-
 		return mapping.findForward("showForm");
 	}
 
@@ -68,7 +67,6 @@ public class ExecutionPeriodDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		HttpSession session = request.getSession(false);
-
 		DynaActionForm indexForm = (DynaActionForm) form;
 
 		ArrayList executionPeriodLabelValueList =
@@ -81,7 +79,6 @@ public class ExecutionPeriodDA extends DispatchAction {
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				executionPeriodLabelValueList.get(index.intValue()));
 		}
-
 		return mapping.findForward("choose");
 	}
 

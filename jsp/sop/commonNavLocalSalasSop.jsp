@@ -4,5 +4,5 @@
 <ul>
   <li><html:link page="/prepararSalaForm.do?method=prepareCreate"><bean:message key="principalSalas.createSalaLinkName"/></html:link></li>
   <li><html:link page="/prepararSalaForm.do?method=prepareSearch"><bean:message key="principalSalas.manipulateSalasLinkName"/></html:link></li>
-  <li><html:link page="/searchEmptyRoomsDA.do?method=prepare"><bean:message key="link.search.empty.rooms"/></html:link></li>  
+  <li><html:link page="/searchEmptyRoomsDA.do?method=prepare"><bean:message key="link.search.empty.rooms"/></html:link></li>
 </ul>

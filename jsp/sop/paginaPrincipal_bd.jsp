@@ -13,7 +13,7 @@ dispon&iacute;veis.</p>
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
-    <td class="infoop"><html:link page="/prepararEscolherContexto.do"><strong>Gest&atilde;o de Hor&aacute;rios</strong></html:link></td>
+    <td class="infoop"><html:link page="/chooseExecutionPeriod.do?method=prepare"><strong>Gest&atilde;o de Hor&aacute;rios</strong></html:link></td>
   </tr>
 </table>
 <p>Na &aacute;rea da Gest&atilde;o de Hor&aacute;rios pode proceder &agrave; gest&atilde;o
@@ -25,7 +25,7 @@ e alterar aulas).</p>
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
-    <td class="infoop"><html:link page="/principalSalas.do?method=prepare"><strong>Gest&atilde;o de Salas</strong></html:link></td>
+    <td class="infoop"><html:link page="/principalSalas.do"><strong>Gest&atilde;o de Salas</strong></html:link></td>
   </tr>
 </table>
 <p>Este m&oacute;dulo visa uma gest&atilde;o eficiente das <strong>salas de aulas</strong> dispon&iacute;veis

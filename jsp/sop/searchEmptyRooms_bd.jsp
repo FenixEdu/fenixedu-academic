@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
       <h2><bean:message key="title.search.empty.rooms"/></h2>
         <br/>
         <span class="error"><html:errors/></span>
@@ -8,6 +9,18 @@
         	<html:hidden property="page" value="1"/>
         	<input type="hidden" name="method" value="doSearch"/>
             <table cellspacing="0" cellpadding="0" border="0">
+	            <tr>
+                    <td nowrap class="formTD">
+                        <bean:message key="property.executionPeriod"/>
+                    </td>
+                    <td nowrap class="formTD">
+						<html:select property="executionPeriodIndex" size="1">
+					 		<html:options property="value"
+					 		              labelProperty="label" 
+ 	  									  collection="<%= SessionConstants.EXECUTION_PERIOD_LIST%>" />
+						</html:select>
+                   </td>
+                </tr>                
 	            <tr>
                     <td nowrap class="formTD">
                         <bean:message key="property.aula.weekDay"/>

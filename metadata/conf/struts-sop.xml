@@ -102,6 +102,7 @@
 	  <form-bean name="searchEmptyRoomsForm"
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
+	        <form-property name="executionPeriodIndex" type="java.lang.Integer"/>
 	        <form-property name="weekDay" type="java.lang.String"/>
 	        <form-property name="startHour" type="java.lang.String"/>
 	        <form-property name="endHour" type="java.lang.String"/>
@@ -270,11 +271,10 @@
       
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
-<!--
+
       <action path="/principalSalas" 
               type="ServidorApresentacao.Action.base.FenixForwardAction" 
               parameter="/sop/principalSalas.jsp"/>
--->
     
 
      
@@ -301,6 +301,18 @@
       </action>
 
 	  <!-- CONTEXTO -->
+
+	<action path="/chooseExecutionPeriod"
+			name="pagedIndexForm"
+			input="/chooseExecutionPeriod.do?method=prepare"
+    		type="ServidorApresentacao.Action.sop.ExecutionPeriodDA"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="/chooseExecutionPeriod.jsp"/>
+  		<forward name="choose" path="/prepararEscolherContexto.do"/>
+	</action>
 
 	  <!-- Choose Context for Timetables Management-->
       <action path="/prepararEscolherContexto"
@@ -414,19 +426,6 @@
 	 </action>
 
       <!-- Gestao de Salas -->
-
-	<action path="/principalSalas"
-			name="pagedIndexForm"
-			input="/principalSalas.do?method=prepare"
-    		type="ServidorApresentacao.Action.sop.ExecutionPeriodDA"
-    		parameter="method"
-    		validate="true"
-    		scope="request"
-    		>
-  		<forward name="showForm" path="/principalSalas.jsp"/>
-  		<forward name="choose" path="/principalSalas.do?method=prepare"/>
-	</action>
-	      
       <action path="/prepararSalaForm"
               type="ServidorApresentacao.Action.sop.PrepararCriarSalaFormAction"
               scope="request"
@@ -447,11 +446,11 @@
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />
-        <forward name="Sucesso" path="/principalSalas.do?method=prepare"/>
+        <forward name="Sucesso" path="/principalSalas.do"/>
       </action>
 
       <action attribute="searchEmptyRoomsForm"
-              input="/searchEmptyRooms.jsp"
+              input="/searchEmptyRoomsDA.do?method=prepare&amp;page=0"
               name="searchEmptyRoomsForm"
               path="/searchEmptyRoomsDA"
               scope="request"
@@ -512,7 +511,7 @@
               scope="request"
               type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
         <forward name="Sucesso" path="/manipularSalas.jsp" />
-        <forward name="Voltar" path="/principalSalas.do?method=prepare"/>
+        <forward name="Voltar" path="/principalSalas.do"/>
       </action>
       
       <action path="/prepareViewRoomOcupation"

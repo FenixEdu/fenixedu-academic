@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,12 +14,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 import ServidorApresentacao.validator.form.FenixDynaValidatorForm;
@@ -43,6 +49,35 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		session.setAttribute("minutes", Util.getMinutes());
 		session.setAttribute("hours", Util.getHours());
 		session.setAttribute("weekDays", Util.getDaysOfWeek());
+		
+		// execution period selection		
+		IUserView userView = (IUserView) session.getAttribute("UserView");
+		GestorServicos gestor = GestorServicos.manager();
+
+		Object argsReadExecutionPeriods[] = {
+		};
+		ArrayList executionPeriods =
+			(ArrayList) gestor.executar(
+				userView,
+				"ReadExecutionPeriods",
+				argsReadExecutionPeriods);
+
+		ArrayList executionPeriodsLabelValueList = new ArrayList();
+		for (int i = 0; i < executionPeriods.size(); i++) {
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) executionPeriods.get(i);
+			executionPeriodsLabelValueList.add(
+				new LabelValueBean(
+					infoExecutionPeriod.getName()
+						+ " - "
+						+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
+					"" + i));
+		}
+
+		request.setAttribute(
+			SessionConstants.EXECUTION_PERIOD_LIST,
+			executionPeriodsLabelValueList);
+		
 		return mapping.findForward("searchPage");
 	}
 
@@ -94,6 +129,21 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 			infoLesson.setInicio(start);
 			infoLesson.setFim(end);
 			
+			//	execution period selection
+			HttpSession session = request.getSession(false);
+							
+			ArrayList executionPeriodLabelValueList =
+				(ArrayList) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD_LIST);
+			Integer index = (Integer) searchForm.get("executionPeriodIndex");
+
+			if (executionPeriodLabelValueList != null && index != null) {
+				session.setAttribute(
+					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+					executionPeriodLabelValueList.get(index.intValue()));
+			}
+			// --------------------------------	
+			
 			Object args[] = { infoRoom, infoLesson };
 			
 			List emptyRoomsList =
@@ -111,7 +161,8 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
-			request.setAttribute("roomList", emptyRoomsList);
+			request.setAttribute("roomList", emptyRoomsList);			
+			
 			return mapping.findForward("showSearchResult");
 			
 		} catch (InvalidTimeIntervalServiceException ex) {

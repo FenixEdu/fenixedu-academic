@@ -337,7 +337,11 @@
       </field>
     </form>
 
+
     <form name="searchEmptyRoomsForm">
+      <field property="executionPeriodIndex" depends="required, integer" page="1">
+        <arg0 key="property.index"/>
+      </field>
 
       <field property="weekDay" depends="required,integer,range" page="1">
         <arg0 key="property.aula.weekDay"/>
