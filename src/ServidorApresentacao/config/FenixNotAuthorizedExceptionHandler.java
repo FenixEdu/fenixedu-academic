@@ -16,8 +16,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo

@@ -6,10 +6,8 @@ package ServidorAplicacao.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IRole;
-import Dominio.PersonRole;
 import Dominio.Role;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;

@@ -19,7 +19,6 @@ import Dominio.Teacher;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import ServidorAplicacao.Servico.credits.validator.CreditsValidator;
 import ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod;
-import ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod;
 import ServidorAplicacao.Servico.credits.validator.PeriodType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
