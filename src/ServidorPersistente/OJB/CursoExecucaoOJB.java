@@ -20,6 +20,7 @@ import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
+import Dominio.ITeacher;
 import Dominio.ITurma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -247,5 +248,30 @@ public class CursoExecucaoOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
 		}
 	}
+
+	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
+		try {
+
+			String oqlQuery = "select all from " + CursoExecucao.class.getName()
+							+ " where coordinator.teacherNumber = $1";
+			
+//			ICursoExecucao cursoExecucao = null;
+//			cursoExecucao.getCoordinator().getTeacherNumber();
+			
+			query.create(oqlQuery);
+
+			query.bind(teacher.getTeacherNumber());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() == 0)
+				return null;
+			return result;
+		} catch (QueryException e) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+
+	}
+
 
 }

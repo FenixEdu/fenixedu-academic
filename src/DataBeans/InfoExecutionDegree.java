@@ -8,6 +8,8 @@ package DataBeans;
 
 import java.io.Serializable;
 
+import DataBeans.gesdis.InfoTeacher;
+
 /**
  *
  * @author  tfc130
@@ -15,6 +17,7 @@ import java.io.Serializable;
 public class InfoExecutionDegree implements Serializable {
 	private InfoExecutionYear infoExecutionYear;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+	private InfoTeacher infoCoordinator;
 
 	public InfoExecutionDegree() {
 	}
@@ -56,9 +59,12 @@ public class InfoExecutionDegree implements Serializable {
 		String result = "[INFOEXECUTIONDEGREE";
 			result += ", infoExecutionYear=" + infoExecutionYear;
 			result += ", infoDegreeCurricularPlan=" + infoDegreeCurricularPlan;
+			result += ", infoCoordinator=" + infoCoordinator;
 			result += "]";
 		return result;
 	}
+	
+	
 
 
 	/**
@@ -91,6 +97,20 @@ public class InfoExecutionDegree implements Serializable {
 	 */
 	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
 		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoTeacher getInfoCoordinator() {
+		return infoCoordinator;
+	}
+
+	/**
+	 * @param teacher
+	 */
+	public void setInfoCoordinator(InfoTeacher teacher) {
+		infoCoordinator = teacher;
 	}
 
 }

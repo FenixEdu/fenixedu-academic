@@ -293,15 +293,23 @@ public abstract class Cloner {
 			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoExecutionDegree.getInfoDegreeCurricularPlan());
 
 		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
+		ITeacher coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
 
 		copyObjectProperties(executionDegree, infoExecutionDegree);
 
+		executionDegree.setCoordinator(coordinator);
 		executionDegree.setExecutionYear(executionYear);
 		executionDegree.setCurricularPlan(degreeCurricularPlan);
 
 		return executionDegree;
 
 	}
+
+	/**
+	 * 
+	 * @param executionDegree
+	 * @return InfoExecutionDegree
+	 */
 
 	public static InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(ICursoExecucao executionDegree) {
 
@@ -310,6 +318,8 @@ public abstract class Cloner {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree.getCurricularPlan());
 
+		InfoTeacher infoCoordinator = Cloner.copyITeacher2InfoTeacher(executionDegree.getCoordinator());
+
 		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionDegree.getExecutionYear());
 		try {
 			BeanUtils.copyProperties(infoExecutionDegree, executionDegree);
@@ -317,7 +327,8 @@ public abstract class Cloner {
 			e.printStackTrace(System.out);
 			throw new RuntimeException(e.getMessage());
 		}
-
+		
+		infoExecutionDegree.setInfoCoordinator(infoCoordinator);
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 

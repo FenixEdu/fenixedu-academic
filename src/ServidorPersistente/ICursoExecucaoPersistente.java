@@ -15,6 +15,7 @@ import java.util.List;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
+import Dominio.ITeacher;
 
 public interface ICursoExecucaoPersistente extends IPersistentObject {
 	/**
@@ -86,4 +87,14 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public ICursoExecucao readByDegreeNameAndExecutionYear(String degreeName, IExecutionYear executionYear) throws ExcepcaoPersistencia;
+	
+	
+	
+	/**
+	 * 
+	 * @param teacher
+	 * @return The list of Execution Degrees that this Teacher Coordinates
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

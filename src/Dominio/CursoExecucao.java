@@ -13,15 +13,17 @@ package Dominio;
 
 public class CursoExecucao implements ICursoExecucao {
 	
-	// codigos internos da base de dados
+	
 	private Integer codigoInterno;
+	private Integer keyCurricularPlan;
+	private Integer keyCoordinator;
 
 	private IExecutionYear executionYear;
 
 	private Integer academicYear;
 
 	private IDegreeCurricularPlan degreeCurricularPlan;
-	private Integer keyCurricularPlan;
+	private ITeacher coordinator;
 
 	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
 	public CursoExecucao() {
@@ -54,14 +56,16 @@ public class CursoExecucao implements ICursoExecucao {
 	public String toString() {
 		String result = "[CURSO_EXECUCAO";
 		result += ", codInt=" + codigoInterno;
-	
 		result += ", executionYear=" + executionYear;
 		result += ", keyExecutionYear=" + academicYear;
 		result += ", planoCurricularCurso=" + degreeCurricularPlan;
-		result += ", chaveplanoCurricularCurso=" + keyCurricularPlan;
+		result += ", coordinator=" + coordinator;
 		result += "]";
 		return result;
 	}
+
+
+	
 
 	/**
 	 * 
@@ -125,6 +129,48 @@ public class CursoExecucao implements ICursoExecucao {
 	 */
 	public void setKeyCurricularPlan(Integer keyCurricularPlan) {
 		this.keyCurricularPlan = keyCurricularPlan;
+	}
+
+	/**
+	 * @return
+	 */
+	public ITeacher getCoordinator() {
+		return coordinator;
+	}
+
+	/**
+	 * @return
+	 */
+	public IDegreeCurricularPlan getDegreeCurricularPlan() {
+		return degreeCurricularPlan;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyCoordinator() {
+		return keyCoordinator;
+	}
+
+	/**
+	 * @param teacher
+	 */
+	public void setCoordinator(ITeacher teacher) {
+		coordinator = teacher;
+	}
+
+	/**
+	 * @param plan
+	 */
+	public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
+		degreeCurricularPlan = plan;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setKeyCoordinator(Integer integer) {
+		keyCoordinator = integer;
 	}
 
 }
