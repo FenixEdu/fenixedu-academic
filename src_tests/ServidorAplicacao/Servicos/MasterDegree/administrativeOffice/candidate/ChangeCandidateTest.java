@@ -69,7 +69,7 @@ public class ChangeCandidateTest extends TestCaseServicos {
 		newCandidate.getInfoPerson().setNumeroDocumentoIdentificacao(originalCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
 		newCandidate.getInfoPerson().setUsername(originalCandidate.getInfoPerson().getUsername());
 		newCandidate.setCandidateNumber(originalCandidate.getCandidateNumber());
-		newCandidate.setSpecialization(Specialization.MESTRADO_STRING);
+		newCandidate.setSpecialization(new Specialization(Specialization.MESTRADO_STRING));
 		
 		Object[] args = {originalCandidate, newCandidate};
 	
@@ -144,7 +144,7 @@ public class ChangeCandidateTest extends TestCaseServicos {
 		infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate((IMasterDegreeCandidate) result.get(0));
 		
 		InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
-		infoCandidateSituation.setSituation(SituationName.ADMITIDO_STRING);
+		infoCandidateSituation.setSituation(SituationName.ADMITIDO_OBJ);
 		infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
 		
 		return infoMasterDegreeCandidate;

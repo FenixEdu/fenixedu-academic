@@ -72,7 +72,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate =
 			new InfoMasterDegreeCandidate();
 		infoMasterDegreeCandidate.setSpecialization(
-			Specialization.INTEGRADO_STRING);
+		new Specialization(Specialization.INTEGRADO_STRING));
 		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 
 		InfoDegree infoDegree = new InfoDegree();
@@ -151,7 +151,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate =
 			new InfoMasterDegreeCandidate();
 		infoMasterDegreeCandidate.setSpecialization(
-			Specialization.INTEGRADO_STRING);
+		new Specialization(Specialization.INTEGRADO_STRING));
 		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 
 		Object[] args =

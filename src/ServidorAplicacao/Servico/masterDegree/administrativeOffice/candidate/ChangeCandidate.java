@@ -143,7 +143,7 @@ public class ChangeCandidate implements IServico {
 		List situations = new ArrayList();
 				
 				
-		if (!masterDegreeCandidate.getActiveCandidateSituation().getSituation().equals(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()))){
+		if (!masterDegreeCandidate.getActiveCandidateSituation().getSituation().equals(newCandidate.getInfoCandidateSituation().getSituation())){
 
 			
 			// Change the Active Situation
@@ -176,7 +176,7 @@ public class ChangeCandidate implements IServico {
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 			candidateSituation.setRemarks(newCandidate.getInfoCandidateSituation().getRemarks());
 		
-			candidateSituation.setSituation(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()));
+			candidateSituation.setSituation(newCandidate.getInfoCandidateSituation().getSituation());
 			candidateSituation.setValidation(new State(State.ACTIVE));
 	
 		}

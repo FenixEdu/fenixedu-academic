@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
@@ -77,8 +78,11 @@ public class ReadMasterDegrees implements IServico {
 
 		ArrayList degrees = new ArrayList();
 		Iterator iterator = result.iterator();
-		while (iterator.hasNext())
-			degrees.add(Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()));
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree =Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()); 
+			degrees.add(infoExecutionDegree);
+		}
+		
 
 		return degrees;
 

@@ -482,7 +482,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
 			infoCandidateSituation.setRemarks(situationRemarks);
 			
-			infoCandidateSituation.setSituation(new SituationName(situation).toString());
+			infoCandidateSituation.setSituation(new SituationName(situation));
 			newCandidate.setInfoCandidateSituation(infoCandidateSituation);
 
 			Object args[] = {candidateID, newCandidate};

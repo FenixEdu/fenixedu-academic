@@ -53,7 +53,7 @@ public class ChangeApplicationInfoDispatchActionPrepareMethodTest
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
 		InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
-		infoCandidateSituation.setSituation(SituationName.PENDENTE_STRING);
+		infoCandidateSituation.setSituation(SituationName.PENDENTE_OBJ);
 		infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
 		
 		HashMap items = new HashMap();
@@ -67,7 +67,7 @@ public class ChangeApplicationInfoDispatchActionPrepareMethodTest
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
 		InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
-		infoCandidateSituation.setSituation(SituationName.ADMITIDO_STRING);
+		infoCandidateSituation.setSituation(SituationName.ADMITIDO_OBJ);
 		infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
 		
 		HashMap items = new HashMap();

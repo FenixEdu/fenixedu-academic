@@ -83,8 +83,7 @@ public class ChangeApplicationInfo implements IServico {
 				sp.getIPersistentMasterDegreeCandidate().readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
 					newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
 					newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao().getTipo(),
-					executionDegree,
-					new Specialization(newMasterDegreeCandidate.getSpecialization()));
+					executionDegree, newMasterDegreeCandidate.getSpecialization());
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
