@@ -23,14 +23,14 @@
 </tr>
 <tr>
 <td>
-<html:reset  styleClass="inputbutton">
-	<bean:message key="label.clear"/>
-</html:reset>			
+	<html:reset  styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset>			
 </td>
 <td>
-<html:submit styleClass="inputbutton">
-	<bean:message key="button.save"/>
-</html:submit>
+	<html:submit styleClass="inputbutton">
+		<bean:message key="button.save"/>
+	</html:submit>
 </td>
 </tr>
 </html:form>

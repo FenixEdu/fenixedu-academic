@@ -22,13 +22,18 @@
 		<html:text size="5" name="<%=SessionConstants.INFO_SECTION %>" property="sectionOrder"/>
 	</td>
 </tr>
+<tr>
+	<td>
+		<html:reset  styleClass="inputbutton">
+			<bean:message key="label.clear"/>
+		</html:reset>			
+	</td>
+	<td>
+		<html:submit styleClass="inputbutton">
+			<bean:message key="button.save"/>
+		</html:submit>
+	</td>
+</tr>
 
-	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
-	</html:reset>			
-    <html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
-	</html:submit>
-	<html:hidden property="method" value="edit" />	
-</html:form>
 </table>
+</html:form>
