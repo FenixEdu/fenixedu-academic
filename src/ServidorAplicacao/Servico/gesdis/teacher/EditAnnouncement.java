@@ -67,8 +67,7 @@ public class EditAnnouncement implements IServico {
 				throw new FenixServiceException(excepcaoPersistencia.getMessage());
 			}
             
-            if (announcement != null)
-                throw new ExistingServiceException();
+            if (announcement != null) throw new ExistingServiceException();
         }
     }
     /**
@@ -114,9 +113,7 @@ public class EditAnnouncement implements IServico {
 		} catch (ExcepcaoPersistencia excepcaoPersistencia){
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
-        if (announcement == null) {
-			throw new InvalidArgumentsServiceException();
-        }
+        if (announcement == null) throw new InvalidArgumentsServiceException();
         Date lastModificationDate = new Date(System.currentTimeMillis());
         announcement.setTitle(announcementNewTitle);
         announcement.setLastModifiedDate(lastModificationDate);

@@ -21,9 +21,9 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 
-public class EditAnnouncementTest extends TestCaseCreateServices {
+public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 
 	public EditAnnouncementTest(java.lang.String testName) {
 		super(testName);
