@@ -5,12 +5,12 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -42,18 +42,8 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 
     public List readAll() throws ExcepcaoPersistencia
     {
-
-        try
-        {
-            String oqlQuery = "select all from " + Professorship.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        return queryList(Professorship.class, criteria);
     }
 
     /*
@@ -78,32 +68,16 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
         IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            IProfessorship professorship = null;
-            String oqlQuery =
-                "select professorship from "
-                    + Professorship.class.getName()
-                    + " where teacher.teacherNumber = $1"
-                    + " and executionCourse.sigla = $2"
-                    + " and executionCourse.executionPeriod.name = $3"
-                    + " and executionCourse.executionPeriod.executionYear.year = $4";
-
-            query.create(oqlQuery);
-            query.bind(teacher.getTeacherNumber());
-            query.bind(executionCourse.getSigla());
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                professorship = (IProfessorship) result.get(0);
-            return professorship;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
+        criteria.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.name",
+            executionCourse.getExecutionPeriod().getName());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.executionYear.year",
+            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        return (IProfessorship) queryObject(Professorship.class, criteria);
     }
 
     public IProfessorship readByTeacherAndExecutionCoursePB(
@@ -121,25 +95,9 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 
     public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
     {
-        try
-        {
-
-            String oqlQuery =
-                "select professorship from "
-                    + Professorship.class.getName()
-                    + " where teacher.teacherNumber = $1";
-
-            query.create(oqlQuery);
-            query.bind(teacher.getTeacherNumber());
-
-            List result = (List) query.execute();
-            lockRead(result);
-
-            return result;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
+        return queryList(Professorship.class, criteria);
     }
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
@@ -156,8 +114,13 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 
     public void deleteAll() throws ExcepcaoPersistencia
     {
-        String oqlQuery = "select all from " + Professorship.class.getName();
-        super.deleteAll(oqlQuery);
+        Criteria criteria = new Criteria();
+        List result = queryList(Professorship.class, criteria);
+        Iterator iterator = result.iterator();
+        while (iterator.hasNext())
+        {
+            delete((IProfessorship) iterator.next());
+        }
     }
 
     public void lockWrite(IProfessorship professorship)
@@ -258,8 +221,8 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
             "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
             executionDegree.getCurricularPlan().getIdInternal());
         criteria.addEqualTo(
-                "executionCourse.executionPeriod.executionYear.idInternal",
-                executionDegree.getExecutionYear().getIdInternal());
+            "executionCourse.executionPeriod.executionYear.idInternal",
+            executionDegree.getExecutionYear().getIdInternal());
         return queryList(Professorship.class, criteria, true);
     }
 

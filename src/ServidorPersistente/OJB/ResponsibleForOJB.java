@@ -5,10 +5,10 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -40,19 +40,10 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
 
     public List readAll() throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select all from " + ResponsibleFor.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        return queryList(ResponsibleFor.class, criteria);
     }
+
     public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
@@ -70,57 +61,23 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
         IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            IResponsibleFor responsibleFor = null;
-            String oqlQuery =
-                "select responsibleFor from "
-                    + ResponsibleFor.class.getName()
-                    + " where teacher.teacherNumber = $1"
-                    + " and executionCourse.sigla = $2"
-                    + " and executionCourse.executionPeriod.name = $3"
-                    + " and executionCourse.executionPeriod.executionYear.year = $4";
-
-            query.create(oqlQuery);
-            query.bind(teacher.getTeacherNumber());
-            query.bind(executionCourse.getSigla());
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                responsibleFor = (IResponsibleFor) result.get(0);
-            return responsibleFor;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
+        criteria.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.name",
+            executionCourse.getExecutionPeriod().getName());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.executionYear.year",
+            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        return (IResponsibleFor) queryObject(ResponsibleFor.class, criteria);
     }
 
     public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
     {
-        try
-        {
-
-            String oqlQuery =
-                "select responsibleFor from "
-                    + ResponsibleFor.class.getName()
-                    + " where teacher.teacherNumber = $1";
-
-            query.create(oqlQuery);
-            query.bind(teacher.getTeacherNumber());
-
-            List result = (List) query.execute();
-            lockRead(result);
-
-            return result;
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
+        return queryList(ResponsibleFor.class, criteria);
     }
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
@@ -137,8 +94,13 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
 
     public void deleteAll() throws ExcepcaoPersistencia
     {
-        String oqlQuery = "select all from " + ResponsibleFor.class.getName();
-        super.deleteAll(oqlQuery);
+        Criteria criteria = new Criteria();
+        List result = queryList(ResponsibleFor.class, criteria);
+        Iterator iterator = result.iterator();
+        while (iterator.hasNext())
+        {
+            delete((IResponsibleFor) iterator.next());
+        }
     }
 
     public void lockWrite(IResponsibleFor responsibleFor)
@@ -169,8 +131,7 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
         {
             super.lockWrite(responsibleFor);
             // else Throw an already existing exception
-        }
-        else
+        } else
             throw new ExistingPersistentException();
     }
 

@@ -5,6 +5,7 @@ package ServidorPersistente.OJB;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -30,13 +31,11 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         criteria.addEqualTo("person.username", user);
         return (ITeacher) queryObject(Teacher.class, criteria);
     }
-    
     // TODO: remove this method, is similar to readTeacherByUsername
     public ITeacher readTeacherByUsernamePB(String user) throws ExcepcaoPersistencia
     {
         return readTeacherByUsername(user);
     }
-    
     public void lockWrite(ITeacher teacher) throws ExcepcaoPersistencia
     {
         super.lockWrite(teacher);
@@ -47,8 +46,13 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
     }
     public void deleteAll() throws ExcepcaoPersistencia
     {
-        String oqlQuery = "select all from " + Teacher.class.getName();
-        super.deleteAll(oqlQuery);
+        Criteria criteria = new Criteria();
+        List result = queryList(Teacher.class, criteria);
+        Iterator iterator = result.iterator();
+        while (iterator.hasNext())
+        {
+            delete((ITeacher) iterator.next());
+        }
     }
     public List readAll() throws ExcepcaoPersistencia
     {
@@ -63,23 +67,15 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
     public List readTeacherByExecutionCourseProfessorship(IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select teacher from " + Teacher.class.getName();
-            oqlQuery += " where professorShipsExecutionCourses.executionPeriod.executionYear.year = $1";
-            oqlQuery += " and professorShipsExecutionCourses.sigla = $2";
-            oqlQuery += " and professorShipsExecutionCourses.executionPeriod.name = $3";
-            query.create(oqlQuery);
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-            query.bind(executionCourse.getSigla());
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (Exception ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo(
+            "professorShipsExecutionCourses.executionPeriod.executionYear.year",
+            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        criteria.addEqualTo("professorShipsExecutionCourses.sigla", executionCourse.getSigla());
+        criteria.addEqualTo(
+            "professorShipsExecutionCourses.executionPeriod.name",
+            executionCourse.getExecutionPeriod().getName());
+        return queryList(Teacher.class, criteria);
     }
     /*
 	 * (non-Javadoc)
@@ -89,28 +85,22 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
     public List readTeacherByExecutionCourseResponsibility(IExecutionCourse executionCourse)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select teacher from " + Teacher.class.getName();
-            oqlQuery += " where responsibleForExecutionCourses.executionPeriod.executionYear.year = $1";
-            oqlQuery += " and responsibleForExecutionCourses.sigla = $2";
-            oqlQuery += " and responsibleForExecutionCourses.executionPeriod.name = $3";
-            query.create(oqlQuery);
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-            query.bind(executionCourse.getSigla());
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (Exception ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    } /*
-	   * (non-Javadoc)
-	   * 
-	   * @see ServidorPersistente.IPersistentTeacher#readByDepartment(Dominio.IDepartment)
-	   */
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo(
+            "responsibleForExecutionCourses.executionPeriod.executionYear.year",
+            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        criteria.addEqualTo("responsibleForExecutionCourses.sigla", executionCourse.getSigla());
+        criteria.addEqualTo(
+            "responsibleForExecutionCourses.executionPeriod.name",
+            executionCourse.getExecutionPeriod().getName());
+        return queryList(Teacher.class, criteria);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentTeacher#readByDepartment(Dominio.IDepartment)
+	 */
     public List readByDepartment(IDepartment department) throws ExcepcaoPersistencia
     { // TODO remove this method by refactoring teacher. Teacher has an employee instead of a person.
         List employees = getEmployees(department);
