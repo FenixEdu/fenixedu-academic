@@ -77,22 +77,28 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
             throw new FenixActionException(e);
         }
         
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso.tipoCurso"));
-        comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
-        comparatorChain.addComparator(new BeanComparator("name"));
-        Collections.sort(degreeCurricularPlans, comparatorChain);
+        List labelValueDegreeCurricularPlans = null; 
         
-        
-        List labelValueDegreeCurricularPlans = (List) CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
-           public Object transform(Object obj) {
-               InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) obj;
-               LabelValueBean valueBean = new LabelValueBean(infoDegreeCurricularPlan.getInfoDegree().getNome() + " - " + infoDegreeCurricularPlan.getName(), infoDegreeCurricularPlan.getIdInternal().toString());
-               return valueBean;
-           }
-        });
-        
-        
+        if (degreeCurricularPlans != null) {
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso.tipoCurso"));
+            comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
+            comparatorChain.addComparator(new BeanComparator("name"));
+            Collections.sort(degreeCurricularPlans, comparatorChain);
+
+            labelValueDegreeCurricularPlans = (List) CollectionUtils.collect(degreeCurricularPlans,
+                    new Transformer() {
+                        public Object transform(Object obj) {
+                            InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) obj;
+                            LabelValueBean valueBean = new LabelValueBean(infoDegreeCurricularPlan
+                                    .getInfoDegree().getNome()
+                                    + " - " + infoDegreeCurricularPlan.getName(),
+                                    infoDegreeCurricularPlan.getIdInternal().toString());
+                            return valueBean;
+                        }
+                    });
+        }
+                
         request.setAttribute("degreeCurricularPlans", labelValueDegreeCurricularPlans);
         request.setAttribute("executionYears", executionYears);
         return mapping.findForward("chooseExecutionYear");
