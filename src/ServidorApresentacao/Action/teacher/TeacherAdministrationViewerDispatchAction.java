@@ -2399,8 +2399,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-		String shiftCodeString = request.getParameter("shiftCode");
-		request.setAttribute("shiftCode",shiftCodeString);
 		Integer objectCode = getObjectCode(request);
 
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
