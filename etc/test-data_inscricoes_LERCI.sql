@@ -342,10 +342,10 @@ insert into ENROLMENT values (31, 1, 35, 7, 2, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (32, 1, 37, 7, 2, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (33, 1, 38, 7, 2, 'Dominio.Enrolment', null);
 
-insert into ENROLMENT values (34, 1, 42, 8, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (35, 1, 43, 8, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (36, 1, 44, 8, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (37, 1, 45, 8, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (34, 1, 42, 8, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (35, 1, 43, 8, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (36, 1, 44, 8, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (37, 1, 45, 8, 1, 'Dominio.Enrolment', null);
 
 -- insert into ENROLMENT values (38, 1, 51, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 25);
 -- insert into ENROLMENT values (39, 1, 52, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 26);
