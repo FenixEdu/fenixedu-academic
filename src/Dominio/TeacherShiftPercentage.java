@@ -31,7 +31,6 @@ public class TeacherShiftPercentage extends DomainObject implements ITeacherShif
 	public String toString() {
 		String result = "[CREDITS_TEACHER";
 		result += ", codInt=" + getIdInternal();
-		result += ", teacher=" + getProfessorShip();
 		result += ", shift=" + getShift();
 		result += "]";
 		return result;
