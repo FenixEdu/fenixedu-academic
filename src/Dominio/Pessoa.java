@@ -9,10 +9,10 @@ import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
 public class Pessoa extends DomainObject implements IPessoa {
+	private Boolean availableEmail;
+	private Boolean availableWebSite;
 	private Integer chavePais;
 	private String codigoFiscal;
-
-	
 	private String codigoPostal;
 	private String concelhoMorada;
 	private String concelhoNaturalidade;
@@ -47,6 +47,7 @@ public class Pessoa extends DomainObject implements IPessoa {
 	private String telemovel;
 	private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
 	private String username;
+	private String workPhone;
 
 	private List manageableDepartmentCredits;
 	private List advisories;
@@ -933,4 +934,40 @@ public class Pessoa extends DomainObject implements IPessoa {
 		advisories = list;
 	}
 
+	/**
+	 * @return Returns the availableEmail.
+	 */
+	public Boolean getAvailableEmail() {
+		return availableEmail;
+	}
+	/**
+	 * @param availableEmail The availableEmail to set.
+	 */
+	public void setAvailableEmail(Boolean availableEmail) {
+		this.availableEmail = availableEmail;
+	}
+	/**
+	 * @return Returns the workPhone.
+	 */
+	public String getWorkPhone() {
+		return workPhone;
+	}
+	/**
+	 * @param workPhone The workPhone to set.
+	 */
+	public void setWorkPhone(String workPhone) {
+		this.workPhone = workPhone;
+	}
+	/**
+	 * @return Returns the availableHomepage.
+	 */
+	public Boolean getAvailableWebSite() {
+		return availableWebSite;
+	}
+	/**
+	 * @param availableHomepage The availableHomepage to set.
+	 */
+	public void setAvailableWebSite(Boolean availableWebSite) {
+		this.availableWebSite = availableWebSite;
+	}
 }

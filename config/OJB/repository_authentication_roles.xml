@@ -122,14 +122,29 @@
         jdbc-type="VARCHAR"
     />
     <field-descriptor
+        name="workPhone"
+        column="WORK_PHONE"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
         name="email"
         column="EMAIL"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
+        name="availableEmail"
+        column="AVAILABLE_EMAIL"
+        jdbc-type="BIT"
+    />
+    <field-descriptor
         name="enderecoWeb"
         column="WEB_ADRDRESS"
         jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="availableWebSite"
+        column="AVAILABLE_WEBSITE"
+        jdbc-type="BIT"
     />
     <field-descriptor
         name="numContribuinte"

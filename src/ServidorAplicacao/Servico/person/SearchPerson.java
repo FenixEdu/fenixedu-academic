@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import DataBeans.InfoObject;
-import DataBeans.util.Cloner;
+import DataBeans.InfoPerson;
 import Dominio.IDomainObject;
 import Dominio.IPessoa;
 import ServidorAplicacao.Servico.framework.SearchService;
@@ -41,7 +41,9 @@ public class SearchPerson extends SearchService
 
 	protected InfoObject cloneDomainObject(IDomainObject object)
 	{
-		return Cloner.copyIPerson2InfoPerson((IPessoa) object);
+		InfoPerson infoPerson = InfoPerson.newInfoFromDomain((IPessoa) object);
+		
+		return infoPerson;
 	}
 
 	protected List doSearch(HashMap parametersSearch, ISuportePersistente sp)

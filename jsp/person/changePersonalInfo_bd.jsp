@@ -246,18 +246,29 @@
             <td width="15%"><bean:message key="label.person.mobilePhone" /></td>
             <td><html:text property="mobilePhone"/></td>
           </tr>
+          <!-- Work Phome -->
+          <tr>
+            <td width="15%"><bean:message key="label.person.workPhone" /></td>
+            <td><html:text property="workPhone"/>&nbsp;<code>*</code></td>
+          </tr>
           <!-- E-Mail -->
           <tr>
             <td><bean:message key="label.person.email" /></td>
-	        <td><html:text property="email"/></td>
+	        <td><html:text property="email"/>
+	        	&nbsp;<bean:message key="label.person.availableEmail" />
+	        	<html:checkbox property="availableEmail" value="true"/></td>
 	      </tr>
           <!-- WebPage -->
           <tr>
             <td><bean:message key="label.person.webSite" /></td>
-            <td><html:text property="webSite"/></td>
+            <td><html:text property="webSite"/>
+            	&nbsp;<bean:message key="label.person.availableWebSite" />
+	        	<html:checkbox property="availableWebSite" value="true"/></td>
           </tr>
    	</table>
 <br />
+<bean:message key="label.person.publicData" />
+<br /><br />
 <html:submit property="Alterar" styleClass="inputbutton">Alterar Dados</html:submit>
 <html:reset property="Reset" styleClass="inputbutton">Dados Originais</html:reset>
       </html:form>  

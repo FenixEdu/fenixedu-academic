@@ -2,7 +2,7 @@
  * Created on 22/Dez/2003
  *
  */
-package ServidorApresentacao.Action.manager.personManagement;
+package ServidorApresentacao.Action.person;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Tânia Pousão
  *
  */
-public class PersonManagementAction extends FenixDispatchAction
+public class FindPersonAction extends FenixDispatchAction
 {
 	public ActionForward firstPage(
 			ActionMapping mapping,
@@ -66,25 +66,11 @@ public class PersonManagementAction extends FenixDispatchAction
 			name = (String) findPersonForm.get("name");
 		}
 		
-		String email = null;
-		if(findPersonForm.get("email") != null) {
-			email = (String) findPersonForm.get("email");
-		}
-		
-		String username = null;
-		if(findPersonForm.get("username") != null) {
-			username = (String) findPersonForm.get("username");
-		}
-		String documentIdNumber = null;
-		if(findPersonForm.get("documentIdNumber") != null){
-			documentIdNumber = (String) findPersonForm.get("documentIdNumber");
-		}
-		
 		HashMap parametersSearch = new HashMap();
 		parametersSearch.put(new String("name"), putSearchChar(name));
-		parametersSearch.put(new String("email"), putSearchChar(email));
-		parametersSearch.put(new String("username"), putSearchChar(username));
-		parametersSearch.put(new String("documentIdNumber"), putSearchChar(documentIdNumber));
+		parametersSearch.put(new String("email"), putSearchChar(null));
+		parametersSearch.put(new String("username"), putSearchChar(null));
+		parametersSearch.put(new String("documentIdNumber"), putSearchChar(null));
 		
 		Object[] args = { parametersSearch };
 		

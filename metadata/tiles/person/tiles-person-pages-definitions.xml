@@ -23,5 +23,13 @@
 		<put name="body" value="/person/viewSmsDeliveryReports.jsp" />
 	</definition>
 	
+	<!-- ========== FIND PERSON MANAGEMENT ========== -->
+	<definition name="findPerson" extends="definition.person.masterPage" >
+		<put name="body" value="/person/findPerson/findPerson.jsp" />
+	</definition>
+	<definition name="displayPerson" extends="definition.person.masterPage" >
+		<put name="body" value="/person/findPerson/displayPerson.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>

@@ -22,7 +22,8 @@ public interface IPessoa extends IDomainObject {
 	public List getAdvisories();
 	public void setAdvisories(List advisories);
 
-
+	public Boolean getAvailableEmail();
+	public Boolean getAvailableWebSite();
 	public String getCodigoFiscal();
 	public String getCodigoPostal();
 	public String getConcelhoMorada();
@@ -56,6 +57,9 @@ public interface IPessoa extends IDomainObject {
 	public String getTelemovel();
 	public TipoDocumentoIdentificacao getTipoDocumentoIdentificacao();
 	public String getUsername();
+	public String getWorkPhone();
+	public void setAvailableEmail(Boolean availableEmail);
+	public void setAvailableWebSite(Boolean availableWebSite);
 	public void setCodigoFiscal(String codigoFiscal);
 	public void setCodigoPostal(String codigoPostal);
 	public void setConcelhoMorada(String concelhoMorada);
@@ -89,4 +93,6 @@ public interface IPessoa extends IDomainObject {
 	public void setTelemovel(String telemovel);
 	public void setTipoDocumentoIdentificacao(TipoDocumentoIdentificacao tipoDocumentoIdentificacao);
 	public void setUsername(String username);
+	public void setWorkPhone(String workPhone);
+	
 }

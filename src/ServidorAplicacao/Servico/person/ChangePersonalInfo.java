@@ -119,8 +119,11 @@ public class ChangePersonalInfo implements IService
         person.setDistritoMorada(newInfoPerson.getDistritoMorada());
         person.setTelefone(newInfoPerson.getTelefone());
         person.setTelemovel(newInfoPerson.getTelemovel());
+        person.setWorkPhone(newInfoPerson.getWorkPhone());
         person.setEmail(newInfoPerson.getEmail());
+        person.setAvailableEmail(newInfoPerson.getAvailableEmail());
         person.setEnderecoWeb(newInfoPerson.getEnderecoWeb());
+        person.setAvailableWebSite(newInfoPerson.getAvailableWebSite());
         person.setNumContribuinte(newInfoPerson.getNumContribuinte());
         person.setProfissao(newInfoPerson.getProfissao());
         person.setNacionalidade(newInfoPerson.getNacionalidade());
