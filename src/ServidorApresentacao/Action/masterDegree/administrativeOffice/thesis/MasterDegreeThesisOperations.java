@@ -144,9 +144,14 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		if (infoExternalPersonsList.isEmpty() == false)
-			request.setAttribute(sessionConstant, infoExternalPersonsList);
-		
+		if (infoExternalPersonsList != null)
+			if (infoExternalPersonsList.isEmpty() == false)
+				request.setAttribute(sessionConstant, infoExternalPersonsList);
+
+
+		if ((infoExternalPersonsList == null) || (infoExternalPersonsList.isEmpty()))
+				actionErrors.add("label.masterDegree.administrativeOffice.searchResultsEmpty", new ActionError("label.masterDegree.administrativeOffice.searchResultsEmpty"));
+
 		request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS_FLAG, new Boolean(true));
 
 	}
