@@ -273,7 +273,8 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(studentCurricularPlan);
 				this.equivalentEnrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan, curricularCourse);
-
+				
+				assertNotNull(equivalentEnrolment);
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Loading Enrolments from DB.");
@@ -290,7 +291,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(studentCurricularPlan);
 				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.APROVED));
-
+				
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Loading Enrolments from DB.");
