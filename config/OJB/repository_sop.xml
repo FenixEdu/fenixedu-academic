@@ -151,6 +151,14 @@
       >
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
+      <collection-descriptor
+			name="associatedTeacherProfessorShipPercentage"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			element-class-ref="Dominio.CreditsTeacher"
+			proxy="true"
+			auto-retrieve="true">
+		<inverse-foreignkey field-ref="keyShift"/>
+	</collection-descriptor>
    </class-descriptor>
 
 <!-- Definitions for Dominio.Aula -->
