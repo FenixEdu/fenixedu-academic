@@ -408,7 +408,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/ReadExecutionPeriodServiceTest.java"/>
+                    <include name="**/AcceptTeacherShiftPercentageTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
@@ -452,7 +452,7 @@
             encoding="${encoding}">
 	        <fileset dir="${sql}">
 			 <include name="tables_*.sql" />
-			 <exclude name="tables_AssiduidadeASSMARCAS.sql" />
+			 <exclude name="tables_AssiduousnessASSMARCAS.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">

@@ -230,7 +230,7 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 		setEmail(pessoa.getEmail());
 		setNumMecanografico(funcionario.getNumeroMecanografico());
 		
-		setStatusAssiduidade(statusAssiduidade.getDesignacao());
+		setStatusAssiduidade(statusAssiduidade.getEstado());
 
 		setSiglaCentroCusto(centroCusto.getSigla());
 		setDescricaoCentroCusto(

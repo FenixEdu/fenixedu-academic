@@ -33,8 +33,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia & Alexandra
  */
 public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
-	private static ReadTeacherExecutionCourseShiftsPercentage service =
-		new ReadTeacherExecutionCourseShiftsPercentage();
+	private static ReadTeacherExecutionCourseShiftsPercentage service = new ReadTeacherExecutionCourseShiftsPercentage();
 
 	/**
 	 * The singleton access method of this class.
@@ -50,79 +49,59 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
 		return "ReadTeacherExecutionCourseShiftsPercentage";
 	}
 
-	public List run(
-		InfoTeacher infoTeacher,
-		InfoExecutionCourse infoExecutionCourse)
-		throws FenixServiceException {
-		
+	public List run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+
 		List infoShiftPercentageList = new ArrayList();
 
 		try {
 			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			ITurno shiftExample = new Turno();
 			shiftExample.setDisciplinaExecucao(executionCourse);
 
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-			
+
 			List executionCourseShiftsList = null;
-			// cannot use mapped objects... with readByCriteria
+			// cannot use mapped objects...with readByCriteria
 			executionCourseShiftsList = shiftDAO.readByCriteria(shiftExample);
-			
-			
+
 			Iterator iterator = executionCourseShiftsList.iterator();
 			while (iterator.hasNext()) {
 				ITurno shift = (ITurno) iterator.next();
 
-				InfoShiftPercentage infoShiftPercentage =
-					new InfoShiftPercentage();
-				infoShiftPercentage.setShift(
-					Cloner.copyIShift2InfoShift(shift));
-
+				InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
+				infoShiftPercentage.setShift(Cloner.copyIShift2InfoShift(shift));
 				double availablePercentage = 100;
 				InfoTeacherShiftPercentage infoTeacherShiftPercentage = null;
-				Iterator iter =
-					shift
-						.getAssociatedTeacherProfessorShipPercentage()
-						.iterator();
+
+				Iterator iter = shift.getAssociatedTeacherProfessorShipPercentage().iterator();
 				while (iter.hasNext()) {
-					ITeacherShiftPercentage teacherShiftPercentage =
-						(ITeacherShiftPercentage) iter.next();
+					ITeacherShiftPercentage teacherShiftPercentage = (ITeacherShiftPercentage) iter.next();
 
-					availablePercentage
-						-= teacherShiftPercentage.getPercentage().doubleValue();
+					availablePercentage -= teacherShiftPercentage.getPercentage().doubleValue();
 
-					infoTeacherShiftPercentage =
-						Cloner
-							.copyITeacherShiftPercentage2InfoTeacherShiftPercentage(
-							teacherShiftPercentage);
-					infoShiftPercentage.addInfoTeacherShiftPercentage(
-						infoTeacherShiftPercentage);
+					infoTeacherShiftPercentage = Cloner.copyITeacherShiftPercentage2InfoTeacherShiftPercentage(teacherShiftPercentage);
+					infoShiftPercentage.addInfoTeacherShiftPercentage(infoTeacherShiftPercentage);
 				}
-				List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer(){
-					
-						public Object transform(Object input) {
-							IAula lesson = (IAula) input;
-							return Cloner.copyILesson2InfoLesson(lesson);
-						}});
-				
-				
+
+				List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {
+					public Object transform(Object input) {
+						IAula lesson = (IAula) input;
+						return Cloner.copyILesson2InfoLesson(lesson);
+					}
+				});
 				infoShiftPercentage.setInfoLessons(infoLessons);
-				
-				infoShiftPercentage.setAvailablePercentage(
-					new Double(availablePercentage));
+
+				infoShiftPercentage.setAvailablePercentage(new Double(availablePercentage));
 
 				infoShiftPercentageList.add(infoShiftPercentage);
-				
 			}
-
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}
 		return infoShiftPercentageList;
 	}
-	
 }

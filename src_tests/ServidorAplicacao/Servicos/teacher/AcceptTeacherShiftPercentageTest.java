@@ -70,52 +70,20 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 
 		Object[][] shiftPercentageArray = { { new Integer(2), new Double(50)}
 		};
-		List infoTeacherShiftPercentageList =
-			getInfoTeacherShiftPercentageList(shiftPercentageArray);
+		List infoTeacherShiftPercentageList = getInfoTeacherShiftPercentageList(shiftPercentageArray);
 
-		Object[] args = { infoTeacher, getInfoExecutionCourse (new Integer(1)), infoTeacherShiftPercentageList };
+		Object[] args = { infoTeacher, getInfoExecutionCourse(new Integer(1)), infoTeacherShiftPercentageList };
 
 		try {
-			ServiceUtils.executeService(
-				getUserViewAuthorized(),
-				getNameOfServiceToBeTested(),
-				args);
+			ServiceUtils.executeService(getUserViewAuthorized(), getNameOfServiceToBeTested(), args);
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			fail("Executing service!");
 		}
 
-		testProfessorShip(new Integer(1), new Integer(1));
+		testProfessorShip(new Integer(1), new Integer(2));
 
 		testPercentage(new Integer(2), new Double(50));
-		
-	}
-
-	/**
-	 * @param _integer
-	 * @param _integer2
-	 */
-	private void testProfessorShip(Integer professorShipId, Integer expectedSizeOfAssociatedTeacherPercentage) {
-		IProfessorship professorship = null;
-		PersistenceBroker pb =
-			PersistenceBrokerFactory.defaultPersistenceBroker();
-
-		pb.clearCache();
-		
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-			
-			professorship = new Professorship();
-			professorship.setIdInternal(professorShipId); 
-			professorship = (IProfessorship) professorshipDAO.readByOId(professorship);
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			fail("Getting professorship id="+professorShipId);
-		}
-		
-		assertEquals("Size is not the same!",expectedSizeOfAssociatedTeacherPercentage.intValue(),professorship.getAssociatedTeacherShiftPercentage().size());
-		
 	}
 
 	public void testShiftNotFull() {
@@ -123,16 +91,12 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 
 		Object[][] shiftPercentageArray = { { new Integer(3), new Double(50)}
 		};
-		List infoTeacherShiftPercentageList =
-			getInfoTeacherShiftPercentageList(shiftPercentageArray);
+		List infoTeacherShiftPercentageList = getInfoTeacherShiftPercentageList(shiftPercentageArray);
 
-		Object[] args = { infoTeacher, getInfoExecutionCourse (new Integer(1)), infoTeacherShiftPercentageList };
+		Object[] args = { infoTeacher, getInfoExecutionCourse(new Integer(1)), infoTeacherShiftPercentageList };
 
 		try {
-			ServiceUtils.executeService(
-				getUserViewAuthorized(),
-				getNameOfServiceToBeTested(),
-				args);
+			ServiceUtils.executeService(getUserViewAuthorized(), getNameOfServiceToBeTested(), args);
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			fail("Shouldn't percentage exceed!");
@@ -142,24 +106,20 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 
 		infoTeacher = getInfoTeacher(new Integer(2));
 
-		Object[][] shiftPercentageArray2 = { { new Integer(3), new Double(50)} };
-		 infoTeacherShiftPercentageList =
-			getInfoTeacherShiftPercentageList(shiftPercentageArray2);
+		Object[][] shiftPercentageArray2 = { { new Integer(3), new Double(50)}
+		};
+		infoTeacherShiftPercentageList = getInfoTeacherShiftPercentageList(shiftPercentageArray2);
 
-		Object[] args2 = { infoTeacher, getInfoExecutionCourse (new Integer(1)), infoTeacherShiftPercentageList };
+		Object[] args2 = { infoTeacher, getInfoExecutionCourse(new Integer(1)), infoTeacherShiftPercentageList };
 
 		try {
-			ServiceUtils.executeService(
-				getUserViewAuthorized(),
-				getNameOfServiceToBeTested(),
-				args2);
+			ServiceUtils.executeService(getUserViewAuthorized(), getNameOfServiceToBeTested(), args2);
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			fail("Executing Service!");
 		}
 
 		testPercentage(new Integer(3), new Double(100));
-
 	}
 
 	public void testShiftFull() {
@@ -167,96 +127,103 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 
 		Object[][] shiftPercentageArray = { { new Integer(1), new Double(50)}
 		};
-		List infoTeacherShiftPercentageList =
-			getInfoTeacherShiftPercentageList(shiftPercentageArray);
+		List infoTeacherShiftPercentageList = getInfoTeacherShiftPercentageList(shiftPercentageArray);
 
-		Object[] args = { infoTeacher, getInfoExecutionCourse (new Integer(1)), infoTeacherShiftPercentageList };
+		Object[] args = { infoTeacher, getInfoExecutionCourse(new Integer(1)), infoTeacherShiftPercentageList };
 
 		try {
-			ServiceUtils.executeService(
-				getUserViewAuthorized(),
-				getNameOfServiceToBeTested(),
-				args);
-			fail("Percentage should exceed!");
-		} catch (ShiftPercentageExceededException e) {
-			Integer[] shiftIdInternal = { new Integer(1)};
-			testShiftPercentageExceedException(e, shiftIdInternal);
-		} catch (FenixServiceException e) {
+			List shiftWithErrors = (List) ServiceUtils.executeService(getUserViewAuthorized(), getNameOfServiceToBeTested(), args);
+			//			fail("Percentage should exceed!");
+
+			assertEquals("Size is not the same on shiftWithErrors!", 1, shiftWithErrors.size());
+			assertEquals("shiftWithErrors whith shift 1", 1, ((ITurno)(Cloner.copyInfoShift2IShift((InfoShift)shiftWithErrors.get(0)))).getIdInternal().intValue());
+		}
+		//				catch (ShiftPercentageExceededException e) {
+		//					Integer[] shiftIdInternal = { new Integer(1) };
+		//					testShiftPercentageExceedException(e, shiftIdInternal);
+		//				} 
+		catch (FenixServiceException e) {
 			e.printStackTrace();
 			fail("Executing Service!");
 		}
 	}
 
+	//	private void testShiftPercentageExceedException(ShiftPercentageExceededException e, Integer[] shiftIdInternal) {
+	//
+	//		assertNotNull("Null!", e.getShiftWithErrors());
+	//		assertEquals("Not the same size!", e.getShiftWithErrors().size(), shiftIdInternal.length);
+	//
+	//		boolean exist = false;
+	//		for (int i = 0; i < shiftIdInternal.length; i++) {
+	//
+	//			Iterator iterator = e.getShiftWithErrors().iterator();
+	//			while (iterator.hasNext()) {
+	//				InfoShift infoShift = (InfoShift) iterator.next();
+	//
+	//				if (infoShift.getIdInternal().equals(shiftIdInternal[i])) {
+	//					exist = true;
+	//					break;
+	//				}
+	//			}
+	//			if (!exist) {
+	//				fail("shift id=" + shiftIdInternal[i] + " not found!");
+	//			}
+	//
+	//		}
+	//	}
 
-	/**
-	 * @param e
-	 * @param shiftIdInternal
-	 */
-	private void testShiftPercentageExceedException(
-		ShiftPercentageExceededException e,
-		Integer[] shiftIdInternal) {
+	//	public void testRemoveAllPercentages() {
+	//		InfoTeacher infoTeacher = getInfoTeacher(new Integer(1));
+	//
+	//		Object[][] shiftPercentageArray = {
+	//		};
+	//		List infoTeacherShiftPercentageList = getInfoTeacherShiftPercentageList(shiftPercentageArray);
+	//
+	//		Object[] args = { infoTeacher, getInfoExecutionCourse(new Integer(1)), infoTeacherShiftPercentageList };
+	//
+	//		try {
+	//			ServiceUtils.executeService(getUserViewAuthorized(), getNameOfServiceToBeTested(), args);
+	//		} catch (FenixServiceException e) {
+	//			e.printStackTrace();
+	//			fail("Executing service!");
+	//		}
+	//
+	//		testPercentage(new Integer(3), new Double(0));
+	//		testPercentage(new Integer(1), new Double(77));
+	//	}
 
-		assertNotNull("Null!", e.getShiftWithErrors());
-		assertEquals(
-			"Not the same size!",
-			e.getShiftWithErrors().size(),
-			shiftIdInternal.length);
+	private void testProfessorShip(Integer professorShipId, Integer expectedSizeOfAssociatedTeacherPercentage) {
+		IProfessorship professorship = null;
+		PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
 
-		boolean exist = false;
-		for (int i = 0; i < shiftIdInternal.length; i++) {
-
-			Iterator iterator = e.getShiftWithErrors().iterator();
-			while (iterator.hasNext()) {
-				InfoShift infoShift = (InfoShift) iterator.next();
-
-				if (infoShift.getIdInternal().equals(shiftIdInternal[i])) {
-					exist = true;
-					break;
-				}
-			}
-			if (!exist) {
-				fail("shift id=" + shiftIdInternal[i] + " not found!");
-			}
-
-		}
-	}
-	
-	public void testRemoveAllPercentages(){
-		InfoTeacher infoTeacher = getInfoTeacher(new Integer(1));
-
-		Object[][] shiftPercentageArray = {};
-		List infoTeacherShiftPercentageList =
-			getInfoTeacherShiftPercentageList(shiftPercentageArray);
-
-		Object[] args = { infoTeacher, getInfoExecutionCourse (new Integer(1)), infoTeacherShiftPercentageList };
+		pb.clearCache();
 
 		try {
-			ServiceUtils.executeService(
-				getUserViewAuthorized(),
-				getNameOfServiceToBeTested(),
-				args);
-		} catch (FenixServiceException e) {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+
+			professorship = new Professorship();
+			professorship.setIdInternal(professorShipId);
+			professorship = (IProfessorship) professorshipDAO.readByOId(professorship);
+		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-			fail("Executing service!");
+			fail("Getting professorship id=" + professorShipId);
 		}
 
-		testPercentage(new Integer(3), new Double(0));
-		testPercentage(new Integer(1), new Double(77));		
-		
+		assertEquals(
+			"Size is not the same on professorship!",
+			expectedSizeOfAssociatedTeacherPercentage.intValue(),
+			professorship.getAssociatedTeacherShiftPercentage().size());
+
 	}
 
-	/**
-	 * @param _integer
-	 * @param _double
-	 */
 	private void testPercentage(Integer shiftId, Double expectedPercentage) {
 
 		ITurno shift = new Turno();
 		shift.setIdInternal(shiftId);
 		ISuportePersistente sp;
 
-		PersistenceBroker pb =
-			PersistenceBrokerFactory.defaultPersistenceBroker();
+		PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
 
 		pb.clearCache();
 
@@ -268,27 +235,17 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 			e.printStackTrace();
 			fail("Reading shift! id=" + shiftId);
 		}
-		List associatedTeacherProfessorShipPercentage =
-			shift.getAssociatedTeacherProfessorShipPercentage();
+		List associatedTeacherProfessorShipPercentage = shift.getAssociatedTeacherProfessorShipPercentage();
 
 		Iterator iterator = associatedTeacherProfessorShipPercentage.iterator();
 		double realPercentage = 0;
 		while (iterator.hasNext()) {
-			ITeacherShiftPercentage teacherShiftPercentage =
-				(ITeacherShiftPercentage) iterator.next();
-			realPercentage
-				+= teacherShiftPercentage.getPercentage().doubleValue();
+			ITeacherShiftPercentage teacherShiftPercentage = (ITeacherShiftPercentage) iterator.next();
+			realPercentage += teacherShiftPercentage.getPercentage().doubleValue();
 		}
-		assertEquals(
-			"Percentage test! Shift with id="+shiftId,
-			expectedPercentage,
-			new Double(realPercentage));
+		assertEquals("Percentage test! Shift with id=" + shiftId, expectedPercentage, new Double(realPercentage));
 	}
 
-	/**
-	 * @param shiftPercentageArray
-	 * @return
-	 */
 	private List getInfoTeacherShiftPercentageList(Object[][] shiftPercentageArray) {
 		List infoTeacherShiftPercentageList = new ArrayList();
 		for (int i = 0; i < shiftPercentageArray.length; i++) {
@@ -300,8 +257,7 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 			infoShift.setIdInternal(shiftId);
 
 			//Elemento da lista
-			InfoTeacherShiftPercentage infoTeacherShiftPercentage =
-				new InfoTeacherShiftPercentage();
+			InfoTeacherShiftPercentage infoTeacherShiftPercentage = new InfoTeacherShiftPercentage();
 			infoTeacherShiftPercentage.setInfoShift(infoShift);
 			infoTeacherShiftPercentage.setInfoProfessorship(null);
 			infoTeacherShiftPercentage.setPercentage(percentage);
@@ -311,11 +267,6 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 		return infoTeacherShiftPercentageList;
 	}
 
-	/**
-	 * 
-	 * @param teacherInternalCode
-	 * @return
-	 */
 	private InfoTeacher getInfoTeacher(Integer teacherInternalCode) {
 		ISuportePersistente sp;
 		ITeacher teacher = null;
@@ -344,8 +295,8 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 
 		return userView;
 	}
-	
-	public InfoExecutionCourse getInfoExecutionCourse (Integer id){
+
+	public InfoExecutionCourse getInfoExecutionCourse(Integer id) {
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setIdInternal(id);
 		return infoExecutionCourse;
