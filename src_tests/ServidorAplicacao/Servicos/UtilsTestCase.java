@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos;
 
+import java.beans.Beans;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,13 +31,14 @@ public class UtilsTestCase {
 		String property,
 		Class infoType) {
 		boolean encontrou = true;
-
+		
 		if ((objects.size() == 0) || (objects.size() != values.length))
 			return false;
 		try {
 			Object object = objects.get(0);
 			List propertiesValues = new ArrayList();
-			if (object.getClass().equals(infoType)) {
+			
+			if (Beans.isInstanceOf(object, infoType)) {
 				for (int i = 0; i < values.length && encontrou; i++) {
 					Object object2 = PropertyUtils.getProperty(objects.get(i), property);
 					propertiesValues.add(object2);
