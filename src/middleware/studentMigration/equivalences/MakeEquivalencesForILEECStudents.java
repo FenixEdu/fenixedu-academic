@@ -183,6 +183,15 @@ public class MakeEquivalencesForILEECStudents
 		{
 			return null;
 		}
+
+	
+//		List studentsList = new ArrayList();
+//		IStudent student =
+//			fenixPersistentSuport.getIPersistentStudent().readStudentByNumberAndDegreeType(
+//				new Integer(41124),
+//				TipoCurso.LICENCIATURA_OBJ);
+//		studentsList.add(student);
+//		return studentsList;
 	}
 
 	/**
@@ -305,8 +314,8 @@ public class MakeEquivalencesForILEECStudents
 
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 
-//			if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
-//			{
+if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+{
 			if (!MakeEquivalencesForILEECStudents
 				.alreadyHasEquivalence(enrolment, currentStudentCurricularPlan, fenixPersistentSuport))
 			{
@@ -339,7 +348,7 @@ public class MakeEquivalencesForILEECStudents
 					currentStudentCurricularPlan,
 					fenixPersistentSuport);
 			}
-//			}
+}
 		}
 	}
 
@@ -755,6 +764,12 @@ public class MakeEquivalencesForILEECStudents
 			newListOfEnrollments.addAll(pastEnrolments);
 			newListOfEnrollments.remove(enrolmentInSE);
 			newListOfEnrollments.remove(enrolmentInSH);
+
+			MakeEquivalencesForILEECStudents.deleteEnrollment(
+				enrolmentInSE.getCurricularCourse(),
+				enrolmentInSE.getExecutionPeriod(),
+				currentStudentCurricularPlan,
+				fenixPersistentSuport);
 		} else if (enrolmentInSE != null && enrolmentInSH == null)
 		{
 			ICurricularCourse curricularCourseCriteria = new CurricularCourse();
@@ -779,6 +794,12 @@ public class MakeEquivalencesForILEECStudents
 			newListOfEnrollments = new ArrayList();
 			newListOfEnrollments.addAll(pastEnrolments);
 			newListOfEnrollments.remove(enrolmentInSE);
+
+			MakeEquivalencesForILEECStudents.deleteEnrollment(
+				enrolmentInSE.getCurricularCourse(),
+				enrolmentInSE.getExecutionPeriod(),
+				currentStudentCurricularPlan,
+				fenixPersistentSuport);
 		} else
 		{
 			newListOfEnrollments = pastEnrolments;
