@@ -69,14 +69,14 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		
 		if (!request.getServerName().equals("localhost")) { 
 			email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-			email.send("suporte@dot.ist.utl.pt","Fenix Error Report",stackTrace.toString());
+			email.send("suporte@dot.ist.utl.pt","Fenix Error Report",mailBody);
 		}
 		
 		else{ email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
-			email.send("suporte@dot.ist.utl.pt","Localhost Error Report",stackTrace.toString());
+			email.send("suporte@dot.ist.utl.pt","Localhost Error Report",mailBody);
 		}
 			
-		email.send("suporte@dot.ist.utl.pt","Error Report",stackTrace.toString());
+		
 //		email.send("j.mota@netcabo.pt", subject, mailBody);
 //		email.send("lepc@mega.ist.utl.pt", subject, mailBody);
 		//		removes from session all the un-needed info
