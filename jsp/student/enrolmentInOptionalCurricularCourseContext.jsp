@@ -9,7 +9,7 @@
 <bean:define id="optionalInfoCurricularCourse" name="infoEnrolmentContext" property="infoChosenOptionalCurricularCourseScope.infoCurricularCourse" />
 <bean:message key="label.option" /><bean:write name="optionalInfoCurricularCourse" property="name"/> <br />
 <logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
-	<logic:equal name="optionalEnrolment" property="infoCurricularCourse" value="<%= pageContext.findAttribute("optionalInfoCurricularCourse").toString() %>">
+	<logic:equal name="optionalEnrolment" property="infoCurricularCourseScope.infoCurricularCourse" value="<%= pageContext.findAttribute("optionalInfoCurricularCourse").toString() %>">
 			&nbsp;&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
 	</logic:equal> 
 </logic:iterate>

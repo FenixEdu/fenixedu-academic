@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    
+    <!-- ========== Data Source Configuration =============================== -->
+    <data-sources />
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+      
+
+      <!-- Dynamic-FormBean para Selecionar Documento -->
+<!--      <form-bean name="posicaoFormBean"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="posicao" type="java.lang.Integer"/>
+      </form-bean>
+    -->  
+      <!-- Bean for The Creation of a Candidate -->
+      <form-bean name="createCandidateForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer" />
+        <form-property name="specialization" type="java.lang.String" />
+        <form-property name="degree" type="java.lang.String" />
+        <form-property name="name" type="java.lang.String" />
+        <form-property name="identificationDocumentNumber" type="java.lang.String" />
+        <form-property name="identificationDocumentType" type="java.lang.String" />
+      </form-bean>
+
+	  <!-- Bean for The List of Candidates -->
+      <form-bean name="listCandidatesForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+         <form-property name="page" type="java.lang.Integer" />
+		 <form-property name="degree" type="java.lang.String" />
+         <form-property name="specialization" type="java.lang.String" />
+		 <form-property name="candidateSituation" type="java.lang.String" />
+		 <form-property name="candidateNumber" type="java.lang.String" />
+		 <form-property name="executionYear" type="java.lang.String" />
+      </form-bean>
+      
+      <!-- Bean for The Creation of a Contributor -->
+      <form-bean name="createContributorForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="contributorNumber" type="java.lang.String" />
+         <form-property name="contributorName" type="java.lang.String" />
+         <form-property name="contributorAddress" type="java.lang.String" />
+      </form-bean>
+
+
+      <!-- Bean for The Choosing of a Contributor -->
+      <form-bean name="chooseContributorForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="contributorNumber" type="java.lang.String" />
+      </form-bean>
+      
+      
+	  <!-- Bean for The Choosing of a Guide -->
+      <form-bean name="chooseGuideForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="guideNumber" type="java.lang.String" />
+         <form-property name="guideYear" type="java.lang.String" />
+      </form-bean>
+
+
+	  <!-- Bean for The Choosing of a Guide -->
+      <form-bean name="chooseExecutionYearForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="executionYear" type="java.lang.String" />
+      </form-bean>      
+
+
+		<!-- Bean for The Creation of a Guide -->
+	    <form-bean name="createGuideForm" 
+     			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			    dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="degree" type="java.lang.String" />
+        	<form-property name="number" type="java.lang.String" />
+        	<form-property name="requester" type="java.lang.String" />
+        	<form-property name="graduationType" type="java.lang.String" />
+        	<form-property name="contributorNumber" type="java.lang.String" />
+        	<form-property name="contributorName" type="java.lang.String" />
+        	<form-property name="contributorAddress" type="java.lang.String" />
+        	<form-property name="contributorList" type="java.lang.String" />
+
+      </form-bean>
+
+	  <!-- Bean for ready to create a guide  -->
+      <form-bean name="guideCreateReadyForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="othersRemarks" type="java.lang.String" />
+        	<form-property name="othersPrice" type="java.lang.String" />
+        	<form-property name="remarks" type="java.lang.String" />
+        	<form-property name="guideSituation" type="java.lang.String" />
+        	<form-property name="paymentType" type="java.lang.String" />
+        	
+      </form-bean>
+
+
+      <!-- Bean for change of Application Information -->
+      <form-bean name="changeCandidateForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+                 
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="identificationDocumentType" type="java.lang.String" />
+        	<form-property name="identificationDocumentNumber" type="java.lang.String" />
+        	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
+        	<form-property name="name" type="java.lang.String" />
+        	<form-property name="sex" type="java.lang.String" />
+        	<form-property name="maritalStatus" type="java.lang.String" />
+        	<form-property name="nationality" type="java.lang.String" />
+        	<form-property name="fatherName" type="java.lang.String" />
+        	<form-property name="motherName" type="java.lang.String" />
+        	<form-property name="birthPlaceParish" type="java.lang.String" />
+        	<form-property name="birthPlaceMunicipality" type="java.lang.String" />
+        	<form-property name="birthPlaceDistrict" type="java.lang.String" />
+        	<form-property name="address" type="java.lang.String" />
+        	<form-property name="place" type="java.lang.String" />
+        	<form-property name="postCode" type="java.lang.String" />
+        	<form-property name="addressParish" type="java.lang.String" />
+        	<form-property name="addressMunicipality" type="java.lang.String" />
+        	<form-property name="addressDistrict" type="java.lang.String" />
+        	<form-property name="telephone" type="java.lang.String" />
+        	<form-property name="mobilePhone" type="java.lang.String" />
+        	<form-property name="email" type="java.lang.String" />
+        	<form-property name="webSite" type="java.lang.String" />
+        	<form-property name="contributorNumber" type="java.lang.String" />
+        	<form-property name="occupation" type="java.lang.String" />
+        	<form-property name="birthDay" type="java.lang.String" /> 
+            <form-property name="birthMonth" type="java.lang.String" /> 
+        	<form-property name="birthYear" type="java.lang.String" /> 
+        	<form-property name="idIssueDateDay" type="java.lang.String" /> 
+            <form-property name="idIssueDateMonth" type="java.lang.String" /> 
+        	<form-property name="idIssueDateYear" type="java.lang.String" /> 
+        	<form-property name="idExpirationDateDay" type="java.lang.String" /> 
+            <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
+        	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
+        	<form-property name="username" type="java.lang.String" /> 
+        	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
+        	<form-property name="average" type="java.lang.String" />
+        	<form-property name="majorDegree" type="java.lang.String" />
+        	<form-property name="majorDegreeSchool" type="java.lang.String" />
+        	<form-property name="majorDegreeYear" type="java.lang.String" />
+        	<form-property name="situationRemarks" type="java.lang.String" />
+        	<form-property name="situation" type="java.lang.String" />
+      </form-bean>
+
+
+	  <!-- Bean to Change the Guide Situation  -->
+      <form-bean name="editGuideSituationForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="remarks" type="java.lang.String" />
+        	<form-property name="guideSituation" type="java.lang.String" />
+        	<form-property name="paymentType" type="java.lang.String" />
+        	<form-property name="paymentDateDay" type="java.lang.String" />
+        	<form-property name="paymentDateMonth" type="java.lang.String" />
+			<form-property name="paymentDateYear" type="java.lang.String" />
+      </form-bean>
+
+	  <!-- Bean to Change the Guide Information  -->
+      <form-bean name="editGuideInformationForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="quantityList" type="java.lang.String" />
+			<form-property name="contributor" type="java.lang.String" />
+			<form-property name="othersRemarks" type="java.lang.String" />
+			<form-property name="othersPrice" type="java.lang.String" />
+			<form-property name="othersQuantity" type="java.lang.String" />
+			
+      </form-bean>
+
+      <!-- Bean for The Choosing of a Year -->
+      <form-bean name="chooseYearForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="year" type="java.lang.String" />
+      </form-bean>
+
+	  <!-- Bean to Choose the Information for the Certificate  -->
+      <form-bean name="chooseCertificateInfoForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="requesterNumber" type="java.lang.String" />
+        	<form-property name="graduationType" type="java.lang.String" />
+        	<form-property name="certificateList" type="java.lang.String"/>
+			<form-property name="destination" type="java.lang.String[]"/>
+      </form-bean>
+
+
+   </form-beans>
+    
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+		<exception type="java.lang.Exception"
+			       key="java.lang.Exception"
+			       path="/naoExecutado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"
+			       />
+		<exception type="ServidorAplicacao.FenixServiceException"
+		  	       key="ServidorAplicacao.FenixServiceException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+	</global-exceptions>
+    
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+	  <forward name="index" path="index.do" redirect="true"/>
+      <forward name="firstPage" path="/index.do"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/> 
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+      <!-- page fronting actions -->
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
+      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
+      <action path="/index" forward="/index.jsp"/>
+
+      <action path="/printGuidePage"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/guide/printGuidePage.jsp"/> 
+      </action>
+ 
+      <action path="/candidateSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/candidateIndex.jsp"/> 
+      </action>
+            
+	  <action path="/contributorSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/contributor/indexContributor.jsp"/> 
+      </action>
+
+	  <action path="/guideSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/guide/indexGuide.jsp"/> 
+      </action>
+      
+      <action path="/certificateSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/certificate/indexCertificate.jsp"/> 
+      </action>
+	  
+	  <action path="/guideListingSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
+      </action>    
+      
+    
+      
+      <!-- action definition -->
+      
+      
+      <!-- action to choose a Execution Year to create a candidate -->
+      <action attribute="chooseExecutionYearForm"
+      		  input="/chooseExecutionYear.jsp"
+      	      name="chooseExecutionYearForm"
+		      path="/chooseExecutionYear"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="CreateReady" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>  
+      </action>
+      
+      
+      
+      <!-- action to create a candidate -->
+      <action attribute="createCandidateForm"
+      		  input="/createCandidate.jsp"
+      	      name="createCandidateForm"
+		      path="/createCandidateDispatchAction"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareSuccess" path="/createCandidate.jsp"/>  
+	         <forward name="CreateSuccess" path="/createCandidateSuccess.jsp"/>  
+      </action>
+
+      <!-- action to visualize candidates -->
+      <action attribute="listCandidatesForm"
+      		  input="/chooseCandidateList.jsp"
+      	      name="listCandidatesForm"
+		      path="/visualizeCandidates"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
+              validate="true">
+	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
+	         <forward name="ActionReady" path="/visualizeCandidate.jsp"/>  
+	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
+      </action>
+
+      <!-- action to edit candidates -->
+      <action attribute="listCandidatesForm"
+      		  input="/chooseCandidateList.jsp"
+      	      name="listCandidatesForm"
+		      path="/editCandidates"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
+	         <forward name="ActionReady" path="/editCandidate.do?method=prepareEdit&amp;page=0"/>  
+	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
+      </action>
+      
+      <action attribute="changeCandidateForm"
+      		  input="/changeCandidate.jsp"
+      	      name="changeCandidateForm"
+		      path="/editCandidate"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareReady" path="/changeCandidate.jsp"/>  
+	         <forward name="ChangeSuccess" path="/visualizeCandidate.jsp"/>  
+	         <forward name="ChangePasswordSuccess" path="/guide/informationTemplate1.jsp"/>  
+      </action>
+      
+      
+      
+      
+      <!-- Dispatch Action to Create the Contributor Information -->
+      <action path="/createContributorDispatchAction"
+	     attribute="createContributorForm"
+	          name="createContributorForm"
+	         input="/contributor/createContributor.jsp"
+	      validate="true"
+		 parameter="method"
+  	         scope="request"
+      	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.CreateContributorDispatchAction">
+   		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
+      	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
+      </action>
+
+      <!-- action to visualize Contributors -->
+      <action attribute="chooseContributorForm"
+      		  input="/contributor/chooseContributor.jsp"
+      	      name="chooseContributorForm"
+		      path="/visualizeContributors"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              validate="true">
+	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
+	         <forward name="ActionReady" path="contributor/visualizeContributor.jsp"/>  
+	         <forward name="ChooseContributor" path="/contributor/selectContributorFromList.jsp"/>  
+      </action>
+
+      <!-- action to edit Contributors -->
+      <action attribute="chooseContributorForm"
+      		  input="/contributor/chooseContributor.jsp"
+      	      name="chooseContributorForm"
+		      path="/editContributors"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
+	         <forward name="ActionReady" path="/editContributor.do?method=prepareEdit&amp;page=0" />  
+	         <forward name="ChooseContributor" path="/contributor/selectContributorFromList.jsp"/>  
+      </action>
+
+	  <!-- Action to Edit ONE contributor -->
+      <action attribute="createContributorForm"
+      		  input="/contributor/editContributor.jsp"
+      	      name="createContributorForm"
+		      path="/editContributor"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="EditReady" path="/contributor/editContributor.jsp"/>  
+	         <forward name="EditSuccess" path="/contributor/editContributorSuccess.jsp"/>  
+      </action>
+      
+      
+      
+
+      <!-- action to create a guide -->
+      <action attribute="createGuideForm"
+      		  input="/guide/createGuide.jsp"
+      	      name="createGuideForm"
+		      path="/createGuideDispatchAction"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
+              validate="true">
+	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
+	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
+      </action>
+
+
+      <!-- action to choose a guide -->
+      <action attribute="chooseGuideForm"
+      		  input="/guide/chooseGuide.jsp"
+      	      name="chooseGuideForm"
+		      path="/chooseGuideDispatchAction"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareReady" path="/guide/chooseGuide.jsp"/> 
+	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
+	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
+      </action>
+
+
+      <!-- action to edit a guide's Information -->
+      <action attribute="editGuideInformationForm"
+      		  input="/guide/editGuideInformation.jsp"
+      	      name="editGuideInformationForm"
+		      path="/editGuideInformation"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
+              validate="true">
+       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       		 <exception type="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+		                key="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+         <forward name="PrepareReady" path="/guide/editGuideInformation.jsp"/> 
+         <forward name="EditInformationSuccess" path="/guide/visualizeGuide.jsp"/> 
+      </action>
+
+
+
+	  <!-- Action to Edit a Guide's Situation -->
+      <action attribute="editGuideSituationForm"
+      		  input="/guide/editGuideSituation.jsp"
+      	      name="editGuideSituationForm"
+		      path="/editGuideSituation"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
+			  validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonValidChangeActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonValidChangeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="EditReady" path="/guide/editGuideSituation.jsp"/>  
+	         <forward name="SituationChanged" path="/guide/changeSuccess.jsp"/>  
+      </action>
+
+
+      <!-- Create Guide -->
+      <action attribute="guideCreateReadyForm"
+      		  input="/guide/createGuideReady.jsp"
+      	      name="guideCreateReadyForm"
+		      path="/createGuideReadyDispatchAction"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
+	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
+	         <forward name="CreateSuccess" path="printGuide.do?method=prepare"/>  	         
+      </action>
+
+      <!-- List Guides by Year -->
+      <action attribute="chooseYearForm"
+      		  input="/guide/chooseGuideYear.jsp"
+      	      name="chooseYearForm"
+		      path="/guideListingByYear"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingDispatchAction"
+              validate="true">
+	         <forward name="PrepareReady" path="/guide/chooseGuideYear.jsp"/> 
+	         <forward name="ShowGuideList" path="/guide/showGuideList.jsp"/> 
+   	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
+      </action>
+
+
+
+      <!-- Choose Execution Year to Visualize Candidates -->
+      <action path="/chooseExecutionYearToVisualizeCandidates"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/visualizeCandidates.do?method=prepareChoose&amp;action=visualize&amp;page=0"/> 
+      </action>
+
+	  
+      <!-- Choose Execution Year to Edit Candidates -->
+      <action path="/chooseExecutionYearToEditCandidates"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/editCandidates.do?method=prepareChoose&amp;action=edit&amp;page=0"/> 
+      </action>
+
+      <!-- Choose Execution Year To Create a Guide -->
+      <action path="/chooseExecutionYearToCreateGuide"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/guide/chooseExecutionYearToCreateGuide.jsp"/>  
+	         <forward name="ChooseSuccess" path="/createGuideDispatchAction.do?method=prepare&amp;page=0"/> 
+      </action>
+
+
+
+      <!-- Print Guide -->
+      <action path="/printGuide"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.PrintGuideDispatchAction"
+			  >
+	         <forward name="PrintReady" path="/guide/printGuide.jsp"/> 
+	         <forward name="PrintOneGuide" path="/guide/guideTemplate1.jsp"/> 
+      </action>
+      
+      
+      <!-- Print Declaration -->
+      <action path="/printDeclaration"
+		      parameter="method"
+              type="ServidorApresentacao.Action.certificate.PrintDeclarationDispatchAction"
+			  >
+	         <forward name="PrintReady" path="/certificate/printDeclarationPage.jsp"/> 
+      </action>
+
+	  <!-- Print Declaration -->
+      <action path="/printCertificate"
+		      attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	          input="/certificate/chooseCertificate.jsp"
+	      	  validate="true"
+		      parameter="method"
+  	          scope="request"
+              type="ServidorApresentacao.Action.certificate.PrintCertificateDispatchAction"
+			  >
+	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
+      </action>
+      
+      <!-- Action to prepare the chooseCertificateInfoForm -->
+      <action path="/chooseCertificateInfoAction"
+	     attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	          input="/certificate/chooseCertificate.jsp"
+	      	  validate="true"
+		      parameter="method"
+  	          scope="request"
+      	      type="ServidorApresentacao.Action.certificate.ChooseCertificateInfoAction">
+   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
+      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
+      </action>
+
+		<!-- Action to prepare the chooseCertificateInfoForm -->
+      <action path="/chooseDeclarationInfoAction"
+	          attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	          input="/certificate/chooseDeclaration.jsp"
+	      	  validate="true"
+			  parameter="method"
+  	          scope="request"
+      	      type="ServidorApresentacao.Action.certificate.ChooseDeclarationInfoAction">
+   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
+   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
+      </action>
+      
+      	<!-- Action to prepare the chooseFinalResultInfoForm -->
+      <action path="/chooseFinalResultInfoAction"
+	          attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	          input="/certificate/chooseFinalResult.jsp"
+	      	  validate="true"
+			  parameter="method"
+  	          scope="request"
+      	      type="ServidorApresentacao.Action.certificate.ChooseFinalResultInfoAction">
+   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+         <exception type="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
+            key="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	 <forward name="PrepareReady" path="/certificate/chooseFinalResult.jsp"/>
+   		 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
+      </action>
+    
+  
+    </action-mappings>
+    
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" />
+
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeAdministrativeOffice.xml"/>
+    </plug-in>
+    
+</struts-config>
+

@@ -15,7 +15,7 @@
 		</logic:iterate>
 		<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
 			<li>
-				<bean:write name="optionalEnrolment" property="infoCurricularCourse.name"/> - <bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
+				<bean:write name="optionalEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/> - <bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
 			</li>
 		</logic:iterate>
 	</ul>	

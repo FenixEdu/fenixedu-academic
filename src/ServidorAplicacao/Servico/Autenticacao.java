@@ -127,15 +127,18 @@ public class Autenticacao implements IServico {
 	 */
 	private IUserView filterUserView(UserView userView, String application) {
 		Collection rolesIntranet = new ArrayList();
+
 		InfoRole masterDegreeAdministrativeOffice = new InfoRole();
 		masterDegreeAdministrativeOffice.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		
 		rolesIntranet.add(masterDegreeAdministrativeOffice);
-
 
 		InfoRole managementAssiduousness = new InfoRole();
 		managementAssiduousness.setRoleType(RoleType.MANAGEMENT_ASSIDUOUSNESS);		
 		rolesIntranet.add(managementAssiduousness);
+
+		InfoRole degreeAdministrativeOffice = new InfoRole();
+		degreeAdministrativeOffice.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+		rolesIntranet.add(degreeAdministrativeOffice);
 
 		if (application.equalsIgnoreCase(Autenticacao.INTRANET)){
 			Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);

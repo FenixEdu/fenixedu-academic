@@ -53,7 +53,7 @@
 					<bean:define id="optionalCourse" name="curricularScope" property="infoCurricularCourse"/>
 
 					<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
-						<logic:equal name="optionalEnrolment" property="infoCurricularCourse" value="<%= pageContext.findAttribute("optionalCourse").toString() %>">
+						<logic:equal name="optionalEnrolment" property="infoCurricularCourseScope.infoCurricularCourse" value="<%= pageContext.findAttribute("optionalCourse").toString() %>">
 							<bean:define id="optionalEnrolmentString">
 								<br/> &nbsp;&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
 							</bean:define>
