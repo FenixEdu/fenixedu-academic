@@ -15,13 +15,24 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseServicos {
+public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseServicosWithAuthorization {
+
+	private InfoExecutionCourse infoExecutionCourse = null;
+
     public LerTurnosDeDisciplinaExecucaoServicosTest(java.lang.String testName) {
     super(testName);
   }
@@ -43,44 +54,24 @@ public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseServicos 
   protected void tearDown() {
     super.tearDown();
   }
-
-  // read turnos by unauthorized user
-  public void testUnauthorizedReadAulas() {
-    Object argsLerTurnos[] = new Object[1];
-    argsLerTurnos[0] = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-                                                  _disciplinaExecucao1.getSigla(),
-                                                  _disciplinaExecucao1.getPrograma(),
-                                                  new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                               new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                                                              _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome())),
-                                               _disciplinaExecucao1.getTheoreticalHours(), _disciplinaExecucao1.getPraticalHours(),
-                                               _disciplinaExecucao1.getTheoPratHours(),_disciplinaExecucao1.getLabHours());
-                                               
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView2, "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
-        fail("testUnauthorizedReadTurnos");
-      } catch (Exception ex) {
-        assertNull("testUnauthorizedReadTurnos", result);
-      }
+  
+  
+  protected String getNameOfServiceToBeTested() {
+	  return "LerTurnosDeDisciplinaExecucao";
   }
 
-  // read new existing turnos
+  
+
   public void testReadExistingTurnos() {
-    Object argsLerTurnos[] = new Object[1];
-    argsLerTurnos[0] = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-    											  _disciplinaExecucao1.getSigla(),
-    											  _disciplinaExecucao1.getPrograma(),
-    											  new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-    																		   new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-    																						  _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome())),
-    										   _disciplinaExecucao1.getTheoreticalHours(), _disciplinaExecucao1.getPraticalHours(),
-    										   _disciplinaExecucao1.getTheoPratHours(),_disciplinaExecucao1.getLabHours());
+
+	this.ligarSuportePersistente(true);
+		
+	Object argsLerTurnos[] = {this.infoExecutionCourse} ;
 
     Object result = null; 
       try {
-        result = _gestor.executar(_userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
-        assertEquals("testLerExistingTurnos", 2, ((List) result).size());
+        result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurnos);
+        assertEquals("testLerExistingTurnos", 10, ((List) result).size());
       } catch (Exception ex) {
       	fail("testLerExistingTurnos");
       }
@@ -88,23 +79,64 @@ public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseServicos 
 
   // read new non-existing turnos
   public void testReadNonExistingTurnos() {
-    Object argsLerTurnos[] = new Object[1];
-    argsLerTurnos[0] = new InfoExecutionCourse(_disciplinaExecucao2.getNome(),
-    											  _disciplinaExecucao2.getSigla(),
-    											  _disciplinaExecucao2.getPrograma(),
-    											  new InfoExecutionDegree(_disciplinaExecucao2.getLicenciaturaExecucao().getAnoLectivo(),
-    																		   new InfoDegree(_disciplinaExecucao2.getLicenciaturaExecucao().getCurso().getSigla(),
-    																						  _disciplinaExecucao2.getLicenciaturaExecucao().getCurso().getNome())),
-    										   _disciplinaExecucao2.getTheoreticalHours(), _disciplinaExecucao2.getPraticalHours(),
-    										   _disciplinaExecucao2.getTheoPratHours(),_disciplinaExecucao2.getLabHours());
+	this.ligarSuportePersistente(false);
+		
+	Object argsLerTurnos[] = {this.infoExecutionCourse} ;
 
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnos);
-        assertTrue("testLerNonExistingTurnos", ((List) result).isEmpty());
-      } catch (Exception ex) {
-      	fail("testLerNonExistingTurnos");
-      }
+	Object result = null; 
+	  try {
+		result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurnos);
+		assertTrue("testLerExistingTurnos", ((List) result).isEmpty());
+	  } catch (Exception ex) {
+		fail("testLerExistingTurnos");
+	  }
   }
+
+
+  private void ligarSuportePersistente(boolean existing) {
+
+	  ISuportePersistente sp = null;
+
+	  try {
+		  sp = SuportePersistenteOJB.getInstance();
+		  sp.iniciarTransaccao();
+
+
+		  IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+		  IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		  assertNotNull(executionYear);
+		  
+		  IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		  IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+		  assertNotNull(executionPeriod);
+		  
+		  
+		  IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+		  IDisciplinaExecucao executionCourse = null;
+			
+
+		  if(existing) {
+			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+			assertNotNull(executionCourse);
+		  } else {
+			executionCourse = new DisciplinaExecucao("desc", "desc", "desc", new Double(1), new Double(2), new Double(3), new Double(4), executionPeriod);
+		  }
+			
+		  this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+
+		  sp.confirmarTransaccao();
+
+	  } catch (ExcepcaoPersistencia excepcao) {
+		  try {
+			  sp.cancelarTransaccao();
+		  } catch (ExcepcaoPersistencia ex) {
+			  fail("ligarSuportePersistente: cancelarTransaccao");
+		  }
+		  fail("ligarSuportePersistente: confirmarTransaccao");
+	  }
+  }
+
+
+
     
 }
