@@ -202,7 +202,7 @@
 	<!-- ========== Global Forward Definitions =============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
      <forward name="index" path="/index.do" redirect="true"/>
-      <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
+     <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
      
     </global-forwards>
 
@@ -298,6 +298,13 @@
         type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
 		>    
      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>         
+	</action>
+	
+	<action 
+		path="/viewSite"
+        type="ServidorApresentacao.Action.teacher.ReadSite"
+		>    
+     <forward name="viewSite" path="/viewSite.jsp"/>         
 	</action>
 	
 	<!--

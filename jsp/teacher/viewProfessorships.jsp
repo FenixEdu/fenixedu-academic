@@ -12,13 +12,16 @@
 	 	<tr>   		
 	 		<bean:message key="label.professorships" />	
 		 </tr>
-	<logic:iterate name="<%= SessionConstants.INFO_SITES_LIST %>" id="site" indexId="index">
+	<% int index = 0; %>	 
+
+	<logic:iterate name="<%= SessionConstants.INFO_SITES_LIST %>" id="site" >
 		<tr>
 		<bean:define id="executionCourse" name="site" property="infoExecutionCourse"/>
-		<html:link href="logoff.do" >			
+		<html:link page="/viewSite.do" indexId="index" indexed="true">			
 			<bean:write name="executionCourse" property="sigla"/>
 		</html:link>	
 		</tr>
+	 <% index++; %>	
 	</logic:iterate>
 	 </table>
 	
