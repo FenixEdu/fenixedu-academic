@@ -49,7 +49,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
 
 			Boolean passwordPrint = (Boolean) session.getAttribute(SessionConstants.PRINT_PASSWORD);
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
-
+			
 			if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE_TYPE)){
 				// Read The Candidate
 				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
@@ -59,7 +59,8 @@ public class PrintGuideDispatchAction extends DispatchAction {
 				} catch (FenixServiceException e) {
 					throw new FenixActionException();
 				}
-				infoMasterDegreeCandidate.getInfoPerson().setPassword(infoGuide.getInfoPerson().getPassword());
+				if (passwordPrint.booleanValue())
+					infoMasterDegreeCandidate.getInfoPerson().setPassword(infoGuide.getInfoPerson().getPassword());
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 				
 			} else if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT_TYPE)){
