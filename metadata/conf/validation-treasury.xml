@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--<!DOCTYPE form-validation PUBLIC 
+      "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/validation_1_1.dtd">-->
+
+<form-validation>
+  <formset>
+
+    <form name="createContributorForm">
+      <field property="contributorNumber" depends="required,integer" page="1">
+        <arg0 key="label.treasury.contributorNumber" />
+      </field>
+
+      <field property="contributorName" depends="required" page="1">
+        <arg0 key="label.treasury.contributorName" />
+      </field>
+           
+      <field property="contributorAddress" depends="required" page="1">
+        <arg0 key="label.treasury.contributorAddress" />
+      </field>
+
+    </form>
+
+  </formset>
+</form-validation>

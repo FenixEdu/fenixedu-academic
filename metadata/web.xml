@@ -62,6 +62,10 @@
             <param-value>/WEB-INF/conf/struts-teacher.xml</param-value>
         </init-param>        
         <init-param>
+            <param-name>config/treasury</param-name>
+            <param-value>/WEB-INF/conf/struts-treasury.xml</param-value>
+        </init-param>        
+        <init-param>
             <param-name>config/person</param-name>
             <param-value>/WEB-INF/conf/struts-person.xml</param-value>
         </init-param>        

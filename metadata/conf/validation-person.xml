@@ -100,7 +100,7 @@
         <arg0 key="Este" resource="false" />
       </field>
 
-      <field property="contributorNumber" depends="required" page="1">
+      <field property="contributorNumber" depends="required,integer" page="1">
         <arg0 key="label.person.contributorNumber" />
       </field>
 	
