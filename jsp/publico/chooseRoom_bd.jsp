@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
 <h2><bean:message key="title.chooseRoom"/></h2>
 <br/>
 	<logic:present name="publico.infoRooms" scope="session">
@@ -25,8 +27,8 @@
 			</logic:iterate>
 		</table>
 		<br/>
-		<html:hidden name="exePeriod" property="ePName" />
-		<html:hidden name="exeYearName" property="eYName" />
+	<%--	<html:hidden name="exePeriod" property="ePName" />
+		<html:hidden name="exeYearName" property="eYName" /> --%>
 		<html:submit styleClass="inputbutton">
 			<bean:message key="label.choose"/>
 		</html:submit>

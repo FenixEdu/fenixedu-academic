@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
 
 	<br/>
 	<center><font color='#034D7A' size='5'> <b> <bean:message key="title.room.occupation"/> </b> </font></center>
@@ -29,8 +31,8 @@
 
 		<br/>
 		<center>
-		<html:hidden name="exePeriod" property="ePName"/>	
-		<html:hidden name="exeYearName" property="eYName"/>	
+	<%--	<html:hidden name="exePeriod" property="ePName"/>	
+		<html:hidden name="exeYearName" property="eYName"/>	--%>
 		<html:submit>
 			<bean:message key="label.choose"/>
 		</html:submit>
