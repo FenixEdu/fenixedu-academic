@@ -4,7 +4,7 @@
  */
 package DataBeans;
 
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 
 /**
  * @author Tânia Pousão
@@ -12,14 +12,14 @@ import Dominio.IEnrolment;
  */
 public class InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlan extends InfoEnrolment {
 
-	public void copyFromDomain(IEnrolment enrolment) {
+	public void copyFromDomain(IEnrollment enrolment) {
 		super.copyFromDomain(enrolment);
 		if(enrolment != null) {
 			setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoDegreeCurricularPlan.newInfoFromDomain(enrolment.getStudentCurricularPlan()));
 		}
 	}
 	
-	public static InfoEnrolment newInfoFromDomain(IEnrolment enrolment) {
+	public static InfoEnrolment newInfoFromDomain(IEnrollment enrolment) {
 		InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlan infoEnrolment = null;
 		if(enrolment != null) {
 			infoEnrolment = new InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlan();

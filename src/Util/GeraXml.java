@@ -39,7 +39,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
@@ -130,7 +130,7 @@ public class GeraXml extends FenixUtil
             String curricularCourseData[] = (String[]) iter.next();
             System.out.println("A Lista tem: " + curricularCourseData[0]);
 
-            IEnrolment enrolment = criaEnrolment(curricularCourseData,
+            IEnrollment enrolment = criaEnrolment(curricularCourseData,
                     studentNumber, degreeCurricularPlanID);
             enrolments.add(enrolment);
         }
@@ -194,7 +194,7 @@ public class GeraXml extends FenixUtil
 
             Iterator iter = enrolments.iterator();
             while (iter.hasNext())
-                persistentEnrolment.delete((IEnrolment) iter.next());
+                persistentEnrolment.delete((IEnrollment) iter.next());
 
             suportePersistente.confirmarTransaccao();
         }
@@ -207,7 +207,7 @@ public class GeraXml extends FenixUtil
     /**
      * @param object
      */
-    private static IEnrolment criaEnrolment(String[] curricularCourseData,
+    private static IEnrollment criaEnrolment(String[] curricularCourseData,
             Integer studentNumber, Integer degreeCurricularPlanID)
     {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
@@ -217,7 +217,7 @@ public class GeraXml extends FenixUtil
                 + curricularCourseData[1]);
         EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 
-        IEnrolment enrolment = null;
+        IEnrollment enrolment = null;
         try
         {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
@@ -396,7 +396,7 @@ public class GeraXml extends FenixUtil
             Iterator iterador = enrolments.iterator();
 
             while (iterador.hasNext())
-                persistentEnrolment.delete((IEnrolment) iterador.next());
+                persistentEnrolment.delete((IEnrollment) iterador.next());
 
             suportePersistente.confirmarTransaccao();
         }

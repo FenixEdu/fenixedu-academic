@@ -5,7 +5,7 @@ import Dominio.CurricularCourse;
 import Dominio.EnrolmentEvaluation;
 import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
@@ -62,7 +62,7 @@ public class WriteEnrolmentInOptionalCourse implements IService
 			IExecutionPeriod executionPeriod = WriteEnrollmentsList.findExecutionPeriod(persistentSuport, executionYear,
 				chosenCurricularCourseID, degreeType);
 
-			IEnrolment enrolment = enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+			IEnrollment enrolment = enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 				studentCurricularPlan, optionalCurricularCourse, executionPeriod);
 
 			if (enrolment == null)
@@ -90,7 +90,7 @@ public class WriteEnrolmentInOptionalCourse implements IService
 		WriteEnrolment.resetAttends();
 	}
 
-	private void createEnrollmentEvaluation(IEnrolment enrolment) throws ExcepcaoPersistencia
+	private void createEnrollmentEvaluation(IEnrollment enrolment) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistentSuport.getIPersistentEnrolmentEvaluation();

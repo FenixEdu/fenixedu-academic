@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IStudentCurricularPlan;
@@ -48,7 +48,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		}
 
 		while(iterator.hasNext()){
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 	
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))&&
 				(!(enrolment instanceof IEnrolmentInExtraCurricularCourse))){
@@ -73,7 +73,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		Iterator iterator = enrolments.iterator();
 		
 		while(iterator.hasNext()){
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 			if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)){
 				Iterator evaluations = enrolment.getEvaluations().iterator();
 				while(evaluations.hasNext()){

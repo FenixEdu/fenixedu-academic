@@ -11,7 +11,7 @@ import java.util.List;
 
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -72,7 +72,7 @@ public class GetEnrolmentList implements IServico {
 		Iterator iterator = enrolmentList.iterator();
 
 		while(iterator.hasNext()) {	
-		    IEnrolment enrolment = (IEnrolment) iterator.next();
+		    IEnrollment enrolment = (IEnrollment) iterator.next();
 		    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
 		        result.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));	
 		    }
@@ -105,7 +105,7 @@ public class GetEnrolmentList implements IServico {
 			Iterator iterator = enrolmentList.iterator();
 
 			while(iterator.hasNext()) {	
-			    IEnrolment enrolment = (IEnrolment) iterator.next();
+			    IEnrollment enrolment = (IEnrollment) iterator.next();
 			    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
 			        result.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));	
 			    }

@@ -6,7 +6,7 @@ import java.util.List;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.rules.IEnrollmentRule;
 
@@ -35,7 +35,7 @@ public class EnrollmentInPreviousYearCurricularCourseRule implements IEnrollment
 
         Iterator iterator = temporaryEnrollments.iterator();
         while(iterator.hasNext()) {
-            IEnrolment enrollment = (IEnrolment) iterator.next();
+            IEnrollment enrollment = (IEnrollment) iterator.next();
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
             
             actualYearTemporarilyEnrolledEnrollment = getCurricularYearOfCurricularCourse(curricularCourse).intValue();

@@ -13,7 +13,7 @@ import Util.enrollment.EnrollmentCondition;
  * 24/Mar/2003
  */
 
-public class Enrolment extends DomainObject implements IEnrolment
+public class Enrolment extends DomainObject implements IEnrollment
 {
 	private IStudentCurricularPlan studentCurricularPlan;
 	private ICurricularCourse curricularCourse;
@@ -200,8 +200,8 @@ public class Enrolment extends DomainObject implements IEnrolment
 	{
 		boolean result = false;
 
-		if (obj instanceof IEnrolment) {
-			IEnrolment enrolment = (IEnrolment) obj;
+		if (obj instanceof IEnrollment) {
+			IEnrollment enrolment = (IEnrollment) obj;
 			
 			result =
 				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan()) &&

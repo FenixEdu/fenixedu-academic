@@ -23,7 +23,7 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourseScope;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -105,7 +105,7 @@ public class ReadStudentListByCurricularCourseScope implements IServico {
 
 		Iterator iterator = studentCurricularPlans.iterator();
 		while (iterator.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 
 			if ((numberAux == null)
 				|| (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent().getNumber().intValue())) {

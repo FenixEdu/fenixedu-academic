@@ -8,7 +8,7 @@ import DataBeans.InfoStudent;
 import Dominio.ExecutionCourse;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -124,7 +124,7 @@ public class WriteStudentAttendingCourse implements IService
 		{
 			ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses.next();
 
-			IEnrolment enrollment =
+			IEnrollment enrollment =
 				persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 					studentCurricularPlan,
 					curricularCourseElem,

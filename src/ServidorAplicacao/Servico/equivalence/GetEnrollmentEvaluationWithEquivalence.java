@@ -8,7 +8,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
@@ -83,7 +83,7 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
 			IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalenceDAO = persistenceDAO
 				.getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
 
-			IEnrolment enrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
+			IEnrollment enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
 			
 			enrollmentEvaluations.add(0, getEnrollmentEvaluation(enrollment));
 			
@@ -118,7 +118,7 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
 		return enrollmentEvaluations;
 	}
 
-	private IEnrolmentEvaluation getEnrollmentEvaluation(IEnrolment enrollment)
+	private IEnrolmentEvaluation getEnrollmentEvaluation(IEnrollment enrollment)
 	{
 		List enrolmentEvaluations = enrollment.getEvaluations();
 

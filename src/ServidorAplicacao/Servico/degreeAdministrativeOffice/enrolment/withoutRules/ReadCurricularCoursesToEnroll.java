@@ -24,7 +24,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
@@ -177,7 +177,7 @@ public class ReadCurricularCoursesToEnroll implements IService
 			{
 				public Object transform(Object obj)
 				{
-					IEnrolment enrolment = (IEnrolment) obj;
+					IEnrollment enrolment = (IEnrollment) obj;
 
 					return enrolment.getCurricularCourse();
 				}

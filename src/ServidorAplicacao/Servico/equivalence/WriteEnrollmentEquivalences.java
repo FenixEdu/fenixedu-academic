@@ -18,7 +18,7 @@ import Dominio.EnrolmentInExtraCurricularCourse;
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.ICurricularCourse;
 import Dominio.IEmployee;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
@@ -121,7 +121,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 				ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseDAO.readByOID(CurricularCourse.class,
 					infoCurricularCourseGrade.getInfoCurricularCourse().getIdInternal());
 				
-				IEnrolment newEnrollment = writeEnrollment(curricularCourse, toStudentCurricularPlan, infoCurricularCourseGrade
+				IEnrollment newEnrollment = writeEnrollment(curricularCourse, toStudentCurricularPlan, infoCurricularCourseGrade
 					.getGrade(), userView);
 				
 				for (int j = 0; j < infoEquivalenceContext.getChosenInfoEnrollmentGradesToGiveEquivalence().size(); j++)
@@ -129,7 +129,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 					InfoEnrolment infoEnrollment = ((InfoEnrollmentGrade)
 						infoEquivalenceContext.getChosenInfoEnrollmentGradesToGiveEquivalence().get(j)).getInfoEnrollment();
 					
-					IEnrolment oldEnrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class, infoEnrollment.getIdInternal());
+					IEnrollment oldEnrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, infoEnrollment.getIdInternal());
 					
 					searchForEnrollmentInExtraCurricularCourseAndDeleteIt(oldEnrollment, toStudentCurricularPlan);
 
@@ -169,7 +169,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 		return employeeDAO.readByPerson(person.getIdInternal().intValue());
 	}
 
-	private IEnrolment writeEnrollment(ICurricularCourse curricularCourse, IStudentCurricularPlan toStudentCurricularPlan,
+	private IEnrollment writeEnrollment(ICurricularCourse curricularCourse, IStudentCurricularPlan toStudentCurricularPlan,
 		String grade, IUserView userView) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
@@ -178,7 +178,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
 		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
-		IEnrolment enrollmentToWrite = enrollmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+		IEnrollment enrollmentToWrite = enrollmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 			toStudentCurricularPlan, curricularCourse, executionPeriod);
 
 		if (enrollmentToWrite == null)
@@ -200,7 +200,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 		return enrollmentToWrite;
 	}
 
-	private void writeEnrollmentEvaluation(IEnrolment newEnrollment, String grade, IUserView userView) throws ExcepcaoPersistencia
+	private void writeEnrollmentEvaluation(IEnrollment newEnrollment, String grade, IUserView userView) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistenceDAO.getIPersistentEnrolmentEvaluation();
@@ -234,7 +234,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 		}
 	}
 
-	private void writeEquivalences(IEnrolment oldEnrollment, IEnrolment newEnrollment, HashMap enrolmentEquivalencesCreated)
+	private void writeEquivalences(IEnrollment oldEnrollment, IEnrollment newEnrollment, HashMap enrolmentEquivalencesCreated)
 		throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
@@ -308,13 +308,13 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 	 * @param oldEnrollment
 	 * @param toStudentCurricularPlan
 	 */
-	private void searchForEnrollmentInExtraCurricularCourseAndDeleteIt(IEnrolment oldEnrollment,
+	private void searchForEnrollmentInExtraCurricularCourseAndDeleteIt(IEnrollment oldEnrollment,
 		IStudentCurricularPlan toStudentCurricularPlan) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 		
-		IEnrolment enrollment = enrollmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+		IEnrollment enrollment = enrollmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 			toStudentCurricularPlan, oldEnrollment.getCurricularCourse(), oldEnrollment.getExecutionPeriod());
 		
 		if ( (enrollment != null) && (enrollment instanceof EnrolmentInExtraCurricularCourse) )

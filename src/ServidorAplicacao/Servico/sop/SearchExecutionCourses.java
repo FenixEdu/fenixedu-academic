@@ -28,7 +28,7 @@ import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
@@ -195,7 +195,7 @@ public class SearchExecutionCourses implements IServico {
                             int approved = 0;
                             Iterator iter = enrolments.iterator();
                             while (iter.hasNext()) {
-                                IEnrolment enrolment = (IEnrolment) iter.next();
+                                IEnrollment enrolment = (IEnrollment) iter.next();
                                 EnrolmentState enrolmentState = enrolment
                                         .getEnrolmentState();
                                 if (enrolmentState
@@ -211,7 +211,7 @@ public class SearchExecutionCourses implements IServico {
                             int evaluated = 0;
                             Iterator iter = enrolments.iterator();
                             while (iter.hasNext()) {
-                                IEnrolment enrolment = (IEnrolment) iter.next();
+                                IEnrollment enrolment = (IEnrollment) iter.next();
                                 EnrolmentState enrolmentState = enrolment
                                         .getEnrolmentState();
                                 if (enrolmentState

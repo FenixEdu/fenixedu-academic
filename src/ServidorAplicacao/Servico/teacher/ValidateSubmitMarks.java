@@ -10,7 +10,7 @@ import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.util.Cloner;
 import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
@@ -96,7 +96,7 @@ public class ValidateSubmitMarks implements IServico
 				public Object transform(Object input)
 				{
 					IFrequenta attend = (IFrequenta)input;
-					IEnrolment enrolment = attend.getEnrolment();
+					IEnrollment enrolment = attend.getEnrolment();
 					return enrolment == null ? null : enrolment.getIdInternal();
 				}
 			});

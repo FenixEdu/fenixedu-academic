@@ -5,7 +5,7 @@ package Dominio;
  *
  * 22/Abr/2003
  */
-public interface IEnrolmentInOptionalCurricularCourse extends IEnrolment
+public interface IEnrolmentInOptionalCurricularCourse extends IEnrollment
 {
 	public ICurricularCourse getCurricularCourseForOption();
 	public Integer getCurricularCourseForOptionKey();

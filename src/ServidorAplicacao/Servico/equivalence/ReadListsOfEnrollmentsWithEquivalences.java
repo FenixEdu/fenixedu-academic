@@ -6,7 +6,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import DataBeans.util.Cloner;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
@@ -107,7 +107,7 @@ public class ReadListsOfEnrollmentsWithEquivalences extends EnrollmentEquivalenc
 
 			for (int i = 0; i < studentEnrollments.size(); i++)
 			{
-				IEnrolment enrollment = (IEnrolment) studentEnrollments.get(i);
+				IEnrollment enrollment = (IEnrollment) studentEnrollments.get(i);
 				
 				IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO.readByEnrolment(enrollment);
 				if (enrollmentEquivalence != null)

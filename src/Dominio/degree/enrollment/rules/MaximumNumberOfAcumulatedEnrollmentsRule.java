@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 
 /**
@@ -31,7 +31,7 @@ public class MaximumNumberOfAcumulatedEnrollmentsRule implements IEnrollmentRule
 
 		for(int i = 0; i < size; i++)
         {
-            IEnrolment enrollment = (IEnrolment) this.studentCurricularPlan.getStudentEnrolledEnrollments().get(i);
+            IEnrollment enrollment = (IEnrollment) this.studentCurricularPlan.getStudentEnrolledEnrollments().get(i);
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
             totalNAC += this.studentCurricularPlan.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue();
         }

@@ -16,7 +16,7 @@ import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
 import Dominio.ICurricularCourseScope;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IScientificArea;
 import Dominio.IStudentCurricularPlan;
@@ -161,7 +161,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			Iterator iterator = enrollments.iterator();
 			while (iterator.hasNext())
 			{
-				IEnrolment enrolment = (IEnrolment) iterator.next();
+				IEnrollment enrolment = (IEnrollment) iterator.next();
 				studentEverEnrolledCurricularCourses.add(enrolment.getCurricularCourse());
 			}
 		}
@@ -432,7 +432,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		Iterator iterator = enrollmentsInCurricularCourseToRemove.iterator();
 		while(iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+		    IEnrollment enrolment = (IEnrollment) iterator.next();
 			if (curricularCoursesToRemoveFrom.contains(enrolment.getCurricularCourse()))
 			{
 				curricularCoursesToRemove.add(enrolment.getCurricularCourse());
@@ -497,7 +497,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		Iterator iterator = enrollments.iterator();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+		    IEnrollment enrolment = (IEnrollment) iterator.next();
 			ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 
 			if (curricularCourseBelongsToAScientificAreaPresentInMoreThanOneBranch(curricularCourse, studentCurricularPlan))
@@ -1313,7 +1313,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		Iterator iterator = enrollments.iterator();
 		while(iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+		    IEnrollment enrolment = (IEnrollment) iterator.next();
 			if (curricularCourses.contains(enrolment.getCurricularCourse()))
 			{
 				if (!enrollmentsToKeep.contains(enrolment))
@@ -1415,7 +1415,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			while (iterator.hasNext())
 			{
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				IEnrolment enrolment = writeEnrollment(studentCurricularPlan, executionPeriod, curricularCourse, enrollmentsCreated);
+				IEnrollment enrolment = writeEnrollment(studentCurricularPlan, executionPeriod, curricularCourse, enrollmentsCreated);
 				if (enrolment != null)
 				{
 					enrollmentsToAdd.add(enrolment);
@@ -1429,7 +1429,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
-				IEnrolment enrolment = (IEnrolment) mapEntry.getValue();
+				IEnrollment enrolment = (IEnrollment) mapEntry.getValue();
 				studentEverEnrolledCurricularCourses.add(enrolment.getCurricularCourse());
 			}
 			
@@ -1470,7 +1470,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 * @return IEnrolment
 	 * @throws ExcepcaoPersistencia
 	 */
-	private IEnrolment writeEnrollment(
+	private IEnrollment writeEnrollment(
 		IStudentCurricularPlan studentCurricularPlan,
 		IExecutionPeriod executionPeriod,
 		ICurricularCourse curricularCourse,
@@ -1479,7 +1479,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 		
-		IEnrolment enrolment =
+		IEnrollment enrolment =
 			enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 				studentCurricularPlan,
 				curricularCourse,
@@ -1487,7 +1487,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		
 		if (enrolment == null)
 		{
-			enrolment = (IEnrolment) enrollmentsCreated.get(curricularCourse.getIdInternal());
+			enrolment = (IEnrollment) enrollmentsCreated.get(curricularCourse.getIdInternal());
 			if (enrolment == null)
 			{
 				enrolment = new Enrolment();

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EnrolmentEquivalence extends DomainObject implements IEnrolmentEquivalence {
 
-	private IEnrolment enrolment;
+	private IEnrollment enrolment;
 	private Integer enrolmentKey;
 	private List equivalenceRestrictions;
 
@@ -39,7 +39,7 @@ public class EnrolmentEquivalence extends DomainObject implements IEnrolmentEqui
 	/**
 	 * @return IEnrolment
 	 */
-	public IEnrolment getEnrolment() {
+	public IEnrollment getEnrolment() {
 		return enrolment;
 	}
 
@@ -54,7 +54,7 @@ public class EnrolmentEquivalence extends DomainObject implements IEnrolmentEqui
 	 * Sets the enrolment.
 	 * @param enrolment The enrolment to set
 	 */
-	public void setEnrolment(IEnrolment enrolment) {
+	public void setEnrolment(IEnrollment enrolment) {
 		this.enrolment = enrolment;
 	}
 

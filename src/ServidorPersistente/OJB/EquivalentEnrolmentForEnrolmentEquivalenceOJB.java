@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -40,7 +40,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
 
     public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(
         IEnrolmentEquivalence enrolmentEquivalence,
-        IEnrolment equivalentEnrolment)
+        IEnrollment equivalentEnrolment)
         throws ExcepcaoPersistencia
     {
         try
@@ -57,7 +57,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
         }
     }
 
-    public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia
+    public List readByEquivalentEnrolment(IEnrollment equivalentEnrolment) throws ExcepcaoPersistencia
     {
         try
         {

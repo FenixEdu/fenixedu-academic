@@ -18,7 +18,7 @@ import Util.EnrolmentEvaluationType;
  */
 public interface IEnrolmentEvaluation extends  IDomainObject {
 
-	public abstract IEnrolment getEnrolment();
+	public abstract IEnrollment getEnrolment();
 	public abstract EnrolmentEvaluationType getEnrolmentEvaluationType();
 	public abstract Date getExamDate();
 	public abstract String getGrade();
@@ -31,7 +31,7 @@ public interface IEnrolmentEvaluation extends  IDomainObject {
 	public abstract String getObservation();
 
 	public abstract void setPersonResponsibleForGrade(IPessoa teacher);
-	public abstract void setEnrolment(IEnrolment enrolment);
+	public abstract void setEnrolment(IEnrollment enrolment);
 	public abstract void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
 	public abstract void setExamDate(Date date);
 	public abstract void setGrade(String string);

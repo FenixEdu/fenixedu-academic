@@ -8,7 +8,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEvaluation;
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
@@ -82,7 +82,7 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
 			{
 				Integer enrollmentID = (Integer) idsOfChosenEnrollments.get(i);
 				
-				IEnrolment enrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
+				IEnrollment enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
 
 				if (enrollment != null)
 				{

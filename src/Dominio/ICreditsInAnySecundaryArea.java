@@ -7,8 +7,8 @@ package Dominio;
 
 public interface ICreditsInAnySecundaryArea extends IDomainObject
 {
-	public IEnrolment getEnrolment();
-	public void setEnrolment(IEnrolment enrolment);
+	public IEnrollment getEnrolment();
+	public void setEnrolment(IEnrollment enrolment);
 	public Integer getEnrolmentKey();
 	public void setEnrolmentKey(Integer enrolmentKey);
 	public Integer getGivenCredits();

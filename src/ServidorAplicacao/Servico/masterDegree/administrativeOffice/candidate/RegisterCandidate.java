@@ -16,7 +16,7 @@ import Dominio.Gratuity;
 import Dominio.IBranch;
 import Dominio.ICandidateEnrolment;
 import Dominio.ICandidateSituation;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IGratuity;
 import Dominio.IMasterDegreeCandidate;
@@ -215,7 +215,7 @@ public class RegisterCandidate implements IService
             {
                 ICandidateEnrolment candidateEnrolment = (ICandidateEnrolment) iterator.next();
 
-                IEnrolment enrolment = new Enrolment();
+                IEnrollment enrolment = new Enrolment();
                 sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
                 //enrolment.setCurricularCourseScope(candidateEnrolment.getCurricularCourseScope());
 				enrolment.setCurricularCourse(candidateEnrolment.getCurricularCourse());

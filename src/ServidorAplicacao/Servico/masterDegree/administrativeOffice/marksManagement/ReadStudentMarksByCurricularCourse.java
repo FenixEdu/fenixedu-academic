@@ -16,7 +16,7 @@ import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
@@ -52,7 +52,7 @@ public class ReadStudentMarksByCurricularCourse implements IService
 		List enrolmentEvaluations = null;
 		InfoTeacher infoTeacher = null;
 		List infoSiteEnrolmentEvaluations = new ArrayList();
-		IEnrolment enrolment = new Enrolment();
+		IEnrollment enrolment = new Enrolment();
 		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
 		try
@@ -129,7 +129,7 @@ public class ReadStudentMarksByCurricularCourse implements IService
 						studentCurricularPlan,
 						curricularCourse);
 				
-				enrolment = (IEnrolment) enrollments.get(0);
+				enrolment = (IEnrollment) enrollments.get(0);
 			}
 
 			if (enrolment != null)

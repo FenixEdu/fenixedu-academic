@@ -363,7 +363,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		List result = (List) CollectionUtils.collect(
 				studentApprovedEnrollments, new Transformer() {
 					public Object transform(Object obj) {
-						IEnrolment enrollment = (IEnrolment) obj;
+						IEnrollment enrollment = (IEnrollment) obj;
 
 						if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
 							return (((IEnrolmentInOptionalCurricularCourse) enrollment)
@@ -398,7 +398,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		List result = (List) CollectionUtils.collect(
 				studentEnrolledEnrollments, new Transformer() {
 					public Object transform(Object obj) {
-						IEnrolment enrollment = (IEnrolment) obj;
+						IEnrollment enrollment = (IEnrollment) obj;
 						return enrollment.getCurricularCourse();
 					}
 				});
@@ -417,7 +417,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		List curricularCourses = (List) CollectionUtils.collect(enrollments,
 				new Transformer() {
 					public Object transform(Object obj) {
-						ICurricularCourse curricularCourse = ((IEnrolment) obj)
+						ICurricularCourse curricularCourse = ((IEnrollment) obj)
 								.getCurricularCourse();
 						return curricularCourse
 								.getCurricularCourseUniqueKeyForEnrollment();
@@ -447,7 +447,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		return (List) CollectionUtils.select(this.getEnrolments(),
 				new Predicate() {
 					public boolean evaluate(Object obj) {
-						IEnrolment enrollment = (IEnrolment) obj;
+						IEnrollment enrollment = (IEnrollment) obj;
 						return enrollment.getEnrolmentState().equals(
 								EnrolmentState.APROVED);
 					}
@@ -458,7 +458,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		return (List) CollectionUtils.select(this.getEnrolments(),
 				new Predicate() {
 					public boolean evaluate(Object obj) {
-						IEnrolment enrollment = (IEnrolment) obj;
+						IEnrollment enrollment = (IEnrollment) obj;
 						return enrollment.getEnrolmentState().equals(
 								EnrolmentState.ENROLED);
 					}
@@ -469,7 +469,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		return (List) CollectionUtils.select(this.getEnrolments(),
 				new Predicate() {
 					public boolean evaluate(Object obj) {
-						IEnrolment enrollment = (IEnrolment) obj;
+						IEnrollment enrollment = (IEnrollment) obj;
 						return (enrollment.getEnrolmentState().equals(
 								EnrolmentState.APROVED) && enrollment
 								.getCondition().equals(
@@ -484,7 +484,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		final List result = (List) CollectionUtils.collect(
 				studentEnrolledEnrollments, new Transformer() {
 					public Object transform(Object obj) {
-						IEnrolment enrollment = (IEnrolment) obj;
+						IEnrollment enrollment = (IEnrollment) obj;
 						String key = enrollment.getCurricularCourse()
 								.getCurricularCourseUniqueKeyForEnrollment();
 						return (key);
@@ -494,7 +494,7 @@ public class StudentCurricularPlan extends DomainObject implements
 		return (List) CollectionUtils.select(this.getEnrolments(),
 				new Predicate() {
 					public boolean evaluate(Object obj) {
-						IEnrolment enrollment = (IEnrolment) obj;
+						IEnrollment enrollment = (IEnrollment) obj;
 						String key = enrollment.getCurricularCourse()
 								.getCurricularCourseUniqueKeyForEnrollment();
 						return result.contains(key);

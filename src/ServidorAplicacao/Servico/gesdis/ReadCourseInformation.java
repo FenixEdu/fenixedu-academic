@@ -38,7 +38,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDepartment;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -318,7 +318,7 @@ public class ReadCourseInformation implements IService
         Iterator iter = enrolments.iterator();
         while (iter.hasNext())
         {
-            IEnrolment enrolment = (IEnrolment) iter.next();
+            IEnrollment enrolment = (IEnrollment) iter.next();
             EnrolmentState enrolmentState = enrolment.getEnrolmentState();
             if (enrolmentState.equals(EnrolmentState.APROVED))
             {
@@ -339,7 +339,7 @@ public class ReadCourseInformation implements IService
         Iterator iter = enrolments.iterator();
         while (iter.hasNext())
         {
-            IEnrolment enrolment = (IEnrolment) iter.next();
+            IEnrollment enrolment = (IEnrollment) iter.next();
             EnrolmentState enrolmentState = enrolment.getEnrolmentState();
             if (enrolmentState.equals(EnrolmentState.APROVED)
                 || enrolmentState.equals(EnrolmentState.NOT_APROVED))

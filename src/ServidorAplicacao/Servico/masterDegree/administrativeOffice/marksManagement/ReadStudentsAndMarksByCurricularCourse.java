@@ -19,7 +19,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
@@ -109,7 +109,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext())
             {
-                IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
+                IEnrollment enrolment = (IEnrollment) iterEnrolment.next();
                 if (enrolment
                     .getStudentCurricularPlan()
                     .getDegreeCurricularPlan()

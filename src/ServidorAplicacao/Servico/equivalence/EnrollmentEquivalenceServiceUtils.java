@@ -9,7 +9,7 @@ import DataBeans.InfoEnrolment;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.Service;
@@ -34,7 +34,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 * @param enrollment
 	 * @return true/false
 	 */
-	protected boolean isAnAprovedEnrollment(IEnrolment enrollment)
+	protected boolean isAnAprovedEnrollment(IEnrollment enrollment)
 	{
 		return enrollment.getEnrolmentState().equals(EnrolmentState.APROVED);
 	}
@@ -43,7 +43,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 * @param enrollment
 	 * @return true/false
 	 */
-	protected boolean isAnEnroledEnrollment(IEnrolment enrollment)
+	protected boolean isAnEnroledEnrollment(IEnrollment enrollment)
 	{
 		return (enrollment.getEnrolmentState().equals(EnrolmentState.ENROLED) || enrollment.getEnrolmentState().equals(
 			EnrolmentState.TEMPORARILY_ENROLED));
@@ -55,7 +55,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 * @param studentCurricularPlan
 	 * @return true/false
 	 */
-	protected boolean isAnEnrollmentWithNoEquivalences(IEnrolment enrollment, IDegreeCurricularPlan degreeCurricularPlan,
+	protected boolean isAnEnrollmentWithNoEquivalences(IEnrollment enrollment, IDegreeCurricularPlan degreeCurricularPlan,
 		IStudentCurricularPlan studentCurricularPlan)
 	{
 		List result1 = null;
@@ -155,7 +155,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 		List infoEnrolments = new ArrayList();
 		for (int i = 0; i < enrollments.size(); i++)
 		{
-			IEnrolment enrollment = (IEnrolment) enrollments.get(i);
+			IEnrollment enrollment = (IEnrollment) enrollments.get(i);
 			InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrollment);
 			infoEnrolments.add(infoEnrolment);
 		}
@@ -166,7 +166,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 * @param infoEnrollment
 	 * @return String
 	 */
-	protected String getEnrollmentGrade(IEnrolment enrollment)
+	protected String getEnrollmentGrade(IEnrollment enrollment)
 	{
 		// This sorts the list ascendingly so we need to reverse it to get the first object.
 		Collections.sort(enrollment.getEvaluations());

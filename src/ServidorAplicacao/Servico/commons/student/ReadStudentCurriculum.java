@@ -13,7 +13,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -67,7 +67,7 @@ public class ReadStudentCurriculum implements IService
 		GetEnrolmentGrade getEnrollmentGrade = GetEnrolmentGrade.getService();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolmentTemp = (IEnrolment) iterator.next();
+			IEnrollment enrolmentTemp = (IEnrollment) iterator.next();
 
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(enrolmentTemp);
 

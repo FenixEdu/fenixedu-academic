@@ -4,7 +4,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -54,12 +54,12 @@ public class GetEnrollmentEvaluation extends EnrollmentEquivalenceServiceUtils i
 		
 		GetEnrolmentGrade service = GetEnrolmentGrade.getService();
 
-		IEnrolment enrollment = null;
+		IEnrollment enrollment = null;
 		try
 		{
 			ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
 			IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
-			enrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
+			enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
 		} catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException(e);

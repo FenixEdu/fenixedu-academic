@@ -15,7 +15,7 @@ import DataBeans.util.Cloner;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -164,7 +164,7 @@ public class InsertStudentsFinalEvaluation implements IService
             InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws ExcepcaoPersistencia,
             FenixServiceException
     {
-        IEnrolment enrolmentForCriteria = new Enrolment();
+        IEnrollment enrolmentForCriteria = new Enrolment();
         enrolmentForCriteria.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
 
         IEnrolmentEvaluation enrolmentEvaluationForCriteria = new EnrolmentEvaluation();

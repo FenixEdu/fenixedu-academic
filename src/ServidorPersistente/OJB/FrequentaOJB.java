@@ -18,7 +18,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 
 import Dominio.Frequenta;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -104,7 +104,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         return new Integer(pb.getCount(queryCriteria));
     }
 
-    public IFrequenta readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
+    public IFrequenta readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());

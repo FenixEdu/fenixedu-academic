@@ -11,7 +11,7 @@ import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEmployee;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -102,7 +102,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico
 								   (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOId(
 								enrolmentEvaluationCopy,
 									   false);
-				IEnrolment enrolment=enrolmentEvaluationCopy.getEnrolment();
+				IEnrollment enrolment=enrolmentEvaluationCopy.getEnrolment();
 				 
 				persistentEnrolment.simpleLockWrite(enrolment);
 				
@@ -184,7 +184,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico
                 //check for an alteration
                 if (!enrolmentEvaluation.getGrade().equals(iEnrolmentEvaluation.getGrade()))
                 {
-					IEnrolment enrolment = iEnrolmentEvaluation.getEnrolment();
+					IEnrollment enrolment = iEnrolmentEvaluation.getEnrolment();
 					persistentEnrolment.simpleLockWrite(enrolment);
                     try
                     {

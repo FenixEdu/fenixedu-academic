@@ -11,7 +11,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -120,7 +120,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends Enroll
 			{
 				public boolean evaluate(Object obj)
 				{
-					IEnrolment enrollment = (IEnrolment) obj;
+					IEnrollment enrollment = (IEnrollment) obj;
 					return (isAnAprovedEnrollment(enrollment) && isAnEnrollmentWithNoEquivalences(enrollment,
 							toStudentCurricularPlan.getDegreeCurricularPlan(), fromStudentCurricularPlan));
 				}
@@ -131,7 +131,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends Enroll
 			{
 				public boolean evaluate(Object obj)
 				{
-					IEnrolment enrollment = (IEnrolment) obj;
+					IEnrollment enrollment = (IEnrollment) obj;
 					return (isAnAprovedEnrollment(enrollment) || isAnEnroledEnrollment(enrollment));
 				}
 			});
@@ -141,7 +141,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends Enroll
 			{
 				public Object transform(Object obj)
 				{
-					IEnrolment enrollment = (IEnrolment) obj;
+					IEnrollment enrollment = (IEnrollment) obj;
 					return enrollment.getCurricularCourse();
 				}
 			});

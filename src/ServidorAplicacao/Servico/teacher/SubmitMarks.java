@@ -26,7 +26,7 @@ import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
 import Dominio.IEmployee;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
@@ -195,7 +195,7 @@ public class SubmitMarks implements IServico
             while (iter.hasNext())
             {
                 IFrequenta attend = (IFrequenta)iter.next();
-                IEnrolment enrolment = attend.getEnrolment();
+                IEnrollment enrolment = attend.getEnrolment();
                 IEnrolmentEvaluation enrolmentEvaluation = null;
 
                 //check student´s degree type
@@ -288,7 +288,7 @@ public class SubmitMarks implements IServico
             public Object transform(Object input)
             {
                 IFrequenta attend = (IFrequenta)input;
-                IEnrolment enrolment = attend.getEnrolment();
+                IEnrollment enrolment = attend.getEnrolment();
                 return enrolment == null ? null : enrolment.getIdInternal();
             }
         });
@@ -329,7 +329,7 @@ public class SubmitMarks implements IServico
     private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolment(
         UserView userView,
         IExecutionCourse executionCourse,
-        IEnrolment enrolment,
+        IEnrollment enrolment,
         Date evaluationDate,
         String publishedMark,
         IEmployee employee,

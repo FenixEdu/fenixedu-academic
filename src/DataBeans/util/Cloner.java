@@ -2783,7 +2783,7 @@ public abstract class Cloner
      * @param copyIEnrolment2InfoEnrolment
      * @return InfoEnrolment
      */
-    public static InfoEnrolment copyIEnrolment2InfoEnrolment(IEnrolment enrolment)
+    public static InfoEnrolment copyIEnrolment2InfoEnrolment(IEnrollment enrolment)
     {
 
         InfoEnrolment infoEnrolment = null;
@@ -2847,10 +2847,10 @@ public abstract class Cloner
      * @param copyInfoEnrolment2IEnrolment
      * @return IEnrolment
      */
-    public static IEnrolment copyInfoEnrolment2IEnrolment(InfoEnrolment infoEnrolment)
+    public static IEnrollment copyInfoEnrolment2IEnrolment(InfoEnrolment infoEnrolment)
     {
 
-        IEnrolment enrolment = null;
+        IEnrollment enrolment = null;
         ICurricularCourse curricularCourseOption = null;
 
         IStudentCurricularPlan studentCurricularPlan =
@@ -3270,7 +3270,7 @@ public abstract class Cloner
             Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 
         InfoEnrolment infoEnrolment = infoFrequenta.getInfoEnrolment();
-        IEnrolment enrolment = null;
+        IEnrollment enrolment = null;
         if (infoEnrolment != null)
         {
             enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEnrolment);

@@ -7,7 +7,7 @@ import java.util.List;
 import Dominio.Enrolment;
 import Dominio.EnrolmentInExtraCurricularCourse;
 import Dominio.IEmployee;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
@@ -100,7 +100,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			Iterator iterator = enrollments.iterator();
 			if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
 				while (iterator.hasNext()) {
-					IEnrolment enrolment = (IEnrolment) iterator.next();
+					IEnrollment enrolment = (IEnrollment) iterator.next();
 					if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ENROLED_TYPE
 							|| enrolment.getEnrolmentState().getValue() ==  EnrolmentState.TEMPORARILY_ENROLED_TYPE) {
 						persistentEnrolment.simpleLockWrite(enrolment);
@@ -110,13 +110,13 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			} else {
 			   
 				while (iterator.hasNext()) {
-					IEnrolment enrolment = (IEnrolment) iterator.next();
+					IEnrollment enrolment = (IEnrollment) iterator.next();
 					
 					if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
 						if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
 						    persistentEnrolment.delete(enrolment);
 						    
-							IEnrolment auxEnrolment = new EnrolmentInExtraCurricularCourse();	
+							IEnrollment auxEnrolment = new EnrolmentInExtraCurricularCourse();	
 							persistentEnrolment.simpleLockWrite(auxEnrolment);
 						    
 							copyEnrollment(enrolment, auxEnrolment);
@@ -128,7 +128,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 						if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 						    persistentEnrolment.delete(enrolment);
 
-						    IEnrolment auxEnrolment = new Enrolment();
+						    IEnrollment auxEnrolment = new Enrolment();
 							persistentEnrolment.simpleLockWrite(auxEnrolment);
 							
 							copyEnrollment(enrolment, auxEnrolment);
@@ -150,7 +150,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
      * @param auxEnrolment
      * @throws FenixServiceException
      */
-    private void copyEnrollment(IEnrolment enrolment, IEnrolment auxEnrolment) throws FenixServiceException
+    private void copyEnrollment(IEnrollment enrolment, IEnrollment auxEnrolment) throws FenixServiceException
     {
 	    auxEnrolment.setIdInternal(enrolment.getIdInternal());
         //auxEnrolment.setCurricularCourseScope(
@@ -176,7 +176,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
      * @param enrolment
      * @throws ExcepcaoPersistencia
      */
-    private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, IPersistentEnrolment persistentEnrolment, IEnrolment enrolment) throws ExcepcaoPersistencia
+    private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, IPersistentEnrolment persistentEnrolment, IEnrollment enrolment) throws ExcepcaoPersistencia
     {
         if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
             if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ANNULED_TYPE) {

@@ -1,6 +1,6 @@
 package DataBeans;
 
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Util.EnrolmentState;
 
@@ -48,7 +48,7 @@ public class InfoEnrolmentInOptionalCurricularCourse extends InfoEnrolment {
 		this.infoCurricularCourseForOption = infoCurricularCourseForOption;
 	}
 	
-	public void copyFromDomain(IEnrolment enrolment) {
+	public void copyFromDomain(IEnrollment enrolment) {
 		super.copyFromDomain(enrolment);		
 	}
 	

@@ -12,7 +12,7 @@ import Dominio.Branch;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
@@ -122,7 +122,7 @@ public class WriteStudentAreas implements IService
 		Iterator iterator = studentsAprovedEnrollments.iterator();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 			if (curricularCoursesBelongingToAnySpecializationAndSecundaryArea
 				.contains(enrolment.getCurricularCourse())
 				&& !curricularCoursesFromGivenAreas.contains(enrolment.getCurricularCourse()))
@@ -213,7 +213,7 @@ public class WriteStudentAreas implements IService
 		{
 			public boolean evaluate(Object obj)
 			{
-				IEnrolment enrolment = (IEnrolment) obj;
+				IEnrollment enrolment = (IEnrollment) obj;
 				return enrolment.getCurricularCourse().getDegreeCurricularPlan().equals(
 					studentCurricularPlan.getDegreeCurricularPlan());
 			}

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.rules.IEnrollmentRule;
@@ -62,7 +62,7 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
 
         for(int i = 0; i < enrolledEnrollments.size(); i++) {
 
-            IEnrolment enrollment = (IEnrolment) enrolledEnrollments.get(i);
+            IEnrollment enrollment = (IEnrollment) enrolledEnrollments.get(i);
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
             totalNAC += getIncrementNAC(curricularCourse).intValue();
         }
@@ -93,7 +93,7 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
         int acumulatedNAC = 0;
         int iterator = 0;
         for (; iterator < curricularCoursesSortedByYear.size(); iterator++) {
-            IEnrolment enrollment = (IEnrolment) curricularCoursesSortedByYear.get(iterator);
+            IEnrollment enrollment = (IEnrollment) curricularCoursesSortedByYear.get(iterator);
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
             acumulatedNAC += getIncrementNAC(curricularCourse).intValue();
 

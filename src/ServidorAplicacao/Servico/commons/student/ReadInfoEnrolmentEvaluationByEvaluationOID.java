@@ -9,7 +9,7 @@ package ServidorAplicacao.Servico.commons.student;
 
 import DataBeans.InfoEnrolmentEvaluation;
 import Dominio.Enrolment;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -54,14 +54,14 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico
     {
         ISuportePersistente sp = null;
         
-		IEnrolment enrolment = null;
+		IEnrollment enrolment = null;
         try {
 	        sp = SuportePersistenteOJB.getInstance();
 	        
-	        IEnrolment enrolmentTemp = new Enrolment();
+	        IEnrollment enrolmentTemp = new Enrolment();
 	        enrolmentTemp.setIdInternal(enrolmentOID);
 	        
-	        enrolment = (IEnrolment) sp.getIPersistentEnrolment().readByOId(enrolmentTemp, false);
+	        enrolment = (IEnrollment) sp.getIPersistentEnrolment().readByOId(enrolmentTemp, false);
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

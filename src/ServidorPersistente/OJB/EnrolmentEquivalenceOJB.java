@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.EnrolmentEquivalence;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
@@ -35,7 +35,7 @@ public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersiste
         return queryList(EnrolmentEquivalence.class, new Criteria());
     }
 
-    public IEnrolmentEquivalence readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
+    public IEnrolmentEquivalence readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());

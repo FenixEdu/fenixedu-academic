@@ -10,7 +10,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -30,7 +30,7 @@ public interface IFrequentaPersistente extends IPersistentObject
 	// FIXME: Must read by Username, not by Student Number
 	public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia;
 	public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-	public IFrequenta readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia;
+	public IFrequenta readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia;
     
     public List readByUsername(String username) throws ExcepcaoPersistencia;
 }

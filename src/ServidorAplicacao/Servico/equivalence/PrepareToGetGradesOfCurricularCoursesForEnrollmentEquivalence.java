@@ -11,7 +11,7 @@ import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -76,7 +76,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
 
 		for (int i = 0; i < enrollmentsToGiveEquivalences.size(); i++)
 		{
-			IEnrolment enrollment = (IEnrolment) enrollmentsToGiveEquivalences.get(i);
+			IEnrollment enrollment = (IEnrollment) enrollmentsToGiveEquivalences.get(i);
 			InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
 			infoEnrollmentGrade.setInfoEnrollment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
 			infoEnrollmentGrade.setGrade(getEnrollmentGrade(enrollment));
@@ -130,7 +130,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
 			for (int i = 0; i < idsOfChosenEnrollmentsToGiveEquivalence.size(); i++)
 			{
 				Integer enrollmentID = (Integer) idsOfChosenEnrollmentsToGiveEquivalence.get(i);
-				IEnrolment enrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
+				IEnrollment enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
 				enrollmentsToGiveEquivalence.add(enrollment);
 			}
 

@@ -16,7 +16,7 @@ import DataBeans.TeacherAdministrationSiteView;
 import Dominio.CurricularCourse;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.ISite;
@@ -105,7 +105,7 @@ public class ReadStudentsByCurricularCourse implements IService
         {
             public Object transform( Object input )
             {
-                IEnrolment enrolment = (IEnrolment) input;
+                IEnrollment enrolment = (IEnrollment) input;
                 IStudent student = enrolment.getStudentCurricularPlan().getStudent();
                 //CLONER
                 //InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);

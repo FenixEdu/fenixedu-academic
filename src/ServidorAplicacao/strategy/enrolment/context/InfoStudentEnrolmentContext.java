@@ -11,7 +11,7 @@ import DataBeans.InfoObject;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 
 /**
  * @author David Santos
@@ -167,7 +167,7 @@ public final class InfoStudentEnrolmentContext extends InfoObject
 		List studentCurrentSemesterInfoEnrollments = new ArrayList();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 			InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
 			studentCurrentSemesterInfoEnrollments.add(infoEnrolment);
 		}

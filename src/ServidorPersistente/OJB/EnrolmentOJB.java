@@ -9,7 +9,7 @@ import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -32,7 +32,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
         return queryList(Enrolment.class, new Criteria());
     }
 
-    public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia {
+    public void delete(IEnrollment enrolment) throws ExcepcaoPersistencia {
         try {
             super.delete(enrolment);
         } catch (ExcepcaoPersistencia ex) {
@@ -93,7 +93,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
         return queryList(Enrolment.class, crit);
     }
 
-    public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
+    public IEnrollment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
             IStudentCurricularPlan studentCurricularPlan,
             ICurricularCourse curricularCourse, String year)
             throws ExcepcaoPersistencia {
@@ -103,7 +103,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
         criteria.addEqualTo("executionPeriod.executionYear.year", year);
         criteria.addEqualTo("studentCurricularPlan.student.number",
                 studentCurricularPlan.getStudent().getNumber());
-        return (IEnrolment) queryObject(Enrolment.class, criteria);
+        return (IEnrollment) queryObject(Enrolment.class, criteria);
     }
 
     public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(
@@ -134,7 +134,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
         return queryList(Enrolment.class, criteria);
     }
 
-    public IEnrolment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+    public IEnrollment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
             IStudentCurricularPlan studentCurricularPlan,
             ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia {
@@ -145,7 +145,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
                 .getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod
                 .getIdInternal());
-        return (IEnrolment) queryObject(Enrolment.class, criteria);
+        return (IEnrollment) queryObject(Enrolment.class, criteria);
     }
 
     public List readByStudentCurricularPlanAndCurricularCourse(
@@ -280,7 +280,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
 
             List enrolmentsInOtherStudentCurricularPlans = queryList(Enrolment.class, criteria);
             for (int i = 0; i < enrolmentsInOtherStudentCurricularPlans.size(); i++) {
-                IEnrolment enrolment = (IEnrolment) enrolmentsInOtherStudentCurricularPlans.get(i);
+                IEnrollment enrolment = (IEnrollment) enrolmentsInOtherStudentCurricularPlans.get(i);
 
                 criteria = new Criteria();
                 criteria.addEqualTo("equivalentEnrolment.idInternal", enrolment.getIdInternal());

@@ -9,7 +9,7 @@ import java.util.ListIterator;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEmployee;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import ServidorAplicacao.IServico;
@@ -97,7 +97,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext())
             {
-                IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
+                IEnrollment enrolment = (IEnrollment) iterEnrolment.next();
                 List allEnrolmentEvaluations =
                     persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
                 IEnrolmentEvaluation enrolmentEvaluation =
@@ -164,7 +164,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
         IEnrolmentEvaluation enrolmentEvaluationElem)
         throws ExcepcaoPersistencia
     {
-        IEnrolment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
+        IEnrollment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
         persistentEnrolment.simpleLockWrite(enrolmentToEdit);
 
         EnrolmentState newEnrolmentState = EnrolmentState.APROVED;

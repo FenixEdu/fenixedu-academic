@@ -6,7 +6,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CreditsInAnySecundaryArea;
 import Dominio.ICreditsInAnySecundaryArea;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
@@ -26,7 +26,7 @@ public class CreditsInAnySecundaryAreaOJB extends ObjectFenixOJB implements IPer
 
 	public ICreditsInAnySecundaryArea readByStudentCurricularPlanAndEnrollment(
 		IStudentCurricularPlan studentCurricularPlan,
-		IEnrolment enrolment)
+		IEnrollment enrolment)
 		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 
 /**
@@ -33,7 +33,7 @@ public class EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCour
 		Iterator iterator = studentEnrolmentContext.getStudentCurrentSemesterEnrollments().iterator();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 			ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 			if (studentEnrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 1)
 			{

@@ -17,7 +17,7 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionYear;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -112,7 +112,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 			{
 				public Object transform(Object input)
 				{
-					IEnrolment enrolment = (IEnrolment) input;
+					IEnrollment enrolment = (IEnrollment) input;
 					return Cloner.copyIEnrolment2InfoEnrolment(enrolment);
 				}
 			});

@@ -3,7 +3,7 @@ package ServidorPersistente;
 import java.util.Date;
 import java.util.List;
 
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
@@ -20,16 +20,16 @@ public interface IPersistentEnrolmentEvaluation extends IPersistentObject
     public List readAll() throws ExcepcaoPersistencia;
 
     public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
-            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade)
+            IEnrollment enrolment, EnrolmentEvaluationType evaluationType, String grade)
             throws ExcepcaoPersistencia;
 
-    public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrolment enrolment,
+    public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrollment enrolment,
             EnrolmentEvaluationState evaluationState) throws ExcepcaoPersistencia;
 
-    public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia;
+    public List readEnrolmentEvaluationByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia;
 
     public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
-            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
+            IEnrollment enrolment, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
             throws ExcepcaoPersistencia;
 
     public List readAlreadySubmitedMarks(List enrolmentIds) throws ExcepcaoPersistencia;

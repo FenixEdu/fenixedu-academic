@@ -24,7 +24,7 @@ import Dominio.CursoExecucao;
 import Dominio.ExecutionYear;
 import Dominio.GuideEntry;
 import Dominio.ICursoExecucao;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
 import Dominio.IGuide;
@@ -248,7 +248,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             ListIterator iterator = enrolments.listIterator();
             while (iterator.hasNext())
             {
-                IEnrolment enrolment = (IEnrolment) iterator.next();
+                IEnrollment enrolment = (IEnrollment) iterator.next();
                 try
                 {
                     infoEnrolments.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));

@@ -5,6 +5,6 @@ package Dominio;
  *
  * 23/Mai/2003
  */
-public interface IEnrolmentInExtraCurricularCourse extends IEnrolment
+public interface IEnrolmentInExtraCurricularCourse extends IEnrollment
 {
 }

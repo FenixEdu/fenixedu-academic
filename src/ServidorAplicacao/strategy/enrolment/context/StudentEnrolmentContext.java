@@ -8,7 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
@@ -214,7 +214,7 @@ public final class StudentEnrolmentContext
 		Iterator iterator = this.getStudentApprovedEnrollments().iterator();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 
 			if(enrolment instanceof IEnrolmentInOptionalCurricularCourse)
 			{

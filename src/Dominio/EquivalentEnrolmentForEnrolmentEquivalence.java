@@ -9,7 +9,7 @@ package Dominio;
  */
 public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject implements IEquivalentEnrolmentForEnrolmentEquivalence {
 	private IEnrolmentEquivalence enrolmentEquivalence;
-	private IEnrolment equivalentEnrolment;
+	private IEnrollment equivalentEnrolment;
 
 	private Integer enrolmentEquivalenceKey;
 	private Integer equivalentEnrolmentKey;
@@ -39,7 +39,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject imp
 		return enrolmentEquivalenceKey;
 	}
 
-	public IEnrolment getEquivalentEnrolment() {
+	public IEnrollment getEquivalentEnrolment() {
 		return equivalentEnrolment;
 	}
 
@@ -55,7 +55,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject imp
 		enrolmentEquivalenceKey = integer;
 	}
 
-	public void setEquivalentEnrolment(IEnrolment enrolment) {
+	public void setEquivalentEnrolment(IEnrollment enrolment) {
 		equivalentEnrolment = enrolment;
 	}
 

@@ -7,7 +7,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Frequenta;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
@@ -46,7 +46,7 @@ public class DeleteEnrolment implements IService
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
                     .getIPersistentEnrolmentEvaluation();
 
-            IEnrolment enrolment = (IEnrolment) enrolmentDAO.readByOID(
+            IEnrollment enrolment = (IEnrollment) enrolmentDAO.readByOID(
                     Enrolment.class, enrolmentID);
 
             if (enrolment != null)
@@ -82,7 +82,7 @@ public class DeleteEnrolment implements IService
      * @param enrolment
      * @throws ExcepcaoPersistencia
      */
-    public static void deleteAttend(IEnrolment enrolment)
+    public static void deleteAttend(IEnrollment enrolment)
             throws ExcepcaoPersistencia
     {
         ISuportePersistente persistentSuport = SuportePersistenteOJB

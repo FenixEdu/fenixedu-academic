@@ -11,7 +11,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import DataBeans.InfoFinalResult;
 import Dominio.EnrolmentEvaluation;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IStudentCurricularPlan;
@@ -105,7 +105,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		Iterator iterator = enrolments.iterator();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 				&& (!enrolment
 					.getCurricularCourse()
@@ -168,7 +168,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		Iterator iterator = enrolments.iterator();
 		while (iterator.hasNext())
 		{
-			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IEnrollment enrolment = (IEnrollment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 				&& (!enrolment
 					.getCurricularCourse()
@@ -299,7 +299,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 	}
 
-	public List newEnrolmentList(IEnrolment enrolmentList)
+	public List newEnrolmentList(IEnrollment enrolmentList)
 	{
 		
 		List newEnrolmentList = new ArrayList();

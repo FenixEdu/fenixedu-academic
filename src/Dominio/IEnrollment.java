@@ -13,7 +13,7 @@ import Util.enrollment.EnrollmentCondition;
  * 24/Mar/2003
  */
 
-public interface IEnrolment extends IDomainObject
+public interface IEnrollment extends IDomainObject
 {
 	public ICurricularCourse getCurricularCourse();
 	public IStudentCurricularPlan getStudentCurricularPlan();

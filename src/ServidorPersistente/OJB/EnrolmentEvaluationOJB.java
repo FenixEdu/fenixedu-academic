@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.EnrolmentEvaluation;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -38,7 +38,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
     }
 
     public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
-            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade)
+            IEnrollment enrolment, EnrolmentEvaluationType evaluationType, String grade)
             throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
@@ -59,7 +59,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         return enrolmentEvaluation;
     }
 
-    public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
+    public List readEnrolmentEvaluationByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
@@ -67,7 +67,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         return result;
     }
 
-    public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrolment enrolment,
+    public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrollment enrolment,
             EnrolmentEvaluationState evaluationState) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
@@ -78,7 +78,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         return examsWithRepetition;
     }
 
-    public IEnrolmentEvaluation readByUnique(Date whenAlter, IEnrolment enrolment)
+    public IEnrolmentEvaluation readByUnique(Date whenAlter, IEnrollment enrolment)
             throws ExcepcaoPersistencia
     {
         try
@@ -98,7 +98,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
     }
 
     public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
-            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
+            IEnrollment enrolment, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
             throws ExcepcaoPersistencia
     {
 

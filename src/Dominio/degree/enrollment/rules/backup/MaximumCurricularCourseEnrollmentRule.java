@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.rules.IEnrollmentRule;
@@ -36,7 +36,7 @@ public class MaximumCurricularCourseEnrollmentRule extends SelectionUponMaximumN
         
        
         for(int i = 0; i < enrollments.size(); i++){
-            IEnrolment enrollment = (IEnrolment) enrollments.get(i);
+            IEnrollment enrollment = (IEnrollment) enrollments.get(i);
             numberOfEnrolledCurricularCourses += enrollment.getCurricularCourse().getEnrollmentWeigth().doubleValue();
         }
 
@@ -66,7 +66,7 @@ public class MaximumCurricularCourseEnrollmentRule extends SelectionUponMaximumN
         int acumulatedEnrollments = 0;
         int iterator = 0;
         for (; iterator < curricularCoursesSortedByYear.size(); iterator++) {
-            IEnrolment enrollment = (IEnrolment) curricularCoursesSortedByYear.get(iterator);
+            IEnrollment enrollment = (IEnrollment) curricularCoursesSortedByYear.get(iterator);
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
             acumulatedEnrollments += curricularCourse.getEnrollmentWeigth().intValue();
 

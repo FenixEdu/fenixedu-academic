@@ -6,7 +6,7 @@ import java.util.List;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoPerson;
 import Dominio.IEmployee;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -42,7 +42,7 @@ public class GetEnrolmentGrade implements IServico {
 		return "GetEnrolmentGrade";
 	}
 
-	public InfoEnrolmentEvaluation run(IEnrolment enrolment) throws FenixServiceException
+	public InfoEnrolmentEvaluation run(IEnrollment enrolment) throws FenixServiceException
 	{
 		List enrolmentEvaluations = enrolment.getEvaluations();
 

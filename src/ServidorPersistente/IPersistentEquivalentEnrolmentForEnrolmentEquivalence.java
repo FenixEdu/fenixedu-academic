@@ -6,7 +6,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEquivalence;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 
@@ -20,11 +20,11 @@ public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends I
             throws ExcepcaoPersistencia;
 
     public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(
-            IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment)
+            IEnrolmentEquivalence enrolmentEquivalence, IEnrollment equivalentEnrolment)
             throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
 
-    public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
+    public List readByEquivalentEnrolment(IEnrollment equivalentEnrolment) throws ExcepcaoPersistencia;
     public List readByEnrolmentEquivalence(IEnrolmentEquivalence enrolmentEquivalence) throws ExcepcaoPersistencia;
 }

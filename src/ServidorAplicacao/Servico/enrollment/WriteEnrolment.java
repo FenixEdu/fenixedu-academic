@@ -13,7 +13,7 @@ import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -89,7 +89,7 @@ public class WriteEnrolment implements IService
 						executionPeriodID);
 			}
 
-			IEnrolment enrolment =
+			IEnrollment enrolment =
 				enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 					studentCurricularPlan,
 					curricularCourse,
@@ -97,7 +97,7 @@ public class WriteEnrolment implements IService
 
 			if (enrolment == null)
 			{
-				IEnrolment enrolmentToWrite = new Enrolment();
+				IEnrollment enrolmentToWrite = new Enrolment();
 				enrolmentDAO.simpleLockWrite(enrolmentToWrite);
 				enrolmentToWrite.setCurricularCourse(curricularCourse);
 				enrolmentToWrite.setEnrolmentState(EnrolmentState.ENROLED);
@@ -135,7 +135,7 @@ public class WriteEnrolment implements IService
 		IStudent student,
 		ICurricularCourse curricularCourse,
 		IExecutionPeriod executionPeriod,
-		IEnrolment enrolmentToWrite)
+		IEnrollment enrolmentToWrite)
 		throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -193,7 +193,7 @@ public class WriteEnrolment implements IService
 		}
 	}
 
-	public static void createAttend(IEnrolment enrolment) throws ExcepcaoPersistencia
+	public static void createAttend(IEnrollment enrolment) throws ExcepcaoPersistencia
 	{
 		createAttend(
 			enrolment.getStudentCurricularPlan().getStudent(),
@@ -202,7 +202,7 @@ public class WriteEnrolment implements IService
 			enrolment);
 	}
 
-	private void createEnrollmentEvaluation(IEnrolment enrolment) throws ExcepcaoPersistencia
+	private void createEnrollmentEvaluation(IEnrollment enrolment) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistentSuport.getIPersistentEnrolmentEvaluation();

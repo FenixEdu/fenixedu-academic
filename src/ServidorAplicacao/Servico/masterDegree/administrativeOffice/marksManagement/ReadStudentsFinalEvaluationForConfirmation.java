@@ -16,7 +16,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IPessoa;
@@ -107,7 +107,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico
 			Iterator iterEnrolment = enrolments.listIterator();
 			while (iterEnrolment.hasNext())
 			{
-				IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
+				IEnrollment enrolment = (IEnrollment) iterEnrolment.next();
 				List allEnrolmentEvaluations =
 					persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
 				IEnrolmentEvaluation enrolmentEvaluation =

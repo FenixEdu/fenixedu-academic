@@ -6,7 +6,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CreditsInScientificArea;
 import Dominio.ICreditsInScientificArea;
-import Dominio.IEnrolment;
+import Dominio.IEnrollment;
 import Dominio.IScientificArea;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -27,7 +27,7 @@ public class CreditsInSpecificScientificAreaOJB extends ObjectFenixOJB implement
 
 	public ICreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
 		IStudentCurricularPlan studentCurricularPlan,
-		IEnrolment enrolment,
+		IEnrollment enrolment,
 		IScientificArea scientificArea)
 		throws ExcepcaoPersistencia
 	{

@@ -25,7 +25,7 @@ public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse
 		List studentCurrentSemesterEnrollments = studentEnrolmentContext.getStudentCurrentSemesterEnrollments();
 		for (int i = 0; i < studentCurrentSemesterEnrollments.size(); i++)
 		{
-			IEnrolment enrolment = (IEnrolment) studentCurrentSemesterEnrollments.get(i);
+			IEnrollment enrolment = (IEnrollment) studentCurrentSemesterEnrollments.get(i);
 			if (enrolment.getCurricularCourse().equals(curricularCourse))
 			{
 				return true;
