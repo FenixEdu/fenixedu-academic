@@ -5,6 +5,8 @@ package ServidorPersistente.AccessLayer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSetMetaData;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -223,17 +225,29 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
             for (int i = 0; i < fieldDescriptors.length; i++) {
                 String columnName = fieldDescriptors[i].getColumnName();
                 String property = getPropertyValue(fieldDescriptors[i], arg1);
-                stringBuffer.append(columnName);
-                stringBuffer.append("='");
-                stringBuffer.append(property);
-                stringBuffer.append("'");
-                if (i != fieldDescriptors.length - 1) {
-                    stringBuffer.append(separator);
+                if (!fieldDescriptors[i].getPersistentField().getType().equals(Calendar.class)
+                        && !fieldDescriptors[i].getPersistentField().getType().equals(Date.class)) {
+                    stringBuffer.append(columnName);
+                    stringBuffer.append("=");
+                    if (property != null) {
+                        stringBuffer.append("'");
+                    }
+                    stringBuffer.append(getSqlValidValue(property));
+                    if (property != null) {
+                        stringBuffer.append("'");
+                    }
+                    if (i != fieldDescriptors.length - 1) {
+                        stringBuffer.append(separator);
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected Object getSqlValidValue(String property) {
+        return property;
     }
 
     /**
