@@ -229,13 +229,13 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			List aulas = null;
       
 			_suportePersistente.iniciarTransaccao();
-			IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+			IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 			assertNotNull(executionCourse);
 
 			/* Testa metodo qdo ha mais do q uma aula de um turno na BD */
 			aulas =
 				_turnoAulaPersistente.readByShift(
-					new Turno("turno3", null, null, executionCourse));
+					new Turno("turno4", null, null, executionCourse));
 			_suportePersistente.confirmarTransaccao();
 			
 			assertEquals(

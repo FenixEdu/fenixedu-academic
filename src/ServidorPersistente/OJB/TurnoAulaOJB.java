@@ -199,7 +199,8 @@ public class TurnoAulaOJB
 			query.bind(sala.getNome());
 
 			List result = (List) query.execute();
-			delete(result.get(0));
+			if (!result.isEmpty())
+				delete((ITurnoAula) result.get(0));
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

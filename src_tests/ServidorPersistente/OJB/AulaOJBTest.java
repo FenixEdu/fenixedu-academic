@@ -375,7 +375,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		assertNotNull(executionCourse2);
 
         lessons = _aulaPersistente.readByExecutionCourse(executionCourse1);
-        assertEquals("testReadByDisciplinaExecucao: Existing", 5, lessons.size());
+        assertEquals("testReadByDisciplinaExecucao: Existing", 6, lessons.size());
   
   
   		// read unexisting disciplinaExecucao
@@ -436,7 +436,7 @@ public class AulaOJBTest extends TestCaseOJB {
 	  	
 		lessons = _aulaPersistente.readByExecutionCourseAndLessonType(executionCourse, new TipoAula(TipoAula.TEORICA));
 		assertNotNull(lessons);
-		assertEquals(lessons.size(), 5);
+		assertEquals(lessons.size(), 6);
 		
 		lessons = null;
 		lessons = _aulaPersistente.readByExecutionCourseAndLessonType(executionCourse, new TipoAula(TipoAula.PRATICA));

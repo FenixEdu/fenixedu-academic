@@ -216,7 +216,7 @@ public class SalaOJBTest extends TestCaseOJB {
       _suportePersistente.iniciarTransaccao();
       salas = _salaPersistente.readAll();
       _suportePersistente.confirmarTransaccao();
-      assertEquals(salas.size(), 2);
+      assertEquals(salas.size(), 3);
 	} catch (ExcepcaoPersistencia ex) {
 		fail("testDeleteSala");
 	}

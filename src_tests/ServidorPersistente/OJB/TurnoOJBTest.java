@@ -266,7 +266,7 @@ public class TurnoOJBTest extends TestCaseOJB {
       assertNotNull(executionCourse);
       
       shifts = _turnoPersistente.readByExecutionCourseAndType(executionCourse, new Integer(TipoAula.TEORICA));
-      assertEquals("testReadByDisciplinaExecucaoAndType: Existing", shifts.size(), 4);
+      assertEquals("testReadByDisciplinaExecucaoAndType: Existing", shifts.size(), 5);
 
 	  // Read non Existing
 	  executionCourse = null;
