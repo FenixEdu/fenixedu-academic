@@ -14,7 +14,7 @@ import Util.FileUtils;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
 public class ReverseFile {
 
@@ -39,8 +39,14 @@ public class ReverseFile {
         System.exit(0);
     }
 
-    protected static void reverseFile(final String inputFilename, final String outputFilename) throws IOException {
-        final String filecontents = FileUtils.readFile(inputFilename);
+    protected static void reverseFile(final String inputFilename, final String outputFilename)
+            throws IOException {
+        String filecontents = null;
+        try {
+            filecontents = FileUtils.readFile(inputFilename);
+        } catch (IOException e) {
+            return;
+        }
         final String[] lines = filecontents.split("\n");
 
         final FileWriter fileWriter = new FileWriter(outputFilename, false);
@@ -50,7 +56,8 @@ public class ReverseFile {
         }
         fileWriter.close();
 
-        if (logger.isDebugEnabled()) logger.debug("Wrote " + lines.length + " lines to " + outputFilename);
+        if (logger.isDebugEnabled())
+            logger.debug("Wrote " + lines.length + " lines to " + outputFilename);
     }
 
 }
