@@ -44,7 +44,6 @@
          column="EXAM_CAPACITY"
          jdbc-type="INTEGER"
       />
-<!--
 	<collection-descriptor
 			name="associatedExams"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -58,7 +57,6 @@
 		<fk-pointing-to-this-class column="KEY_ROOM"/>
 		<fk-pointing-to-element-class column="KEY_EXAM"/>
 	</collection-descriptor>
--->
    </class-descriptor>
 
 <!-- Definitions for Dominio.Turma -->

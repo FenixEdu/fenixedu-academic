@@ -210,6 +210,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 		}
 
 		strBuffer.append("<br />");
+		strBuffer.append("<br />");
+		strBuffer.append("<br />");
+		strBuffer.append("<br />");
+		strBuffer.append("<br />");
 
 		return strBuffer;
 	}

@@ -4,6 +4,8 @@ package ServidorAplicacao;
  * @author jorge
  **/
 
+import java.util.Date;
+
 import ServidorAplicacao.Filtro.GestorFiltros;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -27,6 +29,17 @@ public class InvocadorServicosTransaccional extends InvocadorServicos {
 				result = doInvocation(servico, "run", argumentos);
 				sp.confirmarTransaccao();
 			} catch (Exception ex) {
+					System.out.println("LOGTIME= " + new Date());
+					if (user != null)  {
+						System.out.println("USERVIEW= " + user.getUtilizador());
+					} else {
+						System.out.println("USERVIEW= no user view");
+					}
+					if (servico != null) {
+						System.out.println("SERVICE= " + servico.getNome());
+					} else {
+						System.out.println("SERVICE= no service");
+					}
 					try {
 						sp.cancelarTransaccao();
 					} catch (ExcepcaoPersistencia newEx) {

@@ -130,13 +130,14 @@ public class CursoExecucaoOJB
 	 */
 	public List readByExecutionYear(IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
-			PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker(); 
+		PersistenceBroker broker =
+			((HasBroker) odmg.currentTransaction()).getBroker();
 
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("executionYear.year",executionYear.getYear());
-			criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
-			Query queryPB = new QueryByCriteria(CursoExecucao.class, criteria);
-			return (List) broker.getCollectionByQuery(queryPB);
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionYear.year", executionYear.getYear());
+		criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
+		Query queryPB = new QueryByCriteria(CursoExecucao.class, criteria);
+		return (List) broker.getCollectionByQuery(queryPB);
 	}
 
 	/**
@@ -251,10 +252,12 @@ public class CursoExecucaoOJB
 	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 		try {
 
-			String oqlQuery = "select all from " + CursoExecucao.class.getName()
-							+ " where coordinator.teacherNumber = $1"
-							+ " order by curricularPlan.degree.nome, executionYear.year desc";
-			
+			String oqlQuery =
+				"select all from "
+					+ CursoExecucao.class.getName()
+					+ " where coordinator.teacherNumber = $1"
+					+ " order by curricularPlan.degree.nome, executionYear.year desc";
+
 			query.create(oqlQuery);
 
 			query.bind(teacher.getTeacherNumber());
@@ -270,5 +273,18 @@ public class CursoExecucaoOJB
 
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYearAndDegreeType(Dominio.IExecutionYear, Util.TipoCurso)
+	 */
+	public List readByExecutionYearAndDegreeType(
+		IExecutionYear executionYear,
+		TipoCurso degreeType)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionYear.year", executionYear.getYear());
+		criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
+		criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
+		return queryList(CursoExecucao.class, criteria);
+	}
 
 }

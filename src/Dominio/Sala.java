@@ -25,7 +25,7 @@ public class Sala implements ISala, IDomainObject {
 	// códigos internos da base de dados
 	private Integer idInternal;
 
-	//protected List associatedExams;
+	protected List associatedExams;
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
 	public Sala() {
@@ -127,16 +127,16 @@ public class Sala implements ISala, IDomainObject {
 	/**
 	 * @return
 	 */
-//	public List getAssociatedExams() {
-//		return associatedExams;
-//	}
+	public List getAssociatedExams() {
+		return associatedExams;
+	}
 
 	/**
 	 * @param exams
 	 */
-//	public void setAssociatedExams(List exams) {
-//		associatedExams = exams;
-//	}
+	public void setAssociatedExams(List exams) {
+		associatedExams = exams;
+	}
 
 	/**
 	 * @return

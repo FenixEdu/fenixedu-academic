@@ -12,6 +12,8 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import Util.TipoCurso;
+
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
@@ -23,21 +25,23 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @param cursoExecucao
 	 * @throws ExcepcaoPersistencia
 	 */
-	public void lockWrite(ICursoExecucao cursoExecucao) throws ExcepcaoPersistencia;
-	
+	public void lockWrite(ICursoExecucao cursoExecucao)
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param cursoExecucao
 	 * @throws ExcepcaoPersistencia
 	 */
-	public void delete(ICursoExecucao cursoExecucao) throws ExcepcaoPersistencia;
-	
+	public void delete(ICursoExecucao cursoExecucao)
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @throws ExcepcaoPersistencia
 	 */
 	public void deleteAll() throws ExcepcaoPersistencia;
-	
+
 	/**
 	 * Method readByExecutionYear.
 	 * @param executionYear
@@ -69,16 +73,17 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 		String degreeInitials,
 		String nameDegreeCurricularPlan,
 		IExecutionYear executionYear)
-		throws ExcepcaoPersistencia;		
-	
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param executionPeriod
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia;
-	
+	public List readMasterDegrees(String executionYear)
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param degreeName
@@ -86,10 +91,11 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public ICursoExecucao readByDegreeCodeAndExecutionYear(String degreeName, IExecutionYear executionYear) throws ExcepcaoPersistencia;
-	
-	
-	
+	public ICursoExecucao readByDegreeCodeAndExecutionYear(
+		String degreeName,
+		IExecutionYear executionYear)
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param teacher
@@ -97,4 +103,14 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
+
+	/**
+	 * @param executionYear
+	 * @param curso
+	 * @return
+	 */
+	public List readByExecutionYearAndDegreeType(
+		IExecutionYear executionYear,
+		TipoCurso degreeType)
+		throws ExcepcaoPersistencia;
 }

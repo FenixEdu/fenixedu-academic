@@ -135,9 +135,6 @@ public class FrequentaOJB
 
 	public Integer countStudentsAttendingExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			//((HasBroker) tx).getBroker();
-			//try{
 			Criteria criteria = new Criteria();
 			criteria.addEqualTo(
 				"disciplinaExecucao.sigla",
@@ -151,25 +148,7 @@ public class FrequentaOJB
 					.getExecutionPeriod()
 					.getExecutionYear()
 					.getYear());
-			Query queryPB = new QueryByCriteria(Frequenta.class, criteria);
-			return new Integer(broker.getCount(queryPB));
-
-			//			String oqlQuery = "select attendence from " + Frequenta.class.getName();
-			//			oqlQuery += " where disciplinaExecucao.sigla = $1";
-			//			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2";
-			//			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
-			//
-			//			query.create(oqlQuery);
-			//			query.bind(executionCourse.getSigla());
-			//			query.bind(executionCourse.getExecutionPeriod().getName());
-			//			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-			//
-			//			List result = (List) query.execute();
-			//			lockRead(result);
-			//return new Integer(result.size());
-		//} catch (QueryException ex) {
-		//	throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		//}
+			return new Integer(queryList(Frequenta.class, criteria).size());
 	}
 
 }
