@@ -282,8 +282,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		{
 
 			Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
-
-			infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage.intValue()));
+			infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
 			infoFinalResult.setFinalAverage(
 				String.valueOf(NumberUtils.formatNumber(weightedAverage, 0).intValue()));
 			return;
@@ -292,6 +291,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		// Everything else uses the simple Average
 
 		Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
+
 		infoFinalResult.setAverageSimple(String.valueOf(simpleAverage.intValue()));
 
 		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0).intValue()));
