@@ -3,6 +3,8 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBrokerAware;
+
 import Util.EnrollmentState;
 import Util.EnrolmentEvaluationType;
 import Util.enrollment.EnrollmentCondition;
@@ -13,7 +15,7 @@ import Util.enrollment.EnrollmentCondition;
  * 24/Mar/2003
  */
 
-public interface IEnrollment extends IDomainObject {
+public interface IEnrollment extends IDomainObject, PersistenceBrokerAware {
     public ICurricularCourse getCurricularCourse();
 
     public IStudentCurricularPlan getStudentCurricularPlan();

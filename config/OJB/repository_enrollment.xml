@@ -271,3 +271,57 @@
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 </class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.log.EnrolmentLog -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.log.EnrolmentLog" table="ENROLMENT_LOG">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />
+	<field-descriptor
+		name="keyCurricularCourse"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyStudent"
+		column="KEY_STUDENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="date"
+		column="CREATION_DATE"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+	<field-descriptor
+		name="action"
+		column="ACTION"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion"
+	/>
+	<reference-descriptor
+			name="student"
+			class-ref="Dominio.Student"
+			proxy="true">
+		<foreignkey field-ref="keyStudent"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<foreignkey field-ref="keyCurricularCourse"/>
+	</reference-descriptor>
+</class-descriptor>
+

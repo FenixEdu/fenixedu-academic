@@ -3,7 +3,17 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerAware;
+import org.apache.ojb.broker.PersistenceBrokerException;
+
+import Dominio.log.EnrolmentLog;
+import Dominio.log.IEnrolmentLog;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.OJB.log.IPersistentEnrolmentLog;
 import Util.EnrollmentState;
+import Util.EnrolmentAction;
 import Util.EnrolmentEvaluationType;
 import Util.enrollment.EnrollmentCondition;
 
@@ -13,7 +23,8 @@ import Util.enrollment.EnrollmentCondition;
  * 24/Mar/2003
  */
 
-public class Enrolment extends DomainObject implements IEnrollment {
+public class Enrolment extends DomainObject implements IEnrollment,
+        PersistenceBrokerAware {
     private IStudentCurricularPlan studentCurricularPlan;
 
     private ICurricularCourse curricularCourse;
@@ -87,7 +98,8 @@ public class Enrolment extends DomainObject implements IEnrollment {
      * @param enrolmentEvaluationType
      *            The enrolmentEvaluationType to set.
      */
-    public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
+    public void setEnrolmentEvaluationType(
+            EnrolmentEvaluationType enrolmentEvaluationType) {
         this.enrolmentEvaluationType = enrolmentEvaluationType;
     }
 
@@ -177,7 +189,8 @@ public class Enrolment extends DomainObject implements IEnrollment {
      * @param studentCurricularPlan
      *            The studentCurricularPlan to set.
      */
-    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+    public void setStudentCurricularPlan(
+            IStudentCurricularPlan studentCurricularPlan) {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
@@ -202,9 +215,12 @@ public class Enrolment extends DomainObject implements IEnrollment {
         if (obj instanceof IEnrollment) {
             IEnrollment enrolment = (IEnrollment) obj;
 
-            result = this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
-                    && this.getCurricularCourse().equals(enrolment.getCurricularCourse())
-                    && this.getExecutionPeriod().equals(enrolment.getExecutionPeriod());
+            result = this.getStudentCurricularPlan().equals(
+                    enrolment.getStudentCurricularPlan())
+                    && this.getCurricularCourse().equals(
+                            enrolment.getCurricularCourse())
+                    && this.getExecutionPeriod().equals(
+                            enrolment.getExecutionPeriod());
         }
         return result;
     }
@@ -212,7 +228,8 @@ public class Enrolment extends DomainObject implements IEnrollment {
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "idInternal = " + super.getIdInternal() + "; ";
-        result += "studentCurricularPlan = " + this.getStudentCurricularPlan() + "; ";
+        result += "studentCurricularPlan = " + this.getStudentCurricularPlan()
+                + "; ";
         result += "enrollmentState = " + this.getEnrollmentState() + "; ";
         result += "execution Period = " + this.getExecutionPeriod() + "; ";
         result += "curricularCourse = " + this.getCurricularCourse() + "]\n";
@@ -277,5 +294,93 @@ public class Enrolment extends DomainObject implements IEnrollment {
      */
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterDelete(org.apache.ojb.broker.PersistenceBroker)
+     */
+    public void afterDelete(PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+
+        createNewEnrolmentLog(EnrolmentAction.UNENROL, arg0);
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterInsert(org.apache.ojb.broker.PersistenceBroker)
+     */
+    public void afterInsert(PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+
+        createNewEnrolmentLog(EnrolmentAction.ENROL, arg0);
+
+    }
+
+    private void createNewEnrolmentLog(EnrolmentAction action, PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+        IPersistentEnrolmentLog persistentEnrolmentLog = SuportePersistenteOJB
+                .getInstance().getIPersistentEnrolmentLog();
+        IEnrolmentLog enrolmentLog = new EnrolmentLog();
+        //persistentEnrolmentLog.simpleLockWrite(enrolmentLog);
+        enrolmentLog.setDate(new Date());
+        enrolmentLog.setAction(action);
+        enrolmentLog.setCurricularCourse(this.getCurricularCourse());
+        enrolmentLog.setStudent(this.getStudentCurricularPlan().getStudent());
+        arg0.store(enrolmentLog);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterLookup(org.apache.ojb.broker.PersistenceBroker)
+     */
+    public void afterLookup(PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterUpdate(org.apache.ojb.broker.PersistenceBroker)
+     */
+    public void afterUpdate(PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+       
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeDelete(org.apache.ojb.broker.PersistenceBroker)
+     */
+    public void beforeDelete(PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+        
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeInsert(org.apache.ojb.broker.PersistenceBroker)
+     */
+    public void beforeInsert(PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+        
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeUpdate(org.apache.ojb.broker.PersistenceBroker)
+     */
+    public void beforeUpdate(PersistenceBroker arg0)
+            throws PersistenceBrokerException {
+        
     }
 }
