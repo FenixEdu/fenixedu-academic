@@ -338,7 +338,7 @@
        		<include name="ServidorAplicacao/Servico/UserView.java"/>
        		<include name="ServidorAplicacao/Servico/exceptions/FenixServiceException.java"/>
        		-->
-       		<include name="ServidorAplicacao/logging/ServiceExecutionLog.java"/>
+       		<include name="ServidorAplicacao/logging/*.java"/>
        		<include name="ServidorApresentacao/**/*.java"/>
        		<include name="Util/**/*.java"/>
        		<include name="UtilInsc/**/*.java"/>

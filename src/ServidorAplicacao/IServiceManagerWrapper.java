@@ -35,9 +35,14 @@ public interface IServiceManagerWrapper {
 		throws FenixServiceException, RemoteException;
 
   public HashMap getMapServicesToWatch(IUserView id);
-  public Boolean loggingIsOn(IUserView id);
-  public void turnLoggingOn(IUserView id);
-  public void turnLoggingOff(IUserView id);
-  public void clearLogHistory(IUserView id);
+  public HashMap getMapUsersToWatch(IUserView id);
+  public Boolean serviceLoggingIsOn(IUserView id);
+  public Boolean userLoggingIsOn(IUserView id);
+  public void turnServiceLoggingOn(IUserView id);
+  public void turnServiceLoggingOff(IUserView id);
+  public void turnUserLoggingOn(IUserView id);
+  public void turnUserLoggingOff(IUserView id);
+  public void clearServiceLogHistory(IUserView id);
+  public void clearUserLogHistory(IUserView id);
 
 }

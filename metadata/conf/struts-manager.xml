@@ -911,6 +911,14 @@
           <forward name="Show" path="df.page.monitor-services"/>
       </action>
 
+	<!-- ========== USER MONITORING MANIPULATION ========== -->
+      <action path="/monitorUsers"
+              type="ServidorApresentacao.Action.manager.MonitorUsersDA"
+              parameter="method"
+              >
+          <forward name="Show" path="df.page.monitor-users"/>
+      </action>
+
 	<!-- ========== ADVISORY MANIPULATION ========== -->
       <action path="/manageAdvisories"
       		  name="advisoryForm"

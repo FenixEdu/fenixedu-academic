@@ -21,7 +21,7 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Luis Cruz
  */
-public class MonitorServicesDA extends FenixDispatchAction {
+public class MonitorUsersDA extends FenixDispatchAction {
 
 	public ActionForward monitor(
 		ActionMapping mapping,
@@ -32,11 +32,11 @@ public class MonitorServicesDA extends FenixDispatchAction {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		Boolean loggingIsOn = ServiceManagerServiceFactory.serviceLoggingIsOn(userView);
-		request.setAttribute("loggingIsOn", loggingIsOn);
+		Boolean userLoggingIsOn = ServiceManagerServiceFactory.userLoggingIsOn(userView);
+		request.setAttribute("userLoggingIsOn", userLoggingIsOn);
 
-		Map serviceLogs = ServiceManagerServiceFactory.getServicesLogInfo(userView);
-		request.setAttribute("serviceLogs", serviceLogs);
+		Map userLogs = ServiceManagerServiceFactory.getUsersLogInfo(userView);
+		request.setAttribute("userLogs", userLogs);
 		
 		return mapping.findForward("Show");
 	}
@@ -50,7 +50,7 @@ public class MonitorServicesDA extends FenixDispatchAction {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		ServiceManagerServiceFactory.turnServiceLoggingOn(userView);
+		ServiceManagerServiceFactory.turnUserLoggingOn(userView);
 
 		return monitor(mapping, form, request, response);
 	}
@@ -64,7 +64,7 @@ public class MonitorServicesDA extends FenixDispatchAction {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		ServiceManagerServiceFactory.turnServiceLoggingOff(userView);
+		ServiceManagerServiceFactory.turnUserLoggingOff(userView);
 
 		return monitor(mapping, form, request, response);
 	}

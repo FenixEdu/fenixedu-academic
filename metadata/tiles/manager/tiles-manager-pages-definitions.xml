@@ -146,6 +146,10 @@
 	<definition name="df.page.monitor-services" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/monitorServices_bd.jsp" />
 	</definition>	
+	<!-- ========== USER MONITORING MANIPULATION ========== -->
+	<definition name="df.page.monitor-users" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/monitorUsers_bd.jsp" />
+	</definition>
 	
 	<!-- ========== TEACHERS MANAGEMENT ========== -->
 	<definition name="df.page.firstPage" extends="definition.manager.masterPage" >

@@ -70,14 +70,31 @@ public class ServiceManagerServiceFactory
 		return (Map) execute(method, methodArgs);
 	}
 
-	public static Boolean loggingIsOn(IUserView userView) throws FenixServiceException
+	public static Map getUsersLogInfo(IUserView userView) throws FenixServiceException
 	{
 		Object[] methodArgs = { userView };
 		Method method = null;
 		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
 		for (int i = 0; i < methods.length; i++)
 		{
-			if (methods[i].getName().equals("loggingIsOn")
+			if (methods[i].getName().equals("getMapUsersToWatch")
+				&& (methods[i].getParameterTypes().length == 1))
+			{
+				method = methods[i];
+			}
+		}
+
+		return (Map) execute(method, methodArgs);
+	}
+
+	public static Boolean serviceLoggingIsOn(IUserView userView) throws FenixServiceException
+	{
+		Object[] methodArgs = { userView };
+		Method method = null;
+		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
+		for (int i = 0; i < methods.length; i++)
+		{
+			if (methods[i].getName().equals("serviceLoggingIsOn")
 				&& (methods[i].getParameterTypes().length == 1))
 			{
 				method = methods[i];
@@ -87,14 +104,31 @@ public class ServiceManagerServiceFactory
 		return (Boolean) execute(method, methodArgs);
 	}
 
-	public static void turnLoggingOn(IUserView userView) throws FenixServiceException
+	public static Boolean userLoggingIsOn(IUserView userView) throws FenixServiceException
 	{
 		Object[] methodArgs = { userView };
 		Method method = null;
 		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
 		for (int i = 0; i < methods.length; i++)
 		{
-			if (methods[i].getName().equals("turnLoggingOn")
+			if (methods[i].getName().equals("userLoggingIsOn")
+				&& (methods[i].getParameterTypes().length == 1))
+			{
+				method = methods[i];
+			}
+		}
+
+		return (Boolean) execute(method, methodArgs);
+	}
+
+	public static void turnServiceLoggingOn(IUserView userView) throws FenixServiceException
+	{
+		Object[] methodArgs = { userView };
+		Method method = null;
+		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
+		for (int i = 0; i < methods.length; i++)
+		{
+			if (methods[i].getName().equals("turnServiceLoggingOn")
 				&& (methods[i].getParameterTypes().length == 1))
 			{
 				method = methods[i];
@@ -104,14 +138,14 @@ public class ServiceManagerServiceFactory
 		execute(method, methodArgs);
 	}
 
-	public static void turnLoggingOff(IUserView userView) throws FenixServiceException
+	public static void turnUserLoggingOn(IUserView userView) throws FenixServiceException
 	{
 		Object[] methodArgs = { userView };
 		Method method = null;
 		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
 		for (int i = 0; i < methods.length; i++)
 		{
-			if (methods[i].getName().equals("turnLoggingOff")
+			if (methods[i].getName().equals("turnUserLoggingOn")
 				&& (methods[i].getParameterTypes().length == 1))
 			{
 				method = methods[i];
@@ -121,14 +155,65 @@ public class ServiceManagerServiceFactory
 		execute(method, methodArgs);
 	}
 
-	public static void clearLogHistory(IUserView userView) throws FenixServiceException
+	public static void turnServiceLoggingOff(IUserView userView) throws FenixServiceException
 	{
 		Object[] methodArgs = { userView };
 		Method method = null;
 		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
 		for (int i = 0; i < methods.length; i++)
 		{
-			if (methods[i].getName().equals("clearLogHistory")
+			if (methods[i].getName().equals("turnServiceLoggingOff")
+				&& (methods[i].getParameterTypes().length == 1))
+			{
+				method = methods[i];
+			}
+		}
+
+		execute(method, methodArgs);
+	}
+
+	public static void turnUserLoggingOff(IUserView userView) throws FenixServiceException
+	{
+		Object[] methodArgs = { userView };
+		Method method = null;
+		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
+		for (int i = 0; i < methods.length; i++)
+		{
+			if (methods[i].getName().equals("turnUserLoggingOff")
+				&& (methods[i].getParameterTypes().length == 1))
+			{
+				method = methods[i];
+			}
+		}
+
+		execute(method, methodArgs);
+	}
+
+	public static void clearServiceLogHistory(IUserView userView) throws FenixServiceException
+	{
+		Object[] methodArgs = { userView };
+		Method method = null;
+		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
+		for (int i = 0; i < methods.length; i++)
+		{
+			if (methods[i].getName().equals("clearServiceLogHistory")
+				&& (methods[i].getParameterTypes().length == 1))
+			{
+				method = methods[i];
+			}
+		}
+
+		execute(method, methodArgs);
+	}
+
+	public static void clearUserLogHistory(IUserView userView) throws FenixServiceException
+	{
+		Object[] methodArgs = { userView };
+		Method method = null;
+		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
+		for (int i = 0; i < methods.length; i++)
+		{
+			if (methods[i].getName().equals("clearUserLogHistory")
 				&& (methods[i].getParameterTypes().length == 1))
 			{
 				method = methods[i];

@@ -17,6 +17,7 @@ import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterExceptio
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.logging.ServiceExecutionLog;
+import ServidorAplicacao.logging.UserExecutionLog;
 
 /**
  * This class is the entry point of the system to execute a service. It receives the service to execute,
@@ -29,13 +30,20 @@ import ServidorAplicacao.logging.ServiceExecutionLog;
 public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 {
 
-	private static boolean loggingIsOn;
+	private static boolean serviceLoggingIsOn;
 	private static FastHashMap mapServicesToWatch;
 
+	private static boolean userLoggingIsOn;
+	private static FastHashMap mapUsersToWatch;
+
 	static {
-		loggingIsOn = false;
+		serviceLoggingIsOn = false;
 		mapServicesToWatch = new FastHashMap();
 		mapServicesToWatch.setFast(true);
+
+		userLoggingIsOn = false;
+		mapUsersToWatch = new FastHashMap();
+		mapUsersToWatch.setFast(true);
 	}
 
 	/**
@@ -73,15 +81,22 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 			Calendar serviceEndTime = null;
 
 			IServiceManager manager = ServiceManager.getInstance();
-			if (loggingIsOn)
+			if (serviceLoggingIsOn || (userLoggingIsOn && id != null))
 			{
 				serviceStartTime = Calendar.getInstance();
 			}
 			Object serviceResult = manager.execute(id, service, method, args);
-			if (loggingIsOn)
+			if (serviceLoggingIsOn || (userLoggingIsOn && id != null))
 			{
 				serviceEndTime = Calendar.getInstance();
+			}
+			if (serviceLoggingIsOn)
+			{
 				registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
+			}
+			if (userLoggingIsOn && id != null)
+			{
+				registerUserExecutionOfService(id, service, method, args, serviceStartTime, serviceEndTime);
 			}
 
 			return serviceResult;
@@ -160,19 +175,34 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	{
 	}
 
-	public synchronized void turnLoggingOn(IUserView id)
+	public synchronized void turnServiceLoggingOn(IUserView id)
 	{
-		loggingIsOn = true;
+		serviceLoggingIsOn = true;
 	}
 
-	public synchronized void turnLoggingOff(IUserView id)
+	public synchronized void turnServiceLoggingOff(IUserView id)
 	{
-		loggingIsOn = false;
+		serviceLoggingIsOn = false;
 	}
 
-	public synchronized void clearLogHistory(IUserView id)
+	public synchronized void clearServiceLogHistory(IUserView id)
 	{
 		mapServicesToWatch.clear();
+	}
+
+	public synchronized void turnUserLoggingOn(IUserView id)
+	{
+		userLoggingIsOn = true;
+	}
+
+	public synchronized void turnUserLoggingOff(IUserView id)
+	{
+		userLoggingIsOn = false;
+	}
+
+	public synchronized void clearUserLogHistory(IUserView id)
+	{
+		mapUsersToWatch.clear();
 	}
 
 	/**
@@ -189,7 +219,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		Calendar serviceStartTime,
 		Calendar serviceEndTime)
 	{
-		String hashKey = generateHashKey(service, method, args);
+		String hashKey = generateServiceHashKey(service, method, args);
 		long serviceExecutionTime = calculateServiceExecutionTime(serviceStartTime, serviceEndTime);
 		ServiceExecutionLog serviceExecutionLog = (ServiceExecutionLog) mapServicesToWatch.get(hashKey);
 		if (serviceExecutionLog == null)
@@ -199,6 +229,26 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 		}
 
 		serviceExecutionLog.addExecutionTime(serviceExecutionTime);
+	}
+
+	/**
+	 * @param id
+	 * @param service
+	 * @param method
+	 * @param args
+	 * @param serviceStartTime
+	 * @param serviceEndTime
+	 */
+	private void registerUserExecutionOfService(IUserView id, String service, String method, Object[] args, Calendar serviceStartTime, Calendar serviceEndTime)
+	{
+		UserExecutionLog userExecutionLog = (UserExecutionLog) mapUsersToWatch.get(id.getUtilizador());
+		if (userExecutionLog == null)
+		{
+			userExecutionLog = new UserExecutionLog(id);
+			mapUsersToWatch.put(id.getUtilizador(), userExecutionLog);
+		}
+
+		userExecutionLog.addServiceCall(generateServiceHashKey(service, method, args), serviceStartTime);
 	}
 
 	/**
@@ -217,7 +267,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * @param args
 	 * @return
 	 */
-	private String generateHashKey(String service, String method, Object[] args)
+	private String generateServiceHashKey(String service, String method, Object[] args)
 	{
 		String hashKey = service + "." + method + "(";
 		if (args != null)
@@ -248,9 +298,27 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * 
 	 * @see ServidorAplicacao.IServiceManagerWrapper#loggingIsOn()
 	 */
-	public Boolean loggingIsOn(IUserView id)
+	public Boolean serviceLoggingIsOn(IUserView id)
 	{
-		return new Boolean(loggingIsOn);
+		return new Boolean(serviceLoggingIsOn);
+	}
+
+	/**
+	 * @return Returns the mapUsersToWatch.
+	 */
+	public HashMap getMapUsersToWatch(IUserView id)
+	{
+		return mapUsersToWatch;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.IServiceManagerWrapper#loggingIsOn()
+	 */
+	public Boolean userLoggingIsOn(IUserView id)
+	{
+		return new Boolean(userLoggingIsOn);
 	}
 
 }
