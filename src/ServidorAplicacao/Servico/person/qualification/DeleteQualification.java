@@ -13,70 +13,81 @@ import ServidorPersistente.IPersistentQualification;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-
 /**
  * @author Barbosa
  * @author Pica
  */
 
-public class DeleteQualification implements IServico {
+public class DeleteQualification implements IServico
+{
 
 	private static DeleteQualification service = new DeleteQualification();
 
 	/**
 	 * The singleton access method of this class.
 	 */
-	public static DeleteQualification getService() {
+	public static DeleteQualification getService()
+	{
 		return service;
 	}
 
 	/**
 	 * The constructor of this class.
 	 */
-	private DeleteQualification() {
+	private DeleteQualification()
+	{
 	}
 
 	/**
 	 * The name of the service
 	 */
-	public final String getNome() {
+	public final String getNome()
+	{
 		return "DeleteQualification";
 	}
 
 	/**
 	 * Executes the service
+	 * 
+	 * @param managerPersonKey
+	 *                    the identification of the person that is running the service
+	 * @param infoQualification
+	 *                    the deleted qualification to be
 	 */
-	public void run(
-		Integer managerPersonkey,
-		InfoQualification infoQualification)
-		throws FenixServiceException {
+	public void run(Integer managerPersonKey, InfoQualification infoQualification)
+		throws FenixServiceException
+	{
 
 		ISuportePersistente persistentSupport = null;
 		IPersistentQualification persistentQualification = null;
 
-		try {
+		try
+		{
 			persistentSupport = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e) {
+		} catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace();
 			throw new FenixServiceException("Unable to dao factory!", e);
 		}
 
-		try {
-			if(infoQualification.getIdInternal() == null)
+		try
+		{
+			//If the qualification to be deleted is not defined the service returns an error
+			if (infoQualification.getIdInternal() == null)
 			{
-				throw new FenixServiceException("Qualification id is NULL!");
+				throw new FenixServiceException("DeleteQualification service: Qualification id is null!");
 			}
-			
-			persistentQualification =
-				persistentSupport.getIPersistentQualification();
 
+			//Deleting the qualification
+			persistentQualification = persistentSupport.getIPersistentQualification();
 			persistentSupport.iniciarTransaccao();
-			
 			persistentQualification.deleteByOID(Qualification.class, infoQualification.getIdInternal());
 
-		} catch (ExcepcaoPersistencia e) {
+		} catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e.getMessage());
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw new FenixServiceException(e.getMessage());
 		}
 	}

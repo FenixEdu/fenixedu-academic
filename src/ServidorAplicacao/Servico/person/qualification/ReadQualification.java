@@ -19,68 +19,80 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  */
 
-public class ReadQualification implements IServico {
+public class ReadQualification implements IServico
+{
 
 	private static ReadQualification service = new ReadQualification();
 
 	/**
 	 * The singleton access method of this class.
 	 */
-	public static ReadQualification getService() {
+	public static ReadQualification getService()
+	{
 		return service;
 	}
 
 	/**
 	 * The constructor of this class.
 	 */
-	private ReadQualification() {
+	private ReadQualification()
+	{
 	}
 
 	/**
 	 * The name of the service
 	 */
-	public final String getNome() {
+	public final String getNome()
+	{
 		return "ReadQualification";
 	}
 
 	/**
 	 * Executes the service
+	 * 
+	 * @param managerPersonKey
+	 *                    the identification of the person that is running the service
+	 * @param infoQualification
+	 *                    the create/edit qualification to be
 	 */
-	public IQualification run(
-		Integer managerPersonkey,
-		InfoQualification infoQualification)
-		throws FenixServiceException {
-
+	public IQualification run(Integer managerPersonkey, InfoQualification infoQualification)
+		throws FenixServiceException
+	{
 		ISuportePersistente persistentSupport = null;
 		IPersistentQualification persistentQualification = null;
 
-		try {
+		try
+		{
 			persistentSupport = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e) {
+		} catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace();
 			throw new FenixServiceException("Unable to dao factory!", e);
 		}
 
-		try {
-			persistentQualification =
-				persistentSupport.getIPersistentQualification();
-
+		try
+		{
+			persistentQualification = persistentSupport.getIPersistentQualification();
 			persistentSupport.iniciarTransaccao();
-
+			
+			//Try to read the qualification
 			IQualification qualification = null;
 			qualification =
 				(IQualification) persistentQualification.readByOID(
 					Qualification.class,
 					infoQualification.getIdInternal());
 
-			if (qualification == null) { //Erro, a qualificação a ler não existe
+			if (qualification == null) //The qualification doesn't exist
+			{ 
 				throw new FenixServiceException("Read an inexistent Qualification");
 			}
 			return qualification;
 
-		} catch (ExcepcaoPersistencia e) {
+		} catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e.getMessage());
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw new FenixServiceException(e.getMessage());
 		}
 	}
