@@ -120,6 +120,29 @@ create table ENROLMENT (
 
 
 #----------------------------
+# Table structure for CURRICULAR_YEAR
+#----------------------------
+drop table if exists CURRICULAR_YEAR;
+create table CURRICULAR_YEAR (
+   ID_INTERNAL int(11) not null auto_increment,
+   YEAR int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (YEAR)
+)type=InnoDB;
+
+#----------------------------
+# Table structure for CURRICULAR_SEMESTER
+#----------------------------
+drop table if exists CURRICULAR_SEMESTER;
+create table CURRICULAR_SEMESTER (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_CURRICULAR_YEAR int(11) not null,
+   SEMESTER int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (SEMESTER, KEY_CURRICULAR_YEAR)
+)type=InnoDB;
+
+#----------------------------
 # Table structure for BRANCH
 #----------------------------
 drop table if exists BRANCH;
@@ -129,6 +152,22 @@ create table BRANCH (
    BRANCH_NAME varchar(255),
    primary key (ID_INTERNAL),
    unique U1 (BRANCH_NAME, BRANCH_CODE)
+)type=InnoDB;
+
+#==================================================================================
+# ZONA TABELAS DE RELACAO MUITOS PARA MUITOS
+#==================================================================================
+
+#----------------------------
+# Table structure for CURRICULAR_COURSE_CURRICULAR_SEMESTER
+#----------------------------
+drop table if exists CURRICULAR_COURSE_CURRICULAR_SEMESTER;
+create table CURRICULAR_COURSE_CURRICULAR_SEMESTER (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_CURRICULAR_SEMESTER int(11) not null,
+   KEY_CURRICULAR_COURSE int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE)
 )type=InnoDB;
 
 #----------------------------
@@ -156,12 +195,27 @@ create table STUDENT_CURRICULAR_PLAN_BRANCH (
 )type=InnoDB;
 
 #----------------------------
-# Table structure for CURRICULAR_YEAR
+# Table structure for EQUIVALENCE
 #----------------------------
-drop table if exists CURRICULAR_YEAR;
-create table CURRICULAR_YEAR (
+drop table if exists EQUIVALENCE;
+create table EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
-   YEAR int(11) not null,
+   KEY_EQUIVALENT_ENROLMENT int(11) not null,
+   KEY_ENROLMENT int(11) not null,
+   EQUIVALENCE_TYPE int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (YEAR)
+   unique U1 (KEY_EQUIVALENT_ENROLMENT, KEY_ENROLMENT)
 )type=InnoDB;
+
+#----------------------------
+# Table structure for PRECEDENCE
+#----------------------------
+drop table if exists PRECEDENCE;
+create table PRECEDENCE (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_CURRICULAR_COURSE int(11) not null,
+   KEY_PRECEDING_CURRICULAR_COURSE int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_CURRICULAR_COURSE, KEY_PRECEDING_CURRICULAR_COURSE)
+)type=InnoDB;
+
