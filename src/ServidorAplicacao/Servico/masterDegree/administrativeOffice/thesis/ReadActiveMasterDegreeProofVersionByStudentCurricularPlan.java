@@ -4,6 +4,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
+import Dominio.IBranch;
 import Dominio.IMasterDegreeProofVersion;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -50,15 +51,29 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implement
                 throw new NonExistingServiceException(
                         "error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
 
-            infoMasterDegreeProofVersion = Cloner
-                    .copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(masterDegreeProofVersion);
+            IBranch branch =
+				masterDegreeProofVersion
+					.getMasterDegreeThesis()
+					.getStudentCurricularPlan()
+					.getBranch();
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+			if (branch != null) {
 
-        return infoMasterDegreeProofVersion;
+				branch.getIdInternal();
+			}
+
+			infoMasterDegreeProofVersion =
+				Cloner
+					.copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(
+					masterDegreeProofVersion);
+
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		return infoMasterDegreeProofVersion;
     }
 }
