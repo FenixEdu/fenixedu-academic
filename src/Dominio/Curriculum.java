@@ -31,6 +31,11 @@ public class Curriculum extends DomainObject implements ICurriculum {
 	public Curriculum(Integer idInternal) {
 		setIdInternal(idInternal);
 	}
+	
+	public Curriculum(ICurricularCourse curricularCourse) {
+		setCurricularCourse(curricularCourse);
+		}
+	
 	public Curriculum(
 		ICurricularCourse curricularCourse,
 		String generalObjectives,
