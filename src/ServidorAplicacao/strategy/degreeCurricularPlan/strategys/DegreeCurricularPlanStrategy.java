@@ -1,10 +1,15 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 import DataBeans.InfoFinalResult;
+import Dominio.EnrolmentEvaluation;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -83,7 +88,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		float marks = 0;
 		int numberOfCourses = 0;
 		List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
-	
+		
 		Iterator iterator = enrolments.iterator();
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
@@ -91,10 +96,13 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 				(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
 				if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)){
 					
-					Iterator evaluations = enrolment.getEvaluations().iterator();
+					List newEnrolmentList = newEnrolmentList(enrolment);
+					Iterator evaluations = newEnrolmentList.iterator();
+					
 					int enrolmentMark = 0;
 					while(evaluations.hasNext()){
 						IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) evaluations.next();
+							
 						try {
 							if (new Integer(enrolmentEvaluation.getGrade()).intValue() > enrolmentMark){
 								enrolmentMark = new Integer(enrolmentEvaluation.getGrade()).intValue();
@@ -128,9 +136,9 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)) &&
 				(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
-				if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)){
-					
-					Iterator evaluations = enrolment.getEvaluations().iterator();
+				if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)){	
+					List newEnrolmentList = newEnrolmentList(enrolment);				
+					Iterator evaluations = newEnrolmentList.iterator();
 					int enrolmentMark = 0;
 					float enrolmentWeight = 0;
 					while(evaluations.hasNext()){
@@ -146,6 +154,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 					}
 					if (enrolmentMark > 0) {
 						marks += (enrolmentMark * enrolmentWeight);
+
 						numberOfWeigths += enrolmentWeight;		
 					}
 					
@@ -165,9 +174,9 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 
 	public void calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan, InfoFinalResult infoFinalResult) throws ExcepcaoPersistencia {
-		
+	
 		// Degrees that use the Mixed Average (Average between Simple and Weighted average)
-		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/03")) || 
+		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/04")) || 
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))){
 			Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 			Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
@@ -180,9 +189,9 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		}
 
 		// Degrees that use the Best Average (Best between Simple and Weighted average)
-		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MB02/03")) || 
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MB03/04")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MIOES02/03"))) {
+		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MB02/04")) || 
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MB03/05")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MIOES02/04"))) {
 				Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 				Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
 		
@@ -199,20 +208,20 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		
 		
 		// Degrees that use the Weighted Average 
-		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE02/03")) ||
+		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE02/04")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE03/05")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MF02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MF02/04")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MF03/05")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MC02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MC02/04")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MC03/05")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEMAT02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEMAT02/04")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEQ03/04")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MSIG02/03")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MCES02/03")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MSIG02/04")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MCES02/04")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC02/04")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC03/05")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML03/05")) ||
-			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/03"))) {
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/04"))) {
 				
 				Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
 
@@ -228,6 +237,25 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 				
 		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0)));
 		
+	}
+	
+	public List newEnrolmentList (IEnrolment enrolmentList){
+		Object result = null;
+		List newEnrolmentList = new ArrayList();
+
+		List aux = enrolmentList.getEvaluations();
+
+			if (aux.size() > 1)
+			 {
+				 BeanComparator dateComparator = new BeanComparator("when");
+				 Collections.sort(aux, dateComparator);
+				 Collections.reverse(aux);
+	 		}
+				 EnrolmentEvaluation latestEvaluation =
+					 (EnrolmentEvaluation) aux.get(0);
+				 newEnrolmentList.add(latestEvaluation);
+			
+		return newEnrolmentList;
 	}
 
 

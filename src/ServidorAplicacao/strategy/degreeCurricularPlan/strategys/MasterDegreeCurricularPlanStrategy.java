@@ -49,9 +49,9 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
+	
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))&&
 				(!(enrolment instanceof IEnrolmentInExtraCurricularCourse))){
-
 				studentCredits += enrolment.getCurricularCourse().getCredits().floatValue(); 
 			}
 		}
