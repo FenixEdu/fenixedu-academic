@@ -17,6 +17,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.Turma;
@@ -245,6 +246,18 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente
         criteria.addEqualTo(
             "associatedShifts.disciplinaExecucao.idInternal",
             executionCourse.getIdInternal());
+        return queryList(Turma.class, criteria, true);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ITurmaPersistente#readClassesThatContainsStudentAttendsOnExecutionPeriod(Dominio.IStudent, Dominio.IExecutionPeriod)
+     */
+    public List readClassesThatContainsStudentAttendsOnExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+        Criteria criteria =new Criteria();
+        
+        criteria.addEqualTo("associatedShifts.disciplinaExecucao.attendingStudents.idInternal", student.getIdInternal());
+        criteria.addEqualTo("associatedShifts.disciplinaExecucao.executionPeriod.idInternal", executionPeriod.getIdInternal());
         return queryList(Turma.class, criteria, true);
     }
 }

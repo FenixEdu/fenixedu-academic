@@ -15,6 +15,7 @@ import java.util.List;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IStudent;
 import Dominio.ITurma;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
@@ -75,4 +76,11 @@ public interface ITurmaPersistente extends IPersistentObject {
 	 */
 	public List readByExecutionCourse(IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia;
+
+	/**
+     * @param student
+     * @param executionPeriod
+     * @return
+     */
+    public List readClassesThatContainsStudentAttendsOnExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 }
