@@ -6826,8 +6826,20 @@
         </filterChains>
     </service>
 
+
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->
+
+
+    <service>
+        <name>SchoolRegistration</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.schoolRegistration.SchoolRegistration</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>         
+        </filterChains>
+    </service>
 
 </serviceDefinitions>
