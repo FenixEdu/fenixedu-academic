@@ -585,4 +585,11 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>ReadGratuityListAuthorization</name>
+        <expression>MasterDegreeAdministrativeOfficeAuthorization || DirectiveCouncilAuthorization </expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>    
 </filterChainsDefinitions>
