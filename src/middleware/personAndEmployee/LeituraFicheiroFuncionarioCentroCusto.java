@@ -34,12 +34,11 @@ public class LeituraFicheiroFuncionarioCentroCusto {
   public Collection lerFicheiro(String ficheiroValidas, String delimitador, 
     Hashtable estrutura, Collection ordem) throws NotExecuteException{
             
-//    this.estrutura = estrutura;
+
     this.ordem = ordem;
     this.lista = new ArrayList();
     this.ficheiro = null;
     this.leitura = null;
-//    this.escrita = null;
     
     String linhaFicheiro = null;
     Hashtable instancia = null; 

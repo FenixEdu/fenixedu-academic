@@ -25,7 +25,7 @@ public class Employee extends DomainObject implements IEmployee {
 	
 	private Boolean active;
 
-	public Employee() {
+	public Employee() {		
 	}
 
 	public Employee(Integer idInternal) {

@@ -73,13 +73,8 @@ public class ServicoSeguroActualizarFuncionarios
 		List unusedPersons = new ArrayList();
 
 		broker.beginTransaction();
-
-		/* ciclo para percorrer a Collection de Funcionarios */
-		/* algoritmo */
-
-		/* Recuperar registos */
-
-		/* Procurar chavePessoa correspondente e criar funcionario */
+	
+		/* Find the correspond person and create the employee */
 		Iterator iteradorNovo = lista.iterator();
 
 		System.out.println("Migrating " + lista.size() + " Employees ...");

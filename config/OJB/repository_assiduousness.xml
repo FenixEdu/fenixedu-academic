@@ -1,35 +1,4 @@
 <!-- Definitions for . -->
-
-<class-descriptor 
-  class="Dominio.FuncNaoDocente"
-  table="ass_FUNC_NAO_DOCENTE"
->
-  <field-descriptor id="0"
-    name="codigoInterno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-  <field-descriptor id="1"
-    name="chaveFuncionario"
-    column="chaveFuncionario"
-    jdbc-type="INTEGER"
-  />
-  <reference-descriptor
-  	name="funcionario"
-  	class-ref="Dominio.Employee">
-  	<foreignkey field-ref="chaveFuncionario"/>
-  </reference-descriptor>  
-</class-descriptor>
-
-
 <class-descriptor 
   class="Dominio.Employee"
   table="ass_FUNCIONARIO"
@@ -41,12 +10,12 @@
     primarykey="true"
     autoincrement="true"
   />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+  <field-descriptor
+   	name="ackOptLock"
+  	column="ACK_OPT_LOCK"
+   	jdbc-type="INTEGER"
+   	locking="true"
+  />
   <field-descriptor id="1"
     name="keyPerson"
     column="chavePessoa"
@@ -68,7 +37,10 @@
     jdbc-type="DATE"
   />
     
-  <field-descriptor id="5" name="active" column="ACTIVE" jdbc-type="BIT"/>
+  <field-descriptor id="5" 
+  	name="active" 
+  	column="ACTIVE" 
+  	jdbc-type="BIT"/>
   
   <reference-descriptor
          name="person"
@@ -83,6 +55,35 @@
 	proxy="false">
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor> 
+</class-descriptor>
+
+<class-descriptor 
+  class="Dominio.EmployeeNotTeacher"
+  table="ass_FUNC_NAO_DOCENTE"
+>
+  <field-descriptor id="0"
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />
+  <field-descriptor
+   	name="ackOptLock"
+  	column="ACK_OPT_LOCK"
+   	jdbc-type="INTEGER"
+   	locking="true"
+  />
+  <field-descriptor id="1"
+    name="keyEmployee"
+    column="chaveFuncionario"
+    jdbc-type="INTEGER"
+  />
+  <reference-descriptor
+  	name="employee"
+  	class-ref="Dominio.Employee">
+  	<foreignkey field-ref="keyEmployee"/>
+  </reference-descriptor>  
 </class-descriptor>
 
 <class-descriptor 
@@ -194,6 +195,38 @@
          name="status"
          class-ref="Dominio.StatusAssiduidade">
          <foreignkey field-ref="keyStatus"/>
+  </reference-descriptor>  
+</class-descriptor>
+
+
+<!-- Old classes -->
+
+<class-descriptor 
+  class="Dominio.FuncNaoDocente"
+  table="ass_FUNC_NAO_DOCENTE"
+>
+  <field-descriptor id="0"
+    name="codigoInterno"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+  <field-descriptor id="1"
+    name="chaveFuncionario"
+    column="chaveFuncionario"
+    jdbc-type="INTEGER"
+  />
+  <reference-descriptor
+  	name="funcionario"
+  	class-ref="Dominio.Employee">
+  	<foreignkey field-ref="chaveFuncionario"/>
   </reference-descriptor>  
 </class-descriptor>
 

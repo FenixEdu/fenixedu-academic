@@ -49,7 +49,6 @@ public class Pessoa extends DomainObject implements IPessoa {
 	private String username;
 
 	private List manageableDepartmentCredits;
-
 	private List advisories;
 
 	/**
