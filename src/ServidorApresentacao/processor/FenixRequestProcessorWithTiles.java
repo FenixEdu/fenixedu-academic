@@ -35,7 +35,7 @@ public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
 
 			if ((session == null)
 				|| (session.isNew())
-				|| ((session != null)
+				&& ((session != null)
 					&& (!session.getAttributeNames().hasMoreElements()))) {
 				ActionErrors errors = new ActionErrors();
 
