@@ -43,9 +43,9 @@
 		           <tr>
 		             <td>Password: </td>
 		             <td>
-					 	<html:password property="password"/>
+					 	<html:password property="password" redisplay="false"/>
 		             </td>
-		             <td><span class="error"><html:errors property="password"/></span>
+		             <td><span class="error"><html:errors property="password" /></span>
 		             </td>
 		           </tr>
 	           </table>

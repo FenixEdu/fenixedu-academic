@@ -24,6 +24,8 @@
         <form-property name="index" type="java.lang.String"/>
 
         <form-property name="curYear" type="java.lang.Integer"/>
+        <form-property name="ePName" type="java.lang.String"/>
+        <form-property name="eYName" type="java.lang.String"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
       
@@ -194,11 +196,18 @@
 	<!-- Turnos -->
 	
 	<action path="/prepareSelectExecutionCourseAction"
-            type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction"
-            >
+            type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction">
           <forward name="sucess" path="/prepareSelectExecutionCourse.jsp"/>
           
       </action>
+	<action 
+		path="/viewSiteExecutionCourse"
+		name="chooseExecutionCourseForm"
+		input="/chooseContextDA.do?method=nextPagePublic"
+		parameter="method"
+        type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
+     <forward name="sucess" path="/executionCourseSite.jsp"/>   
+   	</action>
 
 
 	  <!-- SALAS -->
@@ -244,7 +253,6 @@
       
       <action 
               input="/viewShifts.jsp"
-             
       		  path="/viewShiftTimeTable"
              type="ServidorApresentacao.Action.publico.ViewShiftTimeTableAction"
               >
@@ -257,9 +265,11 @@
 	 
 	<!-- Site viewer -->
 	<action 
-		name="chooseExecutionCourseForm"
 		path="/viewSite"
+		name="chooseExecutionCourseForm"
+		input="/executionCourseNotFound.jsp"
 		parameter="method"
+		validate="true"
         type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
      <forward name="sucess" path="/executionCourseSite.jsp"/>   
    	</action>

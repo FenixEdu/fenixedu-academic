@@ -41,8 +41,7 @@ public class ViewExamsAction extends FenixAction {
 		
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
-		Integer executionCourseCode =
-			(Integer) request.getAttribute("objectCode");
+		Integer executionCourseCode = new Integer(request.getParameter("objectCode"));
 		if (executionCourseCode == null) {
 
 			InfoSite infoSite =

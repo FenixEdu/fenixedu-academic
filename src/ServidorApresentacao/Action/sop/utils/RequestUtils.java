@@ -115,7 +115,7 @@ public abstract class RequestUtils {
 			throw new FenixActionException(e);
 		}
 		if (infoExecutionPeriod == null) {
-			System.out.println("there is a link missing the ePName parameter");
+			System.out.println("ERROR: There is a link missing the ePName parameter! from("+request.getHeader("Referer")+") to("+request.getRequestURI()+")");
 		}
 		return infoExecutionPeriod;
 	}
@@ -191,7 +191,7 @@ public abstract class RequestUtils {
 		}
 		if (nameDegreeCurricularPlan==null) {
 			nameDegreeCurricularPlan =  request.getParameter("nameDegreeCurricularPlan");
-				}				
+		}				
 		
 		Object[] args1 =
 			{	infoExecutionYear,

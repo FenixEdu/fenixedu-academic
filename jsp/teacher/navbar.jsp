@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -18,6 +17,7 @@
 <li><html:link page="/viewEvaluation.do?method=viewEvaluation" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li>
 <li><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.bibliography"/></html:link></li>
 <li><html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.teachers"/></html:link></li>
+<li><html:link page="/viewExams.do" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.exams"/></html:link></li>
 <li><html:link page="/sectionManagement.do?method=prepareCreateRootSection" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.createRootSection"/></html:link></li>
 </ul>
 <ul>
