@@ -59,7 +59,7 @@ create table DEGREE_CURRICULAR_PLAN (
    INITIAL_DATE date,
    END_DATE date,
    DEGREE_DURATION int(11) not null,
-   MINIMAL_YEAR_FOR_OPTIONAL_COURSES int(11) not null,,
+   MINIMAL_YEAR_FOR_OPTIONAL_COURSES int(11) not null,
    NEEDED_CREDITS float (11,2),
    MARK_TYPE integer (11),
    primary key (ID_INTERNAL),
@@ -188,7 +188,7 @@ drop table if exists ENROLMENT_EQUIVALENCE;
 create table ENROLMENT_EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_ENROLMENT int(11) not null,
-   primary key (ID_INTERNAL),
+   primary key (ID_INTERNAL)
 )type=InnoDB;
 
 -- ----------------------------
