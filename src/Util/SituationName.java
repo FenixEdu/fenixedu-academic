@@ -301,7 +301,7 @@ public class SituationName extends FenixUtil {
         if (situationName.intValue() == SituationName.ADMITED_SPECIALIZATION)
             return SituationName.ADMITED_SPECIALIZATION_STRING;
         if (situationName.intValue() == SituationName.ADMITED_CONDICIONAL_FINALIST)
-            return SituationName.ADMITED_CONDICIONAL_OTHER_STRING;
+            return SituationName.ADMITED_CONDICIONAL_FINALIST_STRING;
         if (situationName.intValue() == SituationName.ADMITED_CONDICIONAL_OTHER)
             return SituationName.ADMITED_CONDICIONAL_OTHER_STRING;
         if (situationName.intValue() == SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR)
