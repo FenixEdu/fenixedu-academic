@@ -22,6 +22,8 @@ import Util.TipoCurso;
 
 public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 
+
+    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia;
 	/**
 	 * 
 	 * @param studentNumber

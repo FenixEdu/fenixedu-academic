@@ -1432,10 +1432,15 @@ public abstract class Cloner {
 	public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
 
 		InfoBranch infoBranch = new InfoBranch();
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;        
+        //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 25/Set/2003
+        if (branch != null)
+        {
+		infoDegreeCurricularPlan =
 			Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
 				branch.getDegreeCurricularPlan());
 		copyObjectProperties(infoBranch, branch);
+        }
 		infoBranch.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		return infoBranch;
 	}

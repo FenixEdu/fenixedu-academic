@@ -235,4 +235,28 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+    //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 24/Set/2003 
+    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
+        try {
+            IStudentCurricularPlan studentCurricularPlan = null;
+            String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+            oqlQuery += " where student.number = $1" ;
+            oqlQuery += " and student.degreeType = $2 ";
+            oqlQuery += " and currentState = $3";
+
+            query.create(oqlQuery);
+            query.bind(number);
+            query.bind(degreeType);
+            query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
+            
+            List result = (List) query.execute();
+            lockRead(result);
+            if (result.size() != 0)
+                studentCurricularPlan = (IStudentCurricularPlan) result.get(0);
+            return studentCurricularPlan;
+        } catch (QueryException ex) {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }    
+    
 }

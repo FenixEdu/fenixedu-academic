@@ -27,7 +27,7 @@ public class InfoCandidacyDetails
     private String motivation; 
     private InfoCurricularCourse curricularCourse;
     private Integer idInternal;
-    private Integer classification;
+    private Double classification;
     private Integer completedCourses;
 
 	/**
@@ -161,7 +161,7 @@ public class InfoCandidacyDetails
 	/**
 	 * @return
 	 */
-	public Integer getClassification()
+	public Double getClassification()
 	{
 		return classification;
 	}
@@ -177,7 +177,7 @@ public class InfoCandidacyDetails
 	/**
 	 * @param integer
 	 */
-	public void setClassification(Integer integer)
+	public void setClassification(Double integer)
 	{
 		classification= integer;
 	}

@@ -25,6 +25,9 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 	protected StudentCurricularPlanState currentState;
 	protected Specialization specialization;
 	protected Double givenCredits; 
+    protected Double classification;
+    protected Integer enrolledCourses;
+    protected Integer completedCourses; 
 
 	/**
 	 * @return
@@ -174,6 +177,54 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 	 */
 	public void setSpecialization(Specialization specialization) {
 		this.specialization = specialization;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getClassification()
+	{
+		return classification;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getEnrolledCourses()
+	{
+		return enrolledCourses;
+	}
+
+	/**
+	 * @param double1
+	 */
+	public void setClassification(Double double1)
+	{
+		classification= double1;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setEnrolledCourses(Integer integer)
+	{
+		enrolledCourses= integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getCompletedCourses()
+	{
+		return completedCourses;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setCompletedCourses(Integer integer)
+	{
+		completedCourses= integer;
 	}
 
 }

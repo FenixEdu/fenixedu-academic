@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoStudent;
+import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.SiteView;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCandidacyDetails;
@@ -41,7 +42,7 @@ public class ShowCandidacies extends FenixAction
 	Object[] getReadCandidaciesArgs(HttpServletRequest request) throws FenixActionException
 	{
 		Integer modalityID;
-        Integer themeID;
+		Integer themeID;
 		Integer case1Id;
 		Integer case2Id;
 		Integer case3Id;
@@ -50,14 +51,14 @@ public class ShowCandidacies extends FenixAction
 		Integer curricularCourseID;
 		Integer degreeID;
 		Integer seminaryID;
-        try
-        {
-            themeID= new Integer((String) request.getParameter("themeID"));
-        }
-        catch (NumberFormatException ex)
-        {
-            themeID= new Integer(-1);
-        }        
+		try
+		{
+			themeID= new Integer((String) request.getParameter("themeID"));
+		}
+		catch (NumberFormatException ex)
+		{
+			themeID= new Integer(-1);
+		}
 		try
 		{
 			modalityID= new Integer((String) request.getParameter("modalityID"));
@@ -131,7 +132,17 @@ public class ShowCandidacies extends FenixAction
 			degreeID= new Integer(-1);
 		}
 		Object[] arguments=
-			{ modalityID, seminaryID, themeID,case1Id, case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID };
+			{
+				modalityID,
+				seminaryID,
+				themeID,
+				case1Id,
+				case2Id,
+				case3Id,
+				case4Id,
+				case5Id,
+				curricularCourseID,
+				degreeID };
 		return arguments;
 	}
 	public ActionForward execute(
@@ -160,6 +171,7 @@ public class ShowCandidacies extends FenixAction
 				InfoModality modality= null;
 				String motivation= null;
 				InfoSeminary seminary= null;
+				InfoStudentCurricularPlan studentCurricularPlan= null;
 				List casesChoices= null;
 				List cases= new LinkedList();
 				InfoCandidacy candidacy= (InfoCandidacy) iterator.next();
@@ -169,6 +181,12 @@ public class ShowCandidacies extends FenixAction
 				Object[] argsReadModality= { candidacy.getModalityIdInternal()};
 				Object[] argsReadSeminary= { candidacy.getSeminaryIdInternal()};
 				student= (InfoStudent) gestor.executar(userView, "student.ReadStudentById", argsReadStudent);
+				Object[] argsReadCurricularPlan= { student.getNumber(), student.getDegreeType()};
+				studentCurricularPlan=
+					(InfoStudentCurricularPlan) gestor.executar(
+						userView,
+						"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+						argsReadCurricularPlan);
 				curricularCourse=
 					(InfoCurricularCourse) ((SiteView) gestor
 						.executar(userView, "ReadCurricularCourseByOIdService", argsReadCurricularCourse))
@@ -190,14 +208,25 @@ public class ShowCandidacies extends FenixAction
 							argsReadCaseStudy);
 					cases.add(infoCaseStudy);
 				}
-				//   
+				//  
 				InfoCandidacyDetails infoCandidacyDetails= new InfoCandidacyDetails();
 				infoCandidacyDetails.setCases(cases);
-                infoCandidacyDetails.setIdInternal(candidacy.getIdInternal());
+				infoCandidacyDetails.setIdInternal(candidacy.getIdInternal());
 				infoCandidacyDetails.setModality(modality);
 				infoCandidacyDetails.setSeminary(seminary);
 				infoCandidacyDetails.setStudent(student);
 				infoCandidacyDetails.setTheme(theme);
+				if (studentCurricularPlan != null)
+				{
+					infoCandidacyDetails.setClassification(studentCurricularPlan.getClassification());
+					infoCandidacyDetails.setCompletedCourses(studentCurricularPlan.getCompletedCourses());
+				}
+                else
+                {
+                    System.out.println("Isto e null !!");
+                    infoCandidacyDetails.setClassification(null);
+                    infoCandidacyDetails.setCompletedCourses(null);                    
+                }
 				infoCandidacyDetails.setMotivation(candidacy.getMotivation());
 				infoCandidacyDetails.setCurricularCourse(curricularCourse);
 				candidaciesExtendedInfo.add(infoCandidacyDetails);
@@ -207,7 +236,7 @@ public class ShowCandidacies extends FenixAction
 		{
 			throw new FenixActionException();
 		}
-        this.setAvaliableOptionsForInputQueries(request, userView);        
+		this.setAvaliableOptionsForInputQueries(request, userView);
 		request.setAttribute("candidacies", candidaciesExtendedInfo);
 		destiny= mapping.findForward("allCandidaciesGrid");
 		return destiny;
