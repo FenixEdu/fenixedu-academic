@@ -162,7 +162,7 @@
       </action>
 		
 
-      <action input="/chooseContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseContext"
+      <action input="/chooseContextDA.do?method=preparePublic&amp;page=0&amp;inputPage=chooseContext"
               name="chooseSearchContextForm"
               parameter="method"
               path="/chooseContextDA"
