@@ -3,9 +3,7 @@ package framework.factory;
 import java.rmi.RemoteException;
 import java.util.Map;
 
-import javax.ejb.CreateException;
 import javax.ejb.EJBException;
-import javax.naming.NamingException;
 
 import ServidorAplicacao.IServiceManagerWrapper;
 import ServidorAplicacao.IUserView;
@@ -44,14 +42,20 @@ public class ServiceManagerServiceFactory {
         }
 
         try {
-            service = createServiceManager(
-                    "Fenix/ServidorAplicacao/ServiceManagerLocal",
-                    ServiceManagerLocalHome.class);
+            ServiceManagerLocalHome serviceManagerLocalHome = (ServiceManagerLocalHome) EJBHomeFactory
+                    .getInstance().lookupLocalHome(
+                            "Fenix/ServidorAplicacao/ServiceManagerLocal",
+                            ServiceManagerLocalHome.class);
+            System.out.println("Using local ejb service manager calls.");
+            service = serviceManagerLocalHome.create();
         } catch (Exception e) {
             try {
-                service = createServiceManager(
-                        "Fenix/ServidorAplicacao/ServiceManager",
-                        ServiceManagerHome.class);
+                ServiceManagerHome serviceManagerHome = (ServiceManagerHome) EJBHomeFactory
+                        .getInstance().lookupHome(
+                                "Fenix/ServidorAplicacao/ServiceManager",
+                                ServiceManagerHome.class);
+                System.out.println("Using remote ejb service manager calls.");
+                service = serviceManagerHome.create();
             } catch (Exception e2) {
                 try {
                     Class serviceMagagerBeanClass = Class
@@ -61,20 +65,11 @@ public class ServiceManagerServiceFactory {
                     System.out.println("Using direct service manager calls.");
                 } catch (Exception e1) {
                     service = null;
-                    throw new RuntimeException("Unable to create any service manager.", e2);
+                    throw new RuntimeException(
+                            "Unable to create any service manager.", e2);
                 }
             }
         }
-    }
-
-    private IServiceManagerWrapper createServiceManager(String jndiName, Class homeClass)
-    		throws ClassCastException, NamingException, CreateException {
-
-        ServiceManagerLocalHome serviceManagerLocalHome = (ServiceManagerLocalHome) EJBHomeFactory
-                .getInstance().lookupLocalHome(jndiName, homeClass);
-        System.out.println("Using ejb service manager calls. Home class= " + homeClass.getName());
-
-        return serviceManagerLocalHome.create();
     }
 
     private static ServiceManagerServiceFactory getInstance() {
@@ -110,8 +105,10 @@ public class ServiceManagerServiceFactory {
         try {
             return service.execute(userView, serviceName, serviceArgs);
         } catch (EJBException e) {
-            if (e != null && e.getCause() != null && e.getCause() instanceof FenixServiceException) {
-                FenixServiceException fenixServiceException = (FenixServiceException) e.getCause();
+            if (e != null && e.getCause() != null
+                    && e.getCause() instanceof FenixServiceException) {
+                FenixServiceException fenixServiceException = (FenixServiceException) e
+                        .getCause();
                 throw fenixServiceException;
             } else {
                 throw new FenixRemoteServiceException(e);
