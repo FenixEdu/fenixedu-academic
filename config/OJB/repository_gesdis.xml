@@ -281,25 +281,29 @@
     <field-descriptor id="2"
         name="title"
         column="TITLE"
-        jdbc-type="VARCHAR"
+         jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	/>
     
     <field-descriptor id="3"
         name="authors"
         column="AUTHORS"
-        jdbc-type="VARCHAR"
+          jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	/>
     
     <field-descriptor id="4"
         name="reference"
         column="REFERENCE"
-        jdbc-type="VARCHAR"
+          jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	/>
     
     <field-descriptor id="5"
         name="year"
         column="YEAR"
-        jdbc-type="VARCHAR"
+          jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	/>
 	
 	<field-descriptor id="6"
