@@ -22,8 +22,7 @@ public class TestCasePresentation extends MockStrutsTestCase {
 
 	public void setUp() throws Exception {
 		super.setUp();
-		//ligarSuportePersistente();
-		//cleanData();
+		
 		//		The following code backs up the contents of the database
 		// and loads the database with the data set required to run
 		// the test cases.
@@ -43,7 +42,6 @@ public class TestCasePresentation extends MockStrutsTestCase {
 		try {
 			_dbAcessPoint.openConnection();
 			_dbAcessPoint.loadDataBase("etc/testBackup.xml");
-			//_dbAcessPoint.loadDataBase("etc/testDataSet.xml");
 			_dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println("Tear down failed: " + ex);
