@@ -219,7 +219,7 @@ public class PessoaOJBTest extends TestCaseOJB {
 		// End of Added Code
 		///////////////////////////////////////////////////////////////////
 
-        OQLQuery query = odmg.newOQLQuery();;
+        OQLQuery query = odmg.newOQLQuery();
         String oqlQuery = "select pessoa from " + Pessoa.class.getName();
         query.create(oqlQuery);
         result = (List) query.execute();

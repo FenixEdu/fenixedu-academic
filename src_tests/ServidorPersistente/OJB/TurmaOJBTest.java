@@ -284,7 +284,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			
 		Implementation odmg = null;
 		OQLQuery query = null;
-		String oqlQuery = null;;
+		String oqlQuery = null;
 		List result = null;
 		try {
 			persistentSupport.iniciarTransaccao();

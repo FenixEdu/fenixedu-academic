@@ -65,7 +65,7 @@ public class SuperConverter extends ObjectFenixOJB {
 	PersistenceBroker broker = null;
 	public SuperConverter() throws ExcepcaoPersistencia{
 		broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-	};
+	}
 
 
 
@@ -654,7 +654,7 @@ public static void main(String args[]) throws Exception{
 		
 			}
 			System.out.println("  Done !");
-		} catch(Exception e) {;
+		} catch(Exception e) {
 			System.out.println("Error converting Student " + student2Convert.getNumero());
 			throw new Exception(e);
 		}

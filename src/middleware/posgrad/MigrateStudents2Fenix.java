@@ -302,7 +302,7 @@ public class MigrateStudents2Fenix {
 			System.out.println("  Students Written: " + studentsWritten);
 			System.out.println("  Roles Written: " + rolesWritten);
 			System.out.println("  Done !");
-		} catch(Exception e) {;
+		} catch(Exception e) {
 			System.out.println("Error converting Student " + student2Convert.getNumero());
 			throw new Exception(e);
 		}

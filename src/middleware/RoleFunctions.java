@@ -27,7 +27,7 @@ import Util.RoleType;
 public class RoleFunctions {
 
 
-	public RoleFunctions(){};
+	public RoleFunctions(){}
 
 
 	public static void giveRole(IPessoa person, RoleType role, PersistenceBroker broker) throws Exception {

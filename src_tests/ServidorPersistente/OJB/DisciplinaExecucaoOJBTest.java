@@ -274,7 +274,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		  // End of Added Code
 		  ///////////////////////////////////////////////////////////////////
 
-		  OQLQuery query = odmg.newOQLQuery();;
+		  OQLQuery query = odmg.newOQLQuery();
 		  String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
 		  query.create(oqlQuery);
 		  List result = (List) query.execute();
@@ -405,7 +405,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		  ///////////////////////////////////////////////////////////////////
 
 
-		  OQLQuery query = odmg.newOQLQuery();;
+		  OQLQuery query = odmg.newOQLQuery();
 		  String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
 		  query.create(oqlQuery);
 		  List result = (List) query.execute();

@@ -84,7 +84,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentDegree = persistentSupport.getICursoPersistente();
-		persistentBranch = persistentSupport.getIPersistentBranch();;
+		persistentBranch = persistentSupport.getIPersistentBranch();
 	}
 
 	protected void tearDown() {

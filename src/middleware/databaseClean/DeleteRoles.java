@@ -27,7 +27,7 @@ import Util.RoleType;
  */
 public class DeleteRoles {
 	
-	public DeleteRoles(){};
+	public DeleteRoles(){}
 	
 	public static void main(String args[]) throws Exception{
 			

@@ -185,7 +185,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 
 		Implementation odmg = null;
 		OQLQuery query = null;
-		String oqlQuery = null;;
+		String oqlQuery = null;
 		List result = null;
 
 		try {
@@ -346,7 +346,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 
 		Implementation odmg = null;
 		OQLQuery query = null;
-		String oqlQuery = null;;
+		String oqlQuery = null;
 		List result = null;
 
 

@@ -216,7 +216,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 			
 			try {
 				persistentSupport.iniciarTransaccao();
-				IGroupProperties newGroupPropertiesRead = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse2,"nameD");;
+				IGroupProperties newGroupPropertiesRead = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse2,"nameD");
 				assertNotNull(newGroupPropertiesRead);
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia excepcaoPersistencia) {

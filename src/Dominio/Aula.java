@@ -163,7 +163,7 @@ public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
     if (_inicio!=null)
     result += ", inicio=" + _inicio.get(Calendar.HOUR_OF_DAY) +":"+_inicio.get(Calendar.MINUTE);
 	if (_fim!=null)
-    result += ", fim=" + _fim.get(Calendar.HOUR_OF_DAY) +":"+_fim.get(Calendar.MINUTE);;
+    result += ", fim=" + _fim.get(Calendar.HOUR_OF_DAY) +":"+_fim.get(Calendar.MINUTE);
     result += ", tipo=" + _tipo;
     result += ", chaveSala=" + _chaveSala;
     result += ", chaveDisciplinaExecucao=" + _chaveDisciplinaExecucao;

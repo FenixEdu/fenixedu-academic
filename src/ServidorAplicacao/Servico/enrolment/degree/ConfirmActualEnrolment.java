@@ -104,7 +104,7 @@ public class ConfirmActualEnrolment implements IServico {
 			Integer studentNumber = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getNumber();
 			TipoCurso tipoCurso = TipoCurso.LICENCIATURA_OBJ;
 
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readActiveStudentCurricularPlan(studentNumber, tipoCurso);;
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readActiveStudentCurricularPlan(studentNumber, tipoCurso);
 
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
 

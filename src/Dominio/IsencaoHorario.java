@@ -1274,7 +1274,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 	} /* descricaoHorario */
 
 	public String descricaoHorarioTipo(Locale locale, HorarioTipo horarioTipo, ArrayList listaRegimes) {
-		;
+		
 		String descricao = null;
 
 		descricao = new String((new Float(horarioTipo.getDuracaoSemanal())).intValue() + " horas ");

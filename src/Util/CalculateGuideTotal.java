@@ -7,7 +7,7 @@ import DataBeans.InfoGuideEntry;
 
 public class CalculateGuideTotal {
 	
-	public CalculateGuideTotal() {};
+	public CalculateGuideTotal() {}
 
 	public static Double calculate(InfoGuide infoGuide){
 		Iterator iterator = infoGuide.getInfoGuideEntries().iterator();

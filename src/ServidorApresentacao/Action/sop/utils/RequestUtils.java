@@ -213,7 +213,7 @@ public abstract class RequestUtils {
 		String degreeInitials = (String) request.getAttribute("degreeInitials");
 		String nameDegreeCurricularPlan =
 			(String) request.getAttribute("nameDegreeCurricularPlan");
-		;
+		
 		if (degreeInitials == null) {
 			degreeInitials = request.getParameter("degreeInitials");
 		}

@@ -41,7 +41,7 @@ public class InfoStudentSiteExams implements ISiteComponent {
 	public InfoStudentSiteExams(
 		List examEnrollmentsToEnroll,
 		List studentDistributions) {
-		;
+		
 		setExamsToEnroll(examEnrollmentsToEnroll);
 		setExamsEnrolledDistributions(studentDistributions);
 	}
