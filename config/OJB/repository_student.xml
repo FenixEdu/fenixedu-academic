@@ -31,7 +31,7 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"         
 	/>
-	<field-descriptor id="6"
+	<field-descriptor
 		name="studentKindKey"
 		column="KEY_STUDENT_KIND"
 		jdbc-type="INTEGER"
@@ -73,7 +73,7 @@
 			class-ref="Dominio.Pessoa"
 			proxy="false"
 			refresh="true">
-		<foreignkey field-id-ref="3"/>
+		<foreignkey field-ref="personKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="studentKind"
