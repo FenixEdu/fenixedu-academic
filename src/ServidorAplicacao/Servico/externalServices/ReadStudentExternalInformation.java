@@ -38,19 +38,21 @@ public class ReadStudentExternalInformation implements IService
     public Collection run(String username) throws ExcepcaoPersistencia
     {
         Collection result = new ArrayList();
-        IPessoaPersistente persistentPerson = SuportePersistenteOJB.getInstance().getIPessoaPersistente();
-        IPersistentStudent persistentStudent = SuportePersistenteOJB.getInstance().getIPersistentStudent();
+        IPessoaPersistente persistentPerson = SuportePersistenteOJB.getInstance()
+                .getIPessoaPersistente();
+        IPersistentStudent persistentStudent = SuportePersistenteOJB.getInstance()
+                .getIPersistentStudent();
         IPessoa person = persistentPerson.lerPessoaPorUsername(username);
         Collection students = persistentStudent.readbyPerson(person);
         for (Iterator iter = students.iterator(); iter.hasNext();)
         {
             InfoStudentExternalInformation info = new InfoStudentExternalInformation();
             IStudent student = (IStudent) iter.next();
-        
+
             info.setPerson(this.buildExternalPersonInfo(person));
             info.setDegree(this.buildExternalDegreeCurricularPlanInfo(student));
             info.setCourses(this.buildExternalEnrollmentsInfo(student));
-            
+
             result.add(info);
         }
 
@@ -64,15 +66,16 @@ public class ReadStudentExternalInformation implements IService
     private Collection buildExternalEnrollmentsInfo(IStudent student)
     {
         Collection enrollments = new ArrayList();
-        for (Iterator iter = student.getActiveStudentCurricularPlan().getEnrolments().iterator(); iter.hasNext();)
+        for (Iterator iter = student.getActiveStudentCurricularPlan().getEnrolments().iterator(); iter
+                .hasNext();)
         {
             IEnrollment enrollment = (IEnrollment) iter.next();
             InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
-            
+
             enrollments.add(info);
         }
-        
-        
+
+
         return enrollments;
     }
 
@@ -83,14 +86,14 @@ public class ReadStudentExternalInformation implements IService
     private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(IStudent student)
     {
         InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
-        IDegreeCurricularPlan degreeCurricularPlan =  student.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
-        
+        IDegreeCurricularPlan degreeCurricularPlan = student.getActiveStudentCurricularPlan()
+                .getDegreeCurricularPlan();
+
         info.setName(degreeCurricularPlan.getName());
         info.setCode(degreeCurricularPlan.getDegree().getIdInternal().toString());
         info.setBranch(this.buildExternalDegreeBranchInfo(student));
-        
-        
-        
+
+
         return info;
     }
 
@@ -100,10 +103,13 @@ public class ReadStudentExternalInformation implements IService
      */
     private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(IStudent student)
     {
-        InfoExternalDegreeBranchInfo info = new InfoExternalDegreeBranchInfo(); 
-        info.setName(student.getActiveStudentCurricularPlan().getBranch().getName());
-        info.setCode(student.getActiveStudentCurricularPlan().getBranch().getCode());
-        
+        InfoExternalDegreeBranchInfo info = new InfoExternalDegreeBranchInfo();
+        if (student.getActiveStudentCurricularPlan().getBranch() != null)
+        {
+            info.setName(student.getActiveStudentCurricularPlan().getBranch().getName());
+            info.setCode(student.getActiveStudentCurricularPlan().getBranch().getCode());
+        }
+
         return info;
     }
 
@@ -125,7 +131,7 @@ public class ReadStudentExternalInformation implements IService
         info.setNationality(person.getNacionalidade());
         info.setPhone(person.getTelefone());
         info.setSex(person.getSexo().toString());
-        
+
         return info;
     }
 
@@ -138,7 +144,7 @@ public class ReadStudentExternalInformation implements IService
         InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
         info.setDocumentType(person.getTipoDocumentoIdentificacao().toString());
         info.setNumber(person.getNumeroDocumentoIdentificacao());
-        
+
         return info;
     }
 
@@ -151,7 +157,7 @@ public class ReadStudentExternalInformation implements IService
         InfoExternalCitizenshipInfo info = new InfoExternalCitizenshipInfo();
         info.setArea(person.getFreguesiaNaturalidade());
         info.setCounty(person.getConcelhoNaturalidade());
-        
+
         return info;
     }
 
@@ -165,7 +171,7 @@ public class ReadStudentExternalInformation implements IService
         info.setPostalCode(person.getCodigoPostal());
         info.setStreet(person.getMorada());
         info.setTown(person.getLocalidade());
-        
+
         return info;
     }
 }
