@@ -18,7 +18,7 @@
     			</td>
     		</tr>
     		<tr>
-    			<td><html:errors/>
+    			<td colspan="2"><span class="error"><html:errors/></span>
     			</td>
     		</tr>
         	<tr>
@@ -54,11 +54,11 @@
        <div class="infotable" style="display: inline;">
 	   <table width="60%" align="center">
             <tr>
-              <th colspan="2" class="bottomborder" align="left">
-                <span class="inline"><h2>
+              <span class="inline"><th colspan="2" class="bottomborder" align="left">
+                <h2>
                   <bean:message key="prompt.dadosPessoais" />
-                </h2></span>
-              </th>
+                </h2>
+              </th></span>
             </tr>
             <tr>
               <td width="30%">  
@@ -112,11 +112,11 @@
               <td colspan="2"><br></td>       
             </tr>      
             <tr>
-              <th colspan="2" class="bottomborder" align="left">
-                <span class="inline"><h2>
+              <span class="inline"><th colspan="2" class="bottomborder" align="left">
+                <h2>
                   <bean:message key="prompt.dadosAssiduidade" />
-                </h2></span>       
-              </th>
+                </h2>       
+              </th></span>
             </tr>
 			<tr>
               <td width="30%">
