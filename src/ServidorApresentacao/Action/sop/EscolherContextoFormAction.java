@@ -40,8 +40,9 @@ public class EscolherContextoFormAction extends FenixAction {
 
 		if (session != null) {
 			Integer semestre = null;
-			/* TODO:FIXME: add to the executionPeriod functions to return the period in terms of integers */
-			if (((InfoExecutionPeriod)session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getName()=="1º Semestre") {
+			/* TODO: add to the executionPeriod functions to return the period in terms of integers */
+			/* TODO: Clean semestre from session */
+			if (((InfoExecutionPeriod)session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getName().equals("1º Semestre")) {
 				 semestre=new Integer(1);
 			} else {
 				semestre=new Integer(2);
