@@ -1,104 +1,122 @@
+/*
+ * AutenticacaoSOPFormActionTest2.java
+ * Mar 6, 2003
+ */
 package ServidorApresentacao.sop;
 
 import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCaseActionExecution;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-
 /**
- * @author tfc130
- *
+ * @author Ivo Brandão
  */
-public class AutenticacaoSOPFormActionTest extends TestCasePresentation {
-  
+public class AutenticacaoSOPFormActionTest extends TestCaseActionExecution {
 
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(AutenticacaoSOPFormActionTest.class);
-        
-    return suite;
-  }
+	/**
+	 * @param testName
+	 */
+	public AutenticacaoSOPFormActionTest(String testName) {
+		super(testName);
+	}
 
-  public void setUp() {
-    super.setUp();
-    // define ficheiro de configuração a utilizar
-    setServletConfigFile("/WEB-INF/tests/web-sop.xml");
-    
-    
-  }
-  
-  
-  
-  public AutenticacaoSOPFormActionTest(String testName) {
-    super(testName);
-  }
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
+	 */
+	protected String getServletConfigFile() {
+		return "/WEB-INF/tests/web-sop.xml";
+	}
 
-  public void testSuccessfulAutenticacao() {      
-    // define mapping de origem
-    setRequestPathInfo("", "/autenticacaoSOPForm");
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
+	 */
+	protected String getRequestPathInfoPathAction() {
+		return "";
+	}
 
-    // Preenche campos do formulário
-    addRequestParameter("utilizador","user");
-    addRequestParameter("password","pass");
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
+	 */
+	protected String getRequestPathInfoNameAction() {
+		return "/autenticacaoSOPForm";
+	}
 
-    // coloca credenciais na sessão
-    HashSet privilegios = new HashSet();
-    IUserView userView = new UserView("athirduser", privilegios);
-    getSession().setAttribute("UserView", userView);
-    
-    // invoca acção
-    actionPerform();
-    
-    // verifica reencaminhamento
-    verifyForward("SOP");
-    
-    //verifica ausencia de erros
-    verifyNoActionErrors();
-    
-    //verifica UserView guardado na sessão
-    UserView newUserView = (UserView) getSession().getAttribute(SessionConstants.U_VIEW);
-    assertEquals("Verify UserView", newUserView.getUtilizador(), "user");
-    assertTrue("Verify authorization", newUserView.getPrivilegios().contains("CriarSala"));
-  }
-  
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		Map result = new Hashtable();
 
-  public void testUnsuccessfulAutorizacao() {
-    // define mapping de origem
-    setRequestPathInfo("", "/autenticacaoSOPForm");
-    
-    // Preenche campos do formulário
-    addRequestParameter("utilizador","nome");
-    addRequestParameter("password","xpto");
+		result.put("utilizador","user");
+		result.put("password","pass");
+		
+		return result;
+	}
 
-    // coloca credenciais na sessão
-    HashSet privilegios = new HashSet();
-    IUserView userView = new UserView("athirduser", privilegios);
-    getSession().setAttribute("UserView", userView);
-    
-    // invoca acção
-    actionPerform();
-    
-    // verifica endereço do reencaminhamento (ExcepcaoAutorizacao)
-    verifyForwardPath("/autenticacaoSOP.jsp");
-    
-    //verifica existencia de erros
-    verifyActionErrors(new String[] {"errors.invalidAuthentication"});
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
+	 */
+	protected String getSuccessfulForward() {
+		return "SOP";
+	}
 
-    
-    //verifica UserView guardado na sessão
-    UserView newUserView = (UserView) getSession().getAttribute("UserView");
-    assertEquals("Verify UserView", newUserView.getUtilizador(), "athirduser");
-  }
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#testSuccessfulExecutionOfAction()
+	 */
+	public void testSuccessfulExecutionOfAction() {
 
-  
-    
-  
+		doTest(getItemsToPutInRequestForActionToBeTestedSuccessfuly(), null, getSuccessfulForward(), null, null, null, null);
+
+		//verifies UserView
+		UserView newUserView = (UserView) getSession().getAttribute(SessionConstants.U_VIEW);
+		assertEquals("Verify UserView", newUserView.getUtilizador(), "user");
+		assertTrue("Verify authorization", newUserView.getPrivilegios().contains("CriarSala"));		
+	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#testUnsuccessfulExecutionOfAction()
+	 * 
+	 * dummy
+	 */
+	public void testUnsuccessfulExecutionOfAction() {
+		//place unauthorized user in session
+		getSession().removeAttribute(SessionConstants.U_VIEW);
+		Set privileges = new HashSet();
+		IUserView userView = new UserView("athirduser", privileges);
+		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+		
+		String[] actionErrors = { "errors.invalidAuthentication" };
+
+		doTest(getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(), null, null, getUnsuccessfulForwardPath(), null, null, actionErrors);
+		
+		//verifies UserView
+		UserView newUserView = (UserView) getSession().getAttribute(SessionConstants.U_VIEW);
+		assertEquals("Verify UserView", newUserView.getUtilizador(), "athirduser");
+	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		Map result = new Hashtable();
+
+		result.put("utilizador","nome");
+		result.put("password","xpto");
+		
+		return result;
+	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getUnsuccessfulForwardPath()
+	 */
+	protected String getUnsuccessfulForwardPath() {
+		return "/autenticacaoSOP.jsp";
+	}
+
 }
