@@ -13,3 +13,14 @@ create table CANDIDATE_ENROLMENT(
    unique u1 (KEY_MASTER_DEGREE_CANDIDATE, KEY_CURRICULAR_COURSE_SCOPE))
    type=InnoDB;
 
+drop table if exists GRATUITY;
+create table GRATUITY(
+   ID_INTERNAL integer(11) not null auto_increment,
+   KEY_STUDENT_CURRICULAR_PLAN integer(11) not null ,
+   STATE integer(11),
+   GRATUITY_STATE integer(11),
+   DATE date, 
+   REMARKS text,
+   primary key (ID_INTERNAL),
+   unique u1 (KEY_STUDENT_CURRICULAR_PLAN, GRATUITY_STATE))
+   type=InnoDB;
