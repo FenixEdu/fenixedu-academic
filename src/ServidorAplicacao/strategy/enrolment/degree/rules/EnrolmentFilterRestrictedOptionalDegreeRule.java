@@ -10,7 +10,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
  *
  * 3/Abr/2003
  */
-public class EnrolmentFilterOwnOptionalDegreeRule implements IEnrolmentRule {
+public class EnrolmentFilterRestrictedOptionalDegreeRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 

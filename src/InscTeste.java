@@ -26,7 +26,6 @@ public class InscTeste {
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 
-			//			FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
 			Object serviceArgs1[] = {userView, new Integer(2)};
 			result = gestor.executar(userView, "ShowAvailableCurricularCourses", serviceArgs1);
 			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) result;
