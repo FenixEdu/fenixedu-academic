@@ -4,6 +4,7 @@
 
 package DataBeans.grant.contract;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import DataBeans.InfoObject;
@@ -159,6 +160,14 @@ public class InfoGrantContractRegime extends InfoObject {
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
         this.infoGrantContract = infoGrantContract;
+    }
+    
+    public boolean getContractRegimeActive() {
+    	if(this.dateEndContract.after(Calendar.getInstance().getTime())){
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
     
     /**

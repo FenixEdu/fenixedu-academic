@@ -225,6 +225,15 @@
 				<form-property name="dateDispatchCD" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
+
+			<form-bean name="listGrantOwnerForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="spanNumber" type="java.lang.Integer"/>
+				<form-property name="numberOfElementsInSpan" type="java.lang.Integer"/>
+				<form-property name="totalElements" type="java.lang.Integer"/>
+				<form-property name="orderBy" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
 				
 			<form-bean name="correctGrantOwner" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -628,9 +637,23 @@
 
     <!-- ================================================================================= -->
 
+    <!-- ===================== USE CASE: LIST GRANT OWNER============================== -->
+	<action path="/listGrantOwner" 
+			input="/listGrantOwner.do?page=0&amp;method=prepareFirstTimeListGrantOwner"
+			name="listGrantOwnerForm" 
+			scope="request"
+   			parameter="method"
+		    validate="true"
+   			type="ServidorApresentacao.Action.grant.list.ListGrantOwnerAction">
+   			<forward name="list-grant-owner" path="listGrantOwner"/>
+   			<forward name="show-grant-owner" path="showGrantOwner"/>
+    </action>
+
+
+
     <!-- ===================== USE CASE: CORRECT GRANT OWNER============================== -->
 	<action path="/correctGrantOwner" 
-			input="/correctGrantOwner.do?page=0&amp;method=prepareForm"
+			input="/correctGrantOwner.do?page=0&amp;method=listGrantOwner"
 			name="correctGrantOwner" 
 			scope="request"
    			parameter="method"

@@ -1,5 +1,6 @@
 package ServidorPersistente.OJB.grant.contract;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -62,4 +63,13 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         Criteria criteria = new Criteria();
         return queryList(GrantContract.class, criteria);
     }
+    
+    public List readAllActiveContractsByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia
+	{
+    	Criteria criteria = new Criteria();
+    	criteria.addEqualTo("key_grant_owner", grantOwnerId);
+    	criteria.addEqualTo("contractRegimes.state",new Integer(1));
+    	criteria.addLessOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
+    	return queryList(GrantContract.class, criteria);
+	}
 }

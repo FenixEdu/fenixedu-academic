@@ -19,4 +19,7 @@ public interface IPersistentGrantOwner extends IPersistentObject{
 	public IGrantOwner readGrantOwnerByPersonID(String idNumber, TipoDocumentoIdentificacao idType) throws ExcepcaoPersistencia;
 	public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
+    public List readAllGrantOwnersWithActiveContractBySpan(Integer spanNumber, Integer numberOfElementsInSpan, String orderBy) throws ExcepcaoPersistencia;
+    public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan, String orderBy) throws ExcepcaoPersistencia;
+    public Integer countAll();
 }

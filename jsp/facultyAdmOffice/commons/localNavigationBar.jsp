@@ -46,6 +46,16 @@
 	</ul>
 
 	<br/>
+	<strong>&raquo; <bean:message key="link.grant.list"/></strong>	
+	<ul>
+		<li>
+			<html:link page="/listGrantOwner.do?method=listGrantOwner&amp;spanNumber=0&amp;orderBy=orderByNumber&amp;numberOfElementsInSpan=100">
+		    	<bean:message key="link.grant.owner.list"/>
+		    </html:link>
+		</li>
+	</ul>
+
+	<br/>
 	<strong>&raquo; <bean:message key="link.grant.correction"/></strong>	
 	<ul>
 		<li>

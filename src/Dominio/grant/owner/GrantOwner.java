@@ -5,6 +5,7 @@
 package Dominio.grant.owner;
 
 import java.util.Date;
+import java.util.List;
 
 import Dominio.DomainObject;
 import Dominio.IPessoa;
@@ -25,6 +26,9 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
     private IPessoa person;
 
     private Integer keyPerson;
+    
+    private List grantContracts;
+    
 
     /**
      * Constructor
@@ -138,4 +142,18 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
         this.keyPerson = personKey;
     }
 
+	/**
+	 * @return Returns the grantContracts.
+	 */
+	public List getGrantContracts()
+	{
+		return grantContracts;
+	}
+	/**
+	 * @param grantContracts The grantContracts to set.
+	 */
+	public void setGrantContracts(List grantContracts)
+	{
+		this.grantContracts = grantContracts;
+	}
 }

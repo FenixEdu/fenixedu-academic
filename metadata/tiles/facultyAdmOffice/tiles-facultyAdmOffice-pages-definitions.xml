@@ -82,6 +82,14 @@
 		<definition name="editGrantContractRegime" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantContractRegime.jsp"></put>
 	</definition>
+	<!-- GRANT OWNER LIST -->
+	<definition name="listGrantOwner" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/list/listGrantOwner.jsp"></put>
+	</definition>
+	<definition name="showGrantOwner" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/list/showGrantOwner.jsp"></put>
+	</definition>
+	
 
 	<!-- GRANT CORRECTIONS -->
 	<definition name="correctGrantOwner" extends="facultyAdmOffice.masterPage">

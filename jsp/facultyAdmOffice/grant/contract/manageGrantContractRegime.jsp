@@ -26,7 +26,7 @@
 <%-- LISTA DE REGIMES DE CONTRACTO ACTIVOS --%>
 
 <logic:present name="infoGrantActiveContractRegimeList">
-	<b><bean:message key="label.grant.contract.regime.active.list"/></b><br/>
+	<b><bean:message key="label.grant.contract.regime.actual.list"/></b><br/>
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with contract regimes description rows --%>
     <tr>
@@ -38,6 +38,9 @@
         </td>
         <td class="listClasses-header">
             <bean:message key="label.grant.contract.orientationTeacher"/>
+        </td>
+        <td class="listClasses-header">
+            <bean:message key="label.grant.contract.regime.state"/>
         </td>
         <td class="listClasses-header">&nbsp;</td>
     </tr>   
@@ -71,6 +74,14 @@
                 <logic:notPresent name="infoGrantContractRegime" property="infoTeacher">
                     &nbsp;
                 </logic:notPresent>
+            </td>
+            <td class="listClasses">
+               	<logic:equal name="infoGrantContractRegime" property="contractRegimeActive" value="true">
+                	<bean:message key="label.grant.contract.regime.active"/>
+   				</logic:equal>
+                <logic:equal name="infoGrantContractRegime" property="contractRegimeActive" value="false">
+                	<bean:message key="label.grant.contract.regime.desactive"/>
+   				</logic:equal>
             </td>
             <td class="listClasses">
                 <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>
@@ -113,6 +124,9 @@
         <td class="listClasses-header">
             <bean:message key="label.grant.contract.orientationTeacher"/>
         </td>
+        <td class="listClasses-header">
+            <bean:message key="label.grant.contract.regime.state"/>
+        </td>
         <td class="listClasses-header">&nbsp;</td>
     </tr>   
     <%-- Table with result of search --%>
@@ -140,11 +154,19 @@
             </td>
             <td class="listClasses">
                 <logic:present name="infoGrantContractRegime" property="infoTeacher">
-                        <bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>
+                       <bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>
                 </logic:present>
                 <logic:notPresent name="infoGrantContractRegime" property="infoTeacher">
                     &nbsp;
                 </logic:notPresent>
+            </td>
+            <td class="listClasses">
+               	<logic:equal name="infoGrantContractRegime" property="contractRegimeActive" value="true">
+                	<span class="error"><bean:message key="label.grant.contract.regime.active"/></span>
+   				</logic:equal>
+                <logic:equal name="infoGrantContractRegime" property="contractRegimeActive" value="false">
+                	<bean:message key="label.grant.contract.regime.desactive"/>
+   				</logic:equal>
             </td>
             <td class="listClasses">
                 <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>

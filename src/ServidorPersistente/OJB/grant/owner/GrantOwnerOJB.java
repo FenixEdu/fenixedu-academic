@@ -1,5 +1,8 @@
 package ServidorPersistente.OJB.grant.owner;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -66,7 +69,8 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         Criteria criteria = new Criteria();
         criteria.addOrderBy("number", false);
         grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
-        if (grantOwner != null) maxGrantOwnerNumber = grantOwner.getNumber();
+        if (grantOwner != null)
+            maxGrantOwnerNumber = grantOwner.getNumber();
         return maxGrantOwnerNumber;
     }
 
@@ -74,4 +78,60 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         Criteria criteria = new Criteria();
         return queryList(GrantOwner.class, criteria);
     }
+
+    public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        return readSpan(GrantOwner.class, criteria, numberOfElementsInSpan,
+                spanNumber);
+    }
+
+    public Integer countAll() {
+        return new Integer(count(GrantOwner.class, new Criteria()));
+    }
+
+    private List readBySpanAndCriteria(Integer spanNumber,
+            Integer numberOfElementsInSpan, Criteria criteria)
+            throws ExcepcaoPersistencia {
+        
+        List result = new ArrayList();
+
+        Iterator iter = readIteratorByCriteria(GrantOwner.class, criteria);
+
+        int begin = (spanNumber.intValue() - 1) * numberOfElementsInSpan.intValue();
+        int end = begin + numberOfElementsInSpan.intValue();
+
+        if (begin != 0) {
+            for (int j = 0; j < (begin - 1) && iter.hasNext(); j++) {
+                iter.next();
+            }
+        }
+
+        for (int i = begin; i < end && iter.hasNext(); i++) {
+            IGrantOwner grantOwner = (IGrantOwner) iter.next();
+            result.add(grantOwner);
+        }
+        return result;
+    }
+
+    public List readAllGrantOwnersWithActiveContractBySpan(Integer spanNumber,
+            Integer numberOfElementsInSpan, String orderBy)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("grantContracts.contractRegimes.state",new Integer(1));
+        criteria.addGreaterOrEqualThan("grantContracts.contractRegimes.dateEndContract", Calendar.getInstance().getTime());
+        criteria.addOrderBy(orderBy, true);
+
+        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,
+                criteria);
+    }
+
+    public List readAllGrantOwnersBySpan(Integer spanNumber,
+            Integer numberOfElementsInSpan, String orderBy)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addOrderBy(orderBy, true);
+        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria);
+    }
+
 }

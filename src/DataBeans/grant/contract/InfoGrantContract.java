@@ -23,6 +23,7 @@ public class InfoGrantContract extends InfoObject {
     private InfoGrantOrientationTeacher grantOrientationTeacherInfo;
     private InfoGrantType grantTypeInfo;
     private Date dateAcceptTerm;
+    private Boolean active; 
 
     /*
      * If a contract motive is set, the contract is finished. 
@@ -151,4 +152,23 @@ public class InfoGrantContract extends InfoObject {
     	return infoGrantContract;
     }
     
+    /**
+     * @return Returns the active.
+     */
+    public Boolean getActive() {
+        return active;
+    }
+    /**
+     * @param active The active to set.
+     */
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+    
+    public boolean getContractActive() {
+        if(active == null) {
+            return false;
+        }
+        return active.booleanValue();
+    }
 }

@@ -5,6 +5,7 @@
 package Dominio.grant.contract;
 
 import java.util.Date;
+import java.util.List;
 
 import Dominio.DomainObject;
 import Dominio.grant.owner.IGrantOwner;
@@ -29,6 +30,8 @@ public class GrantContract extends DomainObject implements IGrantContract {
     private Integer keyGrantOwner;
 
     private Integer keyGrantType;
+    
+    private List contractRegimes;
 
     /**
      * Constructor
@@ -149,4 +152,18 @@ public class GrantContract extends DomainObject implements IGrantContract {
         this.dateAcceptTerm = dateAcceptTerm;
     }
 
+	/**
+	 * @return Returns the contractRegimes.
+	 */
+	public List getContractRegimes()
+	{
+		return contractRegimes;
+	}
+	/**
+	 * @param contractRegimes The contractRegimes to set.
+	 */
+	public void setContractRegimes(List contractRegimes)
+	{
+		this.contractRegimes = contractRegimes;
+	}
 }

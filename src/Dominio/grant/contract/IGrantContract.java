@@ -5,6 +5,7 @@
 package Dominio.grant.contract;
 
 import java.util.Date;
+import java.util.List;
 
 import Dominio.IDomainObject;
 import Dominio.grant.owner.IGrantOwner;
@@ -25,6 +26,8 @@ public interface IGrantContract extends IDomainObject {
     public IGrantType getGrantType();
 
     public Date getDateAcceptTerm();
+    
+    public List getContractRegimes();
 
     public void setContractNumber(Integer contractNumber);
 
@@ -35,4 +38,6 @@ public interface IGrantContract extends IDomainObject {
     public void setGrantType(IGrantType grantType);
 
     public void setDateAcceptTerm(Date dateAcceptTerm);
+    
+    public void setContractRegimes(List contractRegimes);
 }

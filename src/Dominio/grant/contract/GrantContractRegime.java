@@ -3,6 +3,7 @@
  */
 package Dominio.grant.contract;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import Dominio.DomainObject;
@@ -207,4 +208,13 @@ public class GrantContractRegime extends DomainObject implements
     public void setTeacher(ITeacher teacher) {
         this.teacher = teacher;
     }
+    
+    public boolean getContractRegimeActive() {
+    	if(this.dateEndContract.after(Calendar.getInstance().getTime())){
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+
 }

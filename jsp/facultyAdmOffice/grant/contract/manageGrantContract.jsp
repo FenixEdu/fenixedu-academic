@@ -54,11 +54,11 @@
                 </logic:notPresent>
             </td>
             <td class="listClasses">
-                <logic:equal name="infoGrantContract" property="endContractMotiveSet" value="true">
-                    <bean:message key="label.grant.contract.state.close"/>
+                <logic:equal name="infoGrantContract" property="contractActive" value="true">
+                    <bean:message key="label.grant.contract.state.open"/>
                 </logic:equal>
-                <logic:equal name="infoGrantContract" property="endContractMotiveSet" value="false">
-                     <bean:message key="label.grant.contract.state.open"/>
+                <logic:equal name="infoGrantContract" property="contractActive" value="false">
+                     <bean:message key="label.grant.contract.state.close"/>
                 </logic:equal>
             </td>
             <td class="listClasses">

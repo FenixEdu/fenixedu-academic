@@ -33,6 +33,8 @@ public interface IGrantContractRegime extends IDomainObject {
     public IGrantContract getGrantContract();
 
     public ITeacher getTeacher();
+    
+    public boolean getContractRegimeActive();
 
     public void setState(Integer state);
 
