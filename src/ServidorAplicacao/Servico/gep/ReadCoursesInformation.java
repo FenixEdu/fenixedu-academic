@@ -472,19 +472,15 @@ public class ReadCoursesInformation implements IService {
         while (iter.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter
                     .next();
-            //FIXME
-            //this test is to be taken off when search of courses starts to be made also for master degrees
-            if(curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) {
-	            List curricularCourseScopes = curricularCourse.getScopes();
-	            List infoScopes = getInfoScopes(curricularCourseScopes, sp);
-	            //CLONER
-	            //InfoCurricularCourse infoCurricularCourse = Cloner
-	            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-	            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
-	                    .newInfoFromDomain(curricularCourse);
-	            infoCurricularCourse.setInfoScopes(infoScopes);
-	            infoCurricularCourses.add(infoCurricularCourse);
-            }
+            List curricularCourseScopes = curricularCourse.getScopes();
+            List infoScopes = getInfoScopes(curricularCourseScopes, sp);
+            //CLONER
+            //InfoCurricularCourse infoCurricularCourse = Cloner
+            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourse);
+            infoCurricularCourse.setInfoScopes(infoScopes);
+            infoCurricularCourses.add(infoCurricularCourse);
         }
         return infoCurricularCourses;
     }
