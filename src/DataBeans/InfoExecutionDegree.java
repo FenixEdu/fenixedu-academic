@@ -8,12 +8,11 @@ package DataBeans;
 
 import java.io.Serializable;
 
-
 /**
  *
  * @author  tfc130
  */
-public class InfoExecutionDegree extends InfoObject implements Serializable, Comparable {
+public class InfoExecutionDegree extends InfoObject implements Serializable {
 	private InfoExecutionYear infoExecutionYear;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	private InfoTeacher infoCoordinator;
@@ -116,11 +115,6 @@ public class InfoExecutionDegree extends InfoObject implements Serializable, Com
 	 */
 	public void setTemporaryExamMap(Boolean temporary) {
 		temporaryExamMap = temporary;
-	}
-	
-	public int compareTo(Object arg0) {	
-		InfoExecutionDegree executionDegree = (InfoExecutionDegree) arg0;
-		return this.compareTo(executionDegree);
 	}
 
 }

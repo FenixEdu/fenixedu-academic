@@ -42,7 +42,7 @@ public class ReadDegreeAction extends FenixAction  {
 						
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
-									
+						
 				Integer degreeId = new Integer(request.getParameter("degreeId"));	
 				Object args[] = { degreeId };
 				

@@ -81,7 +81,6 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 				error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
 				actionErrors.add("message.existingDegreeName", error);
 			}			
-			saveErrors(request, actionErrors);
 		}
 		return mapping.findForward("readDegrees");
 	}			

@@ -20,8 +20,8 @@
 
 <ul style="list-style-type: square;">
 	<li><html:link page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&amp;degreeId="  + request.getAttribute("degreeId")%>"  paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
-	<li><html:link page="<%= "/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>			
-	<li><html:link page="/insertExecutionDegree.do?method=prepareInsert" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
+	<li><html:link page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>			
+	<li><html:link page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
 </ul>
 
 <h3><bean:message key="label.manager.curricularCourses"/></h3>
@@ -56,7 +56,7 @@
 							<bean:write name="curricularCourse" property="idInternal"/>
 						</html:multibox>
 					</td>				
-					<td class="listClasses"><bean:write name="curricularCourse" property="name"/>
+					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getAttribute("degreeId") + "&degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="name"/></html:link>
 					</td>
 					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getAttribute("degreeId") + "&degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="code"/></html:link>
 					</td>
@@ -104,7 +104,7 @@
 						</html:multibox>
 					</td>
 					<bean:define id="executionYear" name="executionDegree" property="infoExecutionYear"/>				
-					<td class="listClasses"><html:link page="/readExecutionDegree.do" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:write name="executionYear" property="year"/></html:link>
+					<td class="listClasses"><bean:write name="executionYear" property="year"/>
 					</td>
 					<bean:define id="coordinator" name="executionDegree" property="infoCoordinator"/>
 					<bean:define id="person" name="coordinator" property="infoPerson"/>

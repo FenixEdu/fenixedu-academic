@@ -91,16 +91,14 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 
 	public Boolean delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
 				// Check for related ExecutionCourses
-//				Criteria crit = new Criteria();
-//				crit.addEqualTo("keyCurricularPlan", degreeCurricularPlan.getIdInternal());
-//				List result = queryList(CursoExecucao.class, crit);
-//				if (!result.isEmpty())
-//					return new Boolean(false);
+				List result = curricularCourse.getAssociatedExecutionCourses();
+				if (!result.isEmpty())
+					return new Boolean(false);
 					
 				//Check for related StudentCurricularPlans
 				Criteria criteria = new Criteria();
 				criteria.addEqualTo("curricularCourseScope.curricularCourseKey", curricularCourse.getIdInternal());
-				List result = queryList(Enrolment.class, criteria);
+				result = queryList(Enrolment.class, criteria);
 				if (!result.isEmpty())
 					return new Boolean(false);
 

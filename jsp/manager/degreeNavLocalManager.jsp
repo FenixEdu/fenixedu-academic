@@ -11,7 +11,7 @@
 </strong></p>
 
 <p><strong>&raquo;
-		<html:link page="/readDegree.do" paramId="degreeId" paramName="degreeId">
+		<html:link page="<%= "/readDegree.do?degreeId=" + request.getParameter("degreeId")%>">
 		<bean:message key="label.manager.backReadDegree" />
 		</html:link>
 </strong></p>

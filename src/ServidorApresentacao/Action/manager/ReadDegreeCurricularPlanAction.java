@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -75,7 +76,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
 				}		
-				Collections.sort(executionDegrees);
+				Collections.sort(executionDegrees, new BeanComparator("infoExecutionYear.year"));
 								
 				List curricularCourses = null;
 				try {		
@@ -86,7 +87,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
 				}		
-//				Collections.sort(curricularCourses);
+				Collections.sort(curricularCourses, new BeanComparator("name"));
 				request.setAttribute("curricularCoursesList", curricularCourses);
 				request.setAttribute("executionDegreesList", executionDegrees);
 				request.setAttribute("degreeId", degreeId);
