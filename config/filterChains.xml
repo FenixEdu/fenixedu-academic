@@ -587,7 +587,7 @@
     </filterChain>
     <filterChain>
         <name>EnrollmentLEECAuthorization</name>
-        <expression>EnrollmentLEECAuthorization </expression>
+        <expression>EnrollmentLEECAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
@@ -616,6 +616,13 @@
     <filterChain>
         <name>StudentIsUserAndHasStudentRoleFilter</name>
         <expression>StudentIsUserFilter &amp;&amp; StudentAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>EnrollmentLEECWithoutRulesAuthorization</name>
+        <expression>EnrollmentLEECWithoutRulesAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

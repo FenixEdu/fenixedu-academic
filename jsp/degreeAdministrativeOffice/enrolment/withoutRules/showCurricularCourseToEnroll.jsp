@@ -20,17 +20,17 @@
 	<strong><bean:message key="message.student.unenrolled.curricularCourses" /></strong>
 	<br />
 	<logic:lessEqual  name="curricularCoursesSize" value="0">
-		<bean:message key="message.no.curricular.courses" arg0=""/>
+		<br />
+		<img src="<%= request.getContextPath() %>/images/icon_arrow.gif" />&nbsp;<bean:message key="message.no.curricular.courses.noname"/>
 		<br /><br />
 	</logic:lessEqual >
-	
-	<logic:greaterThan name="curricularCoursesSize" value="0">
-		<html:form action="/courseEnrolmentWithoutRulesManagerDA">
-			<html:hidden property="method" value="enrollCourses"/>
-			<html:hidden property="page" value="1"/>
-			<html:hidden property="studentNumber" />
-			<html:hidden property="executionYear" />
-			<html:hidden property="degreeType" />
+	<html:form action="/courseEnrolmentWithoutRulesManagerDA">
+		<html:hidden property="method" value="enrollCourses"/>
+		<html:hidden property="page" value="1"/>
+		<html:hidden property="studentNumber" />
+		<html:hidden property="executionYear" />
+		<html:hidden property="degreeType" />
+		<logic:greaterThan name="curricularCoursesSize" value="0">
 			<table >
 				<logic:iterate id="infoCurricularCourse" name="infoCurricularCoursesToEnroll">
 					<bean:define id="infoCurricularCourseId" name="infoCurricularCourse" property="idInternal" />
@@ -45,6 +45,12 @@
 			<html:submit styleClass="inputbutton">
 				<bean:message key="button.enroll"/>
 			</html:submit>
-		</html:form>
-	</logic:greaterThan>
+			<html:reset styleClass="inputbutton">
+				<bean:message key="button.clean"/>
+			</html:reset>
+		</logic:greaterThan>
+		<html:cancel styleClass="inputbutton" onclick="this.form.method.value='readEnrollments';this.form.submit();">
+			<bean:message key="button.cancel"/>
+		</html:cancel>
+	</html:form>
 </logic:present>

@@ -590,7 +590,14 @@
             ServidorAplicacao.Filtro.student.StudentIsUserFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter>
+    </filter>     
+    <filter>
+        <name>EnrollmentLEECWithoutRulesAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.enrollment.EnrollmentLEECWithoutRulesAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>  
     <filter>
         <name>EditStudentCourseReportAuthorization</name>
         <implementationClass> 
@@ -604,5 +611,5 @@
             ServidorAplicacao.Filtro.student.StudentCourseReportAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter>           
+    </filter> 
 </filterDefinitions>

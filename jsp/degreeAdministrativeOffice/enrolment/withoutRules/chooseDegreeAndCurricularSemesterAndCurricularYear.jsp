@@ -11,7 +11,7 @@
 <br />
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">
 	<html:hidden property="method" value="readCoursesToEnroll"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden property="page" value="2"/>
 	<html:hidden property="studentNumber" />
 	<html:hidden property="executionYear"/>
 	<html:hidden property="degreeType"/>
@@ -75,4 +75,10 @@
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.submit.degree.type.and.student"/>
 	</html:submit>
+	<html:reset styleClass="inputbutton">
+		<bean:message key="button.clean"/>
+	</html:reset>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='readEnrollments';this.form.submit();">
+		<bean:message key="button.cancel"/>
+	</html:cancel>
 </html:form>

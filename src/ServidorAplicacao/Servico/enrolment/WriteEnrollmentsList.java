@@ -69,7 +69,7 @@ public class WriteEnrollmentsList implements IService
 					degreeType);
 			if (studentCurricularPlan == null)
 			{
-				throw new FenixServiceException("");
+				throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 			}
 
 			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
@@ -77,7 +77,7 @@ public class WriteEnrollmentsList implements IService
 				persistentExecutionYear.readExecutionYearByName(infoExecutionYear.getYear());
 			if (executionYear == null)
 			{
-				throw new FenixServiceException("");
+				throw new FenixServiceException("error.impossible.operations");
 			}
 
 			if (curricularCoursesList != null && curricularCoursesList.size() > 0)

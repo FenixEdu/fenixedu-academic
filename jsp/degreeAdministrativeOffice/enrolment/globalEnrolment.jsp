@@ -14,7 +14,7 @@
 		<html:link page="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.LEEC.enrollment"/></html:link>
 	</li>
 	<li>
-		<html:link page="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"><bean:message key="link.student.LEEC.enrollment.without.rules"/></html:link>
+		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"><bean:message key="link.student.LEEC.enrollment.without.rules"/></html:link>
 	</li>
 </ul>
 <%--

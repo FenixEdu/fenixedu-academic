@@ -9,7 +9,7 @@
 	<html:hidden property="method" value="readEnrollments"/>
 	<html:hidden property="page" value="1"/>
 	<logic:present name="degreeType">
-		<html:hidden property="degreeType" value="<%=pageContext.findAttribute("degreeType").toString()%>"/>
+		<html:hidden property="degreeType" value="<%= pageContext.findAttribute("degreeType").toString()%>"/>
 	</logic:present>
 	<table>
 		<tr>
@@ -22,9 +22,6 @@
 			<td><bean:message key="label.choose.year.execution"/>&nbsp;</td>
 			<td>
 				<html:select property="executionYear" >
-					<html:option value="" key="label.student.enrollment.select">
-						<bean:message key="label.student.enrollment.select"/>
-					</html:option>
 					<html:optionsCollection name="executionYears"/>
 				</html:select>
 			</td>				
@@ -35,4 +32,10 @@
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.submit.student"/>
 	</html:submit>
+	<html:reset styleClass="inputbutton">
+		<bean:message key="button.clean"/>
+	</html:reset>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='exit';this.form.submit();">
+		<bean:message key="button.cancel"/>
+	</html:cancel>			
 </html:form>

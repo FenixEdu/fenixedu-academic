@@ -5813,12 +5813,48 @@
         </filterChains>
     </service>
     <service>
+    	<name>PrepareDegreesListByStudentNumber</name>
+    	<description>Returns a list that the first element is the degree pre-select and the tail is all degrees </description>
+    	<implementationClass>ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareDegreesListByStudentNumber</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
     	<name>ReadEnrollmentsWithStateEnrolledByStudent</name>
     	<description>Enrollments with state ENROLED of the student</description>
     	<implementationClass>ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadEnrollmentsWithStateEnrolledByStudent</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>    
+    <service>
+    	<name>DeleteEnrollmentsList</name>
+    	<description>Deletes enrolment of student in a curricular course</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrollmentsList</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>     
+    <service>
+    	<name>ReadCurricularCoursesToEnroll</name>
+    	<description>Read all curricular course that can be enrolled</description>
+    	<implementationClass>ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnroll</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+        </filterChains>
+    </service> 
+    <service>
+    	<name>WriteEnrollmentsList</name>
+    	<description>Deletes enrolment of student in a curricular course</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrollmentsList</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5838,5 +5874,5 @@
     	<filterChains>
     	    <chain name="StudentCourseReportAuthorization"/>
     	</filterChains>
-    </service>      
+    </service>    
 </serviceDefinitions>

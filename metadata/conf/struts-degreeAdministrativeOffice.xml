@@ -52,6 +52,7 @@
 			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
 			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="executionYear" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 
@@ -270,7 +271,6 @@
 				
 			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
 			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareEnrollmentChooseStudent"/>
-			<forward name="prepareEnrollmentChooseStudentWithoutRules" path="df.page.prepareEnrollmentChooseStudentWithoutRules"/>
 			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
 			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
 			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
@@ -303,10 +303,13 @@
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
 			parameter="method">
+			<forward name="prepareEnrollmentChooseStudentWithoutRules" path="df.page.prepareEnrollmentChooseStudentWithoutRules"/>			
 			<forward name="curricularCourseEnrollmentList" path="df.page.curricularCourseEnrollmentList"/>
 			<forward name="readCurricularCourseEnrollmentList" path="/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments" />
 			<forward name="choosesForEnrollment" path="df.page.choosesForEnrollment" />
 			<forward name="showCurricularCourseToEnroll" path="df.page.showCurricularCourseToEnroll" />
+			<forward name="globalEnrolment" path="/globalEnrolment.do"/>
+			<forward name="exit" path="/index.do"/>
 		</action>		
 	</action-mappings>
 

@@ -60,7 +60,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                 executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
             }
 
-            List executionDegrees;
+            List executionDegrees = null;
 
             if (degreeType == null)
             {
@@ -71,7 +71,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                 executionDegrees =
                     executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear, degreeType);
             }
-
+            
             infoExecutionDegreeList =
                 (ArrayList) CollectionUtils.collect(executionDegrees, new Transformer()
             {
@@ -83,7 +83,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                         (InfoExecutionDegree) Cloner.get(executionDegree);
                     return infoExecutionDegree;
                 }
-            });
+            });            
         }
         catch (ExcepcaoPersistencia ex)
         {

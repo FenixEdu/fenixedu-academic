@@ -20,7 +20,8 @@
 	<strong><bean:message key="message.student.enrolled.curricularCourses" /></strong>
 	<br />
 	<logic:lessEqual  name="enrollmentsSize" value="0">
-		<bean:message key="message.student.whithout.enrollments" />
+		<br />
+		<img src="<%= request.getContextPath() %>/images/icon_arrow.gif" />&nbsp;<bean:message key="message.student.whithout.enrollments" />
 		<br /><br />
 	</logic:lessEqual >
 	
@@ -45,6 +46,9 @@
 			<html:submit styleClass="inputbutton">
 				<bean:message key="button.unenroll"/>
 			</html:submit>
+			<html:reset styleClass="inputbutton">
+				<bean:message key="button.clean"/>
+			</html:reset>			
 		</html:form>
 	</logic:greaterThan>
 </logic:present>
@@ -67,5 +71,19 @@
 	<html:submit styleClass="inputbutton">
 			<bean:message key="button.enroll"/>
 	</html:submit>
+</html:form>
+<hr>
+<br />
+<%-- HELP ANOTHER STUDENT OR CANCEL --%>
+<html:form action="/courseEnrolmentWithoutRulesManagerDA">
+	<html:hidden property="method" value="prepareEnrollmentChooseStudentAndExecutionYear"/>
+	<html:hidden property="page" value="0"/>
+	<html:hidden property="degreeType" />
+	<html:submit styleClass="inputbutton">
+			<bean:message key="button.student.other"/>
+	</html:submit>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='exit';this.form.submit();">
+		<bean:message key="button.exit"/>
+	</html:cancel>
 </html:form>
 <br /><br />

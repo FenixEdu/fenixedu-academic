@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +35,6 @@ import Util.TipoCurso;
 public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 {
 
-	
 	public ReadEnrollmentsWithStateEnrolledByStudent()
 	{
 	}
@@ -49,7 +49,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 				sp.getIStudentCurricularPlanPersistente();
 
 			IStudentCurricularPlan studentCurricularPlan = null;
-			if (infoStudent.getNumber() != null)
+			if (infoStudent != null && infoStudent.getNumber() != null)
 			{
 				studentCurricularPlan =
 					persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
@@ -58,7 +58,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 			}
 			if (studentCurricularPlan == null)
 			{
-				throw new FenixServiceException("");
+				throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 			}
 
 			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
@@ -71,14 +71,13 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 
 			if (infoStudentEnrolmentContext == null)
 			{
-				throw new FenixServiceException("");
+				throw new FenixServiceException();
 			}
-
 		}
 		catch (ExcepcaoPersistencia e)
 		{
 			e.printStackTrace();
-			throw new FenixServiceException("");
+			throw new FenixServiceException();
 		}
 
 		return infoStudentEnrolmentContext;
@@ -96,15 +95,19 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 		InfoStudentCurricularPlan infoStudentCurricularPlan =
 			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
 
-		List infoEnrollments = (List) CollectionUtils.collect(enrollments, new Transformer()
+		List infoEnrollments = new ArrayList();
+		if (enrollments != null && enrollments.size() > 0)
 		{
-			public Object transform(Object input)
+			infoEnrollments = (List) CollectionUtils.collect(enrollments, new Transformer()
 			{
-				IEnrolment enrolment = (IEnrolment) input;
-				return Cloner.copyIEnrolment2InfoEnrolment(enrolment);
-			}
-		});
-		Collections.sort(infoEnrollments, new BeanComparator(("infoCurricularCourse.name")));
+				public Object transform(Object input)
+				{
+					IEnrolment enrolment = (IEnrolment) input;
+					return Cloner.copyIEnrolment2InfoEnrolment(enrolment);
+				}
+			});
+			Collections.sort(infoEnrollments, new BeanComparator(("infoCurricularCourse.name")));
+		}
 
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
 		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
