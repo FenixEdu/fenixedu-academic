@@ -60,10 +60,6 @@ public class ReadExamsMapServiceTest extends TestCaseRequeiersAuthorizationServi
 		return "ReadExamsMap";
 	}
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
-
 	public void testReadValidResult() {
 		infoDegree =
 			new InfoDegree(
