@@ -287,6 +287,11 @@
     		<form-property name="page" type="java.lang.Integer" initial="0"/> 
     		<form-property name="logDirName" type="java.lang.String"/>
 	    </form-bean>
+	    
+	   	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
+		<form-bean name="insertRestrictionForm">
+			<form-property name="page" type="" initial="0"/> 
+		</form-bean>
 
     </form-beans>
     
@@ -1226,19 +1231,6 @@
 
 
 	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
-	<action path="/makeSimplePrecedence" 
-		input="/managePrecedences.do"
-		type="ServidorApresentacao.Action.manager.precedences.MakeSimplePrecedenceAction"
-		parameter="method"
-		scope="request"
-	>
-		<forward name="showAllRestrictions" path="df.page.manage.precedences.showAllRestrictions" />
-	</action>	
-	
-	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>
-	<action path="/deletePrecedence" forward="df.page.manage.precedences"/>
-	<action path="/deleteRestriction" forward="df.page.manage.precedences"/>
-
 	<action
 			path="/managePrecedences"
 			input="df.page.manage.precedences"
@@ -1246,6 +1238,20 @@
 			type="ServidorApresentacao.Action.manager.precedences.ReadPrecedencesFromDegreeCurricularPlanAction">
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
+	
+	<action path="/makeSimplePrecedence" 
+		input="/managePrecedences.do"
+		type="ServidorApresentacao.Action.manager.precedences.MakeSimplePrecedenceAction"
+		parameter="method"
+		scope="request"
+	>
+		<forward name="showAllRestrictions" path="df.page.manage.precedences.showAllRestrictions" />
+		<forward name="insertRestriction" path="df.page.manage.precedences.insertRestriction"/>
+	</action>	
+	
+	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>
+	<action path="/deletePrecedence" forward="df.page.manage.precedences"/>
+	<action path="/deleteRestriction" forward="df.page.manage.precedences"/>
 
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"
