@@ -28,92 +28,138 @@ FROM XPTI;
 DROP TABLE IF EXISTS XPTO;
 DROP TABLE IF EXISTS XPTI;
 
-update enrolment_evaluation set key_enrolment = 25417 where id_internal = 487121;
-delete from enrolment_evaluation where id_internal = 25430;
-delete from enrolment where id_internal = 44018;
-update enrolment set state = 1 where id_internal = 25417;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 25417 WHERE ID_INTERNAL = 487121;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 25430;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44018;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 25417;
 
-update enrolment_evaluation set key_enrolment = 26406 where id_internal = 530406;
-delete from enrolment_evaluation where id_internal = 26419;
-delete from enrolment where id_internal = 44020;
-update enrolment set state = 6 where id_internal = 26406;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 26406 WHERE ID_INTERNAL = 530406;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 26419;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44020;
+UPDATE ENROLMENT SET STATE = 6 WHERE ID_INTERNAL = 26406;
 
-update enrolment_evaluation set key_enrolment = 28451 where id_internal = 487498;
-delete from enrolment_evaluation where id_internal = 28464;
-delete from enrolment where id_internal = 44033;
-update enrolment set state = 1 where id_internal = 28451;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 28451 WHERE ID_INTERNAL = 487498;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 28464;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44033;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 28451;
 
-update enrolment_evaluation set key_enrolment = 28456 where id_internal = 487500;
-delete from enrolment_evaluation where id_internal = 28469;
-delete from enrolment where id_internal = 44034;
-update enrolment set state = 1 where id_internal = 28456;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 28456 WHERE ID_INTERNAL = 487500;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 28469;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44034;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 28456;
 
-update enrolment_evaluation set key_enrolment = 28467 where id_internal = 487501;
-delete from enrolment_evaluation where id_internal = 28480;
-delete from enrolment where id_internal = 44035;
-update enrolment set state = 2 where id_internal = 28467;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 28467 WHERE ID_INTERNAL = 487501;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 28480;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44035;
+UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = 28467;
 
-update enrolment_evaluation set key_enrolment = 28473 where id_internal = 487503;
-delete from enrolment_evaluation where id_internal = 28486;
-delete from enrolment where id_internal = 44036;
-update enrolment set state = 2 where id_internal = 28473;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 28473 WHERE ID_INTERNAL = 487503;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 28486;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44036;
+UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = 28473;
 
-update enrolment_evaluation set key_enrolment = 28501 where id_internal = 530448;
-delete from enrolment_evaluation where id_internal = 28514;
-delete from enrolment where id_internal = 44037;
-update enrolment set state = 6 where id_internal = 28501;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 28501 WHERE ID_INTERNAL = 530448;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 28514;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44037;
+UPDATE ENROLMENT SET STATE = 6 WHERE ID_INTERNAL = 28501;
 
-update enrolment_evaluation set key_enrolment = 28511 where id_internal = 487505;
-delete from enrolment_evaluation where id_internal = 28524;
-delete from enrolment where id_internal = 44038;
-update enrolment set state = 2 where id_internal = 28511;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 28511 WHERE ID_INTERNAL = 487505;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 28524;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44038;
+UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = 28511;
 
-update enrolment_evaluation set key_enrolment = 28516 where id_internal = 487506;
-delete from enrolment_evaluation where id_internal = 28529;
-delete from enrolment where id_internal = 44039;
-update enrolment set state = 1 where id_internal = 28516;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 28516 WHERE ID_INTERNAL = 487506;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 28529;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44039;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 28516;
 
-update enrolment_evaluation set key_enrolment = 29477 where id_internal = 487571;
-delete from enrolment_evaluation where id_internal = 29490;
-delete from enrolment where id_internal = 44040;
-update enrolment set state = 2 where id_internal = 29477;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 29477 WHERE ID_INTERNAL = 487571;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 29490;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44040;
+UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = 29477;
 
-update enrolment_evaluation set key_enrolment = 34703 where id_internal = 530468;
-delete from enrolment_evaluation where id_internal = 34716;
-delete from enrolment where id_internal = 44054;
-update enrolment set state = 6 where id_internal = 34703;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34703 WHERE ID_INTERNAL = 530468;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34716;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44054;
+UPDATE ENROLMENT SET STATE = 6 WHERE ID_INTERNAL = 34703;
 
-update enrolment_evaluation set key_enrolment = 34732 where id_internal = 530496;
-delete from enrolment_evaluation where id_internal = 34745;
-delete from enrolment where id_internal = 44059;
-update enrolment set state = 6 where id_internal = 34732;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34732 WHERE ID_INTERNAL = 530496;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34745;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44059;
+UPDATE ENROLMENT SET STATE = 6 WHERE ID_INTERNAL = 34732;
 
-update enrolment_evaluation set key_enrolment = 34738 where id_internal = 530500;
-delete from enrolment_evaluation where id_internal = 34751;
-delete from enrolment where id_internal = 44060;
-update enrolment set state = 6 where id_internal = 34738;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34738 WHERE ID_INTERNAL = 530500;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34751;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44060;
+UPDATE ENROLMENT SET STATE = 6 WHERE ID_INTERNAL = 34738;
 
-update enrolment_evaluation set key_enrolment = 34744 where id_internal = 530503;
-delete from enrolment_evaluation where id_internal = 34757;
-delete from enrolment where id_internal = 44061;
-update enrolment set state = 6 where id_internal = 34744;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34744 WHERE ID_INTERNAL = 530503;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34757;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 44061;
+UPDATE ENROLMENT SET STATE = 6 WHERE ID_INTERNAL = 34744;
 
-update enrolment_evaluation set key_enrolment = 34709 where id_internal = 489276;
-delete from enrolment_evaluation where id_internal = 34722;
-delete from enrolment where id_internal = 468315;
-update enrolment set state = 1 where id_internal = 34709;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34709 WHERE ID_INTERNAL = 489276;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34722;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 468315;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 34709;
 
-update enrolment_evaluation set key_enrolment = 34714 where id_internal = 489277;
-delete from enrolment_evaluation where id_internal = 34727;
-delete from enrolment where id_internal = 468316;
-update enrolment set state = 1 where id_internal = 34714;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34714 WHERE ID_INTERNAL = 489277;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34727;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 468316;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 34714;
 
-update enrolment_evaluation set key_enrolment = 34719 where id_internal = 489278;
-delete from enrolment_evaluation where id_internal = 34732;
-delete from enrolment where id_internal = 468317;
-update enrolment set state = 1 where id_internal = 34719;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34719 WHERE ID_INTERNAL = 489278;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34732;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 468317;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 34719;
 
-update enrolment_evaluation set key_enrolment = 34726 where id_internal = 489279;
-delete from enrolment_evaluation where id_internal = 34739;
-delete from enrolment where id_internal = 468318;
-update enrolment set state = 1 where id_internal = 34726;
+UPDATE ENROLMENT_EVALUATION SET KEY_ENROLMENT = 34726 WHERE ID_INTERNAL = 489279;
+DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = 34739;
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 468318;
+UPDATE ENROLMENT SET STATE = 1 WHERE ID_INTERNAL = 34726;
+
+
+DELETE FROM ENROLMENT WHERE ID_INTERNAL = 496479;
+DELETE FROM ENROLMENT_EVALUATION WHERE KEY_ENROLMENT = 496479;
+
+UPDATE ATTEND SET KEY_ENROLMENT = 488683 WHERE KEY_STUDENT = 10047 AND KEY_EXECUTION_COURSE = 36741;
+UPDATE ATTEND SET KEY_ENROLMENT = 488612 WHERE KEY_STUDENT = 9699 AND KEY_EXECUTION_COURSE = 36741;
+UPDATE ATTEND SET KEY_ENROLMENT = 495618 WHERE KEY_STUDENT = 9512 AND KEY_EXECUTION_COURSE = 36741;
+
+-- **************************************************************************************************
+
+-- SELECT S.NUMBER,
+-- CC1.CODE,CC1.NAME,
+-- E1.ID_INTERNAL,E1.STATE,E1.KEY_EXECUTION_PERIOD,
+-- EE1.GRADE,
+-- CC2.CODE,CC2.NAME,
+-- E2.ID_INTERNAL,E2.STATE,E2.KEY_EXECUTION_PERIOD,
+-- EE2.GRADE FROM STUDENT S
+-- INNER JOIN STUDENT_CURRICULAR_PLAN SCP ON SCP.KEY_STUDENT = S.ID_INTERNAL
+-- INNER JOIN ENROLMENT E1 ON E1.KEY_STUDENT_CURRICULAR_PLAN = SCP.ID_INTERNAL
+-- INNER JOIN ENROLMENT E2 ON E2.KEY_STUDENT_CURRICULAR_PLAN = SCP.ID_INTERNAL
+-- INNER JOIN CURRICULAR_COURSE CC1 ON E1.KEY_CURRICULAR_COURSE = CC1.ID_INTERNAL
+-- INNER JOIN CURRICULAR_COURSE CC2 ON E2.KEY_CURRICULAR_COURSE = CC2.ID_INTERNAL
+-- INNER JOIN ENROLMENT_EVALUATION EE1 ON EE1.KEY_ENROLMENT = E1.ID_INTERNAL
+-- INNER JOIN ENROLMENT_EVALUATION EE2 ON EE2.KEY_ENROLMENT = E2.ID_INTERNAL
+-- WHERE
+-- SCP.KEY_DEGREE_CURRICULAR_PLAN = 48 AND
+-- E1.ID_INTERNAL <> E2.ID_INTERNAL AND
+-- CC1.CODE = 'SE' AND CC2.CODE = 'ASM'
+-- ORDER BY S.NUMBER
+
+
+-- SELECT CONCAT('DELETE FROM ENROLMENT WHERE ID_INTERNAL = ', E1.ID_INTERNAL, ';DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = ', EE1.ID_INTERNAL, ';') AS ""
+-- FROM STUDENT S
+-- INNER JOIN STUDENT_CURRICULAR_PLAN SCP ON SCP.KEY_STUDENT = S.ID_INTERNAL
+-- INNER JOIN ENROLMENT E1 ON E1.KEY_STUDENT_CURRICULAR_PLAN = SCP.ID_INTERNAL
+-- INNER JOIN ENROLMENT E2 ON E2.KEY_STUDENT_CURRICULAR_PLAN = SCP.ID_INTERNAL
+-- INNER JOIN CURRICULAR_COURSE CC1 ON E1.KEY_CURRICULAR_COURSE = CC1.ID_INTERNAL
+-- INNER JOIN CURRICULAR_COURSE CC2 ON E2.KEY_CURRICULAR_COURSE = CC2.ID_INTERNAL
+-- INNER JOIN ENROLMENT_EVALUATION EE1 ON EE1.KEY_ENROLMENT = E1.ID_INTERNAL
+-- INNER JOIN ENROLMENT_EVALUATION EE2 ON EE2.KEY_ENROLMENT = E2.ID_INTERNAL
+-- WHERE
+-- SCP.KEY_DEGREE_CURRICULAR_PLAN = 48 AND
+-- E1.ID_INTERNAL <> E2.ID_INTERNAL AND
+-- CC1.CODE = 'SE' AND CC2.CODE = 'ASM'
+-- ORDER BY S.NUMBER

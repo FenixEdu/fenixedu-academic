@@ -216,22 +216,23 @@ public class DeleteEnrollmentsInPastStudentCurricularPlans
 
 		if (enrolment == null)
 		{
-			super.out.println(
-				"[ERROR 207.2] Could not find Enrolment for student ["
-					+ studentCurricularPlan.getStudent().getNumber()
-					+ "] in curricular course with name ["
-					+ curricularCourse.getName()
-					+ "] and code ["
-					+ curricularCourse.getCode()
-					+ "] from degree with name ["
-					+ curricularCourse.getDegreeCurricularPlan().getName()
-					+ "] and code ["
-					+ mwEnrolment.getDegreecode()
-					+ "] for execution period ["
-					+ executionPeriod.getExecutionYear().getYear()
-					+ " - "
-					+ executionPeriod.getName()
-					+ "]");
+//			super.out.println(
+//				"[ERROR 207.2] Could not find Enrolment for student ["
+//					+ studentCurricularPlan.getStudent().getNumber()
+//					+ "] in curricular course with name ["
+//					+ curricularCourse.getName()
+//					+ "] and code ["
+//					+ curricularCourse.getCode()
+//					+ "] from degree with name ["
+//					+ curricularCourse.getDegreeCurricularPlan().getName()
+//					+ "] and code ["
+//					+ mwEnrolment.getDegreecode()
+//					+ "] for execution period ["
+//					+ executionPeriod.getExecutionYear().getYear()
+//					+ " - "
+//					+ executionPeriod.getName()
+//					+ "]");
+			super.writeTreatedMWEnrollment(mwEnrolment);
 			return;
 		}
 
@@ -245,24 +246,25 @@ public class DeleteEnrollmentsInPastStudentCurricularPlans
 
 		if (enrolmentEvaluation == null)
 		{
-			super.out.println(
-				"[ERROR 208.2] Could not find EnrolmentEvaluation for student ["
-					+ studentCurricularPlan.getStudent().getNumber()
-					+ "] in curricular course with name ["
-					+ curricularCourse.getName()
-					+ "] and code ["
-					+ curricularCourse.getCode()
-					+ "] with grade ["
-					+ grade
-					+ "] from degree with name ["
-					+ curricularCourse.getDegreeCurricularPlan().getName()
-					+ "] and code ["
-					+ mwEnrolment.getDegreecode()
-					+ "] for execution period ["
-					+ executionPeriod.getExecutionYear().getYear()
-					+ " - "
-					+ executionPeriod.getName()
-					+ "]");
+//			super.out.println(
+//				"[ERROR 208.2] Could not find EnrolmentEvaluation for student ["
+//					+ studentCurricularPlan.getStudent().getNumber()
+//					+ "] in curricular course with name ["
+//					+ curricularCourse.getName()
+//					+ "] and code ["
+//					+ curricularCourse.getCode()
+//					+ "] with grade ["
+//					+ grade
+//					+ "] from degree with name ["
+//					+ curricularCourse.getDegreeCurricularPlan().getName()
+//					+ "] and code ["
+//					+ mwEnrolment.getDegreecode()
+//					+ "] for execution period ["
+//					+ executionPeriod.getExecutionYear().getYear()
+//					+ " - "
+//					+ executionPeriod.getName()
+//					+ "]");
+			super.writeTreatedMWEnrollment(mwEnrolment);
 			return;
 		}
 

@@ -201,23 +201,23 @@ public class DeleteEnrollmentsInCurrentStudentCurricularPlans
 
 		if (enrolment == null)
 		{
-//			super.out.println("[ERROR 105.2] Could not find Enrolment for: " + mwEnrolment.toFlatString());
-			super.out.println(
-				"[ERROR 105.2] Could not find Enrolment for student ["
-					+ studentCurricularPlan.getStudent().getNumber()
-					+ "] in curricular course with name ["
-					+ curricularCourse.getName()
-					+ "] and code ["
-					+ curricularCourse.getCode()
-					+ "] from degree with name ["
-					+ curricularCourse.getDegreeCurricularPlan().getName()
-					+ "] and code ["
-					+ mwEnrolment.getDegreecode()
-					+ "] for execution period ["
-					+ super.executionPeriod.getExecutionYear().getYear()
-					+ " - "
-					+ super.executionPeriod.getName()
-					+ "]");
+//			super.out.println(
+//				"[ERROR 105.2] Could not find Enrolment for student ["
+//					+ studentCurricularPlan.getStudent().getNumber()
+//					+ "] in curricular course with name ["
+//					+ curricularCourse.getName()
+//					+ "] and code ["
+//					+ curricularCourse.getCode()
+//					+ "] from degree with name ["
+//					+ curricularCourse.getDegreeCurricularPlan().getName()
+//					+ "] and code ["
+//					+ mwEnrolment.getDegreecode()
+//					+ "] for execution period ["
+//					+ super.executionPeriod.getExecutionYear().getYear()
+//					+ " - "
+//					+ super.executionPeriod.getName()
+//					+ "]");
+			super.writeTreatedMWEnrollment(mwEnrolment);
 			return;
 		}
 
@@ -242,25 +242,25 @@ public class DeleteEnrollmentsInCurrentStudentCurricularPlans
 
 		if (enrolmentEvaluation == null)
 		{
-//			super.out.println("[ERROR 106.2] Could not find EnrolmentEvaluation for: " + mwEnrolment.toFlatString());
-			super.out.println(
-				"[ERROR 106.2] Could not find EnrolmentEvaluation for student ["
-					+ studentCurricularPlan.getStudent().getNumber()
-					+ "] in curricular course with name ["
-					+ curricularCourse.getName()
-					+ "] and code ["
-					+ curricularCourse.getCode()
-					+ "] with grade ["
-					+ grade
-					+ "] from degree with name ["
-					+ curricularCourse.getDegreeCurricularPlan().getName()
-					+ "] and code ["
-					+ mwEnrolment.getDegreecode()
-					+ "] for execution period ["
-					+ super.executionPeriod.getExecutionYear().getYear()
-					+ " - "
-					+ super.executionPeriod.getName()
-					+ "]");
+//			super.out.println(
+//				"[ERROR 106.2] Could not find EnrolmentEvaluation for student ["
+//					+ studentCurricularPlan.getStudent().getNumber()
+//					+ "] in curricular course with name ["
+//					+ curricularCourse.getName()
+//					+ "] and code ["
+//					+ curricularCourse.getCode()
+//					+ "] with grade ["
+//					+ grade
+//					+ "] from degree with name ["
+//					+ curricularCourse.getDegreeCurricularPlan().getName()
+//					+ "] and code ["
+//					+ mwEnrolment.getDegreecode()
+//					+ "] for execution period ["
+//					+ super.executionPeriod.getExecutionYear().getYear()
+//					+ " - "
+//					+ super.executionPeriod.getName()
+//					+ "]");
+			super.writeTreatedMWEnrollment(mwEnrolment);
 			return;
 		}
 

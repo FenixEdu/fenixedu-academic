@@ -205,6 +205,7 @@ public class VerifyLEECCurricularPlan
 					String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
 					System.out.print("\t\t\t");
 					System.out.println("NOME: [" + name + "], ANO: [" + year + "], SEMESTRE: [" + semester + "]");
+//					System.out.println("NOME: [" + name + "], ANO: [" + year + "], SEMESTRE: [" + semester + "], ID [" + curricularCourseScope.getCurricularCourse().getIdInternal().toString() + "]");
 				}
 			}
 		}
