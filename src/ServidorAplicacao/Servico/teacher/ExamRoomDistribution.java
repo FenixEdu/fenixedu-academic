@@ -12,6 +12,8 @@ package ServidorAplicacao.Servico.teacher;
  **/
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -36,7 +38,9 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ExamRoomDistribution implements IServico {
-
+	public final static int NON_DEFINED_ENROLLMENT_PERIOD = 1;
+	public final static int OUT_OF_ENROLLMENT_PERIOD = 2;
+		
 	private static ExamRoomDistribution _servico = new ExamRoomDistribution();
 	/**
 	 * The singleton access method of this class.
@@ -58,7 +62,7 @@ public class ExamRoomDistribution implements IServico {
 		return "ExamRoomDistribution";
 	}
 
-	public Boolean run(Integer executionCourseCode, Integer examCode, List roomsIds, boolean sms)
+	public Boolean run(Integer executionCourseCode, Integer examCode, List roomsIds, Boolean sms)
 		throws FenixServiceException {
 
 		Boolean result = new Boolean(false);
@@ -72,10 +76,32 @@ public class ExamRoomDistribution implements IServico {
 			IPersistentExamStudentRoom persistentExamStudentRoom =
 				sp.getIPersistentExamStudentRoom();
 			IExam exam =
-				(IExam) persistentExam.readByOId(new Exam(examCode), true);
+				(IExam) persistentExam.readByOId(new Exam(examCode), false);
 			if (exam == null) {
 				throw new InvalidArgumentsServiceException("exam");
 			}
+		
+			Calendar endEnrollmentDay = exam.getEnrollmentEndDay();
+			if (endEnrollmentDay == null) {
+				throw new FenixServiceException(ExamRoomDistribution.NON_DEFINED_ENROLLMENT_PERIOD);
+			}
+			
+			
+			Calendar endHourDay = exam.getEnrollmentBeginTime();
+			
+			endEnrollmentDay.set(Calendar.HOUR, 0);
+			endEnrollmentDay.set(Calendar.MINUTE, 0);
+			endEnrollmentDay.add(Calendar.HOUR, endHourDay.get(Calendar.HOUR));
+			endEnrollmentDay.add(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));			
+
+			Calendar examDay = exam.getDay();
+			Calendar today = Calendar.getInstance();
+			today.setTime(new Date());
+			
+			if ( today.after(examDay) || today.before(endEnrollmentDay) ) {
+				throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);		
+			}
+
 
 			List students = exam.getStudentsEnrolled();
 			if (students == null) {
@@ -86,7 +112,6 @@ public class ExamRoomDistribution implements IServico {
 						persistentAttends.readByExecutionCourse(
 							(IDisciplinaExecucao) iterCourse.next()));
 				}
-
 			}
 
 			Iterator iterRoom = roomsIds.iterator();
@@ -110,24 +135,28 @@ public class ExamRoomDistribution implements IServico {
 				ISala room = (ISala) iter.next();
 				int i = 0;
 				while (i <= room.getCapacidadeExame().intValue()) {
-					IStudent student =
-						(IStudent) getRandomObjectFromList(students);
-					IExamStudentRoom examStudentRoom =
-						persistentExamStudentRoom.readBy(exam, student, room);
-					if (examStudentRoom == null) {
-						examStudentRoom =
-							new ExamStudentRoom(
-								exam,
-								(IStudent) getRandomObjectFromList(students),
-								room);
-						persistentExamStudentRoom.lockWrite(examStudentRoom);		
-					} else {
-						persistentExamStudentRoom.lockWrite(examStudentRoom);
-						examStudentRoom.setRoom(room);
-					}
+					if (students.size() > 0) {
+						IStudent student =
+							(IStudent) getRandomObjectFromList(students);
+						IExamStudentRoom examStudentRoom =
+							persistentExamStudentRoom.readBy(exam, student);
+						if (examStudentRoom == null) {
+							examStudentRoom =
+								new ExamStudentRoom();
+							persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+							examStudentRoom.setExam(exam);
+							examStudentRoom.setRoom(room);
+							examStudentRoom.setStudent(student);
+						} else {
+							persistentExamStudentRoom.lockWrite(examStudentRoom);
+							examStudentRoom.setRoom(room);
+						}
 					
-					if (sms) {
-						sendSMSToStudent(examStudentRoom);
+						if (sms.booleanValue()) {
+							sendSMSToStudent(examStudentRoom);
+						}
+					}else {
+						break;
 					}
 					i++;
 				}
@@ -153,7 +182,7 @@ public class ExamRoomDistribution implements IServico {
 
 	private Object getRandomObjectFromList(List list) {
 		Random randomizer = new Random();
-		int pos = randomizer.nextInt(list.size() + 1);
+		int pos = randomizer.nextInt(list.size());
 		return list.remove(pos);
 
 	}
