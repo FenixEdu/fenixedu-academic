@@ -515,7 +515,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 
     }
 
-    public List readByCurricularCourse(ICurricularCourse curricularCourse, String year)
+    public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, String year)
         throws ExcepcaoPersistencia
     {
 
@@ -580,4 +580,10 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
         return (IEnrolment) queryObject(Enrolment.class, criteria);
     }
 
+    public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
+    {
+    	Criteria criteria = new Criteria();
+    	criteria.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
+    	return queryList(Enrolment.class, criteria);
+    }
 }

@@ -54,10 +54,11 @@ public interface IPersistentEnrolment extends IPersistentObject {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-	public List readByCurricularCourse(ICurricularCourse curricularCourse, String year) throws ExcepcaoPersistencia ;
+	public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, String year) throws ExcepcaoPersistencia ;
 	public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(StudentCurricularPlanState state, EnrolmentState state2, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;  
 
 
 	public IEnrolment readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
+	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 }

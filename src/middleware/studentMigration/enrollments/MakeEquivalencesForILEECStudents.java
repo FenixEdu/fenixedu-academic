@@ -74,7 +74,7 @@ public class MakeEquivalencesForILEECStudents
 			Iterator iterator = result.iterator();
 			while (iterator.hasNext()) {
 				student = (IStudent) iterator.next();
-				System.out.println("[INFO] Updating student with number [" + student.getNumber() + "]...");
+//				System.out.println("[INFO] Updating student with number [" + student.getNumber() + "]...");
 				fenixPersistentSuport.iniciarTransaccao();
 				MakeEquivalencesForILEECStudents.makeEquivalences(student, fenixPersistentSuport);
 				fenixPersistentSuport.confirmarTransaccao();
@@ -203,16 +203,13 @@ public class MakeEquivalencesForILEECStudents
 	 */
 	private static void writeAndUpdateEquivalences(IStudent student, IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		IPersistentEnrolmentEquivalence enrolmentEquivalenceDAO = fenixPersistentSuport.getIPersistentEnrolmentEquivalence();
-
 		List pastEnrolments = pastStudentCurricularPlan.getEnrolments();
 		Iterator iterator = pastEnrolments.iterator();
 		while (iterator.hasNext()) {
 
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 
-			IEnrolmentEquivalence enrolmentEquivalence = enrolmentEquivalenceDAO.readByEnrolment(enrolment);
-			if(enrolmentEquivalence == null)
+			if(!MakeEquivalencesForILEECStudents.alreadyHasEquivalence(enrolment, currentStudentCurricularPlan, fenixPersistentSuport))
 			{
 				ICurricularCourse newCurricularCourse = MakeEquivalencesForILEECStudents.getCurricularCourse(enrolment, fenixPersistentSuport);
 				if(newCurricularCourse == null)
@@ -431,7 +428,7 @@ public class MakeEquivalencesForILEECStudents
 
 		if(mwEquivalenciaIleec == null)
 		{
-			String key = "Código: [" + oldCurricularCourse.getCode() + "] e nome: [" + oldCurricularCourse.getName() + "]";
+			String key = "Código: [" + oldCurricularCourse.getCode() + "] e Nome: [" + oldCurricularCourse.getName() + "]";
 
 			List cases = (List) MakeEquivalencesForILEECStudents.noEquivalences.get(key);
 			if (cases == null)
@@ -447,7 +444,7 @@ public class MakeEquivalencesForILEECStudents
 			MakeEquivalencesForILEECStudents.noEquivalences.put(key, cases);
 		} else
 		{
-			String key = "Código: [" + oldCurricularCourse.getCode() + "] e nome: [" + oldCurricularCourse.getName() + "]";
+			String key = "Código: [" + oldCurricularCourse.getCode() + "] e Nome: [" + oldCurricularCourse.getName() + "]";
 			
 			List cases = null;
 			
@@ -489,6 +486,7 @@ public class MakeEquivalencesForILEECStudents
 		if(!MakeEquivalencesForILEECStudents.noEquivalences.entrySet().isEmpty()) {
 			int total = 0;
 			out.println("\nDISCIPLINAS SEM EQUIVALÊNCIA");
+			out.println("\nOS CASOS SÃO:");
 			Iterator iterator = MakeEquivalencesForILEECStudents.noEquivalences.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -514,6 +512,7 @@ public class MakeEquivalencesForILEECStudents
 		if(!MakeEquivalencesForILEECStudents.creditEquivalencesType2.entrySet().isEmpty()) {
 			int total = 0;
 			out.println("\nDISCIPLINAS COM EQUIVALÊNCIAS DO TIPO \"CRÉDITOS EM QUALQUER ÁREA SECUNDÁRIA\"");
+			out.println("\nOS CASOS SÃO:");
 			Iterator iterator = MakeEquivalencesForILEECStudents.creditEquivalencesType2.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -539,6 +538,7 @@ public class MakeEquivalencesForILEECStudents
 		if(!MakeEquivalencesForILEECStudents.creditEquivalencesType5.entrySet().isEmpty()) {
 			int total = 0;
 			out.println("\nDISCIPLINAS COM EQUIVALÊNCIAS DO TIPO \"CRÉDITOS EM ÁREA CIENTÍFICA ESPECIFICA\"");
+			out.println("\nOS CASOS SÃO:");
 			Iterator iterator = MakeEquivalencesForILEECStudents.creditEquivalencesType5.entrySet().iterator();
 			while (iterator.hasNext())
 			{
@@ -560,5 +560,27 @@ public class MakeEquivalencesForILEECStudents
 			}
 			out.println("TOTAL DE DISCIPLINAS: " + MakeEquivalencesForILEECStudents.creditEquivalencesType5.size());
 		}
+	}
+
+	/**
+	 * @param enrolment
+	 * @param currentStudentCurricularPlan
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Throwable
+	 */
+	private static boolean alreadyHasEquivalence(IEnrolment enrolment, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		boolean result = false;
+
+		ICurricularCourse curricularCourse = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(enrolment.getCurricularCourseScope().getCurricularCourse(), currentStudentCurricularPlan.getDegreeCurricularPlan(), fenixPersistentSuport);
+		if(curricularCourse == null)
+		{
+			result = false;
+		} else
+		{
+			result = true;
+		}
+		return result;
 	}
 }

@@ -98,7 +98,9 @@
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
-               encoding="${encoding}">
+               encoding="${encoding}"
+               memoryInitialSize="512m"
+               memoryMaximumSize="512m" fork="yes">
 			<src path="${src}"/>
         </javac>
 		<replace 

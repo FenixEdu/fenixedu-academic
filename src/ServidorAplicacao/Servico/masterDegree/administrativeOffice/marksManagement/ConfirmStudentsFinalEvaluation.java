@@ -83,7 +83,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
             curricularCourse =
                 (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
 
-            List enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse, yearString);
+            List enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourse, yearString);
             List enrolmentEvaluations = new ArrayList();
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext())

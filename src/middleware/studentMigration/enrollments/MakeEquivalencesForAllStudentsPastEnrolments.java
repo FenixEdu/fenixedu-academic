@@ -1,8 +1,12 @@
 package middleware.studentMigration.enrollments;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
@@ -115,10 +119,10 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			System.out.println("[ERROR 303] Could not obtain current StudentCurricularPlan for Student with number: [" + student.getNumber() + "]!");
 			return;
 		}
-//		if(currentStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal().equals(Integer.valueOf("48")))
-//		{
+		if(currentStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal().equals(Integer.valueOf("48")))
+		{
 			MakeEquivalencesForAllStudentsPastEnrolments.writeAndUpdateEnrolments(student, pastStudentCurricularPlan, currentStudentCurricularPlan, fenixPersistentSuport);
-//		}
+		}
 	}
 
 	/**
@@ -182,7 +186,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 * @return
 	 * @throws Throwable
 	 */
-	private static ICurricularCourse getCurricularCourseFromCurrentDegreeCurricularPlan(ICurricularCourse curricularCourse, IDegreeCurricularPlan currentDegreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	protected static ICurricularCourse getCurricularCourseFromCurrentDegreeCurricularPlan(ICurricularCourse curricularCourse, IDegreeCurricularPlan currentDegreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentCurricularCourse persistentCurricularCourse = fenixPersistentSuport.getIPersistentCurricularCourse();
 
@@ -214,7 +218,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				}
 			} else
 			{
-				System.out.println("[ERROR 307] Cannot find Fenix CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] for Degree [" + currentDegreeCurricularPlan.getDegree().getNome() + "]!");
+//				System.out.println("[ERROR 307] Cannot find Fenix CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] for Degree [" + currentDegreeCurricularPlan.getDegree().getNome() + "]!");
 				return null;
 			}
 		}
@@ -301,7 +305,11 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 						return curricularCourseScope;
 					}
 				}
-				return null;
+				ComparatorChain comparatorChain = new ComparatorChain();
+				comparatorChain.addComparator(new BeanComparator("curricularSemester.idInternal"));
+				Collections.sort(scopes, comparatorChain);
+				return (ICurricularCourseScope) scopes.get(0);
+//				return null;
 			}
 		} else
 		{

@@ -74,7 +74,7 @@ public class ReadStudentListByCurricularCourse implements IServico {
             curricularCourseTemp.setIdInternal(curricularCourseID);
             curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseTemp, false);
 
-			enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(curricularCourse, executionYear);
+			enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(curricularCourse, executionYear);
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
