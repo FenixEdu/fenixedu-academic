@@ -258,8 +258,7 @@
    </form>
 
 	<!-- validation for the Choose Certificate Info Form -->
-    <form name="chooseCertificateInfoForm">
-      
+    <form name="chooseCertificateInfoForm">  
       <field property="requesterNumber" depends="required, integer" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.requesterNumber" />
       </field>
@@ -268,7 +267,9 @@
         <arg0 key="label.masterDegree.administrativeOffice.graduationType" />
       </field>
 
-      
+	  <field property="posicao" depends="integer" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.requesterNumber" />
+      </field>
     </form>
 
 

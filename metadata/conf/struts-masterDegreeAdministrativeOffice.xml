@@ -11,6 +11,12 @@
     <form-beans type="org.apache.struts.action.ActionFormBean">
       
 
+      <!-- Dynamic-FormBean para Selecionar Documento -->
+      <form-bean name="posicaoFormBean"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="posicao" type="java.lang.Integer"/>
+      </form-bean>
       
       <!-- Bean for The Creation of a Candidate -->
       <form-bean name="createCandidateForm" 
@@ -206,6 +212,7 @@
             <form-property name="page" type="java.lang.Integer" />
         	<form-property name="requesterNumber" type="java.lang.Integer" />
 			<form-property name="graduationType" type="java.lang.String" />
+			<form-property name="destination" type="java.lang.String[]"/>
       </form-bean>
 
 
@@ -593,6 +600,15 @@
 	         <forward name="PrintReady" path="/guide/printGuide.jsp"/> 
 	         <forward name="PrintOneGuide" path="/guide/guideTemplate1.jsp"/> 
       </action>
+      
+      
+      <!-- Print Guide -->
+      <action path="/printDeclaration"
+		      parameter="method"
+              type="ServidorApresentacao.Action.certificate.PrintDeclarationDispatchAction"
+			  >
+	         <forward name="PrintReady" path="/certificate/printDeclarationPage.jsp"/> 
+      </action>
 
       <!-- Action to prepare the chooseCertificateInfoForm -->
       <action path="/chooseCertificateInfoAction"
@@ -623,7 +639,7 @@
             key="ServidorApresentacao.Action.exceptions.ExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
-      	  <forward name="ChooseSuccess" path="/certificate/showDeclarationList.jsp"/>
+      	  <forward name="ChooseSuccess" path="/certificate/printDeclarationPage.jsp"/>
           <forward name="ShowDeclarationTypes" path="/guide/chooseTypeDeclaration.jsp"/>  
       </action>
 
