@@ -14,11 +14,15 @@ import Dominio.Aula;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.Frequenta;
 import Dominio.IAula;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.ISala;
@@ -116,46 +120,55 @@ public class ViewScheduleActionTest extends MockStrutsTestCase {
 	person.setPrivilegios(privileges);
 	IStudent student = new Student(new Integer(45498), new Integer(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
 
+	IExecutionYear executionYear = new ExecutionYear();
+	executionYear.setYear("2002/2003");
+	IExecutionPeriod executionPeriod = new ExecutionPeriod();
+	executionPeriod.setExecutionYear(executionYear);
+	executionPeriod.setName("2º Semestre");
+
+
 	IDisciplinaExecucao discipline1 =
 		new DisciplinaExecucao(
 			"Trabalho Final de Curso I",
 			"TFCI",
 			"Program1",
-			_cursoExecucao1,
+
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline2 =
 		new DisciplinaExecucao(
 			"Trabalho Final de Curso II",
 			"TFCII",
 			"Program2",
-			_cursoExecucao1,
+
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline3 =
 		new DisciplinaExecucao(
-			"Engenharia da Programação",
+			"Engenharia da Programacao",
 			"EP",
 			"Program3",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline4 =
 		new DisciplinaExecucao(
 			"Aprendizagem",
 			"APR",
 			"Program4",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 
 	IFrequenta attend1 = new Frequenta(student, discipline1);
 	IFrequenta attend2 = new Frequenta(student, discipline2);

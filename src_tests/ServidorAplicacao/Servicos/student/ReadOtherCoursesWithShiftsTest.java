@@ -21,8 +21,12 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
@@ -67,7 +71,13 @@ public class ReadOtherCoursesWithShiftsTest extends TestCaseServicos {
     
   protected void setUp() {
     super.setUp();
+	IExecutionYear executionYear = new ExecutionYear();
+	executionYear.setYear("2002/03");
+	IExecutionPeriod executionPeriod = new ExecutionPeriod();
+	executionPeriod.setExecutionYear(executionYear);
+	executionPeriod.setName("2º Semestre");
     
+
     IPessoa person = new Pessoa();
     person.setNome("Marvin");
     person.setUsername("lepc");
@@ -83,61 +93,61 @@ public class ReadOtherCoursesWithShiftsTest extends TestCaseServicos {
     		"Trabalho Final de Curso I",
     		"TFCI",
     		"Program1",
-    		_cursoExecucao1,
     		new Double(1),
     		new Double(1),
     		new Double(1),
-    		new Double(1));
+    		new Double(1),
+    		executionPeriod);
     IDisciplinaExecucao discipline2 =
     	new DisciplinaExecucao(
     		"Trabalho Final de Curso II",
     		"TFCII",
     		"Program2",
-    		_cursoExecucao1,
     		new Double(1),
     		new Double(1),
     		new Double(1),
-    		new Double(1));
+    		new Double(1),
+    		executionPeriod);
     IDisciplinaExecucao discipline3 =
     	new DisciplinaExecucao(
     		"Engenharia da Programação",
     		"EP",
     		"Program3",
-    		_cursoExecucao1,
     		new Double(1),
     		new Double(1),
     		new Double(1),
-    		new Double(1));
+    		new Double(1),
+    		executionPeriod);
     IDisciplinaExecucao discipline4 =
     	new DisciplinaExecucao(
     		"Aprendizagem",
     		"APR",
     		"Program4",
-    		_cursoExecucao1,
     		new Double(1),
     		new Double(1),
     		new Double(1),
-    		new Double(1));
+    		new Double(1),
+    		executionPeriod);
 	IDisciplinaExecucao discipline5 =
 		new DisciplinaExecucao(
 			"Programação por Objectos",
 			"PO",
 			"Program5",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline6 =
 		new DisciplinaExecucao(
 			"Base de Dados",
 			"BD",
 			"Program6",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 
     IFrequenta attend1 = new Frequenta(student, discipline1);
 	IFrequenta attend2 = new Frequenta(student, discipline2);

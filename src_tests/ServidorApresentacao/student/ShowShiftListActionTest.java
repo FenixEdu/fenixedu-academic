@@ -19,10 +19,14 @@ import DataBeans.TypeLessonAndInfoShift;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.Frequenta;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -46,7 +50,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
@@ -136,46 +139,55 @@ public class ShowShiftListActionTest extends MockStrutsTestCase {
 				person,
 				new TipoCurso(TipoCurso.LICENCIATURA));
 
+		IExecutionYear executionYear = new ExecutionYear();
+		executionYear.setYear("2002/2003");
+		IExecutionPeriod executionPeriod = new ExecutionPeriod();
+		executionPeriod.setExecutionYear(executionYear);
+		executionPeriod.setName("2º Semestre");
+
+
 		IDisciplinaExecucao discipline1 =
 			new DisciplinaExecucao(
 				"Trabalho Final de Curso I",
 				"TFCI",
 				"Program1",
-				_cursoExecucao1,
+
 				new Double(1),
 				new Double(1),
 				new Double(1),
-				new Double(1));
+				new Double(1),
+				executionPeriod);
 		IDisciplinaExecucao discipline2 =
 			new DisciplinaExecucao(
 				"Trabalho Final de Curso II",
 				"TFCII",
 				"Program2",
-				_cursoExecucao1,
+
 				new Double(1),
 				new Double(1),
 				new Double(1),
-				new Double(1));
+				new Double(1),
+				executionPeriod);
 		IDisciplinaExecucao discipline3 =
 			new DisciplinaExecucao(
-				"Engenharia da Programação",
+				"Engenharia da Programacao",
 				"EP",
 				"Program3",
-				_cursoExecucao1,
 				new Double(1),
 				new Double(1),
 				new Double(1),
-				new Double(1));
+				new Double(1),
+				executionPeriod);
 		IDisciplinaExecucao discipline4 =
 			new DisciplinaExecucao(
 				"Aprendizagem",
 				"APR",
 				"Program4",
-				_cursoExecucao1,
 				new Double(1),
 				new Double(1),
 				new Double(1),
-				new Double(1));
+				new Double(1),
+				executionPeriod);
 		IFrequenta attend1 = new Frequenta(student, discipline1);
 		IFrequenta attend2 = new Frequenta(student, discipline2);
 		IFrequenta attend3 = new Frequenta(student, discipline3);

@@ -13,10 +13,14 @@ import DataBeans.InfoStudent;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.Frequenta;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
@@ -107,7 +111,16 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 
 	ICurso _curso1 = new Curso("LEIC", "Informatica", new TipoCurso(TipoCurso.LICENCIATURA));
 
-	ICursoExecucao _cursoExecucao1 = new CursoExecucao("2002/03", _curso1);
+	IPlanoCurricularCurso degreeCurricularPlan = new PlanoCurricularCurso("plano1", _curso1);
+	
+	IExecutionYear executionYear = new ExecutionYear();
+	executionYear.setYear("2002/03");
+	IExecutionPeriod executionPeriod = new ExecutionPeriod();
+	executionPeriod.setExecutionYear(executionYear);
+	executionPeriod.setName("2º Semestre");
+	
+	
+	ICursoExecucao _cursoExecucao1 = new CursoExecucao(executionYear, degreeCurricularPlan);
 
 	IPessoa person = new Pessoa();
 	Set privileges = new HashSet();	
@@ -128,51 +141,51 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 			"Trabalho Final de Curso I",
 			"TFCI",
 			"Program1",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline2 =
 		new DisciplinaExecucao(
 			"Trabalho Final de Curso II",
 			"TFCII",
 			"Program2",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline3 =
 		new DisciplinaExecucao(
 			"Engenharia da Programação",
 			"EP",
 			"Program3",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline4 =
 		new DisciplinaExecucao(
 			"Aprendizagem",
 			"APR",
 			"Program4",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 	IDisciplinaExecucao discipline5 =
 		new DisciplinaExecucao(
 			"Percepção",
 			"PERC",
 			"Program5",
-			_cursoExecucao1,
 			new Double(1),
 			new Double(1),
 			new Double(1),
-			new Double(1));
+			new Double(1),
+			executionPeriod);
 
 	IFrequenta attend1 = new Frequenta(student, discipline1);
 	IFrequenta attend2 = new Frequenta(student, discipline2);
@@ -237,7 +250,15 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 	ITurnoAluno shiftStudent1 = new TurnoAluno(shift6, student);
 	ITurnoAluno shiftStudent2 = new TurnoAluno(shift7, student);
 
-	ITurma class1 = new Turma("turma1", new Integer(2), new Integer(1), _curso1);
+	
+	
+	ITurma class1 = new Turma();
+	class1.setNome("turma1");
+	class1.setAnoCurricular(new Integer(2));
+	//FIXME wrong 
+	class1.setExecutionDegree(new CursoExecucao());
+	
+	class1.setExecutionPeriod(executionPeriod);
 
 	ITurmaTurno classShift1 = new TurmaTurno();
 	classShift1.setTurma(class1);
