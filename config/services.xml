@@ -8277,4 +8277,14 @@
 			<chain name="ManagementAssiduousnessAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadLessonStartDate</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.teacher.CalculateFirstDayOfLesson
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
 </serviceDefinitions>
