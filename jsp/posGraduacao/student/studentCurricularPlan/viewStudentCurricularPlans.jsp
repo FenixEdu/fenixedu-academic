@@ -31,14 +31,19 @@
 				</html:link>
 			</td>
 			<td align="left">
-				<logic:equal name="infoStudentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
+				<logic:empty name="infoStudentCurricularPlan" property="infoBranch">
 					<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>
-				</logic:equal>
-				<logic:notEqual name="infoStudentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
-					<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
-						<bean:write name="infoStudentCurricularPlan" property="infoBranch.name"/>
-					</html:link>
-				</logic:notEqual>
+				</logic:empty>
+				<logic:notEmpty name="infoStudentCurricularPlan" property="infoBranch">
+					<logic:equal name="infoStudentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
+						<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>
+					</logic:equal>
+					<logic:notEqual name="infoStudentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
+						<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
+							<bean:write name="infoStudentCurricularPlan" property="infoBranch.name"/>
+						</html:link>
+					</logic:notEqual>
+				</logic:notEmpty>
 			</td>
 			<td align="left">
 				<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">

@@ -33,6 +33,7 @@ CHANGES:
 - Coordinator Portal - coordinators for degrees - services used in this portal stopped calling CLONER methods to new philosophy
 - Updated external person and work location tests
 - Minor changes to sms user interface
+- WebSiteManager Portal - changed interface for events and news
 	
 BUG FIXES:
 ==========
@@ -47,6 +48,7 @@ BUG FIXES:
 - Corrected EditGuideInformation service because was causing the system crash
 - Removed the possibility to edit payed guides.
 - [ #308 ] Master Degree's Portal - Candidacy Situation
+- Master Degree's Portal - fixed presentation of branches when viewing student curricular plans
 
 KNOWN ISSUES:
 =============

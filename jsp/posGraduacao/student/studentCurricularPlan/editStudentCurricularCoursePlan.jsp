@@ -27,8 +27,17 @@
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.branch" /></strong>
-			<bean:write name="studentCurricularPlan" property="infoBranch.code" />
-			<bean:write name="studentCurricularPlan" property="infoBranch.name" />
+			<logic:empty name="studentCurricularPlan" property="infoBranch">
+				<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>
+			</logic:empty>
+			<logic:notEmpty name="studentCurricularPlan" property="infoBranch">
+				<logic:equal name="studentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
+					<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>
+				</logic:equal>
+				<logic:notEqual name="studentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
+						<bean:write name="studentCurricularPlan" property="infoBranch.name"/>
+				</logic:notEqual>
+			</logic:notEmpty>
 		</td>						
 	</tr>		
 	<tr>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Student;
@@ -61,9 +61,13 @@ public class ReadPosGradStudentCurricularPlans implements IServico {
                 while (iterator.hasNext()) {
                     IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
                             .next();
+                    //CLONER
+                    //result
+                    //        .add(Cloner
+                    //                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
                     result
-                            .add(Cloner
-                                    .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+                            .add(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan
+                                    .newInfoFromDomain(studentCurricularPlan));
                 }
             } else {
                 throw new NotAuthorizedException();
