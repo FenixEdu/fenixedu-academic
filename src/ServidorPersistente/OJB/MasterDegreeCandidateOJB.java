@@ -332,9 +332,9 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
-        crit.addEqualTo(
+       /* crit.addEqualTo(
             "executionDegree.executionYear.year",
-            executionDegree.getExecutionYear().getYear());
+            executionDegree.getExecutionYear().getYear());*/
         crit.addEqualTo(
             "executionDegree.curricularPlan.name",
             executionDegree.getCurricularPlan().getName());
