@@ -1,5 +1,8 @@
-.horarioHeader {
+.timetable{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.horarioHeader_first {
 	font-size: 11px;
 	font-weight: bold;
 	color: #333333;
@@ -7,20 +10,162 @@
 	text-align: center;
 	height: 20px;
 	vertical-align: middle;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #000000;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000000;
 }
-.horariosBody {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+
+.horarioHeader {
 	font-size: 11px;
+	font-weight: bold;
 	color: #333333;
-	background-color: #E1E1E1;
+	background-color: #999999;
 	text-align: center;
+	height: 20px;
+	vertical-align: middle;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000000;
 }
+
 .horariosHoras {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333333;
 	background-color: #CCCCCC;
 	text-align: center;
 	vertical-align: middle;
 	height: 20px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #000000;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #000000;
+}
+
+.horariosHoras_first {
+	font-size: 11px;
+	color: #333333;
+	background-color: #CCCCCC;
+	text-align: center;
+	vertical-align: middle;
+	height: 20px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #000000;
+}
+
+.timeTable_line{
+	font-size: 9px;
+	color: #333333;
+	background-color: #E1E1E1;
+	text-align: left;
+}
+
+.slot_start_top{
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000000;
+}
+
+.slot_start_top_right{
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000000;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+}
+
+.slot_start_right{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+}
+
+.slot_right{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+}
+
+.slot_end_right{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #000000;
+}
+
+.slot_empty{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: #000000;
+}
+
+.slot_empty_right{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: #000000;
+}
+
+.slot_empty_top_right{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: #000000;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000000;
+}
+
+.slot_empty_right_bottom{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #000000;
+}
+
+.slot_empty_bottom{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #000000;
+}
+
+.slot_empty_top{
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: #000000;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #000000;
 }
