@@ -156,7 +156,7 @@ public class ExemptionGratuityAction extends DispatchAction
 		Integer studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
 		request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
 
-		//read student curricular plan
+		//read student curricular plan only for show in jsp
 		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 		Object[] args = { studentCurricularPlanID };
 		try
