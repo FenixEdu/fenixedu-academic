@@ -12,16 +12,15 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
  * <br>
  * <strong>Description:</strong><br>
  * This exception is throw when one tries to create a reimbursement guide associated with 
- * a payment guide and the sum of the new value with all the other reimbursement guides's values
- * of the payment guide exceeds the payment guide total. 
+ * a payment guide with an active situation that is not PAYED. 
  */
-public class InvalidReimbursementValueSumServiceException extends InvalidArgumentsServiceException
+public class InvalidGuideSituationServiceException extends InvalidArgumentsServiceException
 {
 
     /**
      * 
      */
-    public InvalidReimbursementValueSumServiceException()
+    public InvalidGuideSituationServiceException()
     {
 
     }
@@ -29,7 +28,7 @@ public class InvalidReimbursementValueSumServiceException extends InvalidArgumen
     /**
      * @param s
      */
-    public InvalidReimbursementValueSumServiceException(String s)
+    public InvalidGuideSituationServiceException(String s)
     {
         super(s);
 
@@ -38,7 +37,7 @@ public class InvalidReimbursementValueSumServiceException extends InvalidArgumen
     /**
      * @param cause
      */
-    public InvalidReimbursementValueSumServiceException(Throwable cause)
+    public InvalidGuideSituationServiceException(Throwable cause)
     {
         super(cause);
 
@@ -48,14 +47,14 @@ public class InvalidReimbursementValueSumServiceException extends InvalidArgumen
      * @param message
      * @param cause
      */
-    public InvalidReimbursementValueSumServiceException(String message, Throwable cause)
+    public InvalidGuideSituationServiceException(String message, Throwable cause)
     {
         super(message, cause);
 
     }
     public String toString()
     {
-        String result = "[InvalidReimbursementValueSumServiceException\n";
+        String result = "[InvalidGuideSituationServiceException\n";
         result += "message" + this.getMessage() + "\n";
         result += "cause" + this.getCause() + "\n";
         result += "]";

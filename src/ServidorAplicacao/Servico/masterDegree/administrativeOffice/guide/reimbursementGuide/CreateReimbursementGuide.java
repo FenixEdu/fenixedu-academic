@@ -19,6 +19,7 @@ import Dominio.reimbursementGuide.ReimbursementGuideSituation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidReimbursementValueSumServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,10 +30,30 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import Util.ReimbursementGuideState;
+import Util.SituationOfGuide;
 import Util.State;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * 
+ * @throws FenixServiceException, InvalidReimbursementValueServiceException,
+ *  InvalidGuideSituationServiceException, InvalidReimbursementValueSumServiceException
+ * 
+ * <br>
+ * <strong>Description:</strong><br>
+ * This service creates a reimbursement guide and associates it with a payment guide.
+ * It also creates the reimbursement guide situation and sets it to the ISSUED state.
+ * If any problem occurs during the execution of the service a FenixServiceException 
+ * is thrown. If the payment guide doesn't have a PAYED state active an 
+ * InvalidGuideSituationServiceException is thrown. If the value of the reimbursement
+ * exceeds the total of the payment guide an InvalidReimbursementValueServiceException
+ * is thrown and if the sum of all the reimbursements associated with the payment guide
+ * exceeds the total an  InvalidReimbursementValueSumServiceException is thrown.
+ * <br>
+ * The service also generates the number of the new reimbursement guide using a sequential 
+ * method.   
+ *
+ * 
  */
 public class CreateReimbursementGuide implements IServico
 {
@@ -85,6 +106,11 @@ public class CreateReimbursementGuide implements IServico
                 {
                     throw new InvalidReimbursementValueSumServiceException();
                 }
+            }
+
+            if (!guide.getActiveSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE))
+            {
+                throw new InvalidGuideSituationServiceException();
             }
             Integer reimbursementGuideNumber =
                 persistentReimbursementGuide.generateReimbursementGuideNumber();
