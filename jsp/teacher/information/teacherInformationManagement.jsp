@@ -249,7 +249,7 @@
 				<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfClass" /></td>
 				<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfWeeklyHours" /></td>
 			</tr>
-			<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoExecutionCourses">
+			<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses">
 				<logic:iterate id="infoCurricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
 					<tr>
 							<td class="listClasses">

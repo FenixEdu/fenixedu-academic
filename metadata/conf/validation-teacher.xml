@@ -659,7 +659,7 @@
 		<field property="beginYear" depends="required,integer" page="1">
 			<arg0 key="label.career.beginYear"/>
 		</field>
-		<field property="endYear" depends="required,integer,greaterThan" page="1">
+		<field property="endYear" depends="required,integer,greaterThanOrEqual" page="1">
 			<arg0 key="label.career.beginYear"/>
 			<arg1 key="label.career.endYear"/>
 			<var>
@@ -676,7 +676,7 @@
 		<field property="beginYear" depends="required,integer" page="1">
 			<arg0 key="label.career.year"/>
 		</field>
-		<field property="endYear" depends="required,integer,greaterThan" page="1">
+		<field property="endYear" depends="required,integer,greaterThanOrEqual" page="1">
 			<arg0 key="label.career.beginYear"/>
 			<arg1 key="label.career.endYear"/>
 			<var>

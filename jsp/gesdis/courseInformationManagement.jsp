@@ -16,13 +16,13 @@
 	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
 	<table class="listClasses" width="100%">
-			<tr>
-				<td>
-					<p align="left"><b><bean:message key="message.courseInformation.warning" /></b></p>
-				</td>
-			</tr>
-		</table>
-		</br>
+		<tr>
+			<td>
+				<p align="left"><b><bean:message key="message.courseInformation.warning" /></b></p>
+			</td>
+		</tr>
+	</table>
+	</br  >
 	<table class="infoselected" width="100%">
 		<tr>
 		<td>
@@ -41,6 +41,8 @@
 
 		<logic:iterate id="curricularCourse" name="siteCourseInformation" property="infoCurricularCourses">
 			<blockquote style="margin-top:1px">
+				<br />
+				<b><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
 	  			<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
 	  				<br />
 	  				<b><bean:message key="message.courseInformation.curricularYear" /></b>
@@ -165,24 +167,46 @@
 		</table>--%>
 		<br />
 		<p class="infoop"><span class="emphasis-box">4</span>
-		<bean:message key="message.courseInformation.courseObjectives" /></p>
+	<bean:message key="message.courseInformation.courseObjectives" /></p>
+	<table border="0" cellspacing="1" style="margin-top:10px">
+		<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
+			<tr>
+				<td>
+					<b><bean:write name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></b>
+					<br />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					 <u><bean:message key="label.generalObjectives"/></u>
+					 <br />
+					 <bean:write name="infoCurriculum" property="generalObjectives" filter="false"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					 <u><bean:message key="label.operacionalObjectives"/></u>
+					 <br />
+					 <bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/>
+					 <br />
+ 					 <br />
+				 </td>
+			</tr>
+		</logic:iterate>
+	</table>
+	<br />
+	<p class="infoop"><span class="emphasis-box">5</span>
+	<bean:message key="message.courseInformation.courseProgram" /></p>
 		<table border="0" cellspacing="1" style="margin-top:10px">
 			<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
 				<tr>
-					<td><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></td>
-				</tr>
-				<tr>
-					<td><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></td>
-				</tr>
-			</logic:iterate>
-		</table>
-		<br />
-		<p class="infoop"><span class="emphasis-box">5</span>
-		<bean:message key="message.courseInformation.courseProgram" /></p>
-		<table border="0" cellspacing="1" style="margin-top:10px">
-			<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
-				<tr>
-					<td><bean:write name="infoCurriculum" property="program" filter="false"/></td>
+					<td>
+						<b><bean:write name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></b>
+						<br />
+						<bean:write name="infoCurriculum" property="program" filter="false"/>
+						<br />
+						<br />
+					</td>
 				</tr>
 			</logic:iterate>
 		</table>

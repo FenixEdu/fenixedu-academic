@@ -117,6 +117,10 @@
         <form-property name="programEn" type="java.lang.String"/>        
       </form-bean>
 			
+       <form-bean name="courseInformationForm" 
+                   type="org.apache.struts.validator.DynaValidatorForm" 
+                    dynamic="true">
+        </form-bean>
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -359,7 +363,14 @@
 	         <forward name="ShowCurricularCourseList" path="/courses/showCurricularCourses.jsp" />
 	      	 <forward name="showOccupancy" path="/courses/showOccupancyLevels.jsp"/>	           
     	     <forward name="showLoads" path="/courses/showLoads.jsp"/>
-		</action>		
+		</action>
+		
+	  <!-- Read Teachers Information -->
+        <action path="/teachersInformation" 
+            scope="request"
+            type="ServidorApresentacao.Action.coordinator.ReadTeachersInformationAction" >
+            <forward name="show" path="view-teachers-information"/>
+        </action>
 
 		<!-- ======== coordination team mappings ======= -->
 		 <action path="/viewCoordinationTeam"
@@ -419,8 +430,21 @@
 			<forward name="degreeCurricularPlanManagementExecutionYears" path="/degreeCurricularPlanManagement.do?method=prepareViewCurricularCourseInformationHistory" />
 			<forward name="editCurriculum" path="editCurriculum" />
 			<forward name="editCurriculumEn" path="editCurriculumEn" />
-		</action>		
-
+		</action>	
+		
+	  <!-- Course Information -->
+      <action type="ServidorApresentacao.Action.gesdis.CourseInformationAction"
+      		path="/courseInformation"
+      		name="courseInformationForm"
+      		parameter="method"
+      		scope="request"
+      		validate="true"
+      		input="/courseInformation.do?method=read">
+  		<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			   key="error.exception.notAuthorized"
+               handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" /> 
+		<forward name="successfull-read" path="view-course-information"/>
+	  </action>	
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

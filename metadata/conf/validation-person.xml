@@ -171,7 +171,7 @@
     
      <!-- validation for the Edit Qualification form -->
     <form name="qualificationForm">
-      <field property="mark" depends="integer" page="1">
+      <field property="mark" depends="" page="1">
       	<arg0 key="label.qualification.mark" />
   	  </field>
       <field property="year" depends="required,integer" page="1">
