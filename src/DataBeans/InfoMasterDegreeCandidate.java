@@ -53,12 +53,11 @@ public class InfoMasterDegreeCandidate {
     private String sex = null;    
   
   
-  	private InfoDegree infoDegree = null;
+  	private InfoExecutionDegree infoExecutionDegree = null;
 //    private String degreeName = null;
 //    private String degreeCode = null;
     private InfoCountry infoCountry = null;
 	private InfoCountry infoNationality = null;
-	private InfoExecutionYear infoExecutionYear = null;
 
     private String infoIdentificationDocumentType = null;
     private String specialization = null;
@@ -99,14 +98,13 @@ public class InfoMasterDegreeCandidate {
         username = null;
         password = null;
         candidateNumber = null;
-        infoExecutionYear = null;
         specialization = null;
         majorDegreeSchool = null;
         majorDegreeYear = null;
         average = null;
 		infoCountry = null;		
 		infoCandidateSituation = null;
-		infoDegree = null;
+		infoExecutionDegree = null;
 
     } // Fim do Construtor Sem Argumentos
     
@@ -119,8 +117,9 @@ public class InfoMasterDegreeCandidate {
     		String addressParish, String addressMunicipality, String addressDistrict, 
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
-			String maritalStatus, InfoCountry country, InfoCountry nationality, String specialization, InfoExecutionYear infoExecutionYear,
-			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate, Date identificationDocumentExpirationDate
+			String maritalStatus, InfoCountry country, InfoCountry nationality, String specialization, 
+			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate, 
+			Date identificationDocumentExpirationDate
     		) {
 	    
         setIdentificationDocumentNumber(identificationDocumentNumber);
@@ -156,7 +155,6 @@ public class InfoMasterDegreeCandidate {
 		setSpecialization(specialization);		
         setAverage(average);
         setInfoCountry(country);
-		setInfoExecutionYear(infoExecutionYear);
 		setCandidateNumber(candidateNumber);
     }
         
@@ -199,14 +197,13 @@ public class InfoMasterDegreeCandidate {
         result += "\n  - Username : " + username;
         result += "\n  - Password : " + password;
         result += "\n  - Numero de Candidato : " + candidateNumber;
-        result += "\n  - Ano de Candidatura : " + infoExecutionYear;
         result += "\n  - Especializacao : " + specialization;
         result += "\n  - Escola de Licenciatura : " + majorDegreeSchool;
         result += "\n  - Ano de Licenciatura : " + majorDegreeYear;
         result += "\n  - Media de Licenciatura : " + average;
 		result += "\n  - Pais : " + infoCountry;
 		result += "\n  - Situação Activa : " + infoCandidateSituation;
-		result += "\n  - InfoDegree : " + infoDegree;
+		result += "\n  - InfoExecutionDegree : " + infoExecutionDegree;
         return result;
     }
     
@@ -304,6 +301,13 @@ public class InfoMasterDegreeCandidate {
 	/**
 	 * @return Date
 	 */
+	public Date getIdentificationDocumentExpirationDate() {
+		return identificationDocumentExpirationDate;
+	}
+
+	/**
+	 * @return Date
+	 */
 	public Date getIdentificationDocumentIssueDate() {
 		return identificationDocumentIssueDate;
 	}
@@ -323,13 +327,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * @return String
-	 */
-	public String getInfoIdentificationDocumentType() {
-		return infoIdentificationDocumentType;
-	}
-
-	/**
 	 * @return InfoCandidateSituation
 	 */
 	public InfoCandidateSituation getInfoCandidateSituation() {
@@ -344,17 +341,17 @@ public InfoCountry getInfoCountry() {
 }
 
 	/**
-	 * @return InfoDegree
+	 * @return InfoExecutionDegree
 	 */
-	public InfoDegree getInfoDegree() {
-		return infoDegree;
+	public InfoExecutionDegree getInfoExecutionDegree() {
+		return infoExecutionDegree;
 	}
 
 	/**
-	 * @return InfoExecutionYear
+	 * @return String
 	 */
-	public InfoExecutionYear getInfoExecutionYear() {
-		return infoExecutionYear;
+	public String getInfoIdentificationDocumentType() {
+		return infoIdentificationDocumentType;
 	}
 
 	/**
@@ -581,6 +578,15 @@ public InfoCountry getInfoCountry() {
 	}
 
 	/**
+	 * Sets the identificationDocumentExpirationDate.
+	 * @param identificationDocumentExpirationDate The identificationDocumentExpirationDate to set
+	 */
+	public void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate) {
+		this.identificationDocumentExpirationDate =
+			identificationDocumentExpirationDate;
+	}
+
+	/**
 	 * Sets the identificationDocumentIssueDate.
 	 * @param identificationDocumentIssueDate The identificationDocumentIssueDate to set
 	 */
@@ -606,14 +612,6 @@ public InfoCountry getInfoCountry() {
 	}
 
 	/**
-	 * Sets the infoIdentificationDocumentType.
-	 * @param infoIdentificationDocumentType The infoIdentificationDocumentType to set
-	 */
-	public void setInfoIdentificationDocumentType(String identificationDocumentType) {
-		this.infoIdentificationDocumentType = identificationDocumentType;
-	}
-
-	/**
 	 * Sets the infoCandidateSituation.
 	 * @param infoCandidateSituation The infoCandidateSituation to set
 	 */
@@ -630,19 +628,19 @@ public void setInfoCountry(InfoCountry infoCountry) {
 }
 
 	/**
-	 * Sets the infoDegree.
-	 * @param infoDegree The infoDegree to set
+	 * Sets the infoExecutionDegree.
+	 * @param infoExecutionDegree The infoExecutionDegree to set
 	 */
-	public void setInfoDegree(InfoDegree infoDegree) {
-		this.infoDegree = infoDegree;
+	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
+		this.infoExecutionDegree = infoExecutionDegree;
 	}
 
 	/**
-	 * Sets the infoExecutionYear.
-	 * @param infoExecutionYear The infoExecutionYear to set
+	 * Sets the infoIdentificationDocumentType.
+	 * @param infoIdentificationDocumentType The infoIdentificationDocumentType to set
 	 */
-	public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-		this.infoExecutionYear = infoExecutionYear;
+	public void setInfoIdentificationDocumentType(String infoIdentificationDocumentType) {
+		this.infoIdentificationDocumentType = infoIdentificationDocumentType;
 	}
 
 	/**
@@ -779,22 +777,6 @@ public void setInfoCountry(InfoCountry infoCountry) {
 	 */
 	public void setWebSite(String webSite) {
 		this.webSite = webSite;
-	}
-
-	/**
-	 * @return Date
-	 */
-	public Date getIdentificationDocumentExpirationDate() {
-		return identificationDocumentExpirationDate;
-	}
-
-	/**
-	 * Sets the identificationDocumentExpirationDate.
-	 * @param identificationDocumentExpirationDate The identificationDocumentExpirationDate to set
-	 */
-	public void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate) {
-		this.identificationDocumentExpirationDate =
-			identificationDocumentExpirationDate;
 	}
 
 }
