@@ -8,21 +8,16 @@
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
-
-
 <logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
 				<td>
-					<font color='red'> <bean:message key="message.public.notfound.executionCourse"/> </font>
+					<span class="error"><bean:message key="message.public.notfound.executionCourse"/></span>
 				</td>
 			</tr>
 		</table>
 </logic:notPresent>
-
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
-
-	
 	</br>
 	</br>
 	<logic:present name="publico.infoShifts" scope="session">
