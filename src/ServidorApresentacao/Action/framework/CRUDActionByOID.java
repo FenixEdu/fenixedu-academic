@@ -16,7 +16,6 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoObject;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.credits.ReadTeacherCreditsSheetService;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -229,7 +228,7 @@ public abstract class CRUDActionByOID extends DispatchAction
      * @param form
      * @param request
      */
-    protected void prepareFormConstants(ActionMapping mapping, ActionForm form, HttpServletRequest request)
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form, HttpServletRequest request) throws FenixServiceException
     {
     }
 
