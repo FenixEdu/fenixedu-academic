@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
@@ -41,10 +40,7 @@ public class ViewShiftsFormAction extends FenixAction {
 		
 			DynaActionForm courseForm = (DynaActionForm) form;
 			
-			CurricularYearAndSemesterAndInfoExecutionDegree ctx =
-										(CurricularYearAndSemesterAndInfoExecutionDegree) request
-											.getSession()
-											.getAttribute(SessionConstants.CONTEXT_KEY);
+			
 			
 			InfoExecutionCourse executionCourse =new InfoExecutionCourse();
 			
