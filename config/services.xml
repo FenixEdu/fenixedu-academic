@@ -6605,4 +6605,22 @@
         <filterChains>
         </filterChains>
     </service>
+     <service>
+        <name>ReadActiveStudentCurricularPlanByDegreeType</name>
+        <implementationClass>ServidorAplicacao.Servico.student.ReadActiveStudentCurricularPlanByDegreeType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EstablishFinalDegreeWorkStudentGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.student.EstablishFinalDegreeWorkStudentGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>
