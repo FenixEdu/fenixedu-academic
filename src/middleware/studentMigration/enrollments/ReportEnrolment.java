@@ -426,7 +426,8 @@ public class ReportEnrolment
 			out.println("TOTAL ENROLMENTS MIGRADOS: " + enrolmentsMigrated);
 		}
 
-		int totalEnrolmentsNotMigrated = totalCurricularCoursesFoundInOtherDegree + totalExecutionCoursesNotFound + totalCurricularCourseScopesNotFound + totalCurricularCoursesNotFound;
+//		int totalEnrolmentsNotMigrated = totalCurricularCoursesFoundInOtherDegree + totalExecutionCoursesNotFound + totalCurricularCourseScopesNotFound + totalCurricularCoursesNotFound;
+		int totalEnrolmentsNotMigrated = totalCurricularCoursesFoundInOtherDegree + totalCurricularCourseScopesNotFound + totalCurricularCoursesNotFound;
 		if(totalEnrolmentsNotMigrated > 0) {
 			out.println("");
 			out.println("TOTAL ENROLMENTS NÃO MIGRADOS: " + totalEnrolmentsNotMigrated);

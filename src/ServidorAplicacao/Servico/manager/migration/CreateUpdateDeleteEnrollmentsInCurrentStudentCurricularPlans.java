@@ -65,15 +65,15 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 			return null;
 		} else
 		{
-			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
-			{
-				super.out.println(
-					"[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree curricular plan!");
-				return studentCurricularPlan.getDegreeCurricularPlan();
-			} else
-			{
+//			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
+//			{
+//				super.out.println(
+//					"[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree curricular plan!");
+//				return studentCurricularPlan.getDegreeCurricularPlan();
+//			} else
+//			{
 				return executionDegree.getCurricularPlan();
-			}
+//			}
 		}
 	}
 
@@ -341,21 +341,46 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 	 */
 	private String getRealCurricularCourseCodeForCodesAZx(MWEnrolment mwEnrolment)
 	{
-		if (mwEnrolment.getCoursecode().equals("AZ2") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
+		if (mwEnrolment.getDegreecode().intValue() == 7
+			|| mwEnrolment.getDegreecode().intValue() == 9
+			|| mwEnrolment.getDegreecode().intValue() == 13
+			|| mwEnrolment.getDegreecode().intValue() == 20
+			|| mwEnrolment.getDegreecode().intValue() == 21)
 		{
-			return "QN";
-		} else if (mwEnrolment.getCoursecode().equals("AZ3") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
-		{
-			return "PY";
-		} else if (mwEnrolment.getCoursecode().equals("AZ4") && mwEnrolment.getCurricularcoursesemester().intValue() == 1)
-		{
-			return "P5";
-		} else if (mwEnrolment.getCoursecode().equals("AZ5") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
-		{
-			return "UN";
-		} else if (mwEnrolment.getCoursecode().equals("AZ6") && mwEnrolment.getCurricularcoursesemester().intValue() == 1)
-		{
-			return "U8";
+			if (mwEnrolment.getCoursecode().equals("AZ2") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
+			{
+				return "QN";
+			} else if (mwEnrolment.getCoursecode().equals("AZ3") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
+			{
+				return "PY";
+			} else if (mwEnrolment.getCoursecode().equals("AZ4") && mwEnrolment.getCurricularcoursesemester().intValue() == 1)
+			{
+				return "P5";
+			} else if (mwEnrolment.getCoursecode().equals("AZ5") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
+			{
+				return "UN";
+			} else if (mwEnrolment.getCoursecode().equals("AZ6") && mwEnrolment.getCurricularcoursesemester().intValue() == 1)
+			{
+				return "U8";
+			} else if (mwEnrolment.getCoursecode().equals("QN") && mwEnrolment.getCurricularcoursesemester().intValue() == 1)
+			{
+				return "AZ2";
+			} else if (mwEnrolment.getCoursecode().equals("P5") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
+			{
+				return "AZ4";
+			} else if (mwEnrolment.getCoursecode().equals("UN") && mwEnrolment.getCurricularcoursesemester().intValue() == 1)
+			{
+				return "AZ5";
+			} else if (mwEnrolment.getCoursecode().equals("U8") && mwEnrolment.getCurricularcoursesemester().intValue() == 2)
+			{
+				return "AZ6";
+			} else if (mwEnrolment.getCoursecode().equals("PY") && mwEnrolment.getCurricularcoursesemester().intValue() == 1)
+			{
+				return "AZ3";
+			} else
+			{
+				return mwEnrolment.getCoursecode();
+			}
 		} else
 		{
 			return mwEnrolment.getCoursecode();

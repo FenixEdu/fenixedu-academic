@@ -137,6 +137,11 @@ public class WriteEnrolment implements IService
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
 		IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();
+		
+		if (createdAttends == null)
+		{
+			createdAttends = new HashMap();
+		}
 
 		IExecutionCourse executionCourse =
 			executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(

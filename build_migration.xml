@@ -191,4 +191,82 @@
 		</exec>
 	</target>
 
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+
+	<target name="load-new-students">
+		<sql
+			driver="com.mysql.jdbc.Driver"
+			url="jdbc:mysql://localhost/${db.name}"
+			userid="${db.user}"
+			password="${db.pass}"
+			encoding="${encoding}">
+			<fileset dir="${sql}">
+				<include name="middleware/LoadNewStudents.sql"/>
+			</fileset>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="create-new-students" depends="compile-proj, load-new-students">
+		<java classname="middleware.studentMigration.CreateStudent" fork="yes" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+    <target name="load-existing-students">
+		<sql
+			driver="com.mysql.jdbc.Driver"
+			url="jdbc:mysql://localhost/${db.name}"
+			userid="${db.user}"
+			password="${db.pass}"
+			encoding="${encoding}">
+			<fileset dir="${sql}">
+				<include name="middleware/LoadExistingStudents.sql"/>
+			</fileset>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</sql>
+	</target>
+
+	<target name="update-existing-students" depends="compile-proj, load-existing-students">
+		<java classname="middleware.studentMigration.UpdateStudent" fork="yes" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
 </project>

@@ -114,7 +114,6 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 			super.out.println("[ERROR 101.1] Number: [" + mwStudent.getNumber() + "]");
 			super.out.println("[ERROR 101.1] Degree: [" + mwStudent.getDegreecode() + "]");
 			super.out.println("[ERROR 101.1] Branch: [" + mwStudent.getBranchcode() + "]");
-			e.fillInStackTrace();
 			e.printStackTrace(super.out);
 			throw new FenixServiceException(e);
 		}
@@ -186,7 +185,12 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 
 			if (curricularCourse == null)
 			{
-				continue;
+				curricularCourse = super.getCurricularCourse(mwEnrolment, studentCurricularPlan.getDegreeCurricularPlan(), true);
+
+				if (curricularCourse == null)
+				{
+					continue;
+				}
 			}
 
 			IExecutionPeriod currentExecutionPeriod =
@@ -200,7 +204,7 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 						mwEnrolment.getCoursecode(),
 						mwEnrolment.getDegreecode().toString(),
 						mwEnrolment.getNumber().toString());
-					continue;
+//					continue;
 				}
 			}
 
