@@ -16,7 +16,7 @@ manager.username=admin
 db.name=ciapl
 db.user=root
 db.pass=
-db.alias=//localhost:3306/ciapl
+db.alias=//localhost:3306/ciapl?useUnicode=true&amp;characterEncoding=latin1
 
 db.assiduousness.name=AssiduidadeOracleTeste
 db.assiduousness.platform=MySQL

@@ -33,8 +33,8 @@
     <field-descriptor id="5"
          name="initialStatement"
          column="INITIAL_STATEMENT"
-    	 jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    	 jdbc-type="VARCHAR"/>
+<!--        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/-->
     	 
     <field-descriptor id="6"
          name="introduction"
