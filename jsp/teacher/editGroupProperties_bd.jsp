@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<span class="error"><br><html:errors/></span>
 
 <h2><bean:message key="title.editGroupProperties"/></h2>
 
@@ -13,7 +12,9 @@
 
 <html:form action="/editGroupProperties">
 <html:hidden property="page" value="1"/>
-<br />
+
+<h2><span class="error"><html:errors/></span></h2>
+<br>
 <table>
 		<tr>
 			<td><bean:message key="message.groupPropertiesName"/></td>
@@ -31,7 +32,7 @@
 			</logic:notEmpty>
 			</td>
 			
-			<td><span class="error"><html:errors property="enrolmentBeginDay"/></span></td>
+			<%--<td><span class="error"><html:errors property="enrolmentBeginDay"/></span></td>--%>
 		</tr>
 	    
  		 </tr>

@@ -39,7 +39,7 @@ public class ViewProjectStudentGroupsAction extends FenixContextAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-				
+		
 		String groupPropertiesCodeString =
 						request.getParameter("groupPropertiesCode");
 			
@@ -57,7 +57,7 @@ public class ViewProjectStudentGroupsAction extends FenixContextAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-				
+		
 		List infoSiteGroupsByShiftList= ((InfoSiteAllGroups)viewAllGroups)
 			.getInfoSiteGroupsByShiftList();
 		

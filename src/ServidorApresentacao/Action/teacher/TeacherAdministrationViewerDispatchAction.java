@@ -1619,43 +1619,39 @@ public class TeacherAdministrationViewerDispatchAction
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		ISiteComponent viewGroupProperties = new InfoSiteGroupProperties();
-		SiteView siteView =
-			readSiteView(
-				request,
-				viewGroupProperties,
-				null,
-				groupPropertiesCode,
-				null);
+		SiteView siteView =readSiteView(request,viewGroupProperties,null,groupPropertiesCode,null);
+		
 		List shiftTypeValues = new ArrayList();
 		shiftTypeValues.add(new Integer(1));
 		shiftTypeValues.add(new Integer(2));
 		shiftTypeValues.add(new Integer(3));
 		shiftTypeValues.add(new Integer(4));
+		
 		List shiftTypeNames = new ArrayList();
 		shiftTypeNames.add("Teórica");
 		shiftTypeNames.add("Prática");
 		shiftTypeNames.add("Teórico-Prática");
 		shiftTypeNames.add("Laboratorial");
+		
 		List enrolmentPolicyValues = new ArrayList();
 		enrolmentPolicyValues.add(new Integer(1));
 		enrolmentPolicyValues.add(new Integer(2));
+		
 		List enrolmentPolicyNames = new ArrayList();
 		enrolmentPolicyNames.add("Atómica");
 		enrolmentPolicyNames.add("Individual");
-		InfoGroupProperties infoGroupProperties =
-			((InfoSiteGroupProperties) siteView.getComponent())
-				.getInfoGroupProperties();
-		Integer enrolmentPolicy =
-			infoGroupProperties.getEnrolmentPolicy().getType();
+		
+		InfoGroupProperties infoGroupProperties =((InfoSiteGroupProperties) siteView.getComponent()).getInfoGroupProperties();
+		
+		Integer enrolmentPolicy =infoGroupProperties.getEnrolmentPolicy().getType();
+		
 		enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);
-		String enrolmentPolicyName =
-			enrolmentPolicyNames
-				.remove(enrolmentPolicy.intValue() - 1)
-				.toString();
+		String enrolmentPolicyName =enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1).toString();
+		
 		Integer shiftType = infoGroupProperties.getShiftType().getTipo();
 		shiftTypeValues.remove(shiftType.intValue() - 1);
-		String shiftTypeName =
-			shiftTypeNames.remove(shiftType.intValue() - 1).toString();
+		String shiftTypeName =shiftTypeNames.remove(shiftType.intValue() - 1).toString();
+		
 		request.setAttribute("shiftTypeName", shiftTypeName);
 		request.setAttribute("shiftTypeValue", shiftType);
 		request.setAttribute("shiftTypeValues", shiftTypeValues);
@@ -1664,6 +1660,7 @@ public class TeacherAdministrationViewerDispatchAction
 		request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);
 		request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
 		request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
+		
 		return mapping.findForward("editGroupProperties");
 	}
 	public ActionForward editGroupProperties(
@@ -1672,6 +1669,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+			
 		HttpSession session = request.getSession(false);
 		DynaActionForm editGroupPropertiesForm = (DynaActionForm) form;
 		String groupPropertiesString =
@@ -1691,14 +1689,7 @@ public class TeacherAdministrationViewerDispatchAction
 		String enrolmentEndDayString =
 			(String) editGroupPropertiesForm.get("enrolmentEndDayFormatted");
 		String shiftType = (String) editGroupPropertiesForm.get("shiftType");
-		Boolean optional =
-			new Boolean(
-				(String) editGroupPropertiesForm.get("enrolmentPolicy"));
-		EnrolmentGroupPolicyType enrolmentPolicy;
-		if (optional.booleanValue())
-			enrolmentPolicy = new EnrolmentGroupPolicyType(1);
-		else
-			enrolmentPolicy = new EnrolmentGroupPolicyType(2);
+		String enrolmentPolicy =(String) editGroupPropertiesForm.get("enrolmentPolicy");
 		Calendar enrolmentBeginDay = null;
 		if (!enrolmentBeginDayString.equals("")) {
 			String[] beginDate = enrolmentBeginDayString.split("/");
@@ -1732,7 +1723,7 @@ public class TeacherAdministrationViewerDispatchAction
 		infoGroupProperties.setIdInternal(groupPropertiesCode);
 		infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
 		infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
-		infoGroupProperties.setEnrolmentPolicy(enrolmentPolicy);
+		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
 		if (!groupMaximumNumber.equals(""))
 			infoGroupProperties.setGroupMaximumNumber(
 				new Integer(groupMaximumNumber));
@@ -1760,28 +1751,25 @@ public class TeacherAdministrationViewerDispatchAction
 			throw new FenixActionException(e);
 		}
 		if (result.size() != 0) {
+		
 			Iterator iter = result.iterator();
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			while (iter.hasNext()) {
 				Object exception = iter.next();
-				if (exception
-					.getClass()
-					.equals(ExistingServiceException.class)) {
-					error =
-						new ActionError("error.exception.existing.groupProperties");
-					actionErrors.add(
-						"error.exception.existing.groupProperties",
-						error);
+				if (exception.getClass().equals(ExistingServiceException.class)) {
+					error =new ActionError("error.exception.existing.groupProperties");
+					actionErrors.add("error.exception.existing.groupProperties",error);
 					saveErrors(request, actionErrors);
-				} else if (
-					exception.getClass().equals(
-						NonValidChangeServiceException.class)) {
-					error =
-						new ActionError("error.exception.nonValidChange.editGroupProperties");
-					actionErrors.add(
-						"error.exception.nonValidChange.editGroupProperties",
-						error);
+				} 
+				else 
+					if (exception.getClass().equals(NonValidChangeServiceException.class)) {
+					System.out.println("entra no else");
+				
+					error =new ActionError("error.exception.nonValidChange.editGroupProperties");
+					actionErrors.add("error.exception.nonValidChange.editGroupProperties",error);
+					System.out.println("actionErros"+actionErrors);
+				
 					saveErrors(request, actionErrors);
 				}
 			}
@@ -1903,7 +1891,7 @@ public class TeacherAdministrationViewerDispatchAction
 			// Create an ACTION_ERROR 
 			error = new ActionError("errors.invalid.insert.studentGroupShift");
 			actionErrors.add(
-				"errors.invalid.insert.studentGroupShift",
+				"errors.invalid.edit.studentGroupShift",
 				error);
 			saveErrors(request, actionErrors);
 			return prepareCreateStudentGroup(mapping, form, request, response);

@@ -11,7 +11,6 @@ import java.util.List;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteProjects;
-import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IGroupProperties;

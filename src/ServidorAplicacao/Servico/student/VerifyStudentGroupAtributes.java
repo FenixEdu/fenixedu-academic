@@ -5,16 +5,17 @@
  
 package ServidorAplicacao.Servico.student;
 
-import DataBeans.InfoStudentGroup;
-import DataBeans.util.Cloner;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
+import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
@@ -51,15 +52,26 @@ public class VerifyStudentGroupAtributes implements IServico {
 	 * Executes the service.
 	 **/
 
-	public Boolean run(InfoStudentGroup infoStudentGroup,Integer numberOfStudentsToEnrole) throws FenixServiceException{
-
+	public Boolean run(Integer studentGroupCode,String userName) 
+	throws FenixServiceException{
+		
+		boolean result= false;
+		
 		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-		IGroupProperties groupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoStudentGroup.getInfoGroupProperties());
-		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
-		IStudentGroup studentGroup = Cloner.copyInfoStudentGroup2IStudentGroup(infoStudentGroup);
+		try{
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			
+			IStudentGroup studentGroup =(IStudentGroup)sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
+			IGroupProperties groupProperties = studentGroup.getGroupProperties();
+			
+			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+			result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties,studentGroup,studentGroup.getShift());
 		
-		boolean result = strategy.enrolmentPolicy(groupProperties,numberOfStudentsToEnrole.intValue(),studentGroup,studentGroup.getShift());
+		//boolean result = strategy.enrolmentPolicy(groupProperties,numberOfStudentsToEnrole.intValue(),studentGroup,studentGroup.getShift());
 		
+		} catch (ExcepcaoPersistencia ex) {
+		ex.printStackTrace();
+		}
 		return new Boolean(result);
 	}
 

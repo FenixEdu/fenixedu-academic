@@ -4,17 +4,8 @@
  */
 package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
-import java.util.Calendar;
-import java.util.List;
-
 import Dominio.IGroupProperties;
-import Dominio.IStudentGroup;
 import Dominio.ITurno;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategy;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
@@ -23,41 +14,31 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 	
+	
 
 	public IndividualGroupEnrolmentStrategy(){
 	
 	}
 	
 		
-	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift){
+	public boolean enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift){
+		
 		boolean result = false;
 		
-		if(checkEnrolmentDate(groupProperties,Calendar.getInstance()))
-		{
-			if(studentGroup == null)
-			{
-				if(checkNumberOfGroups(groupProperties,shift) )
-					result=true;
-			}
-			else
-			{	
-				List listStudentGroupAttend = null;
-				try
-				{
-					ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-					listStudentGroupAttend = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
-				
-				
-				} catch (ExcepcaoPersistencia ex) {
-					ex.printStackTrace();
-				  }
-				int nrOfElements = listStudentGroupAttend.size();
-				if(numberOfStudentsToEnrole==1 && nrOfElements < groupProperties.getMaximumCapacity().intValue())
-					result = true;
-			}
-		}
-			return result;			
-				
-			}
+		if(checkNumberOfGroups(groupProperties,shift))
+			result=true;
 		
-}
+		return result;			
+				
+		}
+
+	}
+	
+//	public boolean enrolmentPolicyExistingGroup(
+//			IGroupProperties groupProperties,
+//			int numberOfStudentsToEnrole,
+//			IStudentGroup studentGroup,
+//			ITurno shift)
+//			throws ExcepcaoPersistencia{return true;}
+
+

@@ -6,6 +6,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <logic:present name="infoSiteGroupsByShiftList">
+
+	<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>">
+               				<b><bean:message key="link.insertGroup"/></b></html:link>
+
 	<logic:empty name="infoSiteGroupsByShiftList">
 	<h2><bean:message key="message.infoSiteGroupsByShiftList.not.available" /></h2>
 	</logic:empty>
@@ -18,7 +22,7 @@
 	<logic:iterate id="infoSiteGroupsByShift" name="infoSiteGroupsByShiftList" >
      <tr>
      	<td>
-        <br>
+		<br>
         <h2>
         	<bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>
 			<bean:write name="infoShift" property="nome"/></h2>

@@ -5,6 +5,7 @@
 package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
 import java.util.Calendar;
+import java.util.List;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
@@ -21,7 +22,10 @@ public interface IGroupEnrolmentStrategy {
 	public boolean checkEnrolmentDate(IGroupProperties groupProperties,Calendar actualDate);
 	public boolean checkShiftType(IGroupProperties groupProperties,ITurno shift);
 	public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,IStudentGroup studentGroup) throws ExcepcaoPersistencia;
-	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift);
 	
-	
+	public List checkShiftsType(IGroupProperties groupProperties,List shifts);
+	public boolean checkPossibleToEnrolInExistingGroup(IGroupProperties groupProperties,IStudentGroup studentGroup,ITurno shift)throws ExcepcaoPersistencia; 
+	public boolean enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift);
+	//public boolean enrolmentPolicyExistingGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift)throws ExcepcaoPersistencia;
+	public boolean checkAlreadyEnroled(IGroupProperties groupProperties, List usernames )throws ExcepcaoPersistencia;
 }

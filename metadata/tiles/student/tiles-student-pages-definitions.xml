@@ -69,10 +69,18 @@
 	<definition name="view-StudentGroup-Information" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewStudentGroupInformation_bd.jsp" />		
 	</definition>
-	
+
 	<definition name="remove-Student-InGroup" extends="definition.student.masterPage">
 		<put name="body" value="/student/removeStudentInGroup.jsp" />		
 	</definition>
+	
+	<definition name="group-student-enrolment" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewGroupStudentEnrolment_bd.jsp" />		
+	</definition>
+	<definition name="group-enrolment" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewGroupEnrolment_bd.jsp" />		
+	</definition>
+	
 	
 	
 	<!-- END OF GROUPS DEFINITIONS -->
