@@ -34,8 +34,10 @@
 	
 	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
 	<h2><span class="greytxt"><bean:message key="label.accessRequirements.en"/></span></h2>
-  <br>
-
+	<br /> 
+	<bean:message key="label.information.responsability.accessRequirements.degree.en" />			 
+	<br />
+	<br />
 	<!-- NOME(S) DA PROVA(S) DE INGRESSO -->
   <logic:notEmpty name="infoDegreeInfo" property="testIngressionEn">
   	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.testIngression.en" /></h2>  

@@ -4,11 +4,13 @@
  */
 package ServidorApresentacao.Action.manager.precedences;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -74,6 +76,9 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
+		
+		Collections.sort(curricularCoursesList, new BeanComparator("name"));
+		
         request.setAttribute("curricularCoursesList", curricularCoursesList);
 				
         String className = request.getParameter("className");

@@ -1,12 +1,15 @@
 package Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author David Santos
  * Feb 6, 2004
  */
 
-public class PeriodToApplyRestriction extends FenixUtil
+public class PeriodToApplyRestriction extends FenixValuedEnum
 {
 	public static final int BOTH_SEMESTERS_INT = 0;
 	public static final int FIRST_SEMESTER_INT = 1;
@@ -57,5 +60,15 @@ public class PeriodToApplyRestriction extends FenixUtil
 			result = this.getPeriod().equals(periodToApplyRestriction.getPeriod());
 		}
 		return result;
+	}
+	
+	public List listToChoose() {
+	    List list = new ArrayList();
+	    
+//	    list.add(new ValuedEnum(new String(), BOTH_SEMESTERS_INT));
+//	    list.add(new ValuedEnum(new String(), FIRST_SEMESTER_INT));
+//	    list.add(new ValuedEnum(new String(), SECOND_SEMESTER_INT));
+	    
+	    return list;
 	}
 }

@@ -110,6 +110,9 @@
 	<!-- COORDINATOR END-->
 	<br />
 	<br />
+	<bean:message key="label.information.responsability.description.degree.en" />			 
+	<br />
+	<br />
 			 
 	<div class="degree_imageplacer">
 		<!-- IMAGEM REFERENTE À LICENCIATURA  width="250" height="150"-->

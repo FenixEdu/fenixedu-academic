@@ -33,7 +33,10 @@
 	
 	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
 	<h2><span class="greytxt"><bean:message key="label.accessRequirements"/></span></h2>
-  <br>
+  	<br /> 
+	<bean:message key="label.information.responsability.accessRequirements.degree" />			 
+	<br />
+	<br />
 
 	<!-- NOME(S) DA PROVA(S) DE INGRESSO -->
   <logic:notEmpty name="infoDegreeInfo" property="testIngression">

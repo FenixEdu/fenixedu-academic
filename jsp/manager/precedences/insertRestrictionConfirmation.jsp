@@ -28,5 +28,9 @@
 </logic:equal>
 
 <bean:write name="number" />
+<br />
 <bean:write name="curricularCourseToAddPrecedenceID" />
-<bean:write name="precedentCurricularCourseID" />
+<br />
+<logic:present name="precedentCurricularCourseID">
+	<bean:write name="precedentCurricularCourseID" />
+</logic:present>

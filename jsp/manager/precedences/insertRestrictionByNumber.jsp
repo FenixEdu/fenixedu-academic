@@ -18,12 +18,11 @@
 	<html:hidden property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getAttribute("degreeCurricularPlanId").toString() %>" />
 			
-	<b><bean:message key="label.manager.numberOfDoneCurricularCourses" />:</b>&nbsp;<html:text property="numberOfCurricularCourses" />	
+	<b><bean:message key="label.manager.numberOfDoneCurricularCourses" />:</b>&nbsp;<html:text property="number" />	
 	<p />
 	<table>
 		<tr>
 			<th colspan="2" align="center"><bean:message key="label.manager.curricularCourseToAddPrecedence" /></th>
-			<th colspan="2" align="center"><bean:message key="label.manager.precedentCurricularCourse" /></th>
 		</tr>
 		<tr>
 			<td colspan="4">&nbsp;</td>
@@ -32,8 +31,6 @@
 			<tr>
 				<td><bean:write name="curricularCourse" property="name" /></td>
 				<td><html:radio property="curricularCourseToAddPrecedenceID" idName="curricularCourse" value="idInternal"/></td>				
-				<td><html:radio property="precedentCurricularCourseID" idName="curricularCourse" value="idInternal"/></td>
-				<td align="right"><bean:write name="curricularCourse" property="name" /></td>
 			</tr>
 		</logic:iterate>
 	</table>	
