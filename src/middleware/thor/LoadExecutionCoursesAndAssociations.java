@@ -21,6 +21,7 @@ import org.apache.commons.collections.Predicate;
 
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -361,13 +362,18 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 						.get(
 						0);
 
+				ICurricularCourseScope curricularCourseScope =
+					(ICurricularCourseScope) curricularCourse.getScopes().get(
+						0);
+
 				disciplinaExecucao.setTheoreticalHours(
-					curricularCourse.getTheoreticalHours());
+					curricularCourseScope.getTheoreticalHours());
 				disciplinaExecucao.setPraticalHours(
-					curricularCourse.getPraticalHours());
+					curricularCourseScope.getPraticalHours());
 				disciplinaExecucao.setTheoPratHours(
-					curricularCourse.getTheoPratHours());
-				disciplinaExecucao.setLabHours(curricularCourse.getLabHours());
+					curricularCourseScope.getTheoPratHours());
+				disciplinaExecucao.setLabHours(
+					curricularCourseScope.getLabHours());
 
 				if (numElements == null) {
 					hashMapCode.put(
