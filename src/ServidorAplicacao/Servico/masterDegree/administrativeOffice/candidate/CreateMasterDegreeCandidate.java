@@ -14,9 +14,11 @@ import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IRole;
 import Dominio.MasterDegreeCandidate;
+import Dominio.PersonRole;
 import Dominio.Pessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -133,10 +135,18 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 				person.setUsername(username);
 				
-				person.setPersonRoles(new ArrayList());
-				// Give the Person Role
-				person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
+//				person.setPersonRoles(new ArrayList());
+//				// Give the Person Role
+//				person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
+
 				
+				sp.confirmarTransaccao();
+				sp.iniciarTransaccao();
+
+				IPersonRole personRole = new PersonRole();
+				sp.getIPersistentPersonRole().simpleLockWrite(personRole);
+				personRole.setPerson(person);
+				personRole.setRole(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
 			}			
 			masterDegreeCandidate.setPerson(person);
 			
@@ -151,7 +161,14 @@ public class CreateMasterDegreeCandidate implements IServico {
 			throw newEx;
 		} 
 
-		person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
+//		person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
+
+		IPersonRole personRole = new PersonRole();
+		sp.getIPersistentPersonRole().simpleLockWrite(personRole);
+		personRole.setPerson(person);
+		personRole.setRole(sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
+		
+
 
 
 		// Return the new Candidate
