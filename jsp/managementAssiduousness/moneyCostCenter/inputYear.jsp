@@ -29,10 +29,10 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
-				<bean:message key="label.year" />
+			<td width="1%" nowrap>
+				<bean:message key="label.year" />:
 			</td>
-			<td>
+			<td  width="99%">
 				<html:text property="year" size="4"/>
 			</td>		
 		</tr>

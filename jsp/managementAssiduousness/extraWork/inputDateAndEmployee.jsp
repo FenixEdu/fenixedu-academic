@@ -29,10 +29,10 @@
 			</td>
 		</tr>		
 		<tr>
-			<td>
+			<td width="1%" nowrap>
 				<bean:message key="label.employee" />:
 			</td>
-			<td>
+			<td width="99%">
 				<html:text property="employeeNumber" size="8"/>
 			</td>		
 		</tr>
