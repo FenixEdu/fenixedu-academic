@@ -221,6 +221,14 @@
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
 
+      <action path="/printGuidePage"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/guide/printGuidePage.jsp"/> 
+      </action>
+
+
       <action path="/candidateSection"
 		      parameter="method"
               type="ServidorApresentacao.Action.commons.VoidAction"
@@ -381,7 +389,7 @@
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
-	         <forward name="ActionReady" path="/editContributor.do?method=prepareEdit" />  
+	         <forward name="ActionReady" path="/editContributor.do?method=prepareEdit&amp;page=0" />  
 	         <forward name="ChooseContributor" path="/contributor/selectContributorFromList.jsp"/>  
       </action>
 

@@ -45,8 +45,20 @@
       <!-- page fronting actions -->
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
-      <action path="/candidateSection" forward="/candidate/indexCandidate.jsp"/>
-      <action path="/studentSection" forward="/student/indexStudent.jsp"/>
+
+	  <action path="/candidateSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/candidate/indexCandidate.jsp"/> 
+      </action>
+
+	  <action path="/studentSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/student/indexStudent.jsp"/> 
+      </action>
 
 
       <action path="/index"
@@ -69,7 +81,7 @@
 
       <!-- Dispatch Action to operate on the candidates -->
       <action path="/candidateOperation"
-          input="/indexCoordinator.jsp"
+          input="/candidate/indexCandidate.jsp"
 	      validate="true"
 		 parameter="method"
       	      type="ServidorApresentacao.Action.masterDegree.coordinator.CandidateOperationDispatchAction">
