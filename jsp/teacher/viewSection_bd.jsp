@@ -39,11 +39,12 @@
 <br />
 <table>
 	<tr>			
-		<td><div class="gen-button"><html:link page="/deleteItem.do" indexed="true"><bean:message key="button.deleteItem"/>
+		
+		<td><div class="gen-button"><html:link page="/editItem.do?method=prepareEdit" indexed="true"><bean:message key="button.editItem"/>
 			</html:link>
 			</div>
 		</td>
-		<td><div class="gen-button"><html:link page="/editItem.do?method=prepareEdit" indexed="true"><bean:message key="button.editItem"/>
+		<td><div class="gen-button"><html:link page="/deleteItem.do" indexed="true"><bean:message key="button.deleteItem"/>
 			</html:link>
 			</div>
 		</td>

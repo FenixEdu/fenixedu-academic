@@ -83,12 +83,12 @@
                     </tr>
                     <tr>
                         <td>     
-                  			<html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference" indexId="index" indexed="true">			
-                            (<bean:message key="button.edit"/>)                   		     
-                            </html:link>                               	       
-                  			<html:link page="/bibliographicReferenceManager.do?method=deleteBibliographicReference" indexId="index" indexed="true">			
-                           	(<bean:message key="button.delete"/>)             		     
-                            </html:link>                               	       
+                  			<div class="gen-button"><html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference" indexId="index" indexed="true">			
+                            <bean:message key="button.edit"/>                   		     
+                            </html:link></div>                               	       
+                  			<div class="gen-button"><html:link page="/bibliographicReferenceManager.do?method=deleteBibliographicReference" indexId="index" indexed="true">			
+                           	<bean:message key="button.delete"/>             		     
+                            </html:link></div>                                	       
                         </td>
                     </tr>
                 </logic:notEqual>

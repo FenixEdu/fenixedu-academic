@@ -10,13 +10,13 @@
 <html:form action="/editSection">
 <html:hidden property="page" value="1"/>
 <table>
-	<tr>
+	<%--<tr>
 		<td><div class="gen-button"><html:link page="/editSection.do?method=prepareChangeParent" ><bean:message key="message.parentSection"/>
 			</html:link>
 			</div>
 			<br>
 		</td>
-	</tr>
+	</tr>--%>
 	<tr>
 		<td>
 		<br />
@@ -38,7 +38,7 @@
 	<td>
 		<html:select name="sectionForm" property="sectionOrder">
 			<html:options collection="<%= SessionConstants.CHILDREN_SECTIONS %>" property="name"/>
-			<html:option value="-1">(Fim)</html:option>
+			<html:option value="-1"><bean:message key="label.end"/></html:option>
 		</html:select>
 			<span class="error"><html:errors property="sectionOrder"/></span>
 	</td>

@@ -26,8 +26,9 @@
 	<td>
 		<html:select property="itemOrder" size="1">
 			<bean:define id="items" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>" />
+			<html:option value="-1"><bean:message key="label.end"/></html:option>	
 			<html:options collection="items" labelProperty="name" property="itemOrder" />
-			<html:option value="-1">(fim)</html:option>
+			
 		</html:select>
 		<span class="error"><html:errors property="itemOrder"/></span>
 	</td>
@@ -42,8 +43,8 @@
 	<td>
 		<html:select property="urgent" size="1" >
 				
-				<html:option value="false">não</html:option>
-				<html:option value="true">sim</html:option>
+				<html:option value="false"><bean:message key="label.no"/></html:option>
+				<html:option value="true"><bean:message key="label.yes"/></html:option>
 		</html:select>
 		<span class="error"><html:errors property="urgent"/></span>
 	</td>

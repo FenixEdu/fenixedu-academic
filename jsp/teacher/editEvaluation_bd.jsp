@@ -9,24 +9,29 @@
 <bean:define id="evaluation" name="<%= SessionConstants.INFO_EVALUATION %>" />
 </logic:present>	
  <span class="error"><html:errors property="evaluationElements"/></span>
-<table align="center">
+<h2><bean:message key="label.evaluation"/></h2> 
+<table >
 <html:form action="/editEvaluation">
 	
 <tr>
 	<td>
-		<bean:message key="label.evaluation"/>
+		<strong><bean:message key="label.evaluation"/></strong>
 	</td>
+	
+</tr>
+<tr>	
 	<td>
 		<html:textarea name="evaluation" property="evaluationElements" cols="50" rows="8"/>
 	</td>
+	
 </tr>
 <tr></tr>
 <html:hidden property="method" value="editEvaluation" />
 <tr><td> <html:submit styleClass="inputbutton">
 		<bean:message key="button.save"/>
 	</html:submit>
-	</td>
-	<td><html:reset  styleClass="inputbutton">
+	
+	<html:reset  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>
 	</td>
