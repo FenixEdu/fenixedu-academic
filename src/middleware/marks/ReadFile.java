@@ -3,6 +3,7 @@ package middleware.marks;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -172,31 +173,36 @@ public class ReadFile extends LoadDataFile {
 			return;
 		}
 
-		ICurricularCourse curricularCourse = readCurricularCourse(almeida_enrolment, degreeCurricularPlan);
-		if (curricularCourse == null) {
-			logString += numberLine + "-ERRO: Curricular Courser " + almeida_enrolment.getCoddis() + " unknown\n";
-			numberUntreatableElements++;
-			return;
-		}
-
 		IBranch branch = readBranch(almeida_enrolment, degreeCurricularPlan);
 		if (branch == null) {
 			logString += numberLine + "-ERRO: Branch " + almeida_enrolment.getCurso() + "-" + almeida_enrolment.getRamo() + " unknown\n";
 			numberUntreatableElements++;
-			return;
+			//return;
 		}
 
-		ICurricularCourseScope curricularCourseScope = readCurricularCourseScope(almeida_enrolment, curricularCourse, branch);
-		if (curricularCourseScope == null) {
+		List curricularCourseAndScope = readCurricularCourseAndScope(almeida_enrolment, degreeCurricularPlan, branch);
+		if (curricularCourseAndScope == null || curricularCourseAndScope.size() < 2) {
 			logString += numberLine
-				+ "-ERRO: Curricular Course Scope: curricular course = "
+				+ "-ERRO: Curricular Course and repective Scope: curricular course = "
 				+ almeida_enrolment.getCoddis()
 				+ "  degree = "
 				+ almeida_enrolment.getCurso()
 				+ "unknown\n";
 			numberUntreatableElements++;
 			return;
+		} else if (curricularCourseAndScope == null || curricularCourseAndScope.size() > 2) {
+			logString += numberLine
+				+ "-ERRO: Curricular Course and repective Scope: curricular course = "
+				+ almeida_enrolment.getCoddis()
+				+ "  degree = "
+				+ almeida_enrolment.getCurso()
+				+ "more that one\n";
+			numberUntreatableElements++;
+			return;
 		}
+		
+		ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseAndScope.get(0);
+		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourseAndScope.get(1);
 
 		IExecutionPeriod executionPeriod = readActualExecutionPeriod();
 
@@ -278,11 +284,15 @@ public class ReadFile extends LoadDataFile {
 		}
 	}
 
-	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
+	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {		
 		return persistentObjectOJB.readStudentCurricularPlanByStudentNumber(new Integer("" + almeida_enrolment.getNumalu()));
 	} //readStudentCurricularPlan
 
-	private ICurricularCourse readCurricularCourse(Almeida_enrolment almeida_enrolment, IDegreeCurricularPlan degreeCurricularPlan) {
+	private List readCurricularCourseAndScope(
+		Almeida_enrolment almeida_enrolment,
+		IDegreeCurricularPlan degreeCurricularPlan,
+		IBranch branch) {
+		List curricularCourseAndScope = null;
 
 		// First search the curricular course in Almeida's table
 		Almeida_disc almeida_disc =
@@ -299,28 +309,61 @@ public class ReadFile extends LoadDataFile {
 
 		// Read our corresponding curricular couse
 		ICurricularCourse curricularCourse = null;
-		//TODO
 		curricularCourse =
 			persistentObjectOJB.readCurricularCourseByNameAndDegreeIDAndCode(
 				almeida_disc.getNomedis(),
 				degreeCurricularPlan.getIdInternal(),
 				almeida_disc.getCoddis());
-		if (curricularCourse == null) {
-			curricularCourse = findCurricularCourse(almeida_disc, degreeCurricularPlan);			
+		if (curricularCourse != null) {
+			//read respective scope
+			ICurricularCourseScope curricularCourseScope = readCurricularCourseScope(almeida_enrolment, curricularCourse, branch);
+			if (curricularCourseScope != null) {
+				curricularCourseAndScope = new ArrayList();
+				curricularCourseAndScope.add(curricularCourse);
+				curricularCourseAndScope.add(curricularCourseScope);
+			}
+		} else {
+			curricularCourseAndScope = findCurricularCourseAndScope(almeida_disc, degreeCurricularPlan);
 		}
-		return curricularCourse;
-	} //readCurricularCourse
 
-	private ICurricularCourse findCurricularCourse(Almeida_disc almeida_disc, IDegreeCurricularPlan degreeCurricularPlan) {
-		
-		
-		return null;
+		return curricularCourseAndScope;
+	} //readCurricularCourseAndScope
+
+	private List findCurricularCourseAndScope(Almeida_disc almeida_disc, IDegreeCurricularPlan degreeCurricularPlan) {
+		List curricularCourseAndScope = null;
+
+		//Filter curricular courses ocurred in degree active
+		List curricularCoursesListInDegreeActive =
+			persistentObjectOJB.readCurricularCourseByCodeAndNameInDegreeActive(almeida_disc.getCoddis(), almeida_disc.getNomedis());
+		if (curricularCoursesListInDegreeActive == null || curricularCoursesListInDegreeActive.size() == 0) {
+			logString += numberLine + "-ERRO: Curricular Course " + almeida_disc.getCoddis() + " unknown in active degree\n";
+			return curricularCourseAndScope;
+		}
+
+		//Filter curricular courses ocurred in actual semester
+		curricularCourseAndScope = new ArrayList();
+
+		ICurricularCourse curricularCourse = null;
+		ICurricularCourseScope curricularCourseScope = null;
+		Iterator iterator = curricularCoursesListInDegreeActive.listIterator();
+		while (iterator.hasNext()) {
+			curricularCourse = (ICurricularCourse) iterator.next();
+			curricularCourseScope =
+				persistentObjectOJB.readCurricularCourseScopeBySemester(curricularCourse, new Integer(EXECUTION_SEMESTER));
+			if (curricularCourseScope != null) {
+				curricularCourseAndScope.add(curricularCourse);
+				curricularCourseAndScope.add(curricularCourseScope);
+			}
+		}
+
+		return curricularCourseAndScope;
 	}
 
 	private ICurricularCourseScope readCurricularCourseScope(
 		Almeida_enrolment almeida_enrolment,
 		ICurricularCourse curricularCourse,
 		IBranch branch) {
+		ICurricularCourseScope curricularCourseScope = null;
 
 		ICurricularYear curricularYear =
 			persistentObjectOJB.readCurricularYearByYear(new Integer(String.valueOf(almeida_enrolment.getAnodis())));
@@ -331,23 +374,36 @@ public class ReadFile extends LoadDataFile {
 
 		ICurricularSemester curricularSemester =
 			persistentObjectOJB.readCurricularSemesterBySemesterAndCurricularYear(new Integer(String.valueOf(almeida_enrolment.getSemdis())), curricularYear);
-		if (curricularSemester != null) {
-			if (branch != null) {
-				return persistentObjectOJB.readCurricularCourseScopeByUnique(
-					curricularCourse,
-					branch,
-					curricularSemester
-					/*,	new Integer(String.valueOf(almeida_enrolment.getAnoins()))*/);
-			} else {
-				return persistentObjectOJB.readCurricularCourseScopeByUniqueWithoutBranch(
-					curricularCourse,
-					curricularSemester,
-					new Integer(String.valueOf(almeida_enrolment.getAnoins())));
-			}
-		} else {
+		if (curricularSemester == null) {
 			logString += numberLine + "-ERRO: curricularSemester da disciplina " + almeida_enrolment.getCoddis() + " desconhecido\n";
 			return null;
 		}
+
+		if (branch != null) {
+			curricularCourseScope =
+				persistentObjectOJB.readCurricularCourseScopeByUnique(
+					curricularCourse,
+					branch,
+					curricularSemester,
+					new Integer(String.valueOf(almeida_enrolment.getAnoins())));
+		} else {
+			curricularCourseScope =
+				persistentObjectOJB.readCurricularCourseScopeByUniqueWithoutBranch(
+					curricularCourse,
+					curricularSemester,
+					new Integer(String.valueOf(almeida_enrolment.getAnoins())));
+		}
+
+		if (curricularCourseScope == null) {
+			logString += numberLine
+				+ "-ERRO: Curricular Course Scope: curricular course = "
+				+ almeida_enrolment.getCoddis()
+				+ "  degree = "
+				+ almeida_enrolment.getCurso()
+				+ "unknown\n";
+			numberUntreatableElements++;
+		}
+		return curricularCourseScope;
 	} //readCurricularScope
 
 	private IExecutionPeriod readActualExecutionPeriod() {
