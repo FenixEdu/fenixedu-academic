@@ -3,15 +3,11 @@
  */
 package ServidorAplicacao.Servico.credits.serviceExemption;
 
-import Dominio.IDomainObject;
-import Dominio.credits.IServiceExemptionCreditLine;
 import Dominio.credits.ServiceExemptionCreditLine;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.DeleteDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
 
 /**
  * @author jpvl

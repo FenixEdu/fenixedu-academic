@@ -17,6 +17,7 @@
     <bean:define id="graduationType" name="graduationType"/>
     <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
     <html:hidden property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
+    <html:hidden property="number" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER).toString()%>'/>
     
     <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>"/>
     

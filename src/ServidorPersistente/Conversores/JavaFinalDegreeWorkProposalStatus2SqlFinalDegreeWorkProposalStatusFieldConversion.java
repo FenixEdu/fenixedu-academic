@@ -7,7 +7,6 @@ package ServidorPersistente.Conversores;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.FinalDegreeWorkProposalStatus;
-import Util.TipoCurso;
 
 /**
  * 

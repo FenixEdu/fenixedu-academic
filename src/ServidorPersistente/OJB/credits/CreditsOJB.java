@@ -7,14 +7,12 @@ package ServidorPersistente.OJB.credits;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.TransformerUtils;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Credits;
 import Dominio.ICredits;
 import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
-import Dominio.Teacher;
 import Dominio.util.TransformationUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;

@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoBranch;
 import DataBeans.finalDegreeWork.FinalDegreeWorkProposalHeader;
+import Dominio.IBranch;
 import Dominio.finalDegreeWork.IProposal;
 import Dominio.finalDegreeWork.Proposal;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -73,6 +75,20 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders
 						finalDegreeWorkProposalHeader.setCompanyLink(
 							proposal.getCompanionName());
 						finalDegreeWorkProposalHeader.setStatus(proposal.getStatus());
+						
+						if (proposal.getBranches() != null) {
+						    finalDegreeWorkProposalHeader.setBranches(new ArrayList());
+						    for (int j = 0 ; j < proposal.getBranches().size(); j++) {
+						        IBranch branch = (IBranch) proposal.getBranches().get(j);
+
+						        if (branch != null) {
+						            InfoBranch infoBranch = new InfoBranch();
+						            infoBranch.setIdInternal(branch.getIdInternal());
+						            infoBranch.setName(branch.getName());
+						            finalDegreeWorkProposalHeader.getBranches().add(infoBranch);
+						        }
+						    }
+						}
 
 						finalDegreeWorkProposalHeaders.add(
 							finalDegreeWorkProposalHeader);

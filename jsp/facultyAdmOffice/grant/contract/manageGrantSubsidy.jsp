@@ -94,10 +94,12 @@
     
 <br/><br/>
 
-<bean:message key="message.grant.subsidy.creation"/>:&nbsp;
-<html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idContract=" + request.getAttribute("idContract").toString() %>'>
-	<bean:message key="link.grant.subsidy.create"/>
-</html:link>
+<logic:notPresent name="infoGrantSubsidyList">
+	<bean:message key="message.grant.subsidy.creation"/>:&nbsp;
+	<html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idContract=" + request.getAttribute("idContract").toString() %>'>
+		<bean:message key="link.grant.subsidy.create"/>
+	</html:link>
+</logic:notPresent>
 
 <br/><br/><br/>
 <center>

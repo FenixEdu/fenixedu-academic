@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 
+import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.EMail;
@@ -62,6 +63,14 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
 		mailBody += "Path: " + originalMapping.getPath() + "\n";
 		mailBody += "Name: " + originalMapping.getName() + "\n";
+
+		IUserView userView = (IUserView) session.getAttribute("UserView");
+		if (userView != null) {
+		    mailBody += "UserLogedIn: " + userView.getUtilizador() + "\n";
+		} else {
+		    mailBody += "No user logged in.";
+		}
+
 		mailBody += stackTrace2String(stackTrace);
 	
 		EMail email =null;

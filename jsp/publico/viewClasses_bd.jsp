@@ -20,8 +20,9 @@
 		</tr>		
 	<logic:iterate id="classview" name="component" property="classes" >
 		<tr>
+		    <bean:define id="classId" name="classview" property="idInternal"/>
 			<td class="listClasses">		
-			<html:link page="<%= "/viewClassTimeTable.do?executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials") %>" paramId="className" paramName="classview" paramProperty="nome">
+			<html:link page="<%= "/viewClassTimeTable.do?executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;classId="+pageContext.findAttribute("classId") + "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials") %>" paramId="className" paramName="classview" paramProperty="nome">
 			<jsp:getProperty name="classview" property="nome"/>
 			</html:link>
 			</td>

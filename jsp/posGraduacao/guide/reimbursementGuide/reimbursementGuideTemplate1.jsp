@@ -7,11 +7,12 @@
 
 <html>
     <head>
-    	<title><bean:message key="title.masterDegree.administrativeOffice.printGuide"/></title>
+    	<title><bean:message key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.reimbursementGuideTitle"/></title>
     </head>
 
     <body>
      <bean:define id="reimbursementGuide" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request" />
+   	<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request" />
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
      <table width="100%" border="0" valign="top">
@@ -67,6 +68,10 @@
             <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
             <td> <bean:write name="reimbursementGuide" property="infoGuide.infoPerson.nome"/> </td>
           </tr>
+          <tr>
+            <td> <bean:message key="label.number"/> </td>
+            <td> <bean:write name="student" property="number"/> </td>
+          </tr>             
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.degree"/> </td>
             <td> <bean:write name="reimbursementGuide" property="infoGuide.infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>

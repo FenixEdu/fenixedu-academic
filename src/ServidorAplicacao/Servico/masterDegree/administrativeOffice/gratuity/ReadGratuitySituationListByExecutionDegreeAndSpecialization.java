@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.math.BigDecimal;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -21,11 +22,16 @@ import DataBeans.InfoGuideEntry;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ExecutionYear;
+import Dominio.GuideEntry;
 import Dominio.ICursoExecucao;
 import Dominio.IEnrolment;
 import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
 import Dominio.IGuide;
+import Dominio.IGuideEntry;
+import Dominio.reimbursementGuide.IReimbursementGuide;
+import Dominio.reimbursementGuide.IReimbursementGuideEntry;
+import Dominio.reimbursementGuide.IReimbursementGuideSituation;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,8 +40,10 @@ import ServidorPersistente.IPersistentGratuitySituation;
 import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import Util.DocumentType;
 import Util.GratuitySituationType;
+import Util.ReimbursementGuideState;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 
@@ -283,14 +291,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                 return infoGuide;
             }
         });
-        addPayedGuide(infoGratuitySituation, infoGuideList);
+       
+        addPayedGuide(sp, infoGratuitySituation, infoGuideList);
     }
 
     /**
      * @param infoGuideList
      * @return
      */
-    private void addPayedGuide(InfoGratuitySituation infoGratuitySituation, List infoGuideList)
+    private void addPayedGuide(ISuportePersistente sp, InfoGratuitySituation infoGratuitySituation, List infoGuideList)
             throws Exception
     {
 
@@ -308,9 +317,39 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) iteratorGuideEntries.next();
                     if (infoGuideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE))
                     {
+                      
                         payedValue = payedValue
                                 + (infoGuideEntry.getPrice().doubleValue() * infoGuideEntry
                                         .getQuantity().intValue());
+                        
+                        IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry =
+                        	sp.getIPersistentReimbursementGuideEntry();
+                        IGuideEntry guideEntry = new GuideEntry();
+                        guideEntry.setIdInternal(infoGuideEntry.getIdInternal());
+                        List reimbursementGuideEntries =
+                        	persistentReimbursementGuideEntry.readByGuideEntry(guideEntry);
+                        IReimbursementGuideEntry reimbursementGuideEntry = null;
+
+                        Iterator reimbursementGuideEntriesIterator =
+                        	reimbursementGuideEntries.iterator();
+                        while (reimbursementGuideEntriesIterator.hasNext())
+                        {
+                        	reimbursementGuideEntry =
+                        		(IReimbursementGuideEntry) reimbursementGuideEntriesIterator.next();
+
+                        	IReimbursementGuide reimbursementGuide =
+                        		reimbursementGuideEntry.getReimbursementGuide();
+                        	IReimbursementGuideSituation reimbursementGuideSituation =
+                        		reimbursementGuide.getActiveReimbursementGuideSituation();
+                        	ReimbursementGuideState reimbursementGuideState =
+                        		reimbursementGuideSituation.getReimbursementGuideState();
+
+                        	if (reimbursementGuideState.equals(ReimbursementGuideState.PAYED))
+                        	{
+                        		payedValue =
+                        			payedValue - reimbursementGuideEntry.getValue().doubleValue();
+                    }
+                        }
                     }
                     else if (infoGuideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE))
                     {
@@ -320,7 +359,8 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             }
         }
 
-        infoGratuitySituation.setPayedValue(new Double(payedValue));
+        BigDecimal roundedSum = new BigDecimal(payedValue);  
+        infoGratuitySituation.setPayedValue(new Double(roundedSum.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()));
     }
 
     /**
@@ -389,7 +429,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
         } //now find the remaining value to pay
         double remainingValue = infoGratuitySituation.getRemainingValue().doubleValue()
                 - infoGratuitySituation.getPayedValue().doubleValue();
-        infoGratuitySituation.setRemainingValue(new Double(remainingValue));
+                
+        BigDecimal roundedSum = new BigDecimal(remainingValue);                 
+        infoGratuitySituation.setRemainingValue(new Double(roundedSum.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()));
     }
 
     private double verifyIfAlreadyPayedEnrolments(ISuportePersistente sp,

@@ -60,7 +60,7 @@
 				
 	<!-- COORDINATOR BEGIN-->
  	<logic:present name="infoExecutionDegrees" >
-		<strong><bean:message key="label.coordinators" /></strong>
+		<strong><bean:message key="label.coordinators.en" /></strong>
 
 	 	<br />
 		<bean:size id="executionDegreesSize" name="infoExecutionDegrees" />

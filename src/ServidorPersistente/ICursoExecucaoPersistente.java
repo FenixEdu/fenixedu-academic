@@ -73,18 +73,7 @@ public interface ICursoExecucaoPersistente extends IPersistentObject
 	 */
     public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia;
 
-    /**
-	 * @param degreeName
-	 * @param executionYear
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-     * @deprecated
-	 */
-    public ICursoExecucao readByDegreeCodeAndExecutionYear(
-        String degreeCode,
-        IExecutionYear executionYear)
-        throws ExcepcaoPersistencia;
-
+ 
     /**
 	 * @param degree
 	 * @param executionYear

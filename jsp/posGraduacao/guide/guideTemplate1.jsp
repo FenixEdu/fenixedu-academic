@@ -71,6 +71,12 @@
             <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
             <td> <bean:write name="guide" property="infoPerson.nome"/> </td>
           </tr>
+          <logic:present name="<%= SessionConstants.STUDENT%>">
+			  <tr>
+				<td> <bean:message key="label.number"/> </td>
+				<td> <bean:write name="<%= SessionConstants.STUDENT%>" /> </td>
+			  </tr>  
+          </logic:present>          
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.degree"/> </td>
             <td> <bean:write name="guide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>

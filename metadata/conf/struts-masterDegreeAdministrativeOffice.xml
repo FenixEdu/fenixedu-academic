@@ -196,6 +196,7 @@
         	<form-property name="remarks" type="java.lang.String" />
         	<form-property name="guideSituation" type="java.lang.String" />
         	<form-property name="paymentType" type="java.lang.String" />
+        	<form-property name="requester_number" type="java.lang.String" />
         	<form-property name="requester" type="java.lang.String" />
         	
       </form-bean>
@@ -1006,16 +1007,6 @@
 	         <forward name="ChooseSuccess" path="/displayStudentListByDegree.do?method=prepareReading&amp;page=0"/>
       </action>
 -->      
-      <!-- List the students by Degree -->
-<!--      <action path="/displayStudentListByDegree"
-      		  input="/lists/displayStudentListByDegree.jsp"
-		      parameter="method"
-		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.StudentListingByDegreeDispatchAction"
-			  >
-	         <forward name="PrepareSuccess" path="/lists/displayStudentListByDegree.jsp"/>  
-	  </action>
--->	    
   
       <!-- action to choose a Execution Year to create a candidate -->
       <action attribute="chooseExecutionYearForm"

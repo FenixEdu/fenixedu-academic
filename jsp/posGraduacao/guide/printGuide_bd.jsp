@@ -15,6 +15,9 @@
 	<h2><bean:message key="label.masterDegree.administrativeOffice.guideCreationSuccess" /></h2>
    <table>
    <tr>
+   	<td><bean:message key="label.masterDegree.administrativeOffice.requesterNumber" /></td> <td><bean:write name="<%= SessionConstants.REQUESTER_NUMBER %>"/></td>
+   </tr>
+   <tr>
    	<td><bean:message key="label.masterDegree.administrativeOffice.guideNumber" /></td> <td><bean:write name="guide" property="number"/></td>
    </tr>
    <tr>
@@ -27,12 +30,18 @@
    
    
    </table>
-   <bean:define id="link">/printGuidePages.do?graduationType=<bean:write name="graduationType"/></bean:define>
+   <%--<bean:define id="link">/printGuidePages.do?graduationType=<bean:write name="graduationType"/>&<bean:write name="<%= SessionConstants.REQUESTER_NUMBER %>"/></bean:define>
    <bean:define id="graduationType" name="graduationType"/>
    <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
    <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-   		<bean:message key="link.masterDegree.administrativeOffice.printGuide" />
+   <html:hidden property="<%= SessionConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute("SessionConstants.REQUESTER_NUMBER").toString()%>'/>
+   <bean:message key="link.masterDegree.administrativeOffice.printGuide" />
+   </html:link>--%>
+   <html:link page="<%= "/printGuidePages.do?graduationType=" + pageContext.findAttribute("graduationType") + "&amp;" + SessionConstants.REQUESTER_NUMBER + "=" + pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER)%>" >
+   <bean:message key="link.masterDegree.administrativeOffice.printGuide" /> 
    </html:link>
+   
+   
    
   </body>
 </html>

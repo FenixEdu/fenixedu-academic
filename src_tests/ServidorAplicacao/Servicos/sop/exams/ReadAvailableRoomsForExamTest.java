@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoRoom;
-import Dominio.Sala;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.sop.exams.ReadAvailableRoomsForExam;
 import ServidorAplicacao.Servicos.ServiceTestCase;

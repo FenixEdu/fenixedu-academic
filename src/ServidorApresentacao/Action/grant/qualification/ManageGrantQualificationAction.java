@@ -38,12 +38,18 @@ public class ManageGrantQualificationAction extends FenixDispatchAction
 		{
 			Integer idInternal = null;
 			Integer idInternalPerson = null;
+			Integer grantOwnerNumber = null;
 			String username = null;
 
 			if (request.getParameter("idInternal") != null)
 				idInternal = new Integer(request.getParameter("idInternal"));
+			else if (request.getParameter("idGrantOwner") != null)
+				idInternal = new Integer(request.getParameter("idGrantOwner"));
 			if (request.getParameter("idPerson") != null)
 				idInternalPerson = new Integer(request.getParameter("idPerson"));
+			if (request.getParameter("grantOwnerNumber") != null)
+				grantOwnerNumber = new Integer(request.getParameter("grantOwnerNumber"));
+			
 			username = request.getParameter("username");
 
 			Object[] args = { username };
@@ -62,7 +68,8 @@ public class ManageGrantQualificationAction extends FenixDispatchAction
 					&& !infoSiteQualifications.getInfoQualifications().isEmpty())
 					request.setAttribute("infoQualificationList",infoSiteQualifications.getInfoQualifications());
 			}
-			request.setAttribute("idInternal", idInternal);
+			request.setAttribute("grantOwnerNumber", grantOwnerNumber);
+			request.setAttribute("idGrantOwner", idInternal);
 			request.setAttribute("idPerson", idInternalPerson);
 			request.setAttribute("username", username);
 		}

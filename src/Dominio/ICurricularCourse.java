@@ -62,4 +62,8 @@ public interface ICurricularCourse extends IDomainObject {
 
 	public boolean curricularCourseIsMandatory();
 
+	public Double getWeigth();
+	public void setWeigth(Double weigth);
+	public Boolean getMandatoryEnrollment();
+	public void setMandatoryEnrollment(Boolean mandatoryEnrollment);
 }

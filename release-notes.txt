@@ -1,8 +1,12 @@
+
+
+
 --------------------------------------------------------------------
 Release 2004-04-29
 ---------------------------------------------------------------------
 
 NEW FEATURES:
+- Added username to error page sendmail, when users are logged in.
 - New SOP exams application, with the same use cases but new interface and  
  association of exams to curricular course scopes. More flexible exam hours 
  (end and beggining). Exams associated to room occupations to make the room
@@ -38,6 +42,11 @@ NEW FEATURES:
   association of exams to curricular course scopes. More flexible exam hours 
   (end and beggining). Exams associated to room occupations to make the room
   search algorithm more reliable.
+- In form EditGrantOwner, the validation.xml file required that document id number is a integer, when it olny should be required.
+- A qualification can have a empty date (for monitors, who are in 5º year and still didn't complete the degree).
+- Correcting Grant Actions and JSP associated with QUALIFICATION (date can now be null).
+- A teacher could not be associated with a Grant Cost Center.. now.. he can!
+- In editing a grant part the waiting time was enormous. Changing from drop list to a text box in form.
 
 NOTES:
 - etc\prepareSOPTables.sql necessary to update database with the new tables
@@ -51,8 +60,10 @@ NOTES:
 - updateGuideEntry-20-04-2004.sql: data fix in database about guide entries
 - insert of guide entry for guide with id_internal 3822
 - First deploy of sub aplication Grant Owner Management in facultyAdmOffice portal.
+- Uncommented public links to exams.
  	
 CHANGES:
+- Coordinators label in english in showDegreeSiteDescriptionEnglish.jsp By Tânia Pousão
 - webSiteManager: changed interface for adding and editing an item. Only the relevant dates appear for each section:
   - creation date for news
   - item begin and end date for events
@@ -299,6 +310,91 @@ CHANGES:
 	it was using the database column name instead of the property name of the Class
 - readAllGroupPropertiesByExecutionCourseID
 - readGroupPropertiesByExecutionCourseAndName
+- Added 2 new attributes in CurricularCourse: mandatoryEnrollment & weigth
+
+
+BUG FIXES:
+- fixed bug [ #182 ] by Tânia Pousão Manager - Execution Courses (in jsp.manager.executionCourseManagement: prepareEditECChooseExecDegreeAndCurYear.jsp, prepareEditExecutionCourse.jsp)
+- fixed bug [ #191 ] by Tânia Pousão Manager - Editing Execution Course (in jsp.manager.executionCourseManagement: prepareEditECChooseExecDegreeAndCurYear.jsp, prepareEditExecutionCourse.jsp)
+- fixed bug [ #210 ] by Tânia Pousão Gratuites - Rounding Values (modified ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization.java)
+- fixed bug [ #215 ] Missing filter function for public tfc listing.
+- fixed bug [ #216 ] Missing link to view final degree work proposal listings.
+- fixed bug [ #183 ] Login Page
+- fixed bug [ #181 ] Inserting new items in Section Management ("Gestão de Pautas")
+- fixed bug [ #180 ] bug with users with grantOwner role
+- websiteManager: fixed sections that have accent in word and it was not shown
+- webSiteManager: fixed archive of items that was mixing months from different years
+- webStieManager: fixed verification of dates in edition of item
+- webSiteManager: fixed way of searching for last item inserted or edited, for subsequent update in server files. 
+  - way of finding the last item modified 
+  - to know which file to update when seeing month of modified item
+- webSiteManager: fixed ordering of months in news archive
+- masterDegreeAdministrativeOffice: fixed sum of needed credits for final work proposal that were managed in float way
+  and passed to double way in class MasterDegreeCurricularPlanStrategy in method checkEndOfScholarship
+- Removed possibility of editing guide entries in guides with state = PAYED
+- webSiteManager: [on 30-04-2004] fixed path for images in file SendWebSiteSectionFileToServer.java
+- fixed bug [ #186 ] Faculty Adm Office Portal - Information showed incorrectly in interface ManageGrantQualification
+- fixed bug [ #188 ] Faculty Adm Office Portal - Correcting name of secretaria.
+- fixed bug [ #189 ] Faculty Adm Office Portal - Bug in creating and editing Grant Cost Center.
+- fixed bug [ #190 ] Faculty Adm Office Portal - Bug in Grant Subsidy (Temporary fix)
+- EditCurricularCourseDA (in ServidorApresentacao) & EditCurricularCourse (in ServidorAplicacao): The attribute CurricularCourse enrollmentWeight was being updated when it souldn't.
+- EnrolmentStrategyLEEC: automaticalyEnrollInMandatoryCurricularCourses() was checking the wrong attribute.
+- fixed bug [ #163 ][on 12-05-2004] ReadExecutionDegreeByExecutionYearAndDegreeCode with erroneous method from CursoExecucaoOJB - removed from project
+- fixed bug [ #162 ][on 13-05-2004] ReadCandidateForRegistration with erroneous method from CursoExecucaoOJB - removed erroneous method
+- fixed bug [ #161 ][on 13-05-2004] ReadDegreeByYearAndCode with erroneous method from CursoExecucaoOJB - removed from project
+- fixed bug [ #160 ][on 13-05-2004] ReadNumerusClausus with erroneous method from CursoExecucaoOJB - removed erroneous method
+- fixed bug [ #159 ][on 13-05-2004] ReadStudentsByExecutionDegreeAndExecutionYear with erroneous method from CursoExecucaoOJB - removed from project
+- fixed bug [ #159 ][on 13-05-2004] StudentListingByDegreeDispatchAction calling unused Service is not used - removed from project
+- fixed bug [ #203 ][on 14-05-2004] added message saying that other mails were sent succefully
+
+
+
+KNOWN ISSUES:
+
+- Final degree work proposals are associated with the execution degree prior to the one they
+  are proposed for. This is due to not yet having information regarding the next execution
+  year. This must be resolved by establishing dates when the information must be introduced
+  into the database.
+- update to table credits is not very correct on the of ManagementCreditLine and Service Exemption situations.
+- When we insert an invalid date on create/edit exam the selected rooms, scopes and
+season is lost
+- When we select a curricular year in associate execution course to exam and, after
+ that, we change the selected curricular year the system throws an exception 
+
+
+
+---------------------------------------------------------------------
+Release 2004-04-13
+---------------------------------------------------------------------
+
+NEW FEATURES:
+- Added create/edit of final degree work proposals interface to coordinators portal.
+- task [#178] Publication of Final Degree Work Proposals.
+- task [#177] Public Listing of Final Degree Work Proposals.
+- Added definition of final degree work candidacy period interface to coordinators portal.
+ - new operation in teacher area: delete a grouping.
+- Master Degree Students are now allowed to enroll in execution courses and shifts
+
+NOTES:
+- updateGroupPropertiesTable.sql do an update in table GROUP_PROPERTIES ao campo ENROLMENT_BEGIN_DAY and ENROLMENT_END_DAY. 
+  
+ 	
+CHANGES:
+ - change the order of the input boxes on searchStudents.jsp
+ - changes in teacher area about group properties. Some details pointed by Prof. Mira da Silva like hours in enrolment date.
+ (Calendar2DateTimeFieldConversion.java(nova classe), repository_gesdis.xml, struts-teacher.xml, validation_teacher.xml, 
+ InfoGroupProperties, TeacherAdministrationViewerDispatchAction groupProperties methods, 
+ editGroupPorperties.jsp, insertGroupPorperties.jsp, services.xml, DeleteGroupProperties(Service))
+- added links to other operations, in master degree administrative office, when inside guide listing menu
+- added, in master degree administrative office, in guide listing operations, 
+  the possibility to search by student number
+- added, in gep, the possibility to choose basic, non basic or all types of curricular courses
+- fixed, in coordinator, error report when trying to view active degree curricular plan for
+  a degree curricular plan without curricular courses
+- Some imports in classes were removed for warnings cleaning
+
+
+
 
 
 BUG FIXES:
@@ -450,7 +546,7 @@ BUG FIXES:
 - fixed bug [ #128 ] class cast Exception in ExamEnrollmentManager
 - fixed bug [ #131 ] cannot store files to fenix
 - Fixed a bug in Cloner.java when cloning EnrolmentInOptionalCourse to InfoEnrolmentInOptionalCourse
+- fixed bug [ #132 ] bug in CursoExecucaoOJB
  
 KNOWN ISSUES:
-- method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 
-	by execution year and degree code, should return a list and it is returning an object CursoExecucao.
+

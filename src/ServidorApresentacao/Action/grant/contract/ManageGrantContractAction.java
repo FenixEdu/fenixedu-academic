@@ -56,7 +56,7 @@ public class ManageGrantContractAction extends FenixDispatchAction
 				request.setAttribute("infoGrantContractList", infoGrantContractList);
 
 			//Needed for return to manage contracts
-			request.setAttribute("idInternal", idInternal);
+			request.setAttribute("idGrantOwner", idInternal);
 
 			InfoGrantOwner infoGrantOwner =
 				(InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);

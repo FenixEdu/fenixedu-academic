@@ -99,7 +99,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		InfoExecutionDegree infoExecutionDegree = null;
 		try {
 			Object args[] = { executionDegree };
-			infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
+			infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByOID", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(e);
 		}

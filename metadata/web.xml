@@ -7,11 +7,34 @@
 	    <filter-name>indexFilter</filter-name>
 	    <filter-class>ServidorApresentacao.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
+	<filter>
+		 <filter-name>profiling</filter-name>
+		 <filter-class>com.atlassian.util.profiling.filters.ProfilingFilter</filter-class>
+		 <init-param>
+			 <!-- specify the which HTTP parameter to use to turn the filter on or off -->
+	 		 <!-- if not specified - defaults to "profile.filter" -->
+	 		 <param-name>activate.param</param-name>
+	  		 <param-value>app_profile</param-value>
+	 	 </init-param>
+	 	 <init-param>
+	 		<!-- specify the whether to start the filter automatically -->
+	 		<!-- if not specified - defaults to "true" -->
+	 		<param-name>autostart</param-name>
+	 		<param-value>true</param-value>
+		</init-param>
+	</filter>
 	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+	<filter-mapping>
+ 		 <filter-name>profiling</filter-name>
+ 		 <url-pattern>/*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+ 		 <filter-name>profiling</filter-name>
+ 		 <url-pattern>*.do</url-pattern>
+	</filter-mapping>
     <servlet>
         <servlet-name>StartupServlet</servlet-name>
         <servlet-class>ServidorApresentacao.servlets.startup.StartupServlet</servlet-class>

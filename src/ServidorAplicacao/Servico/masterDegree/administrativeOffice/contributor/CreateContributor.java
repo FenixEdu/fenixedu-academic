@@ -38,8 +38,8 @@ public class CreateContributor implements IService
         {
             sp = SuportePersistenteOJB.getInstance();
 
-            sp.getIPersistentContributor().simpleLockWrite(contributor);
             contributor = Cloner.copyInfoContributor2IContributor(newContributor);
+            sp.getIPersistentContributor().simpleLockWrite(contributor);
 
         }
         catch (ExistingPersistentException ex)
@@ -53,4 +53,6 @@ public class CreateContributor implements IService
             throw newEx;
         }
     }
+
+    
 }

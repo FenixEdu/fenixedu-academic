@@ -56,7 +56,7 @@ public class ViewClassesAction extends FenixContextAction {
 				degreeInitials,
 				nameDegreeCurricularPlan,
 				null,
-				curricularYear };
+				curricularYear,null };
 
 		try {
 			siteView =

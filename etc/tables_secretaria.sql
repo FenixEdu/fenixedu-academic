@@ -45,15 +45,14 @@ create table QUALIFICATION(
    TITLE varchar(200),
    DEGREE varchar(200),
    LAST_MODIFICATION_DATE timestamp(14) not null,
-   DATE date not null,
+   DATE date,
    BRANCH varchar(100),
    SPECIALIZATION_AREA varchar(200),
    DEGREE_RECOGNITION varchar(200),
    EQUIVALENCE_DATE date,
    EQUIVALENCE_SCHOOL varchar(200),
    KEY_COUNTRY integer(11),
-   primary key (ID_INTERNAL),
-   unique U1 (DATE,SCHOOL,KEY_PERSON))
+   primary key (ID_INTERNAL))
    type=InnoDB;
 
 #------------------------------------------

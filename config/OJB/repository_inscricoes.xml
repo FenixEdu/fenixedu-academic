@@ -317,6 +317,16 @@
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+		name="weigth"
+		column="WEIGTH"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="mandatoryEnrollment"
+		column="MANDATORY_ENROLLMENT"
+		jdbc-type="BIT"
+	/>
 	<reference-descriptor
 			name="university"
 			class-ref="Dominio.University"

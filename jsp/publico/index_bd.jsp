@@ -54,11 +54,7 @@
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
     		<td class="infoop">
-    			<% if (!request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).equals("80")) { %>
-	    			<html:link page="<%= "/chooseExamsMapContextDA.do?method=prepare&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" ><h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2></html:link>
-	    		<% } else { %>
-		    		<h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2> - Em construção
-	    		<% }%>
+    			<html:link page="<%= "/chooseExamsMapContextDA.do?method=prepare&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" ><h2 style="display: inline;"><bean:message key="link.exams.consult"/></h2></html:link>
     		</td>
   		</tr>
 	</table>

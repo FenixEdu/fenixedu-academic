@@ -40,6 +40,8 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
     private Integer minimumValueForAcumulatedEnrollments;
     private Integer enrollmentWeigth;
     private Double ectsCredits;
+    private Double weigth;
+    private Boolean mandatoryEnrollment;
 
     public CurricularCourse(Integer idInternal)
     {
@@ -623,4 +625,32 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
 		this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
 	}
 
+	/**
+	 * @return Returns the weigth.
+	 */
+	public Double getWeigth()
+	{
+		return weigth;
+	}
+	/**
+	 * @param weigth The weigth to set.
+	 */
+	public void setWeigth(Double weigth)
+	{
+		this.weigth = weigth;
+	}
+	/**
+	 * @return Returns the mandatoryEnrollment.
+	 */
+	public Boolean getMandatoryEnrollment()
+	{
+		return mandatoryEnrollment;
+	}
+	/**
+	 * @param mandatoryEnrollment The mandatoryEnrollment to set.
+	 */
+	public void setMandatoryEnrollment(Boolean mandatoryEnrollment)
+	{
+		this.mandatoryEnrollment = mandatoryEnrollment;
+	}
 }

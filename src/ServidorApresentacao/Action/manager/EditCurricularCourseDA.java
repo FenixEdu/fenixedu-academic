@@ -162,7 +162,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction
 		{
 			newInfoCurricularCourse.setEctsCredits(new Double(ectsCredits));
 		}
-		newInfoCurricularCourse.setEnrollmentWeigth(new Integer((String) dynaForm.get("weight")));
+		newInfoCurricularCourse.setWeigth(new Double((String) dynaForm.get("weight")));
 		
 		Object args[] = { newInfoCurricularCourse };
 

@@ -60,6 +60,7 @@ public class ReadAvailableRoomsForExam implements IServico {
 		};
 		
 		List availableRooms = null;
+//		List availableWithoutLabsRooms = null;
 		
 		try{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -67,25 +68,40 @@ public class ReadAvailableRoomsForExam implements IServico {
 										sp.getIPersistentRoomOccupation();
 			List roomOccupations = persistentRoomOccupation.readAll();
 			List occupiedInfoRooms = new ArrayList();
+//			List labsInfoRooms = new ArrayList();
+			
+//			Integer laboratorio = new Integer(TipoSala.LABORATORIO);
 			
 			for(int iterRO=0; iterRO < roomOccupations.size(); iterRO++){
 				IRoomOccupation roomOccupation = 
 						(IRoomOccupation) roomOccupations.get(iterRO);
-				
-				boolean occupiedRO = roomOccupation.roomOccupationForDateAndTime(
-												startDate,endDate,
-												startTime,endTime,dayOfWeek);
-				
-				if(occupiedRO){	
-					InfoRoom infoRoom = 
-						Cloner.copyRoom2InfoRoom(roomOccupation.getRoom());	
+
+//				TipoSala tipoSala = roomOccupation.getRoom().getTipo();
+								
+//				if(tipoSala.getTipo() == laboratorio)								
+//				{
+//					InfoRoom infoRoom = 
+//							Cloner.copyRoom2InfoRoom(roomOccupation.getRoom());
+//					
+//					labsInfoRooms.add(infoRoom);
+//				}
+//				else 
+//				{
+					boolean occupiedRO = roomOccupation.roomOccupationForDateAndTime(
+													startDate,endDate,
+													startTime,endTime,dayOfWeek);				
+					if(occupiedRO){	
+						InfoRoom infoRoom = 
+							Cloner.copyRoom2InfoRoom(roomOccupation.getRoom());	
 					
-					occupiedInfoRooms.add(infoRoom);				
-				}			
+						occupiedInfoRooms.add(infoRoom);				
+					}			
+				
+//				}
 			}
 			
 			ISalaPersistente persistentRoom = sp.getISalaPersistente();
-			List rooms = persistentRoom.readAll();
+			List rooms = persistentRoom.readForRoomReservation();
 			
 			List allInfoRooms = (List) CollectionUtils.collect(
 					rooms,
@@ -95,6 +111,13 @@ public class ReadAvailableRoomsForExam implements IServico {
 				(List) CollectionUtils.subtract(
 					allInfoRooms,
 					occupiedInfoRooms);
+			
+//			availableWithoutLabsRooms =
+//				(List) CollectionUtils.subtract(
+//					availableRooms,
+//					labsInfoRooms);
+			
+			
 		}
 		catch(ExcepcaoPersistencia e){
 			throw new FenixServiceException(e);

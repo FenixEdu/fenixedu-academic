@@ -4,14 +4,13 @@
 package ServidorAplicacao.Servico.gep;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.comparators.ComparatorChain;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;

@@ -3,5 +3,5 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <center><strong>
-Bem Vindo à secção de gestão de bolseiros.
+Bem Vindo ao Portal da Secção de Pessoal Docente e Investigador.
 </center></strong>

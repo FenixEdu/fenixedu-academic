@@ -17,7 +17,7 @@
 <%--  CONTRATOS --%>    
 <p class="infoselected">
 	<b><bean:message key="label.grant.qualification.information"/></b><br/>
-    <bean:message key="label.grant.owner.number"/>:&nbsp;<bean:write name="idInternal"/><br/>
+    <bean:message key="label.grant.owner.number"/>:&nbsp;<bean:write name="grantOwnerNumber"/><br/>
     <logic:present name="grantOwnerName">
 	    <bean:message key="label.grant.owner.infoperson.name"/>:&nbsp;<bean:write name="grantOwnerName"/><br/>
 	</logic:present></p>
@@ -63,12 +63,12 @@
             </td>
             <td class="listClasses">
                 <bean:define id="idQualification" name="infoGrantQualification" property="idInternal"/>
-                <html:link page='<%= "/editGrantQualification.do?method=prepareEditGrantQualificationForm&amp;idQualification=" + idQualification + "&amp;idInternal=" + request.getAttribute("idInternal").toString()+ "&amp;load=" + 1 %>' > 
+                <html:link page='<%= "/editGrantQualification.do?method=prepareEditGrantQualificationForm&amp;idQualification=" + idQualification + "&amp;idGrantOwner=" + request.getAttribute("idGrantOwner").toString() + "&amp;load=" + 1 + "&amp;grantOwnerNumber=" + request.getAttribute("grantOwnerNumber").toString() + "&amp;username=" + request.getAttribute("username").toString() %>' > 
                     <bean:message key="link.grant.qualification.edit" />
                 </html:link>
             </td>
             <td class="listClasses">        
-                <html:link page='<%= "/editGrantQualification.do?method=doDelete&amp;idQualification=" + idQualification + "&amp;idPerson=" + request.getAttribute("idPerson").toString() + "&amp;idInternal=" + request.getAttribute("idInternal").toString() + "&amp;username=" + request.getAttribute("username").toString() %>' > 
+                <html:link page='<%= "/editGrantQualification.do?method=doDelete&amp;idQualification=" + idQualification + "&amp;idPerson=" + request.getAttribute("idPerson").toString() + "&amp;idGrantOwner=" + request.getAttribute("idGrantOwner").toString() + "&amp;username=" + request.getAttribute("username").toString() + "&amp;grantOwnerNumber=" + request.getAttribute("grantOwnerNumber").toString() %>' > 
                     <bean:message key="link.grant.qualification.delete" />
                 </html:link>        
                 
@@ -86,7 +86,7 @@
 <br/><br/>
 
 <bean:message key="message.grant.qualification.creation"/>:&nbsp;
-<html:link page='<%= "/editGrantQualification.do?method=prepareEditGrantQualificationForm&amp;idPerson=" + request.getAttribute("idPerson").toString() + "&amp;idInternal=" + request.getAttribute("idInternal").toString() + "&amp;username=" + request.getAttribute("username").toString() %>'>
+<html:link page='<%= "/editGrantQualification.do?method=prepareEditGrantQualificationForm&amp;idPerson=" + request.getAttribute("idPerson").toString() + "&amp;idGrantOwner=" + request.getAttribute("idGrantOwner").toString() + "&amp;username=" + request.getAttribute("username").toString() + "&amp;grantOwnerNumber=" + request.getAttribute("grantOwnerNumber").toString()%>'>
 	<bean:message key="label.grant.qualification.create"/>
 </html:link>
 
@@ -95,7 +95,7 @@
 <html:form action="/manageGrantOwner" style="display:inline">
 	<html:hidden property="method" value="prepareManageGrantOwnerForm"/>
 	<html:hidden property="page" value="1"/>
-	<html:hidden property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
+	<html:hidden property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
 	<html:submit styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantOwner"/>
 	</html:submit>

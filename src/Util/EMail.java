@@ -132,8 +132,18 @@ public class EMail extends FenixUtil
 		} catch (SendFailedException e)
 		{
 			System.out.println("EMail: Nao foi possivel enviar o email");
-			for (int i = 0; i < e.getValidUnsentAddresses().length; i++)
-				unsentMails.add(e.getValidUnsentAddresses()[i]);
+			if(e.getValidUnsentAddresses() != null) {
+				for (int i = 0; i < e.getValidUnsentAddresses().length; i++) {
+					unsentMails.add(e.getValidUnsentAddresses()[i]);
+				}
+			} else {
+			    if(e.getValidSentAddresses() == null || e.getValidSentAddresses().length == 0) {
+			        unsentMails.addAll(tos);
+			        unsentMails.addAll(ccs);
+			        unsentMails.addAll(bccs);
+			        
+			    }
+			}
 			e.printStackTrace(System.out);
 		} catch (MessagingException e)
 		{

@@ -504,7 +504,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             // resultForm.get("degree")};
             Object args[] = {executionDegree};
             infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
+                    userView, "ReadExecutionDegreeByOID", args);
         }
         catch (ExistingServiceException e)
         {

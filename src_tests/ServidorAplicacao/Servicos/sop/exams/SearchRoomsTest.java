@@ -3,11 +3,8 @@
  */
 package ServidorAplicacao.Servicos.sop.exams;
 
-import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoRoom;
-import Dominio.Sala;
 import ServidorAplicacao.Servico.sop.exams.SearchRooms;
 import ServidorAplicacao.Servicos.ServiceTestCase;
 import ServidorPersistente.ExcepcaoPersistencia;

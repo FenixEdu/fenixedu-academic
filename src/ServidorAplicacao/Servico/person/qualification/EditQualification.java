@@ -8,11 +8,9 @@ import DataBeans.InfoObject;
 import DataBeans.person.InfoQualification;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
-import Dominio.IQualification;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
-import ServidorPersistente.IPersistentQualification;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -59,22 +57,23 @@ public class EditQualification extends EditDomainObjectService
         return "EditQualification";
     }
 
-    /**
-	 * This method invokes a persistent method to read an IDomainObject from database
-	 * 
-	 * @param domainObject
-	 * @return
-	 */
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
-        IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-        IQualification oldQualification = (IQualification) domainObject;
-        IQualification newQualification =
-            persistentQualification.readByDateAndSchoolAndPerson(
-                oldQualification.getDate(),
-                oldQualification.getSchool(),
-                oldQualification.getPerson());
-        return newQualification;
-    }
+//	 Qualification UNIQUE was drop (by PICA). At this point all qualifications are valid!
+//    /**
+//	 * This method invokes a persistent method to read an IDomainObject from database
+//	 * 
+//	 * @param domainObject
+//	 * @return
+//	 */
+//    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+//        throws ExcepcaoPersistencia
+//    {
+//        IPersistentQualification persistentQualification = sp.getIPersistentQualification();
+//        IQualification oldQualification = (IQualification) domainObject;
+//        IQualification newQualification =
+//            persistentQualification.readByDateAndSchoolAndPerson(
+//                oldQualification.getDate(),
+//                oldQualification.getSchool(),
+//                oldQualification.getPerson());
+//        return newQualification;
+//    }
 }

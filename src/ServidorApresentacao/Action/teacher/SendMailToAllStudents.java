@@ -374,14 +374,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
             e.printStackTrace();
             throw new FenixActionException(e);
         }
-        ActionErrors actionErrors = new ActionErrors();
-        for (Iterator iter = failedEmails.iterator(); iter.hasNext();)
-        {
-            String to = (String) iter.next();
-            ActionError actionError = new ActionError("error.email.notSend", to);
-            actionErrors.add("error.seminaries.candidaciesLimitReached", actionError);
-        }
-        saveErrors(request, actionErrors);
+        getFailedMails(request, candidaciesExtendedInfo, failedEmails);
         return mapping.findForward("mailCandidaciesSent");
     }
     public ActionForward send(
@@ -489,20 +482,32 @@ public class SendMailToAllStudents extends FenixDispatchAction
             {
                 throw new FenixActionException(e);
             }
-            ActionErrors actionErrors = new ActionErrors();
-            for (Iterator iter = failedEmails.iterator(); iter.hasNext();)
-            {
-                String to="";
-                Object object = iter.next();
-                if (object instanceof String)
-                {
-                     to = (String) object;
-                }
-                ActionError actionError = new ActionError("error.email.notSend", to);
-                actionErrors.add("error.seminaries.candidaciesLimitReached", actionError);
-            }
-            saveErrors(request, actionErrors);
+            getFailedMails(request, infoSiteStudents.getStudents(), failedEmails);
             return mapping.findForward("mailSent");
         }
+    }
+    /**
+     * @param request
+     * @param infoSiteStudents
+     * @param failedEmails
+     */
+    private void getFailedMails(HttpServletRequest request, List mailsList, List failedEmails) {
+        ActionErrors actionErrors = new ActionErrors();
+        for (Iterator iter = failedEmails.iterator(); iter.hasNext();)
+        {
+            String to="";
+            Object object = iter.next();
+            if (object instanceof String)
+            {
+                 to = (String) object;
+            }
+            ActionError actionError = new ActionError("error.email.notSend", to);
+            actionErrors.add("error.seminaries.candidaciesLimitReached", actionError);
+        }
+        if(failedEmails != null && failedEmails.size() > 0 
+                && failedEmails.size() != mailsList.size() + 1) {
+            actionErrors.add("error.remaining.success", new ActionError("error.email.remained.success"));
+        }
+        saveErrors(request, actionErrors);
     }
 }

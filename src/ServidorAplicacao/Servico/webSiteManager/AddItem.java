@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;

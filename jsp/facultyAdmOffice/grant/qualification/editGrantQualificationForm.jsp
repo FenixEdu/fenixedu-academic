@@ -17,10 +17,12 @@
 	<html:hidden property="page" value="1"/>
 
 	<%-- grant type --%>
-	<html:hidden property="idInternal"/>
+	<html:hidden property="idGrantOwner"/>
 	<html:hidden property="idPerson"/>
 	<html:hidden property="username"/>
+	<html:hidden property="grantOwnerNumber"/>
 	<html:hidden property="idQualification"/>
+
 	<table>
 		<tr>
 			<td align="left">
@@ -59,7 +61,7 @@
 				<bean:message key="label.grant.qualification.qualificationDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="qualificationDate" size="10"/><bean:message key="label.requiredfield"/>
+				<html:text property="qualificationDate" size="10"/>
 				&nbsp;<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
@@ -131,8 +133,9 @@
 				<html:form action="/manageGrantQualification" style="display:inline">
 					<html:hidden property="method" value="prepareManageGrantQualificationForm"/>
 					<html:hidden property="idPerson" value='<%= request.getAttribute("idPerson").toString() %>'/>
-					<html:hidden property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
 					<html:hidden property="username" value='<%= request.getAttribute("username").toString() %>'/>
+					<html:hidden property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/> 
+					<html:hidden property="grantOwnerNumber" value='<%= request.getAttribute("grantOwnerNumber").toString() %>'/>
 					<html:submit styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>

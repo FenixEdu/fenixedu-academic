@@ -35,9 +35,10 @@
 				<bean:message key="label.grant.part.grantPaymentEntity.designation"/>:&nbsp;
 			</td>
 			<td>
-				<html:select property="project">
+				<%--<html:select property="project">
 					<html:options collection="projectsList" property="idInternal" labelProperty="number"/>
-				</html:select>&nbsp;
+				</html:select>--%>
+				<html:text property="project" size="10"/>&nbsp; 
 				<html:select property="costCenter">
 					<html:options collection="costCenterList" property="idInternal" labelProperty="designation"/>
 				</html:select>&nbsp;*

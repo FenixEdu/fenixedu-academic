@@ -425,7 +425,8 @@
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <bean:define id="username" name="infoGrantOwner" property="personInfo.username"/>
 <bean:define id="idPerson" name="infoGrantOwner" property="personInfo.idInternal"/>
-<html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;idInternal=" +  idGrantOwner.toString() + "&amp;idPerson=" + idPerson.toString() + "&amp;username=" + username.toString()%>' > 
+<bean:define id="grantOwnerNumber" name="infoGrantOwner" property="grantOwnerNumber"/>
+<html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;idInternal=" +  idGrantOwner.toString() + "&amp;idPerson=" + idPerson.toString() + "&amp;username=" + username.toString() + "&amp;grantOwnerNumber=" + grantOwnerNumber.toString()%>' > 
 	<bean:message key="link.manage.grant.qualification" />
 </html:link>		
 

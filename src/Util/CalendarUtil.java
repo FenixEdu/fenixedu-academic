@@ -6,6 +6,8 @@ package Util;
 
 import java.util.Calendar;
 
+import org.apache.commons.lang.time.DateFormatUtils;
+
 /**
  * @author Ana e Ricardo
  *
@@ -16,115 +18,37 @@ public class CalendarUtil
     public CalendarUtil(){
 	}
 
-	/**
-	 * @param date1, date2
-	 * @return true if date2 is after or the same as date1
-	 */
-	public boolean dateAfter(Calendar date1, Calendar date2)
-	{
-		if(date1.get(Calendar.YEAR) > date2.get(Calendar.YEAR))
-			return false;
-		else if(date1.get(Calendar.YEAR) < date2.get(Calendar.YEAR))
-			return true;
-		else
-		{
-			if(date1.get(Calendar.MONTH) > date2.get(Calendar.MONTH))
-				return false;
-			else if(date1.get(Calendar.MONTH) < date2.get(Calendar.MONTH))
-				return true;
-			else
-			{
-				if(date1.get(Calendar.DAY_OF_MONTH) > date2.get(Calendar.DAY_OF_MONTH))
-					return false;
-				else if(date1.get(Calendar.DAY_OF_MONTH) < date2.get(Calendar.DAY_OF_MONTH))
-					return true;
-				else
-					return true;
-			}
-		}
+	public static boolean intersectDates(Calendar startDate1, Calendar endDate1, Calendar startDate2, Calendar endDate2) {
+		String startDate1String = date2string(startDate1);
+		String endDate1String = date2string(endDate1);
+		String startDate2String = date2string(startDate2);
+		String endDate2String = date2string(endDate2);
+		
+		boolean doesNotIntersect =
+			(endDate2String.compareTo(startDate1String) < 0)
+			|| (startDate2String.compareTo(endDate1String) > 0);
+
+		return !doesNotIntersect;
 	}
-	
-	/**
-	 * @param date1, date2
-	 * @return true if date2 is before or the same as date1
-	 */
-	public boolean dateBefore(Calendar date1, Calendar date2)
-	{
-		if(date1.get(Calendar.YEAR) < date2.get(Calendar.YEAR))
-			return false;
-		else if(date1.get(Calendar.YEAR) > date2.get(Calendar.YEAR))
-			return true;
-		else
-		{
-			if(date1.get(Calendar.MONTH) < date2.get(Calendar.MONTH))
-				return false;
-			else if(date1.get(Calendar.MONTH) > date2.get(Calendar.MONTH))
-				return true;
-			else
-			{
-				if(date1.get(Calendar.DAY_OF_MONTH) < date2.get(Calendar.DAY_OF_MONTH))
-					return false;
-				else if(date1.get(Calendar.DAY_OF_MONTH) > date2.get(Calendar.DAY_OF_MONTH))
-					return true;
-				else
-					return true;
-			}
-		}	    
+
+    private static String date2string(Calendar date) {
+		return DateFormatUtils.format(date.getTime(), "yyyyMMdd");
+    }
+
+	public static boolean intersectTimes(Calendar startTime1, Calendar endTime1, Calendar startTime2, Calendar endTime2) {
+		String startTime1String = time2string(startTime1);
+		String endTime1String = time2string(endTime1);
+		String startTime2String = time2string(startTime2);
+		String endTime2String = time2string(endTime2);
+		boolean doesNotIntersect =
+			(endTime2String.compareTo(startTime1String) <= 0)
+			|| (startTime2String.compareTo(endTime1String) >= 0);
+		return !doesNotIntersect;
 	}
-	
-	/**
-	 * @param time1, time2
-	 * @return true if time2 is after or the same as time1
-	 */
-	public boolean timeAfter(Calendar time1, Calendar time2)
-	{
-		if(time1.get(Calendar.HOUR_OF_DAY) > time2.get(Calendar.HOUR_OF_DAY))
-		    return false;
-		else if(time1.get(Calendar.HOUR_OF_DAY) < time2.get(Calendar.HOUR_OF_DAY))
-		    return true;
-		else
-		{
-			if(time1.get(Calendar.MINUTE) > time2.get(Calendar.MINUTE))
-			    return false;
-			else if(time1.get(Calendar.MINUTE) < time2.get(Calendar.MINUTE))
-			    return true;
-			else
-			{
-				if(time1.get(Calendar.SECOND) > time2.get(Calendar.SECOND))
-				    return false;
-				else if(time1.get(Calendar.SECOND) < time2.get(Calendar.SECOND))
-				    return true;
-				else
-				    return true;
-			}
-		}
+
+	private static String time2string(Calendar time) {
+		return DateFormatUtils.format(time.getTime(), "HHmmss");
 	}
-	
-	/**
-	 * @param time1, time2
-	 * @return true if time2 is before or the same as time1
-	 */
-	public boolean timeBefore(Calendar time1, Calendar time2)
-	{
-		if(time1.get(Calendar.HOUR_OF_DAY) < time2.get(Calendar.HOUR_OF_DAY))
-			return false;
-		else if(time1.get(Calendar.HOUR_OF_DAY) > time2.get(Calendar.HOUR_OF_DAY))
-			return true;
-		else
-		{
-			if(time1.get(Calendar.MINUTE) < time2.get(Calendar.MINUTE))
-				return false;
-			else if(time1.get(Calendar.MINUTE) > time2.get(Calendar.MINUTE))
-				return true;
-			else
-			{
-				if(time1.get(Calendar.SECOND) < time2.get(Calendar.SECOND))
-					return false;
-				else if(time1.get(Calendar.SECOND) > time2.get(Calendar.SECOND))
-					return true;
-				else
-					return true;
-			}
-		}		
-	}
-}
+
+
+ }

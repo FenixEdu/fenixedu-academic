@@ -29,6 +29,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 	private List groupProposals;
 	private InfoGroup groupAttributedByTeacher;
 	private InfoGroup groupAttributed;
+	private List branches;
 
 	public FinalDegreeWorkProposalHeader() {
 		super();
@@ -235,5 +236,17 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     public void setExecutionDegreeOID(Integer executionDegreeOID)
     {
         this.executionDegreeOID = executionDegreeOID;
+    }
+    /**
+     * @return Returns the branches.
+     */
+    public List getBranches() {
+        return branches;
+    }
+    /**
+     * @param branches The branches to set.
+     */
+    public void setBranches(List branches) {
+        this.branches = branches;
     }
 }

@@ -224,8 +224,8 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
     {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
-        criteria.addNotLike("edificio", "Tagus%");
-        criteria.addNotLike("edificio", "Local%");
+//        criteria.addNotLike("edificio", "Tagus%");
+//        criteria.addNotLike("edificio", "Local%");
         return queryList(Sala.class, criteria);
     }
 

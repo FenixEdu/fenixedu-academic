@@ -7,8 +7,6 @@
 <bean:write name="executionPeriodName"/>
 <html:form action="/editExecutionCourseChooseExDegree">
 	<input type="hidden" name="method" value="prepareEditExecutionCourse"/>
-	<html:hidden property="executionPeriodName" value="<%= pageContext.findAttribute("executionPeriodName").toString() %>" />
-	<html:hidden property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>" />
 	<html:hidden property="executionPeriod"/>
 	<html:hidden property="page" value="2" />
 	
@@ -22,7 +20,7 @@
 				:
 			</td>
 			<td>
-				<html:select property="executionDegreeId" size="1">
+				<html:select property="executionDegree" size="1">
 					<html:options collection="<%=SessionConstants.DEGREES%>" property="value" labelProperty="label"/>
 				</html:select>
 				<br />
@@ -44,7 +42,7 @@
 		<bean:message key="message.manager.executionCourseManagement.chooseNotLinked" />
 	</p>
 	<p>
-		<html:checkbox property="executionCoursesNotLinked"/>
+		<html:checkbox property="executionCoursesNotLinked" value="true"/>
 		<bean:message key="label.manager.executionCourseManagement.executionCoursesNotLinked" />
 	</p>
 	<br />

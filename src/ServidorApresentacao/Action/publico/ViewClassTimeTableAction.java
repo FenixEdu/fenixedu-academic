@@ -24,68 +24,51 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
- *
+ *  
  */
 public class ViewClassTimeTableAction extends FenixContextAction {
 
-	/**
-	 * Constructor for ViewClassTimeTableAction.
-	 */
+    /**
+     * Constructor for ViewClassTimeTableAction.
+     */
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		try {
-			super.execute(mapping, form, request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException {
+        try {
+            super.execute(mapping, form, request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		String className = request.getParameter("className");
-		String degreeInitials = (String) request.getAttribute("degreeInitials");
-		String nameDegreeCurricularPlan =
-			(String) request.getAttribute("nameDegreeCurricularPlan");
+        String className = request.getParameter("className");
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+        String classIdString = request.getParameter("classId");
+        Integer classId = null;
+        if (classIdString != null) {
+            classId = new Integer(classIdString);
+        } else {
+            return mapping.getInputForward();
 
-		if (degreeInitials == null) {
-			degreeInitials = request.getParameter("degreeInitials");
-		}
-		if (nameDegreeCurricularPlan == null) {
-			nameDegreeCurricularPlan =
-				request.getParameter("nameDegreeCurricularPlan");
-		}
-		if (className == null)
-			return mapping.getInputForward();
+        }
+        InfoSiteTimetable component = new InfoSiteTimetable();
 
-		InfoSiteTimetable component = new InfoSiteTimetable();
-
-		Object[] args =
-			{
-				component,
-				infoExecutionPeriod.getInfoExecutionYear().getYear(),
-				infoExecutionPeriod.getName(),
-				degreeInitials,
-				nameDegreeCurricularPlan,
-				className,
-				null };
-		SiteView siteView = null;
-		try {
-			siteView =
-				(SiteView) ServiceUtils.executeService(
-					null,
-					"ClassSiteComponentService",
-					args);
-		} catch (FenixServiceException e1) {
-			throw new FenixActionException(e1);
-		}
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("className", className);
-		return mapping.findForward("Sucess");
-	}
+        Object[] args = { component,
+                infoExecutionPeriod.getInfoExecutionYear().getYear(),
+                infoExecutionPeriod.getName(), null, null, className, null,
+                classId};
+        SiteView siteView = null;
+        
+        try {
+            siteView = (SiteView) ServiceUtils.executeService(null,
+                    "ClassSiteComponentService", args);
+        } catch (FenixServiceException e1) {
+            throw new FenixActionException(e1);
+        }
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("className", className);
+        return mapping.findForward("Sucess");
+    }
 }

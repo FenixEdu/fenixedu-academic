@@ -18,6 +18,12 @@
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
          <td><bean:write name="infoGuide" property="infoPerson.nome"/></td>
         </tr>
+        
+       <!-- Requester Number -->
+       <tr>
+         <td><bean:message key="label.masterDegree.administrativeOffice.requesterNumber"/> </td>
+         <td><bean:write name="<%= SessionConstants.REQUESTER_NUMBER %>" /></td>
+        </tr>
 
        <!-- Requester degree -->
        <tr>
@@ -68,6 +74,7 @@
       <html:form action="/createGuideReadyDispatchAction?method=create">
        <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
        <html:hidden property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
+       <html:hidden property="<%= SessionConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER).toString()%>'/>
        <html:hidden property="page" value="1"/>
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.others"/> </td>

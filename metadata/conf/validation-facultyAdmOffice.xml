@@ -63,7 +63,7 @@
         <form name="searchGrantOwnerByNumberForm">
             <field property="idGrantOwner" depends="required, integer" page="1">
                 <msg name="integer" key="errors.integer" resource="true"/>
-                <arg0 key="label.grant.owner.idInternal"/>
+                <arg0 key="label.grant.owner.number"/>
             </field>
         </form>
 
@@ -212,7 +212,7 @@
             <field property="school" depends="required" page="1">
 				<arg0 key="label.grant.qualification.school" resource="true"/>
             </field>			
-            <field property="qualificationDate" depends="required, mask, date" page="1">
+            <field property="qualificationDate" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
 				<arg0 key="label.grant.qualification.qualificationDate" resource="true"/>
@@ -298,8 +298,7 @@
 				<arg0 key="label.grant.owner.cardCopyNumber" resource="true"/>
 			</field>
 			
-			<field property="idNumber" depends="required,integer" page="1">
-				<msg name="number" key="errors.integer"/>
+			<field property="idNumber" depends="required" page="1">
 				<arg0 key="label.grant.owner.idNumber" resource="true"/>
 			</field>
 			<field property="name" depends="required" page="1">
@@ -383,8 +382,7 @@
 		
      	<!-- Edit Grant Cost Center Form -->
         <form name="editGrantCostCenterForm">
-            <field property="number" depends="required, integer" page="1">
-				<msg name="number" key="errors.integer"/>
+            <field property="number" depends="required" page="1">
 				<arg0 key="label.grant.costcenter.number" resource="true"/>
 		    </field>
 		    <field property="designation" depends="required" page="1">

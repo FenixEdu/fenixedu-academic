@@ -38,6 +38,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     private Integer minimumValueForAcumulatedEnrollments;
     private Integer enrollmentWeigth;
     private Double ectsCredits;
+    private Double weigth;
+    private Boolean mandatoryEnrollment;
 
     /**
 	 * @return
@@ -517,4 +519,32 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
     }
 
+	/**
+	 * @return Returns the weigth.
+	 */
+	public Double getWeigth()
+	{
+		return weigth;
+	}
+	/**
+	 * @param weigth The weigth to set.
+	 */
+	public void setWeigth(Double weigth)
+	{
+		this.weigth = weigth;
+	}
+	/**
+	 * @return Returns the mandatoryEnrollment.
+	 */
+	public Boolean getMandatoryEnrollment()
+	{
+		return mandatoryEnrollment;
+	}
+	/**
+	 * @param mandatoryEnrollment The mandatoryEnrollment to set.
+	 */
+	public void setMandatoryEnrollment(Boolean mandatoryEnrollment)
+	{
+		this.mandatoryEnrollment = mandatoryEnrollment;
+	}
 }

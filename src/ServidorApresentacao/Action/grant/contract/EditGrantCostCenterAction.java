@@ -87,18 +87,21 @@ public class EditGrantCostCenterAction extends FenixDispatchAction
 			infoGrantCostCenter = populateInfoFromForm(editGrantCostCenterForm);
 
 			//Check if teacher exists
-//			Object[] args = { infoGrantCostCenter.getInfoResponsibleTeacher().getTeacherNumber()};
-//			InfoTeacher infoTeacher =
-//				(InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber", args);
-//			if (infoTeacher == null)
-//				return setError(
-//					request,
-//					mapping,
-//					"errors.grant.paymententity.unknownTeacher",
-//					null,
-//					editGrantCostCenterForm.get("responsibleTeacherNumber"));
-//            infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
-
+			if(infoGrantCostCenter.getInfoResponsibleTeacher() != null)
+			{
+				Object[] args = { infoGrantCostCenter.getInfoResponsibleTeacher().getTeacherNumber()};
+				InfoTeacher infoTeacher =
+					(InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber", args);
+				if (infoTeacher == null)
+					return setError(
+						request,
+						mapping,
+						"errors.grant.paymententity.unknownTeacher",
+						null,
+						editGrantCostCenterForm.get("responsibleTeacherNumber"));
+	            infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
+			}
+			
             //Edit/Create the payment entity
 			Object[] args2 = { infoGrantCostCenter };
 			ServiceUtils.executeService(userView, "EditGrantPaymentEntity", args2);

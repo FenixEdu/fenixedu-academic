@@ -701,7 +701,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ReadStudentByUsernameAuthorization"/>
+           <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -1990,16 +1990,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadStudentsByExecutionDegreeAndExecutionYear</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.listings.ReadStudentsByExecutionDegreeAndExecutionYear</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>ReadAllMasterDegrees</name>
         <implementationClass> 
             ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees</implementationClass>
@@ -2450,14 +2440,6 @@
         <filterChains/>
     </service>
     <service>
-        <name>ReadExecutionDegreeByExecutionYearAndDegreeCode</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.commons.ReadExecutionDegreeByExecutionYearAndDegreeCode</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
         <name>ReadExecutionYears</name>
         <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionYears</implementationClass>
         <description>returns a collection of labels</description>
@@ -2668,14 +2650,6 @@
         <name>ReadNumerusClausus</name>
         <implementationClass> 
             ServidorAplicacao.Servico.commons.degree.ReadNumerusClausus</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
-        <name>ReadDegreeByYearAndCode</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.commons.degree.ReadDegreeByYearAndCode</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -6195,7 +6169,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentAuthorization"/>
+            <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>

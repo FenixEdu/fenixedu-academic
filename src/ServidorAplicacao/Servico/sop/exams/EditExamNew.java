@@ -38,6 +38,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentPeriod;
 import ServidorPersistente.IPersistentRoomOccupation;
 import ServidorPersistente.ISuportePersistente;
@@ -104,20 +105,31 @@ public class EditExamNew implements IServico
             {
                 throw new FenixServiceException("The exam doesnt exist");
             }
-
-            // This is needed for confirming if doesn't exists an exam for that
-            // season
-            Iterator iterExecutionCourses = exam.getAssociatedExecutionCourses().iterator();
-            while (iterExecutionCourses.hasNext())
-            {
-                IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
-                for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++)
+            /******* VERIFY IF THE EXAM DOES NOT EXIST *********/
+			IPersistentExecutionCourse persistentExecutionCourse =
+												sp.getIPersistentExecutionCourse();
+			List newExecutionCourses = new ArrayList();  
+			List scopeIDs = Arrays.asList(scopeIDArray);
+			
+			for(int i=0; i < executionCourseIDArray.length; i++)
+			{
+				IExecutionCourse executionCourse =
+                    findExecutionCourse(exam.getAssociatedExecutionCourses(), new Integer(executionCourseIDArray[i]));
+                if (executionCourse == null)
+				{
+					executionCourse = 
+							(IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, new Integer(executionCourseIDArray[i]));
+					newExecutionCourses.add(executionCourse);
+				}
+				
+				for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++)
                 {
                     IEvaluation evaluation =
-                        (IEvaluation) executionCourse.getAssociatedEvaluations().get(i);
+                        (IEvaluation) executionCourse.getAssociatedEvaluations().get(j);
                     if (evaluation instanceof IExam)
                     {
-                        IExam examAux = (IExam) evaluation;
+                        IExam examAux = (IExam) evaluation;				
+
                         if (examAux.getSeason().equals(season))
                         {
                             // is necessary to confirm if is for the same scope
@@ -126,17 +138,20 @@ public class EditExamNew implements IServico
                             while (iterScopes.hasNext())
                             {
                                 CurricularCourseScope scope = (CurricularCourseScope) iterScopes.next();
-                                if (exam.getAssociatedCurricularCourseScope().contains(scope)
+                                if ( scopeIDs.contains(scope.getIdInternal().toString())
                                     && !examAux.getIdInternal().equals(exam.getIdInternal()))
                                 {
                                     throw new ExistingServiceException();
                                 }
                             }
-                        }
-                    }
-                }
-            }
+						}
+					}
+				}
+			}
+			
 
+
+            /***************/
             persistentExam.simpleLockWrite(exam);
 
             // Scopes
@@ -158,8 +173,8 @@ public class EditExamNew implements IServico
                     exam.getAssociatedCurricularCourseScope().add(curricularCourseScope);
                 }
             }
-            List scopeIDs = Arrays.asList(scopeIDArray);
-            List indexesToRemove = new ArrayList();
+/*            List scopeIDs = Arrays.asList(scopeIDArray);
+ */           List indexesToRemove = new ArrayList();
 
             for (int i = 0; i < exam.getAssociatedCurricularCourseScope().size(); i++)
             {
@@ -185,9 +200,10 @@ public class EditExamNew implements IServico
                 if (executionCourse == null)
                 {
                     executionCourse =
-                        (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-                            new ExecutionCourse(new Integer(executionCourseIDArray[i])),
-                            false);
+						findExecutionCourse(newExecutionCourses, executionCourseID);
+//                        (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
+//                            new ExecutionCourse(new Integer(executionCourseIDArray[i])),
+//                            false);
                     if (executionCourse == null)
                     {
                         throw new FenixServiceException("The execution course doesnt exist");
@@ -206,7 +222,9 @@ public class EditExamNew implements IServico
                     exam.getAssociatedExecutionCourses().remove(executionCourse);
                 }
             }
+            /************************/
 
+            /***********************/
             // Rooms
             List roomsList = new ArrayList();
             List roomOccupationList = new ArrayList();

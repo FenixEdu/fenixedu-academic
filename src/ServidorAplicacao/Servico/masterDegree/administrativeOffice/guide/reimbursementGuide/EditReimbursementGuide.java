@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.reimbu
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IEmployee;
@@ -67,7 +68,7 @@ public class EditReimbursementGuide implements IService
 				ps.getIPersistentReimbursementGuide();
 			IReimbursementGuide reimbursementGuide = new ReimbursementGuide(reimbursementGuideId);
 			reimbursementGuide =
-				(IReimbursementGuide) persistentReimbursementGuide.readByOId(reimbursementGuide, false);
+				(IReimbursementGuide) persistentReimbursementGuide.readByOId(reimbursementGuide, true);
 
 			if (reimbursementGuide == null)
 				throw new NonExistingServiceException();
@@ -86,7 +87,7 @@ public class EditReimbursementGuide implements IService
 				persistentReimbursementGuideSituation.simpleLockWrite(activeSituation);
 				activeSituation.setState(new State(State.INACTIVE_STRING));
 				IReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
-				persistentReimbursementGuideSituation.simpleLockWrite(newActiveSituation);
+                
 
 				IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
 				IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
@@ -114,6 +115,15 @@ public class EditReimbursementGuide implements IService
 				newActiveSituation.setState(new State(State.ACTIVE));
 				newActiveSituation.setRemarks(remarks);
 
+
+				
+				List reimbursementGuideSituations = reimbursementGuide.getReimbursementGuideSituations();
+				reimbursementGuideSituations.add(newActiveSituation);
+				reimbursementGuide.setReimbursementGuideSituations(reimbursementGuideSituations);
+
+				persistentReimbursementGuideSituation.simpleLockWrite(newActiveSituation);
+				
+				
 				if (newState.equals(ReimbursementGuideState.PAYED))
 				{
 					//TODO: create reimbursement transactions

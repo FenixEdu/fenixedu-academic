@@ -30,7 +30,7 @@ public class EnrollStudentInExam implements IService
 
     public Boolean run(String username, Integer examId) throws FenixServiceException
     {
-
+       
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();

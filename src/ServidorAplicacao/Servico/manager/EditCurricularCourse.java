@@ -65,7 +65,7 @@ public class EditCurricularCourse implements IService
                     .getMinimumValueForAcumulatedEnrollments());
             oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
             oldCurricularCourse.setEctsCredits(newInfoCurricularCourse.getEctsCredits());
-            oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
+            oldCurricularCourse.setWeigth(newInfoCurricularCourse.getWeigth());
 
         }
         catch (ExistingPersistentException ex)

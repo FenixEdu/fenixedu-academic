@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -46,6 +47,10 @@ public class VoidAction extends Action
         if (graduationType == null)
             graduationType = request.getParameter("graduationType");
         request.setAttribute("graduationType", graduationType);
+        
+        if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null)
+            request.setAttribute(SessionConstants.REQUESTER_NUMBER, new Integer(request.getParameter(SessionConstants.REQUESTER_NUMBER)));
+        
         return mapping.findForward("Success");
 
     }

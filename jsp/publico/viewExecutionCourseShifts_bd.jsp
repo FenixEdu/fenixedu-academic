@@ -69,11 +69,10 @@
 
 							<td  class="listClasses" rowspan=<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>>
 								<logic:iterate id="infoClass" name="infoShift" property="infoClasses">
-
+										<bean:define id="classId" name="infoClass" property="idInternal" toScope="request"/>
 										<bean:define id="className" name="infoClass" property="nome" toScope="request"/>
-										<bean:define id="degreeInitials" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" toScope="request"/>
-										<bean:define id="nameDegreeCurricularPlan" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.name" toScope="request"/>
-										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?className=<%= request.getAttribute("className").toString() %>&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>&amp;degreeInitials=<%= request.getAttribute("degreeInitials").toString() %>&amp;nameDegreeCurricularPlan=<%= request.getAttribute("nameDegreeCurricularPlan").toString() %>">
+										
+										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?classId=<%= request.getAttribute("classId").toString() %>&amp;className=<%= request.getAttribute("className").toString() %>">
 											<bean:write name="infoClass" property="nome" /> <br/>
 										</a>
 								</logic:iterate>
