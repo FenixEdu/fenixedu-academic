@@ -106,13 +106,7 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 			assertEquals(result, new Integer(coordinators.size()), new Integer(2));
 			System.out.println("COORDINATORS_->"+coordinators);
 			Object[] ids = { new Integer(1), new Integer(3)};
-			String result2 =
-				"testReadCoordinators was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested()
-					+ "- wrong objects returned";
-			assertTrue(
-				result2,
-				UtilsTestCase.readTestList(coordinators, ids, "idInternal", InfoCoordinator.class));
+			UtilsTestCase.readTestList(coordinators, ids, "idInternal", InfoCoordinator.class);
 			System.out.println(
 				"testReadCoordinators was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());

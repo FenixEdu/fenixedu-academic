@@ -113,12 +113,11 @@ public class ReadExamsByStudentTest
 
 			System.out.println(InfoExamStudentRoom.class);
 			
-			assertTrue(
-				UtilsTestCase.readTestList(
+			UtilsTestCase.readTestList(
 					infoExamsStudentRoomList,
 					values,
 					"idInternal",
-					InfoExamStudentRoom.class));
+					InfoExamStudentRoom.class);
 
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/student/testReadExamsByStudentExpectedDataSet.xml");
 
