@@ -39,27 +39,6 @@
       >
     <foreignkey field-id-ref="3"/>
     </reference-descriptor>
-    
-    <collection-descriptor
-         name="sections"
-         element-class-ref="Dominio.Section"
-         orderby="sectionOrder"
-         sort="ASC"
-         auto-retrieve="true"
-      >
-         <inverse-foreignkey field-id-ref="4"/>
-      </collection-descriptor>
-      
-      <collection-descriptor
-         name="announcements"
-         element-class-ref="Dominio.Announcement"
-         orderby="creationDate"
-         sort="DESC"
-         auto-retrieve="true"
-         
-      >
-         <inverse-foreignkey field-id-ref="6"/>
-      </collection-descriptor>  
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->

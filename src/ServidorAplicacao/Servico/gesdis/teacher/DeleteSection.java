@@ -70,7 +70,7 @@ public class DeleteSection implements IServico {
 				}
 				inferiorSections = fatherSection.getInferiorSections();
 			} else {
-				inferiorSections = site.getSections();
+				inferiorSections = sp.getIPersistentSection().readBySite(site);
 			}
 			sonSection =
 				persistentSection.readBySiteAndSectionAndName(

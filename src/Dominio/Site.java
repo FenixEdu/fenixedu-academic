@@ -14,10 +14,10 @@ public class Site implements ISite {
 	private Integer internalCode;
 	private IDisciplinaExecucao executionCourse;
 	private Integer keyExecutionCourse;
-	private List sections;
+//	private List sections;
 	private ISection initialSection;
 	private Integer keyInitialSection;
-	private List announcements;
+//	private List announcements;
 	
 	/** 
 	 * Construtor
@@ -39,9 +39,9 @@ public class Site implements ISite {
 	
 	public Site(ISection initialSection, List sections, IDisciplinaExecucao executionCourse, List announcements){
 		setInitialSection(initialSection);
-		setSections(sections);
+//		setSections(sections);
 		setExecutionCourse(executionCourse);
-		setAnnouncements(announcements);
+//		setAnnouncements(announcements);
 	}
 	
 	
@@ -106,9 +106,9 @@ public class Site implements ISite {
 	/**
 	 * @return List
 	 */
-	public List getAnnouncements() {
-		return announcements;
-	}
+//	public List getAnnouncements() {
+//		return announcements;
+//	}
 
 	/**
 	 * @return ISection
@@ -122,17 +122,17 @@ public class Site implements ISite {
 	/**
 	 * @return List
 	 */
-	public List getSections() {
-		return sections;
-	}
+//	public List getSections() {
+//		return sections;
+//	}
 
 	/**
 	 * Sets the announcements.
 	 * @param announcements The announcements to set
 	 */
-	public void setAnnouncements(List announcements) {
-		this.announcements = announcements;
-	}
+//	public void setAnnouncements(List announcements) {
+//		this.announcements = announcements;
+//	}
 
 	/**
 	 * Sets the initialSection.
@@ -148,9 +148,9 @@ public class Site implements ISite {
 	 * Sets the sections.
 	 * @param sections The sections to set
 	 */
-	public void setSections(List sections) {
-		this.sections = sections;
-	}
+//	public void setSections(List sections) {
+//		this.sections = sections;
+//	}
 
 	/**
 	 * @return Integer
@@ -174,7 +174,7 @@ public class Site implements ISite {
 		String result = "[SITE";
 		result += ", codInt=" + getInternalCode();
 		result += ", executionCourse=" + getExecutionCourse();
-		result += ", sections=" + getSections();
+//		result += ", sections=" + getSections();
 		result += ", initialSection=" + getInitialSection();
 //		result += ", announcements=" + getAnnouncements();
 		result += "]";

@@ -62,7 +62,7 @@ public class ReadAnnouncements implements IServico {
 		
 		ISite site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
 		
-		List announcementsList = site.getAnnouncements();
+		List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site);
 		List infoAnnouncementsList = new ArrayList();
 		
         if ( announcementsList!= null && announcementsList.isEmpty() == false) {

@@ -6,6 +6,8 @@
 
 package ServidorPersistente;
 
+import java.util.List;
+
 import Dominio.ISection;
 import Dominio.ISite;
 
@@ -18,4 +20,5 @@ public interface IPersistentSection {
     void lockWrite(ISection section) throws ExcepcaoPersistencia;
     void delete(ISection section) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
+	public List readBySite(ISite site) throws ExcepcaoPersistencia;     
 }
