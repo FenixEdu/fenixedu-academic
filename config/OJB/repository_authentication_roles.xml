@@ -335,6 +335,7 @@
          name="responsibleForExecutionCourses"
          element-class-ref="Dominio.DisciplinaExecucao"
          indirection-table="RESPONSIBLEFOR"
+         auto-retrieve="true"
       >
          <fk-pointing-to-this-class column="ID_TEACHER"/>
          <fk-pointing-to-element-class column="ID_EXECUTIONCOURSE"/>
@@ -344,6 +345,7 @@
          name="professorShipsExecutionCourses"
          element-class-ref="Dominio.DisciplinaExecucao"
          indirection-table="PROFESSORSHIPS"
+         auto-retrieve="true"
       >
          <fk-pointing-to-this-class column="ID_TEACHER"/>
          <fk-pointing-to-element-class column="ID_EXECUTIONCOURSE"/>

@@ -4,7 +4,10 @@
 package ServidorPersistente.OJB;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.odmg.QueryException;
+
+import Dominio.IDisciplinaExecucao;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -131,6 +134,53 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 
+	}
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentTeacher#readTeacherByExecutionCourse()
+	 */
+	public List readTeacherByExecutionCourseProfessorship(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+		try {
+			ITeacher teacher = null;
+			String oqlQuery = "select teacher from " + Teacher.class.getName();			
+			oqlQuery += " where professorShipsExecutionCourses.executionPeriod.executionYear.year = $1";
+			oqlQuery += " and professorShipsExecutionCourses.sigla = $2";
+			oqlQuery += " and professorShipsExecutionCourses.executionPeriod.name = $3";
+			
+			query.create(oqlQuery);
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			
+			
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			return result;
+		} catch (Exception ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentTeacher#readTeacherByExecutionCourseResponsibility(Dominio.IDisciplinaExecucao)
+	 */
+	public List readTeacherByExecutionCourseResponsibility(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+		try {
+				ITeacher teacher = null;
+				String oqlQuery = "select teacher from " + Teacher.class.getName();
+				oqlQuery += " where responsibleForExecutionCourses.executionPeriod.executionYear.year = $1";
+				oqlQuery += " and responsibleForExecutionCourses.sigla = $2";
+				oqlQuery += " and responsibleForExecutionCourses.executionPeriod.name = $3";
+				query.create(oqlQuery);
+				query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());				
+				query.bind(executionCourse.getSigla());
+				query.bind(executionCourse.getExecutionPeriod().getName());
+				List result = (List) query.execute();
+				lockRead(result);
+							
+				return result;
+			} catch (Exception ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
 	}
 
 }

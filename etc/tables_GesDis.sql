@@ -54,9 +54,11 @@ create table ITEM (
 #----------------------------
 drop table if exists RESPONSIBLEFOR;
 create table RESPONSIBLEFOR (
+  INTERNAL_CODE integer(11) not null auto_increment,
    ID_TEACHER int(11) unsigned not null default '0',
    ID_EXECUTIONCOURSE int(11) unsigned not null default '0',
-   primary key (ID_TEACHER, ID_EXECUTIONCOURSE))
+   primary key (INTERNAL_CODE),
+    UNIQUE KEY U1(ID_TEACHER, ID_EXECUTIONCOURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------
@@ -64,9 +66,11 @@ create table RESPONSIBLEFOR (
 #----------------------------
 drop table if exists PROFESSORSHIPS;
 create table PROFESSORSHIPS (
+   INTERNAL_CODE integer(11) not null auto_increment,
    ID_TEACHER int(11) unsigned not null default '0',
    ID_EXECUTIONCOURSE int(11) unsigned not null default '0',
-   primary key (ID_TEACHER, ID_EXECUTIONCOURSE))
+   primary key (INTERNAL_CODE),
+    UNIQUE KEY U1(ID_TEACHER, ID_EXECUTIONCOURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------

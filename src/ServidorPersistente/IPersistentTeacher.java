@@ -9,6 +9,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import Dominio.IDisciplinaExecucao;
 import Dominio.ITeacher;
 public interface IPersistentTeacher {
 	
@@ -23,5 +24,8 @@ public interface IPersistentTeacher {
     public void delete(ITeacher teacher) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
+	
+	public List readTeacherByExecutionCourseProfessorship(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+	public List readTeacherByExecutionCourseResponsibility(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
     
 }
