@@ -326,7 +326,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) ServiceUtils.executeService(
 				userView,
-				"ReadActualExecutionPeriod",
+				"ReadCurrentExecutionPeriod",
 				new Object[0]);		
 
 		RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);

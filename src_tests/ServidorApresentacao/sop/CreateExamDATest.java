@@ -220,7 +220,7 @@ public class CreateExamDATest extends TestCasePresentation {
 			infoExecutionPeriod =
 				(InfoExecutionPeriod) ServiceUtils.executeService(
 					getPrivledgedUserView(),
-					"ReadActualExecutionPeriod",
+					"ReadCurrentExecutionPeriod",
 					new Object[0]);
 		} catch (FenixServiceException e) {
 			fail("unexpected exception reading actual execution period: " + e);

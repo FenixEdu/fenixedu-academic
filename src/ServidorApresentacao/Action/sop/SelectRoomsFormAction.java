@@ -99,7 +99,7 @@ public class SelectRoomsFormAction extends FenixAction {
 				executionPeriod =
 					(InfoExecutionPeriod) gestor.executar(
 						null,
-						"ReadActualExecutionPeriod",
+						"ReadCurrentExecutionPeriod",
 						args);
 			} catch (FenixServiceException e1) {
 				throw new FenixActionException(e1);

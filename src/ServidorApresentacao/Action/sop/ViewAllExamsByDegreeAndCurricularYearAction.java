@@ -107,7 +107,7 @@ public class ViewAllExamsByDegreeAndCurricularYearAction extends Action {
 			infoExecutionPeriod =
 				(InfoExecutionPeriod) ServiceUtils.executeService(
 					userView,
-					"ReadActualExecutionPeriod",
+					"ReadCurrentExecutionPeriod",
 					new Object[0]);
 
 			session.setAttribute(

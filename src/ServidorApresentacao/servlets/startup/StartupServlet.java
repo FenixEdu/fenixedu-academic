@@ -21,7 +21,7 @@ public class StartupServlet extends HttpServlet {
 		super.init(config);
 		
 		try {
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod)ServiceUtils.executeService(null, "ReadActualExecutionPeriod", null);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod)ServiceUtils.executeService(null, "ReadCurrentExecutionPeriod", null);
 			config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 		} catch (Exception e) {
 			throw new ServletException("Error reading actual execution period!",e);
