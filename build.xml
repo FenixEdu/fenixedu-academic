@@ -109,6 +109,8 @@
 	    	propertyFile="build.properties">
 	    	<include name="**/**/*.xml"/>
 	    	<include name="**/**/ApplicationResources.properties"/>
+	    	<include name="**/ServidorPersistenteConfig.properties"/>
+	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 		  <replacefilter 
 		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
@@ -155,7 +157,7 @@
 		  <replacefilter 
 		    token="@db.assiduousness.validationQuery@" 
 		    property="db.assiduousness.validationQuery"/>
-		  		    		  		    
+		  		    
 		  <replacefilter 
 		    token="@db.personFilter.user@" 
 		    property="db.personFilter.user"/>
@@ -424,7 +426,7 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
              	<!--      <include name="**/*Test.java"/> -->
-				<include name="**/EvaluationOJBTest.java"/> 
+				<include name="**/SummaryOJBTest.java"/> 
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
                <!-- <exclude name="**/TeacherOJBTest.java"/>
                     <exclude name="**/BibliographicReferenceOJBTest.java"/>
@@ -458,7 +460,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/ReadStudentsAndMarksByExamTest.java"/>
+                    <include name="**/InsertSummaryTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
@@ -903,7 +905,8 @@
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
-					<exclude name="**/fenix-validator-rules.xml"/>					
+					<exclude name="**/fenix-validator-rules.xml"/>		
+					<exclude name="**/Domain.xml"/>			
 				</fileset>
 		</xmlvalidate>
 	</target> 
