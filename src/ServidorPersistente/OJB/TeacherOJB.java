@@ -34,7 +34,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
     // TODO: remove this method, is similar to readTeacherByUsername
     public ITeacher readTeacherByUsernamePB(String user) throws ExcepcaoPersistencia
     {
-        return readTeacherByUsernamePB(user);
+        return readTeacherByUsername(user);
     }
     
     public void lockWrite(ITeacher teacher) throws ExcepcaoPersistencia
