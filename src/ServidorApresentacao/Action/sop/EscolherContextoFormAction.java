@@ -26,58 +26,81 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class EscolherContextoFormAction extends FenixAction {
 
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                                HttpServletRequest request,
-                                HttpServletResponse response)
-      throws Exception {
-    DynaActionForm escolherContextoForm = (DynaActionForm) form;
+	public ActionForward execute(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+		DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-    HttpSession session = request.getSession(false);
-	   
-    SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
-    
-    if (session != null) {
-        Integer semestre = (Integer) escolherContextoForm.get("semestre");
-        Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");
-        String sigla = (String) escolherContextoForm.get("sigla");
+		HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute("UserView");
-        GestorServicos gestor = GestorServicos.manager();
+		SessionUtils.removeAttributtes(
+			session,
+			SessionConstants.CONTEXT_PREFIX);
 
-      	session.setAttribute("anoCurricular", anoCurricular);
-      	session.setAttribute("semestre", semestre);
-      	
-        Object argsLerLicenciaturaExecucao[] = { new DegreeKey(sigla) };
-		InfoExecutionDegree iLE = (InfoExecutionDegree) gestor.executar(userView, "LerLicenciaturaExecucaoDeLicenciatura", argsLerLicenciaturaExecucao);
+		if (session != null) {
+			/* :FIXME: get semestre with executionPeriod */
+			Integer semestre = new Integer(2); 
+			
+			//(Integer) escolherContextoForm.get("semestre");
+			Integer anoCurricular =
+				(Integer) escolherContextoForm.get("anoCurricular");
+			String sigla = (String) escolherContextoForm.get("sigla");
 
-		if (iLE != null) {
-        	session.setAttribute(SessionConstants.INFO_LIC_EXEC_KEY, iLE);
-	    	CurricularYearAndSemesterAndInfoExecutionDegree cYSiED = new CurricularYearAndSemesterAndInfoExecutionDegree(anoCurricular, semestre, iLE);
-	    	session.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
-	
-			Object argsLerLicenciatura[] = { new String(sigla) };
+			IUserView userView = (IUserView) session.getAttribute("UserView");
+			GestorServicos gestor = GestorServicos.manager();
 
-			InfoDegree iL = (InfoDegree) gestor.executar(userView, "LerLicenciatura", argsLerLicenciatura);
+			session.setAttribute("anoCurricular", anoCurricular);
+			session.setAttribute("semestre", semestre);
 
+			Object argsLerLicenciaturaExecucao[] = { new DegreeKey(sigla)};
+			InfoExecutionDegree iLE =
+				(InfoExecutionDegree) gestor.executar(
+					userView,
+					"LerLicenciaturaExecucaoDeLicenciatura",
+					argsLerLicenciaturaExecucao);
 
-	        session.setAttribute("infoLicenciatura", iL);
+			if (iLE != null) {
+				session.setAttribute(SessionConstants.INFO_LIC_EXEC_KEY, iLE);
+				CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
+					new CurricularYearAndSemesterAndInfoExecutionDegree(
+						anoCurricular,
+						semestre,
+						iLE);
+				session.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
 
-			Object argsLerTurmas[] = { cYSiED };
-			List listaInfoTurmas = (List) gestor.executar(userView, "LerTurmas", argsLerTurmas);
+				Object argsLerLicenciatura[] = { new String(sigla)};
 
-	        session.removeAttribute("listaTurmasBean"); 
-	   	    if(!listaInfoTurmas.isEmpty()) {
-    	        //Collections.sort(listaInfoTurmas);
-        	    session.setAttribute("listaInfoTurmas", listaInfoTurmas);
-	        }
-	        session.removeAttribute("licenciaturasExecucao");		
-		}
-		else {
-			return mapping.findForward("Licenciatura execucao inexistente");
-		}
+				InfoDegree iL =
+					(InfoDegree) gestor.executar(
+						userView,
+						"LerLicenciatura",
+						argsLerLicenciatura);
 
-      return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
-  }
+				session.setAttribute("infoLicenciatura", iL);
+
+				Object argsLerTurmas[] = { cYSiED };
+				List listaInfoTurmas =
+					(List) gestor.executar(
+						userView,
+						"LerTurmas",
+						argsLerTurmas);
+
+				session.removeAttribute("listaTurmasBean");
+				if (!listaInfoTurmas.isEmpty()) {
+					//Collections.sort(listaInfoTurmas);
+					session.setAttribute("listaInfoTurmas", listaInfoTurmas);
+				}
+				session.removeAttribute("licenciaturasExecucao");
+			} else {
+				return mapping.findForward("Licenciatura execucao inexistente");
+			}
+
+			return mapping.findForward("Sucesso");
+		} else
+			throw new Exception();
+		// nao ocorre... pedido passa pelo filtro Autorizacao
+	}
 }

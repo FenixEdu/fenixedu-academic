@@ -34,7 +34,7 @@
         </var>
       </field>
 
-      <field property="semestre" depends="range, required">
+<!--  <field property="semestre" depends="range, required">
         <arg0 key="property.context.semester"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -46,7 +46,7 @@
           <var-name>max</var-name>
           <var-value>2</var-value>
         </var>
-      </field>
+      </field> -->
       
     </form>
 

@@ -25,7 +25,7 @@
                  dynamic="true">
         <form-property name="sigla" type="java.lang.String"/>
         <form-property name="anoCurricular" type="java.lang.Integer"/>
-        <form-property name="semestre" type="java.lang.Integer"/>
+<!--        <form-property name="semestre" type="java.lang.Integer"/> -->
       </form-bean>
 
 	  <!-- AULAS -->
