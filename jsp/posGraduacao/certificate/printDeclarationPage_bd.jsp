@@ -7,12 +7,6 @@
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" scope="session" />
 <div id="vert-spacer">
 <table width="100%">
-	<tr> 
-	     <td><h2 style="display: inline;">Aluno Nº: </h2><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/>
-	     	<br />
-			<br />
-	     </td>
-  	</tr>
 	<tr>
         <td align="center"><h2>DECLARAÇÃO</h2></td>
   	</tr>
@@ -29,6 +23,9 @@
 				<jsp:include page="./templateDocumentReason.jsp" flush="true" />
 				<jsp:include page="./templateFinal.jsp" flush="true" />
 		</td>
-	</tr>  	
+	</tr>
+	<tr> 
+	     <td><h2 style="display: inline;">Aluno Nº: </h2><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></td>
+  	</tr>
 </table>
 </div>

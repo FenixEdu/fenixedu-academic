@@ -5,8 +5,8 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <br />
 <br />
-<div align="right">Chefe de Secção,</div>
+<div align="right" style="margin-right: 100px;">Chefe de Secção,</div>
 <br />
-<div align="right"><p>(Josefina Miranda)</p></div>
+<div align="right" style="margin-right: 100px;"><p>(Josefina Miranda)</p></div>
 <br />
 <p><bean:write name="<%= SessionConstants.DATE %>" /></p>

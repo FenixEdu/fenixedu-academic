@@ -32,7 +32,7 @@
          <td>
        
             <html:select property="certificateList" >
-        	    <option value="" selected="selected"><bean:message key="label.certificate.default"/></option>
+        	    <option value="" selected="selected"></option>
                 <html:options name="certificateList" />
              </html:select>       
         
