@@ -10,12 +10,20 @@
     <bean:define id="specializations" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="request"/>
  
     <bean:define id="identificationDocumentTypeList" name="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST %>" scope="request"/>
-     <bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
+    <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>">
+    	<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
+    </logic:present>
      <bean:define id="executionYearName" name="<%= SessionConstants.EXECUTION_YEAR %>"/>
     <html:form action="/createCandidateDispatchAction?method=create">
 	   <html:hidden property="page" value="1"/>
 		<html:hidden property="executionYear"/>
-		<html:hidden property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
+		<logic:present name="curricularPlanID">
+			<html:hidden property="curricularPlanID" value="<%= pageContext.findAttribute("curricularPlanID").toString() %>"/>
+		</logic:present>
+		<logic:present name="executionDegree">
+			<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE %>" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />			
+			<html:hidden property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
+		</logic:present>
        <!-- Degree Type -->
        <tr>
 			<td colspan="2">

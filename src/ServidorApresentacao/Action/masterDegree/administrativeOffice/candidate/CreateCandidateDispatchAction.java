@@ -149,6 +149,8 @@ public class CreateCandidateDispatchAction extends DispatchAction
 			 {
 				curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
 			 }
+			 request.setAttribute("curricularPlanID", curricularPlanID);
+			 
 			ArrayList executionYearList = null;
 			Object args[] = { curricularPlanID };			
 			try {
@@ -182,6 +184,8 @@ public class CreateCandidateDispatchAction extends DispatchAction
 			   curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
 			   
 			}
+			request.setAttribute("curricularPlanID", curricularPlanID);
+			
 			
 			request.setAttribute(SessionConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
 			return mapping.findForward("CreateReady");
@@ -203,7 +207,11 @@ public class CreateCandidateDispatchAction extends DispatchAction
 			ArrayList specializations = Specialization.toArrayList();
 			request.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
 			Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+			
 			String executionDegreeId = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+			if(executionDegreeId== null) {
+			    executionDegreeId = (String) request.getParameter(SessionConstants.EXECUTION_DEGREE);
+			}
 			session.setAttribute(SessionConstants.EXECUTION_YEAR, session.getAttribute(SessionConstants.EXECUTION_YEAR));
 		
 			if (curricularPlanID == null)
@@ -211,6 +219,7 @@ public class CreateCandidateDispatchAction extends DispatchAction
 			   curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
 			   
 			}
+			request.setAttribute("curricularPlanID",curricularPlanID);
 			request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegreeId);
 			
 			// Get the Degree List
