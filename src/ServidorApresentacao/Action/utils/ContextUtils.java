@@ -4,16 +4,23 @@
  */
 package ServidorApresentacao.Action.utils;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
+import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoSala;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -234,4 +241,121 @@ public class ContextUtils {
 		}
 	}
 
+	
+	public static void setSelectedRoomsContext(HttpServletRequest request)
+		throws FenixActionException {
+//		System.out.println("### setSelectedRoomsContext - IN");
+		GestorServicos gestor = GestorServicos.manager();
+	
+		Object argsSelectRooms[] =
+			{
+				 new InfoRoom(
+					readRequestValue(request, "selectRoomCriteria_Name"),
+					readRequestValue(request, "selectRoomCriteria_Building"),
+					readIntegerRequestValue(request, "selectRoomCriteria_Floor"),
+					readTypeRoomRequestValue(request, "selectRoomCriteria_Type"),
+					readIntegerRequestValue(request, "selectRoomCriteria_CapacityNormal"),
+					readIntegerRequestValue(request, "selectRoomCriteria_CapacityExame"))};
+
+		List selectedRooms = null;
+		try {
+			selectedRooms =
+				(List) gestor.executar(null, "SelectRooms", argsSelectRooms);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		if (selectedRooms != null && !selectedRooms.isEmpty()) {
+			Collections.sort(selectedRooms);
+		}
+		request.setAttribute(SessionConstants.SELECTED_ROOMS,selectedRooms);
+
+		setRoomSearchCriteriaContext(request);
+		
+//		System.out.println("### setSelectedRoomsContext - OUT");
+	}
+		
+	/**
+	 * @param request
+	 */
+	private static void setRoomSearchCriteriaContext(HttpServletRequest request) {
+//		System.out.println("### setRoomSearchCriteriaContext - IN");
+
+		request.setAttribute("selectRoomCriteria_Name", readRequestValue(request, "selectRoomCriteria_Name"));
+		request.setAttribute("selectRoomCriteria_Building", readRequestValue(request, "selectRoomCriteria_Building"));
+		request.setAttribute("selectRoomCriteria_Floor", readRequestValue(request, "selectRoomCriteria_Floor"));
+		request.setAttribute("selectRoomCriteria_Type", readRequestValue(request, "selectRoomCriteria_Type"));
+		request.setAttribute("selectRoomCriteria_CapacityNormal",readRequestValue(request, "selectRoomCriteria_CapacityNormal"));
+		request.setAttribute("selectRoomCriteria_CapacityExame",readRequestValue(request, "selectRoomCriteria_CapacityExame"));
+
+//		System.out.println("### setRoomSearchCriteriaContext - OUT");		
+	}
+
+	/**
+	 * @param request
+	 */
+	public static void setSelectedRoomIndexContext(HttpServletRequest request) {
+		String selectedRoomIndexString =
+			(String) request.getAttribute(
+				SessionConstants.SELECTED_ROOM_INDEX);
+		System.out.println("SelectedRoomIndex from request: " + selectedRoomIndexString);
+		if (selectedRoomIndexString == null) {
+			selectedRoomIndexString =
+				request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
+			System.out.println("SelectedRoomIndexString from parameter: " + selectedRoomIndexString);
+		}
+
+		Integer selectedRoomIndex = null;
+		if (selectedRoomIndexString != null) {
+			selectedRoomIndex = new Integer(selectedRoomIndexString); 
+			// Place it in request
+			request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);			
+		}
+		else {
+			System.out.println("ERROR: Missing selectedRoomIndex in request");
+		}
+	}
+
+
+// -------------------------------------------------------------------------------
+// Read from request utils
+// -------------------------------------------------------------------------------
+	private static String readRequestValue(HttpServletRequest request, String name) {
+		String obj = null;
+		if (((String) request.getAttribute(name)) != null
+			&& !((String) request.getAttribute(name)).equals(""))
+			obj = (String) request.getAttribute(name);
+		else if (
+			request.getParameter(name) != null
+				&& !request.getParameter(name).equals("")
+				&& !request.getParameter(name).equals("null"))
+			obj = (String) request.getParameter(name);
+			
+		if (obj != null) {
+			System.out.println(name + " in request: " + obj);
+		}
+		else {
+			System.out.println("ERROR: Missing (or null) " + name +" in request");
+		}
+		return obj;
+	}
+	
+	private static Integer readIntegerRequestValue(
+		HttpServletRequest request,
+		String name) {
+		String obj = readRequestValue(request, name);
+		if (obj != null)
+			return new Integer(obj);
+		else
+			return null;
+	}
+
+	private static TipoSala readTypeRoomRequestValue(
+		HttpServletRequest request,
+		String name) {
+		Integer obj = readIntegerRequestValue(request, name);
+		if (obj != null)
+			return new TipoSala(obj);
+		else
+			return null;
+	}	
 }

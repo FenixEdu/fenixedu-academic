@@ -43,7 +43,7 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 			IUserView userView = (IUserView) session.getAttribute("UserView");
 			GestorServicos gestor = GestorServicos.manager();
 			
-			List infoRooms = (List) request.getAttribute("publico.infoRooms");
+			List infoRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
 			InfoRoom infoRoom =
 				(InfoRoom) infoRooms.get(
 					((Integer) indexForm.get("index")).intValue());

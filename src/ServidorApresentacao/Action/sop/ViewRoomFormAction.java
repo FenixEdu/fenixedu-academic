@@ -19,16 +19,15 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.TipoSala;
 
 /**
  * @author tfc130
  */
-public class ViewRoomFormAction extends FenixContextAction {
+public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -42,7 +41,7 @@ public class ViewRoomFormAction extends FenixContextAction {
 			e2.printStackTrace();
 		}
 
-		System.out.println("### ViewRoomFormAction - IN");
+//		System.out.println("### ViewRoomFormAction - IN");
 		HttpSession session = request.getSession();
 		DynaActionForm indexForm = (DynaActionForm) form;
 		request.removeAttribute(SessionConstants.INFO_SECTION);
@@ -50,18 +49,13 @@ public class ViewRoomFormAction extends FenixContextAction {
 			IUserView userView = (IUserView) session.getAttribute("UserView");
 			GestorServicos gestor = GestorServicos.manager();
 
-			List infoRooms = getSelectedRooms(request);
+			List infoRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
 			InfoRoom infoRoom =
 				(InfoRoom) infoRooms.get(
 					((Integer) indexForm.get("index")).intValue());
+
 			request.setAttribute(SessionConstants.ROOM, infoRoom);
-			request.setAttribute(
-				SessionConstants.ROOM_OID,
-				infoRoom.getIdInternal());
-			System.out.println("#### infoRoom " + infoRoom);
-			if (infoRoom != null)
-				System.out.println(
-					"#### infoRoomOID " + infoRoom.getIdInternal());
+			request.setAttribute(SessionConstants.ROOM_OID,infoRoom.getIdInternal());
 
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) request.getAttribute(
@@ -101,21 +95,6 @@ public class ViewRoomFormAction extends FenixContextAction {
 				throw new FenixActionException();
 			}
 
-			//			// if executionPeriod was previously selected,form has that
-			//			// value as default
-			//			InfoExecutionPeriod selectedExecutionPeriod =
-			//				(InfoExecutionPeriod) session.getAttribute(
-			//					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-			//			DynaActionForm indexFormForExecutionPeriod = new DynaActionForm();
-			//			if (selectedExecutionPeriod != null) {
-			//				indexFormForExecutionPeriod.set(
-			//					"index",
-			//					new Integer(
-			//						executionPeriods.indexOf(selectedExecutionPeriod)));
-			//			}
-			//			request.setAttribute("pagedIndexForm", indexFormForExecutionPeriod);
-			//----------------------------------------------
-
 			ArrayList executionPeriodsLabelValueList = new ArrayList();
 			for (int i = 0; i < executionPeriods.size(); i++) {
 				infoExecutionPeriod =
@@ -130,44 +109,17 @@ public class ViewRoomFormAction extends FenixContextAction {
 						"" + i));
 			}
 
-			//			request.setAttribute(
-			//				SessionConstants.LIST_INFOEXECUTIONPERIOD,
-			//				executionPeriods);
-
 			request.setAttribute(
 				SessionConstants.LABELLIST_EXECUTIONPERIOD,
 				executionPeriodsLabelValueList);
 			//--------------------
-			System.out.println("### ViewRoomFormAction - OUT");
+
+//			System.out.println("### ViewRoomFormAction - OUT");
 			return mapping.findForward("Sucess");
 
 		} else {
 			throw new FenixActionException();
 		}
-
-	}
-
-
-
-
-
-	private void setRoomContext(HttpServletRequest request)
-		throws FenixActionException {
-		Integer selectedRoomIndex =
-			readIntegerRequestValue(request, "selectedRoomIndex");
-		if (selectedRoomIndex != null)
-			request.setAttribute(selectedRoomIndex.toString(),"selectedRoomIndex");
-
-		request.setAttribute("name", readRequestValue(request, "name"));
-		request.setAttribute("building", readRequestValue(request, "building"));
-		request.setAttribute("floor", readRequestValue(request, "floor"));
-		request.setAttribute("type", readRequestValue(request, "type"));
-		request.setAttribute("capacityNormal",readRequestValue(request, "capacityNormal"));
-		request.setAttribute("capacityExame",readRequestValue(request, "capacityExame"));
-
-		InfoRoom selectedRoom = getSelectedRoom(selectedRoomIndex, request);
-		request.setAttribute(SessionConstants.ROOM, selectedRoom);
-		request.setAttribute(SessionConstants.ROOM_OID, selectedRoom.getIdInternal());
 
 	}
 
@@ -179,7 +131,7 @@ public class ViewRoomFormAction extends FenixContextAction {
 		HttpServletRequest request)
 		throws FenixActionException {
 
-		List selectedRooms = getSelectedRooms(request);
+		List selectedRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
 
 		InfoRoom selectedRoom = null;
 		if (selectedRooms != null && !selectedRooms.isEmpty()) {
@@ -188,66 +140,4 @@ public class ViewRoomFormAction extends FenixContextAction {
 		}
 		return selectedRoom;
 	}
-
-	private List getSelectedRooms(HttpServletRequest request)
-		throws FenixActionException {
-
-		GestorServicos gestor = GestorServicos.manager();
-		Object argsSelectRooms[] =
-			{
-				 new InfoRoom(
-					readRequestValue(request, "name"),
-					readRequestValue(request, "building"),
-					readIntegerRequestValue(request, "floor"),
-					readTypeRoomRequestValue(request, "type"),
-					readIntegerRequestValue(request, "capacityNormal"),
-					readIntegerRequestValue(request, "capacityExame"))};
-
-		List selectedRooms = null;
-		try {
-			selectedRooms =
-				(List) gestor.executar(null, "SelectRooms", argsSelectRooms);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		if (selectedRooms != null && !selectedRooms.isEmpty()) {
-			Collections.sort(selectedRooms);
-		}
-		return selectedRooms;
-	}
-
-	private String readRequestValue(HttpServletRequest request, String name) {
-		String obj = null;
-		if (((String) request.getAttribute(name)) != null
-			&& !((String) request.getAttribute(name)).equals(""))
-			obj = (String) request.getAttribute(name);
-		else if (
-			request.getParameter(name) != null
-				&& !request.getParameter(name).equals("")
-				&& !request.getParameter(name).equals("null"))
-			obj = (String) request.getParameter(name);
-		return obj;
-	}
-
-	private Integer readIntegerRequestValue(
-		HttpServletRequest request,
-		String name) {
-		String obj = readRequestValue(request, name);
-		if (obj != null)
-			return new Integer(obj);
-		else
-			return null;
-	}
-
-	private TipoSala readTypeRoomRequestValue(
-		HttpServletRequest request,
-		String name) {
-		Integer obj = readIntegerRequestValue(request, name);
-		if (obj != null)
-			return new TipoSala(obj);
-		else
-			return null;
-	}
-
 }

@@ -17,6 +17,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 
 /**
@@ -59,53 +60,32 @@ public class SelectRoomsFormAction extends FenixAction {
 
 			if (infoRooms != null && !infoRooms.isEmpty()) {
 				Collections.sort(infoRooms);
-				request.removeAttribute("publico.infoRooms");
-				request.setAttribute("publico.infoRooms", infoRooms);
-				request.removeAttribute("selectRoomsName");
-				request.setAttribute("selectRoomsName", readFormValue(roomForm, "name"));
-				request.removeAttribute("selectRoomsBuilding");
+				request.removeAttribute(SessionConstants.SELECTED_ROOMS);
+				request.setAttribute(SessionConstants.SELECTED_ROOMS, infoRooms);
+				request.removeAttribute("selectRoomCriteria_Name");
+				request.setAttribute("selectRoomCriteria_Name", readFormValue(roomForm, "name"));
+				request.removeAttribute("selectRoomCriteria_Building");
 				request.setAttribute(
-					"selectRoomsBuilding",
+					"selectRoomCriteria_Building",
 					readFormValue(roomForm, "building"));
-				request.removeAttribute("selectRoomsFloor");
-				request.setAttribute("selectRoomsFloor", readFormValue(roomForm, "floor"));
-				request.removeAttribute("selectRoomsType");
-				request.setAttribute("selectRoomsType", readFormValue(roomForm, "type"));
-				request.removeAttribute("selectRoomsCapacityNormal");
-				request.setAttribute("selectRoomsCapacityNormal",readFormValue(roomForm, "capacityNormal"));
-				request.removeAttribute("selectRoomsCapacityExame");
-				request.setAttribute("selectRoomsCapacityExame",readFormValue(roomForm, "capacityExame"));
+				request.removeAttribute("selectRoomCriteria_Floor");
+				request.setAttribute("selectRoomCriteria_Floor", readFormValue(roomForm, "floor"));
+				request.removeAttribute("selectRoomCriteria_Type");
+				request.setAttribute("selectRoomCriteria_Type", readFormValue(roomForm, "type"));
+				request.removeAttribute("selectRoomCriteria_CapacityNormal");
+				request.setAttribute("selectRoomCriteria_CapacityNormal",readFormValue(roomForm, "capacityNormal"));
+				request.removeAttribute("selectRoomCriteria_CapacityExame");
+				request.setAttribute("selectRoomCriteria_CapacityExame",readFormValue(roomForm, "capacityExame"));
 			} else {
-				request.removeAttribute("publico.infoRooms");
-				request.removeAttribute("selectRoomsName");
-				request.removeAttribute("selectRoomsBuilding");
-				request.removeAttribute("selectRoomsFloor");
-				request.removeAttribute("selectRoomsType");
-				request.removeAttribute("selectRoomsCapacityNormal");
-				request.removeAttribute("selectRoomsCapacityExame");
+				request.removeAttribute(SessionConstants.SELECTED_ROOMS);
+				request.removeAttribute("selectRoomCriteria_Name");
+				request.removeAttribute("selectRoomCriteria_Building");
+				request.removeAttribute("selectRoomCriteria_Floor");
+				request.removeAttribute("selectRoomCriteria_Type");
+				request.removeAttribute("selectRoomCriteria_CapacityNormal");
+				request.removeAttribute("selectRoomCriteria_CapacityExame");
 			}
-			System.out.println("### SelectRoomsFormAction");
-			System.out.println("## SelectRooms-name:"+readRequestValue(request, "selectRoomsName"));
-			System.out.println("## SelectRooms-building-"+readRequestValue(request, "selectRoomsBuilding"));
-			System.out.println("## SelectRooms-floor-"+readIntegerRequestValue(request, "selectRoomsFloor"));
-			System.out.println("## SelectRooms-type-"+readTypeRoomRequestValue(request, "selectRoomsType"));
-			System.out.println("## SelectRooms-capacityExam-"+readIntegerRequestValue(request, "selectRoomsCapacityNormal"));
-			System.out.println("## SelectRooms-capacityNormal-"+readIntegerRequestValue(request, "selectRoomsCapacityExame") );
 
-//			InfoExecutionPeriod executionPeriod;
-//			Object args[] = {
-//			};
-//			try {
-//				executionPeriod =
-//					(InfoExecutionPeriod) gestor.executar(
-//						null,
-//						"ReadCurrentExecutionPeriod",
-//						args);
-//			} catch (FenixServiceException e1) {
-//				throw new FenixActionException(e1);
-//			}
-//
-//			RequestUtils.setExecutionPeriodToRequest(request, executionPeriod);
 			return mapping.findForward("Sucess");
 		} else
 			throw new FenixActionException();
@@ -153,23 +133,23 @@ public class SelectRoomsFormAction extends FenixAction {
 		return obj;
 	}
 
-	private Integer readIntegerRequestValue(
-		HttpServletRequest request,
-		String name) {
-		String obj = readRequestValue(request, name);
-		if (obj != null)
-			return new Integer(obj);
-		else
-			return null;
-	}
-
-	private TipoSala readTypeRoomRequestValue(
-		HttpServletRequest request,
-		String name) {
-		Integer obj = readIntegerRequestValue(request, name);
-		if (obj != null)
-			return new TipoSala(obj);
-		else
-			return null;
-	}
+//	private Integer readIntegerRequestValue(
+//		HttpServletRequest request,
+//		String name) {
+//		String obj = readRequestValue(request, name);
+//		if (obj != null)
+//			return new Integer(obj);
+//		else
+//			return null;
+//	}
+//
+//	private TipoSala readTypeRoomRequestValue(
+//		HttpServletRequest request,
+//		String name) {
+//		Integer obj = readIntegerRequestValue(request, name);
+//		if (obj != null)
+//			return new TipoSala(obj);
+//		else
+//			return null;
+//	}
 }

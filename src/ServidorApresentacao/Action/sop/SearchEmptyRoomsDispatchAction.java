@@ -15,7 +15,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionPeriod;
@@ -24,7 +23,10 @@ import DataBeans.InfoRoom;
 import DataBeans.comparators.RoomAlphabeticComparator;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -36,7 +38,7 @@ import Util.DiaSemana;
 /**
  * @author jpvl
  */
-public class SearchEmptyRoomsDispatchAction extends DispatchAction {
+public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 
 	/* (non-Javadoc)
 	 * @see org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.String)
@@ -69,7 +71,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		// value as default
 		InfoExecutionPeriod selectedExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+				SessionConstants.EXECUTION_PERIOD);
 		if (selectedExecutionPeriod != null) {
 			DynaActionForm searchForm = (DynaActionForm) form;
 			searchForm.set(
@@ -91,9 +93,9 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 					"" + i));
 		}
 
-		request.setAttribute(
-			SessionConstants.LIST_INFOEXECUTIONPERIOD,
-			executionPeriods);
+//		request.setAttribute(
+//			SessionConstants.LIST_INFOEXECUTIONPERIOD,
+//			executionPeriods);
 
 		request.setAttribute(
 			SessionConstants.LABELLIST_EXECUTIONPERIOD,
@@ -153,9 +155,19 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 			//	execution period selection
 			HttpSession session = request.getSession(false);
 
-			ArrayList infoExecutionPeriodList =
-				(ArrayList) request.getAttribute(
-					SessionConstants.LIST_INFOEXECUTIONPERIOD);
+			Object argsReadExecutionPeriods[] = {
+			};
+			ArrayList infoExecutionPeriodList;
+			try {
+				infoExecutionPeriodList =
+					(ArrayList) ServiceUtils.executeService(
+						null,
+						"ReadExecutionPeriods",
+						argsReadExecutionPeriods);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException();
+			}
+
 			Integer index = (Integer) searchForm.get("executionPeriodIndex");
 
 			InfoExecutionPeriod infoExecutionPeriod = null;
@@ -163,10 +175,11 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 				infoExecutionPeriod =
 					(InfoExecutionPeriod) infoExecutionPeriodList.get(
 						index.intValue());
-				request.setAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-					infoExecutionPeriod);
 			}
+			// Set selected executionPeriod in request
+			request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+			request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());			
+			
 			// --------------------------------	
 
 			Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
@@ -189,12 +202,8 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 			// keep search criteria in request 
 			// (executionPeriod is already in session...)
 			request.setAttribute("weekDay", infoLesson.getDiaSemana());
-			request.setAttribute(
-				"intervalStart",
-				timeToString(infoLesson.getInicio()));
-			request.setAttribute(
-				"intervalEnd",
-				timeToString(infoLesson.getFim()));
+			request.setAttribute("intervalStart",timeToString(infoLesson.getInicio()));
+			request.setAttribute("intervalEnd",timeToString(infoLesson.getFim()));
 			request.setAttribute("minimumCapacity", normalCapacity);
 			//--------------------------------------------
 

@@ -7,16 +7,13 @@
 <br/>
 <span class="error"><html:errors/></span>
 <html:form action="/editarSala">
-Index: <bean:write name="selectedRoomIndex" scope="request"/>
-	<bean:define id="infoRoomOID" name="<%= SessionConstants.ROOM_OID%>" scope="request"/>
-	<html:hidden property="<%= SessionConstants.ROOM_OID%>" value="<%=infoRoomOID.toString()%>"/>
-	<html:hidden property="selectRoomsName" value="<%= ""+request.getAttribute("selectRoomsName")%>"/>            
-	<html:hidden property="selectRoomsBuilding" value="<%= ""+request.getAttribute("selectRoomsBuilding")%>"/>
-	<html:hidden property="selectRoomsFloor" value="<%= ""+request.getAttribute("selectRoomsFloor")%>"/>
-	<html:hidden property="selectRoomsType" value="<%= ""+request.getAttribute("selectRoomsType")%>"/>
-	<html:hidden property="selectRoomsCapacityNormal" value="<%= ""+request.getAttribute("selectRoomsCapacityNormal")%>"/>
-	<html:hidden property="selectRoomsCapacityExame" value="<%= ""+request.getAttribute("selectRoomsCapacityExame")%>"/>
-	<html:hidden property="selectRoomsIndex" value="<%= ""+request.getAttribute("selectedRoomsIndex")%>"/>	
+	<html:hidden property="selectRoomCriteria_Name" value="<%= ""+request.getAttribute("selectRoomCriteria_Name")%>"/>            
+	<html:hidden property="selectRoomCriteria_Building" value="<%= ""+request.getAttribute("selectRoomCriteria_Building")%>"/>
+	<html:hidden property="selectRoomCriteria_Floor" value="<%= ""+request.getAttribute("selectRoomCriteria_Floor")%>"/>
+	<html:hidden property="selectRoomCriteria_Type" value="<%= ""+request.getAttribute("selectRoomCriteria_Type")%>"/>
+	<html:hidden property="selectRoomCriteria_CapacityNormal" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityNormal")%>"/>
+	<html:hidden property="selectRoomCriteria_CapacityExame" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityExame")%>"/>
+	<html:hidden property="<%= SessionConstants.SELECTED_ROOM_INDEX%>" value="<%= ""+request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX)%>"/>	
 	
   <table align="center" cellspacing="10">
     <tr>

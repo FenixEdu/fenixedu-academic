@@ -43,19 +43,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD);
 
-		//		String executionYearName = request.getParameter("executionYearName");
-		//		String executionPeriodName =
-		//			request.getParameter("executionPeriodName");
-		//		request.setAttribute("executionYearName", executionYearName);
-		//		request.setAttribute("executionPeriodName", executionPeriodName);
-
-		//		if (executionYearName != null && executionPeriodName != null) {
-		//			selectedExecutionPeriod =
-		//				new InfoExecutionPeriod(
-		//					executionPeriodName,
-		//					new InfoExecutionYear(executionYearName));
-		//		}
-
 		Object argsReadExecutionPeriods[] = {
 		};
 		ArrayList executionPeriods =
@@ -151,7 +138,9 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		throws Exception {
 		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
-		System.out.println("### ExecutionPeriod-chooseForViewRoom - IN");
+
+//		System.out.println("### ExecutionPeriod-chooseForViewRoom - IN");
+
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
@@ -222,11 +211,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
 		}
-//		System.out.println("###### ExecutionPeriodDA-chooseViewRoom - infoRoom:" + infoRoom);
 		request.setAttribute(SessionConstants.ROOM, infoRoom);
 		request.setAttribute(SessionConstants.ROOM_OID,	infoRoom.getIdInternal());
-//		System.out.println("###### ExecutionPeriodDA-chooseViewRoom - infoExecutionPeriod:"
-//				+ selectedInfoExecutionPeriod);
 
 		Object argsReadLessons[] = { selectedInfoExecutionPeriod, infoRoom };
 
@@ -245,7 +231,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
 		}
-		System.out.println("### ExecutionPeriod-chooseForViewRoom - OUT");
+//		System.out.println("### ExecutionPeriod-chooseForViewRoom - OUT");
 		return mapping.findForward("viewRoom");
 	}
 

@@ -8,7 +8,6 @@
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <h2><bean:message key="title.view.room"/></h2>
 <br />
-Periodo Execucao: <bean:write name="<%=SessionConstants.EXECUTION_PERIOD_OID%>" scope="request"/>
 <html:form action="/chooseExecutionPeriod">
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr>

@@ -6,6 +6,7 @@
 <br />
 <span class="error"><html:errors/></span>
 <html:form action="/searchEmptyRoomsDA">
+	<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
 	<html:hidden property="page" value="1"/>
     	<input type="hidden" name="method" value="doSearch"/>
    	<table cellspacing="0">

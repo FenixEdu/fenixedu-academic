@@ -59,9 +59,11 @@ public abstract class SessionConstants {
 	public static final String DEGREES = "licenciaturas";
 	public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";	
 	public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";	
+
 	public static final String ROOM = "room";
 	public static final String ROOM_OID = "roomOID";
-
+	public static final String SELECTED_ROOM_INDEX = "selectedRoomIndex";
+	public static final String SELECTED_ROOMS = "selectedRooms";	
      //	-------------------------------------------------------------------------------
 	 //    GesDis Constants - For Manager
 	 // -------------------------------------------------------------------------------
