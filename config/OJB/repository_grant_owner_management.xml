@@ -48,6 +48,13 @@
 		proxy="false">
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>   
+	<collection-descriptor
+			name="grantContracts"
+			element-class-ref="Dominio.grant.contract.GrantContract"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyGrantOwner"/>
+	</collection-descriptor>    
+	
    </class-descriptor>
    
    
@@ -109,6 +116,13 @@
 		proxy="true">
 		<foreignkey field-ref="keyGrantType"/>
 	</reference-descriptor> 
+	<collection-descriptor
+			name="contractRegimes"
+			element-class-ref="Dominio.grant.contract.GrantContractRegime"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyGrantContract"/>
+	</collection-descriptor>    
+	
    </class-descriptor>
    
    
