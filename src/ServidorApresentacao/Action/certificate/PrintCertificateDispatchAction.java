@@ -186,7 +186,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                     if ((certificate.equals("Aproveitamento"))
                             || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
                         Object args[] = { infoStudentCurricularPlan.getIdInternal(),
-                                EnrollmentState.APROVED };
+                                EnrollmentState.APROVED, new Boolean(true) };
                         try {
                             enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
                                     "GetEnrolmentList", args);
