@@ -242,7 +242,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				}
 				Ftp.enviarFicheiro(
 					"/IstFtpServerConfig.properties",
-					infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html",
+				infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html",
 					infoWebSiteSection.getName() + "_principal/");
 				// delete created file
 				itemsFileToTransfer.delete();
@@ -258,11 +258,13 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		File excerpts = null;
 		BufferedWriter escritor = null;
 		try {
-			excerpts = new File(fileName);
+			
+			excerpts = new File(System.getProperty("java.io.tmpdir")+ File.separator + fileName);
 			escritor = new BufferedWriter(new FileWriter(excerpts));
 			escritor.write(fileContent);
 			escritor.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception();
 		}
 		return excerpts;

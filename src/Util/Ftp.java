@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,11 +55,11 @@ public class Ftp {
 			System.out.print(ftp.getReplyString());
 
 			ftp.login(_userName, _password);
-			InputStream inputStream = new FileInputStream(nomeFicheiro);
+			InputStream inputStream = new FileInputStream(System.getProperty("java.io.tmpdir") + File.separator + nomeFicheiro);
 
 			ftp.storeFile(caminho + nomeFicheiro, inputStream);
 			inputStream.close();
-			System.out.println("vou desligar");
+			System.out.println("Going to disconnect from " + _urlFTP);
 			ftp.disconnect();
 
 		} catch (IOException e) {
