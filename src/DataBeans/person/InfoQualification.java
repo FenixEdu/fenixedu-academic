@@ -4,6 +4,7 @@
  */
 package DataBeans.person;
 
+import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
 
@@ -12,7 +13,7 @@ import DataBeans.InfoPerson;
  * @author Pica
  */
 
-public class InfoQualification extends InfoObject
+public class InfoQualification extends InfoObject implements ISiteComponent
 {
 	private Integer year;
 	private String mark;
