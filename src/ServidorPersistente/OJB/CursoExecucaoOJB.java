@@ -19,8 +19,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
@@ -139,8 +137,8 @@ public class CursoExecucaoOJB
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("executionYear.year", executionYear.getYear());
 		criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
-		Query queryPB = new QueryByCriteria(CursoExecucao.class, criteria);
-		return (List) broker.getCollectionByQuery(queryPB);
+		
+		return queryList(CursoExecucao.class, criteria);
 	}
 
 	/**
@@ -233,7 +231,7 @@ public class CursoExecucaoOJB
 
 
 			List result = (List) query.execute();
-//			lockRead(result);
+			lockRead(result);
 
 
 			return result;
@@ -337,6 +335,7 @@ public class CursoExecucaoOJB
 			query.bind(degreeCurricularPlan.getIdInternal());
 
 			List result = (List) query.execute();
+			lockRead(result);
 			if (result.size() == 0)
 				return null;
 			return result;

@@ -2,7 +2,6 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
-import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
@@ -155,7 +154,7 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 		criteria.addEqualTo("year", year);
 		criteria.addEqualTo("number", number);
 	
-		List result = (List) PersistenceBrokerFactory.defaultPersistenceBroker().getCollectionByQuery(query);
+		List result = queryList(Guide.class, criteria);
 	
 	
 		if (result.size() != 0){
@@ -182,15 +181,15 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 		return result;
 	}
 	
-	public static void main(String args[]) throws ExcepcaoPersistencia{
-		
-		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-		sp.iniciarTransaccao();
+//	public static void main(String args[]) throws ExcepcaoPersistencia{
+//		
+//		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+//		sp.iniciarTransaccao();
 //		System.out.println(((IGuide) sp.getIPersistentGuide().readLatestVersion(new Integer(2003), new Integer(199))).getVersion());
-		sp.getIPersistentGuide().readByYear(new Integer(2003));
-		
-		sp.confirmarTransaccao();
-		
-	}
+//		sp.getIPersistentGuide().readByYear(new Integer(2003));
+//		
+//		sp.confirmarTransaccao();
+//		
+//	}
 
 }
