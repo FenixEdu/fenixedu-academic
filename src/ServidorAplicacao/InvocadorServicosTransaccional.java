@@ -26,8 +26,7 @@ public class InvocadorServicosTransaccional extends InvocadorServicos {
 				filterChain.preFiltragem(user, servico, argumentos);
 				result = doInvocation(servico, "run", argumentos);
 				sp.confirmarTransaccao();
-			} catch (FenixServiceException ex) {
-				if (ex.getCause() instanceof ExcepcaoPersistencia) {
+			} catch (Exception ex) {
 					try {
 						sp.cancelarTransaccao();
 					} catch (ExcepcaoPersistencia newEx) {
@@ -35,8 +34,6 @@ public class InvocadorServicosTransaccional extends InvocadorServicos {
 					}
 					throw ex;
 					//throw new FenixServiceException(ex.getMessage());         	
-				} else
-					throw ex;
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());
