@@ -20,53 +20,35 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class EditarTurma implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public EditarTurma() {
-    }
+    public Object run(final InfoClass oldClassView, final InfoClass newClassView) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-    public Object run(InfoClass oldClassView, InfoClass newClassView) throws FenixServiceException {
+        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ITurma turma = null;
-        boolean result = false;
+        final IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(oldClassView
+                .getInfoExecutionPeriod());
 
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        final ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(oldClassView
+                .getInfoExecutionDegree());
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(oldClassView.getInfoExecutionPeriod());
+        final ITurma classToEdit = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
+                oldClassView.getNome(), executionDegree, executionPeriod);
 
-            ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(oldClassView
-                    .getInfoExecutionDegree());
+        final ITurma otherClassWithSameNewName = sp.getITurmaPersistente()
+                .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(), executionDegree,
+                        executionPeriod);
 
-            turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
-                    oldClassView.getNome(), executionDegree, executionPeriod);
-            /*
-             * :FIXME: we have to change more things... to dump one year to
-             * another
-             */
-            if (turma != null) {
-
-                try {
-                    sp.getITurmaPersistente().simpleLockWrite(turma);
-                    turma.setNome(newClassView.getNome());
-
-                } catch (ExistingPersistentException ex) {
-                    throw new ExistingServiceException(ex);
-                }
-
-                result = true;
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
+        if (otherClassWithSameNewName != null) {
+            throw new ExistingServiceException("Duplicate Entry: " + otherClassWithSameNewName.getNome());
         }
 
-        return new Boolean(result);
+        sp.getITurmaPersistente().simpleLockWrite(classToEdit);
+        classToEdit.setNome(newClassView.getNome());
+
+        return new Boolean(true);
     }
 
 }

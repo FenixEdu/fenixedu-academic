@@ -65,9 +65,7 @@ public class Turma extends DomainObject implements ITurma {
         boolean resultado = false;
         if (obj instanceof ITurma) {
             ITurma turma = (ITurma) obj;
-            resultado = getNome().equals(turma.getNome())
-                    && getExecutionDegree().equals(turma.getExecutionDegree())
-                    && getExecutionPeriod().equals(turma.getExecutionPeriod());
+            resultado = getIdInternal().equals(turma.getIdInternal());
         }
         return resultado;
     }

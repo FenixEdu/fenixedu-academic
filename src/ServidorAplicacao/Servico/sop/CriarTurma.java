@@ -11,58 +11,61 @@ package ServidorAplicacao.Servico.sop;
  * 
  * @author tfc130
  */
+import java.util.List;
+
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
 import Dominio.ITurma;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
+
+import commons.CollectionUtils;
 
 public class CriarTurma implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public CriarTurma() {
-    }
+    public Object run(final InfoClass infoTurma) throws ExcepcaoPersistencia, ExistingServiceException {
 
-    public Object run(InfoClass infoTurma) throws FenixServiceException {
+        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ITurma turma = null;
-        InfoClass infoClass = null;
+        final ITurma turma = Cloner.copyInfoClass2Class(infoTurma);
 
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        final ITurmaPersistente classDAO = sp.getITurmaPersistente();
+        final List listClasses = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(turma
+                .getExecutionPeriod(), turma.getAnoCurricular(), turma.getExecutionDegree());
 
-            turma = Cloner.copyInfoClass2Class(infoTurma);
+        final ITurma existingClass = (ITurma) CollectionUtils.find(listClasses, new Predicate() {
 
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            try {
-                sp.getITurmaPersistente().simpleLockWrite(turma);
-                turma.setExecutionDegree(executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
-                        turma.getExecutionDegree().getCurricularPlan(), turma.getExecutionDegree()
-                                .getExecutionYear()));
-
-                turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma
-                        .getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));
-
-                infoClass = Cloner.copyClass2InfoClass(turma);
-            } catch (ExistingPersistentException ex) {
-                throw new ExistingServiceException(ex);
+            public boolean evaluate(Object arg0) {
+                final ITurma schoolClass = (ITurma) arg0;
+                return infoTurma.getNome().equalsIgnoreCase(schoolClass.getNome());
             }
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
+        });
+
+        if (existingClass != null) {
+            throw new ExistingServiceException("Duplicate Entry: " + infoTurma.getNome());
         }
 
-        return infoClass;
+        final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+
+        sp.getITurmaPersistente().simpleLockWrite(turma);
+        turma.setExecutionDegree(executionDegreeDAO
+                .readByDegreeCurricularPlanAndExecutionYear(turma.getExecutionDegree()
+                        .getCurricularPlan(), turma.getExecutionDegree().getExecutionYear()));
+
+        turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma
+                .getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));
+
+        return Cloner.copyClass2InfoClass(turma);
     }
 
 }

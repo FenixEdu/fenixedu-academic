@@ -9,78 +9,46 @@ package ServidorAplicacao.Servico.sop;
  * Serviço AdicionarTurno.
  * 
  * @author Luis Cruz & Sara Ribeiro
+ * @author Pedro Santos e Rita Carvalho
  */
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import Dominio.ITurma;
-import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.Turma;
-import Dominio.Turno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class RemoveShifts implements IServico {
+public class RemoveShifts implements IService {
 
-    private static RemoveShifts _servico = new RemoveShifts();
+    public Boolean run(InfoClass infoClass, List shiftOIDs) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static RemoveShifts getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private RemoveShifts() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "RemoveShifts";
-    }
-
-    public Boolean run(InfoClass infoClass, List shiftOIDs) throws FenixServiceException {
-
-        boolean result = false;
-
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
-            ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
-                    infoClass.getIdInternal());
-            sp.getITurmaPersistente().simpleLockWrite(schoolClass);
-
-            for (int i = 0; i < shiftOIDs.size(); i++) {
-                ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
-                        (Integer) shiftOIDs.get(i));
-
-                ITurmaTurno classShift = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(schoolClass,
-                        shift);
-                if (classShift != null) {
-                    sp.getITurmaTurnoPersistente().delete(classShift);
-                }
-
-                schoolClass.getAssociatedShifts().remove(shift);
-
-                sp.getITurmaTurnoPersistente().simpleLockWrite(shift);
-                shift.getAssociatedClasses().remove(schoolClass);
+        final ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+                infoClass.getIdInternal());
+        sp.getITurmaPersistente().simpleLockWrite(schoolClass);
+        final List shifts = schoolClass.getAssociatedShifts();
+        final List shiftsToRemove = new ArrayList(shifts.size());
+        
+        Iterator iter = shifts.iterator();
+        while (iter.hasNext()){
+            ITurno shift = (ITurno) iter.next();
+            
+            if (shiftOIDs.contains(shift.getIdInternal())){
+                shiftsToRemove.add(shift);
             }
-
-            result = true;
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
         }
+                
+        shifts.removeAll(shiftsToRemove);
 
-        return new Boolean(result);
+        return new Boolean(true);
     }
 
 }

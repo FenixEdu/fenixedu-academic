@@ -1400,6 +1400,10 @@
             scope="request"
             validate="true"
             >
+		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
     	<forward name="EditClass" path="/manageClass.jsp"/>
     	<forward name="AddShifts" path="/addShifts.jsp"/>
     	<forward name="ViewSchedule" path="/viewClassSchedule.jsp"/>

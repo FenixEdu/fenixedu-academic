@@ -10,13 +10,14 @@ package ServidorAplicacao.Servico.sop;
  * Serviço ApagarTurma.
  * 
  * @author tfc130
+ * @author Pedro Santos e Rita Carvalho
  */
+import java.util.ArrayList;
+import java.util.List;
+
 import DataBeans.InfoClass;
-import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
-import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -46,40 +47,21 @@ public class ApagarTurma implements IServico {
         return "ApagarTurma";
     }
 
-    public Object run(InfoClass infoClass) {
+    public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
 
-        ITurma turma = null;
-        boolean result = false;
+        
+        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
-                    .getInfoExecutionPeriod());
-            ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
-                    .getInfoExecutionDegree());
+        final ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+                infoClass.getIdInternal());
+        sp.getITurmaPersistente().simpleLockWrite(schoolClass);
+        final List shifts = schoolClass.getAssociatedShifts();
+        final List shiftsToRemove = new ArrayList(shifts);
+        shifts.removeAll(shiftsToRemove);
 
-            turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
-                    infoClass.getNome(), executionDegree, executionPeriod);
-            try {
-                if (turma != null) {
-                    for (int i = 0; i < turma.getAssociatedShifts().size(); i++) {
-                        ITurno shift = (ITurno) turma.getAssociatedShifts().get(i);
-                        sp.getITurnoPersistente().simpleLockWrite(shift);
-                        shift.getAssociatedClasses().remove(turma);
-                    }
+        sp.getITurmaPersistente().delete(schoolClass);
 
-                    sp.getITurmaPersistente().delete(turma);
-                    result = true;
-                }
-            } catch (ExcepcaoPersistencia ex1) {
-                throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex1);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
-
-        return new Boolean(result);
+        return new Boolean(true);
     }
 
 }
