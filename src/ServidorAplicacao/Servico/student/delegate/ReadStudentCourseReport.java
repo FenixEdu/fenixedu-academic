@@ -97,12 +97,26 @@ public class ReadStudentCourseReport implements IService
             }
 
             InfoSiteStudentCourseReport infoSiteStudentCourseReport = new InfoSiteStudentCourseReport();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            Integer semester = executionPeriod.getSemester();
-            // TODO: corrigir o calculo do semestre 
-            semester = new Integer(semester.intValue() == 2 ? 1 : 2);
+            List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+
+            Collections.sort(executionPeriods, new Comparator()
+            {
+
+                public int compare(Object o1, Object o2)
+                {
+                    IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
+                    IExecutionPeriod executionPeriod2 = (IExecutionPeriod) o2;
+                    return executionPeriod2.getEndDate().compareTo(executionPeriod1.getEndDate());
+                }
+            });
+
+            IExecutionPeriod executionPeriod = null;
+            // read the second element of the list corresponding to the last executionPeriod
+            if ((executionPeriods != null) && (executionPeriods.size() >= 2))
+                executionPeriod = (IExecutionPeriod) executionPeriods.get(1);
+
             List infoSiteEvaluationHistory =
-                getInfoSiteEvaluationsHistory(semester, curricularCourse, sp);
+                getInfoSiteEvaluationsHistory(executionPeriod.getSemester(), curricularCourse, sp);
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics =
                 getInfoSiteEvaluationStatistics(executionPeriod, curricularCourse, sp);
@@ -138,7 +152,7 @@ public class ReadStudentCourseReport implements IService
         infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
         infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
-  
+
         return infoSiteEvaluationStatistics;
     }
 
@@ -241,8 +255,7 @@ public class ReadStudentCourseReport implements IService
             IEnrolment enrolment = (IEnrolment) iter.next();
             EnrolmentState enrolmentState = enrolment.getEnrolmentState();
             if (enrolmentState.equals(EnrolmentState.APROVED)
-                || enrolmentState.equals(EnrolmentState.NOT_APROVED)
-                || enrolmentState.equals(EnrolmentState.NOT_EVALUATED))
+                || enrolmentState.equals(EnrolmentState.NOT_APROVED))
             {
                 evaluated++;
             }
