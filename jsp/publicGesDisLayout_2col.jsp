@@ -8,6 +8,7 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="<%= request.getContextPath() %>/CSS/exam_map.css" rel="stylesheet" type="text/css" />
 <logic:present name="<%=SessionConstants.INFO_SITE %>" property="style">
 <bean:define id="style" name="<%=SessionConstants.INFO_SITE %>" property="style"/>	
 <link href="<%= request.getContextPath()+ "/CSS/" + pageContext.findAttribute("style") %>" rel="stylesheet" type="text/css" />	
