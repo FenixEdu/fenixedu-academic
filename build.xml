@@ -27,6 +27,9 @@
     <!--Directorio com instrucoes SQL-->
     <property location="etc" name="sql"/>
 
+    <!--Directorio com reports de testes-->
+    <property location="report" name="reports.tests"/>
+	
 
     <!-- INTERFACE WEB -->
     <!--Directorios da aplicacao Web-->
@@ -234,6 +237,50 @@
     <target depends="clean-tests,compile-tests,deploy"
             description="Compila de raiz os testes para o projecto"
             name="build-tests"/>   
+
+    <target depends="compile-tests,deploy, load-dump-db"
+            description="Executa todos os testes"
+            name="generate_unitTest-reports">
+
+		<junit printsummary="yes" haltonfailure="no">
+            <classpath>
+                <pathelement path="${classes}"/>
+                <pathelement path="${classes.tests}"/>
+                <pathelement path="${config}"/>
+                <pathelement path="${webapp}"/>
+                <pathelement path="${sql}"/>
+                <fileset dir="${libs}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${libs.web}">
+                    <include name="**/*.jar"/>
+                    <exclude name="commons-beanutils.jar;commons-collections.jar;commons-lang.jar;commons-logging.jar;commons-pool.jar;jdbc2_0-stdext.jar"/>
+                </fileset>
+            </classpath>
+
+		  <formatter type="xml"/>
+
+		  <test name="my.test.TestCase" haltonfailure="no" todir="${reports.tests}" outfile="resultTEST">
+		    <formatter type="xml"/>
+		  </test>
+
+            <batchtest fork="yes" todir="${reports.tests}">
+                <fileset dir="${src.tests}">
+                    <!--<include name="**/*Test.java"/>-->
+                    <include name="**/T*OJBTest.java"/>
+                </fileset>
+            </batchtest>
+		</junit>
+
+		<junitreport todir="${reports.tests}">
+          <fileset dir="${reports.tests}">
+	          <include name="TEST-*.xml"/>
+		  </fileset>
+		  <report format="frames" todir="${reports.tests}/html"/>
+		</junitreport>
+
+    </target>
+
     
     <target depends="compile-tests,deploy, load-dump-db"
             description="Executa todos os testes"
@@ -279,7 +326,7 @@
             </classpath>
         </junit>
     </target>
-    
+
     <target depends="compile-tests,deploy, load-dump-db"
             description="Executa todos os testes"
             name="run-tests-capresentacao">
