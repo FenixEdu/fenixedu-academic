@@ -35,8 +35,7 @@ import Util.TipoAula;
 public class CriarAulaFormAction extends FenixAction {
 
 	public static String INVALID_TIME_INTERVAL = "errors.lesson.invalid.time.interval";
-	public static String UNKNOWN_ERROR = "errors.unknown";
-
+	
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -139,7 +138,7 @@ public class CriarAulaFormAction extends FenixAction {
 							+ fim.get(Calendar.HOUR_OF_DAY) + ":" + fim.get(Calendar.MINUTE) + endMinAppend));
 				break;
 			default :
-				actionErrors.add(UNKNOWN_ERROR,new ActionError(UNKNOWN_ERROR));
+				actionErrors.add(INVALID_TIME_INTERVAL,new ActionError(INVALID_TIME_INTERVAL));
 				break;
 		}
 		return actionErrors;
