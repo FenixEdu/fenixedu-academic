@@ -33,6 +33,9 @@
 <!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
 <!ENTITY sms SYSTEM "repository_sms.xml">
 <!ENTITY classProperties SYSTEM "repository-properties.xml">
+<!ENTITY studentCurricularPlan SYSTEM "repository_student_curricular_plan.xml">
+<!ENTITY degreeCurricularPlan SYSTEM "repository_degree_curricular_plan.xml">
+<!ENTITY degree SYSTEM "repository_degree.xml">
 ]>
 
 
@@ -71,4 +74,7 @@
     &finalDegreeWork;
     &sms;    
     &classProperties;
+    &studentCurricularPlan;
+    &degreeCurricularPlan;
+    &degree;
 </descriptor-repository>

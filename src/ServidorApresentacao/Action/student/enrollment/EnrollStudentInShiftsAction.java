@@ -21,7 +21,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoShift;
 import DataBeans.enrollment.shift.ShiftEnrollmentErrorReport;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.enrollment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
+import ServidorAplicacao.Servico.enrolment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
