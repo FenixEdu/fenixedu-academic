@@ -76,7 +76,6 @@
 	
 	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">				
 		<tr>	
-		<%System.out.println("ENTRA");%>
 			<td class="listClasses">
 			<html:multibox property="studentCodes">
 			<bean:write name="infoSiteStudentInformation" property="username"/>

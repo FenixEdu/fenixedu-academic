@@ -29,9 +29,7 @@
 	<h2><bean:message key="message.shifts.not.available"/></h2>
 	
 	<span class="error"><html:errors/></span> 	
-	<br/>
-	<br/>
-	
+
 	<table width="95%" border="0" style="text-align: left;">
 	<tbody>
 	<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >

@@ -95,7 +95,7 @@
 					</td>
 		</tr>
 </table>
-<table>
+<table cellspacing="1" cellpadding="1">
 	<tr>
 		<td colspan="3">
 			<h3>
@@ -137,32 +137,54 @@
 		   </td>
 		</tr> 
 		<tr>
-			<td class="listClasses-header">
+     	   <bean:define id="colspan" value="1"/>
+     	   <bean:define id="rowspan" value="1"/>
+		   <logic:present name="projects">
+			<logic:notEmpty name="projects">
+				<bean:size id="colspanAux" name="projects"/>
+				<bean:define id="colspan">
+					<bean:write name="colspanAux"/>
+				</bean:define>
+   	     	    <bean:define id="rowspan" value="2"/>
+			</logic:notEmpty>
+		   </logic:present>
+		
+			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.number" /> 
 		   </td>
-			<td class="listClasses-header">
+			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.enrollmentStatus" /> 
 		   </td>
-			<td class="listClasses-header">
+			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.Degree" /> 
 		   </td>
-			<td class="listClasses-header">
+			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.name" />
 		   </td>
 		   <logic:present name="projects">
 			<logic:notEmpty name="projects">
+					<td class="listClasses-header" colspan="<%= colspan.toString() %>">
+						<bean:message key="label.projectGroup"/>
+					</td>
+			</logic:notEmpty>
+		   </logic:present>
+			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+				<bean:message key="label.mail" />
+		   </td>
+		</tr>    		
+		<tr>
+		   <logic:present name="projects">
+			<logic:notEmpty name="projects">
 				<logic:iterate name="projects" id="project" type="DataBeans.InfoGroupProperties">
 					<td class="listClasses-header">
-					<bean:message key="label.projectGroup"/>&nbsp;
+<%--					<bean:message key="label.projectGroup"/>&nbsp; --%>
 					<bean:write name="project" property="name"/>
 					</td>
 				</logic:iterate>
 			</logic:notEmpty>
 		   </logic:present>
-			<td class="listClasses-header">
-				<bean:message key="label.mail" />
-		   </td>
 		</tr>    		
+		
 		<bean:define id="mailingList" value=""/>
 
     	<logic:iterate id="attendacy" type="DataBeans.InfoFrequenta" name="attendacies"> 

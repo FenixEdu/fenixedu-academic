@@ -1458,9 +1458,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		UserView userView = (UserView) session.getAttribute("UserView");
 		String name = (String) insertGroupPropertiesForm.get("name");
 		String projectDescription = (String) insertGroupPropertiesForm.get("projectDescription");
-		String maximumCapacity = (String) insertGroupPropertiesForm.get("maximumCapacity");
-		String minimumCapacity = (String) insertGroupPropertiesForm.get("minimumCapacity");
-		String idealCapacity = (String) insertGroupPropertiesForm.get("idealCapacity");
+		String maximumCapacityString = (String) insertGroupPropertiesForm.get("maximumCapacity");
+		String minimumCapacityString = (String) insertGroupPropertiesForm.get("minimumCapacity");
+		String idealCapacityString = (String) insertGroupPropertiesForm.get("idealCapacity");
 		String groupMaximumNumber = (String) insertGroupPropertiesForm.get("groupMaximumNumber");
 		String enrolmentBeginDayString = (String) insertGroupPropertiesForm.get("enrolmentBeginDay");
 		String enrolmentEndDayString = (String) insertGroupPropertiesForm.get("enrolmentEndDay");
@@ -1470,14 +1470,65 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		infoGroupProperties.setName(name);
 		infoGroupProperties.setProjectDescription(projectDescription);
 		infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));
-		if (!maximumCapacity.equals(""))
-			infoGroupProperties.setMaximumCapacity(new Integer(maximumCapacity));
+
+		Integer maximumCapacity = null;
+		Integer minimumCapacity = null;
+		Integer idealCapacity = null;
+
+		if (!maximumCapacityString.equals("")) {
+			maximumCapacity = new Integer(maximumCapacityString);
+			infoGroupProperties.setMaximumCapacity(maximumCapacity);
+		}
+
+		if (!minimumCapacityString.equals("")) {
+			minimumCapacity = new Integer(minimumCapacityString);
+			if (maximumCapacity != null)
+				if (minimumCapacity.compareTo(maximumCapacity) > 0) {
+					ActionErrors actionErrors = new ActionErrors();
+					ActionError error = null;
+					error = new ActionError("error.groupProperties.minimum");
+					actionErrors.add("error.groupProperties.minimum", error);
+					saveErrors(request, actionErrors);
+					return prepareCreateGroupProperties(mapping, form, request, response);
+
+				}
+			infoGroupProperties.setMinimumCapacity(minimumCapacity);
+		}
+
+		if (!idealCapacityString.equals("")) {
+
+			idealCapacity = new Integer(idealCapacityString);
+
+			if (!minimumCapacityString.equals("")) {
+				if (idealCapacity.compareTo(minimumCapacity) < 0) {
+					ActionErrors actionErrors = new ActionErrors();
+					ActionError error = null;
+					error = new ActionError("error.groupProperties.ideal.minimum");
+					actionErrors.add("error.groupProperties.ideal.minimum", error);
+					saveErrors(request, actionErrors);
+					return prepareCreateGroupProperties(mapping, form, request, response);
+
+				}
+			}
+
+			if (!maximumCapacityString.equals("")) {
+				if (idealCapacity.compareTo(maximumCapacity) > 0) {
+					ActionErrors actionErrors = new ActionErrors();
+					ActionError error = null;
+					error = new ActionError("error.groupProperties.ideal.maximum");
+					actionErrors.add("error.groupProperties.ideal.maximum", error);
+					saveErrors(request, actionErrors);
+					return prepareCreateGroupProperties(mapping, form, request, response);
+
+				}
+			}
+
+			infoGroupProperties.setIdealCapacity(idealCapacity);
+		}
+
 		if (!groupMaximumNumber.equals(""))
 			infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
-		if (!idealCapacity.equals(""))
-			infoGroupProperties.setIdealCapacity(new Integer(idealCapacity));
-		if (!minimumCapacity.equals(""))
-			infoGroupProperties.setMinimumCapacity(new Integer(minimumCapacity));
+
 		EnrolmentGroupPolicyType enrolmentPolicy;
 		if (optional.booleanValue())
 			enrolmentPolicy = new EnrolmentGroupPolicyType(1);
@@ -1585,9 +1636,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer groupPropertiesCode = new Integer(groupPropertiesString);
 		String name = (String) editGroupPropertiesForm.get("name");
 		String projectDescription = (String) editGroupPropertiesForm.get("projectDescription");
-		String maximumCapacity = (String) editGroupPropertiesForm.get("maximumCapacity");
-		String minimumCapacity = (String) editGroupPropertiesForm.get("minimumCapacity");
-		String idealCapacity = (String) editGroupPropertiesForm.get("idealCapacity");
+		String maximumCapacityString = (String) editGroupPropertiesForm.get("maximumCapacity");
+		String minimumCapacityString = (String) editGroupPropertiesForm.get("minimumCapacity");
+		String idealCapacityString = (String) editGroupPropertiesForm.get("idealCapacity");
+
 		String groupMaximumNumber = (String) editGroupPropertiesForm.get("groupMaximumNumber");
 		String enrolmentBeginDayString = (String) editGroupPropertiesForm.get("enrolmentBeginDayFormatted");
 		String enrolmentEndDayString = (String) editGroupPropertiesForm.get("enrolmentEndDayFormatted");
@@ -1617,12 +1669,61 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
 		if (!groupMaximumNumber.equals(""))
 			infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
-		if (!idealCapacity.equals(""))
-			infoGroupProperties.setIdealCapacity(new Integer(idealCapacity));
-		if (!maximumCapacity.equals(""))
-			infoGroupProperties.setMaximumCapacity(new Integer(maximumCapacity));
-		if (!minimumCapacity.equals(""))
-			infoGroupProperties.setMinimumCapacity(new Integer(minimumCapacity));
+		Integer maximumCapacity = null;
+		Integer minimumCapacity = null;
+		Integer idealCapacity = null;
+
+		if (!maximumCapacityString.equals("")) {
+			maximumCapacity = new Integer(maximumCapacityString);
+			infoGroupProperties.setMaximumCapacity(maximumCapacity);
+		}
+
+		if (!minimumCapacityString.equals("")) {
+			minimumCapacity = new Integer(minimumCapacityString);
+			if (maximumCapacity != null)
+				if (minimumCapacity.compareTo(maximumCapacity) > 0) {
+					ActionErrors actionErrors = new ActionErrors();
+					ActionError error = null;
+					error = new ActionError("error.groupProperties.minimum");
+					actionErrors.add("error.groupProperties.minimum", error);
+					saveErrors(request, actionErrors);
+					return prepareEditGroupProperties(mapping, form, request, response);
+
+				}
+			infoGroupProperties.setMinimumCapacity(minimumCapacity);
+		}
+
+		if (!idealCapacityString.equals("")) {
+
+			idealCapacity = new Integer(idealCapacityString);
+
+			if (!minimumCapacityString.equals("")) {
+				if (idealCapacity.compareTo(minimumCapacity) < 0) {
+					ActionErrors actionErrors = new ActionErrors();
+					ActionError error = null;
+					error = new ActionError("error.groupProperties.ideal.minimum");
+					actionErrors.add("error.groupProperties.ideal.minimum", error);
+					saveErrors(request, actionErrors);
+					return prepareEditGroupProperties(mapping, form, request, response);
+
+				}
+			}
+
+			if (!maximumCapacityString.equals("")) {
+				if (idealCapacity.compareTo(maximumCapacity) > 0) {
+					ActionErrors actionErrors = new ActionErrors();
+					ActionError error = null;
+					error = new ActionError("error.groupProperties.ideal.maximum");
+					actionErrors.add("error.groupProperties.ideal.maximum", error);
+					saveErrors(request, actionErrors);
+					return prepareEditGroupProperties(mapping, form, request, response);
+
+				}
+			}
+
+			infoGroupProperties.setIdealCapacity(idealCapacity);
+		}
+
 		infoGroupProperties.setName(name);
 		infoGroupProperties.setProjectDescription(projectDescription);
 		infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));

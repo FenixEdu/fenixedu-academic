@@ -434,7 +434,7 @@
 	
 	<field property="idealCapacity" depends="integer" page="1">
 		<arg0 key="message.groupPropertiesIdealCapacity" resource="true"/>
-	</field>
+    </field>
 	
 	<field property="groupMaximumNumber" depends="integer" page="1">
 		<arg0 key="message.groupPropertiesGroupMaximumNumber" resource="true"/>
@@ -539,7 +539,7 @@
     <!-- validation for the insertStudentGroupForm -->
    	
    	<form name="studentGroupForm">
-   	<field property="groupNumber" depends="required,integer" page="1" >
+   	<field property="nrOfElements" depends="required,integer" page="1" >
    		<arg0 key="message.insertStudentGroup.groupNumber" resource="true"/>
    	</field>
     </form>
