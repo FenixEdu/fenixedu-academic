@@ -3,22 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" cellspacing="0">
 	<tr>
-		<td bgcolor="#FFFFFF" class="infoselected"><p>
-			<jsp:include page="examContext.jsp"/>
-         </td>
+		<td class="infoselected"><br /><br /><jsp:include page="examContext.jsp"/></td>
     </tr>
 </table>
 <br/>
-
 <h2><bean:message key="title.exam.setRooms"/></h2>
 <span class="error"><html:errors /></span>
-
 <html:form action="/editExamRooms">
 	<html:hidden property="page" value="1"/>
-	
 	<logic:present name="<%=SessionConstants.AVAILABLE_ROOMS%>">
 		<bean:define id="roomsHashTable" name="<%=SessionConstants.AVAILABLE_ROOMS%>"/>
 			<logic:iterate id="infoRoomsOfBuilding" name="roomsHashTable">
@@ -41,22 +35,12 @@
 	<logic:notPresent name="<%=SessionConstants.AVAILABLE_ROOMS%>">
 		No rooms available.
 	</logic:notPresent>	
-	
-	<br/>
-    <table align="lef">
-    	<tr align="center">
-        	<td>
-        		<html:hidden property="method" value="select"/>
-            	<html:submit styleClass="inputbutton">
-              		<bean:message key="label.choose"/>
-             	</html:submit>
-            </td>
-            <td width="20"> </td>
-            <td>
-            	<html:reset value="Limpar" styleClass="inputbutton">
-                	<bean:message key="label.clear"/>
-                </html:reset>
-            </td>
-		</tr>
-	</table>
+<br />
+<html:hidden property="method" value="select"/>
+<html:submit styleClass="inputbutton">
+	<bean:message key="label.choose"/>
+</html:submit>
+<html:reset value="Limpar" styleClass="inputbutton">
+	<bean:message key="label.clear"/>
+</html:reset>
 </html:form>
