@@ -20,7 +20,8 @@ public class SopClassTimeTableLessonContentRenderer
 		strBuffer.append(lesson.getInfoDisciplinaExecucao().getSigla());
 		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
 		strBuffer
-			.append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
+//			.append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
+			.append(" <a class='timetable' href='pesquisarSala.do?name=")
 			.append(lesson.getInfoSala().getNome())
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())
