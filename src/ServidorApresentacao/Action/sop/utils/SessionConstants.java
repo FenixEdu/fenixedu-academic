@@ -46,6 +46,7 @@ public abstract class SessionConstants {
 	public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
 	public static final String IS_RESPONSIBLE = "is_responsible";
 	public static final String ALTERNATIVE_SITE ="alternative";
+	public static final String LAST_ANNOUNCEMENT ="last_announcement";
 
 
 	// -------------------------------------------------------------------------------

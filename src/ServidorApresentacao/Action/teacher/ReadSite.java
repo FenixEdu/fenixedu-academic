@@ -16,8 +16,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
 import DataBeans.gesdis.InfoTeacher;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -46,20 +49,32 @@ public class ReadSite extends FenixAction {
 			InfoTeacher infoTeacher = (InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);	
 			List infoSites = (List) session.getAttribute(SessionConstants.INFO_SITES_LIST);
 						
-			InfoSite site=null;
-						String index = (String) request.getParameter("index");
-						if(index!=null){
-			
-						site = (InfoSite) infoSites.get((new Integer(index)).intValue());
-							}
-						else {
-						site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);	
-						}
-						session.setAttribute(SessionConstants.INFO_SITE,site);			
-						session.setAttribute(SessionConstants.ALTERNATIVE_SITE,site.getAlternativeSite());	
+			InfoSite site = null;
+			String index = (String) request.getParameter("index");
+			if (index != null) {
+				site = (InfoSite) infoSites.get((new Integer(index)).intValue());
+			} else {
+				site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+			}
+			session.setAttribute(SessionConstants.INFO_SITE, site);
+			session.setAttribute(SessionConstants.ALTERNATIVE_SITE, site.getAlternativeSite());
+
 			//TODO: Read Sections
-			//TODO: Read last Anouncement
-				
+
+			//Read last Anouncement
+			Object args[] = new Object[1];
+			args[0] = site;
+
+			InfoAnnouncement lastAnnouncement = null;		
+			GestorServicos manager = GestorServicos.manager();
+			try {
+				lastAnnouncement = (InfoAnnouncement) manager.executar(userView, "ReadLastAnnouncement", args);
+				session.setAttribute(SessionConstants.LAST_ANNOUNCEMENT, lastAnnouncement);
+			} catch (FenixServiceException fenixServiceException){
+				throw new FenixActionException(fenixServiceException.getMessage());
+			}
+			System.out.println("session.getAttribute(SessionConstants.LAST_ANNOUNCEMENT)" + session.getAttribute(SessionConstants.LAST_ANNOUNCEMENT));
+			
 			
 			return mapping.findForward("viewSite");}
 
