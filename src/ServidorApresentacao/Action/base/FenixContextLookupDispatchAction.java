@@ -28,9 +28,11 @@ public abstract class FenixContextLookupDispatchAction extends FenixLookupDispat
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+
 		ContextUtils.setExecutionPeriodContext(request);
-		
+
+		ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+
 		return super.execute(mapping, actionForm, request, response);
 	}
 

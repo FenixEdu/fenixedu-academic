@@ -32,6 +32,8 @@ public abstract class FenixContextAction extends FenixAction {
 
 		ContextUtils.setExecutionPeriodContext(request);
 
+		ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+
 		return super.execute(mapping, actionForm, request, response);		
 	}
 

@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.utils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +13,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoCurricularYear;
@@ -22,11 +26,14 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
+import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
 /**
@@ -36,7 +43,6 @@ import Util.TipoSala;
 public class ContextUtils {
 
 	public static final void setExecutionPeriodContext(HttpServletRequest request) {
-		System.out.println("### setExecutionPeriodContext - IN");
 		String executionPeriodOIDString =
 			(String) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD_OID);
@@ -89,14 +95,10 @@ public class ContextUtils {
 			request.setAttribute(
 				SessionConstants.EXECUTION_PERIOD_OID,
 				infoExecutionPeriod.getIdInternal().toString());
-			System.out.println(
-				"### ExecutionPeriod in request- " + infoExecutionPeriod);
 		} else {
 			System.out.println(
 				"#### ERROR: Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");
 		}
-
-		System.out.println("### setExecutionPeriodContext - OUT");
 	}
 
 	/**
@@ -388,8 +390,7 @@ public class ContextUtils {
 			(String) request.getAttribute(SessionConstants.LESSON_OID);
 		System.out.println("Lesson from request: " + lessonOIDString);
 		if (lessonOIDString == null) {
-			lessonOIDString =
-				request.getParameter(SessionConstants.LESSON_OID);
+			lessonOIDString = request.getParameter(SessionConstants.LESSON_OID);
 			System.out.println("Lesson from parameter: " + lessonOIDString);
 		}
 
@@ -417,8 +418,6 @@ public class ContextUtils {
 			request.setAttribute(SessionConstants.LESSON, infoLesson);
 		}
 	}
-
-
 
 	public static void setSelectedRoomsContext(HttpServletRequest request)
 		throws FenixActionException {
@@ -508,6 +507,101 @@ public class ContextUtils {
 		}
 	}
 
+	public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request) {
+		IUserView userView = SessionUtils.getUserView(request);
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+
+		/* Obtain a list of curricular years */
+		List labelListOfCurricularYears = getLabelListOfCurricularYears();
+		request.setAttribute(
+			SessionConstants.LABELLIST_CURRICULAR_YEARS,
+			labelListOfCurricularYears);
+
+		/* Obtain a list of degrees for the specified execution year */
+		Object argsLerLicenciaturas[] =
+			{ infoExecutionPeriod.getInfoExecutionYear()};
+		List executionDegreeList = null;
+		try {
+			executionDegreeList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionDegreesByExecutionYear",
+					argsLerLicenciaturas);
+
+			/* Sort the list of degrees */
+			Collections.sort(
+				executionDegreeList,
+				new ComparatorByNameForInfoExecutionDegree());
+		} catch (FenixServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		/* Generate a label list for the above list of degrees */
+		List labelListOfExecutionDegrees =
+			getLabelListOfExecutionDegrees(executionDegreeList);
+		request.setAttribute("licenciaturas", labelListOfExecutionDegrees);
+
+
+
+		///////////////////////////////////////////////////////////////////////
+		// TODO : place the following code in a seperate function and call it
+		//        here and anywhere else the execution period may be selected.
+
+		//HttpSession session = request.getSession(false);
+
+		//IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+		GestorServicos gestor = GestorServicos.manager();
+
+		InfoExecutionPeriod selectedExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+
+		Object argsReadExecutionPeriods[] = {
+		};
+		ArrayList executionPeriods;
+		try {
+			executionPeriods =
+				(ArrayList) gestor.executar(
+					userView,
+					"ReadExecutionPeriods",
+					argsReadExecutionPeriods);
+
+			selectedExecutionPeriod.getInfoExecutionYear().getYear();
+			selectedExecutionPeriod.getSemester();
+			ComparatorChain chainComparator = new ComparatorChain();
+			chainComparator.addComparator(
+				new BeanComparator("infoExecutionYear.year"));
+			chainComparator.addComparator(new BeanComparator("semester"));
+			Collections.sort(executionPeriods, chainComparator);
+
+			ArrayList executionPeriodsLabelValueList = new ArrayList();
+			for (int i = 0; i < executionPeriods.size(); i++) {
+				InfoExecutionPeriod infoExecutionPeriod2 =
+					(InfoExecutionPeriod) executionPeriods.get(i);
+				executionPeriodsLabelValueList.add(
+					new LabelValueBean(
+						infoExecutionPeriod2.getName()
+							+ " - "
+							+ infoExecutionPeriod2.getInfoExecutionYear().getYear(),
+						"" + i));
+			}
+
+			request.setAttribute(
+				SessionConstants.LIST_INFOEXECUTIONPERIOD,
+				executionPeriods);
+
+			request.setAttribute(
+				SessionConstants.LABELLIST_EXECUTIONPERIOD,
+				executionPeriodsLabelValueList);
+		} catch (FenixServiceException e1) {
+		}
+
+	}
+
 	// -------------------------------------------------------------------------------
 	// Read from request utils
 	// -------------------------------------------------------------------------------
@@ -545,6 +639,57 @@ public class ContextUtils {
 			return new TipoSala(obj);
 		else
 			return null;
+	}
+
+	private static List getLabelListOfCurricularYears() {
+		ArrayList labelListOfCurricularYears = new ArrayList();
+		labelListOfCurricularYears.add(new LabelValueBean("escolher", ""));
+		labelListOfCurricularYears.add(new LabelValueBean("1 º", "1"));
+		labelListOfCurricularYears.add(new LabelValueBean("2 º", "2"));
+		labelListOfCurricularYears.add(new LabelValueBean("3 º", "3"));
+		labelListOfCurricularYears.add(new LabelValueBean("4 º", "4"));
+		labelListOfCurricularYears.add(new LabelValueBean("5 º", "5"));
+		return labelListOfCurricularYears;
+	}
+
+	private static List getLabelListOfExecutionDegrees(List executionDegreeList) {
+		List labelListOfExecutionDegrees =
+			(List) CollectionUtils.collect(
+				executionDegreeList,
+				new EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL());
+		labelListOfExecutionDegrees.add(0, new LabelValueBean("escolher", ""));
+		return labelListOfExecutionDegrees;
+	}
+
+	private static class EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL
+		implements Transformer {
+
+		/* (non-Javadoc)
+		 * @see org.apache.commons.collections.Transformer#transform(java.lang.Object)
+		 */
+		public Object transform(Object arg0) {
+			InfoExecutionDegree infoExecutionDegree =
+				(InfoExecutionDegree) arg0;
+
+			String name =
+				infoExecutionDegree
+					.getInfoDegreeCurricularPlan()
+					.getInfoDegree()
+					.getNome();
+
+			name =
+				infoExecutionDegree
+					.getInfoDegreeCurricularPlan()
+					.getInfoDegree()
+					.getTipoCurso()
+					.toString()
+					+ " de "
+					+ name;
+
+			return new LabelValueBean(
+				name,
+				infoExecutionDegree.getIdInternal().toString());
+		}
 	}
 
 }

@@ -6,17 +6,52 @@
 
 	
 <logic:present name="executionDegree">
-	<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/> em 
-	<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-	<br />
-	<bean:define id="curricularYearValue"
-				 name="curricularYear"
-				 property="year"
-				 toScope="request"
-				 scope="request"/>
-	<bean:message key="label.year" arg0="<%= pageContext.findAttribute("curricularYearValue").toString() %>" /> - 
-	<bean:write name="executionPeriod" property="name" scope="request"/> -
-	<bean:write name="executionPeriod" property="infoExecutionYear.year" scope="request"/>
+	<html:form action="/chooseContext" focus="executionDegreeOID">
+		<html:hidden property="page" value="1"/>
+		<html:hidden property="method" value="choose"/>
+		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+
+		<table>
+			<tr>
+				<td colspan="2">
+					<html:select property="executionDegreeOID"
+								 size="1"
+								 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"
+								 onchange="document.chooseScheduleContextForm.submit();">
+				  		<html:options collection="licenciaturas"
+		    	   					  property="value"
+		       						  labelProperty="label"/>
+			       </html:select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<html:select property="curricularYear" size="1"
+								 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"
+								 onchange="document.chooseScheduleContextForm.submit();">
+			       		<html:options collection="anosCurriculares"
+		    	   					  property="value"
+		       						  labelProperty="label"/>
+			       	</html:select> Ano
+				</td>
+	</html:form>
+	<html:form action="/chooseExecutionPeriod" focus="index">
+				<td>
+		<html:hidden property="method" value="choose"/>
+		<html:hidden property="page" value="1"/>
+		<html:select property="index" size="1"
+					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"
+					 onchange="document.pagedIndexForm.submit();">
+	    	<html:options	property="value" 
+	     					labelProperty="label" 
+							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"
+							/>
+		</html:select>
+	</html:form>    
+				</td>
+			</tr>
+		</table>
 </logic:present>
 		
 <logic:present name="<%= SessionConstants.CLASS_VIEW %>"  >

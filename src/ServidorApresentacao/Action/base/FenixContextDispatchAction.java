@@ -31,6 +31,8 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 
 		ContextUtils.setExecutionPeriodContext(request);
 
+		ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+
 		ActionForward actionForward =
 			super.execute(mapping, actionForm, request, response);
 		
