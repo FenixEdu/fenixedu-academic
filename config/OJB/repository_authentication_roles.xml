@@ -183,7 +183,7 @@
     <collection-descriptor
          name="personRoles"
          element-class-ref="Dominio.Role"
-         proxy="false"
+         proxy="true"
          indirection-table = "PERSON_ROLE"
          auto-retrieve="true"
          refresh="true"
@@ -238,7 +238,7 @@
         jdbc-type="VARCHAR"
         id="4"
     />
-    
+<!--
     <collection-descriptor
          name="rolePersons"
          element-class-ref="Dominio.Pessoa"
@@ -251,6 +251,7 @@
     	<fk-pointing-to-this-class  column="KEY_ROLE" />
     	<fk-pointing-to-element-class column="KEY_PERSON" />
     </collection-descriptor> 
+-->
 </class-descriptor>
 
 

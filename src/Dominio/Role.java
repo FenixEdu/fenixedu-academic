@@ -4,8 +4,6 @@
  */
 package Dominio;
 
-import java.util.Collection;
-
 import Util.RoleType;
 
 /**
@@ -13,7 +11,7 @@ import Util.RoleType;
  */
 public class Role extends DomainObject implements IRole {
 	private String portalSubApplication, page, pageNameProperty;
-	private Collection rolePersons;
+	//private Collection rolePersons;
 	private RoleType roleType;
 
 	public Role() {
@@ -53,9 +51,9 @@ public class Role extends DomainObject implements IRole {
 	/**
 	 * @return Collection
 	 */
-	public Collection getRolePersons() {
-		return rolePersons;
-	}
+//	public Collection getRolePersons() {
+//		return rolePersons;
+//	}
 
 	/**
 	 * @return RoleType
@@ -92,9 +90,9 @@ public class Role extends DomainObject implements IRole {
 	 * Sets the rolePersons.
 	 * @param rolePersons The rolePersons to set
 	 */
-	public void setRolePersons(Collection rolePersons) {
-		this.rolePersons = rolePersons;
-	}
+//	public void setRolePersons(Collection rolePersons) {
+//		this.rolePersons = rolePersons;
+//	}
 
 	/**
 	 * Sets the roleType.
