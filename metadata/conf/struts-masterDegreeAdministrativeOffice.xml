@@ -1002,6 +1002,9 @@
 		      parameter="method"
               type="ServidorApresentacao.Action.certificate.PrintDeclarationDispatchAction"
 			  >
+			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrintReady" path="/certificate/printDeclarationPage.jsp"/> 
       </action>
 
@@ -1015,6 +1018,9 @@
   	          scope="request"
               type="ServidorApresentacao.Action.certificate.PrintCertificateDispatchAction"
 			  >
+			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
 	         <forward name="insucesso" path="/chooseCertificateInfoAction.do?method=prepare"/> 
 	         
@@ -1033,7 +1039,7 @@
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
-      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
+      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare&amp;page=0"/>     	  
       </action>
 
 		<!-- Action to prepare the chooseCertificateInfoForm -->
@@ -1049,7 +1055,7 @@
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
-   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
+   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare&amp;page=0"/>
       </action>
       
       	<!-- Action to prepare the chooseFinalResultInfoForm -->
