@@ -1,6 +1,6 @@
 /*
  * Created on 25/Jul/2003
- *
+ *  
  */
 package UtilTests;
 
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -50,7 +51,8 @@ public class ParseQuestion extends DefaultHandler
         try
         {
             parseFile(file, path);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw e;
         }
@@ -62,7 +64,8 @@ public class ParseQuestion extends DefaultHandler
         try
         {
             parseFile(file, path);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw e;
         }
@@ -76,7 +79,8 @@ public class ParseQuestion extends DefaultHandler
         try
         {
             parseFile(file, path);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw e;
         }
@@ -91,7 +95,8 @@ public class ParseQuestion extends DefaultHandler
         try
         {
             parseFile(infoStudentTestQuestion.getQuestion().getXmlFile(), path);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw e;
         }
@@ -119,16 +124,19 @@ public class ParseQuestion extends DefaultHandler
             Resolver resolver = new Resolver(path);
             reader.setEntityResolver(resolver);
             return reader;
-        } catch (SAXParseException e)
+        }
+        catch (SAXParseException e)
         {
             throw e;
-        } catch (SAXException e)
+        }
+        catch (SAXException e)
         {
             throw e;
         }
     }
 
-    public void parseFile(String file, String path) throws Exception
+    public void parseFile(String file, String path)
+        throws ParserConfigurationException, IOException, SAXException
     {
         listQuestion = new ArrayList();
         listOptions = new ArrayList();
@@ -146,19 +154,24 @@ public class ParseQuestion extends DefaultHandler
             Resolver resolver = new Resolver(path);
             reader.setEntityResolver(resolver);
             reader.parse(input);
-        } catch (MalformedURLException e)
+        }
+        catch (MalformedURLException e)
         {
             throw e;
-        } catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
             throw e;
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw e;
-        } catch (SAXParseException e)
+        }
+        catch (SAXParseException e)
         {
             throw e;
-        } catch (SAXException e)
+        }
+        catch (SAXException e)
         {
             throw e;
         }
@@ -166,16 +179,19 @@ public class ParseQuestion extends DefaultHandler
 
     public void error(SAXParseException e) throws SAXParseException
     {
+        System.out.println("-->ERROR:parseException" + e);
         throw e;
     }
 
     public void fatalError(SAXParseException e) throws SAXParseException
     {
+        System.out.println("-->FATAL_ERROR:parseException" + e);
         throw e;
     }
 
     public void warning(SAXParseException e) throws SAXParseException
     {
+        System.out.println("-->WARNING:parseException" + e);
         throw e;
     }
 
@@ -186,11 +202,13 @@ public class ParseQuestion extends DefaultHandler
         if (qName.equals("presentation"))
         {
             question = true;
-        } else if (qName.equals("response_lid"))
+        }
+        else if (qName.equals("response_lid"))
         {
             question = false;
             option = true;
-        } else if (qName.equals("resprocessing"))
+        }
+        else if (qName.equals("resprocessing"))
         {
             response = true;
             question = false;
@@ -241,12 +259,14 @@ public class ParseQuestion extends DefaultHandler
             if ((tag.equals("mattext")))
             {
                 auxList.add(new LabelValueBean("text", element.getValue()));
-            } else if ((tag.equals("matimage")))
+            }
+            else if ((tag.equals("matimage")))
             {
                 if (atts.getIndex("label") != -1)
                     auxList.add(new LabelValueBean("image_label", atts.getValue("label")));
                 auxList.add(new LabelValueBean(atts.getValue("imagtype"), element.getValue()));
-            } else if ((tag.equals("flow")))
+            }
+            else if ((tag.equals("flow")))
             {
                 auxList.add(new LabelValueBean("flow", ""));
             }
@@ -267,19 +287,23 @@ public class ParseQuestion extends DefaultHandler
                 {
                     infoQuestion.setQuestionCardinality(atts.getValue("rcardinality"));
                 }
-            } else if (tag.equals("response_label"))
+            }
+            else if (tag.equals("response_label"))
             {
                 auxList.add(new LabelValueBean("response_label", atts.getValue("ident")));
                 optionNumber++;
-            } else if ((tag.equals("mattext")))
+            }
+            else if ((tag.equals("mattext")))
             {
                 auxList.add(new LabelValueBean("text", element.getValue()));
-            } else if ((tag.equals("matimage")))
+            }
+            else if ((tag.equals("matimage")))
             {
                 if (atts.getIndex("label") != -1)
                     auxList.add(new LabelValueBean("image_label", atts.getValue("label")));
                 auxList.add(new LabelValueBean(atts.getValue("imagtype"), element.getValue()));
-            } else if ((tag.equals("flow")))
+            }
+            else if ((tag.equals("flow")))
             {
                 auxList.add(new LabelValueBean("flow", ""));
             }
@@ -352,7 +376,8 @@ public class ParseQuestion extends DefaultHandler
                     v.add("");
                     vRandom.add(new Integer(v.size()).toString());
                     continue;
-                } else
+                }
+                else
                     v.add(new Integer(v.size() + 1).toString());
             }
         }
@@ -371,7 +396,8 @@ public class ParseQuestion extends DefaultHandler
                     v.removeElementAt(index);
                     ready = true;
                     v.insertElementAt(id, index);
-                } else
+                }
+                else
                     ready = false;
             }
             ready = false;

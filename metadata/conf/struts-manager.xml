@@ -8,7 +8,23 @@
 	
 		<!-- ========== Form Bean Definitions ================================== -->
 		<form-beans type="org.apache.struts.action.ActionFormBean">  
-	
+		
+		<form-bean name="chooseDegreesForExecutionCourseMerge"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="sourceDegreeId" type="java.lang.Integer" />       
+				<form-property name="destinationDegreeId" type="java.lang.Integer" />
+				<form-property name="executionPeriodId" type="java.lang.Integer" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="mergeExecutionCoursesForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="sourceExecutionCourseId" type="java.lang.Integer" />       
+				<form-property name="destinationExecutionCourseId" type="java.lang.Integer" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
 		<form-bean name="degreeForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
@@ -178,7 +194,7 @@
         <form-property name="recipients" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
-
+     
      <form-bean name="rolesForm"
                 type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true"
@@ -887,7 +903,7 @@
           <forward name="Manage" path="df.page.manage-roles"/>
       </action>
 
-	<action	name="newPasswordForm"
+<action	name="newPasswordForm"
 				attribute="newPasswordForm"
 				type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"
 				path="/generateNewPassword"
@@ -902,6 +918,25 @@
 			<forward name="Confirm" path="df.page.confirmPasswordChange"/>
 			<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
 		</action>
+		
+		<!-- ========== Merge Execution Courses ========== -->	
+	<action	name="chooseDegreesForExecutionCourseMerge"
+				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/chooseDegreesForExecutionCourseMerge"
+				parameter="method"
+				scope="request"
+				validate="false">
+			<forward name="chooseDegreesAndExecutionPeriod" path="df.page.chooseDegreesForExecutionCourseMerge"/>
+			<forward name="chooseExecutionCourses" path="df.page.chooseExecutionCoursesForExecutionCourseMerge"/>
+	</action>	
+		<action	name="mergeExecutionCoursesForm"
+				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/mergeExecutionCoursesForm"
+				parameter="method"
+				scope="request"
+				validate="false">
+			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
+	</action>	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

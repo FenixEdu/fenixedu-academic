@@ -36,9 +36,9 @@ public class StudentTestQuestionOJB
 		IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyStudent", student.getIdInternal());
+		criteria.addEqualTo("student.idInternal", student.getIdInternal());
 		criteria.addEqualTo(
-			"keyDistributedTest",
+			"distributedTest.idInternal",
 			distributedTest.getIdInternal());
 		return queryList(StudentTestQuestion.class, criteria);
 	}

@@ -53,8 +53,8 @@ public class Coordinator extends DomainObject implements ICoordinator {
 	/**
 	 * @param keyExecutionCourse
 	 */
-	public void setKeyExecutionDegree(Integer keyExecutionCourse) {
-		this.keyExecutionDegree = keyExecutionCourse;
+	public void setKeyExecutionDegree(Integer keyExecutionDegree) {
+		this.keyExecutionDegree = keyExecutionDegree;
 	}
 
 	/**

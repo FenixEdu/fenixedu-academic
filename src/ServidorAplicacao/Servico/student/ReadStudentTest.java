@@ -61,15 +61,16 @@ public class ReadStudentTest implements IServico {
 				throw new FenixServiceException();
 			IDistributedTest distributedTest =
 				new DistributedTest(distributedTestId);
-			if (distributedTest == null)
-				throw new FenixServiceException();
-			distributedTest =
-				(IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest()
-					.readByOId(
-					distributedTest,
-					false);
-
+            distributedTest =
+            (IDistributedTest) persistentSuport
+            .getIPersistentDistributedTest()
+            .readByOId(
+                    distributedTest,
+                    false);
+			if (distributedTest == null) {
+              		throw new FenixServiceException();
+            }
+			
 			List studentTestQuestionList =
 				persistentSuport
 					.getIPersistentStudentTestQuestion()

@@ -18,34 +18,34 @@ import ServidorPersistente.gesdis.IPersistentCourseReport;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
+ *  
  */
-public class CourseReportOJB
-	extends ObjectFenixOJB
-	implements IPersistentCourseReport {
+public class CourseReportOJB extends ObjectFenixOJB implements IPersistentCourseReport
+{
 
-	/**
+    /**
 	 *  
 	 */
-	public CourseReportOJB() {
-		super();
-	}
+    public CourseReportOJB()
+    {
+        super();
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
 	 */
-	public ICourseReport readCourseReportByExecutionCourse(IExecutionCourse executionCourse)
-		throws ExcepcaoPersistencia {
+    public ICourseReport readCourseReportByExecutionCourse(IExecutionCourse executionCourse)
+        throws ExcepcaoPersistencia
+    {
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo(
-			"keyExecutionCourse",
-			executionCourse.getIdInternal());
-		return (ICourseReport) queryObject(CourseReport.class, criteria);
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("executionCourse.idInternal", executionCourse.getIdInternal());
+        return (ICourseReport) queryObject(CourseReport.class, criteria);
+    }
+    
+    public void delete(ICourseReport courseReport) throws ExcepcaoPersistencia {
+        super.delete(courseReport);
+    }
 }
-
