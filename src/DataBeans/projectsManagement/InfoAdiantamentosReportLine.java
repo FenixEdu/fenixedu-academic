@@ -89,4 +89,8 @@ public class InfoAdiantamentosReportLine extends DataTranferObject implements IR
         return null;
     }
 
+    public int getNumberOfColumns() {
+        return 0;
+    }
+
 }

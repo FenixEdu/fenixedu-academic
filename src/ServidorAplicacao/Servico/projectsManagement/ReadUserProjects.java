@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import pt.utl.ist.berserk.storage.exceptions.StorageException;
 import DataBeans.projectsManagement.InfoProject;
 import Dominio.IEmployee;
 import Dominio.IPessoa;
@@ -29,7 +28,7 @@ public class ReadUserProjects implements IService {
     public ReadUserProjects() {
     }
 
-    public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia, StorageException {
+    public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
         List infoProjectList = new ArrayList();
 
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();

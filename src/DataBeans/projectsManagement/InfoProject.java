@@ -4,10 +4,17 @@
  */
 package DataBeans.projectsManagement;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.DataTranferObject;
 import Dominio.projectsManagement.IProject;
+import Util.projectsManagement.ExcelStyle;
 
 /**
  * @author Susana Fernandes
@@ -150,4 +157,45 @@ public class InfoProject extends DataTranferObject {
         }
         return infoProject;
     }
+
+    public HSSFSheet getProjectInformationToExcel(HSSFSheet sheet) {
+        HSSFRow row = sheet.createRow((short) 2);
+        HSSFCell cell = row.createCell((short) 0);
+        cell.setCellValue("Acrónimo:");
+        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell = row.createCell((short) 1);
+        cell.setCellValue(getTitle());
+        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        row = sheet.createRow((short) 3);
+        cell = row.createCell((short) 0);
+        cell.setCellValue("Projecto Nº:");
+        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell = row.createCell((short) 1);
+        cell.setCellValue(getProjectCode());
+        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        row = sheet.createRow((short) 4);
+        cell = row.createCell((short) 0);
+        cell.setCellValue("Tipo:");
+        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell = row.createCell((short) 1);
+        cell.setCellValue(getType().getLabel() + " - " + getType().getValue());
+        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        row = sheet.createRow((short) 5);
+        cell = row.createCell((short) 0);
+        cell.setCellValue("Coordenador:");
+        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell = row.createCell((short) 1);
+        cell.setCellValue(getCoordinatorName());
+        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        row = sheet.createRow((short) 6);
+        cell = row.createCell((short) 0);
+        cell.setCellValue("Data:");
+        cell.setCellStyle(ExcelStyle.LABEL_STYLE);
+        cell = row.createCell((short) 1);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'às' HH:mm");
+        cell.setCellValue(formatter.format(new Date()));
+        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        return sheet;
+    }
+
 }

@@ -111,4 +111,8 @@ public class InfoSummaryEURReportLine extends DataTranferObject implements IRepo
         return null;
     }
 
+    public int getNumberOfColumns() {
+        return 0;
+    }
+
 }

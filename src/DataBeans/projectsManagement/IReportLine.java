@@ -11,6 +11,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
  * 
  */
 public interface IReportLine {
+    public int getNumberOfColumns();
+
     public Double getValue(int column);
 
     public HSSFRow getHeaderToExcel(HSSFRow row);

@@ -21,7 +21,7 @@ import javax.servlet.jsp.tagext.TagSupport;
  * 
  */
 public class ComputeDateTag extends TagSupport {
-    private String _format = "yyyy-MM-dd 'às' HH:mm";
+    private String _format = "dd-MM-yyyy 'às' HH:mm";
 
     /**
      * Constructor for ComputeDateTag.

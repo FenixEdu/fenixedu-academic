@@ -16,6 +16,9 @@ import Util.FenixUtil;
  * 
  */
 public class ExcelStyle extends FenixUtil {
+
+    public static HSSFCellStyle TITLE_STYLE;
+
     public static HSSFCellStyle HEADER_STYLE;
 
     public static HSSFCellStyle STRING_STYLE;
@@ -26,15 +29,30 @@ public class ExcelStyle extends FenixUtil {
 
     public static HSSFCellStyle INTEGER_STYLE;
 
-    // public static HSSFCellStyle DATE_STYLE;
+    public static HSSFCellStyle LABEL_STYLE;
+
+    public static HSSFCellStyle VALUE_STYLE;
 
     public ExcelStyle(HSSFWorkbook wb) {
+        setTitleStyle(wb);
         setHeaderStyle(wb);
         setStringStyle(wb);
         setDoubleStyle(wb);
         setDoubleNegativeStyle(wb);
         setIntegerStyle(wb);
-        // setDateStyle(wb);
+        setLabelStyle(wb);
+        setValueStyle(wb);
+    }
+
+    private void setTitleStyle(HSSFWorkbook wb) {
+        HSSFCellStyle style = wb.createCellStyle();
+        HSSFFont font = wb.createFont();
+        font.setColor(HSSFColor.BLACK.index);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        font.setFontHeightInPoints((short) 10);
+        style.setFont(font);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        TITLE_STYLE = style;
     }
 
     private void setHeaderStyle(HSSFWorkbook wb) {
@@ -97,15 +115,26 @@ public class ExcelStyle extends FenixUtil {
         style.setDataFormat(wb.createDataFormat().getFormat("#"));
         INTEGER_STYLE = style;
     }
-    // private void setDateStyle(HSSFWorkbook wb) {
-    // HSSFCellStyle style = wb.createCellStyle();
-    // HSSFFont font = wb.createFont();
-    // font.setColor(HSSFColor.BLACK.index);
-    // font.setFontHeightInPoints((short) 8);
-    // style.setFont(font);
-    // style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-    // style.setDataFormat(wb.createDataFormat().getFormat("#"));
-    // INTEGER_STYLE = style;
-    // }
+
+    private void setLabelStyle(HSSFWorkbook wb) {
+        HSSFCellStyle style = wb.createCellStyle();
+        HSSFFont font = wb.createFont();
+        font.setColor(HSSFColor.BLACK.index);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        font.setFontHeightInPoints((short) 8);
+        style.setFont(font);
+        style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+        LABEL_STYLE = style;
+    }
+
+    private void setValueStyle(HSSFWorkbook wb) {
+        HSSFCellStyle style = wb.createCellStyle();
+        HSSFFont font = wb.createFont();
+        font.setColor(HSSFColor.BLACK.index);
+        font.setFontHeightInPoints((short) 8);
+        style.setFont(font);
+        style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+        VALUE_STYLE = style;
+    }
 
 }

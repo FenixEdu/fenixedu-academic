@@ -146,7 +146,7 @@ public class ProjectReportsAction extends FenixDispatchAction {
                 infoProjectReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadReport", new Object[] { userView, reportType,
                         projectCode });
 
-            sheet = infoProjectReport.getReportToExcel(wb, reportType);
+            sheet = infoProjectReport.getReportToExcel(userView, wb, reportType);
             fileName = reportType.getReportLabel();
         }
         try {

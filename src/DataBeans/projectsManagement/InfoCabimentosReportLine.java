@@ -89,4 +89,8 @@ public class InfoCabimentosReportLine extends DataTranferObject implements IRepo
         return null;
     }
 
+    public int getNumberOfColumns() {
+        return 0;
+    }
+
 }

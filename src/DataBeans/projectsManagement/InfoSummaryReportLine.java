@@ -175,7 +175,7 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
     }
 
     public int getNumberOfColumns() {
-        return 8;
+        return 11;
     }
 
     public HSSFRow getHeaderToExcel(HSSFRow row) {
