@@ -343,14 +343,14 @@
       <reference-descriptor
          name="person"
          class-ref="Dominio.Pessoa"
-         proxy="false"
+         proxy="true"
 	  >
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
 	<reference-descriptor
 			name="studentGroupInfo"
 			class-ref="Dominio.StudentGroupInfo"
-			proxy="false">
+			proxy="true">
 		<foreignkey field-ref="studentGroupInfoKey"/>
 	</reference-descriptor>
       

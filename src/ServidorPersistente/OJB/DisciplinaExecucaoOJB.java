@@ -21,6 +21,7 @@ import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 public class DisciplinaExecucaoOJB
 	extends ObjectFenixOJB
@@ -75,7 +76,8 @@ public class DisciplinaExecucaoOJB
 	// TODO : Write test for this method
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+			String oqlQuery =
+				"select all from " + DisciplinaExecucao.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			lockRead(result);
@@ -121,17 +123,28 @@ public class DisciplinaExecucaoOJB
 		IExecutionPeriod executionPeriod,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
-			Criteria criteria = new Criteria();
-			
-			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",curricularYear);
-			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",executionPeriod.getSemester());
-			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name",executionDegree.getCurricularPlan().getName());
-			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",executionDegree.getCurricularPlan().getDegree().getSigla());
-			criteria.addEqualTo("executionPeriod.name",executionPeriod.getName());
-			criteria.addEqualTo("executionPeriod.executionYear.year",executionPeriod.getExecutionYear().getYear());
-			
-			List executionCourseList = queryList(DisciplinaExecucao.class, criteria); 
-			return executionCourseList;
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo(
+			"associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",
+			curricularYear);
+		criteria.addEqualTo(
+			"associatedCurricularCourses.scopes.curricularSemester.semester",
+			executionPeriod.getSemester());
+		criteria.addEqualTo(
+			"associatedCurricularCourses.degreeCurricularPlan.name",
+			executionDegree.getCurricularPlan().getName());
+		criteria.addEqualTo(
+			"associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
+			executionDegree.getCurricularPlan().getDegree().getSigla());
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo(
+			"executionPeriod.executionYear.year",
+			executionPeriod.getExecutionYear().getYear());
+
+		List executionCourseList =
+			queryList(DisciplinaExecucao.class, criteria);
+		return executionCourseList;
 	}
 
 	/**
@@ -232,24 +245,28 @@ public class DisciplinaExecucaoOJB
 
 	public List readByExecutionPeriod(IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select all from " + DisciplinaExecucao.class.getName();
-			oqlQuery += " where executionPeriod.name = $1 "
-				+ " and executionPeriod.executionYear.year = $2 ";
-			query.create(oqlQuery);
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+		return queryList(DisciplinaExecucao.class, criteria);
+	}
 
-			query.bind(executionPeriod.getName());
-			query.bind(executionPeriod.getExecutionYear().getYear());
-
-			List result = (List) query.execute();
-			lockRead(result);
-
-			return result;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriod(Dominio.IExecutionPeriod, Util.TipoCurso)
+	 */
+	public List readByExecutionPeriod(
+		IExecutionPeriod executionPeriod,
+		TipoCurso curso)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+		criteria.addEqualTo(
+			"associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso",
+			curso);
+		return queryList(DisciplinaExecucao.class, criteria);
 	}
 
 }

@@ -6,6 +6,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
@@ -48,6 +49,12 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 		
 	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 	public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	/**
+	 * @param executionPeriod
+	 * @param curso
+	 * @return
+	 */
+	public List readByExecutionPeriod(IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;
 	
 
 }

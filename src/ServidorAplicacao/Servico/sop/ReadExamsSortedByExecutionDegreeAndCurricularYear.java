@@ -11,7 +11,6 @@ package ServidorAplicacao.Servico.sop;
   * 
  **/
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourseAndExams;
@@ -34,13 +33,6 @@ import Util.TipoCurso;
 
 public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 	implements IServico {
-
-	Calendar startTime = null;
-	Calendar tempTime = null;
-
-	long totalServiceTime = 0;
-	long totalReadDegreesTime = 0;
-	long totalReadExecutionCoursesTime = 0;
 
 	private static ReadExamsSortedByExecutionDegreeAndCurricularYear _servico =
 		new ReadExamsSortedByExecutionDegreeAndCurricularYear();
@@ -65,9 +57,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 	}
 
 	public List run(InfoExecutionPeriod infoExecutionPeriod) {
-		
-		startTime = Calendar.getInstance();
-		
+
 		List infoViewAllExamsList = new ArrayList();
 
 		try {
@@ -82,15 +72,10 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 
 			IExecutionYear executionYear = executionPeriod.getExecutionYear();
 
-			tempTime = Calendar.getInstance();
-			/////////////////////////////////////////////////////////////
 			List executionDegrees =
 				executionDegreeDAO.readByExecutionYearAndDegreeType(
 					executionYear,
 					new TipoCurso(TipoCurso.LICENCIATURA));
-			/////////////////////////////////////////////////////////////
-			totalReadDegreesTime = Calendar.getInstance().getTimeInMillis() - tempTime.getTimeInMillis();
-			System.out.println("## ReadExecutionDegrees time = " + totalReadDegreesTime);
 
 			for (int k = 0; k < executionDegrees.size(); k++) {
 				InfoExecutionDegree infoExecutionDegree =
@@ -111,8 +96,6 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 					ICursoExecucao executionDegree =
 						(ICursoExecucao) executionDegrees.get(k);
 
-					tempTime = Calendar.getInstance();
-					/////////////////////////////////////////////////////////////
 					List executionCourses =
 						sp
 							.getIDisciplinaExecucaoPersistente()
@@ -120,8 +103,6 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 								new Integer(curricularYear),
 								executionPeriod,
 								executionDegree);
-//						///////////////////////////////////////////////////////////
-						totalReadExecutionCoursesTime += Calendar.getInstance().getTimeInMillis() - tempTime.getTimeInMillis();
 
 					for (int i = 0; i < executionCourses.size(); i++) {
 						IDisciplinaExecucao executionCourse =
@@ -185,11 +166,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 		}
-		
-		totalServiceTime = Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis();
-		System.out.println("## serviceTotalTime = " + totalServiceTime);		
-		System.out.println("## ReadExecutionCourses time = " + totalReadExecutionCoursesTime);
-		
+
 		return infoViewAllExamsList;
 	}
 }
