@@ -15,7 +15,7 @@
 <div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > 
 	<%--<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" > --%>Ensino<%--</html:link>--%> &gt;&nbsp;
 	<%--<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"> --%>
-		<bean:write name="infoDegree" property="tipoCurso" />&nbsp;<bean:write name="infoDegree" property="nome" />
+		<bean:write name="infoDegree" property="sigla" />
 	<%--</html:link> --%>&gt;&nbsp;
 	<%--<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" > --%>
 		<bean:message key="label.curricularPlan"/>

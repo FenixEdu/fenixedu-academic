@@ -20,10 +20,10 @@
 				<h1><bean:message key="label.education" /></h1>
 				<p class="greytxt">
 					<logic:equal name="degreeType" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
-						<bean:message key="text.nonMasterDegree" />
+						<bean:message key="text.masterDegree" />
 					</logic:equal>
 					<logic:equal name="degreeType" value="<%= TipoCurso.LICENCIATURA_OBJ.toString() %>">
-						<bean:message key="text.masterDegree" />
+						<bean:message key="text.nonMasterDegree" />
 					</logic:equal>				
 				</p>
 			  
@@ -38,7 +38,7 @@
 									<bean:define id="degreeID" name="infoDegree" property="idInternal" />
 									<li>
 										<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + pageContext.findAttribute("degreeID").toString() %>">
-											<bean:write name="infoDegree" property="nome" />
+											<bean:write name="infoDegree" property="nome" />&nbsp;(<bean:write name="infoDegree" property="sigla"/>)
 										</html:link>
 									</li>
 								</logic:iterate>

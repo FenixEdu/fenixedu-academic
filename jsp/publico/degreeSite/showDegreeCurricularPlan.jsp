@@ -13,7 +13,7 @@
 
 <div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino</html:link> &gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
-		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
+	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
 	</html:link>&gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
 	<bean:message key="label.curricularPlan"/>
@@ -30,9 +30,9 @@
 <h2>
 <span class="greytxt">
 	<bean:message key="label.curricularPlan"/>
-	&nbsp;<bean:message key="label.the" />
+	<bean:message key="label.the" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
-	&nbsp;<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
+	<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
 		<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
 		-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
@@ -46,23 +46,32 @@
 
 	<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope" length="1">
 			<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
+			<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
 	</logic:iterate>
 	<table class="tab_altrow" cellspacing="0">
 		<!-- cabeçalho -->
 		<tr>
-			<th><bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
-			<th><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></th>
-			<th><bean:message key="label.curricularCourse"/></th>
-			<th><bean:message key="label.manager.curricularCourseScope.branch"/></th>
+			<th colspan="3"><bean:write name="currentYear"/>º&nbsp;<bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
 		</tr>
-			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope" indexId="row">
+		<tr>			
+			<td class="subheader"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
+			<td class="subheader"><bean:message key="label.curricularCourse"/></td>
+			<td class="subheader"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
+		</tr>
+		<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope" indexId="row">
+				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
+					<tr>
+						<th colspan="3"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
+					</tr>
+					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
+				</logic:notEqual>
+
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.semester" value="<%= pageContext.findAttribute("currentSemester").toString()%>">
 					<!-- cabeçalho -->
-					<tr>
-						<th><bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
-						<th><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></th>
-						<th><bean:message key="label.curricularCourse"/></th>
-						<th><bean:message key="label.manager.curricularCourseScope.branch"/></th>
+					<tr>						
+						<td class="subheader"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
+						<td class="subheader"><bean:message key="label.curricularCourse"/></td>
+						<td class="subheader"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
 					</tr>
 					<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 				</logic:notEqual>
@@ -72,7 +81,6 @@
 				</bean:define>
 				<logic:equal name="isEven" value="0"> <!-- Linhas pares com uma cor -->
 				<tr>
-					<td class="white"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
 					<td class="white"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
 					<td class="white" style="text-align:left">
 						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
@@ -88,7 +96,6 @@
 				
 				<logic:equal name="isEven" value="1"> <!-- Linhas impares com uma cor -->
 				<tr>
-					<td><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
 					<td><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
 					<td style="text-align:left">
 						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
