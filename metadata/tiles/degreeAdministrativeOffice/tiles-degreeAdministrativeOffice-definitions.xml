@@ -12,10 +12,10 @@
 		<put name="footer" value="/degreeAdministrativeOffice/copyrightDefault.jsp"/>
 	</definition>
 	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolmentContext.jsp"/>
+		<put name="body-context" value="/degreeAdministrativeOffice/student/enrolmentContext.jsp"/>
 	</definition>
 	<definition name="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolmentInOptionalCurricularCourseContext.jsp"/>
+		<put name="body-context" value="/degreeAdministrativeOffice/student/enrolmentInOptionalCurricularCourseContext.jsp"/>
 	</definition>
 	<definition name="definition.out.of.period" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/outOfPeriod.jsp"/>

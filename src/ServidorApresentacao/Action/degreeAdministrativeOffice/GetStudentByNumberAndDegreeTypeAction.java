@@ -37,6 +37,7 @@ public class GetStudentByNumberAndDegreeTypeAction extends Action {
 		IUserView actor = null;
 		try {
 			actor = (IUserView) ServiceUtils.executeService(userView, "GetUserViewFromStudentNumberAndDegreeType", args);
+			// TODO DAVID-RICARDO: Fazer qq coisa se o actor não existir, isto é, se o aluno que se quer inscrever não se encontrar na base de dados.
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

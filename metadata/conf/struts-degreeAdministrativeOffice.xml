@@ -115,10 +115,10 @@
 
 	<!-- ========== Message Resources Definitions =========================== -->
 	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources"/>
-	<message-resources parameter="ServidorApresentacao.StudentResources"/>
+<!--
 	<message-resources parameter="ServidorApresentacao.ApplicationResources"/>
 	<message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>
-
+-->
 	<!-- ========== Plug Ins Configuration ================================== -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
 		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-degreeAdministrativeOffice.xml"/>
