@@ -109,7 +109,7 @@
 	
         <field property="birthYear"
 	       depends="required, validateDate" page="2">
-	          <arg0 key="Data de Nascimento" />
+              <arg0 key="label.person.birth" />
 	          <var>
 	             <var-name>month</var-name>
 	             <var-value>birthMonth</var-value>
@@ -122,7 +122,7 @@
 
         <field property="idIssueDateYear"
                depends="required, validateDate" page="2">
-                  <arg0 key="Data de Emissao do Documento de Identificacao" />
+                  <arg0 key="label.person.idIssueDate" />
                   <var>
                      <var-name>month</var-name>
                      <var-value>idIssueDateMonth</var-value>
@@ -135,7 +135,7 @@
 
         <field property="idExpirationDateYear"
                depends="required, validateDate" page="2">
-                  <arg0 key="Data de Validade do Documento de Identificacao" />
+                  <arg0 key="label.person.idExpirationDate" />
                   <var>
                      <var-name>month</var-name>
                      <var-value>idExpirationDateMonth</var-value>
