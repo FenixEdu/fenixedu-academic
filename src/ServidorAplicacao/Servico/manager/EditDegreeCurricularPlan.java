@@ -78,7 +78,6 @@ public class EditDegreeCurricularPlan implements IServico {
 							errors.set(0, newName);
 						}
 					}
-					System.out.println("ERRO ERRO ERRO ERRO"+errors);
 
 					if(modified == 0) {
 						errors = null; 
@@ -97,7 +96,6 @@ public class EditDegreeCurricularPlan implements IServico {
 					oldDegreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
 					
 					persistentDegreeCurricularPlan.simpleLockWrite(oldDegreeCP);
-					System.out.println("TA NO SERVICO INSERT DEGREE CURRICULAR PLAN!!!DEPOIS DOS SETS");
 
 				}
 							

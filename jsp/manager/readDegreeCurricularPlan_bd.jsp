@@ -19,7 +19,7 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&amp;degreeId="  + request.getAttribute("degreeId")%>"  paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
+	<li><html:link page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&degreeId="  + request.getAttribute("degreeId")%>"  paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
 	<li><html:link page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>			
 	<li><html:link page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
 </ul>
@@ -39,7 +39,7 @@
 	<html:form action="/deleteCurricularCourses" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
 		<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
-			<table width="50%" cellpadding="0" border="0">
+			<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
 			
@@ -86,7 +86,7 @@
 	<html:form action="/deleteExecutionDegrees" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
 		<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
-			<table width="50%" cellpadding="0" border="0">
+			<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
 			
@@ -110,15 +110,16 @@
 					</td>
 					<bean:define id="coordinator" name="executionDegree" property="infoCoordinator"/>
 					<bean:define id="person" name="coordinator" property="infoPerson"/>
-					<td class="listClasses"><bean:write name="person" property="username"/>
+					<td class="listClasses"><bean:write name="person" property="nome"/>
 					</td>
 					<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
-					<% String printing;
+					<% String printing = "Não";
 					   if(tempExamMap.toString() == "true")
-					   		printing = "Sim";
-					   else
-					    	printing = "Não"; %>
+					   		printing = "Sim"; %>
 					<td class="listClasses"><%= printing %>
+					</td>
+					<td>
+						<html:link page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getAttribute("degreeId") + "&degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message key="label.edit"/></html:link>
 					</td>
 	 			</tr>
 	 			</logic:iterate>						

@@ -16,6 +16,8 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface IPersistentCurricularCourse extends IPersistentObject {
 
 	public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
+	public List readCurricularCoursesByName(String name) throws ExcepcaoPersistencia;
+	public List readCurricularCoursesByCode(String code) throws ExcepcaoPersistencia;
 	public List readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia;
 	public List readCurricularCoursesBySemesterAndYear(Integer semester, Integer year) throws ExcepcaoPersistencia;
 	public List readCurricularCoursesBySemesterAndYearAndBranch(Integer semester, Integer year,IBranch branch) throws ExcepcaoPersistencia;
