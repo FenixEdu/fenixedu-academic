@@ -5582,4 +5582,11 @@
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service>  
+    <service>
+    	<name>ReadSpecializationAndSecundaryAreasByStudent</name>
+    	<description>Reads areas corrresponding to student curricular plan</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>  
 </serviceDefinitions>

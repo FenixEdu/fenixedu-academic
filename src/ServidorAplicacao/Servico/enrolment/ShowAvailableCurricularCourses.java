@@ -33,33 +33,50 @@ public class ShowAvailableCurricularCourses implements IService
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
-			IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
+			IStudentCurricularPlanPersistente studentCurricularPlanDAO =
+				persistentSuport.getIStudentCurricularPlanPersistente();
 
-			IStudent student = studentDAO.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
+			IStudent student =
+				studentDAO.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
 
 			if (student != null)
 			{
 				IStudentCurricularPlan studentCurricularPlan =
-					studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+					studentCurricularPlanDAO.readActiveStudentCurricularPlan(
+						student.getNumber(),
+						student.getDegreeType());
 
 				if (studentCurricularPlan != null)
 				{
-					IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
-					IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(studentCurricularPlan);
+					try
+					{
+						IEnrolmentStrategyFactory enrolmentStrategyFactory =
+							EnrolmentStrategyFactory.getInstance();
+						IEnrolmentStrategy strategy =
+							enrolmentStrategyFactory.getEnrolmentStrategyInstance(studentCurricularPlan);
+						StudentEnrolmentContext studentEnrolmentContext =
+						strategy.getAvailableCurricularCourses();
 
-					StudentEnrolmentContext studentEnrolmentContext = strategy.getAvailableCurricularCourses();
-					
-					return InfoStudentEnrolmentContext.cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(
-						studentEnrolmentContext);
-				} else
-				{
-					throw new ExistingServiceException("StudentCurricularPlan for student: " + studentNumber + " not found!");
+						return InfoStudentEnrolmentContext
+						.cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(
+								studentEnrolmentContext);
+					}
+					catch (IllegalArgumentException e)
+					{
+						throw new FenixServiceException("degree");
+					}
 				}
-			} else
-			{
-				throw new ExistingServiceException("Student number: " + studentNumber + " not found!");
+				else
+				{
+					throw new ExistingServiceException("studentCurricularPlan");
+				}
 			}
-		} catch (ExcepcaoPersistencia e)
+			else
+			{
+				throw new ExistingServiceException("student");
+			}
+		}
+		catch (ExcepcaoPersistencia e)
 		{
 			e.printStackTrace();
 			throw new FenixServiceException(e);

@@ -2,6 +2,19 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%--
+<script type="text/javascript" language="JavaScript">
+	function disableAllElements(form, elementName){
+		var elements = form.elements;
+		var i = 0;
+		for (i = 0; i < elements.length ; i++){
+			var element = elements[i];
+			if (element.name && element.name.indexOf(elementName) == 0 && !element.checked){
+				element.disabled = true;
+			}
+		}
+	}
+</script>--%>
 <h2><bean:message key="title.student.LEEC.enrollment"/></h2>
 <span class="error"><html:errors/></span>
 <html:form action="/curricularCoursesEnrollment">
@@ -45,7 +58,7 @@
 					<bean:define id="executionPeriod" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name"/>
 					<bean:define id="executionYear" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year"/>
 					<html:link page="<%="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;specializationArea=" + specialization +"&amp;secondaryArea=" + secondary + "&amp;studentNumber=" + number + "&amp;studentName=" + name + "&amp;studentCurricularPlanId="+ studentCurricularPlanId + "&amp;executionPeriod=" + executionPeriod + "&amp;executionYear=" + executionYear%>">
-						<bean:message key="link.student.areas.edit"/>
+						<bean:message key="button.student.modify"/>
 					</html:link>
 				</td>
 			</tr>
@@ -71,39 +84,6 @@
 		</logic:notPresent>
 	</table>
 	<table>
-		<%--<tr>
-			<td colspan='2' class="infoop">
-				<bean:message key="message.student.enrollment.help" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<br />
-				<bean:message key="label.student.enrollment.specializationArea" />
-			</td>
-			<td>
-				<br />
-				<html:select property="specializationArea" onchange="document.curricularCoursesEnrollmentForm.method.value='prepareEnrollmentChooseAreas';document.curricularCoursesEnrollmentForm.submit();">
-					<html:option value="" key="label.student.enrollment.select">
-						<bean:message key="label.student.enrollment.select"/>
-					</html:option>
-					<html:options collection="branches" property="idInternal" labelProperty="name"/>
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.student.enrollment.secondaryArea" />
-			</td>
-			<td>
-				<html:select property="secondaryArea" onchange="document.curricularCoursesEnrollmentForm.method.value='prepareEnrollmentChooseAreas';document.curricularCoursesEnrollmentForm.submit();">
-					<html:option value="" key="label.student.enrollment.select">
-						<bean:message key="label.student.enrollment.select"/>
-					</html:option>
-					<html:options collection="branches" property="idInternal" labelProperty="name"/>
-				</html:select>
-			</td>
-		</tr>--%>
 		<tr>
 			<td colspan="2">
 				<br />
@@ -131,12 +111,16 @@
 			</td>
 		</tr>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="finalInfoCurricularCoursesWhereStudentCanBeEnrolled">
+			<%--<bean:define id="onclickEnroll">
+				if (this.checked == true) {this.form.method.value='enrollInCurricularCourse'; disableAllElements(this.form,'infoStudentEnrolmentContext.finalInfoCurricularCoursesWhereStudentCanBeEnrolled');this.form.submit();}	
+			</bean:define>--%>
 			<tr>
 				<td>
 					<bean:write name="curricularCourse" property="name"/>
 				</td>
 				<td>
 					<bean:define id="curricularCourseIndex" name="curricularCourse" property="idInternal"/>
+<%--					<html:multibox property="unenrolledCurricularCourses" onclick="<%=onclickEnroll.toString()%>" >--%>
 					<html:multibox property="unenrolledCurricularCourses" onclick="document.curricularCoursesEnrollmentForm.method.value='enrollInCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >
 						<bean:write name="curricularCourseIndex"/>
 					</html:multibox>

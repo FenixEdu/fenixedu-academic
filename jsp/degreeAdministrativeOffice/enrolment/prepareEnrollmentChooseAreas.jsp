@@ -30,7 +30,6 @@
 		</tr>
 	</table>
 	<br />
-	<bean:define id="branches" name="infoStudentEnrolmentContext" property="infoAreas"/>
 	<table>
 		<tr>
 			<td colspan='2' class="infoop">
@@ -48,7 +47,7 @@
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<html:options collection="branches" property="idInternal" labelProperty="name"/>
+					<html:options collection="infoBranches" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>
@@ -61,7 +60,7 @@
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<html:options collection="branches" property="idInternal" labelProperty="name"/>
+					<html:options collection="infoBranches" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>

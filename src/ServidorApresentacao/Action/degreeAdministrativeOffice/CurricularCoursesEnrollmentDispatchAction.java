@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.validator.Field;
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -18,7 +16,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
-import org.apache.struts.validator.FieldChecks;
 
 import DataBeans.InfoEnrolment;
 import ServidorAplicacao.IUserView;
@@ -74,13 +71,23 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		}
 		catch (ExistingServiceException e)
 		{
-			errors.add("studentCurricularPlan", new ActionError(e.getMessage()));
+			if(e.getMessage().equals("student")) 
+			{
+				errors.add("student", new ActionError("error.no.student.in.database", studentNumber));
+			} else if(e.getMessage().equals("studentCurricularPlan")) 
+			{
+				errors.add("studentCurricularPlan", new ActionError("error.student.curricularPlan.nonExistent"));
+			}
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
 		catch (FenixServiceException e)
 		{
-			e.printStackTrace();
+			if(e.getMessage().equals("degree")) {
+				errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));
+				saveErrors(request, errors);
+				return mapping.getInputForward();
+			}
 			throw new FenixActionException();
 		}
 
@@ -88,21 +95,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		enrollmentForm.set("enrolledCurricularCoursesBefore", enrolledInArray);
 		enrollmentForm.set("enrolledCurricularCoursesAfter", enrolledInArray);
 
-		//		if (infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoBranch(). != null)
-		//		{
-		//			enrollmentForm.set(
-		//				"specializationArea",
-		//				infoStudentEnrolmentContext
-		//					.getInfoStudentCurricularPlan()
-		//					.getInfoBranch()
-		//					.getIdInternal());
-		//			enrollmentForm.set(
-		//				"secondaryArea",
-		//				infoStudentEnrolmentContext
-		//					.getInfoStudentCurricularPlan()
-		//					.getInfoSecundaryBranch()
-		//					.getIdInternal());
-		//		}
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
 		return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
@@ -124,7 +116,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 				return infoEnrolment.getIdInternal();
 			}
 		});
-		System.out.println(enrolledCurricularCourses.toString());
 		Integer[] enrolledInArray = new Integer[enrolledCurricularCourses.size()];
 		for (int i = 0; i < enrolledInArray.length; i++)
 		{
@@ -152,27 +143,31 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 
 		maintainEnrollmentState(request, studentNumber);
 
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
-
+		List infoBranches = null;
 		Object[] args = { studentNumber };
 		try
 		{
-			infoStudentEnrolmentContext =
-				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+			infoBranches =
+				(List) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ShowAvailableCurricularCourses",
+					"ReadSpecializationAndSecundaryAreasByStudent",
 					args);
 
 		}
 		catch (ExistingServiceException e)
 		{
-			errors.add("studentCurricularPlan", new ActionError(e.getMessage()));
+			if(e.getMessage().equals("student")) 
+			{
+				errors.add("student", new ActionError("error.no.student.in.database", studentNumber));
+			} else if(e.getMessage().equals("studentCurricularPlan")) 
+			{
+				errors.add("studentCurricularPlan", new ActionError("error.student.curricularPlan.nonExistent"));
+			}
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
 		catch (FenixServiceException e)
 		{
-			e.printStackTrace();
 			throw new FenixActionException();
 		}
 		if (specialization != null
@@ -183,8 +178,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 			enrollmentForm.set("specializationArea", Integer.valueOf(specialization));
 			enrollmentForm.set("secondaryArea", Integer.valueOf(secondary));
 		}
-		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
-
+		request.setAttribute("infoBranches", infoBranches);
 		return mapping.findForward("prepareEnrollmentChooseAreas");
 	}
 
@@ -217,8 +211,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 		Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
-		
-		System.out.println(enrollmentForm.getValidatorResults().getResultValueMap().toString());
 
 		Object[] args = { studentCurricularPlanId, specializationArea, secondaryArea };
 		try
@@ -273,8 +265,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
-		System.out.println(studentCurricularPlanId);
-		System.out.println(toEnroll.toString());
 		Object[] args = { studentCurricularPlanId, toEnroll.get(0), null };
 		try
 		{
@@ -305,10 +295,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 
 		List enrollmentsBefore = Arrays.asList(enrolledCurricularCoursesBefore);
 		List enrollmentsAfter = Arrays.asList(enrolledCurricularCoursesAfter);
-		System.out.println(enrollmentsBefore);
-		System.out.println(enrollmentsAfter);
 		List toUnenroll = (List) CollectionUtils.subtract(enrollmentsBefore, enrollmentsAfter);
-		System.out.println("valor do unEnroll: " + toUnenroll.toString());
 		Object[] args = {(Integer) toUnenroll.get(0)};
 		try
 		{
