@@ -18,7 +18,7 @@ public abstract class BibliographicReferenceBelongsExecutionCourse
 		super(name);
 	}
 
-	public void testBibliographicReferenceExecutionCourse() {
+	public void testBibliographicReferenceBelongsExecutionCourse() {
 
 		Object serviceArguments[] = getTestBibliographicReferenceSuccessfullArguments();
 

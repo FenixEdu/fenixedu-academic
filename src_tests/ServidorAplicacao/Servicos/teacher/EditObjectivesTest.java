@@ -169,26 +169,26 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 		}
 	}
 	
-//	public void testSuccessfullEditObjectivesWithNoCurriculum() {
-//
-//		System.out.println("Starting: testSuccessfullEditObjectivesWithNoCurriculum");
-//		try {
-//			String[] args = getAuthorizedUser();
-//			IUserView userView = authenticateUser(args);
-//
-//			gestor.executar(
-//				userView,
-//				getNameOfServiceToBeTested(),
-//				getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
-//
-//			// verificar as alteracoes da bd
-//			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
-//
-//			System.out.println("Finished: testSuccessfullEditObjectivesWithNoCurriculum");
-//		} catch (FenixServiceException ex) {
-//			fail("EditObjectivesTest" + ex);
-//		} catch (Exception ex) {
-//			fail("EditObjectivesTest error on compareDataSet" + ex);
-//		}
-//	}
+	public void testSuccessfullEditObjectivesWithNoCurriculum() {
+
+		System.out.println("Starting: testSuccessfullEditObjectivesWithNoCurriculum");
+		try {
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				getTestObjectivesCurricularCourseWithNoCurriculumArguments());
+
+			// verificar as alteracoes da bd
+			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
+
+			System.out.println("Finished: testSuccessfullEditObjectivesWithNoCurriculum");
+		} catch (FenixServiceException ex) {
+			fail("EditObjectivesTest" + ex);
+		} catch (Exception ex) {
+			fail("EditObjectivesTest error on compareDataSet" + ex);
+		}
+	}
 }

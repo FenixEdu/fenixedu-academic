@@ -43,9 +43,6 @@ public class EditBibliographicReferenceTest extends BibliographicReferenceBelong
 		return "etc/datasets/testExpectedEditOptionalBibliographicReferenceDataSet.xml";
 	}
 
-	protected String getExpectedNewCurriculumDataSetFilePath() {
-		return "etc/datasets/testExpectedNewCurriculumBibliographicReferenceDataSet.xml";
-	}
 
 	protected String[] getAuthorizedUser() {
 
