@@ -44,7 +44,7 @@ public class ViewRoomFormAction extends FenixAction {
 
 
 			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) session.getAttribute(
+				(InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
 			Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };

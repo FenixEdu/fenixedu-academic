@@ -36,10 +36,10 @@ public class ManipularSalasAction extends FenixAction {
 	/**
 	 * @returns the name of the selected sala.
 	 **/
-	private InfoRoom getSelectedSala(HttpSession session) {
+	private InfoRoom getSelectedSala(ActionForm form, HttpSession session) {
 		DynaActionForm posicaoSalaFormBean =
-			(DynaActionForm) session.getAttribute("posicaoFormBean");
-		Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("posicao");
+			(DynaActionForm) form;
+		Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("index");
 		ArrayList listaSalasBean =
 			(ArrayList) session.getAttribute("publico.infoRooms");
 		InfoRoom sala =
@@ -92,8 +92,8 @@ public class ManipularSalasAction extends FenixAction {
 		throws Exception {
 
 		HttpSession session = getSession(request);
-		InfoRoom salaBean = getSelectedSala(session);
-		session.removeAttribute("posicaoFormBean");
+		InfoRoom salaBean = getSelectedSala(form, session);
+		session.removeAttribute(mapping.getAttribute());
 
 		request.setAttribute("salaFormBean", salaBean);
 		session.setAttribute("publico.infoRoom", salaBean);
@@ -114,7 +114,7 @@ public class ManipularSalasAction extends FenixAction {
 		throws Exception {
 
 		HttpSession session = getSession(request);
-		InfoRoom salaBean = getSelectedSala(session);
+		InfoRoom salaBean = getSelectedSala(form, session);
 
 		List edificios = Util.readExistingBuldings(null, null);
 		List tipos = Util.readTypesOfRooms(null, null);
@@ -126,7 +126,8 @@ public class ManipularSalasAction extends FenixAction {
 		// create the bean that holds the information about the sala to edit
 		DynaActionFormClass cl;
 
-		ModuleConfig moduleConfig =(ModuleConfig) this.getServlet().getServletContext().getAttribute(Globals.MODULE_KEY); 
+		ModuleConfig moduleConfig =(ModuleConfig) mapping.getModuleConfig();
+		
 		FormBeanConfig formBeanConfig = moduleConfig.findFormBeanConfig("roomForm");
 		cl = DynaActionFormClass.createDynaActionFormClass(formBeanConfig);
 		
@@ -163,7 +164,7 @@ public class ManipularSalasAction extends FenixAction {
 		ArrayList listaSalasBean =
 			(ArrayList) session.getAttribute("publico.infoRooms");
 		IUserView userView = (IUserView) session.getAttribute("UserView");
-		InfoRoom selectedSala = getSelectedSala(session);
+		InfoRoom selectedSala = getSelectedSala(form,session);
 
 		Object argsCriarSala[] = { new RoomKey(selectedSala.getNome())};
 		try {
@@ -179,7 +180,7 @@ public class ManipularSalasAction extends FenixAction {
 
 		/* Actualiza a lista de salas no "scope" de sessao */
 		listaSalasBean.remove(selectedSala);
-		session.removeAttribute("posicaoFormBean");
+		session.removeAttribute(mapping.getAttribute());
 
 		if (listaSalasBean.isEmpty())
 			session.removeAttribute("publico.infoRooms");
