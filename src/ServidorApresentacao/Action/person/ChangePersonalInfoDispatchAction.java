@@ -52,7 +52,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
 		// Create Dates
@@ -196,7 +196,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 
 		DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
 
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
 		Object changeArgs[] = new Object[1];
