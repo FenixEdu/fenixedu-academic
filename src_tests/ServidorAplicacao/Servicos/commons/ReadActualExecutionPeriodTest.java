@@ -10,6 +10,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear; 
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
@@ -54,9 +55,9 @@ public class ReadActualExecutionPeriodTest extends TestCaseServicos {
 
 		//Empty database	
 		try {
-			_suportePersistente.iniciarTransaccao();
-			persistentExecutionPeriod.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			SuportePersistenteOJB.getInstance().iniciarTransaccao();
+			SuportePersistenteOJB.getInstance().getIPersistentExecutionPeriod().deleteAll();
+			SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when setUp");
 		}

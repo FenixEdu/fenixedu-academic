@@ -64,8 +64,11 @@ public class LerTurnoServicosTest extends TestCaseReadServices {
 		return 0;
 	}
 	protected Object getObjectToCompare(){
+		this.ligarSuportePersistente(true);
+		
 		InfoShift infoShift = new InfoShift();
 		infoShift.setNome("turno1");
+		infoShift.setInfoDisciplinaExecucao(this.infoExecutionCourse);
 		return infoShift;
 	}
 	
