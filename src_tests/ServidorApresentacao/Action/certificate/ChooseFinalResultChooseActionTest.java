@@ -18,7 +18,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  *
  */
-public class ChooseCertificateChooseActionTest
+public class ChooseFinalResultChooseActionTest
 	extends TestCasePresentationMDAdministrativeOffice {
 	/**
 	 * Main method 
@@ -33,14 +33,14 @@ public class ChooseCertificateChooseActionTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ChooseCertificateChooseActionTest.class);
+		TestSuite suite = new TestSuite(ChooseFinalResultChooseActionTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ChooseCertificateChooseActionTest(String testName) {
+	public ChooseFinalResultChooseActionTest(String testName) {
 		super(testName);
 	}
 
@@ -65,9 +65,8 @@ public class ChooseCertificateChooseActionTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		HashMap parameters = new HashMap();
-		parameters.put("requesterNumber","46865");
-		parameters.put("graduationType", "Especialização");
-		parameters.put("destination", "Fins militares");
+		parameters.put("requesterNumber","41329");
+		parameters.put("graduationType", "Mestrado");
 		parameters.put("method","choose");
 		return parameters;
 	}
@@ -86,13 +85,14 @@ public class ChooseCertificateChooseActionTest
 		
 		HashMap attributes = new HashMap();
 		List requestAttributes = new ArrayList();
-		requestAttributes.add(SessionConstants.DOCUMENT_REASON_LIST);
-		requestAttributes.add(SessionConstants.DEGREE_TYPE);
 		requestAttributes.add(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
+		requestAttributes.add(SessionConstants.DEGREE_TYPE);
 		requestAttributes.add(SessionConstants.DATE);
+		requestAttributes.add(SessionConstants.INFO_FINAL_RESULT);
+		requestAttributes.add(SessionConstants.ENROLMENT_LIST);
 		requestAttributes.add(SessionConstants.INFO_EXECUTION_YEAR);
+		requestAttributes.add(SessionConstants.CONCLUSION_DATE);
 		attributes.put(new Integer(ScopeConstants.SESSION), requestAttributes);
-		
 		return attributes;
 	
 	}
@@ -122,7 +122,7 @@ public class ChooseCertificateChooseActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/chooseCertificateInfoAction";
+		return "/chooseFinalResultInfoAction";
 	}
 
 	/* (non-Javadoc)

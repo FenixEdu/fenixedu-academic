@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.DocumentReason;
 import Util.Specialization;
 
 /**
@@ -20,7 +19,7 @@ import Util.Specialization;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  *
  */
-public class ChooseFinalResultActionTest
+public class ChooseFinalResultPrepareActionTest
 	extends TestCasePresentationMDAdministrativeOffice {
 	/**
 	 * Main method 
@@ -35,14 +34,14 @@ public class ChooseFinalResultActionTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ChooseFinalResultActionTest.class);
+		TestSuite suite = new TestSuite(ChooseFinalResultPrepareActionTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ChooseFinalResultActionTest(String testName) {
+	public ChooseFinalResultPrepareActionTest(String testName) {
 		super(testName);
 	}
 
