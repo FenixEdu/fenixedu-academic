@@ -16,6 +16,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Branch;
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
 import Dominio.CurricularYear;
 import Dominio.Curso;
@@ -25,8 +26,10 @@ import Dominio.Enrolment;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Frequenta;
+import Dominio.Funcionario;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import Dominio.ICurso;
@@ -36,11 +39,14 @@ import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
+import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.Pessoa;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Util.PeriodState;
+import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
 /**
@@ -83,9 +89,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	private ICurricularCourse readCurricularCourse(
-		String code,
-		Integer degreeID) {
+	private ICurricularCourse readCurricularCourse(String code, Integer degreeID) {
 		// Delete blank space in the beggining of code1
 		if (code.charAt(0) == ' ') {
 			code = code.substring(1);
@@ -102,21 +106,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		if (result.size() == 1) {
 			return (ICurricularCourse) result.get(0);
 		} else if (result.size() > 1) {
-			System.out.println(
-				"code: "
-					+ code
-					+ "  degreeID: "
-					+ degreeID
-					+ " result.size="
-					+ result.size());
+			System.out.println("code: " + code + "  degreeID: " + degreeID + " result.size=" + result.size());
 		} else /* if (result.size() == 0) */ {
-			System.out.println(
-				"code: "
-					+ code
-					+ "  degreeID: "
-					+ degreeID
-					+ " result.size="
-					+ result.size());
+			System.out.println("code: " + code + "  degreeID: " + degreeID + " result.size=" + result.size());
 		}
 		return null;
 	}
@@ -130,7 +122,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		if (result.size() == 1) {
 			return (ICurricularCourse) result.get(0);
 		} else {
-//			return readCurricularCourse(code, degreeID);
+			//			return readCurricularCourse(code, degreeID);
 			return null;
 		}
 	}
@@ -153,17 +145,11 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 * @param executionPeriod
 	 * @return
 	 */
-	public IDisciplinaExecucao readExecutionCourse(
-		ICurricularCourse curricularCourse,
-		IExecutionPeriod executionPeriod) {
+	public IDisciplinaExecucao readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo(
-			"associatedCurricularCourses.idInternal",
-			((CurricularCourse) curricularCourse).getIdInternal());
+		criteria.addEqualTo("associatedCurricularCourses.idInternal", ((CurricularCourse) curricularCourse).getIdInternal());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-		criteria.addEqualTo(
-			"executionPeriod.name.executionYear.year",
-			executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo("executionPeriod.name.executionYear.year", executionPeriod.getExecutionYear().getYear());
 		List result = query(DisciplinaExecucao.class, criteria);
 		//System.out.println("result.size" + result.size());
 		if (result.size() == 1) {
@@ -188,7 +174,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	}
 
 	/** 
- 	 * @param IExecutionYear
+		 * @param IExecutionYear
 	 * @param Integer
 	 * @return IExecutionPeriod
 	 */
@@ -208,7 +194,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 * @param Integer
 	 * @return IExecutionYear
 	 */
-	public IExecutionYear readExecutionYearByYear(Integer year) {
+	public IExecutionYear readExecutionYearByYear(String year) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("year", year);
 		List result = query(ExecutionYear.class, criteria);
@@ -223,21 +209,12 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 * @param executionPeriod
 	 * @return
 	 */
-	public IEnrolment readEnrolment(
-		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourse curricularCourse,
-		IExecutionPeriod executionPeriod) {
+	public IEnrolment readEnrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo(
-			"studentCurricularPlan.internalCode",
-			((StudentCurricularPlan) studentCurricularPlan).getInternalCode());
-			criteria.addEqualTo(
-				"curricularCourse.idInternal",
-				((CurricularCourse) curricularCourse).getIdInternal());
-			criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-			criteria.addEqualTo(
-				"executionPeriod.name.executionYear.year",
-				executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getInternalCode());
+		criteria.addEqualTo("curricularCourse.idInternal", ((CurricularCourse) curricularCourse).getIdInternal());
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo("executionPeriod.name.executionYear.year", executionPeriod.getExecutionYear().getYear());
 		List result = query(Enrolment.class, criteria);
 		if (result.size() == 1) {
 			return (IEnrolment) result.get(0);
@@ -253,12 +230,8 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 */
 	public IFrequenta readFrequenta(IStudent student, IDisciplinaExecucao disciplinaExecucao) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo(
-			"aluno.internalCode",
-			((Student) student).getInternalCode());
-			criteria.addEqualTo(
-				"disciplinaExecucao.idInternal",
-				((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
+		criteria.addEqualTo("aluno.internalCode", ((Student) student).getInternalCode());
+		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
 		List result = query(Frequenta.class, criteria);
 		if (result.size() == 1) {
 			return (IFrequenta) result.get(0);
@@ -272,9 +245,8 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return result;
 	}
 
-	public ICurricularCourse readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(String code, String name, 
-		IDegreeCurricularPlan degreeCurricularPlan) {
-		
+	public ICurricularCourse readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(String code, String name, IDegreeCurricularPlan degreeCurricularPlan) {
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
 		criteria.addEqualTo("name", name);
@@ -288,7 +260,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 		return null;
 	}
-	
+
 	public IDegreeCurricularPlan readDegreeCurricularPlanByName(String name) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);
@@ -300,7 +272,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	public ICurso readDegreeByCode(String code){
+	public ICurso readDegreeByCode(String code) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("sigla", code);
 		List result = query(Curso.class, criteria);
@@ -310,16 +282,14 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 			return null;
 		}
 	}
-	
-	public List readAllLEQNewCC(){
+
+	public List readAllLEQNewCC() {
 		List result = query(Leq_new_curricular_course.class, null);
 		return result;
-	}	
+	}
 
-	public ICurricularCourse readCurricularCourseByNameAndDegreeCurricularPlan(
-		String name, 
-		IDegreeCurricularPlan degreeCurricularPlan) {
-		
+	public ICurricularCourse readCurricularCourseByNameAndDegreeCurricularPlan(String name, IDegreeCurricularPlan degreeCurricularPlan) {
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);
 		criteria.addEqualTo("degreeCurricularPlan.idInternal", ((DegreeCurricularPlan) degreeCurricularPlan).getIdInternal());
@@ -332,14 +302,14 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 		return null;
 	}
-	
-	public List readAllLEQScopes(){
+
+	public List readAllLEQScopes() {
 		List result = query(Leq_cc_scope.class, null);
 		return result;
-	}	
+	}
 
 	public ICurricularYear readCurricularYear(Integer key) {
-		
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("internalID", key);
 
@@ -353,7 +323,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	}
 
 	public ICurricularSemester readCurricularSemester(Integer semester, ICurricularYear curricularYear) {
-		
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("semester", semester);
 		criteria.addEqualTo("curricularYear.internalID", curricularYear.getInternalID());
@@ -366,9 +336,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 		return null;
 	}
-	
+
 	public IBranch readBranch(Integer key) {
-		
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("internalID", key);
 
@@ -380,5 +350,73 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 		return null;
 	}
-	
+
+	public IStudentCurricularPlan readStudentCurricularPlanByUnique(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, StudentCurricularPlanState studentCurricularPlanState) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("student.internalCode", student.getInternalCode());
+		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("branch.internalID", branch.getInternalID());
+		criteria.addEqualTo("currentState", studentCurricularPlanState);
+		List result = query(StudentCurricularPlan.class, criteria);
+		if (result.size() == 1) {
+			return (IStudentCurricularPlan) result.get(0);
+			//		} else {
+			//			System.out.println("StudentCurricularPlan: " + result.size());
+		}
+		return null;
+	}
+
+	public ICurricularCourse readCurricularCourseByCodeAndDegreeCurricularPlan(String code, IDegreeCurricularPlan degreeCurricularPlan) {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("code", code);
+		criteria.addEqualTo("degreeCurricularPlan.idInternal", ((DegreeCurricularPlan) degreeCurricularPlan).getIdInternal());
+
+		List result = query(CurricularCourse.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourse) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("code: " + code + " result.size = " + result.size());
+		}
+		return null;
+	}
+
+	public ICurricularCourseScope readCurricularCourseScopeByUnique(ICurricularCourse curricularCourse, IBranch branch, ICurricularSemester curricularSemester) {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+		criteria.addEqualTo("branch.internalID", branch.getInternalID());
+		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getInternalID());
+
+		List result = query(CurricularCourseScope.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourseScope) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("CurricularCourseScope: " + result.size());
+		}
+		return null;
+	}
+
+	public IPessoa readPersonByEmployeeNumber(Integer number) {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("numeroMecanografico", number);
+
+		List result = query(Funcionario.class, criteria);
+		if (result.size() == 1) {
+			int personKey = ((Funcionario) result.get(0)).getChavePessoa();
+			Criteria criteria2 = new Criteria();
+			criteria2.addEqualTo("codigoInterno", new Integer(personKey));
+			List result2 = query(Pessoa.class, criteria2);
+			if (result2.size() == 1) {
+				return (IPessoa) result2.get(0);
+			} else if (result2.size() > 1) {
+				System.out.println("Pessoa: " + result2.size());
+			}
+		} else if (result.size() > 1) {
+			System.out.println("Funcionario: " + result.size());
+		}
+		return null;
+	}
+
 }

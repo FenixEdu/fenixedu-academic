@@ -7,7 +7,7 @@ package middleware.almeida.dcsrjao;
  * 21/Mai/2003
  */
 
-public class LEQMigration{
+public class LEQMigration {
 
 
 	private LEQMigration() {
@@ -16,6 +16,10 @@ public class LEQMigration{
 	public static void main(String[] args) {
 		LoadAlmeidaLEQCurricularCourses loadAlmeidaLEQCurricularCourses = new LoadAlmeidaLEQCurricularCourses();
 		loadAlmeidaLEQCurricularCourses.run();
+		
+		LoadLEQEnrolments loadLEQEnrolments = new LoadLEQEnrolments();
+		loadLEQEnrolments.run();
+		
 		// TODO DAVID-RICARDO: Adicionar flag de Activo/Inactivo no CurricularCourseScope.
 	}
 

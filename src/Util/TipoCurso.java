@@ -17,11 +17,14 @@ import org.apache.struts.util.LabelValueBean;
 public class TipoCurso {
     public static final int LICENCIATURA = 1;
     public static final int MESTRADO = 2;
-    
+ 
 
     public static final String LICENCIATURA_STRING = "Licenciatura";
     public static final String MESTRADO_STRING = "Mestrado";
-	public static final String DEFAULT = "[Escolha uma Especialização]";	
+	public static final String DEFAULT = "[Escolha uma Especialização]";
+	
+	public static final TipoCurso LICENCIATURA_OBJ =  new TipoCurso(TipoCurso.LICENCIATURA);	
+	public static final TipoCurso MESTRADO_OBJ =  new TipoCurso(TipoCurso.MESTRADO);
 
     private Integer tipoCurso;    
     

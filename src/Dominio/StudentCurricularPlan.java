@@ -47,7 +47,8 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
 			resultado = this.getStudent().equals(studentCurricularPlan.getStudent()) &&
 									this.getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan()) &&
-									this.getCurrentState().equals(studentCurricularPlan.getCurrentState());
+									this.getCurrentState().equals(studentCurricularPlan.getCurrentState()) &&
+									this.getBranch().equals(studentCurricularPlan.getBranch());
 		}
 		return resultado;
 	}

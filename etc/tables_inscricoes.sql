@@ -113,7 +113,7 @@ create table STUDENT_CURRICULAR_PLAN (
    KEY_BRANCH int(11) not null,
    SPECIALIZATION int(11),
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE)
+   unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, KEY_BRANCH)
 )type=InnoDB;
 
 -- ==================================================================================
@@ -139,7 +139,7 @@ create table ENROLMENT (
 )type=InnoDB;
 
 -- ----------------------------
---  Table structure for EVALUATION
+--  Table structure for ENROLMENT_EVALUATION
 -- ----------------------------
 drop table if exists ENROLMENT_EVALUATION;
 create table ENROLMENT_EVALUATION (

@@ -37,6 +37,7 @@ public abstract class LoadDataFile {
 	protected int numberUntreatableElements = 0;
 	protected Calendar startTime = null;
 	protected Calendar endTime = null;
+	String actualLine = null;
 
 	protected PersistentObjectOJBReader persistentObjectOJB = null;
 
@@ -49,10 +50,10 @@ public abstract class LoadDataFile {
 
 		try {
 			bufferedReader = new BufferedReader(new FileReader(getFilename()));
-			String line = bufferedReader.readLine();
-			while (line != null) {
-				processLine(line);
-				line = bufferedReader.readLine();
+			actualLine = bufferedReader.readLine();
+			while (actualLine != null) {
+				processLine(actualLine);
+				actualLine = bufferedReader.readLine();
 
 				numberLinesProcessed++;
 			}

@@ -15,6 +15,7 @@ public interface ICurricularSemester {
 //	public List getAssociatedCurricularCourses();
 	public ICurricularYear getCurricularYear();
 	public List getScopes();
+	public Integer getInternalID();
 	
 	public void setSemester(Integer code);
 //	public void setAssociatedCurricularCourses(List associatedCurricularCourses);

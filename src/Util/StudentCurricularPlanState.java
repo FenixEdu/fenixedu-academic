@@ -16,6 +16,11 @@ public class StudentCurricularPlanState {
 	public static final int CONCLUDED = 2;
 	public static final int INCOMPLETE = 3;
 	public static final int SCHOOLPARTCONCLUDED = 4;
+	
+	public static final StudentCurricularPlanState ACTIVE_OBJ = new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE);
+	public static final StudentCurricularPlanState CONCLUDED_OBJ = new StudentCurricularPlanState(StudentCurricularPlanState.CONCLUDED);
+	public static final StudentCurricularPlanState INCOMPLETE_OBJ = new StudentCurricularPlanState(StudentCurricularPlanState.INCOMPLETE);
+	public static final StudentCurricularPlanState SCHOOLPARTCONCLUDED_OBJ = new StudentCurricularPlanState(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
 
 	private Integer state;
 

@@ -62,6 +62,11 @@ public class LoadAlmeidaLEQCurricularCourses extends LoadDataFile {
 
 	private void processCurricularCourse(Almeida_curricular_course almeida_curricular_course) {
 
+		//		Delete blank space in the beggining of code
+		if (almeida_curricular_course.getCode().charAt(0) == ' ') {
+			almeida_curricular_course.setCode(almeida_curricular_course.getCode().substring(1));
+		}
+		
 		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(almeida_curricular_course.getCode(), almeida_curricular_course.getName(), oldDegreeCurricularPlan);
 		if (curricularCourse == null) {
 			curricularCourse = new CurricularCourse();
@@ -72,33 +77,11 @@ public class LoadAlmeidaLEQCurricularCourses extends LoadDataFile {
 			curricularCourse.setMandatory(new Boolean(false));
 			curricularCourse.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
 			writeElement(curricularCourse);
-			logString += "A disciplina: " + almeida_curricular_course.getName() + " foi acrescentada no Plano Curricular Antigo\n";
+			//logString += "A disciplina: " + almeida_curricular_course.getName() + " foi acrescentada no Plano Curricular Antigo\n";
 		} else {
-			logString += "A disciplina: " + almeida_curricular_course.getName() + " já existe no Plano Curricular Antigo\n";
+			logString += "ERRO: A disciplina: " + almeida_curricular_course.getName() + " já existe no Plano Curricular Antigo\n";
 			loader.numberUntreatableElements++;
 		}
-
-//		String code = processCurricularCourseCode(almeida_curricular_course.getCode());
-//		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(code, almeida_curricular_course.getName(), newDegreeCurricularPlan);
-//
-//		if (curricularCourse == null) {
-//			curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(almeida_curricular_course.getCode(), almeida_curricular_course.getName(), oldDegreeCurricularPlan);
-//
-//			if (curricularCourse == null) {
-//				curricularCourse = new CurricularCourse();
-//				curricularCourse.setDegreeCurricularPlan(oldDegreeCurricularPlan);
-//				curricularCourse.setName(almeida_curricular_course.getName());
-//				curricularCourse.setCode(almeida_curricular_course.getCode());
-//				writeElement(curricularCourse);
-//				logString += "A disciplina: " + almeida_curricular_course.getName() + " foi acrescentada no Plano Curricular Antigo\n";
-//			} else {
-//				logString += "A disciplina: " + almeida_curricular_course.getName() + " já existe no Plano Curricular Antigo\n";
-//				loader.numberUntreatableElements++;
-//			}
-//		} else {
-//			logString += "A disciplina: " + almeida_curricular_course.getName() + " já existe no Plano Curricular Novo\n";
-//			loader.numberUntreatableElements++;
-//		}
 	}
 
 	private IDegreeCurricularPlan processOldDegreeCurricularPlan() {
@@ -111,7 +94,6 @@ public class LoadAlmeidaLEQCurricularCourses extends LoadDataFile {
 			degreeCurricularPlan.setDegreeDuration(new Integer(5));
 			degreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(3));
 			writeElement(degreeCurricularPlan);
-			logString += "O plano curricular: " + degreeCurricularPlan.getName() + " foi acrescentado \n";
 		}
 		return degreeCurricularPlan;
 	}

@@ -1,22 +1,34 @@
 package middleware.almeida.dcsrjao;
 
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.StringTokenizer;
 
-import middleware.almeida.Almeida_inscricoes;
 import middleware.almeida.LoadDataFile;
+import Dominio.CurricularCourseScope;
 import Dominio.Enrolment;
+import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
+import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.StudentCurricularPlan;
+import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
+import Util.EnrolmentState;
 import Util.PeriodState;
+import Util.StudentCurricularPlanState;
+import Util.TipoCurso;
 import Util.UniversityCode;
 
 /**
@@ -29,19 +41,36 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 	private static LoadLEQEnrolments loader = null;
 	protected static String logString = "";
-	protected List almeidaCurricularCourseList = null;
+	protected static IDegreeCurricularPlan oldDegreeCurricularPlan = null;
+	protected static IBranch branch = null;
+	protected static ICurricularCourse curricularCourse = null;
+	protected static ICurricularSemester curricularSemester = null;
 
-	private LoadLEQEnrolments() {
-		this.almeidaCurricularCourseList = persistentObjectOJB.readAllAlmeidaCurricularCourses();
+	public LoadLEQEnrolments() {
+		super.setupDAO();
+		oldDegreeCurricularPlan = this.processOldDegreeCurricularPlan();
+		super.shutdownDAO();
 	}
 
 	public static void main(String[] args) {
-		loader = new LoadLEQEnrolments();
+		if (loader == null) {
+			loader = new LoadLEQEnrolments();
+		}
+		loader.run();
+	}
+
+	public void run() {
+		if (loader == null) {
+			loader = new LoadLEQEnrolments();
+		}
 		loader.load();
 		loader.writeToFile(logString);
 	}
 
 	protected void processLine(String line) {
+
+		System.out.println(loader.numberLinesProcessed);
+
 		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
 		String studentNumber = stringTokenizer.nextToken();
@@ -61,15 +90,15 @@ public class LoadLEQEnrolments extends LoadDataFile {
 		Almeida_enrolment almeida_enrolment = new Almeida_enrolment();
 		almeida_enrolment.setId_internal(loader.numberElementsWritten + 1);
 		almeida_enrolment.setNumalu(studentNumber);
-	
-		if(epoca.equals(" ")){
+
+		if (epoca.equals(" ")) {
 			epoca = "5"; // corresponde ao valor de uma inscrição noutra universidade	
 		}
-		
-		if(branchCode.equals(" ")){
-			branchCode = "-1"; // por enquanto nao interessa, por isso, passe-se um valor só para nao dar erro no set	
+
+		if ((branchCode.equals(" ")) || (branchCode.equals("4"))) {
+			branchCode = "0";
 		}
-		
+
 		try {
 			almeida_enrolment.setAnoins((new Integer(enrolmentYear)).longValue());
 			almeida_enrolment.setAnodis((new Integer(curricularYear)).longValue());
@@ -77,9 +106,9 @@ public class LoadLEQEnrolments extends LoadDataFile {
 			almeida_enrolment.setEpoca((new Integer(epoca)).longValue());
 			almeida_enrolment.setRamo((new Integer(branchCode)).longValue());
 		} catch (NumberFormatException e) {
-			logString += " Os valores lidos do ficheiro são invalidos para a criação de Integers!\n" ;
+			logString += "ERRO: Os valores lidos do ficheiro são invalidos para a criação de Integers!\n";
 		}
-		
+
 		almeida_enrolment.setCoddis(curricularCourseCode);
 		almeida_enrolment.setCurso(degreeCode);
 		almeida_enrolment.setResult(grade);
@@ -93,12 +122,15 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 	private void processEnrolment(Almeida_enrolment almeida_enrolment) {
 
-		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(almeida_enrolment);
-		ICurricularCourse curricularCourse = readCurricularCourse(almeida_enrolment);
-		IExecutionPeriod executionPeriod = processExecutionPeriod(almeida_enrolment.getAnoins(),almeida_enrolment.getSemdis());
+		branch = processBranch(almeida_enrolment.getRamo());
+		curricularCourse = processCurricularCourse(almeida_enrolment);
+		curricularSemester = processCurricularSemester(almeida_enrolment);
 
-		// existe referencia a esta CC na BD, ou seja, a CC pertence ao degreeCurricularPlan deste semestre (e não o novo)
-		if (curricularCourse != null) {
+		IStudentCurricularPlan studentCurricularPlan = processStudentCurricularPlan(almeida_enrolment);
+
+		if (studentCurricularPlan != null) {
+			IExecutionPeriod executionPeriod = processExecutionPeriod(almeida_enrolment.getAnoins(), almeida_enrolment.getSemdis());
+			ICurricularCourseScope curricularCourseScope = processCurricularCourseScope();
 
 			IEnrolment enrolment = persistentObjectOJB.readEnrolment(studentCurricularPlan, curricularCourse, executionPeriod);
 			if (enrolment == null) {
@@ -107,29 +139,143 @@ public class LoadLEQEnrolments extends LoadDataFile {
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 				enrolment.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));
-				enrolment.setUniversityCode(processUniversityCode(almeida_enrolment.getCoduniv()));
+				enrolment.setEnrolmentState(processGrade(almeida_enrolment));
+
+				// FIXME DAVID-RICARDO: Por os university codes numa tabela
+				enrolment.setUniversityCode(UniversityCode.IST);
+				//enrolment.setUniversityCode(processUniversityCode(almeida_enrolment.getCoduniv()));
 				writeElement(enrolment);
 			}
-//			} else {
-//				enrolment.setCurricularCourse(curricularCourse);
-//				enrolment.setExecutionPeriod(executionPeriod);
-//				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
-//				enrolment.setStudentCurricularPlan(studentCurricularPlan);
-//				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-//				enrolment.setUniversityCode(UniversityCode.IST);
-//				writeElement(enrolment);
-//			}
+
+			IEnrolmentEvaluation enrolmentEvaluation = processEvaluation(enrolment, almeida_enrolment);
+			writeElement(enrolmentEvaluation);
+			//				logString 	+= "ERRO: O enrolment para o aluno: " + almeida_enrolment.getNumalu() 
+			//							+ " na cadeira " + curricularCourse.getName()
+			//							+ " no periodo " + executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear()
+			//							+ " no plano curricular " + studentCurricularPlan.getDegreeCurricularPlan().getName()
+			//							+ " já existe! ";
+			//				logString += "Linha: " + loader.numberLinesProcessed + "\n"; 
+			//				numberUntreatableElements++;
 		}
 	}
 
+	private EnrolmentState processGrade(Almeida_enrolment almeida_enrolment) {
+		String grade = almeida_enrolment.getResult();
+		EnrolmentState enrolmentState = null;
+		if (grade.equals("RE")) {
+			enrolmentState = EnrolmentState.NOT_APROVED_OBJ;
+		} else if (grade.equals("  ")) {
+			enrolmentState = EnrolmentState.WITHOUT_GRADE_OBJ;
+		} else if (almeida_enrolment.getObserv().equals("ANULADO")) {
+			enrolmentState = EnrolmentState.ANNULED_OBJ;
+		} else {
+			enrolmentState = EnrolmentState.APROVED_OBJ;
+		}
+		return enrolmentState;
+	}
+
+	private IEnrolmentEvaluation processEvaluation(IEnrolment enrolment, Almeida_enrolment almeida_enrolment) {
+
+		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+
+		enrolmentEvaluation.setEnrolment(enrolment);
+
+		if (almeida_enrolment.getObserv().equals("RECTIFICADO")) {
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
+		} else if (almeida_enrolment.getObserv().equals("RECTIFICAÇÃO")) {
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFICATION_OBJ);
+		} else {
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.NORMAL_OBJ);
+		}
+
+		enrolmentEvaluation.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));
+
+		if (!almeida_enrolment.getDatexa().equals("          ")) {
+			Calendar newCalendar = Calendar.getInstance();
+			int year = new Integer(almeida_enrolment.getDatexa().substring(0, 3)).intValue();
+			int month = new Integer(almeida_enrolment.getDatexa().substring(5, 6)).intValue();
+			int day = new Integer(almeida_enrolment.getDatexa().substring(8, 9)).intValue();
+			newCalendar.set(year, month, day);
+			Date examDate = newCalendar.getTime();
+			enrolmentEvaluation.setExamDate(examDate);
+		}
+
+		if (!almeida_enrolment.getResult().equals("  ")) {
+			enrolmentEvaluation.setGrade(almeida_enrolment.getResult());
+		}
+
+		enrolmentEvaluation.setGradeAvailableDate(null);
+
+		if (!almeida_enrolment.getNumdoc().equals("    ")) {
+			almeida_enrolment.setNumdoc(almeida_enrolment.getNumdoc().substring(1));
+			enrolmentEvaluation.setPersonResponsibleForGrade(persistentObjectOJB.readPersonByEmployeeNumber(new Integer(almeida_enrolment.getNumdoc())));
+		}
+
+		return enrolmentEvaluation;
+	}
+
+	private ICurricularSemester processCurricularSemester(Almeida_enrolment almeida_enrolment) {
+		Integer semester = new Integer("" + almeida_enrolment.getSemdis());
+		Integer year = new Integer("" + almeida_enrolment.getAnodis());
+
+		ICurricularYear curricularYear = persistentObjectOJB.readCurricularYear(year);
+		if (curricularYear == null) {
+			logString += "ERRO: O curricularYear: " + year + " não existe!\n";
+		}
+
+		ICurricularSemester curricularSemester = persistentObjectOJB.readCurricularSemester(semester, curricularYear);
+		if (curricularSemester == null) {
+			logString += "ERRO: O curricularSemester: " + semester + " não existe!\n";
+		}
+		return curricularSemester;
+	}
+
+	private ICurricularCourseScope processCurricularCourseScope() {
+		ICurricularCourseScope curricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByUnique(curricularCourse, branch, curricularSemester);
+		if (curricularCourseScope == null) {
+			curricularCourseScope = new CurricularCourseScope();
+			curricularCourseScope.setBranch(branch);
+			curricularCourseScope.setCurricularCourse(curricularCourse);
+			curricularCourseScope.setCurricularSemester(curricularSemester);
+			curricularCourseScope.setMaxIncrementNac(new Integer(2));
+			curricularCourseScope.setMinIncrementNac(new Integer(1));
+			curricularCourseScope.setWeigth(new Integer(1));
+			writeElement(curricularCourseScope);
+		}
+		return curricularCourseScope;
+	}
+
+	private ICurricularCourse processCurricularCourse(Almeida_enrolment almeida_enrolment) {
+		String code = almeida_enrolment.getCoddis();
+		//		Delete blank space in the beggining of code
+		if (code.charAt(0) == ' ') {
+			code = code.substring(1);
+		}
+
+		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndDegreeCurricularPlan(code, oldDegreeCurricularPlan);
+		if (curricularCourse == null) {
+			logString += "ERRO: A curricularCourse com o code: " + code + " não existe!\n";
+		}
+
+		return curricularCourse;
+	}
+
+	private IBranch processBranch(long branchKeyLong) {
+		Integer branchKey = new Integer("" + (branchKeyLong + 1));
+		IBranch branch = persistentObjectOJB.readBranch(branchKey);
+		if (branch == null) {
+			logString += "ERRO: O ramo com a key: " + branchKeyLong + " não existe!\n";
+		}
+		return branch;
+	}
 
 	private String processUniversityCode(String universityCodeRead) {
 		String universityCode = null;
-		if(universityCode.equals("IST")){
+		if (universityCode.equals("IST")) {
 			universityCode = UniversityCode.IST;
-		}else if (universityCode.equals("UBI")){
+		} else if (universityCode.equals("UBI")) {
 			universityCode = UniversityCode.UBI;
-		}else {
+		} else {
 			logString += "Novo University Code: " + universityCodeRead + "\n";
 		}
 		return universityCode;
@@ -137,102 +283,120 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 	private EnrolmentEvaluationType processEvaluationType(long epocaLong) {
 		EnrolmentEvaluationType enrolmentEvaluationType = null;
-		
+
 		int epoca = (new Integer("" + epocaLong)).intValue();
 		switch (epoca) {
 			case 0 :
 				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+				break;
 			case 1 :
 				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+				break;
 			case 2 :
 				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+				break;
 			case 3 :
 				enrolmentEvaluationType = EnrolmentEvaluationType.SPECIAL_OBJ;
+				break;
 			case 4 :
 				enrolmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT_OBJ;
+				break;
 			case 5 :
 				enrolmentEvaluationType = EnrolmentEvaluationType.EXTERNAL_OBJ;
-			default:
-				logString += "A epoca [" + epocaLong + "] é invalida!\n";
+				break;
+			default :
+				logString += "ERRO: A epoca [" + epocaLong + "] é invalida!\n";
 				break;
 		}
-		
+
 		return enrolmentEvaluationType;
 	}
 
 	private IExecutionPeriod processExecutionPeriod(long yearLong, long semesterLong) {
-		
+
 		Integer semester = new Integer("" + semesterLong);
 		Integer year = new Integer("" + yearLong);
-		
-		IExecutionYear executionYear = persistentObjectOJB.readExecutionYearByYear(year);
-		if(executionYear == null)
-		{
+		String yearStr = new String((year.intValue() - 1) + "/" + year.intValue());
+
+		IExecutionYear executionYear = persistentObjectOJB.readExecutionYearByYear(yearStr);
+		if (executionYear == null) {
 			executionYear = new ExecutionYear();
 			executionYear.setState(PeriodState.CLOSED);
-			executionYear.setYear(new String("" + year));
-			writeElement(executionYear); 
+			executionYear.setYear(yearStr);
+			writeElement(executionYear);
 		}
-		
-		IExecutionPeriod executionPeriod  = persistentObjectOJB.readExecutionPeriodByYearAndSemester(executionYear, semester);
-		if(executionPeriod == null)
-		{
+
+		IExecutionPeriod executionPeriod = persistentObjectOJB.readExecutionPeriodByYearAndSemester(executionYear, semester);
+		if (executionPeriod == null) {
 			executionPeriod = new ExecutionPeriod();
 			executionPeriod.setExecutionYear(executionYear);
 			executionPeriod.setSemester(semester);
 			executionPeriod.setState(PeriodState.CLOSED);
-			executionPeriod.setName(year.intValue() + "/" + (year.intValue() + 1));
-			writeElement(executionPeriod); 
-		}
-		
-		return executionPeriod;	
-	}
-
-	private IDisciplinaExecucao readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
-		return persistentObjectOJB.readExecutionCourse(curricularCourse, executionPeriod);
-	}
-
-	private IExecutionPeriod readActiveExecutionPeriod() {
-		return persistentObjectOJB.readActiveExecutionPeriod();
-	}
-
-	private ICurricularCourse readCurricularCourse(Almeida_enrolment almeida_enrolment) {
-		ICurricularCourse curricularCourse = null;
-		
-		Almeida_curricular_course almeida_curricular_course = new Almeida_curricular_course();
-		almeida_curricular_course.setCode(almeida_enrolment.getCoddis());
-		if(this.almeidaCurricularCourseList.contains(almeida_curricular_course)) {
-			String code = almeida_enrolment.getCoddis();
-			int index = this.almeidaCurricularCourseList.indexOf(almeida_curricular_course);
-			String name = ((Almeida_curricular_course) this.almeidaCurricularCourseList.get(index)).getName();
-			//curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndName(code, name);
+			String name = null;
+			if (semester.intValue() == 1) {
+				name = "1º Semestre";
+			} else if (semester.intValue() == 2) {
+				name = "2º Semestre";
+			}
+			executionPeriod.setName(name);
+			writeElement(executionPeriod);
 		}
 
-//		curricularCourse = persistentObjectOJB.readCurricularCourse(almeida_disc.getNomedis(), new Integer("" + almeida_disc.getCodcur()), almeida_disc.getCoddis());
-//		if (curricularCourse == null) {
-//			// Log the ones we can't match
-//			writeElement(almeida_inscricoes);
-//			numberUntreatableElements++;
-//		}
-
-		return curricularCourse;
+		return executionPeriod;
 	}
 
-	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
-		IStudentCurricularPlan studentCurricularPlan = persistentObjectOJB.readStudentCurricularPlan(new Integer(almeida_enrolment.getNumalu()));
-		if (studentCurricularPlan == null) {
-			logString += "NÃO HÁ PLANO CURRICULAR DE ALUNO PARA O ALUNO [" + almeida_enrolment.getNumalu() + "]\n";
+	private IStudentCurricularPlan processStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
+
+		IStudentCurricularPlan studentCurricularPlan = null;
+
+		StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState.INCOMPLETE_OBJ;
+		Integer studentNumber = new Integer(almeida_enrolment.getNumalu());
+		IStudent student = persistentObjectOJB.readStudent(studentNumber, TipoCurso.LICENCIATURA_OBJ);
+
+		if (student != null) {
+			Integer year = new Integer("" + almeida_enrolment.getAnoins());
+			int newYear = year.intValue();
+			Calendar newCalendar = Calendar.getInstance();
+			newCalendar.set(newYear, Calendar.JANUARY, 1);
+			Date newDate = newCalendar.getTime();
+
+			studentCurricularPlan = persistentObjectOJB.readStudentCurricularPlanByUnique(student, oldDegreeCurricularPlan, branch, studentCurricularPlanState);
+			if (studentCurricularPlan == null) {
+				studentCurricularPlan = new StudentCurricularPlan();
+				studentCurricularPlan.setBranch(branch);
+				studentCurricularPlan.setCurrentState(studentCurricularPlanState);
+				studentCurricularPlan.setDegreeCurricularPlan(oldDegreeCurricularPlan);
+				studentCurricularPlan.setStudent(student);
+				studentCurricularPlan.setStartDate(newDate);
+				writeElement(studentCurricularPlan);
+			} else {
+				Date oldDate = studentCurricularPlan.getStartDate();
+				Calendar oldCalendar = Calendar.getInstance();
+				oldCalendar.setTime(oldDate);
+				int oldYear = oldCalendar.get(Calendar.YEAR);
+
+				if (newYear < oldYear) {
+					studentCurricularPlan.setStartDate(newDate);
+					writeElement(studentCurricularPlan);
+				}
+			}
+		} else {
+			logString += "ERRO: O aluno numero: " + almeida_enrolment.getNumalu() + " não está inscrito este semsstre!\n";
 		}
+
 		return studentCurricularPlan;
 	}
 
-	private IBranch getBranch(Almeida_inscricoes almeida_inscricoes) {
-		// TODO Auto-generated method stub
-		return null;
+	private IDegreeCurricularPlan processOldDegreeCurricularPlan() {
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName("LEQ-OLD");
+		if (degreeCurricularPlan == null) {
+			logString += "ERRO: O plano curricular: " + degreeCurricularPlan.getName() + " não existe!\n";
+		}
+		return degreeCurricularPlan;
 	}
 
 	protected String getFilename() {
-		return "etc/migration/curriculo_05.txt";
+		return "etc/migration/dcs-rjao/almeidaLEQData/curriculo_05.txt";
 	}
 
 	protected String getFieldSeparator() {
@@ -240,6 +404,6 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	}
 
 	protected String getFilenameOutput() {
-		return "enrolmentMigrationLog.txt";
+		return "etc/migration/dcs-rjao/logs/enrolmentMigrationLog.txt";
 	}
 }

@@ -20,6 +20,7 @@ public interface IStudent {
 	public IPessoa getPerson();
 	public IStudentKind getStudentKind();
 	public TipoCurso getDegreeType();
+	public Integer getInternalCode();
 	
 	public void setNumber(Integer number);
 	public void setState(StudentState state);
