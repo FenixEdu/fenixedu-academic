@@ -92,4 +92,17 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/enrollmentConfirmation.jsp"/>
 	</definition>
 
+	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
+	</definition>
+	<definition name="df.page.showStudentCurricularPlans" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>
+	</definition>
+	<definition name="df.page.notAuthorized" extends="definition.degreeAdministrativeOffice.masterPage" >
+		<put name="body" value="/student/notAuthorized_bd.jsp" />
+	</definition>	
+	<definition name="df.page.showStudentCurriculum" extends="definition.degreeAdministrativeOffice.masterPage" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>	
+	
 </tiles-definitions>

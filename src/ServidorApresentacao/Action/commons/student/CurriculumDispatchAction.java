@@ -17,13 +17,17 @@ import org.apache.struts.actions.DispatchAction;
 
 import framework.factory.ServiceManagerServiceFactory;
 
+import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoCurso;
 
 /**
  * 
@@ -44,14 +48,14 @@ public class CurriculumDispatchAction extends DispatchAction {
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-
-		Integer studentCurricularPlanID = Integer.valueOf(request.getParameter("studentCPID"));
-
+		String studentCurricularPlanID = request.getParameter("studentCPID");
+		if(studentCurricularPlanID == null) {
+			studentCurricularPlanID = (String) request.getAttribute("studentCPID");
+		}
+		
 		List result = null;
-		
-		
 		try {
-			Object args[] = { userView, studentCurricularPlanID };
+			Object args[] = { null, Integer.valueOf(studentCurricularPlanID) };
 			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurriculum", args);
 		} catch (NotAuthorizedException e) {
 			return mapping.findForward("NotAuthorized");
@@ -68,12 +72,10 @@ public class CurriculumDispatchAction extends DispatchAction {
 		chainComparator.addComparator(executionYear);
 		
 		Collections.sort(result, chainComparator);
-
-
 		
 		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 		try {
-			Object args[] = { studentCurricularPlanID };
+			Object args[] = { Integer.valueOf(studentCurricularPlanID) };
 			infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlan", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e);
@@ -94,17 +96,29 @@ public class CurriculumDispatchAction extends DispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession();
-		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-
+		String studentNumber = request.getParameter("studentNumber");
+		if(studentNumber == null) {
+			studentNumber = (String) request.getAttribute("studentNumber");
+		}
+		if(studentNumber == null) {
+			InfoStudent infoStudent = null;
+			try {
+				Object args[] = { userView };
+				infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByUsername", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			studentNumber = infoStudent.getNumber().toString();
+		}
+		
 		List result = null;
 		try {
-			Object args[] = { userView };
+			Object args[] = { Integer.valueOf(studentNumber), TipoCurso.LICENCIATURA_OBJ };
 			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlans", args);
 		} catch (NonExistingServiceException e) {
-			request.setAttribute("studentCPs", new ArrayList());
-			return mapping.findForward("ShowStudentCurricularPlans");
+			result = new ArrayList();
 		}
 		
 		request.setAttribute("studentCPs", result);

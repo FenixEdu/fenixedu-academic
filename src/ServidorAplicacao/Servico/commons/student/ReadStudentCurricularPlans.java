@@ -23,6 +23,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoCurso;
 
 public class ReadStudentCurricularPlans implements IServico
 {
@@ -52,7 +53,7 @@ public class ReadStudentCurricularPlans implements IServico
         return "ReadStudentCurricularPlans";
     }
 
-    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException
+    public List run(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoInexistente, FenixServiceException
     {
         ISuportePersistente sp = null;
 
@@ -63,7 +64,7 @@ public class ReadStudentCurricularPlans implements IServico
             sp = SuportePersistenteOJB.getInstance();
 
             studentCurricularPlans =
-                sp.getIStudentCurricularPlanPersistente().readByUsername(userView.getUtilizador());
+                sp.getIStudentCurricularPlanPersistente().readByStudentNumberAndDegreeType(studentNumber, degreeType);
 
         } catch (ExcepcaoPersistencia ex)
         {

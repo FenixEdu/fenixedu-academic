@@ -148,6 +148,6 @@
 	<br/>
 	<br />
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.student.ok"/>
+		<bean:message key="button.student.end"/>
 	</html:submit>
 </html:form>

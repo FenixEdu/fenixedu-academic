@@ -252,7 +252,7 @@ public class DownloadCandidaciesTable extends FenixAction
 						selectedSCP = cp;
 					}
 				}			
-				Object getCurriculumArgs[] = { userView, selectedSCP.getIdInternal()};
+				Object getCurriculumArgs[] = { null, selectedSCP.getIdInternal()};
 				List enrollments =
 					(ArrayList) ServiceManagerServiceFactory.executeService(
 						userView,

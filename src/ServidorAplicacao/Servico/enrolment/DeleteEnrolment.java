@@ -32,8 +32,8 @@ public class DeleteEnrolment implements IService
 	public DeleteEnrolment()
 	{
 	}
-
-	public void run(Integer enrolmentID) throws FenixServiceException
+	// some of these arguments may be null. they are only needed for filter
+	public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID) throws FenixServiceException
 	{
 		try
 		{

@@ -69,7 +69,7 @@ public class ViewCandidateCurriculum extends FenixAction
 					selectedSCP = cp;
 				}
 			}
-			Object getCurriculumArgs[] = { userView, selectedSCP.getIdInternal()};
+			Object getCurriculumArgs[] = { null, selectedSCP.getIdInternal()};
 			enrollments =
 				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,

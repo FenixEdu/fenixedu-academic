@@ -15,6 +15,7 @@ import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -45,7 +46,7 @@ public class ReadStudentByNumberAndDegreeType implements IServico {
 
   // FIXME: We have to read the student by type also !!
 
-  public Object run(Integer number, TipoCurso degreeType) {
+  public Object run(Integer number, TipoCurso degreeType) throws FenixServiceException {
 
     InfoStudent infoStudent = null;
 
@@ -64,6 +65,7 @@ public class ReadStudentByNumberAndDegreeType implements IServico {
       
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
+      throw new FenixServiceException(ex);
     }
 
     return infoStudent;

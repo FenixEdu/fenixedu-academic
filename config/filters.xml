@@ -563,4 +563,11 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>         
+    <filter>
+        <name>EnrollmentLEECAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.EnrollmentLEECAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>         
 </filterDefinitions>

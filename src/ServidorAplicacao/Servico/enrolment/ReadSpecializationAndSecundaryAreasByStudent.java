@@ -30,8 +30,9 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService
 	public ReadSpecializationAndSecundaryAreasByStudent()
 	{
 	}
-
-	public List run(Integer studentNumber) throws FenixServiceException
+	
+	// some of these arguments may be null. they are only needed for filter
+	public List run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer studentNumber) throws FenixServiceException
 	{
 		List finalAreas = null;
 		try

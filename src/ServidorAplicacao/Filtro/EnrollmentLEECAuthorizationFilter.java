@@ -14,6 +14,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import Dominio.ITutor;
+import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCoordinator;
@@ -78,7 +79,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 					return false;
 				}
 
-				if (!verifyStudentLEEC(student.getNumber(), sp) || verifyStudentWithTutor(student, sp))
+				if (!verifyStudentLEEC(arguments, sp) || verifyStudentWithTutor(student, sp))
 				{
 					return false;
 				}
@@ -87,7 +88,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			{
 
 				//verify if the student to enroll is a LEEC degree student
-				if (!verifyStudentLEEC((Integer) arguments[1], sp))
+				if (!verifyStudentLEEC(arguments, sp))
 				{
 					return false;
 				}
@@ -105,7 +106,8 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 					{
 						return false;
 					}
-				} else if (roles.contains(RoleType.TEACHER))
+				}
+				else if (roles.contains(RoleType.TEACHER))
 				{
 					ITeacher teacher = readTeacher(id, sp);
 					if (teacher == null)
@@ -113,7 +115,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 						return false;
 					}
 
-					IStudent student = readStudent(id, sp);
+					IStudent student = readStudent((Integer) arguments[1], sp);
 					if (student == null)
 					{
 						return false;
@@ -124,12 +126,14 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 						return false;
 					}
 
-					return true;
-				} else if (!(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-					|| roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))
+				}
+				else if (
+					roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+						|| roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
 				{
-					return false;
-				} else
+					return true;
+				}
+				else
 				{
 					return false;
 				}
@@ -137,6 +141,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		}
 		catch (Exception exception)
 		{
+			exception.printStackTrace();
 			return false;
 		}
 		return true;
@@ -149,15 +154,45 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		return persistentStudent.readByUsername(id.getUtilizador());
 	}
 
-	private boolean verifyStudentLEEC(Integer numberStudent, ISuportePersistente sp)
+	private IStudent readStudent(Integer studentCurricularPlanId, ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 			sp.getIStudentCurricularPlanPersistente();
-		IStudentCurricularPlan studentCurricularPlan =
-			persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
-				numberStudent,
-				TipoCurso.LICENCIATURA_OBJ);
+
+		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+		studentCurricularPlan.setIdInternal(studentCurricularPlanId);
+		persistentStudentCurricularPlan.readByOId(studentCurricularPlan, false);
+		if (studentCurricularPlan == null)
+		{
+			return null;
+		}
+
+		return studentCurricularPlan.getStudent();
+	}
+
+	private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
+		throws ExcepcaoPersistencia
+	{
+		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
+			sp.getIStudentCurricularPlanPersistente();
+
+		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+		if (arguments[1] != null)
+		{
+			studentCurricularPlan.setIdInternal((Integer) arguments[1]);
+			studentCurricularPlan =
+				(IStudentCurricularPlan) persistentStudentCurricularPlan.readByOId(
+					studentCurricularPlan,
+					false);
+		}
+		else
+		{
+			studentCurricularPlan =
+				persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
+					(Integer) arguments[2],
+					TipoCurso.LICENCIATURA_OBJ);
+		}
 		if (studentCurricularPlan == null)
 		{
 			return false;

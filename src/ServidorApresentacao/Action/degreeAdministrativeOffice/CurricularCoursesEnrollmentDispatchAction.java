@@ -32,6 +32,7 @@ import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.RoleType;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -75,7 +76,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
 
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
-		Object[] args = { studentNumber };
+		Object[] args = { null, null, studentNumber };
 		try
 		{
 			infoStudentEnrolmentContext =
@@ -83,6 +84,10 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					userView,
 					"ShowAvailableCurricularCourses",
 					args);
+		}
+		catch (NotAuthorizedException e)
+		{
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
 		}
 		catch (ExistingServiceException e)
 		{
@@ -99,7 +104,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
-			errors.add("enrolment", new ActionError(e.getMessage()));
+			if (!(userView.getRoles().contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+				|| userView.getRoles().contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))
+			{
+				errors.add("enrolment", new ActionError(e.getMessage()));
+			}
 		}
 		catch (FenixServiceException e)
 		{
@@ -178,7 +187,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		maintainEnrollmentState(request, studentNumber);
 
 		List infoBranches = null;
-		Object[] args = { studentNumber };
+		Object[] args = { null, null, studentNumber };
 		try
 		{
 			infoBranches =
@@ -186,6 +195,10 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					userView,
 					"ReadSpecializationAndSecundaryAreasByStudent",
 					args);
+		}
+		catch (NotAuthorizedException e)
+		{
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
 		}
 		catch (ExistingServiceException e)
 		{
@@ -253,10 +266,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 		Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
 
-		Object[] args = { studentCurricularPlanId, specializationArea, secondaryArea };
+		Object[] args = { null, studentCurricularPlanId, specializationArea, secondaryArea };
 		try
 		{
 			ServiceManagerServiceFactory.executeService(userView, "WriteStudentAreas", args);
+		}
+		catch (NotAuthorizedException e)
+		{
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
 		}
 		catch (BothAreasAreTheSameServiceException e)
 		{
@@ -301,6 +318,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 	{
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
+		ActionErrors errors = new ActionErrors();
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer[] curricularCoursesToEnroll =
@@ -311,10 +329,16 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		List toEnroll = Arrays.asList(curricularCoursesToEnroll);
 		if (toEnroll.size() == 1)
 		{
-			Object[] args = { studentCurricularPlanId, toEnroll.get(0), null };
+			Object[] args = { null, studentCurricularPlanId, toEnroll.get(0), null };
 			try
 			{
 				ServiceManagerServiceFactory.executeService(userView, "WriteEnrolment", args);
+			}
+			catch (NotAuthorizedException e)
+			{
+				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+				saveErrors(request, errors);
+				return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
 			}
 			catch (FenixServiceException e)
 			{
@@ -333,6 +357,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 	{
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
+		ActionErrors errors = new ActionErrors();
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer[] enrolledCurricularCoursesBefore =
@@ -345,10 +370,18 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		List toUnenroll = (List) CollectionUtils.subtract(enrollmentsBefore, enrollmentsAfter);
 		if (toUnenroll.size() == 1)
 		{
-			Object[] args = {(Integer) toUnenroll.get(0)};
+			Integer studentCurricularPlanId =
+				Integer.valueOf(request.getParameter("studentCurricularPlanId"));
+
+			Object[] args = { null, studentCurricularPlanId, (Integer) toUnenroll.get(0)};
 			try
 			{
 				ServiceManagerServiceFactory.executeService(userView, "DeleteEnrolment", args);
+			}
+			catch (NotAuthorizedException e)
+			{
+				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+				saveErrors(request, errors);
 			}
 			catch (FenixServiceException e)
 			{
@@ -365,8 +398,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		HttpServletResponse response)
 		throws Exception
 	{
-		//		super.validateToken(request, form, mapping, "error.transaction.enrollment");
-
 		IUserView userView = SessionUtils.getUserView(request);
 		ActionErrors errors = new ActionErrors();
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
@@ -376,7 +407,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
-		Object[] args = { studentNumber };
+		Object[] args = { null, null, studentNumber };
 		try
 		{
 			infoStudentEnrolmentContext =
@@ -384,6 +415,10 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					userView,
 					"ShowAvailableCurricularCourses",
 					args);
+		}
+		catch (NotAuthorizedException e)
+		{
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
 		}
 		catch (ExistingServiceException e)
 		{
@@ -420,9 +455,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			saveErrors(request, errors);
 			return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
 		}
-		
+
 		List curriculum = null;
-		Object args2[] = { userView, studentCurricularPlanId };
+		Object args2[] = { null, studentCurricularPlanId };
 		try
 		{
 			curriculum =

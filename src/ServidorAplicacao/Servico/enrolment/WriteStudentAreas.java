@@ -35,7 +35,9 @@ public class WriteStudentAreas implements IService
 	{
 	}
 
+	// some of these arguments may be null. they are only needed for filter
 	public void run(
+		Integer executionDegreeId, 
 		Integer studentCurricularPlanID,
 		Integer specializationAreaID,
 		Integer secundaryAreaID)

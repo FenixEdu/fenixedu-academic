@@ -53,6 +53,11 @@
 			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+
+		<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 		
 	</form-beans>
 
@@ -257,6 +262,24 @@
 			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
 		</action>
 		
+		<action path="/viewStudentCurriculum"
+		      	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
+              	parameter="method">
+			<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
+      	</action>
+      	
+		<action path="/viewCurriculum"
+		      	type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
+              	parameter="method"
+		      	name="curriculumForm"	
+				scope="request"
+				validate="true"
+				input="/viewStudentCurriculum.do?method=prepareViewStudentCurriculumChooseStudent&amp;page=0">
+        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+        	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+      	</action>
+			
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

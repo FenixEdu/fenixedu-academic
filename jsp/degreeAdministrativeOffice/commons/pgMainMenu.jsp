@@ -3,6 +3,9 @@
 
 <ul>
 	<li>
+		<html:link page="<%="/viewStudentCurriculum.do?method=prepareView"%>"><bean:message key="link.student.curriculum"/></html:link>
+	</li>
+	<li>
 		<html:link forward="enrolment"><bean:message key="link.student.enrolment"/></html:link>
 	</li>
 	<li> 

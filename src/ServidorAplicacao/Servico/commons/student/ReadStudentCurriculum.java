@@ -40,7 +40,7 @@ public class ReadStudentCurriculum implements IService
     {
     }
 
-    public List run(IUserView userView, Integer studentCurricularPlanID)
+    public List run(Integer executionDegreeCode, Integer studentCurricularPlanID)
             throws ExcepcaoInexistente, FenixServiceException
     {
         ISuportePersistente sp = null;

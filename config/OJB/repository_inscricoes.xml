@@ -136,7 +136,7 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="Dominio.Curso"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -459,13 +459,13 @@
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="studentKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor

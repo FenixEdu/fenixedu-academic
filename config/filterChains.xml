@@ -63,6 +63,7 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <!--EnrollmentLEECAuthorization-->
     <filterChain>
         <name>MasterDegreeAdministrativeOfficeAuthorization</name>
         <expression>MasterDegreeAdministrativeOfficeAuthorization </expression>
@@ -584,6 +585,13 @@
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>EnrollmentLEECAuthorization</name>
+        <expression>EnrollmentLEECAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
         <name>ReadGratuityListAuthorization</name>

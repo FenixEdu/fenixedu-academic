@@ -5580,35 +5580,45 @@
     	<description>Returns information about student enrollments in curricular courses</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
     	<isTransactional>True</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
     </service>  
     <service>
     	<name>DeleteEnrolment</name>
     	<description>Deletes enrolment of student in a curricular course</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrolment</implementationClass>
     	<isTransactional>True</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
     </service>  
     <service>
     	<name>WriteStudentAreas</name>
     	<description>Modifies areas belonging to student curricular plan</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteStudentAreas</implementationClass>
     	<isTransactional>True</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
     </service>  
     <service>
     	<name>WriteEnrolment</name>
     	<description>Enrolls student in curricular course</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolment</implementationClass>
     	<isTransactional>True</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
     </service>  
     <service>
     	<name>ReadSpecializationAndSecundaryAreasByStudent</name>
     	<description>Reads areas corrresponding to student curricular plan</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
     	<isTransactional>True</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
     </service>  
     <service>
     	<name>ReadStudentsByTutor</name>
@@ -5632,7 +5642,9 @@
         <implementationClass> 
             ServidorAplicacao.Servico.commons.student.ReadStudentCurriculum</implementationClass>
     	<isTransactional>True</isTransactional>
-        <filterChains/>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
     </service>
     <service>
     	<name>InsertTutorShipWithOneStudent</name>

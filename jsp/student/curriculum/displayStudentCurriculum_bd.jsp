@@ -12,7 +12,7 @@
   <bean:define id="student" name="<%= SessionConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />
   
   
-  <bean:message key="label.person.name" />
+  <bean:message key="label.person.name" />:
   <bean:write name="student" property="infoStudent.infoPerson.nome"/>
   </br>
   
@@ -20,7 +20,7 @@
   <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
   </br>
 
-  <bean:message key="label.number" />
+  <bean:message key="label.number" />:
   <bean:write name="student" property="infoStudent.number"/>
   </br>
   </br>
@@ -57,7 +57,7 @@
 			    <bean:write name="enrolment" property="infoExecutionPeriod.semester"/>
 			  </td>
 			  <td class="listClasses">
-			    <bean:write name="enrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>
+			    <bean:write name="enrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>
 			  </td>
 			  <td class="listClasses" style="text-align:left">
 			    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
