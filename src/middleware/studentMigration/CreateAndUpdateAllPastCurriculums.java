@@ -55,12 +55,12 @@ import Util.MarkType;
 
 public class CreateAndUpdateAllPastCurriculums
 {
-	private static int totalMWCurricularCourseScopesRead = 0;
-	private static int totalUniversitysCreated = 0;
+	private static int mwCurricularCourseScopesRead = 0;
+	private static int universitysCreated = 0;
+	private static int degreeCurricularPlansCreated = 0;
+	private static int curricularCoursesCreated = 0;
+	private static int curricularCourseScopesCreated = 0;
 
-	private static HashMap degreeCurricularPlansCreated = new HashMap();
-	private static HashMap curricularCoursesCreated = new HashMap();
-	private static HashMap curricularCourseScopesCreated = new HashMap();
 	private static HashMap branchesCreated = new HashMap();
 
 	public static void main(String args[])
@@ -76,7 +76,7 @@ public class CreateAndUpdateAllPastCurriculums
 	
 			fenixPersistentSuport.confirmarTransaccao();
 	
-			int numberOfElementsInSpan = 100;
+			int numberOfElementsInSpan = 2000;
 			int numberOfSpans = numberOfMWCurricularCourseScopes.intValue() / numberOfElementsInSpan;
 			numberOfSpans =  numberOfMWCurricularCourseScopes.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 	
@@ -86,7 +86,7 @@ public class CreateAndUpdateAllPastCurriculums
 	
 				System.out.println("[INFO] Reading MWCurricularCourseScopes...");
 				List result = persistentMWCurricularCourseScope.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-				CreateAndUpdateAllPastCurriculums.totalMWCurricularCourseScopesRead = CreateAndUpdateAllPastCurriculums.totalMWCurricularCourseScopesRead + result.size();
+				CreateAndUpdateAllPastCurriculums.mwCurricularCourseScopesRead = CreateAndUpdateAllPastCurriculums.mwCurricularCourseScopesRead + result.size();
 	
 				fenixPersistentSuport.confirmarTransaccao();
 		
@@ -112,12 +112,12 @@ public class CreateAndUpdateAllPastCurriculums
 		}
 
 		System.out.println("[INFO] DONE!");
-		System.out.println("[INFO] Total DegreeCurricularPlans created: [" + CreateAndUpdateAllPastCurriculums.degreeCurricularPlansCreated.size() + "].");
-		System.out.println("[INFO] Total CurricularCourses created: [" + CreateAndUpdateAllPastCurriculums.curricularCoursesCreated.size() + "].");
-		System.out.println("[INFO] Total CurricularCourseScopes created: [" + CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated.size() + "].");
+		System.out.println("[INFO] Total DegreeCurricularPlans created: [" + CreateAndUpdateAllPastCurriculums.degreeCurricularPlansCreated + "].");
+		System.out.println("[INFO] Total CurricularCourses created: [" + CreateAndUpdateAllPastCurriculums.curricularCoursesCreated + "].");
+		System.out.println("[INFO] Total CurricularCourseScopes created: [" + CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated + "].");
 		System.out.println("[INFO] Total Branches created: [" + CreateAndUpdateAllPastCurriculums.branchesCreated.size() + "].");
-		System.out.println("[INFO] Total Universitys created: [" + CreateAndUpdateAllPastCurriculums.totalUniversitysCreated + "].");
-		System.out.println("[INFO] Total MWCurricularCourseScopes read: [" + CreateAndUpdateAllPastCurriculums.totalMWCurricularCourseScopesRead + "].");
+		System.out.println("[INFO] Total Universitys created: [" + CreateAndUpdateAllPastCurriculums.universitysCreated + "].");
+		System.out.println("[INFO] Total MWCurricularCourseScopes read: [" + CreateAndUpdateAllPastCurriculums.mwCurricularCourseScopesRead + "].");
 
 	}
 
@@ -200,28 +200,24 @@ public class CreateAndUpdateAllPastCurriculums
 
 			if (degreeCurricularPlan == null) {
 				
-				degreeCurricularPlan = (IDegreeCurricularPlan) CreateAndUpdateAllPastCurriculums.degreeCurricularPlansCreated.get(degreeCode.toString());
-				
-				if (degreeCurricularPlan == null) {
-					degreeCurricularPlan = new DegreeCurricularPlan();
-			
-					persistentDegreeCurricularPlan.simpleLockWrite(degreeCurricularPlan);
-			
-					degreeCurricularPlan.setDegree(degree);
-					degreeCurricularPlan.setInitialDate(new Date());
-					degreeCurricularPlan.setEndDate(new Date());
-					degreeCurricularPlan.setMarkType(MarkType.TYPE20_OBJ);
-					degreeCurricularPlan.setName(degreeCurricularPlanName);
-					degreeCurricularPlan.setState(DegreeCurricularPlanState.PAST_OBJ);
-					degreeCurricularPlan.setDegreeDuration(new Integer(5));
-					degreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(3));
+				degreeCurricularPlan = new DegreeCurricularPlan();
+		
+				persistentDegreeCurricularPlan.simpleLockWrite(degreeCurricularPlan);
+		
+				degreeCurricularPlan.setDegree(degree);
+				degreeCurricularPlan.setInitialDate(new Date());
+				degreeCurricularPlan.setEndDate(new Date());
+				degreeCurricularPlan.setMarkType(MarkType.TYPE20_OBJ);
+				degreeCurricularPlan.setName(degreeCurricularPlanName);
+				degreeCurricularPlan.setState(DegreeCurricularPlanState.PAST_OBJ);
+				degreeCurricularPlan.setDegreeDuration(new Integer(5));
+				degreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(3));
 
-					degreeCurricularPlan.setCurricularCourses(null);
-					degreeCurricularPlan.setNeededCredits(null);
-					degreeCurricularPlan.setNumerusClausus(null);
+				degreeCurricularPlan.setCurricularCourses(null);
+				degreeCurricularPlan.setNeededCredits(null);
+				degreeCurricularPlan.setNumerusClausus(null);
 
-					CreateAndUpdateAllPastCurriculums.degreeCurricularPlansCreated.put(degreeCode.toString(), degreeCurricularPlan);
-				}
+				CreateAndUpdateAllPastCurriculums.degreeCurricularPlansCreated++;
 			}
 		}
 		
@@ -247,37 +243,39 @@ public class CreateAndUpdateAllPastCurriculums
 		MWBranch mwBranch = persistentMWBranch.readByDegreeCodeAndBranchCode(degreeCode, branchCode);
 		
 		if (mwBranch != null) {
-			branch = persistentBranch.readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwBranch.getDescription());
 
-			if (branch == null) {
-				branch = persistentBranch.readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+			String realBranchCode = null;
+			String realBranchName = null;
+
+			if (mwBranch.getDescription().startsWith("CURSO DE ")) {
+				realBranchName = new String("");
+				realBranchCode = new String("");
+			} else {
+				realBranchName = mwBranch.getDescription();
+				realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
 			}
 
+			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
+
+			String key = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
 			if (branch == null) {
-
-				branch = (IBranch) CreateAndUpdateAllPastCurriculums.branchesCreated.get(branchCode.toString());
+				branch = (IBranch) CreateAndUpdateAllPastCurriculums.branchesCreated.get(key);
+			}
 				
-				if (branch == null) {
-					branch = new Branch();
-			
-					persistentBranch.simpleLockWrite(branch);
+			if (branch == null) {
+				branch = new Branch();
+		
+				persistentBranch.simpleLockWrite(branch);
 
-					if (mwBranch.getDescription().startsWith("CURSO DE ")) {
-						branch.setName(new String(""));
-						branch.setCode(new String(""));
-					} else {
-						branch.setName(mwBranch.getDescription());
-						branch.setCode(new String("" + mwBranch.getDegreecode() + mwBranch.getBranchcode() + mwBranch.getOrientationcode()));
-					}
+				branch.setName(realBranchName);
+				branch.setCode(realBranchCode);
+				branch.setDegreeCurricularPlan(degreeCurricularPlan);
+				branch.setScopes(null);
 
-					branch.setDegreeCurricularPlan(degreeCurricularPlan);
-					branch.setScopes(null);
-
-					CreateAndUpdateAllPastCurriculums.branchesCreated.put(branchCode.toString(), branch);
-				}
+				CreateAndUpdateAllPastCurriculums.branchesCreated.put(key, branch);
 			}
 		} else {
-			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6(degreeCode, branchCode, degreeCurricularPlan, persistentBranch);
+			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(degreeCode, branchCode, degreeCurricularPlan, persistentBranch);
 		}
 
 		return branch;
@@ -308,38 +306,33 @@ public class CreateAndUpdateAllPastCurriculums
 			// In fact this can only be curricularCourses.size() == 0 but better safe than sorry :)
 			// This means no CurricularCourse was found with that code, for that DegreeCurricularPlan.
 
-			String key = degreeCurricularPlan.getName() + StringUtils.trim(courseCode);
-			ICurricularCourse curricularCourse = (ICurricularCourse) CreateAndUpdateAllPastCurriculums.curricularCoursesCreated.get(key);
-			if (curricularCourse == null) {
-
-				curricularCourse = new CurricularCourse();
-			
-				persistentCurricularCourse.simpleLockWrite(curricularCourse);
-			
-				String curricularCourseName = CreateAndUpdateAllPastCurriculums.getCurricularCourseName(StringUtils.trim(courseCode));
-				if (curricularCourseName == null) {
-					// This should NEVER happen!
-					System.out.println("[ERROR 06] Couldn't find name for CurricularCourse with code [" + StringUtils.trim(courseCode) + "]!");
-					return null;
-				}
-
-				curricularCourse.setCode(StringUtils.trim(courseCode));
-				curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
-				curricularCourse.setName(curricularCourseName);
-				// NOTE [DAVID]: Verficar se pode usar o valor do tipo de disciplina que vem no ficheiro do Almeida.
-				curricularCourse.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
-
-				curricularCourse.setUniversity(null);
-				curricularCourse.setCurricularCourseExecutionScope(null);
-				curricularCourse.setMandatory(null);
-				curricularCourse.setScopes(null);
-				curricularCourse.setAssociatedExecutionCourses(null);
-				curricularCourse.setBasic(null);
-				curricularCourse.setCredits(null);
-				curricularCourse.setDepartmentCourse(null);
-
-				CreateAndUpdateAllPastCurriculums.curricularCoursesCreated.put(key, curricularCourse);
+			String curricularCourseName = CreateAndUpdateAllPastCurriculums.getCurricularCourseName(StringUtils.trim(courseCode));
+			if (curricularCourseName == null) {
+				// This should NEVER happen!
+				System.out.println("[ERROR 06] Couldn't find name for CurricularCourse with code [" + StringUtils.trim(courseCode) + "]!");
+				return null;
 			}
+
+			ICurricularCourse curricularCourse = new CurricularCourse();
+		
+			persistentCurricularCourse.simpleLockWrite(curricularCourse);
+		
+			curricularCourse.setCode(StringUtils.trim(courseCode));
+			curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
+			curricularCourse.setName(curricularCourseName);
+			// NOTE [DAVID]: Verficar se pode usar o valor do tipo de disciplina que vem no ficheiro do Almeida.
+			curricularCourse.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
+
+			curricularCourse.setUniversity(null);
+			curricularCourse.setCurricularCourseExecutionScope(null);
+			curricularCourse.setMandatory(null);
+			curricularCourse.setScopes(null);
+			curricularCourse.setAssociatedExecutionCourses(null);
+			curricularCourse.setBasic(null);
+			curricularCourse.setCredits(null);
+			curricularCourse.setDepartmentCourse(null);
+
+			CreateAndUpdateAllPastCurriculums.curricularCoursesCreated++;
 
 			return curricularCourse;
 		} else {
@@ -379,33 +372,28 @@ public class CreateAndUpdateAllPastCurriculums
 		ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
 		if (curricularCourseScope == null) {
 
-			String key = mwCurricularCourseScope.getDegreecode().toString() + mwCurricularCourseScope.getBranchcode().toString() + mwCurricularCourseScope.getCoursecode() + mwCurricularCourseScope.getCurricularyear() + mwCurricularCourseScope.getCurricularsemester();
-			curricularCourseScope = (ICurricularCourseScope) CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated.get(key);
-			if (curricularCourseScope == null) {
+			// This means no CurricularCourseScope was found with CurricularCourse, CurricularSemester and Branch.
+			curricularCourseScope = new CurricularCourseScope();
+		
+			persistentCurricularCourseScope.simpleLockWrite(curricularCourseScope);
+		
+			curricularCourseScope.setBranch(branch);
+			curricularCourseScope.setCredits(mwCurricularCourseScope.getCredits());
+			curricularCourseScope.setCurricularCourse(curricularCourse);
+			curricularCourseScope.setCurricularSemester(curricularSemester);
+			curricularCourseScope.setLabHours(mwCurricularCourseScope.getLabhours());
+			curricularCourseScope.setMaxIncrementNac(new Integer(2));
+			curricularCourseScope.setMinIncrementNac(new Integer(1));
+			curricularCourseScope.setTheoreticalHours(mwCurricularCourseScope.getTheoreticalhours());
+			curricularCourseScope.setPraticalHours(mwCurricularCourseScope.getPraticahours());
+			curricularCourseScope.setTheoPratHours(mwCurricularCourseScope.getTheoprathours());
+			curricularCourseScope.setBeginDate(Calendar.getInstance());
+			curricularCourseScope.setEndDate(Calendar.getInstance());
+			curricularCourseScope.setEctsCredits(null);
 
-				// This means no CurricularCourseScope was found with CurricularCourse, CurricularSemester and Branch.
-				curricularCourseScope = new CurricularCourseScope();
-			
-				persistentCurricularCourseScope.simpleLockWrite(curricularCourseScope);
-			
-				curricularCourseScope.setBranch(branch);
-				curricularCourseScope.setCredits(mwCurricularCourseScope.getCredits());
-				curricularCourseScope.setCurricularCourse(curricularCourse);
-				curricularCourseScope.setCurricularSemester(curricularSemester);
-				curricularCourseScope.setLabHours(mwCurricularCourseScope.getLabhours());
-				curricularCourseScope.setMaxIncrementNac(new Integer(2));
-				curricularCourseScope.setMinIncrementNac(new Integer(1));
-				curricularCourseScope.setTheoreticalHours(mwCurricularCourseScope.getTheoreticalhours());
-				curricularCourseScope.setPraticalHours(mwCurricularCourseScope.getPraticahours());
-				curricularCourseScope.setTheoPratHours(mwCurricularCourseScope.getTheoprathours());
-				curricularCourseScope.setBeginDate(Calendar.getInstance());
-				curricularCourseScope.setEndDate(Calendar.getInstance());
-				curricularCourseScope.setEctsCredits(null);
+			curricularCourseScope.setWeigth(null);
 
-				curricularCourseScope.setWeigth(null);
-
-				CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated.put(key, curricularCourseScope);
-			}
+			CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated++;
 		}
 		return curricularCourseScope;
 	}
@@ -455,7 +443,7 @@ public class CreateAndUpdateAllPastCurriculums
 					persistentUniversity.simpleLockWrite(university);
 					university.setCode(mwUniversity.getUniversityCode());
 					university.setName(mwUniversity.getUniversityName());
-					CreateAndUpdateAllPastCurriculums.totalUniversitysCreated++;
+					CreateAndUpdateAllPastCurriculums.universitysCreated++;
 				}
 			}
 		}
@@ -477,23 +465,33 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Exception
 	 */
-	private static IBranch solveBranchesProblemsForDegrees1And4And6(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, IPersistentBranch persistentBranch) throws Exception
+	public static IBranch solveBranchesProblemsForDegrees1And4And6And51And53And54And64(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, IPersistentBranch persistentBranch) throws Exception
 	{
 		if ((degreeCode.intValue() == 6) ||
 			(degreeCode.intValue() == 1) ||
-			(degreeCode.intValue() == 4)) {
+			(degreeCode.intValue() == 4) ||
+			(degreeCode.intValue() == 51) ||
+			(degreeCode.intValue() == 53) ||
+			(degreeCode.intValue() == 54) ||
+			(degreeCode.intValue() == 64)) {
 
-			IBranch branch = (IBranch) CreateAndUpdateAllPastCurriculums.branchesCreated.get(branchCode.toString());
+			String realBranchCode = new String(degreeCode.toString() + branchCode.toString() + 0);
+			IBranch branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
+
+			if (branch == null) {
+				branch = (IBranch) CreateAndUpdateAllPastCurriculums.branchesCreated.get(realBranchCode);
+			}
 				
 			if (branch == null) {
 				branch = new Branch();
 				persistentBranch.simpleLockWrite(branch);
 				branch.setName(new String("BRANCH THAT NO LONGER EXISTS"));
-				branch.setCode(new String(degreeCode.toString() + branchCode.toString() + 0));
+				branch.setCode(realBranchCode);
 				branch.setDegreeCurricularPlan(degreeCurricularPlan);
 				branch.setScopes(null);
-				CreateAndUpdateAllPastCurriculums.branchesCreated.put(branchCode.toString(), branch);
+				CreateAndUpdateAllPastCurriculums.branchesCreated.put(realBranchCode, branch);
 			}
+
 			return branch;
 		} else {
 			return null;

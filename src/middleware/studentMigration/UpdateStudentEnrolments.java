@@ -825,7 +825,10 @@ public class UpdateStudentEnrolments
 			System.out.println("[ERROR 08] the middleware Branch [" + branchCode + "] from degree [" + degreeCode + "] cannot be found!");
 		}
 
-		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+//		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+
+		String realBranchCode = new String(mwbranch.getDegreecode().toString() + mwbranch.getBranchcode().toString() + mwbranch.getOrientationcode().toString());
+		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
 
 //		if(mwbranch.getDescription().startsWith("CURSO DE ")) {
 //			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
@@ -934,6 +937,8 @@ public class UpdateStudentEnrolments
 		String courseCode = null;
 		if (solveSomeProblems) {
 			courseCode = getRealCurricularCourseCodeForCodesAZx(mwEnrolment);
+		} else {
+			courseCode = mwEnrolment.getCoursecode();
 		}
 
 		// Get the list of Fenix CurricularCourses with that code for the selected DegreeCurricularPlan.

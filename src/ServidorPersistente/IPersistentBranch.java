@@ -17,6 +17,10 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface IPersistentBranch extends IPersistentObject {
 
 //    public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
+
+	/**
+	 * @deprecated
+	 */
 	public IBranch readBranchByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia;
     public ArrayList readAll() throws ExcepcaoPersistencia;
     public void lockWrite(IBranch branch) throws ExcepcaoPersistencia, ExistingPersistentException;
@@ -39,4 +43,5 @@ public interface IPersistentBranch extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IBranch readByDegreeCurricularPlanAndBranchName(IDegreeCurricularPlan degreeCurricularPlan, String branchName) throws ExcepcaoPersistencia;
+	public IBranch readByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia;
 }

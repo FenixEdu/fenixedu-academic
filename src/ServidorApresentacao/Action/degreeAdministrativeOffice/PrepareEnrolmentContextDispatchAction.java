@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +36,12 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction {
 
 	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		List infoExecutionDegreesList = this.getInfoExecutionDegreesList(request);
+		List infoExecutionDegreesList = this.getInfoExecutionDegreesList(request, form);
 
-		Integer infoExecutionDegreeIndex = this.getChosenInfoExecutionDegreeIndex(form);
-		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreesList.get(infoExecutionDegreeIndex.intValue());
+		Integer infoExecutionDegreeID = this.getChosenInfoExecutionDegreeIndex(form);
+
+//		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreesList.get(infoExecutionDegreeIndex.intValue());
+		InfoExecutionDegree infoExecutionDegree = this.getChosenInfoExecutionDegree(infoExecutionDegreesList, infoExecutionDegreeID);
 
 		List listOfChosenCurricularYears = this.getListOfChosenCurricularYears(form);
 //		List listOfChosenCurricularSemesters = this.getListOfChosenCurricularSemesters(form);
@@ -57,13 +60,17 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction {
 		return mapping.findForward(forwards[2]);
 	}
 
-	private List getInfoExecutionDegreesList(HttpServletRequest request) throws FenixActionException {
+	private List getInfoExecutionDegreesList(HttpServletRequest request, ActionForm form) throws FenixActionException {
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		List infoExecutionDegreesList = null;
 		try {
 			Integer degreeType = new Integer((String) request.getParameter("degreeType"));
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
+//			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			Integer executionPeriodOID = this.getExecutionPeriodOID(form);
+			InfoExecutionPeriod infoExecutionPeriod = PrepareStudentDataForEnrolmentWithoutRulesDispatchAction.getExecutionPeriod(request, executionPeriodOID);
+
 			TipoCurso realDegreeType = new TipoCurso(degreeType);
 			Object args[] = { infoExecutionPeriod.getInfoExecutionYear(), realDegreeType };
 			infoExecutionDegreesList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
@@ -143,5 +150,16 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction {
 		DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
 		Integer executionPeriodOID = (Integer) getDegreeAndCurricularSemesterAndCurricularYearForm.get("executionPeriodOID");
 		return executionPeriodOID;
+	}
+
+	private InfoExecutionDegree getChosenInfoExecutionDegree(List infoExecutionDegreesList, Integer idInternal) {
+		Iterator iterator = infoExecutionDegreesList.iterator();
+		while(iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+			if (infoExecutionDegree.getIdInternal().equals(idInternal)) {
+				return infoExecutionDegree;
+			}
+		}
+		return null;
 	}
 }

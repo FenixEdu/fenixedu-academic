@@ -92,6 +92,9 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 //		}
 //	}
 
+	/**
+	 * @deprecated
+	 */
 	public IBranch readBranchByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia {
 
 		try {
@@ -184,6 +187,13 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		crit.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
 		crit.addEqualTo("name", branchName);
 		return (IBranch) queryObject(Branch.class, crit);
-
 	}
+
+	public IBranch readByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
+		crit.addEqualTo("code", code);
+		return (IBranch) queryObject(Branch.class, crit);
+	}
+
 }

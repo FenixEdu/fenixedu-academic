@@ -1049,7 +1049,8 @@
 		</sequential>
 	</target>
 
-	<target name="create-and-update-all-past-curriculums" depends="load-mw-tables-with-data-for-all-enrollment-migration, create-past-execution-periods-and-execution-years">
+	<!-- <target name="create-and-update-all-past-curriculums" depends="load-mw-tables-with-data-for-all-enrollment-migration, create-past-execution-periods-and-execution-years"> -->
+	<target name="create-and-update-all-past-curriculums" depends="compile-proj">
 		<java classname="middleware.studentMigration.CreateAndUpdateAllPastCurriculums" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>

@@ -93,27 +93,27 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 	
 	}
 
-	public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree) throws ExcepcaoPersistencia {
-		try {
-			IDegreeCurricularPlan de = null;
-
-			String oqlQuery = "select all from " + DegreeCurricularPlan.class.getName();
-			oqlQuery += " where name = $1 " + " and degree.sigla = $2 ";
-
-			query.create(oqlQuery);
-			query.bind(name);
-			query.bind(degree.getSigla());
-
-			List result = (List) query.execute();
-			super.lockRead(result);
-			if (result.size() != 0)
-				de = (IDegreeCurricularPlan) result.get(0);
-			return de;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-
-	}
+//	public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree) throws ExcepcaoPersistencia {
+//		try {
+//			IDegreeCurricularPlan de = null;
+//
+//			String oqlQuery = "select all from " + DegreeCurricularPlan.class.getName();
+//			oqlQuery += " where name = $1 " + " and degree.sigla = $2 ";
+//
+//			query.create(oqlQuery);
+//			query.bind(name);
+//			query.bind(degree.getSigla());
+//
+//			List result = (List) query.execute();
+//			super.lockRead(result);
+//			if (result.size() != 0)
+//				de = (IDegreeCurricularPlan) result.get(0);
+//			return de;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+//
+//	}
 
 	public List readByDegree(ICurso degree) throws ExcepcaoPersistencia {
 		try {
@@ -147,4 +147,12 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 		return queryList(DegreeCurricularPlan.class, criteria);
 	}
 
+	public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("name", name);
+		criteria.addEqualTo("degreeKey", degree.getIdInternal());
+
+		return (IDegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
+	}
 }

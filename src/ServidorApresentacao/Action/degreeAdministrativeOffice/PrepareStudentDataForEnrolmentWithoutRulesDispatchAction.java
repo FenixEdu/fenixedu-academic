@@ -133,11 +133,11 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 			Iterator iterator = infoExecutionDegreesList.iterator();
 			while(iterator.hasNext()) {
 				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-				Integer index = new Integer(infoExecutionDegreesList.indexOf(infoExecutionDegree));
+//				Integer index = new Integer(infoExecutionDegreesList.indexOf(infoExecutionDegree));
 				if( (degreeType.intValue() == TipoCurso.MESTRADO) && (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) ) {
-					result.add(new LabelValueBean("Licenciatura em " + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
+					result.add(new LabelValueBean("Licenciatura em " + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), infoExecutionDegree.getIdInternal().toString()));
 				} else {
-					result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
+					result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), infoExecutionDegree.getIdInternal().toString()));
 				}
 			}
 		}
