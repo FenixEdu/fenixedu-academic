@@ -127,7 +127,6 @@ public class FileSuport implements IFileSuport {
 	
 	public boolean isFileNameValid(FileSuportObject file) {
 		String uri = "/files"+file.getUri()+"/"+file.getFileName();
-		System.out.println("fileNameSize->"+uri.length());
 		if (uri.length()>255) {
 			return false;
 		}
@@ -239,29 +238,20 @@ public class FileSuport implements IFileSuport {
 	}
 	
 	private void beginTransaction()throws SlideException, NotSupportedException, SystemException{
-		System.out.println("beforeBegintransactionStatus->"+token.getStatus());	
-		
-			token.begin();	
-		
-		System.out.println("afterBegintransactionStatus->"+token.getStatus());	
+				token.begin();	
 	}
 
 	private void commitTransaction() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
-			System.out.println("beforeCommittransactionStatus->"+token.getStatus());
 		if (token.getStatus()!=Status.STATUS_NO_TRANSACTION) {
 			token.commit();	
 		}		
-				
-		System.out.println("afterCommittransactionStatus->"+token.getStatus());	
 		}
 	
 	private void abortTransaction() throws IllegalStateException, SecurityException, SystemException{
-			System.out.println("beforeAborttransactionStatus->"+token.getStatus());		
 			if (token.getStatus()!=Status.STATUS_NO_TRANSACTION) {
 				token.rollback();
 			}
-					
-			System.out.println("afterAborttransactionStatus->"+token.getStatus());	
+			
 			
 		}	
 	/**
