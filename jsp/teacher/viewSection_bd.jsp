@@ -101,13 +101,13 @@
 				</html:link>
 			</div>
 		</td>
-		<td>
+		<%--<td>
 			<div class="gen-button">
 				<html:link page="<%="/prepareFileUpload.do?method=prepareFileUpload&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>">
 					Inserir Ficheiro
 				</html:link>
 			</div>
-		</td>
+		</td>--%>
 	</tr>
 </table>  
 <br> 

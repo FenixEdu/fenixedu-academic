@@ -779,27 +779,27 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		List infoItemsList = new ArrayList(itemsList.size());
 		Iterator iter = itemsList.iterator();
-		IFileSuport fileSuport = FileSuport.getInstance();
+		//IFileSuport fileSuport = FileSuport.getInstance();
 		while (iter.hasNext()) {
 			IItem item = (IItem) iter.next();
 			InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
-			try {
-				List files = fileSuport.getDirectoryFiles(item.getSlideName());
-				if (files != null && !files.isEmpty()) {
-					List links = new ArrayList();
-					Iterator iterFiles = files.iterator();
-					while (iterFiles.hasNext()) {
-						FileSuportObject file = (FileSuportObject) iterFiles.next();
-						InfoLink infoLink = new InfoLink();
-						infoLink.setLink(file.getFileName());
-						infoLink.setLinkName(file.getLinkName());
-						links.add(infoLink);
-					}
-					infoItem.setLinks(links);
-				}
-			} catch (SlideException e1) {
-				//the item does not have a folder associated
-			}
+//			try {
+//				List files = fileSuport.getDirectoryFiles(item.getSlideName());
+//				if (files != null && !files.isEmpty()) {
+//					List links = new ArrayList();
+//					Iterator iterFiles = files.iterator();
+//					while (iterFiles.hasNext()) {
+//						FileSuportObject file = (FileSuportObject) iterFiles.next();
+//						InfoLink infoLink = new InfoLink();
+//						infoLink.setLink(file.getFileName());
+//						infoLink.setLinkName(file.getLinkName());
+//						links.add(infoLink);
+//					}
+//					infoItem.setLinks(links);
+//				}
+//			} catch (SlideException e1) {
+//				//the item does not have a folder associated
+//			}
 			infoItemsList.add(infoItem);
 		}
 		component.setSection(Cloner.copyISection2InfoSection(iSection));

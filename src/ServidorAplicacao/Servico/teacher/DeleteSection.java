@@ -53,11 +53,11 @@ public class DeleteSection implements IServico {
 			if (sectionToDelete == null) {
 				throw new FenixServiceException("non existing section");
 			}
-			IFileSuport fileSuport = FileSuport.getInstance();			
-			long size=	fileSuport.getDirectorySize(sectionToDelete.getSlideName());			
-			if (size>0) {
-				throw new notAuthorizedServiceDeleteException();
-				}
+//			IFileSuport fileSuport = FileSuport.getInstance();			
+//			long size=	fileSuport.getDirectorySize(sectionToDelete.getSlideName());			
+//			if (size>0) {
+//				throw new notAuthorizedServiceDeleteException();
+//				}
 			ISection superiorSection = sectionToDelete.getSuperiorSection();
 			Integer sectionToDeleteOrder = sectionToDelete.getSectionOrder();
 
