@@ -5999,5 +5999,39 @@
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
+    </service>
+ 	<service>
+        <name>EditOtherTypeCreditLineService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.EditOtherTypeCreditLineService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
     </service>  
+ 	<service>
+        <name>DeleteOtherTypeCreditLineService</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.credits.DeleteOtherTypeCreditLineService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>  
+ 	<service>
+        <name>ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>  
+ 	<service>
+        <name>ReadOtherTypeCreditLineByOidService</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.ReadOtherTypeCreditLineByOidService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>  
+    
 </serviceDefinitions>
