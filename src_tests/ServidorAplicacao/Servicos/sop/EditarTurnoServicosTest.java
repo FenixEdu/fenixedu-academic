@@ -13,118 +13,139 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
-import DataBeans.ShiftKey;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.ITurno;
+import Dominio.Turno;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class EditarTurnoServicosTest extends TestCaseServicos {
-    public EditarTurnoServicosTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(EditarTurnoServicosTest.class);
+public class EditarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
+	private InfoShift infoShift = null;
 
-    // edit turno by unauthorized user
-  public void testUnauthorizedEditTurno() {
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
- 	InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-	 													_disciplinaExecucao1.getSigla(),
-	 													_disciplinaExecucao1.getPrograma(),
-	 													infoLicenciaturaExecucao,
-	 													_disciplinaExecucao1.getTheoreticalHours(),
-	 													_disciplinaExecucao1.getPraticalHours(),
-	 													_disciplinaExecucao1.getTheoPratHours(),
-	 													_disciplinaExecucao1.getLabHours());
-    Object argsEditarTurno[] = new Object[2];
-    argsEditarTurno[0] = new ShiftKey("turno1", iDE);
-    argsEditarTurno[1] = new InfoShift("turno1", new TipoAula(TipoAula.PRATICA), new Integer(50), iDE);
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView2, "EditarTurno", argsEditarTurno);
-        fail("testUnauthorizedEditarTurno");
-      } catch (Exception ex) {
-        assertNull("testUnauthorizedEditarTurno", result);
-      }
-  }
+	public EditarTurnoServicosTest(java.lang.String testName) {
+		super(testName);
+	}
 
-    // edit new existing turno
-  public void testEditExistingTurno() {
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
-	 InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-	 													_disciplinaExecucao1.getSigla(),
-	 													_disciplinaExecucao1.getPrograma(),
-	 													infoLicenciaturaExecucao,
-	 													_disciplinaExecucao1.getTheoreticalHours(),
-	 													_disciplinaExecucao1.getPraticalHours(),
-	 													_disciplinaExecucao1.getTheoPratHours(),
-	 													_disciplinaExecucao1.getLabHours());
-    Object argsEditarTurno[] = new Object[2];
-    argsEditarTurno[0] = new ShiftKey("turno1", iDE);    
-    argsEditarTurno[1] = new InfoShift("turno1", new TipoAula(TipoAula.PRATICA), new Integer(50), iDE);
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "EditarTurno", argsEditarTurno);
-        assertEquals("testEditNonExistingTurno", Boolean.TRUE.booleanValue(),
-                                                 ((Boolean) result).booleanValue());
-      } catch (Exception ex) {
-      	fail("testEditNonExistingTurno");
-      }
-  }
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
 
-    // edit new non-existing turno
-  public void testEditarNonExistingTurno() {
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
-	 InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-	 													_disciplinaExecucao1.getSigla(),
-	 													_disciplinaExecucao1.getPrograma(),
-	 													infoLicenciaturaExecucao,
-	 													_disciplinaExecucao1.getTheoreticalHours(),
-	 													_disciplinaExecucao1.getPraticalHours(),
-	 													_disciplinaExecucao1.getTheoPratHours(),
-	 													_disciplinaExecucao1.getLabHours());
-    Object argsEditarTurno[] = new Object[2];
-    argsEditarTurno[0] = new ShiftKey("turno3", iDE);
-    argsEditarTurno[1] = new InfoShift("turno3", new TipoAula(TipoAula.PRATICA), new Integer(50), iDE);
+	public static Test suite() {
+		TestSuite suite = new TestSuite(EditarTurnoServicosTest.class);
 
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "EditarTurno", argsEditarTurno);
-        assertEquals("testEditNonExistingTurno", Boolean.FALSE.booleanValue(),
-                                                 ((Boolean) result).booleanValue());
-      } catch (Exception ex) {
-      	fail("testEditNonExistingTurno");
-      }
-  }
-    
+		return suite;
+	}
+
+	protected void setUp() {
+		super.setUp();
+	}
+
+	protected void tearDown() {
+		super.tearDown();
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "EditarTurno";
+	}
+
+	// edit existing turno
+	public void testEditExistingTurno() {
+
+		this.ligarSuportePersistente(true);
+
+		Object argsEditarTurno[] = new Object[2];
+		argsEditarTurno[0] = this.infoShift;
+		ITurno turno = Cloner.copyInfoShift2Shift(this.infoShift);
+		InfoShift newInfoShift = Cloner.copyShift2InfoShift(turno);
+		newInfoShift.setLotacao(new Integer(200));
+		newInfoShift.setTipo(new TipoAula(TipoAula.DUVIDAS));
+		newInfoShift.setNome("turno3243324324sdv");
+		argsEditarTurno[1] = newInfoShift;
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurno);
+			assertEquals("testEditNonExistingTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
+		} catch (Exception ex) {
+			fail("testEditNonExistingTurno");
+		}
+	}
+
+	// edit non-existing turno
+	public void testEditarNonExistingTurno() {
+
+		this.ligarSuportePersistente(false);
+
+		Object argsEditarTurno[] = new Object[2];
+		argsEditarTurno[0] = this.infoShift;
+		ITurno turno = Cloner.copyInfoShift2Shift(this.infoShift);
+		InfoShift newInfoShift = Cloner.copyShift2InfoShift(turno);
+		newInfoShift.setLotacao(new Integer(200));
+		newInfoShift.setTipo(new TipoAula(TipoAula.DUVIDAS));
+		newInfoShift.setNome("turno3243324324sdv");
+		argsEditarTurno[1] = newInfoShift;
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurno);
+			assertEquals("testEditNonExistingTurno", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
+		} catch (Exception ex) {
+			fail("testEditNonExistingTurno");
+		}
+	}
+
+	private void ligarSuportePersistente(boolean existing) {
+
+		ISuportePersistente sp = null;
+
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+
+			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+
+			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
+
+			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
+			
+			ITurnoPersistente itp = sp.getITurnoPersistente();
+			ITurno it = null;
+
+			if(existing) {
+				it = itp.readByNameAndExecutionCourse("turno1", ide);
+			} else {
+				it = new Turno("turnoXPTO", new TipoAula(TipoAula.TEORICA), new Integer(100), ide);
+			}
+
+			this.infoShift = Cloner.copyIShift2InfoShift(it);
+
+			sp.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia excepcao) {
+			try {
+				sp.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("ligarSuportePersistente: cancelarTransaccao");
+			}
+			fail("ligarSuportePersistente: confirmarTransaccao");
+		}
+	}
 }

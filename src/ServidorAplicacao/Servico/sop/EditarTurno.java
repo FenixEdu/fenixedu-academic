@@ -63,7 +63,7 @@ public class EditarTurno implements IServico {
 					executionCourse);
 			if (turno != null) {
 				turno.setNome(turnoNova.getNome());
-				turno.setTipo(turno.getTipo());
+				turno.setTipo(turnoNova.getTipo());
 				turno.setLotacao(turnoNova.getLotacao());
 				sp.getITurnoPersistente().lockWrite(turno);
 				result = true;

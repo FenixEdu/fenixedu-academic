@@ -13,13 +13,7 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.ClassKey;
 import DataBeans.InfoClass;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -75,76 +69,49 @@ public class EditarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 	// edit existing turma
 	public void testEditExistingTurma() {
 
-//		this. ligarSuportePersistente(true);
-//
-//		InfoDegree iL = new InfoDegree(_curso1.getSigla(), _curso1.getNome());
-//		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-//			new InfoDegreeCurricularPlan("plano1", iL);
-//		InfoExecutionDegree infoExecutionDegree =
-//			new InfoExecutionDegree(
-//				infoDegreeCurricularPlan,
-//				new InfoExecutionYear("2002/2003"));
-//		InfoExecutionPeriod infoExecutionPeriod =
-//			new InfoExecutionPeriod(
-//				"2º Semestre",
-//				new InfoExecutionYear("2002/2003"));
-//		Object argsEditarTurma[] = new Object[2];
-//		argsEditarTurma[0] = new ClassKey("turma1");
-//		argsEditarTurma[1] =
-//			new InfoClass(
-//				"turma1",
-//				new Integer(1),
-//				infoExecutionDegree,
-//				infoExecutionPeriod);
-//
-//		Object result = null;
-//		try {
-//			result =
-//				_gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurma);
-//			assertEquals(
-//				"testEditNonExistingTurma",
-//				Boolean.TRUE.booleanValue(),
-//				((Boolean) result).booleanValue());
-//		} catch (Exception ex) {
-//			fail("testEditNonExistingTurma");
-//		}
-	}
-/*
-	// edit new non-existing turma
-	public void testEditarNonExistingTurma() {
-		InfoDegree iL = new InfoDegree(_curso1.getSigla(), _curso1.getNome());
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			new InfoDegreeCurricularPlan("plano1", iL);
-		InfoExecutionDegree infoExecutionDegree =
-			new InfoExecutionDegree(
-				infoDegreeCurricularPlan,
-				new InfoExecutionYear("2002/2003"));
-		InfoExecutionPeriod infoExecutionPeriod =
-			new InfoExecutionPeriod(
-				"2º Semestre",
-				new InfoExecutionYear("2002/2003"));
+		this. ligarSuportePersistente(true);
+
 		Object argsEditarTurma[] = new Object[2];
-		argsEditarTurma[0] = new ClassKey("turma2");
-		argsEditarTurma[1] =
-			new InfoClass(
-				"turma2",
-				new Integer(1),
-				infoExecutionDegree,
-				infoExecutionPeriod);
+		argsEditarTurma[0] = this.infoClass;
+		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
+		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+		newInfoClass.setAnoCurricular(new Integer(2));
+		newInfoClass.setSemestre(new Integer(2));
+		newInfoClass.setNome("turmaXPTO");
+		argsEditarTurma[1] = newInfoClass;
 
 		Object result = null;
 		try {
-			result =
-				_gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurma);
-			assertEquals(
-				"testEditNonExistingTurma",
-				Boolean.FALSE.booleanValue(),
-				((Boolean) result).booleanValue());
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurma);
+			assertEquals("testEditNonExistingTurma", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testEditNonExistingTurma");
 		}
 	}
-*/
+
+	// edit new non-existing turma
+	public void testEditarNonExistingTurma() {
+
+		this. ligarSuportePersistente(false);
+
+		Object argsEditarTurma[] = new Object[2];
+		argsEditarTurma[0] = this.infoClass;
+		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
+		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+		newInfoClass.setAnoCurricular(new Integer(2));
+		newInfoClass.setSemestre(new Integer(2));
+		newInfoClass.setNome("turmaXPTO");
+		argsEditarTurma[1] = newInfoClass;
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurma);
+			assertEquals("testEditNonExistingTurma", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
+		} catch (Exception ex) {
+			fail("testEditNonExistingTurma");
+		}
+	}
+
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;
