@@ -4,4 +4,4 @@ CREATE TABLE SCIENTIFIC_AREA (
   name varchar(100) NOT NULL,
   PRIMARY KEY  (id_internal),
   UNIQUE(name)
-) TYPE=InnoDB
+) TYPE=InnoDB;

@@ -11,5 +11,5 @@ create table CREDIT_LINE (
    EXPLANATION varchar(250) not null,
    START_DATE date not null,
    END_DATE date not null,
-   primary key (ID_INTERNAL),
+   primary key (ID_INTERNAL)
 )type=InnoDB;
