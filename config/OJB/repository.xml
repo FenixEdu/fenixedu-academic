@@ -20,7 +20,7 @@
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
 <!ENTITY teacher-credits SYSTEM "repository_creditsTeacher.xml">
 <!ENTITY assiduousness SYSTEM "repository_assiduousness.xml">
-<!ENTITY leq-migration SYSTEM "repository_LEQ_Migration.xml">
+<!ENTITY leq-migration SYSTEM "repository_enrolment_migration.xml">
 <!ENTITY sigla SYSTEM "repository_sigla.xml">
 <!ENTITY thor SYSTEM "repository_thor.xml">
 <!ENTITY almeida_coddis SYSTEM "repository_almeida_coddis.xml">
@@ -49,6 +49,7 @@
     &almeida;
     &posgrad;
     &assiduousness;
+    &leq-migration;
     &sigla;
     &thor;
     &almeida_coddis;
