@@ -11,6 +11,7 @@ public class Qualification extends DomainObject implements IQualification
 	private String mark;
 	private String school;
 	private String title;
+    private String degree;
 	private Integer personKey;
 
 	private IPessoa person;
@@ -128,4 +129,19 @@ public class Qualification extends DomainObject implements IQualification
 		this.year = year;
 	}
 
+    /**
+     * @return Returns the degree.
+     */
+    public String getDegree()
+    {
+        return degree;
+    }
+
+    /**
+     * @param degree The degree to set.
+     */
+    public void setDegree(String degree)
+    {
+        this.degree = degree;
+    }
 }
