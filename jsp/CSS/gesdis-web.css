@@ -57,7 +57,7 @@ h3 {
 	background-color: #B5BED6 !important;
 	}
 	
-/* Sub-t—picos */
+/* Sub-topicos */
 h4	{
 	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -399,15 +399,7 @@ p.contacto {
 	background-color: #CCCCCC;
 	text-align: center;
 	height: 20px;
-	border-color: #000000;
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-left-width: 1px;
-	border-left-style: solid;
-	border-right-width: 1px;
-	border-right-style: solid;	
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	border: 1px solid #000;
 }	
 
 /*****************************************************************
@@ -435,16 +427,30 @@ p.contacto {
 	border-width: 1px dotted #333;
 }
 
-.formTD{
+.formTD	{
 	text-align: left;
 	height: 30px;
 	width: 100px;
 }
 
-.listClasses{
-background-color: #EBECED;
-border: 1px solid #666;
-text-align: center;
-width: 150px;
-height: 30px;
+.listClasses {
+	background-color: #EBECED;
+	text-align: center;
+	width: 150px;
+	height: 30px;
 }
+
+.listClasses-header	{
+	background-color: #CCC;
+	font-weight: bold;
+	padding: 0 0 0 20px;
+	text-align: left;
+	height: 30px;
+}
+
+.tall-td {
+	height: 30px;
+	vertical-align: middle;
+	padding: 0 10px 0 10px;
+	background-color: transparent;
+	}
