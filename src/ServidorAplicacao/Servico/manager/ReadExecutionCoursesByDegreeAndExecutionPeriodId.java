@@ -90,7 +90,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             while (iter.hasNext())
             {
                 IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter.next();
-                if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE_OBJ))
+                if (degreeCurricularPlan.getState().getDegreeState().intValue()==DegreeCurricularPlanState.ACTIVE)
                 {
                     curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
                 }
