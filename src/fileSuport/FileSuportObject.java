@@ -42,7 +42,8 @@ public class FileSuportObject {
 	 */
 	public void setFileName(String fileName) {
 		try {
-			this.fileName = new String(fileName.getBytes("ISO-8859-1"), "ISO-8859-1");
+			this.fileName =
+				new String(fileName.getBytes("ISO-8859-1"), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			this.fileName = fileName;
 		}
@@ -66,7 +67,12 @@ public class FileSuportObject {
 	 * @param uri
 	 */
 	public void setUri(String uri) {
-		this.uri = uri;
+		try {
+			this.uri = new String(uri.getBytes("ISO-8859-1"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			this.uri = uri;
+		}
+
 	}
 
 	/**
@@ -109,7 +115,8 @@ public class FileSuportObject {
 	 */
 	public void setLinkName(String linkName) {
 		try {
-			this.linkName = new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
+			this.linkName =
+				new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			this.linkName = linkName;
 		}
@@ -126,7 +133,13 @@ public class FileSuportObject {
 	 * @param rootUri
 	 */
 	public void setRootUri(String rootUri) {
-		this.rootUri = rootUri;
+		try {
+			this.rootUri =
+				new String(rootUri.getBytes("ISO-8859-1"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			this.rootUri = rootUri;
+		}
+
 	}
 
 }

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Factory;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -789,7 +790,11 @@ public class TeacherAdministrationSiteComponentBuilder {
 					while (iterFiles.hasNext()) {
 						FileSuportObject file = (FileSuportObject) iterFiles.next();
 						InfoLink infoLink = new InfoLink();
-						infoLink.setLink(file.getFileName());
+						try {
+							infoLink.setLink(new String(file.getFileName().getBytes("ISO-8859-1"),"ISO-8859-1"));
+						} catch (UnsupportedEncodingException e2) {
+							infoLink.setLink(file.getFileName());
+						}
 						infoLink.setLinkName(file.getLinkName());
 						links.add(infoLink);
 					}

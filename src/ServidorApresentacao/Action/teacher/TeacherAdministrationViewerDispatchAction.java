@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.teacher;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -945,7 +946,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		throws FenixActionException {
 
 		Integer itemCode = getItemCode(request);
-		String fileName = request.getParameter("fileName");
+		String fileName;
+		
+			try {
+				fileName = new String(request.getParameter("fileName").getBytes("ISO-8859-1"),"ISO-8859-1");
+			} catch (UnsupportedEncodingException e) {
+				fileName = new String(request.getParameter("fileName"));
+			}
+		
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object[] args = { itemCode, fileName };

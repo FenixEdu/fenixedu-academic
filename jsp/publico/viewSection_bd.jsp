@@ -26,7 +26,8 @@
 				<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="" />
 				</td>
 				<td>
-				<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
+				<bean:define id="link" name="infoLink" property="link"/>
+				<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode + "&fileName=" + link %>" ><bean:write name="infoLink" property="linkName"/></html:link>
 				</td>
 			</tr>	
 		</logic:iterate>
