@@ -51,7 +51,7 @@ public class EnrollStudentInExam implements IServico {
 			IPersistentExam persistentExam = sp.getIPersistentExam();
 			IExam exam = new Exam();
 			exam.setIdInternal(examId);
-			exam = (IExam) persistentExam.readByOId(exam, false);
+			exam = (IExam) persistentExam.readByOId(exam, true);
 			if (exam == null || student == null) {
 
 				throw new InvalidArgumentsServiceException();
@@ -59,6 +59,7 @@ public class EnrollStudentInExam implements IServico {
 			if ( student.getExamsEnrolled().contains(exam)) {
 				throw new ExistingServiceException();
 			}
+			persistentStudent.lockWrite(student);
 		//	exam.getStudentsEnrolled().add(student);
 			student.getExamsEnrolled().add(exam);
 

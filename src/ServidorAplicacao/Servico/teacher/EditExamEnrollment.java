@@ -64,10 +64,11 @@ public class EditExamEnrollment implements IServico {
 				IPersistentExam persistentExam = sp.getIPersistentExam();
 				IExam exam = new Exam();
 				exam.setIdInternal(examCode);
-				exam = (IExam) persistentExam.readByOId(exam,false);
+				exam = (IExam) persistentExam.readByOId(exam,true);
 				if (exam==null){
 					throw new InvalidArgumentsServiceException();
 				}
+				persistentExam.lockWrite(exam);
 				exam.setEnrollmentBeginDay(beginDate);
 				exam.setEnrollmentEndDay(endDate);
 				exam.setEnrollmentBeginTime(beginTime);
@@ -75,7 +76,7 @@ public class EditExamEnrollment implements IServico {
 				if (exam.getEnrollmentEndDay().getTimeInMillis()>exam.getDay().getTimeInMillis()){
 					throw new InvalidTimeIntervalServiceException();
 				}
-				persistentExam.lockWrite(exam);
+			
 			} catch (ExcepcaoPersistencia e) {
 				throw new FenixServiceException(e);
 			}
