@@ -5,8 +5,10 @@
 package DataBeans.credits;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -27,7 +29,7 @@ public class TeacherCreditsSheetDTO implements Serializable
 
     private List infoMasterDegreeProfessorships;
 
-    private List infoProfessorshipList;
+    private List detailedProfessorshipList;
     private List infoShiftProfessorshipList;
     private List infoSupportLessonList;
     private InfoTeacher infoTeacher;
@@ -62,9 +64,11 @@ public class TeacherCreditsSheetDTO implements Serializable
     /**
 	 * @return Returns the infoProfessorshipList.
 	 */
-    public List getInfoProfessorshipList()
+    public List getDetailedProfessorshipList()
     {
-        return this.infoProfessorshipList;
+        BeanComparator executionCourseName = new BeanComparator("infoProfessorship.infoExecutionCourse.nome");
+        Collections.sort(this.detailedProfessorshipList, executionCourseName);
+        return this.detailedProfessorshipList;
     }
 
     /**
@@ -135,9 +139,9 @@ public class TeacherCreditsSheetDTO implements Serializable
 	 * @param infoProfessorshipList
 	 *                   The infoProfessorshipList to set.
 	 */
-    public void setInfoProfessorshipList(List infoProfessorshipList)
+    public void setDetailedProfessorshipList(List detailedProfessorshipList)
     {
-        this.infoProfessorshipList = infoProfessorshipList;
+        this.detailedProfessorshipList = detailedProfessorshipList;
     }
 
     /**
