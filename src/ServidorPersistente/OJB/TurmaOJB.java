@@ -173,41 +173,50 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		ICursoExecucao executionDegree,
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select turmas from " + Turma.class.getName();
-			//				oqlQuery += " where executionPeriod.executionYear.year = $1"
-			//					+ " and executionPeriod.name = $2"
-			//					+ " and nome = $3"
-			//					+ " and executionDegree.executionYear.year = $4"
-			//					+ " and executionDegree.curricularPlan.name = $5"
-			//					+ " and executionDegree.curricularPlan.degree.sigla = $6";
-
-			oqlQuery += " where nome = $1 ";
-			oqlQuery += " and executionPeriod.name = $2 ";
-			oqlQuery += " and executionPeriod.executionYear.year = $3 ";
-			oqlQuery += " and executionDegree.executionYear.year = $4 ";
-			oqlQuery += " and executionDegree.curricularPlan.name = $5 ";
-			oqlQuery
-				+= " and executionDegree.curricularPlan.degree.sigla = $6 ";
-			query.create(oqlQuery);
-			query.bind(className);
-			query.bind(executionPeriod.getName());
-			query.bind(executionPeriod.getExecutionYear().getYear());
-
-			query.bind(executionDegree.getExecutionYear().getYear());
-			query.bind(executionDegree.getCurricularPlan().getName());
-			query.bind(
-				executionDegree.getCurricularPlan().getDegree().getSigla());
-
-			List result = (List) query.execute();
-			lockRead(result);
-			ITurma iClass = null;
-			if (!result.isEmpty())
-				iClass = (ITurma) result.get(0);
-			return iClass;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria criteria = new Criteria();	
+		criteria.addEqualTo("nome", className);	
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear().getYear());
+		criteria.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getCurricularPlan().getName());
+		criteria.addEqualTo("executionDegree.curricularPlan.degree.sigla", executionDegree.getCurricularPlan().getDegree().getSigla());
+		
+		return (ITurma) queryObject(Turma.class, criteria);
+//		try {
+//			String oqlQuery = "select turmas from " + Turma.class.getName();
+//			//				oqlQuery += " where executionPeriod.executionYear.year = $1"
+//			//					+ " and executionPeriod.name = $2"
+//			//					+ " and nome = $3"
+//			//					+ " and executionDegree.executionYear.year = $4"
+//			//					+ " and executionDegree.curricularPlan.name = $5"
+//			//					+ " and executionDegree.curricularPlan.degree.sigla = $6";
+//
+//			oqlQuery += " where nome = $1 ";
+//			oqlQuery += " and executionPeriod.name = $2 ";
+//			oqlQuery += " and executionPeriod.executionYear.year = $3 ";
+//			oqlQuery += " and executionDegree.executionYear.year = $4 ";
+//			oqlQuery += " and executionDegree.curricularPlan.name = $5 ";
+//			oqlQuery
+//				+= " and executionDegree.curricularPlan.degree.sigla = $6 ";
+//			query.create(oqlQuery);
+//			query.bind(className);
+//			query.bind(executionPeriod.getName());
+//			query.bind(executionPeriod.getExecutionYear().getYear());
+//
+//			query.bind(executionDegree.getExecutionYear().getYear());
+//			query.bind(executionDegree.getCurricularPlan().getName());
+//			query.bind(
+//				executionDegree.getCurricularPlan().getDegree().getSigla());
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			ITurma iClass = null;
+//			if (!result.isEmpty())
+//				iClass = (ITurma) result.get(0);
+//			return iClass;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
 	}
 
 	public List readByDegreeNameAndDegreeCode(String name, String code)
