@@ -33,7 +33,6 @@
          name="message"
          column="MESSAGE"
     	 jdbc-type="LONGVARCHAR"
-    	 />
       />
       <field-descriptor id="6"
          name="expires"
