@@ -183,7 +183,6 @@
         	<form-property name="situationRemarks" type="java.lang.String" />
         	<form-property name="situation" type="java.lang.String" />
         	<form-property name="specializationArea" type="java.lang.String" />
-        	<form-property name="specializationArea" type="java.lang.String" />
         	<form-property name="candidateID" type="java.lang.Integer" />
       </form-bean>
 
@@ -359,7 +358,7 @@
       
       <!-- action definition -->
       
-      <!-- List All Master Degrees -->
+      <!-- List Students from Master Degree -->
 	  <action path="/listMasterDegrees"
 		      parameter="method"
 		      scope="request"
@@ -370,7 +369,28 @@
 	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
 	  </action>
 	  
-  
+	  <!-- Action for the Coordinator to List the Students -->
+	  <action path="/listStudentsForCoordinator"
+		      parameter="method"
+		      scope="session"
+              type="ServidorApresentacao.Action.masterDegree.coordinator.StudentListDispatchAction"
+			  >
+	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
+	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
+	  </action>
+
+<!-- TO DO -->
+        <!-- List Student Curriculum -->
+        <action path="/studentCurriculum"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.CurriculumDispatchAction"
+			  >
+	         <forward name="DisplayMasterDegreeList" path="/student/displayMasterDegrees.jsp"/>
+	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
+	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
+	  </action>
+
 <!-- ////////////////// CHECK UTILITY ON STUDENTS LISTINGS BEFORE DELETING ///////////////////// -->
       <!-- action to choose a Execution Year List the students by degree -->
 <!--      <action attribute="chooseExecutionYearForm"
