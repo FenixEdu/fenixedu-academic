@@ -90,7 +90,6 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 					
 					Calendar examDate = Calendar.getInstance();
 					examDate.setTime(evaluation.getExamDate());
-					
 					if (examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR)){
 						date.setTime(evaluation.getExamDate());
 						continue;
@@ -102,6 +101,11 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 							date.setTime(evaluation.getExamDate());
 							continue;
 					}
+					if ((examDate.get(Calendar.MONTH) > date.get(Calendar.MONTH )) &&
+						(examDate.get(Calendar.YEAR) == date.get(Calendar.YEAR ))){
+							date.setTime(evaluation.getExamDate());
+							continue;
+					}
 
 					
 					if ((examDate.get(Calendar.DAY_OF_MONTH) > date.get(Calendar.DAY_OF_MONTH )) &&
@@ -109,11 +113,15 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 						(examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR ))){
 							date.setTime(evaluation.getExamDate());
 					}
+					if ((examDate.get(Calendar.DAY_OF_MONTH) > date.get(Calendar.DAY_OF_MONTH )) &&
+						(examDate.get(Calendar.MONTH) == date.get(Calendar.MONTH )) &&
+						(examDate.get(Calendar.YEAR) == date.get(Calendar.YEAR ))){
+							date.setTime(evaluation.getExamDate());
+					}
 					
 				}
 			}
 		}
-		
 		return date.getTime();
 	}
 

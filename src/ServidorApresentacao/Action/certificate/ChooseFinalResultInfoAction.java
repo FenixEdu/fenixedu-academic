@@ -184,9 +184,10 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                         {
                             throw new FenixActionException(e);
                         }
-
-                        conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "-");
-
+						
+                        conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "/");
+                        Date dateConclusion = Data.convertStringDate( conclusionDate, "/");
+						conclusionDate= DateFormat.getDateInstance().format(dateConclusion);
                         String dataAux = null;
                         Object result = null;
                         Iterator iterator = enrolmentList.iterator();
@@ -201,10 +202,10 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                             dataAux =
                                 DateFormat.getDateInstance().format(
                                     infoEnrolmentEvaluation.getExamDate());
-                            if (conclusionDate.compareTo(dataAux) == -1)
+                          /*  if (conclusionDate.compareTo(dataAux) == -1)
                             {
                                 conclusionDate = dataAux;
-                            }
+                            }*/
                         }
                         List newEnrolmentList = new ArrayList();
                         //get the last enrolmentEvaluation
