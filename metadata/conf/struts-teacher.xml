@@ -9,6 +9,17 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 	
+		<!-- summary form -->
+		<form-bean name="summaryForm"
+		   type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+		    <form-property name="title" type="java.lang.String"/>
+		    <form-property name="summaryDate" type="java.lang.String"/>
+		    <form-property name="summaryHour" type="java.lang.String"/>
+		    <form-property name="summaryText" type="java.lang.String"/>
+		    <form-property name="summaryType" type="java.lang.String"/>
+		     <form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 		 <!-- evaluation form--> 
 		 <form-bean name="evaluationForm" 
 			 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
@@ -716,6 +727,32 @@
             
 	</action>
 	<!-- End Marks List -->
+	<action 
+		name="summaryForm"
+		path="/summariesManager"
+		input="/summariesManager.do?method=prepareInsertSummary&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
+		validate="true"
+		  >
+       <forward name="showSummaries" path="/showSummaries.jsp" />       
+       <forward name="insertSummary" path="/insertSummaries.jsp" />    
+        <forward name="editSummary" path="/editSummary.jsp" />    
+	</action>
+	<action 
+		name="summaryForm"
+		path="/summariesManager1"
+		input="/summariesManager1.do?method=prepareEditSummary&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
+		validate="true"
+		  >
+       <forward name="showSummaries" path="/showSummaries.jsp" />       
+       <forward name="insertSummary" path="/insertSummaries.jsp" />    
+        <forward name="editSummary" path="/editSummary.jsp" />    
+	</action>
 	
 	</action-mappings>
 

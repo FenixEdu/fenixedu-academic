@@ -1,8 +1,6 @@
 /*
  * Created on 5/Mai/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package DataBeans;
 
@@ -13,31 +11,47 @@ package DataBeans;
  */
 public class ExecutionCourseSiteView extends SiteView {
 
-/**
-	 * @param commonComponent
-	 * @param bodyComponent
-	 */
-	public ExecutionCourseSiteView(ISiteComponent commonComponent, ISiteComponent bodyComponent) {
+	/**
+		 * @param commonComponent
+		 * @param bodyComponent
+		 */
+	public ExecutionCourseSiteView(
+		ISiteComponent commonComponent,
+		ISiteComponent bodyComponent) {
 		setCommonComponent(commonComponent);
 		setComponent(bodyComponent);
 	}
 
-	private ISiteComponent commonComponent; 
+	private ISiteComponent commonComponent;
 
+	/**
+	 * @return
+	 */
+	public ISiteComponent getCommonComponent() {
 
-/**
- * @return
- */
-public ISiteComponent getCommonComponent() {
+		return commonComponent;
+	}
 
-	return commonComponent;
-}
+	/**
+	 * @param component
+	 */
+	public void setCommonComponent(ISiteComponent component) {
+		commonComponent = component;
+	}
 
-/**
- * @param component
- */
-public void setCommonComponent(ISiteComponent component) {
-	commonComponent = component;
-}
+	public boolean equals(Object obj) {
+
+		boolean resultado = false;
+
+		if (obj instanceof ExecutionCourseSiteView) {
+			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) obj;
+
+			resultado =
+				getCommonComponent().equals(siteView.getCommonComponent())
+					&& getComponent().equals(siteView.getComponent());
+		}
+
+		return resultado;
+	}
 
 }

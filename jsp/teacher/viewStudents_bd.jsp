@@ -44,8 +44,13 @@
 			<td class="listClasses-header">
 				<bean:message key="label.name" />
 		   </td>
+			<td class="listClasses-header">
+				<bean:message key="label.mail" />
+		   </td>
 		</tr>    		
+		<bean:define id="mailingList" value=""/>	
     	<logic:iterate id="student" name="studentsComponent" property="students"> 
+			
 			<tr>
 				<td class="listClasses">
 					<bean:write name="student" property="number"/>&nbsp;
@@ -53,10 +58,32 @@
 				<td class="listClasses">
 					<bean:write name="student" property="infoPerson.nome"/>
 				</td>
+			
+				<td class="listClasses">
+					<logic:notEmpty name="student"  property="infoPerson.email">
+					<bean:define id="mail" name="student" property="infoPerson.email"/>
+					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="student" property="infoPerson.email"/></html:link>
+					</logic:notEmpty>
+					<logic:empty name="student"  property="infoPerson.email">
+					&nbsp;
+					</logic:empty>
+				</td>
 			</tr>
+			<logic:notEmpty name="student"  property="infoPerson.email">
+			<bean:define id="aux" name="mailingList"/>
+			<logic:lessThan name="aux" value="1">
+				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
+			</logic:lessThan>
+			<logic:greaterThan name="aux" value="0">
+				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
+			</logic:greaterThan>
+			</logic:notEmpty>
     	</logic:iterate>
 		
-    </table>    
+    </table>   
+<br/>
+<br/> 
+	<html:link href="<%= "mailto:" + mailingList %>"><bean:message key="message.emailStudents"/></html:link>
 </logic:notEqual>
     
 </logic:present>

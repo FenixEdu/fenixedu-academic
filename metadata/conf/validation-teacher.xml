@@ -3,6 +3,76 @@
 <form-validation>
   <formset>
    
+   <!-- validation for summaryForm -->
+   <form name="summariesManager">
+   
+   	<field property="summaryDate" depends="required,mask,date" page="1" >
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.summaryDate" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)</var-value>
+        </var>
+   	</field>
+   	<field property="summaryHour" depends="required,date" page="1" >
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.summaryHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+   	</field>
+   		<field property="summaryType" depends="required" page="1">
+   	<arg0 key="message.summaryType" resource="true"/>
+   	</field> 
+   	 <field property="title" depends="required" page="1">
+    	<arg0 key="message.title" resource="true"/>
+       	</field>	
+   	<field property="summaryText" depends="required" page="1">
+   	<arg0 key="message.summaryText" resource="true"/>
+   	</field>
+     	
+   </form>
+   
+   <form name="summariesManager1">
+   
+   	<field property="summaryDateFormatted" depends="required,mask,date" page="1" >
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.summaryDate" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)</var-value>
+        </var>
+   	</field>
+   	<field property="summaryHourFormatted" depends="required,date" page="1" >
+   		<msg name="date" key="error.invalid.hour"/>
+   		<arg0 key="message.summaryHour" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+   	</field>
+   		<field property="summaryType" depends="required" page="1">
+   	<arg0 key="message.summaryType" resource="true"/>
+   	</field> 
+   	 <field property="title" depends="required" page="1">
+    	<arg0 key="message.title" resource="true"/>
+       	</field>	
+   	<field property="summaryText" depends="required" page="1">
+   	<arg0 key="message.summaryText" resource="true"/>
+   	</field>
+     	
+   </form>
    
     <!-- validation for the examEnrollment form -->
    <form name="examEnrollmentForm">
