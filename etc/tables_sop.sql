@@ -131,4 +131,17 @@ create table EXECUTION_YEAR (
    primary key (ID_INTERNAL),
    unique U1 (`YEAR`))
    type=InnoDB comment="InnoDB free: 373760 kB";
-   
+
+#----------------------------
+# Table structure for exam
+#----------------------------
+DROP TABLE IF EXISTS EXAM;
+CREATE TABLE EXAM (
+  ID_INTERNAL int(11) not null auto_increment,
+  KEY_EXECUTION_COURSE int(11) not null,
+  DAY date,
+  BEGINNING time,
+  END time,
+  PRIMARY KEY (ID_INTERNAL),
+  UNIQUE KEY U1 (KEY_EXECUTION_COURSE, DAY, START_TIME)
+) TYPE=InnoDB;
