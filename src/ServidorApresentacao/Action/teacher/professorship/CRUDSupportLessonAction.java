@@ -193,15 +193,12 @@ public class CRUDSupportLessonAction extends CRUDActionByOID
         request.setAttribute("infoProfessorship", infoProfessorship);
     }
 
-    /**
-	 * @param calendar
-	 * @param integer
-	 * @param integer2
-	 */
-    private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes)
-    {
-        calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
-        calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
-    }
-
+	
+	private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes)
+	{
+		calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
+		calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);		
+	}
 }
