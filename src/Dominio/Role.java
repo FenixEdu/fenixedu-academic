@@ -24,8 +24,8 @@ public class Role extends DomainObject implements IRole {
 	 */
 	public boolean equals(Object obj) {
 		return (
-			(obj instanceof Role)
-				&& (((Role) obj).getRoleType().equals(getRoleType())));
+			(obj instanceof IRole)
+				&& (((IRole) obj).getRoleType().equals(getRoleType())));
 	}
 
 
