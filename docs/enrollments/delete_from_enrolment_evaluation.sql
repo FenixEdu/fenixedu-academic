@@ -1,21 +1,21 @@
--- select concat('DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = ', ee2.id_internal, ';') as "QQ"
--- from enrolment e
--- inner join enrolment_evaluation ee1 on ee1.key_enrolment = e.id_internal
--- inner join enrolment_evaluation ee2 on ee2.key_enrolment = e.id_internal
--- inner join curricular_course cc on e.key_curricular_course = cc.id_internal
--- where
--- cc.key_degree_curricular_plan = 48 and
--- cc.code = 'APD' and
--- ee1.grade is not null and
--- ee2.grade is null and
--- e.state = 3;
+-- SELECT CONCAT('DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = ', EE2.ID_INTERNAL, ';') AS "QQ"
+-- FROM ENROLMENT E
+-- INNER JOIN ENROLMENT_EVALUATION EE1 ON EE1.KEY_ENROLMENT = E.ID_INTERNAL
+-- INNER JOIN ENROLMENT_EVALUATION EE2 ON EE2.KEY_ENROLMENT = E.ID_INTERNAL
+-- INNER JOIN CURRICULAR_COURSE CC ON E.KEY_CURRICULAR_COURSE = CC.ID_INTERNAL
+-- WHERE
+-- CC.KEY_DEGREE_CURRICULAR_PLAN = 48 AND
+-- CC.CODE = 'APD' AND
+-- EE1.GRADE IS NOT NULL AND
+-- EE2.GRADE IS NULL AND
+-- E.STATE = 3;
 
-select concat('DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = ', ee2.id_internal, ';') as ""
-from enrolment e
-inner join enrolment_evaluation ee1 on ee1.key_enrolment = e.id_internal
-inner join enrolment_evaluation ee2 on ee2.key_enrolment = e.id_internal
-inner join curricular_course cc on e.key_curricular_course = cc.id_internal
-where
-ee1.grade is not null and
-ee2.grade is null and
-e.state = 3;
+SELECT CONCAT('DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = ', EE2.ID_INTERNAL, ';') AS ""
+FROM ENROLMENT E
+INNER JOIN ENROLMENT_EVALUATION EE1 ON EE1.KEY_ENROLMENT = E.ID_INTERNAL
+INNER JOIN ENROLMENT_EVALUATION EE2 ON EE2.KEY_ENROLMENT = E.ID_INTERNAL
+INNER JOIN CURRICULAR_COURSE CC ON E.KEY_CURRICULAR_COURSE = CC.ID_INTERNAL
+WHERE
+EE1.GRADE IS NOT NULL AND
+EE2.GRADE IS NULL AND
+E.STATE = 3;

@@ -9,7 +9,8 @@
   	<li><html:link page="/listAllSeminaries.do"> <bean:message key="link.seminaries.enrolment"/></html:link> <a href='<bean:message key="link.seminaries.rules" />' target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li>
   	<li><html:link page="/examEnrollmentManager.do?method=viewExamsToEnroll" ><bean:message key="link.exams.enrolment"/></html:link></li>
   	<li><html:link page="/viewEnroledExecutionCourses.do" ><bean:message key="link.groupEnrolment" /></html:link></li>
-	<li><html:link page="<%="/studentCurricularCoursesEnrollment.do?method=prepareEnrollment"%>"><bean:message key="link.student.enrollment"/></html:link></li>
+	<%--<li><html:link page="<%="/studentCurricularCoursesEnrollment.do?method=prepareEnrollment"%>"><bean:message key="link.student.enrollment"/></html:link></li>--%>
+	<li><html:link page="<%="/warningFirst.do"%>"><bean:message key="link.student.enrollment"/></html:link></li>
 </ul>
 <ul>
 	<li><html:link page="/studentTimeTable.do" target="_blank" ><bean:message key="link.my.timetable"/></html:link></li>

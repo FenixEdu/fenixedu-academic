@@ -134,4 +134,7 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/enrollmentConfirmation.jsp"/>
 	</definition>
 
+	<definition name="df.page.warning" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/warning.jsp"/>
+	</definition>
 </tiles-definitions>

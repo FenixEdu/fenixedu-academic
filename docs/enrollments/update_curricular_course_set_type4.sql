@@ -1,3 +1,3 @@
-select concat('UPDATE CURRICULAR_COURSE SET TYPE = 4 WHERE ID_INTERNAL = ', ID_INTERNAL, ';') as ""
-from curricular_course
-where name like 'Trabalho Final de Curso%' and key_degree_curricular_plan = 48;
+SELECT CONCAT('UPDATE CURRICULAR_COURSE SET TYPE = 4 WHERE ID_INTERNAL = ', ID_INTERNAL, ';') AS ""
+FROM CURRICULAR_COURSE
+WHERE NAME LIKE 'TRABALHO FINAL DE CURSO%' AND KEY_DEGREE_CURRICULAR_PLAN = 48;

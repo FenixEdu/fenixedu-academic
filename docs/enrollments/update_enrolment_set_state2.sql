@@ -1,19 +1,19 @@
--- select concat('UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = ', e.ID_INTERNAL, ';') as "QQ"
--- from enrolment_evaluation ee
--- inner join enrolment e on ee.key_enrolment = e.id_internal
--- inner join curricular_course cc on e.key_curricular_course = cc.id_internal
--- inner join student_curricular_plan scp on e.key_student_curricular_plan = scp.id_internal
--- where
--- cc.key_degree_curricular_plan = 48 and
--- cc.code = 'APD' and
--- ee.grade = 'RE' and
--- e.state = 3;
+-- SELECT CONCAT('UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = ', E.ID_INTERNAL, ';') AS "QQ"
+-- FROM ENROLMENT_EVALUATION EE
+-- INNER JOIN ENROLMENT E ON EE.KEY_ENROLMENT = E.ID_INTERNAL
+-- INNER JOIN CURRICULAR_COURSE CC ON E.KEY_CURRICULAR_COURSE = CC.ID_INTERNAL
+-- INNER JOIN STUDENT_CURRICULAR_PLAN SCP ON E.KEY_STUDENT_CURRICULAR_PLAN = SCP.ID_INTERNAL
+-- WHERE
+-- CC.KEY_DEGREE_CURRICULAR_PLAN = 48 AND
+-- CC.CODE = 'APD' AND
+-- EE.GRADE = 'RE' AND
+-- E.STATE = 3;
 
-select concat('UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = ', e.ID_INTERNAL, ';') as ""
-from enrolment_evaluation ee
-inner join enrolment e on ee.key_enrolment = e.id_internal
-inner join curricular_course cc on e.key_curricular_course = cc.id_internal
-inner join student_curricular_plan scp on e.key_student_curricular_plan = scp.id_internal
-where
-ee.grade = 'RE' and
-e.state = 3;
+SELECT CONCAT('UPDATE ENROLMENT SET STATE = 2 WHERE ID_INTERNAL = ', E.ID_INTERNAL, ';') AS ""
+FROM ENROLMENT_EVALUATION EE
+INNER JOIN ENROLMENT E ON EE.KEY_ENROLMENT = E.ID_INTERNAL
+INNER JOIN CURRICULAR_COURSE CC ON E.KEY_CURRICULAR_COURSE = CC.ID_INTERNAL
+INNER JOIN STUDENT_CURRICULAR_PLAN SCP ON E.KEY_STUDENT_CURRICULAR_PLAN = SCP.ID_INTERNAL
+WHERE
+EE.GRADE = 'RE' AND
+E.STATE = 3;

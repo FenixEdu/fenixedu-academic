@@ -26,7 +26,6 @@
 		<form-property name="shiftMap" type="java.util.HashMap" />   			
 	    <form-property name="shifts" type="java.lang.Integer[]"/>
 	    <form-property name="class" type="java.lang.String"/>
-	    	
       </form-bean>
       
 <!--
@@ -583,6 +582,10 @@
 			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
 		</action>
     
+    	<action	path="/warningFirst"
+				type="ServidorApresentacao.Action.commons.VoidAction">
+        	<forward name="Success" path="df.page.warning"/>
+		</action>
     
      </action-mappings>     
 
