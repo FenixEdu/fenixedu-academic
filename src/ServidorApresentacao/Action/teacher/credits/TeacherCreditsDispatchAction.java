@@ -37,9 +37,10 @@ public class TeacherCreditsDispatchAction extends DispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 		Object[] args = {infoTeacher};
 		InfoCredits infoCredits = (InfoCredits) ServiceUtils.executeService(userView, "ReadCreditsTeacher", args);
-		DynaActionForm creditsTeacherForm = (DynaActionForm) form;
-		
-		creditsTeacherForm.set("tfcStudentsNumber", infoCredits.getTfcStudentsNumber());	
+		if (infoCredits != null){
+			DynaActionForm creditsTeacherForm = (DynaActionForm) form;
+			creditsTeacherForm.set("tfcStudentsNumber", infoCredits.getTfcStudentsNumber());
+		}
 		return mapping.findForward("showForm");
 	}
 
