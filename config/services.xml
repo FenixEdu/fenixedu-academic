@@ -2337,6 +2337,16 @@
         </filterChains>
     </service>
     <service>
+        <name>ChangePersonUsernameService</name>
+        <implementationClass>ServidorAplicacao.Servico.person.ChangePersonUsernameService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    
+    <service>
         <name>ReadPersonByUsername</name>
         <implementationClass>ServidorAplicacao.Servico.person.ReadPersonByUsername</implementationClass>
         <description/>
@@ -5076,6 +5086,36 @@
         </filterChains>
     </service>
     <service>
+        <name>ReadLastGrantContractCreatedByGrantOwner</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadLastGrantContractCreatedByGrantOwner</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadGrantContractRegime</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadGrantContractRegime</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadGrantContractRegimeByContractAndState</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadGrantContractRegimeByContractAndState</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>ReadExecutionDegreesByExecutionPeriodId</name>
         <implementationClass> 
             ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId</implementationClass>
@@ -5170,6 +5210,26 @@
         </filterChains>
     </service>
     <service>
+        <name>DeleteGrantContract</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.DeleteGrantContract</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditGrantContractRegime</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.EditGrantContractRegime</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>EditGrantSubsidy</name>
         <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.EditGrantSubsidy</implementationClass>
@@ -5193,6 +5253,16 @@
         <name>ReadAllGrantSubsidiesByGrantContract</name>
         <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadAllGrantSubsidiesByGrantContract</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAllGrantSubsidiesByGrantContractAndState</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadAllGrantSubsidiesByGrantContractAndState</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

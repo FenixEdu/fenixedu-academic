@@ -1,1 +1,0 @@
-alter table CURRICULAR_COURSE add KEY_SCIENTIFIC_AREA int(11);

@@ -4,8 +4,6 @@
  */
 package ServidorAplicacao.Servico.grant.contract;
 
-import java.util.Date;
-
 import org.apache.commons.beanutils.PropertyUtils;
 
 import DataBeans.InfoObject;
@@ -22,11 +20,7 @@ import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantContractEndDateBeforeBeginDateException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherEndDateBeforeBeginDateException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodConflictException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -61,58 +55,58 @@ public class EditGrantContract extends EditDomainObjectService
 		return sp.getIPersistentGrantContract();
 	}
 
-	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
-		IGrantContract grantContract = (IGrantContract) domainObject;
+//	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+//		throws ExcepcaoPersistencia
+//	{
+//		IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
+//		IGrantContract grantContract = (IGrantContract) domainObject;
+//
+//		return pgc.readGrantContractByNumberAndGrantOwner(
+//			grantContract.getContractNumber(),
+//			grantContract.getGrantOwner().getIdInternal());
+//	}
 
-		return pgc.readGrantContractByNumberAndGrantOwner(
-			grantContract.getContractNumber(),
-			grantContract.getGrantOwner().getIdInternal());
-	}
+//	protected void checkIfGrantTeacherPeriodConflict(
+//		IGrantContract grantContract,
+//		InfoGrantContract infoGrantContract,
+//		ISuportePersistente sp)
+//		throws FenixServiceException
+//	{
+//		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
+//		try
+//		{
+//			//check that new ORIENTATION period does NOT CONFLICT with any other
+//			IPersistentGrantOrientationTeacher got = sp.getIPersistentGrantOrientationTeacher();
+//			IGrantOrientationTeacher orientationTeacher =
+//				got.readActualGrantOrientationTeacherByContract(
+//					grantContract,
+//					infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
+//
+//			if ((orientationTeacher != null)
+//				&& (beginOrientationDate.before(orientationTeacher.getEndDate())))
+//				throw new GrantOrientationTeacherPeriodConflictException();
+//
+//		}
+//		catch (ExcepcaoPersistencia e)
+//		{
+//			throw new FenixServiceException();
+//		}
+//	}
 
-	protected void checkIfGrantTeacherPeriodConflict(
-		IGrantContract grantContract,
-		InfoGrantContract infoGrantContract,
-		ISuportePersistente sp)
-		throws FenixServiceException
-	{
-		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
-		try
-		{
-			//check that new ORIENTATION period does NOT CONFLICT with any other
-			IPersistentGrantOrientationTeacher got = sp.getIPersistentGrantOrientationTeacher();
-			IGrantOrientationTeacher orientationTeacher =
-				got.readActualGrantOrientationTeacherByContract(
-					grantContract,
-					infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
-
-			if ((orientationTeacher != null)
-				&& (beginOrientationDate.before(orientationTeacher.getEndDate())))
-				throw new GrantOrientationTeacherPeriodConflictException();
-
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException();
-		}
-	}
-
-	protected void checkIfGrantTeacherPeriodWithinContractPeriod(InfoGrantContract infoGrantContract)
-		throws FenixServiceException
-	{
-		Date beginContractDate = infoGrantContract.getDateBeginContract();
-		Date endContractDate = infoGrantContract.getDateEndContract();
-		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
-		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
-
-		//check if ORIENTATION period is WITHIN contract period
-		if (!((beginOrientationDate.after(beginContractDate)
-			|| beginContractDate.equals(beginOrientationDate))
-			&& (endOrientationDate.before(endContractDate) || endContractDate.equals(endOrientationDate))))
-			throw new GrantOrientationTeacherPeriodNotWithinContractPeriodException();
-	}
+//	protected void checkIfGrantTeacherPeriodWithinContractPeriod(InfoGrantContract infoGrantContract)
+//		throws FenixServiceException
+//	{
+//		Date beginContractDate = infoGrantContract.getDateBeginContract();
+//		Date endContractDate = infoGrantContract.getDateEndContract();
+//		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
+//		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
+//
+//		//check if ORIENTATION period is WITHIN contract period
+//		if (!((beginOrientationDate.after(beginContractDate)
+//			|| beginContractDate.equals(beginOrientationDate))
+//			&& (endOrientationDate.before(endContractDate) || endContractDate.equals(endOrientationDate))))
+//			throw new GrantOrientationTeacherPeriodNotWithinContractPeriodException();
+//	}
 
 	protected void doBeforeLock(
 		IDomainObject domainObjectToLock,
@@ -120,22 +114,22 @@ public class EditGrantContract extends EditDomainObjectService
 		ISuportePersistente sp)
 		throws FenixServiceException
 	{
-		InfoGrantContract infoGrantContract = (InfoGrantContract) infoObject;
+//		InfoGrantContract infoGrantContract = (InfoGrantContract) infoObject;
 
-		Date beginContractDate = infoGrantContract.getDateBeginContract();
-		Date endContractDate = infoGrantContract.getDateEndContract();
-		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
-		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
+//		Date beginContractDate = infoGrantContract.getDateBeginContract();
+//		Date endContractDate = infoGrantContract.getDateEndContract();
+//		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
+//		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
 
 		try
 		{
 			//check that endDate is after beginDate (GrantContract)
-			if (endContractDate.before(beginContractDate))
-				throw new GrantContractEndDateBeforeBeginDateException();
+//			if (endContractDate.before(beginContractDate))
+//				throw new GrantContractEndDateBeforeBeginDateException();
 			
 			//check that endDate is after beginDate (GrantOrientationTeacher)
-			if (endOrientationDate.before(beginOrientationDate))
-				throw new GrantOrientationTeacherEndDateBeforeBeginDateException();
+//			if (endOrientationDate.before(beginOrientationDate))
+//				throw new GrantOrientationTeacherEndDateBeforeBeginDateException();
 
 			//TODO: DOES THIS VERIFICATION REALLY NEEDS TO BE DONE??
 			//TODO (pica): comentei isto já que a secretaria deve poder alterar para os valores que
@@ -144,7 +138,7 @@ public class EditGrantContract extends EditDomainObjectService
 			//if (!isNew(grantContract))
 			//	checkIfGrantTeacherPeriodConflict(grantContract, infoGrantContract, sp);
 
-			checkIfGrantTeacherPeriodWithinContractPeriod(infoGrantContract);
+			//checkIfGrantTeacherPeriodWithinContractPeriod(infoGrantContract);
 			checkIfGrantTeacherRelationExists(domainObjectToLock, infoObject, sp);
 
 		}
@@ -224,6 +218,10 @@ public class EditGrantContract extends EditDomainObjectService
 		IPersistentTeacher pt)
 		throws FenixServiceException
 	{
+		//TODO.. esta mal!! ele tem é que ir ler o GrantOrientationTeacher associado ao
+		//contrato e nao o professor!!!!
+
+		
 		InfoTeacher infoTeacher = new InfoTeacher();
 		ITeacher teacher = new Teacher();
 		try
@@ -253,8 +251,7 @@ public class EditGrantContract extends EditDomainObjectService
 			IPersistentGrantType pGrantType = sp.getIPersistentGrantType();
 			IPersistentGrantContract pGrantContract = sp.getIPersistentGrantContract();
 
-			infoGrantContract.setGrantTypeInfo(
-				checkIfGrantTypeExists(infoGrantContract.getGrantTypeInfo().getSigla(), pGrantType));
+			infoGrantContract.setGrantTypeInfo(checkIfGrantTypeExists(infoGrantContract.getGrantTypeInfo().getSigla(), pGrantType));
 
 			infoGrantContract.getGrantOrientationTeacherInfo().setOrientationTeacherInfo(
 				checkIfGrantOrientationTeacherExists(

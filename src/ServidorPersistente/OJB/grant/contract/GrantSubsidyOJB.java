@@ -31,4 +31,15 @@ public class GrantSubsidyOJB extends ObjectFenixOJB implements IPersistentGrantS
 		subsidyList = queryList(GrantSubsidy.class, criteria);
 		return subsidyList;
 	}
+	
+	public List readAllSubsidiesByGrantContractAndState(Integer idContract, Integer state) throws ExcepcaoPersistencia
+	{
+		List subsidyList = null;
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("key_grant_contract", idContract);
+		criteria.addEqualTo("state", state);
+		criteria.addOrderBy("dateBeginSubsidy", false);
+		subsidyList = queryList(GrantSubsidy.class, criteria);
+		return subsidyList;
+	}
 }

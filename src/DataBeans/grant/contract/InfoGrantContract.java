@@ -4,36 +4,39 @@
  */
 package DataBeans.grant.contract;
 
-import java.util.Date;
-
 import DataBeans.InfoObject;
 import DataBeans.grant.owner.InfoGrantOwner;
 
 /**
  * @author  Barbosa
  * @author  Pica
- * 
  */
 
 public class InfoGrantContract extends InfoObject
 {
     private Integer contractNumber;
-	private Date dateBeginContract;
-	private Date dateEndContract;
-    private Date dateSendDispatchCC;
-    private Date dateDispatchCC;
-    private Date dateSendDispatchCD;
-    private Date dateDispatchCD;
-    private Date dateAcceptTerm;
     private String endContractMotive;
 	private InfoGrantOwner grantOwnerInfo;
-    private InfoGrantType grantTypeInfo;
 	private InfoGrantOrientationTeacher grantOrientationTeacherInfo;
-    
+	private InfoGrantType grantTypeInfo;
+	
     public InfoGrantContract()
     {
     }
 
+
+    /*
+     * If a contract motive is set, the contract is finished.
+     * If not, de contract is active and running.
+     */
+    public boolean getEndContractMotiveSet()
+	{
+    	if(endContractMotive == null || endContractMotive.equals(""))
+    		return false;
+    	else
+    		return true;
+	}
+    
     /**
      * @return
      */
@@ -41,7 +44,6 @@ public class InfoGrantContract extends InfoObject
     {
         return contractNumber;
     }
-
     /**
      * @param contractNumber
      */
@@ -49,39 +51,6 @@ public class InfoGrantContract extends InfoObject
     {
         this.contractNumber = contractNumber;
     }
-
-    /**
-     * @return
-     */
-    public Date getDateBeginContract()
-    {
-        return dateBeginContract;
-    }
-
-    /**
-     * @param dateBeginContract
-     */
-    public void setDateBeginContract(Date dateBeginContract)
-    {
-        this.dateBeginContract = dateBeginContract;
-    }
-
-    /**
-     * @return
-     */
-    public Date getDateEndContract()
-    {
-        return dateEndContract;
-    }
-
-    /**
-     * @param dateEndContract
-     */
-    public void setDateEndContract(Date dateEndContract)
-    {
-        this.dateEndContract = dateEndContract;
-    }
-
     /**
      * @return
      */
@@ -89,7 +58,6 @@ public class InfoGrantContract extends InfoObject
     {
         return endContractMotive;
     }
-
     /**
      * @param endContractMotive
      */
@@ -97,7 +65,6 @@ public class InfoGrantContract extends InfoObject
     {
         this.endContractMotive = endContractMotive;
     }
-
     /**
      * @return
      */
@@ -105,7 +72,6 @@ public class InfoGrantContract extends InfoObject
     {
         return grantOwnerInfo;
     }
-
     /**
      * @param grantOwnerInfo
      */
@@ -113,117 +79,32 @@ public class InfoGrantContract extends InfoObject
     {
         this.grantOwnerInfo = grantOwnerInfo;
     }
-   
-    /**
-     * @return
-     */
-    public InfoGrantType getGrantTypeInfo()
-    {
-        return grantTypeInfo;
-    }
-
-    /**
-     * @param grantType
-     */
-    public void setGrantTypeInfo(InfoGrantType grantType)
-    {
-        this.grantTypeInfo = grantType;
-    }
-
-    /**
-     * @return
-     */
-    public InfoGrantOrientationTeacher getGrantOrientationTeacherInfo()
-    {
-        return grantOrientationTeacherInfo;
-    }
-
-    /**
-     * @param grantOrientationTeacherInfo
-     */
-    public void setGrantOrientationTeacherInfo(InfoGrantOrientationTeacher grantOrientationTeacherInfo)
-    {
-        this.grantOrientationTeacherInfo = grantOrientationTeacherInfo;
-    }
-
 	/**
-	 * @return Returns the dateAcceptTerm.
+	 * @return Returns the grantOrientationTeacherInfo.
 	 */
-	public Date getDateAcceptTerm()
+	public InfoGrantOrientationTeacher getGrantOrientationTeacherInfo()
 	{
-		return dateAcceptTerm;
+		return grantOrientationTeacherInfo;
 	}
-
 	/**
-	 * @param dateAcceptTerm The dateAcceptTerm to set.
+	 * @param grantOrientationTeacherInfo The grantOrientationTeacherInfo to set.
 	 */
-	public void setDateAcceptTerm(Date dateAcceptTerm)
+	public void setGrantOrientationTeacherInfo(InfoGrantOrientationTeacher grantOrientationTeacherInfo)
 	{
-		this.dateAcceptTerm = dateAcceptTerm;
+		this.grantOrientationTeacherInfo = grantOrientationTeacherInfo;
 	}
-
 	/**
-	 * @return Returns the dateDispatchCC.
+	 * @return Returns the grantTypeInfo.
 	 */
-	public Date getDateDispatchCC()
+	public InfoGrantType getGrantTypeInfo()
 	{
-		return dateDispatchCC;
+		return grantTypeInfo;
 	}
-
 	/**
-	 * @param dateDispatchCC The dateDispatchCC to set.
+	 * @param grantTypeInfo The grantTypeInfo to set.
 	 */
-	public void setDateDispatchCC(Date dateDispatchCC)
+	public void setGrantTypeInfo(InfoGrantType grantTypeInfo)
 	{
-		this.dateDispatchCC = dateDispatchCC;
+		this.grantTypeInfo = grantTypeInfo;
 	}
-
-	/**
-	 * @return Returns the dateDispatchCD.
-	 */
-	public Date getDateDispatchCD()
-	{
-		return dateDispatchCD;
-	}
-
-	/**
-	 * @param dateDispatchCD The dateDispatchCD to set.
-	 */
-	public void setDateDispatchCD(Date dateDispatchCD)
-	{
-		this.dateDispatchCD = dateDispatchCD;
-	}
-
-	/**
-	 * @return Returns the dateSendDispatchCC.
-	 */
-	public Date getDateSendDispatchCC()
-	{
-		return dateSendDispatchCC;
-	}
-
-	/**
-	 * @param dateSendDispatchCC The dateSendDispatchCC to set.
-	 */
-	public void setDateSendDispatchCC(Date dateSendDispatchCC)
-	{
-		this.dateSendDispatchCC = dateSendDispatchCC;
-	}
-
-	/**
-	 * @return Returns the dateSendDispatchCD.
-	 */
-	public Date getDateSendDispatchCD()
-	{
-		return dateSendDispatchCD;
-	}
-
-	/**
-	 * @param dateSendDispatchCD The dateSendDispatchCD to set.
-	 */
-	public void setDateSendDispatchCD(Date dateSendDispatchCD)
-	{
-		this.dateSendDispatchCD = dateSendDispatchCD;
-	}
-
 }

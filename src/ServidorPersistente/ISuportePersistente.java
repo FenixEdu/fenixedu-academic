@@ -23,6 +23,7 @@ import ServidorPersistente.gesdis.IPersistentCourseHistoric;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantContractRegime;
 import ServidorPersistente.grant.IPersistentGrantCostCenter;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 import ServidorPersistente.grant.IPersistentGrantOwner;
@@ -205,8 +206,9 @@ public interface ISuportePersistente
     public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity();
     public IPersistentGrantProject getIPersistentGrantProject();
     public IPersistentGrantSubsidy getIPersistentGrantSubsidy();
-
-	public IPersistentAdvisory getIPersistentAdvisory();
+    public IPersistentGrantContractRegime getIPersistentGrantContractRegime();
+    
+    public IPersistentAdvisory getIPersistentAdvisory();
 
 	public IPersistentWebSite getIPersistentWebSite();
 	public IPersistentWebSiteSection getIPersistentWebSiteSection();
@@ -273,7 +275,7 @@ public interface ISuportePersistente
     
     public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine();
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();
-	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
+    public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
 
 	//	Ana e Ricardo
 	public IPersistentRoomOccupation getIPersistentRoomOccupation();

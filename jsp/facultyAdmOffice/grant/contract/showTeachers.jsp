@@ -10,7 +10,7 @@
 
 <title>Lista de Professores do IST</title>
 
-<body>
+<body bgcolor="white">
 
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -18,6 +18,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <strong><p align="center"><bean:message key="label.grant.contract.teachersList"/></p></strong><br/>
+
+<%-- Presenting errors --%>
+<logic:messagesPresent>
+<span class="error">
+	<html:errors/>
+</span><br/>
+</logic:messagesPresent>
+
+<logic:messagesNotPresent>
+
 
 <logic:present name="teachersList">
 <center>
@@ -45,6 +55,8 @@
     </table>
 </center>
 </logic:present>
+
+</logic:messagesNotPresent>
 
 </body>
 

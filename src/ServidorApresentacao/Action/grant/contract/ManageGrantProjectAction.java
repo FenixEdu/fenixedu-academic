@@ -25,9 +25,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class ManageGrantProjectAction extends FenixDispatchAction
 {
-    /*
-     * Fills the form with the correspondent data
-     */
+
     public ActionForward prepareManageGrantProject(
         ActionMapping mapping,
         ActionForm form,
@@ -37,20 +35,19 @@ public class ManageGrantProjectAction extends FenixDispatchAction
     {
         try
         {
-            //Object[] args = { GrantCostCenter.class };
             Object[] args = { "Dominio.grant.contract.GrantProject" };
             IUserView userView = SessionUtils.getUserView(request);
             List infoGrantProjectList =
                 (List) ServiceUtils.executeService(userView, "ReadAllGrantPaymentEntitiesByClassName", args);
 
-            //If they exist put them on request
             if (infoGrantProjectList != null && !infoGrantProjectList.isEmpty())
                 request.setAttribute("infoGrantProjectList", infoGrantProjectList);
+            
+            return mapping.findForward("manage-grant-project");
         }
         catch (FenixServiceException e)
         {
             return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-project", null);
         }
-        return mapping.findForward("manage-grant-project");
     }
 }

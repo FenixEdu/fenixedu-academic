@@ -61,7 +61,7 @@
 
 		<!-- Initial form to search a Grant Owner By Number-->
         <form name="searchGrantOwnerByNumberForm">
-            <field property="idGrantOwner" depends="required, integer" page="1">
+            <field property="grantOwnerNumber" depends="required, integer" page="1">
                 <msg name="integer" key="errors.integer" resource="true"/>
                 <arg0 key="label.grant.owner.number"/>
             </field>
@@ -73,7 +73,7 @@
             <field property="dateBeginContract" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.contract.beginDate" resource="true"/>
+				<arg0 key="label.grant.contract.regime.beginDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 				 	<var-value>dd-MM-yyyy</var-value>
@@ -86,84 +86,84 @@
             <field property="dateEndContract" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 		   		<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.contract.endDate" resource="true"/>
+				<arg0 key="label.grant.contract.regime.endDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd-MM-yyyy</var-value>
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>
 		    
 		    <field property="dateSendDispatchCC" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 		   		<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.contract.dateSendDispatchCC" resource="true"/>
+				<arg0 key="label.grant.contract.regime.dateSendDispatchCC" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd-MM-yyyy</var-value>
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>
 		    <field property="dateDispatchCC" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 		   		<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.contract.dateDispatchCC" resource="true"/>
+				<arg0 key="label.grant.contract.regime.dateDispatchCC" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd-MM-yyyy</var-value>
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>	
 		    <field property="dateSendDispatchCD" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 		   		<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.contract.dateSendDispatchCD" resource="true"/>
+				<arg0 key="label.grant.contract.regime.dateSendDispatchCD" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd-MM-yyyy</var-value>
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>
 		    <field property="dateDispatchCD" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 		   		<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.contract.dateDispatchCD" resource="true"/>
+				<arg0 key="label.grant.contract.regime.dateDispatchCD" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd-MM-yyyy</var-value>
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>
 		    <field property="dateAcceptTerm" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 		   		<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.contract.dateAcceptTerm" resource="true"/>
+				<arg0 key="label.grant.contract.regime.dateAcceptTerm" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd-MM-yyyy</var-value>
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>
 		    
-            <field property="grantOrientationTeacher" depends="required, integer" page="1">
+            <field property="grantContractOrientationTeacherNumber" depends="required, integer" page="1">
 				<msg name="number" key="errors.integer"/>
 				<arg0 key="label.grant.contract.orientationTeacher" resource="true"/>
 		    </field>
@@ -273,7 +273,7 @@
 	        	</var>
 		    	<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>
 		</form>
@@ -290,7 +290,7 @@
 				</var>
 				<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 					</var>
 			</field>	    
 			<field property="cardCopyNumber" depends="integer" page="1">
@@ -406,10 +406,141 @@
 				<msg name="responsibleTeacherNumber" key="errors.integer"/>
 				<arg0 key="label.grant.project.responsibleTeacher.number" resource="true"/>
 		    </field>
-		    <field property="grantCostCenterNumber" depends="required, integer" page="1">
-				<msg name="grantCostCenterNumber" key="errors.integer"/>
+		    <field property="grantCostCenterNumber" depends="required" page="1">
 				<arg0 key="label.grant.project.grantCostCenter.number" resource="true"/>
 		    </field>		    
+		</form>
+
+		<!-- Edit Grant Contract Regime Form -->
+		<form name="editGrantContractRegimeForm">
+            <field property="dateBeginContract" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.regime.beginDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+				 	<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+				</var>
+		    </field>
+            <field property="dateEndContract" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.regime.endDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+	        	</var>
+		    </field>
+		    
+		    <field property="dateSendDispatchCC" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.regime.dateSendDispatchCC" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+	        	</var>
+		    </field>
+		    <field property="dateDispatchCC" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.regime.dateDispatchCC" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+	        	</var>
+		    </field>	
+		    <field property="dateSendDispatchCD" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.regime.dateSendDispatchCD" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+	        	</var>
+		    </field>
+		    <field property="dateDispatchCD" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.regime.dateDispatchCD" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+	        	</var>
+		    </field>
+		    <field property="dateAcceptTerm" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.regime.dateAcceptTerm" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+	        	</var>
+		    </field>
+			<field property="grantContractRegimeTeacherNumber" depends="integer" page="1">
+				<msg name="grantContractRegimeTeacherNumber" key="errors.integer"/>
+				<arg0 key="label.grant.contract.orientationTeacher" resource="true"/>
+		    </field>
+		</form>
+
+     	<!-- Correct Grant Owner Form -->
+		<form name="correctGrantOwner">
+		    <field property="grantOwnerNumber" depends="required, integer" page="1">
+				<msg name="grantOwnerNumber" key="errors.integer"/>
+				<arg0 key="label.grant.owner.number" resource="true"/>
+		    </field>
+		    <field property="documentIdNumber" depends="required, integer" page="1">
+				<msg name="documentIdNumber" key="errors.integer"/>
+				<arg0 key="label.grant.owner.infoperson.idNumber" resource="true"/>
+		    </field>
+		</form>
+
+     	<!-- Correct Grant Contract Form -->
+		<form name="correctGrantContract">
+			<field property="grantOwnerNumber" depends="integer" page="1">
+				<msg name="grantOwnerNumber" key="errors.integer"/>
+				<arg0 key="label.grant.owner.number" resource="true"/>
+		    </field>
+			<field property="grantContractNumber" depends="integer" page="1">
+				<msg name="grantContractNumber" key="errors.integer"/>
+				<arg0 key="label.grant.contract.number" resource="true"/>
+		    </field>
+			<field property="newGrantContractNumber" depends="integer" page="1">
+				<msg name="newGrantContractNumber" key="errors.integer"/>
+				<arg0 key="label.grant.contract.number" resource="true"/>
+		    </field>
+			<field property="newGrantOwnerNumber" depends="integer" page="1">
+				<msg name="newGrantOwnerNumber" key="errors.integer"/>
+				<arg0 key="label.grant.owner.number" resource="true"/>
+		    </field>			
 		</form>
 
     </formset>

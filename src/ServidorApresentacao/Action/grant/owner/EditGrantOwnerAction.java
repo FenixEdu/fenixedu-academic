@@ -47,25 +47,27 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		//Get the information to search
 		Integer loaddb = null;
 		Integer personId = null;
 		Integer idInternal = null;
 
-		if (request.getParameter("loaddb") != null && !request.getParameter("loaddb").equals(""))
+		if (verifyParameterInRequest(request,"loaddb"))
+		{
 			loaddb = new Integer(request.getParameter("loaddb"));
-
-		if (request.getParameter("personId") != null && !request.getParameter("personId").equals(""))
+		}
+		if (verifyParameterInRequest(request,"personId"))
+		{
 			personId = new Integer(request.getParameter("personId"));
-
-		if (request.getParameter("idGrantOwner") != null
-			&& !request.getParameter("idGrantOwner").equals(""))
+		}
+		if (verifyParameterInRequest(request,"idGrantOwner"))
+		{
 			idInternal = new Integer(request.getParameter("idGrantOwner"));
-
+		}
+		
 		/*
-		 * loaddb=1 --> first time on page, load contents from db personId not null --> create grant
-		 * owner from searchGrantOwnerResult idGrantOwner not null --> edit grant owner from
-		 * manageGrantOwner
+		 * loaddb=1 --> first time on page, load contents from db 
+		 * personId not null --> create grant owner from searchGrantOwnerResult 
+		 * idGrantOwner not null --> edit grant owner from manageGrantOwner
 		 */
 		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 		if (loaddb != null && loaddb.equals(new Integer(1))) //Load contents from database
@@ -76,20 +78,12 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 				{
 					//Read the grant owner
 					Object[] args = { idInternal };
-					infoGrantOwner =
-						(InfoGrantOwner) ServiceUtils.executeService(
-							SessionUtils.getUserView(request),
-							"ReadGrantOwner",
-							args);
+					infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(
+										SessionUtils.getUserView(request),"ReadGrantOwner",args);
 				}
 				catch (Exception e)
 				{
-					return setError(
-						request,
-						mapping,
-						"errors.grant.unrecoverable",
-						"manage-grant-owner",
-						null);
+					return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-owner",null);
 				}
 			}
 			else if (personId != null)
@@ -99,28 +93,18 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 					//Read the person (grant owner doesn't exist)
 					Object[] args = { personId };
 					InfoPerson infoPerson = null;
-					infoPerson =
-						(InfoPerson) ServiceUtils.executeService(
-							SessionUtils.getUserView(request),
-							"ReadPerson",
-							args);
+					infoPerson = (InfoPerson) ServiceUtils.executeService(
+									SessionUtils.getUserView(request),"ReadPerson",args);
 					infoGrantOwner.setPersonInfo(infoPerson);
 				}
 				catch (Exception e)
 				{
-					return setError(
-						request,
-						mapping,
-						"errors.grant.unrecoverable",
-						"manage-grant-owner",
-						null);
+					return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-owner",null);
 				}
 			}
 		}
 
-		/*
-		 * Fill the form (grant owner e person information)
-		 */
+		//Fill the form (grant owner e person information)
 		DynaValidatorForm grantOwnerInformationForm = (DynaValidatorForm) form;
 		if (infoGrantOwner.getIdInternal() != null)
 		{
@@ -133,41 +117,39 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 			setFormPersonalInformation(grantOwnerInformationForm, infoGrantOwner);
 		}
 
+		if (infoGrantOwner.getIdInternal() != null)
+		{
+			request.setAttribute("idInternal", infoGrantOwner.getIdInternal().toString());
+		}
+		
 		List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
 		request.setAttribute("documentTypeList", documentTypeList);
 
 		List maritalStatusList = EstadoCivil.toIntegerArrayList();
 		request.setAttribute("maritalStatusList", maritalStatusList);
 
-		List countryList = null;
 		try
 		{
-			countryList =
-				(List) ServiceUtils.executeService(
-					SessionUtils.getUserView(request),
-					"ReadAllCountries",
-					null);
+			List countryList = (List) ServiceUtils.executeService(
+							SessionUtils.getUserView(request),"ReadAllCountries",null);
+			
+			//Adding a select country line to the list (presentation reasons)
+			Country selectCountry = new Country();
+			selectCountry.setIdInternal(null);
+			selectCountry.setName("[Escolha um país]");
+			countryList.add(0, selectCountry);
+			request.setAttribute("countryList", countryList);
 		}
 		catch (Exception e)
 		{
 			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-owner", null);
 		}
-
-		//Adding a select country line to the list (presentation reasons)
-		Country selectCountry = new Country();
-		selectCountry.setIdInternal(null);
-		selectCountry.setName("[Escolha um país]");
-		countryList.add(0, selectCountry);
-		request.setAttribute("countryList", countryList);
-
-		if (infoGrantOwner.getIdInternal() != null)
-		{
-			request.setAttribute("idInternal", infoGrantOwner.getIdInternal().toString());
-		}
-
 		return mapping.findForward("edit-grant-owner-form");
 	}
 
+	/*
+	 * Editing a Grant Owner
+	 */
 	public ActionForward doEdit(
 		ActionMapping mapping,
 		ActionForm form,
@@ -176,14 +158,17 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 		throws Exception
 	{
 		DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
-		Integer grantOwnerId = null;
         InfoGrantOwner infoGrantOwner = null;
+		Integer grantOwnerId = null;
+
 		try
 		{
 			infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
 
 			if (infoGrantOwner.getPersonInfo().getTipoDocumentoIdentificacao() == null)
+			{
 				return setError(request, mapping, "errors.grant.owner.idtype", null, null);
+			}
 
 			//Edit Grant Owner
 			Object[] args = { infoGrantOwner };
@@ -207,11 +192,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 		{
 			//Read the grant owner by person
 			Object[] args2 = { grantOwnerId };
-			infoGrantOwner =
-				(InfoGrantOwner) ServiceUtils.executeService(
-					SessionUtils.getUserView(request),
-					"ReadGrantOwner",
-					args2);
+			infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(
+								SessionUtils.getUserView(request),"ReadGrantOwner",args2);
 		}
 		catch (FenixServiceException e)
 		{
@@ -219,11 +201,14 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 		}
 
 		if (infoGrantOwner != null)
+		{
 			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
+			return mapping.findForward("manage-grant-owner");
+		}
 		else
+		{
 			return setError(request, mapping, "errors.grant.owner.readafterwrite", null, null);
-
-		return mapping.findForward("manage-grant-owner");
+		}
 	}
 
 	/*
@@ -299,6 +284,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 		if (infoPerson.getInfoPais() != null)
 			form.set("country", infoPerson.getInfoPais().getIdInternal());
 	}
+	
 	/*
 	 * Populates form from InfoGrantOwner
 	 */

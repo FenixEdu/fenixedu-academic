@@ -19,13 +19,7 @@ import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
  */
 public abstract class FenixDispatchAction extends DispatchAction
 {
-	/**
-	 * Tests if the session is valid.
-	 * 
-	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
-	 * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm, HttpServletRequest,
-	 *      HttpServletResponse)
-	 */
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -44,6 +38,13 @@ public abstract class FenixDispatchAction extends DispatchAction
 		return super.execute(mapping, actionForm, request, response);
 	}
 
+	/**
+	 * Tests if the session is valid.
+	 * 
+	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
+	 * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm, HttpServletRequest,
+	 *      HttpServletResponse)
+	 */
 	protected HttpSession getSession(HttpServletRequest request) throws InvalidSessionActionException
 	{
 		HttpSession result = request.getSession(false);
@@ -70,16 +71,44 @@ public abstract class FenixDispatchAction extends DispatchAction
         saveErrors(request, errors);
 
         if (forwardPage != null)
+        {
             return mapping.findForward(forwardPage);
+        }
         else
+        {
             return mapping.getInputForward();
+        }
     }
     
+    /*
+     * Verifies if a property of type String in a FormBean is not empty. 
+     * Returns true if the field is present and not empty. False otherwhise.
+     */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field)
     {
         if(dynaForm.get(field) != null && !dynaForm.get(field).equals(""))
+        {
             return true;
+        }
         else
+        {
         	return false;
+        }
+    }
+    
+    /*
+     * Verifies if a parameter in a Http Request is not empty.
+     * Return true if the field is not empty. False otherwise. 
+     */
+    protected boolean verifyParameterInRequest(HttpServletRequest request, String field)
+    {
+    	if(request.getParameter(field) != null && !request.getParameter(field).equals(""))
+    	{
+    		return true;
+    	}
+    	else
+    	{
+    		return false;
+    	}
     }
 }

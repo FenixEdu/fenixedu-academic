@@ -13,6 +13,7 @@ import Dominio.DomainObject;
  */
 public class GrantSubsidy extends DomainObject implements IGrantSubsidy
 {
+	private Integer state;
     private Date dateBeginSubsidy;
     private Date dateEndSubsidy;
 	private String valueFullName;
@@ -148,4 +149,18 @@ public class GrantSubsidy extends DomainObject implements IGrantSubsidy
 		this.dateEndSubsidy = dateEndSubsidy;
 	}
 
+	/**
+	 * @return Returns the state.
+	 */
+	public Integer getState()
+	{
+		return state;
+	}
+	/**
+	 * @param state The state to set.
+	 */
+	public void setState(Integer state)
+	{
+		this.state = state;
+	}
 }

@@ -1162,14 +1162,16 @@ public abstract class Cloner
             infoGrantProject = new InfoGrantProject();
             copyObjectProperties(infoGrantProject, grantProject);
 
+			
 			InfoTeacher infoResponsibleTeacher = null;
-			if(grantProject.getResponsibleTeacher() != null) {
-				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());}
+			if(grantProject.getResponsibleTeacher() != null)
+				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());
             infoGrantProject.setInfoResponsibleTeacher(infoResponsibleTeacher);
 
+			
 			InfoGrantCostCenter infoGrantCostCenter = null;
-			if(grantProject.getGrantCostCenter() != null) {
-				infoGrantCostCenter = Cloner.copyIGrantCostCenter2InfoGrantCostCenter(grantProject.getGrantCostCenter());}
+			if(grantProject.getGrantCostCenter() != null)
+				infoGrantCostCenter = Cloner.copyIGrantCostCenter2InfoGrantCostCenter(grantProject.getGrantCostCenter());
             infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
         }
         return infoGrantProject;

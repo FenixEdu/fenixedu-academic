@@ -21,26 +21,9 @@ import ServidorPersistente.ISuportePersistente;
  */
 public class ReadGrantOwner extends ReadDomainObjectService implements IService
 {
-    private static ReadGrantOwner service = new ReadGrantOwner();
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadGrantOwner getService()
+
+	public ReadGrantOwner()
     {
-        return service;
-    }
-    /**
-     * The constructor of this class.
-     */
-    private ReadGrantOwner()
-    {
-    }
-    /**
-     * The name of the service
-     */
-    public final String getNome()
-    {
-        return "ReadGrantOwner";
     }
 
     /* (non-Javadoc)

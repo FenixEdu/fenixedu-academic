@@ -4,7 +4,20 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<p><b><bean:message key="label.grant.type.information"/></b></p><br/>
+<p><b><bean:message key="label.grant.type.information"/></b></p>
+
+	<table class="infoop">
+		<tr>
+			<td rowspan=4><p class="emphasis-box">i</p></td>
+		    <td><bean:message key="info.grant.manage.granttype.information"/></td>
+		</tr>
+		<tr>
+			<td><bean:message key="info.grant.manage.granttype.edit"/>"<bean:message key="link.edit"/>".</td>
+		</tr>
+		<tr>
+			<td><bean:message key="info.grant.manage.granttype.create"/>"<bean:message key="link.create.grant.type"/>".</td>
+		</tr>
+	</table><br/><br/>
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
@@ -16,6 +29,13 @@
 <logic:messagesNotPresent>
 
 <logic:present name="infoGrantTypeList">
+
+	<%-- Create a new Grant Type --%>
+	<bean:message key="message.grant.type.creation"/>:&nbsp;
+	<html:link page="/editGrantType.do?method=prepareEditGrantTypeForm">
+		<bean:message key="link.create.grant.type"/>
+	</html:link><br><br>
+
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with grant type description rows --%>
     <tr>
@@ -94,9 +114,8 @@
 <logic:notPresent name="infoGrantTypeList">
     <p align="center"><bean:message key="message.grant.type.nonExistentGrantTypes" /></p>
 </logic:notPresent>
-    
-<br/><br/>
 
+<br/><br/>
 <%-- Create a new Grant Type --%>
 <bean:message key="message.grant.type.creation"/>:&nbsp;
 <html:link page="/editGrantType.do?method=prepareEditGrantTypeForm">

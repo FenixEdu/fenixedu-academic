@@ -31,6 +31,30 @@ CREATE TABLE GRANT_CONTRACT (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
    ACK_OPT_LOCK int(11),
   NUMBER int(11) unsigned NOT NULL default '0',
+--  DATE_BEGIN_CONTRACT date default NULL,
+--  DATE_END_CONTRACT date default NULL,
+--  DATE_SEND_DISPATCH_CC date default NULL,
+--  DATE_DISPATCH_CC date default NULL,
+--  DATE_SEND_DISPATCH_CD date default NULL,
+--  DATE_DISPATCH_CD date default NULL,
+--  DATE_ACCEPT_TERM date default NULL,
+  END_CONTRACT_MOTIVE varchar(255) default NULL,
+  KEY_GRANT_OWNER int(11) unsigned NOT NULL default '0',
+  KEY_GRANT_TYPE int(11) unsigned NOT NULL default '0',
+--  KEY_GRANT_CONTEST int(11) unsigned default NULL,
+  PRIMARY KEY  (ID_INTERNAL),
+  UNIQUE KEY UNIQUE1 (NUMBER,KEY_GRANT_OWNER)
+) TYPE=InnoDB;
+
+#
+# Table structure for table 'grant_contract_regime'
+#
+
+DROP TABLE IF EXISTS GRANT_CONTRACT_REGIME;
+CREATE TABLE GRANT_CONTRACT_REGIME (
+  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
+   ACK_OPT_LOCK int(11),
+  STATE int(2) unsigned NOT NULL default '0',
   DATE_BEGIN_CONTRACT date default NULL,
   DATE_END_CONTRACT date default NULL,
   DATE_SEND_DISPATCH_CC date default NULL,
@@ -38,12 +62,10 @@ CREATE TABLE GRANT_CONTRACT (
   DATE_SEND_DISPATCH_CD date default NULL,
   DATE_DISPATCH_CD date default NULL,
   DATE_ACCEPT_TERM date default NULL,
-  END_CONTRACT_MOTIVE varchar(255) default NULL,
-  KEY_GRANT_OWNER int(11) unsigned NOT NULL default '0',
-  KEY_GRANT_TYPE int(11) unsigned NOT NULL default '0',
---  KEY_GRANT_CONTEST int(11) unsigned default NULL,
-  PRIMARY KEY  (ID_INTERNAL),
-  UNIQUE KEY UNIQUE1 (NUMBER,KEY_GRANT_OWNER)
+  --KEY_GRANT_TYPE int(11) unsigned NOT NULL default '0',
+  KEY_GRANT_CONTRACT int(11) unsigned NOT NULL default '0',
+  KEY_TEACHER int(11) unsigned,
+  PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;
 
 
@@ -92,13 +114,17 @@ DROP TABLE IF EXISTS GRANT_SUBSIDY;
 CREATE TABLE GRANT_SUBSIDY (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
    ACK_OPT_LOCK int(11),
+ 
+  STATE int(2) unsigned NOT NULL default '0',
   DATE_BEGIN_SUBSIDY date default NULL,
   DATE_END_SUBSIDY date default NULL, 
   VALUE_FULL_NAME varchar(255),
   VALUE DOUBLE(11,2) unsigned  NOT NULL default '0.00',
   TOTAL_COST DOUBLE(11,2) unsigned default '0,00',
+ 
   KEY_GRANT_CONTRACT int(11) unsigned NOT NULL,
-  PRIMARY KEY  (ID_INTERNAL)
+  PRIMARY KEY  (ID_INTERNAL),
+  UNIQUE KEY UNIQUE1 (KEY_GRANT_CONTRACT, DATE_BEGIN_SUBSIDY)
 ) TYPE=InnoDB;
 
 #

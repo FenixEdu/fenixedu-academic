@@ -1,7 +1,7 @@
 --------------------------------------------------------------------
 Release 2004-05-26
 ---------------------------------------------------------------------
-
+ 
 NEW FEATURES:
 =============
 - Added the general class properties concept. For more information related to this,
@@ -16,6 +16,10 @@ NEW FEATURES:
 		3. All _bd.jsp files were deleted. 
 		4. Now it is used the definitions tiles.
 		5. New service were created and old services where changed.
+- Grant Contracts can now have more than one Grant Subsidy (only one active though, the rest are for historical purposes).
+- Grant Contracts are now renewd (using Grant Contract Regimes as regimes of Grant Contract)
+- Adding new Correction forms (temporarily WE HOPE!) to correct key references in erroneus data in database.
+- Search of persons can now be restricted only to grant owners.
 
 NOTES:
 ======
@@ -26,6 +30,11 @@ NOTES:
                           mysql <DBNAME> < result.sql
 - It is necessary run "changeSummaryTable.sql" but ATTENTION only run the ten first lines! This files add new columns in the SUMMARY 
   table and change others.
+- It is necessary to run the 2 script in the project middleware:
+			In directory /etc/middleware/grantMigration2/
+- It is also necessary to run the 2 java scripts in middleware project (after the 2 scripts mentioned before)
+	ant -f build_run.xml migrate-bolseiros
+	ant -f build_run.xml migrate-grant-contract
 
 CHANGES:
 ========
@@ -37,7 +46,8 @@ BUG FIXES:
 - fixed bug [ #218 ] Exams listing by degree and curricular year on SOP's portal
 - fixed bug [ #229 ] Error on examEnrollmentManager
 - fixed bug [ #224 ] GEP's Portal - wrong presentation of responsible teachers for acreditation listing
-
+- fixed bug [ #197 ] Faculty Adm Office (edit Grant Payment Entities)
+- fixed bug [ #223 ] Faculty Adm Office (manageGrantContract)
 
 KNOWN ISSUES:
 =============
@@ -591,4 +601,3 @@ BUG FIXES:
 - fixed bug [ #132 ] bug in CursoExecucaoOJB
  
 KNOWN ISSUES:
-

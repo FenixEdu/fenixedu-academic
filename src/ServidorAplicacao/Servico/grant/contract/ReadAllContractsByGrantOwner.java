@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.grant.contract;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -78,6 +79,7 @@ public class ReadAllContractsByGrantOwner implements IService
 				throw new FenixServiceException(e.getMessage());
 			}
 		}
+		Collections.reverse(contractList);
 		return contractList;
 	}
 }

@@ -1,6 +1,5 @@
 /*
  * Created on 03/Dec/2003
- *  
  */
 
 package ServidorApresentacao.Action.grant.owner;
@@ -28,15 +27,18 @@ public class SearchGrantOwnerAction extends SearchAction
 		String name = (String) searchGrantOwnerForm.get("name");
 		String idNumber = (String) searchGrantOwnerForm.get("idNumber");
 		Integer idType = (Integer) searchGrantOwnerForm.get("idType");
-
-		//Prepare arguments of service to search
-		Object[] args = { name, idNumber, idType, null };
+		
+		Boolean onlyGrantOwner = new Boolean(false);
+		if(searchGrantOwnerForm.get("justGrantOwner") != null)
+		{
+			request.setAttribute("justGrantOwner","yes");
+			onlyGrantOwner = new Boolean(true);
+		}
+		
+		Object[] args = { name, idNumber, idType, null, onlyGrantOwner };
 		return args;
 	}
 
-	/*
-	 * Populate form
-	 */
 	protected void prepareFormConstants(
 		ActionMapping mapping,
 		HttpServletRequest request,

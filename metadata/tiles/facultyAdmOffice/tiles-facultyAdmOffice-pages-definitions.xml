@@ -75,6 +75,29 @@
 		<definition name="editGrantProjectForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantProject.jsp"></put>
 	</definition>
+	<!-- GRANT CONTRACT REGIME -->
+	<definition name="manageGrantContractRegime" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantContractRegime.jsp"></put>
+	</definition>
+		<definition name="editGrantContractRegime" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantContractRegime.jsp"></put>
+	</definition>
+
+	<!-- GRANT CORRECTIONS -->
+	<definition name="correctGrantOwner" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/correction/grantOwnerCorrection.jsp"></put>
+	</definition>
+	<definition name="correctDeleteGrantContract" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/correction/grantContractDeletion.jsp"></put>
+	</definition>
+	<definition name="correctChangeNumberGrantContract" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/correction/grantContractChangeNumber.jsp"></put>
+	</definition>
+	<definition name="correctMoveGrantContract" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/correction/grantContractMove.jsp"></put>
+	</definition>
+
+	
 	
 	<!-- CREDITS related tiles =================================================================== -->
 	<!-- == USE CASE : List Teacher Service Exemptions =========================================== -->

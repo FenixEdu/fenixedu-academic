@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -24,11 +24,9 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  *  
  */
 
-public class ShowAllTeachersAction extends DispatchAction
+public class ShowAllTeachersAction extends FenixDispatchAction
 {
-	/*
-	 * Fills the form with the correspondent data
-	 */
+	
 	public ActionForward showForm(
 		ActionMapping mapping,
 		ActionForm form,
@@ -36,6 +34,8 @@ public class ShowAllTeachersAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+		try
+		{
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Object[] args = {};
@@ -43,5 +43,10 @@ public class ShowAllTeachersAction extends DispatchAction
 		request.setAttribute("teachersList", teachersList);
 
 		return mapping.findForward("show-teachers");
+		}
+		catch(Exception e)
+		{
+			return setError(request,mapping,"errors.grant.unrecoverable","show-teachers",null);
+		}
 	}
 }

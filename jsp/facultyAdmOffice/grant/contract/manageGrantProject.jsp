@@ -3,7 +3,21 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<p><b><bean:message key="label.grant.project.information"/></b></p><br/>
+<p><b><bean:message key="label.grant.project.information"/></b></p>
+
+	<table class="infoop">
+		<tr>
+			<td rowspan=4><p class="emphasis-box">i</p></td>
+		    <td><bean:message key="info.grant.manage.grantproject.information"/></td>
+		</tr>
+		<tr>
+			<td><bean:message key="info.grant.manage.grantproject.edit"/>"<bean:message key="link.edit"/>".</td>
+		</tr>
+		<tr>
+			<td><bean:message key="info.grant.manage.grantproject.create"/>"<bean:message key="link.create.grant.project"/>".</td>
+		</tr>
+	</table><br/><br/>
+
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
@@ -15,6 +29,13 @@
 <logic:messagesNotPresent>
 
 <logic:present name="infoGrantProjectList">
+
+	<%-- Create a new Grant Project --%>
+	<bean:message key="message.grant.project.creation"/>:&nbsp;
+	<html:link page="/editGrantProject.do?method=prepareEditGrantProjectForm">
+		<bean:message key="link.create.grant.project"/>
+	</html:link><br><br>
+
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with grant type description rows --%>
     <tr>
@@ -66,14 +87,14 @@
 <%-- If there are no grant projects --%>
 <logic:notPresent name="infoGrantProjectList">
     <p align="center"><bean:message key="message.grant.project.nonExistentProjects" /></p>
-</logic:notPresent>
-    
-<br/><br/>
+</logic:notPresent>   	
 
+<br/><br/>
 <%-- Create a new Grant Project --%>
 <bean:message key="message.grant.project.creation"/>:&nbsp;
 <html:link page="/editGrantProject.do?method=prepareEditGrantProjectForm">
 	<bean:message key="link.create.grant.project"/>
 </html:link>
+
 
 </logic:messagesNotPresent>

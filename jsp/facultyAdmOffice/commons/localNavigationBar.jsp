@@ -44,9 +44,38 @@
 		    </html:link>
 		</li>
 	</ul>
-	
+
 	<br/>
-	
+	<strong>&raquo; <bean:message key="link.grant.correction"/></strong>	
+	<ul>
+		<li>
+			<html:link page="/correctGrantOwner.do?method=prepareForm">
+		    	<bean:message key="link.grant.owner.correction"/>
+		    </html:link>
+		</li>
+	</ul>
+		<ul>
+		<li>
+			<html:link page="/correctGrantContract.do?method=prepareForm&amp;action=deleteContract">
+				<bean:message key="link.grant.contract.delete.correction"/>
+		    </html:link>
+		</li>
+	</ul>
+		<ul>
+		<li>
+			<html:link page="/correctGrantContract.do?method=prepareForm&amp;action=changeNumberContract">
+		    	<bean:message key="link.grant.contract.change.number.correction"/>
+		    </html:link>
+		</li>
+	</ul>
+		<ul>
+		<li>
+			<html:link page="/correctGrantContract.do?method=prepareForm&amp;action=moveContract">
+		    	<bean:message key="link.grant.contract.move.correction"/>
+		    </html:link>
+		</li>
+	</ul>	
+	<br/>
 </logic:present>
 
 <logic:present role="creditsManager">

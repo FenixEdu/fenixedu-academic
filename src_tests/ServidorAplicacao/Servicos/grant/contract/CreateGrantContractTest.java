@@ -125,8 +125,8 @@ public class CreateGrantContractTest
         infoGrantOwner.setIdInternal(new Integer(2));
 
         infoGrantContract.setContractNumber(new Integer(2));
-        infoGrantContract.setDateBeginContract(dateBeginContract);
-        infoGrantContract.setDateEndContract(dateEndContract);
+        //infoGrantContract.setDateBeginContract(dateBeginContract);
+        //infoGrantContract.setDateEndContract(dateEndContract);
 
         infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
         infoGrantContract.setGrantTypeInfo(grantType);      
@@ -214,7 +214,7 @@ public class CreateGrantContractTest
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         Date dateEnd = calendar.getTime();
-        infoGrantContract.setDateEndContract(dateEnd);
+        //infoGrantContract.setDateEndContract(dateEnd);
         infoGrantContract.setIdInternal(new Integer(1));
         infoGrantContract.getGrantOrientationTeacherInfo().setIdInternal(new Integer(1));
         return args;

@@ -1,6 +1,5 @@
 /*
  * Created on 20/Jan/2004
- *  
  */
 
 package ServidorApresentacao.Action.grant.contract;
@@ -28,7 +27,6 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Pica
  *  
  */
-
 public class EditGrantTypeAction extends FenixDispatchAction
 {
 	/*
@@ -42,8 +40,10 @@ public class EditGrantTypeAction extends FenixDispatchAction
 		throws Exception
 	{
 		Integer idGrantType = null;
-		if (request.getParameter("idGrantType") != null)
+		if (verifyParameterInRequest(request, "idGrantType"))
+		{
 			idGrantType = new Integer(request.getParameter("idGrantType"));
+		}
 
 		if (idGrantType != null) //Edit
 		{
@@ -65,10 +65,12 @@ public class EditGrantTypeAction extends FenixDispatchAction
 				return setError(request, mapping, "errors.grant.type.read", null, null);
 			}
 		}
-
 		return mapping.findForward("edit-grant-type");
 	}
 
+	/*
+	 * Edit the Grant Type
+	 */
 	public ActionForward doEdit(
 		ActionMapping mapping,
 		ActionForm form,
@@ -84,28 +86,30 @@ public class EditGrantTypeAction extends FenixDispatchAction
 			Object[] args = { infoGrantType };
 			IUserView userView = SessionUtils.getUserView(request);
 			ServiceUtils.executeService(userView, "EditGrantType", args);
+			
+			return mapping.findForward("manage-grant-type");
 		}
 		catch (FenixServiceException e)
 		{
 			return setError(request, mapping, "errors.grant.type.bd.create", null, null);
 		}
-
-		return mapping.findForward("manage-grant-type");
 	}
 
 	/*
-	 * Populates form from InfoContract
+	 * Populates Form from Info
 	 */
 	private void setFormGrantType(DynaValidatorForm form, InfoGrantType infoGrantType) throws Exception
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		
 		BeanUtils.copyProperties(form, infoGrantType);
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		if (infoGrantType.getState() != null)
 			form.set("state", sdf.format(infoGrantType.getState()));
 	}
 
+	/*
+	 * Populates Info from Form
+	 */
 	private InfoGrantType populateInfoFromForm(DynaValidatorForm editGrantTypeForm) throws Exception
 	{
 		InfoGrantType infoGrantType = new InfoGrantType();

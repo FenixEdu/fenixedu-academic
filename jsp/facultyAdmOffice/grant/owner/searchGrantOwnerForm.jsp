@@ -2,34 +2,26 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+
 <html:form action="/searchGrantOwner">
 
+	<p><b><bean:message key="info.grant.searchform.name.and.id"/></b></p>
+
 	<table class="infoop">
-	 <tr>
-	 <td rowspan=4>
-    	 <p class="emphasis-box">i</p>
-	 </td>
-	  <td>
-	   Procura de uma pessoa por Nome:
-	  </td>
-	 </tr>
-	 <tr>
-	  <td>
-	   Para obter todas as pessoas cujo primeiro nome seja 'João' deve escrever 'João*'
-	  </td>
-	 </tr>
-	 <tr>
-	  <td>
-	   Para obter todas as pessoas cujo último nome seja 'Silva' deve escrever '*Silva'
-	  </td>
-	 </tr>
-	 <tr>
-	  <td>
-	   Para obter todas as pessoas que contenham o nome 'Pedro' deve escrever '*Pedro*'
-	  </td>
-	 </tr>
-	</table>
-	<br>
+		<tr>
+			<td rowspan=4><p class="emphasis-box">i</p></td>
+	  		<td><bean:message key="info.grant.searchform.by.firstname"/></td>
+		</tr>
+	 	<tr>
+	 		<td><bean:message key="info.grant.searchform.by.lastname"/></td>
+	 	</tr>
+	 	<tr>
+	 		<td><bean:message key="info.grant.searchform.by.name"/></td>
+	 	</tr>
+	 	<tr>
+	 		<td><bean:message key="info.grant.searchform.only.grants"/></td>
+	 	</tr>
+	</table><br/>
 
 	<html:hidden property="method" value="doSearch"/>
 	<html:hidden property="page" value="1"/>
@@ -59,6 +51,10 @@
 				</html:select>
 			</td>
 		</tr>
+		<tr>
+			<td align="left"><bean:message key="label.search.just.grant.owner"/>:&nbsp;</td>
+			<td><html:checkbox property="justGrantOwner"></html:checkbox></td>
+		</tr>
 	</table>
 	
 	<p><html:submit styleClass="inputbutton">
@@ -73,11 +69,13 @@
 	<html:hidden property="method" value="searchGrantOwner"/>
 	<html:hidden property="page" value="1"/>
 
+	<p><b><bean:message key="info.grant.searchform.grantowner.number"/></b></p>
+
 	<%-- Search Form By Grant Owner number --%>	
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.number"/>:&nbsp;</td>
-			<td><html:text property="idGrantOwner"/></td>
+			<td><html:text property="grantOwnerNumber"/></td>
 		</tr>
 	</table>
 	

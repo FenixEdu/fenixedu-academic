@@ -24,9 +24,6 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ManageGrantOwnerAction extends FenixDispatchAction
 {
-	/*
-	 * Fills the form with the correspondent data
-	 */
 	public ActionForward prepareManageGrantOwnerForm(
 		ActionMapping mapping,
 		ActionForm form,
@@ -37,19 +34,30 @@ public class ManageGrantOwnerAction extends FenixDispatchAction
 		try
 		{
             Integer idInternal = null;
-			if (request.getParameter("idInternal") != null)
+			if (verifyParameterInRequest(request,"idInternal"))
+			{
 				idInternal = new Integer(request.getParameter("idInternal"));
+			}
 			else if ((Integer) request.getAttribute("idInternal") != null)
+			{
 				idInternal = (Integer) request.getAttribute("idInternal");
+			}
 
-			//Run the service
+			if(idInternal == null)
+			{
+				throw new Exception();
+			}
+			
+			//Read Grant Owner
 			Object[] args = { idInternal };
 			IUserView userView = SessionUtils.getUserView(request);
 			InfoGrantOwner infoGrantOwner =
 				(InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
 
 			if (infoGrantOwner == null)
+			{
             	throw new Exception();
+			}
 
             request.setAttribute("infoGrantOwner", infoGrantOwner);
 		}

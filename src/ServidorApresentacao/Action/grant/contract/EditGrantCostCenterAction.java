@@ -25,10 +25,8 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Barbosa
- * @author Pica
- *  
+ * @author Pica 
  */
-
 public class EditGrantCostCenterAction extends FenixDispatchAction
 {
 	/*
@@ -42,8 +40,10 @@ public class EditGrantCostCenterAction extends FenixDispatchAction
 		throws Exception
 	{
 		Integer idGrantCostCenter = null;
-		if (request.getParameter("idGrantCostCenter") != null)
+		if (verifyParameterInRequest(request, "idGrantCostCenter"))
+		{
 			idGrantCostCenter = new Integer(request.getParameter("idGrantCostCenter"));
+		}
 
 		if (idGrantCostCenter != null) //Edit
 		{
@@ -52,13 +52,10 @@ public class EditGrantCostCenterAction extends FenixDispatchAction
 				DynaValidatorForm grantCostCenterForm = (DynaValidatorForm) form;
 				IUserView userView = SessionUtils.getUserView(request);
 
-				//Read the grant type
+				//Read the grant cost center
 				Object[] args = { idGrantCostCenter };
 				InfoGrantCostCenter infoGrantCostCenter =
-					(InfoGrantCostCenter) ServiceUtils.executeService(
-						userView,
-						"ReadGrantPaymentEntity",
-						args);
+					(InfoGrantCostCenter) ServiceUtils.executeService(userView,"ReadGrantPaymentEntity",args);
 
 				//Populate the form
 				setFormGrantCostCenter(grantCostCenterForm, infoGrantCostCenter);
@@ -71,6 +68,9 @@ public class EditGrantCostCenterAction extends FenixDispatchAction
 		return mapping.findForward("edit-grant-costcenter");
 	}
 
+	/*
+	 * Edit a cost center
+	 */
 	public ActionForward doEdit(
 		ActionMapping mapping,
 		ActionForm form,
@@ -78,49 +78,37 @@ public class EditGrantCostCenterAction extends FenixDispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		DynaValidatorForm editGrantCostCenterForm = (DynaValidatorForm) form;
-		IUserView userView = SessionUtils.getUserView(request);
 		InfoGrantCostCenter infoGrantCostCenter = null;
-
 		try
 		{
+			IUserView userView = SessionUtils.getUserView(request);
+			
+			DynaValidatorForm editGrantCostCenterForm = (DynaValidatorForm) form;
 			infoGrantCostCenter = populateInfoFromForm(editGrantCostCenterForm);
 
 			//Check if teacher exists
-			if(infoGrantCostCenter.getInfoResponsibleTeacher() != null)
+			Object[] argTeacher = { infoGrantCostCenter.getInfoResponsibleTeacher().getTeacherNumber()};
+			InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber", argTeacher);
+			if (infoTeacher == null)
 			{
-				Object[] args = { infoGrantCostCenter.getInfoResponsibleTeacher().getTeacherNumber()};
-				InfoTeacher infoTeacher =
-					(InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber", args);
-				if (infoTeacher == null)
-					return setError(
-						request,
-						mapping,
-						"errors.grant.paymententity.unknownTeacher",
-						null,
-						editGrantCostCenterForm.get("responsibleTeacherNumber"));
-	            infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
+				return setError(request,mapping,"errors.grant.paymententity.unknownTeacher",null,editGrantCostCenterForm.get("responsibleTeacherNumber"));
 			}
-			
-            //Edit/Create the payment entity
-			Object[] args2 = { infoGrantCostCenter };
-			ServiceUtils.executeService(userView, "EditGrantPaymentEntity", args2);
+			infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
+            
+			//Edit-Create the payment entity
+			Object[] argCostCenter = { infoGrantCostCenter };
+			ServiceUtils.executeService(userView, "EditGrantPaymentEntity", argCostCenter);
+
+			return mapping.findForward("manage-grant-costcenter");
 		}
 		catch (ExistingServiceException e)
 		{
-			return setError(
-				request,
-				mapping,
-				"errors.grant.costcenter.duplicateEntry",
-				null,
-				infoGrantCostCenter.getNumber());
+			return setError(request,mapping,"errors.grant.costcenter.duplicateEntry",null,infoGrantCostCenter.getNumber());
 		}
 		catch (FenixServiceException e)
 		{
 			return setError(request, mapping, "errors.grant.costcenter.bd.create", null, null);
 		}
-
-		return mapping.findForward("manage-grant-costcenter");
 	}
 
 	/*
@@ -134,6 +122,9 @@ public class EditGrantCostCenterAction extends FenixDispatchAction
 			form.set("responsibleTeacherNumber",infoGrantCostCenter.getInfoResponsibleTeacher().getTeacherNumber().toString());
 	}
 
+	/*
+	 * Populates Info from Form
+	 */
 	private InfoGrantCostCenter populateInfoFromForm(DynaValidatorForm editGrantCostCenterForm)
 		throws Exception
 	{
@@ -144,8 +135,7 @@ public class EditGrantCostCenterAction extends FenixDispatchAction
         
         //Build the teacher Number
         InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setTeacherNumber(
-			new Integer((String) editGrantCostCenterForm.get("responsibleTeacherNumber")));
+        infoTeacher.setTeacherNumber(new Integer((String) editGrantCostCenterForm.get("responsibleTeacherNumber")));
 		infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
 		
         return infoGrantCostCenter;

@@ -13,6 +13,7 @@ import DataBeans.InfoObject;
  */
 public class InfoGrantSubsidy extends InfoObject
 {
+	private Integer state;
     private Date dateBeginSubsidy;
     private Date dateEndSubsidy;
 	private String valueFullName;
@@ -121,4 +122,18 @@ public class InfoGrantSubsidy extends InfoObject
 		this.dateEndSubsidy = dateEndSubsidy;
 	}
 
+	/**
+	 * @return Returns the state.
+	 */
+	public Integer getState()
+	{
+		return state;
+	}
+	/**
+	 * @param state The state to set.
+	 */
+	public void setState(Integer state)
+	{
+		this.state = state;
+	}
 }

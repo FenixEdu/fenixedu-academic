@@ -24,9 +24,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ManageGrantQualificationAction extends FenixDispatchAction
 {
-	/*
-	 * Fills the form with the correspondent data
-	 */
+
 	public ActionForward prepareManageGrantQualificationForm(
 		ActionMapping mapping,
 		ActionForm form,
@@ -41,32 +39,40 @@ public class ManageGrantQualificationAction extends FenixDispatchAction
 			Integer grantOwnerNumber = null;
 			String username = null;
 
-			if (request.getParameter("idInternal") != null)
+			if (verifyParameterInRequest(request, "idInternal"))
+			{
 				idInternal = new Integer(request.getParameter("idInternal"));
-			else if (request.getParameter("idGrantOwner") != null)
+			}
+			else if (verifyParameterInRequest(request, "idGrantOwner"))
+			{
 				idInternal = new Integer(request.getParameter("idGrantOwner"));
-			if (request.getParameter("idPerson") != null)
+			}
+			if (verifyParameterInRequest(request, "idPerson"))
+			{
 				idInternalPerson = new Integer(request.getParameter("idPerson"));
-			if (request.getParameter("grantOwnerNumber") != null)
+			}
+			if (verifyParameterInRequest(request, "grantOwnerNumber"))
+			{
 				grantOwnerNumber = new Integer(request.getParameter("grantOwnerNumber"));
-			
+			}
 			username = request.getParameter("username");
 
 			Object[] args = { username };
 			IUserView userView = SessionUtils.getUserView(request);
 			InfoSiteQualifications infoSiteQualifications =
-				(InfoSiteQualifications) ServiceUtils.executeService(
-					userView,
-					"ReadQualifications",
-					args);
+				(InfoSiteQualifications) ServiceUtils.executeService(userView,"ReadQualifications",args);
 
 			if (infoSiteQualifications != null)
 			{
 				if (infoSiteQualifications.getInfoPerson() != null)
+				{
 					request.setAttribute("grantOwnerName",infoSiteQualifications.getInfoPerson().getNome());
+				}
 				if (infoSiteQualifications.getInfoQualifications() != null
 					&& !infoSiteQualifications.getInfoQualifications().isEmpty())
+				{
 					request.setAttribute("infoQualificationList",infoSiteQualifications.getInfoQualifications());
+				}
 			}
 			request.setAttribute("grantOwnerNumber", grantOwnerNumber);
 			request.setAttribute("idGrantOwner", idInternal);

@@ -31,6 +31,7 @@
 	
 	<%-- grant subsidy --%>
 	<html:hidden property="idGrantSubsidy"/>
+	<html:hidden property="state"/>
 
 	<%-- grant owner  --%>
 	<html:hidden property="idGrantOwner"/>

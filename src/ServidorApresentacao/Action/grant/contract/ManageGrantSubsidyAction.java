@@ -27,9 +27,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ManageGrantSubsidyAction extends FenixDispatchAction
 {
-	/*
-	 * Fills the form with the correspondent data
-	 */
+
 	public ActionForward prepareManageGrantSubsidyForm(
 		ActionMapping mapping,
 		ActionForm form,
@@ -43,22 +41,22 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction
 			try
 			{
 				if (request.getAttribute("idContract") != null)
+				{
 					idContract = (Integer) request.getAttribute("idContract");
+				}
 				else
+				{
 					idContract = new Integer(request.getParameter("idContract"));
+				}
 			}
 			catch (Exception e)
 			{
 				request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
 				request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-				return setError(
-					request,
-					mapping,
-					"errors.grant.unrecoverable",
-					"manage-grant-subsidy",
-					null);
+				return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-subsidy",null);
 			}
 
+			//Read Contract
 			Object[] args = { idContract };
 			IUserView userView = SessionUtils.getUserView(request);
 			InfoGrantContract infoGrantContract =
@@ -67,35 +65,35 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction
 			request.setAttribute("idContract", idContract);
 			request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-			List infoGrantSubsidyList =
-				(List) ServiceUtils.executeService(userView, "ReadAllGrantSubsidiesByGrantContract", args);
-
+			//Read Subsidies
+			Object[] argsActiveSubsidy = { idContract, new Integer(1) };
+			Object[] argsNotActiveSubsidy = { idContract, new Integer(0) };
+			List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService(userView, "ReadAllGrantSubsidiesByGrantContractAndState", argsActiveSubsidy);
+			List infoGrantNotActiveSubsidyList = (List) ServiceUtils.executeService(userView, "ReadAllGrantSubsidiesByGrantContractAndState", argsNotActiveSubsidy);
+						
 			//If they exist put them on request
-			if (infoGrantSubsidyList != null && !infoGrantSubsidyList.isEmpty())
-				request.setAttribute("infoGrantSubsidyList", infoGrantSubsidyList);
-
+			if (infoGrantActiveSubsidyList != null && !infoGrantActiveSubsidyList.isEmpty())
+			{
+				request.setAttribute("infoGrantActiveSubsidyList", infoGrantActiveSubsidyList);
+			}
+			if (infoGrantNotActiveSubsidyList != null && !infoGrantNotActiveSubsidyList.isEmpty())
+			{
+				request.setAttribute("infoGrantNotActiveSubsidyList", infoGrantNotActiveSubsidyList);
+			}
+			
 			//Presenting adittional information
 			request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
 			request.setAttribute("grantContractNumber", infoGrantContract.getContractNumber());
+			
+			return mapping.findForward("manage-grant-subsidy");
 		}
 		catch (FenixServiceException e)
 		{
-			return setError(
-				request,
-				mapping,
-				"errors.grant.unrecoverable",
-				"manage-grant-subsidy",
-				null);
+			return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-subsidy",null);
 		}
 		catch (Exception e)
 		{
-			return setError(
-				request,
-				mapping,
-				"errors.grant.unrecoverable",
-				"manage-grant-subsidy",
-				null);
+			return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-subsidy",null);
 		}
-		return mapping.findForward("manage-grant-subsidy");
 	}
 }

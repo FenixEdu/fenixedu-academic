@@ -31,17 +31,30 @@
 			</td>
 		</tr>
 		<tr>
+			<td align="left" colspan="2">
+				<bean:message key="label.grant.part.grantPaymentEntity.designation"/> *&nbsp;
+			</td>
+		</tr>
+		<tr>
 			<td align="left">
-				<bean:message key="label.grant.part.grantPaymentEntity.designation"/>:&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;<bean:message key="label.grant.paymententity.project"/>&nbsp;
 			</td>
 			<td>
-				<%--<html:select property="project">
-					<html:options collection="projectsList" property="idInternal" labelProperty="number"/>
-				</html:select>--%>
 				<html:text property="project" size="10"/>&nbsp; 
-				<html:select property="costCenter">
-					<html:options collection="costCenterList" property="idInternal" labelProperty="designation"/>
-				</html:select>&nbsp;*
+					<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;project=1" %>' target="_blank">
+						<bean:message key="link.grantproject.showList"/>
+					</html:link>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				&nbsp;&nbsp;&nbsp;&nbsp;<bean:message key="label.grant.paymententity.costcenter"/>&nbsp;
+			</td>
+			<td>
+				<html:text property="costCenter" size="10"/>&nbsp; 
+				<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;costcenter=1" %>' target="_blank">
+					<bean:message key="link.grantcostcenter.showList"/>
+				</html:link>
 			</td>
 		</tr>
 		<tr>

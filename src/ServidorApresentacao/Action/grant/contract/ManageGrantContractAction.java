@@ -24,12 +24,9 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Barbosa
  * @author Pica
  */
-
 public class ManageGrantContractAction extends FenixDispatchAction
 {
-	/*
-	 * Fills the form with the correspondent data
-	 */
+
 	public ActionForward prepareManageGrantContractForm(
 		ActionMapping mapping,
 		ActionForm form,
@@ -41,24 +38,27 @@ public class ManageGrantContractAction extends FenixDispatchAction
 		{
 			Integer idInternal = null;
 			if (request.getParameter("idInternal") != null)
+			{
 				idInternal = new Integer(request.getParameter("idInternal"));
+			}
 			else if ((Integer) request.getAttribute("idInternal") != null)
+			{
 				idInternal = (Integer) request.getAttribute("idInternal");
-
+			}
+			
 			//Run the service
 			Object[] args = { idInternal };
 			IUserView userView = SessionUtils.getUserView(request);
 			List infoGrantContractList =
 				(List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
 
-			//If they exist put them on request
 			if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
 				request.setAttribute("infoGrantContractList", infoGrantContractList);
 
 			//Needed for return to manage contracts
 			request.setAttribute("idGrantOwner", idInternal);
 
-			InfoGrantOwner infoGrantOwner =
+			InfoGrantOwner infoGrantOwner = 
 				(InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
 			request.setAttribute("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber());
 			request.setAttribute("grantOwnerName", infoGrantOwner.getPersonInfo().getNome());

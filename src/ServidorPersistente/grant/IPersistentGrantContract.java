@@ -17,5 +17,5 @@ public interface IPersistentGrantContract extends IPersistentObject
         throws ExcepcaoPersistencia;
 	public List readAllContractsByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia;
 	public Integer readMaxGrantContractNumberByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia;
-        
+	public List readAll() throws ExcepcaoPersistencia;    
 }

@@ -46,12 +46,13 @@
 				<form-property name="name" type="java.lang.String"/>
 				<form-property name="idNumber" type="java.lang.String"/>
 				<form-property name="idType" type="java.lang.Integer"/>
+				<form-property name="justGrantOwner" type="java.lang.Boolean"/>
 				<form-property name="page" type="java.lang.Integer"/>
 			</form-bean>
 			
 			<form-bean name="searchGrantOwnerByNumberForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idGrantOwner" type="java.lang.String"/>
+				<form-property name="grantOwnerNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer"/>
 			</form-bean>
 			
@@ -102,13 +103,17 @@
 			
 			<form-bean name="editGrantContractForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<!-- Grant Owner -->
 				<form-property name="idInternal" type="java.lang.Integer"/>
+				<!-- Grant Contract -->
+				<form-property name="idGrantContract" type="java.lang.Integer"/>
 				<form-property name="contractNumber" type="java.lang.String"/>
 				<form-property name="endContractMotive" type="java.lang.String"/>
-				<form-property name="grantOrientationTeacher" type="java.lang.String"/>
-				<form-property name="grantOrientationTeacherIdInternal" type="java.lang.Integer"/>
+				<form-property name="grantContractOrientationTeacherId" type="java.lang.Integer"/>
+				<form-property name="grantContractOrientationTeacherNumber" type="java.lang.String"/>
 				<form-property name="grantType" type="java.lang.String"/>
-				<form-property name="idGrantContract" type="java.lang.Integer"/>
+				<!-- Grant Contract Regime -->
+				<form-property name="grantContractRegimeId" type="java.lang.Integer"/>
 				<form-property name="dateBeginContract" type="java.lang.String"/>
 				<form-property name="dateEndContract" type="java.lang.String"/>
 				<form-property name="dateSendDispatchCC" type="java.lang.String"/>
@@ -116,6 +121,7 @@
 				<form-property name="dateSendDispatchCD" type="java.lang.String"/>
 				<form-property name="dateDispatchCD" type="java.lang.String"/>
 				<form-property name="dateAcceptTerm" type="java.lang.String"/>
+
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 
@@ -136,8 +142,11 @@
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="idGrantOwner" type="java.lang.Integer"/>
 				<form-property name="grantOwnerNumber" type="java.lang.Integer"/>
-				<form-property name="idQualification" type="java.lang.Integer"/>
 				<form-property name="idPerson" type="java.lang.Integer"/>
+				<form-property name="username" type="java.lang.String"/>								
+				<!-- Grant Qualification -->
+
+				<form-property name="idQualification" type="java.lang.Integer"/>
 				<form-property name="mark" type="java.lang.String"/>
 				<form-property name="school" type="java.lang.String"/>								
 				<form-property name="title" type="java.lang.String"/>
@@ -148,7 +157,6 @@
 				<form-property name="degreeRecognition" type="java.lang.String"/>												
 				<form-property name="equivalenceDate" type="java.lang.String"/>												
 				<form-property name="equivalenceSchool" type="java.lang.String"/>												
-				<form-property name="username" type="java.lang.String"/>												
 				<form-property name="country" type="java.lang.Integer"/>																							
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
@@ -156,7 +164,9 @@
 			<form-bean name="editGrantSubsidyForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="idGrantOwner" type="java.lang.Integer"/>
+				
 				<form-property name="idContract" type="java.lang.Integer"/>
+				<form-property name="state" type="java.lang.Integer"/>
 				<form-property name="idGrantSubsidy" type="java.lang.Integer"/>
 				<form-property name="value" type="java.lang.String"/>
 				<form-property name="valueFullName" type="java.lang.String"/>
@@ -197,6 +207,42 @@
 				<form-property name="grantCostCenterNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>						
+			
+			<form-bean name="editGrantContractRegimeForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<!-- Grant Contract -->
+				<form-property name="idContract" type="java.lang.Integer"/>
+				<form-property name="contractNumber" type="java.lang.String"/>
+				<!-- Grant Contract Regime -->
+				<form-property name="grantContractRegimeId" type="java.lang.Integer"/>
+				<form-property name="state" type="java.lang.Integer"/>
+				<form-property name="grantContractRegimeTeacherNumber" type="java.lang.String"/>
+				<form-property name="dateBeginContract" type="java.lang.String"/>
+				<form-property name="dateEndContract" type="java.lang.String"/>
+				<form-property name="dateSendDispatchCC" type="java.lang.String"/>
+				<form-property name="dateDispatchCC" type="java.lang.String"/>
+				<form-property name="dateSendDispatchCD" type="java.lang.String"/>
+				<form-property name="dateDispatchCD" type="java.lang.String"/>
+				<form-property name="dateAcceptTerm" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+				
+			<form-bean name="correctGrantOwner" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="grantOwnerNumber" type="java.lang.String"/>
+				<form-property name="documentIdNumber" type="java.lang.String"/>
+				<form-property name="documentIdType" type="java.lang.Integer"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+			<form-bean name="correctGrantContract" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="grantOwnerNumber" type="java.lang.String"/>
+				<form-property name="grantContractNumber" type="java.lang.String"/>
+				<form-property name="newGrantContractNumber" type="java.lang.String"/>
+				<form-property name="newGrantOwnerNumber" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>				
+							
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -494,6 +540,28 @@
   			<forward name="manage-grant-part" path="/manageGrantPart.do?method=prepareManageGrantPart"/>
     </action>
 
+	<!-- ===================== USE CASE: MANAGE GRANT CONTRACT REGIME ======================= -->
+	<action path="/manageGrantContractRegime" 
+			input="/manageGrantContractRegime.do?page=0&amp;method=prepareManageGrantContractRegime" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantContractRegimeAction">
+  			<forward name="manage-grant-contract-regime" path="manageGrantContractRegime"/> 
+    </action>
+
+    <!-- ===================== USE CASE: EDIT GRANT CONTRACT REGIME ========================= -->
+	<action path="/editGrantContractRegime" 
+			input="/editGrantContractRegime.do?page=0&amp;method=prepareEditGrantContractRegime" 
+			name="editGrantContractRegimeForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantContractRegimeAction">
+  			<forward name="edit-grant-contract-regime" path="editGrantContractRegime"/>
+  			<forward name="manage-grant-contract-regime" path="/manageGrantContractRegime.do?method=prepareManageGrantContractRegime"/>
+    </action>
+
     <!-- ===================== USE CASE: SHOW TEACHERS LIST ============================== -->
 	<action path="/showTeachersList" 
 			input="/showTeachersList.do?page=0&amp;method=showForm" 
@@ -503,6 +571,16 @@
      		validate="true"
    			type="ServidorApresentacao.Action.teacher.ShowAllTeachersAction">
   			<forward name="show-teachers" path="/grant/contract/showTeachers.jsp"/>
+    </action>
+    <!-- ===================== USE CASE: SHOW PAYMENT ENTITIES LIST ============================== -->
+	<action path="/showPaymentEntitiesList" 
+			input="/showPaymentEntitiesList.do?page=0&amp;method=showForm" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.ShowAllGrantPaymentEntitiesAction">
+  			<forward name="show-payment-entities" path="/grant/contract/showGrantPaymentEntities.jsp"/>
     </action>
 
 	<!-- ===================== USE CASE: MANAGE GRANT COSTCENTER  ============================== -->
@@ -551,6 +629,29 @@
 
     <!-- ================================================================================= -->
 
+    <!-- ===================== USE CASE: CORRECT GRANT OWNER============================== -->
+	<action path="/correctGrantOwner" 
+			input="/correctGrantOwner.do?page=0&amp;method=prepareForm"
+			name="correctGrantOwner" 
+			scope="request"
+   			parameter="method"
+		    validate="true"
+   			type="ServidorApresentacao.Action.grant.correction.CorrectGrantOwnerAction">
+   			<forward name="correct-grant-owner" path="correctGrantOwner"/>
+    </action>
+
+    <!-- ===================== USE CASE: CORRECT GRANT CONTRACT============================== -->
+	<action path="/correctGrantContract" 
+			input="/correctGrantContract.do?page=0&amp;method=prepareForm"
+			name="correctGrantContract"
+			scope="request"
+   			parameter="method"
+		    validate="true"
+   			type="ServidorApresentacao.Action.grant.correction.CorrectGrantContractAction">
+   			<forward name="correct-grant-contract-delete" path="correctDeleteGrantContract"/>
+   			<forward name="correct-grant-contract-change-number" path="correctChangeNumberGrantContract"/>
+   			<forward name="correct-grant-contract-move" path="correctMoveGrantContract"/>
+    </action>
 
     <!-- ================================================================================= -->
 	</action-mappings>

@@ -1,6 +1,5 @@
 /*
  * Created on Dec 20, 2003
- *  
  */
 package ServidorApresentacao.Action.grant.owner;
 
@@ -33,14 +32,13 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction
 		throws Exception
 	{
 		List infoGrantOwnerList = null;
-
 		try
 		{
 			//Read attributes from FormBean
 			DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
-			Integer idGrantOwner = new Integer((String) searchGrantOwnerForm.get("idGrantOwner"));
+			Integer grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
 			
-			Object[] args = { null, null, null, idGrantOwner};
+			Object[] args = { null, null, null, grantOwnerNumber, null };
 			IUserView userView = SessionUtils.getUserView(request);
 			infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner", args);
 		}

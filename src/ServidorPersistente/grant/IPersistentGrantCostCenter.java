@@ -3,6 +3,8 @@
  */
 package ServidorPersistente.grant;
 
+import Dominio.grant.contract.IGrantCostCenter;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
 /**
@@ -11,5 +13,5 @@ import ServidorPersistente.IPersistentObject;
  */
 public interface IPersistentGrantCostCenter extends IPersistentObject
 {
-
+	public IGrantCostCenter readGrantCostCenterByNumber(String number) throws ExcepcaoPersistencia;
 }

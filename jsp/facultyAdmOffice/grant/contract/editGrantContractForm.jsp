@@ -19,30 +19,27 @@
 	<%-- contract --%>
 	<html:hidden property="idGrantContract"/>
 	<html:hidden property="contractNumber"/>
-	<html:hidden property="grantOrientationTeacherIdInternal"/>
+	<html:hidden property="grantContractOrientationTeacherId"/>
 
 	<%-- grant owner --%>
 	<html:hidden property="idInternal"/>
 
+	<%-- contract regime --%>
+	<html:hidden property="grantContractRegimeId"/>
+
+	<strong><p><bean:message key="label.grant.contract.information"/></p></strong><br/>
+
 	<table>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.beginDate"/>:&nbsp;
+				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginContract" size="10"/>
-				<bean:message key="label.requiredfield"/>&nbsp;
-				<bean:message key="label.dateformat"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.endDate"/>:&nbsp;
-			</td>
-			<td>
-				<html:text property="dateEndContract" size="10"/>
-				<bean:message key="label.requiredfield"/>&nbsp;
-				<bean:message key="label.dateformat"/>
+				<html:text property="grantContractOrientationTeacherNumber" size="10"/>
+				<bean:message key="label.requiredfield"/>
+				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
+					<bean:message key="link.teacher.showList"/>
+				</html:link>
 			</td>
 		</tr>
 		<tr>
@@ -63,21 +60,34 @@
 				<html:text property="endContractMotive" size="40"/>
 			</td>
 		</tr>	
+	</table>
+
+	<br/><br/><strong><p><bean:message key="label.grant.contract.regime.information"/></p></strong>
+
+	<table>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
+				<bean:message key="label.grant.contract.regime.beginDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantOrientationTeacher" size="10"/>
-				<bean:message key="label.requiredfield"/>
-				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
-					<bean:message key="link.teacher.showList"/>
-				</html:link>
+				<html:text property="dateBeginContract" size="10"/>
+				<bean:message key="label.requiredfield"/>&nbsp;
+				<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.dateSendDispatchCC"/>:&nbsp;
+				<bean:message key="label.grant.contract.regime.endDate"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateEndContract" size="10"/>
+				<bean:message key="label.requiredfield"/>&nbsp;
+				<bean:message key="label.dateformat"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.regime.dateSendDispatchCC"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="dateSendDispatchCC" size="10"/>
@@ -87,7 +97,7 @@
 		</tr>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.dateDispatchCC"/>:&nbsp;
+				<bean:message key="label.grant.contract.regime.dateDispatchCC"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="dateDispatchCC"  size="10"/>
@@ -97,7 +107,7 @@
 		</tr>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.dateSendDispatchCD"/>:&nbsp;
+				<bean:message key="label.grant.contract.regime.dateSendDispatchCD"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="dateSendDispatchCD" size="10"/>
@@ -107,7 +117,7 @@
 		</tr>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.dateDispatchCD"/>:&nbsp;
+				<bean:message key="label.grant.contract.regime.dateDispatchCD"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="dateDispatchCD" size="10"/>
@@ -117,7 +127,7 @@
 		</tr>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.dateAcceptTerm"/>:&nbsp;
+				<bean:message key="label.grant.contract.regime.dateAcceptTerm"/>:&nbsp;
 			</td>
 			<td>
 				<html:text property="dateAcceptTerm" size="10"/>

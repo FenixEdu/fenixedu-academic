@@ -13,6 +13,7 @@ import Dominio.IDomainObject;
  */
 public interface IGrantSubsidy extends IDomainObject
 {
+	public Integer getState();
 	public Date getDateEndSubsidy();
 	public Date getDateBeginSubsidy();
 	public IGrantContract getGrantContract();
@@ -20,6 +21,7 @@ public interface IGrantSubsidy extends IDomainObject
 	public Double getValue();
 	public String getValueFullName();
 
+	public void setState(Integer state);
 	public void setDateBeginSubsidy(Date dateBeginSubsidy);
 	public void setDateEndSubsidy(Date dateEndSubsidy);
 	public void setGrantContract(IGrantContract grantContract);

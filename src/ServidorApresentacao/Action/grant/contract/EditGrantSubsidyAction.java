@@ -5,6 +5,7 @@
 package ServidorApresentacao.Action.grant.contract;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,14 +22,13 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+
 /**
  * @author Barbosa
- * @author Pica
- *  
+ * @author Pica  
  */
 public class EditGrantSubsidyAction extends FenixDispatchAction
 {
-
 	/*
 	 * Fills the form with the correspondent data
 	 */
@@ -37,32 +37,37 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 	{
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm grantSubsidyForm = (DynaValidatorForm) form;
+		
 		Integer idSubsidy = null;
 		Integer idContract = null;
 		try
 		//Probably a validation error
 		{
-			if (request.getParameter("idSubsidy") == null)
+			if (!verifyParameterInRequest(request, "idSubsidy"))
+			{
 				//Check if is a new subsidy
 				idContract = new Integer(request.getParameter("idContract"));
+			}
 			else
+			{
 				idSubsidy = new Integer(request.getParameter("idSubsidy"));
+			}
 		}
 		catch (Exception e)
 		{
 			request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-			if (request.getParameter("idSubsidy") != null
-					&& !request.getParameter("idSubsidy").equals(""))
-				request.setAttribute("idSubsidy", new Integer(request.getParameter("idSubsidy")));
 			request.setAttribute("contractNumber", request.getParameter("contractNumber"));
 			request.setAttribute("grantTypeName", request.getParameter("grantTypeName"));
+			if (verifyParameterInRequest(request,"idSubsidy"))
+				request.setAttribute("idSubsidy", new Integer(request.getParameter("idSubsidy")));
 			return mapping.findForward("edit-grant-subsidy");
 		}
+		
 		try
 		{
 			InfoGrantContract infoGrantContract = null;
-			//if is a new contract
-			if (idContract != null)
+		
+			if (idContract != null)	//if is a new Subsidy
 			{
 				//Read the contract
 				Object[] args3 = {idContract};
@@ -71,9 +76,8 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 				if (infoGrantContract != null)
 				{
 					request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-					request
-							.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo()
-									.getName());
+					request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
+					grantSubsidyForm.set("state", new Integer(-1));
 				}
 			}
 			else
@@ -82,6 +86,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 				Object[] args = {idSubsidy};
 				InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ServiceUtils.executeService(
 						userView, "ReadGrantSubsidy", args);
+				
 				idContract = infoGrantSubsidy.getInfoGrantContract().getIdInternal();
 				//Read the contract
 				Object[] args2 = {idContract};
@@ -90,9 +95,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 				if (infoGrantContract != null)
 				{
 					request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-					request
-							.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo()
-									.getName());
+					request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
 				}
 				//Populate the form
 				if (infoGrantSubsidy != null)
@@ -112,20 +115,45 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 		}
 		catch (Exception e)
 		{
-			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract",
-					null);
+			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract",null);
 		}
 		return mapping.findForward("edit-grant-subsidy");
 	}
+	
 	public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
-		DynaValidatorForm editGrantSubsidyForm = (DynaValidatorForm) form;
-		InfoGrantSubsidy infoGrantSubsidy = populateInfoFromForm(editGrantSubsidyForm);
 		try
 		{
-			Object[] args = {infoGrantSubsidy};
+			DynaValidatorForm editGrantSubsidyForm = (DynaValidatorForm) form;
+			InfoGrantSubsidy infoGrantSubsidy = populateInfoFromForm(editGrantSubsidyForm);
 			IUserView userView = SessionUtils.getUserView(request);
+			
+			/*
+			 * If this is a new subsidy, than desactivate all active subsidies and set this
+			 * subsidy active
+			 */
+			if(infoGrantSubsidy.getState().equals(new Integer(-1)))
+			{
+				//Read Active Subsidies
+				Object[] argActiveSubsidy = { infoGrantSubsidy.getInfoGrantContract().getIdInternal(), new Integer(1) };
+				List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService(userView, "ReadAllGrantSubsidiesByGrantContractAndState", argActiveSubsidy);
+				
+				//Desactivate them
+				for(int i = 0; i < infoGrantActiveSubsidyList.size(); i++)
+				{
+					InfoGrantSubsidy infoGrantSubsidyTemp = (InfoGrantSubsidy) infoGrantActiveSubsidyList.get(i);
+					infoGrantSubsidyTemp.setState(new Integer(0));
+					Object[] argTemp = {infoGrantSubsidyTemp};			
+					ServiceUtils.executeService(userView, "EditGrantSubsidy", argTemp);
+				}
+	
+				//Active this subsidy
+				infoGrantSubsidy.setState(new Integer(1));
+			}
+			
+			//Save the subsidy
+			Object[] args = {infoGrantSubsidy};			
 			ServiceUtils.executeService(userView, "EditGrantSubsidy", args);
 			request.setAttribute("idInternal", editGrantSubsidyForm.get("idGrantOwner"));
 		}
@@ -158,6 +186,11 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 			form.set("dateBeginSubsidy", sdf.format(infoGrantSubsidy.getDateBeginSubsidy()));
 		if (infoGrantSubsidy.getDateEndSubsidy() != null)
 			form.set("dateEndSubsidy", sdf.format(infoGrantSubsidy.getDateEndSubsidy()));
+		//In case state is null.. than this is a new subsidy, put the state -1
+		if (infoGrantSubsidy.getState() != null)
+			form.set("state", infoGrantSubsidy.getState());
+		else
+			form.set("state", new Integer(-1));
 	}
 	private InfoGrantSubsidy populateInfoFromForm(DynaValidatorForm editGrantSubsidyForm)
 			throws Exception
@@ -183,6 +216,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 			infoGrantSubsidy.setDateEndSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateEndSubsidy")));
 		
 		infoGrantSubsidy.setInfoGrantContract(infoGrantContract);
+		infoGrantSubsidy.setState((Integer) editGrantSubsidyForm.get("state"));
 		return infoGrantSubsidy;
 	}
 }

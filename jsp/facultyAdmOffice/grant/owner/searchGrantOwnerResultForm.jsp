@@ -7,6 +7,11 @@
 <bean:size id="resultSize" name="infoGrantOwnerList"/>
 <p><bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/></p>
 
+<logic:present name="justGrantOwner">
+<br/><strong><bean:message key="label.grant.owner.filter"/></strong>
+</logic:present>
+
+
 <table border="0" cellspacing="1" cellpadding="1">
 	<%-- Table description rows --%>
 	<tr>

@@ -21,26 +21,9 @@ import ServidorPersistente.grant.IPersistentGrantOwner;
  */
 public class ReadGrantOwnerByPerson implements IService
 {
-    private static ReadGrantOwnerByPerson service = new ReadGrantOwnerByPerson();
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadGrantOwnerByPerson getService()
+
+	public ReadGrantOwnerByPerson()
     {
-        return service;
-    }
-    /**
-     * The constructor of this class.
-     */
-    private ReadGrantOwnerByPerson()
-    {
-    }
-    /**
-     * The name of the service
-     */
-    public final String getNome()
-    {
-        return "ReadGrantOwnerByPerson";
     }
 
     public InfoGrantOwner run(Integer personId) throws FenixServiceException

@@ -55,13 +55,13 @@
 			</td>
 			<td>
 				<html:text property="grantCostCenterNumber"/><bean:message key="label.requiredfield"/>
+				<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;costcenter=1" %>' target="_blank">
+					<bean:message key="link.grantcostcenter.showList"/>
+				</html:link>
 			</td>
-		</tr>
-		
+		</tr>		
 	</table>
-
 	<br/>
-
 	<table>
 		<tr>
 			<td>

@@ -10,7 +10,7 @@ import DataBeans.InfoTeacher;
  * @author pica
  * @author barbosa
  */
-public class InfoGrantPaymentEntity extends InfoObject
+public abstract class InfoGrantPaymentEntity extends InfoObject
 {
     protected String number;
     protected String designation;

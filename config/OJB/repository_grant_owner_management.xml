@@ -142,6 +142,93 @@
    </class-descriptor>
    
    
+
+<!-- ********************************************************** -->
+<!-- Definitions for Dominio.grant.contract.GrantContractRegime -->
+<!-- ********************************************************** -->
+
+   <class-descriptor
+   	  class="Dominio.grant.contract.GrantContractRegime"
+   	  table="GRANT_CONTRACT_REGIME"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <field-descriptor
+      	name="state"
+      	column="STATE"
+      	jdbc-type="INTEGER"
+      />
+	  <field-descriptor
+		name="dateBeginContract"
+		column="DATE_BEGIN_CONTRACT"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateEndContract"
+		column="DATE_END_CONTRACT"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateSendDispatchCC"
+		column="DATE_SEND_DISPATCH_CC"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateDispatchCC"
+		column="DATE_DISPATCH_CC"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateSendDispatchCD"
+		column="DATE_SEND_DISPATCH_CD"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateDispatchCD"
+		column="DATE_DISPATCH_CD"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateAcceptTerm"
+		column="DATE_ACCEPT_TERM"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="keyTeacher"
+		column="KEY_TEACHER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyGrantContract"
+		column="KEY_GRANT_CONTRACT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+		name="teacher"
+		class-ref="Dominio.Teacher"
+		proxy="true">
+		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor> 
+	<reference-descriptor
+		name="grantContract"
+		class-ref="Dominio.grant.contract.GrantContract"
+		proxy="true">
+		<foreignkey field-ref="keyGrantContract"/>
+	</reference-descriptor> 
+   </class-descriptor>
+
+   
 <!-- ************************************************ -->
 <!-- Definitions for Dominio.grant.contract.GrantType -->
 <!-- ************************************************ -->
@@ -256,6 +343,16 @@
    
    
 <!-- ************************************************************** -->
+<!-- Definitions for Dominio.grant.contract.GrantPaymentEntity      -->
+<!-- ************************************************************** -->
+   <class-descriptor
+   	  class="Dominio.grant.contract.GrantPaymentEntity"
+   >
+    <extent-class class-ref="Dominio.grant.contract.GrantProject" />
+    <extent-class class-ref="Dominio.grant.contract.GrantCostCenter" />
+   </class-descriptor>
+	
+<!-- ************************************************************** -->
 <!-- Definitions for Dominio.grant.contract.GrantProject            -->
 <!-- ************************************************************** -->
    <class-descriptor
@@ -344,13 +441,11 @@
       	name="number"
       	column="NUMBER"
       	jdbc-type="VARCHAR"
-      	locking="true"
       />
       <field-descriptor
       	name="designation"
       	column="DESIGNATION"
       	jdbc-type="VARCHAR"
-      	locking="true"
       />
        <field-descriptor
 		name="keyResponsibleTeacher"
@@ -365,57 +460,6 @@
 	  </reference-descriptor>
    </class-descriptor>
 
-<!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantPaymentEntity      -->
-<!-- ************************************************************** -->
-   <class-descriptor
-   	  class="Dominio.grant.contract.GrantPaymentEntity"
-   	  table="GRANT_PAYMENT_ENTITY"
-   >
-    <extent-class class-ref="Dominio.grant.contract.GrantProject" />
-    <extent-class class-ref="Dominio.grant.contract.GrantCostCenter" />
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-      <field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-      />
-       <field-descriptor
-      	name="number"
-      	column="NUMBER"
-      	jdbc-type="VARCHAR"
-      	locking="true"
-      />
-      <field-descriptor
-      	name="designation"
-      	column="DESIGNATION"
-      	jdbc-type="VARCHAR"
-      	locking="true"
-      />
-      <field-descriptor
-		name="keyResponsibleTeacher"
-		column="KEY_TEACHER"
-		jdbc-type="INTEGER"
-	  />
-	  <reference-descriptor
-		name="responsibleTeacher"
-		class-ref="Dominio.Teacher"
-		proxy="true">
-		<foreignkey field-ref="keyResponsibleTeacher"/>
-	  </reference-descriptor>
-   </class-descriptor>
    
 <!-- ************************************************************** -->
 <!-- Definitions for Dominio.grant.contract.GrantPart               -->
@@ -496,6 +540,11 @@
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
+      />
+      <field-descriptor		
+      	name="state"
+      	column="STATE"
+      	jdbc-type="INTEGER"
       />
       <field-descriptor
 		name="dateBeginSubsidy"

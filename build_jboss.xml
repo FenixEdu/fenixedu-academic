@@ -239,6 +239,7 @@
        		<include name="ServidorPersistenteJDBC/**/*.java"/>
        		<include name="Util/**/*.java"/>
        		<include name="UtilInsc/**/*.java"/>
+       		<include name="UtilTests/**/*.java"/>
 		</javac>
 	</target>
 
@@ -405,6 +406,7 @@
        		<include name="ServidorApresentacao/**/*.java"/>
        		<include name="Util/**/*.java"/>
        		<include name="UtilInsc/**/*.java"/>
+      		<include name="UtilTests/**/*.java"/>
 		</javac>
 	</target>
 

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.grant.owner;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.owner.InfoGrantOwner;
 import Dominio.IDomainObject;
 import Dominio.IPersonRole;
@@ -11,7 +12,6 @@ import Dominio.IPessoa;
 import Dominio.PersonRole;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.person.base.CreatePersonBaseClass;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -27,47 +27,30 @@ import Util.RoleType;
  * @author Pica
  *  
  */
-public class EditGrantOwner extends CreatePersonBaseClass implements IServico
+public class EditGrantOwner extends CreatePersonBaseClass implements IService
 {
-    private static EditGrantOwner service = new EditGrantOwner();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static EditGrantOwner getService()
+
+	public EditGrantOwner()
     {
-        return service;
-    }
-    /**
-	 * The constructor of this class.
-	 */
-    private EditGrantOwner()
-    {
-    }
-    /**
-	 * The name of the service
-	 */
-    public final String getNome()
-    {
-        return "EditGrantOwner";
     }
 
     private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber)
     {
         String result = null;
-        result = "B" + grantOwnerNumber.toString();
+        result = "b" + grantOwnerNumber.toString();
         return result;
     }
 
     private IGrantOwner checkIfGrantOwnerExists(
-        Integer personIdInternal,
-        IPessoaPersistente persistentPerson,
+        Integer grantOwnerNumber,
         IPersistentGrantOwner persistentGrantOwner)
         throws FenixServiceException
     {
         IGrantOwner grantOwner = null;
         try
         {
-            grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personIdInternal);
+            //grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personIdInternal);
+        	grantOwner = persistentGrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
         } catch (ExcepcaoPersistencia persistentException)
         {
             throw new FenixServiceException(persistentException.getMessage());
@@ -144,7 +127,7 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IServico
 
             //verify if person is new
             if (person.getUsername() != null)
-                grantOwner = checkIfGrantOwnerExists(person.getIdInternal(), pPerson, pGrantOwner);
+                grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber(), pGrantOwner);
 
             //create or edit grantOwner information
             IPersonRole personRole = null;

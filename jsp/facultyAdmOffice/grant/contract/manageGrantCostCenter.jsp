@@ -3,7 +3,20 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<p><b><bean:message key="label.grant.costcenter.information"/></b></p><br/>
+<p><b><bean:message key="label.grant.costcenter.information"/></b></p>
+
+	<table class="infoop">
+		<tr>
+			<td rowspan=4><p class="emphasis-box">i</p></td>
+		    <td><bean:message key="info.grant.manage.grantcostcenter.information"/></td>
+		</tr>
+		<tr>
+			<td><bean:message key="info.grant.manage.grantcostcenter.edit"/>"<bean:message key="link.edit"/>".</td>
+		</tr>
+		<tr>
+			<td><bean:message key="info.grant.manage.grantcostcenter.create"/>"<bean:message key="link.create.grant.costcenter"/>".</td>
+		</tr>
+	</table><br/><br/>
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
@@ -12,9 +25,17 @@
 </span><br/>
 </logic:messagesPresent>
 
+
 <logic:messagesNotPresent>
 
 <logic:present name="infoGrantCostCenterList">
+	<%-- Create a new Grant CostCenter --%>
+	<bean:message key="message.grant.costcenter.creation"/>:&nbsp;
+	<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
+		<bean:message key="link.create.grant.costcenter"/>
+	</html:link><br><br>
+
+
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with grant type description rows --%>
     <tr>

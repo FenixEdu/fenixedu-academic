@@ -60,4 +60,10 @@ public class GrantContractOJB
             maxGrantContractNumber = grantContract.getContractNumber();
         return maxGrantContractNumber;
     }
+    
+    public List readAll() throws ExcepcaoPersistencia
+	{
+    	Criteria criteria = new Criteria();
+        return queryList(GrantContract.class, criteria);
+	}
 }

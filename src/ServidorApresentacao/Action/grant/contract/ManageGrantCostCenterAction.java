@@ -25,9 +25,6 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class ManageGrantCostCenterAction extends FenixDispatchAction
 {
-	/*
-	 * Fills the form with the correspondent data
-	 */
 	public ActionForward prepareManageGrantCostCenter(
 		ActionMapping mapping,
 		ActionForm form,
@@ -37,20 +34,19 @@ public class ManageGrantCostCenterAction extends FenixDispatchAction
 	{
 		try
  		{
-			//Object[] args = { GrantCostCenter.class };
 			Object[] args = { "Dominio.grant.contract.GrantCostCenter" };
 			IUserView userView = SessionUtils.getUserView(request);
 			List infoGrantCostCenterList =
 				(List) ServiceUtils.executeService(userView, "ReadAllGrantPaymentEntitiesByClassName", args);
 
-			//If they exist put them on request
 			if (infoGrantCostCenterList != null && !infoGrantCostCenterList.isEmpty())
 				request.setAttribute("infoGrantCostCenterList", infoGrantCostCenterList);
+			
+			return mapping.findForward("manage-grant-costcenter");
 		}
 		catch (FenixServiceException e)
 		{
 			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-costcenter", null);
 		}
-		return mapping.findForward("manage-grant-costcenter");
 	}
 }

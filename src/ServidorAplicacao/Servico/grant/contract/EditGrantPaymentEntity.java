@@ -2,64 +2,96 @@
  * Created on 23/Jan/2004
  *  
  */
+
 package ServidorAplicacao.Servico.grant.contract;
 
-import DataBeans.InfoObject;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantCostCenter;
-import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import DataBeans.grant.contract.InfoGrantProject;
 import DataBeans.util.Cloner;
-import Dominio.IDomainObject;
-import Dominio.grant.contract.IGrantPaymentEntity;
+import Dominio.grant.contract.GrantCostCenter;
+import Dominio.grant.contract.GrantProject;
+import Dominio.grant.contract.IGrantCostCenter;
+import Dominio.grant.contract.IGrantProject;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
-
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.grant.IPersistentGrantCostCenter;
+import ServidorPersistente.grant.IPersistentGrantProject;
 /**
  * @author Barbosa
  * @author Pica
  */
-public class EditGrantPaymentEntity extends EditDomainObjectService
+public class EditGrantPaymentEntity implements IService
 {
+
 	/**
 	 * The constructor of this class.
 	 */
 	public EditGrantPaymentEntity()
 	{
 	}
-
-	protected IDomainObject clone2DomainObject(InfoObject infoObject)
-	{
-		return Cloner.copyInfoGrantPaymentEntity2IGrantPaymentEntity(
-			(InfoGrantPaymentEntity) infoObject);
-	}
-
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-	{
-		return sp.getIPersistentGrantPaymentEntity();
-	}
-
-	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		IPersistentGrantPaymentEntity pgs = sp.getIPersistentGrantPaymentEntity();
-		IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) domainObject;
-
-		return pgs.readByNumberAndClass(
-			grantPaymentEntity.getNumber(),
-			grantPaymentEntity.getOjbConcreteClass());
-	}
-
+	
 	public void run(InfoGrantCostCenter infoObject) throws FenixServiceException
 	{
-		super.run(new Integer(0), infoObject);
+		ISuportePersistente sp = null;
+		IGrantCostCenter grantCostCenter = null;
+		InfoGrantCostCenter infoGrantCostCenter = (InfoGrantCostCenter) infoObject;
+		IPersistentGrantCostCenter pgcc = null;
+		
+		try
+		{
+			sp = SuportePersistenteOJB.getInstance();
+			pgcc = sp.getIPersistentGrantCostCenter();
+			IGrantCostCenter costCenterExists = pgcc.readGrantCostCenterByNumber(infoGrantCostCenter.getNumber());
+			if((costCenterExists != null) && !costCenterExists.getIdInternal().equals(infoGrantCostCenter.getIdInternal()))
+				throw new ExistingServiceException();
+			grantCostCenter = (IGrantCostCenter) pgcc.readByOID(GrantCostCenter.class,infoGrantCostCenter.getIdInternal());
+			if(grantCostCenter == null)
+				grantCostCenter = new GrantCostCenter();
+			pgcc.simpleLockWrite(grantCostCenter);
+			grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
+			grantCostCenter.setNumber(infoGrantCostCenter.getNumber());
+			grantCostCenter.setResponsibleTeacher(Cloner.copyInfoGrantCostCenter2IGrantCostCenter(infoGrantCostCenter).getResponsibleTeacher());
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			e.printStackTrace();
+			throw new FenixServiceException("Unable to dao factory!", e);
+		}
 	}
-
+	
 	public void run(InfoGrantProject infoObject) throws FenixServiceException
 	{
-		super.run(new Integer(0), infoObject);
+		ISuportePersistente sp = null;
+		IGrantProject grantProject = null;
+		InfoGrantProject infoGrantProject = (InfoGrantProject) infoObject;
+		IGrantProject iGrantProject = Cloner.copyInfoGrantProject2IGrantProject(infoGrantProject);
+		IPersistentGrantProject pgp = null;
+		
+		try
+		{
+			sp = SuportePersistenteOJB.getInstance();
+			pgp = sp.getIPersistentGrantProject();
+			IGrantProject projectExists = pgp.readGrantProjectByNumber(infoGrantProject.getNumber()); 
+			if((projectExists != null) && !projectExists.getIdInternal().equals(infoGrantProject.getIdInternal()))
+				throw new ExistingServiceException();
+			grantProject = (IGrantProject) pgp.readByOID(GrantProject.class,infoGrantProject.getIdInternal());
+			if(grantProject == null)
+				grantProject = new GrantProject();
+			pgp.simpleLockWrite(grantProject);
+			Cloner.copyInfoGrantProject2IGrantProject(infoGrantProject);
+			grantProject.setDesignation(infoGrantProject.getDesignation());
+			grantProject.setNumber(infoGrantProject.getNumber());
+			grantProject.setResponsibleTeacher(Cloner.copyInfoGrantProject2IGrantProject(infoGrantProject).getResponsibleTeacher());
+			grantProject.setGrantCostCenter(iGrantProject.getGrantCostCenter());
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			e.printStackTrace();
+			throw new FenixServiceException("Unable to dao factory!", e);
+		}
 	}
 }
