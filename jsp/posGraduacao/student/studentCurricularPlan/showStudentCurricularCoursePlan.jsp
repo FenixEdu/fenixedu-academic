@@ -41,7 +41,7 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.student.startDate" /></b>
-			<bean:write name="studentCurricularPlan" property="startDate" />
+			<bean:write name="studentCurricularPlan" property="startDateFormatted" />
 		</td>								
 	</tr>	
 	<tr>

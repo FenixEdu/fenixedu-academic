@@ -7,6 +7,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,9 +18,7 @@ import Util.StudentCurricularPlanState;
  *
  * @author  tfc130
  */
-public class InfoStudentCurricularPlan
-	extends InfoObject
-	implements Serializable, Comparable {
+public class InfoStudentCurricularPlan extends InfoObject implements Serializable, Comparable {
 
 	protected InfoStudent infoStudent;
 	protected InfoBranch infoBranch;
@@ -79,16 +78,12 @@ public class InfoStudentCurricularPlan
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof InfoStudentCurricularPlan) {
-			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) obj;
+			InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
 			resultado =
-				this.getInfoStudent().equals(
-					infoStudentCurricularPlan.getInfoStudent())
+				this.getInfoStudent().equals(infoStudentCurricularPlan.getInfoStudent())
 					&& this.getInfoDegreeCurricularPlan().equals(
-						infoStudentCurricularPlan
-							.getInfoDegreeCurricularPlan())
-					&& this.getCurrentState().equals(
-						infoStudentCurricularPlan.getCurrentState());
+						infoStudentCurricularPlan.getInfoDegreeCurricularPlan())
+					&& this.getCurrentState().equals(infoStudentCurricularPlan.getCurrentState());
 		}
 		return resultado;
 	}
@@ -96,9 +91,7 @@ public class InfoStudentCurricularPlan
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "student = " + this.infoStudent + "; ";
-		result += "degreeCurricularPlan = "
-			+ this.infoDegreeCurricularPlan
-			+ "; ";
+		result += "degreeCurricularPlan = " + this.infoDegreeCurricularPlan + "; ";
 		result += "startDate = " + this.startDate + "; ";
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
@@ -140,6 +133,20 @@ public class InfoStudentCurricularPlan
 		return startDate;
 	}
 
+	/**
+		 * @return Date
+		 */
+	public String getStartDateFormatted() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(startDate);
+		String result =
+			calendar.get(Calendar.DAY_OF_MONTH)
+				+ "/"
+				+ (calendar.get(Calendar.MONTH) + 1)
+				+ "/"
+				+ calendar.get(Calendar.YEAR);
+		return result;
+	}
 	/**
 	 * Sets the currentState.
 	 * @param currentState The currentState to set
@@ -243,22 +250,19 @@ public class InfoStudentCurricularPlan
 	public void setInfoEnrolments(List infoEnrolments) {
 		this.infoEnrolments = infoEnrolments;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Object arg0) {
 		InfoStudentCurricularPlan obj0 = (InfoStudentCurricularPlan) arg0;
-		if (obj0.currentState.getState().intValue()
-			== getCurrentState().getState().intValue()) {
+		if (obj0.currentState.getState().intValue() == getCurrentState().getState().intValue()) {
 			return 0;
 		}
-		if (obj0.currentState.getState().intValue()
-			< getCurrentState().getState().intValue()) {
+		if (obj0.currentState.getState().intValue() < getCurrentState().getState().intValue()) {
 			return -1;
 		}
-		if (obj0.currentState.getState().intValue()
-			> getCurrentState().getState().intValue()) {
+		if (obj0.currentState.getState().intValue() > getCurrentState().getState().intValue()) {
 			return 1;
 		}
 		return 0;

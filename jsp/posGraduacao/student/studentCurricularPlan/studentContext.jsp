@@ -16,4 +16,3 @@
 	</tr>
 </table>
 <br/>
-<html:errors/>

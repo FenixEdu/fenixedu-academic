@@ -27,7 +27,7 @@
 			</td>
 			<td align="left">
 				<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
-					<bean:write name="infoStudentCurricularPlan" property="startDate"/>
+					<bean:write name="infoStudentCurricularPlan" property="startDateFormatted"/>
 				</html:link>
 			</td>
 			<td align="left">

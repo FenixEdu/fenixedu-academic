@@ -1,9 +1,4 @@
-package ServidorApresentacao
-	.Action
-	.masterDegree
-	.administrativeOffice
-	.student
-	.studentCurricularPlan;
+package ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,8 +39,7 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 		DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
 		Integer studentCurricularPlanId =
 			new Integer(getFromRequest("studentCurricularPlanId", request));
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Object args[] = { studentCurricularPlanId };
 
@@ -65,34 +59,29 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 		//put request			
 		request.setAttribute(
 			SessionConstants.STATE,
-			StudentCurricularPlanState.toOrderedArrayList(infoStudentCurricularPlan.getCurrentState()));
-		request.setAttribute(
-			"student",
-			infoStudentCurricularPlan.getInfoStudent());
-		request.setAttribute(
-			"studentCurricularPlan",
-			infoStudentCurricularPlan);
-	
+			StudentCurricularPlanState.toOrderedArrayList(
+				infoStudentCurricularPlan.getCurrentState()));
+		request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
+		request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+
 		editStudentCurricularPlanForm.set(
 			"currentState",
 			infoStudentCurricularPlan.getCurrentState().toString());
 		editStudentCurricularPlanForm.set(
 			"credits",
 			String.valueOf(infoStudentCurricularPlan.getGivenCredits()));
-
-		String[] formValues =
-			new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
+		editStudentCurricularPlanForm.set("startDate", infoStudentCurricularPlan.getStartDateFormatted());
+		String[] formValues = new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
 		int i = 0;
-		for (Iterator iter =
-			infoStudentCurricularPlan.getInfoEnrolments().iterator();
+		for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator();
 			iter.hasNext();
 			) {
-			Object enrollment =iter.next();
+			Object enrollment = iter.next();
 			if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
 				Integer enrollmentId =
-				((InfoEnrolmentInExtraCurricularCourse)enrollment).getIdInternal();
-			formValues[i] = enrollmentId.toString();
-			}  
+					((InfoEnrolmentInExtraCurricularCourse) enrollment).getIdInternal();
+				formValues[i] = enrollmentId.toString();
+			}
 			i++;
 		}
 		DynaActionForm coursesForm = (DynaActionForm) form;
@@ -110,29 +99,23 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
 
-		String studentCurricularPlanIdString =
-			request.getParameter("studentCurricularPlanId");
+		String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
 		String[] extraCurricularCoursesArray =
 			(String[]) editStudentCurricularPlanForm.get("extraCurricularCourses");
 
-		String currentState =
-			(String) editStudentCurricularPlanForm.get("currentState");
-		Double credits =
-			Double.valueOf(
-				(String) editStudentCurricularPlanForm.get("credits"));
+		String currentState = (String) editStudentCurricularPlanForm.get("currentState");
+		Double credits = Double.valueOf((String) editStudentCurricularPlanForm.get("credits"));
+		String startDate = (String) editStudentCurricularPlanForm.get("startDate");
 
-		Integer studentCurricularPlanId =
-			new Integer(studentCurricularPlanIdString);
-		String observations = 	(String) editStudentCurricularPlanForm.get("observations");
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
+		String observations = (String) editStudentCurricularPlanForm.get("observations");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		List extraCurricularCourses = new ArrayList();
 
 		for (int i = 0; i < extraCurricularCoursesArray.length; i++) {
-			extraCurricularCourses.add(
-				new Integer(extraCurricularCoursesArray[i]));
-			
+			extraCurricularCourses.add(new Integer(extraCurricularCoursesArray[i]));
+
 		}
 		Object args[] =
 			{
@@ -140,31 +123,24 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 				studentCurricularPlanId,
 				currentState,
 				credits,
+				startDate,
 				extraCurricularCourses,
 				observations };
 
 		GestorServicos gestor = GestorServicos.manager();
 
 		try {
-			 gestor.executar(
-					userView,
-					"EditPosGradStudentCurricularPlanStateAndCredits",
-					args);
+			gestor.executar(userView, "EditPosGradStudentCurricularPlanStateAndCredits", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
-		
-		request.setAttribute(
-			"studentCurricularPlanId",
-			studentCurricularPlanId);
+		request.setAttribute("studentCurricularPlanId", studentCurricularPlanId);
 
 		return mapping.findForward("ShowStudentCurricularCoursePlan");
 	}
 
-	private String getFromRequest(
-		String parameter,
-		HttpServletRequest request) {
+	private String getFromRequest(String parameter, HttpServletRequest request) {
 		String parameterString = request.getParameter(parameter);
 		if (parameterString == null) {
 			parameterString = (String) request.getAttribute(parameter);

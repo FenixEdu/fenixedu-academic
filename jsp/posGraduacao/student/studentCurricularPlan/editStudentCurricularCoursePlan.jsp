@@ -7,15 +7,16 @@
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
 
-<span class="error"><html:errors/></span>
+
 
 <h2 align="left"><bean:message key="title.studentCurricularPlan"/></h2>
 
-
+<span class="error"><html:errors/></span>
 <html:form action="/alterStudentCurricularPlan">
 <html:hidden property="method" value="edit"/>
 <bean:define id="idInternal" name="studentCurricularPlan" property="idInternal"/>
 <html:hidden property="studentCurricularPlanId" value="<%= idInternal.toString() %>"/>
+<html:hidden property="page" value="1"/>
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
 		<td>
@@ -51,7 +52,8 @@
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.startDate" /></strong>
-			<bean:write name="studentCurricularPlan" property="startDate" />
+			<html:text property="startDate" /> 
+			<span class="error"><bean:message key="message.dateFormat"/></span>
 		</td>								
 	</tr>	
 	<tr>

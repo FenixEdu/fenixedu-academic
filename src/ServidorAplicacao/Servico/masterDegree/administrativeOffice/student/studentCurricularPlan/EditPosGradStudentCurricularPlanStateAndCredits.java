@@ -1,10 +1,6 @@
-package ServidorAplicacao
-	.Servico
-	.masterDegree
-	.administrativeOffice
-	.student
-	.studentCurricularPlan;
+package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,8 +30,7 @@ import Util.StudentCurricularPlanState;
  * 15/Out/2003
  */
 
-public class EditPosGradStudentCurricularPlanStateAndCredits
-	implements IServico {
+public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico {
 
 	private static EditPosGradStudentCurricularPlanStateAndCredits servico =
 		new EditPosGradStudentCurricularPlanStateAndCredits();
@@ -56,6 +51,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits
 		Integer studentCurricularPlanId,
 		String currentState,
 		Double credits,
+		String startDate,
 		List extraCurricularCourses,
 		String observations)
 		throws FenixServiceException {
@@ -65,45 +61,37 @@ public class EditPosGradStudentCurricularPlanStateAndCredits
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 				sp.getIStudentCurricularPlanPersistente();
 			IStudentCurricularPlan studentCurricularPlan =
-				(
-					IStudentCurricularPlan) persistentStudentCurricularPlan
-						.readByOId(
+				(IStudentCurricularPlan) persistentStudentCurricularPlan.readByOId(
 					new StudentCurricularPlan(studentCurricularPlanId),
 					true);
 			if (studentCurricularPlan == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			StudentCurricularPlanState newState =
-				new StudentCurricularPlanState(currentState);
+			StudentCurricularPlanState newState = new StudentCurricularPlanState(currentState);
 			IEmployee employee = null;
-			IPersistentEmployee persistentEmployee =
-				sp.getIPersistentEmployee();
+			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPersistentEnrolment persistentEnrolment =
-				sp.getIPersistentEnrolment();
-			IPessoa person =
-				persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 			if (person == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			employee =
-				persistentEmployee.readByPerson(
-					person.getIdInternal().intValue());
+			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 			if (employee == null) {
 				throw new InvalidArgumentsServiceException();
 			}
+
+			studentCurricularPlan.setStartDate(stringDateToCalendar(startDate).getTime());
 			studentCurricularPlan.setCurrentState(newState);
 			studentCurricularPlan.setEmployee(employee);
 			studentCurricularPlan.setGivenCredits(credits);
 			studentCurricularPlan.setObservations(observations);
 			List enrollments = studentCurricularPlan.getEnrolments();
 			Iterator iterator = enrollments.iterator();
-			if (newState.getState().intValue()
-				== StudentCurricularPlanState.INACTIVE) {
+			if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
 				while (iterator.hasNext()) {
 					IEnrolment enrolment = (IEnrolment) iterator.next();
-					if (enrolment.getEnrolmentState().getValue()
-						!= EnrolmentState.APROVED_TYPE) {
+					if (enrolment.getEnrolmentState().getValue() != EnrolmentState.APROVED_TYPE) {
 						enrolment.setEnrolmentState(EnrolmentState.ANNULED);
 					}
 
@@ -113,18 +101,13 @@ public class EditPosGradStudentCurricularPlanStateAndCredits
 				while (iterator.hasNext()) {
 					IEnrolment enrolment = (IEnrolment) iterator.next();
 					IEnrolment auxEnrolment = null;
-					if (extraCurricularCourses
-						.contains(enrolment.getIdInternal())) {
-						if (!(enrolment
-							instanceof EnrolmentInExtraCurricularCourse)) {
-							auxEnrolment =
-								new EnrolmentInExtraCurricularCourse();
-							auxEnrolment.setIdInternal(
-								enrolment.getIdInternal());
+					if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
+						if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
+							auxEnrolment = new EnrolmentInExtraCurricularCourse();
+							auxEnrolment.setIdInternal(enrolment.getIdInternal());
 							auxEnrolment.setCurricularCourseScope(
 								enrolment.getCurricularCourseScope());
-							auxEnrolment.setExecutionPeriod(
-								enrolment.getExecutionPeriod());
+							auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
 							auxEnrolment.setStudentCurricularPlan(
 								enrolment.getStudentCurricularPlan());
 							persistentEnrolment.simpleLockWrite(auxEnrolment);
@@ -132,36 +115,29 @@ public class EditPosGradStudentCurricularPlanStateAndCredits
 
 								auxEnrolment.setEnrolmentEvaluationType(
 									enrolment.getEnrolmentEvaluationType());
-								auxEnrolment.setEnrolmentState(
-									enrolment.getEnrolmentState());
-								auxEnrolment.setEvaluations(
-									enrolment.getEvaluations());
+								auxEnrolment.setEnrolmentState(enrolment.getEnrolmentState());
+								auxEnrolment.setEvaluations(enrolment.getEvaluations());
 
 							} catch (Exception e1) {
 								throw new FenixServiceException(e1);
 							}
 						}
 					} else {
-						if (enrolment
-							instanceof EnrolmentInExtraCurricularCourse) {
+						if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 
 							auxEnrolment = new Enrolment();
-							auxEnrolment.setIdInternal(
-								enrolment.getIdInternal());
+							auxEnrolment.setIdInternal(enrolment.getIdInternal());
 							auxEnrolment.setCurricularCourseScope(
 								enrolment.getCurricularCourseScope());
-							auxEnrolment.setExecutionPeriod(
-								enrolment.getExecutionPeriod());
+							auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
 							auxEnrolment.setStudentCurricularPlan(
 								enrolment.getStudentCurricularPlan());
 							persistentEnrolment.simpleLockWrite(auxEnrolment);
 							try {
 								auxEnrolment.setEnrolmentEvaluationType(
 									enrolment.getEnrolmentEvaluationType());
-								auxEnrolment.setEnrolmentState(
-									enrolment.getEnrolmentState());
-								auxEnrolment.setEvaluations(
-									enrolment.getEvaluations());
+								auxEnrolment.setEnrolmentState(enrolment.getEnrolmentState());
+								auxEnrolment.setEvaluations(enrolment.getEvaluations());
 							} catch (Exception e1) {
 								throw new FenixServiceException(e1);
 							}
@@ -175,6 +151,18 @@ public class EditPosGradStudentCurricularPlanStateAndCredits
 			throw new FenixServiceException(e);
 		}
 
+	}
+
+	private Calendar stringDateToCalendar(String startDate) throws NumberFormatException {
+		Calendar calendar = Calendar.getInstance();
+		String[] aux = startDate.split("/");
+		calendar.set(Calendar.DAY_OF_MONTH, (new Integer(aux[0])).intValue());
+		calendar.set(Calendar.MONTH, (new Integer(aux[1])).intValue() - 1);
+		calendar.set(Calendar.YEAR, (new Integer(aux[2])).intValue());
+//		calendar.set(Calendar.HOUR_OF_DAY, 0);
+//		calendar.set(Calendar.MINUTE, 0);
+//		calendar.set(Calendar.SECOND, 0);
+		return calendar;
 	}
 
 }

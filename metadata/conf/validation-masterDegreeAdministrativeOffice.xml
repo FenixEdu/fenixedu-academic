@@ -3,7 +3,22 @@
 
 <form-validation>
   <formset>
-
+		<form name="studentCurricularPlanForm">
+			<field property="startDate" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+   				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="message.testBeginDate" resource="true"/>
+				<var>
+         		  <var-name>datePattern</var-name>
+         		  <var-value>dd/MM/yyyy</var-value>
+       			 </var>
+       			 <var>
+          			 <var-name>mask</var-name>
+          			 <var-value>^((.||..)/(.||..)/2...)$</var-value>
+       			 </var>
+			</field>
+		</form>
+		
 		<form name="getStudentByNumberForm">
 			<field property="degreeType" depends="required,integer" page="1">
 				<arg0 key="error.no.degree.type.selected" resource="true"/>

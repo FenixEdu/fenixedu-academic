@@ -464,6 +464,7 @@
             <form-property name="page" type="java.lang.Integer" />
    	        <form-property name="currentState" type="java.lang.String"/>
    	        <form-property name="credits" type="java.lang.String"/>
+   	        <form-property name="startDate" type="java.lang.String"/>
    	        <form-property name="extraCurricularCourses" type="java.lang.String[]"/>
    	        <form-property name="observations" type="java.lang.String"/>
       </form-bean>
@@ -1727,7 +1728,8 @@
 	 		 parameter="method"
 	 		 name="studentCurricularPlanForm" 
 	 		 scope="request"
-	 		 validate="false" >
+	 		 validate="true" 
+	 		 input="/editStudentCurricularPlan.do?method=prepare">
 	 		<forward name="editStudentCurricularCoursePlan" path="df.page.editStudentCurricularCoursePlan"/>
 	 		<forward name="ShowStudentCurricularCoursePlan" path="/showStudentCurricularCoursePlan.do"/>
 	 </action>
