@@ -1103,8 +1103,10 @@ public class TeacherAdministrationSiteComponentBuilder {
             //InfoItem infoItem = Cloner.copyIItem2InfoItem(iItem);
             InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
             
+            
             ISection iSection = (ISection) persistentSection.readByOID(
-                    Section.class, infoItem.getInfoSection().getIdInternal());
+                    Section.class, iItem.getSection().getIdInternal());
+            infoItem.setInfoSection(InfoSection.newInfoFromDomain(iSection));
             List allItems = persistentItem.readAllItemsBySection(iSection);
 
             // build the result of this service
