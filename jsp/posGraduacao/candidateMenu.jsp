@@ -1,11 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administrativeOffice.main" /></title>
-  </head>
-  <body>
   	<bean:message key="label.masterDegree.administrativeOffice.candidate" /><br>
         &nbsp;&nbsp;- <html:link page="/createCandidateDispatchAction.do?method=prepare&page=0"><bean:message key="link.masterDegree.administrativeOffice.createCandidate" /></html:link><br>
         &nbsp;&nbsp;- <html:link page="/visualizeCandidates.do?method=prepareChoose&action=visualize&page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeCandidateInformations" /></html:link><br>
@@ -21,6 +16,4 @@
     </html:link>
 	<html:link forward="logoff">
 	<bean:message key="link.logout"/>
-</html:link><br>
-  </body>
-</html>
+</html:link><br/>

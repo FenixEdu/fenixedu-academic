@@ -9,12 +9,7 @@
 
 
 
-<html>
-  <head>
-    <title><bean:message key="label.person.visualizeInformation" /></title>
-  </head>
-  <body>
-    <table>
+ <table>
      <bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" property="infoPerson"/>
      <bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
 
@@ -264,7 +259,3 @@
     <html:link page="/editCandidate.do?method=prepareEdit">
     	<bean:message key="link.masterDegree.administrativeOffice.editCandidate" />
     </html:link>
-    
-    
-  </body>
-</html>
