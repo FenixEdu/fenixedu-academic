@@ -9,9 +9,9 @@ package Dominio;
  */
 abstract public class DomainObject implements IDomainObject {
 	private Integer idInternal;
-	public DomainObject(){
+	public DomainObject() {
 	}
-	
+
 	/**
 	 * @return Integer
 	 */
@@ -31,7 +31,12 @@ abstract public class DomainObject implements IDomainObject {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return this.idInternal.intValue();
+		if (idInternal != null) {
+
+			return this.idInternal.intValue();
+		} else {
+			return super.hashCode();
+		}
 	}
 
 }
