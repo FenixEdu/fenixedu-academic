@@ -190,13 +190,8 @@ public class InfoExecutionCourse implements Serializable {
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		System.out.println(this.infoExecutionPeriod.getName());
-		System.out.println(this.infoExecutionPeriod.getInfoExecutionYear().getYear());
 		if (obj instanceof InfoExecutionCourse) {
 			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) obj;
-			System.out.println("SIGLA = "+infoExecutionCourse.getSigla());
-			System.out.println("PERIODO:"+ infoExecutionCourse.getInfoExecutionPeriod().getName());			
-			System.out.println("ANO:"+ infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
 			resultado =
 				(getSigla().equals(infoExecutionCourse.getSigla())
 					&& getInfoExecutionPeriod().equals(infoExecutionCourse.getInfoExecutionPeriod()));

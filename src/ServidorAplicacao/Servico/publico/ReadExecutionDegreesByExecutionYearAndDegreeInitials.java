@@ -63,9 +63,10 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials
 					degreeInitials,
 					nameDegreeCurricularPlan,
 					executionYear);
-			infoExecutionDegree =
-				Cloner.copyIExecutionDegree2InfoExecutionDegree(
-					executionDegree);
+			if (executionDegree != null)
+				infoExecutionDegree =
+					Cloner.copyIExecutionDegree2InfoExecutionDegree(
+						executionDegree);
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);

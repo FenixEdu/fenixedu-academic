@@ -1,24 +1,18 @@
 package ServidorAplicacao.Servicos.publico;
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
-import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -28,15 +22,18 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author tfc130
  *
  */
-public class ReadCurricularCourseListOfExecutionCourseTest
+public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest
 	extends TestCaseServicos {
 
-	private InfoExecutionCourse infoExecutionCourse = null;
+		private InfoExecutionDegree infoExecutionDegree = null;
+		private String degreeInitials = null;
+		private String nameDegreeCurricularPlan = null;
+		private InfoExecutionYear infoExecutionYear = null;		
 
 	/**
 	 * Constructor for SelectClassesTest.
 	 */
-	public ReadCurricularCourseListOfExecutionCourseTest(
+	public ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest(
 		java.lang.String testName) {
 		super(testName);
 	}
@@ -48,7 +45,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 	public static Test suite() {
 		TestSuite suite =
 			new TestSuite(
-				ReadCurricularCourseListOfExecutionCourseTest.class);
+			ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest.class);
 
 		return suite;
 	}
@@ -63,44 +60,49 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 
 	public void testReadAll() {
 
-		Object argsReadCurricularCourseListOfExecutionCourse[] =
-			new Object[1];
+		Object argsReadExecutionDegreesByExecutionYearAndDegreeInitials[] =
+			new Object[3];
 
 		Object result = null;
 
-		//execution course with 1 curricularCourses associated
+		// executionDegree exists in database
 		this.prepareTestCase(true);
 
-		argsReadCurricularCourseListOfExecutionCourse[0] =
-			this.infoExecutionCourse;
-
+		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[0] =
+			this.infoExecutionYear;
+		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[1] =
+			this.degreeInitials;
+		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[2] =
+			this.nameDegreeCurricularPlan;
+		
 		try {
 			result =
 				_gestor.executar(
 					_userView,
-					"ReadCurricularCourseListOfExecutionCourse",
-					argsReadCurricularCourseListOfExecutionCourse);
-			assertEquals(
-				"testReadAll: 1 curricularCourses of executionCourse",
-				1,
-				((List) result).size());
-
+					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
+					argsReadExecutionDegreesByExecutionYearAndDegreeInitials);
+			assertTrue(((InfoExecutionDegree)result).equals(infoExecutionDegree));
+			
 		} catch (Exception ex) {
 			fail("testReadAll: executionCourse with 1 curricularCourses: " + ex);
 		}
 
-		// Empty database - no curricularCourses of selected executionCourse
+		// Empty database - executionDegrees does not exist in db
 		this.prepareTestCase(false);
+		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[0] =
+			this.infoExecutionYear;
+		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[1] =
+			this.degreeInitials;
+		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[2] =
+			this.nameDegreeCurricularPlan;
+		
 		try {
 			result =
 				_gestor.executar(
 					_userView,
-					"ReadCurricularCourseListOfExecutionCourse",
-					argsReadCurricularCourseListOfExecutionCourse);
-			assertEquals(
-				"testReadAll: no curricularCourses of executionCourse",
-				0,
-				((List) result).size());
+					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
+					argsReadExecutionDegreesByExecutionYearAndDegreeInitials);
+			assertNull(result);
 		} catch (Exception ex) {
 			fail("testReadAll: no curricularCourses of executionCourse: " + ex);
 		}
@@ -108,7 +110,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 	}
 
 	private void prepareTestCase(
-		boolean hasCurricularCourses) {
+		boolean exists) {
 
 		ISuportePersistente sp = null;
 
@@ -143,7 +145,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 					executionYear);
 			assertNotNull(executionDegree);
 
-			IPersistentExecutionPeriod persistentExecutionPeriod =
+/*			IPersistentExecutionPeriod persistentExecutionPeriod =
 				sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod executionPeriod =
 				persistentExecutionPeriod.readByNameAndExecutionYear(
@@ -159,13 +161,17 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 					"TFCI",
 					executionPeriod);
 			assertNotNull(executionCourse);
+*/
+			this.degreeInitials = degree.getSigla();
+			this.nameDegreeCurricularPlan = degreeCurricularPlan.getName();
+			this.infoExecutionYear =  Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
 
-			if (!hasCurricularCourses)
-				executionCourse.setAssociatedCurricularCourses(null);
 
-			this.infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse);
+			if (!exists)
+				cursoExecucaoPersistente.delete(executionDegree);
+
+			this.infoExecutionDegree =
+				Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
 
 			sp.confirmarTransaccao();
 

@@ -53,7 +53,8 @@ public class ReadExecutionCourse implements IServico {
 			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
  			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 			iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(code, executionPeriod);
-			infoExecCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(iExecCourse);
+			if (iExecCourse != null)
+				infoExecCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(iExecCourse);
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 			NotExecutedException newEx = new NotExecutedException("");

@@ -58,6 +58,7 @@ public class SelectShiftsTest extends TestCaseServicos {
 		infoShift.setInfoDisciplinaExecucao(iDE);	
 		argsSelecthifts[0] = infoShift;		
 		GestorServicos manager = GestorServicos.manager();
+
 		try {
 			result =
 				(ArrayList) manager.executar(

@@ -1,11 +1,9 @@
 package ServidorAplicacao.Servicos.publico;
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -28,15 +26,17 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author tfc130
  *
  */
-public class ReadCurricularCourseListOfExecutionCourseTest
+public class ReadExecutionCourseTest
 	extends TestCaseServicos {
 
 	private InfoExecutionCourse infoExecutionCourse = null;
-
+	private InfoExecutionPeriod infoExecutionPeriod = null;
+	private String code = null;
+	
 	/**
 	 * Constructor for SelectClassesTest.
 	 */
-	public ReadCurricularCourseListOfExecutionCourseTest(
+	public ReadExecutionCourseTest(
 		java.lang.String testName) {
 		super(testName);
 	}
@@ -48,7 +48,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 	public static Test suite() {
 		TestSuite suite =
 			new TestSuite(
-				ReadCurricularCourseListOfExecutionCourseTest.class);
+				ReadExecutionCourseTest.class);
 
 		return suite;
 	}
@@ -63,44 +63,40 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 
 	public void testReadAll() {
 
-		Object argsReadCurricularCourseListOfExecutionCourse[] =
-			new Object[1];
+		Object argsReadExecutionCourse[] = new Object[2];
 
 		Object result = null;
 
-		//execution course with 1 curricularCourses associated
+		
+		// execution course exists in database
 		this.prepareTestCase(true);
 
-		argsReadCurricularCourseListOfExecutionCourse[0] =
-			this.infoExecutionCourse;
+		argsReadExecutionCourse[0] = this.infoExecutionPeriod;
+		argsReadExecutionCourse[1] = this.code;
 
 		try {
 			result =
 				_gestor.executar(
 					_userView,
-					"ReadCurricularCourseListOfExecutionCourse",
-					argsReadCurricularCourseListOfExecutionCourse);
-			assertEquals(
-				"testReadAll: 1 curricularCourses of executionCourse",
-				1,
-				((List) result).size());
+					"ReadExecutionCourse",
+					argsReadExecutionCourse);
+			assertTrue(((InfoExecutionCourse)result).equals(infoExecutionCourse));
 
 		} catch (Exception ex) {
 			fail("testReadAll: executionCourse with 1 curricularCourses: " + ex);
 		}
 
-		// Empty database - no curricularCourses of selected executionCourse
+		// executionCourse does not exist in database
 		this.prepareTestCase(false);
 		try {
 			result =
 				_gestor.executar(
 					_userView,
-					"ReadCurricularCourseListOfExecutionCourse",
-					argsReadCurricularCourseListOfExecutionCourse);
-			assertEquals(
-				"testReadAll: no curricularCourses of executionCourse",
-				0,
-				((List) result).size());
+					"ReadExecutionCourse",
+					argsReadExecutionCourse);
+			assertNull(
+				"testReadAll: executionCourse does not exist in db",
+				result);
 		} catch (Exception ex) {
 			fail("testReadAll: no curricularCourses of executionCourse: " + ex);
 		}
@@ -108,7 +104,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 	}
 
 	private void prepareTestCase(
-		boolean hasCurricularCourses) {
+		boolean exists) {
 
 		ISuportePersistente sp = null;
 
@@ -160,12 +156,15 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 					executionPeriod);
 			assertNotNull(executionCourse);
 
-			if (!hasCurricularCourses)
-				executionCourse.setAssociatedCurricularCourses(null);
-
 			this.infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse);
+				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+			
+			if (!exists)
+				disciplinaExecucaoPersistente.deleteExecutionCourse(executionCourse);
+
+			this.infoExecutionPeriod =
+				Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+			this.code = executionCourse.getSigla();
 
 			sp.confirmarTransaccao();
 

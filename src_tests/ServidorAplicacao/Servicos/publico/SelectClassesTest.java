@@ -5,7 +5,6 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoClass;
-import DataBeans.InfoDegree;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -13,10 +12,15 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
-import Dominio.Turma;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -25,7 +29,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class SelectClassesTest extends TestCaseServicos {
 
-	private InfoDegree infoDegree = null;
+	private InfoClass infoClass = null;
 	/**
 	 * Constructor for SelectClassesTest.
 	 */
@@ -45,96 +49,39 @@ public class SelectClassesTest extends TestCaseServicos {
 
 	protected void setUp() {
 		super.setUp();
-		try {
-			_gestor=GestorServicos.manager();
-			_suportePersistente= SuportePersistenteOJB.getInstance();
-			_turmaPersistente=_suportePersistente.getITurmaPersistente();
-			persistentExecutionYear=_suportePersistente.getIPersistentExecutionYear();
-			persistentExecutionPeriod=_suportePersistente.getIPersistentExecutionPeriod();
-			_cursoPersistente=_suportePersistente.getICursoPersistente();
-			_persistentDegreeCurricularPlan=_suportePersistente.getIPlanoCurricularCursoPersistente();
-			_cursoExecucaoPersistente=_suportePersistente.getICursoExecucaoPersistente();
-		} catch (ExcepcaoPersistencia e) {
-			fail("setup failed");
-			e.printStackTrace();
-		}
 	}
 
 	protected void tearDown() {
 		super.tearDown();
 	}
 
-	
-
-
-
 	public void testReadByDegreeAndOtherStuff() {
+
 		Object argsSelectClasses[] = new Object[1];
-		InfoDegree infoDegree = new InfoDegree();
-
-		ITurma class1 = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IPlanoCurricularCurso degreeCurricularPlan = null;
-		ICursoExecucao executionDegree = null;
-		ICurso degree = null;
-		try {
-			_suportePersistente.iniciarTransaccao();
-			executionYear =
-				persistentExecutionYear.readExecutionYearByName("2002/2003");
-			assertNotNull(executionYear);
-			executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					"2º Semestre",
-					executionYear);
-			assertNotNull(executionPeriod);
-
-			degree = _cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);
-			degreeCurricularPlan =
-				_persistentDegreeCurricularPlan.readByNameAndDegree(
-					"plano1",
-					degree);
-			assertNotNull(degreeCurricularPlan);
-			executionDegree =
-				_cursoExecucaoPersistente
-					.readByDegreeCurricularPlanAndExecutionYear(
-					degreeCurricularPlan,
-					executionYear);
-			assertNotNull(executionDegree);
-			class1 =
-				_turmaPersistente
-					.readByNameAndExecutionDegreeAndExecutionPeriod(
-					"10501",
-					executionDegree,
-					executionPeriod);
-			assertNotNull(class1);
-			_suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
-		}
-
-		infoDegree.setNome(degree.getNome());
-		infoDegree.setSigla(degree.getSigla());
-
-		InfoClass infoClass = Cloner.copyClass2InfoClass(class1);
-		
-		
-		
-		argsSelectClasses[0] = infoClass;
 		Object result = null;
-System.out.println("anocurricular"+infoClass.getAnoCurricular());
-		//Empty database	
-		try {
-			_suportePersistente.iniciarTransaccao();
-			_turmaPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
-		}
+		
+//		4 classes in database
+		prepareTestCase(true);
+		
+		argsSelectClasses[0] = this.infoClass;
+		
 		try {
 			result =
-				_gestor.executar(null, "SelectClasses", argsSelectClasses);
+				_gestor.executar(_userView, "SelectClasses", argsSelectClasses);
+			assertEquals(
+				"testReadByDegreeAndOtherStuff: 4classes in db",
+				4,
+				((List) result).size());
+		} catch (Exception ex) {
+			fail("testReadByDegreeAndOtherStuff: 4 classes in db");
+		}
+		
+		//Empty database	
+		prepareTestCase(false);
+		argsSelectClasses[0] = this.infoClass;
+
+		try {
+			result = _gestor.executar(null, "SelectClasses", argsSelectClasses);
 			assertEquals(
 				"testReadByDegreeAndOtherStuff: no classes to read",
 				0,
@@ -143,42 +90,78 @@ System.out.println("anocurricular"+infoClass.getAnoCurricular());
 			fail("testReadByDegreeAndOtherStuff: no classes to read");
 		}
 
-		//2 classes in database
-		ITurma classTemp1 = null;
-		ITurma classTemp2 = null;
+	}
+
+	private void prepareTestCase(boolean classesExist) {
+
+		ISuportePersistente sp = null;
 
 		try {
-			_suportePersistente.iniciarTransaccao();
-			classTemp1 =
-				new Turma(
+			sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+
+			IPersistentExecutionYear persistentExecutionYear =
+				sp.getIPersistentExecutionYear();
+			IExecutionYear executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+
+			IPersistentExecutionPeriod persistentExecutionPeriod =
+				sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
+			assertNotNull(executionPeriod);
+
+			ICursoPersistente cursoPersistente = sp.getICursoPersistente();
+			ICurso degree = cursoPersistente.readBySigla("LEIC");
+			assertNotNull(degree);
+
+			IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan =
+				sp.getIPlanoCurricularCursoPersistente();
+			IPlanoCurricularCurso degreeCurricularPlan =
+				persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+
+			ICursoExecucaoPersistente cursoExecucaoPersistente =
+				sp.getICursoExecucaoPersistente();
+			ICursoExecucao executionDegree =
+				cursoExecucaoPersistente
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
+			assertNotNull(executionDegree);
+
+			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
+			ITurma class1 =
+				turmaPersistente
+					.readByNameAndExecutionDegreeAndExecutionPeriod(
 					"10501",
-					new Integer(1),
 					executionDegree,
 					executionPeriod);
+			assertNotNull(class1);
 			
-			classTemp2 =
-				new Turma(
-					"10502",
-					new Integer(3),
-					executionDegree,
-					executionPeriod);
 			
-			_turmaPersistente.lockWrite(classTemp1);
-			_turmaPersistente.lockWrite(classTemp2);
-			_suportePersistente.confirmarTransaccao();
+			if (!classesExist)
+				turmaPersistente.deleteAll();
+
+			this.infoClass = Cloner.copyClass2InfoClass(class1);
+			
+
+			sp.confirmarTransaccao();
+
 		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
+			try {
+				sp.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("ligarSuportePersistente: cancelarTransaccao: " + ex);
+			}
+			fail("ligarSuportePersistente: confirmarTransaccao: " + excepcao);
 		}
-		try {
-			result =
-				_gestor.executar(_userView, "SelectClasses", argsSelectClasses);
-			assertEquals(
-				"testReadByDegreeAndOtherStuff: 2 classes in db",
-				1,
-				((List) result).size());
-		} catch (Exception ex) {
-			fail("testReadByDegreeAndOtherStuff: 2 classes in db");
-		}
+
 	}
 
 }

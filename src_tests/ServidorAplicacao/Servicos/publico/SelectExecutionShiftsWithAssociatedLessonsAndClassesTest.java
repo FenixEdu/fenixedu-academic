@@ -85,7 +85,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 
 
 		//execution course with 10 shifts with 1st shift with 1 associated lessons and 1 associated classes
-		this.ligarSuportePersistente(1);
+		this.prepareTestCase(1);
 
 		argsSelectExecutionShiftsWithAssociatedLessonsAndClasses[0] =
 			this.infoExecutionCourse;
@@ -123,7 +123,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 		}
 
 		//10 shifts in database with no associated lessons and no associated classes 
-		this.ligarSuportePersistente(2);
+		this.prepareTestCase(2);
 		try {
 			result =
 			_gestor.executar(
@@ -157,7 +157,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 		}
 
 		// Empty database - no shifts of selected executionCourse
-		this.ligarSuportePersistente(3);
+		this.prepareTestCase(3);
 		try {
 			result =
 				_gestor.executar(
@@ -173,7 +173,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 		}
 	}
 
-	private void ligarSuportePersistente(
+	private void prepareTestCase(
 		int testCase) {
 
 		ISuportePersistente sp = null;
