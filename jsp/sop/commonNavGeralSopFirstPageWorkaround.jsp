@@ -4,6 +4,5 @@
     <td width="25%" nowrap class="navopgeral"><html:link page="/sop/paginaPrincipal.jsp">Home</html:link></td>
     <td width="25%" nowrap class="navopgeral"><html:link page="/sop/prepararEscolherContexto.do">Gestão de Horários</html:link></td>
     <td width="25%" nowrap class="navopgeral"><html:link page="/sop/principalSalas.do">Gestão de Salas</html:link></td>
-    <td width="25%" nowrap class="centerContent"><a href="http://www.ist.utl.pt"></a><a href="http://www.ist.utl.pt"><img alt="" border="0" src="../images/logout.gif"></a></td>
-  </tr>
+	<td width="25%" nowrap class="centerContent"><html:link page="/sop/logoff.do"><img alt="" border="0" src="../images/logout.gif"></html:link></td></tr>
 </table>

@@ -28,6 +28,7 @@
        <tr>
          <td><p>&nbsp;</p>
            <center><span class="error"><html:errors property="invalidAuthentication"/></span></center>
+           <center><span class="error"><html:errors property="error.invalid.session"/></span></center>           
            <html:form action="/autenticacaoSOPForm">
 		   <table align='center' border="0">
            <!-- input utilizador -->
