@@ -22,6 +22,7 @@
 			<td rowspan="2" class="listClasses-header" ><bean:message key="label.beginning"/></td>	
 			<td  colspan="4" class="listClasses-header"><bean:message key="label.exam.enrollment.period"/></td>
 			<td rowspan="2" class="listClasses-header" ><bean:message key="label.students.enrolled.exam"/></td>
+			<td rowspan="2" class="listClasses-header" ><bean:message key="label.students.listMarks"/></td>
 		</tr>	
 		<tr>
 			<td class="listClasses-header" ><bean:message key="label.exam.enrollment.begin.day"/></td>
@@ -45,7 +46,13 @@
 			<td class="listClasses" >
 				<html:link 
 					page="<%= "/showStudentsEnrolledInExam.do?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("idInternal") %>" >
-					<bean:message key="link.students.enrolled.exam"/></html:link></td>			
+					<bean:message key="link.students.enrolled.exam"/></html:link></td>	
+			<td class="listClasses" >
+				<html:link 
+					page="<%= "/showMarksListOptions?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("idInternal") %>" >
+					<bean:message key="link.students.listMarks"/></html:link></td>	
+					
+							
 			<bean:define id="examCode" name="exam" property="idInternal"/>
 			
 			<html:hidden property="method" value="editExamEnrollment" />
