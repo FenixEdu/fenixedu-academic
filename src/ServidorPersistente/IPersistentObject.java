@@ -21,4 +21,21 @@ public interface IPersistentObject {
 	 * @return Object that we want to read
 	 */	
 	public IDomainObject readByOId(IDomainObject obj, boolean lockWrite);
+	
+	/**
+	 * Only locks the object for write. <b>Doesn't do anything else</b>
+	 * @param obj object to lock
+	 * @throws ExcepcaoPersistencia when can't lock object.
+	 */
+	void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia;	
+	/**
+	 * Reads an object using from Database using it's unique.
+	 * @param domainObject
+	 * @param lockWrite
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public IDomainObject readByUnique(
+		IDomainObject domainObject,
+		boolean lockWrite) throws IllegalArgumentException;
 }
