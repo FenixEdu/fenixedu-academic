@@ -331,4 +331,75 @@
     </reference-descriptor>
     
 </class-descriptor>
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.Professorship -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.Professorship" table="PROFESSORSHIPS">
+	<field-descriptor
+		id="1"
+		name="idInternal"
+		column="INTERNAL_CODE"
+		jdbc-type="INTEGER"
+		primarykey="true"
+        autoincrement="true"
+		/>
+	<field-descriptor id="2"
+        name="keyTeacher"
+        column="KEY_TEACHER"
+        jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="3"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+         name="teacher"
+         class-ref="Dominio.Teacher"
+         >
+	<foreignkey field-id-ref="2"/>
+    </reference-descriptor>
+	<reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         >
+	<foreignkey field-id-ref="3"/>
+    </reference-descriptor>
+</class-descriptor>
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.ResponsibleFor -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.ResponsibleFor" table="RESPONSIBLEFOR">
+	<field-descriptor
+		id="1"
+		name="idInternal"
+		column="INTERNAL_CODE"
+		jdbc-type="INTEGER"
+		primarykey="true"
+        autoincrement="true"
+		/>
+	<field-descriptor id="2"
+        name="keyTeacher"
+        column="KEY_TEACHER"
+        jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="3"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+         name="teacher"
+         class-ref="Dominio.Teacher"
+         >
+	<foreignkey field-id-ref="2"/>
+    </reference-descriptor>
+	<reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         >
+	<foreignkey field-id-ref="3"/>
+    </reference-descriptor>
+</class-descriptor>	
 <!-- Mapping of User defined classes ends here -->
