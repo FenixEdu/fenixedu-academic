@@ -60,7 +60,7 @@ public class InsertStudentGroupMembers implements IServico {
 	 * Executes the service.
 	 */
 
-	public void run(Integer executionCourseCode,Integer studentGroupCode,List studentCodes) throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode,Integer studentGroupCode,List studentCodes) throws FenixServiceException {
 		
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
@@ -80,7 +80,7 @@ public class InsertStudentGroupMembers implements IServico {
 			IStudentGroup studentGroup =(IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
 			
 			if(studentGroup==null)
-				throw new NonExistingServiceException();
+				return new Boolean(false);
 				
 			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			
@@ -102,5 +102,7 @@ public class InsertStudentGroupMembers implements IServico {
 		catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
+	
+		return new Boolean(true);
 	}
 }

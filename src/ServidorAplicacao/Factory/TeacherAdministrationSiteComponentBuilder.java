@@ -21,7 +21,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
-import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
+import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
@@ -167,7 +167,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		} else if (component instanceof InfoSiteGroupProperties) {
 			return getInfoSiteGroupProperties((InfoSiteGroupProperties) component, (Integer) obj1);
 		} else if (component instanceof InfoSiteShifts) {
-			return getInfoSiteShifts((InfoSiteShifts) component, (Integer) obj1);
+			return getInfoSiteShifts((InfoSiteShifts) component, (Integer) obj1,(Integer) obj2);
 		}
 		return null;
 	}
@@ -1037,13 +1037,16 @@ public class TeacherAdministrationSiteComponentBuilder {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
-
+			
+			if(studentGroup==null)
+				return null;
+			
 			studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
 			
 			} catch (ExcepcaoPersistencia ex) {
-					ex.printStackTrace();
+				ex.printStackTrace();
 			
-			throw new FenixServiceException("error.impossibleReadAllShiftsByProject");
+			throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
 			}
 		
 			studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
@@ -1115,11 +1118,24 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode) throws FenixServiceException {
-		List shiftsWithAssociatedClassesAndLessons = new ArrayList();
+	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode, Integer studentGroupCode) throws FenixServiceException {
+		List infoShifts = new ArrayList();
 		IDisciplinaExecucao executionCourse=null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			
+			if(studentGroupCode!=null)
+			{
+			
+				IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
+			
+				if(studentGroup==null)
+				{
+					component.setShifts(null);
+					return component;
+				}
+			}	
+			
 			executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(objectCode), false);
 
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
@@ -1130,8 +1146,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 				for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);
-					InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons =
-						new InfoShiftWithAssociatedInfoClassesAndInfoLessons(Cloner.copyShift2InfoShift(shift), null, null);
+					InfoShift infoShift =
+						new InfoShift(shift.getNome(),shift.getTipo(),shift.getLotacao(),Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
 					List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
 					List infoLessons = new ArrayList();
@@ -1141,26 +1157,85 @@ public class TeacherAdministrationSiteComponentBuilder {
 					for (int j = 0; j < lessons.size(); j++)
 						infoLessons.add(Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
 
-					shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
+					infoShift.setInfoLessons(infoLessons);
 
 					for (int j = 0; j < classesShifts.size(); j++)
 						infoClasses.add(Cloner.copyClass2InfoClass(((ITurmaTurno) classesShifts.get(j)).getTurma()));
 
-					shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
+					infoShift.setInfoClasses(infoClasses);
+					infoShift.setIdInternal(shift.getIdInternal());
 
-					shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
+					infoShifts.add(infoShift);
 				}
 			}
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		component.setShifts(shiftsWithAssociatedClassesAndLessons);
+		component.setShifts(infoShifts);
 		component.setInfoExecutionPeriodName(executionCourse.getExecutionPeriod().getName());
 		component.setInfoExecutionYearName(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 		return component;
 	}
 	
 	
-
+//	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode, Integer studentGroupCode) throws FenixServiceException {
+//			List shiftsWithAssociatedClassesAndLessons = new ArrayList();
+//			IDisciplinaExecucao executionCourse=null;
+//			try {
+//				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+//			
+//				if(studentGroupCode!=null)
+//				{
+//			
+//					IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
+//			
+//					if(studentGroup==null)
+//					{
+//						component.setShifts(null);
+//						return component;
+//					}
+//				}	
+//			
+//				executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(objectCode), false);
+//
+//				List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+//
+//				if (shifts == null || shifts.isEmpty()) {
+//
+//				} else {
+//
+//					for (int i = 0; i < shifts.size(); i++) {
+//						ITurno shift = (ITurno) shifts.get(i);
+//						InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons =
+//							new InfoShiftWithAssociatedInfoClassesAndInfoLessons(Cloner.copyShift2InfoShift(shift), null, null);
+//
+//						List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
+//						List infoLessons = new ArrayList();
+//						List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
+//						List infoClasses = new ArrayList();
+//
+//						for (int j = 0; j < lessons.size(); j++)
+//							infoLessons.add(Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
+//
+//						shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
+//
+//						for (int j = 0; j < classesShifts.size(); j++)
+//							infoClasses.add(Cloner.copyClass2InfoClass(((ITurmaTurno) classesShifts.get(j)).getTurma()));
+//
+//						shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
+//
+//						shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
+//					}
+//				}
+//
+//			} catch (ExcepcaoPersistencia e) {
+//				throw new FenixServiceException(e);
+//			}
+//			component.setShifts(shiftsWithAssociatedClassesAndLessons);
+//			component.setInfoExecutionPeriodName(executionCourse.getExecutionPeriod().getName());
+//			component.setInfoExecutionYearName(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+//			return component;
+//		}
+	
 }

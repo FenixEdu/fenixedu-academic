@@ -66,6 +66,9 @@ public class VerifyStudentGroupAtributes implements IServico {
 			List username = new ArrayList();
 			username.add(userName);
 			IStudentGroup studentGroup =(IStudentGroup)sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
+			if(studentGroup==null)
+				return new Integer(-3);
+				
 			IGroupProperties groupProperties = studentGroup.getGroupProperties();
 			
 			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
@@ -75,7 +78,6 @@ public class VerifyStudentGroupAtributes implements IServico {
 				return new Integer(-1);
 			
 			result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties,studentGroup,studentGroup.getShift());
-			System.out.println("NO SERVICO VERIFY RESULTADO"+result);
 			if(!result)
 				return new Integer(-2);
 		

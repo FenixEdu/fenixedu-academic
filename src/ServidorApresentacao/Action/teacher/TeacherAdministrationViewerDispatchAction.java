@@ -29,7 +29,6 @@ import DataBeans.InfoCurriculum;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoShift;
-import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
@@ -1472,9 +1471,23 @@ public class TeacherAdministrationViewerDispatchAction
 		String groupPropertiesCodeString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		Integer objectCode = getObjectCode(request);
+		
+		ISiteComponent shiftsView = new InfoSiteShifts();
+		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView)readSiteView(request, shiftsView, null, objectCode, null);
+		
+		List shifts =(List) ((InfoSiteShifts) siteView.getComponent()).getShifts();
+		if(shifts.size()==0)
+		{
+		
+			request.setAttribute("noShifts",new Boolean(true));
+		}
+		
 		ISiteComponent viewAllGroups = new InfoSiteAllGroups();
 		readSiteView(request, viewAllGroups, null, groupPropertiesCode, null);
+		
 		return mapping.findForward("groupsManagement");
+		
 	}
 	public ActionForward viewStudentGroupInformation(
 		ActionMapping mapping,
@@ -1482,11 +1495,22 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		String studentGroupCodeString =
-		(String) request.getParameter("studentGroupCode");
+		String studentGroupCodeString = (String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
-		readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
+		TeacherAdministrationSiteView result = (TeacherAdministrationSiteView) readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
+		
+		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup)result.getComponent();
+		if(infoSiteStudentGroup.getInfoSiteStudentInformationList()==null)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error =new ActionError("error.NoGroup");
+			actionErrors.add("error.NoGroup",error);
+			saveErrors(request, actionErrors);
+			return viewProjectStudentGroups(mapping,form,request,response);
+		}
 		return mapping.findForward("viewStudentGroupInformation");
 	}
 	public ActionForward prepareCreateGroupProperties(
@@ -1844,15 +1868,14 @@ public class TeacherAdministrationViewerDispatchAction
 		InfoShift oldInfoShift = new InfoShift();
 		if (shifts.size() != 0) {
 			shiftsList.add(new LabelValueBean("(escolher)", ""));
-			InfoShiftWithAssociatedInfoClassesAndInfoLessons infoShift;
+			InfoShift infoShift;
 			Iterator iter = shifts.iterator();
 			String label, value;
 			while (iter.hasNext()) {
 				infoShift =
-					(InfoShiftWithAssociatedInfoClassesAndInfoLessons) iter
-						.next();
-				value = infoShift.getInfoShift().getIdInternal().toString();
-				label = infoShift.getInfoShift().getNome();
+					(InfoShift) iter.next();
+				value = infoShift.getIdInternal().toString();
+				label = infoShift.getNome();
 				shiftsList.add(new LabelValueBean(label, value));
 			}
 			request.setAttribute("shiftsList", shiftsList);
@@ -1957,9 +1980,9 @@ public class TeacherAdministrationViewerDispatchAction
 		String studentGroupCodeString =
 			(String) request.getParameter("studentGroupCode");
 		String shiftCodeString = (String) request.getParameter("shiftCode");
-
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 		Integer shiftCode = new Integer(shiftCodeString);
+		System.out.println("SHIFT CODE = "+shiftCode);
 		Integer objectCode = getObjectCode(request);
 		ISiteComponent viewShifts = new InfoSiteShifts();
 		TeacherAdministrationSiteView shiftsView =
@@ -1967,28 +1990,34 @@ public class TeacherAdministrationViewerDispatchAction
 				viewShifts,
 				null,
 				objectCode,
-				null);
+				studentGroupCode);
 		List shifts =
 			(List) ((InfoSiteShifts) shiftsView.getComponent()).getShifts();
+		
+		if(shifts==null)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error =new ActionError("error.NoGroup");
+			actionErrors.add("error.NoGroup",error);
+			saveErrors(request, actionErrors);
+			return viewProjectStudentGroups(mapping,form,request,response);
+		}
 		//			creation of bean of InfoSiteShifts for use in jsp
 		ArrayList shiftsList = new ArrayList();
 		InfoShift oldInfoShift = new InfoShift();
 		if (shifts.size() != 0) {
 			shiftsList.add(new LabelValueBean("(escolher)", ""));
-			InfoShiftWithAssociatedInfoClassesAndInfoLessons infoShift;
+			InfoShift infoShift;
 			Iterator iter = shifts.iterator();
 			String label, value;
 			while (iter.hasNext()) {
-				infoShift =
-					(InfoShiftWithAssociatedInfoClassesAndInfoLessons) iter
-						.next();
-				if ((infoShift.getInfoShift())
-					.getIdInternal()
-					.equals(shiftCode)) {
-					oldInfoShift = infoShift.getInfoShift();
+				infoShift =(InfoShift) iter.next();
+				if (infoShift.getIdInternal().equals(shiftCode)) {
+					oldInfoShift = infoShift;
 				}
-				value = infoShift.getInfoShift().getIdInternal().toString();
-				label = infoShift.getInfoShift().getNome();
+				value = infoShift.getIdInternal().toString();
+				label = infoShift.getNome();
 				shiftsList.add(new LabelValueBean(label, value));
 			}
 			request.setAttribute("shiftsList", shiftsList);
@@ -2075,6 +2104,16 @@ public class TeacherAdministrationViewerDispatchAction
 		InfoSiteStudentGroup component =
 			(InfoSiteStudentGroup) siteView.getComponent();
 
+		if(component.getInfoSiteStudentInformationList()==null)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error =new ActionError("error.NoGroup");
+			actionErrors.add("error.NoGroup",error);
+			saveErrors(request, actionErrors);
+			return viewProjectStudentGroups(mapping,form,request,response);
+		}
+		
 		Object args[] = { objectCode, studentGroupCode };
 		GestorServicos gestor = GestorServicos.manager();
 		List infoStudentList = null;
@@ -2084,9 +2123,10 @@ public class TeacherAdministrationViewerDispatchAction
 					userView,
 					"PrepareEditStudentGroupMembers",
 					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
 		}
+		 catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		 }
 		request.setAttribute("infoStudentList", infoStudentList);
 		return mapping.findForward("editStudentGroupMembers");
 	}
@@ -2113,13 +2153,21 @@ public class TeacherAdministrationViewerDispatchAction
 		GestorServicos gestor = GestorServicos.manager();
 		Boolean result;
 		try {
-			gestor.executar(userView, "InsertStudentGroupMembers", args);
-		}catch(NonExistingServiceException ex){ 
-			throw new NonExistingActionException("message.editStudentGroupMembers.NoGroup", viewProjectStudentGroups(mapping,form,request,response));
-		  }
-		 catch (FenixServiceException e) {
+			result = (Boolean)gestor.executar(userView, "InsertStudentGroupMembers", args);
+		}catch (FenixServiceException e) {
 			throw new FenixActionException(e);
-		 }
+		}
+		
+		if(!result.booleanValue())
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error =new ActionError("error.NoGroup");
+			actionErrors.add("error.NoGroup",error);
+			saveErrors(request, actionErrors);
+			return viewProjectStudentGroups(mapping,form,request,response);
+		}
+		  
 		return prepareEditStudentGroupMembers(mapping, form, request, response);
 	}
 
@@ -2146,10 +2194,7 @@ public class TeacherAdministrationViewerDispatchAction
 				Boolean result;
 				try {
 					gestor.executar(userView, "DeleteStudentGroupMembers", args);
-				}catch(NonExistingServiceException ex){ 
-					throw new NonExistingActionException("message.editStudentGroupMembers.NoGroup", viewProjectStudentGroups(mapping,form,request,response));
-		  		 }
-				 catch (FenixServiceException e) {
+				}catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				 }
 				return prepareEditStudentGroupMembers(mapping, form, request, response);

@@ -956,11 +956,7 @@
 		path="/viewStudentGroupInformation"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">	
-		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-        /> 			
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">			
        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
        <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
@@ -1036,7 +1032,11 @@
 		scope="request"
 		input="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;page=0" 
 		validate="true"
-     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">  
+     	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        />          
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
 		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
        	

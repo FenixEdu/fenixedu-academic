@@ -101,7 +101,9 @@
 	</html:form>
 	</td>
 	
-</tr>			
+</tr>
+</table>
+			
 </logic:present>
 <logic:notPresent name="shiftsList">
 <h4>

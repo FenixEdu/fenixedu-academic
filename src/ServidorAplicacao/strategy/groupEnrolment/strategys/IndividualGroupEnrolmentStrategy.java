@@ -5,7 +5,9 @@
 package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
 import Dominio.IGroupProperties;
+import Dominio.IStudentGroup;
 import Dominio.ITurno;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author asnr and scpo
@@ -32,13 +34,10 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
 				
 		}
 
-	}
 	
-//	public boolean enrolmentPolicyExistingGroup(
-//			IGroupProperties groupProperties,
-//			int numberOfStudentsToEnrole,
-//			IStudentGroup studentGroup,
-//			ITurno shift)
-//			throws ExcepcaoPersistencia{return true;}
+	public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+		return true;
+	}
+}
 
 

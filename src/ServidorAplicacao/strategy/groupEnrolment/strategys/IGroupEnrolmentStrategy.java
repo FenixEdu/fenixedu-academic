@@ -27,6 +27,5 @@ public interface IGroupEnrolmentStrategy {
 	public List checkShiftsType(IGroupProperties groupProperties,List shifts);
 	public boolean checkPossibleToEnrolInExistingGroup(IGroupProperties groupProperties,IStudentGroup studentGroup,ITurno shift)throws ExcepcaoPersistencia; 
 	public boolean enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift);
-	//public boolean enrolmentPolicyExistingGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift)throws ExcepcaoPersistencia;
 	public boolean checkAlreadyEnroled(IGroupProperties groupProperties, List usernames )throws ExcepcaoPersistencia;
 }

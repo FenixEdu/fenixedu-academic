@@ -4,7 +4,6 @@
  */
 package ServidorApresentacao.Action.student;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -24,7 +23,6 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoShift;
-import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoSiteShifts;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -57,7 +55,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent emptyShifts = null;
 		Object[] args1 = { groupPropertiesCode,userView.getUtilizador() };
-		System.out.println("PREPARE ENROLMENT ANTES DO SERVICO");
 		try {
 			emptyShifts =
 				(ISiteComponent) ServiceUtils.executeService(
@@ -68,7 +65,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		System.out.println("JA ESTOU ISNCRITO "+emptyShifts);
 		if(emptyShifts==null)
 		{
 			ActionErrors actionErrors = new ActionErrors();
@@ -87,19 +83,19 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		if (shifts.size() != 0) 
 		{
 			shiftsList.add(new LabelValueBean("(escolher)", ""));
-			InfoShiftWithAssociatedInfoClassesAndInfoLessons infoShift;
+			InfoShift infoShift;
 			Iterator iter = shifts.iterator();
 			String label, value;
 			while (iter.hasNext()) {
 				infoShift =
-					(InfoShiftWithAssociatedInfoClassesAndInfoLessons) iter
+					(InfoShift) iter
 						.next();
-				value = infoShift.getInfoShift().getIdInternal().toString();
-				label = infoShift.getInfoShift().getNome();
+				value = infoShift.getIdInternal().toString();
+				label = infoShift.getNome();
 				shiftsList.add(new LabelValueBean(label, value));
 			}
 		request.setAttribute("shiftsList", shiftsList);
-		System.out.println("SHIFT LIST SIZE"+shiftsList.size());
+		
 		}
 		//else
 		//TODO groupProperties sem turno 
@@ -132,7 +128,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			HttpServletResponse response)
 			throws FenixActionException {
 			
-				System.out.println("ENTRA NA ACCAO ENROLMENT");
+				
 			HttpSession session = request.getSession(false);
 			DynaActionForm enrolmentForm = (DynaActionForm) form;
 			
@@ -152,7 +148,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			
 			List studentCodes = new ArrayList();
 			studentCodes =Arrays.asList((Integer[]) enrolmentForm.get("studentsNotEnroled"));
-			System.out.println("STUDENT CODES-TAM"+studentCodes.size());
+			
 			
 			Object[] args = { groupPropertiesCode,shiftCode, studentCodes,userView.getUtilizador()};
 			Integer result;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
+import DataBeans.InfoShift;
 import DataBeans.InfoSiteShifts;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
@@ -59,7 +59,7 @@ public class ReadGroupPropertiesShifts implements IServico {
 		throws FenixServiceException {
 		
 		
-		List shiftsWithAssociatedClassesAndLessons = new ArrayList();
+		List infoShifts = new ArrayList();
 		IGroupProperties groupProperties = null;
 		InfoSiteShifts infoSiteShifts = null;
 		try {
@@ -88,11 +88,9 @@ public class ReadGroupPropertiesShifts implements IServico {
 
 					for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);
-					InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons =
-						new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
-							Cloner.copyShift2InfoShift(shift),
-							null,
-							null);
+					InfoShift infoShift =
+						new InfoShift(shift.getNome(),shift.getTipo(),shift.getLotacao(),Cloner.copyIExecutionCourse2InfoExecutionCourse(groupProperties.getExecutionCourse()));
+
 
 					List lessons =
 						sp.getITurnoAulaPersistente().readByShift(shift);
@@ -107,7 +105,7 @@ public class ReadGroupPropertiesShifts implements IServico {
 							Cloner.copyILesson2InfoLesson(
 								(IAula) lessons.get(j)));
 
-					shiftWithAssociatedClassesAndLessons.setInfoLessons(
+					infoShift.setInfoLessons(
 						infoLessons);
 
 					for (int j = 0; j < classesShifts.size(); j++)
@@ -116,15 +114,14 @@ public class ReadGroupPropertiesShifts implements IServico {
 								((ITurmaTurno) classesShifts.get(j))
 									.getTurma()));
 
-					shiftWithAssociatedClassesAndLessons.setInfoClasses(
-						infoClasses);
+					infoShift.setInfoClasses(infoClasses);
+					infoShift.setIdInternal(shift.getIdInternal());
 
-					shiftsWithAssociatedClassesAndLessons.add(
-						shiftWithAssociatedClassesAndLessons);
+					infoShifts.add(infoShift);
 				}
 			}
 			infoSiteShifts = new InfoSiteShifts();
-			infoSiteShifts.setShifts(shiftsWithAssociatedClassesAndLessons);
+			infoSiteShifts.setShifts(infoShifts);
 			infoSiteShifts.setInfoExecutionPeriodName(groupProperties.getExecutionCourse().getExecutionPeriod().getName());
 			infoSiteShifts.setInfoExecutionYearName(groupProperties.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 		

@@ -10,10 +10,8 @@ import java.util.List;
 
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
-
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -82,6 +80,7 @@ public class PrepareEditStudentGroupMembers  implements IServico {
 			
 			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			IStudentGroup studentGroup = (IStudentGroup)ps.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
+			
 			
 			frequentas = persistentAttend.readByExecutionCourse(executionCourse);
 			

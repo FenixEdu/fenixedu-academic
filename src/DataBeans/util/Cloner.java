@@ -101,9 +101,6 @@ public abstract class Cloner {
 	public static ITurno copyInfoShift2Shift(InfoShift infoShift) {
 		ITurno shift = new Turno();
 		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
-
-		System.out.println("executionCourse= " + executionCourse);
-
 		copyObjectProperties(shift, infoShift);
 
 		shift.setDisciplinaExecucao(executionCourse);
@@ -239,8 +236,6 @@ public abstract class Cloner {
 				return copyClass2InfoClass((ITurma) arg0);
 			}
 		});
-
-		System.out.println("infoLessonList.size= " + infoLessonList.size());
 
 		copyObjectProperties(infoShift, shift);
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);

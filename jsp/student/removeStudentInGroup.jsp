@@ -18,8 +18,8 @@
 
 	<html:form action="/removeGroupEnrolment" method="get">
 	<table width="50%" cellpadding="0" border="0">
-	<h2><bean:message key="title.StudentGroupInformation"/></h2>
-	
+	<h2><bean:message key="title.RemoveEnrolment"/></h2>
+	<h2><bean:message key="label.StudentGroup"/></h2>
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.numberWord" />
 		</td>
@@ -52,10 +52,12 @@
 			</logic:iterate>
 	 		
 	</table>
-	
-	<h2><bean:message key="title.RemoveEnrollment"/></h2>
 	<br>
-	
+	<br>
+	<bean:message key="label.confirmGroupStudentUnrolment"/>
+	<br>
+	<br>
+	<br>
 	<table>
 		<tr>
 			<td>

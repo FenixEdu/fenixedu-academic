@@ -12,7 +12,8 @@
 	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
 	</logic:empty>
 <h2><li><html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link></li></h2>
-  
+ 
+ <logic:notEmpty name="component" property="infoGroupPropertiesList"> 
 <table border="0" style="text-align: left;">
         <tbody>
     	 <tr>
@@ -40,7 +41,7 @@
             
             </tbody>
 </table>
-     
+</logic:notEmpty>     
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">

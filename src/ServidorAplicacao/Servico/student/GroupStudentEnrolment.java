@@ -60,7 +60,7 @@ public class GroupStudentEnrolment implements IServico {
 			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 			
 			IStudentGroup studentGroup =(IStudentGroup)persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode),false);
-			
+				
 			IStudent student = (IStudent) sp.getIPersistentStudent().readByUsername(username);
 			
 			IFrequenta attend = (IFrequenta)sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,studentGroup.getGroupProperties().getExecutionCourse());

@@ -93,7 +93,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 		} 
 		else
 		{	
-			System.out.println("NA ACCAO STUDENT ENROLMENT RESULT"+result);
+			
 			switch(result.intValue())
 			{	
 				case -1:	
@@ -112,6 +112,15 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 				error2 = new ActionError("errors.invalid.insert.groupStudentEnrolment");
 				actionErrors2.add("errors.invalid.insert.groupStudentEnrolment",error2);
 				saveErrors(request, actionErrors2);	
+				return mapping.findForward("viewProjectStudentGroups");	
+				
+				case -3:
+				ActionErrors actionErrors3 = new ActionErrors();
+				ActionError error3 = null;
+				// Create an ACTION_ERROR 
+				error3 = new ActionError("error.noGroup");
+				actionErrors3.add("error.noGroup",error3);
+				saveErrors(request, actionErrors3);	
 				return mapping.findForward("viewProjectStudentGroups");	
 					
 			}
