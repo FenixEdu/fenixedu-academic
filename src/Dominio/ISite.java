@@ -14,5 +14,7 @@ public interface ISite {
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
 	ISection getInitialSection();
 	public void setInitialSection(ISection section);
+	public String getAlternativeSite();
+	public void setAlternativeSite(String alternativeSite);
 
 }

@@ -17,6 +17,7 @@ public class InfoSite {
     //private List infoSections;
     private String initialSectionName;
     private InfoExecutionCourse infoExecutionCourse;
+    private String alternativeSite;
     //private List infoAnnouncements;
     
 	/** 
@@ -165,4 +166,19 @@ public class InfoSite {
 		return result;
 	}
 	
+	/**
+	 * @return String
+	 */
+	public String getAlternativeSite() {
+		return alternativeSite;
+	}
+
+	/**
+	 * Sets the alternativeSite.
+	 * @param alternativeSite The alternativeSite to set
+	 */
+	public void setAlternativeSite(String alternativeSite) {
+		this.alternativeSite = alternativeSite;
+	}
+
 }

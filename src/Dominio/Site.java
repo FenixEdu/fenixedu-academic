@@ -17,6 +17,7 @@ public class Site implements ISite {
 //	private List sections;
 	private ISection initialSection;
 	private Integer keyInitialSection;
+	private String alternativeSite;
 //	private List announcements;
 	
 	/** 
@@ -166,19 +167,34 @@ public class Site implements ISite {
 	public void setKeyInitialSection(Integer keyInitialSection) {
 		this.keyInitialSection = keyInitialSection;
 	}
+	
+	/**
+	 * @return String
+	 */
+	public String getAlternativeSite() {
+		return alternativeSite;
+	}
 
 	/**
-	 * @see java.lang.Object#toString()
+	 * Sets the alternativeSite.
+	 * @param alternativeSite The alternativeSite to set
 	 */
-	public String toString() {
-		String result = "[SITE";
-		result += ", codInt=" + getInternalCode();
-		result += ", executionCourse=" + getExecutionCourse();
-//		result += ", sections=" + getSections();
-		result += ", initialSection=" + getInitialSection();
-//		result += ", announcements=" + getAnnouncements();
-		result += "]";
-		return result;
+	public void setAlternativeSite(String alternativeSite) {
+		this.alternativeSite = alternativeSite;
 	}
+
+	/**
+		 * @see java.lang.Object#toString()
+		 */
+		public String toString() {
+			String result = "[SITE";
+			result += ", codInt=" + getInternalCode();
+			result += ", executionCourse=" + getExecutionCourse();
+//			result += ", sections=" + getSections();
+			result += ", initialSection=" + getInitialSection();
+//			result += ", announcements=" + getAnnouncements();
+			result += "]";
+			return result;
+		}
 
 }

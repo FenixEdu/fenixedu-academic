@@ -93,9 +93,10 @@ create table SECTION (
 #----------------------------
 drop table if exists SITE;
 create table SITE (
-   ID_INTERNAL int(11) unsigned not null auto_increment,
+   ID_INTERNAL int(11) unsigned not null auto_increment,   
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
    KEY_INITIAL_SECTION int(11),
+   ALTERNATIVE_SITE varchar(50),
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";

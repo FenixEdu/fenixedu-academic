@@ -5,16 +5,16 @@
 #
 #---------
 DELETE FROM SITE;
-INSERT INTO SITE VALUES (1, '24', 2);
-INSERT INTO SITE VALUES (2, '25', null);
-INSERT INTO SITE VALUES (3, '26', null);
-INSERT INTO SITE VALUES (4, '27', null);
-INSERT INTO SITE VALUES (5, '28', null);
-INSERT INTO SITE VALUES (6, '29', null);
-INSERT INTO SITE VALUES (7, '30', null);
-INSERT INTO SITE VALUES (8, '31', null);
-INSERT INTO SITE VALUES (9, '32', null);
-INSERT INTO SITE VALUES (10, '33', null);
+INSERT INTO SITE VALUES (1, '24', 2, 'http://www.ist.utl.pt');
+INSERT INTO SITE VALUES (2, '25', null, null);
+INSERT INTO SITE VALUES (3, '26', null, null);
+INSERT INTO SITE VALUES (4, '27', null, null);
+INSERT INTO SITE VALUES (5, '28', null, null);
+INSERT INTO SITE VALUES (6, '29', null, null);
+INSERT INTO SITE VALUES (7, '30', null, null);
+INSERT INTO SITE VALUES (8, '31', null, null);
+INSERT INTO SITE VALUES (9, '32', null, null);
+INSERT INTO SITE VALUES (10,'33', null, null);
 
 
 

@@ -23,6 +23,11 @@
          name="keyInitialSection"
          column="KEY_INITIAL_SECTION"
          jdbc-type="INTEGER"/>
+         
+    <field-descriptor id="4"
+         name="alternativeSite"
+         column="ALTERNATIVE_SITE"
+    	 jdbc-type="VARCHAR"/>
 	
     <reference-descriptor
          name="executionCourse"
