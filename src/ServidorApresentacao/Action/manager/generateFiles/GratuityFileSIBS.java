@@ -214,6 +214,10 @@ public class GratuityFileSIBS extends GratuityFile
 		}
 		stringBuffer.append(intPart);
 
+		if (decPart.length() > decDigits)
+		{
+			decPart = decPart.substring(0, decDigits);
+		}
 		stringBuffer.append(decPart);
 		for (int i = 0; i < decDigits - decPart.length(); i++)
 		{
