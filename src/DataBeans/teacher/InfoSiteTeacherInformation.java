@@ -4,8 +4,13 @@
  */
 package DataBeans.teacher;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExecutionPeriod;
@@ -24,7 +29,8 @@ public class InfoSiteTeacherInformation implements ISiteComponent
     private List infoTeachingCareers;
     private InfoServiceProviderRegime infoServiceProviderRegime;
     private List infoExternalActivities;
-    private List infoExecutionCourses;
+    private List infoLecturingExecutionCourses;
+    private List infoResponsibleExecutionCourses;
     private InfoWeeklyOcupation infoWeeklyOcupation;
     private InfoOrientation infoDegreeOrientation;
     private InfoOrientation infoMasterOrientation;
@@ -47,7 +53,85 @@ public class InfoSiteTeacherInformation implements ISiteComponent
 
     public Date getLastModificationDate()
     {
-        return infoServiceProviderRegime.getLastModificationDate();
+        List dates = new ArrayList();
+        dates.add(infoServiceProviderRegime.getLastModificationDate());
+        dates.add(infoWeeklyOcupation.getLastModificationDate());
+        dates.add(infoDegreeOrientation.getLastModificationDate());
+        dates.add(infoMasterOrientation.getLastModificationDate());
+        dates.add(infoPhdOrientation.getLastModificationDate());
+        dates.add(infoComunicationPublicationsNumber.getLastModificationDate());
+        dates.add(infoMagArticlePublicationsNumber.getLastModificationDate());
+        dates.add(infoAuthorBookPublicationsNumber.getLastModificationDate());
+        dates.add(infoEditBookPublicationsNumber.getLastModificationDate());
+        dates.add(infoArticleChapterPublicationsNumber.getLastModificationDate());
+        dates.addAll(CollectionUtils.collect(infoProfessionalCareers, new Transformer()
+        {
+            public Object transform(Object arg0)
+            {
+                InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer) arg0;
+                return infoProfessionalCareer.getLastModificationDate();
+            }
+        }));
+        dates.addAll(CollectionUtils.collect(infoTeachingCareers, new Transformer()
+        {
+            public Object transform(Object arg0)
+            {
+                InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) arg0;
+                return infoTeachingCareer.getLastModificationDate();
+            }
+        }));
+        dates.addAll(CollectionUtils.collect(infoExternalActivities, new Transformer()
+        {
+            public Object transform(Object arg0)
+            {
+                InfoExternalActivity infoExternalActivity = (InfoExternalActivity) arg0;
+                return infoExternalActivity.getLastModificationDate();
+            }
+        }));
+        dates.addAll(CollectionUtils.collect(infoOldCientificPublications, new Transformer()
+        {
+            public Object transform(Object arg0)
+            {
+                InfoOldPublication infoOldPublication = (InfoOldPublication) arg0;
+                return infoOldPublication.getLastModificationDate();
+            }
+        }));
+        dates.addAll(CollectionUtils.collect(infoOldDidacticPublications, new Transformer()
+        {
+            public Object transform(Object arg0)
+            {
+                InfoOldPublication infoOldPublication = (InfoOldPublication) arg0;
+                return infoOldPublication.getLastModificationDate();
+            }
+        }));
+        return getMostRecentDate(dates);
+    }
+
+    /**
+	 * @param dates
+	 * @return
+	 */
+    private Date getMostRecentDate(List dates)
+    {
+        Date maxDate = new Date(Long.MAX_VALUE);
+        Date minDate = maxDate;
+        Iterator iter = dates.iterator();
+        while (iter.hasNext())
+        {
+            Date date = (Date) iter.next();
+
+            if (date == null)
+                continue;
+
+            if (date.getTime() < minDate.getTime())
+                minDate = date;
+        }
+
+        // if the minDate is equal to maxDate then the information wasn't filled
+        if (minDate == maxDate)
+            minDate = null;
+
+        return minDate;
     }
 
     /**
@@ -59,29 +143,46 @@ public class InfoSiteTeacherInformation implements ISiteComponent
     }
 
     /**
+	 * @return Returns the infoLecturingExecutionCourses.
+	 */
+    public List getInfoLecturingExecutionCourses()
+    {
+        return infoLecturingExecutionCourses;
+    }
+
+    /**
+	 * @param infoLecturingExecutionCourses
+	 *            The infoLecturingExecutionCourses to set.
+	 */
+    public void setInfoLecturingExecutionCourses(List infoLecturingExecutionCourses)
+    {
+        this.infoLecturingExecutionCourses = infoLecturingExecutionCourses;
+    }
+
+    /**
+	 * @return Returns the infoResponsibleExecutionCourses.
+	 */
+    public List getInfoResponsibleExecutionCourses()
+    {
+        return infoResponsibleExecutionCourses;
+    }
+
+    /**
+	 * @param infoResponsibleExecutionCourses
+	 *            The infoResponsibleExecutionCourses to set.
+	 */
+    public void setInfoResponsibleExecutionCourses(List infoResponsibleExecutionCourses)
+    {
+        this.infoResponsibleExecutionCourses = infoResponsibleExecutionCourses;
+    }
+
+    /**
 	 * @param infoExternalActivities
 	 *            The infoExternalActivities to set.
 	 */
     public void setInfoExternalActivities(List infoExternalActivities)
     {
         this.infoExternalActivities = infoExternalActivities;
-    }
-
-    /**
-	 * @return Returns the infoExecutionCourses.
-	 */
-    public List getInfoExecutionCourses()
-    {
-        return infoExecutionCourses;
-    }
-
-    /**
-	 * @param infoExecutionCourses
-	 *            The infoExecutionCourses to set.
-	 */
-    public void setInfoExecutionCourses(List infoExecutionCourses)
-    {
-        this.infoExecutionCourses = infoExecutionCourses;
     }
 
     /**
@@ -357,16 +458,17 @@ public class InfoSiteTeacherInformation implements ISiteComponent
     }
 
     /**
-     * @return Returns the infoExecutionPeriod.
-     */
+	 * @return Returns the infoExecutionPeriod.
+	 */
     public InfoExecutionPeriod getInfoExecutionPeriod()
     {
         return infoExecutionPeriod;
     }
 
     /**
-     * @param infoExecutionPeriod The infoExecutionPeriod to set.
-     */
+	 * @param infoExecutionPeriod
+	 *            The infoExecutionPeriod to set.
+	 */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
     {
         this.infoExecutionPeriod = infoExecutionPeriod;
