@@ -3,10 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
-
 <logic:present name="equivalency" >
 <bean:define id="equivalency" type="DataBeans.Seminaries.InfoEquivalency" scope="request" name="equivalency"/>
-
 <h2><bean:message key="label.candidacyFormTitle"/></h2>	
 <html:form action="submitCandidacyFirstInfo.do" method="post">
 <table width="90%" align="center">
@@ -44,12 +42,7 @@
 		</td>
 	</tr>
 </table>
-
-
 </html:form>
-
-
-
 </logic:present>
 <br/>
 <br/>

@@ -16,86 +16,54 @@
 			<logic:present name="curricularCourse">
 					<logic:present name="motivation">
 				<h2><bean:message key="label.viewCandidacyTitle"/></h2>
-
 				<h3><bean:message key="label.seminaries.showCandidacy.Student"/></h3>	
-				<table>
+				<table width="90%" class="infotable">
 					<tr>
-						<td>
-							<b><bean:message key="label.seminaries.showCandidacy.Student.Number"/></b>
-						</td>
-						<td>
-							<bean:write name="student" property="number"/>
-						</td>
+						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.Student.Number"/>:</strong></td>
+						<td><bean:write name="student" property="number"/></td>
+					</tr>
 					<tr>
-					<tr>
-						<td>
-							<b><bean:message key="label.seminaries.showCandidacy.Student.Name"/></b>
-						</td>
-						<td>
-							<bean:write name="student" property="infoPerson.nome"/>
-						</td>
+						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.Student.Name"/>:</strong></td>
+						<td><bean:write name="student" property="infoPerson.nome"/></td>
 					</tr>
 				</table>
 				<h3><bean:message key="label.seminaries.showCandidacy.CurricularCourse"/></h3>
-				<table>
+				<table width="90%" class="infotable">
 					<tr>
-						<td>
-							<b><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Name"/></b>
-						</td>
-						<td>
-							<bean:write name="curricularCourse" property="name"/>
-						</td>
+						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Name"/>:</Strong></td>
+						<td><bean:write name="curricularCourse" property="name"/></td>
 					</tr>
 					<tr>
-						<td>
-							<b><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Code"/></b>
-						</td>
-						<td>
-							<bean:write name="curricularCourse" property="code"/>
-						</td>
+						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Code"/>:</strong></td>
+						<td><bean:write name="curricularCourse" property="code"/></td>
 					</tr>
 				</table>
 				<h3><bean:message key="label.seminaries.showCandidacy.Candidacy"/></h3>
-				<table>
+				<table width="90%"class="infotable">
 					<logic:present name="theme">
 						<logic:notEmpty name="theme">
 							<tr>
-								<td width="0%">
-									<b><bean:message key="label.seminaries.showCandidacy.Theme"/></b>
-								</td>
-								<td>
-									<bean:write name="theme" property="name"/>
-								</td>
+								<td><strong><bean:message key="label.seminaries.showCandidacy.Theme"/>:</strong></td>
+								<td><bean:write name="theme" property="name"/></td>
 							</tr>
 						</logic:notEmpty>
 					</logic:present>
 					<tr>
-						<td width="0%">
-							<b><bean:message key="label.seminaries.showCandidacy.Modality"/></b>
-						</td>
-						<td>
-							<bean:write name="modality" property="name"/>
-						</td>
+						<td><strong><bean:message key="label.seminaries.showCandidacy.Modality"/>:</strong></td>
+						<td><bean:write name="modality" property="name"/></td>
 					</tr>
 					<tr>
-						<td>
-							<b><bean:message key="label.seminaries.showCandidacy.Motivation"/></b>
-						</td>
-						<td>
-							<bean:write name="motivation"/>
-						</td>
+						<td><strong><bean:message key="label.seminaries.showCandidacy.Motivation"/>:</strong></td>
+						<td><bean:write name="motivation"/></td>
 					</tr>
 					<logic:iterate indexId="index" type="DataBeans.Seminaries.InfoCaseStudy" name="cases" id="caseStudy">
 					<tr>
-						<td>
-							<b><bean:message key="label.seminaries.showCandidacy.Case"/> <%=index.intValue()+1 %></b>
-						</td>
-						<td>
-							<bean:write name="caseStudy" property="code"/> - <bean:write name="caseStudy" property="name"/>
-						</td>
+						<td><strong><bean:message key="label.seminaries.showCandidacy.Case"/> <%=index.intValue()+1 %></strong></td>
+						<td><bean:write name="caseStudy" property="code"/> - <bean:write name="caseStudy" property="name"/></td>
 					</tr>
 					</logic:iterate>
 				</table>
+				<br />
 				<html:link page="/listAllSeminaries.do"><bean:message key="label.seminaries.showCandidacy.Back"/></html:link>
 					</logic:present>
 				</logic:present>

@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
-
 <logic:present name="equivalency" >
 	<logic:present name="selectedCases" >
 		<logic:present name="unselectedCases" >
@@ -13,9 +12,8 @@
 				<bean:define id="unselectedCases" type="java.util.List" scope="request" name="unselectedCases"/>
 				<bean:define id="hiddenSelectedCases" type="java.util.List" scope="request" name="hiddenSelectedCases"/>
 				<bean:size id="selectedCasesSize" scope="request" name="selectedCases"/>
-
 				<h2><bean:message key="label.candidacyFormTitle"/></h2>
-				<h2><bean:message key="message.seminaries.selectCaseStudy"/></h2>
+				<h2 class="redtxt">Informação:</h2><p><bean:message key="message.seminaries.selectCaseStudy"/></p>
 				<html:form action="manageCaseStudyChoices.do" method="post">
 				<table width="100%" align="center" border="0">
 					<tr>

@@ -9,6 +9,8 @@
 </logic:empty>
 <logic:notEmpty name="listSeminaries" >
 	<span class="error"><html:errors /></span>
+	<h2 class="redtxt">Informações de utilização:</h2>
+	<p>Existem várias modalidades de inscrição. Para mais informações consultar regulamento do seminário.</p>
 	<h2><bean:message key="label.seminariesToEnroll"/></h2>
 	<table width="90%" align="center">
 	<tr>
@@ -30,8 +32,6 @@
 	</logic:iterate>
 	</table>
 </logic:notEmpty>
-
-
 <logic:notEmpty name="currentCandidacies" >
 	<h2><bean:message key="label.currentCandidacies"/></h2>
 	<bean:define id="currentCandidacies" type="java.util.List" scope="request" name="currentCandidacies"/>
