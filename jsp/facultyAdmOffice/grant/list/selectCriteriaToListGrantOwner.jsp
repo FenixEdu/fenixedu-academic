@@ -24,7 +24,7 @@
 	<table>
 		<tr>
 			<td colspan="2">
-				<table border="1">
+				<table>
 					<tr>
 						<td>
 							<bean:message key="label.list.byCriteria.grant.owner.radio.all"/>:&nbsp;
