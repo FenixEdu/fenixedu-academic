@@ -467,7 +467,7 @@
 		</java>
 	</target>
 	
-	<target name="migrate-all-ileec-data" depends="compile-proj, load-ileec-data, update-LEEC-degree-curricular-plan-for-enrollement, migrate-ileec-scientific-areas, associate-ileecCourses-toScientificAreas, migrate-IleecGroups-Data, migrate-precedence-by-number-curricular-courses, migrate-precedence-by-curricular-courses">
+	<target name="migrate-all-ileec-data" depends="compile-proj, load-ileec-data, migrate-ileec-scientific-areas, associate-ileecCourses-toScientificAreas, migrate-IleecGroups-Data, migrate-precedence-by-number-curricular-courses, migrate-precedence-by-curricular-courses">
 	</target>
 
 	<!-- ********************************************************************* -->

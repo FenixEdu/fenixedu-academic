@@ -1,10 +1,12 @@
 package middleware.studentMigration.equivalences;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourse;
@@ -14,10 +16,11 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -44,29 +47,30 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 
 		try {
 			ISuportePersistente fenixPersistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentStudent persistentStudent = fenixPersistentSuport.getIPersistentStudent();
-
-			fenixPersistentSuport.iniciarTransaccao();
-	
-			Integer numberOfStudents = persistentStudent.countAll();
-			
-			fenixPersistentSuport.confirmarTransaccao();
-	
-			System.out.println("[INFO] Total number of student curriculums to update [" + numberOfStudents + "].");
-
-			int numberOfElementsInSpan = 100;
-			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
-			numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
-			
-			for (int span = 0; span < numberOfSpans; span++) {
+//			IPersistentStudent persistentStudent = fenixPersistentSuport.getIPersistentStudent();
+//
+//			fenixPersistentSuport.iniciarTransaccao();
+//	
+//			Integer numberOfStudents = persistentStudent.countAll();
+//			
+//			fenixPersistentSuport.confirmarTransaccao();
+//	
+//			System.out.println("[INFO] Total number of student curriculums to update [" + numberOfStudents + "].");
+//
+//			int numberOfElementsInSpan = 100;
+//			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
+//			numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
+//			
+//			for (int span = 0; span < numberOfSpans; span++) {
 
 				fenixPersistentSuport.iniciarTransaccao();
 
 				System.gc();
 
 				System.out.println("[INFO] Reading Students...");
-				List result = persistentStudent.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-	
+//				List result = persistentStudent.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
+				List result = MakeEquivalencesForAllStudentsPastEnrolments.getStudents(new Integer("48"), fenixPersistentSuport);
+
 				fenixPersistentSuport.confirmarTransaccao();
 		
 				System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
@@ -89,7 +93,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 					MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.clear();
 					MakeEquivalencesForAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
 				}
-			}
+//			}
 		} catch (Throwable e) {
 			System.out.println("[ERROR 301] Exception giving equivalences for student [" + student.getNumber() + "] enrolments!");
 			e.printStackTrace(System.out);
@@ -132,14 +136,12 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 					+ "]!");
 			return;
 		}
-		if (currentStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal().equals(Integer.valueOf("48")))
-		{
-			MakeEquivalencesForAllStudentsPastEnrolments.writeAndUpdateEnrolments(
-				student,
-				pastStudentCurricularPlan,
-				currentStudentCurricularPlan,
-				fenixPersistentSuport);
-		}
+
+		MakeEquivalencesForAllStudentsPastEnrolments.writeAndUpdateEnrolments(
+			student,
+			pastStudentCurricularPlan,
+			currentStudentCurricularPlan,
+			fenixPersistentSuport);
 	}
 
 	/**
@@ -461,5 +463,38 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			endIndex = numberOfElementsInSpan - 1;
 		}
 		System.out.println("[INFO] Indexes from [" + startIndex + "] to [" + endIndex + "].");
+	}
+
+	/**
+	 * @param degreeCurricularPlanID
+	 * @param persistentSuport
+	 * @return List of students
+	 * @throws ExcepcaoPersistencia
+	 */
+	private static List getStudents(Integer degreeCurricularPlanID, ISuportePersistente persistentSuport) throws ExcepcaoPersistencia
+	{
+		IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
+		IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport.getIPersistentDegreeCurricularPlan();
+
+		IDegreeCurricularPlan degreeCurricularPlan =
+			(IDegreeCurricularPlan) degreeCurricularPlanDAO.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+
+		List result1 =
+			studentCurricularPlanDAO.readAllByDegreeCurricularPlanAndState(
+				degreeCurricularPlan,
+				StudentCurricularPlanState.ACTIVE_OBJ);
+		
+		List result2 = new ArrayList();
+		Iterator iterator = result1.iterator();
+		while (iterator.hasNext())
+		{
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+			if (!result2.contains(studentCurricularPlan.getStudent()))
+			{
+				result2.add(studentCurricularPlan.getStudent());
+			}
+		}
+		
+		return result2;
 	}
 }
