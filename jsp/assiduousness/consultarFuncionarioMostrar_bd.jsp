@@ -25,9 +25,8 @@
             	<td><bean:message key="prompt.consultar"/>:
             	    <html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
                    	<app:options name="ConsultarFuncionarioMostrarForm" property="listaEscolhas"/>
-                   	</html:select> 
-                   	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   	<bean:message key="prompt.data" />:
+                   	</html:select>
+                   	<bean:message key="prompt.de" />
                   	<html:text name="ConsultarFuncionarioMostrarForm" property="diaInicioEscolha" size="2" maxlength="2"/> / 
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="mesInicioEscolha" size="2" maxlength="2"/> / 
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="anoInicioEscolha" size="4" maxlength="4"/>
@@ -205,9 +204,9 @@
                     <bean:message key="prompt.regime"/>:
                 </td>
                 <td class="greytxt">
-              <%--      <logic:iterate id="listaRegime" name="horario" property="listaRegimes">
+                   <logic:iterate id="listaRegime" name="horario" property="listaRegimes">
                       <bean:message name="listaRegime"/>&nbsp;
-                    </logic:iterate> --%>
+                   </logic:iterate>
                 </td>     
               </tr>
               <tr>
