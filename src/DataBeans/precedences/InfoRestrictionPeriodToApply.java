@@ -41,6 +41,6 @@ public class InfoRestrictionPeriodToApply extends InfoRestriction {
     }
 
     public String getArg() {
-        return periodToApplyRestriction.getPeriod().toString();
+        return periodToApplyRestriction.toString();
     }
 }

@@ -305,7 +305,7 @@ public class VerifyLEECCurricularPlan
 						{
 							RestrictionPeriodToApply actualRestriction = (RestrictionPeriodToApply) restriction;
 							System.out.print("\t\t");
-							System.out.println("no " + actualRestriction.getPeriodToApplyRestriction().getPeriod() + "º semestre");
+							System.out.println("no " + actualRestriction.getPeriodToApplyRestriction().getValue() + "º semestre");
 						} else
 						{
 							throw new RuntimeException("RESTRIÇÃO DESCONHECIDA!");

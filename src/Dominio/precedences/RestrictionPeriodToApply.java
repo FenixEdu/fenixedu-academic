@@ -58,7 +58,7 @@ public class RestrictionPeriodToApply extends Restriction implements IRestrictio
 
 		if (this.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.BOTH_SEMESTERS)) {
             isValid = true;
-        } else if (executionPeriod.getSemester().equals(this.getPeriodToApplyRestriction().getPeriod())) {
+        } else if (executionPeriod.getSemester().equals(new Integer(this.getPeriodToApplyRestriction().getValue()))) {
             isValid = true;
         }
 

@@ -78,7 +78,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                     RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1))) {
                 IRestrictionPeriodToApply restrictionPeriodToApply = new RestrictionPeriodToApply();
                 restrictionPeriodToApply.setPrecedence(precedence);
-                restrictionPeriodToApply.setPeriodToApplyRestriction(new PeriodToApplyRestriction(number.intValue()));
+                //restrictionPeriodToApply.setPeriodToApplyRestriction(new PeriodToApplyRestriction(number.intValue()));
                              
                 
                 persistentRestriction.lockWrite(restrictionPeriodToApply);
