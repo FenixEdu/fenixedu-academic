@@ -95,8 +95,10 @@ public class LerAulasDeTurma implements IServico
                     IAula elem = (IAula) lessonIterator.next();
                     InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
 
-                    infoLesson.getInfoShiftList().add(infoShift);
-                    infoLessonList.add(infoLesson);
+                    if (infoLesson != null) {
+                    	infoLesson.getInfoShiftList().add(infoShift);
+                    	infoLessonList.add(infoLesson);
+                    }
 
                 }
             }
