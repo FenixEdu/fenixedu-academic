@@ -4,6 +4,7 @@ Release 2004-05-26
  
 NEW FEATURES:
 =============
+- [feature request #225] - coordinator portal - added extra information on execution courses page
 - Added the general class properties concept. For more information related to this,
   see file docs/txt/general-class-properties-doc.txt.
 - Added new feature in Degree Administrative Office portal: Change student areas.

@@ -20,6 +20,7 @@ import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.gesdis.InfoSiteEvaluationStatistics;
 import DataBeans.util.Cloner;
 import Dominio.CurricularYear;
 import Dominio.CursoExecucao;
@@ -27,259 +28,367 @@ import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
+import Dominio.IEnrolment;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
+import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.gesdis.IPersistentCourseReport;
+import Util.EnrolmentState;
 import Util.NumberUtils;
 import Util.TipoAula;
 
-public class SearchExecutionCourses implements IServico
-{
+public class SearchExecutionCourses implements IServico {
 
-	private static SearchExecutionCourses _servico = new SearchExecutionCourses();
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static SearchExecutionCourses getService()
-	{
-		return _servico;
-	}
+    private static SearchExecutionCourses _servico = new SearchExecutionCourses();
 
-	/**
-	 * The actor of this class.
-	 */
-	private SearchExecutionCourses()
-	{
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static SearchExecutionCourses getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 */
-	public final String getNome()
-	{
-		return "SearchExecutionCourses";
-	}
+    /**
+     * The actor of this class.
+     */
+    private SearchExecutionCourses() {
+    }
 
-	public List run(
-		InfoExecutionPeriod infoExecutionPeriod,
-		InfoExecutionDegree infoExecutionDegree,
-		InfoCurricularYear infoCurricularYear,
-		String executionCourseName)
-		throws FenixServiceException
-	{
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "SearchExecutionCourses";
+    }
 
-		List result = null;
+    public List run(InfoExecutionPeriod infoExecutionPeriod,
+            InfoExecutionDegree infoExecutionDegree,
+            InfoCurricularYear infoCurricularYear, String executionCourseName)
+            throws FenixServiceException {
 
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        List result = null;
 
-			final IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(
-					ExecutionPeriod.class,
-					infoExecutionPeriod.getIdInternal());
-			ICursoExecucao executionDegree = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			if (infoExecutionDegree != null)
-			{
-				executionDegree =
-					(ICursoExecucao) sp.getICursoExecucaoPersistente().readByOID(
-						CursoExecucao.class,
-						infoExecutionDegree.getIdInternal());
-			}
+            final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp
+                    .getIPersistentExecutionPeriod().readByOID(
+                            ExecutionPeriod.class,
+                            infoExecutionPeriod.getIdInternal());
+            ICursoExecucao executionDegree = null;
 
-			ICurricularYear curricularYear = null;
-			if (infoCurricularYear != null)
-			{
-				curricularYear =
-					(ICurricularYear) sp.getIPersistentCurricularYear().readByOID(
-						CurricularYear.class,
-						infoCurricularYear.getIdInternal());
-			}
+            if (infoExecutionDegree != null) {
+                executionDegree = (ICursoExecucao) sp
+                        .getICursoExecucaoPersistente().readByOID(
+                                CursoExecucao.class,
+                                infoExecutionDegree.getIdInternal());
+            }
 
-			List executionCourses =
-				sp
-					.getIPersistentExecutionCourse()
-					.readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
-					executionPeriod,
-					executionDegree,
-					curricularYear,
-					executionCourseName);
+            ICurricularYear curricularYear = null;
+            if (infoCurricularYear != null) {
+                curricularYear = (ICurricularYear) sp
+                        .getIPersistentCurricularYear().readByOID(
+                                CurricularYear.class,
+                                infoCurricularYear.getIdInternal());
+            }
 
-			result = (List) CollectionUtils.collect(executionCourses, new Transformer()
-			{
-				public Object transform(Object arg0)
-				{
-					InfoExecutionCourse infoExecutionCourse = null;
-					try
-					{
+            List executionCourses = sp
+                    .getIPersistentExecutionCourse()
+                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
+                            executionPeriod, executionDegree, curricularYear,
+                            executionCourseName);
 
-						// Get the occupancy Levels
-						infoExecutionCourse = getOccupancyLevels(arg0);
+            result = (List) CollectionUtils.collect(executionCourses,
+                    new Transformer() {
 
-						// Check if the curricular Loads are all the same
+                        public Object transform(Object arg0) {
+                            InfoExecutionCourse infoExecutionCourse = null;
+                            try {
 
-						checkEqualLoads(arg0, infoExecutionCourse, executionPeriod);
+                                // Get the occupancy Levels
+                                infoExecutionCourse = getOccupancyLevels(arg0);
 
-					}
-					catch (ExcepcaoPersistencia e)
-					{
+                                // Check if the curricular Loads are all the
+                                // same
 
-						System.out.println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                                checkEqualLoads(arg0, infoExecutionCourse,
+                                        executionPeriod);
 
-					}
-					return infoExecutionCourse;
-				}
+                                // fill infomation regarding to teacher report
 
-				private void checkEqualLoads(
-					Object arg0,
-					InfoExecutionCourse infoExecutionCourse,
-					IExecutionPeriod executionPeriod)
-				{
-					IExecutionCourse executionCourse = (IExecutionCourse) arg0;
-					infoExecutionCourse.setEqualLoad(Boolean.TRUE.toString());
+                                getTeacherReportInformation(infoExecutionCourse, arg0);
 
-					Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
-					while (iterator.hasNext())
-					{
-						ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+                            } catch (ExcepcaoPersistencia e) {
 
-						if ((!executionCourse
-							.getTheoPratHours()
-							.equals(curricularCourse.getTheoPratHours()))
-							|| (!executionCourse
-								.getTheoreticalHours()
-								.equals(curricularCourse.getTheoreticalHours()))
-							|| (!executionCourse
-								.getPraticalHours()
-								.equals(curricularCourse.getPraticalHours()))
-							|| (!executionCourse.getLabHours().equals(curricularCourse.getLabHours())))
-						{
-							infoExecutionCourse.setEqualLoad(Boolean.FALSE.toString());
-							break;
-						}
-					}
-				}
+                                System.out
+                                        .println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-				private InfoExecutionCourse getOccupancyLevels(Object arg0) throws ExcepcaoPersistencia
-				{
-					InfoExecutionCourse infoExecutionCourse;
-					// Get the associated Shifs
-					ISuportePersistente spTemp = SuportePersistenteOJB.getInstance();
-					IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                            }
+                            return infoExecutionCourse;
+                        }
 
-					// FIXME: Find a better way to get the total capacity for each type of Shift
-					Integer theoreticalCapacity = new Integer(0);
-					Integer theoPraticalCapacity = new Integer(0);
-					Integer praticalCapacity = new Integer(0);
-					Integer labCapacity = new Integer(0);
-					Integer doubtsCapacity = new Integer(0);
-					Integer reserveCapacity = new Integer(0);
+                        private void getTeacherReportInformation(
+                                InfoExecutionCourse infoExecutionCourse, Object arg0)
+                                throws ExcepcaoPersistencia {
 
-					List shifts = spTemp.getITurnoPersistente().readByExecutionCourse(executionCourse);
-					Iterator iterator = shifts.iterator();
-					while (iterator.hasNext())
-					{
-						ITurno shift = (ITurno) iterator.next();
+                            IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                            
+                            if (executionCourse.getAssociatedCurricularCourses() != null) {
+                                ISuportePersistente sp = SuportePersistenteOJB
+                                        .getInstance();
 
-						if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA)))
-						{
-							theoreticalCapacity =
-								new Integer(
-									theoreticalCapacity.intValue() + shift.getLotacao().intValue());
-						}
-						else if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA)))
-						{
-							theoPraticalCapacity =
-								new Integer(
-									theoPraticalCapacity.intValue() + shift.getLotacao().intValue());
-						}
-						else if (shift.getTipo().equals(new TipoAula(TipoAula.DUVIDAS)))
-						{
-							doubtsCapacity =
-								new Integer(doubtsCapacity.intValue() + shift.getLotacao().intValue());
-						}
-						else if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL)))
-						{
-							labCapacity =
-								new Integer(labCapacity.intValue() + shift.getLotacao().intValue());
-						}
-						else if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA)))
-						{
-							praticalCapacity =
-								new Integer(praticalCapacity.intValue() + shift.getLotacao().intValue());
-						}
-						else if (shift.getTipo().equals(new TipoAula(TipoAula.RESERVA)))
-						{
-							reserveCapacity =
-								new Integer(reserveCapacity.intValue() + shift.getLotacao().intValue());
-						}
+                                InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
+                                int enrolledInCurricularCourse = 0;
+                                int evaluated = 0;
+                                int approved = 0;
+                                Iterator iter = executionCourse.getAssociatedCurricularCourses()
+                                        .iterator();
+                                while (iter.hasNext()) {
+                                    ICurricularCourse curricularCourse = (ICurricularCourse) iter
+                                            .next();
 
-					}
-					infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-					List capacities = new ArrayList();
+                                    List enrolled = getEnrolled(
+                                            executionCourse.getExecutionPeriod(),
+                                            curricularCourse, sp);
+                                    if(enrolled != null) {
+	                                    enrolledInCurricularCourse += enrolled
+	                                            .size();
+	                                    evaluated += getEvaluated(enrolled)
+	                                            .intValue();
+	                                    approved += getApproved(enrolled)
+	                                            .intValue();
+	                                }
+                                }
+                                infoSiteEvaluationStatistics
+                                        .setEnrolled(new Integer(
+                                                enrolledInCurricularCourse));
+                                infoSiteEvaluationStatistics
+                                        .setEvaluated(new Integer(evaluated));
+                                infoSiteEvaluationStatistics
+                                        .setApproved(new Integer(approved));
 
-					if (theoreticalCapacity.intValue() != 0)
-					{
-						capacities.add(theoreticalCapacity);
-					}
-					if (theoPraticalCapacity.intValue() != 0)
-					{
-						capacities.add(theoPraticalCapacity);
-					}
-					if (doubtsCapacity.intValue() != 0)
-					{
-						capacities.add(doubtsCapacity);
-					}
-					if (labCapacity.intValue() != 0)
-					{
-						capacities.add(labCapacity);
-					}
-					if (praticalCapacity.intValue() != 0)
-					{
-						capacities.add(praticalCapacity);
-					}
-					if (reserveCapacity.intValue() != 0)
-					{
-						capacities.add(reserveCapacity);
-					}
+                                infoExecutionCourse
+                                        .setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
+                                
+                                IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
+                                ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(executionCourse);
+                                if(courseReport != null) {
+                                    infoExecutionCourse.setCourseReportFilled(courseReport.getReport()!=null?new String("true"):new String("false"));
+                                }
+                            }
+                        }
 
-					int total = 0;
+                        /**
+                         * @param curricularCourses
+                         * @param sp
+                         * @return
+                         */
+                        private Integer getApproved(List enrolments)
+                                throws ExcepcaoPersistencia {
+                            int approved = 0;
+                            Iterator iter = enrolments.iterator();
+                            while (iter.hasNext()) {
+                                IEnrolment enrolment = (IEnrolment) iter.next();
+                                EnrolmentState enrolmentState = enrolment
+                                        .getEnrolmentState();
+                                if (enrolmentState
+                                        .equals(EnrolmentState.APROVED)) {
+                                    approved++;
+                                }
+                            }
+                            return new Integer(approved);
+                        }
 
-					if (!capacities.isEmpty())
-					{
-						total = ((Integer) Collections.min(capacities)).intValue();
-					}
+                        private Integer getEvaluated(List enrolments)
+                                throws ExcepcaoPersistencia {
+                            int evaluated = 0;
+                            Iterator iter = enrolments.iterator();
+                            while (iter.hasNext()) {
+                                IEnrolment enrolment = (IEnrolment) iter.next();
+                                EnrolmentState enrolmentState = enrolment
+                                        .getEnrolmentState();
+                                if (enrolmentState
+                                        .equals(EnrolmentState.APROVED)
+                                        || enrolmentState
+                                                .equals(EnrolmentState.NOT_APROVED)) {
+                                    evaluated++;
+                                }
+                            }
+                            return new Integer(evaluated);
+                        }
 
-					if (total == 0)
-					{
-						infoExecutionCourse.setOccupancy(new Double(-1));
-					}
-					else
-					{
-						infoExecutionCourse.setOccupancy(
-							NumberUtils.formatNumber(
-								new Double(
-									(new Double(executionCourse.getAttendingStudents().size())
-										.floatValue()
-										* 100
-										/ total)),
-								1));
-					}
-					return infoExecutionCourse;
-				}
-			});
-		}
-		catch (ExcepcaoPersistencia ex)
-		{
-			throw new FenixServiceException(ex.getMessage());
-		}
-		return result;
-	}
+                        private List getEnrolled(
+                                IExecutionPeriod executionPeriod,
+                                ICurricularCourse curricularCourse,
+                                ISuportePersistente sp)
+                                throws ExcepcaoPersistencia {
+                            IPersistentEnrolment persistentEnrolment = sp
+                                    .getIPersistentEnrolment();
+                            List enrolments = persistentEnrolment
+                                    .readByCurricularCourseAndExecutionPeriod(
+                                            curricularCourse, executionPeriod);
+                            return enrolments;
+                        }
 
+                        private void checkEqualLoads(Object arg0,
+                                InfoExecutionCourse infoExecutionCourse,
+                                IExecutionPeriod executionPeriod) {
+                            IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                            infoExecutionCourse.setEqualLoad(Boolean.TRUE
+                                    .toString());
+                            
+                            Iterator iterator = executionCourse
+                                    .getAssociatedCurricularCourses()
+                                    .iterator();
+                            while (iterator.hasNext()) {
+                                ICurricularCourse curricularCourse = (ICurricularCourse) iterator
+                                        .next();
+
+                                if ((!executionCourse.getTheoPratHours()
+                                        .equals(
+                                                curricularCourse
+                                                        .getTheoPratHours()))
+                                        || (!executionCourse
+                                                .getTheoreticalHours()
+                                                .equals(
+                                                        curricularCourse
+                                                                .getTheoreticalHours()))
+                                        || (!executionCourse
+                                                .getPraticalHours()
+                                                .equals(
+                                                        curricularCourse
+                                                                .getPraticalHours()))
+                                        || (!executionCourse.getLabHours()
+                                                .equals(
+                                                        curricularCourse
+                                                                .getLabHours()))) {
+                                    infoExecutionCourse
+                                            .setEqualLoad(Boolean.FALSE
+                                                    .toString());
+                                    break;
+                                }
+                            }
+                        }
+
+                        private InfoExecutionCourse getOccupancyLevels(
+                                Object arg0) throws ExcepcaoPersistencia {
+                            InfoExecutionCourse infoExecutionCourse;
+                            // Get the associated Shifs
+                            ISuportePersistente spTemp = SuportePersistenteOJB
+                                    .getInstance();
+                            IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+
+                            // FIXME: Find a better way to get the total
+                            // capacity for
+                            // each type of Shift
+                            Integer theoreticalCapacity = new Integer(0);
+                            Integer theoPraticalCapacity = new Integer(0);
+                            Integer praticalCapacity = new Integer(0);
+                            Integer labCapacity = new Integer(0);
+                            Integer doubtsCapacity = new Integer(0);
+                            Integer reserveCapacity = new Integer(0);
+
+                            List shifts = spTemp.getITurnoPersistente()
+                                    .readByExecutionCourse(executionCourse);
+                            Iterator iterator = shifts.iterator();
+                            while (iterator.hasNext()) {
+                                ITurno shift = (ITurno) iterator.next();
+
+                                if (shift.getTipo().equals(
+                                        new TipoAula(TipoAula.TEORICA))) {
+                                    theoreticalCapacity = new Integer(
+                                            theoreticalCapacity.intValue()
+                                                    + shift.getLotacao()
+                                                            .intValue());
+                                } else if (shift.getTipo().equals(
+                                        new TipoAula(TipoAula.TEORICO_PRATICA))) {
+                                    theoPraticalCapacity = new Integer(
+                                            theoPraticalCapacity.intValue()
+                                                    + shift.getLotacao()
+                                                            .intValue());
+                                } else if (shift.getTipo().equals(
+                                        new TipoAula(TipoAula.DUVIDAS))) {
+                                    doubtsCapacity = new Integer(doubtsCapacity
+                                            .intValue()
+                                            + shift.getLotacao().intValue());
+                                } else if (shift.getTipo().equals(
+                                        new TipoAula(TipoAula.LABORATORIAL))) {
+                                    labCapacity = new Integer(labCapacity
+                                            .intValue()
+                                            + shift.getLotacao().intValue());
+                                } else if (shift.getTipo().equals(
+                                        new TipoAula(TipoAula.PRATICA))) {
+                                    praticalCapacity = new Integer(
+                                            praticalCapacity.intValue()
+                                                    + shift.getLotacao()
+                                                            .intValue());
+                                } else if (shift.getTipo().equals(
+                                        new TipoAula(TipoAula.RESERVA))) {
+                                    reserveCapacity = new Integer(
+                                            reserveCapacity.intValue()
+                                                    + shift.getLotacao()
+                                                            .intValue());
+                                }
+
+                            }
+                            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                                    .get(executionCourse);
+                            List capacities = new ArrayList();
+
+                            if (theoreticalCapacity.intValue() != 0) {
+                                capacities.add(theoreticalCapacity);
+                            }
+                            if (theoPraticalCapacity.intValue() != 0) {
+                                capacities.add(theoPraticalCapacity);
+                            }
+                            if (doubtsCapacity.intValue() != 0) {
+                                capacities.add(doubtsCapacity);
+                            }
+                            if (labCapacity.intValue() != 0) {
+                                capacities.add(labCapacity);
+                            }
+                            if (praticalCapacity.intValue() != 0) {
+                                capacities.add(praticalCapacity);
+                            }
+                            if (reserveCapacity.intValue() != 0) {
+                                capacities.add(reserveCapacity);
+                            }
+
+                            int total = 0;
+
+                            if (!capacities.isEmpty()) {
+                                total = ((Integer) Collections.min(capacities))
+                                        .intValue();
+                            }
+
+                            if (total == 0) {
+                                infoExecutionCourse
+                                        .setOccupancy(new Double(-1));
+                            } else {
+                                infoExecutionCourse
+                                        .setOccupancy(NumberUtils
+                                                .formatNumber(
+                                                        new Double(
+                                                                (new Double(
+                                                                        executionCourse
+                                                                                .getAttendingStudents()
+                                                                                .size())
+                                                                        .floatValue() * 100 / total)),
+                                                        1));
+                            }
+                            return infoExecutionCourse;
+                        }
+                    });
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex.getMessage());
+        }
+        return result;
+    }
 }

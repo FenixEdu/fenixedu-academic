@@ -8,6 +8,8 @@ package DataBeans;
 
 import java.util.List;
 
+import DataBeans.gesdis.InfoSiteEvaluationStatistics;
+
 
 
 /**
@@ -31,6 +33,11 @@ public class InfoExecutionCourse extends InfoObject
 
     protected String comment;
 
+    
+    // useful for coordinator portal
+    protected InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;
+    protected String courseReportFilled;
+    
     /**
 	 * Tells if all the associated Curricular Courses load are the same
 	 */
@@ -400,4 +407,29 @@ public class InfoExecutionCourse extends InfoObject
     }
 
     
+    /**
+     * @return Returns the courseReportFilled.
+     */
+    public String getCourseReportFilled() {
+        return courseReportFilled;
+    }
+    /**
+     * @param courseReportFilled The courseReportFilled to set.
+     */
+    public void setCourseReportFilled(String courseReportFilled) {
+        this.courseReportFilled = courseReportFilled;
+    }
+    /**
+     * @return Returns the infoSiteEvaluationStatistics.
+     */
+    public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
+        return infoSiteEvaluationStatistics;
+    }
+    /**
+     * @param infoSiteEvaluationStatistics The infoSiteEvaluationStatistics to set.
+     */
+    public void setInfoSiteEvaluationStatistics(
+            InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
+        this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
+    }
 }
