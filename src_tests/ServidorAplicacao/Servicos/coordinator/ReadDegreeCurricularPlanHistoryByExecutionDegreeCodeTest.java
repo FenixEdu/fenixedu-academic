@@ -1,22 +1,20 @@
 package ServidorAplicacao.Servicos.coordinator;
 
+import java.util.Calendar;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegreeCurricularPlan;
-import Dominio.DegreeCurricularPlan;
-import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.DegreeCurricularPlanState;
+import Util.MarkType;
 
 /**
- * @author Fernanda Quitério 
- * 10/Nov/2003
+ * @author Fernanda Quitério 10/Nov/2003
  */
 public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends ServiceTestCase {
 
@@ -37,7 +35,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends Se
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/testDataSetReadDegreeCurricularPlanByExecutionDegreeCode.xml";
+		return "etc/datasets_templates/servicos/coordinator/testDataSetReadDegreeCurricularPlanByExecutionDegreeCode.xml";
 	}
 	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
@@ -66,64 +64,45 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends Se
 
 	public void testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeSuccessfull() {
 		try {
-			//Argumentos do serviço
 			Integer infoExecutionDegreeCode = new Integer(10);
-			Integer degreeCurricularPlanCode = new Integer(10);
 
 			Object[] args = { infoExecutionDegreeCode };
 
-			//Utilizador Válido
+			//Valid User
 			String[] argsUser = getAuthenticatedAndAuthorizedUser();
 			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
 
-			//Execução do serviço
 			InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 			infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) gestor.executar(id, getNameOfServiceToBeTested(), args);
 
-			//Leu alguma coisa?
+			//read something?
 			if (infoDegreeCurricularPlan == null) {
 				fail("Reading a Degree Curricular Plan.");
 			}
 
-			//Verificar se o que foi lido pelo serviço está correcto
-			try {
+			//Check information read is correct
+			assertEquals(new String("LEIC"), infoDegreeCurricularPlan.getName());
+			Calendar calendar = Calendar.getInstance();
+			calendar.clear();
+			calendar.set(2000, 0, 1, 0, 0, 0);
+			assertEquals(calendar.getTime().getTime(), infoDegreeCurricularPlan.getInitialDate().getTime());
+			calendar.clear();
+			calendar.set(2000, 11, 2, 0, 0, 0);
+			assertEquals(calendar.getTime().getTime(), infoDegreeCurricularPlan.getEndDate().getTime());
+			assertEquals(new MarkType(20), infoDegreeCurricularPlan.getMarkType());
+			assertEquals(new Integer(0), infoDegreeCurricularPlan.getMinimalYearForOptionalCourses());
+			assertEquals(new Double("0"), infoDegreeCurricularPlan.getNeededCredits());
+			assertEquals(new Integer(0), infoDegreeCurricularPlan.getNumerusClausus());
+			assertEquals(new DegreeCurricularPlanState(2), infoDegreeCurricularPlan.getState());
 
-				IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan(degreeCurricularPlanCode);
-				IDegreeCurricularPlan degreeCurricularPlan2 = null;
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				sp.iniciarTransaccao();
+			assertEquals(new Integer(infoDegreeCurricularPlan.getCurricularCourses().size()), new Integer(1));
 
-				degreeCurricularPlan2 = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(degreeCurricularPlan, false);
-
-				sp.confirmarTransaccao();
-
-				if (degreeCurricularPlan2 == null) {
-					fail("Reading a degree Curricular Plan from database.");
-				}
-
-				assertEquals(degreeCurricularPlan2.getName(), infoDegreeCurricularPlan.getName());
-				assertEquals(degreeCurricularPlan2.getEndDate(), infoDegreeCurricularPlan.getEndDate());
-				assertEquals(degreeCurricularPlan2.getInitialDate(), infoDegreeCurricularPlan.getInitialDate());
-				assertEquals(degreeCurricularPlan2.getMarkType(), infoDegreeCurricularPlan.getMarkType());
-				assertEquals(
-					degreeCurricularPlan2.getMinimalYearForOptionalCourses(),
-					infoDegreeCurricularPlan.getMinimalYearForOptionalCourses());
-				assertEquals(degreeCurricularPlan2.getNeededCredits(), infoDegreeCurricularPlan.getNeededCredits());
-				assertEquals(degreeCurricularPlan2.getNumerusClausus(), infoDegreeCurricularPlan.getNumerusClausus());
-				assertEquals(degreeCurricularPlan2.getState(), infoDegreeCurricularPlan.getState());
-
-				assertEquals(new Integer(infoDegreeCurricularPlan.getCurricularCourses().size()), new Integer(1));
-
-				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) infoDegreeCurricularPlan.getCurricularCourses().get(0);
-				assertEquals(new Integer(infoCurricularCourse.getInfoScopes().size()), new Integer(2));
-
-			} catch (ExcepcaoPersistencia e) {
-				e.printStackTrace();
-				fail("Reading a degree Curricular Plan from database2 " + e);
-			}
+			InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) infoDegreeCurricularPlan.getCurricularCourses().get(0);
+			assertEquals(new Integer(infoCurricularCourse.getInfoScopes().size()), new Integer(2));
 
 			System.out.println(
-				"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeSuccessfull was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
+				"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeSuccessfull was SUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
 
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
@@ -149,7 +128,8 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends Se
 			fail("Reading a degree curricular plan with invalid user");
 		} catch (NotAuthorizedException e) {
 			System.out.println(
-				"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeUserUnsuccessfull was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
+				"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeUserUnsuccessfull was SUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
 		} catch (FenixServiceException e) {
 			fail("Reading a degree curricular plan with invalid user " + e);
 		} catch (Exception e) {
@@ -173,15 +153,16 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends Se
 			fail("Reading a degree Curricular Plan with non existent execution degree");
 		} catch (NonExistingServiceException e2) {
 			System.out.println(
-				"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeNoDegreeUnsuccessfull3 was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
-		} catch (FenixServiceException e3) {
-			fail("Reading a degree Curricular Plan with non existent execution degree " + e3);
+				"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeNoDegreeUnsuccessfull was SUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
+		} catch (FenixServiceException e) {
+			fail("Reading a degree Curricular Plan with non existent execution degree " + e);
 		} catch (Exception e) {
 			fail("Reading a degree Curricular Plan with non existent execution degree " + e);
 		}
 	}
 
-	public void testReadActiveDegreeCurricularPlanByExecutionDegreeCodeNullDCPUnsuccessfull() {
+	public void testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeNullDCPUnsuccessfull() {
 		try {
 			//	existing execution degree
 			Integer infoExecutionDegreeCode = new Integer(17);
@@ -195,15 +176,12 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends Se
 			InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 				(InfoDegreeCurricularPlan) gestor.executar(id2, getNameOfServiceToBeTested(), args);
 
-			if (infoDegreeCurricularPlan == null) {
+			assertNull(infoDegreeCurricularPlan);
 				System.out.println(
 					"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeNullDCPUnsuccessfull was SUCCESSFULY runned by service: "
 						+ getNameOfServiceToBeTested());
-			} else {
-				fail("Reading a degree Curricular Plan with non existing degree curricular plan");
-			}
-		} catch (FenixServiceException e7) {
-			fail("Reading a degree Curricular Plan with non existing degree curricular plan " + e7);
+		} catch (FenixServiceException e) {
+			fail("Reading a degree Curricular Plan with non existing degree curricular plan " + e);
 		} catch (Exception e) {
 			fail("Reading a degree Curricular Plan with non existing degree curricular plan " + e);
 		}
@@ -220,11 +198,14 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends Se
 			gestor.executar(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Reading a degree curricular plan with null execution degree code");
-		} catch (IllegalArgumentException e1) {
-			System.out.println(
-				"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeNullDegreeUnsuccessfull was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
-		} catch (FenixServiceException e4) {
-			fail("Reading a degree curricular plan with null execution degree code " + e4);
+		} catch (FenixServiceException e) {
+			if (e.getMessage().equals("nullDegree")) {
+				System.out.println(
+					"testReadDegreeCurricularPlanHistoryByExecutionDegreeCodeNullDegreeUnsuccessfull was SUCCESSFULY runned by service: "
+						+ getNameOfServiceToBeTested());
+			} else {
+				fail("Reading an active degree curricular plan with null execution degree code " + e);
+			}
 		} catch (Exception e) {
 			fail("Reading a degree curricular plan with null execution degree code " + e);
 		}

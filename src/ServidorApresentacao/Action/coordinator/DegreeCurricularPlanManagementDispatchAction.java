@@ -166,7 +166,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 				curricularCourseScopesHashMap.put(curricularCourseScope.getIdInternal(), equalCurricularCourseScopes);
 				lastKey = curricularCourseScope.getIdInternal();
 			}
-
 			request.setAttribute("allCurricularCourseScopes", allCurricularCourseScopes);
 			request.setAttribute("curricularCourseScopesHashMap", curricularCourseScopesHashMap);
 		}
