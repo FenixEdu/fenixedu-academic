@@ -42,7 +42,7 @@ insert into DEGREE_CURRICULAR_PLAN values (1, 'LEQ-2003', 1, 1, '0000-00-00', '0
 delete from CURRICULAR_COURSE;
 insert into CURRICULAR_COURSE values (1, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À QUÍMICA-FÍSICA", "D3", 1, 1, 0, null);
 insert into CURRICULAR_COURSE values (2, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1, 1, 1, null);
-insert into CURRICULAR_COURSE values (3, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1, , null);
+insert into CURRICULAR_COURSE values (3, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1, null);
 insert into CURRICULAR_COURSE values (4, null, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO E PROGRAMAÇÃO", "AZ9", 1, 1, 0, null);
 insert into CURRICULAR_COURSE values (5, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À LIGAÇÃO QUÍMICA", "GU", 1, 1, 0, null);
 insert into CURRICULAR_COURSE values (6, null, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "LABORATÓRIO DE QUÍMICA GERAL I", "AGU", 6, 1, 0, null);
