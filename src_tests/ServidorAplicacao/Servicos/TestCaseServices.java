@@ -35,16 +35,19 @@ public abstract class TestCaseServices extends TestCase {
 			dbAcessPoint = new dbaccess();
 			dbAcessPoint.openConnection();
 			dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-			dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+			dbAcessPoint.loadDataBase(getDataSetFilePath());
 			dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			fail("Setup failed loading database with test data set: " + ex);
 		}
+	}
 
-		gestor = GestorServicos.manager();
-
-		setUserViewAuthorized();
-		setUserViewNotAuthorized();
+	/**
+	 * @return
+	 */
+	protected String getDataSetFilePath() {
+		// TODO Auto-generated method stub
+		return "etc/testDataSet.xml";
 	}
 
 	protected void tearDown() {
