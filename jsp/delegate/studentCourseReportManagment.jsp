@@ -23,6 +23,7 @@
 				</logic:iterate>
 			</td>
 		</tr>
+<!--
 		<tr>
 			<td><strong><bean:message key="message.studentReport.responsibleTeacher"/></strong></td>
 			<td>
@@ -52,6 +53,7 @@
 				https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>--%>
 			</td>
 		</tr>
+-->
 	</table>
 	<br />
 	<h3 class="bluetxt"><bean:message key="message.studentReport.executionYear" />

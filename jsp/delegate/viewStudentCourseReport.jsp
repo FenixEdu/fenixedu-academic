@@ -22,6 +22,7 @@
 				</logic:iterate>
 			</td>
 		</tr>
+<!--
 		<tr>
 			<td><strong><bean:message key="message.studentReport.responsibleTeacher"/></strong></td>
 			<td>
@@ -51,6 +52,7 @@
 				https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>--%>
 			</td>
 		</tr>
+-->
 	</table>
 	<br />
 	<h3 class="bluetxt"><bean:message key="message.studentReport.executionYear" />
@@ -132,10 +134,25 @@
 		<bean:message key="message.studentReport.note2"/>
 	</p>
 	<h3 class="bluetxt"><bean:message key="message.studentReport.strongPoints"/></h3>
-	<bean:write name="infoStudentCourseReport" property="strongPoints"/>
+	<logic:present name="infoStudentCourseReport" property="strongPoints">
+		<bean:write name="infoStudentCourseReport" property="strongPoints"/>
+	</logic:present>
+	<logic:notPresent name="infoStudentCourseReport" property="strongPoints">
+		<bean:message key="message.studentReport.infoNotFilled"/>
+	</logic:notPresent>
 	<h3 class="bluetxt"><bean:message key="message.studentReport.weakPoints"/></h3>
-	<bean:write name="infoStudentCourseReport" property="weakPoints"/>
+	<logic:present name="infoStudentCourseReport" property="weakPoints">
+		<bean:write name="infoStudentCourseReport" property="weakPoints"/>
+	</logic:present>
+	<logic:notPresent name="infoStudentCourseReport" property="weakPoints">
+		<bean:message key="message.studentReport.infoNotFilled"/>
+	</logic:notPresent>
 	<h3 class="bluetxt"><bean:message key="message.studentReport.studentReport"/></h3>
-	<bean:write name="infoStudentCourseReport" property="studentReport"/>
+	<logic:present name="infoStudentCourseReport" property="studentReport">
+		<bean:write name="infoStudentCourseReport" property="studentReport"/>
+	</logic:present>
+	<logic:notPresent name="infoStudentCourseReport" property="studentReport">
+		<bean:message key="message.studentReport.infoNotFilled"/>
+	</logic:notPresent>
 	<br />
 </logic:present>
