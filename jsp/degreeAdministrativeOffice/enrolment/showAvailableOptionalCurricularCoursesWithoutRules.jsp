@@ -43,13 +43,13 @@
 				<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
+				<bean:define id="optionalEnrolmentString" value=""></bean:define>
 				<logic:equal name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
 					<bean:define id="onclick">
 						if (this.checked == true) {this.form.method.value='startEnrolmentInOptional'; document.forms[0].optionalCourseIndex.value='<bean:write name="index"/>'; disableAllElements(this.form,this.name);this.form.submit();}	
 					</bean:define>
 					<bean:define id="optionalCourse" name="curricularScope" property="infoCurricularCourse"/>
 					<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
-						<bean:define id="optionalEnrolmentString" value=""></bean:define>
 						<logic:equal name="optionalEnrolment" property="infoCurricularCourseScope.infoCurricularCourse" value="<%= pageContext.findAttribute("optionalCourse").toString() %>">
 							<bean:define id="optionalEnrolmentString">
 								-&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>

@@ -18,4 +18,9 @@
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.continue.enrolment"/>
 	</html:submit>
+
+	<html:cancel styleClass="inputbutton">
+		<bean:message key="button.cancel"/>
+	</html:cancel>
+
 </html:form>

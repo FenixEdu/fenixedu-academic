@@ -1,16 +1,13 @@
 package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
+import DataBeans.InfoStudent;
+import DataBeans.util.Cloner;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author David Santos
@@ -31,11 +28,9 @@ public class ShowAvailableOptionalCurricularCoursesWithoutRules implements IServ
 		return "ShowAvailableOptionalCurricularCoursesWithoutRules";
 	}
 
-	public InfoEnrolmentContext run(IUserView userView) throws FenixServiceException {
+	public InfoEnrolmentContext run(InfoStudent infoStudent) throws FenixServiceException {
 		try {
-			ISuportePersistente persistentSupport =	SuportePersistenteOJB.getInstance();
-			IPersistentStudent studentDAO =	persistentSupport.getIPersistentStudent();
-			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
+			IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
 			return EnrolmentContextManager.getInfoEnrolmentContext(EnrolmentContextManager.initialOptionalEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(student));
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

@@ -7,6 +7,7 @@
 package ServidorPersistente;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
@@ -25,4 +26,5 @@ public interface IPersistentEnrolmentEquivalenceRestriction extends IPersistentO
 	public void delete(IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction) throws ExcepcaoPersistencia;
 	public IEnrolmentEquivalenceRestriction readByEnrolmentEquivalenceAndEquivalentEnrolment(IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
 	public ArrayList readAll() throws ExcepcaoPersistencia;
+	public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
 }

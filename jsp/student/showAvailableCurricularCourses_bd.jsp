@@ -23,27 +23,28 @@
 <bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled"/>
 
 <logic:notEqual name="sizeAutomaticalyEnroled" value="0">
-	<b><bean:message key="label.mandatory.enrolment.curricular.courses"/></b><br/>
+	<b><bean:message key="label.mandatory.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b><br/>
 	<logic:iterate id="curricularCourseScope" name="infoEnrolmentContext" property="infoCurricularCoursesScopesAutomaticalyEnroled">
 		<bean:write name="curricularCourseScope" property="infoCurricularCourse.name"/><br/>
 	</logic:iterate>
 </logic:notEqual>
 
 <logic:notEqual name="sizeToBeEnroled" value="0">
-	<html:form action="/curricularCourseEnrolmentManager.do">
+	<html:form action="/curricularCourseEnrolmentWithRulesManager.do">
 		<html:hidden property="step" value="0"/>
 		<html:hidden property="method" value="verifyEnrolment"/>
 		<html:hidden property="optionalCourseIndex" value=""/>
-		<b><bean:message key="label.enrolment.curricular.courses"/></b>
+		<b><bean:message key="label.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b>
 		<br/>
 		<br/>
 		<table border="0" cellpadding="2" cellspacing="0">
 			<tr>
 				<td>&nbsp;</td>
-				<td><u><bean:message key="label.curricular.course.name"/></u></td>
-				<td align="center"><u><bean:message key="label.curricular.course.year"/></u></td>
+				<td><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
+				<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
+				<bean:define id="optionalEnrolmentString" value=""></bean:define>
 				<logic:equal name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
 					<bean:define id="onclick">
 						if (this.checked == true) {this.form.method.value='startEnrolmentInOptional'; document.forms[0].optionalCourseIndex.value='<bean:write name="index"/>'; disableAllElements(this.form,this.name);this.form.submit();}	
@@ -80,6 +81,6 @@
 		</table>
 		<br/>
 		<br/>
-		<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment"/></html:submit>
+		<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/></html:submit>
 	</html:form>
 </logic:notEqual>

@@ -11,9 +11,14 @@
 	<html:hidden property="method" value="showOptionalCurricularCourses"/>
 
 	<html:select property="infoDegree" size="1">
-		<html:options collection="infoDegree" property="nome" labelProperty="sigla"/>
+		<html:options collection="infoDegreesList" property="idInternal" labelProperty="nome"/>
 	</html:select>
+	<br/>
+	<br/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/>
 	</html:submit>
+	<html:cancel styleClass="inputbutton">
+		<bean:message key="button.cancel"/>
+	</html:cancel>
 </html:form>

@@ -77,6 +77,16 @@ public class EnrolmentEquivalenceRestrictionOJB extends ObjectFenixOJB implement
 		}
 	}
 
+	public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia {
+		try {
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("equivalentEnrolmentKey", equivalentEnrolment.getIdInternal());
+			return queryList(EnrolmentEquivalenceRestriction.class, criteria);
+		} catch (ExcepcaoPersistencia e) {
+			throw e;
+		}
+	}
+
 	public ArrayList readAll() throws ExcepcaoPersistencia {
 
 		try {

@@ -7,8 +7,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
-
 /**
  * @author David Santos
  */
@@ -22,7 +20,6 @@ public class PrepareStudentDataForEnrolmentInOptionalWithoutRulesDispatchAction 
 		boolean isSuccess = super.getStudentByNumberAndDegreeType(form, request);
 
 		if(isSuccess) {
-			request.getSession().removeAttribute(SessionConstants.DEGREE_TYPE);
 			return mapping.findForward(forwards[0]);
 		} else {
 			return mapping.getInputForward();

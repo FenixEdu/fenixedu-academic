@@ -1,4 +1,4 @@
-package ServidorApresentacao.Action.degreeAdministrativeOffice;
+package ServidorApresentacao.Action.student;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,7 +21,6 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -40,56 +39,25 @@ import Util.CurricularCourseType;
  *
  */
 
-public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends TransactionalDispatchAction {
+public class CurricularCourseEnrolmentManagerDispatchAction2 extends TransactionalDispatchAction {
 
-	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment", "cancel" };
+	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment" };
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		super.createToken(request);
 
 		HttpSession session = request.getSession();
-
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		InfoStudent infoStudent = CurricularCourseEnrolmentWithRulesManagerDispatchAction.getInfoStudent(request, form, userView);
-		Object args[] = { infoStudent };
+		Object args[] = { userView };
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		try {
-			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args);
+			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCourses", args);
 		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
 			throw new OutOfCurricularEnrolmentPeriodActionException(e.getMessageKey(), e.getStartDate(), e.getEndDate(), mapping.findForward("globalOutOfPeriod"));
 		}
-
-		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-		this.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
-		return mapping.findForward(forwards[0]);
-	}
-
-	public ActionForward outOfPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		super.validateToken(request, form, mapping, "error.transaction.enrolment");
-
-		if (isCancelled(request)) {
-			return mapping.findForward(forwards[3]);
-		}
-
-		HttpSession session = request.getSession();
-
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoStudent infoStudent = CurricularCourseEnrolmentWithRulesManagerDispatchAction.getInfoStudent(request, form, userView);
-
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-
-		Object args1[] = { infoExecutionPeriod, infoStudent };
-		ServiceUtils.executeService(userView, "CreateTemporarilyEnrolmentPeriod", args1);
-
-		Object args2[] = { infoStudent };
-		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args2);
-
-//		Object args3[] = { infoExecutionPeriod, infoEnrolmentContext };
-//		ServiceUtils.executeService(userView, "DeleteTemporarilyEnrolmentPeriod", args3);
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		this.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
@@ -418,7 +386,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Tra
 		saveErrors(request, actionErrors);
 	}
 
-	public static InfoStudent getInfoStudent(HttpServletRequest request, ActionForm form, IUserView userView) throws FenixActionException {
+	private InfoStudent getInfoStudent(HttpServletRequest request, ActionForm form, IUserView userView) throws FenixActionException {
 		DynaActionForm enrolmentForm = (DynaActionForm) form;
 		InfoStudent infoStudent = (InfoStudent) request.getAttribute(SessionConstants.STUDENT);
 		if(infoStudent == null) {

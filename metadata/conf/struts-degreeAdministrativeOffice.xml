@@ -30,6 +30,7 @@
 		<form-bean name="curricularCourseEnrolmentWithRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>
+			<form-property name="infoDegree" type="java.lang.Integer"/>
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
 			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
@@ -43,6 +44,7 @@
 
 		<form-bean name="optionalCurricularCourseEnrolmentWithoutRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
+			<form-property name="studentOID" type="java.lang.Integer"/>
 			<form-property name="infoDegree" type="java.lang.Integer"/>
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
@@ -209,9 +211,7 @@
 			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
 						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-
 			<forward name="beginTransaction" path="/optionalCurricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
-
 			<forward name="showAvailableOptionalCurricularCourses" path="df.page.showAvailableOptionalCurricularCoursesWithoutRules"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCoursesWithoutRules"/>
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalListWithoutRules"/>
@@ -220,21 +220,6 @@
 			<forward name="cancel" path="/prepareStudentEnrolment.do?method=optionalWithoutRules"/>
 			<forward name="home" path="df.page.main"/>
 		</action>
-<!--
-		<action	name="manualEquivalenceFrom"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.ManualEquivalenceManagerDispatchAction"
-				path="/manualEquivalenceManager"
-				parameter="method"
-				scope="session"
-				validate="false">
-			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForEquivalence"/>
-			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForEquivalence"/>
-			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForEquivalence"/>
-
-			<forward name="begin" path="/setStartMode.do?method=manualEquivalence"/>
-			<forward name="home" path="df.page.main"/>
-		</action>
--->
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

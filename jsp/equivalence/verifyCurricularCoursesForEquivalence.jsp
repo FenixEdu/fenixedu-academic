@@ -43,7 +43,7 @@
 					<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/>
 				</td>
 				<td>
-					<html:text size="2" property='<%= "grades" + "["+ indexId + "]" %>'/>
+					<html:text size="2" maxlength="2" property='<%= "grades" + "["+ indexId + "]" %>'/>
 				</td>
 			</tr>
 		</logic:iterate>
