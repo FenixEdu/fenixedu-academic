@@ -54,4 +54,6 @@ public interface ISuportePersistente {
 	public IPersistentItem getIPersistentItem();
 	public IPersistentAnnouncement getIPersistentAnnouncement();
 	public IPersistentCurriculum getIPersistentCurriculum();
+	
+	public IPersistentTeacher getIPersistentTeacher();
 }

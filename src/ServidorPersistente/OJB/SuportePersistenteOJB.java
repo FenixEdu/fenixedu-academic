@@ -39,6 +39,7 @@ import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.ISalaPersistente;
@@ -257,14 +258,19 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentAnnouncement getIPersistentAnnouncement() {
 			return new AnnouncementOJB();
 		}
-
-
 	
-	/* (non-Javadoc)
+	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCurriculum()
 	 */
 	public IPersistentCurriculum getIPersistentCurriculum() {
 		return new CurriculumOJB();
+	}
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacher()
+	 */
+	public IPersistentTeacher getIPersistentTeacher() {
+		return new TeacherOJB();
 	}
 
 }
