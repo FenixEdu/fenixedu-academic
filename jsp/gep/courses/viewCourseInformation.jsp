@@ -320,7 +320,7 @@
 		<logic:iterate id="infoBibliographicReference" name="infoSiteCourseInformation" property="infoBibliographicReferences">
 		<logic:equal name="infoBibliographicReference" property="optional" value="false">
 		<tr>
-			<td class="listClasses"> <bean:write name="infoBibliographicReference" property="title"/></td>
+			<td class="listClasses"> <bean:write name="infoBibliographicReference" property="title" filter="false"/></td>
 			<td class="listClasses"> <bean:write name="infoBibliographicReference" property="authors"/></td>
 			<td class="listClasses"> <bean:write name="infoBibliographicReference" property="reference"/></td>
 			<td class="listClasses"> <bean:write name="infoBibliographicReference" property="year"/></td>
@@ -335,7 +335,7 @@
 		<logic:iterate id="infoBibliographicReference" name="infoSiteCourseInformation" property="infoBibliographicReferences">
 			<logic:equal name="infoBibliographicReference" property="optional" value="true">
 			<tr>
-				<td class="listClasses"> <bean:write name="infoBibliographicReference" property="title"/></td>
+				<td class="listClasses"> <bean:write name="infoBibliographicReference" property="title" filter="false"/></td>
 				<td class="listClasses"> <bean:write name="infoBibliographicReference" property="authors"/></td>
 				<td class="listClasses"> <bean:write name="infoBibliographicReference" property="reference"/></td>
 				<td class="listClasses"> <bean:write name="infoBibliographicReference" property="year"/></td>
