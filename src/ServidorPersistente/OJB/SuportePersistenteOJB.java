@@ -1281,4 +1281,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new SentSmsOJB();
 
 	}
+	
+	// Nuno Correia & Ricardo Rodrigues
+	public IPersistentSchoolRegistrationInquiryAnswer getIPersistentSchoolRegistrationInquiryAnswer()
+	{
+	    return new SchoolRegistrationInquiryAnswerOJB();
+	}
+	
 }
