@@ -223,7 +223,9 @@
     bibliographic_reference*,
     execution_degree*,
     website_item*,
-    conversaolocaldistrito*)>
+    conversaolocaldistrito*,
+    REIMBURSEMENT_GUIDE_SITUATION*,
+    REIMBURSEMENT_GUIDE*)>
 
 <!ELEMENT mw_curricular_course_outside_student_degree EMPTY>
 <!ATTLIST mw_curricular_course_outside_student_degree
@@ -2575,3 +2577,23 @@
     distrito CDATA #IMPLIED
 >
 
+<!ELEMENT REIMBURSEMENT_GUIDE EMPTY>
+<!ATTLIST REIMBURSEMENT_GUIDE
+    id_internal CDATA #REQUIRED
+    number CDATA #REQUIRED
+    value CDATA #REQUIRED
+    justification CDATA #IMPLIED
+    key_guide CDATA #REQUIRED
+    creation_date CDATA #REQUIRED
+>
+
+<!ELEMENT REIMBURSEMENT_GUIDE_SITUATION EMPTY>
+<!ATTLIST REIMBURSEMENT_GUIDE_SITUATION
+    id_internal CDATA #REQUIRED
+    state CDATA #REQUIRED
+    key_reimbursement_guide CDATA #REQUIRED
+    remarks CDATA #IMPLIED
+    key_employee CDATA #REQUIRED
+    modification_date CDATA #REQUIRED
+    reimbursement_guide_state CDATA #REQUIRED
+>
