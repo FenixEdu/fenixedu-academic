@@ -47,16 +47,24 @@ public class InfoEnrolment extends InfoObject {
 		setEnrolmentState(state);
 		setInfoExecutionPeriod(infoExecutionPeriod);
 	}
-	public boolean equals(Object obj) {
+
+   	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof InfoEnrolment) {
 			InfoEnrolment enrolment = (InfoEnrolment) obj;
-			resultado = this.getInfoStudentCurricularPlan().equals(
-					enrolment.getInfoStudentCurricularPlan())
-					&& this.getInfoCurricularCourse().equals(
-							enrolment.getInfoCurricularCourse())
-					&& this.getInfoExecutionPeriod().equals(
-							enrolment.getInfoExecutionPeriod());
+			// these kind of tests are necessary for the new cloner philosophy
+			resultado = ((this.getInfoStudentCurricularPlan() == null && enrolment
+                    .getInfoStudentCurricularPlan() == null) || (this.getInfoStudentCurricularPlan() != null
+                    && enrolment.getInfoStudentCurricularPlan() != null && this
+                    .getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan())))
+                    && ((this.getInfoCurricularCourse() == null && enrolment.getInfoCurricularCourse() == null) || (this
+                            .getInfoCurricularCourse() != null
+                            && enrolment.getInfoCurricularCourse() != null && this
+                            .getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse())))
+                    && ((this.getInfoExecutionPeriod() == null && enrolment.getInfoExecutionPeriod() == null) || (this
+                            .getInfoExecutionPeriod() != null
+                            && enrolment.getInfoExecutionPeriod() != null && this
+                            .getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod()))); 
 		}
 		return resultado;
 	}
