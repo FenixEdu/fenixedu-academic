@@ -4,11 +4,13 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.teacher.one-column" extends="df.layout.one-column">
+		<put name="title" value="Docente" />
 		<put name="serviceName" value="Portal Docente" />
 	  	<put name="institutionName" value="Instituto Superior Técnico" />
 	  	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	</definition>
 	<definition name="definition.teacher.two-column" extends="df.layout.two-column">
+	  <put name="title" value="Docente" />
 	  <put name="serviceName" value="Portal Docente" />
 	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
@@ -66,7 +68,7 @@
     </definition>
     
 	<definition name="definition.teacher.two-column.extra-menu" extends="df.layout.two-column.extra-menu">	  
-		<put name="title" value="Docente" />
+		<put name="title" value="Docência" />
   		<put name="serviceName" value="Portal do Docente" />
  	   	<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>   
  	   	<put name="navLocalExtra" value="" /> 	   
