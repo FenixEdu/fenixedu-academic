@@ -134,109 +134,25 @@
 			HashMap statistics = new HashMap();
 			HashMap statistics_en = new HashMap();			
 		%>
-		<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation" type="DataBeans.gesdis.InfoSiteCourseInformation">
+		<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation" type="DataBeans.gesdis.InfoSiteCourseInformation">		
 			<% 
-				int numberOfFields = 0; 
-				int numberOfFields_en = 0;
-			%>
-			<logic:present name="infoSiteCourseInformation" property="infoLecturingTeachers">
-				<% 
-					if (infoSiteCourseInformation.getInfoLecturingTeachers().size() > 0)
-					{
-						numberOfFields++;
-					}
-				%>
-			</logic:present>
-			<logic:present name="infoSiteCourseInformation" property="infoCurriculums">
-				<bean:define id="curriculums" name="infoSiteCourseInformation" property="infoCurriculums" type="java.util.List"/>
-				<% 
-					Iterator iter = curriculums.iterator();
-					while(iter.hasNext())
-					{
-						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-						if (infoCurriculum.getGeneralObjectives() != null)
-						{
-							numberOfFields++;
-							break;
-						}
-					}
-					
-					iter = curriculums.iterator();
-					while(iter.hasNext())
-					{
-						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-						if (infoCurriculum.getProgram() != null)
-						{
-							numberOfFields++;
-							break;
-						}
-					}
-					
-					iter = curriculums.iterator();
-					while(iter.hasNext())
-					{
-						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-						if (infoCurriculum.getGeneralObjectivesEn() != null)
-						{
-							numberOfFields_en++;
-							break;
-						}
-					}
-					
-					iter = curriculums.iterator();
-					while(iter.hasNext())
-					{
-						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-						if (infoCurriculum.getOperacionalObjectivesEn() != null)
-						{
-							numberOfFields_en++;
-							break;
-						}
-					}
-					
-					iter = curriculums.iterator();
-					while(iter.hasNext())
-					{
-						InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-						if (infoCurriculum.getProgramEn() != null)
-						{
-							numberOfFields_en++;
-							break;
-						}
-					}
-				%>
-			</logic:present>
-			<logic:present name="infoSiteCourseInformation" property="infoBibliographicReferences">
-				<% 
-					if (infoSiteCourseInformation.getInfoBibliographicReferences().size() > 0)
-					{
-						numberOfFields++;
-						numberOfFields_en++;
-					}
-				%>
-			</logic:present>
-			<logic:present name="infoSiteCourseInformation" property="infoEvaluationMethod">
-				<% 
-					numberOfFields++; 
-					numberOfFields_en++; 
-				%>
-			</logic:present>
-			<% 
-				if (!statistics.containsKey(new Integer(numberOfFields)))
-					statistics.put(new Integer(numberOfFields), new Integer(1));
+                Integer numberOfFields = infoSiteCourseInformation.getNumberOfFieldsFilled();
+                Integer numberOfFields_en = infoSiteCourseInformation.getNumberOfFieldsFilledEn();
+				if (!statistics.containsKey(numberOfFields))
+					statistics.put(numberOfFields, new Integer(1));
 				else
 				{
-					int value = ((Integer) statistics.get(new Integer(numberOfFields))).intValue();
+					int value = ((Integer) statistics.get(numberOfFields)).intValue();
 					value++;
-					statistics.put(new Integer(numberOfFields), new Integer(value));
+					statistics.put(numberOfFields, new Integer(value));
 				}
-				if (!statistics_en.containsKey(new Integer(numberOfFields_en)))
-					statistics_en.put(new Integer(numberOfFields_en), new Integer(1));
+				if (!statistics_en.containsKey(numberOfFields_en))
+					statistics_en.put(numberOfFields_en, new Integer(1));
 				else
 				{
-					int value = ((Integer) statistics_en.get(new Integer(numberOfFields_en))).intValue();
+					int value = ((Integer) statistics_en.get(numberOfFields_en)).intValue();
 					value++;
-					statistics_en.put(new Integer(numberOfFields_en), new Integer(value));
+					statistics_en.put(numberOfFields_en, new Integer(value));
 				}
 			%>
 			<logic:iterate id="infoCurricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">

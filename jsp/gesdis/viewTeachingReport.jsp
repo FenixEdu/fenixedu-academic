@@ -1,4 +1,5 @@
 <%@ page language="java" %>
+<%@ page import="java.lang.Math" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -75,12 +76,12 @@
 			<td><strong><bean:message key="message.teachingReport.AP"/></strong></td>
 			<td><bean:write name="approved"/></td>
 		</tr>
-		<% int ap_en = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
+		<% int ap_en = Math.round(((float) approved.intValue() / (float) enrolled.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AP/IN"/></strong></td>
 			<td><%= ap_en %>%</td>
 		</tr>
-		<% int ap_ev = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
+		<% int ap_ev = Math.round(((float) approved.intValue() / (float) evaluated.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AP/AV"/></strong></td>
 			<td><%= ap_ev %>%</td>
@@ -102,29 +103,32 @@
 				<td class="listClasses">
 					<bean:write name="siteEvaluationStatistics" property="infoExecutionPeriod.infoExecutionYear.year"/>
 				</td>
-				<% int ap_en_h = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
+				<% int ap_en_h = Math.round(((float) approved.intValue() / (float) enrolled.intValue()) * 100); %>
 				<td class="listClasses"><%= ap_en_h %>%</td>
-				<% int ap_ev_h = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
+				<% int ap_ev_h = Math.round(((float) approved.intValue() / (float) evaluated.intValue()) * 100); %>
 				<td class="listClasses"><%= ap_ev_h %>%</td>
 			</tr>
 		</logic:iterate>
 		<logic:present name="infoCoursesHistoric">
-			<logic:iterate id="courseHistoric" name="infoCoursesHistoric">
-				<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.idInternal"/>
-				<logic:equal name="curricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
-					<bean:define id="evaluated" name="courseHistoric.evaluated" property="evaluated" type="java.lang.Integer"/>
-					<bean:define id="enrolled" name="courseHistoric.enrolled" property="enrolled" type="java.lang.Integer"/>
-					<bean:define id="approved" name="courseHistoric.approved" property="approved" type="java.lang.Integer"/>
-					<tr>
-						<td class="listClasses">
-							<bean:write name="courseHistoric" property="curricularYear"/>
-						</td>
-						<% int ap_en_ch = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
-						<td class="listClasses"><%= ap_en_ch %>%</td>
-						<% int ap_ev_ch = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
-						<td class="listClasses"><%= ap_ev_ch %>%</td>
-					</tr>
-				</logic:equal>
+			<bean:define id="curricularCourse" name="siteEvaluationInformation" property="infoCurricularCourse"/>
+			<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
+				<logic:iterate id="courseHistoric" name="siteCourseHistoric" property="infoCourseHistorics">
+					<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.idInternal"/>
+					<logic:equal name="curricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
+						<bean:define id="evaluated" name="courseHistoric" property="evaluated" type="java.lang.Integer"/>
+						<bean:define id="enrolled" name="courseHistoric" property="enrolled" type="java.lang.Integer"/>
+						<bean:define id="approved" name="courseHistoric" property="approved" type="java.lang.Integer"/>
+						<tr>
+							<td class="listClasses">
+								<bean:write name="courseHistoric" property="curricularYear"/>
+							</td>
+							<% int ap_en_ch = Math.round(((float) approved.intValue() / (float) enrolled.intValue()) * 100); %>
+							<td class="listClasses"><%= ap_en_ch %>%</td>
+							<% int ap_ev_ch = Math.round(((float) approved.intValue() / (float) evaluated.intValue()) * 100); %>
+							<td class="listClasses"><%= ap_ev_ch %>%</td>
+						</tr>
+					</logic:equal>
+				</logic:iterate>
 			</logic:iterate>
 		</logic:present>		
 	</table>
@@ -139,7 +143,7 @@
 	<bean:message key="message.teachingReport.note2"/>
 </p>
 <h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
-<p><bean:write name="siteCourseInformation" property="infoCourseReport.report" /></p>
+<p><bean:write name="siteCourseInformation" property="infoCourseReport.report" filter="false"/></p>
 <strong><bean:message key="message.teachingReport.text1"/>
 20/03/2004
 <bean:message key="message.teachingReport.text2"/></strong>

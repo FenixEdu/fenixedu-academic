@@ -3,20 +3,16 @@
  *  
  */
 package DataBeans.teacher;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
 import DataBeans.DataTranferObject;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
@@ -44,14 +40,11 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
     private List infoOldCientificPublications;
     private List infoOldDidacticPublications;
     private InfoExecutionPeriod infoExecutionPeriod;
-
     /**
-	 *  
-	 */
+     *  
+     */
     public InfoSiteTeacherInformation()
-    {
-    }
-
+    {}
     public Date getLastModificationDate()
     {
         List dates = new ArrayList();
@@ -107,372 +100,330 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
         }));
         return getMostRecentDate(dates);
     }
-
     /**
-	 * @param dates
-	 * @return
-	 */
+     * @param dates
+     * @return
+     */
     private Date getMostRecentDate(List dates)
     {
-        Date maxDate = new Date(Long.MAX_VALUE);
-        Date minDate = maxDate;
+        Date minDate = new Date(Long.MIN_VALUE);
+        Date maxDate = minDate;
         Iterator iter = dates.iterator();
         while (iter.hasNext())
         {
             Date date = (Date) iter.next();
-
             if (date == null)
                 continue;
-
-            if (date.getTime() < minDate.getTime())
-                minDate = date;
+            if (date.getTime() > maxDate.getTime())
+                maxDate = date;
         }
-
         // if the minDate is equal to maxDate then the information wasn't filled
         if (minDate == maxDate)
-            minDate = null;
-
-        return minDate;
+            maxDate = null;
+        return maxDate;
     }
-
     /**
-	 * @return Returns the infoExternalActivities.
-	 */
+     * @return Returns the infoExternalActivities.
+     */
     public List getInfoExternalActivities()
     {
         return infoExternalActivities;
     }
-
     /**
-	 * @return Returns the infoLecturingExecutionCourses.
-	 */
+     * @return Returns the infoLecturingExecutionCourses.
+     */
     public List getInfoLecturingExecutionCourses()
     {
         return infoLecturingExecutionCourses;
     }
-
     /**
-	 * @param infoLecturingExecutionCourses
-	 *            The infoLecturingExecutionCourses to set.
-	 */
+     * @param infoLecturingExecutionCourses
+     *            The infoLecturingExecutionCourses to set.
+     */
     public void setInfoLecturingExecutionCourses(List infoLecturingExecutionCourses)
     {
         this.infoLecturingExecutionCourses = infoLecturingExecutionCourses;
     }
-
     /**
-	 * @return Returns the infoResponsibleExecutionCourses.
-	 */
+     * @return Returns the infoResponsibleExecutionCourses.
+     */
     public List getInfoResponsibleExecutionCourses()
     {
         return infoResponsibleExecutionCourses;
     }
-
     /**
-	 * @param infoResponsibleExecutionCourses
-	 *            The infoResponsibleExecutionCourses to set.
-	 */
+     * @param infoResponsibleExecutionCourses
+     *            The infoResponsibleExecutionCourses to set.
+     */
     public void setInfoResponsibleExecutionCourses(List infoResponsibleExecutionCourses)
     {
         this.infoResponsibleExecutionCourses = infoResponsibleExecutionCourses;
     }
-
     /**
-	 * @param infoExternalActivities
-	 *            The infoExternalActivities to set.
-	 */
+     * @param infoExternalActivities
+     *            The infoExternalActivities to set.
+     */
     public void setInfoExternalActivities(List infoExternalActivities)
     {
         this.infoExternalActivities = infoExternalActivities;
     }
-
     /**
-	 * @return Returns the infoProfessionalCareers.
-	 */
+     * @return Returns the infoProfessionalCareers.
+     */
     public List getInfoProfessionalCareers()
     {
         return infoProfessionalCareers;
     }
-
     /**
-	 * @param infoProfessionalCareers
-	 *            The infoProfessionalCareers to set.
-	 */
+     * @param infoProfessionalCareers
+     *            The infoProfessionalCareers to set.
+     */
     public void setInfoProfessionalCareers(List infoProfessionalCareers)
     {
         this.infoProfessionalCareers = infoProfessionalCareers;
     }
-
     /**
-	 * @return Returns the infoQualifications.
-	 */
+     * @return Returns the infoQualifications.
+     */
     public List getInfoQualifications()
     {
         return infoQualifications;
     }
-
     /**
-	 * @param infoQualifications
-	 *            The infoQualifications to set.
-	 */
+     * @param infoQualifications
+     *            The infoQualifications to set.
+     */
     public void setInfoQualifications(List infoQualifications)
     {
         this.infoQualifications = infoQualifications;
     }
-
     /**
-	 * @return Returns the infoServiceProviderRegime.
-	 */
+     * @return Returns the infoServiceProviderRegime.
+     */
     public InfoServiceProviderRegime getInfoServiceProviderRegime()
     {
         return infoServiceProviderRegime;
     }
-
     /**
-	 * @param infoServiceProviderRegime
-	 *            The infoServiceProviderRegime to set.
-	 */
+     * @param infoServiceProviderRegime
+     *            The infoServiceProviderRegime to set.
+     */
     public void setInfoServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime)
     {
         this.infoServiceProviderRegime = infoServiceProviderRegime;
     }
-
     /**
-	 * @return Returns the infoTeacher.
-	 */
+     * @return Returns the infoTeacher.
+     */
     public InfoTeacher getInfoTeacher()
     {
         return infoTeacher;
     }
-
     /**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
     public void setInfoTeacher(InfoTeacher infoTeacher)
     {
         this.infoTeacher = infoTeacher;
     }
-
     /**
-	 * @return Returns the infoTeachingCareers.
-	 */
+     * @return Returns the infoTeachingCareers.
+     */
     public List getInfoTeachingCareers()
     {
         return infoTeachingCareers;
     }
-
     /**
-	 * @param infoTeachingCareers
-	 *            The infoTeachingCareers to set.
-	 */
+     * @param infoTeachingCareers
+     *            The infoTeachingCareers to set.
+     */
     public void setInfoTeachingCareers(List infoTeachingCareers)
     {
         this.infoTeachingCareers = infoTeachingCareers;
     }
-
     /**
-	 * @return Returns the infoWeeklyOcupation.
-	 */
+     * @return Returns the infoWeeklyOcupation.
+     */
     public InfoWeeklyOcupation getInfoWeeklyOcupation()
     {
         return infoWeeklyOcupation;
     }
-
     /**
-	 * @param infoWeeklyOcupation
-	 *            The infoWeeklyOcupation to set.
-	 */
+     * @param infoWeeklyOcupation
+     *            The infoWeeklyOcupation to set.
+     */
     public void setInfoWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation)
     {
         this.infoWeeklyOcupation = infoWeeklyOcupation;
     }
-
     /**
-	 * @return Returns the infoDegreeOrientation.
-	 */
+     * @return Returns the infoDegreeOrientation.
+     */
     public InfoOrientation getInfoDegreeOrientation()
     {
         return infoDegreeOrientation;
     }
-
     /**
-	 * @param infoDegreeOrientation
-	 *            The infoDegreeOrientation to set.
-	 */
+     * @param infoDegreeOrientation
+     *            The infoDegreeOrientation to set.
+     */
     public void setInfoDegreeOrientation(InfoOrientation infoDegreeOrientation)
     {
         this.infoDegreeOrientation = infoDegreeOrientation;
     }
-
     /**
-	 * @return Returns the infoMasterOrientation.
-	 */
+     * @return Returns the infoMasterOrientation.
+     */
     public InfoOrientation getInfoMasterOrientation()
     {
         return infoMasterOrientation;
     }
-
     /**
-	 * @param infoMasterOrientation
-	 *            The infoMasterOrientation to set.
-	 */
+     * @param infoMasterOrientation
+     *            The infoMasterOrientation to set.
+     */
     public void setInfoMasterOrientation(InfoOrientation infoMasterOrientation)
     {
         this.infoMasterOrientation = infoMasterOrientation;
     }
-
     /**
-	 * @return Returns the infoPhdOrientation.
-	 */
+     * @return Returns the infoPhdOrientation.
+     */
     public InfoOrientation getInfoPhdOrientation()
     {
         return infoPhdOrientation;
     }
-
     /**
-	 * @param infoPhdOrientation
-	 *            The infoPhdOrientation to set.
-	 */
+     * @param infoPhdOrientation
+     *            The infoPhdOrientation to set.
+     */
     public void setInfoPhdOrientation(InfoOrientation infoPhdOrientation)
     {
         this.infoPhdOrientation = infoPhdOrientation;
     }
-
     /**
-	 * @return Returns the infoArticleChapterPublicationsNumber.
-	 */
+     * @return Returns the infoArticleChapterPublicationsNumber.
+     */
     public InfoPublicationsNumber getInfoArticleChapterPublicationsNumber()
     {
         return infoArticleChapterPublicationsNumber;
     }
-
     /**
-	 * @param infoArticleChapterPublicationsNumber
-	 *            The infoArticleChapterPublicationsNumber to set.
-	 */
-    public void setInfoArticleChapterPublicationsNumber(InfoPublicationsNumber infoArticleChapterPublicationsNumber)
+     * @param infoArticleChapterPublicationsNumber
+     *            The infoArticleChapterPublicationsNumber to set.
+     */
+    public void setInfoArticleChapterPublicationsNumber(
+            InfoPublicationsNumber infoArticleChapterPublicationsNumber)
     {
         this.infoArticleChapterPublicationsNumber = infoArticleChapterPublicationsNumber;
     }
-
     /**
-	 * @return Returns the infoAuthorBookPublicationsNumber.
-	 */
+     * @return Returns the infoAuthorBookPublicationsNumber.
+     */
     public InfoPublicationsNumber getInfoAuthorBookPublicationsNumber()
     {
         return infoAuthorBookPublicationsNumber;
     }
-
     /**
-	 * @param infoAuthorBookPublicationsNumber
-	 *            The infoAuthorBookPublicationsNumber to set.
-	 */
-    public void setInfoAuthorBookPublicationsNumber(InfoPublicationsNumber infoAuthorBookPublicationsNumber)
+     * @param infoAuthorBookPublicationsNumber
+     *            The infoAuthorBookPublicationsNumber to set.
+     */
+    public void setInfoAuthorBookPublicationsNumber(
+            InfoPublicationsNumber infoAuthorBookPublicationsNumber)
     {
         this.infoAuthorBookPublicationsNumber = infoAuthorBookPublicationsNumber;
     }
-
     /**
-	 * @return Returns the infoComunicationPublicationsNumber.
-	 */
+     * @return Returns the infoComunicationPublicationsNumber.
+     */
     public InfoPublicationsNumber getInfoComunicationPublicationsNumber()
     {
         return infoComunicationPublicationsNumber;
     }
-
     /**
-	 * @param infoComunicationPublicationsNumber
-	 *            The infoComunicationPublicationsNumber to set.
-	 */
-    public void setInfoComunicationPublicationsNumber(InfoPublicationsNumber infoComunicationPublicationsNumber)
+     * @param infoComunicationPublicationsNumber
+     *            The infoComunicationPublicationsNumber to set.
+     */
+    public void setInfoComunicationPublicationsNumber(
+            InfoPublicationsNumber infoComunicationPublicationsNumber)
     {
         this.infoComunicationPublicationsNumber = infoComunicationPublicationsNumber;
     }
-
     /**
-	 * @return Returns the infoEditBookPublicationsNumber.
-	 */
+     * @return Returns the infoEditBookPublicationsNumber.
+     */
     public InfoPublicationsNumber getInfoEditBookPublicationsNumber()
     {
         return infoEditBookPublicationsNumber;
     }
-
     /**
-	 * @param infoEditBookPublicationsNumber
-	 *            The infoEditBookPublicationsNumber to set.
-	 */
+     * @param infoEditBookPublicationsNumber
+     *            The infoEditBookPublicationsNumber to set.
+     */
     public void setInfoEditBookPublicationsNumber(InfoPublicationsNumber infoEditBookPublicationsNumber)
     {
         this.infoEditBookPublicationsNumber = infoEditBookPublicationsNumber;
     }
-
     /**
-	 * @return Returns the infoMagArticlePublicationsNumber.
-	 */
+     * @return Returns the infoMagArticlePublicationsNumber.
+     */
     public InfoPublicationsNumber getInfoMagArticlePublicationsNumber()
     {
         return infoMagArticlePublicationsNumber;
     }
-
     /**
-	 * @param infoMagArticlePublicationsNumber
-	 *            The infoMagArticlePublicationsNumber to set.
-	 */
-    public void setInfoMagArticlePublicationsNumber(InfoPublicationsNumber infoMagArticlePublicationsNumber)
+     * @param infoMagArticlePublicationsNumber
+     *            The infoMagArticlePublicationsNumber to set.
+     */
+    public void setInfoMagArticlePublicationsNumber(
+            InfoPublicationsNumber infoMagArticlePublicationsNumber)
     {
         this.infoMagArticlePublicationsNumber = infoMagArticlePublicationsNumber;
     }
-
     /**
-	 * @return Returns the infoOldCientificPublications.
-	 */
+     * @return Returns the infoOldCientificPublications.
+     */
     public List getInfoOldCientificPublications()
     {
         return infoOldCientificPublications;
     }
-
     /**
-	 * @param infoOldCientificPublications
-	 *            The infoOldCientificPublications to set.
-	 */
+     * @param infoOldCientificPublications
+     *            The infoOldCientificPublications to set.
+     */
     public void setInfoOldCientificPublications(List infoOldCientificPublications)
     {
         this.infoOldCientificPublications = infoOldCientificPublications;
     }
-
     /**
-	 * @return Returns the infoOldDidacticPublications.
-	 */
+     * @return Returns the infoOldDidacticPublications.
+     */
     public List getInfoOldDidacticPublications()
     {
         return infoOldDidacticPublications;
     }
-
     /**
-	 * @param infoOldDidacticPublications
-	 *            The infoOldDidacticPublications to set.
-	 */
+     * @param infoOldDidacticPublications
+     *            The infoOldDidacticPublications to set.
+     */
     public void setInfoOldDidacticPublications(List infoOldDidacticPublications)
     {
         this.infoOldDidacticPublications = infoOldDidacticPublications;
     }
-
     /**
-	 * @return Returns the infoExecutionPeriod.
-	 */
+     * @return Returns the infoExecutionPeriod.
+     */
     public InfoExecutionPeriod getInfoExecutionPeriod()
     {
         return infoExecutionPeriod;
     }
-
     /**
-	 * @param infoExecutionPeriod
-	 *            The infoExecutionPeriod to set.
-	 */
+     * @param infoExecutionPeriod
+     *            The infoExecutionPeriod to set.
+     */
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
     {
         this.infoExecutionPeriod = infoExecutionPeriod;
     }
-
 }

@@ -29,6 +29,9 @@
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
 </class-descriptor>
 
 <!-- Definitions for Dominio.teacher.TeachingCareer -->
@@ -56,6 +59,9 @@
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
 </class-descriptor>
 
 <!-- Definitions for Dominio.teacher.WeeklyOcupation -->
@@ -100,6 +106,9 @@
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
 </class-descriptor>
 
 <!-- Definitions for Dominio.teacher.ServiceProviderRegime -->
@@ -148,6 +157,9 @@
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
 </class-descriptor>
 
 <!-- Definitions for Dominio.teacher.PublicationsNumber -->
@@ -199,6 +211,9 @@
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
 </class-descriptor>  
 				  		
 <!-- Mapping of User defined classses ends here -->

@@ -146,7 +146,6 @@ public class SearchAction extends DispatchAction
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = getSearchServiceArgs(request, form);
         Collection result = (Collection) ServiceUtils.executeService(userView, serviceName, args);
-        doAfterSearch(mapping, request, result);
         ActionForward actionForward = null;
         if (result.isEmpty())
         {
@@ -177,6 +176,7 @@ public class SearchAction extends DispatchAction
 
         prepareFormConstants(mapping, request, form);
         materializeSearchCriteria(mapping, request, form);
+        doAfterSearch(mapping, request, result);
         request.setAttribute(mapping.getListAttribute(), result);
         return actionForward;
     }
