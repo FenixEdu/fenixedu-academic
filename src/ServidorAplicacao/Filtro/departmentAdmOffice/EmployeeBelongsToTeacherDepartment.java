@@ -5,15 +5,12 @@ import java.util.HashMap;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
-import Dominio.ICostCenter;
 import Dominio.IDepartment;
 import Dominio.IEmployee;
-import Dominio.IFuncionario;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.Filtro;
-import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -23,7 +20,6 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
 
 /**
  * @author mrsp and jdnf
@@ -144,6 +140,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
         if(teacher == null) {
             throw new NotAuthorizedFilterException("error.teacher.not.found");
         }
+   
         return teacher;
     }
 
@@ -151,8 +148,15 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @param argumentos
      */
     protected String getTeacherNumber(Object[] argumentos) {
-        HashMap hashMap = (HashMap) argumentos[0];
-        String teacherNumber = (String) hashMap.get("teacherNumber");
+        String teacherNumber = null;
+        
+        if(argumentos.length == 1 && argumentos[0] instanceof HashMap){
+            HashMap hashMap = (HashMap) argumentos[0];
+            teacherNumber = (String) hashMap.get("teacherNumber");            
+        }
+        else
+            teacherNumber = argumentos[0].toString();
+                                    
         return teacherNumber;
     }
 

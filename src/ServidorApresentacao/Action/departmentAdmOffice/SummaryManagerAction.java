@@ -73,7 +73,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 		Integer professorShiftId = getTeacherNumber(request);
 		request.setAttribute("teacherNumber", professorShiftId);
 		
-		Object[] args = { executionCourseId, lessonType, shiftId, professorShiftId };
+		Object[] args = { professorShiftId, executionCourseId, lessonType, shiftId };
 		SiteView siteView = null;
 		try {
 			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummariesDepartmentAdmOffice", args);
@@ -440,7 +440,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 		Integer teacherNumber = getTeacherNumber(request);
 		request.setAttribute("teacherNumber", teacherNumber);
 		
-		Object[] args = { executionCourseId, summaryId, teacherNumber };
+		Object[] args = { teacherNumber, executionCourseId, summaryId };
 		SiteView siteView = null;
 		try {
 			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaryDepartment", args);                    

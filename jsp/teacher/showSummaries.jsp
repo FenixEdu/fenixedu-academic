@@ -56,7 +56,7 @@
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="professorships" property="idInternal" labelProperty="infoTeacher.infoPerson.nome"/>
 				<html:option  value="-1" key="label.others"/>
-			</html:select>			
+			</html:select>
 		</td>
 	</tr>
 	<%--<tr>

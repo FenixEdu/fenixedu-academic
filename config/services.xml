@@ -7613,6 +7613,9 @@
         </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="EmployeeBelongsToTeacherDepartment"/>
+        </filterChains>
     </service>    
     <service>
         <name>PrepareInsertSummaryDepartment</name>
@@ -7653,6 +7656,9 @@
         </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="EmployeeBelongsToTeacherDepartment"/>
+        </filterChains>
     </service>
     <service>
 		<name>ReadProfessorshipByTeacherIDandExecutionCourseIDDepartment</name>

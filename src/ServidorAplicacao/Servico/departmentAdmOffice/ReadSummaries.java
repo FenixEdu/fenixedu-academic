@@ -72,8 +72,7 @@ public class ReadSummaries implements IServico {
         return "ReadSummaries";
     }
 
-    public SiteView run(Integer executionCourseId, Integer summaryType, Integer shiftId,
-            Integer teacherNumber) throws FenixServiceException {
+    public SiteView run(Integer teacherNumber, Integer executionCourseId, Integer summaryType, Integer shiftId) throws FenixServiceException {
 
         try {       	
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();

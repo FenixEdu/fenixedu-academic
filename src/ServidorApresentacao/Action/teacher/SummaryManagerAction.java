@@ -123,17 +123,18 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      */
     protected Integer getProfessorShipId(HttpServletRequest request, DynaActionForm actionForm,
             IUserView userView, Integer executionCourseId) throws FenixServiceException {
+        
         Integer professorShipId = null;
+        
         if (request.getParameter("byTeacher") != null && request.getParameter("byTeacher").length() > 0) {
             professorShipId = new Integer(request.getParameter("byTeacher"));
+        
         } else {
             Object[] args = { userView.getUtilizador(), executionCourseId };
             InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceUtils.executeService(
                     userView, "ReadProfessorshipByTeacherNumberAndExecutionCourseID", args);
-            professorShipId = infoProfessorship.getIdInternal();
-            
+            professorShipId = infoProfessorship.getIdInternal();   
             actionForm.set("byTeacher", professorShipId.toString());
-            
         }
         return professorShipId;
     }
@@ -636,7 +637,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             return prepareEditSummary(mapping, form, request, response);//mudei
         }
         
-        return showSummaries(mapping, form, request, response);
+        return mapping.findForward("doShowSummariesAction");
     }
     
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,

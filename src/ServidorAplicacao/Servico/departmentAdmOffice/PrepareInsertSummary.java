@@ -46,7 +46,7 @@ public class PrepareInsertSummary implements IService {
     public PrepareInsertSummary() {
     }
 
-    public SiteView run(Integer executionCourseId, Integer teacherNumber) throws FenixServiceException {
+    public SiteView run(Integer teacherNumber, Integer executionCourseId) throws FenixServiceException {
         SiteView siteView;
 
         try {

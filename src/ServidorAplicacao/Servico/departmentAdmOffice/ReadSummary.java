@@ -56,7 +56,7 @@ public class ReadSummary implements IService {
     public ReadSummary() {
     }
 
-    public SiteView run(Integer executionCourseId, Integer summaryId, Integer teacherNumber)
+    public SiteView run(Integer teacherNumber, Integer executionCourseId, Integer summaryId)
             throws FenixServiceException {
         SiteView siteView;
         try {
