@@ -23,6 +23,10 @@
 		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showRevenueReport.jsp" />
 	</definition>
+	<definition name="show-Movements-Report" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showMovementsReport.jsp" />
+	</definition>
 	<definition name="help-Page" extends="definition.projectManager.two-column">
 		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/helpPage.jsp" />

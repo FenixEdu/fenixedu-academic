@@ -4,7 +4,7 @@
  */
 package DataBeans.projectsManagement;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import DataBeans.DataTranferObject;
 import Dominio.projectsManagement.IAdiantamentosReportLine;
@@ -77,16 +77,13 @@ public class InfoAdiantamentosReportLine extends DataTranferObject implements IR
         return null;
     }
 
-    public HSSFRow getHeaderToExcel(HSSFRow row) {
-        return null;
+    public void getHeaderToExcel(HSSFSheet sheet) {
     }
 
-    public HSSFRow getLineToExcel(HSSFRow row) {
-        return null;
+    public void getLineToExcel(HSSFSheet sheet) {
     }
 
-    public HSSFRow getTotalLineToExcel(HSSFRow row) {
-        return null;
+    public void getTotalLineToExcel(HSSFSheet sheet) {
     }
 
     public int getNumberOfColumns() {

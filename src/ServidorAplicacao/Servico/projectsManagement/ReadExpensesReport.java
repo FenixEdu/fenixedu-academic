@@ -66,12 +66,12 @@ public class ReadExpensesReport implements IService {
                 infoReport.setRubricList(persistentExpensesReport.getRubricList(reportType, projectCode));
             } else {
 
-                List lines = p.getIPersistentAdiantamentosReport().getCompleteReport(ReportType.ADIANTAMENTOS, projectCode);
+                List lines = p.getIPersistentAdiantamentosReport().getCompleteReport(ReportType.SUMMARY_ADIANTAMENTOS, projectCode);
                 for (int i = 0; i < lines.size(); i++)
                     infoLines.add(InfoAdiantamentosReportLine.newInfoFromDomain((IAdiantamentosReportLine) lines.get(i)));
                 infoReport.setAdiantamentosReport(infoLines);
                 infoLines = new ArrayList();
-                lines = p.getIPersistentCabimentosReport().getCompleteReport(ReportType.CABIMENTOS, projectCode);
+                lines = p.getIPersistentCabimentosReport().getCompleteReport(ReportType.SUMMARY_CABIMENTOS, projectCode);
                 for (int i = 0; i < lines.size(); i++)
                     infoLines.add(InfoCabimentosReportLine.newInfoFromDomain((ICabimentosReportLine) lines.get(i)));
                 infoReport.setCabimentosReport(infoLines);

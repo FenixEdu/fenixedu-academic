@@ -3,15 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-report.tld" prefix="report"%>
-<logic:present name="infoRevenueReport">
-	<logic:notEmpty name="infoRevenueReport" property="infoProject">
-		<bean:define id="infoProject" name="infoRevenueReport" property="infoProject" />
+<logic:present name="infoReport">
+	<logic:notEmpty name="infoReport" property="infoProject">
+		<bean:define id="infoProject" name="infoReport" property="infoProject" />
 		<table width="100%" cellspacing="0">
 			<tr>
 				<td class="infoop">
 				<h2><bean:message key="title.revenueReport" /></h2>
 				</td>
-				<logic:notEmpty name="infoRevenueReport" property="lines">
+				<logic:notEmpty name="infoReport" property="lines">
 					<bean:define id="projectCode" name="infoProject" property="projectCode" />
 					<td class="infoop" width="20"><html:link
 						page="<%="/projectReport.do?method=exportToExcel&amp;reportType=revenueReport&amp;projectCode="+projectCode%>">
@@ -50,8 +50,8 @@
 		</table>
 		<br />
 		<br />
-		<logic:notEmpty name="infoRevenueReport" property="lines">
-			<bean:define id="revenueLines" name="infoRevenueReport" property="lines" />
+		<logic:notEmpty name="infoReport" property="lines">
+			<bean:define id="revenueLines" name="infoReport" property="lines" />
 			<table class="report-table">
 				<tr>
 					<td class="report-hdr"><bean:message key="label.idMov" /></td>
@@ -67,7 +67,7 @@
 						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="financialEntity" /></td>
 						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="rubric" /></td>
 						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="date" /></td>
-						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="description" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="left"><bean:write name="line" property="description" /></td>
 						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="value" /></td>
 					</tr>
 				</logic:iterate>
@@ -76,6 +76,9 @@
 					<td class="report-line-total"><report:sumColumn id="revenueLines" column="5" /></td>
 				</tr>
 			</table>
+			<br />
+			<bean:message key="message.listReport" />
+			<br />
 		</logic:notEmpty>
 		<br />
 		<br />

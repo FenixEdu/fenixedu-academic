@@ -134,6 +134,7 @@ public class ExcelStyle extends FenixUtil {
         font.setFontHeightInPoints((short) 8);
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+        style.setWrapText(true);
         VALUE_STYLE = style;
     }
 

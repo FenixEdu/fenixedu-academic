@@ -6,6 +6,7 @@ package DataBeans.projectsManagement;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.CellReference;
 
 import DataBeans.DataTranferObject;
@@ -178,7 +179,8 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
         return 11;
     }
 
-    public HSSFRow getHeaderToExcel(HSSFRow row) {
+    public void getHeaderToExcel(HSSFSheet sheet) {
+        HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("NºProj");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
@@ -213,12 +215,12 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
         cell.setCellValue("Cabimentos por Executar");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
         cell = row.createCell((short) 11);
-        cell.setCellValue("Saldo Orçamental");
+        cell.setCellValue("Saldo Orçamental (*)");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        return row;
     }
 
-    public HSSFRow getLineToExcel(HSSFRow row) {
+    public void getLineToExcel(HSSFSheet sheet) {
+        HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(Double.parseDouble(getProjectCode().toString()));
         cell.setCellStyle(ExcelStyle.INTEGER_STYLE);
@@ -279,11 +281,10 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
             cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
         else
             cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
-
-        return row;
     }
 
-    public HSSFRow getTotalLineToExcel(HSSFRow row) {
+    public void getTotalLineToExcel(HSSFSheet sheet) {
+        HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellStyle(ExcelStyle.STRING_STYLE);
         cell.setCellValue("TOTAL");
@@ -294,7 +295,6 @@ public class InfoSummaryReportLine extends DataTranferObject implements IReportL
             cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
             cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
         }
-        return row;
     }
 
     public Double getValue(int column) {

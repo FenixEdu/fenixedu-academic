@@ -94,11 +94,11 @@
 			<table width="50%" cellspacing="0">
 				<logic:iterate id="lineAdvancingReport" name="infoExpensesReport" property="adiantamentosReport">
 					<tr>
-						<td><strong><bean:message key="label.totalAdiantamentos" />:</strong></td>
+						<td><strong><bean:message key="label.total.adiantamentosReport" />:</strong></td>
 						<td align="right"><report:formatDoubleValue name="lineAdvancingReport" property="adiantamentos" /></td>
 					</tr>
 					<tr>
-						<td class="bottomborder"><strong><bean:message key="label.devolutions" /></strong>:</td>
+						<td class="bottomborder"><strong><bean:message key="label.returnsExecuted.adiantamentosReport" /></strong>:</td>
 						<td class="bottomborder" align="right"><report:formatDoubleValue name="lineAdvancingReport" property="justifications" /></td>
 					</tr>
 					<tr>
@@ -124,15 +124,15 @@
 			<table width="50%" cellspacing="0">
 				<logic:iterate id="cabimentosReport" name="infoExpensesReport" property="cabimentosReport">
 					<tr>
-						<td><strong><bean:message key="label.totalDeCabimentos" />:</strong></td>
+						<td><strong><bean:message key="label.total.cabimentosReport" />:</strong></td>
 						<td align="right"><report:formatDoubleValue name="cabimentosReport" property="cabimentos" /></td>
 					</tr>
 					<tr>
-						<td class="bottomborder"><b>Cabimentos Executados:</b></td>
+						<td class="bottomborder"><b><bean:message key="label.returnsExecuted.cabimentosReport" />:</b></td>
 						<td class="bottomborder" align="right"><report:formatDoubleValue name="cabimentosReport" property="justifications" /></td>
 					</tr>
 					<tr>
-						<td><strong><bean:message key="label.cabimentosPorExecutar" />:</strong></td>
+						<td><strong><bean:message key="label.toExecute.cabimentosReport" />:</strong></td>
 						<td align="right"><report:formatDoubleValue name="cabimentosReport" property="total" /></td>
 					</tr>
 				</logic:iterate>

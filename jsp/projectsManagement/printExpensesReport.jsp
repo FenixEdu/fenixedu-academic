@@ -74,7 +74,7 @@
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="rubric" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="type" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="date" /></td>
-								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="description" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align=left><bean:write name="line" property="description" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="value" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="tax" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="total" /></td>
@@ -87,7 +87,8 @@
 							<td class="report-line-total-last"><report:sumColumn id="expensesLines" column="8" /></td>
 						</tr>
 					</table>
-					<br />
+					<br />		
+					<bean:message key="message.listReport" />
 					<br />
 					<br />
 					<logic:present name="infoExpensesReport" property="summaryPTEReport">

@@ -4,7 +4,7 @@
  */
 package DataBeans.projectsManagement;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 /**
  * @author Susana Fernandes
@@ -15,9 +15,10 @@ public interface IReportLine {
 
     public Double getValue(int column);
 
-    public HSSFRow getHeaderToExcel(HSSFRow row);
+    public void getHeaderToExcel(HSSFSheet sheet);
 
-    public HSSFRow getLineToExcel(HSSFRow row);
+    public void getLineToExcel(HSSFSheet sheet);
 
-    public HSSFRow getTotalLineToExcel(HSSFRow row);
+    public void getTotalLineToExcel(HSSFSheet sheet);
+
 }

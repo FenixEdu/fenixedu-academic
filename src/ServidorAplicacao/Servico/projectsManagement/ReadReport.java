@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.projectsManagement.InfoMovementReport;
 import DataBeans.projectsManagement.InfoProject;
 import DataBeans.projectsManagement.InfoProjectReport;
 import DataBeans.projectsManagement.InfoRevenueReportLine;
@@ -15,6 +16,7 @@ import DataBeans.projectsManagement.InfoSummaryReportLine;
 import Dominio.IEmployee;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
+import Dominio.projectsManagement.IMovementReport;
 import Dominio.projectsManagement.IRevenueReportLine;
 import Dominio.projectsManagement.ISummaryReportLine;
 import ServidorAplicacao.IUserView;
@@ -34,8 +36,7 @@ public class ReadReport implements IService {
     public ReadReport() {
     }
 
-    public InfoProjectReport run(UserView userView, ReportType reportType, Integer projectCode) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public InfoProjectReport run(UserView userView, ReportType reportType, Integer projectCode) throws FenixServiceException, ExcepcaoPersistencia {
         InfoProjectReport infoReport = null;
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
         Integer userNumber = getUserNumber(persistentSuport, userView);
@@ -58,7 +59,14 @@ public class ReadReport implements IService {
                     for (int i = 0; i < lines.size(); i++)
                         infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines.get(i)));
                 }
-            } 
+            } else if (reportType.equals(ReportType.ADIANTAMENTOS) || reportType.equals(ReportType.CABIMENTOS)) {
+                if (projectCode != null && p.getIPersistentProject().isUserProject(userNumber, projectCode)) {
+                    infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
+                    List lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
+                    for (int i = 0; i < lines.size(); i++)
+                        infoLines.add(InfoMovementReport.newInfoFromDomain((IMovementReport) lines.get(i)));
+                }
+            }
             infoReport.setLines(infoLines);
         }
 

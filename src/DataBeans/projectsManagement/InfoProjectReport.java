@@ -77,6 +77,7 @@ public class InfoProjectReport extends DataTranferObject {
             cell.setCellValue(formatter.format(new Date()));
             cell.setCellStyle(ExcelStyle.VALUE_STYLE);
         }
+
         sheet.addMergedRegion(new Region(0, (short) 0, 0, (short) ((IReportLine) lines.get(0)).getNumberOfColumns()));
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
             sheet.addMergedRegion(new Region(i, (short) 1, i, (short) (((IReportLine) lines.get(0)).getNumberOfColumns())));
@@ -85,15 +86,21 @@ public class InfoProjectReport extends DataTranferObject {
         int lastRowNum = sheet.getLastRowNum() + 2;
         if (lines != null && lines.size() > 0) {
             row = sheet.createRow(lastRowNum);
-            row = ((IReportLine) lines.get(0)).getHeaderToExcel(row);
+            ((IReportLine) lines.get(0)).getHeaderToExcel(sheet);
             lastRowNum++;
             for (int i = 0; i < lines.size(); i++) {
-                row = sheet.createRow((short) i + lastRowNum);
-                row = ((IReportLine) lines.get(i)).getLineToExcel(row);
+                ((IReportLine) lines.get(i)).getLineToExcel(sheet);
             }
-            row = sheet.createRow((short) lines.size() + lastRowNum);
-            row = ((IReportLine) lines.get(0)).getTotalLineToExcel(row);
+            ((IReportLine) lines.get(0)).getTotalLineToExcel(sheet);
         }
+
+        row = sheet.createRow((short) sheet.getLastRowNum() + 2);
+        row.setHeight((short) 0x349);
+        cell = row.createCell((short) 0);
+        cell.setCellValue(reportType.getReportNote());
+        cell.setCellStyle(ExcelStyle.VALUE_STYLE);
+        sheet.addMergedRegion(new Region(sheet.getLastRowNum(), (short) 0, sheet.getLastRowNum(), (short) ((IReportLine) lines.get(0))
+                .getNumberOfColumns()));
 
         return sheet;
     }

@@ -166,4 +166,8 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
         return new PersistentSummaryEURReport();
     }
 
+    public IPersistentReport getIPersistentMovementReport() {
+        return new PersistentMovementReport();
+    }
+
 }

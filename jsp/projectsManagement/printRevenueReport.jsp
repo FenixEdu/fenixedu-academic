@@ -14,8 +14,8 @@
 <body style="background: #fff;">
 <table id="bodycontent" width="100%">
 	<tr>
-		<td><logic:present name="infoRevenueReport">
-			<logic:notEmpty name="infoRevenueReport" property="infoProject">
+		<td><logic:present name="infoReport">
+			<logic:notEmpty name="infoReport" property="infoProject">
 				<table>
 					<tr>
 						<td rowspan="7"><html:img height="110" src="<%= request.getContextPath() + "/images/LogoIST.gif"%>" /></td>
@@ -25,7 +25,7 @@
 						<h2><bean:message key="title.revenueReport" /></h2>
 						</td>
 					</tr>
-					<bean:define id="infoProject" name="infoRevenueReport" property="infoProject" />
+					<bean:define id="infoProject" name="infoReport" property="infoProject" />
 
 					<tr>
 						<td><strong><bean:message key="label.acronym" />:</strong></td>
@@ -52,8 +52,8 @@
 				<br />
 				<br />
 				<br />
-				<logic:notEmpty name="infoRevenueReport" property="lines">
-					<bean:define id="revenueLines" name="infoRevenueReport" property="lines" />
+				<logic:notEmpty name="infoReport" property="lines">
+					<bean:define id="revenueLines" name="infoReport" property="lines" />
 
 					<table class="report-table">
 						<tr>
@@ -70,7 +70,7 @@
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="financialEntity" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="rubric" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="date" /></td>
-								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="description" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="left"><bean:write name="line" property="description" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="value" /></td>
 							</tr>
 						</logic:iterate>
@@ -79,6 +79,10 @@
 							<td class="report-line-total"><report:sumColumn id="revenueLines" column="5" /></td>
 						</tr>
 					</table>
+					<br />
+					<bean:message key="message.listReport" />
+					<br />
+					<br />
 				</logic:notEmpty>
 			</logic:notEmpty>
 		</logic:present></td>

@@ -40,4 +40,6 @@ public interface IPersistentSuportOracle {
     public abstract IPersistentReport getIPersistentSummaryPTEReport();
 
     public abstract IPersistentReport getIPersistentSummaryEURReport();
+
+    public IPersistentReport getIPersistentMovementReport();
 }

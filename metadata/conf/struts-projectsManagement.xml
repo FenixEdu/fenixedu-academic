@@ -45,10 +45,14 @@
 		<forward name="showsummaryReport" path="show-Summary-Report"/>
 		<forward name="showexpensesReport" path="show-Expenses-Report"/>
 		<forward name="showrevenueReport" path="show-Revenue-Report"/>
+		<forward name="showcabimentosReport" path="show-Movements-Report"/>
+		<forward name="showadiantamentosReport" path="show-Movements-Report"/>
 		<forward name="helpPage" path="help-Page"/>
 		<forward name="printexpensesReport" path="/printExpensesReport.jsp"/>
 		<forward name="printrevenueReport" path="/printRevenueReport.jsp"/>
 		<forward name="printsummaryReport" path="/printSummaryReport.jsp"/>
+		<forward name="printcabimentosReport" path="/printMovementsReport.jsp"/>
+		<forward name="printadiantamentosReport" path="/printMovementsReport.jsp"/>
     </action>
   </action-mappings>
   

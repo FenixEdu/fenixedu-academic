@@ -18,8 +18,15 @@
 		<li><html:link page="/projectReport.do?method=prepareShowReport&amp;reportType=revenueReport">
 			<bean:message key="link.revenue" />
 		</html:link></li>
+		<li><html:link page="/projectReport.do?method=prepareShowReport&amp;reportType=cabimentosReport">
+			<bean:message key="label.cabimentos" />
+		</html:link></li>
+		<li><html:link page="/projectReport.do?method=prepareShowReport&amp;reportType=adiantamentosReport">
+			<bean:message key="label.adiantamentos" />
+		</html:link></li>
 	</ul>
-	<br/><br/>
+	<br />
+	<br />
 	<p><strong><bean:message key="label.listByCoordinator" /></strong></p>
 	<ul>
 		<li><html:link page="/projectReport.do?method=getReport&amp;reportType=summaryReport">
@@ -27,7 +34,8 @@
 		</html:link></li>
 	</ul>
 	<%}%>
-	<br/><br/>
+	<br />
+	<br />
 	<p><strong><bean:message key="label.help" /></strong></p>
 	<ul>
 		<li><html:link page="/projectReport.do?method=showHelp&amp;helpPage=listHelp">

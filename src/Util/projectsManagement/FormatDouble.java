@@ -33,4 +33,14 @@ public class FormatDouble extends FenixUtil {
         }
         return new Double(doubleValue);
     }
+
+    public static double round(double value) {
+        DecimalFormatSymbols s = new DecimalFormatSymbols();
+        s.setDecimalSeparator('.');
+        DecimalFormat nf = new DecimalFormat("#.00", s);
+        nf.setMaximumFractionDigits(2);
+        nf.setMinimumFractionDigits(2);
+        String stringValue = nf.format(value);
+        return parseDouble(stringValue).doubleValue();
+    }
 }

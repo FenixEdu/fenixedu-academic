@@ -37,6 +37,7 @@
 				</logic:present>
 			</table>
 			<br />
+			<bean:message key="message.summaryReport" />
 			<br />
 			<br />
 			<bean:define id="summaryLines" name="infoSummaryReport" property="lines" />
@@ -53,7 +54,7 @@
 						<td class="report-hdr"><bean:message key="link.expenses" /></td>
 						<td class="report-hdr"><bean:message key="label.adiantPorJust" /></td>
 						<td class="report-hdr"><bean:message key="label.treasuryBalance" /></td>
-						<td class="report-hdr"><bean:message key="label.cabimentosPorExecutar" /></td>
+						<td class="report-hdr"><bean:message key="label.toExecute.cabimentosReport" /></td>
 						<td class="report-hdr"><bean:message key="label.budgetBalance" /></td>
 					</tr>
 					<logic:iterate id="line" name="summaryLines" indexId="lineIndex">

@@ -7,24 +7,20 @@ package DataBeans.projectsManagement;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.util.CellReference;
 
 import DataBeans.DataTranferObject;
-import Dominio.projectsManagement.IExpensesReportLine;
+import Dominio.projectsManagement.IMovementReportLine;
 import Util.projectsManagement.ExcelStyle;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class InfoExpensesReportLine extends DataTranferObject implements IReportLine {
-    private Integer projectCode;
+public class InfoMovementReportLine extends DataTranferObject implements IReportLine {
 
     private String movementId;
 
-    private String member;
-
-    private Integer rubric;
+    private Integer rubricId;
 
     private String type;
 
@@ -42,24 +38,12 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getMember() {
-        return member;
-    }
-
-    public void setMember(String member) {
-        this.member = member;
     }
 
     public String getMovementId() {
@@ -70,20 +54,12 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         this.movementId = movementId;
     }
 
-    public Integer getProjectCode() {
-        return projectCode;
+    public Integer getRubricId() {
+        return rubricId;
     }
 
-    public void setProjectCode(Integer projectCode) {
-        this.projectCode = projectCode;
-    }
-
-    public Integer getRubric() {
-        return rubric;
-    }
-
-    public void setRubric(Integer rubric) {
-        this.rubric = rubric;
+    public void setRubricId(Integer rubricId) {
+        this.rubricId = rubricId;
     }
 
     public Double getTax() {
@@ -118,32 +94,34 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         this.value = value;
     }
 
-    public void copyFromDomain(IExpensesReportLine expensesReportLine) {
-        if (expensesReportLine != null) {
-            setProjectCode(expensesReportLine.getProjectCode());
-            setMovementId(expensesReportLine.getMovementId());
-            setMember(expensesReportLine.getMember());
-            setRubric(expensesReportLine.getRubric());
-            setType(expensesReportLine.getType());
-            setDate(expensesReportLine.getDate());
-            setDescription(expensesReportLine.getDescription());
-            setValue(expensesReportLine.getValue());
-            setTax(expensesReportLine.getTax());
-            setTotal(expensesReportLine.getTotal());
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void copyFromDomain(IMovementReportLine movementReportLine) {
+        if (movementReportLine != null) {
+            setMovementId(movementReportLine.getMovementId());
+            setRubricId(movementReportLine.getRubricId());
+            setType(movementReportLine.getType());
+            setDate(movementReportLine.getDate());
+            setDescription(movementReportLine.getDescription());
+            setValue(movementReportLine.getValue());
+            setTax(movementReportLine.getTax());
+            setTotal(new Double(getValue().doubleValue() + getTax().doubleValue()));
         }
     }
 
-    public static InfoExpensesReportLine newInfoFromDomain(IExpensesReportLine expensesReportLine) {
-        InfoExpensesReportLine infoExpensesReportLine = null;
-        if (expensesReportLine != null) {
-            infoExpensesReportLine = new InfoExpensesReportLine();
-            infoExpensesReportLine.copyFromDomain(expensesReportLine);
+    public static InfoMovementReportLine newInfoFromDomain(IMovementReportLine movementReportLine) {
+        InfoMovementReportLine infoMovementReportLine = null;
+        if (movementReportLine != null) {
+            infoMovementReportLine = new InfoMovementReportLine();
+            infoMovementReportLine.copyFromDomain(movementReportLine);
         }
-        return infoExpensesReportLine;
+        return infoMovementReportLine;
     }
 
-    public int getNumberOfColumns() {
-        return 8;
+    public Double getValue(int column) {
+        return null;
     }
 
     public void getHeaderToExcel(HSSFSheet sheet) {
@@ -152,27 +130,24 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         cell.setCellValue("Id Mov");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
         cell = row.createCell((short) 1);
-        cell.setCellValue("Membro");
-        cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        cell = row.createCell((short) 2);
         cell.setCellValue("Rúbrica");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        cell = row.createCell((short) 3);
+        cell = row.createCell((short) 2);
         cell.setCellValue("Tipo");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        cell = row.createCell((short) 4);
+        cell = row.createCell((short) 3);
         cell.setCellValue("Data");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        cell = row.createCell((short) 5);
+        cell = row.createCell((short) 4);
         cell.setCellValue("Descrição");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        cell = row.createCell((short) 6);
+        cell = row.createCell((short) 5);
         cell.setCellValue("Valor");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        cell = row.createCell((short) 7);
+        cell = row.createCell((short) 6);
         cell.setCellValue("Iva");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
-        cell = row.createCell((short) 8);
+        cell = row.createCell((short) 7);
         cell.setCellValue("Total");
         cell.setCellStyle(ExcelStyle.HEADER_STYLE);
     }
@@ -183,64 +158,43 @@ public class InfoExpensesReportLine extends DataTranferObject implements IReport
         cell.setCellValue(getMovementId());
         cell.setCellStyle(ExcelStyle.STRING_STYLE);
         cell = row.createCell((short) 1);
-        cell.setCellValue(getMember());
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
-        cell = row.createCell((short) 2);
-        cell.setCellValue(Double.parseDouble(getRubric().toString()));
+        cell.setCellValue(Double.parseDouble(getRubricId().toString()));
         cell.setCellStyle(ExcelStyle.INTEGER_STYLE);
-        cell = row.createCell((short) 3);
+        cell = row.createCell((short) 2);
         cell.setCellValue(getType());
         cell.setCellStyle(ExcelStyle.STRING_STYLE);
-        cell = row.createCell((short) 4);
+        cell = row.createCell((short) 3);
         cell.setCellValue(getDate());
         cell.setCellStyle(ExcelStyle.STRING_STYLE);
-        cell = row.createCell((short) 5);
+        cell = row.createCell((short) 4);
         cell.setCellValue(getDescription());
         cell.setCellStyle(ExcelStyle.STRING_STYLE);
-        cell = row.createCell((short) 6);
+        cell = row.createCell((short) 5);
         cell.setCellValue(getValue().doubleValue());
         if (getValue().doubleValue() < 0)
             cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
         else
             cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
-        cell = row.createCell((short) 7);
+        cell = row.createCell((short) 6);
         cell.setCellValue(getTax().doubleValue());
         if (getTax().doubleValue() < 0)
             cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
         else
             cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
-        cell = row.createCell((short) 8);
-        cell.setCellValue(getTotal().doubleValue());
-        if (getTotal().doubleValue() < 0)
+        cell = row.createCell((short) 7);
+        double total = getValue().doubleValue() + getTax().doubleValue();
+        cell.setCellValue(total);
+        if (total < 0)
             cell.setCellStyle(ExcelStyle.DOUBLE_NEGATIVE_STYLE);
         else
             cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
     }
 
     public void getTotalLineToExcel(HSSFSheet sheet) {
-        HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
-        HSSFCell cell = row.createCell((short) 0);
-        cell.setCellStyle(ExcelStyle.STRING_STYLE);
-        cell.setCellValue("TOTAL");
-        for (int i = 6; i <= 8; i++) {
-            CellReference cellRef1 = new CellReference(1, i);
-            CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), i);
-            cell = row.createCell((short) i);
-            cell.setCellStyle(ExcelStyle.DOUBLE_STYLE);
-            cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
-        }
     }
-  
-    public Double getValue(int column) {
-        switch (column) {
-        case 6:
-            return getValue();
-        case 7:
-            return getTax();
-        case 8:
-            return getTotal();
-        default:
-            return null;
-        }
+
+    public int getNumberOfColumns() {
+        return 7;
     }
+
 }
