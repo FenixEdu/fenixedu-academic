@@ -28,10 +28,30 @@ import DataBeans.InfoStudent;
 import DataBeans.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
 import DataBeans.enrollment.shift.InfoClassEnrollmentDetails;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInGroupServiceException;
-import ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInShiftServiceException;
-import ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledServiceException;
-import ServidorAplicacao.Servico.enrolment.shift.WriteStudentAttendingCourse.ReachedAttendsLimitServiceException;
+import ServidorAplicacao
+	.Servico
+	.enrolment
+	.shift
+	.DeleteStudentAttendingCourse
+	.AlreadyEnrolledInGroupServiceException;
+import ServidorAplicacao
+	.Servico
+	.enrolment
+	.shift
+	.DeleteStudentAttendingCourse
+	.AlreadyEnrolledInShiftServiceException;
+import ServidorAplicacao
+	.Servico
+	.enrolment
+	.shift
+	.DeleteStudentAttendingCourse
+	.AlreadyEnrolledServiceException;
+import ServidorAplicacao
+	.Servico
+	.enrolment
+	.shift
+	.WriteStudentAttendingCourse
+	.ReachedAttendsLimitServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.commons.TransactionalLookupDispatchAction;
@@ -112,11 +132,12 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 	private void checkParameter(HttpServletRequest request)
 	{
 		String selectCourses = request.getParameter("selectCourses");
-		if(selectCourses != null) {
+		if (selectCourses != null)
+		{
 			request.setAttribute("selectCourses", selectCourses);
 		}
 	}
-	
+
 	public ActionForward removeCourses(
 		ActionMapping mapping,
 		ActionForm form,
@@ -127,7 +148,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
 		checkParameter(request);
-		
+
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -193,10 +214,12 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		System.out.println("-->proceedToShiftEnrolment");
 
 		checkParameter(request);
-		
+
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer classIdSelected = readClassSelected(request);
 
 		//Read data from form
 		DynaActionForm enrollmentForm = (DynaActionForm) form;
@@ -232,13 +255,37 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		enrollmentForm.set("shiftMap", shiftsMap);
 		enrollmentForm.set("studentId", infoClassEnrollmentDetails.getInfoStudent().getIdInternal());
 
-		request.setAttribute("classId", ((InfoClass) infoClassEnrollmentDetails.getInfoClassList().get(0)).getIdInternal());
-		
+		if (classIdSelected != null)
+		{
+			request.setAttribute("classId", classIdSelected);
+		}
+		else
+		{
+			request.setAttribute(
+				"classId",
+				((InfoClass) infoClassEnrollmentDetails.getInfoClassList().get(0)).getIdInternal());
+		}
+
 		order(infoClassEnrollmentDetails);
 
 		request.setAttribute("infoClassEnrollmentDetails", infoClassEnrollmentDetails);
 
 		return mapping.findForward("showShiftsToEnroll");
+	}
+
+	private Integer readClassSelected(HttpServletRequest request)
+	{
+		String classIdSelectedString = request.getParameter("classId");
+		Integer classIdSelected = null;
+		if (classIdSelectedString != null)
+		{
+			classIdSelected = Integer.valueOf(classIdSelectedString);
+		}
+		else
+		{
+			classIdSelected = (Integer) request.getAttribute("classId");
+		}
+		return classIdSelected;
 	}
 
 	/**
@@ -265,7 +312,9 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 			{
 				ExecutionCourseShiftEnrollmentDetails details2 =
 					(ExecutionCourseShiftEnrollmentDetails) iterator2.next();
-				Collections.sort(details2.getShiftEnrollmentDetailsList(), new BeanComparator("infoShift.nome"));
+				Collections.sort(
+					details2.getShiftEnrollmentDetailsList(),
+					new BeanComparator("infoShift.nome"));
 
 			}
 
@@ -329,6 +378,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		map.put("button.removeCourse", "removeCourses");
 		map.put("button.continue.enrolment", "proceedToShiftEnrolment");
 		map.put("button.exit.enrollment", "exitEnrollment");
+		map.put("label.class", "proceedToShiftEnrolment");
 		map.put("link.shift.enrolement.edit", "proceedToShiftEnrolment");
 		return map;
 	}

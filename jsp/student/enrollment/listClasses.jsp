@@ -5,11 +5,15 @@
 <ul>
 	<logic:iterate id="infoClass" name="infoClassEnrollmentDetails" property="infoClassList">
 		<bean:define id="infoClassId" name="infoClass" property="idInternal"/>
+		<bean:define id="infoClassName" name="infoClass" property="nome"/>
+		<bean:define id="classSelected">
+			<bean:message key="label.class"/>
+		</bean:define>
 		<li>
 			<logic:present name="classId" >
 				<bean:define id="classIdSelected" name="classId" />
 				<logic:notEqual name="infoClassId" value="<%= classIdSelected.toString() %>">
-					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + request.getParameter("studentId").toString() + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString()%>">
+					<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=" + classSelected + "&amp;studentId=" + request.getParameter("studentId").toString() + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString()%>">
 						<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />			
 					</html:link>
 				</logic:notEqual>
@@ -18,8 +22,8 @@
 				</logic:equal>
 			</logic:present>			
 			<logic:notPresent name="classId" >
-				<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + request.getParameter("studentId").toString()  + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString() %>">
-					<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />			
+				<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=" + classSelected + "&amp;studentId=" + request.getParameter("studentId").toString()  + "&amp;classId=" + pageContext.findAttribute("infoClassId").toString() %>">
+					<bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome" />						
 				</html:link>
 			</logic:notPresent>						
 		</li>

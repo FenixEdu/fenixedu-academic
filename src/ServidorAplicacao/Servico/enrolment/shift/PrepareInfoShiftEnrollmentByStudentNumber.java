@@ -263,6 +263,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 		//read the execution degree chosen
 		if (executionDegreeIdChosen != null)
 		{
+			System.out.println("executionDegreeIdChosen: ...");
 			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
 
 			executionDegree = new CursoExecucao();
@@ -271,6 +272,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 				(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
 			if (executionDegree != null)
 			{
+				System.out.println("--> " + executionDegree.getIdInternal());
 				return executionDegree;
 			}
 		}
@@ -286,9 +288,11 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 			|| studentCurricularPlan.getDegreeCurricularPlan().getDegree() == null
 			|| studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome() == null)
 		{
+			System.out.println("sem SCP: ...");
 			executionDegree =
 				Cloner.copyInfoExecutionDegree2ExecutionDegree(
 					(InfoExecutionDegree) infoExecutionDegreeList.get(0));
+			System.out.println("--> " + executionDegree.getIdInternal());
 			return executionDegree;
 		}
 
@@ -309,17 +313,20 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 		});
 		if (!infoExecutionDegreeListWithDegreeCode.isEmpty())
 		{
+			System.out.println("No SCP: ...");
 			executionDegree =
 				Cloner.copyInfoExecutionDegree2ExecutionDegree(
 					(InfoExecutionDegree) infoExecutionDegreeListWithDegreeCode.get(0));
 		}
 		else
 		{
+			System.out.println("Não predicate: ...");
 			executionDegree =
 				Cloner.copyInfoExecutionDegree2ExecutionDegree(
 					(InfoExecutionDegree) infoExecutionDegreeList.get(0));
 		}
 
+		System.out.println("--> " + executionDegree.getIdInternal());
 		return executionDegree;
 	}
 }

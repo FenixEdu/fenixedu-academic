@@ -8,10 +8,8 @@
 	<h2 style="text-align:center">
 		<bean:message key="title.student.shift.enrollment" />
 	</h2>
-	<p align="center">
-		<span class="error"><b><bean:message key="label.warning" /></b></span>
-		<br />
-		
+	<p align="left">
+		<bean:message key="message.warning.student.enrolmentClasses" />
 	</p>
 	<html:form action="/studentShiftEnrolmentManager" >
 		<html:hidden property="method" value="start" />
