@@ -19,7 +19,7 @@ public class ExamEnrollment extends DomainObject implements IExamEnrollment {
 	public boolean equals(Object obj) {
 			if (obj instanceof ExamEnrollment) {
 				ExamEnrollment examEnrollmentObj = (ExamEnrollment) obj;
-				return this.getIdInternal().equals(examEnrollmentObj.getIdInternal());
+				return getExam().equals(examEnrollmentObj.getExam());
 			}
 			return false;
 		}
