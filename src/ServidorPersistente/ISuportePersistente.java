@@ -6,6 +6,8 @@
 
 package ServidorPersistente;
 
+import ServidorPersistente.OJB.IPersistentEnrolmentPeriod;
+
 
 /**
  *
@@ -86,4 +88,6 @@ public interface ISuportePersistente {
 	public IPersistentRestriction getIPersistentRestriction();
 	
 	public IPersistentEvaluation getIPersistentEvaluation();
+
+	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 }

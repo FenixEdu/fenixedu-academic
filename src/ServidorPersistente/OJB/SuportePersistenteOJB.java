@@ -412,4 +412,11 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			return new EvaluationOJB();
 		}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentEnrolmentPeriod()
+	 */
+	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
+		return new PersistentEnrolmentPeriod();
+	}
+
 }
