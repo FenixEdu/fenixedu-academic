@@ -4,7 +4,6 @@
  */
 package ServidorApresentacao.servlets.filters.cache;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,6 +11,7 @@ import java.util.Properties;
 import org.apache.commons.lang.StringUtils;
 
 import com.opensymphony.oscache.general.GeneralCacheAdministrator;
+import com.opensymphony.oscache.web.filter.ResponseContent;
 
 /**
  * @author Luis Cruz
@@ -69,7 +69,7 @@ public class ResponseCacheOSCacheImpl
         return instance;
     }
 
-	public void cache(String id, ByteArrayOutputStream response)
+	public void cache(String id, ResponseContent response)
 	{
 		try
 		{
@@ -85,11 +85,11 @@ public class ResponseCacheOSCacheImpl
 		}
 	}
 
-	public ByteArrayOutputStream lookup(String id)
+	public ResponseContent lookup(String id)
 	{
 		try
 		{
-			return (ByteArrayOutputStream) admin.getFromCache(id, refreshTimeout);
+			return (ResponseContent) admin.getFromCache(id, refreshTimeout);
 		}
 		catch (Exception e)
 		{
