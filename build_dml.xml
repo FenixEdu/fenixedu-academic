@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="generate" name="DML generation and deletion scripts">
+	
+	<property environment="env"/>
+	<property name="encoding" value="ISO-8859-1"/>	
+
+	<property file="build.properties"/>
+
+    <!-- Source code directories -->
+    <property name="src" location="src"/>
+    <property name="config" location="config"/>
+	<property name="config.web" location="metadata"/>
+
+	<!-- Directories for compiled code -->
+	<property name="build.home" location="build"/>
+	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+	<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
+	
+	<!-- Directories with libraries (JARs) -->
+    <property name="lib" location="lib" />
+	
+	<!-- DML-specific properties -->
+	<property name="dml.topLevelPackage" value="net.sourceforge.fenixedu.dml"/>
+	<property name="dml.definition.file" value="domain.dml"/>
+	<property name="dml.dir" value="config"/>
+	<property name="dml.generated.dir" value="${src}"/>
+	
+	<target name="generate"
+	                description="Generate java code from a DML file">
+		<echo message="Compiling ${dml.definition.file} ..."/>
+		<java classname="dml.DmlCompiler" fork="true">
+			<arg value="-f"/>
+			<arg value="-d"/>
+			<arg value="${dml.generated.dir}"/>
+			<arg value="-p"/>
+			<arg value="${dml.topLevelPackage}"/>
+			<arg value="${dml.dir}/${dml.definition.file}"/>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+		<echo level="info" message="Compilation of ${dml.definition.file} terminated."/>
+	</target>
+	
+	<target name="delete-generated-classes"
+		                description="Delete generated java classes">
+		<delete includeEmptyDirs="true">
+			<fileset defaultExcludes="no" dir="${dml.generated.dir}"
+		               includes="**/*~,**/#*#,**/*_Base.java"/>
+	    </delete>
+	</target>
+
+</project>
