@@ -971,7 +971,7 @@
 	
 	
 	<target name="load-db-for-curicula-course-enrollment-test" description="" depends="compile-app-server">
-		<java classname="UtilTests.enrollment.LoadDBForCurricularCourseEnrollmentTest" fork="true">
+		<java classname="Tools.enrollment.LoadDBForCurricularCourseEnrollmentTest" fork="true">
 			<classpath>
 				<pathelement path="${build.app-server}"/>
             	<fileset dir="${env.JBOSS_HOME}/client">
