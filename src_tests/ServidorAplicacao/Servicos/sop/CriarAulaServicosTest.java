@@ -104,7 +104,7 @@ public class CriarAulaServicosTest extends TestCaseServicos {
 				assertNull("testUnauthorizedCreateAula", result);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace(System.out);
 			fail("Falhou o teste!!!");    
 		}
