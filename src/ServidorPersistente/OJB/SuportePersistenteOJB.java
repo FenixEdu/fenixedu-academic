@@ -62,6 +62,7 @@ import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentExternalPerson;
 import ServidorPersistente.IPersistentGratuity;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentGuide;
@@ -70,6 +71,9 @@ import ServidorPersistente.IPersistentGuideSituation;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
+import ServidorPersistente.IPersistentMasterDegreeProofVersion;
+import ServidorPersistente.IPersistentMasterDegreeThesis;
+import ServidorPersistente.IPersistentMasterDegreeThesisDataVersion;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentPersonRole;
 import ServidorPersistente.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
@@ -679,4 +683,19 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentWebSiteItem getIPersistentWebSiteItem() {
 		return new WebSiteItemOJB();
 	}
+	
+	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis() {
+		return new MasterDegreeThesisOJB();
+	}
+	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion() {
+		return new MasterDegreeThesisDataVersionOJB();
+	}
+	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {
+		return new MasterDegreeProofVersionOJB();
+	}
+	
+	public IPersistentExternalPerson getIPersistentExternalPerson() {
+		return new ExternalPersonOJB();
+	}
+	
 }
