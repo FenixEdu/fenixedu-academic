@@ -151,12 +151,10 @@ public class EditGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedCreateDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantTypeSuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantTypeSuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantType successfull " + e);
         } catch (Exception e) {
@@ -173,14 +171,12 @@ public class EditGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(false);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
         } catch (ExistingServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantTypeUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantTypeUnsuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantType unsuccessfull " + e);
         } catch (Exception e) {
@@ -197,13 +193,11 @@ public class EditGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsEdit();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testEditGrantTypeSuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantTypeSuccessfull");
         } catch (FenixServiceException e) {
             fail("Editing a GrantType successfull " + e);
         } catch (Exception e) {
@@ -220,13 +214,11 @@ public class EditGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(true);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
         } catch (ExistingServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testEditGrantTypeUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantTypeUnsuccessfull");
         } catch (FenixServiceException e) {
             fail("Editing a GrantType unsuccessfull " + e);
         } catch (Exception e) {

@@ -91,7 +91,6 @@ public class ReadGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -104,10 +103,10 @@ public class ReadGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read a GrantType Successfull
      */
@@ -117,19 +116,18 @@ public class ReadGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantTypeId = new Integer(1);
             if (!result.getIdInternal().equals(grantTypeId))
-                    fail("Reading a GrantType Successfull: invalid grant type read!");
+                fail("Reading a GrantType Successfull: invalid grant type read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantTypeSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantTypeSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantType " + e);
         } catch (Exception e) {
@@ -146,18 +144,17 @@ public class ReadGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantType result = (InfoGrantType) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null)
-                    fail("Reading a GrantType Unsuccessfull: grant type should not exist!");
+                fail("Reading a GrantType Unsuccessfull: grant type should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantTypeUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantTypeUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantType Unsuccessfull " + e);
         } catch (Exception e) {
@@ -165,5 +162,4 @@ public class ReadGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
         }
     }
 
-    
 }

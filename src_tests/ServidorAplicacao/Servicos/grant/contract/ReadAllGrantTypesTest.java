@@ -12,7 +12,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
@@ -80,11 +79,10 @@ public class ReadAllGrantTypesTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
      */
     protected Object[] getAuthorizeArguments() {
-        Object[] args = { };
+        Object[] args = {};
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -97,8 +95,8 @@ public class ReadAllGrantTypesTest extends ServiceNeedsAuthenticationTestCase {
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
 
     /*
@@ -110,20 +108,17 @@ public class ReadAllGrantTypesTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null && result.size() != 2)
-                    fail("Reading all GrantTypes Successfull: invalid grant type read!");
-            
-            //TODO.. verificar o que ele leu...
+                fail("Reading all GrantTypes Successfull: invalid grant type read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadAllGrantTypesSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadAllGrantTypesSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading all GrantTypes " + e);
         } catch (Exception e) {

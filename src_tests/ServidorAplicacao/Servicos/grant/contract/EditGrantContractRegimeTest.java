@@ -20,8 +20,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Pica
  * @author Barbosa
  */
-public class EditGrantContractRegimeTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class EditGrantContractRegimeTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param name
@@ -97,13 +96,10 @@ public class EditGrantContractRegimeTest extends
         infoGrantContractRegime.setState(new Integer(1));
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            infoGrantContractRegime.setDateBeginContract(sdf
-                    .parse("10-10-2222"));
+            infoGrantContractRegime.setDateBeginContract(sdf.parse("10-10-2222"));
             infoGrantContractRegime.setDateEndContract(sdf.parse("10-10-3333"));
-            infoGrantContractRegime.setDateSendDispatchCC(sdf
-                    .parse("08-10-2003"));
-            infoGrantContractRegime.setDateSendDispatchCD(sdf
-                    .parse("08-10-2003"));
+            infoGrantContractRegime.setDateSendDispatchCC(sdf.parse("08-10-2003"));
+            infoGrantContractRegime.setDateSendDispatchCD(sdf.parse("08-10-2003"));
             infoGrantContractRegime.setDateDispatchCC(sdf.parse("08-10-2003"));
             infoGrantContractRegime.setDateDispatchCD(sdf.parse("08-10-2003"));
         } catch (java.text.ParseException e) {
@@ -128,13 +124,10 @@ public class EditGrantContractRegimeTest extends
         infoGrantContractRegime.setState(new Integer(1));
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            infoGrantContractRegime.setDateBeginContract(sdf
-                    .parse("11-11-2003"));
+            infoGrantContractRegime.setDateBeginContract(sdf.parse("11-11-2003"));
             infoGrantContractRegime.setDateEndContract(sdf.parse("10-10-2004"));
-            infoGrantContractRegime.setDateSendDispatchCC(sdf
-                    .parse("08-10-2003"));
-            infoGrantContractRegime.setDateSendDispatchCD(sdf
-                    .parse("08-10-2003"));
+            infoGrantContractRegime.setDateSendDispatchCC(sdf.parse("08-10-2003"));
+            infoGrantContractRegime.setDateSendDispatchCD(sdf.parse("08-10-2003"));
             infoGrantContractRegime.setDateDispatchCC(sdf.parse("08-10-2003"));
             infoGrantContractRegime.setDateDispatchCD(sdf.parse("08-10-2003"));
         } catch (java.text.ParseException e) {
@@ -165,13 +158,10 @@ public class EditGrantContractRegimeTest extends
         infoGrantContractRegime.setState(new Integer(1));
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            infoGrantContractRegime.setDateBeginContract(sdf
-                    .parse("11-11-2003"));
+            infoGrantContractRegime.setDateBeginContract(sdf.parse("11-11-2003"));
             infoGrantContractRegime.setDateEndContract(sdf.parse("10-10-2004"));
-            infoGrantContractRegime.setDateSendDispatchCC(sdf
-                    .parse("08-10-2003"));
-            infoGrantContractRegime.setDateSendDispatchCD(sdf
-                    .parse("08-10-2003"));
+            infoGrantContractRegime.setDateSendDispatchCC(sdf.parse("08-10-2003"));
+            infoGrantContractRegime.setDateSendDispatchCD(sdf.parse("08-10-2003"));
             infoGrantContractRegime.setDateDispatchCC(sdf.parse("08-10-2003"));
             infoGrantContractRegime.setDateDispatchCD(sdf.parse("08-10-2003"));
         } catch (java.text.ParseException e) {
@@ -209,12 +199,10 @@ public class EditGrantContractRegimeTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedCreateDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantContractRegimeSuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantContractRegimeSuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantContractRegime successfull " + e);
         } catch (Exception e) {
@@ -231,14 +219,12 @@ public class EditGrantContractRegimeTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(false);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
         } catch (ExistingServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantContractRegimeUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantContractRegimeUnsuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantContractRegime unsuccessfull " + e);
         } catch (Exception e) {
@@ -249,25 +235,24 @@ public class EditGrantContractRegimeTest extends
     /*
      * Grant ContractRegime Edition Successfull
      */
-        public void testEditGrantContractRegimeSuccessfull() {
-            try {
-                String[] args = getAuthenticatedAndAuthorizedUser();
-                IUserView id = authenticateUser(args);
-                Object[] args2 = getAuthorizeArgumentsEdit();
-    
-                ServiceManagerServiceFactory.executeService(id,
-                        getNameOfServiceToBeTested(), args2);
-    
-                compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
-                System.out
-                        .println(getNameOfServiceToBeTested()
-                                + " was SUCCESSFULY runned by test: testEditGrantContractRegimeSuccessfull");
-            } catch (FenixServiceException e) {
-                fail("Editing a GrantContractRegime successfull " + e);
-            } catch (Exception e) {
-                fail("Editing a GrantContractRegime successfull " + e);
-            }
+    public void testEditGrantContractRegimeSuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArgumentsEdit();
+
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantContractRegimeSuccessfull");
+        } catch (FenixServiceException e) {
+            fail("Editing a GrantContractRegime successfull " + e);
+        } catch (Exception e) {
+            fail("Editing a GrantContractRegime successfull " + e);
         }
+    }
+
     /*
      * Grant ContractRegime Edition Unsuccessfull: invalid values
      */
@@ -277,13 +262,11 @@ public class EditGrantContractRegimeTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(true);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
         } catch (ExistingServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testEditGrantContractRegimeUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantContractRegimeUnsuccessfull");
         } catch (FenixServiceException e) {
             fail("Editing a GrantContractRegime unsuccessfull " + e);
         } catch (Exception e) {

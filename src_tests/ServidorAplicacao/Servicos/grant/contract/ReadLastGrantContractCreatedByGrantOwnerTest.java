@@ -10,25 +10,20 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadLastGrantContractCreatedByGrantOwnerTest
-		extends
-			ServiceNeedsAuthenticationTestCase
-{
+public class ReadLastGrantContractCreatedByGrantOwnerTest extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	 * @param name
-	 */
-	public ReadLastGrantContractCreatedByGrantOwnerTest(String name)
-	{
-		super(name);
-	}
-	
-	    /*
+    /**
+     * @param name
+     */
+    public ReadLastGrantContractCreatedByGrantOwnerTest(String name) {
+        super(name);
+    }
+
+    /*
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
@@ -95,7 +90,6 @@ public class ReadLastGrantContractCreatedByGrantOwnerTest
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -108,10 +102,10 @@ public class ReadLastGrantContractCreatedByGrantOwnerTest
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read the Last GrantContract by Grant Owner Successfull
      */
@@ -121,14 +115,15 @@ public class ReadLastGrantContractCreatedByGrantOwnerTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory.executeService(
+                    id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantContractId = new Integer(2);
             Integer grantContractNumber = new Integer(2);
-            if (!result.getIdInternal().equals(grantContractId) || !result.getContractNumber().equals(grantContractNumber))
-                    fail("Reading a GrantContract Successfull: invalid grant contract read!");
+            if (!result.getIdInternal().equals(grantContractId)
+                    || !result.getContractNumber().equals(grantContractNumber))
+                fail("Reading a GrantContract Successfull: invalid grant contract read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -143,7 +138,8 @@ public class ReadLastGrantContractCreatedByGrantOwnerTest
     }
 
     /*
-     * Read the Last GrantContract By GrantOwner Unsuccessfull (unKnowned grant owner)
+     * Read the Last GrantContract By GrantOwner Unsuccessfull (unKnowned grant
+     * owner)
      */
     public void testReadLastGrantContractCreatedByGrantOwnerUnsuccessfull() {
         try {
@@ -151,12 +147,12 @@ public class ReadLastGrantContractCreatedByGrantOwnerTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory.executeService(
+                    id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null && result.getIdInternal() != null)
-                    fail("Reading LastGrantContractCreatedByGrantOwner Unsuccessfull: grant contract should not exist!");
+                fail("Reading LastGrantContractCreatedByGrantOwner Unsuccessfull: grant contract should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -168,6 +164,6 @@ public class ReadLastGrantContractCreatedByGrantOwnerTest
         } catch (Exception e) {
             fail("Reading LastGrantContractCreatedByGrantOwner Unsuccessfull " + e);
         }
-    }	
+    }
 
 }

@@ -16,8 +16,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Pica
  * @author Barbosa
  */
-public class ReadAllGrantPaymentEntitiesByClassNameTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class ReadAllGrantPaymentEntitiesByClassNameTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param name
@@ -125,12 +124,12 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null || result.size() != 2)
-                    fail("Reading a AllGrantPaymentEntityByClassName (Cost Center) Successfull: invalid grant payment entity read!");
+                fail("Reading a AllGrantPaymentEntityByClassName (Cost Center) Successfull: invalid grant payment entity read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -153,12 +152,12 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsGrantProject();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null && result.size() != 3)
-                    fail("Reading a AllGrantPaymentEntityByClassName (Projects) Successfull: invalid grant payment entity read!");
+                fail("Reading a AllGrantPaymentEntityByClassName (Projects) Successfull: invalid grant payment entity read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -181,8 +180,7 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             fail("Reading a GrantPaymentEntity Unsuccessfull: grant payment entity should not exist!");
 

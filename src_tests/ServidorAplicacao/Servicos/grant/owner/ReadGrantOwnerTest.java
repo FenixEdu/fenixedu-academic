@@ -17,8 +17,7 @@ import framework.factory.ServiceManagerServiceFactory;
  *  
  */
 
-public class ReadGrantOwnerTest extends
-        ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
+public class ReadGrantOwnerTest extends ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param testName
@@ -102,19 +101,18 @@ public class ReadGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantOwnerId = new Integer(2);
             if (!result.getIdInternal().equals(grantOwnerId))
-                    fail("Reading a GrantOwner Successfull: invalid grant owner read!");
+                fail("Reading a GrantOwner Successfull: invalid grant owner read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantOwnerSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantOwnerSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantOwner Successfull " + e);
         } catch (Exception e) {
@@ -131,18 +129,17 @@ public class ReadGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null)
-                    fail("Reading a GrantOwner Unsuccessfull: grant owner should not exist!");
+                fail("Reading a GrantOwner Unsuccessfull: grant owner should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantOwnerUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantOwnerUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantOwner Unsuccessfull " + e);
         } catch (Exception e) {

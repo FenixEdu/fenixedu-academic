@@ -10,21 +10,18 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase
-{
+public class ReadGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	 * @param name
-	 */
-	public ReadGrantSubsidyTest(String name)
-	{
-		super(name);
-	}
+    /**
+     * @param name
+     */
+    public ReadGrantSubsidyTest(String name) {
+        super(name);
+    }
 
     /*
      * (non-Javadoc)
@@ -93,7 +90,6 @@ public class ReadGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -106,10 +102,10 @@ public class ReadGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read a GrantSubsidy Successfull
      */
@@ -119,20 +115,18 @@ public class ReadGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantSubsidy result = (InfoGrantSubsidy) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantSubsidy result = (InfoGrantSubsidy) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantSubsidyId = new Integer(1);
             if (!result.getIdInternal().equals(grantSubsidyId))
-                    fail("Reading a GrantSubsidy Successfull: invalid grant Subsidy read!");
-            //TODO.. verify other values...
+                fail("Reading a GrantSubsidy Successfull: invalid grant Subsidy read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantSubsidySuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantSubsidySuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantSubsidy " + e);
         } catch (Exception e) {
@@ -156,13 +150,12 @@ public class ReadGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase
         } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadSubsidyTypeUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
- 
+            System.out.println("testReadSubsidyTypeUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
+
         } catch (Exception e) {
             fail("Reading a GrantSubsidy Unsuccessfull " + e);
         }
-    }	
+    }
 
 }

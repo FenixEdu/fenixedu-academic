@@ -9,24 +9,23 @@ import DataBeans.grant.contract.InfoGrantContract;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author  Barbosa
- * @author  Pica
- *
+ * @author Barbosa
+ * @author Pica
+ *  
  */
 
-public class ReadGrantContractTest extends ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase
-{
+public class ReadGrantContractTest extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	 * @param testName
-	 */
-	public ReadGrantContractTest(java.lang.String testName)
-	{
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public ReadGrantContractTest(java.lang.String testName) {
+        super(testName);
+    }
 
     /*
      * (non-Javadoc)
@@ -95,7 +94,6 @@ public class ReadGrantContractTest extends ServidorAplicacao.Servicos.ServiceNee
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -108,10 +106,10 @@ public class ReadGrantContractTest extends ServidorAplicacao.Servicos.ServiceNee
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read a GrantContract Successfull
      */
@@ -121,20 +119,18 @@ public class ReadGrantContractTest extends ServidorAplicacao.Servicos.ServiceNee
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory.executeService(
+                    id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantContractId = new Integer(1);
             if (!result.getIdInternal().equals(grantContractId))
-                    fail("Reading a GrantContract Successfull: invalid grant contract read!");
-            //TODO.. verify other values...
+                fail("Reading a GrantContract Successfull: invalid grant contract read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantContractSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantContractSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantContract " + e);
         } catch (Exception e) {
@@ -151,19 +147,17 @@ public class ReadGrantContractTest extends ServidorAplicacao.Servicos.ServiceNee
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
-             fail("Reading a GrantContract Unsuccessfull: grant contract should not exist!");
+            fail("Reading a GrantContract Unsuccessfull: grant contract should not exist!");
 
         } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadContractTypeUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadContractTypeUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (Exception e) {
             fail("Reading a GrantContract Unsuccessfull " + e);
         }
-    }	
+    }
 }

@@ -116,19 +116,18 @@ public class ReadGrantPartTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantPart result = (InfoGrantPart) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantPart result = (InfoGrantPart) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantPartId = new Integer(1);
             if (!result.getIdInternal().equals(grantPartId))
-                    fail("Reading a GrantPart Successfull: invalid grant part read!");
+                fail("Reading a GrantPart Successfull: invalid grant part read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantPartSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantPartSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantPart " + e);
         } catch (Exception e) {
@@ -145,18 +144,17 @@ public class ReadGrantPartTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            InfoGrantPart result = (InfoGrantPart) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantPart result = (InfoGrantPart) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null)
-                    fail("Reading a GrantPart Unsuccessfull: grant Part should not exist!");
+                fail("Reading a GrantPart Unsuccessfull: grant Part should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantPartUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantPartUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantPartUnsuccessfull " + e);
         } catch (Exception e) {

@@ -9,6 +9,7 @@ import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -17,8 +18,7 @@ import framework.factory.ServiceManagerServiceFactory;
  *  
  */
 
-public class ReadGrantOwnerByPersonTest extends
-        ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
+public class ReadGrantOwnerByPersonTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param testName
@@ -102,19 +102,18 @@ public class ReadGrantOwnerByPersonTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantOwnerId = new Integer(2);
             if (!result.getIdInternal().equals(grantOwnerId))
-                    fail("Reading a GrantOwnerByPerson Successfull: invalid grant owner read!");
+                fail("Reading a GrantOwnerByPerson Successfull: invalid grant owner read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantOwnerByPersonSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantOwnerByPersonSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantOwnerByPerson Successfull " + e);
         } catch (Exception e) {
@@ -131,18 +130,17 @@ public class ReadGrantOwnerByPersonTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null)
-                    fail("Reading a GrantOwnerByPerson Unsuccessfull: grant owner should not exist!");
+                fail("Reading a GrantOwnerByPerson Unsuccessfull: grant owner should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantOwnerByPersonUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantOwnerByPersonUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantOwnerByPerson Unsuccessfull " + e);
         } catch (Exception e) {

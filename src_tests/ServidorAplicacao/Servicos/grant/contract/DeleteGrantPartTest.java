@@ -10,7 +10,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
@@ -45,8 +44,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
     protected String getExpectedDataSetFilePath() {
         return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartExpectedDataSet.xml";
     }
-    
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -119,15 +117,14 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
-            Object[] args2 = { new Integer(1)};
+            Object[] args2 = { new Integer(1) };
 
             ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-            System.out
-                    .println("testDeleteGrantPartSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testDeleteGrantPartSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Deleting a GrantPart " + e);
         } catch (Exception e) {
@@ -151,9 +148,8 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
         } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testDeleteGrantPartUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testDeleteGrantPartUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (Exception e) {
             fail("Delete a GrantPart Unsuccessfull " + e);
         }

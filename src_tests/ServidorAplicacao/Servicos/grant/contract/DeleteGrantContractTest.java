@@ -4,12 +4,11 @@
  */
 package ServidorAplicacao.Servicos.grant.contract;
 
-import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Pica
@@ -45,8 +44,7 @@ public class DeleteGrantContractTest extends ServiceNeedsAuthenticationTestCase 
     protected String getExpectedDataSetFilePath() {
         return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantContractExpectedDataSet.xml";
     }
-    
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -125,9 +123,8 @@ public class DeleteGrantContractTest extends ServiceNeedsAuthenticationTestCase 
 
             //Verify changed database
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-            System.out
-                    .println("testDeleteGrantContractSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testDeleteGrantContractSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Deleting a GrantContract " + e);
         } catch (Exception e) {
@@ -151,13 +148,11 @@ public class DeleteGrantContractTest extends ServiceNeedsAuthenticationTestCase 
         } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testDeleteGrantContractUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testDeleteGrantContractUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (Exception e) {
             fail("Delete a GrantContract Unsuccessfull " + e);
         }
     }
-
 
 }

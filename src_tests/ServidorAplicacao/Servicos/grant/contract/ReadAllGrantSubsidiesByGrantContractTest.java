@@ -11,20 +11,17 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadAllGrantSubsidiesByGrantContractTest extends ServiceNeedsAuthenticationTestCase
-{
-	/**
-	 * @param name
-	 */
-	public ReadAllGrantSubsidiesByGrantContractTest(String name)
-	{
-		super(name);
-	}
+public class ReadAllGrantSubsidiesByGrantContractTest extends ServiceNeedsAuthenticationTestCase {
+    /**
+     * @param name
+     */
+    public ReadAllGrantSubsidiesByGrantContractTest(String name) {
+        super(name);
+    }
 
     /*
      * (non-Javadoc)
@@ -93,7 +90,6 @@ public class ReadAllGrantSubsidiesByGrantContractTest extends ServiceNeedsAuthen
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -106,10 +102,10 @@ public class ReadAllGrantSubsidiesByGrantContractTest extends ServiceNeedsAuthen
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read all GrantSubsidies by Contract Successfull
      */
@@ -119,12 +115,12 @@ public class ReadAllGrantSubsidiesByGrantContractTest extends ServiceNeedsAuthen
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null || result.size() != 3)
-                    fail("Reading AllGrantSubsidiesByGrantContract Successfull: invalid grant Subsidy read!");
+                fail("Reading AllGrantSubsidiesByGrantContract Successfull: invalid grant Subsidy read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -147,23 +143,22 @@ public class ReadAllGrantSubsidiesByGrantContractTest extends ServiceNeedsAuthen
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null && result.size() != 0)
-                    fail("Reading AllGrantSubsidiesByGrantContract Unsuccessfull: grant Subsidies should not exist!");
+                fail("Reading AllGrantSubsidiesByGrantContract Unsuccessfull: grant Subsidies should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadAllGrantSubsidiesByGrantContract was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadAllGrantSubsidiesByGrantContract was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading AllGrantSubsidiesByGrantContract Unsuccessfull " + e);
         } catch (Exception e) {
             fail("Reading AllGrantSubsidiesByGrantContract Unsuccessfull " + e);
         }
-    }	
+    }
 
 }

@@ -11,14 +11,11 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-//TODODODODODOD
-
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadPaymentEntityByNumberAndClassTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class ReadPaymentEntityByNumberAndClassTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param name
@@ -149,16 +146,14 @@ public class ReadPaymentEntityByNumberAndClassTest extends
                     .executeService(id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
-            if (!(result.getNumber().equals("1")
-                    && result.getOjbConcreteClass().equals(
-                            "Dominio.grant.contract.GrantCostCenter")))
-                    fail("Reading a GrantPaymentEntity Successfull: invalid grant payment entity read!");
+            if (!(result.getNumber().equals("1") && result.getOjbConcreteClass().equals(
+                    "Dominio.grant.contract.GrantCostCenter")))
+                fail("Reading a GrantPaymentEntity Successfull: invalid grant payment entity read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantPaymentEntitySuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantPaymentEntitySuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantPaymentEntity " + e);
         } catch (Exception e) {
@@ -180,15 +175,13 @@ public class ReadPaymentEntityByNumberAndClassTest extends
 
             //Check the read result
             if (!result.getNumber().equals("2")
-                    || !result.getOjbConcreteClass().equals(
-                            "Dominio.grant.contract.GrantProject"))
-                    fail("Reading a GrantPaymentEntity Successfull: invalid grant payment entity read!");
+                    || !result.getOjbConcreteClass().equals("Dominio.grant.contract.GrantProject"))
+                fail("Reading a GrantPaymentEntity Successfull: invalid grant payment entity read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantPaymentEntitySuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantPaymentEntitySuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantPaymentEntity " + e);
         } catch (Exception e) {
@@ -210,13 +203,12 @@ public class ReadPaymentEntityByNumberAndClassTest extends
 
             //Check the read result
             if (result != null)
-                    fail("Reading a GrantPaymentEntity Unsuccessfull: grant payment entity should not exist!");
+                fail("Reading a GrantPaymentEntity Unsuccessfull: grant payment entity should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantPaymentEntityUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantPaymentEntityUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantPaymentEntity Unsuccessfull " + e);
         } catch (Exception e) {
@@ -238,13 +230,12 @@ public class ReadPaymentEntityByNumberAndClassTest extends
 
             //Check the read result
             if (result != null)
-                    fail("Reading a GrantPaymentEntity Unsuccessfull: grant payment entity should not exist!");
+                fail("Reading a GrantPaymentEntity Unsuccessfull: grant payment entity should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantPaymentEntityUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantPaymentEntityUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantPaymentEntity Unsuccessfull " + e);
         } catch (Exception e) {
@@ -261,18 +252,17 @@ public class ReadPaymentEntityByNumberAndClassTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArgumentsInvalidClass();
 
-            InfoGrantPaymentEntity result = (InfoGrantPaymentEntity) ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            InfoGrantPaymentEntity result = (InfoGrantPaymentEntity) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
-            if(result != null)
+            if (result != null)
                 fail("Reading a GrantPaymentEntity Unsuccessfull: grant payment entity should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantPaymentEntityUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
-            
+            System.out.println("testReadGrantPaymentEntityUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
+
         } catch (FenixServiceException e) {
             fail("Reading a GrantPaymentEntity Unsuccessfull " + e);
         } catch (Exception e) {

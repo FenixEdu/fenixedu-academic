@@ -20,8 +20,7 @@ import framework.factory.ServiceManagerServiceFactory;
  *  
  */
 
-public class SearchGrantOwnerTest extends
-        ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
+public class SearchGrantOwnerTest extends ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param testName
@@ -168,17 +167,16 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() > 1)
-                    fail("Searching by name a person that is NOT a grantOwner: more than ONE result!!");
+                fail("Searching by name a person that is NOT a grantOwner: more than ONE result!!");
             //Check the search result
             Integer personId = new Integer(6);
             Object[] values = { personId };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
@@ -201,17 +199,16 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByIDAndGetOneResult();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() > 1)
-                    fail("Searching by ID a person that is NOT a grantOwner: more than ONE result!!");
+                fail("Searching by ID a person that is NOT a grantOwner: more than ONE result!!");
             //Check the search result
             Integer personId = new Integer(1);
             Object[] values = { personId };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
                     .println("testSearchByIDNumberAndIDTypeSuccessfullPersonNotGrantOwner was SUCCESSFULY runned by: "
@@ -233,28 +230,25 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByNameAndIDAndGetOneResult();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() > 1)
-                    fail("Searching by name and ID a person that is NOT a grantOwner: more than ONE result!!");
+                fail("Searching by name and ID a person that is NOT a grantOwner: more than ONE result!!");
             //Check the search result
             Integer personId = new Integer(2);
             Object[] values = { personId };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
                     .println("testSearchByNameAndIDNumberAndIDTypeSuccessfullPersonNotGrantOwner was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Searching by name and ID a person that is NOT a grantOwner "
-                    + e);
+            fail("Searching by name and ID a person that is NOT a grantOwner " + e);
         } catch (Exception e) {
-            fail("Searching by name and ID a person that is NOT a grantOwner "
-                    + e);
+            fail("Searching by name and ID a person that is NOT a grantOwner " + e);
         }
     }
 
@@ -268,17 +262,16 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByNameGetOneResultGrantOwner();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() > 1)
-                    fail("Searching by name a person that IS ALSO a grantOwner: more than ONE result!!");
+                fail("Searching by name a person that IS ALSO a grantOwner: more than ONE result!!");
             //Check the search result
             Integer personId = new Integer(14);
             Object[] values = { personId };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
@@ -301,17 +294,16 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByIDGetOneResultGrantOwner();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() > 1)
-                    fail("Searching by ID a person that IS ALSO a grantOwner: more than ONE result!!");
+                fail("Searching by ID a person that IS ALSO a grantOwner: more than ONE result!!");
             //Check the search result
             Integer personId = new Integer(15);
             Object[] values = { personId };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
@@ -334,28 +326,25 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByNameAndIDGetOneResultGrantOwner();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() > 1)
-                    fail("Searching by name and ID a person that IS ALSO a grantOwner: more than ONE result!!");
+                fail("Searching by name and ID a person that IS ALSO a grantOwner: more than ONE result!!");
             //Check the search result
             Integer personId = new Integer(15);
             Object[] values = { personId };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
                     .println("testSearchByNameAndIDNumberAndIDTypeSuccessfullPersonIsGrantOwner was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
 
         } catch (FenixServiceException e) {
-            fail("Searching by name and ID a person that IS ALSO a grantOwner "
-                    + e);
+            fail("Searching by name and ID a person that IS ALSO a grantOwner " + e);
         } catch (Exception e) {
-            fail("Searching by name and ID a person that ID ALSO a grantOwner "
-                    + e);
+            fail("Searching by name and ID a person that ID ALSO a grantOwner " + e);
         }
     }
 
@@ -368,21 +357,19 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByNameGetSeveralResults();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() <= 1)
-                    fail("Searching by name expecting several results: ONE or NO results!!");
+                fail("Searching by name expecting several results: ONE or NO results!!");
             //Check the search result
             Object[] values = { new Integer(1), new Integer(3), new Integer(13) };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testSearchByNameSuccessfullSeveralPerson was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testSearchByNameSuccessfullSeveralPerson was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Searching by name expecting several results " + e);
         } catch (Exception e) {
@@ -399,16 +386,15 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByNameAndIDGetSeveralResults();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns only ONE result
             if (result.size() <= 1)
-                    fail("Searching by name and ID expecting several results: ONE or NO results!!");
+                fail("Searching by name and ID expecting several results: ONE or NO results!!");
             //Check the search result
             Object[] values = { new Integer(1), new Integer(3), new Integer(13) };
-            UtilsTestCase.readTestList(result, values, "personInfo.idInternal",
-                    InfoGrantOwner.class);
+            UtilsTestCase.readTestList(result, values, "personInfo.idInternal", InfoGrantOwner.class);
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
@@ -430,18 +416,17 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByNameUnsuccessfull();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns ZERO results
             if (result != null && result.size() != 0)
-                    fail("Searching by name unsuccessfull: should retrieve NO result ");
+                fail("Searching by name unsuccessfull: should retrieve NO result ");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testSearchByNameUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testSearchByNameUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Searching by name unsuccessfull " + e);
         } catch (Exception e) {
@@ -458,18 +443,17 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByIDUnsuccessfull();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns ZERO results
             if (result != null && result.size() != 0)
-                    fail("Searching by ID unsuccessfull: should retrieve NO result ");
+                fail("Searching by ID unsuccessfull: should retrieve NO result ");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testSearchByIDNumberAndIDTypeUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testSearchByIDNumberAndIDTypeUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Searching by ID unsuccessfull " + e);
         } catch (Exception e) {
@@ -486,12 +470,12 @@ public class SearchGrantOwnerTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getArgumentsToSearchByNameAndIDUnsuccessfull();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns ZERO results
             if (result != null && result.size() != 0)
-                    fail("Searching by name and ID unsuccessfull: should retrieve NO result ");
+                fail("Searching by name and ID unsuccessfull: should retrieve NO result ");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());

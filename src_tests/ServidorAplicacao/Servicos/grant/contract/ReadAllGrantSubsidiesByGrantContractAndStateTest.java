@@ -11,21 +11,17 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadAllGrantSubsidiesByGrantContractAndStateTest
-		extends ServiceNeedsAuthenticationTestCase
-{
-	/**
-	 * @param name
-	 */
-	public ReadAllGrantSubsidiesByGrantContractAndStateTest(String name)
-	{
-		super(name);
-	}
+public class ReadAllGrantSubsidiesByGrantContractAndStateTest extends ServiceNeedsAuthenticationTestCase {
+    /**
+     * @param name
+     */
+    public ReadAllGrantSubsidiesByGrantContractAndStateTest(String name) {
+        super(name);
+    }
 
     /*
      * (non-Javadoc)
@@ -84,7 +80,7 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
 
         Integer idInternal = new Integer(1);
         Integer state = new Integer(1); //Active subsidies
-        Object[] args = { idInternal , state};
+        Object[] args = { idInternal, state };
         return args;
     }
 
@@ -92,19 +88,18 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
 
         Integer idInternal = new Integer(1);
         Integer state = new Integer(0); //Desactivated subsidies
-        Object[] args = { idInternal , state};
+        Object[] args = { idInternal, state };
         return args;
     }
-    
+
     protected Object[] getUnauthorizeArguments() {
 
         Integer idInternal = new Integer(666); //Invalid Contract...
         Integer state = new Integer(0); //Desactivated subsidies
-        Object[] args = { idInternal , state};
+        Object[] args = { idInternal, state };
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -117,10 +112,10 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read all GrantSubsidies actives by Contract Successfull
      */
@@ -130,12 +125,12 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null || result.size() != 1)
-                    fail("Reading AllGrantSubsidiesByGrantContractAndState Successfull: invalid grant Subsidy read!");
+                fail("Reading AllGrantSubsidiesByGrantContractAndState Successfull: invalid grant Subsidy read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -158,12 +153,12 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments2();
 
-            List result = (List) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null || result.size() != 2)
-                    fail("Reading AllGrantSubsidiesByGrantContractAndState Successfull: invalid grant Subsidy read!");
+                fail("Reading AllGrantSubsidiesByGrantContractAndState Successfull: invalid grant Subsidy read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -177,7 +172,6 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
         }
     }
 
-    
     /*
      * Read all GrantSubsidies Unsuccessfull (invalid contract)
      */
@@ -187,12 +181,12 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null && result.size() != 0)
-                    fail("Reading AllGrantSubsidiesByGrantContractAndState Unsuccessfull: grant Subsidies should not exist!");
+                fail("Reading AllGrantSubsidiesByGrantContractAndState Unsuccessfull: grant Subsidies should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -204,6 +198,6 @@ public class ReadAllGrantSubsidiesByGrantContractAndStateTest
         } catch (Exception e) {
             fail("Reading AllGrantSubsidiesByGrantContractAndState Unsuccessfull " + e);
         }
-    }	
+    }
 
 }

@@ -14,6 +14,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -22,8 +23,7 @@ import framework.factory.ServiceManagerServiceFactory;
  *  
  */
 
-public class EditGrantSubsidyTest extends
-        ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
+public class EditGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param testName
@@ -166,12 +166,10 @@ public class EditGrantSubsidyTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedCreateDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantSubsidy " + e);
         } catch (Exception e) {
@@ -188,14 +186,12 @@ public class EditGrantSubsidyTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(false);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
         } catch (ExistingServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantSubsidyUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantSubsidyUnsuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantSubsidy unsuccessfull " + e);
         } catch (Exception e) {
@@ -212,13 +208,11 @@ public class EditGrantSubsidyTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsEdit();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testEditGrantSubsidySuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantSubsidySuccessfull");
         } catch (FenixServiceException e) {
             fail("Editing a GrantSubsidy successfull " + e);
         } catch (Exception e) {
@@ -235,15 +229,13 @@ public class EditGrantSubsidyTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(true);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
         } catch (ExistingServiceException e) {
             fail("Editing a GrantSubsidy unsuccessfull " + e);
         } catch (FenixServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testEditGrantSubsidyUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantSubsidyUnsuccessfull");
         } catch (Exception e) {
             fail("Editing a GrantSubsidy unsuccessfull " + e);
         }

@@ -10,20 +10,17 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadGrantContractRegimeTest extends ServiceNeedsAuthenticationTestCase
-{
-	/**
-	 * @param name
-	 */
-	public ReadGrantContractRegimeTest(String name)
-	{
-		super(name);
-	}
+public class ReadGrantContractRegimeTest extends ServiceNeedsAuthenticationTestCase {
+    /**
+     * @param name
+     */
+    public ReadGrantContractRegimeTest(String name) {
+        super(name);
+    }
 
     /*
      * (non-Javadoc)
@@ -92,7 +89,6 @@ public class ReadGrantContractRegimeTest extends ServiceNeedsAuthenticationTestC
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -105,10 +101,10 @@ public class ReadGrantContractRegimeTest extends ServiceNeedsAuthenticationTestC
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read a GrantContractRegime Successfull
      */
@@ -124,14 +120,12 @@ public class ReadGrantContractRegimeTest extends ServiceNeedsAuthenticationTestC
             //Check the read result
             Integer grantContractRegimeId = new Integer(1);
             if (!result.getIdInternal().equals(grantContractRegimeId))
-                    fail("Reading a GrantContractRegime Successfull: invalid grant ContractRegime read!");
-            //TODO.. verify other values...
+                fail("Reading a GrantContractRegime Successfull: invalid grant ContractRegime read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadGrantContractRegimeSuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadGrantContractRegimeSuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantContractRegime " + e);
         } catch (Exception e) {
@@ -153,18 +147,17 @@ public class ReadGrantContractRegimeTest extends ServiceNeedsAuthenticationTestC
 
             //Check the read result
             if (result != null)
-                    fail("Reading a GrantContractRegime Unsuccessfull: grant ContractRegime should not exist!");
+                fail("Reading a GrantContractRegime Unsuccessfull: grant ContractRegime should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadContractRegimeTypeUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadContractRegimeTypeUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading a GrantContractRegime Unsuccessfull " + e);
         } catch (Exception e) {
             fail("Reading a GrantContractRegime Unsuccessfull " + e);
         }
     }
-	
+
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -18,145 +19,119 @@ import framework.factory.ServiceManagerServiceFactory;
  *  
  */
 
-public class ReadAllContractsByGrantOwnerTest
-    extends ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase
-{
+public class ReadAllContractsByGrantOwnerTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
-	 * @param testName
-	 */
-    public ReadAllContractsByGrantOwnerTest(java.lang.String testName)
-    {
+     * @param testName
+     */
+    public ReadAllContractsByGrantOwnerTest(java.lang.String testName) {
         super(testName);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServiceNeedsAuthenticationTestCase#getApplication()
-	 */
-    protected String getApplication()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected String getApplication() {
         return Autenticacao.INTRANET;
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadAllContractsByGrantOwner";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/grant/contract/testReadAllContractsByGrantOwnerDataSet.xml";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-	 */
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "16", "pass", getApplication()};
-        return args;
-    }
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-	 */
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = { "julia", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+     */
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "16", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
-	 */
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = { "fiado", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+     */
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-	 */
-    protected Object[] getAuthorizeArguments()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
+     */
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
+    protected Object[] getAuthorizeArguments() {
         Integer idInternal = new Integer(2);
         Object[] args = { idInternal };
         return args;
     }
 
-    protected Object[] getUnauthorizeArguments()
-    {
+    protected Object[] getUnauthorizeArguments() {
         Integer idInternal = new Integer(69);
         Object[] args = { idInternal };
         return args;
     }
+
     /** ********** Inicio dos testes ao serviço************* */
 
     /*
-	 * Read all GrantContracts of a GrantOwner Successfull
-	 */
-    public void testReadAllContractsByGrantOwnerSuccessfull()
-    {
-        try
-        {
+     * Read all GrantContracts of a GrantOwner Successfull
+     */
+    public void testReadAllContractsByGrantOwnerSuccessfull() {
+        try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result =
-                (List) ServiceManagerServiceFactory.executeService(
-                    id,
-                    getNameOfServiceToBeTested(),
-                    args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns some result
             if (result == null || result.size() != 2)
                 fail("Reading all contracts by grantOwner: NO results!!");
 
-            //Check the search result
-            //Object[] values = { new Integer(1), new Integer(2)};
-            //UtilsTestCase.readTestList(result, values, "idInternal", InfoGrantContract.class);
-
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out.println(
-                "testReadAllContractsByGrantOwnerSuccessfull was SUCCESSFULY runned by: "
+            System.out.println("testReadAllContractsByGrantOwnerSuccessfull was SUCCESSFULY runned by: "
                     + getNameOfServiceToBeTested());
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             fail("Reading all contracts by grantOwner Successfull " + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("Reading all contracts by grantOwner Successfull " + e);
         }
     }
 
     /*
-	 * Read all GrantContracts of a GrantOwner Unsuccessfull
-	 */
-    public void testReadAllContractsByGrantOwnerUnsuccessfull()
-    {
-        try
-        {
+     * Read all GrantContracts of a GrantOwner Unsuccessfull
+     */
+    public void testReadAllContractsByGrantOwnerUnsuccessfull() {
+        try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            List result =
-                (List) ServiceManagerServiceFactory.executeService(
-                    id,
-                    getNameOfServiceToBeTested(),
-                    args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check that service returns some result
             if (result.size() > 0)
@@ -164,14 +139,12 @@ public class ReadAllContractsByGrantOwnerTest
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out.println(
-                "testReadAllContractsByGrantOwnerUnsuccessfull was SUCCESSFULY runned by: "
-                    + getNameOfServiceToBeTested());
-        } catch (FenixServiceException e)
-        {
+            System.out
+                    .println("testReadAllContractsByGrantOwnerUnsuccessfull was SUCCESSFULY runned by: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
             fail("Reading all contracts by grantOwner Unsuccessfull " + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("Reading all contracts by grantOwner Unsuccessfull " + e);
         }
     }

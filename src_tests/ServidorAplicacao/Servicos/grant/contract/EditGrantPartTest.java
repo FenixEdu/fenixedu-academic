@@ -16,7 +16,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
@@ -94,19 +93,19 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
     protected Object[] getAuthorizeArguments() {
         InfoGrantPart infoGrantPart = new InfoGrantPart();
         infoGrantPart.setPercentage(new Integer(1));
-        
+
         InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
         infoGrantSubsidy.setIdInternal(new Integer(1));
         infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
-        
+
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setTeacherNumber(new Integer(6));
         infoGrantPart.setInfoResponsibleTeacher(infoTeacher);
-        
+
         InfoGrantPaymentEntity infoGrantPaymentEntity = new InfoGrantCostCenter();
         infoGrantPaymentEntity.setIdInternal(new Integer(4));
         infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
-        
+
         Object[] args = { infoGrantPart };
         return args;
     }
@@ -115,15 +114,15 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
         InfoGrantPart infoGrantPart = new InfoGrantPart();
         infoGrantPart.setPercentage(new Integer(66));
         infoGrantPart.setIdInternal(new Integer(3));
-        
+
         InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
         infoGrantSubsidy.setIdInternal(new Integer(1));
         infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
-        
+
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setTeacherNumber(new Integer(6));
         infoGrantPart.setInfoResponsibleTeacher(infoTeacher);
-        
+
         InfoGrantPaymentEntity infoGrantPaymentEntity = new InfoGrantCostCenter();
         infoGrantPaymentEntity.setIdInternal(new Integer(4));
         infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
@@ -135,32 +134,27 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
     protected Object[] getUnauthorizeArguments(boolean edit) {
         InfoGrantPart infoGrantPart = new InfoGrantPart();
         infoGrantPart.setPercentage(new Integer(20));
-        
-        
+
         InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
-        if(edit)
-        {
-            infoGrantSubsidy.setIdInternal(new Integer(444));    
+        if (edit) {
+            infoGrantSubsidy.setIdInternal(new Integer(444));
             infoGrantPart.setIdInternal(new Integer(1));
-        }
-        else
-        {
+        } else {
             infoGrantSubsidy.setIdInternal(new Integer(444));
         }
         infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
-        
+
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setTeacherNumber(new Integer(1));
         infoGrantPart.setInfoResponsibleTeacher(infoTeacher);
-        
+
         InfoGrantPaymentEntity infoGrantPaymentEntity = new InfoGrantCostCenter();
         infoGrantPaymentEntity.setIdInternal(new Integer(1));
         infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
-        
+
         Object[] args = { infoGrantPart };
         return args;
     }
-    
 
     /*
      * (non-Javadoc)
@@ -186,12 +180,10 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedCreateDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantPartSuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantPartSuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantPart successfull " + e);
         } catch (Exception e) {
@@ -208,14 +200,12 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(false);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
         } catch (ExistingServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantPartUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantPartUnsuccessfull");
         } catch (FenixServiceException e) {
             fail("Creating a new GrantPart unsuccessfull " + e);
         } catch (Exception e) {
@@ -232,13 +222,11 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsEdit();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testEditGrantPartSuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantPartSuccessfull");
         } catch (FenixServiceException e) {
             fail("Editing a GrantPart successfull " + e);
         } catch (Exception e) {
@@ -255,13 +243,11 @@ public class EditGrantPartTest extends ServiceNeedsAuthenticationTestCase {
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(true);
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
         } catch (ExistingServiceException e) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testEditGrantPartUnsuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testEditGrantPartUnsuccessfull");
         } catch (FenixServiceException e) {
             fail("Editing a GrantPart unsuccessfull " + e);
         } catch (Exception e) {

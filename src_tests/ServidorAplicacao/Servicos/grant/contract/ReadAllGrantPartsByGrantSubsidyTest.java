@@ -16,8 +16,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Pica
  * @author Barbosa
  */
-public class ReadAllGrantPartsByGrantSubsidyTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class ReadAllGrantPartsByGrantSubsidyTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param name
@@ -118,8 +117,8 @@ public class ReadAllGrantPartsByGrantSubsidyTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (!(result != null && result.size() == 3))
@@ -127,9 +126,8 @@ public class ReadAllGrantPartsByGrantSubsidyTest extends
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadAllGrantPartBySubsidySuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadAllGrantPartBySubsidySuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading all GrantPart by subsidy " + e);
         } catch (Exception e) {
@@ -146,18 +144,17 @@ public class ReadAllGrantPartsByGrantSubsidyTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            List result = (List)ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null && result.size() != 0)
-                    fail("Reading all GrantPart by subsidy Unsuccessfull: grant Part should not exist!");
+                fail("Reading all GrantPart by subsidy Unsuccessfull: grant Part should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out
-                    .println("testReadAllGrantPartsBySubsidyUnsuccessfull was SUCCESSFULY runned by: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testReadAllGrantPartsBySubsidyUnsuccessfull was SUCCESSFULY runned by: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading All GrantParts By Subsidy Unsuccessfull " + e);
         } catch (Exception e) {

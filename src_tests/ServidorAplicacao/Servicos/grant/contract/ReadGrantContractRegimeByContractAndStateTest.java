@@ -12,13 +12,11 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadGrantContractRegimeByContractAndStateTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class ReadGrantContractRegimeByContractAndStateTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param name
@@ -87,7 +85,7 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
         Object[] args = { contractId, state };
         return args;
     }
-    
+
     protected Object[] getAuthorizeArgumentsDesactiveContractRegime() {
 
         Integer contractId = new Integer(1);
@@ -95,7 +93,6 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
         Object[] args = { contractId, state };
         return args;
     }
-
 
     protected Object[] getUnauthorizeArguments() {
 
@@ -105,7 +102,6 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
         return args;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -118,10 +114,10 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
     /***************************************************************************
      * 
      * Begining of the tests
+     * 
      *  
-     *
      */
-    
+
     /*
      * Read active GrantContractRegime Successfull
      */
@@ -131,11 +127,12 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null || result.size() != 1)
-                    fail("Reading active GrantContractRegime Successfull: invalid grant ContractRegime read!");
+                fail("Reading active GrantContractRegime Successfull: invalid grant ContractRegime read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -158,11 +155,12 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsDesactiveContractRegime();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result == null || result.size() != 2)
-                    fail("Reading desactive GrantContractRegime Successfull: invalid grant ContractRegime read!");
+                fail("Reading desactive GrantContractRegime Successfull: invalid grant ContractRegime read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -175,8 +173,7 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
             fail("Reading a GrantContractRegime by contract and state" + e);
         }
     }
-    
-    
+
     /*
      * Read a GrantContractRegime Unsuccessfull
      */
@@ -186,11 +183,12 @@ public class ReadGrantContractRegimeByContractAndStateTest extends
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
 
             //Check the read result
-            if (result != null && result.size() != 0) 
-                    fail("Reading a GrantContractRegime by contract and stateUnsuccessfull: grant ContractRegime should not exist!");
+            if (result != null && result.size() != 0)
+                fail("Reading a GrantContractRegime by contract and stateUnsuccessfull: grant ContractRegime should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
