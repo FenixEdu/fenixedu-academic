@@ -7,6 +7,8 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="Util.Data" %>
 
+<span class="error"><html:errors/></span>
+ 
 <html:form action="/writeMarks" >  
 	<logic:present name="siteView">
 	<bean:define id="marksListComponent" name="siteView" property="component" type="DataBeans.InfoSiteMarks"/>
@@ -17,8 +19,8 @@
 	
 	<html:hidden property="objectCode" value="<%= executionCourseId.toString() %>" />	
 	<html:hidden property="examCode" value="<%= examId.toString() %>" />
-    
-    <span class="error"><html:errors/></span>
+		
+	<html:hidden property="method" value="writeMarks" />
 
     <table>        
 		<tr>
@@ -33,7 +35,7 @@
 				<bean:write name="marksListComponent" property="infoExam.date"/> <i>às</i> <bean:write name="marksListComponent" property="infoExam.beginningHour"/><br />
 				</h2>
 		   </logic:present>
-		   
+		   </td>
 		</tr> 
 		<tr>
 			<td class="listClasses-header">
@@ -49,10 +51,15 @@
 			</logic:present>
 		</tr>    		
 		
-		<logic:present name="marksListComponent" property="marksList">  								
+		<logic:present name="marksListComponent" property="marksList">  
+			<bean:size id="size" name="marksListComponent" property="marksList" />	
+			<html:hidden property="sizeList" value="<%= size.toString() %>" />							
+				    			    		
 	    	<logic:iterate id="markElem" name="marksListComponent" property="marksList" indexId="markId" > 
-	    		<bean:define id="studentNumber" name="markElem" property="infoFrequenta.aluno.number" />
-				<tr>
+	    		<bean:define id="studentCode" name="markElem" property="infoFrequenta.aluno.idInternal" />
+	    		<bean:define id="studentMark" name="markElem" property="mark" />
+	    		
+	    		<tr>
 					<td class="listClasses">
 						<bean:write name="markElem" property="infoFrequenta.aluno.number"/>&nbsp;
 					</td>
@@ -61,10 +68,10 @@
 					</td>											
 					<td class="listClasses">
 						<html:text name="markElem" property="mark" size="4" indexed="true" />
-						<html:hidden name="markElem" property="studentsNumbers" value="<%= studentNumber.toString() %>" indexed="true" />
+						<html:hidden name="markElem" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
 					</td>
 				</tr>
-	    	</logic:iterate>
+	    	</logic:iterate>	    	
 		</logic:present>
 		
     </table>    

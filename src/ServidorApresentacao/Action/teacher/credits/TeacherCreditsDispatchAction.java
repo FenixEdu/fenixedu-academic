@@ -33,10 +33,13 @@ public class TeacherCreditsDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		HttpSession session = request.getSession();
+		
 		InfoTeacher infoTeacher = (InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);
 		IUserView userView = SessionUtils.getUserView(request);
+		
 		Object[] args = {infoTeacher};
 		InfoCredits infoCredits = (InfoCredits) ServiceUtils.executeService(userView, "ReadCreditsTeacher", args);
+		
 		if (infoCredits != null){
 			DynaActionForm creditsTeacherForm = (DynaActionForm) form;
 			creditsTeacherForm.set("tfcStudentsNumber", infoCredits.getTfcStudentsNumber());

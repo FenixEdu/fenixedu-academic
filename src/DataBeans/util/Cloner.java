@@ -1851,6 +1851,7 @@ public abstract class Cloner {
 	public static InfoFrequenta copyIFrequenta2InfoFrequenta(IFrequenta frequenta) {
 		InfoFrequenta infoFrequenta = new InfoFrequenta();
 		
+		if(frequenta.getAluno() == null) System.out.println("--> frequenta.getAluno() e' null");
 		InfoStudent infoStudent = new InfoStudent();
 		infoStudent = Cloner.copyIStudent2InfoStudent(frequenta.getAluno());
 		
@@ -1891,7 +1892,8 @@ public abstract class Cloner {
 			enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEnrolment);
 		}
 
-		copyObjectProperties(frequenta, infoFrequenta);
+		//copyObjectProperties(frequenta, infoFrequenta);
+		
 		frequenta.setAluno(student);
 		frequenta.setDisciplinaExecucao(disciplinaExecucao);
 		frequenta.setEnrolment(enrolment);

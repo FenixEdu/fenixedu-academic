@@ -6,9 +6,9 @@
   		<bean:message key="link.manage.executionCourse"/>
   	</html:link>
   </li>
-<%--  <li>
+  <li>
   	<html:link page='/creditsManagement.do?page=0&amp;method=prepare'>
   		<bean:message key="link.manage.credits"/>
   	</html:link>
-  </li> --%>
+  </li> 
 </ul>

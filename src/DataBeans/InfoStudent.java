@@ -14,7 +14,7 @@ import Util.TipoCurso;
  * @author  tfc130
  */
 
-public class InfoStudent {
+public class InfoStudent extends InfoObject{
 	protected Integer number;
 	protected StudentState state = new StudentState(1);
 	private InfoPerson infoPerson;

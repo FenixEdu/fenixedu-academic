@@ -12,6 +12,7 @@ public class InfoSiteMarks implements ISiteComponent {
 	private InfoExam infoExam;
 	private List marksList;
 	private List marksListErrors;
+	private List marksListErrors2;
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
@@ -87,6 +88,20 @@ public class InfoSiteMarks implements ISiteComponent {
 	 */
 	public void setMarksListErrors(List marksListErrors) {
 		this.marksListErrors = marksListErrors;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getMarksListErrors2() {
+		return marksListErrors2;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setMarksListErrors2(List list) {
+		marksListErrors2 = list;
 	}
 
 }

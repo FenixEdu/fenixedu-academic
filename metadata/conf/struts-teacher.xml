@@ -154,8 +154,6 @@
 		<form-bean name="marksForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
         	dynamic="true">
-	        <form-property name="examCode" type="java.lang.Integer" />
-    	    <form-property name="objectCode" type="java.lang.Integer" />
         	<form-property name="studentsNumbers"  type="java.lang.Integer[]" />
 	        <form-property name="marks"  type="java.lang.String[]" />
 		</form-bean>	
@@ -236,9 +234,6 @@
 				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             
-
-
-
 	
 	<action     path="/alternativeSite"   
 				parameter="method"   			
@@ -655,12 +650,14 @@
 	</action>
 	<action 
 		path="/writeMarks"
-		input="/marksList.do?method=loadMarksOnline"
+		input="/marksList.jsp"
 		name="marksForm"
 		scope="request"
+		parameter="method"
 		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
-		  >
-       <forward name="marksList" path="/marksList.jsp" />       
+		>
+       <forward name="marksList" path="/marksList.jsp" />
+       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>       
 	</action>
 	<!-- End Marks List -->
 	
