@@ -11,6 +11,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.taglib.html.Constants;
 import org.apache.struts.taglib.html.SelectTag;
@@ -145,7 +146,7 @@ public class OptionsTag extends TagSupport {
     /**
      * The session scope key under which our Locale is stored.
      */
-    protected String localeKey = Action.LOCALE_KEY;
+    protected String localeKey = Globals.LOCALE_KEY;
 
     public String getLocale() {
 	return (this.localeKey);
