@@ -36,6 +36,7 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.places.campus.IPersistentCampus;
+import ServidorPersistente.sms.IPersistentSentSms;
 import ServidorPersistente.student.IPersistentDelegate;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
@@ -277,7 +278,10 @@ public interface ISuportePersistente
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();
     public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
 
+	public IPersistentSentSms getIPersistentSentSms();
+	
 	//	Ana e Ricardo
 	public IPersistentRoomOccupation getIPersistentRoomOccupation();
 	public IPersistentPeriod getIPersistentPeriod();
+		
 }

@@ -58,6 +58,7 @@ import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideSituationOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.places.campus.CampusOJB;
+import ServidorPersistente.OJB.sms.SentSmsOJB;
 import ServidorPersistente.OJB.student.DelegateOJB;
 import ServidorPersistente.OJB.teacher.CareerOJB;
 import ServidorPersistente.OJB.teacher.CategoryOJB;
@@ -100,6 +101,7 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.places.campus.IPersistentCampus;
+import ServidorPersistente.sms.IPersistentSentSms;
 import ServidorPersistente.student.IPersistentDelegate;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
@@ -1253,6 +1255,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry()
 	{
 		return new ReimbursementGuideEntryOJB();
+
+	}
+
+	public IPersistentSentSms getIPersistentSentSms()
+	{
+		return new SentSmsOJB();
 
 	}
 }
