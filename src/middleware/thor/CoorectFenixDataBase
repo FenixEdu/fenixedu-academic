@@ -30,5 +30,16 @@ CREATE TABLE almeida_curram (
 ) TYPE=MyISAM;
 
 
+DELETE FROM EXECUTION_YEAR WHERE ID_INTERNAL = 2;
 INSERT INTO EXECUTION_YEAR values (2, '2003/2004', 'NO');
 INSERT INTO EXECUTION_PERIOD values (2, '1 Semestre', 2, 'NO', 1);
+
+UPDATE BRANCH SET KEY_DEGREE_CURRICULAR_PLAN = 1 WHERE KEY_DEGREE_CURRICULAR_PLAN = 0;
+
+create table EXAM_STUDENT (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EXAM int(11) not null,
+   KEY_STUDENT int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXAM, KEY_STUDENT))
+   type=InnoDB;

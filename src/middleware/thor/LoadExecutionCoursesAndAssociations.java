@@ -6,7 +6,6 @@
  */
 package middleware.thor;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -108,8 +107,21 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 							disciplinaExecucao.setTheoPratHours(null);
 							disciplinaExecucao.setLabHours(null);
 							disciplinaExecucao.setComment(" ");
-							writeElement(disciplinaExecucao);
-							numberElementsWritten++;
+							
+							
+
+							if (curricularCourseToAdd != null) {
+								numberElementsWritten++;
+								writeElement(disciplinaExecucao);
+								bufferToWrite
+									+= "insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, " 
+									+ curricularCourseToAdd.getIdInternal()
+									+ ", "
+									+ disciplinaExecucao.getIdInternal()					
+									+ ");\n";
+							} else {
+							}
+
 						}
 
 						//Ler Curricular correspondente e se ja existir na BD criar associacao
@@ -153,16 +165,9 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 				curricularCourse.getAssociatedExecutionCourses().add(
 					disciplinaExecucao);
 
-				numberElementsWritten++;
 				return curricularCourse;
 			} else {
 				numberUntreatableElements++;
-				bufferToWrite
-					+= "Could not match course:" 
-					+ disciplinaExecucao.getSigla()
-					+ " plan: "
-					+ degreeCurricularPlan.getName()					
-					+ "]";
 			}
 
 		} else {
@@ -185,7 +190,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 	}
 
 	protected String getFilenameOutput() {
-		return "UntreatableExecutionCourses.txt";
+		return "CurricularCourseExecutionCourse.txt";
 	}
 
 	protected void report() {
