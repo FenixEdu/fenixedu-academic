@@ -16,6 +16,9 @@ import Dominio.IMark;
 import Dominio.ISite;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.sms.SmsNotSentServiceException;
+import ServidorAplicacao.utils.SmsUtil;
+import ServidorAplicacao.utils.exceptions.FenixUtilException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentEvaluation;
@@ -24,6 +27,7 @@ import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.sms.IPersistentSentSms;
 
 /**
  * @author Fernanda Quitério
@@ -43,6 +47,7 @@ public class PublishMarks implements IService
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentSentSms persistentSentSms = sp.getIPersistentSentSms();
 
             //Execution Course
             IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
@@ -87,6 +92,7 @@ public class PublishMarks implements IService
             ListIterator iterMarks = marksList.listIterator();
             while (iterMarks.hasNext())
             {
+
                 IMark mark = (IMark) iterMarks.next();
 
                 if (!mark.getMark().equals(mark.getPublishedMark()))
@@ -96,13 +102,31 @@ public class PublishMarks implements IService
                     mark.setPublishedMark(mark.getMark());
                     if (sendSMS != null && sendSMS.booleanValue())
                     {
-                        // send SMS with student's mark and publishment message
-                        // if exists
-                        // TODO: send SMS
+                	if (mark.getAttend().getAluno().getPerson().getTelemovel () != null)
+					{
+						String StringDestinationNumber = mark.getAttend().getAluno().getPerson().getTelemovel();
+						if (StringDestinationNumber.startsWith("96") || StringDestinationNumber.startsWith("91")||StringDestinationNumber.startsWith("93"))
+						{
+						  try
+						  { 
+							  SmsUtil.getInstance().sendSmsWithoutDeliveryReports(Integer.valueOf (StringDestinationNumber), evaluation.getPublishmentMessage() +" "+ mark.getMark());
+						  }
+						  catch (FenixUtilException e1)
+						  {
+							  throw new SmsNotSentServiceException("error.person.sendSms");
+						  }
+
+                    	}
+						else
+						{
+							throw new FenixServiceException("error.impossiblePublishMarks");
+						}
+					
                     }
                 }
             }
-        }
+          }
+		}
         catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace();
