@@ -84,9 +84,9 @@
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
         dynamic="true">
         <form-property name="information" type="java.lang.String"/>  
-        <form-property name="itemOrder" type="java.lang.Integer" />   
+        <form-property name="itemOrder" type="java.lang.String" />   
         <form-property name="itemName" type="java.lang.String" />   
-        <form-property name="urgent" type="java.lang.Boolean"/>           
+        <form-property name="urgent" type="java.lang.String"/>           
 		          
 	
 	</form-bean> 
@@ -328,8 +328,8 @@
 		parameter="method"
 		type="ServidorApresentacao.Action.teacher.EditItemDispatchAction"
         validate="false" >
-         <forward name="editItem" path="/editItem.do?method=edit"/>
-       <forward name="viewSection" path="/viewSection.do"/>
+       <forward name="editItem" path="/editItem.jsp"/>
+       <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
 	
 	
