@@ -774,9 +774,9 @@ public class AulaOJBTest extends TestCaseOJB {
 		start.set(Calendar.SECOND, 0);
 		lesson.setInicio(start);
 		Calendar end = Calendar.getInstance();
-		start.set(Calendar.HOUR_OF_DAY, 9);
-		start.set(Calendar.MINUTE, 0);
-		start.set(Calendar.SECOND, 0);
+		end.set(Calendar.HOUR_OF_DAY, 9);
+		end.set(Calendar.MINUTE, 0);
+		end.set(Calendar.SECOND, 0);
 		lesson.setFim(end);
 
 		// execute query
@@ -790,8 +790,8 @@ public class AulaOJBTest extends TestCaseOJB {
 		// prepare query input
 		start.set(Calendar.HOUR_OF_DAY, 9);
 		lesson.setInicio(start);
-		start.set(Calendar.HOUR_OF_DAY, 10);
-		start.set(Calendar.MINUTE, 30);
+		end.set(Calendar.HOUR_OF_DAY, 10);
+		end.set(Calendar.MINUTE, 30);
 		lesson.setFim(end);
 
 		// execute query
