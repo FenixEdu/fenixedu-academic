@@ -1,3 +1,6 @@
 . EditarAulaServicosTest.java
 . LerAulasDeDisciplinaExecucaoETipoServicosTest.java
-. 
+
+
+FIQUEI NO TESTE "LerAulasDeSalaEmSemestreServicosTest" (FEITO)
+

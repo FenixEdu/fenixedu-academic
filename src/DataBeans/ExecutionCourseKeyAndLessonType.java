@@ -15,7 +15,9 @@ import Util.TipoAula;
 public class ExecutionCourseKeyAndLessonType {
   protected TipoAula _tipoAula;
   protected String _sigla;
-//  protected + UNIQUE de LicenciaturaExecucao
+
+  //FIXME: Add all uniques from ExecutionCourse or add'em to the services that use this bean
+
 
   public ExecutionCourseKeyAndLessonType() { }
 
