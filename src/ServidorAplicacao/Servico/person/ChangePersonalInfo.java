@@ -19,7 +19,6 @@
 package ServidorAplicacao.Servico.person;
 
 import DataBeans.InfoPerson;
-import Dominio.ICountry;
 import Dominio.IPessoa;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;

@@ -10,7 +10,6 @@ import java.util.Collection;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
@@ -24,10 +23,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EstadoCivil;
 import Util.RoleType;
-import Util.Sexo;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author jpvl
@@ -64,46 +60,48 @@ public class ChangePersonalInfoTest extends TestCaseNeedAuthorizationServices {
 		return true;
 	}
 
+	// FIXME: At this time we only can change the Email, Mobile Phone and the Web Site
+
 	public void testSuccessfullChangePersonalInfo() {
 		UserView userView = getUserViewToBeTested("user");
 		
 		Calendar calendar = Calendar.getInstance();
 				
 		InfoPerson infoPerson = new InfoPerson();
-		infoPerson.setCodigoPostal("123");
-		infoPerson.setConcelhoMorada("123");
-		infoPerson.setConcelhoNaturalidade("123");
-		infoPerson.setDistritoMorada("123");
-		infoPerson.setDistritoNaturalidade("123");
+//		infoPerson.setCodigoPostal("123");
+//		infoPerson.setConcelhoMorada("123");
+//		infoPerson.setConcelhoNaturalidade("123");
+//		infoPerson.setDistritoMorada("123");
+//		infoPerson.setDistritoNaturalidade("123");
 		infoPerson.setEmail("123");
 		infoPerson.setEnderecoWeb("123");
-		infoPerson.setEstadoCivil(new EstadoCivil(EstadoCivil.SOLTEIRO));
-		infoPerson.setFreguesiaMorada("123");
-		infoPerson.setFreguesiaNaturalidade("123");
-		infoPerson.setLocalEmissaoDocumentoIdentificacao("123");
-		infoPerson.setLocalidade("123");
-		infoPerson.setLocalidadeCodigoPostal("123");
-		infoPerson.setMorada("123");
-		infoPerson.setNacionalidade("123");
-		infoPerson.setNome("123");
-		infoPerson.setNomeMae("123");
-		infoPerson.setNomePai("123");
-		infoPerson.setNumContribuinte("123");
-		infoPerson.setNumeroDocumentoIdentificacao("123");
-		infoPerson.setProfissao("123");
-		infoPerson.setSexo(new Sexo(Sexo.FEMININO));
-		infoPerson.setTelefone("123");
+//		infoPerson.setEstadoCivil(new EstadoCivil(EstadoCivil.SOLTEIRO));
+//		infoPerson.setFreguesiaMorada("123");
+//		infoPerson.setFreguesiaNaturalidade("123");
+//		infoPerson.setLocalEmissaoDocumentoIdentificacao("123");
+//		infoPerson.setLocalidade("123");
+//		infoPerson.setLocalidadeCodigoPostal("123");
+//		infoPerson.setMorada("123");
+//		infoPerson.setNacionalidade("123");
+//		infoPerson.setNome("123");
+//		infoPerson.setNomeMae("123");
+//		infoPerson.setNomePai("123");
+//		infoPerson.setNumContribuinte("123");
+//		infoPerson.setNumeroDocumentoIdentificacao("123");
+//		infoPerson.setProfissao("123");
+//		infoPerson.setSexo(new Sexo(Sexo.FEMININO));
+//		infoPerson.setTelefone("123");
 		infoPerson.setTelemovel("123");
-		infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO));
-		infoPerson.setUsername("nuno");
+//		infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO));
+//		infoPerson.setUsername("nuno");
 		
-		infoPerson.setDataEmissaoDocumentoIdentificacao(calendar.getTime());
-		infoPerson.setDataValidadeDocumentoIdentificacao(calendar.getTime());
-		infoPerson.setNascimento(calendar.getTime());
-		
-		InfoCountry infoCountry = new InfoCountry();
-		infoCountry.setNationality("Inglesa");
-		infoPerson.setInfoPais(infoCountry);
+//		infoPerson.setDataEmissaoDocumentoIdentificacao(calendar.getTime());
+//		infoPerson.setDataValidadeDocumentoIdentificacao(calendar.getTime());
+//		infoPerson.setNascimento(calendar.getTime());
+//		
+//		InfoCountry infoCountry = new InfoCountry();
+//		infoCountry.setNationality("Inglesa");
+//		infoPerson.setInfoPais(infoCountry);
 		
 		Object args[] = { infoPerson, userView };
 
@@ -115,39 +113,39 @@ public class ChangePersonalInfoTest extends TestCaseNeedAuthorizationServices {
 			fail("Calling service "+ getNameOfServiceToBeTested()+"!");
 		}
 		assertNotNull(userViewResult);
-		assertEquals("nuno", userViewResult.getUtilizador());
+		assertEquals("user", userViewResult.getUtilizador());
 		
-		InfoPerson newInfoPerson = this.readPerson("nuno");
+		InfoPerson newInfoPerson = this.readPerson("user");
 		
-		assertEquals(infoPerson.getCodigoPostal(), newInfoPerson.getCodigoPostal());
-		assertEquals(infoPerson.getConcelhoMorada(), newInfoPerson.getConcelhoMorada());
-		assertEquals(infoPerson.getConcelhoNaturalidade(), newInfoPerson.getConcelhoNaturalidade());
-		assertEquals(infoPerson.getDataEmissaoDocumentoIdentificacao(), newInfoPerson.getDataEmissaoDocumentoIdentificacao());
-		assertEquals(infoPerson.getDataValidadeDocumentoIdentificacao(), newInfoPerson.getDataValidadeDocumentoIdentificacao());
-		assertEquals(infoPerson.getDistritoMorada(), newInfoPerson.getDistritoMorada());
-		assertEquals(infoPerson.getDistritoNaturalidade(), newInfoPerson.getDistritoNaturalidade());
+//		assertEquals(infoPerson.getCodigoPostal(), newInfoPerson.getCodigoPostal());
+//		assertEquals(infoPerson.getConcelhoMorada(), newInfoPerson.getConcelhoMorada());
+//		assertEquals(infoPerson.getConcelhoNaturalidade(), newInfoPerson.getConcelhoNaturalidade());
+//		assertEquals(infoPerson.getDataEmissaoDocumentoIdentificacao(), newInfoPerson.getDataEmissaoDocumentoIdentificacao());
+//		assertEquals(infoPerson.getDataValidadeDocumentoIdentificacao(), newInfoPerson.getDataValidadeDocumentoIdentificacao());
+//		assertEquals(infoPerson.getDistritoMorada(), newInfoPerson.getDistritoMorada());
+//		assertEquals(infoPerson.getDistritoNaturalidade(), newInfoPerson.getDistritoNaturalidade());
 		assertEquals(infoPerson.getEmail(), newInfoPerson.getEmail());
 		assertEquals(infoPerson.getEnderecoWeb(), newInfoPerson.getEnderecoWeb());
-		assertEquals(infoPerson.getEstadoCivil(), newInfoPerson.getEstadoCivil());
-		assertEquals(infoPerson.getFreguesiaMorada(), newInfoPerson.getFreguesiaMorada());
-		assertEquals(infoPerson.getFreguesiaNaturalidade(), newInfoPerson.getFreguesiaNaturalidade());
-		assertEquals(infoPerson.getLocalEmissaoDocumentoIdentificacao(), newInfoPerson.getLocalEmissaoDocumentoIdentificacao());
-		assertEquals(infoPerson.getLocalidade(), newInfoPerson.getLocalidade());
-		assertEquals(infoPerson.getLocalidadeCodigoPostal(), newInfoPerson.getLocalidadeCodigoPostal());
-		assertEquals(infoPerson.getMorada(), newInfoPerson.getMorada());
-		assertEquals(infoPerson.getNacionalidade(), newInfoPerson.getNacionalidade());
-		assertEquals(infoPerson.getNome(), newInfoPerson.getNome());
-		assertEquals(infoPerson.getNomeMae(), newInfoPerson.getNomeMae());
-		assertEquals(infoPerson.getNomePai(), newInfoPerson.getNomePai());
-		assertEquals(infoPerson.getNumContribuinte(), newInfoPerson.getNumContribuinte());
-		assertEquals(infoPerson.getNumeroDocumentoIdentificacao(), newInfoPerson.getNumeroDocumentoIdentificacao());
-		assertEquals(infoPerson.getNascimento(), newInfoPerson.getNascimento());
-		assertEquals(infoPerson.getProfissao(), newInfoPerson.getProfissao());
-		assertEquals(infoPerson.getTelefone(), newInfoPerson.getTelefone());
+//		assertEquals(infoPerson.getEstadoCivil(), newInfoPerson.getEstadoCivil());
+//		assertEquals(infoPerson.getFreguesiaMorada(), newInfoPerson.getFreguesiaMorada());
+//		assertEquals(infoPerson.getFreguesiaNaturalidade(), newInfoPerson.getFreguesiaNaturalidade());
+//		assertEquals(infoPerson.getLocalEmissaoDocumentoIdentificacao(), newInfoPerson.getLocalEmissaoDocumentoIdentificacao());
+//		assertEquals(infoPerson.getLocalidade(), newInfoPerson.getLocalidade());
+//		assertEquals(infoPerson.getLocalidadeCodigoPostal(), newInfoPerson.getLocalidadeCodigoPostal());
+//		assertEquals(infoPerson.getMorada(), newInfoPerson.getMorada());
+//		assertEquals(infoPerson.getNacionalidade(), newInfoPerson.getNacionalidade());
+//		assertEquals(infoPerson.getNome(), newInfoPerson.getNome());
+//		assertEquals(infoPerson.getNomeMae(), newInfoPerson.getNomeMae());
+//		assertEquals(infoPerson.getNomePai(), newInfoPerson.getNomePai());
+//		assertEquals(infoPerson.getNumContribuinte(), newInfoPerson.getNumContribuinte());
+//		assertEquals(infoPerson.getNumeroDocumentoIdentificacao(), newInfoPerson.getNumeroDocumentoIdentificacao());
+//		assertEquals(infoPerson.getNascimento(), newInfoPerson.getNascimento());
+//		assertEquals(infoPerson.getProfissao(), newInfoPerson.getProfissao());
+//		assertEquals(infoPerson.getTelefone(), newInfoPerson.getTelefone());
 		assertEquals(infoPerson.getTelemovel(), newInfoPerson.getTelemovel());
-		assertEquals(infoPerson.getTipoDocumentoIdentificacao(), newInfoPerson.getTipoDocumentoIdentificacao());
-		assertEquals(infoPerson.getSexo(), newInfoPerson.getSexo());
-		assertEquals(infoPerson.getInfoPais().getNationality(), newInfoPerson.getInfoPais().getNationality());
+//		assertEquals(infoPerson.getTipoDocumentoIdentificacao(), newInfoPerson.getTipoDocumentoIdentificacao());
+//		assertEquals(infoPerson.getSexo(), newInfoPerson.getSexo());
+//		assertEquals(infoPerson.getInfoPais().getNationality(), newInfoPerson.getInfoPais().getNationality());
 		
 	}
 	
