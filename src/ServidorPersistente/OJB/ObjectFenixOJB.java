@@ -106,6 +106,14 @@ public abstract class ObjectFenixOJB implements IPersistentObject
                 for (int i = 0; i < list.size(); i++)
                 {
                     Object obj = list.get(i);
+                    Object newObject =
+                        ((TransactionImpl) tx).getObjectByIdentity(
+                            new Identity(obj, getCurrentPersistenceBroker()));
+                    if (newObject != null)
+                    {
+                        obj = newObject;
+                        list.set(i, obj);
+                    }
                     tx.lock(obj, Transaction.READ);
                 }
             }
@@ -608,6 +616,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         Object object = pb.getObjectByQuery(query);
         if (object != null)
         {
+            Object newObject =
+                ((TransactionImpl) odmg.currentTransaction()).getObjectByIdentity(
+                    new Identity(object, pb));
+            if (newObject != null)
+            {
+                object = newObject;
+            }
             lockRead(object);
         }
         return object;
