@@ -361,17 +361,24 @@ public class TeacherAdministrationSiteComponentBuilder {
 				if (curriculum == null) {
 					throw new InvalidArgumentsServiceException();
 				}
-				InfoCurriculum infoCurriculum =
-					Cloner.copyICurriculum2InfoCurriculum(curriculum);
 
-				component.setGeneralObjectives(
-					infoCurriculum.getGeneralObjectives());
-				component.setOperacionalObjectives(
-					infoCurriculum.getOperacionalObjectives());
-				component.setGeneralObjectivesEn(
-					infoCurriculum.getGeneralObjectivesEn());
-				component.setOperacionalObjectivesEn(
-					infoCurriculum.getOperacionalObjectivesEn());
+				if (!curriculum
+					.getCurricularCourse()
+					.getBasic()
+					.booleanValue()) {
+
+					InfoCurriculum infoCurriculum =
+						Cloner.copyICurriculum2InfoCurriculum(curriculum);
+
+					component.setGeneralObjectives(
+						infoCurriculum.getGeneralObjectives());
+					component.setOperacionalObjectives(
+						infoCurriculum.getOperacionalObjectives());
+					component.setGeneralObjectivesEn(
+						infoCurriculum.getGeneralObjectivesEn());
+					component.setOperacionalObjectivesEn(
+						infoCurriculum.getOperacionalObjectivesEn());
+				}
 			}
 
 		} catch (ExcepcaoPersistencia e) {
@@ -414,12 +421,17 @@ public class TeacherAdministrationSiteComponentBuilder {
 				if (curriculum == null) {
 					throw new InvalidArgumentsServiceException();
 				}
-				InfoCurriculum infoCurriculum =
-					Cloner.copyICurriculum2InfoCurriculum(curriculum);
-				
-				component.setProgram(infoCurriculum.getProgram());
-				component.setProgramEn(infoCurriculum.getProgramEn());
-				
+				if (!curriculum
+					.getCurricularCourse()
+					.getBasic()
+					.booleanValue()) {
+					InfoCurriculum infoCurriculum =
+						Cloner.copyICurriculum2InfoCurriculum(curriculum);
+
+					component.setProgram(infoCurriculum.getProgram());
+					component.setProgramEn(infoCurriculum.getProgramEn());
+				}
+
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
@@ -1002,11 +1014,15 @@ public class TeacherAdministrationSiteComponentBuilder {
 		while (iter.hasNext()) {
 			ICurricularCourse curricularCourse =
 				(ICurricularCourse) iter.next();
-			ICurriculum curriculum = null;
-			curriculum =
-				sp.getIPersistentCurriculum().readCurriculumByCurricularCourse(
-					curricularCourse);
-			curriculums.add(curriculum);
+			if (!curricularCourse.getBasic().booleanValue()) {
+				ICurriculum curriculum = null;
+				curriculum =
+					sp
+						.getIPersistentCurriculum()
+						.readCurriculumByCurricularCourse(
+						curricularCourse);
+				curriculums.add(curriculum);
+			}
 		}
 
 		return curriculums;

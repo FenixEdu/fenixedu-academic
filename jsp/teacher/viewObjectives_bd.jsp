@@ -11,10 +11,14 @@
 			</tr>
 		</table>	
 
-	
+
 <logic:present name="siteView">
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="infoCurriculums" name="component" property="infoCurriculums"/>
+
+<logic:empty name="infoCurriculums">
+<h2><bean:message key="message.teacher.scientificCouncilControl.objectives"/></h2>
+</logic:empty>	
 <logic:iterate id="objectives" name="infoCurriculums">
 
 
