@@ -31,7 +31,7 @@ public class InscTeste2 {
 	}
 
 	private static void autentication() {
-		String argsAutenticacao[] = { "user", "pass" };
+		String argsAutenticacao[] = { "stdnt", "pass" };
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {

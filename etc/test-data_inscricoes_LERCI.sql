@@ -86,7 +86,8 @@ insert into DEGREE_CURRICULAR_PLAN values (1, 'Licenciatura em Engenharia de Red
 # (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH)
 ;
 delete from STUDENT_CURRICULAR_PLAN;
-insert into STUDENT_CURRICULAR_PLAN values (1, 1, 1, 1, '0000-00-00', 2);
+insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 2);
+#insert into STUDENT_CURRICULAR_PLAN values (2, 6, 1, 1, '0000-00-00', 2);
 
 #-----------------------------
 # Data for table 'CURRICULAR_COURSE'
