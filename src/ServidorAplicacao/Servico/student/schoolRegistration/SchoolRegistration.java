@@ -28,8 +28,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCountry;
-import ServidorPersistente.IPersistentEnrollment;
-import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentSchoolRegistrationInquiryAnswer;
@@ -53,75 +51,79 @@ public class SchoolRegistration implements IService {
         super();
     }
 
-    public void run(UserView userView, HashMap answers, InfoPerson infoPerson) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(UserView userView, HashMap answers, InfoPerson infoPerson)
+            throws ExcepcaoPersistencia, FenixServiceException {
 
         ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
         String user = userView.getUtilizador();
         Integer studentNumber = new Integer(user.substring(1));
-        
+
         System.out.println("O id da pessoa do catano e camandro é: " + infoPerson.getIdInternal());
-        writeInquiryAnswers(suportePersistente,studentNumber,answers);
+        writeInquiryAnswers(suportePersistente, studentNumber, answers);
         System.out.println("Já escrevi as respostas!");
-        enrollStudent1stTime1stYear(suportePersistente,studentNumber);
+        enrollStudent1stTime1stYear(suportePersistente, studentNumber);
         System.out.println("Já inscrevi o aluno rookie!");
-        updatePersonalInfo(suportePersistente,infoPerson);
+        updatePersonalInfo(suportePersistente, infoPerson);
         System.out.println("Já estaaaaaaaaa!");
 
     }
 
-    private void enrollStudent1stTime1stYear(ISuportePersistente sp, Integer studentNumber) throws ExcepcaoPersistencia,
-    		FenixServiceException {
-        
+    private void enrollStudent1stTime1stYear(ISuportePersistente sp, Integer studentNumber)
+            throws ExcepcaoPersistencia, FenixServiceException {
+
         IStudentCurricularPlanPersistente scpPersistent = sp.getIStudentCurricularPlanPersistente();
-        IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
         IPersistentExecutionPeriod persistentEP = sp.getIPersistentExecutionPeriod();
-        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
-        
-        IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber,TipoCurso.LICENCIATURA_OBJ);        
+
+
+        IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber,
+                TipoCurso.LICENCIATURA_OBJ);
         IDegreeCurricularPlan dcp = scp.getDegreeCurricularPlan();
-        List curricularCourses = dcp.getCurricularCoursesByYearAndSemesterAndBranch(1,new Integer(1),scp.getBranch());
+        List curricularCourses = dcp.getCurricularCoursesByYearAndSemesterAndBranch(1, new Integer(1),
+                scp.getBranch());
 
         WriteEnrollment we = new WriteEnrollment();
-        for(int iter=0; iter<curricularCourses.size(); iter++)
-        {         
+        for (int iter = 0; iter < curricularCourses.size(); iter++) {
             ICurricularCourse cc = (ICurricularCourse) curricularCourses.get(iter);
             Integer executionPeriodId = persistentEP.readActualExecutionPeriod().getIdInternal();
-            we.run(null,scp.getIdInternal(),cc.getIdInternal(),executionPeriodId,CurricularCourseEnrollmentType.DEFINITIVE);
+            we.run(null, scp.getIdInternal(), cc.getIdInternal(), executionPeriodId,
+                    CurricularCourseEnrollmentType.DEFINITIVE);
         }
     }
 
-    private void writeInquiryAnswers(ISuportePersistente sp, Integer studentNumber, HashMap answers) throws ExcepcaoPersistencia,
-            FenixServiceException {
+    private void writeInquiryAnswers(ISuportePersistente sp, Integer studentNumber, HashMap answers)
+            throws ExcepcaoPersistencia, FenixServiceException {
 
-        IPersistentSchoolRegistrationInquiryAnswer persistentSRIA = sp.getIPersistentSchoolRegistrationInquiryAnswer();
-        ISchoolRegistrationInquiryAnswer schoolRegistrationInquiryAnswer = persistentSRIA.readAnswersByStudentNumber(studentNumber);
+        IPersistentSchoolRegistrationInquiryAnswer persistentSRIA = sp
+                .getIPersistentSchoolRegistrationInquiryAnswer();
+        ISchoolRegistrationInquiryAnswer schoolRegistrationInquiryAnswer = persistentSRIA
+                .readAnswersByStudentNumber(studentNumber);
 
-        if (schoolRegistrationInquiryAnswer == null)
-        {
-            schoolRegistrationInquiryAnswer = new SchoolRegistrationInquiryAnswer();            
+        if (schoolRegistrationInquiryAnswer == null) {
+            schoolRegistrationInquiryAnswer = new SchoolRegistrationInquiryAnswer();
         }
         persistentSRIA.simpleLockWrite(schoolRegistrationInquiryAnswer);
         schoolRegistrationInquiryAnswer.setKeyStudent(studentNumber);
-                
+
         Iterator iterator = answers.keySet().iterator();
-        while (iterator.hasNext()) {         
-            String key = (String) iterator.next();            
-            schoolRegistrationInquiryAnswer.setAnswer(new Integer(key), new Boolean((String) answers.get(key)));
-        }     
+        while (iterator.hasNext()) {
+            String key = (String) iterator.next();
+            schoolRegistrationInquiryAnswer.setAnswer(new Integer(key), new Boolean((String) answers
+                    .get(key)));
+        }
     }
-    
-    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson)throws ExcepcaoPersistencia,
-    		FenixServiceException {
-        
+
+    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson)
+            throws ExcepcaoPersistencia, FenixServiceException {
+
         IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,infoPerson.getIdInternal());
+        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class, infoPerson.getIdInternal());
         IPersistentRole pRole = sp.getIPersistentRole();
-        IRole newRole = (IRole) pRole.readByRoleType(RoleType.STUDENT);
+        IRole newRole = pRole.readByRoleType(RoleType.STUDENT);
         IPersistentCountry pCountry = sp.getIPersistentCountry();
-        ICountry country = (ICountry) pCountry.readCountryByNationality(infoPerson.getNacionalidade());
-        
+        ICountry country = pCountry.readCountryByNationality(infoPerson.getNacionalidade());
+
         pessoaPersistente.simpleLockWrite(pessoa);
-        
+
         pessoa.setCodigoPostal(infoPerson.getCodigoPostal());
         pessoa.setConcelhoMorada(infoPerson.getConcelhoMorada());
         pessoa.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
@@ -142,30 +144,30 @@ public class SchoolRegistration implements IService {
         pessoa.setNacionalidade(infoPerson.getNacionalidade());
         pessoa.setNomeMae(infoPerson.getNomeMae());
         pessoa.setNomePai(infoPerson.getNomePai());
-        pessoa.setNumContribuinte(infoPerson.getNumContribuinte());        
-        pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"/*infoPerson.getPassword()*/));
-        pessoa.setProfissao(infoPerson.getProfissao());       
+        pessoa.setNumContribuinte(infoPerson.getNumContribuinte());
+        pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"/* infoPerson.getPassword() */));
+        pessoa.setProfissao(infoPerson.getProfissao());
         pessoa.setTelefone(infoPerson.getTelefone());
         pessoa.setTelemovel(infoPerson.getTelemovel());
         pessoa.setPais(country);
 
         //remove firstTimeStudentRole and add studentRole
         CollectionUtils.filter(pessoa.getPersonRoles(), new Predicate() {
-        	
-        	public boolean evaluate(Object arg0) {
-        		IRole role = (Role) arg0;
-        		
-        		IRole newRole = new Role();
-        		newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
-        		
-        		return !role.equals(newRole);
-        	}
+
+            public boolean evaluate(Object arg0) {
+                IRole role = (Role) arg0;
+
+                IRole newRole = new Role();
+                newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
+
+                return !role.equals(newRole);
+            }
         });
-        
-        Object[] obj = {newRole};
-        
+
+        Object[] obj = { newRole };
+
         CollectionUtils.addAll(pessoa.getPersonRoles(), obj);
-        
+
     }
-    
+
 }
