@@ -144,7 +144,9 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		request.setAttribute(sessionConstant, infoExternalPersonsList);
+		if (infoExternalPersonsList.isEmpty() == false)
+			request.setAttribute(sessionConstant, infoExternalPersonsList);
+		
 		request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS_FLAG, new Boolean(true));
 
 	}
