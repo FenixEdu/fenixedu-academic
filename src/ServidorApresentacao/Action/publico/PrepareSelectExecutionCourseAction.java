@@ -13,9 +13,11 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 
 /**
  * @author João Mota
@@ -27,35 +29,52 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 
+		HttpSession session = request.getSession(true);
+
+		GestorServicos gestor = GestorServicos.manager();
+
+		InfoExecutionCourse executionCourse = new InfoExecutionCourse();
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			RequestUtils.getExecutionPeriodFromRequest(request);
+
+		InfoExecutionDegree infoExecutionDegree =
+			RequestUtils.getExecutionDegreeFromRequest(
+				request,
+				infoExecutionPeriod.getInfoExecutionYear());
+		executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		
-
-			HttpSession session = request.getSession(true);
-		if (session != null) {
-			
-			GestorServicos gestor = GestorServicos.manager();
-
-			InfoExecutionCourse executionCourse = new InfoExecutionCourse();
-			
-			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);							
-			executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-			Integer curricularYear = (Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);			
-			Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear};
-			
-			List infoExecutionCourses =
-				(List) gestor.executar(null, "SelectExecutionCourse", argsSelectExecutionCourse);
+		Integer curricularYear =
+			(Integer) request.getAttribute("curYear");
 		
-			request.setAttribute(
-				"exeCourseList",
-				infoExecutionCourses);
-			return mapping.findForward("sucess");
+			System.out.println("##################");
+			System.out.println("infoExecutionDegree"+infoExecutionDegree);
+			System.out.println("##################");
+			System.out.println("infoExecutionPeriod"+infoExecutionPeriod);
+			System.out.println("##################");
+			System.out.println("curricularYear"+curricularYear);
+			System.out.println("##################");
+		Object argsSelectExecutionCourse[] =
+			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
+
+		List infoExecutionCourses;
+		try {
+			infoExecutionCourses =
+				(List) gestor.executar(
+					null,
+					"SelectExecutionCourse",
+					argsSelectExecutionCourse);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
-		else {
-			throw new Exception();
-					// nao ocorre... pedido passa pelo filtro Autorizacao
-		}
+		System.out.println("##################");
+		System.out.println(infoExecutionCourses);
+		System.out.println("##################");
+		RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);
+		request.setAttribute("exeCourseList", infoExecutionCourses);
+		return mapping.findForward("sucess");
 	}
 
 }

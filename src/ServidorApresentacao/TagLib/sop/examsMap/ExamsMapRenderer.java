@@ -119,6 +119,10 @@ public class ExamsMapRenderer {
 					strBuffer.append(
 						"<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode="
 							+ infoExecutionCourse.getSigla()
+							+"&amp;ePName="
+							+ infoExecutionCourse.getInfoExecutionPeriod().getName()
+							+"&amp;eYName="
+							+ infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
 							+ "'>");
 				} else if (showCreateExamLink && user.equals("sop")) {
 					strBuffer.append(

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.gesdis.InfoSection;
@@ -178,6 +179,41 @@ public abstract class RequestUtils {
 		return sections;
 	}
 
+	public static final InfoExecutionDegree getExecutionDegreeFromRequest(
+		HttpServletRequest request,
+		InfoExecutionYear infoExecutionYear)
+		throws FenixActionException {
+
+		String degreeInitials = (String) request.getAttribute("degreeInitials");
+		String nameDegreeCurricularPlan = (String) request.getAttribute("nameDegreeCurricularPlan");;
+		if (degreeInitials==null) {
+			degreeInitials =  request.getParameter("degreeInitials");
+		}
+		if (nameDegreeCurricularPlan==null) {
+			nameDegreeCurricularPlan =  request.getParameter("nameDegreeCurricularPlan");
+				}				
+
+		Object[] args1 =
+			{	infoExecutionYear,
+				degreeInitials,
+				nameDegreeCurricularPlan};
+		
+			
+				
+		InfoExecutionDegree infoExecutionDegree;
+		try {
+			infoExecutionDegree =
+				(InfoExecutionDegree) ServiceUtils.executeService(
+					null,
+					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
+					args1);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		
+		return infoExecutionDegree;
+	}
+
 	public static final void setSiteToRequest(
 		HttpServletRequest request,
 		InfoSite infoSite) {
@@ -251,13 +287,32 @@ public abstract class RequestUtils {
 		}
 	}
 
-	public static final void setSectionToRequest(HttpServletRequest request)
-		throws FenixActionException {
+	public static final void setSectionToRequest(HttpServletRequest request) {
 
 		InfoSection infoSection =
 			(InfoSection) request.getAttribute("infoSection");
 		if (infoSection != null) {
 			request.setAttribute("infoSection", infoSection);
+		}
+
+	}
+
+	public static final void setExecutionDegreeToRequest(
+		HttpServletRequest request,
+		InfoExecutionDegree executionDegree) {
+		if (executionDegree != null) {
+			request.setAttribute("exeDegree", executionDegree);
+
+			request.setAttribute(
+				"nameDegreeCurricularPlan",
+				executionDegree.getInfoDegreeCurricularPlan().getName());
+			request.setAttribute(
+				"degreeInitials",
+				executionDegree
+					.getInfoDegreeCurricularPlan()
+					.getInfoDegree()
+					.getSigla());
+			
 		}
 
 	}

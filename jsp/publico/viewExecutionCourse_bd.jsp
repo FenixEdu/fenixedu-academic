@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-
 <%@ page import="java.util.Calendar" %>
 <logic:notPresent name="exeCode" >
 <table align="center"  cellpadding='0' cellspacing='0'>

@@ -1,10 +1,8 @@
 <%@ page language="java" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-
 <br/>
 <table width="80%" border="0" cellpadding="0" cellspacing="0" align="center">
 	<tr>
@@ -15,8 +13,7 @@
     </tr>
 </table>
 <br/>
-
-<bean:define id="infoExecutionDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_KEY %>" scope="session" />
+<bean:define id="infoExecutionDegree" name="exeDegree" />
 <logic:equal name="infoExecutionDegree" property="temporaryExamMap" value="true">
 	<center>
 	<font color="red" size="12"><bean:message key="label.temporary.exam.map"/><font>
@@ -24,4 +21,4 @@
 </logic:equal>
 
 <br/>
-<app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="public"/>
+<app:generateExamsMap name="infoExamsMap" user="public"/>

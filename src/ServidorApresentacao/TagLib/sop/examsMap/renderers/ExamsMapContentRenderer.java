@@ -58,8 +58,8 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						"<a href='viewExamsMap.do?method=edit"
 							+ "&amp;executionCourseInitials="
 							+ infoExecutionCourse.getSigla()
-							+ "&amp;executionPeriod="+infoExecutionCourse.getInfoExecutionPeriod().getName()
-							+ "&amp;executionYear="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
+							+ "&amp;ePName="+infoExecutionCourse.getInfoExecutionPeriod().getName()
+							+ "&amp;eYName="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
 							+ "&amp;season="
 							+ infoExam.getSeason().getseason()
 							+ "'>");
@@ -75,8 +75,8 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 					strBuffer.append(
 						"<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode="
 							+ infoExecutionCourse.getSigla()
-							+ "&amp;executionPeriod="+infoExecutionCourse.getInfoExecutionPeriod().getName()
-							+ "&amp;executionYear="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
+							+ "&amp;ePName="+infoExecutionCourse.getInfoExecutionPeriod().getName()
+							+ "&amp;eYName="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()
 							+ "'>");
 					strBuffer.append(courseInitials);
 				}

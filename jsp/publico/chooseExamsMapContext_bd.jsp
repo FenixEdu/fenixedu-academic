@@ -3,11 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.action.Action" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
 <span class="error"><html:errors/></span>
 
 <html:form action="/chooseExamsMapContextDA">
+	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
+	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
+	
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="choose"/>
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -19,7 +20,7 @@
 	<br />
     <p><bean:message key="property.context.degree"/>:
 	<html:select property="index" size="1">
-    	<html:options collection="<%=SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
+    	<html:options collection="degreeList" property="value" labelProperty="label"/>
     </html:select>
 	</p>
 	<br />
@@ -31,8 +32,8 @@
 	<br />
 	<br />   
    	<bean:message key="property.context.curricular.year"/>:<br/>
-	<logic:present name="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>" scope="session">
-		<logic:iterate id="item" name="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>">
+	<logic:present name="curricularYearList" >
+		<logic:iterate id="item" name="curricularYearList">
 			<html:multibox property="selectedCurricularYears">
 				<bean:write name="item"/>
 			</html:multibox>

@@ -13,9 +13,12 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
 /**
  * @author João Mota
@@ -30,41 +33,61 @@ public class ViewClassesAction extends FenixAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 
+		HttpSession session = request.getSession(true);
+
+		GestorServicos gestor = GestorServicos.manager();
+		InfoClass infoClass = new InfoClass();
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			RequestUtils.getExecutionPeriodFromRequest(request);
+			
+		String executionDegreeName = (String) request.getAttribute("degreeInitials");
+		String nameDegreeCurricularPlan =(String) request.getAttribute("nameDegreeCurricularPlan");
+			
 		
-			
-			HttpSession session = request.getSession(true);
-		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
-			InfoClass infoClass = new InfoClass();
-			
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY); 
-			
-			Integer curricularYear=(Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
-			
-			infoClass.setAnoCurricular(curricularYear);
-			
-			infoClass.setInfoExecutionDegree(infoExecutionDegree);
-			infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
-			
-			Object argsSelectClasses[] = { infoClass };
-			List infoClasses =
+		
+		Object[] args1 =
+			{
+				infoExecutionPeriod.getInfoExecutionYear(),
+				executionDegreeName,
+				nameDegreeCurricularPlan
+				 };
+		InfoExecutionDegree infoExecutionDegree;
+		try {
+			infoExecutionDegree =
+				(InfoExecutionDegree) ServiceUtils.executeService(
+					null,
+					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
+					args1);
+		} catch (FenixServiceException e1) {
+			throw new FenixActionException(e1);
+		}
+		Integer curricularYear =
+			 (Integer) request.getAttribute("curYear");
+
+		infoClass.setAnoCurricular(curricularYear);
+
+		infoClass.setInfoExecutionDegree(infoExecutionDegree);
+		infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
+		
+		Object argsSelectClasses[] = { infoClass };
+		List infoClasses;
+		try {
+			infoClasses =
 				(List) gestor.executar(
 					null,
 					"SelectClasses",
 					argsSelectClasses);
-			
-			if (infoClasses != null && infoClasses.isEmpty()) {
-				session.removeAttribute("publico.infoClasses");
-			} else {
-				session.setAttribute("publico.infoClasses", infoClasses);
-			}
-			return mapping.findForward("Sucess");
-		} else
-			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("publico.infoClasses", infoClasses);
+
+		return mapping.findForward("Sucess");
+
 	}
 
 }

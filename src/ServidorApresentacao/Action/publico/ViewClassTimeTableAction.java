@@ -20,8 +20,10 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
@@ -38,35 +40,46 @@ public class ViewClassTimeTableAction extends Action {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
-			
-		
-			
-			HttpSession session = request.getSession(true);
+		throws FenixActionException {
+
+		HttpSession session = request.getSession(true);
 		String className = request.getParameter("className");
 
 		if (className == null)
 			return mapping.getInputForward();
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			RequestUtils.getExecutionPeriodFromRequest(request);
+
+		System.out.println("infoExecutionPeriod"+infoExecutionPeriod);
+
 		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+			RequestUtils.getExecutionDegreeFromRequest(
+				request,
+				infoExecutionPeriod.getInfoExecutionYear());
 
+		
+		System.out.println("infoExecutionDegree"+infoExecutionDegree);
+		
 		InfoClass classView = new InfoClass();
-
 		classView.setInfoExecutionDegree(infoExecutionDegree);
 		classView.setInfoExecutionPeriod(infoExecutionPeriod);
 		classView.setNome(className);
 
 		Object[] args = { classView };
-		List lessons =
-			(List) ServiceUtils.executeService(null, "LerAulasDeTurma", args);
-		
-		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
-		session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
+		List lessons;
+		try {
+			lessons =
+				(List) ServiceUtils.executeService(
+					null,
+					"LerAulasDeTurma",
+					args);
+		} catch (FenixServiceException e1) {
+			throw new FenixActionException(e1);
+		}
+
+		request.setAttribute("class", classView);
+		request.setAttribute("lessonList", lessons);
 
 		return mapping.findForward("Sucess");
 	}

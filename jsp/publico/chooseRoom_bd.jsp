@@ -4,9 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-
-
-
 <h2><bean:message key="title.chooseRoom"/></h2>
 <br/>
 

@@ -17,8 +17,8 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author tfc130
@@ -38,8 +38,7 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 		
 		
 			
-		HttpSession session = request.getSession();
-		session.removeAttribute(SessionConstants.INFO_SECTION);
+		HttpSession session = request.getSession(true);		
 		String degreeInitials = request.getParameter("degreeInitials");
 		String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
 
@@ -47,10 +46,8 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 		if (degreeInitials == null)
 			return mapping.getInputForward();
 			
-
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
+			
 
 
 		Object[] args = { infoExecutionPeriod.getInfoExecutionYear(),
@@ -62,7 +59,8 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 				"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
 				args);
 				
-		session.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+		request.setAttribute("exeDegree", infoExecutionDegree);
+		RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);
 
 		return mapping.findForward("Sucess");
 	}

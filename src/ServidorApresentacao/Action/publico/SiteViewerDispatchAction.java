@@ -25,7 +25,6 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class SiteViewerDispatchAction extends FenixDispatchAction {
 
@@ -146,10 +145,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		InfoExecutionCourse infoExecCourse = null;
 
 		if (session != null) {
-			infoExecPeriod =
-				(InfoExecutionPeriod) session.getAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-
+			infoExecPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
+				
 			if (infoExecPeriod == null) {
 				infoExecPeriod =
 					RequestUtils.getExecutionPeriodFromRequest(request);

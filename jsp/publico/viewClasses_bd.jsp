@@ -18,11 +18,11 @@
 				<bean:message key="property.context.curricular.year"/> 
 			</th>
 		</tr>		
-	<logic:iterate id="classview" name="publico.infoClasses" scope="session">
+	<logic:iterate id="classview" name="publico.infoClasses" >
 		<tr>
 			<td class="listClasses">
 		
-			<html:link page="<%= "/viewClassTimeTable.do?ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +pageContext.findAttribute("eYName") %>" paramId="className" paramName="classview" paramProperty="nome">
+			<html:link page="<%= "/viewClassTimeTable.do?ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +pageContext.findAttribute("eYName")+ "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials") %>" paramId="className" paramName="classview" paramProperty="nome">
 			<jsp:getProperty name="classview" property="nome"/>
 			</html:link>
 			</td>

@@ -1,5 +1,4 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <tiles:insert page="/publicGesDisLayout_2col.jsp" flush="true">
   <tiles:put name="serviceName" value="Instituto Superior T&eaccute;cnico" />
   <tiles:put name="executionCourseName" beanName="exeName" />

@@ -23,7 +23,7 @@
         <arg0 key="property.context.degree" />
       </field>
 
-      <field property="curricularYear" depends="range,required" page="1">
+      <field property="curYear" depends="range,required" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -137,7 +137,7 @@
         <arg0 key="property.context.degree" />
       </field>
 
-      <field property="curricularYear" depends="range,required" page="1">
+      <field property="curYear" depends="range,required" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        

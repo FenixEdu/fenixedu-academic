@@ -9,6 +9,9 @@
         <span class="error"><html:errors/></span>        
         <html:form action="/viewExecutionCourse">
        		<input type="hidden" name="method" value="executionCourseViewerSelectedFromForm">
+       		<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
+			<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
+		
         	<html:hidden property="page" value="1"/>
         	<table width="100%" align="center" border="0" cellpadding='0' cellspacing='0'>
         		<tr>

@@ -2,13 +2,15 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
         <span class="error"><html:errors/></span>
 		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
-        	<input type="hidden" value="nextPage" name="method"/>
+        	<input type="hidden" value="nextPagePublic" name="method"/>
         	<html:hidden property="page" value="1"/>
-        	
+        	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
+			<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
+	
+	
          <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoop">Por favor, proceda &agrave; escolha
@@ -18,7 +20,7 @@
 	<br />
     <p><bean:message key="property.context.degree"/>:
 		<html:select property="index" size="1">
-       		<html:options collection="<%= SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
+       		<html:options collection="degreeList" property="value" labelProperty="label"/>
        </html:select>
 	 </p>
 	 <br />
@@ -32,8 +34,8 @@
 	 <table border="0" cellspacing="0" cellpadding="0">
 	   <tr>
 	     <td nowrap class="formTD"><bean:message key="property.context.curricular.year"/>:</td>
-	     <td nowrap class="formTD"><html:select property="curricularYear" size="1">
-       		<html:options collection="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>" property="value" labelProperty="label"/>
+	     <td nowrap class="formTD"><html:select property="curYear" size="1">
+       		<html:options collection="curricularYearList" property="value" labelProperty="label"/>
        </html:select></td>
        </tr>
 <%--	   <tr>
