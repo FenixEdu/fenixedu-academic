@@ -65,7 +65,8 @@ public class ReadCandidateListTest extends TestCaseReadServices {
 	try {
 		sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
-		sp.getIPersistentMasterDegreeCandidate().deleteAll();
+        //TODO: delete all no longer exists
+		//sp.getIPersistentMasterDegreeCandidate().deleteAll();
 		sp.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia excepcao) {
 	  fail("Exception when setUp");

@@ -217,7 +217,7 @@ public class ConversorSOP
 
             classDAO.deleteAll();
             //shiftDAO.deleteAll();
-            shiftLessonDAO.deleteAll();
+          //  shiftLessonDAO.deleteAll();
             classShiftDAO.deleteAll();
             lessonDAO.deleteAll();
             readDatabase.deleteAll("select all from " + ExecutionCourse.class.getName());

@@ -260,7 +260,8 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends Te
             {
                 //System.out.println("###### Turnos sem aulas e sem turmas
 				// associadas");
-                turnoAulaPersistente.deleteAll();
+//TODO: deleteAll was deleted. replace with another metod
+               // turnoAulaPersistente.deleteAll();
                 turmaTurnoPersistente.deleteAll();
             }
 

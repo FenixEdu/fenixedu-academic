@@ -52,11 +52,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
      * @throws ExcepcaoPersistencia
      */
     public void delete(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia;
-    /**
-     * 
-     * @throws ExcepcaoPersistencia
-     */
-    public void deleteAll() throws ExcepcaoPersistencia;
+   
 
 	/**
 	 * 

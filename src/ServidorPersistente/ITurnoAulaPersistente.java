@@ -26,7 +26,7 @@ public interface ITurnoAulaPersistente extends IPersistentObject{
                throws ExcepcaoPersistencia;
     public void lockWrite(ITurnoAula turnoAula) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(ITurnoAula turnoAula) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+   
 	
 	
 	public List readLessonsByStudent(String username) throws ExcepcaoPersistencia;
