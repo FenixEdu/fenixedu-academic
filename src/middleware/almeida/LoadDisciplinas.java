@@ -55,7 +55,7 @@ public class LoadDisciplinas extends LoadDataFile {
 		almeida_disc.setLab((new Double(laboratorio)).doubleValue());
 		almeida_disc.setNomedis(nomeDisciplina);
 
-		//writeElement(almeida_disc);
+		writeElement(almeida_disc);
 		processCurricularCourse(almeida_disc);
 	}
 
