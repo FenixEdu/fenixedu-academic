@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+
+<slide logger="org.apache.slide.util.logger.SimpleLogger" logger-level="6" default="slide">
+
+<!--
+logger
+~~~~~~
+org.apache.slide.util.logger.SimpleLogger 
+   default logger with 1 log level
+log4j.Log4jLogger 
+   logger with fine granularity
+   see http://jakarta.apache.org/log4j/
+
+logger-level 
+~~~~~~~~~~~~
+0 EMERGENCY
+1 CRITICAL
+2 ERROR
+4 WARNING
+6 INFO
+7 DEBUG
+-->
+
+  <namespace name="slide">
+<!-- ### Memory Configuration ###
+     The following memory configuration uses the MemoryDescriptorsStore
+     for node,security,locks and revisions. For content the FileContentStore
+     is used. Content is reset before start.
+-->
+ <!--   <definition>
+      <store name="memory">
+        <nodestore classname="slidestore.reference.MemoryDescriptorsStore">
+        </nodestore>
+        <securitystore>
+          <reference store="nodestore" />
+        </securitystore>
+        <lockstore>
+          <reference store="nodestore" />
+        </lockstore>
+        <revisiondescriptorsstore>
+          <reference store="nodestore" />
+        </revisiondescriptorsstore>
+        <revisiondescriptorstore>
+          <reference store="nodestore" />
+        </revisiondescriptorstore>
+        <contentstore classname="slidestore.reference.FileContentStore">
+          <parameter name="rootpath">contentstore</parameter>
+          <parameter name="version">false</parameter>
+          <parameter name="resetBeforeStarting">false</parameter>
+        </contentstore>
+      </store>
+      <scope match="/" store="memory" />
+    </definition> -->
+
+	<definition >
+      
+       <store name="jdbc" >
+        <nodestore classname="slidestore.reference.JDBCDescriptorsStore" >
+         <parameter name="driver" >com.mysql.jdbc.Driver</parameter >
+         <parameter name="url" >mysql://localhost:3306/myDB</parameter >
+         <parameter name="user">root</parameter>
+         <parameter name="password"></parameter>         
+        </nodestore >
+        <securitystore >
+          <reference store="nodestore" />
+        </securitystore >
+        <lockstore >
+          <reference store="nodestore" />
+        </lockstore >
+        <revisiondescriptorsstore >
+          <reference store="nodestore" />
+        </revisiondescriptorsstore >
+        <revisiondescriptorstore >
+          <reference store="nodestore" />
+        </revisiondescriptorstore >
+        <contentstore classname="slidestore.reference.JDBCContentStore" >
+          <parameter name="driver" >com.mysql.jdbc.Driver</parameter >
+          <parameter name="url" >mysql://localhost:3306/myDB</parameter >
+          <parameter name="user">root</parameter>
+          <parameter name="password"></parameter>
+        </contentstore >
+        <!-- contentstore classname="slidestore.reference.FileContentStore" >
+          < parameter name="rootpath" >files</ parameter >
+        </ contentstore -->
+      </store >
+      
+      <scope match="/" store="jdbc" />
+     
+    </definition >
+    
+    
+
+<!-- ### JDBC Configuration ###
+     The following jdbc sample configuration uses the hsql Database Engine
+     a relational database engine written in Java, for more info: 
+     http://hsqldb.sourceforge.net/ 
+-->
+<!--
+    <definition>
+      <store name="jdbc">
+        <nodestore classname="slidestore.reference.JDBCDescriptorsStore">
+         <parameter name="driver">org.hsqldb.jdbcDriver</parameter>
+         <parameter name="url">jdbc:hsqldb:slidestructure</parameter>
+         <parameter name="user">sa</parameter>
+         <parameter name="password"></parameter>
+        </nodestore>
+        <securitystore>
+          <reference store="nodestore" />
+        </securitystore>
+        <lockstore>
+          <reference store="nodestore" />
+        </lockstore>
+        <revisiondescriptorsstore>
+          <reference store="nodestore" />
+        </revisiondescriptorsstore>
+        <revisiondescriptorstore>
+          <reference store="nodestore" />
+        </revisiondescriptorstore>
+        <contentstore classname="slidestore.reference.JDBCContentStore">
+         <parameter name="driver">org.hsqldb.jdbcDriver</parameter>
+         <parameter name="url">jdbc:hsqldb:slidecontent</parameter>
+         <parameter name="user">sa</parameter>
+         <parameter name="password"></parameter>
+        </contentstore>
+      </store>
+      <scope match="/" store="jdbc" />
+    </definition>
+-->
+
+<!-- ### Mixed JDBC - Filesystem ###
+     stores: slidestore.reference.JDBCDescriptorsStore
+             slidestore.reference.FileContentStore
+     !!! set resetBeforeStarting parameter for FileContentStore to false !!!
+-->
+
+<!-- ### Cloudscape configuration (embedded database) ###
+     stores: slidestore.cloudscape.CloudscapeDescriptorsStore
+             slidestore.cloudscape.CloudscapeContentStore
+     driver: COM.cloudscape.core.JDBCDriver
+     url:    jdbc:cloudscape:slidestructure;create=true
+             jdbc:cloudscape:slidecontent;create=true
+-->
+
+<!-- ### Oracle configuration (thin driver) ###
+     stores: slidestore.reference.JDBCDescriptorsStore
+             slidestore.oracle.OracleContentStore
+     driver: oracle.jdbc.OracleDriver
+     url:    jdbc:oracle:thin:@localhost:1521:slide
+-->
+
+    <configuration>
+
+      <!-- Actions mapping -->
+      <default-action>/actions</default-action>
+      <read-object>/actions/read</read-object>
+      <create-object>/actions/write</create-object>
+      <remove-object>/actions/write</remove-object>
+      <grant-permission>/actions/manage</grant-permission>
+      <revoke-permission>/actions/manage</revoke-permission>
+      <read-permissions>/actions/manage</read-permissions>
+      <lock-object>/actions/write</lock-object>
+      <kill-lock>/actions/manage</kill-lock>
+      <read-locks>/actions/read</read-locks>
+      <read-revision-metadata>/actions/read</read-revision-metadata>
+      <create-revision-metadata>/actions/write</create-revision-metadata>
+      <modify-revision-metadata>/actions/write</modify-revision-metadata>
+      <remove-revision-metadata>/actions/write</remove-revision-metadata>
+      <read-revision-content>/actions/read</read-revision-content>
+      <create-revision-content>/actions/write</create-revision-content>
+      <modify-revision-content>/actions/write</modify-revision-content>
+      <remove-revision-content>/actions/write</remove-revision-content>
+
+      <!-- Paths configuration -->
+      <userspath>/users</userspath>
+      <guestpath>guest</guestpath>
+      <filespath>/files</filespath>
+      <parameter name="dav">true</parameter>
+      <parameter name="standalone">true</parameter>
+
+      <!-- Roles definition -->
+      <role name="root">slideroles.basic.RootRole</role>
+      <role name="user">slideroles.basic.UserRole</role>
+      <role name="guest">slideroles.basic.GuestRole</role>
+
+      <!-- Users management -->
+      <auto-create-users>true</auto-create-users>
+
+      <!-- Default properties mapping -->
+      <default-property name="foo" namespace="nsfoo/" value="bar"
+       role="user"/>
+      <default-property name="password" namespace="slide/" value=""
+       role="user"/>
+
+    </configuration>
+    
+    <data>
+      
+      <objectnode classname="org.apache.slide.structure.SubjectNode" uri="/">
+        
+        <!-- Subject can be:
+                self  "~"
+                all   "nobody"
+                user  "/users/john"
+                group "+/users/groupA"
+                role  "root"
+        -->
+                
+        <!-- Uncomment the following line to give all permissions to 
+             principals have the root role -->
+        <!-- <permission action="/actions" subject="root"/> -->
+
+        <permission action="/actions" subject="/users/root"/>
+        <permission action="/actions/read" subject="/users"
+         inheritable="false"/>
+        <permission action="/actions/read" subject="nobody"
+         inheritable="false"/>
+        
+        <!-- /users -->
+        
+        <objectnode classname="org.apache.slide.structure.SubjectNode" 
+         uri="/users">
+          
+          <permission action="/actions" subject="~"/>
+          <permission action="/actions" subject="/users/guest"
+           inheritable="true" negative="true"/>
+          <permission action="/actions/read" subject="/users"
+           inheritable="false"/>
+
+          <!-- Permission group example -->
+          
+          <objectnode classname="org.apache.slide.structure.GroupNode" 
+            uri="/users/groupA">
+             <objectnode classname="org.apache.slide.structure.LinkNode" 
+                uri="/users/groupA/john" linkedUri="/users/john" />
+             <objectnode classname="org.apache.slide.structure.LinkNode" 
+                uri="/users/groupA/root" linkedUri="/users/root" />
+             <objectnode classname="org.apache.slide.structure.SubjectNode" 
+               uri="/users/groupA/singleGroupMember"  />
+          </objectnode>
+
+          <!-- /users/root represents the administrator -->
+          
+          <objectnode classname="slideroles.basic.RootRoleImpl" 
+           uri="/users/root">
+            <revision>
+              <property name="password">root</property>
+            </revision>
+          </objectnode>
+          
+          <!-- /users/john represents an authenticated user -->
+          
+          <objectnode classname="slideroles.basic.UserRoleImpl" 
+           uri="/users/john">
+            <revision>
+              <property name="password">john</property>
+            </revision>
+          </objectnode>
+          
+          <!-- /users/guest represents an authenticated or unauthenticated 
+               guest user -->
+          
+          <objectnode classname="slideroles.basic.GuestRoleImpl" 
+           uri="/users/guest">
+            <revision>
+              <property name="password"></property>
+            </revision>
+          </objectnode>
+          
+        </objectnode>
+        
+        <objectnode classname="org.apache.slide.structure.ActionNode" 
+         uri="/actions">
+          
+          <objectnode classname="org.apache.slide.structure.ActionNode" 
+           uri="/actions/read"/>
+          
+          <objectnode classname="org.apache.slide.structure.ActionNode" 
+           uri="/actions/write"/>
+          
+          <objectnode classname="org.apache.slide.structure.ActionNode" 
+           uri="/actions/manage"/>
+          
+        </objectnode>
+        
+        <objectnode classname="org.apache.slide.structure.SubjectNode" 
+         uri="/files">
+
+          <!-- ### Give read/write/manage permission to guest ### 
+               Uncomment the following line to give permission to do
+               all actions on /files to guest (unauthenticated users) -->
+          <!-- <permission action="/actions" subject="/users/guest"/> -->
+
+          <permission action="/actions/manage" subject="/users/john"/>
+          <permission action="/actions/write" subject="+/users/groupA"/>
+          <permission action="/actions/read" subject="nobody"/>
+          
+        </objectnode>
+        
+      </objectnode>
+      
+    </data>
+    
+  </namespace>
+  <!--
+    DeltaV global parameters
+    ========================
+    * historypath (mandatory=no, default="/history"):
+    Specifies a Slide path which determines the location where this DeltaV
+    server stores history data.
+
+    * workspacepath (mandatory=no, default="/workspace"):
+    Specifies a Slide path which determines the location where this DeltaV
+    server allows workspaces to reside.
+
+    * workingresourcepath (mandatory=no, default="/workingresource"):
+    Specifies a Slide path which determines the location where this DeltaV
+    server stores working resources.
+
+    * auto-version (mandatory=no, default="checkout-checkin"):
+    Controls the DeltaV auto-version behaviour.
+
+    * auto-version-control (mandatory=no, default="false"):
+    Indicates if a resource just created by a PUT should be set under
+    version-control.
+
+   * versioncontrol-exclude (mandatory=no, default=""):
+   Specifies a Slide path which determines resources which are excluded from \
+version-control.  The default value "" makes no path being excluded.
+
+    * checkout-fork (mandatory=no, default="forbidden"):
+    Controls the DeltaV check-out behaviour when a version is already
+    checked-out or has a successor.
+
+    * checkin-fork (mandatory=no, default="forbidden"):
+    Controls the DeltaV check-out behaviour when a version has already a
+    successor.
+
+    * standardLivePropertiesClass (mandatory=no,
+    default="org.apache.slide.webdav.util.resourcekind.AbstractResourceKind"):
+    Determines the "agent" knowing about what the standard live properties are.
+    It should be a loadable class containing the following static methods:
+    - boolean isLiveProperty(String propName)
+    - boolean isProtectedProperty(String propName)
+    - boolean isComputedProperty(String propName)
+    - Set getAllLiveProperties()
+    - Set getAllProtectedProperties()
+    - Set getAllComputedProperties()
+
+    * uriRedirectorClass (mandatory=no,
+    default="org.apache.slide.webdav.util.DeltavUriRedirector"):
+    Determines the URI redirector class. The DeltaV URI redirector is in
+    charge of the following redirections:
+    - version URI to history URI, e.g. /history/2/1.4 to /history/2
+    - latest revision number for history resource to 0.0
+    - latest revision number for version resource to last URI token,
+    e.g. /history/2/1.4 to 1.4
+    It should be a loadable class containing the following static methods:
+    - String redirectUri(String uri)
+    - NodeRevisionNumber redirectLatestRevisionNumber(String uri)
+    -->
+  
+</slide>
