@@ -11,7 +11,9 @@
 <span class="error"><html:errors/></span>
 
 <h2 align="left"><bean:message key="title.studentCurricularPlan"/></h2>
+<bean:define id="idInternal">/alterStudentCurricularPlan.do?method=edit&studentCurricularPlanId=<bean:write name="studentCurricularPlan" property="idInternal"/></bean:define>
 
+<html:form action='<%= pageContext.findAttribute("idInternal").toString() %>'>
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
 		<td>
@@ -36,7 +38,11 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.student.state" /></b>
-			<bean:write name="studentCurricularPlan" property="currentState" />
+			<logic:present name="<%= SessionConstants.STATE %>">
+				<html:select name="studentCurricularPlanForm" property="currentState">	
+	          	 <html:options collection="<%= SessionConstants.STATE %>" property="value" labelProperty="label"/>
+	    	 	</html:select>   
+			</logic:present>
 		</td>						
 	</tr>	
 	<tr>
@@ -48,7 +54,9 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.student.credits" /></b>
-			<bean:write name="studentCurricularPlan" property="givenCredits" />
+			<logic:present name="<%= SessionConstants.STATE %>">
+				<html:text name="studentCurricularPlanForm" property="credits" size="4"/>
+			</logic:present>
 		</td>
 	</tr>	
 	<tr>
@@ -83,6 +91,7 @@
 				</logic:lessEqual>
 				
 				<logic:greaterThan name="sizeEnrolments" value="0">
+				<html:hidden property="size" value='<%= pageContext.findAttribute("sizeEnrolments").toString() %>'/>
 					<table>
 						<tr>
 							<td colspan="3" align="center"><h3><bean:message key="title.enrolments"/></h3></td>
@@ -91,7 +100,8 @@
 							<th align="left"><bean:message key="label.enrolment.curricularCourse"/></th>
 							<th align="left"><bean:message key="label.enrolment.type"/></th>
 							<th align="left"><bean:message key="label.enrolment.state"/></th>
-							<th align="left"><bean:message key="label.enrolment.year"/></th>							
+							<th align="left"><bean:message key="label.enrolment.year"/></th>
+							<th align="left"><bean:message key="label.enrolment.extraCurricular"/></th>							
 						</tr>
 						<logic:iterate id="infoEnrolment" name="studentCurricularPlan" property="infoEnrolments">
 							<tr>	
@@ -116,6 +126,10 @@
 									<bean:write name="infoEnrolment" property="infoExecutionPeriod.infoExecutionYear.year" />&nbsp;
 									<bean:write name="infoEnrolment" property="infoExecutionPeriod.name" />
 								</td>
+								<td>
+									<bean:define  id="idEnrolment" name="infoEnrolment" property="idInternal"/>
+									<html:checkbox property="courseType"  value='<%= pageContext.findAttribute("idEnrolment").toString() %>'/>&nbsp;
+								</td>
 							</tr>		
 						</logic:iterate>
 					</table>
@@ -124,10 +138,9 @@
 		</td>
 	</tr>	
 </table>	
-<bean:define id="link">/editStudentCurricularPlan.do?method=prepare&studentCurricularPlanId=<bean:write name="studentCurricularPlan" property="idInternal"/></bean:define>   
-<html:link page='<%= pageContext.findAttribute("link").toString() %>'>
-	<bean:message key="label.masterDegree.administrativeOffice.edit"/>
-</html:link>		
+ <html:submit value="Submeter" styleClass="inputbutton">
+</html:submit>
+</html:form>	
 
 
 

@@ -28,6 +28,7 @@ public class Enrolment extends DomainObject implements IEnrolment {
 
 	private List evaluations;
 
+
 	private String ojbConcreteClass;
 
 	public Enrolment() {
@@ -245,5 +246,7 @@ public class Enrolment extends DomainObject implements IEnrolment {
 	public void setCurricularCourseScopeKey(Integer integer) {
 		curricularCourseScopeKey = integer;
 	}
+
+	
 
 }

@@ -106,10 +106,10 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 			Calendar calendario = Calendar.getInstance();
 
 			if (!isValidEvaluation(infoEnrolmentEvaluation)) {
-				System.out.println("entrei aqui no servico");
 				infoEvaluationsWithError.add(infoEnrolmentEvaluation);
 			} else {
-
+		
+			
 				// read enrolmentEvaluation
 				IEnrolmentEvaluation iEnrolmentEvaluation = new EnrolmentEvaluation();
 
@@ -126,10 +126,9 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 						iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.APROVED);
 					} catch (NumberFormatException e) {
 						if (enrolmentEvaluation.getGrade().equals("RE"))
-							iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.NOT_APROVED);
+							iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.NOT_APROVED);		
 						if (enrolmentEvaluation.getGrade().equals("NA"))
 							iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.NOT_EVALUATED);
-						System.out.println("há problemas");
 					}
 					IEnrolment enrolment = new Enrolment();
 					enrolment.setCurricularCourseScope(iEnrolmentEvaluation.getEnrolment().getCurricularCourseScope());
@@ -142,7 +141,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 					persistentEnrolment.lockWrite(enrolment);
 					iEnrolmentEvaluation.setEnrolment(enrolment);
 
-				}
+				}		
 
 				enrolmentEvaluation.setEnrolment(iEnrolmentEvaluation.getEnrolment());
 				enrolmentEvaluation.setWhen(calendario.getTime());

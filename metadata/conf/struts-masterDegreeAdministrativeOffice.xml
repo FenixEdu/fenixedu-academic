@@ -451,10 +451,21 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
 
-            <form-property name="page" type="java.lang.Integer" />
+       		<form-property name="page" type="java.lang.Integer" />
    	        <form-property name="year" type="java.lang.String"/>
    	        <form-property name="state" type="java.lang.String"/>
       </form-bean>
+      <form-bean name="studentCurricularPlanForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" />
+   	        <form-property name="currentState" type="java.lang.String"/>
+   	        <form-property name="credits" type="java.lang.String"/>
+   	        <form-property name="courseType" type="java.lang.String"/>
+   	        <form-property name="enrolmentID" type="java.lang.String"/>
+   	        <form-property name="size" type="java.lang.Integer" />
+      </form-bean>
+     
 
    </form-beans>
     
@@ -1511,7 +1522,7 @@
 	         <forward name="Print" path="/candidate/candidateRegistrationTemplate.jsp"/> 
 	         
       </action>
-      
+  
 	<!-- visualize Student Informations -->
       
  	  
@@ -1548,8 +1559,6 @@
 	         <forward name="Success" path="/student/visualizePersonalStudentInfo.jsp"/>  
        </action>
       <!-- end of edit student information -->
-
-
 		<action	name="seeStudentAndCurricularPlansForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentAndCurricularPlansDispatchAction"
 				path="/seeStudentAndCurricularPlans"
@@ -1560,7 +1569,6 @@
 			<forward name="start" path="df.page.searchStudents"/>
 			<forward name="viewStudents" path="df.page.viewStudents"/>
 		</action>
-
 		<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentCurricularPlansAction"
 				path="/seeStudentCurricularPlans"
 				scope="request"
@@ -1572,9 +1580,9 @@
 				path="/showStudentCurricularCoursePlan"
 				scope="request">
 			<forward name="ShowStudentCurricularCoursePlan" path="df.page.showStudentCurricularCoursePlan"/>
-	 </action>		
-
-	  <action	name="chooseGuideStateForm"
+	 </action>	
+	 	 
+  	 <action	name="chooseGuideStateForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingByStateDispatchAction"
 				path="/guideListingByState"
 				parameter="method"
@@ -1583,27 +1591,45 @@
 				validate="true">
 			<forward name="PrepareSuccess" path="df.page.searchGuideByState"/>
 			<forward name="ShowList" path="df.page.showSearchGuideListResult"/>
-		</action>
+	</action>
+	<action  type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.EditStudentCurricularCoursePlan"
+	 		 path="/editStudentCurricularPlan"		 
+	 		 parameter="method"
+	 		 name="studentCurricularPlanForm" 
+	 		 scope="request"
+	 		 validate="false" >
+	 		<forward name="editStudentCurricularCoursePlan" path="df.page.editStudentCurricularCoursePlan"/>
+	 </action>
+	 <action  type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.EditStudentCurricularCoursePlan"
+	 		 path="/alterStudentCurricularPlan"		 
+	 		 parameter="method"
+	 		 name="studentCurricularPlanForm" 
+	 		 scope="request"
+	 		 validate="false" >
+	 		<forward name="editStudentCurricularCoursePlan" path="df.page.editStudentCurricularCoursePlan"/>
+	 </action>
 
     </action-mappings>
     
-	<!-- ========== Controller Configuration ================================ -->
+    <!-- ========== Controller Configuration ================================ -->
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
-
+    
     <!-- ========== Message Resources Definitions ============================ -->
      <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>   
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeAdministrativeOffice.xml"/>
+             value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeAdministrativeOffice.xml"/>
     </plug-in>
-
-	<plug-in className="org.apache.struts.tiles.TilesPlugin">
-		<set-property property="definitions-config" value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-pages-definitions.xml"/>
-		<set-property property="moduleAware" value="true"/>
-		<set-property property="definitions-parser-validate" value="true"/>
+    <plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" 
+		     value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-pages-definitions.xml"/>
+		<set-property property="moduleAware"
+   			value="true"/>
+		<set-property property="definitions-parser-validate" 
+			value="true"/>
 	</plug-in>
-
+    
 </struts-config>
 

@@ -160,7 +160,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber, TipoCurso degreeType, Specialization specialization)
 		throws ExcepcaoPersistencia {
 		try {
-			IStudentCurricularPlan studentCurricularPlan = null;
+			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan ();
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
 			oqlQuery += " where student.number = $1";
 			oqlQuery += " and student.degreeType = $2";
@@ -254,7 +254,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
     //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 24/Set/2003 
     public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
         try {
-            IStudentCurricularPlan studentCurricularPlan = null;
+            IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
             String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
             oqlQuery += " where student.number = $1" ;
             oqlQuery += " and student.degreeType = $2 ";

@@ -170,6 +170,7 @@ public abstract class SessionConstants {
 	public static final String STUDENT_LIST = "student_list";
 	public static final String STUDENT_CURRICULAR_PLAN = "student_curricular_plan";
 	public static final String STUDENT = "student";
+	public static final String STATE = "state";
 	
 	
 	

@@ -350,7 +350,17 @@
 		column="CLASSIFICATION"
 		jdbc-type="FLOAT"
 	/>
-
+    <field-descriptor
+		name="employeeKey"
+		column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"	
+	/>
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
@@ -369,7 +379,12 @@
 			proxy="false">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
-	
+	<reference-descriptor
+			name="employee"
+			class-ref="Dominio.Employee"
+			proxy="false">
+		<foreignkey field-ref="employeeKey"/>
+	</reference-descriptor>
 	<collection-descriptor
 			name="enrolments"
 			refresh="true"

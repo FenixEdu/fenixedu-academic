@@ -13,16 +13,19 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	protected Integer degreeCurricularPlanKey;
 	protected Specialization specialization;
 	protected Double givenCredits;
+	protected Date when;
 
 	protected IStudent student;
 	protected IBranch branch;
 	protected IDegreeCurricularPlan degreeCurricularPlan;
+	protected Employee employee; 
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
 	protected List enrolments;
     protected Integer completedCourses;
     protected Double classification;
     protected Integer enrolledCourses;
+	protected Integer employeeKey;
 
 	public StudentCurricularPlan() {
 		setStudent(null);
@@ -65,6 +68,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		result += "startDate = " + this.startDate + "; ";
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
+		result += "when alter = " + this.when + "]\n";
+		result += "employee = " + this.employee.getPerson().getNome()  + "]\n";
 		return result;
 	}
 
@@ -285,6 +290,48 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	public void setClassification(Double double1)
 	{
 		classification= double1;
+	}
+
+	/**
+	 * @return
+	 */
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	/**
+	 * @param employee
+	 */
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getEmployeeKey() {
+		return employeeKey;
+	}
+
+	/**
+	 * @param employeeKey
+	 */
+	public void setEmployeeKey(Integer employeeKey) {
+		this.employeeKey = employeeKey;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getWhen() {
+		return when;
+	}
+
+	/**
+	 * @param when
+	 */
+	public void setWhen(Date when) {
+		this.when = when;
 	}
 
 }

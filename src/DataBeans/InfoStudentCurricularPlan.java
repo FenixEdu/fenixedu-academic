@@ -31,6 +31,8 @@ public class InfoStudentCurricularPlan
 	protected Double classification;
 	protected Integer enrolledCourses;
 	protected Integer completedCourses;
+	protected Date when;
+	protected InfoPerson infoEmployee;
 	
 	protected List infoEnrolments;
 
@@ -261,4 +263,33 @@ public class InfoStudentCurricularPlan
 		}
 		return 0;
 	}
+
+	/**
+	 * @return
+	 */
+	public InfoPerson getInfoEmployee() {
+		return infoEmployee;
+	}
+
+	/**
+	 * @param infoEmployee
+	 */
+	public void setInfoEmployee(InfoPerson infoEmployee) {
+		this.infoEmployee = infoEmployee;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getWhen() {
+		return when;
+	}
+
+	/**
+	 * @param when
+	 */
+	public void setWhen(Date when) {
+		this.when = when;
+	}
+
 }

@@ -119,6 +119,8 @@ create table STUDENT_CURRICULAR_PLAN (
    COMPLETED_COURSES int(11) default 0,
    ENROLLED_COURSES int(11) default 0,
    CLASSIFICATION float(10,2),
+   KEY_EMPLOYEE int(11),
+   WHEN_ALTER datetime,  
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, KEY_BRANCH)
 )type=InnoDB;
