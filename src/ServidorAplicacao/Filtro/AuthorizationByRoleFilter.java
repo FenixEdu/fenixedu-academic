@@ -4,10 +4,6 @@
  */
 package ServidorAplicacao.Filtro;
 
-import java.util.Collection;
-import java.util.Iterator;
-
-import DataBeans.InfoRole;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -29,25 +25,12 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
 		throws Exception {
 		if (((id != null
 			&& id.getRoles() != null
-			&& !containsRole(id.getRoles())))
+			&& !AuthorizationUtils.containsRole(id.getRoles(),getRoleType())))
 			|| (id == null)
 			|| (id.getRoles() == null)) {
 			throw new NotAuthorizedException();
 		}
 
-	}
-	/**
-	 * @param collection
-	 * @return boolean
-	 */
-	private boolean containsRole(Collection roles) {
-		Iterator rolesIterator = roles.iterator();
-		while (rolesIterator.hasNext()) {
-			InfoRole infoRole = (InfoRole) rolesIterator.next();
-			if (infoRole.getRoleType().equals(getRoleType()))
-				return true;	
-		}
-		return false;
 	}
 	/**
 	 * This method returns the role that we want to authorize.
