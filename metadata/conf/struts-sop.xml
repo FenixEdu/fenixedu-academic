@@ -18,7 +18,7 @@
         <form-property name="password" type="java.lang.String" />
       </form-bean>
 		
-	  <!-- CONTEXTO -->choose
+	  <!-- CONTEXTO -->
       <!-- Dynamic-FormBean para EscolherContexto -->
       <form-bean name="escolherContextoForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -234,7 +234,7 @@
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
       
-     </form-beans>
+    </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
