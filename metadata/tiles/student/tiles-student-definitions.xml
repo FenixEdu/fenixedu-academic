@@ -1,0 +1,24 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<!-- page="/fenixLayoutStudent_2col_photo.jsp"-->
+	<definition name="definition.student.masterPage" extends="df.layout.two-column-photo">
+	  <put name="title" value=".IST - portalEstudante" />
+	  <put name="serviceName" value="Portal do Estudante" />	
+	  <put name="navGeral" value=" " />
+	  <put name="photos" value="/student/commonEntrPhotosStudent.jsp" />
+	  <put name="context-body" value=" "/>
+	  <put name="body" value="/student/main_bd.jsp" />
+	  <put name="footer" value="/student/commonFooterStudent.jsp" />
+	</definition>
+	<definition name="definition.student.curricular.course.enrolment" extends="definition.student.masterPage">
+		<put name="body-context" value="/student/enrolmentContext.jsp"/>
+	</definition>
+	<definition name="definition.student.choose.optional.curricular.course.enrolment" extends="definition.student.masterPage">
+		<put name="body-context" value="/student/enrolmentInOptionalCurricularCourseContext.jsp"/>
+	</definition>
+	<definition name="definition.out.of.period" extends="definition.student.masterPage">
+		<put name="body" value="/outOfPeriod.jsp"/>
+	</definition>
+</tiles-definitions>
