@@ -38,7 +38,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 	protected String getDataSetFilePath()
 	{
-		return "etc/datasets_templates/servicos/coordinator/testDataSetReadCurriculumByCurricularCourseCode.xml";
+		return "etc/datasets_templates/servicos/coordinator/testDataSetCurriculum.xml";
 	}
 	protected String[] getAuthenticatedAndAuthorizedUser()
 	{

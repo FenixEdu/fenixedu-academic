@@ -35,7 +35,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCodeTest extends Se
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets_templates/servicos/coordinator/testDataSetReadDegreeCurricularPlanByExecutionDegreeCode.xml";
+		return "etc/datasets_templates/servicos/coordinator/testDataSetDegreeCurricularPlan.xml";
 	}
 	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};

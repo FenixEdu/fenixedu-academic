@@ -34,7 +34,7 @@ public class ReadCurrentCurriculumByCurricularCourseCodeTest extends ServiceTest
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets_templates/servicos/coordinator/testDataSetReadCurriculumByCurricularCourseCode.xml";
+		return "etc/datasets_templates/servicos/coordinator/testDataSetCurriculum.xml";
 	}
 	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
@@ -169,11 +169,17 @@ public class ReadCurrentCurriculumByCurricularCourseCodeTest extends ServiceTest
 			infoCurriculum = (InfoCurriculum) gestor.executar(id2, getNameOfServiceToBeTested(), args);
 
 			if (infoCurriculum == null) {
+				fail("Reading Curriculum with non existing curriculum");
+			} else {
+				System.out.println("infoCurriculum nao é null.");
+				assertEquals(infoCurriculum.getIdInternal(), new Integer(0));
+//				assertNotNull(infoCurriculum.getInfoCurricularCourse());
+//				assertEquals(infoCurriculum.getInfoCurricularCourse().getIdInternal(), infoCurricularCourseCode);
+				
+				
 				System.out.println(
 					"testReadCurrentCurriculumByCurricularCourseCodeNullCurriculumUnsuccessfull was SUCCESSFULY runned by service: "
 						+ getNameOfServiceToBeTested());
-			} else {
-				fail("Reading Curriculum with non existing curriculum");
 			}
 		} catch (FenixServiceException e) {
 			fail("Reading Curriculum with non existing curriculum " + e);

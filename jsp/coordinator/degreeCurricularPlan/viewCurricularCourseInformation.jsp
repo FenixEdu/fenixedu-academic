@@ -7,12 +7,10 @@
 <logic:present name="infoCurriculum">
 	<logic:notPresent name="executionYear"> 
 		<%-- want to see current curricular course information --%>
-<%--		<h2><bean:message key="label.coordinator.degreeCurricularPlan.current.information"/>&nbsp;-&nbsp;<str:capitalizeAllWords><str:lowerCase><bean:write name="infoCurriculum" property="infoCurricularCourse.name"/></str:lowerCase></str:capitalizeAllWords></h2> --%>
 		<h2><str:upperCase><bean:message key="label.coordinator.degreeCurricularPlan.current.information"/></str:upperCase>&nbsp;-&nbsp;<bean:write name="infoCurriculum" property="infoCurricularCourse.name"/></h2>
 	</logic:notPresent>
 	<logic:present name="executionYear"> 
 		<%-- want to see curricular course information history --%>
-<%--		<h2><bean:message key="label.coordinator.degreeCurricularPlan.history.information"/>&nbsp;-&nbsp;<str:capitalizeAllWords><str:lowerCase><bean:write name="infoCurriculum" property="infoCurricularCourse.name"/></str:lowerCase></str:capitalizeAllWords>&nbsp;-&nbsp;<bean:write name="executionYear"/></h2> --%>
 		<h2><str:upperCase><bean:message key="label.coordinator.degreeCurricularPlan.history.information"/></str:upperCase>&nbsp;-&nbsp;<bean:write name="infoCurriculum" property="infoCurricularCourse.name"/>&nbsp;-&nbsp;<bean:write name="executionYear"/></h2>
 	</logic:present>
 	<p>

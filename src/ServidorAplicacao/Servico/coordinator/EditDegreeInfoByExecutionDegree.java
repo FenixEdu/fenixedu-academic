@@ -85,9 +85,9 @@ public class EditDegreeInfoByExecutionDegree implements IServico
 
             degreeInfo = (IDegreeInfo) persistentDegreeInfo.readByOId(degreeInfo, true);
 
-            //verify if the record finded is in this execution period
+            //verify if the record found is in this execution period
             //or if is new in database
-            //if it isn't is necessary create a new record
+            //if it isn't, is necessary to create a new record
             if (degreeInfo == null
                 || (!verifyExecutionYear(degreeInfo.getLastModificationDate(),
                     executionDegree.getExecutionYear())))

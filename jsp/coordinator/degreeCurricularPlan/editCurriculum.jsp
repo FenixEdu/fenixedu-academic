@@ -24,6 +24,7 @@
 			<html:hidden property="method" value="editCurriculum"/>
 			<html:hidden property="infoCurriculumCode" value="<%=infoCurriculumId.toString()%>"/>
 			<html:hidden property="infoExecutionDegreeCode" value="<%=pageContext.findAttribute("infoExecutionDegreeCode").toString()%>"/>
+			<html:hidden property="infoCurricularCourseCode" value="<%=pageContext.findAttribute("infoCurricularCourseCode").toString()%>"/>
 			<table>
 				<tr>
 					<td>

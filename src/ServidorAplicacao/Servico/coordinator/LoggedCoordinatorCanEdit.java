@@ -1,16 +1,19 @@
 package ServidorAplicacao.Servico.coordinator;
 
+import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
+import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCoordinator;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -41,26 +44,32 @@ public class LoggedCoordinatorCanEdit implements IServico
 		return "LoggedCoordinatorCanEdit";
 	}
 
-	public Boolean run(Integer executionDegreeCode, IUserView userView) throws FenixServiceException
+	public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
+		throws FenixServiceException
 	{
-		Boolean result = Boolean.FALSE;
+		Boolean result = new Boolean(false);
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
 			if (executionDegreeCode == null)
 			{
 				throw new FenixServiceException("nullExecutionDegreeCode");
 			}
-			if (userView == null)
+			if (curricularCourseCode == null)
 			{
-				throw new FenixServiceException("nullUserView");
+				throw new FenixServiceException("nullCurricularCourseCode");
+			}
+			if (username == null)
+			{
+				throw new FenixServiceException("nullUsername");
 			}
 
-			ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(userView.getUtilizador());
+			ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(username);
 
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(executionDegreeCode);
@@ -69,6 +78,16 @@ public class LoggedCoordinatorCanEdit implements IServico
 
 			IExecutionYear executionYear = executionDegree.getExecutionYear();
 
+			ICurricularCourse curricularCourse = new CurricularCourse();
+			curricularCourse.setIdInternal(curricularCourseCode);
+			curricularCourse =
+				(ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
+
+			if (curricularCourse == null)
+			{
+				throw new NonExistingServiceException();
+			}
+
 			ICoordinator coordinator =
 				persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(
 					teacher,
@@ -76,7 +95,9 @@ public class LoggedCoordinatorCanEdit implements IServico
 
 			result =
 				new Boolean(
-					(coordinator != null) && executionYear.getState().equals(PeriodState.CURRENT));
+					(coordinator != null)
+						&& executionYear.getState().equals(PeriodState.CURRENT)
+						&& curricularCourse.getBasic().equals(Boolean.FALSE));
 		} catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException(e);
