@@ -66,7 +66,7 @@ public class ManageLessonDA
 
 		String action = request.getParameter("action");
 		if (action != null && action.equals("edit")) {
-			return prepareEdit(mapping, form, request, response);			
+			return prepareEdit(mapping, form, request, response);
 		} else {
 			return prepareCreate(mapping, form, request, response);
 		}
@@ -188,11 +188,17 @@ public class ManageLessonDA
 
 			String action = request.getParameter("action");
 			if (action != null && action.equals("edit")) {
-				emptyRoomsList.add(
-					0,
-					((InfoLesson) request
-						.getAttribute(SessionConstants.LESSON))
-						.getInfoSala());
+				// Permit selection of current room only if the day didn't
+				// change and the hour is contained within the original hour
+				InfoLesson infoLessonOld =
+					(InfoLesson) request.getAttribute(SessionConstants.LESSON);
+				if (contained(infoLessonOld, infoLesson)) {
+					emptyRoomsList.add(
+						0,
+						((InfoLesson) request
+							.getAttribute(SessionConstants.LESSON))
+							.getInfoSala());
+				}
 				manageLessonForm.set(
 					"nomeSala",
 					""
@@ -204,8 +210,6 @@ public class ManageLessonDA
 
 			Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
 			List listaSalas = new ArrayList();
-			listaSalas.add(
-				new LabelValueBean(infoSala.getNome(), infoSala.getNome()));
 			for (int i = 0; i < emptyRoomsList.size(); i++) {
 				InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
 				listaSalas.add(
@@ -380,9 +384,6 @@ public class ManageLessonDA
 		IUserView userView = (IUserView) sessao.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
-		//		System.out.println(
-		//			"##### lessonOID = "
-		//				+ request.getParameter(SessionConstants.LESSON_OID));
 		Object argsReadLessonByOID[] =
 			{ new Integer(request.getParameter(SessionConstants.LESSON_OID))};
 
@@ -477,30 +478,11 @@ public class ManageLessonDA
 			infoLessonToCreateOrEdited.setTipo(infoShift.getTipo());
 			infoLessonToCreateOrEdited.setInfoSala(infoSala);
 
-			System.out.println(
-				"### Action parameter in request: "
-					+ request.getParameter("action"));
 			String action = request.getParameter("action");
 			if (action != null && action.equals("edit")) {
 
-				HttpSession sessao = request.getSession(false);
-				IUserView userView =
-					(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-				GestorServicos gestor = GestorServicos.manager();
-
-				//				Object argsReadLessonByOID[] =
-				//					{ new Integer(request.getParameter(SessionConstants.LESSON_OID))};
-				//					System.out.println("##### LessonOID - " + request.getParameter(SessionConstants.LESSON_OID));
-				//				InfoLesson infoLessonOld = null;
-				//				infoLessonOld =
-				//					(InfoLesson) gestor.executar(
-				//						userView,
-				//						"ReadLessonByOID",
-				//						argsReadLessonByOID);
 				InfoLesson infoLessonOld =
 					(InfoLesson) request.getAttribute(SessionConstants.LESSON);
-				System.out.println("infoLessonOld= " + infoLessonOld);
-				System.out.println("infoSala= " + infoSala);
 				KeyLesson keyLessonOld =
 					new KeyLesson(
 						infoLessonOld.getDiaSemana(),
@@ -544,6 +526,69 @@ public class ManageLessonDA
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 		}
+	}
+
+	private boolean contained(
+		InfoLesson infoLessonOld,
+		InfoLesson infoLessonNew) {
+
+		if (!infoLessonOld
+			.getDiaSemana()
+			.getDiaSemana()
+			.equals(infoLessonNew.getDiaSemana().getDiaSemana())) {
+			return false;
+		}
+
+		String startTimeOld = "";
+		String startTimeNew = "";
+		String endTimeOld = "";
+		String endTimeNew = "";
+
+		if (infoLessonOld.getInicio().get(Calendar.HOUR_OF_DAY) < 10) {
+			startTimeOld += "0";
+		}
+		startTimeOld += infoLessonOld.getInicio().get(Calendar.HOUR_OF_DAY);
+		if (infoLessonOld.getInicio().get(Calendar.MINUTE) == 0) {
+			startTimeOld += "0";
+		}
+		startTimeOld += infoLessonOld.getInicio().get(Calendar.MINUTE);
+
+		if (infoLessonOld.getFim().get(Calendar.HOUR_OF_DAY) < 10) {
+			endTimeOld += "0";
+		}
+		endTimeOld += infoLessonOld.getFim().get(Calendar.HOUR_OF_DAY);
+		if (infoLessonOld.getFim().get(Calendar.MINUTE) == 0) {
+			endTimeOld += "0";
+		}
+		endTimeOld += infoLessonOld.getFim().get(Calendar.MINUTE);
+
+		if (infoLessonNew.getInicio().get(Calendar.HOUR_OF_DAY) < 10) {
+			startTimeNew += "0";
+		}
+		startTimeNew += infoLessonNew.getInicio().get(Calendar.HOUR_OF_DAY);
+		if (infoLessonNew.getInicio().get(Calendar.MINUTE) == 0) {
+			startTimeNew += "0";
+		}
+		startTimeNew += infoLessonNew.getInicio().get(Calendar.MINUTE);
+
+		if (infoLessonNew.getFim().get(Calendar.HOUR_OF_DAY) < 10) {
+			endTimeNew += "0";
+		}
+		endTimeNew += infoLessonNew.getFim().get(Calendar.HOUR_OF_DAY);
+		if (infoLessonNew.getFim().get(Calendar.MINUTE) == 0) {
+			endTimeNew += "0";
+		}
+		endTimeNew += infoLessonNew.getFim().get(Calendar.MINUTE);
+
+		if (startTimeOld.compareTo(startTimeNew) > 0) {
+			return false;
+		}
+
+		if (endTimeOld.compareTo(endTimeNew) < 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 }
