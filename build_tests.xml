@@ -13,6 +13,7 @@
 
 	<property name="src.tests" location="src_tests"/>
 	<property name="src.tests.cache" location="${src.tests}/ServidorPersistente/cache"/>
+	<property name="src.tests.cloner" location="${src.tests}/DataBeans/util"/>
 
 	<property name="build.home" location="build"/>
 	<property name="build.app-server" value="${build.home}/app-server"/>
@@ -26,7 +27,7 @@
 		<javac classpath="${build.app-server}"
                destdir="${build.tests.cache}"
                extdirs="${lib}" 
-               srcdir="${src.tests.cache}"
+               srcdir="${src.tests.cache};${src.tests.cloner}"
                debug="true"
                optimize="true"
                deprecation="true"
@@ -56,6 +57,23 @@
 			depends="compile-tests-cache"
             description="Verifies correct cache distribution.">
 		<java classname="ServidorPersistente.cache.DistributedCachePerformanceTest">
+			<classpath>
+				<pathelement path="${build.tests.cache}"/>
+				<pathelement path="${build.app-server}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="/usr/local/jboss/client">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="run-tests-cloner-performance"
+			depends="compile-tests-cache"
+            description="Verifies correct cache distribution.">
+		<java classname="DataBeans.util.ClonerInfoObjectCachePerformanceTest">
 			<classpath>
 				<pathelement path="${build.tests.cache}"/>
 				<pathelement path="${build.app-server}"/>
