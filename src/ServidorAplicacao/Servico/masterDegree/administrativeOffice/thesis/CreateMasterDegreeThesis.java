@@ -8,12 +8,10 @@ import java.util.List;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.IEmployee;
-import Dominio.IMasterDegreeProofVersion;
 import Dominio.IMasterDegreeThesis;
 import Dominio.IMasterDegreeThesisDataVersion;
 import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
-import Dominio.MasterDegreeProofVersion;
 import Dominio.MasterDegreeThesis;
 import Dominio.MasterDegreeThesisDataVersion;
 import ServidorAplicacao.IServico;
@@ -23,7 +21,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.MasterDegreeClassification;
 import Util.State;
 
 /**
@@ -68,10 +65,15 @@ public class CreateMasterDegreeThesis implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
+			
 			IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis().readByStudentCurricularPlan(studentCurricularPlan);
-
 			if (storedMasterDegreeThesis != null)
-				throw new ExistingServiceException();
+				throw new ExistingServiceException("message.masterDegree.existingMasterDegreeThesis");
+			
+			IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp.getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(dissertationTitle);
+			if (storedMasterDegreeThesisDataVersion != null)
+				if (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().equals(studentCurricularPlan))
+					throw new ExistingServiceException("message.masterDegree.dissertationTitleAlreadyChosen");
 
 			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 			IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
@@ -90,7 +92,6 @@ public class CreateMasterDegreeThesis implements IServico {
 			List guiders = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherGuiders);
 			List assistentGuiders = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherAssistentGuiders);
 			List externalAssistentGuiders = Cloner.copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalAssistentGuiders);
-
 			masterDegreeThesisDataVersion.setGuiders(guiders);
 			masterDegreeThesisDataVersion.setAssistentGuiders(assistentGuiders);
 			masterDegreeThesisDataVersion.setExternalAssistentGuiders(externalAssistentGuiders);
