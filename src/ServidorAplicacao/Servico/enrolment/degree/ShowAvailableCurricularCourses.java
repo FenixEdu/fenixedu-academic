@@ -111,16 +111,9 @@ public class ShowAvailableCurricularCourses implements IServico {
 			}
 		});
 		
-		final List enrolmentsNotInOptionalCurricularCourses = (List) CollectionUtils.select(temporarilyEnrolments, new Predicate() {
-			public boolean evaluate(Object obj) {
-				if(obj instanceof IEnrolment) {
-					IEnrolment enrolment = (IEnrolment) obj;
-					return !enrolment.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE));
-				} else {
-					return false;
-				}
-			}
-		});
+
+		final List enrolmentsNotInOptionalCurricularCourses = (List) CollectionUtils.subtract(temporarilyEnrolments, enrolmentsInOptionalCurricularCourses);
+
 
 		List notOptionalCurricularCoursesTemporarilyEnroled = (List) CollectionUtils.collect(enrolmentsNotInOptionalCurricularCourses, new Transformer() {
 			public Object transform(Object obj) {
@@ -129,31 +122,14 @@ public class ShowAvailableCurricularCourses implements IServico {
 			}
 		});
 
-//		List optionalCurricularCoursesTemporarilyEnroled = (List) CollectionUtils.collect(enrolmentsInOptionalCurricularCourses, new Transformer() {
-//			public Object transform(Object obj) {
-//				IEnrolment enrolment = (IEnrolment) obj;
-//				return (enrolment.getCurricularCourse());
-//			}
-//		});
-
-//		List aux1 = (List) CollectionUtils.union(enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled(), enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
-		
 		Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
 		List noOptionalCourseScopes = new ArrayList();
-//		List optionalCourseScopes = new ArrayList();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 			if (notOptionalCurricularCoursesTemporarilyEnroled.contains(curricularCourseScope.getCurricularCourse())) {
 				noOptionalCourseScopes.add(curricularCourseScope);
 			}
-//			if (optionalCurricularCoursesTemporarilyEnroled.contains(curricularCourseScope.getCurricularCourse())) {
-//				optionalCourseScopes.add(curricularCourseScope);
-//			}
 		}
-//		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(noOptionalCourseScopes);
-//		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(noOptionalCourseScopes);
-//		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(optionalCourseScopes);
-//		enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().removeAll(optionalCourseScopes);
 		enrolmentContext.setActualEnrolment(noOptionalCourseScopes);
 		enrolmentContext.getActualEnrolment().addAll(enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled());
 		enrolmentContext.setOptionalCurricularCoursesEnrolments(enrolmentsInOptionalCurricularCourses);
