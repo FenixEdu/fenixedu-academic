@@ -159,7 +159,7 @@ a:hover {
 /******************************************
  	links para menu de navega?‹o
  *******************************************/	
-#nav ul li a:link, ul li a:visited {
+#nav ul li a:link, #nav ul li a:visited {
 	display: block;
 	color: #666;
 	text-indent: 5px;
