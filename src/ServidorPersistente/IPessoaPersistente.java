@@ -8,6 +8,7 @@ package ServidorPersistente;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.IPessoa;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -19,6 +20,7 @@ public interface IPessoaPersistente extends IPersistentObject {
     public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia;
     public void apagarTodasAsPessoas() throws ExcepcaoPersistencia;
     public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia;
+	public List readPersonByName(String name) throws ExcepcaoPersistencia;
     public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
     public ArrayList lerTodasAsPessoas() throws ExcepcaoPersistencia;
 }

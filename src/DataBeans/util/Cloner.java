@@ -91,6 +91,7 @@ import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
+import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.*;
@@ -103,6 +104,8 @@ import Dominio.Seminaries.ICourseEquivalency;
 import Dominio.Seminaries.IModality;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.ITheme;
+import Dominio.grant.owner.GrantOwner;
+import Dominio.grant.owner.IGrantOwner;
 import Util.EvaluationType;
 import Util.State;
 
@@ -541,9 +544,9 @@ public abstract class Cloner {
 	}
 
 	/**
-	 * Method copyInfoPerson2IPerson.
-	 * @param infoPerson
-	 * @return IPessoa
+	 * Method copyIPerson2InfoPerson.
+	 * @param Person
+	 * @return InfoPerson
 	 */
 	public static InfoPerson copyIPerson2InfoPerson(IPessoa person) {
 		InfoPerson infoPerson = null;
@@ -569,7 +572,46 @@ public abstract class Cloner {
 		}
 		return infoPerson;
 	}
+	
+	/**
+		 * Method copyInfoGrantOwner2IGrantOwner.
+		 * @param infoGrantOwner
+		 * @return IGrantOwner
+		 */
+		public static IGrantOwner copyInfoGrantOwner2IGrantOwner(InfoGrantOwner infoGrantOwner) {
+			IGrantOwner grantOwner = null;
+			
+			if (infoGrantOwner != null) {
+				grantOwner = new GrantOwner();
+				grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+				copyObjectProperties(grantOwner, infoGrantOwner);
+				IPessoa person = null;
+				person = Cloner.copyInfoPerson2IPerson(infoGrantOwner.getPersonInfo());
+				grantOwner.setPerson(person);
+			}
+			return grantOwner;
+		}
 
+		/**
+		 * Method copyIGrantOwner2InfoGrantOwner.
+		 * @param grantOwner
+		 * @return InfoGrantOwner
+		 */
+		public static InfoGrantOwner copyIGrantOwner2InfoGrantOwner(IGrantOwner grantOwner) {
+			InfoGrantOwner infoGrantOwner = null;
+			if (grantOwner != null) {
+				infoGrantOwner = new InfoGrantOwner();
+				InfoPerson infoPerson = null;
+				if (grantOwner.getPerson() != null)
+					infoPerson = Cloner.copyIPerson2InfoPerson(grantOwner.getPerson());
+
+				infoGrantOwner.setGrantOwnerNumber(grantOwner.getNumber());
+				copyObjectProperties(infoGrantOwner, grantOwner);
+				infoGrantOwner.setPersonInfo(infoPerson);
+			}
+			return infoGrantOwner;
+		}
+	
 	/**
 	 * @param advisory
 	 * @return

@@ -12,6 +12,7 @@ import Dominio.PersonRole;
 import Dominio.Pessoa;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorAplicacao.utils.GeneratePassword;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCountry;
@@ -141,7 +142,7 @@ public class CreatePersonBaseClass {
 			
 			//Generate person's Password
 			if(person.getPassword() == null)
-				person.setPassword(GeneratePassword.generatePassword());
+				person.setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword()));
 
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);

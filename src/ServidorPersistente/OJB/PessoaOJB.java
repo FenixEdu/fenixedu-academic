@@ -111,6 +111,15 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 		person = (IPessoa) queryObject(Pessoa.class,criteria);
 		return person;
     }
+    
+	public List readPersonByName(String name) throws ExcepcaoPersistencia {
+		List personList = null;
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("name",name);
+		personList = queryList(Pessoa.class,criteria);
+		return personList;
+	}    
 
     public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
