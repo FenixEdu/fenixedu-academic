@@ -669,7 +669,6 @@
 			<arg0 key="label.oldPublication.publication"/>
 		</field>
 	</form>
-	
 
   </formset>
 </form-validation>

@@ -11,7 +11,7 @@ import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
-import DataBeans.teacher.InfoSiteCareers;
+import DataBeans.teacher.InfoSiteOldPublications;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
 import Dominio.teacher.IOldPublication;
@@ -79,14 +79,10 @@ public class ReadOldPublications implements IServico
                 }
             });
 
-            /*InfoSiteOldPublications bodyComponent = new InfoSiteOldPublications();*/
-            /*bodyComponent.setInfoOldPublications(result);*/
-            /*bodyComponent.setOldPublicationsType(old)
-            
-            InfoSiteCareers bodyComponent = new InfoSiteCareers();
-            bodyComponent.setInfoCareers(result);
-            bodyComponent.setCareerType(careerType);
-            bodyComponent.setInfoTeacher(infoTeacher);*/
+            InfoSiteOldPublications bodyComponent = new InfoSiteOldPublications();
+            bodyComponent.setInfoOldPublications(result);
+            bodyComponent.setOldPublicationType(oldPublicationType);
+            bodyComponent.setInfoTeacher(infoTeacher);
 
             SiteView siteView = new SiteView(null);
             return siteView;

@@ -436,6 +436,23 @@
 			<form-property name="careerType" type="java.lang.String" />
 		</form-bean>
 		
+		<!-- READ OLD PUBLICATIONS FORM -->
+		<form-bean name="readOldPublicationsForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="oldPublicationType" type="java.lang.String" />
+		</form-bean>
+		
+		<!-- OLD PUBLICATION FORM -->
+		<form-bean name="oldPublicationForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="page" type="java.lang.Integer" />
+			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
+			<form-property name="publication" type="java.lang.String" />
+			<form-property name="infoTeacher#idInternal" type="java.lang.Integer"/>
+		</form-bean>
+
 		<!-- EXTERNAL ACTIVITY FORM -->
 		<form-bean name="externalActivityForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
@@ -1443,6 +1460,57 @@
 	  	<forward name="show-teaching-form" path="view-teaching-careers"/>
 	  	<forward name="show-professional-form" path="view-professional-careers"/>
 	  </action>
+	  
+	  <!-- Read Old Publications -->
+	  <action type="ServidorApresentacao.Action.teacher.ReadOldPublicationsAction"
+	  		path="/readPublications"
+	  		name="readPublicationsForm"
+	  		scope="request">
+	  	<forward name="show-cientific-form" path="view-cientific-oldpublications"/>
+	  	<forward name="show-didatic-form" path="view-didactic-oldpublications"/>
+	  </action>
+	  
+	  <!-- Old Cientific Publication -->
+	  <action type="ServidorApresentacao.Action.framework.CRUDActionByOID"
+	  		path="/oldCientificPublication"
+	  		name="oldPublicationForm"
+	  		parameter="method"
+	  		scope="request"
+	  		validate="true"
+	  		input="/oldCientificPublication.do?page=0&amp;method=prepareEdit"
+	  		className="ServidorApresentacao.mapping.framework.CRUDMapping">
+  		<set-property property="editService" value="EditOldPublication"/>
+  		<set-property property="deleteService" value="DeleteOldPublication"/>
+  		<set-property property="readService" value="ReadOldPublication"/>
+  		<set-property property="oidProperty" value="idInternal"/>
+  		<set-property property="requestAttribute" value="infoOldPublication"/>
+  		<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoOldPublication" />
+  		<forward name="show-form" path="edit-old-publication"/>
+  		<forward name="successfull-edit" path="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0"/>
+ 		<forward name="successfull-delete" path="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0"/>
+  		<forward name="successfull-read" path="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0"/>
+  	  </action>
+  	  
+	  <!-- Old Didactic Publication -->
+	  <action type="ServidorApresentacao.Action.framework.CRUDActionByOID"
+	  		path="/oldCientificPublication"
+	  		name="oldCientificPublicationForm"
+	  		parameter="method"
+	  		scope="request"
+	  		validate="true"
+	  		input="/oldCientificPublication.do?page=0&amp;method=prepareEdit"
+	  		className="ServidorApresentacao.mapping.framework.CRUDMapping">
+  		<set-property property="editService" value="EditOldPublication"/>
+  		<set-property property="deleteService" value="DeleteOldPublication"/>
+  		<set-property property="readService" value="ReadOldPublication"/>
+  		<set-property property="oidProperty" value="idInternal"/>
+  		<set-property property="requestAttribute" value="infoOldPublication"/>
+  		<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoOldPublication" />
+  		<forward name="show-form" path="edit-old-publication"/>
+  		<forward name="successfull-edit" path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
+ 		<forward name="successfull-delete" path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
+  		<forward name="successfull-read" path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
+  	  </action>
 		
 	  <!-- External Activity -->
 	  <action type="ServidorApresentacao.Action.framework.CRUDActionByOID"
@@ -1450,6 +1518,7 @@
 	  		name="externalActivityForm"
 	  		parameter="method"
 	  		scope="request"
+	  		validate="true"
 	  		input="/externalActivity.do?page=0&amp;method=prepareEdit"
 	  		className="ServidorApresentacao.mapping.framework.CRUDMapping">
 	  	<set-property property="editService" value="EditExternalActivity" />
