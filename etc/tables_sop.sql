@@ -116,8 +116,9 @@ drop table if exists EXECUTION_PERIOD;
 create table EXECUTION_PERIOD (
    ID_INTERNAL int(11) not null auto_increment,
    NAME varchar(50) not null,
-   KEY_EXECUTION_YEAR int(11) not null default '0',
+   KEY_EXECUTION_YEAR int(11) not null,
    STATE varchar(3) not null default "NO",
+   SEMESTER int (11) not null,
    primary key (ID_INTERNAL),
    unique U1 (NAME, KEY_EXECUTION_YEAR))
    type=InnoDB comment="InnoDB free: 373760 kB";
