@@ -146,8 +146,6 @@ public abstract class EnrolmentContextManager {
 		List aprovedCurricularCoursesFromStudent)
 		throws ExcepcaoPersistencia {
 
-		List scopesNotDone = new ArrayList();
-
 		List coursesNotDone = (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
 
 		return computeScopesOfCurricularCourses(coursesNotDone);
