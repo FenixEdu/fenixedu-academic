@@ -47,4 +47,14 @@ public interface IPersistentGuide extends IPersistentObject {
 	 */
 	public Integer generateGuideNumber(Integer year)  throws ExcepcaoPersistencia;
 	
+	
+	/**
+	 * 
+	 * @param year
+	 * @return A list with diferente Guides for this Year
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByYear(Integer year) throws ExcepcaoPersistencia;
+	
+	
 }

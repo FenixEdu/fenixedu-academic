@@ -187,7 +187,14 @@
 			
       </form-bean>
 
+      <!-- Bean for The Choosing of a Year -->
+      <form-bean name="chooseYearForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
 
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="year" type="java.lang.String" />
+      </form-bean>
 
     </form-beans>
     
@@ -250,7 +257,12 @@
 	         <forward name="Success" path="/guide/indexGuide.jsp"/> 
       </action>
 
-    
+	  <action path="/guideListingSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
+      </action>    
       
       <!-- action definition -->
       
@@ -501,6 +513,22 @@
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
 	         <forward name="CreateSuccess" path="printGuide.do?method=prepare"/>  	         
       </action>
+
+      <!-- List Guides by Year -->
+      <action attribute="chooseYearForm"
+      		  input="/guide/chooseYear.jsp"
+      	      name="chooseYearForm"
+		      path="/guideListingByYear"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingDispatchAction"
+              validate="true">
+	         <forward name="PrepareReady" path="/guide/chooseGuideYear.jsp"/> 
+	         <forward name="ShowGuideList" path="/guide/showGuideList.jsp"/> 
+   	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
+      </action>
+
+
 
 
       <!-- Print Guide -->

@@ -10,6 +10,7 @@ import junit.framework.TestCase;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 
@@ -64,6 +65,10 @@ public abstract class TestCaseServices extends TestCase {
 //			System.out.println("Tear down failed: " +ex);
 //		}
 	}
+	
+	public String getApplication(){
+		return Autenticacao.EXTRANET;
+	}
 
 	protected void callServiceWithAuthorizedUserView()
 		throws FenixServiceException {
@@ -113,7 +118,7 @@ public abstract class TestCaseServices extends TestCase {
 	 * @param
 	 */
 	public void setUserViewAuthorized() {
-		String argsForAuthentication[] = { "user", "pass" };
+		String argsForAuthentication[] = { "user", "pass" , getApplication()};
 
 		try {
 			userViewAuthorized =
@@ -130,7 +135,7 @@ public abstract class TestCaseServices extends TestCase {
 	 * @param
 	 */
 	public void setUserViewNotAuthorized() {
-		String argsForAuthentication[] = { "julia", "pass" };
+		String argsForAuthentication[] = { "julia", "pass" , getApplication()};
 
 		try {
 			userViewNotAuthorized =

@@ -31,8 +31,8 @@ import Util.RoleType;
 import Util.State;
 
 public class Autenticacao implements IServico {
-	private final String EXTRANET = "extranet";
-	private final String INTRANET = "intranet"; 
+	public static final String EXTRANET = "extranet";
+	public static final String INTRANET = "intranet"; 
 	private static Autenticacao _servico = new Autenticacao();
 
 	/**
@@ -127,19 +127,20 @@ public class Autenticacao implements IServico {
 	 */
 	private IUserView filterUserView(UserView userView, String application) {
 		Collection rolesIntranet = new ArrayList();
-		
 		InfoRole masterDegreeAdministrativeOffice = new InfoRole();
-		masterDegreeAdministrativeOffice.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);		
+		masterDegreeAdministrativeOffice.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+		
 		rolesIntranet.add(masterDegreeAdministrativeOffice);
+
 
 		InfoRole managementAssiduousness = new InfoRole();
 		managementAssiduousness.setRoleType(RoleType.MANAGEMENT_ASSIDUOUSNESS);		
 		rolesIntranet.add(managementAssiduousness);
-		
-		if (application.equals(INTRANET)){
+
+		if (application.equals(Autenticacao.INTRANET)){
 			Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);
 			userView.setRoles(roles);	
-		}else if (application.equals("") || application.equals(EXTRANET)){
+		}else if (application.equals("") || application.equals(Autenticacao.EXTRANET)){
 			userView.getRoles().removeAll(rolesIntranet);
 		}
 		return userView;

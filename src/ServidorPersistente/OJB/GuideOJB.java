@@ -2,6 +2,9 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.Guide;
@@ -117,5 +120,18 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 		}
 	}
 		
+	public List readByYear(Integer year) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
+		query.addGroupBy("number");
+		
+		criteria.addEqualTo("year", year);
+
+		List result = (List) PersistenceBrokerFactory.defaultPersistenceBroker().getCollectionByQuery(query);
+
+		lockRead(result);
+		return result;
+	}
 	
 }

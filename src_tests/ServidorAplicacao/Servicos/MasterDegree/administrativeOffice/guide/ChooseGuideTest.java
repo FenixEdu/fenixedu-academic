@@ -16,10 +16,10 @@ import DataBeans.InfoGuide;
 import DataBeans.InfoRole;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseServicesIntranet;
 import Util.RoleType;
 
-public class ChooseGuideTest extends TestCaseServicos {
+public class ChooseGuideTest extends TestCaseServicesIntranet {
 
 	public ChooseGuideTest(java.lang.String testName) {
 		super(testName);
@@ -115,6 +115,49 @@ public class ChooseGuideTest extends TestCaseServicos {
 		assertEquals(infoGuide.getVersion(), guideVersion);
 		
 	}
+
+
+
+	public void testChooseGuideByYear() {
+		System.out.println("- Test 3 : Choose Guide By Year");
+		
+		UserView userView = this.getUserViewToBeTested("nmsn", true);
+		Integer guideYear = new Integer(2002);
+
+		Object[] args = {guideYear};
+
+		List result = null;
+		 try {
+			 result = (List) _gestor.executar(userView, "ChooseGuide", args);
+		 } catch (FenixServiceException ex) {
+			fail("Fenix Service Exception" + ex);
+		 } catch (Exception ex) {
+			fail("Eception");
+		 }
+		
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+		
+		guideYear = new Integer(2003);
+
+		args[0] = guideYear;
+
+		result = null;
+		 try {
+			 result = (List) _gestor.executar(userView, "ChooseGuide", args);
+		 } catch (FenixServiceException ex) {
+			fail("Fenix Service Exception" + ex);
+		 } catch (Exception ex) {
+			fail("Eception");
+		 }
+
+		assertNotNull(result);
+		assertEquals(result.size(), 3);
+		
+		
+		
+	}
+
 
 	private UserView getUserViewToBeTested(String username, boolean withRole) {
 		Collection roles = new ArrayList();

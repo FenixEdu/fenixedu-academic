@@ -264,6 +264,27 @@ public class GuideOJBTest extends TestCaseOJB {
 		}
 	}
 
+	public void testReadByYear() {
+		System.out.println("Test 6 - Read Guide By Year");        
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			List listOfGuides = persistentGuide.readByYear(new Integer(2003));
+			assertNotNull(listOfGuides);
+			assertEquals(listOfGuides.size(), 3);
+									
+			listOfGuides = persistentGuide.readByYear(new Integer(2002));
+			assertNotNull(listOfGuides);
+			assertEquals(listOfGuides.size(), 1);
+			
+												
+			persistentSupport.confirmarTransaccao();
+		} catch(ExistingPersistentException ex) {
+			// All is OK
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testGenerateGuideNumber: unexpected exception" + ex);
+		}
+	}
 
 
 }

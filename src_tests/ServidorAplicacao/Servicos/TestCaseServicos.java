@@ -6,6 +6,7 @@ import org.apache.ojb.broker.PersistenceBrokerFactory;
 import junit.framework.TestCase;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
 import Tools.dbaccess;
 
 
@@ -38,8 +39,8 @@ public class TestCaseServicos extends TestCase {
 		}
 
 		_gestor = GestorServicos.manager();
-		String argsAutenticacao[] = { "user", "pass" };
-		String argsAutenticacao2[] = { "julia", "pass" };
+		String argsAutenticacao[] = { "user", "pass" , getApplication()};
+		String argsAutenticacao2[] = { "julia", "pass" , getApplication()};
 		try {
 			_userView = (IUserView) _gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
@@ -60,6 +61,10 @@ public class TestCaseServicos extends TestCase {
 	 */
 	protected String getDataSetFilePath() {
 		return "etc/testDataSet.xml";
+	}
+	
+	public String getApplication(){
+		return Autenticacao.EXTRANET;
 	}
 
 	protected void tearDown() {
