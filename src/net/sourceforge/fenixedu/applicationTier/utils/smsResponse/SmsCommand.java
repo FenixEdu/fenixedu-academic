@@ -330,7 +330,7 @@ public class SmsCommand {
 
                 VariableInformation password = (VariableInformation) this.variablesInformation
                         .get(SmsCommandExpressionConstants.PASSWORD_VARIABLE);
-                Object[] authenticationArgs = new Object[3];
+                Object[] authenticationArgs = new Object[4];
 
                 authenticationArgs[1] = matcher.group(password.getVariablePosition());
 
@@ -342,7 +342,8 @@ public class SmsCommand {
                     authenticationArgs[0] = matcher.group(username.getVariablePosition());
 
                 }
-                authenticationArgs[2] = Authenticate.EXTRANET;
+                //authenticationArgs[2] = Authenticate.EXTRANET;
+                authenticationArgs[3] = "?";
                 userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
                         authenticationArgs);
 

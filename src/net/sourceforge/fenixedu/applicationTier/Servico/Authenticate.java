@@ -72,36 +72,6 @@ public class Authenticate implements IService, Serializable {
 			throw new RuntimeException("Unable to load " + propertiesFilename
 					+ ". User authentication is therefor not possible.");
 		}
-
-//		INTRANET_ROLES.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-//		INTRANET_ROLES.add(RoleType.MANAGEMENT_ASSIDUOUSNESS);
-//		INTRANET_ROLES.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-//		INTRANET_ROLES.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-//		INTRANET_ROLES.add(RoleType.MANAGER);
-//		INTRANET_ROLES.add(RoleType.GRANT_OWNER_MANAGER);
-//		INTRANET_ROLES.add(RoleType.CREDITS_MANAGER);
-//
-//		EXTRANET_ROLES.add(RoleType.PERSON);
-//		EXTRANET_ROLES.add(RoleType.STUDENT);
-//		EXTRANET_ROLES.add(RoleType.TEACHER);
-//		EXTRANET_ROLES.add(RoleType.TIME_TABLE_MANAGER);
-//		EXTRANET_ROLES.add(RoleType.MASTER_DEGREE_CANDIDATE);
-//		EXTRANET_ROLES.add(RoleType.TREASURY);
-//		EXTRANET_ROLES.add(RoleType.COORDINATOR);
-//		EXTRANET_ROLES.add(RoleType.EMPLOYEE);
-//		EXTRANET_ROLES.add(RoleType.MANAGER);
-//		EXTRANET_ROLES.add(RoleType.ERASMUS);
-//		EXTRANET_ROLES.add(RoleType.SCIENTIFIC_COUNCIL);
-//		EXTRANET_ROLES.add(RoleType.ADMINISTRATOR);
-//		EXTRANET_ROLES.add(RoleType.OPERATOR);
-//		EXTRANET_ROLES.add(RoleType.SEMINARIES_COORDINATOR);
-//		EXTRANET_ROLES.add(RoleType.WEBSITE_MANAGER);
-//		EXTRANET_ROLES.add(RoleType.DEPARTMENT_MEMBER);
-//		EXTRANET_ROLES.add(RoleType.GEP);
-//		EXTRANET_ROLES.add(RoleType.DIRECTIVE_COUNCIL);
-//		EXTRANET_ROLES.add(RoleType.DELEGATE);
-//		EXTRANET_ROLES.add(RoleType.FIRST_TIME_STUDENT);
-//		EXTRANET_ROLES.add(RoleType.PROJECTS_MANAGER);
 	}
 
 	public class UserView implements IUserView {
