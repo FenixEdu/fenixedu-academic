@@ -170,12 +170,13 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+			List announcements = persistentAnnouncement.readAll();
+			assertTrue("testDeleteAllAnnouncements: read existing announcements",announcements.size()>0);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testDeleteAllAnnouncements: readAnnouncementByTitleAndDateAndSite");
+			fail("testDeleteAllAnnouncements: read existing announcementse");
 		}
-		assertNotNull(announcement);
+		
 
 		//erase all existing        
         try {
@@ -190,12 +191,12 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
-			persistentSupport.confirmarTransaccao();
+			List announcements = persistentAnnouncement.readAll();
+			assertTrue("testDeleteAllAnnouncements: read again deleted announcements",announcements.size()==0);
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testDeleteAllAnnouncements: readAnnouncementByTitleAndDateAndSite");
+			fail("testDeleteAllAnnouncements: read again deleted announcements");
 		}
-		assertNull(announcement);
+		
     }
 
     public void testReadAnnouncementByTitleAndDateAndSite() {
@@ -206,8 +207,8 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 13);
+		calendar.set(Calendar.MINUTE, 20);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		
@@ -246,8 +247,8 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 13);
+		calendar.set(Calendar.MINUTE,20);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		
@@ -323,5 +324,18 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		assertNotNull(newAnnouncement);
 		assertEquals(newAnnouncement.getCreationDate(), actualDate);
 	}
+	
+	public void testReadAll() {
+
+			
+			try {
+				persistentSupport.iniciarTransaccao();
+				List announcements=persistentAnnouncement.readAll();
+				assertEquals("testReadAll: failed reading all announcements",5,announcements.size());
+				persistentSupport.confirmarTransaccao();
+			} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			  fail("testReadAll: failed reading all announcements");	
+			}
+				}
 	
 }
