@@ -6053,4 +6053,14 @@
         <isTransactional>true</isTransactional>
         <filterChains/>
     </service>
+    <service>
+        <name>ReadBranchesByDegreeCurricularPlanId</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.ReadBranchesByDegreeCurricularPlan</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <!--<filterChains>
+            <chain name=""/>
+        </filterChains>-->
+    </service>
 </serviceDefinitions>
