@@ -87,6 +87,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 			(String) objectivesForm.get("generalObjectives"));
 		newCurriculum.setOperacionalObjectives(
 			(String) objectivesForm.get("operacionalObjectives"));
+		newCurriculum.setInfoExecutionCourse(oldCurriculum.getInfoExecutionCourse());	
 		Object args[] = { oldCurriculum, newCurriculum };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -159,12 +160,15 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession();
 		DynaActionForm objectivesForm = (DynaActionForm) form;
+		
 		InfoCurriculum oldCurriculum =
 			(InfoCurriculum) session.getAttribute(
 				SessionConstants.EXECUTION_COURSE_CURRICULUM);
+				
 		InfoCurriculum newCurriculum = new InfoCurriculum();
-		BeanUtils.copyProperties(oldCurriculum, newCurriculum);
+		BeanUtils.copyProperties(newCurriculum,oldCurriculum);
 		newCurriculum.setProgram((String) objectivesForm.get("program"));
+		newCurriculum.setInfoExecutionCourse(oldCurriculum.getInfoExecutionCourse());	
 		Object args[] = { oldCurriculum, newCurriculum };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -175,7 +179,10 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 					userView,
 					"EditCurriculum",
 					args);
-			if (result.booleanValue()) {session.setAttribute(
+			System.out.println("sai do serviço");		
+			if (result.booleanValue()) {
+				System.out.println("entrei no if");	
+				session.setAttribute(
 				SessionConstants.EXECUTION_COURSE_CURRICULUM,
 				newCurriculum);		
 			} else {

@@ -25,13 +25,13 @@
     <p><html:checkbox property="optional" value="yes"/></p>
     <p><center>
     
-    <logic:equal property="edit" scope="session" value="insert">
+    <logic:equal name="edit" scope="session" value="Inserir">
    	 	<html:submit property="method">
     	   	<bean:message key="button.confirmInsert"/>                    		         	
     	</html:submit>       
     </logic:equal>
     
-    <logic:equal property="edit" scope="session" value="edit">
+    <logic:equal name="edit" scope="session" value="Editar">
    	 	<html:submit property="method">
     	   	<bean:message key="button.confirmEdit"/>                    		         	
     	</html:submit>       

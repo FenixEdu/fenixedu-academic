@@ -270,7 +270,7 @@
       	  <forward name="Success" path="/index.do"/>
       </action>
 	
-	<!--attention: this action is incomplete --> 
+	<!-- Actions For Objectives and Program -->
 	<action 
 		name="executionCourseObjectivesForm"
 		parameter="method"
