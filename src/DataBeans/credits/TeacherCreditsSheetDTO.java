@@ -18,13 +18,15 @@ public class TeacherCreditsSheetDTO implements Serializable
 
     private List infoCreditLineList;
 
-    private List infoDegreeFinalProjectOrientationList;
     private InfoExecutionPeriod infoExecutionPeriod;
 
     private List infoMasterDegreeProfessorships;
-
     private List infoShiftProfessorshipList;
+    private List infoSupportLessonList;
     private InfoTeacher infoTeacher;
+    private List infoTeacherDegreeFinalProjectStudentList;
+
+    private List infoTeacherInstitutionWorkingTimeList;
 
     /**
 	 * @return Returns the infoCreditLineList.
@@ -32,14 +34,6 @@ public class TeacherCreditsSheetDTO implements Serializable
     public List getInfoCreditLineList()
     {
         return this.infoCreditLineList;
-    }
-
-    /**
-	 * @return Returns the infoTfcOrientation.
-	 */
-    public List getInfoDegreeFinalProjectOrientationList()
-    {
-        return this.infoDegreeFinalProjectOrientationList;
     }
 
     /**
@@ -65,6 +59,13 @@ public class TeacherCreditsSheetDTO implements Serializable
     {
         return this.infoShiftProfessorshipList;
     }
+    /**
+	 * @return Returns the infoSupportLessonList.
+	 */
+    public List getInfoSupportLessonList()
+    {
+        return this.infoSupportLessonList;
+    }
 
     /**
 	 * @return Returns the infoTeacher.
@@ -72,6 +73,21 @@ public class TeacherCreditsSheetDTO implements Serializable
     public InfoTeacher getInfoTeacher()
     {
         return this.infoTeacher;
+    }
+    /**
+	 * @return Returns the infoTeacherDegreeFinalProjectStudentList.
+	 */
+    public List getInfoTeacherDegreeFinalProjectStudentList()
+    {
+        return this.infoTeacherDegreeFinalProjectStudentList;
+    }
+
+    /**
+	 * @return Returns the infoTeacherInstitutionWorkingTimeList.
+	 */
+    public List getInfoTeacherInstitutionWorkingTimeList()
+    {
+        return this.infoTeacherInstitutionWorkingTimeList;
     }
 
     /**
@@ -81,15 +97,6 @@ public class TeacherCreditsSheetDTO implements Serializable
     public void setInfoCreditLineList(List infoCreditLineList)
     {
         this.infoCreditLineList = infoCreditLineList;
-    }
-
-    /**
-	 * @param infoTfcOrientation
-	 *                   The infoTfcOrientation to set.
-	 */
-    public void setInfoDegreeFinalProjectOrientationList(List infoTfcOrientation)
-    {
-        this.infoDegreeFinalProjectOrientationList = infoTfcOrientation;
     }
 
     /**
@@ -118,6 +125,14 @@ public class TeacherCreditsSheetDTO implements Serializable
     {
         this.infoShiftProfessorshipList = infoShiftProfessorshipList;
     }
+    /**
+	 * @param infoSupportLessonList
+	 *                   The infoSupportLessonList to set.
+	 */
+    public void setInfoSupportLessonList(List infoSupportLessonList)
+    {
+        this.infoSupportLessonList = infoSupportLessonList;
+    }
 
     /**
 	 * @param infoTeacher
@@ -127,5 +142,20 @@ public class TeacherCreditsSheetDTO implements Serializable
     {
         this.infoTeacher = infoTeacher;
     }
-
+    /**
+	 * @param infoTeacherDegreeFinalProjectStudentList
+	 *                   The infoTeacherDegreeFinalProjectStudentList to set.
+	 */
+    public void setInfoTeacherDegreeFinalProjectStudentList(List infoTeacherDegreeFinalProjectStudentList)
+    {
+        this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
+    }
+    /**
+	 * @param infoTeacherInstitutionWorkingTimeList
+	 *                   The infoTeacherInstitutionWorkingTimeList to set.
+	 */
+    public void setInfoTeacherInstitutionWorkingTimeList(List infoTeacherInstitutionWorkingTimeList)
+    {
+        this.infoTeacherInstitutionWorkingTimeList = infoTeacherInstitutionWorkingTimeList;
+    }
 }
