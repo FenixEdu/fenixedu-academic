@@ -33,7 +33,7 @@
 				<td><bean:write name="curricularCourse" property="name" /></td>
 				<td><html:radio property="curricularCourseToAddPrecedenceID" idName="curricularCourse" value="idInternal"/></td>				
 				<td><html:radio property="precedentCurricularCourseID" idName="curricularCourse" value="idInternal"/></td>
-				<td><bean:write name="curricularCourse" property="name" /></td>
+				<td align="right"><bean:write name="curricularCourse" property="name" /></td>
 			</tr>
 		</logic:iterate>
 	</table>	
