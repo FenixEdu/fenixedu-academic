@@ -18,11 +18,11 @@ public class InfoEnrolmentInOptionalCurricularCourse extends InfoEnrolment {
 
 	public InfoEnrolmentInOptionalCurricularCourse(
 		InfoStudentCurricularPlan infoStudentCurricularPlan,
-		InfoCurricularCourseScope infoCurricularCourseScope,
+		InfoCurricularCourse infoCurricularCourse,
 		EnrolmentState state,
 		InfoExecutionPeriod infoExecutionPeriod,
 		InfoCurricularCourse infoCurricularCourseForOption) {
-		super(infoStudentCurricularPlan, infoCurricularCourseScope, state, infoExecutionPeriod);
+		super(infoStudentCurricularPlan, infoCurricularCourse, state, infoExecutionPeriod);
 		setInfoCurricularCourseForOption(infoCurricularCourseForOption);
 	}
 

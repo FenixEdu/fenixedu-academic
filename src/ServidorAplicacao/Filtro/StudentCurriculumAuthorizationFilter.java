@@ -164,15 +164,17 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 		roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		if (CollectionUtils.containsAny(roles, roleTemp))
 		{
-			if (!studentCurricularPlan
-				.getDegreeCurricularPlan()
-				.getDegree()
-				.getTipoCurso()
-				.equals(TipoCurso.MESTRADO_OBJ))
+			if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)
+				&& !(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
+					.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))
 			{
 				return "noAuthorization";
 			}
-			return null;
+			if (!(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
+				.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))
+			{
+				return null;
+			}
 		}
 
 		if (arguments[0] != null)

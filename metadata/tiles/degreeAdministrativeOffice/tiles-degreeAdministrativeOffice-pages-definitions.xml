@@ -12,7 +12,7 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/globalEnrolment.jsp"/>
 	</definition>
 
-<!-- **************************************************************************************************************************** -->
+<!-- **************************************************************************************************************************** 
 
 	<definition name="df.page.chooseStudentAndDegreeTypeForEnrolmentWithRules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeForEnrolmentWithRules.jsp"/>
@@ -30,8 +30,6 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
 	</definition>
 
-<!-- **************************************************************************************************************************** -->
-
 	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolmentWithRules.jsp"/>
 	</definition>
@@ -48,8 +46,6 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/searchOptionalCurricularCourses.jsp"/>
 	</definition>
 
-<!-- **************************************************************************************************************************** -->
-
 	<definition name="df.page.showAvailableCurricularCoursesWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithoutRules.jsp"/>
 	</definition>
@@ -59,8 +55,6 @@
 	<definition name="df.page.acceptEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolmentWithoutRules.jsp"/>
 	</definition>
-
-<!-- **************************************************************************************************************************** -->
 
 	<definition name="df.page.showAvailableOptionalCurricularCoursesWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableOptionalCurricularCoursesWithoutRules.jsp"/>
@@ -77,7 +71,9 @@
 	<definition name="df.page.acceptOptionalEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptOptionalEnrolmentWithoutRules.jsp"/>
 	</definition>
-	
+
+ **************************************************************************************************************************** -->
+
 <!-- ************************************** LEEC Enrollment **************************** -->
 	<definition name="df.page.prepareEnrollmentChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseStudent.jsp"/>
@@ -122,22 +118,25 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/showCurricularCourseToEnroll.jsp"/>
 	</definition>	
 
-<!-- **************************************************************************************************************************** -->
-
+	<!-- ******************* Enrollment in optional courses **************** -->
 	<definition name="df.page.chooseStudentAndExecutionYear" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/chooseStudentAndExecutionYear.jsp"/>
 	</definition>
-	<definition name="df.page.curricularCourseEnrollmentList" extends="definition.degreeAdministrativeOffice.masterPage">
+	<definition name="df.page.showAvailableOptionalCourses" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/curricularCourseEnrollmentList.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/showAvailableOptionalCourses.jsp"/>
 	</definition>
-	<definition name="df.page.choosesForEnrollment" extends="definition.degreeAdministrativeOffice.masterPage">
+	<definition name="df.page.showAvailableExecutionDegrees" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/showAvailableExecutionDegrees.jsp"/>
 	</definition>	
-	<definition name="df.page.showCurricularCourseToEnroll" extends="definition.degreeAdministrativeOffice.masterPage">
+	<definition name="df.page.showChosenDegreeCourses" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/showCurricularCourseToEnroll.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/showChosenDegreeCourses.jsp"/>
+	</definition>	
+	<definition name="df.page.optionalEnrollmentConfirmation" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/optionalCourses/optionalEnrollmentConfirmation.jsp"/>
 	</definition>	
 
 </tiles-definitions>

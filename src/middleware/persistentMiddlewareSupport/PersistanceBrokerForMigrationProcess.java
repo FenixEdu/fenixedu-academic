@@ -165,6 +165,10 @@ public class PersistanceBrokerForMigrationProcess
 		query.setStartAtIndex(startIndex);
 
 		int endIndex = startIndex + numberOfElementsInSpan.intValue() - 1;
+		if (endIndex == 0)
+		{
+			endIndex = 1;
+		}
 
 		query.setEndAtIndex(endIndex);
 		List list = (List) this.broker.getCollectionByQuery(query);
@@ -189,6 +193,10 @@ public class PersistanceBrokerForMigrationProcess
 		query.setStartAtIndex(startIndex);
 
 		int endIndex = startIndex + numberOfElementsInSpan.intValue() - 1;
+		if (endIndex == 0)
+		{
+			endIndex = 1;
+		}
 
 		query.setEndAtIndex(endIndex);
 		Iterator iterator = this.broker.getIteratorByQuery(query);

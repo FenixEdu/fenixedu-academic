@@ -8,6 +8,7 @@ import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Util.CurricularCourseType;
 import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 
@@ -91,4 +92,8 @@ public interface IPersistentEnrolment extends IPersistentObject
             ICurricularCourse curricularCourse,
             IExecutionPeriod executionPeriod, EnrolmentState state)
             throws ExcepcaoPersistencia;
+
+	public List readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(
+		IStudentCurricularPlan studentCurricularPlan, EnrolmentState enrolmentState, CurricularCourseType curricularCourseType)
+		throws ExcepcaoPersistencia;
 }

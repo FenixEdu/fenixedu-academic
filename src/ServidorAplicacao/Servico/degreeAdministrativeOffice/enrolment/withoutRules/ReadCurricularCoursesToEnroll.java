@@ -61,7 +61,7 @@ public class ReadCurricularCoursesToEnroll implements IService
 		List curricularSemestersList)
 		throws FenixServiceException
 	{
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 
 		try
 		{

@@ -17,7 +17,6 @@ public class InfoEnrolment extends InfoObject
     private InfoExecutionPeriod infoExecutionPeriod;
     private EnrolmentState enrolmentState;
     private EnrolmentEvaluationType enrolmentEvaluationType;
-    //private InfoCurricularCourseScope infoCurricularCourseScope;
 
     // to be used to keep the actual enrolment evaluation
     private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
@@ -30,12 +29,11 @@ public class InfoEnrolment extends InfoObject
 
     public InfoEnrolment(
         InfoStudentCurricularPlan infoStudentCurricularPlan,
-        InfoCurricularCourseScope infoCurricularCourseScope,
+		InfoCurricularCourse infoCurricularCourse,
         EnrolmentState state,
         InfoExecutionPeriod infoExecutionPeriod)
     {
         this();
-        //setInfoCurricularCourseScope(infoCurricularCourseScope);
 		setInfoCurricularCourse(infoCurricularCourse);
         setInfoStudentCurricularPlan(infoStudentCurricularPlan);
         setEnrolmentState(state);
@@ -53,7 +51,6 @@ public class InfoEnrolment extends InfoObject
             resultado =
                 this.getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan()) &&
                 this.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse()) &&
-    			//this.getInfoCurricularCourseScope().equals(enrolment.getInfoCurricularCourseScope())
          this.getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod());
         }
         return resultado;
@@ -66,7 +63,6 @@ public class InfoEnrolment extends InfoObject
         result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
         result += "state = " + this.enrolmentState + "; ";
       	result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
-        //result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
         result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
         result += "infoEvaluations = " + this.infoEvaluations + "]\n";
 
@@ -157,16 +153,6 @@ public class InfoEnrolment extends InfoObject
     {
         infoEvaluations = list;
     }
-
-//    public InfoCurricularCourseScope getInfoCurricularCourseScope()
-//    {
-//        return infoCurricularCourseScope;
-//    }
-//
-//    public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope)
-//    {
-//        infoCurricularCourseScope = scope;
-//    }
 
     /**
 	 * @return InfoEnrolmentEvaluation

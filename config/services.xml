@@ -6250,4 +6250,23 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>    
+	<service>
+        <name>PrepareStudentEnrolmentContextForOptionalCoursesEnrolment</name>
+        <description></description>
+        <implementationClass>
+            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareStudentEnrolmentContextForOptionalCoursesEnrolment</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>WriteEnrolmentInOptionalCourse</name>
+        <description>Enrolls student in curricular course</description>
+        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolmentInOptionalCourse</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

@@ -7,7 +7,7 @@
 
 	<!-- ========== Form Bean Definitions =================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
-
+<!--
 		<form-bean name="methodForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
@@ -42,7 +42,7 @@
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>
 		</form-bean>
-		
+-->
 		<!-- ******************* LEEC Enrollment **************** -->
 		<form-bean name="curricularCoursesEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="studentNumber" type="java.lang.String"/>
@@ -76,10 +76,18 @@
 		
 		<!-- ******************* Enrollment in optional courses **************** -->
 		<form-bean name="optionalCoursesEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="studentNumber" type="java.lang.String"/>			
 			<form-property name="executionYear" type="java.lang.String"/>
 			<form-property name="degreeType" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="executionDegreeID" type="java.lang.Integer"/>
+			<form-property name="studentCurricularPlanID" type="java.lang.Integer"/>
+			<form-property name="curricularCourseID" type="java.lang.Integer"/>
+			<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
+			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
+			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="curricularYears" type="java.lang.Integer[]"/>
+			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
 		</form-bean>
 		
 	</form-beans>
@@ -136,7 +144,7 @@
 		<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
 			<forward name="Success" path="df.page.main"/>
 		</action>
-	
+<!--
 		<action	name="methodForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.FunctionRedirectDispatchAction"
 				path="/functionRedirect"
@@ -263,7 +271,7 @@
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
 			<forward name="error" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=0"/>
 		</action>
-		
+-->
 		<!-- ****************** LEEC Enrollment **************************** -->
 		<action	path="/curricularCoursesEnrollment"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
@@ -285,6 +293,7 @@
 			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
 		</action>
 		
+		<!-- ****************** View Student Curriculum **************************** -->
 		<action path="/viewStudentCurriculum"
 		      	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
               	parameter="method">
@@ -321,19 +330,19 @@
 		</action>		
 
 
-		<action path="/optionalCoursesEnrolmentManager"
+		<!-- ******************* Enrollment in optional courses **************** -->
+		<action path="/optionalCoursesEnrolmentManagerDA"
 			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.OptionalCoursesEnrollmentManagerDispatchAction"
 			input="/optionalCoursesEnrolmentManagerDA.do?method=chooseStudentAndExecutionYear&amp;degreeType=1"
 			name="optionalCoursesEnrolmentForm"
 			scope="request"
 			parameter="method">
 				<forward name="chooseStudentAndExecutionYear" path="df.page.chooseStudentAndExecutionYear"/>			
-				<forward name="showAvailableOptionalCourses" path="df.page.curricularCourseEnrollmentList"/>
-				<forward name="readCurricularCourseEnrollmentList" path="/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments"/>
-				<forward name="choosesForEnrollment" path="df.page.choosesForEnrollment"/>
-				<forward name="showCurricularCourseToEnroll" path="df.page.showCurricularCourseToEnroll" />
-				<forward name="globalError" path="/globalEnrolment.do"/>
-				<forward name="exit" path="/index.do"/>
+				<forward name="showAvailableOptionalCourses" path="df.page.showAvailableOptionalCourses"/>
+				<forward name="showAvailableExecutionDegrees" path="df.page.showAvailableExecutionDegrees"/>
+				<forward name="showChosenDegreeCourses" path="df.page.showChosenDegreeCourses"/>
+				<forward name="enrollmentConfirmation" path="df.page.optionalEnrollmentConfirmation"/>
+				<forward name="exit" path="/globalEnrolment.do"/>
 		</action>		
 	</action-mappings>
 

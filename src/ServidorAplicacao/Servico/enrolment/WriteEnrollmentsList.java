@@ -112,7 +112,7 @@ public class WriteEnrollmentsList implements IService
 
 	}
 
-	private IExecutionPeriod findExecutionPeriod(
+	public static IExecutionPeriod findExecutionPeriod(
 		ISuportePersistente sp,
 		IExecutionYear executionYear,
 		Integer curricularCourseID,
@@ -143,7 +143,7 @@ public class WriteEnrollmentsList implements IService
 
 	}
 
-	private Integer findBestSemester(
+	private static Integer findBestSemester(
 		IPersistentExecutionPeriod persistentExecutionPeriod,
 		List curricularCourseScopes)
 		throws ExcepcaoPersistencia

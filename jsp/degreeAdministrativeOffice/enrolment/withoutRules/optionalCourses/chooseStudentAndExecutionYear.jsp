@@ -7,7 +7,7 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/optionalCoursesEnrolmentManager.do" focus="studentNumber">
+<html:form action="/optionalCoursesEnrolmentManagerDA.do" focus="studentNumber">
 	<html:hidden property="method" value="showAvailableOptionalCourses"/>
 	<html:hidden property="page" value="1"/>
 	<logic:present name="degreeType">

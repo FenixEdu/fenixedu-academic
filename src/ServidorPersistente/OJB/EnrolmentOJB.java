@@ -13,6 +13,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
+import Util.CurricularCourseType;
 import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 
@@ -208,4 +209,14 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 
         return queryList(Enrolment.class, criteria);
     }
+
+	public List readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(IStudentCurricularPlan studentCurricularPlan, EnrolmentState enrolmentState, CurricularCourseType curricularCourseType) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
+		criteria.addEqualTo("enrolmentState", enrolmentState);
+		criteria.addEqualTo("curricularCourse.type", curricularCourseType);
+		return queryList(Enrolment.class, criteria);
+	}
+
 }

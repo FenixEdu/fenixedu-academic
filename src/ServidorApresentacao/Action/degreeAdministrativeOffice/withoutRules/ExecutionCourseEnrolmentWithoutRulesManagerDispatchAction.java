@@ -323,7 +323,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 			return mapping.findForward("readCurricularCourseEnrollmentList");
 		}
 		infoExecutionDegreeSelected = (InfoExecutionDegree) executionDegreeList.get(0);
-		executionDegreeList = executionDegreeList.subList(1, executionDegreeList.size() - 1);
+		executionDegreeList.remove(0);
 
 		Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 		List executionDegreeLabels =
