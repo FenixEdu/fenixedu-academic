@@ -18,12 +18,12 @@
 		</td>
 	</tr>
 </table>
-<br />		
-<html:reset  styleClass="inputbutton">
-<bean:message key="label.clear"/>
-</html:reset>
+<br />
 <html:hidden property="method" value="editProgram"/>
 <html:submit styleClass="inputbutton">
 <bean:message key="button.save"/>
-</html:submit></h3>
+</html:submit>
+<html:reset  styleClass="inputbutton">
+<bean:message key="label.clear"/>
+</html:reset>
 </html:form>

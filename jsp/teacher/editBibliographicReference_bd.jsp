@@ -31,8 +31,6 @@
 <br />
 <br />
 <br />
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
-</html:reset>
 <logic:notPresent name="edit">
 	<html:hidden property="method" value="createBibliographicReference"/>
 	<html:submit styleClass="inputbutton">
@@ -44,5 +42,7 @@
    	<html:submit styleClass="inputbutton">
     	<bean:message key="button.save"/>                    		         	
     </html:submit> 
-</logic:present>  
+</logic:present>
+<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+</html:reset>  
 </html:form>

@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<br />
 <table width="100%">
 <tr>
 <td class="infoop"><bean:message key="label.announcement.explanation" /></td>

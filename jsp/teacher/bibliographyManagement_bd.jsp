@@ -2,13 +2,21 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<br />
+<table width="100%">
+	<tr>
+		<td class="infoop">
+			<bean:message key="label.bibliography.explanation" />
+		</td>
+	</tr>
+</table>
 <html:form action="/bibliographicReferenceManager">
 <html:hidden property="page" value="0"/>
 <p><html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference"><bean:message key="label.insertBibliographicReference"/>                    		     
 </html:link>
 </p>            
 <h2><bean:message key="message.recommendedBibliography"/></h2>
-<table cellspacing="0" cellpadding="0" border="0">
+<table cellspacing="0" cellpadding="0">
   		<tbody>
             <tr>
             	<% int index = 0; %>             
