@@ -23,7 +23,7 @@ import java.util.Iterator;
 import DataBeans.InfoCountry;
 import Dominio.ICountry;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -55,7 +55,7 @@ public class ReadAllCountries implements IServico {
     
     
     public Object run()
-	    throws ExcepcaoInexistente, NotExecutedException {
+	    throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
         ArrayList paises = new ArrayList();
@@ -64,7 +64,7 @@ public class ReadAllCountries implements IServico {
             sp = SuportePersistenteOJB.getInstance();
             paises = sp.getIPersistentCountry().readAllCountrys();
         } catch (ExcepcaoPersistencia ex) {
-            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         } 

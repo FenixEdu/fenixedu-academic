@@ -184,9 +184,6 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 		actionPerform();
 		verifyForwardPath("/naoExecutado.do");
 
-		verifyActionErrors(
-			new String[] { "java.lang.Exception" });
-
-	}
+		verifyActionErrors(new String[] { "ServidorAplicacao.FenixServiceException" });	}
 
 }

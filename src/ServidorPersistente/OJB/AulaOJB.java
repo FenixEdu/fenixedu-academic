@@ -26,7 +26,7 @@ import Dominio.ITurnoAula;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.exceptions.ExistingException;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -62,7 +62,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 	}
 
 	public void lockWrite(IAula lessonToWrite)
-		throws ExcepcaoPersistencia, ExistingException {
+		throws ExcepcaoPersistencia, ExistingPersistentException {
 		IAula lessonFromDB = null;
 		if (lessonToWrite == null)
 			// Should we throw an exception saying nothing to write or
@@ -93,7 +93,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			//super.lockWrite(lessonToWrite);
 			// else throw an AlreadyExists exception.
 		} else
-			throw new ExistingException();
+			throw new ExistingPersistentException();
 	}
 
 	public void delete(IAula aula) throws ExcepcaoPersistencia {

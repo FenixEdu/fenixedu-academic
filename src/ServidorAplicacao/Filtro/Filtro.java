@@ -25,7 +25,7 @@ public class Filtro {
      * invoked. It should throw an exception if the service should
      * not be called
      *
-     * @throws NotExecutedException
+     * @throws FenixServiceException
      * @throws NotAuthorizedException
      **/
     public void preFiltragem(IUserView id, IServico servico, Object argumentos[])

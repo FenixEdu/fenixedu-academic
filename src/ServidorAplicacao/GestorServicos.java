@@ -211,7 +211,7 @@ public class GestorServicos {
    * @param argumentos is a vector with the arguments of the service
    * to execute.
    *
-   * @throws NotExecutedException
+   * @throws FenixServiceException
    * @throws NotAuthorizedException
    **/
   public Object executar(IUserView id, String servico, Object argumentos[])
@@ -219,7 +219,7 @@ public class GestorServicos {
     AssociacaoServico assoc = getInformacaoServico(servico);
 
     if (assoc == null || assoc.servico == null) {
-      throw new NotExecutedException("Servico inválido : " + servico);
+      throw new FenixServiceException("Servico inválido : " + servico);
     }
 
     assoc.gestorFiltros.preFiltragem(id, assoc.servico, argumentos);

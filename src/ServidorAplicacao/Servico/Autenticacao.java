@@ -15,7 +15,7 @@ import Dominio.IPessoa;
 import Dominio.IPrivilegio;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -45,14 +45,14 @@ public class Autenticacao implements IServico {
 
 
   public IUserView run(String utilizador, String password)
-      throws NotExecutedException, ExcepcaoAutenticacao {
+      throws FenixServiceException, ExcepcaoAutenticacao {
     IPessoa pessoa = null;
     
     try {
       //pessoa = SuportePersistenteOJB.getInstance().getIPessoaPersistente().readByUtilizador(utilizador);
       pessoa = SuportePersistenteOJB.getInstance().getIPessoaPersistente().lerPessoaPorUsername(utilizador);
     } catch (ExcepcaoPersistencia ex) {
-      throw new NotExecutedException(ex.getMessage());
+      throw new FenixServiceException(ex.getMessage());
     }
 
     if (pessoa != null && pessoa.getPassword().equals(password)) {

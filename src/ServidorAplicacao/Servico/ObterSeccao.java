@@ -17,7 +17,7 @@ import Dominio.IItem;
 import Dominio.ISeccao;
 import Dominio.ISitio;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -57,7 +57,7 @@ public class ObterSeccao implements IServico {
    * desired name, parent and sitio.
    **/
   public SeccaoView run(String sitioName, String name)
-    throws NotExecutedException, ExcepcaoInexistente {
+    throws FenixServiceException, ExcepcaoInexistente {
     ISeccao seccao = null;
     ISuportePersistente sp;
     ISitio sitio;
@@ -71,8 +71,8 @@ public class ObterSeccao implements IServico {
           null,
           name);
     } catch (ExcepcaoPersistencia ex) {
-      NotExecutedException newEx =
-        new NotExecutedException("Persistence layer error");
+      FenixServiceException newEx =
+        new FenixServiceException("Persistence layer error");
       newEx.fillInStackTrace();
       throw newEx;
     }

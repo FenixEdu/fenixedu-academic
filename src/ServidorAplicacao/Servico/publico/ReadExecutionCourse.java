@@ -6,7 +6,7 @@ import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -43,7 +43,7 @@ public class ReadExecutionCourse implements IServico {
 		return _servico;
 	}
 
-	public Object run(InfoExecutionPeriod infoExecutionPeriod, String code) throws ExcepcaoInexistente, NotExecutedException {
+	public Object run(InfoExecutionPeriod infoExecutionPeriod, String code) throws ExcepcaoInexistente, FenixServiceException {
 
 		IDisciplinaExecucao iExecCourse = null;
 		InfoExecutionCourse infoExecCourse = null;
@@ -57,7 +57,7 @@ public class ReadExecutionCourse implements IServico {
 				infoExecCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(iExecCourse);
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
-			NotExecutedException newEx = new NotExecutedException("");
+			FenixServiceException newEx = new FenixServiceException("");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}

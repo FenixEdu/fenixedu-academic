@@ -23,7 +23,7 @@ import Dominio.ICountry;
 import Dominio.ICurso;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -56,7 +56,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
     
     
     public void run(InfoMasterDegreeCandidate newMasterDegreeCandidate) 
-	    throws ExcepcaoInexistente, NotExecutedException {
+	    throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
         IMasterDegreeCandidate existingMasterDegreeCandidate = null;
@@ -64,7 +64,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
         try {
 	        sp = SuportePersistenteOJB.getInstance();
         } catch (ExcepcaoPersistencia ex) {
-            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         } 
@@ -73,7 +73,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
             ICurso degreeTemp = sp.getICursoPersistente().readBySigla(newMasterDegreeCandidate.getInfoDegree().getSigla());
             existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(newMasterDegreeCandidate.getCandidateNumber(), newMasterDegreeCandidate.getApplicationYear(), degreeTemp.getSigla());
         } catch (ExcepcaoPersistencia ex) {
-            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx; 
         } 
@@ -85,7 +85,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
         try {
 			country = sp.getIPersistentCountry().readCountryByName(newMasterDegreeCandidate.getCountry());
         } catch (ExcepcaoPersistencia ex) {
-            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx; 
         } 
@@ -128,7 +128,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
 		try {
             sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(existingMasterDegreeCandidate);
 	    } catch (ExcepcaoPersistencia ex) {
-	      NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+	      FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 	      newEx.fillInStackTrace();
 	      throw newEx;
 	    }

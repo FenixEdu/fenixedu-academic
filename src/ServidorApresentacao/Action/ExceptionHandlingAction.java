@@ -66,6 +66,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		EMail email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
 		//email.send("suporte@dot.ist.utl.pt","Error Report",stackTrace.toString());
 		email.send("j.mota@netcabo.pt", subject, mailBody);
+		email.send("lepc@mega.ist.utl.pt", subject, mailBody);
 		//		removes from session all the un-needed info
 		sessionRemover(request);
 		return originalMapping.getInputForward();

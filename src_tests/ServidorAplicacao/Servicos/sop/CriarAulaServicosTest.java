@@ -24,6 +24,7 @@ import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.DiaSemana;
 import Util.TipoAula;
@@ -146,9 +147,11 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		try {
 			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
 			fail("testCreateExistingLessonCompleteMatch");
-		
+		} catch (ExistingServiceException ex) {
+			// all is ok
 		} catch (Exception ex) {
 			// all is ok
+			fail("Unexpected exception " + ex);
 		}
 	}
 

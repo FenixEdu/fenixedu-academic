@@ -175,7 +175,7 @@ public class GestorFiltros {
    * the execution of the given service, then an exception is
    * thrown.
    *
-   * @throws NotExecutedException
+   * @throws FenixServiceException
    * @throws NotAuthorizedException
    **/
   public void preFiltragem(IUserView id, IServico servico, Object argumentos[])

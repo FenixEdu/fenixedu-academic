@@ -185,7 +185,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 		verifyForwardPath("/naoExecutado.do");
 
 		verifyActionErrors(
-			new String[] { "ServidorAplicacao.NotExecutedException" });
+			new String[] { "ServidorAplicacao.FenixServiceException" });
 	}
 
 }

@@ -9,7 +9,7 @@ import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -46,7 +46,7 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
 		return _servico;
 	}
 
-	public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoInexistente, NotExecutedException {
+	public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoInexistente, FenixServiceException {
 		
 		List infoCurricularCourseList = new ArrayList();
 
@@ -78,7 +78,7 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
 				}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
-			NotExecutedException newEx = new NotExecutedException("");
+			FenixServiceException newEx = new FenixServiceException("");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}

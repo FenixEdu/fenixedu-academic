@@ -44,10 +44,10 @@ public abstract class InvocadorServicos {
    *
    * @return the resukt of the invocation.
    *
-   * @throws NotExecutedException if something goes wrong.
+   * @throws FenixServiceException if something goes wrong.
    **/
   final protected Object doInvocation(IServico servico, String methodName,
-				      Object argumentos[]) throws Exception //NotExecutedException
+				      Object argumentos[]) throws Exception //FenixServiceException
   {
     // The Java reflexion mewchanism does not handle the case where an angument type
     // is null. In this case, the methos is not found. To overcame this problem,
@@ -78,13 +78,13 @@ public abstract class InvocadorServicos {
 	method = methods[methodPos];
 
       if (methodPos == -1) // not found
-	throw new NotExecutedException("Cannot invoke service: "
+	throw new FenixServiceException("Cannot invoke service: "
 				       + servico.getNome() + ". Method " + methodName
 				       + " does not exist.");
 
     }
     catch (SecurityException e) {
-      throw new NotExecutedException("Cannot execute method " +
+      throw new FenixServiceException("Cannot execute method " +
 				     methodName + " of service: " +
 				     servico.getNome() + ": " + e);
     }
@@ -99,11 +99,11 @@ public abstract class InvocadorServicos {
 	method = servico.getClass().getDeclaredMethod("run", types);
       }
       catch (NoSuchMethodException e) {
-	throw new NotExecutedException("Cannot execute method run of service: "
+	throw new FenixServiceException("Cannot execute method run of service: "
 				       + servico.getNome() + ": " + e);
       }
       catch (SecurityException e) {
-	throw new NotExecutedException("Cannot execute method run of service: "
+	throw new FenixServiceException("Cannot execute method run of service: "
 				       + servico.getNome() + ": " + e);
       }
     }
@@ -114,18 +114,18 @@ public abstract class InvocadorServicos {
       return method.invoke(servico, argumentos);
     }
     catch (IllegalAccessException e) {
-      throw new NotExecutedException("Cannot access method run of service: "
+      throw new FenixServiceException("Cannot access method run of service: "
 				    + servico.getNome() + ": " + e);
     }
     catch ( IllegalArgumentException e) {
-      throw new NotExecutedException("Cannot execute method run of service: "
+      throw new FenixServiceException("Cannot execute method run of service: "
 				    + servico.getNome() + ": " + e);
     }
     catch (InvocationTargetException e) {
       if (e.getCause() instanceof Exception) {
         throw (Exception) e.getCause();
       } else {
-        throw new NotExecutedException("Exception in execution of method run " +
+        throw new FenixServiceException("Exception in execution of method run " +
                                         "of service: " + servico.getNome() + 
                                         ": " + e);
       }

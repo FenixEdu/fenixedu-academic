@@ -23,12 +23,14 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarAula implements IServico {
 
@@ -54,7 +56,7 @@ public class CriarAula implements IServico {
 	}
 
 	public InfoLessonServiceResult run(InfoLesson infoLesson)
-		throws NotExecutedException {
+		throws FenixServiceException, ExistingServiceException {
 
 		InfoLessonServiceResult result = null;
 
@@ -92,13 +94,19 @@ public class CriarAula implements IServico {
 			boolean resultB = validNoInterceptingLesson(aula);
 
 			if (result.isSUCESS() && resultB) {
-				sp.getIAulaPersistente().lockWrite(aula);
+				try {
+					System.out.println("Before lockWrite");
+					sp.getIAulaPersistente().lockWrite(aula);
+					System.out.println("After lockWrite");
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException(ex);
+				}
 			} else {
 				result.setMessageType(2);
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
-			throw new NotExecutedException(ex.getMessage());
+			throw new FenixServiceException(ex.getMessage());
 		}
 
 		return result;
@@ -108,7 +116,7 @@ public class CriarAula implements IServico {
 	 * @param aula
 	 * @return InfoLessonServiceResult
 	 */
-	private boolean validNoInterceptingLesson(IAula lesson) {
+	private boolean validNoInterceptingLesson(IAula lesson) throws ExistingServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -119,11 +127,17 @@ public class CriarAula implements IServico {
 				persistentLesson.readLessonsInBroadPeriod(lesson);
 
 			System.out.println("Tenho aulas:" + lessonMatchList.size());
-			if (lessonMatchList != null) {
-				lessonMatchList.remove(lesson);
-			}
+			
 			if (lessonMatchList.size() > 0) {
-				return false;
+				System.out.println("lessonMatchList is going to blow up...");
+				if (lessonMatchList.contains(lesson)) {
+					System.out.println("After contains");
+					throw new ExistingServiceException();
+				} else {
+					System.out.println("Another After contains");
+					// TODO: throw new exception : INTERCEPTINGMATCHEXCEPTION 
+					return false;
+				}
 			} else {
 				return true;
 			}
@@ -132,6 +146,7 @@ public class CriarAula implements IServico {
 
 		}
 	}
+	
 	private InfoLessonServiceResult validTimeInterval(IAula lesson) {
 		InfoLessonServiceResult result = new InfoLessonServiceResult();
 

@@ -12,12 +12,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.Globals;
+import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -67,6 +70,23 @@ public class FenixExceptionHandler extends ExceptionHandler {
 			ae.setScope("session");
 		}
 
+		ActionError error = null;
+		String property = null;
+
+		// Figure out the error
+		if (ex instanceof FenixActionException) {
+			error = ((FenixActionException) ex).getError();
+			property = ((FenixActionException) ex).getProperty();
+		} else {
+			error = new ActionError(ae.getKey(), ex.getMessage());
+			property = error.getKey();
+		}
+
+		// Store the exception
+		request.setAttribute(Globals.EXCEPTION_KEY, ex);
+		super.storeException(request, property, error, forward, ae.getScope());
+		System.out.println("Mapping mandou para o FenixExceptionHandler " + mapping);
+	
 		return super.execute(ex, ae, mapping, formInstance, request, response);
 	}
 

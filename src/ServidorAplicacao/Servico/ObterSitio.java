@@ -14,7 +14,7 @@ import java.util.List;
 import Dominio.ISeccao;
 import Dominio.ISitio;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -53,7 +53,7 @@ public class ObterSitio implements IServico {
    * desired name.
    **/
   public SitioView run(String name)
-    throws NotExecutedException, ExcepcaoInexistente {
+    throws FenixServiceException, ExcepcaoInexistente {
     ISitio sitio = null;
     ISuportePersistente sp;
 
@@ -61,8 +61,8 @@ public class ObterSitio implements IServico {
       sp = SuportePersistenteOJB.getInstance();
       sitio = sp.getISitioPersistente().readByNome(name);
     } catch (ExcepcaoPersistencia ex) {
-      NotExecutedException newEx =
-        new NotExecutedException("Persistence layer error");
+      FenixServiceException newEx =
+        new FenixServiceException("Persistence layer error");
       newEx.fillInStackTrace();
       throw newEx;
     }

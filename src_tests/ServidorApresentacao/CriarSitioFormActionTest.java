@@ -92,7 +92,7 @@ public class CriarSitioFormActionTest extends MockStrutsTestCase {
     actionPerform();
     verifyForwardPath("/naoExecutado.do");
     
-    verifyActionErrors(new String[] {"ServidorAplicacao.NotExecutedException"});
+    verifyActionErrors(new String[] {"ServidorAplicacao.FenixServiceException"});
   }
   
 

@@ -76,7 +76,7 @@ public class CriarSalaFormActionTest extends TestCasePresentation {
     actionPerform();
     verifyForwardPath("/naoExecutado.do");
     
-    verifyActionErrors(new String[] {"ServidorAplicacao.NotExecutedException"});
+    verifyActionErrors(new String[] {"ServidorAplicacao.FenixServiceException"});
   }
   
 

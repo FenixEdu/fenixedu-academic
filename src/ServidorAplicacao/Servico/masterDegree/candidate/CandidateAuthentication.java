@@ -19,7 +19,7 @@ package ServidorAplicacao.Servico.masterDegree.candidate;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
 import ServidorAplicacao.Servico.UserView;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -50,13 +50,13 @@ public class CandidateAuthentication implements IServico {
 
 
   public IUserView run(String username, String password)
-      throws NotExecutedException, ExcepcaoAutenticacao {
+      throws FenixServiceException, ExcepcaoAutenticacao {
 	    IMasterDegreeCandidate masterDegreeCandidate = null;
 
     try {
       masterDegreeCandidate = SuportePersistenteOJB.getInstance().getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByUsername(username);
     } catch (ExcepcaoPersistencia ex) {
-      throw new NotExecutedException(ex.getMessage());
+      throw new FenixServiceException(ex.getMessage());
     }
 
     if (masterDegreeCandidate != null && masterDegreeCandidate.getPassword().equals(password)) {

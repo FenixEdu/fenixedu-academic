@@ -23,16 +23,19 @@ public class InvocadorServicosTransaccional extends InvocadorServicos {
         sp.iniciarTransaccao();
         result = doInvocation(servico, "run", argumentos);
         sp.confirmarTransaccao();
-      } catch (NotExecutedException ex) {
-        try {
-          sp.cancelarTransaccao();
-        } catch (ExcepcaoPersistencia newEx) {
-          throw new NotExecutedException(newEx.getMessage());
-        }
-        throw new NotExecutedException(ex.getMessage()); 
+      } catch (FenixServiceException ex) {
+      	if (ex.getCause() instanceof ExcepcaoPersistencia) {
+	        try {
+    	      sp.cancelarTransaccao();
+        	} catch (ExcepcaoPersistencia newEx) {
+          	throw new FenixServiceException(newEx.getMessage());
+        	}
+			throw new FenixServiceException(ex.getMessage());         	
+      	} else
+      		throw ex;
       }
     } catch (ExcepcaoPersistencia ex) {
-      throw new NotExecutedException(ex.getMessage());
+      throw new FenixServiceException(ex.getMessage());
     }
     
     return result;

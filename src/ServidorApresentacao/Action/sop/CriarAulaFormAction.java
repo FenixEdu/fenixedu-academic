@@ -18,7 +18,9 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -64,7 +66,6 @@ public class CriarAulaFormAction extends FenixAction {
 			fim.set(Calendar.SECOND, 0);
 
 
-
 			String initials = (String) criarAulaForm.get("courseInitials");
 			
 			InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request, initials);
@@ -86,11 +87,16 @@ public class CriarAulaFormAction extends FenixAction {
 						courseView)
 				};
 
-			InfoLessonServiceResult result =
-				(InfoLessonServiceResult) ServiceUtils.executeService(
-					userView,
-					"CriarAula",
-					argsCriarAula);
+			InfoLessonServiceResult result = null;
+			try {
+				result =
+					(InfoLessonServiceResult) ServiceUtils.executeService(
+						userView,
+						"CriarAula",
+						argsCriarAula);
+			} catch (ExistingServiceException e) {
+				throw new ExistingActionException("1", e);
+			}
 			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
 
 			if (actionErrors.isEmpty()){

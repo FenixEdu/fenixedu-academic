@@ -25,7 +25,7 @@ import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.UserView;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -59,7 +59,7 @@ public class ReadMasterDegreeCandidateByUsername implements IServico {
     
     
     public Object run(UserView userView)
-	    throws ExcepcaoInexistente, NotExecutedException {
+	    throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
         
@@ -70,7 +70,7 @@ public class ReadMasterDegreeCandidateByUsername implements IServico {
             sp = SuportePersistenteOJB.getInstance();
             masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByUsername(username);
         } catch (ExcepcaoPersistencia ex) {
-            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         } 

@@ -18,6 +18,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+
 /**
  * @author jmota
  */
@@ -52,18 +54,14 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 		ActionError error = null;
 	 	String property = null;
 
-	  // Build the forward from the exception mapping if it exists
-	  // or from the form input
-	  if (ae.getPath() != null) {
-		  forward = new ActionForward(ae.getPath());
-		  forward.setContextRelative(true);
-	  } else {
-	  forward = mapping.getInputForward();
-	  }
+	  
 
 	  // Figure out the error
 	  if (ex instanceof FenixActionException) {
 		  error = ((FenixActionException) ex).getError();
+		  System.out.println("error.getValues() = " + error.getValues());
+		  Object[] xpto = error.getValues(); 
+		  System.out.println("xpto1 = " + xpto[0]);
 		  property = ((FenixActionException) ex).getProperty();
 	  } else {
 		  error = new ActionError(ae.getKey(), ex.getMessage());
@@ -73,8 +71,9 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 	  // Store the exception
 	  request.setAttribute(Globals.EXCEPTION_KEY, ex);
 	  super.storeException(request, property, error, forward, ae.getScope());
+	  super.execute(ex, ae, mapping, formInstance, request, response);
 
-	
+	System.out.println("Mapping mandou para o FenixErrorExceptionHandler " + mapping);
 	
 		return mapping.getInputForward();
 	}

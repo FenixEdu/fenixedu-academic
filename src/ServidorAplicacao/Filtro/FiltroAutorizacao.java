@@ -13,7 +13,7 @@ import java.util.Set;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.NotAuthorizedException;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.UserView;
 
 public class FiltroAutorizacao extends Filtro {
@@ -38,12 +38,12 @@ public class FiltroAutorizacao extends Filtro {
    * @see ServidorAplicacao.Filtro.Filtro#prefilter
    **/
   public void preFiltragem(IUserView id, IServico servico, Object argumentos[])
-    throws NotExecutedException, NotAuthorizedException {
+    throws FenixServiceException, NotAuthorizedException {
     boolean result = false;
     
     System.out.println("FiltroAutorizacao::preFiltragem() invocado");
     if (id == null || !(id instanceof UserView)){
-      throw new NotExecutedException("Invalid user ID");
+      throw new FenixServiceException("Invalid user ID");
     }
     
     UserView userView = (UserView) id;

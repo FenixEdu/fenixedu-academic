@@ -28,7 +28,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.NotAuthorizedException;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -149,7 +149,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 			
 			} catch (NotAuthorizedException e){
 				throw e; 
-			} catch (NotExecutedException e) {
+			} catch (FenixServiceException e) {
 				e.printStackTrace(System.out);
 				oldClassView.setNome(newClassView.getNome());
 				ActionErrors actionErrors = new ActionErrors();

@@ -29,7 +29,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.exceptions.ExistingException;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -147,16 +147,17 @@ public class AulaOJBTest extends TestCaseOJB {
 	lesson.setFim(endTime);
 	lesson.setInicio(startTime);
 	lesson.setSala(room);
-		
+	lesson.setDisciplinaExecucao(executionCourse);
+	lesson.setTipo(new TipoAula(TipoAula.TEORICA));
 	
     try {
       persistentSupport.iniciarTransaccao();
       persistentLesson.lockWrite(lesson);
       persistentSupport.confirmarTransaccao();
       fail("testCreateExistingAula");
-    } catch (ExistingException eex) {
+    } catch (ExistingPersistentException eex) {
     	// all is ok
-    	System.out.println("Caught ExistingException" + eex);
+    	System.out.println("Caught ExistingPersistentException" + eex);
     } catch (ExcepcaoPersistencia ex) {
       fail("Caught ExcepcaoPersistencia" + ex);
     }

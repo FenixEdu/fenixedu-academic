@@ -20,7 +20,7 @@ import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.TurnoAluno;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
@@ -53,7 +53,7 @@ public class StudentShiftEnrolment implements IServico {
 	 * 
 	 * */
 	public Object run(InfoStudent infoStudent, InfoShift newShiftInfo)
-		throws NotExecutedException {
+		throws FenixServiceException {
 		if (infoStudent == null){
 			throw new IllegalArgumentException("InfoStudent must be not null!");
 		}
@@ -74,7 +74,7 @@ public class StudentShiftEnrolment implements IServico {
 			setShiftEnrolment(student, newShift, sp);
 
 		} catch (ExcepcaoPersistencia e) {
-			throw new NotExecutedException(e.getMessage());
+			throw new FenixServiceException(e.getMessage());
 		} catch (MessageException e) {
 			return e.getResult();
 		}

@@ -26,7 +26,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.IMasterDegreeCandidate;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -103,7 +103,7 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
             masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(2), new Integer(2003), "MIC");
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
-            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
         }  
         

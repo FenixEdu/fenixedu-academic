@@ -12,7 +12,7 @@ package ServidorAplicacao.Servico;
 import java.util.Calendar;
 
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import Util.Mes;
 
 
@@ -51,7 +51,7 @@ public class ObterData implements IServico {
    * desired name, parent and sitio.
    **/
   public DataView run()
-	throws NotExecutedException, ExcepcaoInexistente {
+	throws FenixServiceException, ExcepcaoInexistente {
 	
 	System.out.println("Entrei em data");
 	Calendar calendar = Calendar.getInstance();

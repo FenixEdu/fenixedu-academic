@@ -11,7 +11,7 @@ package ServidorAplicacao.Filtro;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.NotAuthorizedException;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.UserView;
 
 public class CandidateAuthorizationFilter extends Filtro {
@@ -36,11 +36,11 @@ public class CandidateAuthorizationFilter extends Filtro {
    * @see ServidorAplicacao.Filtro.Filtro#prefilter
    **/
   public void preFiltragem(IUserView id, IServico servico, Object argumentos[])
-    throws NotExecutedException, NotAuthorizedException {
+    throws FenixServiceException, NotAuthorizedException {
     
     System.out.println("CandidateAuthorizationFilter::preFiltering() invoked");
     if (id == null || !(id instanceof UserView))
-      throw new NotExecutedException("Invalid user ID");
+      throw new FenixServiceException("Invalid user ID");
     
 
   }

@@ -10,7 +10,7 @@ package ServidorAplicacao.Servico;
 import Dominio.ISitio;
 import Dominio.Sitio;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -39,7 +39,7 @@ public class CriarSitio implements IServico {
 
 
   public void run(String nome, Integer anoCurricular, Integer semestre,
-                     String curso, String departamento) throws NotExecutedException {
+                     String curso, String departamento) throws FenixServiceException {
                         
     ISitio sitio = new Sitio(nome, anoCurricular.intValue(), 
                              semestre.intValue(), curso, departamento);
@@ -47,7 +47,7 @@ public class CriarSitio implements IServico {
     try {
       SuportePersistenteOJB.getInstance().getISitioPersistente().lockWrite(sitio);
     } catch (ExcepcaoPersistencia ex) {
-      NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+      FenixServiceException newEx = new FenixServiceException("Persistence layer error");
       newEx.fillInStackTrace();
       throw newEx;
     }

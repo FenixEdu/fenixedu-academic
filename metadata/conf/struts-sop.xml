@@ -187,8 +187,8 @@
 			       key="ServidorAplicacao.NotAuthorizedException"
 			       path="/naoAutorizado.do"
 			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
-		<exception type="ServidorAplicacao.NotExecutedException"
-		  	       key="ServidorAplicacao.NotExecutedException"
+		<exception type="ServidorAplicacao.FenixServiceException"
+		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
@@ -275,7 +275,12 @@
               path="/criarAulaForm"
               scope="request"
               type="ServidorApresentacao.Action.sop.CriarAulaFormAction"
-              validate="true">
+              validate="true"
+              >
+		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+			       key="error.exception.existing.lesson"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />              
 <!--        <forward name="Sucesso" path="/principalAulas.do"/> -->
 			<forward name="Sucesso" path="/gestaoHorarios.do"/>
       </action>

@@ -19,7 +19,7 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorApresentacao.Action.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -52,7 +52,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 			try {
 				infoRoom = (InfoRoom) gestor.executar(userView, "LerSala", args);
-			} catch(NotExecutedException nee) {
+			} catch(FenixServiceException nee) {
 				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
 			} catch(ExcepcaoInexistente ein) {
 				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(ein.getMessage()));
@@ -146,7 +146,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 			try {
 				infoExecCourse = (InfoExecutionCourse) gestor.executar(userView, "ReadExecutionCourse", args);
-			} catch(NotExecutedException nee) {
+			} catch(FenixServiceException nee) {
 				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
 			} finally {
 				if(!errors.isEmpty()) {
