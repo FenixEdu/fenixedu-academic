@@ -1,8 +1,6 @@
 package DataBeans.gesdis;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.ViewUtils;
@@ -24,8 +22,8 @@ public class InfoSection {
     protected InfoSite infoSite;
     protected InfoSection infoSuperiorSection;
     protected List superiorSectionsNames;
-    protected List inferiorInfoSections;
-    protected List infoItems;
+//    protected List inferiorInfoSections;
+//    protected List infoItems;
     
 	/** 
 	* Construtor
@@ -59,46 +57,27 @@ public class InfoSection {
 		this.superiorSectionsNames =
         ViewUtils.buildQualifiedName(infoSuperiorSection);
         
-        if ((inferiorInfoSections != null) &&
-        !inferiorInfoSections.isEmpty()) {
-            this.inferiorInfoSections =
-            ViewUtils.buildSectionsList(inferiorInfoSections,
-            new ArrayList());
-        } else
-            this.inferiorInfoSections = new ArrayList();
-        
-        this.infoItems = new ArrayList();
-        if ((infoItems != null) &&
-        !infoItems.isEmpty()) {
-            
-            Iterator iter = infoItems.iterator();
-            while (iter.hasNext()) {
-                InfoItem item = (InfoItem) iter.next();
-                infoItems.add(item);
-            }
-        }
+//        if ((inferiorInfoSections != null) &&
+//        !inferiorInfoSections.isEmpty()) {
+//            this.inferiorInfoSections =
+//            ViewUtils.buildSectionsList(inferiorInfoSections,
+//            new ArrayList());
+//        } else
+//            this.inferiorInfoSections = new ArrayList();
+//        
+//        this.infoItems = new ArrayList();
+//        if ((infoItems != null) &&
+//        !infoItems.isEmpty()) {
+//            
+//            Iterator iter = infoItems.iterator();
+//            while (iter.hasNext()) {
+//                InfoItem item = (InfoItem) iter.next();
+//                infoItems.add(item);
+//            }
+//        }
     }
     
- /*   public InfoSection(String name,List ancestors){
-        this.name = name;
-		this.superiorSectionsNames =ancestors;
-		this.superiorSection = null;
-		this.sectionOrder = new Integer(0);
-		this.lastModifiedDate = new Date();
-		this.infoSite = null;
-		this.inferiorInfoSections = null;
-		this.infoItems = null;
-    }
-    
-    public InfoSection(List sonNodes){
-		this.name = null;
-		this.superiorSection = null;
-		this.sectionOrder = new Integer(0);
-		this.lastModifiedDate = new Date();
-		this.infoSite = null;
-		this.inferiorInfoSections = sonNodes;
-		this.infoItems = null;
-    }*/
+
 	
 	/**
 	* @return Integer
@@ -219,39 +198,39 @@ public class InfoSection {
 		this.superiorSectionsNames = superiorSectionsNames;
 	}
 	
-
-	/**
-	 * @return List
-	 */	
-    public List getInferiorInfoSections() {
-        return inferiorInfoSections;
-    }
-
-
-	/**
-	* Sets the inferiorInfoSections.
-	* @param inferiorInfoSections The inferiorInfoSections to set
-	*/
-	public void setInferiorInfoSections(List inferiorInfoSections) {
-		this.inferiorInfoSections = inferiorInfoSections;
-	}
-
-
-	/**
-	 * @return List
-	 */	    
-    public List getInfoItems() {
-        return infoItems;
-    }
-
-
-	/**
-	* Sets the infoItems.
-	* @param infoItems The infoItems to set
-	*/
-	public void setInfoItems(List infoItems) {
-		this.infoItems = infoItems;
-	}
+//
+//	/**
+//	 * @return List
+//	 */	
+//    public List getInferiorInfoSections() {
+//        return inferiorInfoSections;
+//    }
+//
+//
+//	/**
+//	* Sets the inferiorInfoSections.
+//	* @param inferiorInfoSections The inferiorInfoSections to set
+//	*/
+//	public void setInferiorInfoSections(List inferiorInfoSections) {
+//		this.inferiorInfoSections = inferiorInfoSections;
+//	}
+//
+//
+//	/**
+//	 * @return List
+//	 */	    
+//    public List getInfoItems() {
+//        return infoItems;
+//    }
+//
+//
+//	/**
+//	* Sets the infoItems.
+//	* @param infoItems The infoItems to set
+//	*/
+//	public void setInfoItems(List infoItems) {
+//		this.infoItems = infoItems;
+//	}
 
 
 	/**
@@ -263,8 +242,8 @@ public class InfoSection {
 		result += ", sectionOrder=" + sectionOrder;
 		result += ", infoSite=" + getInfoSite();
 		result += ", superiorInfoSection=" + getSuperiorInfoSection();
-		result += ", inferiorInfoSections=" + getInferiorInfoSections();
-		result += ", infoItems=" +getInfoItems();		
+//		result += ", inferiorInfoSections=" + getInferiorInfoSections();
+//		result += ", infoItems=" +getInfoItems();		
 		result += "]";
 		return result;
 	}
