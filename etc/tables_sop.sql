@@ -98,7 +98,6 @@ create table SHIFT_LESSON (
 
 #----------------------------
 # Table structure for attend
-# FIXME : This should associate students with shifts, not with execution courses.
 #----------------------------
 drop table if exists ATTEND;
 create table ATTEND (
