@@ -3914,16 +3914,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ConfirmActualEnrolmentWithRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.ConfirmActualEnrolmentWithRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>SelectOptionalCurricularCourseWithRules</name>
         <implementationClass>ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse 
             </implementationClass>
