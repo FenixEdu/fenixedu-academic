@@ -1,7 +1,6 @@
 /*
- * Created on Apr 3, 2003
- *
-*/
+ * Created on Apr 3, 2003  
+ */
 
 package ServidorApresentacao.TagLib.sop.examsMap.renderers;
 
@@ -20,13 +19,29 @@ import ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot;
 public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 	private ExamsMap examsMap;
-	
-	public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap) {
+
+	public StringBuffer renderDayLabel(
+		ExamsMapSlot examsMapSlot,
+		ExamsMap examsMap) {
 		this.examsMap = examsMap;
 		StringBuffer strBuffer = new StringBuffer();
 
+		boolean isFirstDayOfSeason =
+			((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH)
+				== examsMap.getFirstDayOfSeason().get(Calendar.DAY_OF_MONTH))
+			&& (examsMapSlot.getDay().get(Calendar.MONTH)
+				== examsMap.getFirstDayOfSeason().get(Calendar.MONTH))
+			&& (examsMapSlot.getDay().get(Calendar.YEAR)
+				== examsMap.getFirstDayOfSeason().get(Calendar.YEAR)));
+
+		boolean isSecondDayOfMonthAndFirstDayWasASunday =
+			(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 2
+			&& examsMapSlot.getDay().get(Calendar.DAY_OF_WEEK) == 2);
+		
 		strBuffer.append(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH));
-		if (examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1) {
+		if ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1)
+			|| isFirstDayOfSeason
+			|| isSecondDayOfMonthAndFirstDayWasASunday) {
 			strBuffer.append(" de ");
 			strBuffer.append(
 				monthToString(examsMapSlot.getDay().get(Calendar.MONTH)));
@@ -76,11 +91,19 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 								.getYear()
 							+ "&amp;season="
 							+ infoExam.getSeason().getseason()
-							+ "&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="
-							+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
-							+ "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "="
+							+ "&amp;"
+							+ SessionConstants.EXECUTION_PERIOD_OID
+							+ "="
+							+ infoExecutionCourse
+								.getInfoExecutionPeriod()
+								.getIdInternal()
+							+ "&amp;"
+							+ SessionConstants.EXECUTION_DEGREE_OID
+							+ "="
 							+ examsMap.getInfoExecutionDegree().getIdInternal()
-							+ "&amp;" + SessionConstants.EXECUTION_COURSE_OID + "="
+							+ "&amp;"
+							+ SessionConstants.EXECUTION_COURSE_OID
+							+ "="
 							+ infoExecutionCourse.getIdInternal()
 							+ getCurricularYearsArgs()
 							+ "'>");
@@ -89,7 +112,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						strBuffer.append(courseInitials);
 					} else {
 						strBuffer.append(
-							"<span class='redtxt'>" + courseInitials + "</span>");
+							"<span class='redtxt'>"
+								+ courseInitials
+								+ "</span>");
 					}
 
 				} else if (typeUser.equals("public")) {
@@ -192,8 +217,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer#renderDayContents(ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot, java.lang.String)
+	/*
+	 * (non-Javadoc) @see ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer#renderDayContents(ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot,
+	 * java.lang.String)
 	 */
 	public StringBuffer renderDayContents(
 		ExamsMapSlot examsMapSlot,
@@ -237,22 +263,22 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 		List curricularYears = examsMap.getCurricularYears();
 		for (int i = 0; i < curricularYears.size(); i++) {
 			if (curricularYears.get(i).equals(new Integer(1))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=1"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=1";
 			}
 			if (curricularYears.get(i).equals(new Integer(2))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_2 + "=2"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_2 + "=2";
 			}
 			if (curricularYears.get(i).equals(new Integer(3))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_3 + "=3"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_3 + "=3";
 			}
 			if (curricularYears.get(i).equals(new Integer(4))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_4 + "=4"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_4 + "=4";
 			}
 			if (curricularYears.get(i).equals(new Integer(5))) {
-				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_5 + "=5"; 
+				result += "&amp;" + SessionConstants.CURRICULAR_YEARS_5 + "=5";
 			}
 		}
 		return result;
 	}
-	
+
 }

@@ -24,6 +24,8 @@ public class ExamsMap {
 	private List curricularYears;
 	private List executionCourses;
 	private InfoExecutionDegree infoExecutionDegree;
+	private Calendar firstDayOfSeason;
+	private Calendar lastDayOfSeason;
 
 	/**
 		 * @param infoRoomExamsMap
@@ -31,6 +33,8 @@ public class ExamsMap {
 	public ExamsMap(InfoRoomExamsMap infoRoomExamsMap) {
 		Calendar firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
 		Calendar lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
+		this.firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
+		this.lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
 
 		days = new ArrayList();
 		if (firstDayOfSeason.get(Calendar.YEAR)
@@ -75,6 +79,9 @@ public class ExamsMap {
 	}
 
 	public ExamsMap(InfoExamsMap infoExamsMap) {
+		this.firstDayOfSeason = infoExamsMap.getStartSeason1();
+		this.lastDayOfSeason = infoExamsMap.getEndSeason2();
+
 		setInfoExecutionDegree(infoExamsMap.getInfoExecutionDegree());
 		
 		Calendar firstDayOfSeason = infoExamsMap.getStartSeason1();
@@ -337,6 +344,34 @@ public class ExamsMap {
 	 */
 	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
 		this.infoExecutionDegree = infoExecutionDegree;
+	}
+
+	/**
+	 * @return Returns the firstDayOfSeason.
+	 */
+	public Calendar getFirstDayOfSeason() {
+		return firstDayOfSeason;
+	}
+
+	/**
+	 * @param firstDayOfSeason The firstDayOfSeason to set.
+	 */
+	public void setFirstDayOfSeason(Calendar firstDayOfSeason) {
+		this.firstDayOfSeason = firstDayOfSeason;
+	}
+
+	/**
+	 * @return Returns the lastDayOfSeason.
+	 */
+	public Calendar getLastDayOfSeason() {
+		return lastDayOfSeason;
+	}
+
+	/**
+	 * @param lastDayOfSeason The lastDayOfSeason to set.
+	 */
+	public void setLastDayOfSeason(Calendar lastDayOfSeason) {
+		this.lastDayOfSeason = lastDayOfSeason;
 	}
 
 }
