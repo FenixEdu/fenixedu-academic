@@ -4,6 +4,7 @@
   <tiles:put name="serviceName" value="Portal da Tesouraria" />
   <tiles:put name="navLocal" value="/treasury/treasuryMainMenu.jsp" />
   <tiles:put name="navGeral" value="/treasury/globalNav.jsp" />
+  <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/treasury/welcomeScreen.jsp" />
   <tiles:put name="footer" value="/treasury/copyrightDefault.jsp" />
 </tiles:insert>

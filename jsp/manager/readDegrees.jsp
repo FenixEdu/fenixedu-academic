@@ -4,6 +4,7 @@
   <tiles:put name="serviceName" value="&Aacute;rea de Ger&ecircncia" />
   <tiles:put name="navLocal" value="/manager/mainMenu.jsp" />
   <tiles:put name="navGeral" value="/manager/commonNavGeralManager.jsp" />
+  <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/manager/readDegrees_bd.jsp" />
   <tiles:put name="footer" value="/manager/commonFooter.jsp" />
 </tiles:insert>

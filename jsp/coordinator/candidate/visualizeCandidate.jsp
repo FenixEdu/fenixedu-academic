@@ -4,6 +4,7 @@
   <tiles:put name="serviceName" value="Portal de Coordenador" />
   <tiles:put name="navLocal" value="/coordinator/candidate/candidateMenu.jsp" />
   <tiles:put name="navGeral" value="/coordinator/commonNavGeralCoordinator.jsp" />
+  <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/coordinator/candidate/visualizeCandidate_bd.jsp" />
   <tiles:put name="footer" value="/coordinator/copyrightDefault.jsp" />
 </tiles:insert>

@@ -4,6 +4,7 @@
   <tiles:put name="serviceName" value="&Aacute;rea Pessoal" />
   <tiles:put name="navGeral" value="" />
   <tiles:put name="navLocal" value="" />
+  <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/person/error_bd.jsp" />
   <tiles:put name="footer" value="/person/commonFooter.jsp" />
 </tiles:insert>

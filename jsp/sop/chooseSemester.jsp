@@ -4,6 +4,7 @@
   <tiles:put name="serviceName" value="SOP - Serviço de Organização Pedagógica" />
   <tiles:put name="navGeral" value="/sop/commonNavGeralSop.jsp" />
   <tiles:put name="navLocal" value="/sop/commonNavLocalSalasSop.jsp" />
+  <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/sop/chooseSemester_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
 </tiles:insert>
