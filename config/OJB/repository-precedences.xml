@@ -13,6 +13,7 @@
 <class-descriptor class="Dominio.Restriction">
     <extent-class class-ref="Dominio.CurricularCourseDoneRestriction" />
     <extent-class class-ref="Dominio.NumberOfCurricularCourseDoneRestriction" />
+    <extent-class class-ref="Dominio.RestrictionEnrolmentInCurricularCourse" />    
 </class-descriptor>
 
 <class-descriptor class="Dominio.CurricularCourseDoneRestriction" table="RESTRICTION">
@@ -36,4 +37,17 @@
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
 	<field-descriptor name="numberOfCurricularCourseDone" column="NUMBER_OF_CURRICULAR_COURSE_DONE" jdbc-type="INTEGER" nullable="false"/>
+</class-descriptor>
+
+<class-descriptor class="Dominio.RestrictionEnrolmentInCurricularCourse" table="RESTRICTION">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+    <reference-descriptor name="precedence" class-ref="Dominio.Precedence" proxy="true">
+	    <foreignkey field-ref="keyPrecedence"/>
+    </reference-descriptor>
+	<field-descriptor name="keyCurricularCourseAlreadyEnroled" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    <reference-descriptor name="curricularCourseAlreadyEnroled" class-ref="Dominio.CurricularCourse">
+	    <foreignkey field-ref="keyCurricularCourseEnrolled"/>
+    </reference-descriptor>
 </class-descriptor>
