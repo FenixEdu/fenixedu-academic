@@ -334,6 +334,7 @@
       	      name="createGuideForm"
 		      path="/createGuideDispatchAction"
 		      parameter="method"
+		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
               validate="true">
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 

@@ -12,11 +12,19 @@
   <body>
    <span class="error"><html:errors/></span>
      <bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="session" />
+	<h2><bean:message key="label.masterDegree.administrativeOffice.guideCreationSuccess" /></h2>
    <table>
    <tr>
-   	<td>Ano da guia</td><td> <bean:write name="guide" property="year"/></td>
-    <td>numero da guia</td> <td><bean:write name="guide" property="number"/></td>
+   	<td><bean:message key="label.masterDegree.administrativeOffice.guideNumber" /></td> <td><bean:write name="guide" property="number"/></td>
    </tr>
+   <tr>
+    <td><bean:message key="label.masterDegree.administrativeOffice.guideYear" /></td> <td><bean:write name="guide" property="year"/></td>
+   </tr>
+   <tr>
+    <td><bean:message key="label.masterDegree.administrativeOffice.guideTotal" /></td> <td><bean:write name="guide" property="total"/>&nbsp;
+    	<bean:message key="label.currencySymbol" /></td>
+   </tr>
+   
    
    </table>
    
