@@ -69,7 +69,7 @@ public class DeleteSection implements IServico {
 							fatherSection,
 							fatherSectionName);
 				}
-				inferiorSections = fatherSection.getInferiorSections();
+				//inferiorSections = fatherSection.getInferiorSections();
 			} else {
 				inferiorSections = sp.getIPersistentSection().readBySite(site);
 			}
@@ -124,8 +124,8 @@ public class DeleteSection implements IServico {
 				Iterator iter = fatherSectionsList.iterator();
 				while (iter.hasNext()) {
 					ISection fatherSection = (ISection) iter.next();
-					sonSectionsList.addAll(fatherSection.getInferiorSections());
-					itemsList = fatherSection.getItems();
+				//	sonSectionsList.addAll(fatherSection.getInferiorSections());
+				//	itemsList = fatherSection.getItems();
 					Iterator iterItens = itemsList.iterator();
 					while (iterItens.hasNext()) {
 						IItem item = (IItem) iterItens.next();

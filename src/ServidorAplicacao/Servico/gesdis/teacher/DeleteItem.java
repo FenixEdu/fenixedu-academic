@@ -65,9 +65,9 @@ public class DeleteItem implements IServico {
 			
 			persistentItem.delete(deletedItem);
 			
-			List itemsList =null;
+			List itemsList = null;
 			
-			itemsList = section.getItems();
+			itemsList = persistentItem.readAllItemsBySection(section);
 			
 			Iterator iterItems = itemsList.iterator();
 			

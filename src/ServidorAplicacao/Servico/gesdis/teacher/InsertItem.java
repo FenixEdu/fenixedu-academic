@@ -62,7 +62,7 @@ public class InsertItem implements IServico {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();	
 			persistentItem = persistentSuport.getIPersistentItem();
 		
-			List itemsList = section.getItems();
+			List itemsList = persistentItem.readAllItemsBySection(section);
 	
 			if (itemsList!= null) {
 			
