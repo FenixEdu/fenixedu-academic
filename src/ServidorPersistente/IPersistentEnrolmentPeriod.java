@@ -2,7 +2,7 @@
  * Created on 28/Abr/2003 by jpvl
  *
  */
-package ServidorPersistente.OJB;
+package ServidorPersistente;
 
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolmentPeriod;

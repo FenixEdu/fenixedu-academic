@@ -13,6 +13,7 @@ import Dominio.EnrolmentPeriod;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolmentPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrolmentPeriod;
 
 /**
  * @author jpvl

@@ -1,5 +1,7 @@
 package ServidorPersistente.OJB;
 
+import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+
 
 /**
  * @author dcs-rjao

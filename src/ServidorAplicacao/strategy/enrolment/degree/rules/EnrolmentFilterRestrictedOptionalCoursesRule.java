@@ -13,8 +13,8 @@ import Dominio.IPossibleCurricularCourseForOptionalCurricularCourse;
 import Dominio.PossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**

@@ -6,9 +6,6 @@
 
 package ServidorPersistente;
 
-import ServidorPersistente.OJB.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
-import ServidorPersistente.OJB.IPersistentEnrolmentPeriod;
-
 
 /**
  *

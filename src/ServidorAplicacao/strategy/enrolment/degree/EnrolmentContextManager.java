@@ -36,9 +36,9 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.IPersistentEnrolmentPeriod;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentState;
 

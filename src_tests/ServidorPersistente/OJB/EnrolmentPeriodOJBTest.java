@@ -19,6 +19,7 @@ import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import Util.TipoCurso;
 
