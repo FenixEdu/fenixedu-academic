@@ -21,6 +21,7 @@
             <tr>
                 <td>
 					<div class="gen-button">
+						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 						<html:link page="<%= "/announcementManagementAction.do?method=prepareCreateAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
 							<bean:message key="label.insertAnnouncement" />
 						</html:link></div>
@@ -46,10 +47,10 @@
                     <td>
 						<div class="gen-button">
 							<bean:define id="announcementCode" name="announcement" property="idInternal" />
+							<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 							<html:link page="<%= "/announcementManagementAction.do?method=prepareEditAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>">
 								<bean:message key="button.edit" /> 
-							</html:link></div>
-						<div class="gen-button">
+							</html:link>&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 							<html:link page="<%= "/announcementManagementAction.do?method=deleteAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>" onclick="return confirm('Tem a certeza que deseja apagar este anúncio?')">
 								<bean:message key="button.delete" />
 							</html:link></div>
