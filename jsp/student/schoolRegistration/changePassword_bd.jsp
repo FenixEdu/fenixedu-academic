@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
    <h2><p align="center">Por razões de segurança mude a sua password</p></h2>
 	<p align="center">
    		<font color='#FF0000'><strong>
@@ -12,7 +13,8 @@
 	<span class="error"><html:errors property="newPassword"/></span></p>
 
    <table align="center">
-    <html:form action="/VisualizeFistTimeStudentPersonalInfoAction">
+    <html:form action="/viewPersonalInfo?method=visualizeFirstTimeStudentPersonalInfoAction">
+    <html:hidden property="page" value="1"/>
        <!-- Old Password -->
        <tr>
          <td><bean:message key="label.candidate.oldPassword" bundle="DEFAULT"/>:</td>

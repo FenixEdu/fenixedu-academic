@@ -13,7 +13,7 @@
 	<td>Sim</td> 
 	<td>Não</td>
 </tr>
-<html:form action="/schoolRegistration">
+<html:form action="/enrollStudent?method=enrollStudent">
 
 <tr>
 	<td><bean:message key="label.schoolRegistration.Question1" bundle="STUDENT_RESOURCES"/></td>

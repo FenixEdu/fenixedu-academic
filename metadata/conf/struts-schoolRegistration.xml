@@ -12,6 +12,9 @@
 	  <form-bean name="schoolRegistrationForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
+                 
+         <form-property name="page" type="java.lang.Integer"/>
+         
         <form-property name="oldPassword" type="java.lang.String" />
         <form-property name="newPassword" type="java.lang.String" />
         <form-property name="reTypeNewPassword" type="java.lang.String" />
@@ -83,28 +86,52 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
     
-    <action path="/showStudentInquiry" name="schoolRegistrationForm" 
-    		forward="definition.schoolRegistration.inquiry"/>
-    		
     
     <!-- ********************* SCHOOL REGISTRATION ********************* -->
-      <action path="/index" 
-    		forward="definition.schoolRegistration.changePassword"/>
-      
-      
-		<action path="/VisualizeFistTimeStudentPersonalInfoAction"
-			name="schoolRegistrationForm"
-            input="/index.do"
-      	    type="ServidorApresentacao.Action.student.schoolRegistration.VisualizeFirstTimeStudentPersonalInfoAction"
+     <action path="/index" 
+    		forward="definition.schoolRegistration.showSchoolRegistrationInstructions"/>
+    
+    	<action path="/changePassword"
+    		name="schoolRegistrationForm"
+   		 	input="/index.do"
+   			parameter="method"
+   			validate="true"
+   			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
       	    >
-      	  	<forward name="Success" path="definition.schoolRegistration.personalInfo"/>      	      
+      	    <forward name="beginTransaction" path="/index.do" />
+      	    <forward name="changePassword" path="definition.schoolRegistration.changePassword" />
       	</action>
-		
-		<action path="/schoolRegistration"
+
+		<action path="/viewPersonalInfo"
 			name="schoolRegistrationForm"
-			type="ServidorApresentacao.Action.student.schoolRegistration.EnrollAction"
-			input="/VisualizeFistTimeStudentPersonalInfoAction.do"
+            parameter="method"
+            input="/changePassword.do?method=start&amp;page=0"
+            validate="true"
+      	    type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+      	    >
+      		<forward name="beginTransaction" path="/index.do" />
+      	  	<forward name="Success" path="definition.schoolRegistration.personalInfo" />      	      
+      	</action>
+
+		<action path="/showStudentInquiry"
+			parameter="method"
+			name="schoolRegistrationForm"
+			validate="true"
+			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			input="/viewPersonalInfo.do?method=visualizeFirstTimeStudentPersonalInfoAction&amp;page=0"
 			>
+			<forward name="beginTransaction" path="/index.do" />
+			<forward name="viewQuestions" path="definition.schoolRegistration.inquiry"/>
+		</action>
+		
+		<action path="/enrollStudent"
+			parameter="method"
+			name="schoolRegistrationForm"
+			validate="true"
+			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			input="/showStudentInquiry.do?method=viewInquiryQuestions&amp;page=0"
+			>
+			<forward name="beginTransaction" path="/index.do" />
 		</action>
     </action-mappings>
     

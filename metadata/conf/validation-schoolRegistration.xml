@@ -2,19 +2,103 @@
 <!-- @validation.doctype@ -->
 <form-validation>
   <formset>
-
    <form name="schoolRegistrationForm">
-      	<field property="oldPassword" depends="required">
-        	<arg0 key="label.candidate.oldPasswordError"/>
+  <!--  	<field property="oldPassword" depends="required" page="1">
+        	<arg0 key="label.candidate.oldPasswordError" />
       	</field>
 
-  		<field property="newPassword" depends="required,twoFields">
+  		<field property="newPassword" depends="required,twoFields" page="1">
 			<arg0 key="label.candidate.newPasswordError" />
             <var>
             	<var-name>secondProperty</var-name>
            		<var-value>reTypeNewPassword</var-value>
             </var>
         </field>
+        
+        <field property="DayOfEmissionDateOfDocumentId" depends="required" page="2">
+        	<arg0 key="label.person.identificationDocumentIssueDate" />
+        </field>
+        
+        <field property="MonthOfEmissionDateOfDocumentId" depends="required" page="2">
+        	<arg0 key="label.person.identificationDocumentIssueDate" />
+        </field>
+        
+        <field property="YearOfEmissionDateOfDocumentId" depends="required" page="2">
+        	<arg0 key="label.person.identificationDocumentIssueDate" />
+        </field>
+        
+        <field property="DayOfExpirationDateOfDocumentId" depends="required" page="2">
+        	<arg0 key="label.person.identificationDocumentExpirationDate" />
+        </field>
+        
+        <field property="MonthOfExpirationDateOfDocumentId" depends="required" page="2">
+        	<arg0 key="label.person.identificationDocumentExpirationDate" />
+        </field>
+        
+        <field property="YearOfExpirationDateOfDocumentId" depends="required" page="2">
+        	<arg0 key="label.person.identificationDocumentExpirationDate" />
+        </field>
+        
+        <field property="nameOfFather" depends="required" page="2">
+        	<arg0 key="label.person.fatherName" />
+        </field>
+        
+        <field property="nameOfMother" depends="required" page="2">
+        	<arg0 key="label.person.motherName" />
+        </field>
+        
+        <field property="parishOfBirth" depends="required" page="2">
+        	<arg0 key="label.person.birthPlaceParish" />
+        </field>
+        
+        <field property="districtSubvisionOfBirth" depends="required" page="2">
+        	<arg0 key="label.person.birthPlaceMunicipality" />
+        </field>
+        
+        <field property="districtOfBirth" depends="required" page="2">
+        	<arg0 key="label.person.birthPlaceDistrict" />
+        </field>
+        
+        <field property="address" depends="required" page="2">
+        	<arg0 key="label.person.address" />
+        </field>
+        
+        <field property="area" depends="required" page="2">
+        	<arg0 key="label.person.place" />
+        </field>
+        
+        <field property="PrimaryAreaCode" depends="required" page="2">
+        	<arg0 key="label.person.postCode" />
+        </field>
+        
+        <field property="areaOfAreaCode" depends="required" page="2">
+        	<arg0 key="label.person.areaOfPostCode" />
+        </field>
+        
+        <field property="parishOfResidence" depends="required" page="2">
+        	<arg0 key="label.person.addressParish" />
+        </field>
+        
+        <field property="districtSubdivisionOfResidence" depends="required" page="2">
+        	<arg0 key="label.person.addressMunicipality" />
+        </field>
+        
+        <field property="districtOfResidence" depends="required" page="2">
+        	<arg0 key="label.person.addressDistrict" />
+        </field>
+        
+        <field property="contributorNumber" depends="required" page="2">
+        	<arg0 key="label.person.contributorNumber" />
+        </field>
+        
+        <field property="occupation" depends="required" page="2">
+        	<arg0 key="label.person.occupation" />
+        </field>
+        
+        <field property="maritalStatus" depends="required" page="2">
+        	<arg0 key="label.person.maritalStatus" />
+        </field>-->
     </form>
+    
   </formset>
 </form-validation>

@@ -7,7 +7,33 @@
 <%@ page import="java.util.Date" %>
  <h2><bean:message key="label.person.title.personalConsult" /></h2>
  
-<html:form action="/showStudentInquiry">
+<p align="center">
+	<span class="error"><html:errors property="DayOfEmissionDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="MonthOfEmissionDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="YearOfEmissionDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="DayOfExpirationDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="MonthOfExpirationDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="YearOfExpirationDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="nameOfFather"/></span>
+	<span class="error"><html:errors property="nameOfMother" /></span>
+	<span class="error"><html:errors property="parishOfBirth"/></span>
+	<span class="error"><html:errors property="districtSubvisionOfBirth"/></span>
+	<span class="error"><html:errors property="districtOfBirth"/></span>
+	<span class="error"><html:errors property="address"/></span>
+	<span class="error"><html:errors property="area"/></span>
+	<span class="error"><html:errors property="PrimaryAreaCode"/></span>
+	<span class="error"><html:errors property="areaOfAreaCode"/></span>
+	<span class="error"><html:errors property="parishOfResidence"/></span>
+	<span class="error"><html:errors property="districtSubdivisionOfResidence"/></span>
+	<span class="error"><html:errors property="districtOfResidence"/></span>
+	<span class="error"><html:errors property="contributorNumber"/></span>
+	<span class="error"><html:errors property="occupation"/></span>
+	<span class="error"><html:errors property="maritalStatus"/></span>
+</p>
+
+
+<html:form action="/showStudentInquiry?method=viewInquiryQuestions">
+ <html:hidden property="page" value="2"/>
  <br/>
  <logic:present name="personalInfo">
  <bean:define id="infoPersonId" name="personalInfo" property="idInternal"/>
