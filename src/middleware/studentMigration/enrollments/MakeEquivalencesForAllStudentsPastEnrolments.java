@@ -18,6 +18,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.StudentCurricularPlanState;
+import Util.TipoCurso;
 
 /**
  * @author David Santos
@@ -66,12 +67,15 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				Iterator iterator = result.iterator();
 				while (iterator.hasNext()) {
 					student = (IStudent) iterator.next();
-	
-					fenixPersistentSuport.iniciarTransaccao();
-	
-					MakeEquivalencesForAllStudentsPastEnrolments.makeEquivalences(student, fenixPersistentSuport);
-	
-					fenixPersistentSuport.confirmarTransaccao();
+
+					if (student.getDegreeType().equals(TipoCurso.LICENCIATURA_OBJ))
+					{
+						fenixPersistentSuport.iniciarTransaccao();
+						
+						MakeEquivalencesForAllStudentsPastEnrolments.makeEquivalences(student, fenixPersistentSuport);
+						
+						fenixPersistentSuport.confirmarTransaccao();
+					}	
 				}
 			}
 		} catch (Throwable e) {
