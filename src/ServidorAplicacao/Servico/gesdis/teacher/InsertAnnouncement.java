@@ -118,7 +118,7 @@ public class InsertAnnouncement implements IServico {
 				new Announcement(
 					newAnnouncementTitle,
 					calendar.getTime(),
-					null,
+					calendar.getTime(),
 					newAnnouncementInformation,
 					site);
 			persistentAnnouncement.lockWrite(newAnnouncement);

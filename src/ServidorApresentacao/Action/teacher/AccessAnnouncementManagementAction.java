@@ -37,6 +37,9 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		GestorServicos manager = GestorServicos.manager();
 
 		List announcements = (List) manager.executar(userView, "ReadAnnouncements", args);
+		//remove old announcement list
+		session.removeAttribute("Announcements");
+		//put new announcement list
 		session.setAttribute("Announcements", announcements);
 		
 		return mapping.findForward("AnnouncementManagement");

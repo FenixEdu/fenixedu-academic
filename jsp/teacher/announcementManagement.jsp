@@ -12,13 +12,14 @@
             <tr>
                 <td>
                     <br>
-					<html:link page="/announcementManagementAction.do?method=createAnnouncement">
+					<html:link page="/announcementManagementAction.do?method=prepareCreateAnnouncement">
 						<bean:message key="label.insertAnnouncement" />
 					</html:link>
                     &nbsp;&nbsp;
                     <br><br><hr>
                 </td>
             </tr>
+            <% int index = 0; %>
             <logic:iterate id="announcement" name="Announcements" scope="session" >
                 <tr>
                     <td>
@@ -41,16 +42,17 @@
             	</tr>
                 <tr>
                     <td>
-						<html:link page="/announcementManagementAction.do?method=prepareEditAnnouncement">
+						<html:link page="/announcementManagementAction.do?method=prepareEditAnnouncement" indexId="index" indexed="true">
 							<bean:message key="button.edit" />
 						</html:link>
-						<html:link page="/announcementManagementAction.do?method=deleteAnnouncement">
+						<html:link page="/announcementManagementAction.do?method=deleteAnnouncement" indexId="index" indexed="true">
 							<bean:message key="button.delete" />
 						</html:link>
 	                    &nbsp;&nbsp;
     	                <br><hr>
                     </td>
                 </tr>
+             <% index++; %>
             </logic:iterate>
         </tbody>
     </html:form>

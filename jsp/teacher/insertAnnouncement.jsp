@@ -5,7 +5,7 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/editAnnouncement" focus="title" >
+<html:form action="/announcementManagementAction" focus="title" >
 	<table border="0" >
         	<tr>
         		<td>
@@ -28,9 +28,10 @@
         </table>
 
 	<br>
-	<html:reset value="clean" styleClass="inputbutton"><bean:message key="label.clear"/>
+	<html:reset ><bean:message key="label.clear"/>
 	</html:reset>
-	<html:submit property="method" value="button.save" titleKey="button.save">
+	<html:hidden property="method" value="createAnnouncement" />
+	<html:submit> <bean:message key="button.save" />
 	</html:submit>    
 
 </html:form>

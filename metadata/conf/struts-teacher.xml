@@ -137,7 +137,7 @@
         path="/announcementManagementAction" 
         input="/announcementManagement.jsp"
 		validate="false">
-		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction"/>	            
+		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction.do"/>	            
 
         <forward name="showAnnouncements" path="/announcementManagement.jsp" />
         
@@ -155,7 +155,7 @@
         path="/editAnnouncement"
 		validate="false">
 
-		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction"/>	            
+		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction.do"/>	            
 	</action>
 
 	<!-- ExceptionHandling -->   
