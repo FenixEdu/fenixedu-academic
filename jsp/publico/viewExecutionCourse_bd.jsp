@@ -4,9 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
-<%@ page import="DataBeans.InfoLesson"%>
+
 <%@ page import="java.util.Calendar" %>
 <logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <table align="center"  cellpadding='0' cellspacing='0'>
@@ -18,20 +16,6 @@
 		</table>
 </logic:notPresent>
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
-	<logic:present name="publico.infoCurricularCourses" scope="session">
-			<table align="center" cellpadding="2" width="90%">
-			<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
-				<tr class="timeTable_line" >
-					<td class="degreetablestd">
-							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>-
-							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-					</td>					
-				</tr>
-				</logic:iterate>
-			</table>	
-			<br/>	
-			<br/>		
-	</logic:present>	
  	<logic:present name="<%= SessionConstants.INFO_SITE %>" property="initialStatement">
 	<table align="center" cellspacing="0" width="90%">
         <tr>

@@ -29,6 +29,7 @@
     <td id="principal" bgcolor="#FFFFFF">
       <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324 height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
 	  <h4><tiles:getAsString name="institutionName" ignore="true"/></h4>
+	  		<tiles:insert attribute="degrees" ignore="true" />	
       <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
       <br />
 	  <tiles:insert attribute="body" ignore="true"/>      
