@@ -107,7 +107,7 @@ public class CreateExecutionPeriod implements IServico {
 				executionPeriodToCreate.setSemester(
 					infoExecutionPeriodOfWorkingArea.getSemester());
 				executionPeriodToCreate.setState(
-					new PeriodState(PeriodState.OPEN));
+					new PeriodState(PeriodState.NOT_OPEN));
 				executionPeriodToCreate.setBeginDate(Calendar.getInstance().getTime());
 				executionPeriodToCreate.setEndDate(Calendar.getInstance().getTime());
 
