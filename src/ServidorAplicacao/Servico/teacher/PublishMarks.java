@@ -102,26 +102,24 @@ public class PublishMarks implements IService
                     mark.setPublishedMark(mark.getMark());
                     if (sendSMS != null && sendSMS.booleanValue())
                     {
-                	if (mark.getAttend().getAluno().getPerson().getTelemovel () != null)
+                	if (mark.getAttend().getAluno().getPerson().getTelemovel () != null || mark.getAttend().getAluno().getPerson().getTelemovel ().length() == 9 )
 					{
 						String StringDestinationNumber = mark.getAttend().getAluno().getPerson().getTelemovel();
+						
 						if (StringDestinationNumber.startsWith("96") || StringDestinationNumber.startsWith("91")||StringDestinationNumber.startsWith("93"))
 						{
+
 						  try
 						  { 
-							  SmsUtil.getInstance().sendSmsWithoutDeliveryReports(Integer.valueOf (StringDestinationNumber), evaluation.getPublishmentMessage() +" "+ mark.getMark());
+							 SmsUtil.getInstance().sendSmsWithoutDeliveryReports(Integer.valueOf (StringDestinationNumber), evaluation.getPublishmentMessage() +" "+ mark.getMark());
 						  }
 						  catch (FenixUtilException e1)
 						  {
+						
 							  throw new SmsNotSentServiceException("error.person.sendSms");
 						  }
 
                     	}
-						else
-						{
-							throw new FenixServiceException("error.impossiblePublishMarks");
-						}
-					
                     }
                 }
             }
