@@ -8,10 +8,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.InfoCurriculum;
+import DataBeans.InfoCurriculumWithInfoCurricularCourse;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.util.Cloner;
+import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
@@ -23,10 +24,10 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurriculum;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -124,9 +125,11 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
             IPersistentExecutionCourse persistentExecutionCourse,
             List activeCurricularCourseScopes, List associatedExecutionCourses)
             throws ExcepcaoPersistencia {
-        InfoCurriculum infoCurriculum;
-        infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-        infoCurriculum.setIdInternal(curriculum.getIdInternal());
+        
+        //CLONER
+        InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
+        //InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+        //infoCurriculum.setIdInternal(curriculum.getIdInternal());
 
         List scopes = new ArrayList();
 
@@ -134,9 +137,13 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
                 new Transformer() {
                     public Object transform(Object arg0) {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                        InfoCurricularCourseScope infoCurricularCourseScope = Cloner
-                                .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-                        return infoCurricularCourseScope;
+                        
+                        //CLONER
+                        return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+                        .newInfoFromDomain(curricularCourseScope);
+                        //return Cloner
+                        //        .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                        
                     }
                 }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
@@ -147,8 +154,12 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
         while (iterExecutionCourses.hasNext()) {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses
                     .next();
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            
+            //CLONER
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(executionCourse);
+            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+            //        .get(executionCourse);
             infoExecutionCourse.setHasSite(persistentExecutionCourse
                     .readSite(executionCourse.getIdInternal()));
             infoExecutionCourses.add(infoExecutionCourse);

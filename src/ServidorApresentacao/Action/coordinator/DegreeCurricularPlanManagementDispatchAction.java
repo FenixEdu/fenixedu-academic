@@ -77,33 +77,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			}
 		}
 
-		//        if (infoDegreeCurricularPlan == null)
-		//        {
-		//            errors.add(
-		//                "noDegreeCurricularPlan",
-		//                new ActionError("error.coordinator.noDegreeCurricularPlan"));
-		//            saveErrors(request, errors);
-		//        }
-		//		//order list by year, next semester, next course
-		//		if (infoDegreeCurricularPlan.getCurricularCourses() != null)
-		//		{
-		//			List allActiveCurricularCourseScopes = new ArrayList();
-		//			Iterator iter = infoDegreeCurricularPlan.getCurricularCourses().iterator();
-		//			while (iter.hasNext())
-		//			{
-		//				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
-		//				allActiveCurricularCourseScopes.addAll(infoCurricularCourse.getInfoScopes());
-		//			}
-		//			ComparatorChain comparatorChain = new ComparatorChain();
-		//			comparatorChain.addComparator(
-		//				new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-		//			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-		//			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-		//			Collections.sort(allActiveCurricularCourseScopes, comparatorChain);
-		//
-		//			request.setAttribute("allActiveCurricularCourseScopes", allActiveCurricularCourseScopes);
-		//		}
-
 		if (activeCurricularCourseScopes == null || activeCurricularCourseScopes.size() == 0)
 		{
 			errors.add(

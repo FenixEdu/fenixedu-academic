@@ -81,17 +81,17 @@ public class EditCurriculumForCurricularCourse implements IServico {
                 throw new NonExistingServiceException("noPerson");
             }
 
+            
             ICurriculum oldCurriculum = (ICurriculum) persistentCurriculum
-                    .readByOID(Curriculum.class, oldCurriculumId, true);
+                    .readByOID(Curriculum.class, oldCurriculumId);
             if (oldCurriculum == null) {
                 oldCurriculum = new Curriculum();
-
-                persistentCurriculum.simpleLockWrite(oldCurriculum);
 
                 oldCurriculum.setCurricularCourse(curricularCourse);
                 Calendar today = Calendar.getInstance();
                 oldCurriculum.setLastModificationDate(today.getTime());
             }
+            persistentCurriculum.simpleLockWrite(oldCurriculum);
 
             IExecutionYear currentExecutionYear = persistentExecutionYear
                     .readCurrentExecutionYear();
