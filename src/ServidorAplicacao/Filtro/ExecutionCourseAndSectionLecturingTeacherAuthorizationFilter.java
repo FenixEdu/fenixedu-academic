@@ -116,11 +116,11 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
             return false;
         }
 
-        if (section == null)
+        if (section == null) {
             return false;
-        else
-            return section.getSite().getExecutionCourse().equals(
-                    executionCourse);
+        }
+
+        return section.getSite().getExecutionCourse().equals(executionCourse);
     }
 
     /**

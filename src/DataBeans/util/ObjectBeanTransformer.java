@@ -15,21 +15,20 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public abstract class ObjectBeanTransformer implements Transformer
-{
+public abstract class ObjectBeanTransformer implements Transformer {
 
     protected Class fromClass;
+
     protected Class toClass;
 
     protected FastHashMap processedObjectsMap = null;
 
     /**
-     * 
+     *  
      */
-    public ObjectBeanTransformer(Class toClass, Class fromClass)
-    {
+    public ObjectBeanTransformer(Class toClass, Class fromClass) {
         super();
         processedObjectsMap = new FastHashMap();
         processedObjectsMap.setFast(true);
@@ -38,52 +37,37 @@ public abstract class ObjectBeanTransformer implements Transformer
         this.toClass = toClass;
     }
 
-    public Object transform(Object arg0)
-    {
-        if (Beans.isInstanceOf(arg0, fromClass))
-        {
+    public Object transform(Object arg0) {
+        if (Beans.isInstanceOf(arg0, fromClass)) {
             Object destinationObject = destinationObjectConstructor(arg0);
 
             indicateProcessed(arg0, destinationObject);
 
-            try
-            {
+            try {
                 Method[] methods = arg0.getClass().getDeclaredMethods();
-                for (int i = 0; i < methods.length; i++)
-                {
-                    if (methods[i].getName().startsWith("get"))
-                    {
+                for (int i = 0; i < methods.length; i++) {
+                    if (methods[i].getName().startsWith("get")) {
                         Object value = methods[i].invoke(arg0, new Object[0]);
 
-                        if (value != null)
-                        {
+                        if (value != null) {
 
                             Object transformedValue = null;
-                            if (value instanceof List)
-                            {
+                            if (value instanceof List) {
                                 transformedValue = copyObject(value);
-                                copyProperty(
-                                    destinationObject,
-                                    methods[i],
-                                    List.class,
-                                    transformedValue);
-                            } else if (Beans.isInstanceOf(value, fromClass))
-                            {
-                                if (alreadyProcessed(value))
-                                {
+                                copyProperty(destinationObject, methods[i],
+                                        List.class, transformedValue);
+                            } else if (Beans.isInstanceOf(value, fromClass)) {
+                                if (alreadyProcessed(value)) {
                                     transformedValue = retrieveProcessedElement(value);
-                                } else
-                                {
+                                } else {
                                     transformedValue = copyObject(value);
                                 }
-                                copyProperty(
-                                    destinationObject,
-                                    methods[i],
-                                    transformedValue.getClass(),
-                                    transformedValue);
-                            } else
-                            {
-                                copyProperty(destinationObject, methods[i], value.getClass(), value);
+                                copyProperty(destinationObject, methods[i],
+                                        transformedValue.getClass(),
+                                        transformedValue);
+                            } else {
+                                copyProperty(destinationObject, methods[i],
+                                        value.getClass(), value);
                             }
                         }
 
@@ -91,15 +75,13 @@ public abstract class ObjectBeanTransformer implements Transformer
                 }
 
                 return destinationObject;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
-        } else
-        {
-            return arg0;
         }
+        return arg0;
+
     }
 
     /**
@@ -112,8 +94,7 @@ public abstract class ObjectBeanTransformer implements Transformer
      * @param object
      * @return
      */
-    protected Object retrieveProcessedElement(Object fromObject)
-    {
+    protected Object retrieveProcessedElement(Object fromObject) {
         return processedObjectsMap.get(getHashKey(fromObject));
     }
 
@@ -121,16 +102,14 @@ public abstract class ObjectBeanTransformer implements Transformer
      * @param object
      * @return
      */
-    protected boolean alreadyProcessed(Object fromObject)
-    {
+    protected boolean alreadyProcessed(Object fromObject) {
         return processedObjectsMap.containsKey(getHashKey(fromObject));
     }
 
     /**
      * @param object
      */
-    protected void indicateProcessed(Object fromObject, Object toObject)
-    {
+    protected void indicateProcessed(Object fromObject, Object toObject) {
         processedObjectsMap.put(getHashKey(fromObject), toObject);
     }
 
@@ -140,16 +119,14 @@ public abstract class ObjectBeanTransformer implements Transformer
      * @param class1
      * @param value
      */
-    protected void copyProperty(Object bean, Method method, Class class1, Object value)
-        throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException
-    {
+    protected void copyProperty(Object bean, Method method, Class class1,
+            Object value) throws IllegalArgumentException, SecurityException,
+            IllegalAccessException, InvocationTargetException {
         Class[] argTypes = { class1 };
         Object[] setArgs = { value };
-        try
-        {
+        try {
             invokeSetMethod(bean, method, argTypes, setArgs);
-        } catch (NoSuchMethodException ex)
-        {
+        } catch (NoSuchMethodException ex) {
         }
     }
 
@@ -159,45 +136,33 @@ public abstract class ObjectBeanTransformer implements Transformer
      * @param argTypes
      * @param setArgs
      */
-    protected void invokeSetMethod(Object bean, Method method, Class[] argTypes, Object[] setArgs)
-        throws
-            IllegalArgumentException,
-            SecurityException,
-            IllegalAccessException,
-            InvocationTargetException,
-            NoSuchMethodException
-    {
-        bean.getClass().getMethod(method.getName().replaceFirst("get", "set"), argTypes).invoke(
-            bean,
-            setArgs);
+    protected void invokeSetMethod(Object bean, Method method,
+            Class[] argTypes, Object[] setArgs)
+            throws IllegalArgumentException, SecurityException,
+            IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException {
+        bean.getClass().getMethod(method.getName().replaceFirst("get", "set"),
+                argTypes).invoke(bean, setArgs);
     }
 
-    public Object copyObject(Object result)
-    {
-        if (result instanceof List)
-        {
+    public Object copyObject(Object result) {
+        if (result instanceof List) {
             return CollectionUtils.collect((List) result, this);
-        } else
-        {
-            return transform(result);
         }
+        return transform(result);
+
     }
 
     protected abstract Object destinationObjectConstructor(Object fromObject);
 
-    protected Object objectConstructor(String classToCreate)
-    {
-        try
-        {
+    protected Object objectConstructor(String classToCreate) {
+        try {
             return Class.forName(classToCreate).newInstance();
-        } catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (InstantiationException e)
-        {
+        } catch (InstantiationException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;

@@ -156,14 +156,12 @@ public class InfoAnnouncement extends InfoObject implements Comparable,
     public int compareTo(Object arg0) {
         if (getYoungerDate().after(((InfoAnnouncement) arg0).getYoungerDate())) {
             return -1;
-        } else {
-            if (getYoungerDate().before(
-                    ((InfoAnnouncement) arg0).getYoungerDate())) {
-                return 1;
-            } else {
-                return 0;
-            }
         }
+        if (getYoungerDate().before(((InfoAnnouncement) arg0).getYoungerDate())) {
+            return 1;
+        }
+        return 0;
+
     }
 
     public String getCreationDateFormatted() {
@@ -185,9 +183,8 @@ public class InfoAnnouncement extends InfoObject implements Comparable,
         if (getLastModifiedDate() != null
                 && getLastModifiedDate().after(getCreationDate())) {
             return getLastModifiedDate();
-        } else {
-            return getCreationDate();
         }
+        return getCreationDate();
 
     }
 

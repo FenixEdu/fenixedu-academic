@@ -66,27 +66,32 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             verifySerializable = Boolean.FALSE;
             try {
                 // load the properties file from the classpath root
-                InputStream inputStream = getClass().getResourceAsStream("/serialization_verifier.properties");
+                InputStream inputStream = getClass().getResourceAsStream(
+                        "/serialization_verifier.properties");
 
                 if (inputStream != null) {
                     serProps = new Properties();
                     serProps.load(inputStream);
-                    String propSerVerify = serProps.getProperty("verify_serializable");
+                    String propSerVerify = serProps
+                            .getProperty("verify_serializable");
                     if (propSerVerify != null) {
-                            propSerVerify = propSerVerify.trim();
+                        propSerVerify = propSerVerify.trim();
                     }
                     if ("true".equalsIgnoreCase(propSerVerify)
                             || "1".equalsIgnoreCase(propSerVerify)
                             || "on".equalsIgnoreCase(propSerVerify)
                             || "yes".equalsIgnoreCase(propSerVerify)) {
-                            verifySerializable = Boolean.TRUE;
-                            System.out.println("Serialization verification is turned on.");
+                        verifySerializable = Boolean.TRUE;
+                        System.out
+                                .println("Serialization verification is turned on.");
                     } else {
-                        System.out.println("Serialization verification is turned off.");
+                        System.out
+                                .println("Serialization verification is turned off.");
                     }
                 }
             } catch (java.io.IOException ex) {
-                System.out.println("Couldn't load serialization_verifier.properties file!");
+                System.out
+                        .println("Couldn't load serialization_verifier.properties file!");
             }
         }
     }
@@ -124,7 +129,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             try {
                 Calendar serviceStartTime = null;
                 Calendar serviceEndTime = null;
-                
+
                 IServiceManager manager = ServiceManager.getInstance();
                 if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                     serviceStartTime = Calendar.getInstance();
@@ -152,32 +157,30 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 if (ex.getServiceThrownException() instanceof FenixServiceException) {
                     throw (FenixServiceException) ex
                             .getServiceThrownException();
-                } else {
-                    throw ex;
                 }
+                throw ex;
 
             } catch (ExecutedFilterException ex) {
                 if (ex.getCause() instanceof FenixServiceException) {
                     System.out.println("ExecutedFilterException= "
                             + ex.getCause().getClass().getName());
                     throw (FenixServiceException) ex.getCause();
-                } else {
-                    throw ex;
                 }
+                throw ex;
+
             } catch (FilterChainFailedException ex) {
                 if (ex.getCause() instanceof FenixServiceException) {
                     System.out.println("FilterChainFailedException= "
                             + ex.getCause().getClass().getName());
                     throw (FenixServiceException) ex.getCause();
-                } else {
-                    //TODO: What's wrong with berserk?? It isn't throwing
-                    // correct exception
-                    System.out.println("else= " + ex.getClass().getName());
-                    throw new NotAuthorizedException();
                 }
+                //TODO: What's wrong with berserk?? It isn't throwing
+                // correct exception
+                System.out.println("else= " + ex.getClass().getName());
+                throw new NotAuthorizedException();
+
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Exception= " + e.getClass().getName());
             throw (EJBException) new EJBException(e).initCause(e);
         }
@@ -192,26 +195,31 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 oos.writeObject(serviceResult);
                 oos.flush();
             } catch (Exception e) {
-                System.out.println("Executing service= " + service + "." + method + "()");
+                System.out.println("Executing service= " + service + "."
+                        + method + "()");
                 System.out.println("Problem serializing service result!");
                 if (serviceResult != null) {
-                    System.out.println(serviceResult.getClass().getName() + " is not serializable.");
+                    System.out.println(serviceResult.getClass().getName()
+                            + " is not serializable.");
                 }
                 //e.printStackTrace();
             } finally {
-                if (oos != null) try {
-                    oos.close();
-                } catch (Exception ignored) {
-                    // ignore exception
+                if (oos != null)
+                    try {
+                        oos.close();
+                    } catch (Exception ignored) {
+                        // ignore exception
                     }
-                if (baos != null) try {
-                    baos.close();
-                } catch (Exception ignored) {
-                    // ignore exception
+                if (baos != null)
+                    try {
+                        baos.close();
+                    } catch (Exception ignored) {
+                        // ignore exception
                     }
             }
         } catch (IOException e1) {
-            System.out.println("IOException while verifying service result serialization.");
+            System.out
+                    .println("IOException while verifying service result serialization.");
         }
     }
 

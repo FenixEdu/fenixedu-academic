@@ -107,9 +107,8 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends
         }
         if (responsibleFor == null) {
             return false;
-        } else {
-            return true;
         }
+        return true;
 
     }
 

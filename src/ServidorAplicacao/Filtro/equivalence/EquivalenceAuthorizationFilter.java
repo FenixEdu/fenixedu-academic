@@ -59,7 +59,7 @@ public class EquivalenceAuthorizationFilter extends Filtro
 		return result;
 	}
 
-	private Collection getNeededRoles()
+	protected Collection getNeededRoles()
 	{
 		List roles = new ArrayList();
 

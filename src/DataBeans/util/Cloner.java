@@ -1934,7 +1934,7 @@ public abstract class Cloner
         InfoExam infoExam = new InfoExam();
 
         copyObjectProperties(infoExam, exam);
-        List infoRooms = new ArrayList();
+       
         List infoCurricularCourseScope = new ArrayList();
         List infoRoomOccupation = new ArrayList();
         List infoExecutionCourse = new ArrayList();
@@ -3216,8 +3216,7 @@ public abstract class Cloner
         {
             return null;
         }
-        else
-        {
+        
 
             InfoFrequenta infoFrequenta = new InfoFrequenta();
 
@@ -3239,7 +3238,7 @@ public abstract class Cloner
             infoFrequenta.setInfoEnrolment(infoEnrolment);
 
             return infoFrequenta;
-        }
+        
     }
 
     /**

@@ -2,7 +2,6 @@ package DataBeans;
 
 import java.util.Date;
 
-import Dominio.Advisory;
 import Dominio.IAdvisory;
 
 /**
@@ -146,8 +145,5 @@ public class InfoAdvisory extends InfoObject {
         return infoAdvisory;
     }
     
-    public IAdvisory newDomainFromInfo() {
-        IAdvisory advisory = new Advisory();
-        return null;
-    }
+    
 }

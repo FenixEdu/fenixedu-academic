@@ -45,20 +45,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
         super();
     }
 
-    /**
-     * @param collection
-     * @return boolean
-     */
-    private boolean containsRole(Collection roles) {
-        CollectionUtils.intersection(roles, getNeededRoles());
-
-        if (roles.size() != 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -78,7 +64,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
     /**
      * @return The Needed Roles to Execute The Service
      */
-    private Collection getNeededRoles() {
+    protected Collection getNeededRoles() {
         List roles = new ArrayList();
 
         InfoRole infoRole = new InfoRole();

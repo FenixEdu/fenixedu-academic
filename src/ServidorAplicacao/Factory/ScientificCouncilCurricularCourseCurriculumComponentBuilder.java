@@ -45,10 +45,8 @@ public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
         if (component instanceof InfoSiteCurriculum) {
             return getInfoSiteCurriculum((InfoSiteCurriculum) component,
                     curricularCourseId);
-        } else {
-            System.out.println("dei bronca aqui");
-            return null;
         }
+        return null;
 
     }
 

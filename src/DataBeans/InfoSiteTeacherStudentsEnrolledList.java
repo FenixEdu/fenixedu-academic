@@ -9,87 +9,92 @@ import java.util.List;
 
 /**
  * @author João Mota
- *
+ *  
  */
-public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject implements ISiteComponent {
-	private List infoStudents;
-	private InfoExam infoExam;
-	private List infoExamStudentRoomList;
-	/**
-	 * 
-	 */
-	public InfoSiteTeacherStudentsEnrolledList() {
+public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject
+        implements ISiteComponent {
+    private List infoStudents;
 
-	}
-	public InfoSiteTeacherStudentsEnrolledList(List infoStudents,InfoExam infoExam, List infoExamStudentRoomList) {
-		setInfoExam(infoExam);
-		setInfoStudents(infoStudents);
-		setInfoExamStudentRoomList(infoExamStudentRoomList);
-	}
+    private InfoExam infoExam;
 
-	/**
-	 * @return
-	 */
-	public List getInfoExamStudentRoomList() {
-		return this.infoExamStudentRoomList;
-	}
+    private List infoExamStudentRoomList;
 
-	/**
-	 * @param infoExamStudentRoomList
-	 */
-	public void setInfoExamStudentRoomList(List infoExamStudentRoomList) {
-		this.infoExamStudentRoomList = infoExamStudentRoomList;
-	}
+    /**
+     *  
+     */
+    public InfoSiteTeacherStudentsEnrolledList() {
 
-	public int getSize() {
-		if (getInfoStudents() == null) {
-			return 0;
-		} else {
-			return getInfoStudents().size();
-		}
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoStudents() {
-		return infoStudents;
-	}
+    public InfoSiteTeacherStudentsEnrolledList(List infoStudents,
+            InfoExam infoExam, List infoExamStudentRoomList) {
+        setInfoExam(infoExam);
+        setInfoStudents(infoStudents);
+        setInfoExamStudentRoomList(infoExamStudentRoomList);
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoStudents(List list) {
-		infoStudents = list;
-	}
+    /**
+     * @return
+     */
+    public List getInfoExamStudentRoomList() {
+        return this.infoExamStudentRoomList;
+    }
 
-	public boolean equals(Object arg0) {
-		boolean result = false;
+    /**
+     * @param infoExamStudentRoomList
+     */
+    public void setInfoExamStudentRoomList(List infoExamStudentRoomList) {
+        this.infoExamStudentRoomList = infoExamStudentRoomList;
+    }
 
-		if (arg0 instanceof InfoSiteTeacherStudentsEnrolledList) {
-			InfoSiteTeacherStudentsEnrolledList component =
-				(InfoSiteTeacherStudentsEnrolledList) arg0;
-			result =
-				component.getInfoStudents().containsAll(this.getInfoStudents())
-					&& this.getInfoStudents().containsAll(
-						component.getInfoStudents());
-		}
+    public int getSize() {
+        if (getInfoStudents() == null) {
+            return 0;
+        }
+        return getInfoStudents().size();
 
-		return result;
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoExam getInfoExam() {
-		return infoExam;
-	}
+    /**
+     * @return
+     */
+    public List getInfoStudents() {
+        return infoStudents;
+    }
 
-	/**
-	 * @param exam
-	 */
-	public void setInfoExam(InfoExam exam) {
-		infoExam = exam;
-	}
+    /**
+     * @param list
+     */
+    public void setInfoStudents(List list) {
+        infoStudents = list;
+    }
+
+    public boolean equals(Object arg0) {
+        boolean result = false;
+
+        if (arg0 instanceof InfoSiteTeacherStudentsEnrolledList) {
+            InfoSiteTeacherStudentsEnrolledList component = (InfoSiteTeacherStudentsEnrolledList) arg0;
+            result = component.getInfoStudents().containsAll(
+                    this.getInfoStudents())
+                    && this.getInfoStudents().containsAll(
+                            component.getInfoStudents());
+        }
+
+        return result;
+    }
+
+    /**
+     * @return
+     */
+    public InfoExam getInfoExam() {
+        return infoExam;
+    }
+
+    /**
+     * @param exam
+     */
+    public void setInfoExam(InfoExam exam) {
+        infoExam = exam;
+    }
 
 }

@@ -462,12 +462,11 @@ public class MarcacaoPontoRelacional implements IMarcacaoPontoPersistente
                         {
                             continue;
                         }
-                        else
-                        {
+                       
                             marcacaoPonto.setEstado("regularizada");
                             marcacaoPonto.setSiglaUnidade("");
                             marcacaoPonto.setNumCartao(0);
-                        }
+                        
                     }
                     marcacoesPonto.add(marcacaoPonto);
                 }

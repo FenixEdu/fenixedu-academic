@@ -24,24 +24,6 @@ import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 public abstract class AuthorizationByManyRolesFilter extends Filtro
 {
 	/**
-	 * @param collection
-	 * @return boolean
-	 */
-	private boolean containsRole(Collection roles)
-	{
-		CollectionUtils.intersection(roles, getNeededRoles());
-
-		if (roles.size() != 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	/**
 	 * @return The Needed Roles to Execute The Service
 	 */
 	abstract protected Collection getNeededRoles();

@@ -20,9 +20,12 @@ import Util.Season;
 
 public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
 
-    protected Season season;    
+    protected Season season;
+
     protected String publishmentMessage;
+
     protected Integer enrolledStudents;
+
     private List infoExecutionCourses;
 
     /**
@@ -42,7 +45,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         this.setBeginning(beginning);
         this.setEnd(end);
         this.setSeason(season);
-       
+
     }
 
     public String toString() {
@@ -80,15 +83,13 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     /**
-    
-	 * @return
-	 */
-    public List getAssociatedRooms()
-    {
+     * 
+     * @return
+     */
+    public List getAssociatedRooms() {
         return (List) CollectionUtils.collect(super
                 .getAssociatedRoomOccupation(), new Transformer() {
 
-    
             public Object transform(Object arg0) {
                 InfoRoomOccupation roomOccupation = (InfoRoomOccupation) arg0;
                 return roomOccupation.getInfoRoom();
@@ -111,7 +112,9 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     public String getDate() {
-        if (getDay() == null) { return "0/0/0"; }
+        if (getDay() == null) {
+            return "0/0/0";
+        }
         String result = String.valueOf(getDay().get(Calendar.DAY_OF_MONTH));
         result += "/";
         result += String.valueOf(getDay().get(Calendar.MONTH) + 1);
@@ -121,7 +124,9 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     public String getBeginningHour() {
-        if (getBeginning() == null) { return "00:00"; }
+        if (getBeginning() == null) {
+            return "00:00";
+        }
         String result = format(String.valueOf(getBeginning().get(
                 Calendar.HOUR_OF_DAY)));
         result += ":";
@@ -130,7 +135,9 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     public String getEndHour() {
-        if (getEnd() == null) { return "00:00"; }
+        if (getEnd() == null) {
+            return "00:00";
+        }
         String result = format(String.valueOf(getEnd()
                 .get(Calendar.HOUR_OF_DAY)));
         result += ":";
@@ -208,7 +215,9 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     public boolean getEnrollmentAuthorization() {
-        if (getEnrollmentEndDay() == null) { return false; }
+        if (getEnrollmentEndDay() == null) {
+            return false;
+        }
         Calendar enrollmentEnd = Calendar.getInstance();
         enrollmentEnd.set(Calendar.DAY_OF_MONTH, getEnrollmentEndDay().get(
                 Calendar.DAY_OF_MONTH));
@@ -223,9 +232,9 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         Calendar now = Calendar.getInstance();
         if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     public boolean equals(Object obj) {
@@ -245,18 +254,22 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         }
         return result;
     }
+
     /**
      * @return Returns the infoExecutionCourses.
      */
     public List getInfoExecutionCourses() {
         return infoExecutionCourses;
     }
+
     /**
-     * @param infoExecutionCourses The infoExecutionCourses to set.
+     * @param infoExecutionCourses
+     *            The infoExecutionCourses to set.
      */
     public void setInfoExecutionCourses(List infoExecutionCourses) {
         this.infoExecutionCourses = infoExecutionCourses;
     }
+
     public void copyFromDomain(IExam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {

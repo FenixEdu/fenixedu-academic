@@ -309,10 +309,9 @@ public class DegreeCurricularPlan extends DomainObject implements
                 if (branch.getBranchType() == null) {
                     return branch.getName().equals("")
                             && branch.getCode().equals("");
-                } else {
-                    return branch.getBranchType().equals(
-                            BranchType.COMMON_BRANCH);
                 }
+                return branch.getBranchType().equals(BranchType.COMMON_BRANCH);
+
             }
         });
     }

@@ -118,7 +118,9 @@ public class FileSuport implements IFileSuport {
 
     public boolean isFileNameValid(FileSuportObject file) {
         String uri = "/files" + file.getUri() + "/" + file.getFileName();
-        if (uri.length() > 255) { return false; }
+        if (uri.length() > 255) {
+            return false;
+        }
         return true;
     }
 
@@ -139,7 +141,9 @@ public class FileSuport implements IFileSuport {
 
     public boolean isFileSizeAllowed(FileSuportObject file) {
         float size = file.getContent().length / (1024 * 1024);
-        if (size < (new Float(MAX_FILE_SIZE)).floatValue()) { return true; }
+        if (size < (new Float(MAX_FILE_SIZE)).floatValue()) {
+            return true;
+        }
         return false;
     }
 
@@ -250,18 +254,18 @@ public class FileSuport implements IFileSuport {
     private boolean isDirectory(ObjectNode objects) {
         if (objects instanceof SubjectNode && !isFile(objects)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     private boolean isFile(ObjectNode objectNode) {
         if (objectNode instanceof SubjectNode && !objectNode.hasChildren()
                 && hasRevisionContent(objectNode)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     /**
@@ -276,9 +280,9 @@ public class FileSuport implements IFileSuport {
                     revDescriptors);
             if (revDescriptor.getContentLength() > 0) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
+
         } catch (SlideException e) {
             return false;
         }
@@ -362,9 +366,9 @@ public class FileSuport implements IFileSuport {
             ObjectNode objectNode = structure.retrieve(getSlideToken(), path);
             if (objectNode == null) {
                 return false;
-            } else {
-                return true;
             }
+            return true;
+
         } catch (SlideException e) {
             return false;
         }
@@ -407,10 +411,9 @@ public class FileSuport implements IFileSuport {
             Enumeration links = objectNode.enumerateLinks();
             if (links.hasMoreElements()) {
                 return links.nextElement();
-            } else {
-                //	structure.createLink(getSlideToken())
-                return null;
             }
+            return null;
+
         } catch (SlideException e) {
             return null;
         }

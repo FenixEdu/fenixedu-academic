@@ -347,10 +347,9 @@ public class MakeCloner
                 }
                 return concrete;
             }
-            else
-            {
+           
                 return type;
-            }
+            
         }
 
         private String onlyClassName(String className)
@@ -595,10 +594,9 @@ public class MakeCloner
             {
                 return str;
             }
-            else
-            {
+           
                 return Character.toUpperCase(str.charAt(0)) + str.substring(1);
-            }
+            
         }
 
         private PropertyDescriptor getPropertyByType(PrintWriter out,
@@ -618,10 +616,9 @@ public class MakeCloner
                                 + prop.getName());
                         return null;
                     }
-                    else
-                    {
+                    
                         found = prop;
-                    }
+                    
                 }
             }
             return found;

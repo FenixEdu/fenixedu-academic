@@ -14,252 +14,264 @@ import fileSuport.INode;
  */
 public class Section extends DomainObject implements ISection {
 
-	
-	private String name;
-	private Integer sectionOrder;
-	private Date lastModifiedDate;
-	private ISite site;
-	private Integer keySite;
-	private ISection superiorSection;
-	private Integer keySuperiorSection;
-	
+    private String name;
 
-	/** 
-	 * Construtor
-	 */
-	public Section() {
-	}
+    private Integer sectionOrder;
 
-	/** 
-	 * Construtor
-	 */
-	public Section(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    private Date lastModifiedDate;
 
-	/** 
-	 * Construtor
-	 */
-	public Section(String name, ISite site, ISection superiorSection) {
+    private ISite site;
 
-		setName(name);
-		setSite(site);
-		setSuperiorSection(superiorSection);
+    private Integer keySite;
 
-	}
+    private ISection superiorSection;
 
-	/** 
-	 * Construtor
-	 */
-	public Section(
-		String name,
-		Integer sectionOrder,
-		Date lastModifiedDate,
-		ISite site,
-		ISection superiorSection,
-		List inferiorSections,
-		List items) {
+    private Integer keySuperiorSection;
 
-		setName(name);
-		setSectionOrder(sectionOrder);
-		setLastModifiedDate(lastModifiedDate);
-		setSite(site);
-		setSuperiorSection(superiorSection);
-		//		setInferiorSections(inferiorSections);
-		//		setItems(items);
-	}
+    /**
+     * Construtor
+     */
+    public Section() {
+    }
 
-	//	/**
-	//	 * @return List
-	//	 */
-	//	public List getInferiorSections() {
-	//		return inferiorSections;
-	//	}
+    /**
+     * Construtor
+     */
+    public Section(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	
+    /**
+     * Construtor
+     */
+    public Section(String name, ISite site, ISection superiorSection) {
 
-	//	/**
-	//	 * @return List
-	//	 */
-	//	public List getItems() {
-	//		return items;
-	//	}
+        setName(name);
+        setSite(site);
+        setSuperiorSection(superiorSection);
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeySite() {
-		return keySite;
-	}
+    }
 
-	/**
-	 * @return Date
-	 */
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
+    /**
+     * Construtor
+     */
+    public Section(String name, Integer sectionOrder, Date lastModifiedDate,
+            ISite site, ISection superiorSection, List inferiorSections,
+            List items) {
 
-	/**
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
+        setName(name);
+        setSectionOrder(sectionOrder);
+        setLastModifiedDate(lastModifiedDate);
+        setSite(site);
+        setSuperiorSection(superiorSection);
+        //		setInferiorSections(inferiorSections);
+        //		setItems(items);
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getSectionOrder() {
-		return sectionOrder;
-	}
+    //	/**
+    //	 * @return List
+    //	 */
+    //	public List getInferiorSections() {
+    //		return inferiorSections;
+    //	}
 
-	/**
-	 * @return ISite
-	 */
-	public ISite getSite() {
-		return site;
-	}
+    //	/**
+    //	 * @return List
+    //	 */
+    //	public List getItems() {
+    //		return items;
+    //	}
 
-	/**
-	 * @return ISection
-	 */
-	public ISection getSuperiorSection() {
-		return superiorSection;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getKeySite() {
+        return keySite;
+    }
 
-	//	/**
-	//	 * Sets the inferiorSections.
-	//	 * @param inferiorSections The inferiorSections to set
-	//	 */
-	//	public void setInferiorSections(List inferiorSections) {
-	//		this.inferiorSections = inferiorSections;
-	//	}
+    /**
+     * @return Date
+     */
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
-	
+    /**
+     * @return String
+     */
+    public String getName() {
+        return name;
+    }
 
-	//	/**
-	//	 * Sets the items.
-	//	 * @param items The items to set
-	//	 */
-	//	public void setItems(List items) {
-	//		this.items = items;
-	//	}
+    /**
+     * @return Integer
+     */
+    public Integer getSectionOrder() {
+        return sectionOrder;
+    }
 
-	/**
-	 * Sets the keySite.
-	 * @param keySite The keySite to set
-	 */
-	public void setKeySite(Integer keySite) {
-		this.keySite = keySite;
-	}
+    /**
+     * @return ISite
+     */
+    public ISite getSite() {
+        return site;
+    }
 
-	/**
-	 * Sets the lastModifiedDate.
-	 * @param lastModifiedDate The lastModifiedDate to set
-	 */
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
+    /**
+     * @return ISection
+     */
+    public ISection getSuperiorSection() {
+        return superiorSection;
+    }
 
-	/**
-	 * Sets the name.
-	 * @param name The name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    //	/**
+    //	 * Sets the inferiorSections.
+    //	 * @param inferiorSections The inferiorSections to set
+    //	 */
+    //	public void setInferiorSections(List inferiorSections) {
+    //		this.inferiorSections = inferiorSections;
+    //	}
 
-	/**
-	 * Sets the order.
-	 * @param order The order to set
-	 */
-	public void setSectionOrder(Integer order) {
-		this.sectionOrder = order;
-	}
+    //	/**
+    //	 * Sets the items.
+    //	 * @param items The items to set
+    //	 */
+    //	public void setItems(List items) {
+    //		this.items = items;
+    //	}
 
-	/**
-	 * Sets the site.
-	 * @param site The site to set
-	 */
-	public void setSite(ISite site) {
-		this.site = site;
-	}
+    /**
+     * Sets the keySite.
+     * 
+     * @param keySite
+     *            The keySite to set
+     */
+    public void setKeySite(Integer keySite) {
+        this.keySite = keySite;
+    }
 
-	/**
-	 * Sets the superiorSection.
-	 * @param superiorSection The superiorSection to set
-	 */
-	public void setSuperiorSection(ISection superiorSection) {
-		this.superiorSection = superiorSection;
-	}
+    /**
+     * Sets the lastModifiedDate.
+     * 
+     * @param lastModifiedDate
+     *            The lastModifiedDate to set
+     */
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof ISection) {
-			result =
-				(getName().equals(((ISection) arg0).getName()))
-					&& (getSite().equals(((ISection) arg0).getSite()))
-					&& ((getSuperiorSection() == null && ((ISection) arg0).getSuperiorSection() == null)
-						|| (getSuperiorSection().equals(((ISection) arg0).getSuperiorSection())));
-		}
-		return result;
-	}
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            The name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeySuperiorSection() {
-		return keySuperiorSection;
-	}
+    /**
+     * Sets the order.
+     * 
+     * @param order
+     *            The order to set
+     */
+    public void setSectionOrder(Integer order) {
+        this.sectionOrder = order;
+    }
 
-	/**
-	 * Sets the keySuperiorSection.
-	 * @param keySuperiorSection The keySuperiorSection to set
-	 */
-	public void setKeySuperiorSection(Integer keySuperiorSection) {
-		this.keySuperiorSection = keySuperiorSection;
-	}
+    /**
+     * Sets the site.
+     * 
+     * @param site
+     *            The site to set
+     */
+    public void setSite(ISite site) {
+        this.site = site;
+    }
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		String result = "[SECTION";
-		result += ", codInt=" + getIdInternal();
-		result += ", sectionOrder=" + getSectionOrder();
-		result += ", name=" + getName();
-		result += ", lastModifiedDate=" + getLastModifiedDate();
-		result += ", site=" + getSite();
-		result += ", superiorSection=" + getSuperiorSection();
-		//		result += ", inferiorSections=" + getInferiorSections();
-		//result += ", items=" + getItems();
-		result += "]";
+    /**
+     * Sets the superiorSection.
+     * 
+     * @param superiorSection
+     *            The superiorSection to set
+     */
+    public void setSuperiorSection(ISection superiorSection) {
+        this.superiorSection = superiorSection;
+    }
 
-		return result;
-	}
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object arg0) {
+        boolean result = false;
+        if (arg0 instanceof ISection) {
+            result = (getName().equals(((ISection) arg0).getName()))
+                    && (getSite().equals(((ISection) arg0).getSite()))
+                    && ((getSuperiorSection() == null && ((ISection) arg0)
+                            .getSuperiorSection() == null) || (getSuperiorSection()
+                            .equals(((ISection) arg0).getSuperiorSection())));
+        }
+        return result;
+    }
 
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getSlideName()
-	 */
-	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/S"+getIdInternal();
-		return result;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getKeySuperiorSection() {
+        return keySuperiorSection;
+    }
 
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getParentNode()
-	 */
-	public INode getParentNode() {
-		if (getSuperiorSection()==null) {
-			ISite site = getSite();
-			IExecutionCourse executionCourse=site.getExecutionCourse();
-			return executionCourse;
-		}else {
-			ISection section = getSuperiorSection();
-			return section;
-		}
-	}
+    /**
+     * Sets the keySuperiorSection.
+     * 
+     * @param keySuperiorSection
+     *            The keySuperiorSection to set
+     */
+    public void setKeySuperiorSection(Integer keySuperiorSection) {
+        this.keySuperiorSection = keySuperiorSection;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[SECTION";
+        result += ", codInt=" + getIdInternal();
+        result += ", sectionOrder=" + getSectionOrder();
+        result += ", name=" + getName();
+        result += ", lastModifiedDate=" + getLastModifiedDate();
+        result += ", site=" + getSite();
+        result += ", superiorSection=" + getSuperiorSection();
+      
+        result += "]";
+
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see fileSuport.INode#getSlideName()
+     */
+    public String getSlideName() {
+        String result = getParentNode().getSlideName() + "/S" + getIdInternal();
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see fileSuport.INode#getParentNode()
+     */
+    public INode getParentNode() {
+        if (getSuperiorSection() == null) {
+            ISite site = getSite();
+            IExecutionCourse executionCourse = site.getExecutionCourse();
+            return executionCourse;
+        }
+        ISection section = getSuperiorSection();
+        return section;
+
+    }
 }

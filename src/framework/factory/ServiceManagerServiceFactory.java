@@ -110,9 +110,9 @@ public class ServiceManagerServiceFactory {
                 FenixServiceException fenixServiceException = (FenixServiceException) e
                         .getCause();
                 throw fenixServiceException;
-            } else {
-                throw new FenixRemoteServiceException(e);
             }
+            throw new FenixRemoteServiceException(e);
+
         } catch (RemoteException e) {
             service = null;
             throw new FenixRemoteServiceException(e);

@@ -9,23 +9,21 @@ import Dominio.IStudentCurricularPlan;
  * @author David Santos in Jun 23, 2004
  */
 
-public class MinimumNumberOfCurricularCoursesEnrollmentRule implements IEnrollmentRule
-{
-	private int minCoursesToBeEnrolled;
+public class MinimumNumberOfCurricularCoursesEnrollmentRule implements
+        IEnrollmentRule {
+    private int minCoursesToBeEnrolled;
 
-	public MinimumNumberOfCurricularCoursesEnrollmentRule(IStudentCurricularPlan studentCurricularPlan)
-	{
-		minCoursesToBeEnrolled = studentCurricularPlan.getMinimumNumberOfCoursesToEnroll().intValue();
-	}
+    public MinimumNumberOfCurricularCoursesEnrollmentRule(
+            IStudentCurricularPlan studentCurricularPlan) {
+        minCoursesToBeEnrolled = studentCurricularPlan
+                .getMinimumNumberOfCoursesToEnroll().intValue();
+    }
 
-	public List apply(List curricularCoursesToBeEnrolledIn)
-	{
-		if (minCoursesToBeEnrolled > curricularCoursesToBeEnrolledIn.size())
-		{
-			return null;
-		} else
-		{
-			return curricularCoursesToBeEnrolledIn;
-		}
-	}
+    public List apply(List curricularCoursesToBeEnrolledIn) {
+        if (minCoursesToBeEnrolled > curricularCoursesToBeEnrolledIn.size()) {
+            return null;
+        }
+        return curricularCoursesToBeEnrolledIn;
+
+    }
 }

@@ -49,23 +49,9 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
     }
 
     /**
-     * @param collection
-     * @return boolean
-     */
-    private boolean containsRole(Collection roles) {
-        CollectionUtils.intersection(roles, getNeededRoles());
-
-        if (roles.size() != 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * @return The Needed Roles to Execute The Service
      */
-    private Collection getNeededRoles() {
+    protected Collection getNeededRoles() {
         List roles = new ArrayList();
 
         InfoRole infoRole = new InfoRole();
@@ -120,9 +106,9 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
                     .equals(TipoCurso.MESTRADO_OBJ)) {
 
                 return true;
-            } else {
-                return false;
             }
+            return false;
+
         }
 
         roleTemp = new ArrayList();

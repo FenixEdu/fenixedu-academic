@@ -111,11 +111,12 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends
             return false;
         }
 
-        if (item == null)
+        if (item == null) {
             return false;
-        else
-            return item.getSection().getSite().getExecutionCourse().equals(
-                    executionCourse);
+        }
+
+        return item.getSection().getSite().getExecutionCourse().equals(
+                executionCourse);
     }
 
     /**

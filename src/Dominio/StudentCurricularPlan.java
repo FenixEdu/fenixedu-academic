@@ -373,9 +373,9 @@ public class StudentCurricularPlan extends DomainObject implements
                         if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
                             return (((IEnrolmentInOptionalCurricularCourse) enrollment)
                                     .getCurricularCourseForOption());
-                        } else {
-                            return enrollment.getCurricularCourse();
                         }
+                        return enrollment.getCurricularCourse();
+
                     }
                 });
 

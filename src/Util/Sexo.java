@@ -51,9 +51,9 @@ public class Sexo extends FenixUtil {
             Sexo aux = (Sexo) o;
             return this.sexo.equals(aux.getSexo());
         }
-        else {
+      
             return false;
-        }
+        
     }
 
     public ArrayList toArrayList() {

@@ -445,62 +445,73 @@ public class InfoSummary extends InfoObject implements Comparable {
     /**
      * @return String that describe the lesson
      */
-   
-    public String getLesson()
-    {
-        if(getLessonIdSelected() != null) {
+
+    public String getLesson() {
+        if (getLessonIdSelected() != null) {
             return getLessonIdSelected().toString();
         }
-        
+
         if (getIsExtraLesson() != null
                 && getIsExtraLesson().equals(Boolean.FALSE)) {
-	        if (getSummaryDate() != null && getSummaryHour() != null)
-	        {
-	            Calendar dateAndHourSummary = Calendar.getInstance();
-	            dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
-	            dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-	            dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-	            dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
-	            dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
-	            dateAndHourSummary.set(Calendar.SECOND, 00);
-	
-	            Calendar beginLesson = Calendar.getInstance();
-	            beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
-	            beginLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-	            beginLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-	
-	            Calendar endLesson = Calendar.getInstance();
-	            endLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
-	            endLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-	            endLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-	
-	            if (infoShift.getInfoLessons() != null && infoShift.getInfoLessons().size() > 0)
-	            {
-	                ListIterator listIterator = infoShift.getInfoLessons().listIterator();
-	                while (listIterator.hasNext())
-	                {
-	                    InfoLesson lesson = (InfoLesson) listIterator.next();
-	
-	                    beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(Calendar.HOUR_OF_DAY));
-	                    beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
-	                    beginLesson.set(Calendar.SECOND, 00);
-	
-	                    endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
-	                    endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
-	                    endLesson.set(Calendar.SECOND, 00);
-	
-	                    if (infoShift.getTipo().equals(lesson.getTipo())
-	                            && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
-	                                    .getDiaSemana().intValue() && !beginLesson.after(dateAndHourSummary)
-	                            && !endLesson.before(dateAndHourSummary))
-	                    {
-	                        return lesson.getIdInternal().toString();
-	                    }
-	                }
-	            }
-	        }
+            if (getSummaryDate() != null && getSummaryHour() != null) {
+                Calendar dateAndHourSummary = Calendar.getInstance();
+                dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate
+                        .get(Calendar.DAY_OF_MONTH));
+                dateAndHourSummary.set(Calendar.MONTH, summaryDate
+                        .get(Calendar.MONTH));
+                dateAndHourSummary.set(Calendar.YEAR, summaryDate
+                        .get(Calendar.YEAR));
+                dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour
+                        .get(Calendar.HOUR_OF_DAY));
+                dateAndHourSummary.set(Calendar.MINUTE, summaryHour
+                        .get(Calendar.MINUTE));
+                dateAndHourSummary.set(Calendar.SECOND, 00);
+
+                Calendar beginLesson = Calendar.getInstance();
+                beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate
+                        .get(Calendar.DAY_OF_MONTH));
+                beginLesson
+                        .set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                beginLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
+
+                Calendar endLesson = Calendar.getInstance();
+                endLesson.set(Calendar.DAY_OF_MONTH, summaryDate
+                        .get(Calendar.DAY_OF_MONTH));
+                endLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                endLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
+
+                if (infoShift.getInfoLessons() != null
+                        && infoShift.getInfoLessons().size() > 0) {
+                    ListIterator listIterator = infoShift.getInfoLessons()
+                            .listIterator();
+                    while (listIterator.hasNext()) {
+                        InfoLesson lesson = (InfoLesson) listIterator.next();
+
+                        beginLesson.set(Calendar.HOUR_OF_DAY, lesson
+                                .getInicio().get(Calendar.HOUR_OF_DAY));
+                        beginLesson.set(Calendar.MINUTE, lesson.getInicio()
+                                .get(Calendar.MINUTE));
+                        beginLesson.set(Calendar.SECOND, 00);
+
+                        endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim()
+                                .get(Calendar.HOUR_OF_DAY));
+                        endLesson.set(Calendar.MINUTE, lesson.getFim().get(
+                                Calendar.MINUTE));
+                        endLesson.set(Calendar.SECOND, 00);
+
+                        if (infoShift.getTipo().equals(lesson.getTipo())
+                                && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson
+                                        .getDiaSemana().getDiaSemana()
+                                        .intValue()
+                                && !beginLesson.after(dateAndHourSummary)
+                                && !endLesson.before(dateAndHourSummary)) {
+                            return lesson.getIdInternal().toString();
+                        }
+                    }
+                }
+            }
         }
-        
+
         return "0";//extra lesson
     }
 
@@ -541,8 +552,9 @@ public class InfoSummary extends InfoObject implements Comparable {
      * @return The shift selected that the summary belong
      */
     public String getShift() {
-        if (infoShift != null && infoShift.getIdInternal() != null) { return infoShift
-                .getIdInternal().toString(); }
+        if (infoShift != null && infoShift.getIdInternal() != null) {
+            return infoShift.getIdInternal().toString();
+        }
 
         return null;
     }
@@ -551,8 +563,9 @@ public class InfoSummary extends InfoObject implements Comparable {
      * @return The romm selected that the summary belong
      */
     public String getRoom() {
-        if (infoRoom != null && infoRoom.getIdInternal() != null) { return infoRoom
-                .getIdInternal().toString(); }
+        if (infoRoom != null && infoRoom.getIdInternal() != null) {
+            return infoRoom.getIdInternal().toString();
+        }
 
         return null;
     }
@@ -563,12 +576,17 @@ public class InfoSummary extends InfoObject implements Comparable {
      */
     public String getTeacher() {
         if (infoProfessorship != null
-                && infoProfessorship.getIdInternal() != null) { return infoProfessorship
-                .getIdInternal().toString(); }
+                && infoProfessorship.getIdInternal() != null) {
+            return infoProfessorship.getIdInternal().toString();
+        }
 
-        if (infoTeacher != null) { return "0"; }
+        if (infoTeacher != null) {
+            return "0";
+        }
 
-        if (teacherName != null) { return "-1"; }
+        if (teacherName != null) {
+            return "-1";
+        }
 
         return null;
     }
@@ -577,8 +595,9 @@ public class InfoSummary extends InfoObject implements Comparable {
      * @return The teacher's number who lectured a lesson
      */
     public String getTeacherNumber() {
-        if (infoTeacher != null && infoTeacher.getTeacherNumber() != null) { return infoTeacher
-                .getTeacherNumber().toString(); }
+        if (infoTeacher != null && infoTeacher.getTeacherNumber() != null) {
+            return infoTeacher.getTeacherNumber().toString();
+        }
 
         return null;
     }
@@ -620,10 +639,9 @@ public class InfoSummary extends InfoObject implements Comparable {
                 .getSummaryDate()) == 0) {
             return hourComparator.compare(getSummaryHour(), infoSummary
                     .getSummaryHour());
-        } else {
-            return dateComparator.compare(getSummaryDate(), infoSummary
-                    .getSummaryDate());
         }
+        return dateComparator.compare(getSummaryDate(), infoSummary
+                .getSummaryDate());
 
     }
 

@@ -101,10 +101,9 @@ public class Specialization extends FenixUtil
 			Specialization aux = (Specialization) o;
 			return this.specialization.equals(aux.getSpecialization());
 		}
-		else
-		{
+		
 			return false;
-		}
+		
 	}
 
 	public String toString()
