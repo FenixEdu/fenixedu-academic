@@ -55,7 +55,6 @@ public class TipoCurso implements Serializable{
     
 	public static ArrayList toLabelValueBeanList() {
 		ArrayList result = new ArrayList();
-		result.add(new LabelValueBean("Escolha", ""));
 		result.add(new LabelValueBean(TipoCurso.LICENCIATURA_STRING, String.valueOf(TipoCurso.LICENCIATURA)));
 		result.add(new LabelValueBean(TipoCurso.MESTRADO_STRING, String.valueOf(TipoCurso.MESTRADO)));
 		return result;	

@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.equivalence;
 
-import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
+import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 

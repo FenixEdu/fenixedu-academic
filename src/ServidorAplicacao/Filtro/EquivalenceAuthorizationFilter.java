@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoStudent;
-import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
+import DataBeans.equivalence.InfoEquivalenceContext;
 import Dominio.ICursoExecucao;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;

@@ -6,7 +6,7 @@
 <%@ page import="org.apache.struts.action.Action" %>
 
 <bean:define id="infoEquivalenceContext" name="<%= SessionConstants.EQUIVALENCE_CONTEXT_KEY %>" scope="session"/>
-<bean:define id="chosenInfoCurricularCourseScopesToGiveEquivalence" name="infoEquivalenceContext" property="chosenInfoCurricularCourseScopesToGiveEquivalence"/>
+<bean:define id="chosenInfoEnrolmentsToGiveEquivalence" name="infoEquivalenceContext" property="chosenInfoEnrolmentsToGiveEquivalence"/>
 <bean:define id="chosenInfoCurricularCourseScopesToGetEquivalence" name="infoEquivalenceContext" property="chosenInfoCurricularCourseScopesToGetEquivalence"/>
 
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>"/>
@@ -16,14 +16,20 @@
 
 	<b><bean:message key="label.curricular.courses.that.will.give.equivalence"/></b>
 	<ul>
-		<logic:iterate id="infoCurricularCourseScope" name="chosenInfoCurricularCourseScopesToGiveEquivalence">
-			<li><bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/></li>
+		<logic:iterate id="infoEnrolment" name="chosenInfoEnrolmentsToGiveEquivalence">
+			<li>
+				<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>&nbsp;&nbsp;&nbsp;
+			</li>
 		</logic:iterate>
 	</ul>
 	<b><bean:message key="label.curricular.courses.that.will.get.equivalence"/></b>
 	<ul>
-		<logic:iterate id="infoCurricularCourseScope" name="chosenInfoCurricularCourseScopesToGetEquivalence">
-			<li><bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/></li>
+		<logic:iterate id="infoCurricularCourseScope" name="chosenInfoCurricularCourseScopesToGetEquivalence" indexId="indexId">
+			<li>
+				<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/>
+				<%--<input type="text" name="<bean:write name='infoEnrolment' property='idInternal' />_text" size="5" value=""/>--%>
+				<html:text size="5" property='<%= "grades" + "["+ indexId + "]" %>'/>
+			</li>
 		</logic:iterate>
 	</ul>	
 

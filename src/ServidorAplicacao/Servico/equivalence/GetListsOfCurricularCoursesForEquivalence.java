@@ -9,9 +9,10 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
-import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
+import DataBeans.equivalence.InfoEquivalenceContext;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -20,6 +21,7 @@ import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
@@ -49,7 +51,7 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 		return "GetListsOfCurricularCoursesForEquivalence";
 	}
 
-	public InfoEquivalenceContext run(InfoStudent infoStudent, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
+	public InfoEquivalenceContext run(InfoStudent infoStudent, IUserView responsible, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
 		InfoEquivalenceContext infoEquivalenceContext = new InfoEquivalenceContext();
 
@@ -125,23 +127,25 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 				}
 			}
 
-			List curricularCoursesScopesFromStudentAprovedEnrolmentsWithDiferentDegreeCurricularPlan = (List) CollectionUtils.select(curricularCoursesScopesFromStudentAprovedEnrolments, new Predicate() {
+			List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan = (List) CollectionUtils.select(studentAprovedEnrolments, new Predicate() {
 				public boolean evaluate(Object obj) {
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-					return !curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().equals(currentDegreeCurricularPlanForStudent);
+					IEnrolment enrolment = (IEnrolment) obj;
+					return !enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(currentDegreeCurricularPlanForStudent);
 				}
 			});
 
-			if(curricularCoursesScopesFromStudentAprovedEnrolments != null && curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent != null) {
-				infoEquivalenceContext.setInfoCurricularCourseScopesToGiveEquivalence(this.cloneCurricularCourseScopesToInfoCurricularCourseScopes(curricularCoursesScopesFromStudentAprovedEnrolmentsWithDiferentDegreeCurricularPlan));
+			if(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan != null && curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent != null) {
+				infoEquivalenceContext.setInfoEnrolmentsToGiveEquivalence(this.cloneEnrolmentsToInfoEnrolments(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan));
 				infoEquivalenceContext.setInfoCurricularCourseScopesToGetEquivalence(this.cloneCurricularCourseScopesToInfoCurricularCourseScopes(curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent));
 			} else {
-				infoEquivalenceContext.setInfoCurricularCourseScopesToGiveEquivalence(new ArrayList());
+				infoEquivalenceContext.setInfoEnrolmentsToGiveEquivalence(new ArrayList());
 				infoEquivalenceContext.setInfoCurricularCourseScopesToGetEquivalence(new ArrayList());
 			}
 			
 			infoEquivalenceContext.setCurrentInfoExecutionPeriod(infoExecutionPeriod);
 			infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentActiveCurricularPlan));
+			
+			infoEquivalenceContext.setResponsible(responsible);
 
 			return infoEquivalenceContext;
 		} catch (ExcepcaoPersistencia e) {
@@ -158,5 +162,16 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 			infoCurricularCourseScopes.add(infoCurricularCourseScope);
 		}
 		return infoCurricularCourseScopes;
+	}
+
+	private List cloneEnrolmentsToInfoEnrolments(List enrolments) {
+		List infoEnrolments = new ArrayList();
+		Iterator iterator = enrolments.iterator();
+		while(iterator.hasNext()) {
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
+			infoEnrolments.add(infoEnrolment);
+		}
+		return infoEnrolments;
 	}
 }

@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.equivalence;
 
-import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
+import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
@@ -30,7 +30,7 @@ public class ValidateEquivalence implements IServico {
 			infoEquivalenceContext.getErrorMessages().clear();
 		} 
 
-		if(infoEquivalenceContext.getChosenInfoCurricularCourseScopesToGiveEquivalence().isEmpty()) {
+		if(infoEquivalenceContext.getChosenInfoEnrolmentsToGiveEquivalence().isEmpty()) {
 			infoEquivalenceContext.setErrorMessage("error.no.curricular.courses.to.give.equivalence");
 		}
 

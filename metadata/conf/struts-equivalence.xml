@@ -10,6 +10,7 @@
 		<form-bean name="manualEquivalenceFrom" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="studentOID" type="java.lang.Integer"/>
+			<form-property name="grades" type="java.lang.String[]"/>
 			<form-property name="curricularCoursesToGiveEquivalence" type="java.lang.Integer[]"/>
 			<form-property name="curricularCoursesToGetEquivalence" type="java.lang.Integer[]"/>
 		</form-bean>
@@ -75,7 +76,7 @@
 			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
 			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
 			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="begin" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
+			<forward name="begin" path="/manualEquivalenceManagerForDegreeAdministrativeOffice.do?method=show"/>
 		</action>
 
 		<action	name="manualEquivalenceFrom"
@@ -91,7 +92,7 @@
 			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForCoordinatorEquivalence"/>
-			<forward name="begin" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
+			<forward name="begin" path="/manualEquivalenceManagerForCoordinator.do?method=show"/>
 		</action>
 	</action-mappings>
 

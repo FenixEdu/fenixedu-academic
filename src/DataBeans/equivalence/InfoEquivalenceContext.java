@@ -1,20 +1,23 @@
-package DataBeans.degreeAdministrativeOffice;
+package DataBeans.equivalence;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
+import ServidorAplicacao.IUserView;
 
 public class InfoEquivalenceContext {
-	private List infoCurricularCourseScopesToGiveEquivalence;
+	private List infoEnrolmentsToGiveEquivalence;
 	private List infoCurricularCourseScopesToGetEquivalence;
 	private InfoExecutionPeriod currentInfoExecutionPeriod;
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
-	private List chosenInfoCurricularCourseScopesToGiveEquivalence;
+	private List chosenInfoEnrolmentsToGiveEquivalence;
 	private List chosenInfoCurricularCourseScopesToGetEquivalence;
+	private IUserView responsible;
 	private boolean success;
 	private List errorMessages;
+	private List chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade;
 	
 	public InfoEquivalenceContext() {
 	}
@@ -27,24 +30,10 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
-	 * @return
-	 */
-	public List getInfoCurricularCourseScopesToGiveEquivalence() {
-		return infoCurricularCourseScopesToGiveEquivalence;
-	}
-
-	/**
 	 * @param list
 	 */
 	public void setInfoCurricularCourseScopesToGetEquivalence(List list) {
 		infoCurricularCourseScopesToGetEquivalence = list;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setInfoCurricularCourseScopesToGiveEquivalence(List list) {
-		infoCurricularCourseScopesToGiveEquivalence = list;
 	}
 
 	/**
@@ -83,24 +72,10 @@ public class InfoEquivalenceContext {
 	}
 
 	/**
-	 * @return
-	 */
-	public List getChosenInfoCurricularCourseScopesToGiveEquivalence() {
-		return chosenInfoCurricularCourseScopesToGiveEquivalence;
-	}
-
-	/**
 	 * @param list
 	 */
 	public void setChosenInfoCurricularCourseScopesToGetEquivalence(List list) {
 		chosenInfoCurricularCourseScopesToGetEquivalence = list;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setChosenInfoCurricularCourseScopesToGiveEquivalence(List list) {
-		chosenInfoCurricularCourseScopesToGiveEquivalence = list;
 	}
 
 	/**
@@ -139,6 +114,62 @@ public class InfoEquivalenceContext {
 			errorMessages = new ArrayList();
 		}
 		errorMessages.add(string);
+	}
+
+	/**
+	 * @return
+	 */
+	public IUserView getResponsible() {
+		return responsible;
+	}
+
+	/**
+	 * @param view
+	 */
+	public void setResponsible(IUserView view) {
+		responsible = view;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoEnrolmentsToGiveEquivalence() {
+		return infoEnrolmentsToGiveEquivalence;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoEnrolmentsToGiveEquivalence(List list) {
+		infoEnrolmentsToGiveEquivalence = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getChosenInfoEnrolmentsToGiveEquivalence() {
+		return chosenInfoEnrolmentsToGiveEquivalence;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setChosenInfoEnrolmentsToGiveEquivalence(List list) {
+		chosenInfoEnrolmentsToGiveEquivalence = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade() {
+		return chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade(List list) {
+		chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade = list;
 	}
 
 }

@@ -17,9 +17,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
-import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
+import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -58,7 +59,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		}
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		Object args[] = { infoStudent, infoExecutionPeriod };
+		Object args[] = { infoStudent, userView, infoExecutionPeriod };
 
 		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "GetListsOfCurricularCoursesForEquivalence", args);
 
@@ -88,6 +89,8 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 
 		session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
 
+		this.initializeForm2(infoEquivalenceContext, equivalenceForm);
+
 		if(infoEquivalenceContext.isSuccess()) {
 			return mapping.findForward(forwards[1]);
 		} else {
@@ -103,7 +106,13 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		}
 
 		validateToken(request, form, mapping);
-		
+
+//		DynaActionForm equivalenceForm = (DynaActionForm) form;
+//		String[] grades = (String[]) equivalenceForm.get("grades");
+//		for(int i = 0; i < grades.length; i++) {
+//			System.out.println("\n\n" + grades[i] + " - " + i + "\n");
+//		}
+
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -125,13 +134,13 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 
 	private void initializeForm(InfoEquivalenceContext infoEquivalenceContext, DynaActionForm equivalenceForm) {
 
-		List infoCurricularCourseScopesToGiveEquivalence = infoEquivalenceContext.getInfoCurricularCourseScopesToGiveEquivalence();
+		List infoEnrolmentsToGiveEquivalence = infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence();
 		List infoCurricularCourseScopesToGetEquivalence = infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence();
 
-		Integer[] curricularCoursesToGiveEquivalence = new Integer[infoCurricularCourseScopesToGiveEquivalence.size()];
+		Integer[] curricularCoursesToGiveEquivalence = new Integer[infoEnrolmentsToGiveEquivalence.size()];
 		Integer[] curricularCoursesToGetEquivalence = new Integer[infoCurricularCourseScopesToGetEquivalence.size()];
 
-		for(int i = 0; i < infoCurricularCourseScopesToGiveEquivalence.size(); i++) {
+		for(int i = 0; i < infoEnrolmentsToGiveEquivalence.size(); i++) {
 			curricularCoursesToGiveEquivalence[i] = null;
 		}
 
@@ -143,12 +152,27 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		equivalenceForm.set("curricularCoursesToGetEquivalence", curricularCoursesToGetEquivalence);
 	}
 
+	private void initializeForm2(InfoEquivalenceContext infoEquivalenceContext, DynaActionForm equivalenceForm) {
+
+		List chosenInfoCurricularCourseScopesToGetEquivalence = infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence();
+
+		int size = chosenInfoCurricularCourseScopesToGetEquivalence.size();
+
+		String[] grades = new String[size];
+
+		for(int i = 0; i < size; i++) {
+			grades[i] = null;
+		}
+
+		equivalenceForm.set("grades", grades);
+	}
+
 	private InfoEquivalenceContext processEquivalence(HttpServletRequest request, DynaActionForm equivalenceForm, HttpSession session) {
 
 		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) session.getAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
 
 		if(request.getParameter("curricularCoursesToGiveEquivalence") == null) {
-			equivalenceForm.set("curricularCoursesToGiveEquivalence", new Integer[infoEquivalenceContext.getInfoCurricularCourseScopesToGiveEquivalence().size()]);
+			equivalenceForm.set("curricularCoursesToGiveEquivalence", new Integer[infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence().size()]);
 		}
 
 		if(request.getParameter("curricularCoursesToGetEquivalence") == null) {
@@ -158,16 +182,16 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		Integer[] curricularCoursesToGiveEquivalence = (Integer[]) equivalenceForm.get("curricularCoursesToGiveEquivalence");
 		Integer[] curricularCoursesToGetEquivalence = (Integer[]) equivalenceForm.get("curricularCoursesToGetEquivalence");
 
-		List chosenInfoCurricularCourseScopesToGiveEquivalence = new ArrayList();
+		List chosenInfoEnrolmentsToGiveEquivalence = new ArrayList();
 		List chosenInfoCurricularCourseScopesToGetEquivalence = new ArrayList();
 
 		if(curricularCoursesToGiveEquivalence != null) {
 			for(int i = 0; i < curricularCoursesToGiveEquivalence.length; i++) {
 				Integer curricularCourseScopeIndex = curricularCoursesToGiveEquivalence[i];
 				if(curricularCourseScopeIndex != null) {
-					InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEquivalenceContext.getInfoCurricularCourseScopesToGiveEquivalence().get(curricularCourseScopeIndex.intValue());
-					if(infoCurricularCourseScope != null) {
-						chosenInfoCurricularCourseScopesToGiveEquivalence.add(infoCurricularCourseScope);
+					InfoEnrolment infoEnrolment = (InfoEnrolment) infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence().get(curricularCourseScopeIndex.intValue());
+					if(infoEnrolment != null) {
+						chosenInfoEnrolmentsToGiveEquivalence.add(infoEnrolment);
 					}
 				}
 			}
@@ -185,7 +209,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 			}
 		}
 
-		infoEquivalenceContext.setChosenInfoCurricularCourseScopesToGiveEquivalence(chosenInfoCurricularCourseScopesToGiveEquivalence);
+		infoEquivalenceContext.setChosenInfoEnrolmentsToGiveEquivalence(chosenInfoEnrolmentsToGiveEquivalence);
 		infoEquivalenceContext.setChosenInfoCurricularCourseScopesToGetEquivalence(chosenInfoCurricularCourseScopesToGetEquivalence);
 
 		return infoEquivalenceContext;

@@ -6,14 +6,14 @@
 <%@ page import="org.apache.struts.action.Action" %>
 
 <bean:define id="infoEquivalenceContext" name="<%= SessionConstants.EQUIVALENCE_CONTEXT_KEY %>" scope="session"/>
-<bean:define id="infoCurricularCourseScopesToGiveEquivalence" name="infoEquivalenceContext" property="infoCurricularCourseScopesToGiveEquivalence"/>
+<bean:define id="infoEnrolmentsToGiveEquivalence" name="infoEquivalenceContext" property="infoEnrolmentsToGiveEquivalence"/>
 <bean:define id="infoCurricularCourseScopesToGetEquivalence" name="infoEquivalenceContext" property="infoCurricularCourseScopesToGetEquivalence"/>
-<bean:size id="sizeCurricularCourseScopesToGiveEquivalence" name="infoEquivalenceContext" property="infoCurricularCourseScopesToGiveEquivalence"/>
+<bean:size id="sizeEnrolmentsToGiveEquivalence" name="infoEquivalenceContext" property="infoEnrolmentsToGiveEquivalence"/>
 <bean:size id="sizeCurricularCourseScopesToGetEquivalence" name="infoEquivalenceContext" property="infoCurricularCourseScopesToGetEquivalence"/>
 
 <h2 align="center"><bean:message key="tilte.manual.equivalence"/></h2>
 
-<logic:equal name="sizeCurricularCourseScopesToGiveEquivalence" value="0">
+<logic:equal name="sizeEnrolmentsToGiveEquivalence" value="0">
 	<bean:define id="noCurricularCourseScopes">
 		<bean:message key="message.no.curricular.courses.to.give.equivalence"/>
 	</bean:define>
@@ -56,19 +56,19 @@
 							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
 							<th align="center"><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></th>
 						</tr>
-						<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourseScopesToGiveEquivalence" indexId="index">
+						<logic:iterate id="infoEnrolment" name="infoEnrolmentsToGiveEquivalence" indexId="index">
 							<tr>
 								<td align="center">
 									<html:multibox property="curricularCoursesToGiveEquivalence"><bean:write name="index"/></html:multibox>
 								</td>
 								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/><br/>(<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>)
+									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/><br/>(<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>)
 								</td>
 								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>
+									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
 								</td>
 								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>
+									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
 								</td>
 							</tr>
 						</logic:iterate>
