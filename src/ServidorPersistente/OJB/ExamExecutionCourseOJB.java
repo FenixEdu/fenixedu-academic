@@ -18,9 +18,11 @@ import org.odmg.QueryException;
 
 import Dominio.Exam;
 import Dominio.ExamExecutionCourse;
+import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
+import Dominio.IExecutionPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -53,6 +55,39 @@ public class ExamExecutionCourseOJB
 			if (result.size() != 0)
 				examExecutionCourse = (IExamExecutionCourse) result.get(0);
 			return examExecutionCourse;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	// TODO : write test for this method.
+	public List readBy(
+		ICursoExecucao executionDegree,
+		IExecutionPeriod executionPeriod,
+		Integer curricularYear)
+		throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select examexecutioncourse from " + ExamExecutionCourse.class.getName();
+			oqlQuery += " where executionCourse.associatedCurricularCourses";
+			oqlQuery += ".associatedCurricularSemesters.curricularYear.year = $1";
+			oqlQuery += " and executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $2";
+			oqlQuery += " and executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.nome = $3";
+			oqlQuery += " and executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso = $4";
+			oqlQuery += " and executionCourse.executionPeriod.name = $5";
+			oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $6";
+			oqlQuery += " order by executionCourse.sigla asc, exam.season asc";
+
+			query.create(oqlQuery);
+			query.bind(curricularYear);
+			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getTipoCurso());
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

@@ -150,11 +150,11 @@ public class DisciplinaExecucaoOJB
 
 			query.bind(curricularYear);
 			query.bind(executionDegree.getCurricularPlan().getName());
-			query.bind(
-				executionDegree.getCurricularPlan().getDegree().getSigla());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);
+			
 			
 			Iterator iterator = result.listIterator();
 
@@ -164,6 +164,8 @@ public class DisciplinaExecucaoOJB
 					(ICurricularCourse) iterator.next();
 				Iterator executionCourseIterator =
 					curricularCourse.getAssociatedExecutionCourses().iterator();
+
+
 
 				while (executionCourseIterator.hasNext()) {
 					IDisciplinaExecucao executionCourse =

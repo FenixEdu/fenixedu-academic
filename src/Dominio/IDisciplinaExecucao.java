@@ -28,12 +28,11 @@ public interface IDisciplinaExecucao extends Serializable{
     public void setTheoPratHours(Double theoPratHours);
     public Double getLabHours();    
     public void setLabHours(Double labHours);
-   
-    
-   
     
     public void setAssociatedCurricularCourses(List associatedCurricularCourses);
     public List getAssociatedCurricularCourses();
+	public void setAssociatedExams(List list);
+	public List getAssociatedExams();
     
     IExecutionPeriod getExecutionPeriod();
     void setExecutionPeriod(IExecutionPeriod executionPeriod);

@@ -2,7 +2,7 @@
 <%@ page import ="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DataBeans.InfoViewExamByDayAndShift" %>
+<%@ page import="DataBeans.InfoExecutionCourseAndExams" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -15,7 +15,6 @@
           </tr>
         </table>
         <br/>
-   		<% ArrayList iVE = (ArrayList) session.getAttribute(SessionConstants.INFO_EXAMS_KEY); %>
         <h2><bean:message key="title.exams.list"/></h2>
         <span class="error"><html:errors/></span>
 		<logic:notPresent name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
@@ -28,12 +27,9 @@
 			</table>
 		</logic:notPresent>
 		
-		<logic:present name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
-			<table align="center" border='1' cellpadding='10'>
+<logic:present name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
+	<table align="center" border='1' cellpadding='10'>
 				<tr align="center">
-					<td>
-						<bean:message key="property.course.initials"/>
-					</td>
 					<td>
 						<bean:message key="property.course"/>
 					</td>
@@ -47,50 +43,54 @@
 						<bean:message key="property.exam.2stExam"/>
 					</td>
 				</tr>
-	            <% int i = 0; %>
-				<logic:iterate id="infoViewExam" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
-					<%if((i%2) == 0) { %>
+				<logic:iterate id="infoExecutionCourseAndExams" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
 					<tr align="center">
 						<td>
-							<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.sigla"/>
+							<bean:write name="infoExecutionCourseAndExams" property="infoExecutionCourse.nome"/>
 						</td>
 						<td>
-							<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.nome"/>
+							<bean:write name="infoExecutionCourseAndExams" property="numberStudentesAttendingCourse"/>
 						</td>
 						<td>
-							<bean:write name="infoViewExam" property="numberStudentesAttendingCourse"/>
-						</td>
-						<td>
-							<logic:notEmpty name="infoViewExam" property="infoExam.beginning">
-	                    	<% Integer iH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
-	                    	<% Integer iM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.MINUTE)); %>
-								<bean:write name="infoViewExam" property="infoExam.day"/>
-								<br/>
-								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
+						  <logic:present name="infoExecutionCourseAndExams" property="infoExam1">
+							<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam1.day">
+								<bean:write name="infoExecutionCourseAndExams" property="infoExam1.day"/>
+								<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam1.beginning">
+			                    	<% Integer iH = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
+			                    	<% Integer iM = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getBeginning().get(Calendar.MINUTE)); %>
+									<br/>
+									<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
+								</logic:notEmpty>
 							</logic:notEmpty>
-							
-							<logic:empty name="infoViewExam" property="infoExam.beginning">
-								Não disponivel
-							</logic:empty>
-						</td>
-					<%} else {%>
-						<td>
-							<logic:notEmpty name="infoViewExam" property="infoExam.beginning">
-		                       <% Integer iH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
-		                       <% Integer iM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.MINUTE)); %>
-								<bean:write name="infoViewExam" property="infoExam.day"/>
-								<br/>
-								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
-							</logic:notEmpty>
-							
-							<logic:empty name="infoViewExam" property="infoExam.beginning">
+							<logic:empty name="infoExecutionCourseAndExams" property="infoExam1.day">
 								<bean:message key="message.exam.not.scheduled"/>
 							</logic:empty>
+						  </logic:present>
+						  <logic:notPresent name="infoExecutionCourseAndExams" property="infoExam1">
+						  	<bean:message key="message.exam.not.scheduled"/>
+  						  </logic:notPresent>							
+						</td>
+						<td>
+						  <logic:present name="infoExecutionCourseAndExams" property="infoExam2">
+							<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam2.day">
+								<bean:write name="infoExecutionCourseAndExams" property="infoExam2.day"/>
+								<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam2.beginning">
+			                    	<% Integer iH = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
+			                    	<% Integer iM = new Integer(((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getBeginning().get(Calendar.MINUTE)); %>
+									<br/>
+									<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
+								</logic:notEmpty>
+							</logic:notEmpty>
+							<logic:empty name="infoExecutionCourseAndExams" property="infoExam2.day">
+								<bean:message key="message.exam.not.scheduled"/>
+							</logic:empty>
+						  </logic:present>
+						  <logic:notPresent name="infoExecutionCourseAndExams" property="infoExam2">
+						  	<bean:message key="message.exam.not.scheduled"/>
+  						  </logic:notPresent>
 						</td>
 					</tr>
-					<%} %>
-                    <% i++; %>
-						</logic:iterate>
-			</table>
+			</logic:iterate>
+	</table>
 				
-		</logic:present>
+</logic:present>

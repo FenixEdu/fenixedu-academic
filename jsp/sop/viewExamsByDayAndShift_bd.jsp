@@ -46,10 +46,8 @@
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 			<tr align="center">
 				<td>
-					<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.nome"/>
-					- - - - -
 					<logic:iterate id="infoExecutionCourse" name="infoViewExam" property="infoExecutionCourses">
-						<bean:write name="infoExecutionCourse" property="name"/> <br/>
+						<bean:write name="infoExecutionCourse" property="nome"/> <br/>
 					</logic:iterate>					
 				</td>
 				<td>

@@ -17,7 +17,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
     private Integer codigoInterno;
 
 	private List associatedCurricularCourses = null;
-	
+	private List associatedExams = null;	
 	
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
@@ -297,6 +297,19 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		this.keyExecutionPeriod = keyExecutionPeriod;
 	}
 
-	
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedExams() {
+		return associatedExams;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedExams(List list) {
+		associatedExams = list;
+	}
 
 }
