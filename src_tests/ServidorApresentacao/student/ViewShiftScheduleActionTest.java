@@ -1,7 +1,6 @@
 package ServidorApresentacao.student;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,26 +10,9 @@ import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoPerson;
 import DataBeans.InfoRole;
 import DataBeans.InfoStudent;
-import Dominio.Aula;
-import Dominio.Curso;
-import Dominio.Frequenta;
-import Dominio.IAula;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDisciplinaExecucao;
-import Dominio.IFrequenta;
+import DataBeans.util.Cloner;
 import Dominio.IPessoa;
-import Dominio.ISala;
 import Dominio.IStudent;
-import Dominio.ITurno;
-import Dominio.ITurnoAluno;
-import Dominio.ITurnoAula;
-import Dominio.Pessoa;
-import Dominio.Sala;
-import Dominio.Student;
-import Dominio.Turno;
-import Dominio.TurnoAluno;
-import Dominio.TurnoAula;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -46,14 +28,8 @@ import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.DiaSemana;
 import Util.RoleType;
-import Util.StudentState;
-import Util.TipoAula;
 import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
-import Util.TipoSala;
-
 
 /**
  * @author tfc130
@@ -61,290 +37,108 @@ import Util.TipoSala;
  */
 public class ViewShiftScheduleActionTest extends MockStrutsTestCase {
 
-  protected ISuportePersistente _suportePersistente = null;
-  protected IPessoaPersistente _persistentPerson = null;
-  protected IPersistentStudent _persistentStudent = null;
-  protected ICursoExecucaoPersistente _cursoExecucaoPersistente = null;
-  protected ICursoPersistente _cursoPersistente = null;
-  protected IFrequentaPersistente _frequentaPersistente;
-  protected ITurnoPersistente _turnoPersistente = null;
-  protected ITurnoAlunoPersistente _turnoAlunoPersistente = null;
-  protected ITurnoAulaPersistente _turnoAulaPersistente = null;
-  protected ISalaPersistente _salaPersistente = null;
-  
-  protected IPessoa _person1 = null;
-  protected IPessoa _person2 = null;
-  protected IPessoa _person3 = null;
-  protected IStudent _student1 = null;
-  protected IStudent _student3 = null;
-  protected InfoPerson _infoPerson = null;
-  protected InfoStudent _infoStudent = null;
-  
+	protected ISuportePersistente _suportePersistente = null;
+	protected IPessoaPersistente _persistentPerson = null;
+	protected IPersistentStudent _persistentStudent = null;
+	protected ICursoExecucaoPersistente _cursoExecucaoPersistente = null;
+	protected ICursoPersistente _cursoPersistente = null;
+	protected IFrequentaPersistente _frequentaPersistente;
+	protected ITurnoPersistente _turnoPersistente = null;
+	protected ITurnoAlunoPersistente _turnoAlunoPersistente = null;
+	protected ITurnoAulaPersistente _turnoAulaPersistente = null;
+	protected ISalaPersistente _salaPersistente = null;
 
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(ViewShiftScheduleActionTest.class);
-        
-    return suite;
-  }
+	protected IPessoa _person1 = null;
+	protected IPessoa _person2 = null;
+	protected IPessoa _person3 = null;
+	protected IStudent _student1 = null;
+	protected IStudent _student3 = null;
+	protected InfoPerson _infoPerson = null;
+	protected InfoStudent _infoStudent = null;
 
-  public void setUp() throws Exception {
-    super.setUp();
-    // define ficheiro de configuração a utilizar
-    setServletConfigFile("/WEB-INF/web.xml");
-
-    ligarSuportePersistente();
-    cleanData();
-
-	ICurso _curso1 = new Curso("LEIC", "Informatica", new TipoCurso(TipoCurso.LICENCIATURA));
-
-	ICursoExecucao _cursoExecucao1 = null; // new CursoExecucao("2002/03", _curso1);
-
-	IPessoa person = new Pessoa();
-	person.setNome("Marvin");
-	person.setUsername("45498");
-	person.setNumeroDocumentoIdentificacao("010101010101");
-	person.setCodigoFiscal("010101010101");
-	person.setTipoDocumentoIdentificacao(
-		new TipoDocumentoIdentificacao(
-			TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-	IStudent student = new Student(new Integer(45498), new StudentState(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
-
-	IDisciplinaExecucao discipline1 = null;
-//		new DisciplinaExecucao(
-//			"Trabalho Final de Curso I",
-//			"TFCI",
-//			"Program1",
-//			_cursoExecucao1,
-//			new Double(1),
-//			new Double(1),
-//			new Double(1),
-//			new Double(1));
-	IDisciplinaExecucao discipline2 = null;
-//		new DisciplinaExecucao(
-//			"Trabalho Final de Curso II",
-//			"TFCII",
-//			"Program2",
-//			_cursoExecucao1,
-//			new Double(1),
-//			new Double(1),
-//			new Double(1),
-//			new Double(1));
-	IDisciplinaExecucao discipline3 = null;
-//		new DisciplinaExecucao(
-//			"Engenharia da Programação",
-//			"EP",
-//			"Program3",
-//			_cursoExecucao1,
-//			new Double(1),
-//			new Double(1),
-//			new Double(1),
-//			new Double(1));
-	IDisciplinaExecucao discipline4 = null;
-//		new DisciplinaExecucao(
-//			"Aprendizagem",
-//			"APR",
-//			"Program4",
-//			_cursoExecucao1,
-//			new Double(1),
-//			new Double(1),
-//			new Double(1),
-//			new Double(1));
-
-	IFrequenta attend1 = new Frequenta(student, discipline1);
-	IFrequenta attend2 = new Frequenta(student, discipline2);
-	IFrequenta attend3 = new Frequenta(student, discipline3);
-	IFrequenta attend4 = new Frequenta(student, discipline4);
-	
-	ITurno shift1 =
-		new Turno(
-			"turno_ep_teorico1",
-			new TipoAula(TipoAula.TEORICA),
-			new Integer(100),
-			discipline3);
-	ITurno shift2 =
-		new Turno(
-			"turno_ep_laboratorio1",
-			new TipoAula(TipoAula.LABORATORIAL),
-			new Integer(50),
-			discipline3);
-	ITurno shift3 =
-		new Turno(
-			"turno_ep_laboratorio2",
-			new TipoAula(TipoAula.LABORATORIAL),
-			new Integer(50),
-			discipline3);
-	ITurno shift4 =
-		new Turno(
-			"turno_ep_pratica1",
-			new TipoAula(TipoAula.PRATICA),
-			new Integer(50),
-			discipline3);
-	ITurno shift5 =
-		new Turno(
-			"turno_ep_pratica2",
-			new TipoAula(TipoAula.PRATICA),
-			new Integer(50),
-			discipline4);
-	ITurno shift6 =
-		new Turno(
-			"turno_apr_teorico1",
-			new TipoAula(TipoAula.TEORICA),
-			new Integer(25),
-			discipline4);
-	ITurno shift7 =
-		new Turno(
-			"turno_apr_pratica1",
-			new TipoAula(TipoAula.PRATICA),
-			new Integer(25),
-			discipline4);
-
-	ITurnoAluno shiftStudent1 = new TurnoAluno(shift6, student);
-	ITurnoAluno shiftStudent2 = new TurnoAluno(shift7, student);
-
-	Calendar inicio = Calendar.getInstance();
-	Calendar fim = Calendar.getInstance();
-	ISala sala1 =
-		new Sala(
-			new String("Ga1"),
-			new String("Pavilho Central"),
-			new Integer(1),
-			new TipoSala(TipoSala.ANFITEATRO),
-			new Integer(100),
-			new Integer(50));
-
-	IAula lesson1 =
-		new Aula(
-			new DiaSemana(DiaSemana.QUARTA_FEIRA),
-			inicio,
-			fim,
-			new TipoAula(TipoAula.TEORICA),
-			sala1,
-			discipline4);
-	IAula lesson2 =
-		new Aula(
-			new DiaSemana(DiaSemana.QUINTA_FEIRA),
-			inicio,
-			fim,
-			new TipoAula(TipoAula.PRATICA),
-			sala1,
-			discipline4);
-
-	ITurnoAula shiftLesson1 = new TurnoAula(shift6, lesson1);
-	ITurnoAula shiftLesson2 = new TurnoAula(shift7, lesson2);
-
-	try {
-		_suportePersistente.iniciarTransaccao();
-		_cursoPersistente.lockWrite(_curso1);
-		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);				
-		_frequentaPersistente.lockWrite(attend1);
-		_frequentaPersistente.lockWrite(attend2);
-		_frequentaPersistente.lockWrite(attend3);
-		_frequentaPersistente.lockWrite(attend4);
-		_turnoPersistente.lockWrite(shift1);
-		_turnoPersistente.lockWrite(shift2);
-		_turnoPersistente.lockWrite(shift3);
-		_turnoPersistente.lockWrite(shift4);
-		_turnoPersistente.lockWrite(shift5);
-		_turnoAlunoPersistente.lockWrite(shiftStudent1);
-		_turnoAlunoPersistente.lockWrite(shiftStudent2);
-		_turnoAulaPersistente.lockWrite(shiftLesson1);
-		_turnoAulaPersistente.lockWrite(shiftLesson2);
-		_suportePersistente.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia excepcao) {
-		fail("Exception when setUp");
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
 	}
 
-	_infoPerson = new InfoPerson();
-	_infoPerson.setNome(person.getNome());
-	_infoPerson.setUsername(person.getUsername());
-	_infoStudent =
-		new InfoStudent(
-			student.getNumber(),
-			student.getState(),
-			_infoPerson,
-			new TipoCurso(TipoCurso.LICENCIATURA));
-  }
-  
-  public void tearDown() throws Exception {
-    super.tearDown();
-  }
-  
-  public ViewShiftScheduleActionTest(String testName) {
-    super(testName);
-  }
+	public static Test suite() {
+		TestSuite suite = new TestSuite(ViewShiftScheduleActionTest.class);
 
-  public void testSuccessfulViewEnrolment() {      
-    // define mapping de origem
-    setRequestPathInfo("/student", "/viewShiftSchedule");
+		return suite;
+	}
 
-	// Preenche campos do formulário
-	addRequestParameter("shiftName","turno_apr_teorico1");
+	public void setUp() throws Exception {
+		super.setUp();
+		// define ficheiro de configuração a utilizar
+		setServletConfigFile("/WEB-INF/web.xml");
 
-    // coloca credenciais na sessão
-	Collection roles = new ArrayList();
+	}
 
-	InfoRole infoRole = new InfoRole();
-	infoRole.setRoleType(RoleType.STUDENT);
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}
 
-	IUserView userView = new UserView("athirduser", roles);
-	getSession().setAttribute(SessionConstants.U_VIEW, userView);
-    
-    // invoca acção
-    actionPerform();
+	public ViewShiftScheduleActionTest(String testName) {
+		super(testName);
+	}
 
-    // verifica reencaminhamento
-    verifyForward("sucess");
+	public void testSuccessfulViewEnrolment() {
+		// define mapping de origem
+		setRequestPathInfo("/student", "/viewShiftSchedule");
 
-    //verifica ausencia de erros
-    verifyNoActionErrors();
+		// Preenche campos do formulário
+		addRequestParameter("shiftName", "turno_apr_teorico1");
 
-    //verifica UserView guardado na sessão
-    List lessons = (List) getSession().getAttribute(SessionConstants.LESSON_LIST_ATT);
-	assertNotNull("Shift lessons not present", lessons);
-	assertEquals("Shift lessons not present", lessons.size(), 1);
-  }
-  
+		// coloca credenciais na sessão
+		Collection roles = new ArrayList();
 
-  // Not possible if user was able to log in as a student
-  //public void testUnsuccessfulViewEnrolment() {
-  //}
+		InfoRole infoRole = new InfoRole();
+		infoRole.setRoleType(RoleType.STUDENT);
+		roles.add(infoRole);
+		IUserView userView = new UserView("pessoa3", roles);
 
-  protected void ligarSuportePersistente() {
-    try {
-      _suportePersistente = SuportePersistenteOJB.getInstance();
-    } catch (ExcepcaoPersistencia excepcao) {
-      fail("Exception when opening database");
-    }
-    _persistentPerson = _suportePersistente.getIPessoaPersistente();
-	_persistentStudent = _suportePersistente.getIPersistentStudent();
-	_cursoExecucaoPersistente =_suportePersistente.getICursoExecucaoPersistente();
-	_cursoPersistente =_suportePersistente.getICursoPersistente();
-	_frequentaPersistente = _suportePersistente.getIFrequentaPersistente();
-	_turnoPersistente = _suportePersistente.getITurnoPersistente();
-	_turnoAlunoPersistente =_suportePersistente.getITurnoAlunoPersistente();
-	_turnoAulaPersistente =_suportePersistente.getITurnoAulaPersistente();
-	_salaPersistente = _suportePersistente.getISalaPersistente();
-  }
-    
-  protected void cleanData() {
-    try {
-      _suportePersistente.iniciarTransaccao();
-      _persistentPerson.apagarTodasAsPessoas();
-	  _persistentStudent.deleteAll();
-	  _cursoExecucaoPersistente.deleteAll();
-	  _cursoPersistente.deleteAll();
-	  _frequentaPersistente.deleteAll();
-	  _turnoPersistente.deleteAll();
-	  _turnoAlunoPersistente.deleteAll();
-	  _turnoAulaPersistente.deleteAll();
-	  _salaPersistente.deleteAll();
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia excepcao) {
-      fail("Exception when cleaning data");
-    }
-  } 
+		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+
+		// invoca acção
+		actionPerform();
+
+		// verifica reencaminhamento
+		verifyForward("sucess");
+
+		//verifica ausencia de erros
+		verifyNoActionErrors();
+
+		//verifica UserView guardado na sessão
+		List lessons =
+			(List) getSession().getAttribute(SessionConstants.LESSON_LIST_ATT);
+		assertNotNull("Shift lessons not present", lessons);
+		assertEquals("Shift lessons not present", lessons.size(), 1);
+	}
+
+	/**
+	* @param integer
+	* @return
+	*/
+	private InfoStudent getInfoStudent(Integer number) {
+		InfoStudent infoStudent = null;
+
+		IStudent student = null;
+
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentStudent studentDAO = sp.getIPersistentStudent();
+			sp.iniciarTransaccao();
+			student =
+				studentDAO.readByNumero(
+					number,
+					new TipoCurso(TipoCurso.LICENCIATURA));
+			sp.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace(System.out);
+			fail("Reading student number " + number.intValue());
+		}
+		assertNotNull(student);
+		infoStudent = Cloner.copyIStudent2InfoStudent(student);
+		return infoStudent;
+	}
+
 }
