@@ -33,6 +33,7 @@ import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 import org.apache.ojb.broker.metadata.fieldaccess.PersistentField;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.broker.query.QueryFactory;
 import org.apache.ojb.broker.util.ProxyHelper;
 import org.apache.ojb.broker.util.logging.LoggerFactory;
@@ -114,7 +115,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			PersistenceBroker broker = ((HasBroker) tx).getBroker();
 			broker.removeFromCache(obj);
 		} catch (ODMGRuntimeException ex) {
-			ex.printStackTrace();
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.UPGRADE_LOCK,
 				ex);
@@ -444,5 +444,23 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 				}*/
 		broker.clearCache();
 	}
+	
+	
+	protected List queryList(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia {
+		PersistenceBroker pb = ((HasBroker)odmg.currentTransaction()).getBroker();		
+		Query query = new QueryByCriteria(classToQuery, criteria);
+		List list = (List) pb.getCollectionByQuery(query);
+		lockRead(list);
+		return list;
+	}	
+
+	protected Object queryObject(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia {
+		List listObj = queryList(classToQuery, criteria);
+		Object obj = null;
+		if (!listObj.isEmpty()){
+			obj = listObj.get(0);
+		}
+		return obj;
+	}	
 
 }
