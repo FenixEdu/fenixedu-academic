@@ -8,16 +8,20 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 /**
  * @author tfc130
  */
 
-public class EditarAulasDeTurnoFormAction extends FenixAction {
+public class EditarAulasDeTurnoFormAction
+	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
+      	
+	super.execute(mapping, form, request, response);
+      	
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
          /* Obtem o parametro do submit que indica a operacao a realizar */

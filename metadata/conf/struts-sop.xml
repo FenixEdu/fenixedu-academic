@@ -716,11 +716,11 @@
               name="editarAulasDeTurnoForm"
       		  path="/removerAulaDeTurno"
               scope="request"      		  
-              input="/editarAulasDeTurnoForm.do"
+              input="/prepararEditarAulasDeTurno.do"
               type="ServidorApresentacao.Action.sop.RemoverAulaDeTurnoFormAction"
               validate="true"
               >
-          <forward name="Sucesso" path="/editarAulasDeTurnoForm.do"/>
+          <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
       </action>
 
       <action path="/prepararAdicionarAulasDeTurno"

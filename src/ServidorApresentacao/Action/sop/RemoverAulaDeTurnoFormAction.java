@@ -55,7 +55,14 @@ public class RemoverAulaDeTurnoFormAction
 			//ArrayList infoTurnos =
 			//	(ArrayList) request.getAttribute(
 			//		"infoTurnosDeDisciplinaExecucao");
-			InfoShift infoTurno = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+			//InfoShift infoTurno = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+			Integer shiftOID =
+				new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+			Object args[] = { shiftOID };
+			InfoShift infoTurno =
+				(InfoShift) gestor.executar(userView, "ReadShiftByOID", args);
+
+
 			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
 			System.out.println("infoTurno: " + infoTurno);
