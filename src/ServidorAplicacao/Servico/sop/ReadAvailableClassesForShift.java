@@ -10,10 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.ISiteComponent;
 import DataBeans.InfoClass;
-import DataBeans.InfoSiteClassesComponent;
-import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
@@ -60,7 +57,8 @@ public class ReadAvailableClassesForShift implements IServico {
 		return service;
 	}
 
-	public SiteView run(Integer shiftOID) throws FenixServiceException {
+	public List run(Integer shiftOID) throws FenixServiceException {
+
 		List infoClasses = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -91,7 +89,8 @@ public class ReadAvailableClassesForShift implements IServico {
 			Iterator iter = classes.iterator();
 			while (iter.hasNext()) {
 				ITurma classImpl = (ITurma) iter.next();
-				if (executionDegree.contains(classImpl.getExecutionDegree())) {
+				if (executionDegree.contains(classImpl.getExecutionDegree()) &&
+					!shift.getAssociatedClasses().contains(classImpl)) {
 					InfoClass infoClass = Cloner.copyClass2InfoClass(classImpl);
 					infoClasses.add(infoClass);
 				}
@@ -99,11 +98,8 @@ public class ReadAvailableClassesForShift implements IServico {
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		ISiteComponent classesComponent =
-			new InfoSiteClassesComponent(infoClasses);
-		SiteView siteView = new SiteView(classesComponent);
 
-		return siteView;
+		return infoClasses;
 	}
 
 	private Collection extractCurricularPlans(IDisciplinaExecucao executionCourse) {

@@ -15,12 +15,14 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftType;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -44,23 +46,14 @@ public class ManageShiftDA
 
 		InfoShift infoShiftToEdit =
 			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
-		System.out.println(
-			"###### infoShiftToEdit.getInfoClasses().size()= "
-				+ infoShiftToEdit.getInfoClasses().size());
 
 		/* Fill out form to be edited with shifts original values */
 		DynaActionForm editShiftForm = (DynaActionForm) form;
-		//if (editShiftForm.get("courseInitials") == null) {
 		editShiftForm.set(
 			"courseInitials",
 			infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
-		//}
-		//if (editShiftForm.get("nome") == null) {
 		editShiftForm.set("nome", infoShiftToEdit.getNome());
-		//}
-		//if (editShiftForm.get("tipoAula") == null) {
 		editShiftForm.set("tipoAula", infoShiftToEdit.getTipo().getTipo());
-		//}
 
 		/* Place list of execution courses in request */
 		SessionUtils.getExecutionCourses(request);
@@ -147,25 +140,16 @@ public class ManageShiftDA
 		InfoClass infoClass =
 			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-		Integer shiftOID =
-			new Integer(request.getParameter(SessionConstants.SHIFT_OID));
-
-		Object[] args = { shiftOID };
-		InfoShift infoShift = null;
-		try {
-			infoShift =
-				(InfoShift) ServiceUtils.executeService(
-					userView,
-					"ReadShiftByOID",
-					args);
-			System.out.println("shift= " + infoShift);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException();
-		}
+		InfoShift infoShift =
+			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
 		Object argsRemove[] = { infoShift, infoClass };
 		ServiceUtils.executeService(userView, "RemoverTurno", argsRemove);
-		
+
+		ContextUtils.setShiftContext(request);
+
+		request.removeAttribute(SessionConstants.CLASS_VIEW);
+
 		return prepareEditShift(mapping, form, request, response);
 	}
 

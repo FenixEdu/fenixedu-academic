@@ -75,11 +75,11 @@
       </form-bean>
 
 	  <!-- Dynamic-FormBean for adding shifts to class -->
-      <form-bean name="addShiftsForm"
+      <form-bean name="selectMultipleItemsForm"
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
         <form-property name="page" type="java.lang.Integer"/>
-        <form-property name="selectedShifts" type="java.lang.String[]" size="0"/>
+        <form-property name="selectedItems" type="java.lang.String[]" size="0"/>
       </form-bean>
 
 	  <!-- AULAS -->
@@ -1204,12 +1204,24 @@
 	<action path="/addShifts"
 			input="/manageClass.do?method=prepare&amp;page=0"
             type="ServidorApresentacao.Action.sop.AddShiftsDA"
-            name="addShiftsForm"
+            name="selectMultipleItemsForm"
             parameter="method"
             scope="request"
             validate="true"
             >
     	<forward name="EditClass" path="/manageClass.do?method=prepare&amp;page=0"/>
+	</action>
+
+	<action path="/addClasses"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="ServidorApresentacao.Action.sop.AddClassesDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ListClasses" path="/addClasses.jsp"/>
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
 	</action>
 
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->

@@ -40,7 +40,7 @@ public class AddShiftsDA
 
 		DynaActionForm addShiftsForm = (DynaActionForm) form;
 		String[] selectedShifts =
-			(String[]) addShiftsForm.get("selectedShifts");
+			(String[]) addShiftsForm.get("selectedItems");
 
 		List shiftOIDs = new ArrayList();
 		for (int i = 0; i < selectedShifts.length; i++) {

@@ -39,6 +39,8 @@
 			<td class="listClasses-header">
 	        	<bean:message key="property.shift.capacity"/>
 	        </td>
+			<td class="listClasses-header">
+	        </td>
 		</tr>
 		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
@@ -89,6 +91,30 @@
               	<td class="listClasses">
               		<bean:write name="infoShift" property="lotacao"/>
               	</td>
+				<td class="listClasses">
+               		<html:link page="<%= "/manageShifts.do?method=deleteShift&amp;page=0&amp;"
+               							+ SessionConstants.SHIFT_OID
+			  							+ "="
+               				   			+ pageContext.findAttribute("infoShiftOID")
+               				   			+ "&amp;"
+			  							+ SessionConstants.EXECUTION_COURSE_OID
+  										+ "="
+  										+ pageContext.findAttribute("infoExecutionCourseOID")
+               				   			+ "&amp;"
+			  							+ SessionConstants.EXECUTION_PERIOD_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionPeriodOID")
+  										+ "&amp;"
+  										+ SessionConstants.CURRICULAR_YEAR_OID
+			  							+ "="
+  										+ pageContext.findAttribute("curricularYearOID")
+  										+ "&amp;"
+			  							+ SessionConstants.EXECUTION_DEGREE_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionDegreeOID") %>">
+						<bean:message key="link.delete"/>
+					</html:link>
+				</td>
 			</tr>
 		</logic:iterate>
 	</table>

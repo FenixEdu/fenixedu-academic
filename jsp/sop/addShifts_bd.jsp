@@ -101,7 +101,7 @@
 	              		<bean:write name="infoShift" property="lotacao"/>
 	              	</td>
 	              	<td class="listClasses">
-						<html:multibox property="selectedShifts">
+						<html:multibox property="selectedItems">
 							<bean:write name="infoShift" property="idInternal"/>
 						</html:multibox>
 					</td>

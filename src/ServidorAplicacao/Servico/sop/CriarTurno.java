@@ -82,6 +82,7 @@ public class CriarTurno implements IServico {
 			//        be attributed by SOP users. So for now just set it to 0. 
 			turno.setAvailabilityFinal(new Integer(0));
 			turno.setAssociatedLessons(new ArrayList());
+			turno.setAssociatedClasses(new ArrayList());
 			turno.setAssociatedTeacherProfessorShipPercentage(new ArrayList());
 			
 			try {

@@ -30,6 +30,7 @@ import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.TipoAula;
 
 /**
@@ -79,7 +80,9 @@ public class ManageShiftsDA
 		Collections.sort(infoShifts, chainComparator);
 
 		/* Place list of shifts in request */
-		request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+		if (infoShifts != null && !infoShifts.isEmpty()) {
+			request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+		}
 
 		/* Place list of execution courses in request */
 		SessionUtils.getExecutionCourses(request);
@@ -121,15 +124,39 @@ public class ManageShiftsDA
 					userView,
 					"CriarTurno",
 					argsCriarTurno);
+			infoShift.setInfoLessons(null);
+			infoShift.setInfoClasses(null);
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException("O Turno", ex);
 		}
 
-		request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+		request.setAttribute(
+			SessionConstants.EXECUTION_COURSE,
+			infoExecutionCourse);
 
 		request.setAttribute(SessionConstants.SHIFT, infoShift);
 
 		return mapping.findForward("EditShift");
+	}
+
+	public ActionForward deleteShift(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		IUserView userView = SessionUtils.getUserView(request);
+
+		ContextUtils.setShiftContext(request);
+
+		InfoShift infoShiftToDelete =
+			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+
+		Object args[] = { infoShiftToDelete };
+		ServiceUtils.executeService(userView, "DeleteShift", args);
+
+		return listShifts(mapping, form, request, response);
 	}
 
 }

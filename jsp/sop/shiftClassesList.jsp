@@ -57,6 +57,10 @@ Turmas a que turno pertence:
 							  	+ "="
 							  	+ pageContext.findAttribute("shiftOID")
 							  	+ "&amp;"
+								+ SessionConstants.EXECUTION_COURSE_OID
+							  	+ "="
+							  	+ pageContext.findAttribute("executionCourseOID")
+							  	+ "&amp;"
 								+ SessionConstants.EXECUTION_PERIOD_OID
 							  	+ "="
 							  	+ pageContext.findAttribute("executionPeriodOID")

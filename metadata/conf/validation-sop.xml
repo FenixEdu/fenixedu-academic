@@ -688,8 +688,8 @@
     </form>
 
   <!-- Validation for chooseContextForm Form -->
-    <form name="addShiftsForm">
-        <field property="selectedShifts" depends="requiered" page="1">
+    <form name="selectMultipleItemsForm">
+        <field property="selectedItems" depends="requiered" page="1">
 	        <arg0 key="ano curricular" resource="true"/>
         </field>
     </form>

@@ -325,6 +325,14 @@ public class ContextUtils {
 					new BeanComparator("infoSala.nome"));
 				Collections.sort(infoShift.getInfoLessons(), chainComparator);
 
+				if (infoShift.getInfoLessons().isEmpty()) {
+					infoShift.setInfoLessons(null);
+				}
+
+				if (infoShift.getInfoClasses().isEmpty()) {
+					infoShift.setInfoClasses(null);
+				}
+
 				// Place it in request
 				request.setAttribute(SessionConstants.SHIFT, infoShift);
 			} else {
