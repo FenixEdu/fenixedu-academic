@@ -2,199 +2,49 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for Dominio.gaugingTests.physics.GaugingTestResult -->
-   <class-descriptor
-   	  class="Dominio.gaugingTests.physics.GaugingTestResult"
-   	  table="GAUGING_TEST_RESULT"
-   >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-     <field-descriptor
-		name="keyStudent"
-		column="KEY_STUDENT"
-		jdbc-type="INTEGER"
-	/>
-      <field-descriptor
-		name="p1"
-		column="P1"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p2"
-		column="P2"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p3"
-		column="P3"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p4"
-		column="P4"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p5"
-		column="P5"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p6"
-		column="P6"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p7"
-		column="P7"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p8"
-		column="P8"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p9"
-		column="P9"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p10"
-		column="P10"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p11"
-		column="P11"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p12"
-		column="P12"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p13"
-		column="P13"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p14"
-		column="P14"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p15"
-		column="P15"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p16"
-		column="P16"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p17"
-		column="P17"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p18"
-		column="P18"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p19"
-		column="P19"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p20"
-		column="P20"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p21"
-		column="P21"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p22"
-		column="P22"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p23"
-		column="P23"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p24"
-		column="P24"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p25"
-		column="P25"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p26"
-		column="P26"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p27"
-		column="P27"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="p28"
-		column="P28"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="test"
-		column="TEST"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="test"
-		column="TEST"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="unanswered"
-		column="UNANSWERED"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="correct"
-		column="CORRECT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="wrong"
-		column="WRONG"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="cf"
-		column="CF"
-		jdbc-type="DOUBLE"
-	/>	
-    <reference-descriptor
-			name="student"
-			class-ref="Dominio.Student"
-			proxy="true">
-		<foreignkey field-ref="keyStudent"/>
-	</reference-descriptor>  
-   </class-descriptor>
+    <class-descriptor class="Dominio.gaugingTests.physics.GaugingTestResult" table="GAUGING_TEST_RESULT" >
+        <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
+            autoincrement="true" />
+        <field-descriptor name="keyStudent" column="KEY_STUDENT" jdbc-type="INTEGER" />
+        <field-descriptor name="p1" column="P1" jdbc-type="VARCHAR" />
+        <field-descriptor name="p2" column="P2" jdbc-type="VARCHAR" />
+        <field-descriptor name="p3" column="P3" jdbc-type="VARCHAR" />
+        <field-descriptor name="p4" column="P4" jdbc-type="VARCHAR" />
+        <field-descriptor name="p5" column="P5" jdbc-type="VARCHAR" />
+        <field-descriptor name="p6" column="P6" jdbc-type="VARCHAR" />
+        <field-descriptor name="p7" column="P7" jdbc-type="VARCHAR" />
+        <field-descriptor name="p8" column="P8" jdbc-type="VARCHAR" />
+        <field-descriptor name="p9" column="P9" jdbc-type="VARCHAR" />
+        <field-descriptor name="p10" column="P10" jdbc-type="VARCHAR" />
+        <field-descriptor name="p11" column="P11" jdbc-type="VARCHAR" />
+        <field-descriptor name="p12" column="P12" jdbc-type="VARCHAR" />
+        <field-descriptor name="p13" column="P13" jdbc-type="VARCHAR" />
+        <field-descriptor name="p14" column="P14" jdbc-type="VARCHAR" />
+        <field-descriptor name="p15" column="P15" jdbc-type="VARCHAR" />
+        <field-descriptor name="p16" column="P16" jdbc-type="VARCHAR" />
+        <field-descriptor name="p17" column="P17" jdbc-type="VARCHAR" />
+        <field-descriptor name="p18" column="P18" jdbc-type="VARCHAR" />
+        <field-descriptor name="p19" column="P19" jdbc-type="VARCHAR" />
+        <field-descriptor name="p20" column="P20" jdbc-type="VARCHAR" />
+        <field-descriptor name="p21" column="P21" jdbc-type="VARCHAR" />
+        <field-descriptor name="p22" column="P22" jdbc-type="VARCHAR" />
+        <field-descriptor name="p23" column="P23" jdbc-type="VARCHAR" />
+        <field-descriptor name="p24" column="P24" jdbc-type="VARCHAR" />
+        <field-descriptor name="p25" column="P25" jdbc-type="VARCHAR" />
+        <field-descriptor name="p26" column="P26" jdbc-type="VARCHAR" />
+        <field-descriptor name="p27" column="P27" jdbc-type="VARCHAR" />
+        <field-descriptor name="p28" column="P28" jdbc-type="VARCHAR" />
+        <field-descriptor name="test" column="TEST" jdbc-type="INTEGER" />
+        <field-descriptor name="test" column="TEST" jdbc-type="INTEGER" />
+        <field-descriptor name="unanswered" column="UNANSWERED" jdbc-type="INTEGER" />
+        <field-descriptor name="correct" column="CORRECT" jdbc-type="INTEGER" />
+        <field-descriptor name="wrong" column="WRONG" jdbc-type="INTEGER" />
+        <field-descriptor name="cf" column="CF" jdbc-type="VARCHAR" 
+            conversion="ServidorPersistente.Conversores.JavaString2FloatFieldConversion" />
+        <reference-descriptor name="student" class-ref="Dominio.Student" proxy="true">
+            <foreignkey field-ref="keyStudent"/>
+        </reference-descriptor>
+    </class-descriptor>
    
 
 <!-- Mapping of User defined classses ends here -->
