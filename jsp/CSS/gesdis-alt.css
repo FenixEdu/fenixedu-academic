@@ -68,34 +68,34 @@ h4	{
 *******************************************/
 a{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #000;
+	color: #900;
 	text-decoration: underline;
 /*	background-color: transparent;*/
 }
 a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #000;
+	color: #900;
 	text-decoration: underline;
 /*	background-color: transparent;*/
 	}
 
 a:active {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #000;
+	color: #900;
 	text-decoration: underline;
 /*	background-color: transparent;*/
 }	
 	
 a:visited	{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #000;
+	color: #900;
 	text-decoration: underline;
 /*	background-color: transparent;*/
 	}
 
 a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #000;
+	color: #900;
 	text-decoration: none;
 /*	background-color: transparent;*/
 	}
@@ -301,7 +301,7 @@ p.citation-author	{
 	}
 
 .mais-anuncio a:link, a:active, a:visited	{
-	color: #000;
+	color: #900;
 	text-decoration: underline;
 	background-color: transparent;
 	}
