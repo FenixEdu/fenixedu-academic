@@ -1,6 +1,6 @@
 drop table if exists mw_ENROLMENT;
 create table mw_ENROLMENT
-select * from mw_ENROLMENT_temp use index (I2) where enrolmentYear <> 2003 and degreeCode = 1 order by number;
+select * from mw_ENROLMENT_temp use index (I2) where enrolmentYear <> 2003;
 
 drop table if exists mw_CURRICULAR_COURSE_SCOPE;
 create table mw_CURRICULAR_COURSE_SCOPE

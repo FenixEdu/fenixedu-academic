@@ -1,9 +1,4 @@
 -- 2003 Enrolments
 drop table if exists mw_ENROLMENT;
 create table mw_ENROLMENT
-select * from mw_ENROLMENT_temp where enrolmentYear = 2003 and degreeCode = 2;
-
-UPDATE DEGREE_CURRICULAR_PLAN SET STATE = 2 WHERE NAME LIKE "L%" AND NAME NOT LIKE "%2003/2004";
-UPDATE DEGREE_CURRICULAR_PLAN SET STATE = 1 WHERE NAME LIKE "L%2003/2004";
-
-UPDATE BRANCH SET BRANCH_NAME = '' WHERE BRANCH_NAME LIKE "CURSO DE%";
+select * from mw_ENROLMENT_temp where enrolmentYear = 2003;

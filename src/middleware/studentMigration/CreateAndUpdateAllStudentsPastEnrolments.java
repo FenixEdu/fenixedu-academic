@@ -2,6 +2,7 @@ package middleware.studentMigration;
 
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -60,6 +61,10 @@ import Util.TipoCurso;
 
 public class CreateAndUpdateAllStudentsPastEnrolments
 {
+	private static HashMap studentCurricularPlansCreated = new HashMap();
+	private static HashMap enrollmentsCreated = new HashMap();
+	private static HashMap enrollmentEvaluationsCreated = new HashMap();
+
 	public static void main(String args[])
 	{
 		MWAluno mwStudent = null;
@@ -72,7 +77,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	
 			fenixPersistentSuport.iniciarTransaccao();
 	
-//			IExecutionPeriod currentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod().readActualExecutionPeriod();
 			Integer numberOfStudents = persistentMWAluno.countAll();
 	
 			fenixPersistentSuport.confirmarTransaccao();
@@ -114,6 +118,11 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		}
 
 		ReportEnrolment.report(new PrintWriter(System.out, true));
+
+		System.out.println("[INFO] DONE!");
+		System.out.println("[INFO] Total StudentCurricularPlans created: [" + CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.size() + "].");
+		System.out.println("[INFO] Total Enrolments created: [" + CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.size() + "].");
+		System.out.println("[INFO] Total EnrolmentEvaluations created: [" + CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.size() + "].");
 	}
 
 	/**
@@ -193,33 +202,40 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 		List result = persistentStudentCurricularPlan.readAllByDegreeCurricularPlanAndState(degreeCurricularPlan, StudentCurricularPlanState.PAST_OBJ);
 		if ((result == null) || (result.isEmpty())) {
-			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 
-			persistentStudentCurricularPlan.simpleLockWrite(studentCurricularPlan);
-
-			studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
-			studentCurricularPlan.setCurrentState(StudentCurricularPlanState.PAST_OBJ);
-			studentCurricularPlan.setStartDate(new Date());
-			studentCurricularPlan.setStudent(student);
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.get(student.getNumber().toString());
 			
-			IBranch branch = CreateAndUpdateAllStudentsPastEnrolments.getBranch(mwStudent.getDegreecode(), mwStudent.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
-			if (branch == null) {
-				// This should NEVER happen!
-				System.out.println("[ERROR 03.1] No record of Branch with code: [" + mwStudent.getBranchcode() + "] for Degree with code: [" + mwStudent.getDegreecode() + "]!");
-				return null;
+			if (studentCurricularPlan == null) {
+				studentCurricularPlan = new StudentCurricularPlan();
+
+				persistentStudentCurricularPlan.simpleLockWrite(studentCurricularPlan);
+
+				studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
+				studentCurricularPlan.setCurrentState(StudentCurricularPlanState.PAST_OBJ);
+				studentCurricularPlan.setStartDate(new Date());
+				studentCurricularPlan.setStudent(student);
+			
+				IBranch branch = CreateAndUpdateAllStudentsPastEnrolments.getBranch(mwStudent.getDegreecode(), mwStudent.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
+				if (branch == null) {
+					// This should NEVER happen!
+					System.out.println("[ERROR 03.1] No record of Branch with code: [" + mwStudent.getBranchcode() + "] for Degree with code: [" + mwStudent.getDegreecode() + "]!");
+					return null;
+				}
+			
+				studentCurricularPlan.setBranch(branch);
+
+				studentCurricularPlan.setClassification(null);
+				studentCurricularPlan.setCompletedCourses(null);
+				studentCurricularPlan.setEmployee(null);
+				studentCurricularPlan.setEnrolledCourses(null);
+				studentCurricularPlan.setEnrolments(null);
+				studentCurricularPlan.setGivenCredits(null);
+				studentCurricularPlan.setObservations(null);
+				studentCurricularPlan.setSpecialization(null);
+				studentCurricularPlan.setWhen(null);
+				
+				CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.put(student.getNumber().toString(), studentCurricularPlan);
 			}
-			
-			studentCurricularPlan.setBranch(branch);
-
-			studentCurricularPlan.setClassification(null);
-			studentCurricularPlan.setCompletedCourses(null);
-			studentCurricularPlan.setEmployee(null);
-			studentCurricularPlan.setEnrolledCourses(null);
-			studentCurricularPlan.setEnrolments(null);
-			studentCurricularPlan.setGivenCredits(null);
-			studentCurricularPlan.setObservations(null);
-			studentCurricularPlan.setSpecialization(null);
-			studentCurricularPlan.setWhen(null);
 			
 			return studentCurricularPlan;
 		} else if (!result.isEmpty()) {
@@ -343,7 +359,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			System.out.println("[ERROR 03.2] No record of Branch with code: [" + mwEnrolment.getBranchcode() + "] for Degree with code: [" + mwEnrolment.getDegreecode() + "]!");
 			return null;
 		}
-		
+
 		return UpdateStudentEnrolments.getCurricularCourseScopeToEnrollIn(studentCurricularPlan, mwEnrolment, curricularCourse, branch, fenixPersistentSuport);
 	}
 
@@ -395,40 +411,54 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		IEnrolment enrolment = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(studentCurricularPlan, curricularCourseScope, executionPeriod);
 
 		if (enrolment == null) {
-			// Create the Enrolment.
-			enrolment = new Enrolment();
 
-			fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolment);
+			String key = executionYearName + executionPeriodName + curricularCourseScope.getCurricularCourse().getCode() + studentCurricularPlan.getStudent().getNumber();
+			enrolment = (IEnrolment) CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.get(key);
 
-			enrolment.setCurricularCourseScope(curricularCourseScope);
-			enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
-			enrolment.setEnrolmentState(CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentStateByGrade(mwEnrolment));
-			enrolment.setExecutionPeriod(executionPeriod);
-			enrolment.setStudentCurricularPlan(studentCurricularPlan);
+			if (enrolment == null) {
+				// Create the Enrolment.
+				enrolment = new Enrolment();
+
+				fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolment);
+
+				enrolment.setCurricularCourseScope(curricularCourseScope);
+				enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
+				enrolment.setEnrolmentState(CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentStateByGrade(mwEnrolment));
+				enrolment.setExecutionPeriod(executionPeriod);
+				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.put(key, enrolment);
+			}
 		}
 
 		// Create the EnrolmentEvaluation.
 		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade());
 
 		if (enrolmentEvaluation == null) {
-			enrolmentEvaluation = new EnrolmentEvaluation();
 
-			fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+			String key = executionYearName + executionPeriodName + curricularCourseScope.getCurricularCourse().getCode() + studentCurricularPlan.getStudent().getNumber() + mwEnrolment.getGrade() + enrolmentEvaluationType.getType().toString();
+			enrolmentEvaluation = (IEnrolmentEvaluation) CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.get(key);
 
-			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-			enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
-			enrolmentEvaluation.setExamDate(mwEnrolment.getExamdate());
-			enrolmentEvaluation.setGrade(mwEnrolment.getGrade());
-			enrolmentEvaluation.setObservation(mwEnrolment.getRemarks());
-			enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
+			if (enrolmentEvaluation == null) {
+				enrolmentEvaluation = new EnrolmentEvaluation();
 
-			enrolmentEvaluation.setEmployee(null);
-			enrolmentEvaluation.setGradeAvailableDate(null);
-			enrolmentEvaluation.setWhen(null);
-			enrolmentEvaluation.setCheckSum(null);
+				fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+
+				enrolmentEvaluation.setEnrolment(enrolment);
+				enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+				enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
+				enrolmentEvaluation.setExamDate(mwEnrolment.getExamdate());
+				enrolmentEvaluation.setGrade(mwEnrolment.getGrade());
+				enrolmentEvaluation.setObservation(mwEnrolment.getRemarks());
+				enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
+
+				enrolmentEvaluation.setEmployee(null);
+				enrolmentEvaluation.setGradeAvailableDate(null);
+				enrolmentEvaluation.setWhen(null);
+				enrolmentEvaluation.setCheckSum(null);
+				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
+			}
 		}
-		
+
 		ReportEnrolment.addEnrolmentMigrated();
 
 		return enrolment;

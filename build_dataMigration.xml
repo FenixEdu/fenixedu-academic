@@ -1034,7 +1034,7 @@
 		</exec>
 	</target>
 
-	<target name="load-mw-tables-with-data-for-all-enrollment-migration" depends="compile-proj, load-data-from-old-system, create-past-execution-periods-and-execution-years" description="Loads tables mw_ENROLMENT, mw_CURRICULAR_COURSE_SCOPE and mw_ALUNO with data for all enrollment migration">
+	<target name="load-mw-tables-with-data-for-all-enrollment-migration" depends="compile-proj, load-data-from-old-system" description="Loads tables mw_ENROLMENT, mw_CURRICULAR_COURSE_SCOPE and mw_ALUNO with data for all enrollment migration">
 		<sequential>
 			<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 				<fileset dir="${sql}">
@@ -1049,7 +1049,7 @@
 		</sequential>
 	</target>
 
-	<target name="create-and-update-all-past-curriculums" depends="load-mw-tables-with-data-for-all-enrollment-migration">
+	<target name="create-and-update-all-past-curriculums" depends="load-mw-tables-with-data-for-all-enrollment-migration, create-past-execution-periods-and-execution-years">
 		<java classname="middleware.studentMigration.CreateAndUpdateAllPastCurriculums" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
