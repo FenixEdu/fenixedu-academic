@@ -56,7 +56,7 @@ public class ReadStudentByNumberAndType implements IServico {
       // Isto não é para ficar assim. Está assim temporariamente até se saber como é feita de facto a distinção
       // dos aluno, referente ao tipo, a partir da página de login.
 	  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-      IStudent student = sp.getIPersistentStudent().readByNumero(number, degreeType);
+      IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number, degreeType);
 
       if (student != null) { 	
       	infoStudent = Cloner.copyIStudent2InfoStudent(student);

@@ -55,7 +55,7 @@ public class ReadStudent implements IServico {
       // Isto não é para ficar assim. Está assim temporariamente até se saber como é feita de facto a distinção
       // dos aluno, referente ao tipo, a partir da página de login.
 	  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-      IStudent student = sp.getIPersistentStudent().readByNumero(number, new TipoCurso(TipoCurso.LICENCIATURA));
+      IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number, new TipoCurso(TipoCurso.LICENCIATURA));
 
       if (student != null) {
       	InfoPerson infoPerson = new InfoPerson();

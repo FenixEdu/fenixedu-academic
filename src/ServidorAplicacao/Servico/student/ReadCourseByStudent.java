@@ -43,7 +43,7 @@ public class ReadCourseByStudent implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudent student = sp.getIPersistentStudent().readByNumero(number, degreeType);
+			IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number, degreeType);
 			if (student != null) {
 				IStudentCurricularPlan StudentCurricularPlan =
 					sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(number, degreeType);

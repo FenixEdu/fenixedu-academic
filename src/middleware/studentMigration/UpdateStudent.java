@@ -96,7 +96,7 @@ public class UpdateStudent
 	{
 		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 		
-		IStudent student = persistentStudent.readByNumero(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+		IStudent student = persistentStudent.readStudentByNumberAndDegreeType(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 		
 		if (student == null) {
 			System.out.println("Error Reading Fenix Student [" + mwStudent.getNumber() + "]!");

@@ -115,7 +115,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 	{
 		IPersistentStudent persistentStudent = fenixPersistentSuport.getIPersistentStudent();
 
-		IStudent student = persistentStudent.readByNumero(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+		IStudent student = persistentStudent.readStudentByNumberAndDegreeType(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 		if (student == null) {
 			System.out.println("[ERROR 502] Can't find Student in Fenix DB with number: [" + mwStudent.getNumber() + "]!");
 			return;

@@ -145,7 +145,7 @@ public class UpdateStudentEnrolments
 		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
 		// Read Fenix Student.
-		IStudent student = persistentStudent.readByNumero(oldStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+		IStudent student = persistentStudent.readStudentByNumberAndDegreeType(oldStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 
 		if (student == null)
 		{
@@ -243,7 +243,7 @@ public class UpdateStudentEnrolments
 			ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 		} else
 		{
-			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 			attend = sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
 
 			if (attend != null)
@@ -645,7 +645,7 @@ public class UpdateStudentEnrolments
 			ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 		} else
 		{
-			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 //			IFrequenta attend = new Frequenta();
 //			sp.getIFrequentaPersistente().simpleLockWrite(attend);
 //			attend.setAluno(student);

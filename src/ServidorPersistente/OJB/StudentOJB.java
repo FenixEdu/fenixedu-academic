@@ -52,16 +52,6 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
 
     }
 
-    public IStudent readByNumero(Integer numero, TipoCurso degreeType) throws ExcepcaoPersistencia
-    {
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("number", numero);
-        criteria.addEqualTo("degreeType", degreeType);
-
-        return (IStudent) queryObject(Student.class, criteria);
-    }
-
     //	---------------------------------------------------------------------------------------------------------
 
     // feitos por David \ Ricardo

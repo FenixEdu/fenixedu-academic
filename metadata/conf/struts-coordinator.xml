@@ -130,6 +130,7 @@
         <form-property name="executionDegreeId" type="java.lang.Integer"/>
 	    <form-property name="tutorNumber" type="java.lang.Integer"/>
 	    <form-property name="deletedTutorsIds" type="java.lang.Integer[]" />
+   	    <form-property name="studentNumber" type="java.lang.Integer"/>
 	    <form-property name="studentNumberFirst" type="java.lang.Integer"/>
 	    <form-property name="studentNumberSecond" type="java.lang.Integer"/>	    
       </form-bean>
@@ -481,8 +482,8 @@
 	  	scope="request"
 	  	input="/tutorManagement.do?method=prepareChooseTutor&amp;page=0"
 	  >
-	  	<forward name="chooseTutor" path="chooseTutor" />
-	  	<forward name="showStudentsByTutor" path="showStudentsByTutor" />
+	  	<forward name="confirmation" path="/tutorManagement.do?method=readTutor" />
+	  	<forward name="cancel" path="/tutorManagement.do?method=prepareChooseTutor" />
 	  </action>
     </action-mappings>
     

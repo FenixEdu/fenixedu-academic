@@ -182,7 +182,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		IPersistentStudent persistentStudent = fenixPersistentSuport.getIPersistentStudent();
 
 		// Read Fenix Student.
-		IStudent student = persistentStudent.readByNumero(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+		IStudent student = persistentStudent.readStudentByNumberAndDegreeType(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 
 		if (student == null) {
 			// This can only happen if the Students/Persons migration was not runed before this one!

@@ -50,7 +50,6 @@ public class ReadStudentsByTutor implements IService
 			teacher.setTeacherNumber(tutorNumber);
 			
 			List tutorStudents = persistentTutor.readStudentsByTeacher(teacher);
-			
 			if(tutorStudents == null || tutorStudents.size() <= 0){
 				throw new FenixServiceException("error.tutor.noStudent");
 			}

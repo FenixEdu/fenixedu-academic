@@ -103,7 +103,7 @@ public class RegisterCandidate implements IServico
             if (studentNumber != null)
             {
                 IStudent student =
-                    sp.getIPersistentStudent().readByNumero(studentNumber, TipoCurso.MESTRADO_OBJ);
+                    sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber, TipoCurso.MESTRADO_OBJ);
 
                 if (student != null)
                 {

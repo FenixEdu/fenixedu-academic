@@ -85,7 +85,7 @@ public class WriteStudentAttendingCourses implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Reads the student from the database
-			IStudent student = sp.getIPersistentStudent().readByNumero(infoStudent.getNumber(), infoStudent.getDegreeType());
+			IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
 
 			IFrequentaPersistente attendsDAO = sp.getIFrequentaPersistente();
 

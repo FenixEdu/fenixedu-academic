@@ -75,7 +75,7 @@ public class UpdateStudentIDNumbers {
 			}
 
 		
-			IStudent student = sp.getIPersistentStudent().readByNumero(oldStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(oldStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 			
 			IPessoa personTemp = new Pessoa();
 			personTemp.setIdInternal(student.getPerson().getIdInternal());

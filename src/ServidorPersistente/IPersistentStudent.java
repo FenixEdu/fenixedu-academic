@@ -26,7 +26,6 @@ public interface IPersistentStudent extends IPersistentObject {
 	
 		
 // feitos pelo Nortadas
-	public IStudent readByNumero(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia;
 	public IStudent readByUsername(String username) throws ExcepcaoPersistencia;
 
 	

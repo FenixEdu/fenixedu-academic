@@ -10,6 +10,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IStudent;
 import Dominio.ITeacher;
+import Dominio.ITutor;
 import Dominio.Tutor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTutor;
@@ -20,7 +21,18 @@ import ServidorPersistente.IPersistentTutor;
  */
 public class TutorOJB extends ObjectFenixOJB implements IPersistentTutor
 {
-
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentTutor#readTutorByTeacherAndStudent(Dominio.ITeacher, Dominio.IStudent)
+	 */
+	public ITutor readTutorByTeacherAndStudent(ITeacher teacher, IStudent student) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+		criteria.addEqualTo("student.idInternal", student.getIdInternal());
+		
+		return (ITutor) queryObject(Tutor.class, criteria);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

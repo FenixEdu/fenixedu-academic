@@ -4,12 +4,14 @@
  */
 package ServidorApresentacao.Action.coordinator;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -36,10 +38,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		System.out.println("-->prepareChooseTutor...");
-
 		String executionDegreeId = request.getParameter("executionDegreeId");
-		System.out.println("executionDegreeId: " + executionDegreeId);
 		request.setAttribute("executionDegreeId", executionDegreeId);
 
 		return mapping.findForward("chooseTutor");
@@ -52,8 +51,6 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		System.out.println("-->readTutor...");
-
 		ActionErrors errors = new ActionErrors();
 
 		HttpSession httpSession = request.getSession();
@@ -61,11 +58,9 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 
 		DynaActionForm tutorForm = (DynaActionForm) actionForm;
 		Integer tutorNumber = (Integer) tutorForm.get("tutorNumber");
-		System.out.println("tutorNumber: " + tutorNumber);
 		request.setAttribute("tutorNumber", tutorNumber);
 
 		Integer executionDegreeId = (Integer) tutorForm.get("executionDegreeId");
-		System.out.println("executionDegreeId: " + executionDegreeId);
 		request.setAttribute("executionDegreeId", executionDegreeId);
 
 		Object[] args = { tutorNumber };
@@ -85,8 +80,24 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 			saveErrors(request, errors);
 			mapping.getInputForward();
 		}
+		
+		cleanForm(tutorForm);
+		
+		//order list by number
+		Collections.sort(infoStudentsOfTutor, new BeanComparator("infoStudent.number"));	
 		request.setAttribute("studentsOfTutor", infoStudentsOfTutor);
 
 		return mapping.findForward("showStudentsByTutor");
+	}
+
+	/**
+	 * @param tutorForm
+	 */
+	private void cleanForm(DynaActionForm tutorForm)
+	{
+		tutorForm.set("deletedTutorsIds", null);
+		tutorForm.set("studentNumber", null);
+		tutorForm.set("studentNumberFirst", null);
+		tutorForm.set("studentNumberSecond", null);		
 	}
 }

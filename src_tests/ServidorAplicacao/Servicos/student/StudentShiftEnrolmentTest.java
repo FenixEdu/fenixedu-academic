@@ -109,7 +109,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
         {
             SuportePersistenteOJB.getInstance().iniciarTransaccao();
             student =
-                SuportePersistenteOJB.getInstance().getIPersistentStudent().readByNumero(
+                SuportePersistenteOJB.getInstance().getIPersistentStudent().readStudentByNumberAndDegreeType(
                     new Integer(600),
                     new TipoCurso(TipoCurso.LICENCIATURA));
             assertNotNull(student);

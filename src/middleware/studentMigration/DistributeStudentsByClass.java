@@ -101,7 +101,7 @@ public class DistributeStudentsByClass
         IPersistentStudent studentDAO = sp.getIPersistentStudent();
         ITurmaPersistente groupDAO = sp.getITurmaPersistente();
         IStudent student =
-            studentDAO.readByNumero(new Integer(studentNumber), TipoCurso.LICENCIATURA_OBJ);
+            studentDAO.readStudentByNumberAndDegreeType(new Integer(studentNumber), TipoCurso.LICENCIATURA_OBJ);
 
         ICursoExecucao executionDegree = getExecutionDegree(studentClass, executionPeriod, sp, spmw);
         ITurma group =

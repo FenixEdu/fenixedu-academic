@@ -131,7 +131,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
             IStudent student =
-                studentDAO.readByNumero(infoStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+                studentDAO.readStudentByNumberAndDegreeType(infoStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 
             IExecutionPeriod executionPeriod =
                 new ExecutionPeriod(
@@ -228,7 +228,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         IStudent student = teacherDegreeFinalProjectStudent.getStudent();
         IPersistentStudent studentDAO = sp.getIPersistentStudent();
 
-        student = studentDAO.readByNumero(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+        student = studentDAO.readStudentByNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
         if (student == null)
         {
             throw new StudentNotFoundServiceException();

@@ -216,7 +216,7 @@ public class PrepareCreateGuide implements IServico {
 			IStudent student = null;
 			IStudentCurricularPlan studentCurricularPlan = null;
 			try {
-				student = sp.getIPersistentStudent().readByNumero(number, TipoCurso.MESTRADO_OBJ);
+				student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number, TipoCurso.MESTRADO_OBJ);
 				if (student == null)
 					throw new NonExistingServiceException("O Aluno", null);
 
