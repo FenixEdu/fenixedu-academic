@@ -5,6 +5,8 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
+<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
+     <bean:define id="executionYearName" name="<%= SessionConstants.EXECUTION_YEAR %>"/>
     <bean:define id="specializationList" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="session" />
     <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />
     <bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="session" />
@@ -12,19 +14,20 @@
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         <html:hidden property="executionYear"/>
+        <html:hidden property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
         <html:hidden property="page" value="1"/>
         <input type="hidden" value="getCandidates" name="method"/>
 <h2><bean:message name="title"/></h2>
 <table>    
-       <!-- Degree -->
+    <!-- Degree   
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.degree"/></td>
          <td><html:select property="degree">
          		<option value="" selected="selected"><bean:message key="label.candidate.degree.default"/></option>
-                <html:options collection="degreeList" property="infoDegreeCurricularPlan.infoDegree.nome" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
+                <html:options collection="degreeList" property="value" labelProperty="label"/>
              </html:select>
          </td>
-       </tr>
+       </tr> -->
        
        <!-- Degree Type -->
        <tr>

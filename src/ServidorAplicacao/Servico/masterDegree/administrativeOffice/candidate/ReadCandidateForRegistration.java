@@ -10,6 +10,7 @@ import java.util.List;
 
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
+import Dominio.CursoExecucao;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
@@ -61,17 +62,14 @@ public class ReadCandidateForRegistration implements IServico {
 
 			executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 			
-			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(degreeCode, executionYear);
-			
-			
+			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(degreeCode, executionYear);		
 			result = sp.getIPersistentCandidateSituation().readCandidateListforRegistration(executionDegree);
-
 		} catch (ExcepcaoPersistencia ex) {
+
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		} 
-
 
 
 		if (result == null){
@@ -91,4 +89,44 @@ public class ReadCandidateForRegistration implements IServico {
 		return candidateList;
 		
 	}
+	
+	public List run(Integer executionDegreeCode) throws FenixServiceException {
+
+			ISuportePersistente sp = null;
+			List result = null;
+		
+			try {
+				sp = SuportePersistenteOJB.getInstance();
+			
+				// Get the Actual Execution Year
+				
+				ICursoExecucao executionDegree = new CursoExecucao();
+				executionDegree.setIdInternal(executionDegreeCode);
+						
+				result = sp.getIPersistentCandidateSituation().readCandidateListforRegistration(executionDegree);
+			} catch (ExcepcaoPersistencia ex) {
+
+				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+				newEx.fillInStackTrace();
+				throw newEx;
+			} 
+
+
+			if (result == null){
+				throw new NonExistingServiceException();
+			}
+
+
+			List candidateList = new ArrayList();
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()){
+				ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next(); 
+				InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateSituation.getMasterDegreeCandidate());
+				infoMasterDegreeCandidate.setInfoCandidateSituation(Cloner.copyICandidateSituation2InfoCandidateSituation(candidateSituation));
+				candidateList.add(infoMasterDegreeCandidate);
+			}
+		
+			return candidateList;
+		
+		}
 }

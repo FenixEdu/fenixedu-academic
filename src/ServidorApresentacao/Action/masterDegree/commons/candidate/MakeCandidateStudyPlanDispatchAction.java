@@ -17,10 +17,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCandidateEnrolment;
+import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -65,8 +68,9 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String executionYear = (String) request.getAttribute("executionYear");
+		executionYear = (String)session.getAttribute( SessionConstants.EXECUTION_YEAR );
         String degree = (String) request.getAttribute("degree");
-
+		Integer executionDegree = Integer.valueOf( request.getParameter("executionDegreeID"));
         InfoExecutionDegree infoExecutionDegree =
             (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
@@ -76,10 +80,10 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
             {
                 executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
             }
-            else
+           /* else
             {
-                executionYear = (String) approvalForm.get("executionYear");
-            }
+                executionYear = executionYear;//(String) approvalForm.get("executionYear");
+            }*/
 
         }
 
@@ -87,12 +91,12 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             if (infoExecutionDegree != null)
             {
-                degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
+                degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName(); //getInfoDegree().getSigla();
             }
-            else
+          /*  else
             {
                 degree = (String) approvalForm.get("degree");
-            }
+            }*/
         }
 
         List candidateList = null;
@@ -103,7 +107,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_FINALIST));
         admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_OTHER));
 
-        Object args[] = { executionYear, degree, admitedSituations };
+        Object args[] = { executionDegree, admitedSituations };
 
         try
         {
@@ -132,8 +136,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         Collections.sort(candidateList, nameComparator);
 
         request.setAttribute("executionYear", executionYear);
-        request.setAttribute("degree", degree);
-
+      //  request.setAttribute("degree", degree);
+		request.setAttribute(SessionConstants.EXECUTION_DEGREE,String.valueOf( executionDegree));
         request.setAttribute("candidateList", candidateList);
         return mapping.findForward("PrepareSuccess");
     }
@@ -161,7 +165,6 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         String executionYear = getFromRequest("executionYear", request);
 
         String candidateID = getFromRequest("candidateID", request);
-
         chooseSecondMasterDegreeForm.set("candidateID", Integer.valueOf(candidateID));
         chooseSecondMasterDegreeForm.set("masterDegree", null);
 
@@ -196,11 +199,13 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
             throw new ExistingActionException(e);
         }
 
-        Collections.sort(
-            masterDegreeList,
-            new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
-
-        request.setAttribute(SessionConstants.DEGREE_LIST, masterDegreeList);
+       // Collections.sort(
+        //    masterDegreeList,
+         //   new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+		Collections.sort(masterDegreeList, new ComparatorByNameForInfoExecutionDegree());
+		List newDegreeList = masterDegreeList;
+		List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
+        request.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
 
         return mapping.findForward("PrepareSecondChooseMasterDegreeReady");
     }
@@ -228,6 +233,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         request.setAttribute("candidateID", chooseMDForm.get("candidateID"));
 
         String degree = (String) chooseMDForm.get("masterDegree");
+System.out.println("na action " + degree);
 
         request.setAttribute("degree", degree);
 
@@ -263,7 +269,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 
         if ((degree == null) || (degree.length() == 0))
         {
-            degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
+            degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         }
 
         if ((executionYear == null) || (executionYear.length() == 0))
@@ -731,5 +737,50 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 
         return mapping.findForward("PrintReady");
     }
+	private List buildExecutionDegreeLabelValueBean(List executionDegreeList)
+				{
+					List executionDegreeLabels = new ArrayList();
+					Iterator iterator = executionDegreeList.iterator();
+					while (iterator.hasNext())
+					{
+						InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+						String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+
+						name =
+							infoExecutionDegree
+								.getInfoDegreeCurricularPlan()
+								.getInfoDegree()
+								.getTipoCurso()
+								.toString()
+								+ " em "
+								+ name;
+
+						name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
+							? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
+							: "";
+
+						executionDegreeLabels.add(
+							new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan ().getName()));
+					}
+					return executionDegreeLabels;
+			}
+		private boolean duplicateInfoDegree(
+					List executionDegreeList,
+					InfoExecutionDegree infoExecutionDegree)
+				{
+					InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+					Iterator iterator = executionDegreeList.iterator();
+
+					while (iterator.hasNext())
+					{
+						InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+						if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+							&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
+							return true;
+
+					}
+					return false;
+				}
+	  
 
 }

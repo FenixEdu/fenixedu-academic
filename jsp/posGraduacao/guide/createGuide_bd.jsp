@@ -9,7 +9,7 @@
    <table>
     <html:form action="/createGuideDispatchAction?method=requesterChosen">
       <!-- Degree -->
-      <tr>
+	  <tr>
    		<td align="center" class="infoselected" colspan="2">
 			<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />
    			<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>: &nbsp;</b>

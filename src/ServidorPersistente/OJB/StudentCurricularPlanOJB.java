@@ -233,8 +233,8 @@ public class StudentCurricularPlanOJB
     {
         Criteria criteria = new Criteria();
 		List studentPlanState = new ArrayList();
-		studentPlanState.add(new Integer(1));
-		studentPlanState.add(new Integer(4));
+		studentPlanState.add(StudentCurricularPlanState.ACTIVE_OBJ);
+		studentPlanState.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
 		
 		criteria.addIn("currentState",studentPlanState);
      //   criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);

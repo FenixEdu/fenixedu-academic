@@ -2,6 +2,7 @@ package ServidorAplicacao.Servico.commons;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
+import Dominio.CursoExecucao;
 import Dominio.ExecutionYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
@@ -66,4 +67,33 @@ public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IServico
 
         return result;
     }
+    
+	public InfoExecutionDegree run(Integer executionDegreeCode)
+		   throws FenixServiceException
+	   {
+
+		   InfoExecutionDegree result = null;
+		   try
+		   {
+			   ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+			   ICursoExecucao executionDegreeDomain = new CursoExecucao();
+				executionDegreeDomain.setIdInternal(executionDegreeCode);
+
+			   ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+			   ICursoExecucao executionDegree =
+				   (CursoExecucao) executionDegreeDAO.readByOId(executionDegreeDomain,false);
+
+			   if (executionDegree != null)
+			   {
+				   result = (InfoExecutionDegree) Cloner.get(executionDegree);
+			   }
+		   }
+		   catch (ExcepcaoPersistencia ex)
+		   {
+			   throw new FenixServiceException(ex);
+		   }
+
+		   return result;
+	   }
 }

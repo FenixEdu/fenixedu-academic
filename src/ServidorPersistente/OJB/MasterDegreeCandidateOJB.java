@@ -235,7 +235,8 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 
         if (degreeName != null)
         {
-            criteria.addEqualTo("executionDegree.curricularPlan.degree.nome", degreeName);
+      	
+            criteria.addEqualTo("executionDegree.idInternal", degreeName);
         }
 
         if (specialization != null)

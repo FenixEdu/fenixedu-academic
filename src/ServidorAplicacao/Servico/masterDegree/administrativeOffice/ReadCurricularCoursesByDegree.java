@@ -64,6 +64,7 @@ public class ReadCurricularCoursesByDegree implements IServico
 				sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 
 			// Read degree
+
 			ICursoExecucao cursoExecucao =
 				sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(
 					degreeName,

@@ -71,12 +71,10 @@ public class GetCandidatesByID implements IServico {
 			masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, false);
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
+			//newEx.fillInStackTrace();
 			throw newEx;
 		} 
 
-
-System.out.println("Encontrei " + masterDegreeCandidate.getIdInternal());
 
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 		Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
@@ -87,15 +85,12 @@ System.out.println("Encontrei " + masterDegreeCandidate.getIdInternal());
 			
 			// Check if this is the Active Situation
 			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE))){
-
-System.out.println("Situacao activa " + infoCandidateSituation.getSituation());
 				
 				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
 			}
 				
 		}			
 		infoMasterDegreeCandidate.setSituationList(situations);
-			
 		return infoMasterDegreeCandidate;
 	}	
 }

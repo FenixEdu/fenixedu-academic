@@ -24,7 +24,7 @@
 			<tr>
 				<td>
 					<html:select property="masterDegree">
-               		<html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="infoDegreeCurricularPlan.infoDegree.sigla" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/></html:select>
+               		<html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="value" labelProperty="label"/></html:select>
 				</td>
 	   		</tr>
 	</table>

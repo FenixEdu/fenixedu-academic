@@ -287,12 +287,22 @@ public class RegisterCandidate implements IServico
                 qualification.setMark(masterDegreeCandidate.getAverage().toString());
             }
             qualification.setPerson(masterDegreeCandidate.getPerson());
-            qualification.setSchool(masterDegreeCandidate.getMajorDegreeSchool());
+            if (masterDegreeCandidate.getMajorDegreeSchool()==null){
+				qualification.setSchool("");
+            }
+            else{
+            	qualification.setSchool(masterDegreeCandidate.getMajorDegreeSchool());
+       		 }
             qualification.setTitle(masterDegreeCandidate.getMajorDegree());
-            
+                      
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, masterDegreeCandidate.getMajorDegreeYear().intValue());
-            qualification.setDate(calendar.getTime());
+            if ( masterDegreeCandidate.getMajorDegreeYear()==null){
+				qualification.setDate(calendar.getTime());
+            }
+			else{
+	            calendar.set(Calendar.YEAR, masterDegreeCandidate.getMajorDegreeYear().intValue());
+	            qualification.setDate(calendar.getTime());
+			}
             qualification.setDegree(masterDegreeCandidate.getMajorDegree());
 
             sp.confirmarTransaccao();
@@ -315,7 +325,6 @@ public class RegisterCandidate implements IServico
         }
 
         InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
-
         infoCandidateRegistration.setInfoMasterDegreeCandidate(
             Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate));
         infoCandidateRegistration.setInfoStudentCurricularPlan(

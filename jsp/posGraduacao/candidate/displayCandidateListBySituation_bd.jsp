@@ -7,6 +7,8 @@
 <span class="error"><html:errors/></span>
 	<br />
 	<bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="request" />
+	<bean:define id="executionDegreeID" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />
+	
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
@@ -36,5 +38,6 @@
         	</logic:iterate>
         	</table>	
 		   <html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
+		   <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
         </html:form>	
    </logic:present>

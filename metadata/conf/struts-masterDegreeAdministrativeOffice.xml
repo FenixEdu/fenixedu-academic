@@ -304,7 +304,6 @@
 			<form-property name="othersPrice" type="java.lang.String" />
 			<form-property name="othersQuantity" type="java.lang.String" />
 			
-			
       </form-bean>
 
       <!-- Bean for The Choosing of a Year -->
@@ -972,11 +971,30 @@
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+             <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegrees.jsp"/>
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="CreateReady" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>  
       </action>
-      
-      
+     
+	  <action path="/listMasterDegreesCandidate"
+			      parameter="method"
+			      scope="request"
+			      input="/chooseExecutionYear.do?method=chooseDegreeFromList&amp;page=0"
+	              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+				  >
+				<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+	                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+		         <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegrees.jsp"/>
+		         <forward name="PrepareSuccess" path="/candidate/chooseExecutionYear.jsp"/> 
+		         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegree.jsp"/>
+		         <forward name="CreateReady" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>   
+	   	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp" />  
+	 </action>
+	 
+ 
+ 
+ 
       <!-- action to create a candidate -->
       <action attribute="createCandidateForm"
       		  input="/createCandidateDispatchAction.do?page=0&amp;method=prepare"
@@ -989,6 +1007,7 @@
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+             
 	         <forward name="PrepareSuccess" path="/createCandidate.jsp"/>  
 	         <forward name="CreateSuccess" path="/createCandidateSuccess.jsp"/>  
       </action>
@@ -1279,9 +1298,29 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
+	         
+	         <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
+	         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="ChooseSuccess" path="/visualizeCandidates.do?method=prepareChoose&amp;action=visualize&amp;page=0"/> 
       </action>
+
+	  <action path="/listMasterDegreesToVisualizeCandidates"
+		      parameter="method"
+		      scope="request"
+		      input="/chooseExecutionYear.do?method=chooseDegreeFromList&amp;page=0"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+			  >
+			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+	                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+	         <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegrees.jsp"/>
+	         <forward name="PrepareSuccess" path="/candidate/chooseExecutionYear.jsp"/> 
+	         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegree.jsp"/>
+	         <forward name="CreateReady" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>   
+   	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp" />  
+	 </action>
+
 
 	  
       <!-- Choose Execution Year to Edit Candidates -->
@@ -1293,6 +1332,8 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
+			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
+			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="ChooseSuccess" path="/editCandidates.do?method=prepareChoose&amp;action=edit&amp;page=0"/> 
       </action>
@@ -1306,8 +1347,10 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
+			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
+			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
-	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&amp;page=0"/>  
+	         <forward name="ChooseSuccess" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates&amp;page=0"/>  
       </action>
 
       <!-- Choose Master Degree To Select Candidates -->
@@ -1362,8 +1405,12 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
+			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
+			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
-	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCandidateStudyPlan.do?method=prepareChooseMasterDegree&amp;page=0"/>  
+	         <forward name="ChooseSuccess" path="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0"/>
+      
+  <!--  chooseMasterDegreeToCandidateStudyPlan.do?method=prepareSelectCandidates&amp;page=0"/>-->
       </action>
 
       <!-- Choose Master Degree To Make Candidate Study Plan -->
@@ -1710,7 +1757,18 @@
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCandidateRegistration.do?method=prepareChooseMasterDegree"/> 
       </action>
       
-      
+       <action path="/chooseExecutionYearToRegisterCandidate"
+      		  input="/chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
+	         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
+	         <forward name="PrepareSuccess" path="/candidate/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/candidateRegistration.do?method=getCandidateList"/>
+	         
+      </action>
       
 
       <!-- Choose Master Degree To Candidate Registration -->

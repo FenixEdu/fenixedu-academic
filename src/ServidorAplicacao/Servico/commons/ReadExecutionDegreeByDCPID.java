@@ -67,4 +67,6 @@ public class ReadExecutionDegreeByDCPID implements IServico
 
         return (InfoExecutionDegree) Cloner.get(executionDegree);
     }
+    
+	
 }

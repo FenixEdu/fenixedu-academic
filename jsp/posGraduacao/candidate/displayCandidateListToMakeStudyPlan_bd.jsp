@@ -11,6 +11,7 @@
 		<bean:write name="path"/>.do?method=prepareSecondChooseMasterDegree<%= "&" %>candidateID=
 		</bean:define>
 	<br />
+	
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
@@ -35,6 +36,7 @@
     			</html:link>
     		</td>
     		</tr>
+    		
     		</logic:iterate>
         	</table>
 	</logic:present> 

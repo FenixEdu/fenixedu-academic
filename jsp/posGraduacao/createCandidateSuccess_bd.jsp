@@ -34,16 +34,16 @@
           <tr>
             <td><bean:message key="label.candidate.degree" /></td>
             <td><bean:write name="newCandidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> - 
-                <bean:write name="newCandidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/>
+                <bean:write name="newCandidate" property="infoExecutionDegree.infoDegreeCurricularPlan.name"/>
             </td>
           </tr>
 
-          <!-- Execution Year  -->
+          <!-- Execution Year  
           <tr>
             <td><bean:message key="label.masterDegree.administrativeOffice.executionYear" /></td>
             <td><bean:write name="newCandidate" property="infoExecutionDegree.infoExecutionYear.year"/></td>
           </tr>
-
+			-- >
           <!-- Identification Document Number -->
           <tr>
             <td><bean:message key="label.candidate.identificationDocumentNumber" /></td>

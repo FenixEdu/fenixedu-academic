@@ -3,12 +3,12 @@
 <p><b><bean:message key="label.masterDegree.administrativeOffice.candidate" /></b></p>
 <ul>
  <blockquote>
-	 <li><html:link page="/chooseExecutionYear.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.createCandidate" /></html:link></li>
-	 <li><html:link page="/chooseExecutionYearToVisualizeCandidates.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeCandidateInformations" /></html:link></li>
-	 <li><html:link page="/chooseExecutionYearToEditCandidates.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.editCandidateInformations" /></html:link></li>
-	 <li><html:link page="/chooseExecutionYearToSelectCandidates.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.selectCandidates" /></html:link></li>
-	 <li><html:link page="/chooseExecutionYearToCandidateStudyPlan.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link></li>
-	 <li><html:link page="/chooseExecutionYearToCandidateRegistration.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.candidateRegistration" /></html:link></li>
+	 <li><html:link page="/chooseExecutionYear.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.createCandidate" /></html:link></li>
+	 <li><html:link page="/chooseExecutionYearToVisualizeCandidates.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeCandidateInformations" /></html:link></li>
+	 <li><html:link page="/chooseExecutionYearToEditCandidates.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.editCandidateInformations" /></html:link></li>
+	 <li><html:link page="/chooseExecutionYearToSelectCandidates.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.selectCandidates" /></html:link></li>
+	 <li><html:link page="/chooseExecutionYearToCandidateStudyPlan.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link></li>
+	 <li><html:link page="/chooseExecutionYearToRegisterCandidate.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.candidateRegistration" /></html:link></li>
  </blockquote>
 </ul>
 <ul>
