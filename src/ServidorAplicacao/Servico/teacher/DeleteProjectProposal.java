@@ -159,7 +159,7 @@ public class DeleteProjectProposal implements IServico {
     
     private IAdvisory createDeleteProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse,IPessoa withdrawalPerson, IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
         IAdvisory advisory = new Advisory();
-        advisory.setCreated(null);
+        advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()!=null){
         	advisory.setExpires(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay().getTime());
         }

@@ -146,7 +146,7 @@ public class RejectNewProjectProposal implements IService
 	
 	private IAdvisory createRejectAdvisory(IExecutionCourse executionCourse,IPessoa senderPerson, IPessoa receiverPerson,IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
         IAdvisory advisory = new Advisory();
-        advisory.setCreated(null);
+        advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()!=null){
         	advisory.setExpires(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay().getTime());
         }
