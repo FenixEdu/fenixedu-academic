@@ -390,7 +390,7 @@
 		    type="ServidorApresentacao.Action.coordinator.DegreeSiteManagementDispatchAction" 	
 		    name="degreeInfoForm"
 		    validate="true"	      
-		    input="/degreeSiteManagement.do?method=subMenu"  
+		    input="/degreeSiteManagement.do?method=subMenu&amp;page=0"  
 		  >
 			<forward name="degreeSiteMenu" path="degreeSiteMenu" />
 			<forward name="editOK" path="editOK" />
