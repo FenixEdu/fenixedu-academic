@@ -66,9 +66,23 @@ public class RemoverAulaServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 
-	// remove Aula by unauthorized user
 	public void testRemoveLessonExisting() {
 		this.ligarSuportePersistente(true);
+		
+		Object argsRemoveLesson[] = {this.infoLesson, this.infoShift} ;
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoveLesson);
+			assertEquals("testRemoverAula",	Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
+		} catch (Exception ex) {
+			assertNull("testUnauthorizedRemoveAula", result);
+		}
+	}
+
+
+	public void testRemoveUnexistingLessonExisting() {
+		this.ligarSuportePersistente(false);
 		
 		Object argsRemoveLesson[] = {this.infoLesson, this.infoShift} ;
 
