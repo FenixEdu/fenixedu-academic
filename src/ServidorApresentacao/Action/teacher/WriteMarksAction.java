@@ -2,18 +2,19 @@ package ServidorApresentacao.Action.teacher;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.converters.StringConverter;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -63,20 +64,7 @@ public class WriteMarksAction extends DispatchAction {
 		
 		FormFile formFile = (FormFile) marksForm.get("theFile");
         if (!(formFile.getContentType().equals("application/vnd.ms-excel")) && !(formFile.getContentType().equals("text/plain"))){
-			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-			ISiteComponent commonComponent = new InfoSiteCommon();
-			Object[] args = { objectCode, commonComponent, null, null, null, null };
-
-			try {
-				TeacherAdministrationSiteView siteView =
-					(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
-
-				request.setAttribute("siteView", siteView);
-				request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			request.setAttribute("examCode", examCode);
+			prepareInputForward(request, session, objectCode, examCode);
 			actionErrors.add(
 					"FileNotExist",
 					new ActionError(
@@ -90,13 +78,15 @@ public class WriteMarksAction extends DispatchAction {
 			new InputStreamReader(formFile.getInputStream());
 
 		BufferedReader reader = new BufferedReader(input);
-	
+	    
+	    
 		int n = 0;
 		do {
 			try {
 				lineReader = reader.readLine();
 				
 				System.out.println("readline------>"+lineReader);
+				
 			} catch (IOException e) {
 				throw new NotExecuteException("error.ficheiro.impossivelLer");
 			}
@@ -104,8 +94,11 @@ public class WriteMarksAction extends DispatchAction {
 				n++;
 			}
 
-		} while ((lineReader != null) && (lineReader.length() != 0));
-
+		}
+		
+		 while ((lineReader != null) && (lineReader.length() != 0));
+		
+		 reader.close();
 		input = new InputStreamReader(formFile.getInputStream());
 		reader = new BufferedReader(input);
 
@@ -126,7 +119,19 @@ public class WriteMarksAction extends DispatchAction {
 
 				stringTokenizer = new StringTokenizer(lineReader);				
 				studentsNumbers[j] = stringTokenizer.nextToken().trim();
-				marks[j] = stringTokenizer.nextToken().trim();
+				try {
+					marks[j] = stringTokenizer.nextToken().trim();
+				} catch (NoSuchElementException e1) {
+					prepareInputForward(request, session, objectCode, examCode);
+								actionErrors.add(
+										"BadFormatFile",
+										new ActionError(
+											"error.file.badFormat"));
+			
+								saveErrors(request, actionErrors);
+								return mapping.findForward("loadMarks");
+					
+				}
 
 			}
 			try {
@@ -211,6 +216,28 @@ public class WriteMarksAction extends DispatchAction {
 			return mapping.getInputForward();
 		}
 		return mapping.findForward("success");
+	}
+
+	private void prepareInputForward(
+		HttpServletRequest request,
+		HttpSession session,
+		Integer objectCode,
+		Integer examCode)
+		throws FenixActionException {
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		ISiteComponent commonComponent = new InfoSiteCommon();
+		Object[] args = { objectCode, commonComponent, null, null, null, null };
+		
+		try {
+			TeacherAdministrationSiteView siteView =
+				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
+		
+			request.setAttribute("siteView", siteView);
+			request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		request.setAttribute("examCode", examCode);
 	}
 
 	public ActionForward writeMarks(
