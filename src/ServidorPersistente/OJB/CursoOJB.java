@@ -22,6 +22,7 @@ import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 
@@ -132,6 +133,25 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 		try {
 			String oqlQuery = "select degree from " + Curso.class.getName();
 			query.create(oqlQuery);
+			List result = (List) query.execute();
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia {
+		try {
+			ICurso degree = null;
+			String oqlQuery = "select curso from " + Curso.class.getName();
+			oqlQuery += " where tipoCurso = $1 ";
+			query.create(oqlQuery);
+			query.bind(degreeType);
 			List result = (List) query.execute();
 			try {
 				lockRead(result);

@@ -344,9 +344,17 @@
       
       <!-- action definition -->
       
-
+      <!-- List All Master Degrees -->
+	  <action path="/listMasterDegrees"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.MasterDegreeListingDispatchAction"
+			  >
+	         <forward name="DisplayMasterDegreeList" path="/student/displayStudentListByDegree.jsp"/> 
+	  </action>
+	  
+<!-- ////////////////// CHECK UTILITY ON STUDENTS LISTINGS BEFORE DELETING ///////////////////// -->
       <!-- action to choose a Execution Year List the students by degree -->
-      <action attribute="chooseExecutionYearForm"
+<!--      <action attribute="chooseExecutionYearForm"
       		  input="/chooseExecutionYear.jsp"
       	      name="chooseExecutionYearForm"
 		      path="/chooseExecutionYear2DegreeStudentList"
@@ -357,9 +365,9 @@
 	         <forward name="PrepareSuccess" path="/student/chooseExecutionYearToDegreeStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToDegreeStudentList.do?method=prepareChooseMasterDegree&amp;page=0"/>  
       </action>
-
+-->
       <!-- Choose Master Degree To List the students by degree -->
-      <action path="/chooseMasterDegreeToDegreeStudentList"
+<!--      <action path="/chooseMasterDegreeToDegreeStudentList"
       		  input="/student/chooseMasterDegreeToDegreeStudentList.jsp"
 		      attribute="chooseMasterDegreeForm"
 		      name="chooseMasterDegreeForm"
@@ -370,9 +378,9 @@
 	         <forward name="PrepareSuccess" path="/student/chooseMasterDegreeToDegreeStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/displayStudentListByDegree.do?method=prepareReading&amp;page=0"/>
       </action>
-      
+-->      
       <!-- List the students by Degree -->
-      <action path="/displayStudentListByDegree"
+<!--      <action path="/displayStudentListByDegree"
       		  input="/student/displayStudentListByDegree.jsp"
 		      parameter="method"
 		      scope="request"
@@ -380,7 +388,7 @@
 			  >
 	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/>  
 	  </action>
-    
+-->	    
   
       <!-- action to choose a Execution Year to create a candidate -->
       <action attribute="chooseExecutionYearForm"

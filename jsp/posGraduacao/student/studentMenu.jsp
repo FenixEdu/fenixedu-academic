@@ -8,7 +8,7 @@
     <p><b><bean:message key="label.coordinator.student" /></b></p>
 <ul>
     
-    <li><html:link page="/chooseExecutionYear2DegreeStudentList.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.studentListByDegree" /></html:link></li>
+    <li><html:link page="/listMasterDegrees.do?method=chooseDegreeFromList&page=0"><bean:message key="link.studentListByDegree" /></html:link></li>
     </br>
     <li><html:link page="/chooseCertificateInfoAction.do?method=prepare&page=0"><bean:message key="link.certificate" /></html:link></li>
     <li><html:link page="/chooseDeclarationInfoAction.do?method=prepare&page=0"><bean:message key="link.declarations" /></html:link></li>

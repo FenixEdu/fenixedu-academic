@@ -15,6 +15,7 @@ import java.util.List;
 
 import Dominio.ICurso;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 public interface ICursoPersistente extends IPersistentObject {
     ICurso readBySigla(String sigla) throws ExcepcaoPersistencia;
@@ -23,4 +24,5 @@ public interface ICursoPersistente extends IPersistentObject {
     Boolean delete(ICurso degree) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
+	public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia;
 }

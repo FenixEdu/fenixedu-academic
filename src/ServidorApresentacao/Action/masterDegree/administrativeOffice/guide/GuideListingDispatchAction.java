@@ -114,6 +114,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 			List result = null;
 			try {
 				result = (List) serviceManager.executar(userView, "ChooseGuide", args);
+
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Guia", e);
 			}
