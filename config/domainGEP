@@ -1,0 +1,347 @@
+class Dominio.teacher.Category {
+	String code;
+	String longName;
+	Boolean canBeExecutionCourseResponsible;
+	Integer ackOptLock;
+	String shortName;
+	Integer idInternal;
+}
+
+
+class Dominio.teacher.OldPublication {
+	Integer keyTeacher;
+	Date lastModificationDate;
+	String publication;
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
+
+class Dominio.gesdis.CourseReport {
+	String report;
+	Date lastModificationDate;
+	Integer ackOptLock;
+	Integer keyExecutionCourse;
+	Integer idInternal;
+}
+
+
+class Dominio.gesdis.StudentCourseReport {
+	Integer keyCurricularCourse;
+	String strongPoints;
+	Date lastModificationDate;
+	Integer ackOptLock;
+	Integer idInternal;
+	String studentReport;
+	String weakPoints;
+}
+
+
+class Dominio.gesdis.CourseHistoric {
+	Integer keyCurricularCourse;
+	Integer enrolled;
+	Integer approved;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer evaluated;
+	String curricularYear;
+	Integer semester;
+}
+
+
+class Dominio.student.Delegate {
+	Integer keyExecutionYear;
+	Integer ackOptLock;
+	Integer keyDegree;
+	Integer idInternal;
+	Boolean type;
+	Integer keyStudent;
+}
+
+
+
+class Dominio.inquiries.OldInquiriesTeachersRes {
+	String classTypeLong;
+	Double average3_9;
+	Double deviation3_4;
+	Double tolerance3_4;
+	Integer numAnswers3_5;
+	Integer keyTeacher;
+	Double tolerance3_10;
+	String average3_4;
+	String classType;
+	Integer numAnswers3_7;
+	Double tolerance3_5;
+	String active;
+	Integer numAnswers3_8;
+	Integer numAnswers3_9;
+	Double average3_6;
+	Integer mail;
+	Double average3_11;
+	Integer numAnswers3_3;
+	Double deviation3_7;
+	String courseCode;
+	Integer numAnswers3_10;
+	Double tolerance3_11;
+	Integer gepExecutionYear;
+	Double deviation3_6;
+	Integer numAnswers3_4;
+	Double average3_8;
+	Integer inquiryId;
+	Double tolerance3_6;
+	Integer idInternal;
+	Integer gepCourseId;
+	Integer numAnswers3_11;
+	String average3_3;
+	Double tolerance3_3;
+	String gepCourseName;
+	Double deviation3_11;
+	Double deviation3_10;
+	Double deviation3_3;
+	Integer semester;
+	Double tolerance3_8;
+	Integer keyExecutionPeriod;
+	String category;
+	Double deviation3_8;
+	Integer curricularYear;
+	Double tolerance3_7;
+	Double deviation3_5;
+	Double average3_10;
+	Integer totalNumberAnswers;
+	String teacherName;
+	Integer teacherNumber;
+	Integer keyDegree;
+	Integer numAnswers3_6;
+	Double average3_7;
+	Double average3_5;
+	Double tolerance3_9;
+	Integer departmentCode;
+	Double deviation3_9;
+}
+
+
+
+class Dominio.inquiries.OldInquiriesSummary {
+	Double average3_9;
+	Integer idInternal;
+	Double average3_4_numerical;
+	Integer gepCourseId;
+	Double average2_8;
+	Double roomAverage;
+	String average3_3_interval;
+	String gepCourseName;
+	Integer numberEvaluated;
+	Double averageAppreciationTeachers;
+	Double average3_3_numerical;
+	Double averageAppreciationCourse;
+	Double average2_6;
+	Integer semester;
+	Double average6_2;
+	Double average2_7_numerical;
+	Double average2_3;
+	Double average3_6;
+	Integer keyExecutionPeriod;
+	String average2_7_interval;
+	Integer numberApproved;
+	Integer curricularYear;
+	Double average6_1;
+	Double average2_4;
+	Double average3_11;
+	Double average3_10;
+	String average3_4_interval;
+	String gepDegreeName;
+	Double firstEnrollment;
+	Double average2_2;
+	String courseCode;
+	Integer keyDegree;
+	Double average3_7;
+	Double average2_5;
+	Integer numberEnrollments;
+	Integer gepExecutionYear;
+	Double average3_5;
+	Double representationQuota;
+	Double average6_3;
+	Double average3_8;
+	Integer numberAnswers;
+	Integer inquiryId;
+}
+
+
+class Dominio.inquiries.OldInquiriesCoursesRes {
+	Double tolerance2_3;
+	Double deviation2_3;
+	Double tolerance2_2;
+	Integer idInternal;
+	Integer numAnswers2_4;
+	Integer gepCourseId;
+	Integer numAnswers2_5_number;
+	Double average2_8;
+	Integer numAnswers2_3;
+	String gepCourseName;
+	String average2_7;
+	Double numberEvaluated;
+	Integer numAnswers2_6;
+	Double tolerance2_4;
+	Double deviation2_2;
+	Double average2_6;
+	Integer semester;
+	Integer numAnswers2_7;
+	Double average2_3;
+	Integer numAnswers2_8;
+	Integer keyExecutionPeriod;
+	Double tolerance2_6;
+	Double deviation2_4;
+	Double numberApproved;
+	Integer curricularYear;
+	Double average2_4;
+	Double tolerance2_5;
+	Double deviation2_5;
+	Integer firstEnrollment;
+	Double average2_2;
+	String courseCode;
+	Integer keyDegree;
+	Double average2_5;
+	Integer numAnswers2_2;
+	Double numberEnrollments;
+	Integer gepExecutionYear;
+	Double representationQuota;
+	Double deviation2_8;
+	Double deviation2_6;
+	Double tolerance2_8;
+	Integer numAnswers2_5_text;
+	Integer numberAnswers;
+	Integer inquiryId;
+}
+
+
+
+
+relation ??? {
+	Dominio.Teacher playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.teacher.Category playsRole category;
+}
+
+relation ??? {
+	Dominio.teacher.TeachingCareer playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.teacher.Category playsRole category;
+}
+
+
+
+relation ??? {
+	Dominio.teacher.OldPublication playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+
+
+relation ??? {
+	Dominio.gesdis.CourseReport playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+
+
+relation ??? {
+	Dominio.gesdis.StudentCourseReport playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+
+
+relation ??? {
+	Dominio.gesdis.CourseHistoric playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+
+
+relation ??? {
+	Dominio.student.Delegate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.student.Delegate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation ??? {
+	Dominio.student.Delegate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesSummary playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesCoursesRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ??? {
+	Dominio.inquiries.OldInquiriesCoursesRes playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Curso playsRole degree;
+}
+
+
