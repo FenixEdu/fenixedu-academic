@@ -1,8 +1,6 @@
 /*
  * Created on 28/Mai/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorPersistente.OJB;
 
@@ -24,8 +22,6 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistentStudentGroupAttend{
 

@@ -63,7 +63,7 @@ public class GroupSiteComponentService implements IServico {
 	ExecutionCourseSiteView executionCourseSiteView = null;
 
 	try {
-		System.out.println("<------------NO GROUP SERVICE GERAL-GROUP PROPERTIES "+groupPropertiesCode);
+		
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		IPersistentSite persistentSite = sp.getIPersistentSite();
 		ISite site = null;
@@ -78,7 +78,7 @@ public class GroupSiteComponentService implements IServico {
 		ExecutionCourseSiteComponentBuilder componentBuilder2=ExecutionCourseSiteComponentBuilder.getInstance();
 		
 		commonComponent = componentBuilder2.getComponent(commonComponent,site,null,null,null);	
-		System.out.println("<------------NO GROUP SERVICE GERAL-CommonComponent "+commonComponent);
+		
 		executionCourseSiteView  = new ExecutionCourseSiteView (commonComponent,bodyComponent);
 	} catch (ExcepcaoPersistencia e) {
 		throw new FenixServiceException(e);

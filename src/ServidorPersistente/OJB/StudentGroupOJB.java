@@ -1,8 +1,6 @@
 /*
  * Created on 12/Mai/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorPersistente.OJB;
 
@@ -24,8 +22,6 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStudentGroup{
 
@@ -112,7 +108,6 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 		// read studentGroup from DB	
 		studentGroupFromDB = readStudentGroupByGroupPropertiesAndGroupNumberAndShift(studentGroupToWrite.getGroupProperties(),studentGroupToWrite.getGroupNumber(),studentGroupToWrite.getShift());
 		
-		System.out.println("NO OJB-LER DA DB"+studentGroupFromDB);
 		// if (studentGroup not in database) then write it
 		if (studentGroupFromDB == null)
 			super.lockWrite(studentGroupToWrite);
