@@ -35,6 +35,7 @@ import Dominio.Sala;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentPeriod;
@@ -104,7 +105,6 @@ public class EditExamNew implements IServico
                 throw new FenixServiceException("The exam doesnt exist");
             }
 
-            
             // This is needed for confirming if doesn't exists an exam for that
             // season
             Iterator iterExecutionCourses = exam.getAssociatedExecutionCourses().iterator();
@@ -211,40 +211,20 @@ public class EditExamNew implements IServico
             List roomsList = new ArrayList();
             List roomOccupationList = new ArrayList();
             IPeriod period;
-            if (roomIDArray.length != 0)
+            if (exam.getAssociatedRoomOccupation() != null
+                && exam.getAssociatedRoomOccupation().size() != 0)
             {
-                if (exam.getAssociatedRoomOccupation() != null
-                    && exam.getAssociatedRoomOccupation().size() != 0)
+                period = ((IRoomOccupation) exam.getAssociatedRoomOccupation().get(0)).getPeriod();
+
+                List rooms = period.getRoomOccupations();
+                if (rooms.size() == exam.getAssociatedRoomOccupation().size())
                 {
-                    period = ((IRoomOccupation) exam.getAssociatedRoomOccupation().get(0)).getPeriod();
-
-///
-					List rooms = period.getRoomOccupations();
-//					if (rooms == null)
-//						System.out.println("##### ROOMS NULL");
-                    if (rooms.size() == exam.getAssociatedRoomOccupation().size())
-                    {
-                        persistentPeriod.simpleLockWrite(period);
-                        period.setStartDate(examDate);
-                        period.setEndDate(examDate);
-                    }
-                    else
-                    {
-                        period = (Period) sp.getIPersistentPeriod().readBy(examDate, examDate);
-                        if (period == null)
-                        {
-                            period = new Period();
-                            period.setRoomOccupations(new ArrayList());
-                            persistentPeriod.simpleLockWrite(period);
-                            period.setStartDate(examDate);
-                            period.setEndDate(examDate);
-                        }
-                    }
-
+                    persistentPeriod.simpleLockWrite(period);
+                    period.setStartDate(examDate);
+                    period.setEndDate(examDate);
                 }
                 else
                 {
-
                     period = (Period) sp.getIPersistentPeriod().readBy(examDate, examDate);
                     if (period == null)
                     {
@@ -256,82 +236,96 @@ public class EditExamNew implements IServico
                     }
                 }
 
-                try
+            }
+            else
+            {
+
+                period = (Period) sp.getIPersistentPeriod().readBy(examDate, examDate);
+                if (period == null)
                 {
-                    List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
-                    List roomOccupations = exam.getAssociatedRoomOccupation();
-                    for (int i = 0; i < roomOccupations.size(); i++)
-                    {
-                    	roomOccupationInDBList.remove(roomOccupations.get(i));
-                    }
-
-                    for (int i = 0; i < roomIDArray.length; i++)
-                    {
-                        ISala room =
-                            (ISala) sp.getISalaPersistente().readByOID(
-                                Sala.class,
-                                new Integer(roomIDArray[i]));
-
-                        if (room == null)
-                        {
-                            throw new FenixServiceException("The room doesnt exist");
-                        }
-
-                        roomsList.add(room);
-                        DiaSemana weekday = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
-
-                        RoomOccupation roomOccupation =
-                            new RoomOccupation(room, examStartTime, examEndTime, weekday);
-                        roomOccupation.setPeriod(period);
-
-                        Iterator iter = roomOccupationInDBList.iterator();
-                        while (iter.hasNext())
-                        {
-                            IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
-
-                            if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB))
-                            {
-                                throw new FenixServiceException("A sala tá ocupada");
-                            }
-                        }
-
-                        if (!exam.getAssociatedRoomOccupation().contains(roomOccupation))
-                        {
-                            try
-                            {
-                                roomOccupationDAO.simpleLockWrite(roomOccupation);
-                            }
-                            catch (ExistingPersistentException ex)
-                            {
-                                throw new ExistingServiceException(ex);
-                            }
-                            exam.getAssociatedRoomOccupation().add(roomOccupation);
-                        }
-
-                        roomOccupationList.add(roomOccupation);
-                    }
-
-                    Iterator iterator = exam.getAssociatedRoomOccupation().iterator();
-                    List roomOcupationToRemove = new ArrayList();
-                    while (iterator.hasNext())
-                    {
-                        RoomOccupation oldRoomOccupation = (RoomOccupation) iterator.next();
-                        if (!roomOccupationList.contains(oldRoomOccupation))
-                        {
-                            roomOcupationToRemove.add(oldRoomOccupation);
-                        }
-                    }
-                    if (roomOcupationToRemove.size() > 0)
-                    {
-                        exam.getAssociatedRoomOccupation().removeAll(roomOcupationToRemove);
-                    }
-                }
-                catch (ExcepcaoPersistencia ex)
-                {
-                    throw new FenixServiceException(ex);
+                    period = new Period();
+                    period.setRoomOccupations(new ArrayList());
+                    persistentPeriod.simpleLockWrite(period);
+                    period.setStartDate(examDate);
+                    period.setEndDate(examDate);
                 }
             }
 
+            try
+            {
+                List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
+                List roomOccupations = exam.getAssociatedRoomOccupation();
+                for (int i = 0; i < roomOccupations.size(); i++)
+                {
+                    roomOccupationInDBList.remove(roomOccupations.get(i));
+                }
+
+                for (int i = 0; i < roomIDArray.length; i++)
+                {
+                    ISala room =
+                        (ISala) sp.getISalaPersistente().readByOID(
+                            Sala.class,
+                            new Integer(roomIDArray[i]));
+
+                    if (room == null)
+                    {
+                        throw new FenixServiceException("The room doesnt exist");
+                    }
+
+                    roomsList.add(room);
+                    DiaSemana weekday = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
+
+                    RoomOccupation roomOccupation =
+                        new RoomOccupation(room, examStartTime, examEndTime, weekday);
+                    roomOccupation.setPeriod(period);
+
+                    Iterator iter = roomOccupationInDBList.iterator();
+                    while (iter.hasNext())
+                    {
+                        IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
+
+                        if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB))
+                        {
+                            throw new InterceptingRoomsServiceException(
+                                roomOccupation.getRoom().getNome());
+                        }
+                    }
+
+                    if (!exam.getAssociatedRoomOccupation().contains(roomOccupation))
+                    {
+                        try
+                        {
+                            roomOccupationDAO.simpleLockWrite(roomOccupation);
+                        }
+                        catch (ExistingPersistentException ex)
+                        {
+                            throw new ExistingServiceException(ex);
+                        }
+                        exam.getAssociatedRoomOccupation().add(roomOccupation);
+                    }
+
+                    roomOccupationList.add(roomOccupation);
+                }
+
+                Iterator iterator = exam.getAssociatedRoomOccupation().iterator();
+                List roomOcupationToRemove = new ArrayList();
+                while (iterator.hasNext())
+                {
+                    RoomOccupation oldRoomOccupation = (RoomOccupation) iterator.next();
+                    if (!roomOccupationList.contains(oldRoomOccupation))
+                    {
+                        roomOcupationToRemove.add(oldRoomOccupation);
+                    }
+                }
+                if (roomOcupationToRemove.size() > 0)
+                {
+                    exam.getAssociatedRoomOccupation().removeAll(roomOcupationToRemove);
+                }
+            }
+            catch (ExcepcaoPersistencia ex)
+            {
+                throw new FenixServiceException(ex);
+            }
             exam.setDay(examDate);
             exam.setBeginning(examStartTime);
             exam.setEnd(examEndTime);

@@ -7,6 +7,10 @@
 			<field property="position" depends="required" page="1">
 				<arg0 key="label.managementPosition.position" />
 			</field>
+			<field property="credits" depends="required, double" page="1">
+				<arg0 key="label.managementPosition.credits" />
+			</field>
+			
 			<field property="start" depends="required, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<arg0 key="label.managementPosition.start"/>

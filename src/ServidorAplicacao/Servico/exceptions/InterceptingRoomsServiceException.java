@@ -24,4 +24,8 @@ public class InterceptingRoomsServiceException extends FenixServiceException {
 		super(message, cause);
 	}
 
+	public InterceptingRoomsServiceException(String message) {
+		super(message);
+	}
+
 }

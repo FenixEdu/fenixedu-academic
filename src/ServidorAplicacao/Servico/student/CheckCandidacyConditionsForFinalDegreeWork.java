@@ -9,17 +9,16 @@ import java.util.Date;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudent;
-import Dominio.IStudentCurricularPlan;
 import Dominio.finalDegreeWork.IScheduleing;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoCurso;
 
 /**
  * @author Luis Cruz
@@ -41,6 +40,8 @@ public class CheckCandidacyConditionsForFinalDegreeWork implements IService
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport
         		.getIStudentCurricularPlanPersistente();
+        IPersistentEnrolment persistentEnrolment = persistentSupport
+        	.getIPersistentEnrolment();
 
         IScheduleing scheduleing = persistentFinalDegreeWork
                 .readFinalDegreeWorkScheduleing(executionDegreeOID);
@@ -63,13 +64,12 @@ public class CheckCandidacyConditionsForFinalDegreeWork implements IService
         }
 
         IStudent student = persistentStudent.readByUsername(userView.getUtilizador());
-        IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+
+        int numberOfCompletedCourses = persistentEnrolment
+        	.countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
 
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
-        if (studentCurricularPlan.getCompletedCourses() == null ||
-                (numberOfNecessaryCompletedCourses != null
-                        && studentCurricularPlan.getCompletedCourses().intValue()
-                        	< numberOfNecessaryCompletedCourses.intValue()))
+        if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue())
         {
             throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());
         }

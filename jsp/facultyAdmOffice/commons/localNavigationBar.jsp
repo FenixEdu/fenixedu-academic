@@ -53,11 +53,36 @@
 	<%-- TEACHER CREDITS MANAGEMENT APPLICATIONS --%>
 	<strong>&raquo; <bean:message key="link.group.creditsManagement.title"/></strong>
 	<ul>
-			<li>
-				<html:link action="/teacherSearch?method=searchForm&amp;page=0" >
-					<bean:message key="link.teacher.credits.sheet.management"/>
-				</html:link>
-			</li>
+		<li>
+			<html:link page="/prepareManagementPositionsManagement.do?method=searchForm&amp;page=0" >
+				<bean:message key="link.managementPositions.management"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/prepareServiceExemptionsManagement.do?method=searchForm&amp;page=0" >
+				<bean:message key="link.serviceExemptions.management"/>
+			</html:link>
+		</li>
+	</ul>
+	<br />
+	<br />
+	&raquo;	As funcionalidades abaixo <br />estarão brevemente disponíveis.
+	<ul>
+		<li>
+		
+<%--			<html:link page="/prepareCreditsSheetView.do?method=searchForm&amp;page=0" > --%>
+				<bean:message key="link.creditsSheet.view"/>  
+<%--			</html:link> --%>
+		</li>
+	</ul>
+	<b>Relatórios</b>
+	<ul>
+		<li>
+			Cargos de gestão
+		</li>
+		<li>
+			Situações de não exercício
+		</li>
 	</ul>
 </logic:present>
 

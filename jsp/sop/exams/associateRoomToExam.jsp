@@ -17,10 +17,8 @@ Exame de
 					</logic:notEqual>
 				</logic:iterate>
 	</logic:present>
-dia <bean:write name="<%=SessionConstants.DATE%>"/>
- das <bean:write name="<%=SessionConstants.START_TIME%>"/>
- às <bean:write name="<%=SessionConstants.END_TIME%>"/>
-<br/>
+dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
+ <br/>
 
 <html:form action="/associateRoomToExam">
 	<span class="error"><html:errors /></span>
@@ -40,6 +38,12 @@ dia <bean:write name="<%=SessionConstants.DATE%>"/>
 					 value="<%= pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID).toString() %>"/>
 	<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.DATE %>"
+					 value="<%= pageContext.findAttribute("date").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.START_TIME %>"
+					 value="<%= pageContext.findAttribute("start_time").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.END_TIME %>"
+					 value="<%= pageContext.findAttribute("end_time").toString() %>"/>
 	
 	<html:hidden property="day" />
 	<html:hidden property="month" />

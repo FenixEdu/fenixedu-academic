@@ -701,7 +701,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentAuthorization"/>
+            <chain name="ReadStudentByUsernameAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5703,7 +5703,6 @@
             </implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>

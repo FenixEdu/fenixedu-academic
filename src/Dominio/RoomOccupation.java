@@ -217,9 +217,10 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation
         Calendar endTime,
         DiaSemana dayOfWeek,
         ISala room)
-    {
+    {	
+		
     	if (!room.equals(this.getRoom()))
-    	{
+    	{       		 
     		return false;
     	}
     	       
@@ -229,9 +230,9 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation
             && calendarUtil.dateBefore(endDate, this.period.getStartDate()))
             || (calendarUtil.dateBefore(startDate, this.period.getStartDate())
                 && calendarUtil.dateAfter(startDate, this.period.getEndDate()))
-            || (calendarUtil.dateAfter(startDate, this.period.getStartDate())
-                && calendarUtil.dateAfter(endDate, this.period.getEndDate())))
-        {
+/*            || (calendarUtil.dateAfter(startDate, this.period.getStartDate())
+                && calendarUtil.dateBefore(endDate, this.period.getEndDate()))*/)
+        {        	
 			
             if (dayOfWeek.equals(this.dayOfWeek))
             {
@@ -240,8 +241,8 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation
                     && calendarUtil.timeBefore(endTime, this.getStartTime()))
                     || (calendarUtil.timeBefore(startTime, this.getStartTime())
                         && calendarUtil.timeAfter(startTime, this.getEndTime()))
-                    || (calendarUtil.timeAfter(startTime, this.getStartTime())
-                        && calendarUtil.timeAfter(endTime, this.getEndTime())))
+/*                    || (calendarUtil.timeAfter(startTime, this.getStartTime())
+                        && calendarUtil.timeAfter(endTime, this.getEndTime()))*/)
                 {
                     return true;
                 }
@@ -274,8 +275,8 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation
 			&& calendarUtil.dateBefore(endDate, this.period.getStartDate()))
 			|| (calendarUtil.dateBefore(startDate, this.period.getStartDate())
 				&& calendarUtil.dateAfter(startDate, this.period.getEndDate()))
-			|| (calendarUtil.dateAfter(startDate, this.period.getStartDate())
-				&& calendarUtil.dateAfter(endDate, this.period.getEndDate())))
+/*			|| (calendarUtil.dateAfter(startDate, this.period.getStartDate())
+				&& calendarUtil.dateAfter(endDate, this.period.getEndDate()))*/)
 		{
 			
 			if (dayOfWeek.equals(this.dayOfWeek))
@@ -285,8 +286,8 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation
 					&& calendarUtil.timeBefore(endTime, this.getStartTime()))
 					|| (calendarUtil.timeBefore(startTime, this.getStartTime())
 						&& calendarUtil.timeAfter(startTime, this.getEndTime()))
-					|| (calendarUtil.timeAfter(startTime, this.getStartTime())
-						&& calendarUtil.timeAfter(endTime, this.getEndTime())))
+/*					|| (calendarUtil.timeAfter(startTime, this.getStartTime())
+						&& calendarUtil.timeAfter(endTime, this.getEndTime()))*/)
 				{
 					return true;
 				}

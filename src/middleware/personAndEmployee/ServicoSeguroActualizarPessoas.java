@@ -73,6 +73,7 @@ public class ServicoSeguroActualizarPessoas extends ServicoSeguroSuperMigracaoPe
 		desactivarPessoas(listaPessoasFromFile);
 
 		System.out.println("  Done !");
+		System.exit(0);
 	}
 
 	private static void personFilter(LimpaNaturalidades limpaNaturalidades, Pessoa pessoa)

@@ -226,5 +226,6 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios extends ServicoSe
 
 		System.out.println("New Employees with  Working Place Cost Center: " + newEmployees);
 		System.out.println("  Done !");
+		System.exit(0);
 	}
 }

@@ -93,15 +93,16 @@ public class InsertItem implements IService
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
             IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
-            persistentItem.simpleLockWrite(item);
+            
 
             section = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
 
             infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
             item = Cloner.copyInfoItem2IItem(infoItem);
-
+            persistentItem.simpleLockWrite(item);
             Integer itemOrder = new Integer(organizeExistingItemsOrder(section, infoItem.getItemOrder()
                     .intValue()));
+            
             item.setItemOrder(itemOrder);
 
         }

@@ -69,6 +69,7 @@ public class ServicoSeguroPessoasInactivas extends ServicoSeguroSuperMigracaoPes
 
 		desactivarPessoas(servico);
 		System.out.println("  Done !");
+		System.exit(0);
 	}
 
 	private static void desactivarPessoas(ServicoSeguroPessoasInactivas servico)

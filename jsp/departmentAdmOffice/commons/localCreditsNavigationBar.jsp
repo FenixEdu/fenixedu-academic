@@ -17,6 +17,9 @@
 <logic:present role="role.department.member">
 	<logic:present role="role.department.credits.manager">
 		<strong>&raquo; <html:link action="/creditsManagementIndex"><bean:message key="link.group.creditsManagement"/></html:link></strong>
+		<br />
+		<br />
+		
 		<ul>
 			<li>
 				<html:link page="/teacherSearchForShiftManagement.do?method=searchForm&amp;page=0" paramId="executionPeriodId" paramName="executionPeriodId">
@@ -36,6 +39,11 @@
 			<li>
 				<html:link page="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0" paramId="executionPeriodId" paramName="executionPeriodId">
 					<bean:message key="link.teacher-working-time-management"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link page="/teacherSearchForOtherTypeCreditLine.do?method=searchForm&amp;page=0" paramId="executionPeriodId" paramName="executionPeriodId">
+					<bean:message key="link.other-type-credit-line" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</html:link>
 			</li>
 			<li>

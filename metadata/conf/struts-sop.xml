@@ -1533,6 +1533,7 @@
     	<forward name="associateExecutionCourse" path="/associateExecutionCourseToExam.do?method=prepare&amp;page=0"/>
    		<forward name="associateRoom" path="/associateRoomToExam.do?method=prepare&amp;page=0"/>
    		<forward name="dissociateExecutionCourse" path="/createExamNew.do?method=prepareAfterAssociateExecutionCourse&amp;page=0"/>
+   		<forward name="sucessSearchByDate" path="/ExamSearchByDate.do?method=prepareAfterEdit&amp;page=0"/>
    	</action>
    	
 	<action path="/chooseExecutionCourseForExams"

@@ -240,6 +240,7 @@ public class ServicoSeguroActualizarFuncionarios extends ServicoSeguroSuperMigra
 		System.out.println("New Funcionarios added : " + newEmployees);
 		System.out.println("New Roles added : " + newRoles);
 		System.out.println("  Done !");
+		System.exit(0);
 
 	}
 	

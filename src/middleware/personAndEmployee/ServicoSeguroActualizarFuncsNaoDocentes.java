@@ -204,5 +204,6 @@ public class ServicoSeguroActualizarFuncsNaoDocentes extends ServicoSeguroSuperM
 		System.out.println("New Funcionarios Nao Docentes added : " + newEmployees);
 		System.out.println("New Roles added : " + newRoles);
 		System.out.println("  Done !");
+		System.exit(0);
 	}
 }

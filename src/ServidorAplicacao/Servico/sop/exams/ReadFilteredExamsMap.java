@@ -182,17 +182,21 @@ public class ReadFilteredExamsMap implements IServico
                         for (int l = 0; l < infoExam.getAssociatedCurricularCourseScope().size(); l++)
                         {
                             InfoCurricularCourseScope scope =
-                                (InfoCurricularCourseScope) infoExam.getAssociatedCurricularCourseScope().get(l);
+                                (InfoCurricularCourseScope) infoExam
+                                    .getAssociatedCurricularCourseScope()
+                                    .get(
+                                    l);
                             InfoCurricularCourse infoCurricularCourse = scope.getInfoCurricularCourse();
                             if (!curricularCourseIDs.contains(infoCurricularCourse.getIdInternal()))
                             {
                                 curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
-                                List enroledStudents =
-                                    persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
-                                        Cloner.copyInfoCurricularCourse2CurricularCourse(
-                                            infoCurricularCourse),
-                                        executionPeriod);
-                                numberOfStudentsForExam += enroledStudents.size();
+                                int numberEnroledStudentsInCurricularCourse =
+                                    persistentEnrolment
+                                        .countEnrolmentsByCurricularCourseAndExecutionPeriod(
+                                        infoCurricularCourse.getIdInternal(),
+                                        executionPeriod.getIdInternal());
+                               
+                                numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
                             }
                         }
 

@@ -7,7 +7,7 @@ NEW FEATURES:
  association of exams to curricular course scopes. More flexible exam hours 
  (end and beggining). Exams associated to room occupations to make the room
  search algorithm more reliable.
-
+- task [#172] Guide print
 - Added double credits field to ManagementCreditLine
 - added a migration script for math courses responsabilities
 - added a migration script for erasmus/air force/etc students
@@ -62,65 +62,6 @@ CHANGES:
 - the service ReadCoursesInformation no longer sorts the result, that is now done in the corresponding action SearchCoursesI$
 - the statistics about the CoursesInformation are no longer calculated in the jsp, that is now done at InfoSiteCourseInforma$
 - the DomainObjects associated with the TeacherInformation are now not cacheable
-
-BUG FIXES:
-- websiteManager: fixed sections that have accent in word and it was not shown
-- webSiteManager: fixed archive of items that was mixing months from different years
-- webStieManager: fixed verification of dates in edition of item
-- webSiteManager: fixed way of searching for last item inserted or edited, for subsequent update in server files. 
-  - way of finding the last item modified 
-  - to know which file to update when seeing month of modified item
-- webSiteManager: fixed ordering of months in news archive
-- masterDegreeAdministrativeOffice: fixed sum of needed credits for final work proposal that were managed in float way
-  and passed to double way in class MasterDegreeCurricularPlanStrategy in method checkEndOfScholarship
-- Removed possibility of editing guide entries in guides with state = PAYED
-
-KNOWN ISSUES:
-- method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 
-	by execution year and degree code, should return a list and it is returning an object CursoExecucao.
-- Final degree work proposals are associated with the execution degree prior to the one they
-  are proposed for. This is due to not yet having information regarding the next execution
-  year. This must be resolved by establishing dates when the information must be introduced
-  into the database.
-- update to table credits is not very correct on the of ManagementCreditLine and Service Exemption situations.
-- When we insert an invalid date on create/edit exam the selected rooms, scopes and
-season is lost
-- When we select a curricular year in associate execution course to exam and, after
- that, we change the selected curricular year the system throws an exception 
-
-
-
----------------------------------------------------------------------
-Release 2004-04-13
----------------------------------------------------------------------
-
-NEW FEATURES:
-- Added create/edit of final degree work proposals interface to coordinators portal.
-- task [#178] Publication of Final Degree Work Proposals.
-- task [#177] Public Listing of Final Degree Work Proposals.
-- Added definition of final degree work candidacy period interface to coordinators portal.
- - new operation in teacher area: delete a grouping.
-- Master Degree Students are now allowed to enroll in execution courses and shifts
-
-NOTES:
-- updateGroupPropertiesTable.sql do an update in table GROUP_PROPERTIES ao campo ENROLMENT_BEGIN_DAY and ENROLMENT_END_DAY. 
-  
- 	
-CHANGES:
- - change the order of the input boxes on searchStudents.jsp
- - changes in teacher area about group properties. Some details pointed by Prof. Mira da Silva like hours in enrolment date.
- (Calendar2DateTimeFieldConversion.java(nova classe), repository_gesdis.xml, struts-teacher.xml, validation_teacher.xml, 
- InfoGroupProperties, TeacherAdministrationViewerDispatchAction groupProperties methods, 
- editGroupPorperties.jsp, insertGroupPorperties.jsp, services.xml, DeleteGroupProperties(Service))
-- added links to other operations, in master degree administrative office, when inside guide listing menu
-- added, in master degree administrative office, in guide listing operations, 
-  the possibility to search by student number
-- added, in gep, the possibility to choose basic, non basic or all types of curricular courses
-- fixed, in coordinator, error report when trying to view active degree curricular plan for
-  a degree curricular plan without curricular courses
-- Some imports in classes were removed for warnings cleaning
-
-
 - changed in master-degree area the rounding of the total credits of "folha de apuramento final"
 - Updated exames period for the second semesters exams season of 2003/2004.
 - Filtered exams from list of evaluations of an execution course when reading all exams sorted by degree.	
@@ -358,6 +299,71 @@ CHANGES:
 	it was using the database column name instead of the property name of the Class
 - readAllGroupPropertiesByExecutionCourseID
 - readGroupPropertiesByExecutionCourseAndName
+
+
+BUG FIXES:
+- fixed bug [ #183 ] Login Page
+- fixed bug [ #181 ] Inserting new items in Section Management ("Gestão de Pautas")
+- fixed bug [ #180 ] bug with users with grantOwner role
+- websiteManager: fixed sections that have accent in word and it was not shown
+- webSiteManager: fixed archive of items that was mixing months from different years
+- webStieManager: fixed verification of dates in edition of item
+- webSiteManager: fixed way of searching for last item inserted or edited, for subsequent update in server files. 
+  - way of finding the last item modified 
+  - to know which file to update when seeing month of modified item
+- webSiteManager: fixed ordering of months in news archive
+- masterDegreeAdministrativeOffice: fixed sum of needed credits for final work proposal that were managed in float way
+  and passed to double way in class MasterDegreeCurricularPlanStrategy in method checkEndOfScholarship
+- Removed possibility of editing guide entries in guides with state = PAYED
+- webSiteManager: [on 30-04-2004] fixed path for images in file SendWebSiteSectionFileToServer.java
+
+KNOWN ISSUES:
+- method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 
+	by execution year and degree code, should return a list and it is returning an object CursoExecucao.
+- Final degree work proposals are associated with the execution degree prior to the one they
+  are proposed for. This is due to not yet having information regarding the next execution
+  year. This must be resolved by establishing dates when the information must be introduced
+  into the database.
+- update to table credits is not very correct on the of ManagementCreditLine and Service Exemption situations.
+- When we insert an invalid date on create/edit exam the selected rooms, scopes and
+season is lost
+- When we select a curricular year in associate execution course to exam and, after
+ that, we change the selected curricular year the system throws an exception 
+
+
+
+---------------------------------------------------------------------
+Release 2004-04-13
+---------------------------------------------------------------------
+
+NEW FEATURES:
+- Added create/edit of final degree work proposals interface to coordinators portal.
+- task [#178] Publication of Final Degree Work Proposals.
+- task [#177] Public Listing of Final Degree Work Proposals.
+- Added definition of final degree work candidacy period interface to coordinators portal.
+ - new operation in teacher area: delete a grouping.
+- Master Degree Students are now allowed to enroll in execution courses and shifts
+
+NOTES:
+- updateGroupPropertiesTable.sql do an update in table GROUP_PROPERTIES ao campo ENROLMENT_BEGIN_DAY and ENROLMENT_END_DAY. 
+  
+ 	
+CHANGES:
+ - change the order of the input boxes on searchStudents.jsp
+ - changes in teacher area about group properties. Some details pointed by Prof. Mira da Silva like hours in enrolment date.
+ (Calendar2DateTimeFieldConversion.java(nova classe), repository_gesdis.xml, struts-teacher.xml, validation_teacher.xml, 
+ InfoGroupProperties, TeacherAdministrationViewerDispatchAction groupProperties methods, 
+ editGroupPorperties.jsp, insertGroupPorperties.jsp, services.xml, DeleteGroupProperties(Service))
+- added links to other operations, in master degree administrative office, when inside guide listing menu
+- added, in master degree administrative office, in guide listing operations, 
+  the possibility to search by student number
+- added, in gep, the possibility to choose basic, non basic or all types of curricular courses
+- fixed, in coordinator, error report when trying to view active degree curricular plan for
+  a degree curricular plan without curricular courses
+- Some imports in classes were removed for warnings cleaning
+
+
+
 
 BUG FIXES:
 - fixed bug [ #142 ] master degree students cannot enroll in shifts and execution courses

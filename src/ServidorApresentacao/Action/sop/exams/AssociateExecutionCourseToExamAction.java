@@ -26,7 +26,6 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -40,7 +39,8 @@ import ServidorApresentacao.Action.utils.ContextUtils;
 public class AssociateExecutionCourseToExamAction
 //extends FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
 //extends FenixContextDispatchAction{
-extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
+extends FenixDateAndTimeContextDispatchAction
+//extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
 {
 
     public ActionForward prepare(
@@ -160,7 +160,7 @@ extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAc
             	
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
-		System.out.println("*********************Choose Associate Execution Course: " + infoExecutionCourse.getIdInternal());
+		
 		request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 		
         return mapping.findForward("forwardChoose");

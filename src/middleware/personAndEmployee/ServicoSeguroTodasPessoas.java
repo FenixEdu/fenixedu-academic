@@ -71,6 +71,7 @@ public class ServicoSeguroTodasPessoas extends ServicoSeguroSuperMigracaoPessoas
 		actualizaPessoas(servico, newPersons, newRoles);
 
 		System.out.println("  Done !");
+		System.exit(0);
 	}
 
 	private static void actualizaPessoas(

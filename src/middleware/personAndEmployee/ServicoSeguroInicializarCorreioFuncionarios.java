@@ -223,5 +223,6 @@ public class ServicoSeguroInicializarCorreioFuncionarios extends ServicoSeguroSu
 
 		System.out.println("New Employees with  Mailing Cost Center: " + newEmployees);
 		System.out.println("  Done !");
+		System.exit(0);
 	}
 }

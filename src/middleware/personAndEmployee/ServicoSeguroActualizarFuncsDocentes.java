@@ -236,6 +236,7 @@ public class ServicoSeguroActualizarFuncsDocentes extends ServicoSeguroSuperMigr
 		System.out.println("New Teachers added : " + newTeachers);
 		System.out.println("New Roles added : " + newRoles);
 		System.out.println("  Done !");
+		System.exit(0);
 
 	}
 

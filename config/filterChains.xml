@@ -683,4 +683,11 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+	<filterChain>
+		<name>ReadStudentByUsernameAuthorization</name>
+		<expression>StudentAuthorization || MasterDegreeAdministrativeOfficeAuthorization</expression>
+		<description />
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>	
 </filterChainsDefinitions>

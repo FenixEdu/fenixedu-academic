@@ -28,6 +28,8 @@
 				<form-property name="position" type="java.lang.String"/>
 				<form-property name="start" type="java.lang.String"/>
 				<form-property name="end" type="java.lang.String"/>
+				<form-property name="credits" type="java.lang.String"/>
+				
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 			<form-bean name="ServiceExemptionForm" 

@@ -38,6 +38,53 @@ public class ExamSearchByDate extends FenixContextDispatchAction
         return mapping.findForward("choose");
     }
 
+    public ActionForward prepareAfterEdit(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        DynaActionForm formSearch = (DynaActionForm) form;
+
+        String strDate = (String) request.getAttribute(SessionConstants.DATE);
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(new Long(strDate).longValue());
+        formSearch.set("day", new Integer(date.get(Calendar.DAY_OF_MONTH)).toString());
+        formSearch.set("month", new Integer(date.get(Calendar.MONTH) + 1).toString());
+        formSearch.set("year", new Integer(date.get(Calendar.YEAR)).toString());
+
+        String strStartTime = (String) request.getAttribute(SessionConstants.START_TIME);
+        if (strStartTime != null && !strStartTime.equals("null"))
+        {
+            Calendar startTime = Calendar.getInstance();
+            startTime.setTimeInMillis(new Long(strStartTime).longValue());
+            formSearch.set("beginningHour", new Integer(startTime.get(Calendar.HOUR_OF_DAY)).toString());
+            formSearch.set("beginningMinute", new Integer(startTime.get(Calendar.MINUTE)).toString());
+        }
+        else
+        {
+            formSearch.set("beginningHour", null);
+            formSearch.set("beginningMinute", null);
+        }
+        
+        String strEndTime = (String) request.getAttribute(SessionConstants.END_TIME);
+        if (strEndTime != null && !strEndTime.equals("null"))
+        {
+            Calendar endTime = Calendar.getInstance();
+            endTime.setTimeInMillis(new Long(strEndTime).longValue());
+            formSearch.set("endHour", new Integer(endTime.get(Calendar.HOUR_OF_DAY)).toString());
+            formSearch.set("endMinute", new Integer(endTime.get(Calendar.MINUTE)).toString());
+        }
+        else
+        {
+            formSearch.set("endHour", null);
+            formSearch.set("endMinute", null);
+        }
+		
+        return search(mapping, form, request, response);
+    }
+
     public ActionForward search(
         ActionMapping mapping,
         ActionForm form,
@@ -132,8 +179,8 @@ public class ExamSearchByDate extends FenixContextDispatchAction
                 + ":"
                 + new Integer(examEndTime.get(Calendar.MINUTE));
         }
-	  	
-	  	Object[] args = { examDate, examStartTime, examEndTime };
+
+        Object[] args = { examDate, examStartTime, examEndTime };
         InfoViewExam infoViewExam =
             (InfoViewExam) ServiceUtils.executeService(userView, "ReadExamsByDate", args);
 
@@ -145,6 +192,19 @@ public class ExamSearchByDate extends FenixContextDispatchAction
         }
         request.setAttribute(SessionConstants.EXAM_DATEANDTIME_STR, examDateString);
 
+        Long date = new Long(examDate.getTimeInMillis());
+        request.setAttribute(SessionConstants.DATE, date.toString());
+        if (examStartTime != null)
+        {
+            Long sTime = new Long(examStartTime.getTimeInMillis());
+            request.setAttribute(SessionConstants.START_TIME, sTime.toString());
+        }
+        if (examEndTime != null)
+        {
+            Long eTime = new Long(examEndTime.getTimeInMillis());
+            request.setAttribute(SessionConstants.END_TIME, eTime.toString());
+        }
+		
         return mapping.findForward("show");
     }
 

@@ -25,7 +25,7 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoRoomOccupation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -39,8 +39,8 @@ import commons.CollectionUtils;
 /**
  * @author Ana e Ricardo
  */
-public class CreateExamDA
-    extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
+public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
+//extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
 {
     //extends FenixContextDispatchAction{
 
@@ -306,94 +306,93 @@ public class CreateExamDA
         return mapping.findForward("showCreateForm");
     }
 
-	public ActionForward prepareAfterDissociateExecutionCourse(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
-		if (infoExamId == null)
-		{
-			infoExamId = request.getParameter(SessionConstants.EXAM_OID);
-		}
-		request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+    public ActionForward prepareAfterDissociateExecutionCourse(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+        if (infoExamId == null)
+        {
+            infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+        }
+        request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
 
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setCurricularYearsContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setCurricularYearsContext(request);
 
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaValidatorForm createExamForm = (DynaValidatorForm) form;
-		String[] executionCourseArray = (String[]) createExamForm.get("executionCourses");
+        IUserView userView = SessionUtils.getUserView(request);
+        DynaValidatorForm createExamForm = (DynaValidatorForm) form;
+        String[] executionCourseArray = (String[]) createExamForm.get("executionCourses");
 
-		List executionCourseList = new ArrayList();
-		for (int i = 0; i < executionCourseArray.length; i++)
-		{
-			Object args[] = { new Integer(executionCourseArray[i])};
-			InfoExecutionCourse executionCourse;
-			try
-			{
-				executionCourse =
-					(InfoExecutionCourse) ServiceUtils.executeService(
-						userView,
-						"ReadExecutionCoursewithAssociatedCurricularCourses",
-						args);
-			}
-			catch (Exception ex)
-			{
-				throw new Exception(ex);
-			}
+        List executionCourseList = new ArrayList();
+        for (int i = 0; i < executionCourseArray.length; i++)
+        {
+            Object args[] = { new Integer(executionCourseArray[i])};
+            InfoExecutionCourse executionCourse;
+            try
+            {
+                executionCourse =
+                    (InfoExecutionCourse) ServiceUtils.executeService(
+                        userView,
+                        "ReadExecutionCoursewithAssociatedCurricularCourses",
+                        args);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex);
+            }
 
-			executionCourseList.add(executionCourse);
-		}
-		request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
+            executionCourseList.add(executionCourse);
+        }
+        request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
 
-		String nextPage = request.getParameter("nextPage");
-		request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+        String nextPage = request.getParameter("nextPage");
+        request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
-		ArrayList examSeasons = Util.getExamSeasons();
-		request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+        ArrayList examSeasons = Util.getExamSeasons();
+        request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
-		String[] scopeIDArray = (String[]) createExamForm.get("scopes");
-//		List scopeIDList = CollectionUtils.toList(scopeIDArray);
-//		InfoExecutionCourse executionCourse =
-//			(InfoExecutionCourse) executionCourseList.get(executionCourseList.size() - 1);
-//		Iterator iter2 = executionCourse.getAssociatedInfoCurricularCourses().iterator();
-//		while (iter2.hasNext())
-//		{
-//			Iterator iter3 = ((InfoCurricularCourse) iter2.next()).getInfoScopes().iterator();
-//			while (iter3.hasNext())
-//			{
-//				scopeIDList.add(((InfoCurricularCourseScope) iter3.next()).getIdInternal().toString());
-//			}
-//		}
-//		scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
-		createExamForm.set("scopes", scopeIDArray);
+        String[] scopeIDArray = (String[]) createExamForm.get("scopes");
+        //		List scopeIDList = CollectionUtils.toList(scopeIDArray);
+        //		InfoExecutionCourse executionCourse =
+        //			(InfoExecutionCourse) executionCourseList.get(executionCourseList.size() - 1);
+        //		Iterator iter2 = executionCourse.getAssociatedInfoCurricularCourses().iterator();
+        //		while (iter2.hasNext())
+        //		{
+        //			Iterator iter3 = ((InfoCurricularCourse) iter2.next()).getInfoScopes().iterator();
+        //			while (iter3.hasNext())
+        //			{
+        //				scopeIDList.add(((InfoCurricularCourseScope) iter3.next()).getIdInternal().toString());
+        //			}
+        //		}
+        //		scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
+        createExamForm.set("scopes", scopeIDArray);
 
-		String[] rooms = (String[]) createExamForm.get("rooms");
-		List roomNames = new ArrayList();
+        String[] rooms = (String[]) createExamForm.get("rooms");
+        List roomNames = new ArrayList();
 
-		if (rooms != null && rooms.length > 0)
-		{
+        if (rooms != null && rooms.length > 0)
+        {
 
-			for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++)
-			{
-				Object argRoom[] = { new Integer(rooms[iterRooms])};
-				InfoRoom infoRoom =
-					(InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", argRoom);
+            for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++)
+            {
+                Object argRoom[] = { new Integer(rooms[iterRooms])};
+                InfoRoom infoRoom =
+                    (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", argRoom);
 
-				roomNames.add(infoRoom);
-			}
-		}
+                roomNames.add(infoRoom);
+            }
+        }
 
-		request.setAttribute("rooms", roomNames);
+        request.setAttribute("rooms", roomNames);
 
-		return mapping.findForward("showCreateForm");
-	}
-
+        return mapping.findForward("showCreateForm");
+    }
 
     public ActionForward associateRoom(
         ActionMapping mapping,
@@ -415,54 +414,54 @@ public class CreateExamDA
         ContextUtils.setExecutionPeriodContext(request);
         ContextUtils.setCurricularYearsContext(request);
 
-		DynaValidatorForm examForm = (DynaValidatorForm) form;
-        
-		// exam start time
-		Calendar examStartTime = Calendar.getInstance();
-		Integer startHour = new Integer((String) examForm.get("beginningHour"));
-		Integer startMinute = new Integer((String) examForm.get("beginningMinute"));
-		examStartTime.set(Calendar.HOUR_OF_DAY, startHour.intValue());
-		examStartTime.set(Calendar.MINUTE, startMinute.intValue());
-		examStartTime.set(Calendar.SECOND, 0);
-		
-		// exam end time
-		Calendar examEndTime = Calendar.getInstance();			
-		Integer endHour = new Integer((String) examForm.get("endHour"));
-		Integer endMinute = new Integer((String) examForm.get("endMinute"));
-		examEndTime.set(Calendar.HOUR_OF_DAY, endHour.intValue());
-		examEndTime.set(Calendar.MINUTE, endMinute.intValue());
-		examEndTime.set(Calendar.SECOND, 0);
+        DynaValidatorForm examForm = (DynaValidatorForm) form;
 
-		if (examStartTime.after(examEndTime))
-		{
-			ActionError actionError = new ActionError("error.dateSwitched");
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.dateSwitched", actionError);
-			saveErrors(request, actionErrors);
-			return prepare(mapping, form, request, response);
-		}
-		
-		// exam date
-		Calendar examDate = Calendar.getInstance();
-		Integer day = new Integer((String) examForm.get("day"));
-		Integer month = new Integer((String) examForm.get("month"));
-		Integer year = new Integer((String) examForm.get("year"));
-		examDate.set(Calendar.YEAR, year.intValue());
-		examDate.set(Calendar.MONTH, month.intValue()-1);
-		examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
-		
-		if (examDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-		{
-			ActionError actionError = new ActionError("error.sunday");
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.sunday", actionError);
-			saveErrors(request, actionErrors);
-			return prepare(mapping, form, request, response);
-		}
-////////////////////
-		String[] scopeIDArray = (String[]) examForm.get("scopes");
-		request.setAttribute("scopes",scopeIDArray);
-/////////////////
+        // exam start time
+        Calendar examStartTime = Calendar.getInstance();
+        Integer startHour = new Integer((String) examForm.get("beginningHour"));
+        Integer startMinute = new Integer((String) examForm.get("beginningMinute"));
+        examStartTime.set(Calendar.HOUR_OF_DAY, startHour.intValue());
+        examStartTime.set(Calendar.MINUTE, startMinute.intValue());
+        examStartTime.set(Calendar.SECOND, 0);
+
+        // exam end time
+        Calendar examEndTime = Calendar.getInstance();
+        Integer endHour = new Integer((String) examForm.get("endHour"));
+        Integer endMinute = new Integer((String) examForm.get("endMinute"));
+        examEndTime.set(Calendar.HOUR_OF_DAY, endHour.intValue());
+        examEndTime.set(Calendar.MINUTE, endMinute.intValue());
+        examEndTime.set(Calendar.SECOND, 0);
+
+        if (examStartTime.after(examEndTime))
+        {
+            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.dateSwitched", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        }
+
+        // exam date
+        Calendar examDate = Calendar.getInstance();
+        Integer day = new Integer((String) examForm.get("day"));
+        Integer month = new Integer((String) examForm.get("month"));
+        Integer year = new Integer((String) examForm.get("year"));
+        examDate.set(Calendar.YEAR, year.intValue());
+        examDate.set(Calendar.MONTH, month.intValue() - 1);
+        examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
+
+        if (examDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+        {
+            ActionError actionError = new ActionError("error.sunday");
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.sunday", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        }
+        ////////////////////
+        String[] scopeIDArray = (String[]) examForm.get("scopes");
+        request.setAttribute("scopes", scopeIDArray);
+        /////////////////
 
         return mapping.findForward("associateRoom");
     }
@@ -488,6 +487,7 @@ public class CreateExamDA
 
         String executionDegreeOID = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
         request.setAttribute("executionDegreeOID", executionDegreeOID);
+//		request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeOID);		
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
@@ -521,25 +521,25 @@ public class CreateExamDA
 
         ArrayList examSeasons = Util.getExamSeasons();
         request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
-///////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////
         String[] scopeIDArray = (String[]) createExamForm.get("scopes");
-		request.setAttribute("scopes",scopeIDArray);
-///////////////////////
-/*        List scopeIDList = CollectionUtils.toList(scopeIDArray);
-        InfoExecutionCourse executionCourse =
-            (InfoExecutionCourse) executionCourseList.get(executionCourseList.size() - 1);
-        Iterator iter2 = executionCourse.getAssociatedInfoCurricularCourses().iterator();
-        while (iter2.hasNext())
-        {
-            Iterator iter3 = ((InfoCurricularCourse) iter2.next()).getInfoScopes().iterator();
-            while (iter3.hasNext())
-            {
-                scopeIDList.add(((InfoCurricularCourseScope) iter3.next()).getIdInternal().toString());
-            }
-        }
-        scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
-        createExamForm.set("scopes", scopeIDArray);
-*/
+        request.setAttribute("scopes", scopeIDArray);
+        ///////////////////////
+        /*        List scopeIDList = CollectionUtils.toList(scopeIDArray);
+                InfoExecutionCourse executionCourse =
+                    (InfoExecutionCourse) executionCourseList.get(executionCourseList.size() - 1);
+                Iterator iter2 = executionCourse.getAssociatedInfoCurricularCourses().iterator();
+                while (iter2.hasNext())
+                {
+                    Iterator iter3 = ((InfoCurricularCourse) iter2.next()).getInfoScopes().iterator();
+                    while (iter3.hasNext())
+                    {
+                        scopeIDList.add(((InfoCurricularCourseScope) iter3.next()).getIdInternal().toString());
+                    }
+                }
+                scopeIDArray = CollectionUtils.toArrayOfString(scopeIDList);
+                createExamForm.set("scopes", scopeIDArray);
+        */
         String[] rooms = (String[]) createExamForm.get("rooms");
         List roomNames = new ArrayList();
 
@@ -557,7 +557,6 @@ public class CreateExamDA
         }
 
         request.setAttribute("rooms", roomNames);
-
 
         return mapping.findForward("showCreateForm");
     }
@@ -667,12 +666,12 @@ public class CreateExamDA
 
         Integer infoExamID = new Integer((String) createExamForm.get("exam_oid"));
 
-		String infoExamIdInteger = (String) request.getAttribute(SessionConstants.EXAM_OID);
-		if (infoExamIdInteger == null)
-		{
-			infoExamIdInteger = request.getParameter(SessionConstants.EXAM_OID);
-		}
-		request.setAttribute(SessionConstants.EXAM_OID, infoExamIdInteger);
+        String infoExamIdInteger = (String) request.getAttribute(SessionConstants.EXAM_OID);
+        if (infoExamIdInteger == null)
+        {
+            infoExamIdInteger = request.getParameter(SessionConstants.EXAM_OID);
+        }
+        request.setAttribute(SessionConstants.EXAM_OID, infoExamIdInteger);
 
         // exam season
         Season season = new Season(new Integer((String) createExamForm.get("season")));
@@ -690,11 +689,11 @@ public class CreateExamDA
         examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
         if (examDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
         {
-			ActionError actionError = new ActionError("error.sunday");
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.sunday", actionError);
-			saveErrors(request, actionErrors);
-			return prepare(mapping, form, request, response);
+            ActionError actionError = new ActionError("error.sunday");
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.sunday", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
             //return mapping.findForward("showCreateForm");
         }
 
@@ -715,11 +714,11 @@ public class CreateExamDA
         examEndTime.set(Calendar.SECOND, 0);
         if (examStartTime.after(examEndTime))
         {
-			ActionError actionError = new ActionError("error.dateSwitched");
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.dateSwitched", actionError);
-			saveErrors(request, actionErrors);
-			return prepare(mapping, form, request, response);
+            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.dateSwitched", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
 
             //return mapping.findForward("showCreateForm");
         }
@@ -747,17 +746,36 @@ public class CreateExamDA
         }
         catch (ExistingServiceException ex)
         {
-			ActionError actionError = new ActionError("error.existingExam", season);
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.existingExam", actionError);
-			saveErrors(request, actionErrors);
-			return prepare(mapping, form, request, response);
+            ActionError actionError = new ActionError("error.existingExam", season);
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.existingExam", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
 
             //throw new ExistingActionException("O exame", ex);
         }
+        catch (InterceptingRoomsServiceException ex)
+        {
+            ActionError actionError = new ActionError("error.roomOccupied", ex.getMessage());
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.roomOccupied", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        }
 
-        System.out.println("returning sucess forward");
-        return mapping.findForward("Sucess");
+        String date = (String) request.getAttribute(SessionConstants.DATE);
+        if (date == null)
+        {
+            date = request.getParameter(SessionConstants.DATE);
+        }
+        if (date == null)
+        {
+            return mapping.findForward("Sucess");
+        }
+        else
+        {
+			return mapping.findForward("sucessSearchByDate");
+        }
     }
 
     public ActionForward dissociateExecutionCourse(
@@ -795,161 +813,165 @@ public class CreateExamDA
 
     }
 
-	public ActionForward checkRooms(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws Exception {
-	    
-			DynaActionForm examForm = (DynaActionForm) form;
-			ContextUtils.setCurricularYearsContext(request);
-			IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward checkRooms(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-			String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
-			if (infoExamId == null)
-			{
-				infoExamId = request.getParameter(SessionConstants.EXAM_OID);
-			}
-			request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
-			
-			String[] executionCourseArray = (String[]) examForm.get("executionCourses");
+        DynaActionForm examForm = (DynaActionForm) form;
+        ContextUtils.setCurricularYearsContext(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-			List executionCourseList = new ArrayList();
-			for (int i = 0; i < executionCourseArray.length; i++)
-			{
-				Object args[] = { new Integer(executionCourseArray[i])};
-				InfoExecutionCourse executionCourse;
-				try
-				{
-					executionCourse =
-						(InfoExecutionCourse) ServiceUtils.executeService(
-							userView,
-							"ReadExecutionCoursewithAssociatedCurricularCourses",
-							args);
-				} catch (Exception ex)
-				{
-					throw new Exception(ex);
-				}
+        String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+        if (infoExamId == null)
+        {
+            infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+        }
+        request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
 
-				executionCourseList.add(executionCourse);
-			}
-			request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
+        String[] executionCourseArray = (String[]) examForm.get("executionCourses");
 
-			String nextPage = request.getParameter("nextPage");
-			request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+        List executionCourseList = new ArrayList();
+        for (int i = 0; i < executionCourseArray.length; i++)
+        {
+            Object args[] = { new Integer(executionCourseArray[i])};
+            InfoExecutionCourse executionCourse;
+            try
+            {
+                executionCourse =
+                    (InfoExecutionCourse) ServiceUtils.executeService(
+                        userView,
+                        "ReadExecutionCoursewithAssociatedCurricularCourses",
+                        args);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex);
+            }
 
-			ArrayList examSeasons = Util.getExamSeasons();
-			request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);		
-						
-			List executionCourseNames = (List) request.getAttribute(SessionConstants.LIST_EXECUTION_COURSE_NAMES);
-			request.setAttribute(SessionConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
-			
-			String[] executionCourse = (String[]) examForm.get("executionCourses");
-			examForm.set("executionCourses",executionCourse);
-			
-			String[] scopeIDArray = (String[]) examForm.get("scopes");
-			examForm.set("scopes",scopeIDArray);
-			
-			// exam start time
-			Calendar examStartTime = Calendar.getInstance();
-			Integer startHour = new Integer((String) examForm.get("beginningHour"));
-			Integer startMinute = new Integer((String) examForm.get("beginningMinute"));
-			examStartTime.set(Calendar.HOUR_OF_DAY, startHour.intValue());
-			examStartTime.set(Calendar.MINUTE, startMinute.intValue());
-			examStartTime.set(Calendar.SECOND, 0);
-		
-			// exam end time
-			Calendar examEndTime = Calendar.getInstance();			
-			Integer endHour = new Integer((String) examForm.get("endHour"));
-			Integer endMinute = new Integer((String) examForm.get("endMinute"));
-			examEndTime.set(Calendar.HOUR_OF_DAY, endHour.intValue());
-			examEndTime.set(Calendar.MINUTE, endMinute.intValue());
-			examEndTime.set(Calendar.SECOND, 0);
+            executionCourseList.add(executionCourse);
+        }
+        request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
 
-			if (examStartTime.after(examEndTime))
-			{
-				ActionError actionError = new ActionError("error.dateSwitched");
-				ActionErrors actionErrors = new ActionErrors();
-				actionErrors.add("error.dateSwitched", actionError);
-				saveErrors(request, actionErrors);
-				return prepare(mapping, form, request, response);
-			}
-		
-			// exam date
-			Calendar examDate = Calendar.getInstance();
-			Integer day = new Integer((String) examForm.get("day"));
-			Integer month = new Integer((String) examForm.get("month"));
-			Integer year = new Integer((String) examForm.get("year"));
-			examDate.set(Calendar.YEAR, year.intValue());
-			examDate.set(Calendar.MONTH, month.intValue()-1);
-			examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
-		
-			int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
-			DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
-			if (dayOfWeekInt == Calendar.SUNDAY)
-			{
-				ActionError actionError = new ActionError("error.sunday");
-				ActionErrors actionErrors = new ActionErrors();
-				actionErrors.add("error.sunday", actionError);
-				saveErrors(request, actionErrors);
-				return prepare(mapping, form, request, response);
-			}
-			
-			Object args[] = { examDate, examDate, 
-							  examStartTime, examEndTime, dayOfWeek }; 
-		
-			List availableInfoRoom = 
-				(List) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
-		
-			String[] rooms = (String[]) examForm.get("rooms");
-			List selectedRooms = new ArrayList();
-			List occupiedSelectedRooms = new ArrayList();
-			
-			if(rooms != null && rooms.length > 0){
-			
-				for(int iterRooms=0; iterRooms < rooms.length; iterRooms++){
-					Integer argRoom[] = { Integer.valueOf(rooms[iterRooms]) };
-					InfoRoom infoRoom = 
-						(InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", argRoom);
-			
-					selectedRooms.add(infoRoom);
-				}
-			
-				for(int iterSR=0; iterSR < selectedRooms.size(); iterSR++)
-				{
-					InfoRoom selectedInfoRoom = (InfoRoom) selectedRooms.get(iterSR);
-				
-					boolean infoContida = false;
-				
-					for(int iterAIF=0; iterAIF < availableInfoRoom.size(); iterAIF++)
-					{
-						InfoRoom availInfoRoom = (InfoRoom) availableInfoRoom.get(iterAIF);
-				    
-						if(selectedInfoRoom.equals(availInfoRoom))
-						{
-							infoContida = true;
-							break;
-						}
-					}  
-				
-					if(!infoContida)
-					{
-						//room occupied
-						occupiedSelectedRooms.add(selectedInfoRoom);
-					}    
-				}
-			
-				for(int iterOSR=0; iterOSR < occupiedSelectedRooms.size(); iterOSR++)
-				{
-					InfoRoom occupiedInfoRoom = (InfoRoom) occupiedSelectedRooms.get(iterOSR);
-					selectedRooms.remove(occupiedInfoRoom);
-				}
-				
-				request.setAttribute("rooms",selectedRooms);
-			}
-		
-			return mapping.findForward("showCreateForm"); 
-	}
-	
+        String nextPage = request.getParameter("nextPage");
+        request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+
+        ArrayList examSeasons = Util.getExamSeasons();
+        request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+
+        List executionCourseNames =
+            (List) request.getAttribute(SessionConstants.LIST_EXECUTION_COURSE_NAMES);
+        request.setAttribute(SessionConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
+
+        String[] executionCourse = (String[]) examForm.get("executionCourses");
+        examForm.set("executionCourses", executionCourse);
+
+        String[] scopeIDArray = (String[]) examForm.get("scopes");
+        examForm.set("scopes", scopeIDArray);
+
+        // exam start time
+        Calendar examStartTime = Calendar.getInstance();
+        Integer startHour = new Integer((String) examForm.get("beginningHour"));
+        Integer startMinute = new Integer((String) examForm.get("beginningMinute"));
+        examStartTime.set(Calendar.HOUR_OF_DAY, startHour.intValue());
+        examStartTime.set(Calendar.MINUTE, startMinute.intValue());
+        examStartTime.set(Calendar.SECOND, 0);
+
+        // exam end time
+        Calendar examEndTime = Calendar.getInstance();
+        Integer endHour = new Integer((String) examForm.get("endHour"));
+        Integer endMinute = new Integer((String) examForm.get("endMinute"));
+        examEndTime.set(Calendar.HOUR_OF_DAY, endHour.intValue());
+        examEndTime.set(Calendar.MINUTE, endMinute.intValue());
+        examEndTime.set(Calendar.SECOND, 0);
+
+        if (examStartTime.after(examEndTime))
+        {
+            ActionError actionError = new ActionError("error.dateSwitched");
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.dateSwitched", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        }
+
+        // exam date
+        Calendar examDate = Calendar.getInstance();
+        Integer day = new Integer((String) examForm.get("day"));
+        Integer month = new Integer((String) examForm.get("month"));
+        Integer year = new Integer((String) examForm.get("year"));
+        examDate.set(Calendar.YEAR, year.intValue());
+        examDate.set(Calendar.MONTH, month.intValue() - 1);
+        examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
+
+        int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
+        DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
+        if (dayOfWeekInt == Calendar.SUNDAY)
+        {
+            ActionError actionError = new ActionError("error.sunday");
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.sunday", actionError);
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        }
+
+        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek };
+
+        List availableInfoRoom =
+            (List) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
+
+        String[] rooms = (String[]) examForm.get("rooms");
+        List selectedRooms = new ArrayList();
+        List occupiedSelectedRooms = new ArrayList();
+
+        if (rooms != null && rooms.length > 0)
+        {
+
+            for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++)
+            {
+                Integer argRoom[] = { Integer.valueOf(rooms[iterRooms])};
+                InfoRoom infoRoom =
+                    (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", argRoom);
+
+                selectedRooms.add(infoRoom);
+            }
+
+            for (int iterSR = 0; iterSR < selectedRooms.size(); iterSR++)
+            {
+                InfoRoom selectedInfoRoom = (InfoRoom) selectedRooms.get(iterSR);
+
+                boolean infoContida = false;
+
+                for (int iterAIF = 0; iterAIF < availableInfoRoom.size(); iterAIF++)
+                {
+                    InfoRoom availInfoRoom = (InfoRoom) availableInfoRoom.get(iterAIF);
+
+                    if (selectedInfoRoom.equals(availInfoRoom))
+                    {
+                        infoContida = true;
+                        break;
+                    }
+                }
+
+                if (!infoContida)
+                {
+                    //room occupied
+                    occupiedSelectedRooms.add(selectedInfoRoom);
+                }
+            }
+
+            for (int iterOSR = 0; iterOSR < occupiedSelectedRooms.size(); iterOSR++)
+            {
+                InfoRoom occupiedInfoRoom = (InfoRoom) occupiedSelectedRooms.get(iterOSR);
+                selectedRooms.remove(occupiedInfoRoom);
+            }
+
+            request.setAttribute("rooms", selectedRooms);
+        }
+
+        return mapping.findForward("showCreateForm");
+    }
+
 }

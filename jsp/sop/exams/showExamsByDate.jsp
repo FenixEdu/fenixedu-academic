@@ -28,8 +28,8 @@
 	<table width="100%" border="1">
 		<tr>
 			<td class="listClasses-header">Disciplina</td>
-			<td class="listClasses-header">Época</td>		
-			<td class="listClasses-header">Curso</td>
+			<td class="listClasses-header">Curso</td>		
+			<td class="listClasses-header">Época</td>
 			<td class="listClasses-header">Hora</td>
 			<td class="listClasses-header">Salas</td>
 			<td class="listClasses-header">Nº Alunos</td>	
@@ -37,22 +37,67 @@
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 			<% int seatsReserved = 0; %>
+			
+			<logic:iterate id="infoScope" name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
+				<bean:define id="curricularYearOID" name="infoScope" property="infoCurricularSemester.infoCurricularYear.year"/>				
+			</logic:iterate>
+			
+			<bean:define id="examID" name="infoViewExam" property="infoExam.idInternal"/> 
 			<tr>
 				<td class="listClasses">
 					<%-- DISCIPLINA --%>
 					<logic:iterate id="infoExecutionCourse" name="infoViewExam" property="infoExecutionCourses">
 						<bean:write name="infoExecutionCourse" property="nome"/><br />
+						<bean:define id="executionCourseOID" name="infoExecutionCourse" property="idInternal"/>
+						<bean:define id="executionPeriodOID" name="infoExecutionCourse" property="infoExecutionPeriod.idInternal"/>												
 					</logic:iterate>					
-				</td>
-				<td class="listClasses">
-					<%-- EPOCA --%>
-					<bean:write name="infoViewExam" property="infoExam.season"/>
 				</td>
 				<td class="listClasses">
 					<%-- CURSO --%>
 					<logic:iterate id="infoDegree" name="infoViewExam" property="infoDegrees">
 						<bean:write name="infoDegree" property="sigla"/><br />
+						<bean:define id="executionDegreeOID" name="infoDegree" property="idInternal"/>
 					</logic:iterate>
+				</td>
+				<td class="listClasses">
+					<%-- EPOCA --%>
+					
+					<html:link page="<%= "/showExamsManagement.do?method=edit&amp;"
+										+ SessionConstants.EXECUTION_COURSE_OID 
+										+ "="
+										+ pageContext.findAttribute("executionCourseOID")
+										+ "&amp;"
+										+ SessionConstants.EXECUTION_PERIOD_OID
+										+ "="
+										+ pageContext.findAttribute("executionPeriodOID")
+										+ "&amp;"
+										+ SessionConstants.EXECUTION_DEGREE_OID
+										+ "="
+										+ pageContext.findAttribute("executionDegreeOID") 
+										+ "&amp;"
+										+ SessionConstants.CURRICULAR_YEAR_OID
+										+ "="
+										+ pageContext.findAttribute("curricularYearOID")
+										+ "&amp;"
+										+ SessionConstants.EXAM_OID
+										+ "="
+										+ pageContext.findAttribute("examID") 
+										+ "&amp;"
+										+ SessionConstants.DATE
+										+ "="
+										+ pageContext.findAttribute("date") 
+										+ "&amp;"
+										+ SessionConstants.START_TIME
+										+ "="
+										+ pageContext.findAttribute("start_time")
+										+ "&amp;"
+										+ SessionConstants.END_TIME
+										+ "="
+										+ pageContext.findAttribute("end_time") %>"> 
+
+						<bean:write name="infoViewExam" property="infoExam.season"/>
+					</html:link>
+
 				</td>
 				<td class="listClasses">
 					<%-- HORA --%>
