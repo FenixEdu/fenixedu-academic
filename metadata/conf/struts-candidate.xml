@@ -10,13 +10,23 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
       
-      <!-- Dynamic-FormBean para Autorizacao -->
+      <!-- Dynamic-FormBean for Authorization -->
       <form-bean name="authenticationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="username" type="java.lang.String" />
         <form-property name="password" type="java.lang.String" />
       </form-bean>
+
+      <!-- Dynamic-FormBean for Password Change -->
+      <form-bean name="changePasswordForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="oldPassword" type="java.lang.String" />
+        <form-property name="newPassword" type="java.lang.String" />
+        <form-property name="reTypeNewPassword" type="java.lang.String" />
+      </form-bean>
+
 
       <form-bean name="errorMailForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -45,8 +55,6 @@
         	<form-property name="applicationYear" type="java.lang.String" />
         	<form-property name="degreeName" type="java.lang.String" />
         	<form-property name="degreeCode" type="java.lang.String" />
-        	<form-property name="password" type="java.lang.String" />
-        	<form-property name="reTypePassword" type="java.lang.String" />
         	<form-property name="majorDegree" type="java.lang.String" />
         	<form-property name="majorDegreeSchool" type="java.lang.String" />
         	<form-property name="majorDegreeYear" type="java.lang.Integer" />
@@ -81,7 +89,7 @@
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
-    <global-exceptions>
+	<global-exceptions>
 		<exception type="java.lang.Exception"
 			       key="java.lang.Exception"
 			       path="/naoExecutado.do"
@@ -94,7 +102,7 @@
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
-    </global-exceptions>
+	</global-exceptions>
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
@@ -107,6 +115,7 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
       <action path="/index" forward="/autenticacaoCand.jsp"/>
+      <action path="/changePasswordForward" forward="/changePassword.jsp"/>
       <action path="/authentication" forward="/autenticacaoCand.jsp"/>
       <action path="/naoExecutado" forward="/error.jsp"/>
       
@@ -158,6 +167,20 @@
               input="/changeApplicationInfo.jsp"
               scope="request">
         <forward name="Success" path="/changeSuccess.jsp"/>
+      </action>
+
+      <!-- Action to Change Candidate's Password -->
+      <action path="/changePasswordForm"
+      	      attribute="changePasswordForm"
+      	      name="changePasswordForm"
+              type="ServidorApresentacao.Action.masterDegree.candidate.ChangeCandidatePasswordFormAction"
+              input="/changePassword.jsp"
+              scope="request">
+  	  <exception type="ServidorApresentacao.Action.exceptions.InvalidPasswordActionException"
+				 key="ServidorApresentacao.Action.exceptions.InvalidPasswordActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
+        <forward name="Success" path="/changePasswordSuccess.jsp"/>
       </action>
 
 
