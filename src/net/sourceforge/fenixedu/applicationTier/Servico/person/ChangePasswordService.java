@@ -3,18 +3,18 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -40,7 +40,7 @@ public class ChangePasswordService implements IService {
         IPerson person = null;
         IPessoaPersistente personDAO = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             personDAO = sp.getIPessoaPersistente();
             person = personDAO.lerPessoaPorUsername(username);
         } catch (ExcepcaoPersistencia ex) {

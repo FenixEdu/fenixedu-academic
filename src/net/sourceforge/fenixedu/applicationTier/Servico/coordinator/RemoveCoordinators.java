@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -14,14 +16,12 @@ import net.sourceforge.fenixedu.domain.IPersonRole;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -34,7 +34,7 @@ public class RemoveCoordinators implements IService {
     public Boolean run(Integer executionDegreeId, List coordinatorsIds) throws FenixServiceException {
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
             IPersistentPersonRole persistentPersonRole = sp.getIPersistentPersonRole();
 

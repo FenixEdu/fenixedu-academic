@@ -92,7 +92,7 @@ public class LerTurnoServicosTest extends TestCaseReadServices {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();

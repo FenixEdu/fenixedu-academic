@@ -146,7 +146,7 @@ public class ReadAnnouncementTest extends AnnouncementBelongsToExecutionCourseTe
                 IAnnouncement iAnnouncement = null;
 
                 //Ler o anúncio da base de dados.
-                ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+                ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 sp.iniciarTransaccao();
                 iAnnouncement = (IAnnouncement) sp.getIPersistentAnnouncement().readByOID(
                         Announcement.class, announcementCode);

@@ -7,12 +7,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 import java.util.HashMap;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -37,7 +37,7 @@ public abstract class SearchService implements IService {
         ISuportePersistente sp;
         List domainList;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             domainList = doSearch(searchParameters, sp);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException("Problems with database!", e);

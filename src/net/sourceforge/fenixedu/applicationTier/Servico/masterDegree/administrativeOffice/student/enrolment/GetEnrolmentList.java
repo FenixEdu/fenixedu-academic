@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrollment;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -33,7 +33,7 @@ public class GetEnrolmentList implements IService {
         ISuportePersistente sp = null;
         List enrolmentList = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // Read the list
 
@@ -72,7 +72,7 @@ public class GetEnrolmentList implements IService {
         ISuportePersistente sp = null;
         List enrolmentList = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // Read the list
 
@@ -112,7 +112,7 @@ public class GetEnrolmentList implements IService {
             return this.run(studentCurricularPlanID, enrollmentState);
         }
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // Read the list
         List enrolmentList = sp.getIPersistentEnrolment()

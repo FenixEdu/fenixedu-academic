@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.fileSuport.INode;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
  * Created on 11/Fev/2003

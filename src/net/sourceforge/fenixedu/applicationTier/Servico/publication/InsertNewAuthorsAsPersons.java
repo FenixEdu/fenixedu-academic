@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 
 /**
@@ -44,7 +44,7 @@ public class InsertNewAuthorsAsPersons implements IServico {
         List authors = new ArrayList();
         try {
             Iterator iterator = idsInternalPersons.iterator();
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 

@@ -51,11 +51,11 @@ public class ReadShiftLessonsTest extends TestCaseReadServices {
 
         IExecutionCourse executionCourse = null;
         try {
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
+            executionCourse = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
             Object[] result = { new InfoShift("turnoINEX", null, null, (InfoExecutionCourse) Cloner
                     .get(executionCourse)) };
             return result;
@@ -68,11 +68,11 @@ public class ReadShiftLessonsTest extends TestCaseReadServices {
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         IExecutionCourse executionCourse = null;
         try {
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
+            executionCourse = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
             Object[] result = { new InfoShift("turno4", null, null, (InfoExecutionCourse) Cloner
                     .get(executionCourse)) };
             return result;

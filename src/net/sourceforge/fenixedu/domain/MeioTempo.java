@@ -9,10 +9,10 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.AssociarHorarioForm;
 import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.AssociarHorarioTipoConfirmarForm;
 import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.AssociarHorarioTipoForm;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;

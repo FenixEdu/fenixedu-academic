@@ -50,7 +50,7 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
         //		IExecutionPeriod executionPeriod = null;
         //		IDisciplinaExecucao executionCourse = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             //			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
@@ -100,7 +100,7 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
         //		IExecutionPeriod executionPeriod = null;
         //		IDisciplinaExecucao executionCourse = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             //			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -48,7 +48,7 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
 
         try {
 
-            suportePersistente = SuportePersistenteOJB.getInstance();
+            suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentCurricularCourseGroup = suportePersistente.getIPersistentCurricularCourseGroup();
             List optionalCurricularCourseGroups = persistentCurricularCourseGroup
                     .readOptionalCurricularCourseGroupsFromArea(studentCurricularPlan.getBranch());

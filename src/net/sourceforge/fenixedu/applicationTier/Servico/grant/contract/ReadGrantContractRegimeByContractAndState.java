@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -37,7 +37,7 @@ public class ReadGrantContractRegimeByContractAndState implements IService {
         List contractRegimes = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGrantContractRegime persistentGrantContractRegime = sp
                     .getIPersistentGrantContractRegime();
             contractRegimes = persistentGrantContractRegime

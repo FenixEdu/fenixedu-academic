@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
@@ -15,10 +16,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -39,7 +39,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
         InfoExecutionDegree infoExecutionDegree = null;
         List executionDegrees = null;
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // degree curricular plan
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) suportePersistente

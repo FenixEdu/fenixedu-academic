@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfoWithDegree;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -11,11 +13,10 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -45,7 +46,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             //Execution Period

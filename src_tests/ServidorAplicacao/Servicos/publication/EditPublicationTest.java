@@ -59,7 +59,7 @@ public class EditPublicationTest extends ServiceTestCase {
      */
     public void testEditPublicationOK() {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             
             List infoAuthorsList = new ArrayList();
             InfoAuthor infoAuthor1 = new InfoAuthor();
@@ -116,7 +116,7 @@ public class EditPublicationTest extends ServiceTestCase {
      */
     public void testEditPublicationNonExistent() {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             
             List infoAuthorsList = new ArrayList();
             InfoAuthor infoAuthor1 = new InfoAuthor();

@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.Announcement;
-import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.Announcement;
+import net.sourceforge.fenixedu.domain.IAnnouncement;
+import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -59,7 +59,7 @@ public class EditAnnouncementService implements IService {
         Timestamp date = null;
         IAnnouncement iAnnouncement = null;
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author joaosa & rmalo
@@ -52,7 +52,7 @@ public class ReadStudentsByAttendsSetID implements IServico{
 
 
            try {
-             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
              IPersistentAttendsSet persistentAttendsSet = sp.getIPersistentAttendsSet();
              
              IAttendsSet attendsSet = (IAttendsSet) persistentAttendsSet.readByOID(AttendsSet.class,attendsSetId);

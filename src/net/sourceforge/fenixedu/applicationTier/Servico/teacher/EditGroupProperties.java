@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -62,7 +62,7 @@ public class EditGroupProperties implements IService {
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         List errors = new ArrayList();
         try {
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             persistentStudentGroup = ps.getIPersistentStudentGroup();
             persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
@@ -143,7 +143,7 @@ public class EditGroupProperties implements IService {
 
     private void unEnrollStudentGroups(List studentGroupList) throws FenixServiceException {
         try {
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentGroup persistentStudentGroup = ps.getIPersistentStudentGroup();
 
             Iterator iterStudentGroupList = studentGroupList.iterator();
@@ -169,7 +169,7 @@ public class EditGroupProperties implements IService {
 
         List result = new ArrayList();
         try {
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
 

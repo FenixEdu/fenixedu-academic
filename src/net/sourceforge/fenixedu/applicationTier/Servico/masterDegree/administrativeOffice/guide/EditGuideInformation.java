@@ -9,7 +9,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -23,19 +25,17 @@ import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.transactions.TransactionType;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -75,7 +76,7 @@ public class EditGuideInformation implements IService {
 
         // Read The Guide
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
                     infoGuide.getYear(), infoGuide.getVersion());
         } catch (ExcepcaoPersistencia ex) {
@@ -95,7 +96,7 @@ public class EditGuideInformation implements IService {
 
         // Read the Contributor
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
         } catch (ExcepcaoPersistencia ex) {
@@ -160,7 +161,7 @@ public class EditGuideInformation implements IService {
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
                     try {
-                        sp = SuportePersistenteOJB.getInstance();
+                        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                         IGuideEntry guideEntry = sp.getIPersistentGuideEntry()
                                 .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
                                         infoGuideEntry.getGraduationType(),
@@ -180,7 +181,7 @@ public class EditGuideInformation implements IService {
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
                     try {
-                        sp = SuportePersistenteOJB.getInstance();
+                        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                         IGuideEntry guideEntry = sp.getIPersistentGuideEntry()
                                 .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
                                         infoGuideEntry.getGraduationType(),
@@ -206,7 +207,7 @@ public class EditGuideInformation implements IService {
                 // Create a new Guide Version
                 IGuide newGuideVersion = null;
                 try {
-                    sp = SuportePersistenteOJB.getInstance();
+                    sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                     sp.getIPersistentGuide().simpleLockWrite(newGuideVersion);
                     newGuideVersion = this.createNewGuideVersion(infoGuide);
 
@@ -326,7 +327,7 @@ public class EditGuideInformation implements IService {
         IGuide newGuide = null;
         InfoGuide result = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // write the Others Guide Entry if necessary
             if (othersGuideEntry != null) {
@@ -367,7 +368,7 @@ public class EditGuideInformation implements IService {
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             guides = sp.getIPersistentGuide().readByNumberAndYear(infoGuide.getNumber(),
                     infoGuide.getYear());
 
@@ -390,7 +391,7 @@ public class EditGuideInformation implements IService {
 
         // Read the needed information from the DataBase
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             person = sp.getIPessoaPersistente().lerPessoaPorUsername(
                     infoGuide.getInfoPerson().getUsername());
             contributor = sp.getIPersistentContributor().readByContributorNumber(

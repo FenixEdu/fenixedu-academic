@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -22,7 +22,7 @@ public class ReadDegreeCurricularPlansLabelValueBeanList implements IService {
 
     public List run() throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List curricularPlans = sp.getIPersistentDegreeCurricularPlan().readAll();
 
         List result = new ArrayList();

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -34,7 +34,7 @@ public class ReadShiftsByClass implements IService {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         ISchoolClass shcoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());

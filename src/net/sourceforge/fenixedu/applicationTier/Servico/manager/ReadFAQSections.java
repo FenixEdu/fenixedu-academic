@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.support.IFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -25,7 +25,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadFAQSections implements IService {
 
     public Collection run() throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFAQSection dao = sp.getIPersistentFAQSection();
 
         List faqSections = dao.readAll();

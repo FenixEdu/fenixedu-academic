@@ -6,15 +6,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.RoleType;
 import net.sourceforge.fenixedu.util.TipoCurso;
@@ -95,7 +96,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            IPersistentCurricularCourse persistentCurricularCourse = SuportePersistenteOJB.getInstance()
+            IPersistentCurricularCourse persistentCurricularCourse = PersistenceSupportFactory.getDefaultPersistenceSupport()
                     .getIPersistentCurricularCourse();
 
             curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
@@ -125,8 +126,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
             // Read The ExecutionDegree
             try {
-                IPersistentExecutionDegree persistentExecutionDegree = SuportePersistenteOJB
-                        .getInstance().getIPersistentExecutionDegree();
+                IPersistentExecutionDegree persistentExecutionDegree = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionDegree();
 
                 List executionDegrees = persistentExecutionDegree
                         .readByDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
@@ -136,7 +136,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
                 // IMPORTANT: It's assumed that the coordinator for a Degree is
                 // ALWAYS the same
                 //modified by Tânia Pousão
-                List coodinatorsList = SuportePersistenteOJB.getInstance().getIPersistentCoordinator()
+                List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCoordinator()
                         .readCoordinatorsByExecutionDegree(((IExecutionDegree) executionDegrees.get(0)));
                 if (coodinatorsList == null) {
                     return false;

@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author asnr and scpo
@@ -63,7 +63,7 @@ public class PrepareEditStudentGroupMembers implements IServico {
 
         try {
 
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentStudentGroupAttend = ps
                     .getIPersistentStudentGroupAttend();
 

@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoQuestion;
@@ -16,12 +18,10 @@ import net.sourceforge.fenixedu.domain.IMetadata;
 import net.sourceforge.fenixedu.domain.IQuestion;
 import net.sourceforge.fenixedu.domain.Metadata;
 import net.sourceforge.fenixedu.domain.Question;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -40,7 +40,7 @@ public class ReadQuestion implements IService {
             throws FenixServiceException {
         this.path = path.replace('\\', '/');
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
                     .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
             if (executionCourse == null) {

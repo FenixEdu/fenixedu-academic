@@ -7,12 +7,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,7 +32,7 @@ public class ReadAllGrantTypes implements IService {
     public List run() throws FenixServiceException {
         List grantTypes = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGrantType pgt = sp.getIPersistentGrantType();
             grantTypes = pgt.readAll();
         } catch (ExcepcaoPersistencia e) {

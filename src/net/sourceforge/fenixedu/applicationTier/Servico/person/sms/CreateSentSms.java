@@ -30,7 +30,7 @@ public class CreateSentSms implements IService {
         throw new SmsNotSentServiceException("error.person.sendSms");
         //    	
         //        try {
-        //            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+        //            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         //            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
         //
         //            IPerson person =

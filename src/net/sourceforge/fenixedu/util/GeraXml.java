@@ -42,7 +42,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.SmartDataSetGeneratorForLEECTestBattery;
 import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 
@@ -160,7 +160,7 @@ public class GeraXml extends FenixUtil {
      */
     private static void apagaEnrolments(List enrolments) {
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment persistentEnrolment = suportePersistente.getIPersistentEnrolment();
 
             suportePersistente.iniciarTransaccao();
@@ -187,7 +187,7 @@ public class GeraXml extends FenixUtil {
 
         IEnrollment enrolment = null;
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentCurricularCourse persistentCurricularCourse = suportePersistente
                     .getIPersistentCurricularCourse();
@@ -239,7 +239,7 @@ public class GeraXml extends FenixUtil {
 
     private static void writeEnrollmentPeriod() {
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentEnrolmentPeriod persistentEnrolmentPeriod = suportePersistente
                     .getIPersistentEnrolmentPeriod();
@@ -282,7 +282,7 @@ public class GeraXml extends FenixUtil {
 
     private static void deleteEnrollmentPeriod() {
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentEnrolmentPeriod persistentEnrolmentPeriod = suportePersistente
                     .getIPersistentEnrolmentPeriod();
@@ -316,7 +316,7 @@ public class GeraXml extends FenixUtil {
 
     private static void apagaStudentCurricularPlanEnrolments(Integer studentNumber) {
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment persistentEnrolment = suportePersistente.getIPersistentEnrolment();
             IPersistentStudentCurricularPlan studentCurricularPlanPersistente = suportePersistente
                     .getIStudentCurricularPlanPersistente();

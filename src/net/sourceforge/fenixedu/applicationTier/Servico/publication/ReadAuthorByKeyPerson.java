@@ -6,16 +6,16 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.Author;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.publication.Author;
+import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 
 /**
@@ -48,7 +48,7 @@ public class ReadAuthorByKeyPerson implements IServico {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();

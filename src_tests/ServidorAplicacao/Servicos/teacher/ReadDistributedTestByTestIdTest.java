@@ -49,7 +49,7 @@ public class ReadDistributedTestByTestIdTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         List result = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IPersistentTest persistentTest = sp.getIPersistentTest();
             ITest test = new Test(new Integer(3));

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -12,11 +14,9 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -33,7 +33,7 @@ public class ReadCurricularCoursesByDegree implements IService {
 			throws FenixServiceException {
 		List infoCurricularCourses = null;
 		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 			IExecutionYear executionYear = sp.getIPersistentExecutionYear()
 					.readExecutionYearByName(executionYearString);
@@ -88,7 +88,7 @@ public class ReadCurricularCoursesByDegree implements IService {
 			throws FenixServiceException {
 		List infoCurricularCourses = null;
 		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
 					.getIPersistentDegreeCurricularPlan().readByOID(

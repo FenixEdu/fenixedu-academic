@@ -101,7 +101,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -134,7 +134,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -167,7 +167,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -205,7 +205,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -243,7 +243,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -280,7 +280,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -318,7 +318,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -355,7 +355,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -406,7 +406,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -457,7 +457,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -508,7 +508,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -559,7 +559,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,
@@ -610,7 +610,7 @@ public class CreateExamNewTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(examDate, examStartTime, examEndTime, season, executionCourseIDArray,

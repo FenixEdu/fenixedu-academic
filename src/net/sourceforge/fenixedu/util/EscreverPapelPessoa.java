@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.applicationTier.Executor;
 import net.sourceforge.fenixedu.applicationTier.PersistenceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAutorizacaoLer;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroEscreverPapelPessoa;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroLerTodasPessoas;
+import net.sourceforge.fenixedu.domain.Person;
 
 /**
  * 

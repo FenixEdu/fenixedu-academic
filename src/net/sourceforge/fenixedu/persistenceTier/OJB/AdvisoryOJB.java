@@ -52,8 +52,8 @@ public class AdvisoryOJB extends PersistentObjectOJB implements IPersistentAdvis
         int numberOfRecipients = count(Person.class, criteria);
         int numberOfElementsInSpan = 500;
         for (int i = 0; ((i - 1) * numberOfElementsInSpan) < numberOfRecipients; i++) {
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
             List people = readSpan(Person.class, criteria, new Integer(numberOfElementsInSpan),
                     new Integer(i));
 

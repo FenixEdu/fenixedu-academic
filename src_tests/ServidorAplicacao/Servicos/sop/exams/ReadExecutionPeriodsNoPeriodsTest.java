@@ -36,7 +36,7 @@ public class ReadExecutionPeriodsNoPeriodsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List executionPeriodsList = service.run();

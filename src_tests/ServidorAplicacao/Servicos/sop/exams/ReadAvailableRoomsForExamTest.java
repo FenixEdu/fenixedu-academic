@@ -71,7 +71,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List availableRooms = service.run(examDate, examDate, examStartTime, examEndTime, dayOfWeek);
@@ -105,7 +105,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase {
 		ISuportePersistente sp = null;
 
         try {
-			sp = SuportePersistenteOJB.getInstance();
+			sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			sp.iniciarTransaccao();
 
 			List availableRooms = service.run(examDate, examDate, examStartTime, examEndTime, dayOfWeek);
@@ -150,7 +150,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase {
 		ISuportePersistente sp = null;
 
         try {
-			sp = SuportePersistenteOJB.getInstance();
+			sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			sp.iniciarTransaccao();
 
 			List availableRooms = service.run(examDate, examDate, examStartTime, examEndTime, dayOfWeek);
@@ -200,7 +200,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase {
 		ISuportePersistente sp = null;
 
         try {
-			sp = SuportePersistenteOJB.getInstance();
+			sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			sp.iniciarTransaccao();
 
 			List availableRooms = service.run(examDate, examDate, examStartTime, examEndTime, dayOfWeek);

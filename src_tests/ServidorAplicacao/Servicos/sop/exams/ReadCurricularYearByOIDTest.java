@@ -41,7 +41,7 @@ public class ReadCurricularYearByOIDTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoCurricularYear year = service.run(id);
@@ -64,7 +64,7 @@ public class ReadCurricularYearByOIDTest extends ServiceTestCase {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(id);

@@ -45,7 +45,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCoursesTest extends Serv
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionCourse executionCourse = service.run(executionCourseID);
@@ -72,7 +72,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCoursesTest extends Serv
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionCourse executionCourse = service.run(executionCourseID);
@@ -100,7 +100,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCoursesTest extends Serv
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionCourse executionCourse = service.run(executionCourseID);
@@ -128,7 +128,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCoursesTest extends Serv
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(executionCourseID);

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author asnr and scpo
@@ -64,7 +64,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
             List allStudentGroupAttend = new ArrayList();
             try {
 
-                ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+                ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
                         .getIPersistentStudentGroupAttend();
 

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.NumberUtils;
@@ -24,7 +24,7 @@ public class CreateGuideEntry implements IService {
     public void run(Integer guideID, GraduationType graduationType, DocumentType documentType,
             String description, Double price, Integer quantity) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
 

@@ -238,7 +238,7 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();

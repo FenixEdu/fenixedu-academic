@@ -132,7 +132,7 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
      * @return
      */
     private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
-        IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+        IPersistentEmployee employeeDAO = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
 
         IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
         employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()

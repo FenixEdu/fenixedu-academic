@@ -51,7 +51,7 @@ public abstract class FilterTestCase extends TestCase {
             DatabaseOperation.DELETE_ALL.execute(connection, fullDataSet);
 
             DatabaseOperation.INSERT.execute(connection, dataSet);
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             sp.clearCache();
             sp.confirmarTransaccao();

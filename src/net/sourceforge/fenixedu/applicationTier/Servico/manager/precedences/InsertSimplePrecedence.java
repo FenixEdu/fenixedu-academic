@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
@@ -19,13 +20,12 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrWillB
 import net.sourceforge.fenixedu.domain.precedences.RestrictionNotDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -41,7 +41,7 @@ public class InsertSimplePrecedence implements IService {
     public void run(String className, Integer curricularCourseToAddPrecedenceID,
             Integer precedentCurricularCourseID, Integer number) throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
                     .getIPersistentCurricularCourse();

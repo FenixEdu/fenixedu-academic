@@ -7,15 +7,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.domain.IQuestion;
 import net.sourceforge.fenixedu.domain.Question;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
@@ -37,7 +37,7 @@ public class ReadQuestionImage implements IService {
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport;
         try {
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 
@@ -61,7 +61,7 @@ public class ReadQuestionImage implements IService {
             Integer imageId, String path) throws FenixServiceException {
         this.path = path.replace('\\', '/');
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IQuestion question = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(
                     Question.class, questionId);

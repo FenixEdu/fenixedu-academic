@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -37,7 +37,7 @@ public class ReadStudentCurricularPlans implements IService {
         List studentCurricularPlans = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
                     .readByStudentNumberAndDegreeType(studentNumber, degreeType);
@@ -83,7 +83,7 @@ public class ReadStudentCurricularPlans implements IService {
     //		List studentCurricularPlans = null;
     //         
     //		try {
-    //			sp = SuportePersistenteOJB.getInstance();
+    //			sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     //            
     //			studentCurricularPlans = (List)
     // sp.getIStudentCurricularPlanPersistente().readByStudentNumberAndDegreeType(studentNumber,

@@ -9,6 +9,10 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.CreditsValidator;
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingPeriodException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
@@ -22,10 +26,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.CreditsValidator;
-import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingPeriodException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -74,7 +74,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
         List shiftWithErrors = new ArrayList();
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();

@@ -70,7 +70,7 @@ public class TeacherAdministrationSiteComponentServiceRootSectionsTest extends T
         List rootSectionsList = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();

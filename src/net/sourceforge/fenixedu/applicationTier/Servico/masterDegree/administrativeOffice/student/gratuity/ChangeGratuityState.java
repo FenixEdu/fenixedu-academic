@@ -2,18 +2,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Calendar;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.Gratuity;
 import net.sourceforge.fenixedu.domain.IGratuity;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.GratuityState;
 import net.sourceforge.fenixedu.util.State;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -36,7 +36,7 @@ public class ChangeGratuityState implements IService {
         IStudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             gratuity = sp.getIPersistentGratuity().readByStudentCurricularPlanIDAndState(
                     studentCurricularPlanID, new State(State.ACTIVE));

@@ -9,17 +9,17 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -38,7 +38,7 @@ public class ChooseGuide implements IService {
         List guides = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             guides = sp.getIPersistentGuide().readByNumberAndYear(guideNumber, guideYear);
 
         } catch (ExcepcaoPersistencia ex) {
@@ -79,7 +79,7 @@ public class ChooseGuide implements IService {
         IGuide guide = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
                     guideVersion);
@@ -116,7 +116,7 @@ public class ChooseGuide implements IService {
         List guides = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             guides = sp.getIPersistentGuide().readByYear(guideYear);
 
@@ -194,7 +194,7 @@ public class ChooseGuide implements IService {
         // Check if person exists
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
                     identificationDocumentNumber, identificationDocumentType);
 
@@ -209,7 +209,7 @@ public class ChooseGuide implements IService {
         }
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             guides = sp.getIPersistentGuide().readByPerson(identificationDocumentNumber,
                     identificationDocumentType);
 

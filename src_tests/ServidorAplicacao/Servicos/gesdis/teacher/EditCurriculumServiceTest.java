@@ -54,7 +54,7 @@ public class EditCurriculumServiceTest extends TestCaseDeleteAndEditServices {
         //	IExecutionYear executionYear = null;
         //IExecutionPeriod executionPeriod = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             //	IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();

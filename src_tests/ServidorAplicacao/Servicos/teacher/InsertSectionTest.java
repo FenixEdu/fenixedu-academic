@@ -98,7 +98,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
             ISite iSite = (ISite) persistentSuport.getIPersistentSite().readByOID(Site.class,
@@ -133,7 +133,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
             ISite iSite = (ISite) persistentSuport.getIPersistentSite().readByOID(Site.class,
@@ -167,7 +167,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
             ISite iSite = (ISite) persistentSuport.getIPersistentSite().readByOID(Site.class,
@@ -223,7 +223,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
             ISite iSite = (ISite) persistentSuport.getIPersistentSite().readByOID(Site.class,

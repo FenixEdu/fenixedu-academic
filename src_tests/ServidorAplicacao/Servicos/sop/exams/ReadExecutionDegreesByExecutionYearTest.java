@@ -45,7 +45,7 @@ public class ReadExecutionDegreesByExecutionYearTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List listExecutionDegrees = service.run(info);
@@ -73,7 +73,7 @@ public class ReadExecutionDegreesByExecutionYearTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List listExecutionDegrees = service.run(info);
@@ -101,7 +101,7 @@ public class ReadExecutionDegreesByExecutionYearTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List listExecutionDegrees = service.run(info);

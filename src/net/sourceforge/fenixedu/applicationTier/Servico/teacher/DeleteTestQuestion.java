@@ -8,20 +8,20 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.IQuestion;
 import net.sourceforge.fenixedu.domain.ITest;
 import net.sourceforge.fenixedu.domain.ITestQuestion;
 import net.sourceforge.fenixedu.domain.Question;
 import net.sourceforge.fenixedu.domain.Test;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Susana Fernandes
@@ -34,7 +34,7 @@ public class DeleteTestQuestion implements IService {
     public boolean run(Integer executionCourseId, Integer testId, Integer questionId)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
             ITest test = (ITest) persistentTest.readByOID(Test.class, testId, true);

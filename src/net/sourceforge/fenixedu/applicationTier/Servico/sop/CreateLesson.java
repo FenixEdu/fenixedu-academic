@@ -14,6 +14,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
@@ -27,12 +30,9 @@ import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.TipoAula;
 import net.sourceforge.fenixedu.util.beanUtils.FenixPropertyUtils;
@@ -44,7 +44,7 @@ public class CreateLesson implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoLessonServiceResult result = null;
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
         IRoomOccupation roomOccupation = Cloner.copyInfoRoomOccupation2RoomOccupation(infoLesson
@@ -104,7 +104,7 @@ public class CreateLesson implements IService {
     private boolean validNoInterceptingLesson(IRoomOccupation roomOccupation)
             throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
 
             Iterator iter = roomOccupationInDBList.iterator();
@@ -120,7 +120,7 @@ public class CreateLesson implements IService {
         }
 
         /*
-         * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+         * try { ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
          * IAulaPersistente persistentLesson = sp.getIAulaPersistente(); List
          * lessonMatchList = persistentLesson.readLessonsInBroadPeriod(lesson,
          * null, executionPeriod); if (lessonMatchList.size() > 0) { if
@@ -192,7 +192,7 @@ public class CreateLesson implements IService {
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
         if (associatedLessons == null) {
-            associatedLessons = SuportePersistenteOJB.getInstance().getIAulaPersistente()
+            associatedLessons = PersistenceSupportFactory.getDefaultPersistenceSupport().getIAulaPersistente()
                     .readLessonsByShift(shift);
             shift.setAssociatedLessons(associatedLessons);
         }

@@ -64,7 +64,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         // Write the Person first to see if there's no clash
 
         try {
-            SuportePersistenteOJB.getInstance().getIPessoaPersistente().escreverPessoa(
+            PersistenceSupportFactory.getDefaultPersistenceSupport().getIPessoaPersistente().escreverPessoa(
                     masterDegreeCandidateToWrite.getPerson());
         } catch (ExistingPersistentException e) {
             throw new ExistingPersistentException("Existing Person !");

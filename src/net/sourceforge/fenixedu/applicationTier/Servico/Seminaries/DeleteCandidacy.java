@@ -11,12 +11,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
+import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -33,7 +33,7 @@ public class DeleteCandidacy implements IService {
 
     public void run(Integer id) throws BDException {
         try {
-            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
                     .getIPersistentSeminaryCandidacy();
             IPersistentSeminaryCaseStudyChoice persistentChoice = persistenceSupport

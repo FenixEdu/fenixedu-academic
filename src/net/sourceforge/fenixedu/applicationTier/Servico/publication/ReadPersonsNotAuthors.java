@@ -9,14 +9,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author TJBF & PFON
@@ -45,7 +45,7 @@ public class ReadPersonsNotAuthors implements IServico {
     public List run(String nameString, IUserView userView) throws FenixServiceException {
         List persons = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             persons = persistentPerson.findPersonByName(nameString);

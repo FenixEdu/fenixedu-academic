@@ -8,20 +8,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
+import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Barbosa
@@ -45,7 +45,7 @@ public class SearchGrantOwner implements IService {
         IGrantOwner grantOwner = null;
         IPerson person = null;
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentPerson = persistentSupport.getIPessoaPersistente();
             persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 

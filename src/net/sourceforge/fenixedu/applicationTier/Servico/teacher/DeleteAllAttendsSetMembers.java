@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
@@ -65,8 +66,7 @@ public class DeleteAllAttendsSetMembers implements IServico {
 
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
             persistentAttendInAttendsSet = persistentSupport.getIPersistentAttendInAttendsSet();

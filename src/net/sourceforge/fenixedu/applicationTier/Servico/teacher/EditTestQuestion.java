@@ -6,19 +6,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ITest;
 import net.sourceforge.fenixedu.domain.ITestQuestion;
 import net.sourceforge.fenixedu.domain.Test;
 import net.sourceforge.fenixedu.domain.TestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Susana Fernandes
@@ -32,7 +32,7 @@ public class EditTestQuestion implements IService {
             Integer questionOrder, Double questionValue, CorrectionFormula formula)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTestQuestion persistentTestQuestion = persistentSuport
                     .getIPersistentTestQuestion();
             ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(

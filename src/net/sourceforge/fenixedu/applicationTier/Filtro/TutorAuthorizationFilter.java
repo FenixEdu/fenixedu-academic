@@ -6,13 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -59,7 +59,7 @@ public class TutorAuthorizationFilter extends AuthorizationByRoleFilter {
         ISuportePersistente sp;
         
         try {
-        	sp = SuportePersistenteOJB.getInstance();
+        	sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTutor persistentTutor = sp.getIPersistentTutor();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             

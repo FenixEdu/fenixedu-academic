@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.RoleType;
@@ -36,7 +36,7 @@ public class InsertNewProjectAccess implements IService {
     }
 
     public void run(UserView userView, String username, GregorianCalendar beginDate, GregorianCalendar endDate) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
@@ -71,7 +71,7 @@ public class InsertNewProjectAccess implements IService {
 
     public void run(UserView userView, String username, String[] projectCodes, GregorianCalendar beginDate, GregorianCalendar endDate)
             throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();

@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -74,7 +74,7 @@ public class PrepareCreateStudentGroup implements IServico {
         IGroupProperties groupProperties;
         try {
 
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
             persistentStudentGroupAttend = ps
                     .getIPersistentStudentGroupAttend();

@@ -7,14 +7,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -30,7 +30,7 @@ public class ReadStudentsWithDistributedTest implements IService {
         ISuportePersistente persistentSuport;
         List infoStudentList = new ArrayList();
         try {
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IDistributedTest distributedTest = (IDistributedTest) persistentSuport
                     .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);

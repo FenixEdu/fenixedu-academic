@@ -4,15 +4,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -26,7 +26,7 @@ public class EditSite implements IService {
     public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException {
         IPersistentSite persistentSite = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSite = sp.getIPersistentSite();
             ISite siteOld = Cloner.copyInfoSite2ISite(infoSiteOld);
             IExecutionCourse executionCourse = siteOld.getExecutionCourse();

@@ -63,7 +63,7 @@ public class ReadTeachersByExecutionCourseProfessorshipTest extends TestCaseRead
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                     .getIPersistentExecutionCourse();
             IPersistentExecutionYear persistentExecutionYear = persistentSupport

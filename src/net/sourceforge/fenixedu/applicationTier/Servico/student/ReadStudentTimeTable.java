@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -34,7 +34,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadStudentTimeTable implements IService {
 
     public List run(String username) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IStudent student = persistentStudent.readByUsername(username);
         ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();

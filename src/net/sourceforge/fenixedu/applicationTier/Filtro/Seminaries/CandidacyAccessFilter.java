@@ -5,15 +5,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.util.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -67,7 +67,7 @@ public class CandidacyAccessFilter extends Filtro {
     boolean checkCandidacyOwnership(IUserView id, Object[] arguments) throws Exception {
         boolean result = true;
         Integer candidacyID = (Integer) arguments[0];
-        ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
                 .getIPersistentSeminaryCandidacy();
         //

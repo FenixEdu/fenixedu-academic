@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -17,8 +19,6 @@ import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -64,7 +64,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
         ISummary summary = getSummary(arguments);
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();        
         ITeacher teacherLogged = persistentTeacher.readTeacherByUsername(id.getUtilizador());
                         
@@ -98,7 +98,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      */
     private List getExecutionCourseTeachers(Object[] arguments, ServiceRequest request) throws ExcepcaoPersistencia {
               
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         
@@ -117,7 +117,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      */
     private boolean isTeacherExecutionCourseMember(List teachers, Object[] arguments, IUserView userView) throws ExcepcaoPersistencia {       
         ISummary summary = getSummary(arguments);
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();       
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
@@ -167,7 +167,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     private List getResponsibleTeachers(Integer executionCourse) throws NotAuthorizedFilterException {
         try {
             List result = null;
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
             result = persistentResponsibleFor.readByExecutionCourseID(executionCourse);
             
@@ -242,7 +242,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      */
     private List getProfessorships(Object[] arguments) throws ExcepcaoPersistencia {
         ISummary summary = getSummary(arguments);
-        ISuportePersistente persistenteSupport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenteSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProfessorship persistentProfessorship = persistenteSupport
                 .getIPersistentProfessorship();
         if (summary.getShift() == null) {
@@ -330,7 +330,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         ISummary summary = null;
         InfoSummary infoSummary = null;
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSummary persistentSummary = sp.getIPersistentSummary();
         if (arguments[1] instanceof InfoSummary) {
             infoSummary = (InfoSummary) arguments[1];
@@ -347,7 +347,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      *         ExcepcaoPersistencia
      */
     private ITeacher getTeacher(IUserView id) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
         return teacher;
@@ -370,7 +370,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         }
         try {
 
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
@@ -422,7 +422,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         }
         try {
 
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTestWithTestScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -17,12 +19,10 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.domain.IStudentTestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -41,7 +41,7 @@ public class ReadDistributedTestMarksStatistics implements IService {
         ISuportePersistente persistentSuport;
         InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
         try {
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IDistributedTest distributedTest = (IDistributedTest) persistentSuport
                     .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
             if (distributedTest == null)

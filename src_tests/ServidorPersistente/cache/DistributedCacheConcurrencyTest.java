@@ -31,7 +31,7 @@ public class DistributedCacheConcurrencyTest extends PersistentObjectOJB {
 
     static {
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             cacheTest = new DistributedCacheConcurrencyTest();
         } catch (Exception e) {
             e.printStackTrace();

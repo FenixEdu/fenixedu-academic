@@ -74,10 +74,10 @@ public class EditContributorServiceTest extends TestCaseServicos {
 
         // Check the edition
         try {
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            IContributor contributor = SuportePersistenteOJB.getInstance().getIPersistentContributor()
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
+            IContributor contributor = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentContributor()
                     .readByContributorNumber(new Integer(1));
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
 
             assertNotNull(contributor);
             assertEquals(contributor.getContributorAddress(), "Rua do Nuno1");

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AreaType;
 import net.sourceforge.fenixedu.util.BranchType;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
@@ -271,7 +271,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         List curricularCourses = new ArrayList();
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport
                     .getIPersistentCurricularCourseScope();
 
@@ -421,7 +421,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         List groups = new ArrayList();
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                     .getIPersistentCurricularCourseGroup();
 

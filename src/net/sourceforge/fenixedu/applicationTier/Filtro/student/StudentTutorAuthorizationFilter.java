@@ -9,16 +9,16 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.student;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -67,7 +67,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter
     	    try 
     	    {
     	        String username = (String)arguments[0];
-    	        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    	        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     	        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
     	        
     	        IStudent student = sp.getIPersistentStudent().readByUsername(username);
@@ -110,7 +110,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter
             for (Iterator it = students.iterator(); it.hasNext();)
             {
                 student = (IStudent)it.next();
-                tutor = SuportePersistenteOJB.getInstance().getIPersistentTutor().readTutorByTeacherAndStudent(teacher, student);
+                tutor = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTutor().readTutorByTeacherAndStudent(teacher, student);
 
                 if (tutor != null)
                     return true;

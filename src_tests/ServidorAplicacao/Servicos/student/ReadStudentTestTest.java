@@ -78,7 +78,7 @@ public class ReadStudentTestTest extends TestCaseReadServices {
         Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
         List infoStudentTestQuestionList = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IStudent student = sp.getIPersistentStudent().readByUsername((String) args[0]);
             assertNotNull("student is null", student);

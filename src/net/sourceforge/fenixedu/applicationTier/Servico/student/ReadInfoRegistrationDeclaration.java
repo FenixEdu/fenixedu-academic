@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -37,7 +37,7 @@ public class ReadInfoRegistrationDeclaration implements IService {
         IPersistentStudent persistentStudent = null;
         IStudent student = null;
 
-        sp = SuportePersistenteOJB.getInstance();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         persistentStudent = sp.getIPersistentStudent();
         student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);

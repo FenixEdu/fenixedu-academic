@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryEURReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryPTEReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -43,7 +43,7 @@ public class ReadExpensesReport implements IService {
     public InfoExpensesReport run(InfoExpensesReport infoReport, UserView userView, ReportType reportType, Integer projectCode, String rubric)
             throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Integer userNumber = getUserNumber(persistentSuport, userView);
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         if (userNumber != null

@@ -8,17 +8,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanListGrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
+import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.NameUtils;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Pica
@@ -41,7 +41,7 @@ public class ListGrantOwners implements IService {
         List grantOwnerBySpan = null;
         IPersistentGrantOwner persistentGrantOwner = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentGrantOwner = sp.getIPersistentGrantOwner();
             grantOwnerBySpan = persistentGrantOwner.readAllGrantOwnersBySpan(infoSpanListGrantOwner
                     .getSpanNumber(), SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,

@@ -6,16 +6,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestionWithInfoQuestion;
 import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentTestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
@@ -38,7 +38,7 @@ public class ReadStudentTestQuestionImage implements IService {
             String feedbackId, String path) throws FenixServiceException {
         this.path = path.replace('\\', '/');
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
             if (student == null)
                 throw new FenixServiceException();

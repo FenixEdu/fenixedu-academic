@@ -90,7 +90,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();

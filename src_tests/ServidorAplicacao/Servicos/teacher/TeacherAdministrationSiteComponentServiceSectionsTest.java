@@ -73,7 +73,7 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends TestC
         ISection iSection = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();

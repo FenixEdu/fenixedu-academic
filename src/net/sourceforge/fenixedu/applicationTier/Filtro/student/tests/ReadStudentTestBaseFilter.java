@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -34,7 +34,7 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
         super.execute(request, response);
 
         Integer testId = (Integer) request.getServiceParameters().parametersArray()[1];
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentDistributedTest distributedTestDAO = sp.getIPersistentDistributedTest();
 

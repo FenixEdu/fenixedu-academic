@@ -5,6 +5,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentRuleServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
+import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
@@ -18,18 +23,13 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentRuleServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
-import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -172,7 +172,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
     public static IEnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
             IStudentCurricularPlan studentActiveCurricularPlan) throws ExcepcaoPersistencia,
             OutOfCurricularCourseEnrolmentPeriod {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport.getIPersistentEnrolmentPeriod();
         IEnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
                 .readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
@@ -198,7 +198,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
      * @throws ExcepcaoPersistencia
      */
     protected IStudent getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
 
         return studentDAO.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
@@ -211,7 +211,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
      */
     protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                 .getIStudentCurricularPlanPersistente();
 
@@ -225,7 +225,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
         IExecutionPeriod executionPeriod2Return = executionPeriod;
 
         if (executionPeriod == null) {
-            ISuportePersistente daoFactory = SuportePersistenteOJB.getInstance();
+            ISuportePersistente daoFactory = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
             executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
         }

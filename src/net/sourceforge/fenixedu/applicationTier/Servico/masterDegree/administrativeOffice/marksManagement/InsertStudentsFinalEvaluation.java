@@ -7,6 +7,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -17,19 +23,13 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -50,7 +50,7 @@ public class InsertStudentsFinalEvaluation implements IService {
 
         List infoEvaluationsWithError = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
                     .getIPersistentEnrolmentEvaluation();
             //			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
@@ -168,7 +168,7 @@ public class InsertStudentsFinalEvaluation implements IService {
     //		IPersistentEmployee persistentEmployee;
     //		try {
     //			persistentEmployee =
-    // SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+    // PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
     //			employee =
     // persistentEmployee.readByPerson(person.getIdInternal().intValue());
     //		} catch (ExcepcaoPersistencia e) {
@@ -180,7 +180,7 @@ public class InsertStudentsFinalEvaluation implements IService {
     private InfoEnrolmentEvaluation completeEnrolmentEvaluation(
             InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
             //			Student
@@ -201,7 +201,7 @@ public class InsertStudentsFinalEvaluation implements IService {
         IStudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentCurricularPlan curricularPlanPersistente = sp
                     .getIStudentCurricularPlanPersistente();
 

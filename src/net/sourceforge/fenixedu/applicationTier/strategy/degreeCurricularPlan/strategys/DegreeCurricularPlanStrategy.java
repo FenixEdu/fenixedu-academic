@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -16,12 +14,14 @@ import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.NumberUtils;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -79,7 +79,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             throws ExcepcaoPersistencia {
         float marks = 0;
         int numberOfCourses = 0;
-        List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment()
+        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
                 .readAllByStudentCurricularPlan(studentCurricularPlan);
 
         Iterator iterator = enrolments.iterator();
@@ -126,7 +126,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             throws ExcepcaoPersistencia {
         float marks = 0;
         int numberOfWeigths = 0;
-        List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment()
+        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
                 .readAllByStudentCurricularPlan(studentCurricularPlan);
 
         Iterator iterator = enrolments.iterator();

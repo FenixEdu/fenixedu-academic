@@ -14,6 +14,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -26,13 +29,10 @@ import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 public class EditLesson implements IServico {
@@ -63,7 +63,7 @@ public class EditLesson implements IServico {
         ILesson aula = null;
         InfoLessonServiceResult result = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
             IRoom salaAntiga = sp.getISalaPersistente().readByName(aulaAntiga.getInfoSala().getNome());
             IRoom salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
@@ -79,7 +79,7 @@ public class EditLesson implements IServico {
                     aulaNova.getTipo(), salaNova, roomOccupation, shift /* ,null */
             );
             newLesson.setIdInternal(aula.getIdInternal());
-            List associatedLessons = SuportePersistenteOJB.getInstance().getIAulaPersistente()
+            List associatedLessons = PersistenceSupportFactory.getDefaultPersistenceSupport().getIAulaPersistente()
                     .readLessonsByShift(shift);
             for (int i = 0; i < associatedLessons.size(); i++) {
                 ILesson lessonAssociated = (ILesson) associatedLessons.get(i);
@@ -163,7 +163,7 @@ public class EditLesson implements IServico {
     private boolean validNoInterceptingLesson(IRoomOccupation roomOccupation,
             IRoomOccupation oldroomOccupation) throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
 
             Iterator iter = roomOccupationInDBList.iterator();
@@ -183,7 +183,7 @@ public class EditLesson implements IServico {
 
         /*
          * throws ExistingServiceException,InterceptingServiceException { try {
-         * ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+         * ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
          * IAulaPersistente persistentLesson = sp.getIAulaPersistente(); List
          * lessonMatchList =
          * persistentLesson.readLessonsInBroadPeriod(newLesson, oldLesson,
@@ -251,7 +251,7 @@ public class EditLesson implements IServico {
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
         if (associatedLessons == null) {
-            associatedLessons = SuportePersistenteOJB.getInstance().getIAulaPersistente()
+            associatedLessons = PersistenceSupportFactory.getDefaultPersistenceSupport().getIAulaPersistente()
                     .readLessonsByShift(shift);
             shift.setAssociatedLessons(associatedLessons);
         }

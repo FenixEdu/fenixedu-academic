@@ -47,7 +47,7 @@ public class ReadExamByOIDTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(oid);
@@ -71,7 +71,7 @@ public class ReadExamByOIDTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExam exam = service.run(examID);
@@ -105,7 +105,7 @@ public class ReadExamByOIDTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExam exam = service.run(examID);

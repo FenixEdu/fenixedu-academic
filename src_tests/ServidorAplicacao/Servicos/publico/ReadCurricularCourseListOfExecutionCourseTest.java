@@ -98,7 +98,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest extends TestCaseServi
     private void prepareTestCase(boolean hasCurricularCourses) {
         ISuportePersistente sp = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             ICursoPersistente cursoPersistente = sp.getICursoPersistente();
             ICurso degree = cursoPersistente.readBySigla("LEIC");

@@ -68,7 +68,7 @@ public class TestCaseServicosCandidato extends TestCase {
 
     protected void ligarSuportePersistente() {
         try {
-            suportePersistente = SuportePersistenteOJB.getInstance();
+            suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         } catch (ExcepcaoPersistencia excepcao) {
             fail("Exception when opening database");
         }

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -37,7 +37,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
             throws ExcepcaoPersistencia
     {
         Collection result = new ArrayList();        
-        IPersistentExecutionCourse persistentExecutionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse();
+        IPersistentExecutionCourse persistentExecutionCourse = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse();
         IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseID);
 
         List groupProperties = executionCourse.getGroupProperties();
@@ -66,7 +66,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     {
         InfoExternalStudentGroup result = null;
         Collection studentGroups = group.getAttendsSet().getStudentGroups();
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = SuportePersistenteOJB.getInstance()
+        IPersistentStudentGroupAttend persistentStudentGroupAttend = PersistenceSupportFactory.getDefaultPersistenceSupport()
                 .getIPersistentStudentGroupAttend();
 
         for (Iterator iter = studentGroups.iterator(); iter.hasNext();)
@@ -149,7 +149,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 
     private Collection findShifts(IStudent aluno, IExecutionCourse disciplinaExecucao) throws ExcepcaoPersistencia
     {
-        ITurnoAlunoPersistente persistentStudentShift = SuportePersistenteOJB.getInstance().getITurnoAlunoPersistente();
+        ITurnoAlunoPersistente persistentStudentShift = PersistenceSupportFactory.getDefaultPersistenceSupport().getITurnoAlunoPersistente();
         return persistentStudentShift.readByStudentAndExecutionCourse(aluno, disciplinaExecucao);
     }
 

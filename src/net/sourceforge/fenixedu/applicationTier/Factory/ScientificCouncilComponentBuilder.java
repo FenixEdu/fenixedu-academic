@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -23,15 +25,13 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 
 /**
@@ -80,7 +80,7 @@ public class ScientificCouncilComponentBuilder {
     private ISiteComponent getInfoSiteBasicCurricularCourses(InfoSiteBasicCurricularCourses component,
             Integer degreeCurricularPlanId) throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentObject persistentObject = sp.getIPersistentObject();
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentObject
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
@@ -134,7 +134,7 @@ public class ScientificCouncilComponentBuilder {
     private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component,
             Integer degreeCurricularPlanId) throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentObject persistentObject = sp.getIPersistentObject();
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentObject
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
@@ -171,7 +171,7 @@ public class ScientificCouncilComponentBuilder {
     private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component,
             Integer degreeId) throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentObject persistentObject = sp.getIPersistentObject();
             IDegree degree = (IDegree) persistentObject.readByOID(Degree.class, degreeId);
             if (degree == null) {
@@ -206,7 +206,7 @@ public class ScientificCouncilComponentBuilder {
             throws FenixServiceException {
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
             List degrees = persistentDegree.readAll();
             Iterator degreeIterator = degrees.iterator();

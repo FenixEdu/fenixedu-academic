@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ListIterator;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -29,7 +28,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author tfs
@@ -39,7 +39,7 @@ public class CopySiteExecutionCourse implements IService {
     public void run(Integer executionCourseIDFrom, Integer executionCourseIDTo)
             throws Exception {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSite persistentSite = sp.getIPersistentSite();
 
             //Course From

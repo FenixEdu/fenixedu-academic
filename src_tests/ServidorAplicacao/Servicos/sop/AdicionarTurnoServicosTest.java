@@ -94,7 +94,7 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             ICursoPersistente icp = sp.getICursoPersistente();

@@ -5,14 +5,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsAbstractService;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
+import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author gedl@rnl.ist.utl.pt
@@ -28,7 +28,7 @@ public class ReadProfessorshipByTeacherIDandExecutionCourseID extends
             throws FenixServiceException {
         try {
             ISuportePersistente persistentSuport;
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
 

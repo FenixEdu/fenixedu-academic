@@ -5,17 +5,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
@@ -90,7 +90,7 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
         IStudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class,
                     infoStudent.getIdInternal());
@@ -143,7 +143,7 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
     //		Integer executionCourseIdToAttend)
     //		throws ExcepcaoPersistencia
     //	{
-    //		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    //		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     //		IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
     //		IExecutionCourse executionCourse =
     // findExecutionCourse(executionCourseIdToAttend, sp);

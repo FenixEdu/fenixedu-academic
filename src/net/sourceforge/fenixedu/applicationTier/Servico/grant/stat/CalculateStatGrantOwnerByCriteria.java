@@ -4,14 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.stat;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatResultGrantOwner;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
@@ -28,7 +28,7 @@ public class CalculateStatGrantOwnerByCriteria implements IService {
 
     public Object[] run(InfoStatGrantOwner infoStatGrantOwner) throws FenixServiceException {
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGrantContract persistentGrantContract = suportePersistente
                     .getIPersistentGrantContract();
             IPersistentGrantOwner persistentGrantOwner = suportePersistente.getIPersistentGrantOwner();

@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -32,7 +32,7 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IServi
 
         List result = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();

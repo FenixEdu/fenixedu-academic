@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author nmgo
@@ -71,7 +71,7 @@ public abstract class DeleteEnrolmentUtils {
      * @throws ExcepcaoPersistencia
      */
     protected static void deleteAttend(IEnrollment enrolment) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
         IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();
         IPersistentMark markDAO = persistentSuport.getIPersistentMark();

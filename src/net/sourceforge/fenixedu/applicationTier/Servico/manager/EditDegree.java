@@ -3,15 +3,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -38,7 +38,7 @@ public class EditDegree implements IService {
 
         try {
 
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentDegree = persistentSuport.getICursoPersistente();
             oldDegree = persistentDegree.readByIdInternal(newInfoDegree.getIdInternal());
 

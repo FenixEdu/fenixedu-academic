@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -28,7 +28,7 @@ public class ReadCostCenterByNumber implements IService {
 		IGrantCostCenter costCenter = new GrantCostCenter();
 		
 		try {  
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			IPersistentGrantCostCenter pCostContract = sp.getIPersistentGrantCostCenter();
 			costCenter = pCostContract.readGrantCostCenterByNumber(costContractNumber);
 		    if (costCenter == null)

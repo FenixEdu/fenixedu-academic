@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -18,13 +20,11 @@ import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentTestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -44,7 +44,7 @@ public class ReadDistributedTestMarksToString implements IService {
     public String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
         ISuportePersistente persistentSuport;
         try {
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IDistributedTest distributedTest = (IDistributedTest) persistentSuport
                     .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
             if (distributedTest == null)
@@ -110,7 +110,7 @@ public class ReadDistributedTestMarksToString implements IService {
         ISuportePersistente persistentSuport;
         try {
             String result = new String("Número\tNome\t");
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
                     .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
             if (executionCourse == null)

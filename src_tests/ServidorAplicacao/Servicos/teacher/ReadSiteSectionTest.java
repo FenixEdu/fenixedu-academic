@@ -78,7 +78,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 
         try {
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             section = (ISection) persistentSection.readByOID(Section.class, new Integer(6));

@@ -131,7 +131,7 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
         ISuportePersistente sp = null;
         List result = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             sp.iniciarTransaccao();
             result = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(

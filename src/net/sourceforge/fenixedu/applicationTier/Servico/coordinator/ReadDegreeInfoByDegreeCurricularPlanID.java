@@ -3,15 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -34,7 +34,7 @@ public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
                 throw new FenixServiceException("error.invalidDegreeCurricularPlan");
             }
 
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // Degree curricular plan
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) suportePersistente

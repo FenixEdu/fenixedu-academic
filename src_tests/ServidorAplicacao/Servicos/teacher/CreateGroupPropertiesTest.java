@@ -57,7 +57,7 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
     protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         try {
 
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSupport.iniciarTransaccao();
             persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
             persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
@@ -88,7 +88,7 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 
         try {
 
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSupport.iniciarTransaccao();
             persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
             persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();

@@ -3,17 +3,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.equivalence;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -107,7 +107,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
         List output = new ArrayList();
 
         try {
-            ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistenceDAO
                     .getIStudentCurricularPlanPersistente();
 

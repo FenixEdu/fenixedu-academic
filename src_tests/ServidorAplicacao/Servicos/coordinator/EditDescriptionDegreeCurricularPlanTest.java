@@ -96,7 +96,7 @@ public class EditDescriptionDegreeCurricularPlanTest extends ServiceTestCase {
             }
 
             //Read the change in degree curricular plan
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                     .getIPersistentDegreeCurricularPlan();
 

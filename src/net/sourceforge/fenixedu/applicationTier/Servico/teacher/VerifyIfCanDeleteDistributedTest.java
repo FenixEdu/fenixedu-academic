@@ -5,13 +5,13 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.domain.DistributedTest;
-import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.DistributedTest;
+import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -25,7 +25,7 @@ public class VerifyIfCanDeleteDistributedTest implements IService {
     public boolean run(Integer executionCourseId, Integer distributedTestId)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IDistributedTest distributedTest = (IDistributedTest) persistentSuport
                     .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
             if (distributedTest == null) {

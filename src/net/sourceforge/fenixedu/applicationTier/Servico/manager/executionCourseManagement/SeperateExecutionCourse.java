@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -55,7 +56,7 @@ public class SeperateExecutionCourse implements IService {
             final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer)
             throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = sp.getIPersistentObject();
 
         final IExecutionCourse originExecutionCourse = (IExecutionCourse) persistentObject.readByOID(
@@ -277,7 +278,7 @@ public class SeperateExecutionCourse implements IService {
     }
 
     private Set getExecutionCourseCodes(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
         List executionCourses = persistentExecutionCourse.readByExecutionPeriod(executionPeriod);

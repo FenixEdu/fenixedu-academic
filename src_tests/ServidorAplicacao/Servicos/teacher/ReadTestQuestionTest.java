@@ -66,7 +66,7 @@ public class ReadTestQuestionTest extends TestCaseReadServices {
         InfoTestQuestion infoTestQuestion = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();

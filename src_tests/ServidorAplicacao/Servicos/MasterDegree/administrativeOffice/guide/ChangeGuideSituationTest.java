@@ -65,7 +65,7 @@ public class ChangeGuideSituationTest extends TestCaseServicos {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentGuide persistentGuide = sp.getIPersistentGuide();
@@ -110,7 +110,7 @@ public class ChangeGuideSituationTest extends TestCaseServicos {
         }
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentGuide persistentGuide = sp.getIPersistentGuide();
@@ -153,7 +153,7 @@ public class ChangeGuideSituationTest extends TestCaseServicos {
         }
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentGuide persistentGuide = sp.getIPersistentGuide();

@@ -3,12 +3,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -28,7 +28,7 @@ public class ReadPaymentEntityByNumberAndClass implements IService {
         IPersistentGrantPaymentEntity pgpe = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             pgpe = sp.getIPersistentGrantPaymentEntity();
             grantPaymentEntity = pgpe.readByNumberAndClass(paymentEntityNumber, className);
             result = InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);

@@ -4,18 +4,19 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
-import org.apache.slide.common.SlideException;
-
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.fileSuport.FileSuport;
+import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.fileSuport.FileSuport;
-import net.sourceforge.fenixedu.fileSuport.IFileSuport;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+
+import org.apache.slide.common.SlideException;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * fenix-head ServidorAplicacao.Servico.fileManager
@@ -28,7 +29,7 @@ public class DeleteItemFile implements IService {
     public void run(Integer itemId, String fileName) throws FenixServiceException {
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentItem persistentItem = sp.getIPersistentItem();
             IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
             IFileSuport fileSuport = FileSuport.getInstance();

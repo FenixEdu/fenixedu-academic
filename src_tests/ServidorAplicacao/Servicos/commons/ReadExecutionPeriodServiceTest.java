@@ -62,7 +62,7 @@ public class ReadExecutionPeriodServiceTest extends TestCaseReadServices {
         IExecutionYear executionYear = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
@@ -98,7 +98,7 @@ public class ReadExecutionPeriodServiceTest extends TestCaseReadServices {
         IExecutionPeriod executionPeriod = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();

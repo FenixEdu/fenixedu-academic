@@ -103,7 +103,7 @@ public class EditCurriculumForCurricularCourseTest extends ServiceTestCase {
             ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
             //Read the change in curriculum
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
             sp.iniciarTransaccao();
@@ -156,7 +156,7 @@ public class EditCurriculumForCurricularCourseTest extends ServiceTestCase {
             ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
             //Read the change in curriculum
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 

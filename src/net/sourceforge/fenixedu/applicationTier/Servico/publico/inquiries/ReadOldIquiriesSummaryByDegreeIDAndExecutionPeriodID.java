@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 
@@ -45,7 +46,7 @@ public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID implements ISe
             if (executionPeriodID == null) {
                 throw new FenixServiceException("nullExecutionPeriodId");
             }
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentOldInquiriesSummary pois = sp.getIPersistentOldInquiriesSummary();
         
             oldInquiriesSummaryList = pois.readByDegreeIdAndExecutionPeriod(degreeID, executionPeriodID);

@@ -5,7 +5,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -21,18 +23,16 @@ import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 
@@ -64,7 +64,7 @@ public class CreateGuideFromTransactions implements IService {
         // Get the Guide Number
         Integer guideNumber = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             guideNumber = sp.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -88,7 +88,7 @@ public class CreateGuideFromTransactions implements IService {
         //      FIXME: Remove the : guide.setGuideEntries(null); WHY????
         guide.setGuideEntries(null);
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.getIPersistentGuide().simpleLockWrite(guide);
             if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
                 guide.setPaymentType(new PaymentType(PaymentType.ATM_STRING));

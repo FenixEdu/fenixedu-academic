@@ -10,7 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.DistributedTest;
@@ -32,8 +33,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.Test;
 import net.sourceforge.fenixedu.domain.TestScope;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -41,9 +40,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Susana Fernandes
@@ -62,7 +62,7 @@ public class InsertDistributedTest implements IService {
         this.contextPath = contextPath.replace('\\', '/');
         try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(

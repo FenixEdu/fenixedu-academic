@@ -84,7 +84,7 @@ public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuth
         List infoViewExams = new ArrayList();
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             sp.iniciarTransaccao();
 

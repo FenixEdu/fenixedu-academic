@@ -96,7 +96,7 @@ public class ReadItemsServiceTest extends TestCaseReadServices {
         ISection section = null;
 
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
             persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
             persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();

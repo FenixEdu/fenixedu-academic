@@ -80,7 +80,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
         IItem item = new Item(new Integer(1));
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IPersistentItem persistentItem = sp.getIPersistentItem();
             item = (IItem) persistentItem.readByOID(Item.class, new Integer(1));

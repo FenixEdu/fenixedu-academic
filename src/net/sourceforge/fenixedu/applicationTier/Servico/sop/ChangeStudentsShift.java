@@ -9,21 +9,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ITurnoAluno;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz
@@ -32,7 +32,7 @@ public class ChangeStudentsShift implements IService {
 
     public void run(IUserView userView, Integer oldShiftId, Integer newShiftId)
             throws ExcepcaoPersistencia, FenixServiceException {
-        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         ITurnoAlunoPersistente persistentShiftStudent = persistentSupport.getITurnoAlunoPersistente();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();

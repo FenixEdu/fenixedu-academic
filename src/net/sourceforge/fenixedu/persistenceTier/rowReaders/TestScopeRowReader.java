@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ITestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.ojb.broker.accesslayer.RowReaderDefaultImpl;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
@@ -32,7 +32,7 @@ public class TestScopeRowReader extends RowReaderDefaultImpl {
         if (testScope.getClassName().equals(ExecutionCourse.class.getName())) {
             ISuportePersistente persistentSuport;
             try {
-                persistentSuport = SuportePersistenteOJB.getInstance();
+                persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
                         .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,

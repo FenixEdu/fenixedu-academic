@@ -72,7 +72,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
         List infoRoomExamMapList = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionPeriod infoExecutionPeriod = (new ReadExecutionPeriod()).run(new Integer(80));
@@ -113,7 +113,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
         List infoRoomExamMapList = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionPeriod infoExecutionPeriod = (new ReadExecutionPeriod()).run(new Integer(80));
@@ -157,7 +157,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
         List infoRoomExamMapList = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionPeriod infoExecutionPeriod = (new ReadExecutionPeriod()).run(new Integer(80));
@@ -182,7 +182,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List infoRooms = new ArrayList();

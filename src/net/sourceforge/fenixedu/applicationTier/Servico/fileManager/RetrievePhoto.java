@@ -6,19 +6,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
 import java.util.List;
 
-import org.apache.slide.common.SlideException;
-
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+
+import org.apache.slide.common.SlideException;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Nuno Correia
@@ -33,7 +34,7 @@ public class RetrievePhoto implements IService {
     public FileSuportObject run(Integer personId) throws FenixServiceException {
         FileSuportObject file = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -27,7 +27,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadExecutionDegreeRecentByDegreeId implements IService {
 
     public InfoExecutionDegree run(final Integer degreeId) throws ExcepcaoPersistencia{
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
         List listExecutionDegrees = persistentExecutionDegree.readAll();
         CollectionUtils.filter(listExecutionDegrees, new Predicate(){

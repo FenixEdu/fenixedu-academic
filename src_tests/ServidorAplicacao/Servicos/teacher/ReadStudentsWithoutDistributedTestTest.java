@@ -49,7 +49,7 @@ public class ReadStudentsWithoutDistributedTestTest extends TestCaseReadServices
     protected Object getObjectToCompare() {
         List infoStudentList = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IStudent student10 = (IStudent) sp.getIPersistentStudent().readByOID(Student.class,

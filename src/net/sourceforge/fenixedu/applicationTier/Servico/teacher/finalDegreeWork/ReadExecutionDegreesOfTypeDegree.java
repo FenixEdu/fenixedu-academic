@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -34,7 +35,7 @@ public class ReadExecutionDegreesOfTypeDegree implements IService {
         List executionDegrees = null;
         List infoExecutionDegrees = new ArrayList();
         try {
-            SuportePersistenteOJB suportePersistenteOJB = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB suportePersistenteOJB = PersistenceSupportFactory.getDefaultPersistenceSupport();
             executionDegrees = suportePersistenteOJB.getIPersistentExecutionDegree()
                     .readExecutionDegreesOfTypeDegree();
 

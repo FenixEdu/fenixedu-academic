@@ -59,7 +59,7 @@ public class PrepareCreateGuideTest extends TestCaseServicos {
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IExecutionYear executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();

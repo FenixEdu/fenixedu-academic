@@ -6,13 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Building;
 import net.sourceforge.fenixedu.domain.IBuilding;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class CreateBuilding implements IService {
 
     public void run(String buildingName) throws ExcepcaoPersistencia, ExistingServiceException {
-        final ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentBuilding persistentBuilding = persistentSupport.getIPersistentBuilding();
 
         final List buildings = persistentBuilding.readAll();

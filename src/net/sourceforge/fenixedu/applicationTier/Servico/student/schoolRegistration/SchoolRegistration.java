@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -52,7 +52,7 @@ public class SchoolRegistration implements IService {
     public Boolean run(UserView userView, HashMap answers, InfoPerson infoPerson,
             InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
-        ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+        ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
         String username = userView.getUtilizador();
         IStudent student = persistentStudent.readByUsername(username);

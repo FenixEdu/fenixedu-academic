@@ -4,15 +4,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 
 /**
@@ -43,7 +43,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 
         IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
 
-        List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment()
+        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
                 .readAllByStudentCurricularPlan(studentCurricularPlan);
 
         Iterator iterator = enrolments.iterator();
@@ -75,7 +75,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         //		IDegreeCurricularPlan degreeCurricularPlan =
         // super.getDegreeCurricularPlan();
 
-        List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment()
+        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
                 .readAllByStudentCurricularPlan(studentCurricularPlan);
 
         Iterator iterator = enrolments.iterator();

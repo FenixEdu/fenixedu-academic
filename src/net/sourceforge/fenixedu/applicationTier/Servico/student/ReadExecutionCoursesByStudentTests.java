@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -26,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadExecutionCoursesByStudentTests implements IService {
 
     public Object run(String userName) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
         final IFrequentaPersistente persistentAttends = persistentSuport.getIFrequentaPersistente();
         final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();

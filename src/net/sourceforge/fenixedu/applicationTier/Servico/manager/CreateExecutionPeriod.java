@@ -3,8 +3,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -25,7 +25,7 @@ public class CreateExecutionPeriod implements IService {
         /*
          * Boolean result = new Boolean(false);
          * 
-         * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+         * try { ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
          * IPersistentExecutionPeriod executionPeriodDAO =
          * sp.getIPersistentExecutionPeriod(); IPersistentExecutionYear
          * executionYearDAO = sp.getIPersistentExecutionYear();

@@ -12,11 +12,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
+import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -34,7 +34,7 @@ public class GetCandidaciesByStudentIDAndSeminaryID implements IService {
     public List run(Integer studentID, Integer seminaryID) throws BDException {
         List candidaciesInfo = new LinkedList();
         try {
-            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistenceSupport
                     .getIPersistentSeminaryCandidacy();
             List candidacies = persistentSeminaryCandidacy.readByStudentIDAndSeminaryID(studentID,

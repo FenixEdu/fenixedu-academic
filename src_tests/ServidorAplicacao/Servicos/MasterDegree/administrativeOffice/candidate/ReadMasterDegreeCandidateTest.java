@@ -62,7 +62,7 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet 
         ISuportePersistente sp = null;
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IExecutionYear executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
@@ -100,7 +100,7 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet 
         InfoExecutionDegree infoExecutionDegree = null;
         ICursoExecucao executionDegree = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IExecutionYear executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
@@ -132,7 +132,7 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet 
     protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         ISuportePersistente sp = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             //TODO: delete all no longer exists
             // sp.getIPersistentMasterDegreeCandidate().deleteAll();

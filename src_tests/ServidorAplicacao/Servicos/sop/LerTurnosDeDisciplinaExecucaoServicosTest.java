@@ -86,7 +86,7 @@ public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseReadServi
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();

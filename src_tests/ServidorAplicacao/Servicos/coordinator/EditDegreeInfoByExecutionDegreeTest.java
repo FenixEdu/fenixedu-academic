@@ -134,7 +134,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
             }
 
             //Read the change in degree info
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
 
             sp.iniciarTransaccao();
@@ -194,7 +194,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
             }
 
             //Read the change in degree info
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree persistenExecutionDegree = sp.getIPersistentExecutionDegree();
 
             //read executionDegree for find degree
@@ -276,7 +276,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
             }
 
             //Read the change in degree info
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree persistenExecutionDegree = sp.getIPersistentExecutionDegree();
 
             //read executionDegree for find degree

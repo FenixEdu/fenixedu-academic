@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.domain.Tutor;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -37,7 +37,7 @@ public class DeleteTutorShip implements IService {
             ISuportePersistente sp;
 
             try {
-                sp = SuportePersistenteOJB.getInstance();
+                sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 IPersistentTutor persistentTutor = sp.getIPersistentTutor();
 
                 ListIterator iterator = tutorIds2Delete.listIterator();

@@ -56,10 +56,10 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
          * executionCourse.getAssociatedExams().remove(exam);
          * 
          * IExamExecutionCourse examExecutionCourseToDelete =
-         * SuportePersistenteOJB.getInstance().getIPersistentExamExecutionCourse().readBy(
+         * PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExamExecutionCourse().readBy(
          * exam, executionCourse);
          * 
-         * SuportePersistenteOJB.getInstance().getIPersistentExamExecutionCourse().delete(
+         * PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExamExecutionCourse().delete(
          * examExecutionCourseToDelete); } }
          * 
          * exam.setAssociatedExecutionCourses(null);

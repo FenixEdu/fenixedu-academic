@@ -1,15 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.equivalence;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrollment;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -56,7 +56,7 @@ public class GetEnrollmentEvaluation extends EnrollmentEquivalenceServiceUtils i
 
         IEnrollment enrollment = null;
         try {
-            ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
             enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
         } catch (ExcepcaoPersistencia e) {

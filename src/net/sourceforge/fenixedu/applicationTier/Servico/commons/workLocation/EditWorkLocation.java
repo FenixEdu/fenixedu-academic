@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation;
 
-import net.sourceforge.fenixedu.domain.IWorkLocation;
-import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.domain.IWorkLocation;
+import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -33,7 +33,7 @@ public class EditWorkLocation implements IService {
 
     public void run(Integer oldWorkLocationOID, String newWorkLocationName) throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IWorkLocation storedWorkLocation = sp.getIPersistentWorkLocation().readByName(
                     newWorkLocationName);

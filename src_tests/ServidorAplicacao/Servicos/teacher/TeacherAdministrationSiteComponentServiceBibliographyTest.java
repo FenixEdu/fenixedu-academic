@@ -71,7 +71,7 @@ public class TeacherAdministrationSiteComponentServiceBibliographyTest extends T
         IBibliographicReference iBibliographicReference = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();

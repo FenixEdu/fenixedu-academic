@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.equivalence;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;
@@ -11,14 +12,13 @@ import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -68,7 +68,7 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
         List idsOfChosenEnrollments = (List) object;
 
         try {
-            ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistenceDAO
                     .getIPersistentEnrolmentEvaluation();

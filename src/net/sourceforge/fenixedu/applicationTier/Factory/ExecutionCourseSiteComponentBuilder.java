@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
@@ -70,7 +71,8 @@ import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.fileSuport.FileSuport;
+import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
@@ -80,10 +82,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoAula;
-import net.sourceforge.fenixedu.fileSuport.FileSuport;
-import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -155,7 +155,7 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             //execution courses's lesson types for display to filter summary
             List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
@@ -453,7 +453,7 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             // read sections
 
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             allSections = sp.getIPersistentSection().readBySite(site);
 
             // build the result of this service
@@ -499,7 +499,7 @@ public class ExecutionCourseSiteComponentBuilder {
         component.setSection(infoSection);
         List itemsList = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentItem persistentItem = sp.getIPersistentItem();
             ISection section = Cloner.copyInfoSection2ISection(infoSection);
             itemsList = persistentItem.readAllItemsBySection(section);
@@ -536,7 +536,7 @@ public class ExecutionCourseSiteComponentBuilder {
         List shiftsWithAssociatedClassesAndLessons = new ArrayList();
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
             List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao);
 
@@ -593,7 +593,7 @@ public class ExecutionCourseSiteComponentBuilder {
         List infoLessonList = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
@@ -677,7 +677,7 @@ public class ExecutionCourseSiteComponentBuilder {
         List references = null;
         List infoBibRefs = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = sp
                     .getIPersistentBibliographicReference();
@@ -714,7 +714,7 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod = persistentEvaluationMethod
@@ -736,7 +736,7 @@ public class ExecutionCourseSiteComponentBuilder {
     private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
@@ -819,7 +819,7 @@ public class ExecutionCourseSiteComponentBuilder {
             throws FenixServiceException {
         try {
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site);
             List infoAnnouncementsList = new ArrayList();

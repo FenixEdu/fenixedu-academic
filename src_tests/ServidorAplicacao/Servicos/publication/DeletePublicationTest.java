@@ -50,7 +50,7 @@ public class DeletePublicationTest extends ServiceTestCase {
      */
     public void testDeletePublicationOK() {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             DeletePublication dp = new DeletePublication();
             dp.run(new Integer(1));
@@ -67,7 +67,7 @@ public class DeletePublicationTest extends ServiceTestCase {
 
     public void testDeletePublicationNonExistent() {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             DeletePublication dp = new DeletePublication();
             dp.run(new Integer(10));

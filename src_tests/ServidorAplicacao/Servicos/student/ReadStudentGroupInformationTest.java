@@ -70,7 +70,7 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
                     StudentGroup.class, new Integer(8));

@@ -81,7 +81,7 @@ public class ReadTeacherByUsernameServiceTest extends TestCaseReadServices {
         ISuportePersistente sp;
         IPessoa person;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             sp.iniciarTransaccao();
             person = persistentPerson.lerPessoaPorUsername("user");

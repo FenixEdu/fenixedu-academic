@@ -9,6 +9,10 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.student;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -17,15 +21,11 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -71,7 +71,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 	    try 
 	    {
 	        String username = (String)arguments[0];
-	        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+	        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 	        IPersistentFinalDegreeWork persistentFinalDegreeWork = sp.getIPersistentFinalDegreeWork();
 	        
 	        IStudent student1 = sp.getIPersistentStudent().readByUsername(username);

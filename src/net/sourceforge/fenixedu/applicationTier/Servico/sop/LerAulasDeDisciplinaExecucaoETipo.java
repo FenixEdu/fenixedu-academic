@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class LerAulasDeDisciplinaExecucaoETipo implements IService {
@@ -40,7 +40,7 @@ public class LerAulasDeDisciplinaExecucaoETipo implements IService {
             IExecutionCourse executionCourse = Cloner
                     .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             //			List aulas =
             //				sp.getIAulaPersistente().readByExecutionCourseAndLessonType(
             //					executionCourse,

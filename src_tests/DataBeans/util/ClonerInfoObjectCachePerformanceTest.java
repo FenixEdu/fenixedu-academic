@@ -31,7 +31,7 @@ public class ClonerInfoObjectCachePerformanceTest extends PersistentObjectOJB {
 
     static {
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             cacheTest = new ClonerInfoObjectCachePerformanceTest();
         } catch (Exception e) {
             e.printStackTrace();

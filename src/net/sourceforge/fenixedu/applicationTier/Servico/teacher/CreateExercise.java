@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
@@ -41,7 +41,7 @@ public class CreateExercise implements IService {
             Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
                     .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
             if (executionCourse == null) {

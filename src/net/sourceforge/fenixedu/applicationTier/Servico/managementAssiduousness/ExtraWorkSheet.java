@@ -44,7 +44,7 @@ import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWork;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
@@ -150,7 +150,7 @@ public class ExtraWorkSheet implements IService {
         IEmployee employee = null;
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
             // »»»»»»»»»read employee
@@ -199,7 +199,7 @@ public class ExtraWorkSheet implements IService {
 
         _dataConsulta = new Timestamp(_dataInicioEscolha.getTime());
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExtraWork persistentExtraWork = sp.getIPersistentExtraWork();
 
         // invoca a função execute do ServicoSeguroConsultarVerbete

@@ -108,7 +108,7 @@ public class ChangePasswordTest extends TestCaseNeedAuthorizationServices {
         IPessoa person = null;
         ISuportePersistente sp = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
             sp.iniciarTransaccao();
             person = personDAO.lerPessoaPorUsername(username);

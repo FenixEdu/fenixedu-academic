@@ -4,19 +4,19 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.student.ISenior;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Egidio, luis.egidio@ist.utl.pt
@@ -30,7 +30,7 @@ public class ReadSeniorInfoByUsername implements IService {
 
     public InfoSenior run(IUserView userView) throws FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
             IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());

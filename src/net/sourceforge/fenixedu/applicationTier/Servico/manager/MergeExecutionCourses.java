@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
@@ -28,8 +30,6 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
@@ -45,7 +45,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 
@@ -90,7 +90,7 @@ public class MergeExecutionCourses implements IService {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-       ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+       ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
         IExecutionCourse destination;
         IExecutionCourse source;
@@ -323,7 +323,7 @@ public class MergeExecutionCourses implements IService {
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
                 attend.setDisciplinaExecucao(destination);
                 try {
-                    SuportePersistenteOJB.getInstance().currentBroker().store(attend);
+                    PersistenceSupportFactory.getDefaultPersistenceSupport().currentBroker().store(attend);
                 } catch (Exception e) {
                     throw new ExcepcaoPersistencia("Error storing attend", e);
                 }

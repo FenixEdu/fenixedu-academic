@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -33,7 +33,7 @@ public class ReadSummaryReport implements IService {
 
     public List run(UserView userView) throws ExcepcaoPersistencia {
         List infoProjectReportList = new ArrayList();
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Integer userNumber = getUserNumber(persistentSuport, userView);
         if (userNumber != null) {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();

@@ -152,7 +152,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
 
             Integer studentCurricularPlanId = new Integer(0);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             persistentSuport.iniciarTransaccao();
 

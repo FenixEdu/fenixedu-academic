@@ -56,7 +56,7 @@ public class InsertPublicationTest extends ServiceTestCase {
      */
     public void testInsertPublicationOK() {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             
             List infoAuthorsList = new ArrayList();
             InfoAuthor infoAuthor1 = new InfoAuthor();

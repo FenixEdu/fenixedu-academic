@@ -68,7 +68,7 @@ public class ReadExecutionCourseProjectsTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         InfoSiteProjects infoSiteProjects = new InfoSiteProjects();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IGroupProperties groupProperties1 = (IGroupProperties) sp.getIPersistentGroupProperties()
                     .readByOID(GroupProperties.class, new Integer(3));

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
@@ -11,7 +10,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz
@@ -24,7 +24,7 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy impleme
 
     public boolean run(Integer groupOID, Integer groupProposalOID, Integer orderOfPreference)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 

@@ -103,7 +103,7 @@ public class LerTurmaServicosTest extends TestCaseReadServices {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             ICursoPersistente persistentDegree = sp.getICursoPersistente();

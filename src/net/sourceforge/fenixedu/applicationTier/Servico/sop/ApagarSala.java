@@ -11,13 +11,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * 
  * @author tfc130
  */
-import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
-import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
+import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.notAuthorizedPersistentDeleteException;
 
 public class ApagarSala implements IServico {
@@ -50,7 +50,7 @@ public class ApagarSala implements IServico {
         boolean result = false;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sala1 = sp.getISalaPersistente().readByName(keySala.getNomeSala());
             if (sala1 != null) {
                 sp.getISalaPersistente().delete(sala1);

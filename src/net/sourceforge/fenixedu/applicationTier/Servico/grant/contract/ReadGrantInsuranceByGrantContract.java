@@ -3,13 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsuranceWithContractAndPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -26,7 +26,7 @@ public class ReadGrantInsuranceByGrantContract implements IService {
         IGrantInsurance grantInsurance = null;
         IPersistentGrantInsurance persistentGrantInsurance = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentGrantInsurance = sp.getIPersistentGrantInsurance();
             grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(idContract);
         } catch (ExcepcaoPersistencia e) {

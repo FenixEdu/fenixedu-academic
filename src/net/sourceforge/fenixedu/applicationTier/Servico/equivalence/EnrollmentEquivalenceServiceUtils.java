@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
@@ -12,7 +13,6 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.Service;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
@@ -60,7 +60,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
         List result4 = null;
 
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolmentForEnrolmentEquivalenceDAO = persistentSupport
                     .getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
@@ -117,7 +117,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      */
     protected IStudentCurricularPlan getActiveStudentCurricularPlan(Integer studentNumber,
             TipoCurso degreeType) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistenceDAO
                 .getIStudentCurricularPlanPersistente();

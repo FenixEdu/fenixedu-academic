@@ -87,7 +87,7 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();

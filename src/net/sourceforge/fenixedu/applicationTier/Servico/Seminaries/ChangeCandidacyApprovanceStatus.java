@@ -10,11 +10,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
+import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -34,7 +34,7 @@ public class ChangeCandidacyApprovanceStatus implements IService {
 
     public void run(List candidaciesIDs) throws BDException {
         try {
-            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
                     .getIPersistentSeminaryCandidacy();
             for (Iterator iterator = candidaciesIDs.iterator(); iterator.hasNext();) {

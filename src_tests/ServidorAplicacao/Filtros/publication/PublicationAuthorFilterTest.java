@@ -113,9 +113,9 @@ public class PublicationAuthorFilterTest extends FilterTestCase {
 
         PublicationAuthorAuthorizationFilter filter = new PublicationAuthorAuthorizationFilter();
 
-        SuportePersistenteOJB.getInstance().iniciarTransaccao();
+        PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
         filter.execute(createWorkingRequest(), null);
-        SuportePersistenteOJB.getInstance().confirmarTransaccao();
+        PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
 
         System.out.println(getNameOfFilterToBeTested() + " was SUCCESSFULLY run by test: "
                 + "testPublicationAuthorFilterOK");
@@ -132,9 +132,9 @@ public class PublicationAuthorFilterTest extends FilterTestCase {
 
             PublicationAuthorAuthorizationFilter filter = new PublicationAuthorAuthorizationFilter();
 
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
             filter.execute(createNonWorkingRequest(), null);
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
 
             fail(getNameOfFilterToBeTested()
                     + "failed since a teacher was able to modify a publication for wich he wasn't an author");

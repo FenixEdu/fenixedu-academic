@@ -71,7 +71,7 @@ public class CreateGuideTest extends TestCaseServicos {
         IExecutionYear executionYear = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             person = sp.getIPessoaPersistente().lerPessoaPorUsername("nmsn");
             assertNotNull(person);

@@ -95,7 +95,7 @@ public class SelectClassesTest extends TestCaseServicos {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();

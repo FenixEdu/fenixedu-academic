@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -89,7 +90,7 @@ public class RegisterCandidate implements IService {
         IMasterDegreeCandidate masterDegreeCandidate = null;
         IStudent student = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             if (studentNumber != null) {
                 student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
@@ -381,7 +382,7 @@ public class RegisterCandidate implements IService {
 
     private void changeUsernameIfNeccessary(IStudent student) throws ExcepcaoPersistencia {
         try {
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             if ((student.getPerson().getUsername().indexOf("Mes") != -1)
                     || (student.getPerson().getUsername().indexOf("Esp") != -1)

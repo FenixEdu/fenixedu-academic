@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 
 /**
@@ -47,7 +47,7 @@ public class ReadAuthorByPersonId implements IServico {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
@@ -67,7 +67,7 @@ public class ReadAuthorByPersonId implements IServico {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
@@ -87,7 +87,7 @@ public class ReadAuthorByPersonId implements IServico {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 

@@ -68,7 +68,7 @@ public class ReadTeacherSiteTest extends TestCaseReadServices {
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
@@ -116,7 +116,7 @@ public class ReadTeacherSiteTest extends TestCaseReadServices {
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();

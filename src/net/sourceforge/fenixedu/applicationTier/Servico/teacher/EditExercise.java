@@ -6,14 +6,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IMetadata;
-import net.sourceforge.fenixedu.domain.Metadata;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.IMetadata;
+import net.sourceforge.fenixedu.domain.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -31,7 +31,7 @@ public class EditExercise implements IService {
             String secondarySubject) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 

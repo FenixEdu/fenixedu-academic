@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICoordinator;
@@ -17,14 +19,13 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.RoleType;
 import net.sourceforge.fenixedu.util.TipoCurso;
@@ -119,8 +120,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = SuportePersistenteOJB
-                    .getInstance().getIStudentCurricularPlanPersistente();
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = PersistenceSupportFactory.getDefaultPersistenceSupport().getIStudentCurricularPlanPersistente();
 
             studentCurricularPlan = readStudentCurricularPlan(studentCurricularPlanID,
                     persistentStudentCurricularPlan);
@@ -136,7 +136,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         try {
             IStudent student = studentCurricularPlan.getStudent();
 
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = SuportePersistenteOJB.getInstance()
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = PersistenceSupportFactory.getDefaultPersistenceSupport()
                     .getIPersistentFinalDegreeWork();
 
             IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
@@ -199,7 +199,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             roleTemp.add(RoleType.COORDINATOR);
             if (CollectionUtils.containsAny(roles, roleTemp)) {
                 try {
-                    ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+                    ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                     IPersistentExecutionDegree persistentExecutionDegree = sp
                             .getIPersistentExecutionDegree();
 
@@ -285,7 +285,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.TEACHER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             try {
-                ITeacher teacher = SuportePersistenteOJB.getInstance().getIPersistentTeacher()
+                ITeacher teacher = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTeacher()
                         .readTeacherByUsername(id.getUtilizador());
                 if (teacher == null) {
                     return "noAuthorization";
@@ -316,7 +316,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     }
 
     private boolean verifyStudentTutor(ITeacher teacher, IStudent student) throws ExcepcaoPersistencia {
-        ITutor tutor = SuportePersistenteOJB.getInstance().getIPersistentTutor()
+        ITutor tutor = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTutor()
                 .readTutorByTeacherAndStudent(teacher, student);
 
         return (tutor != null);

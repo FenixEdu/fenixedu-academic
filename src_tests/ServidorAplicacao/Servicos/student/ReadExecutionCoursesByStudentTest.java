@@ -49,7 +49,7 @@ public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         List infoExecutionCousesList = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IExecutionCourse disciplinaExecucao25 = new ExecutionCourse(new Integer(25));

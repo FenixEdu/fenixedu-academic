@@ -4,10 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.course.inquiries;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 
@@ -49,7 +50,7 @@ public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode
             if (courseCode == null) {
                 throw new FenixServiceException("nullCourseCode");
             }
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             
             IPersistentOldInquiriesCoursesRes poics = sp.getIPersistentOldInquiriesCoursesRes();
         

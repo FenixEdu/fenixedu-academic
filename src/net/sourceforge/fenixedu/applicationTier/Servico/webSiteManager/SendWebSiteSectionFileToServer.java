@@ -13,16 +13,17 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.Ftp;
 import net.sourceforge.fenixedu.util.Mes;
@@ -44,7 +45,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
             throws FenixServiceException {
 
         try {
-            SuportePersistenteOJB persistentSupport = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                     .getIPersistentWebSiteSection();
             IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -51,8 +52,7 @@ public class CreateStudentGroupWithoutShift implements IService {
 
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentStudentGroup = persistentSupport
                     .getIPersistentStudentGroup();
 
@@ -82,8 +82,7 @@ public class CreateStudentGroupWithoutShift implements IService {
         
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             persistentGroupProperites = persistentSupport
                     .getIPersistentGroupProperties();

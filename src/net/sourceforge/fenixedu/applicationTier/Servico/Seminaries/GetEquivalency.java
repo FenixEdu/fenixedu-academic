@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
+import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -38,7 +38,7 @@ public class GetEquivalency implements IService {
     public InfoEquivalency run(Integer equivalencyID) throws BDException {
         InfoEquivalency infoEquivalency = null;
         try {
-            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistenceSupport
                     .getIPersistentSeminaryCurricularCourseEquivalency();
             ICourseEquivalency equivalency = (ICourseEquivalency) persistentEquivalency.readByOID(

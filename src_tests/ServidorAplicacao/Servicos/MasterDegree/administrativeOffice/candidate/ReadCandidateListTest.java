@@ -62,7 +62,7 @@ public class ReadCandidateListTest extends TestCaseReadServices {
     protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         ISuportePersistente sp = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             //TODO: delete all no longer exists
             //sp.getIPersistentMasterDegreeCandidate().deleteAll();

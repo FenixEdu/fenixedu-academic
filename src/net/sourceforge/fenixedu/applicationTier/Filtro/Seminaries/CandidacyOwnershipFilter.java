@@ -5,13 +5,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -35,7 +35,7 @@ public class CandidacyOwnershipFilter extends Filtro {
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
-        ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
                 .getIPersistentSeminaryCandidacy();
         //

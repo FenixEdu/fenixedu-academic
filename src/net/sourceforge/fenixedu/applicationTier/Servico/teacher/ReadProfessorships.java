@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author jpvl
@@ -30,7 +30,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
 
     public List run(IUserView userView, Integer executionPeriodCode) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport;
-        persistentSuport = SuportePersistenteOJB.getInstance();
+        persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentResponsibleFor responsibleForDAO = persistentSuport.getIPersistentResponsibleFor();
         IPersistentProfessorship persistentProfessorship = persistentSuport

@@ -61,7 +61,7 @@ public class ReadShiftsByExecutionCourseCodeTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         List shiftList = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();

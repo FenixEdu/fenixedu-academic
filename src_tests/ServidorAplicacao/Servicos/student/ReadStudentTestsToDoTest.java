@@ -69,7 +69,7 @@ public class ReadStudentTestsToDoTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         InfoSiteDistributedTests infoSiteDistributedTests = new InfoSiteDistributedTests();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IDistributedTest distributedTest = (IDistributedTest) sp.getIPersistentDistributedTest()
                     .readByOID(DistributedTest.class, new Integer(2));

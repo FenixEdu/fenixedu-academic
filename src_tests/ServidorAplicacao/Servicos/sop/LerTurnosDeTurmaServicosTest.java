@@ -95,7 +95,7 @@ public class LerTurnosDeTurmaServicosTest extends TestCaseReadServices {
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             ICursoPersistente persistentDegree = sp.getICursoPersistente();

@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractMovementWithContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,7 +32,7 @@ public class ReadAllGrantMovementsByContract implements IService {
         List result = null;
         IPersistentGrantContractMovement pgcm = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             pgcm = sp.getIPersistentGrantContractMovement();
             List grantMovements = pgcm.readAllMovementsByContract(grantContractId);
 

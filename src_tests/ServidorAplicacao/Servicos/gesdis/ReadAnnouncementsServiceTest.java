@@ -73,7 +73,7 @@ public class ReadAnnouncementsServiceTest extends TestCaseReadServices {
         IExecutionCourse executionCourse = null;
         ISite site = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionYear ipey = sp.getIPersistentExecutionYear();

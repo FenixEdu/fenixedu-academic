@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason;
 
 /**
@@ -33,7 +33,7 @@ public class SecretaryEnrollmentRule implements IEnrollmentRule {
 
         ISuportePersistente persistentSuport;
         try {
-            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             
             //check if student curricular plan is Old LEIC
             if(studentCurricularPlan.getDegreeCurricularPlan().getIdInternal().intValue() == LEIC_OLD_DCP) {

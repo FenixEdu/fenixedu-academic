@@ -44,7 +44,7 @@ public class SearchRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -74,7 +74,7 @@ public class SearchRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -104,7 +104,7 @@ public class SearchRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -134,7 +134,7 @@ public class SearchRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -164,7 +164,7 @@ public class SearchRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -193,7 +193,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -223,7 +223,7 @@ public class SearchRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -252,7 +252,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -281,7 +281,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -310,7 +310,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -339,7 +339,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -368,7 +368,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -397,7 +397,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -426,7 +426,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -455,7 +455,7 @@ public class SearchRoomsTest extends ServiceTestCase {
 
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);
@@ -485,7 +485,7 @@ public class SearchRoomsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List rooms = service.run(name, building, floor, type, normal, exam);

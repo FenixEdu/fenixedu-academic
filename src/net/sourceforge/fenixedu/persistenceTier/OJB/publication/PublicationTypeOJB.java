@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.publication;
 
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
+
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author TJBF & PFON

@@ -5,10 +5,10 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.IntroduzirJustificacaoForm;
 import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.LerDadosJustificacaoForm;
 import net.sourceforge.fenixedu.util.FormataCalendar;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;

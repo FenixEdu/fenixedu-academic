@@ -40,7 +40,7 @@ public class ReadAllBuildingsNoBuildingsTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             List buildingNames = service.run();

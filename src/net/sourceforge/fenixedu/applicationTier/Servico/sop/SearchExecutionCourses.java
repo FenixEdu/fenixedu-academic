@@ -13,9 +13,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -26,22 +25,23 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.TipoAula;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 public class SearchExecutionCourses implements IServico {
 
@@ -74,7 +74,7 @@ public class SearchExecutionCourses implements IServico {
         List result = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp
                     .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class,
@@ -125,7 +125,7 @@ public class SearchExecutionCourses implements IServico {
                     IExecutionCourse executionCourse = (IExecutionCourse) arg0;
 
                     if (executionCourse.getAssociatedCurricularCourses() != null) {
-                        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+                        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
                         InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
                         int enrolledInCurricularCourse = 0;
@@ -230,7 +230,7 @@ public class SearchExecutionCourses implements IServico {
                 private InfoExecutionCourse getOccupancyLevels(Object arg0) throws ExcepcaoPersistencia {
                     InfoExecutionCourse infoExecutionCourse;
                     // Get the associated Shifs
-                    ISuportePersistente spTemp = SuportePersistenteOJB.getInstance();
+                    ISuportePersistente spTemp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                     IExecutionCourse executionCourse = (IExecutionCourse) arg0;
 
                     // FIXME: Find a better way to get the total

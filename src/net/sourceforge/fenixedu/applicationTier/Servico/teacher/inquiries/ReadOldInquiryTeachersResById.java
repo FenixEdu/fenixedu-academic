@@ -4,10 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 
@@ -40,7 +41,7 @@ public class ReadOldInquiryTeachersResById implements IServico {
             if (internalId == null) {
                 throw new FenixServiceException("nullInternalId");
             }
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentOldInquiriesTeachersRes poits = sp.getIPersistentOldInquiriesTeachersRes();
         
             IOldInquiriesTeachersRes oits = poits.readByInternalId(internalId);

@@ -61,7 +61,7 @@ public class LerSalasServicosTest extends TestCaseReadServices {
     protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         ISuportePersistente sp = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             //sp.getISalaPersistente().deleteAll(); method deleted - too
             // dangerous

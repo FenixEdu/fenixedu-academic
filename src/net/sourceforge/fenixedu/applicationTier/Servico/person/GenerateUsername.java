@@ -4,11 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecutedException;
+import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 
 /**
@@ -25,7 +25,7 @@ public class GenerateUsername {
 
         // Verify if the Username already Exists
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             while ((sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null)
                 username = RandomStringGenerator.getRandomStringGenerator(6);
         } catch (ExcepcaoPersistencia ex) {
@@ -55,7 +55,7 @@ public class GenerateUsername {
         // Verify if the Username already Exists
         String username2Test = username;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             int i = 1;
             while ((sp.getIPessoaPersistente().lerPessoaPorUsername(username2Test)) != null) {
                 //while ((person =

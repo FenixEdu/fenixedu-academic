@@ -12,6 +12,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -20,11 +22,9 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoAula;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -50,7 +50,7 @@ public class EditarTurno implements IService {
             throw new InvalidNewShiftCapacity();
         }
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IShift shiftToEdit = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                 infoShiftOld.getIdInternal());
@@ -117,7 +117,7 @@ public class EditarTurno implements IService {
         IShift shift = null;
         try {
             ISuportePersistente sp;
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                     infoShiftOld.getIdInternal());
             shiftLessons = shift.getAssociatedLessons();

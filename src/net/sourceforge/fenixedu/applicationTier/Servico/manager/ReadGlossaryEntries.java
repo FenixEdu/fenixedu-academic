@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.support.IGlossaryEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGlossaryEntries;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -25,7 +25,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadGlossaryEntries implements IService {
 
     public Collection run() throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentGlossaryEntries dao = sp.getIPersistentGlossaryEntries();
 
         List glossaryEntries = dao.readAll();

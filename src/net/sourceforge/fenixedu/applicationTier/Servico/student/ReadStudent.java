@@ -11,13 +11,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
  * 
  * @author tfc130
  */
+import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class ReadStudent implements IServico {
@@ -51,7 +51,7 @@ public class ReadStudent implements IServico {
         InfoStudent infoStudent = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Isto não é para ficar assim. Está assim temporariamente até se
             // saber como é feita de facto a distinção

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.applicationTier.ICandidateView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.util.SituationName;
 
 /**

@@ -67,7 +67,7 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
 
         try {
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
             summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);
@@ -104,7 +104,7 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
 
         try {
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
             summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);
@@ -139,7 +139,7 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
 
             Integer summaryId = (Integer) args2[1];
             ISummary summary;
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
             summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);

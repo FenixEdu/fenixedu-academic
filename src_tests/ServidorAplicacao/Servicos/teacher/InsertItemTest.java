@@ -130,7 +130,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
             ISection iSection = (ISection) persistentSuport.getIPersistentSection().readByOID(
@@ -171,7 +171,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
             ISection iSection = (ISection) persistentSuport.getIPersistentSection().readByOID(
@@ -212,7 +212,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
             ISection iSection = (ISection) persistentSuport.getIPersistentSection().readByOID(

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author asnr and scpo
@@ -36,7 +36,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         boolean result = false;
         try
         {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
             List groups = new ArrayList();
             if(shift!=null){
@@ -133,7 +133,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     {
         try
         {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
             IPersistentStudentGroupAttend persistentStudentGroupAttend =
@@ -190,7 +190,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     {
         try
         {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IPersistentStudentGroupAttend persistentStudentGroupAttend =
                 sp.getIPersistentStudentGroupAttend();
@@ -241,7 +241,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         List listStudentGroupAttend = null;
         try
         {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             listStudentGroupAttend =
                 sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
 
@@ -270,7 +270,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         List allStudentGroupAttend = new ArrayList();
         try
         {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentGroupAttend persistentStudentGroupAttend =
                 persistentSuport.getIPersistentStudentGroupAttend();
 
@@ -294,7 +294,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     	boolean found = false;
     	try
 		{
-    		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
     		IStudent student = persistentStudent.readByUsername(username);
@@ -322,7 +322,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
 	{
     	boolean found = true;
     	try {
-    		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     		IPersistentStudent persistentStudent = sp
 			.getIPersistentStudent();
 	
@@ -352,7 +352,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
 	{
     	boolean found = true;
     	try {
-    		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     		IPersistentStudent persistentStudent = sp
 			.getIPersistentStudent();
 	

@@ -71,7 +71,7 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends 
         List announcementsList = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();

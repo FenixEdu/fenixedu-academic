@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncionarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;

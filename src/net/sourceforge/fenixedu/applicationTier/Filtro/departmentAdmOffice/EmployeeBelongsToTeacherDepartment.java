@@ -2,24 +2,24 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.departmentAdmOffice;
 
 import java.util.HashMap;
 
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author mrsp and jdnf
@@ -30,7 +30,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
 	public void execute(ServiceRequest request, ServiceResponse response)
 			throws FilterException, Exception, FenixServiceException {
 	    
-	    ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+	    ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
 	    IPersistentDepartment persistentDepartment = persistentSuport.getIDepartamentoPersistente();
 	    IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -31,7 +31,7 @@ public class ReadPublicationType implements IService {
     public IPublicationType run(Integer publicationTypeId) throws FenixServiceException {
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
@@ -48,7 +48,7 @@ public class ReadPublicationType implements IService {
     public IPublicationType run(String publicationTypeName) throws FenixServiceException {
         ISuportePersistente sp;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
  

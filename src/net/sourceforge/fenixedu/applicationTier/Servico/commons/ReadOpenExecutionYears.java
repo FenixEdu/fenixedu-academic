@@ -5,13 +5,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -26,7 +26,7 @@ public class ReadOpenExecutionYears implements IService {
 
     public List run() throws FenixServiceException {
         try {
-            IPersistentExecutionYear persistentExecutionYear = SuportePersistenteOJB.getInstance()
+            IPersistentExecutionYear persistentExecutionYear = PersistenceSupportFactory.getDefaultPersistenceSupport()
                     .getIPersistentExecutionYear();
             List openExecutionYears = persistentExecutionYear.readOpenExecutionYears();
 

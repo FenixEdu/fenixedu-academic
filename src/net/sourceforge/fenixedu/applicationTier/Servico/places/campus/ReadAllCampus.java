@@ -6,14 +6,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.places.campus;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICampus;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -50,7 +50,7 @@ public class ReadAllCampus implements IServico {
     public List run() throws FenixServiceException {
         List infoCampusList;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCampus campus = sp.getIPersistentCampus();
             List campusList = campus.readAll();
             infoCampusList = (List) CollectionUtils.collect(campusList, new Transformer() {

@@ -87,7 +87,7 @@ public class ReadExamsByDateTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
@@ -114,7 +114,7 @@ public class ReadExamsByDateTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
@@ -141,7 +141,7 @@ public class ReadExamsByDateTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
@@ -168,7 +168,7 @@ public class ReadExamsByDateTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
@@ -195,7 +195,7 @@ public class ReadExamsByDateTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);

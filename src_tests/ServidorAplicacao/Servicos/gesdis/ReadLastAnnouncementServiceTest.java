@@ -69,7 +69,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
         ISite site = null;
 
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSupport.iniciarTransaccao();
 
             IPersistentExecutionYear ipey = persistentSupport.getIPersistentExecutionYear();
@@ -115,7 +115,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
         ISite site = null;
 
         try {
-            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSupport.iniciarTransaccao();
 
             IPersistentExecutionYear ipey = persistentSupport.getIPersistentExecutionYear();
@@ -151,11 +151,11 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 
         InfoAnnouncement infoAnnouncement = null;
         try {
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            announcement = SuportePersistenteOJB.getInstance().getIPersistentAnnouncement()
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
+            announcement = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentAnnouncement()
                     .readAnnouncementByTitleAndCreationDateAndSite("announcement2deTFCI", date, site);
             infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
             System.out.println("getObjectToCompare2:failed setting up the test data" + e);
         }

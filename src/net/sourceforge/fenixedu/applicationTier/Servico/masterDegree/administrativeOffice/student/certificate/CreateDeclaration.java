@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
@@ -30,7 +30,7 @@ public class CreateDeclaration implements IService {
 
         ISuportePersistente sp = null;
 
-        sp = SuportePersistenteOJB.getInstance();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         try {
             studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
@@ -72,7 +72,7 @@ public class CreateDeclaration implements IService {
 
         ISuportePersistente sp = null;
 
-        sp = SuportePersistenteOJB.getInstance();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         try {
             studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
@@ -117,7 +117,7 @@ public class CreateDeclaration implements IService {
 
         ISuportePersistente sp = null;
 
-        sp = SuportePersistenteOJB.getInstance();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         for (Iterator iter = states.iterator(); iter.hasNext();) {
             StudentCurricularPlanState state = (StudentCurricularPlanState) iter.next();

@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -27,13 +28,12 @@ import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author João Mota
@@ -70,7 +70,7 @@ public class RoomSiteComponentBuilder {
 
         List infoShowOccupations = new ArrayList();
         /*
-         * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+         * try { ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
          * 
          * //adicionar as aulas IAulaPersistente lessonDAO =
          * sp.getIAulaPersistente(); IPersistentExam examDAO =
@@ -99,7 +99,7 @@ public class RoomSiteComponentBuilder {
          * ex) { ex.printStackTrace(); }
          */
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IPersistentExam examDAO = sp.getIPersistentExam();
@@ -182,7 +182,7 @@ public class RoomSiteComponentBuilder {
 
     private Period calculateLessonsSeason(IExecutionPeriod executionPeriod) throws Exception {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             int semester = executionPeriod.getSemester().intValue();
 

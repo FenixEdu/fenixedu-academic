@@ -5,14 +5,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosit
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositionCreditLine;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -26,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadTeacherManagementPositionsService implements IService {
     public List run(Integer teacherId) throws FenixServiceException {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentManagementPositionCreditLine managementPositionCreditLineDAO = sp
                     .getIPersistentManagementPositionCreditLine();

@@ -110,7 +110,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
                     getAuthorizeArguments());
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExam persistentExam = sp.getIPersistentExam();
             sp.iniciarTransaccao();
             IExam exam = (IExam) persistentExam.readByOID(Exam.class,
@@ -146,7 +146,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExam persistentExam = sp.getIPersistentExam();
             sp.iniciarTransaccao();
             IExam exam = (IExam) persistentExam.readByOID(Exam.class, (Integer) args[1]);
@@ -343,7 +343,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
         try {
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExam persistentExam = sp.getIPersistentExam();
             sp.iniciarTransaccao();
             IExam exam = (IExam) persistentExam.readByOID(Exam.class, (Integer) args[1]);

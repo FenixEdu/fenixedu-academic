@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoCurricularCourseGrade;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEnrollmentGrade;
@@ -26,8 +27,6 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -39,12 +38,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author David Santos in May 12, 2004
@@ -103,7 +103,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
         IUserView userView = (IUserView) input.get(2);
 
         try {
-            ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularCourse curricularCourseDAO = persistenceDAO
                     .getIPersistentCurricularCourse();
             IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
@@ -153,7 +153,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
      * @return IPerson
      */
     private IPerson getPersonResponsibleFor(IUserView userView) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPessoaPersistente personDAO = persistenceDAO.getIPessoaPersistente();
 
         return personDAO.lerPessoaPorUsername(userView.getUtilizador());
@@ -164,7 +164,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
      * @return IEmployee
      */
     private IEmployee getEmployee(IPerson person) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEmployee employeeDAO = persistenceDAO.getIPersistentEmployee();
 
         return employeeDAO.readByPerson(person.getIdInternal().intValue());
@@ -173,7 +173,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
     private IEnrollment writeEnrollment(ICurricularCourse curricularCourse,
             IStudentCurricularPlan toStudentCurricularPlan, String grade, IUserView userView)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
         IPersistentExecutionPeriod executionPeriodDAO = persistenceDAO.getIPersistentExecutionPeriod();
 
@@ -204,7 +204,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
     private void writeEnrollmentEvaluation(IEnrollment newEnrollment, String grade, IUserView userView)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistenceDAO
                 .getIPersistentEnrolmentEvaluation();
 
@@ -240,7 +240,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
     private void writeEquivalences(IEnrollment oldEnrollment, IEnrollment newEnrollment,
             HashMap enrolmentEquivalencesCreated) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrolmentEquivalence enrollmentEquivalenceDAO = persistenceDAO
                 .getIPersistentEnrolmentEquivalence();
         IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalenceDAO = persistenceDAO
@@ -308,7 +308,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
      */
     private void searchForEnrollmentInExtraCurricularCourseAndDeleteIt(IEnrollment oldEnrollment,
             IStudentCurricularPlan toStudentCurricularPlan) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 
         IEnrollment enrollment = enrollmentDAO

@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPart;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,7 +32,7 @@ public class ReadAllGrantPartsByGrantSubsidy implements IService {
     public List run(Integer grantSubsidyId) throws FenixServiceException {
         List result = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGrantPart pgp = sp.getIPersistentGrantPart();
             List grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
 

@@ -40,11 +40,11 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
 
         IExecutionCourse executionCourse = null;
         try {
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
+            executionCourse = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
             Object[] result = { Cloner.get(executionCourse), new TipoAula(TipoAula.RESERVA) };
             return result;
         } catch (ExcepcaoPersistencia ex) {
@@ -56,11 +56,11 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         IExecutionCourse executionCourse = null;
         try {
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
+            executionCourse = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
             Object[] result = { Cloner.get(executionCourse), new TipoAula(TipoAula.TEORICA) };
             return result;
         } catch (ExcepcaoPersistencia ex) {

@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -66,7 +66,7 @@ public class PublicationOJB extends PersistentObjectOJB implements IPersistentPu
     public void lockWrite(Object obj) throws ExcepcaoPersistencia {
         super.lockWrite(obj);
         IPublication publication = (IPublication) obj;
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentPublicationAuthor ppa = sp.getIPersistentPublicationAuthor();
         
         Iterator it = publication.getPublicationAuthors().iterator();
@@ -83,7 +83,7 @@ public class PublicationOJB extends PersistentObjectOJB implements IPersistentPu
     public void delete(Object obj) throws ExcepcaoPersistencia{
         super.delete(obj);
         IPublication publication = (IPublication) obj;
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentPublicationAuthor ppa = sp.getIPersistentPublicationAuthor();
         
         Iterator it = publication.getPublicationAuthors().iterator();

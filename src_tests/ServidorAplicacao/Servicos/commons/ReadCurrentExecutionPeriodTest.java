@@ -42,7 +42,7 @@ public class ReadCurrentExecutionPeriodTest extends TestCaseServicos {
     protected void setUp() {
         super.setUp();
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             executionPeriodDAO = sp.getIPersistentExecutionPeriod();
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoAula;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
@@ -44,7 +44,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
 
     public List run(UserView userView) throws ExcepcaoPersistencia {
 
-        ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+        ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentStudentCurricularPlan pSCP = suportePersistente
                 .getIStudentCurricularPlanPersistente();

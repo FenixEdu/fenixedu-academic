@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
@@ -22,11 +23,10 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -51,7 +51,7 @@ public class SelectCandidaciesService implements IService {
         SelectCandidaciesDTO result = new SelectCandidaciesDTO();
         ISuportePersistente persistenceSupport;
         try {
-            persistenceSupport = SuportePersistenteOJB.getInstance();
+            persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
             IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();

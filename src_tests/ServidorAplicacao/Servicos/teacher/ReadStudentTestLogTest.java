@@ -48,7 +48,7 @@ public class ReadStudentTestLogTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         List logList = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IStudentTestLog log1 = (IStudentTestLog) sp.getIPersistentStudentTestLog().readByOID(

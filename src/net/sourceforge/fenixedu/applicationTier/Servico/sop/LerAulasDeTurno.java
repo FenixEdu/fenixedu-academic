@@ -29,7 +29,7 @@ public class LerAulasDeTurno implements IService {
         ArrayList infoAulas = null;
 
         //   try {
-        //   ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        //   ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IShift shift = Cloner.copyInfoShift2Shift(new InfoShift(shiftKey.getShiftName(), null, null,
                 shiftKey.getInfoExecutionCourse()));

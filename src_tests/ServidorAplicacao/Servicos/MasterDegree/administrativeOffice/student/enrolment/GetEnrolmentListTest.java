@@ -59,7 +59,7 @@ public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IStudentCurricularPlan iStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
                     .readActiveStudentAndSpecializationCurricularPlan(new Integer(46865),

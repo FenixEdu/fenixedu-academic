@@ -41,7 +41,7 @@ public class ReadExecutionDegreeByOIDTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionDegree infoExecutionDegree = service.run(id);
@@ -66,7 +66,7 @@ public class ReadExecutionDegreeByOIDTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             InfoExecutionDegree infoExecutionDegree = service.run(id);

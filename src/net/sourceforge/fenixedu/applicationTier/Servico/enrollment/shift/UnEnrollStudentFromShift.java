@@ -4,15 +4,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -36,7 +36,7 @@ public class UnEnrollStudentFromShift implements IService {
     public Boolean run(Integer studentId, Integer shiftId) throws StudentNotFoundServiceException,
             ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException, FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IShift shift = (IShift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
                     shiftId);

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -142,7 +142,7 @@ public class RowMarksFile {
         IEmployee employee = null;
         IPersistentEmployee persistentEmployee;
         try {
-            persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+            persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
             employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();

@@ -64,7 +64,7 @@ public abstract class ManagerBaseTest extends ServiceTestCase {
     private IUserView authenticateUser(String[] args) {
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             sp.clearCache();
             sp.confirmarTransaccao();

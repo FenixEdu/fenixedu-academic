@@ -3,15 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -71,7 +71,7 @@ public class GetEnrolmentGrade {
         IEmployee employee = null;
         IPersistentEmployee persistentEmployee;
         try {
-            persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+            persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
             employee = persistentEmployee.readByIdInternal(id);
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();

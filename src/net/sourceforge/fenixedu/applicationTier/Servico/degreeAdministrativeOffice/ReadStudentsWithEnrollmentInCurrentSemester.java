@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrollmentState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -39,7 +39,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
         List degreeNames = new ArrayList();
         List allStudentsData = new ArrayList();
 
-        sp = SuportePersistenteOJB.getInstance();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent pStudent = sp.getIPersistentStudent();
         List studentsList = pStudent.readAllBetweenNumbers(fromNumber, toNumber);
 

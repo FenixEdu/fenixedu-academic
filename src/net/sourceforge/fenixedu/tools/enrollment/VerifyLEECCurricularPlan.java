@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AreaType;
 import net.sourceforge.fenixedu.util.BranchType;
 
@@ -38,7 +38,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class VerifyLEECCurricularPlan {
     public static void main(String args[]) {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
             IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport
                     .getIPersistentDegreeCurricularPlan();
@@ -79,7 +79,7 @@ public class VerifyLEECCurricularPlan {
      */
     private static void printItForThisAreaWithScopes(IBranch branch, AreaType areaType)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -178,7 +178,7 @@ public class VerifyLEECCurricularPlan {
      */
     private static void printItForPrecedences(IDegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
         IPersistentCurricularCourse curricularCourseDAO = persistentSuport
                 .getIPersistentCurricularCourse();

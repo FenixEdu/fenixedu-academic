@@ -132,7 +132,7 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
             // apaga o sumario inserido para verificar se nao houve mais nenhuma
             // alteracao da bd
             Integer summaryId = summary.getIdInternal();
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             sp.getIPersistentSummary().deleteByOID(Summary.class, summaryId);
             sp.confirmarTransaccao();

@@ -79,7 +79,7 @@ public class ReadShiftsAndGroupsTest extends TestCaseReadServices {
         List infoSiteGroupsByShiftList = new ArrayList();
         List infoSiteStudentGroupList = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, new Integer(30));
             IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(

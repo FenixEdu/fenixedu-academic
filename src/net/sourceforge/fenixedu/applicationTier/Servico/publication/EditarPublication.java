@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -33,7 +33,7 @@ public class EditarPublication implements IService {
 
     public void run(InfoPublication infoPublication) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
         final IPersistentPublicationAuthor persistentPublicationAuthor = sp.getIPersistentPublicationAuthor();
         final IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
@@ -96,7 +96,7 @@ public class EditarPublication implements IService {
 //            ipa.run(infoAuthorsList);
 //
 //            //Write the Publication
-//            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+//            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 //            IPersistentPublication persistentPublication = sp.getIPersistentPublication();
 //
 //            IPublication publication;

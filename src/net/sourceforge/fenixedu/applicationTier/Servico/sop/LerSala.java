@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @version
  */
 
+import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.domain.IRoom;
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 public class LerSala implements IServico {
 
@@ -44,7 +44,7 @@ public class LerSala implements IServico {
         InfoRoom infoSala = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IRoom sala = sp.getISalaPersistente().readByName(keySala.getNomeSala());
             if (sala != null)
                 infoSala = new InfoRoom(sala.getNome(), sala.getEdificio(), sala.getPiso(), sala

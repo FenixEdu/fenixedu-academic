@@ -97,26 +97,26 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices {
         IStudent student = null;
         InfoShift infoShift = null;
         try {
-            SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            student = SuportePersistenteOJB.getInstance().getIPersistentStudent()
+            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
+            student = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentStudent()
                     .readStudentByNumberAndDegreeType(new Integer(600),
                             new TipoCurso(TipoCurso.LICENCIATURA));
             assertNotNull(student);
             infoStudent = Cloner.copyIStudent2InfoStudent(student);
 
             IExecutionCourse executionCourse = null;
-            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
+            executionCourse = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
 
             ITurno shift = new Turno();
-            shift = SuportePersistenteOJB.getInstance().getITurnoPersistente()
+            shift = PersistenceSupportFactory.getDefaultPersistenceSupport().getITurnoPersistente()
                     .readByNameAndExecutionCourse("turno4", executionCourse);
             assertNotNull(shift);
 
             infoShift = (InfoShift) Cloner.get(shift);
 
-            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }

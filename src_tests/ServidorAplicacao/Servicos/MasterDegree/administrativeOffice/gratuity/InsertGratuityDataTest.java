@@ -237,7 +237,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest {
 
             ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
             ICursoExecucao executionDegree = new CursoExecucao();
@@ -331,7 +331,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest {
 
             ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
-            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
             IGratuityValues gratuityValues;

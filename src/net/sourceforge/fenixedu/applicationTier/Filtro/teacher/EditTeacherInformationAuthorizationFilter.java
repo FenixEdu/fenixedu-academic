@@ -4,17 +4,17 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -64,7 +64,7 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
     private boolean argumentsBelongToTeacher(IUserView id,
             InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation) {
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());

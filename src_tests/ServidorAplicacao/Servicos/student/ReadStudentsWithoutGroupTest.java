@@ -70,7 +70,7 @@ public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
         InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
 
         try {
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ps.iniciarTransaccao();
             IStudent student = null;
             List infoStudentList = new ArrayList();

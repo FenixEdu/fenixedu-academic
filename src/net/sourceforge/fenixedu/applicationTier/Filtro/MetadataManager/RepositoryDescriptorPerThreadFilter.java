@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.MetadataManager;
  */
 
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.metadata.DescriptorRepository;
@@ -30,7 +31,7 @@ public class RepositoryDescriptorPerThreadFilter implements IFilter {
         MetadataManager mm = MetadataManager.getInstance();
         // tell the manager to use per thread mode
         mm.setEnablePerThreadChanges(true);
-        ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         DescriptorRepository descriptorRepository = ((SuportePersistenteOJB) ps)
                 .getDescriptor("lightVersion");
         if (descriptorRepository == null) {

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -16,7 +16,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadDegreeByOID implements IService {
 
     public InfoDegree run(Integer degreeId) throws ExcepcaoPersistencia {
-        ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+        ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ICursoPersistente persistentDegree = suportePersistente.getICursoPersistente();
 
         IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -56,7 +56,7 @@ public class InsertPublicationAuthors implements IService {
         ISuportePersistente sp = null;
         IPersistentAuthor persistentAuthor = null;
 
-        sp = SuportePersistenteOJB.getInstance();
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentAuthor = sp.getIPersistentAuthor();
         // We have to be aware if the author is a known person or not,
         // because if he isn't then, the keyperson fiel will be NULL

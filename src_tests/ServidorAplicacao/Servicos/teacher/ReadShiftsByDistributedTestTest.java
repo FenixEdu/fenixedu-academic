@@ -49,7 +49,7 @@ public class ReadShiftsByDistributedTestTest extends TestCaseReadServices {
     protected Object getObjectToCompare() {
         List shiftList = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, new Integer(19));
             assertNotNull("shift null", shift);

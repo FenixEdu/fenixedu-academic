@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -26,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadShiftsByTypeFromExecutionCourse implements IService {
 
     public List run(InfoExecutionCourse infoExecutionCourse, TipoAula tipoAula) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 

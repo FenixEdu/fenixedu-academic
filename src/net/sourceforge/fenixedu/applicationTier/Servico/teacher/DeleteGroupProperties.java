@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -53,7 +53,7 @@ public class DeleteGroupProperties implements IService
 		try
 		{
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
 			IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp.getIPersistentGroupPropertiesExecutionCourse();
 			IPersistentAttendsSet persistentAttendsSet = sp.getIPersistentAttendsSet();

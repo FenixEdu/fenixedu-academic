@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -41,9 +41,9 @@ public class ReadStudentExternalInformation implements IService
     public Collection run(String username) throws ExcepcaoPersistencia, FenixServiceException
     {
         Collection result = new ArrayList();
-        IPessoaPersistente persistentPerson = SuportePersistenteOJB.getInstance()
+        IPessoaPersistente persistentPerson = PersistenceSupportFactory.getDefaultPersistenceSupport()
                 .getIPessoaPersistente();
-        IPersistentStudent persistentStudent = SuportePersistenteOJB.getInstance()
+        IPersistentStudent persistentStudent = PersistenceSupportFactory.getDefaultPersistenceSupport()
                 .getIPersistentStudent();
         IPerson person = persistentPerson.lerPessoaPorUsername(username);
         Collection students = persistentStudent.readbyPerson(person);

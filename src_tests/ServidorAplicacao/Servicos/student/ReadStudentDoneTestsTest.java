@@ -71,7 +71,7 @@ public class ReadStudentDoneTestsTest extends TestCaseReadServices {
         InfoSiteDistributedTests infoSiteDistributedTests = new InfoSiteDistributedTests();
         try {
             Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             List distributedTestList = new ArrayList();
 
             sp.iniciarTransaccao();

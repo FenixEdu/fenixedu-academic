@@ -67,7 +67,7 @@ public class TeacherAdministrationSiteComponentServiceObjectivesTest extends Tes
         ISite site = null;
         List sections = null;
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();

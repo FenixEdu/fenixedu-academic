@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -21,7 +21,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class CalculateFirstDayOfLesson implements IService {
 
 	public Calendar run(Integer lessonId) throws ExcepcaoPersistencia {
-	    ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+	    ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 	    IAulaPersistente persistentLesson = persistentSupport.getIAulaPersistente();
 
 	    ILesson lesson = (ILesson) persistentLesson.readByOID(Lesson.class, lessonId);

@@ -77,7 +77,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
         Object[] args = getArguments();
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();

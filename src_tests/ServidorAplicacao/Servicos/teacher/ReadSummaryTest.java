@@ -85,7 +85,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTest {
             IUserView userView = authenticateUser(args);
 
             ISummary newSummary;
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
             newSummary = (ISummary) persistentSummary.readByOID(Summary.class, new Integer(261));

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfoWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
@@ -11,12 +12,11 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -28,7 +28,7 @@ public class EditDegreeInfoByExecutionDegree implements IService {
             InfoDegreeInfo infoDegreeInfo) throws FenixServiceException {
         IDegreeInfo degreeInfo = null;
         try {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             if (infoExecutionDegreeId == null || infoDegreeInfoId == null || infoDegreeInfo == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");

@@ -4,17 +4,17 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.framework.EditDomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.framework.EditDomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.util.RoleType;
 
@@ -33,7 +33,7 @@ public class EditOldPublicationTeacherAuthorizationFilter extends EditDomainObje
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
         try {
             InfoOldPublication infoOldPublication = (InfoOldPublication) infoOject;
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 

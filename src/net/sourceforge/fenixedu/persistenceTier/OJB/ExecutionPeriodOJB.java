@@ -46,9 +46,9 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         List classes = new ArrayList();
         try {
 
-            executionCourses = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
+            executionCourses = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse()
                     .readByExecutionPeriod(executionPeriod);
-            classes = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionPeriod(
+            classes = PersistenceSupportFactory.getDefaultPersistenceSupport().getITurmaPersistente().readByExecutionPeriod(
                     executionPeriod);
 
             if (classes.isEmpty() && executionCourses.isEmpty()) {

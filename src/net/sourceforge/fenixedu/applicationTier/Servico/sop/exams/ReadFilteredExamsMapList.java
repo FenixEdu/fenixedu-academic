@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 public class ReadFilteredExamsMapList implements IServico {
 
@@ -129,7 +129,7 @@ public class ReadFilteredExamsMapList implements IServico {
 		   IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
 		
 		   try {
-			   ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			   ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			   IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
 			   // List of execution courses

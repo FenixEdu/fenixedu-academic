@@ -8,9 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -51,7 +52,7 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
         List executionDegrees = null;
         List result = new ArrayList();
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             executionDegrees = sp.getIPersistentExecutionDegree()
                     .readExecutionDegreesbyDegreeCurricularPlanID(degreeCurricularPlanID);
@@ -81,7 +82,7 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
 
         IExecutionDegree executionDegrees = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             executionDegrees = sp.getIPersistentExecutionDegree()
                     .readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(

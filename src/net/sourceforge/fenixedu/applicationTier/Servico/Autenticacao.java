@@ -12,24 +12,24 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
+import net.sourceforge.fenixedu.applicationTier.ICandidateView;
+import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.applicationTier.ICandidateView;
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.RoleType;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 public class Autenticacao implements IServico {
 
@@ -64,7 +64,7 @@ public class Autenticacao implements IServico {
         IPerson pessoa = null;
 
         try {
-            pessoa = SuportePersistenteOJB.getInstance().getIPessoaPersistente().lerPessoaPorUsername(
+            pessoa = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPessoaPersistente().lerPessoaPorUsername(
                     utilizador);
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex.getMessage());
@@ -87,7 +87,7 @@ public class Autenticacao implements IServico {
             if (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)) {
                 List masterDegreeCandidates = null;
                 try {
-                    masterDegreeCandidates = SuportePersistenteOJB.getInstance()
+                    masterDegreeCandidates = PersistenceSupportFactory.getDefaultPersistenceSupport()
                             .getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(
                                     userView.getUtilizador());
                 } catch (ExcepcaoPersistencia ex) {

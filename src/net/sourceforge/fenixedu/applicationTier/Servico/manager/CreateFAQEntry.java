@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.support.IFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -21,7 +21,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class CreateFAQEntry implements IService {
 
     public void run(InfoFAQEntry infoFAQEntry) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentObject dao = sp.getIPersistentObject();
 
         IFAQSection parentFAQSection = null;

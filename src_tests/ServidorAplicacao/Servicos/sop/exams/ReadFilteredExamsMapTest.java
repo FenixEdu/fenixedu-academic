@@ -139,7 +139,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         InfoExamsMap infoExamsMap = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             /////
@@ -198,7 +198,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(infoExecutionDegree, curricularYears, null);
@@ -232,7 +232,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);
@@ -268,7 +268,7 @@ public class ReadFilteredExamsMapTest extends ServiceTestCase {
         ISuportePersistente sp;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             service.run(infoExecutionDegree, null, infoExecutionPeriod);

@@ -129,7 +129,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends Te
         ISuportePersistente sp = null;
 
         try {
-            sp = SuportePersistenteOJB.getInstance();
+            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.iniciarTransaccao();
 
             ICursoPersistente cursoPersistente = sp.getICursoPersistente();

@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScie
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AreaType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -79,7 +79,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private void getGivenCreditsInScientificAreas(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInScientificAreas) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCreditsInSpecificScientificArea creditsInScientificAreaDAO = persistentSuport
                 .getIPersistentCreditsInSpecificScientificArea();
 
@@ -99,7 +99,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private int getGivenCreditsInAnySecundaryArea(IStudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCreditsInAnySecundaryArea creditsInAnySecundaryAreaDAO = persistentSuport
                 .getIPersistentCreditsInAnySecundaryArea();
         int creditsInAnySecundaryAreas = 0;
@@ -159,7 +159,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
             IStudentCurricularPlan studentCurricularPlan, HashMap creditsInSecundaryAreaGroups,
             HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -192,7 +192,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private boolean curricularCourseBelongsToSpecializationArea(ICurricularCourse curricularCourse,
             IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -205,7 +205,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private boolean curricularCourseBelongsToSecundaryArea(ICurricularCourse curricularCourse,
             IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -233,7 +233,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private void calculateNonClashingScientificAreas(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups,
             HashMap creditsInSecundaryAreaGroups, HashMap clashingGroups) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentScientificArea scientificAreaDAO = persistentSuport.getIPersistentScientificArea();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
@@ -371,7 +371,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private Integer calculateCreditsInSecundaryArea(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
         int areaCredits = 0;
@@ -404,7 +404,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private Integer calculateCreditsInSpecializationArea(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
         int areaCredits = 0;
@@ -480,7 +480,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private boolean isSpecializationAreaDone(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -516,7 +516,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private boolean isSecundaryAreaDone(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -555,7 +555,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private List selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
             IStudentCurricularPlan studentCurricularPlan, HashMap creditsInSecundaryAreaGroups,
             int creditsInAnySecundaryArea) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -579,7 +579,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private List selectSpecializationAreaCurricularCoursesFromGroupsNotFull(
             IStudentCurricularPlan studentCurricularPlan, HashMap creditsInSpecializationAreaGroups)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 

@@ -9,6 +9,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted;
@@ -36,18 +42,12 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -112,7 +112,7 @@ public class GroupSiteComponentBuilder {
         IGroupProperties groupProperties; 
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse executionCourse = (IExecutionCourse) sp
                     .getIPersistentExecutionCourse().readByOID(
                             ExecutionCourse.class, executionCourseCode);
@@ -184,7 +184,7 @@ public class GroupSiteComponentBuilder {
     	List infoSiteStudentsAndGroupsList = new ArrayList();
     		try
 			{
-    			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
     			ITurnoPersistente persistentShift =  sp.getITurnoPersistente();
 
@@ -256,7 +256,7 @@ public class GroupSiteComponentBuilder {
         	List infoSiteStudentsAndGroupsList = new ArrayList();
         		try
     			{
-        			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
         			
         			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
@@ -325,7 +325,7 @@ public class GroupSiteComponentBuilder {
     	List infoSiteStudentsAndGroupsList = new ArrayList();
     		try
 			{
-    			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
     			
     			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
@@ -419,7 +419,7 @@ public class GroupSiteComponentBuilder {
     		IShift shift = null;
     		try
 			{
-    			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     			ITurnoPersistente persistentShift =  sp.getITurnoPersistente();
     			
     			shift = (IShift) persistentShift
@@ -459,7 +459,7 @@ public class GroupSiteComponentBuilder {
         List infoSiteShiftsAndGroups = null;
 
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             IPersistentStudentGroup persistentStudentGroup = sp
                     .getIPersistentStudentGroup();
@@ -780,7 +780,7 @@ public class GroupSiteComponentBuilder {
 		
     		InfoGroupProperties infoGroupProperties = null;
 		try{	
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             	
 			IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
             		.readByOID(GroupProperties.class, groupPropertiesCode);
@@ -819,7 +819,7 @@ public class GroupSiteComponentBuilder {
 
         List studentGroupAttendInformationList = null;
         try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IStudentGroup studentGroup = (IStudentGroup) sp
                     .getIPersistentStudentGroup().readByOID(StudentGroup.class,
@@ -871,7 +871,7 @@ public class GroupSiteComponentBuilder {
     		
     		InfoStudentGroup infoStudentGroup = null;
     		try{	
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
                     StudentGroup.class, studentGroupCode);

@@ -7,19 +7,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectAccess;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -30,7 +30,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadProjectAccesses implements IService {
 
     public List run(UserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ITeacher personCoordinator = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
         if (personCoordinator == null)
             throw new InvalidArgumentsServiceException();
@@ -52,7 +52,7 @@ public class ReadProjectAccesses implements IService {
     }
 
     public List run(UserView userView, String username) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         ITeacher personTeacher = sp.getIPersistentTeacher().readTeacherByUsername(username);
         if (personTeacher == null) {
@@ -80,7 +80,7 @@ public class ReadProjectAccesses implements IService {
     }
 
     public InfoProjectAccess run(Integer personCode, Integer projectCode) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSuportOracle spOracle = PersistentSuportOracle.getInstance();
         InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(sp.getIPersistentProjectAccess()
                 .readByPersonIdAndProjectAndDate(personCode, projectCode));

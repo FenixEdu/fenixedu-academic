@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.SpecificLEICEnrol
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AreaType;
 
 /**
@@ -32,7 +32,7 @@ public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlan implemen
         List curricularCourses = new ArrayList();
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                     .getIPersistentCurricularCourseGroup();
 

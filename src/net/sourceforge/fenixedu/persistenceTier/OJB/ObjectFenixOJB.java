@@ -48,7 +48,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     public ObjectFenixOJB() {
 
         try {
-            odmg = SuportePersistenteOJB.getInstance().getImplementation();
+            odmg = PersistenceSupportFactory.getDefaultPersistenceSupport().getImplementation();
         } catch (ExcepcaoPersistencia e1) {
             e1.printStackTrace();
         }
