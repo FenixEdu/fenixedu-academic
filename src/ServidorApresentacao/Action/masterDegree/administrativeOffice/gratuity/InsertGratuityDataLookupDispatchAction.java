@@ -134,10 +134,6 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 		Collections.sort(infoPaymentPhases, new BeanComparator("endDate"));
 
 		String[] phasesToRemove = (String[]) gratuityForm.get("removedPhases");
-		//		for (int i = 0; i < phasesToRemove.length; i++)
-		//		{
-		//			System.out.println(phasesToRemove[i]);
-		//		}
 
 		removePhasesFromList(phasesToRemove, infoPaymentPhases);
 		gratuityForm.set("removedPhases", new String[] {
@@ -192,11 +188,6 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 
 		InfoGratuityValues infoGratuityValues = fillGratuity(gratuityForm);
 
-		System.out.println(infoGratuityValues.toString());
-		if (infoGratuityValues.getInfoPaymentPhases() != null)
-		{
-			System.out.println(infoGratuityValues.getInfoPaymentPhases().toString());
-		}
 		return mapping.findForward("insertGratuityData");
 	}
 
@@ -243,6 +234,18 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 		if (actionForm.get("partialPayment") != null
 			&& ((Boolean) actionForm.get("partialPayment")).equals(Boolean.TRUE))
 		{
+			// collect payment phases
+			String[] paymentPhases = (String[]) actionForm.get("paymentPhases");
+			List infoPaymentPhases = new ArrayList();
+			for (int i = 0; i < paymentPhases.length; i = i + 3)
+			{
+				fillPaymentPhasesList(
+					paymentPhases[i],
+					paymentPhases[i + 1],
+					paymentPhases[i + 2],
+					infoPaymentPhases);
+			}
+
 			if (actionForm.get("registrationPayment") != null
 				&& ((Boolean) actionForm.get("registrationPayment")).equals(Boolean.TRUE))
 			{
@@ -265,21 +268,9 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 							"/"));
 				}
 				infoPaymentPhase.setValue(Double.valueOf((String) actionForm.get("registrationValue")));
-
-				String[] paymentPhases = (String[]) actionForm.get("paymentPhases");
-
-				List infoPaymentPhases = new ArrayList();
-				for (int i = 0; i < paymentPhases.length; i = i + 3)
-				{
-					fillPaymentPhasesList(
-						paymentPhases[i],
-						paymentPhases[i + 1],
-						paymentPhases[i + 2],
-						infoPaymentPhases);
-				}
 				infoPaymentPhases.add(infoPaymentPhase);
-
 			}
+			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
 		}
 
 		return infoGratuityValues;

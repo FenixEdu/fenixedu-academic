@@ -23,7 +23,6 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGratuityValues;
@@ -212,18 +211,11 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 
 		String executionYear = (String) gratuityForm.get("executionYear");
 		String degree = (String) gratuityForm.get("degree");
-		System.out.println(degree);
 		Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
-		System.out.println(degreeId);
 		String degreeName = degree.substring(0, degree.indexOf("#"));
-		System.out.println(degreeName);
-//		String degreeCurricularPlan = degree.substring(degree.indexOf("-") + 1, degree.indexOf("#"));
-//		System.out.println(degreeCurricularPlan);
+		gratuityForm.set("degree", degreeName);
 		request.setAttribute("degree", degreeName);
-		gratuityForm.set("degree",degreeName);
 		request.setAttribute("executionYear", executionYear);
-//		request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-
 
 		InfoGratuityValues infoGratuityValues = null;
 		Object args[] = { degreeId };
@@ -243,18 +235,17 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		if (infoGratuityValues == null)
 		{
 			infoGratuityValues = new InfoGratuityValues();
-/*			InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-			infoExecutionYear.setYear(executionYear);
-			InfoDegree infoDegree = new InfoDegree();
-			infoDegree.setNome(degreeName);
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-			infoDegreeCurricularPlan.setName(degreeCurricularPlan);
-			infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-			InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-			infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-			infoGratuityValues.setInfoExecutionDegree(infoExecutionDegree);*/
+			/*
+			 * InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+			 * infoExecutionYear.setYear(executionYear); InfoDegree infoDegree = new InfoDegree();
+			 * infoDegree.setNome(degreeName); InfoDegreeCurricularPlan infoDegreeCurricularPlan = new
+			 * InfoDegreeCurricularPlan(); infoDegreeCurricularPlan.setName(degreeCurricularPlan);
+			 * infoDegreeCurricularPlan.setInfoDegree(infoDegree); InfoExecutionDegree
+			 * infoExecutionDegree = new InfoExecutionDegree();
+			 * infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+			 * infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+			 *  
+			 */
 		}
 		fillForm(gratuityForm, infoGratuityValues);
 		request.setAttribute("infoPaymentPhases", infoGratuityValues.getInfoPaymentPhases());
