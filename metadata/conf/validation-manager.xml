@@ -3,7 +3,7 @@
 <form-validation>
     <formset>
     	<!--validation to the form to insert a Degree-->
-    <form name="insertDegreeForm">
+    <form name="degreeForm">
       <field property="name" depends="required" page="1" >
         <arg0 key="message.manager.name" resource="true"/>
       </field>

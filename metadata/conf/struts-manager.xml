@@ -9,7 +9,7 @@
 		<!-- ========== Form Bean Definitions ================================== -->
 		<form-beans type="org.apache.struts.action.ActionFormBean">
 	 
-		<form-bean name="deleteDegreesForm"
+		<form-bean name="deleteForm"
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 					dynamic="true">  	      
 				<form-property name="internalIds" type="java.lang.Integer[]" />
@@ -24,7 +24,7 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
 
-		<form-bean name="readDegreeForm"
+		<form-bean name="readForm"
 					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 					dynamic="true">        
 				<form-property name="idInternal" type="java.lang.Integer" />
@@ -73,7 +73,7 @@
       
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
-      	      name="readDegreeForm"
+      	      name="readForm"
               input="/readDegreesInput.do"
               scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
@@ -88,7 +88,7 @@
      <!-- Action for inserting a degree -->
 	<action
 		path="/insertDegree"
-		name="insertDegreeForm"
+		name="degreeForm"
 		input="/insertDegreeInput.do"
 		parameter="method"
 		scope="request"
@@ -101,7 +101,7 @@
 	<!-- Action for deleting degrees --> 
       <action 
       		 path="/deleteDegrees"
-      		 name="deleteDegreesForm"
+      		 name="deleteForm"
       		 input="/readDegreesInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
@@ -111,7 +111,7 @@
       <!-- Action for editing a degree -->
 	<action
 		path="/editDegree"
-		name="insertDegreeForm"
+		name="degreeForm"
 		input="/insertDegreeInput.do"
 		parameter="method"
 		scope="request"
@@ -123,7 +123,7 @@
      
      <!-- Action for reading all degree curricular plans  -->
       <action path="/readDegreeCurricularPlans"
-      		 name="readDegreeForm"
+      		 name="readForm"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlansAction">
       	  <forward name="readDegreeCurricularPlans" path="df.page.read-degreeCurricularPlans"/>      	      
