@@ -26,6 +26,7 @@ import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.PeriodToApplyRestriction;
 
 /**
  * @author Tânia Pousão
@@ -67,19 +68,18 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
             IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
             if (className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName().substring(
                     RestrictionByNumberOfDoneCurricularCourses.class.getName().lastIndexOf(".") + 1))) {
-                IRestrictionByNumberOfCurricularCourses restrictionByNumberOfCurricularCourses = new RestrictionByNumberOfDoneCurricularCourses();
-                restrictionByNumberOfCurricularCourses.setNumberOfCurricularCourses(number);
-                restrictionByNumberOfCurricularCourses.setPrecedence(precedence);
+                IRestrictionByNumberOfCurricularCourses restriction = new RestrictionByNumberOfDoneCurricularCourses();
+                restriction.setNumberOfCurricularCourses(number);
+                restriction.setPrecedence(precedence);
                 
-                persistentRestriction.lockWrite(restrictionByNumberOfCurricularCourses);
+                persistentRestriction.lockWrite(restriction);
                 
             } else if (className.equals(RestrictionPeriodToApply.class.getName().substring(
                     RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1))) {
                 IRestrictionPeriodToApply restrictionPeriodToApply = new RestrictionPeriodToApply();
                 restrictionPeriodToApply.setPrecedence(precedence);
-                //restrictionPeriodToApply.setPeriodToApplyRestriction(new PeriodToApplyRestriction(number.intValue()));
-                             
-                
+                restrictionPeriodToApply.setPeriodToApplyRestriction(PeriodToApplyRestriction.getEnum(number.intValue()));
+                                             
                 persistentRestriction.lockWrite(restrictionPeriodToApply);
                 
             } else if (className.equals(RestrictionDoneCurricularCourse.class.getName().substring(

@@ -21,11 +21,14 @@
 	<html:hidden property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getAttribute("degreeCurricularPlanId").toString() %>" />
 			
-	<b><bean:message key="label.manager.numberOfDoneCurricularCourses" />:</b>&nbsp;<html:text property="number" />	
+	<b><bean:message key="label.manager.periodToApplyRestriction" />:</b>&nbsp;
+	<html:select property="number" >	
+		<html:options collection="periodToApplyList" labelProperty="name" property="value"/>
+	</html:select>
 	<p />
 	<table>
 		<tr>
-			<th colspan="2" align="center"><bean:message key="label.manager.curricularCourseToAddPrecedence" /></th>
+			<th colspan="2"><bean:message key="label.manager.curricularCourseToAddPrecedence" /></th>
 		</tr>
 		<tr>
 			<td colspan="4">&nbsp;</td>

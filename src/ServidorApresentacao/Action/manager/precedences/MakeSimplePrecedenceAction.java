@@ -29,6 +29,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.PeriodToApplyRestriction;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -92,6 +93,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
             return mapping.findForward("insertRestrictionByNumber");
         } else if (className.equals(RestrictionPeriodToApply.class.getName().substring(
                 RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1))) {
+            request.setAttribute("periodToApplyList", PeriodToApplyRestriction.getEnumList());
             return mapping.findForward("insertRestrictionByPeriodToApply");
         } else if ((className.equals(RestrictionDoneCurricularCourse.class.getName().substring(
                 RestrictionDoneCurricularCourse.class.getName().lastIndexOf(".") + 1)))
@@ -147,7 +149,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 			errors.add("impossibleInsertPrecedence", new ActionError("error.manager.impossible.insertPrecedence"));
 		}        
         
-        return mapping.findForward("insertRestrictionConfirmation");
+        return mapping.findForward("sucess");
     }
 }
 

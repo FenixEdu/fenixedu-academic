@@ -320,10 +320,6 @@
 		<put name="body" value="/manager/precedences/insertRestrictionByPeriodToApply.jsp"/>
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
 	</definition>
-	<definition name="df.page.manage.precedences.insertRestrictionConfirmation" extends="definition.manager.masterPage">
-		<put name="body" value="/manager/precedences/insertRestrictionConfirmation.jsp"/>
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp"/>
-	</definition>
     
     <!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->
 	<definition name="viewCurricularCourseGroups" extends="definition.manager.masterPage" >
