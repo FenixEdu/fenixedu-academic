@@ -4,13 +4,19 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonRole;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.PersonRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,9 +32,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class RemoveProjectAccess implements IService {
 
-    public RemoveProjectAccess() {
-    }
-
     public void run(IUserView userView, String personUsername, Integer projectCode) throws ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
@@ -36,10 +39,16 @@ public class RemoveProjectAccess implements IService {
         if (persistentProjectAccess.countByPerson(person) == 1) {
             IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
             if (persistentSuportOracle.getIPersistentProject().countUserProject(getUserNumber(sp, person)) == 0) {
-                IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
-                role.setRoleType(RoleType.PROJECTS_MANAGER);
-                IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
-                sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+                sp.getIPessoaPersistente().simpleLockWrite(person);
+
+                List oldRolesList = (List) person.getPersonRoles();
+                person.setPersonRoles(new ArrayList());
+                for (int i = 0; i < oldRolesList.size(); i++) {
+                    IRole role = (IRole) oldRolesList.get(i);
+                    if (!role.getRoleType().equals(RoleType.PROJECTS_MANAGER)) {
+                        person.getPersonRoles().add(role);
+                    }
+                }
             }
         }
         IProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(person.getIdInternal(), projectCode);
