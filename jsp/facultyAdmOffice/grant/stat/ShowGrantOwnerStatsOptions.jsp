@@ -3,7 +3,23 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<p><center><b><bean:message key="label.grant.owner.stats"/></b></center></p>
+<table class="infoop">
+<tr>
+	<td rowspan=5><p class="emphasis-box">i</p></td>
+	<td><b><bean:message key="label.grant.owner.stats"/></b></td>		
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr>
+	<td><bean:message key="message.grant.stat.grantcontractbycriteria.resume"/></td>
+</tr>
+<tr>
+	<td><bean:message key="message.grant.stat.grantcontractbycriteria.options"/></td>
+</tr>
+<tr>
+	<td><bean:message key="message.grant.stat.grantcontractbycriteria.optionsselected"/></td>
+</tr>
+</table><br/>
+
 
 <html:form action="/grantOwnerStats" style="display:inline">
 

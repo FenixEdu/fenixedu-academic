@@ -35,15 +35,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         DynaValidatorForm listForm = (DynaValidatorForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
-        //Read grant types for the contract
-		Object[] args = { };
-		List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);			
-		//Adding a select country line to the list (presentation reasons)
-		GrantType grantType = new GrantType();
-		grantType.setIdInternal(null);
-		grantType.setSigla("[Escolha um tipo de bolsa]");
-		grantTypeList.add(0, grantType);
-		request.setAttribute("grantTypeList", grantTypeList);
+		request.setAttribute("grantTypeList", createGrantTypeList(userView));
         
         listForm.set("filterType", new Integer(1)); 
         return mapping.findForward("select-criteria");
@@ -106,6 +98,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
                 request.setAttribute("numberOfSpans", infoSpanByCriteriaListGrantOwner
                         .getNumberOfSpans());
             } else {
+                request.setAttribute("grantTypeList", createGrantTypeList(userView));
                 return setError(request, mapping, "errors.grant.list.noResults", "select-criteria", null);
             }
             return mapping.findForward("list-byCriteria-grant-contract");
@@ -243,6 +236,18 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             infoSpanByCriteriaListGrantOwner.setGrantTypeId(grantType);
         }
         return infoSpanByCriteriaListGrantOwner;
+    }
+    
+    private List createGrantTypeList(IUserView userView) throws FenixServiceException{
+        //Read grant types for the contract
+		Object[] args = { };
+		List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);			
+		//Adding a select country line to the list (presentation reasons)
+		GrantType grantType = new GrantType();
+		grantType.setIdInternal(null);
+		grantType.setSigla("[Escolha um tipo de bolsa]");
+		grantTypeList.add(0, grantType);
+		return grantTypeList;
     }
 
 }
