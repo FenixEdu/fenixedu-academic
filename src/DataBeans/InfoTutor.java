@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import Dominio.ITutor;
+
 /**
  * @author Tânia Pousão
  *
@@ -43,5 +45,14 @@ public class InfoTutor extends InfoObject
 	public void setInfoTeacher(InfoTeacher infoTeacher)
 	{
 		this.infoTeacher = infoTeacher;
+	}
+	
+	public static InfoTutor newInfoFromDomain(ITutor tutor) {
+	    InfoTutor infoTutor = null;
+	    if(tutor != null) {
+	        infoTutor = new InfoTutor();
+	        infoTutor.copyFromDomain(tutor);
+	    }
+	    return infoTutor;
 	}
 }

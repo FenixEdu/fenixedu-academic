@@ -5,7 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
-import DataBeans.util.Cloner;
+import DataBeans.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
+import DataBeans.InfoCurricularCourseWithInfoDegree;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -67,19 +68,25 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
                                 curricularCourse,
                                 executionCourse.getExecutionPeriod());
 
-                InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-                infoCurricularCourse = Cloner
-                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                //CLONER
+                //InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+                //infoCurricularCourse = Cloner
+                //        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes(new ArrayList());
 
                 Iterator scopeIterator = curricularCourseScopes.iterator();
                 while (scopeIterator.hasNext()) {
-                    infoCurricularCourse
-                            .getInfoScopes()
-                            .add(
-                                    Cloner
-                                            .copyICurricularCourseScope2InfoCurricularCourseScope(((ICurricularCourseScope) scopeIterator
-                                                    .next())));
+                    //CLONER
+                    //infoCurricularCourse
+                    //        .getInfoScopes()
+                    //        .add(
+                    //                Cloner
+                    //                        .copyICurricularCourseScope2InfoCurricularCourseScope(((ICurricularCourseScope) scopeIterator
+                    //                                .next())));
+                    infoCurricularCourse.getInfoScopes().add(
+                            InfoCurricularCourseScopeWithBranchAndSemesterAndYear
+                                    .newInfoFromDomain((ICurricularCourseScope) scopeIterator.next()));
                 }
                 infoCurricularCourses.add(infoCurricularCourse);
             }

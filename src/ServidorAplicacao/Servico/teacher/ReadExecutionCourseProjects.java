@@ -79,6 +79,7 @@ public class ReadExecutionCourseProjects implements IServico {
                 while (iterator.hasNext()) {
                     IGroupProperties groupProperties = (IGroupProperties) iterator
                             .next();
+                    //CLONER
                     //infoGroupPropertiesList
                     //.add(Cloner
                     //.copyIGroupProperties2InfoGroupProperties(groupProperties));
