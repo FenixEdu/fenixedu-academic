@@ -19,11 +19,12 @@
 		 
 		 <!-- examEnrollment form -->
 		   <form-bean name="examEnrollmentForm"
-			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">        
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">        
 			<form-property name="enrollmentBeginDayFormatted" type="java.lang.String" />
 			<form-property name="enrollmentBeginTimeFormatted" type="java.lang.String" />
 			<form-property name="enrollmentEndDayFormatted" type="java.lang.String" />
 			<form-property name="enrollmentEndTimeFormatted" type="java.lang.String" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
 		 </form-bean>    	
 		 
 		 <!--curriculum forms --> 
@@ -147,7 +148,7 @@
 		<form-bean name="roomDistributionForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">
-			<form-property name="examCode"  type="java.lang.String"/>
+			<form-property name="evaluationCode"  type="java.lang.String"/>
 			<form-property name="objectCode"  type="java.lang.String"/>
 			<form-property name="rooms"  type="java.lang.Integer[]"/>			
 			<form-property name="method" type="java.lang.String"></form-property>       
@@ -167,6 +168,10 @@
 			<form-property name="year" type="java.lang.Integer" />
 			<form-property name="month" type="java.lang.Integer" />
 			<form-property name="day" type="java.lang.Integer" />				        
+		</form-bean>
+		<form-bean name="voidForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+        	dynamic="true">
 		</form-bean>	
 
     </form-beans>
@@ -507,15 +512,28 @@
 	
 	
 	<action 
+		path="/examEnrollmentManager"
 		input="/viewEvaluation.do?method=viewEvaluation"
-		name="examEnrollmentForm"
+		name="voidForm"
+		parameter="method"
+		type="ServidorApresentacao.Action.teacher.ExamEnrollmentDispatchAction"
+		scope="request"
+		validate="false"
+        >               
+       <forward name="viewEvaluationEnrolmentManagementMenu" path="/viewEvaluationEnrolmentManagementMenu.jsp"/>
+       
+	</action>
+	<action 
 		path="/examEnrollmentEditionManager"
+		input="/examEnrollmentEditionManager.do?method=prepareEditEvaluationEnrolment&amp;page=0"
+		name="examEnrollmentForm"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.ExamEnrollmentDispatchAction"
 		validate="true"
-        >       
-       <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>
+        >         
+       <forward name="editEvaluationEnrolmentPeriod" path="/editEvaluationEnrolmentPeriod.jsp"/>
+       <forward name="viewEvaluationEnrolmentManagementMenu" path="/viewEvaluationEnrolmentManagementMenu.jsp"/>              
 	</action>
 	
 	
@@ -579,6 +597,7 @@
 	</action>	
 	
 	<action path="/distributeStudentsByRoom"
+		input="/examEnrollmentManager.do?method=prepareEnrolmentManagement"
 		name="roomDistributionForm"
 		scope="request"
 		parameter="method"

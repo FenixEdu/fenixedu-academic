@@ -54,7 +54,6 @@
 	    		
 	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
 	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />
-	<%--    		<bean:define id="studentGrade" name="enrolmentEvaluation" property="grade" />  --%>
 	    		
 	    		<tr>
 					<td class="listClasses">

@@ -7,10 +7,9 @@
 	<html:hidden property="page" value="1" />
 	<html:hidden property="method" value="distribute" />	
 	<html:hidden property="objectCode"/>
-	<html:hidden property="examCode"/>
+	<html:hidden property="evaluationCode"/>
 
-    <b>Ordem pela qual pretende ocupar as salas:</b> <br/>
-    <i>Por omissao, as salas encontram-se por ordem decrescente de capacidade para exame.</i>
+	<bean:message key="label.distribution.information"/>
     <br />
     <br />    
 	<table>

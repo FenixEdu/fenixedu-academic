@@ -17,7 +17,6 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentAnnouncement;
-import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -30,7 +29,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class EditAnnouncementService implements IServico {
 	ISuportePersistente persistentSupport = null;
 	private IPersistentSite persistentSite = null;
-	private IPersistentSection persistentSection = null;
 	private IPersistentAnnouncement persistentAnnouncement = null;
 	private IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 	private static EditAnnouncementService service = new EditAnnouncementService();
@@ -109,12 +107,6 @@ public class EditAnnouncementService implements IServico {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
 
-//		try {
-//			persistentAnnouncement.lockWrite(iAnnouncement);
-//
-//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-//			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-//		}
 		Timestamp lastModificationDate = new Timestamp(new Date(System.currentTimeMillis()).getTime());
 		iAnnouncement.setTitle(announcementNewTitle);
 		iAnnouncement.setLastModifiedDate(lastModificationDate);

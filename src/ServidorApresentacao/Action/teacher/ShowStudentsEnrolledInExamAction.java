@@ -87,6 +87,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction{
 		
 		request.setAttribute("siteView",siteView);
 		request.setAttribute("objectCode",executionCourseCode);
+		request.setAttribute("evaluationCode",examCode);
 		return mapping.findForward("showStudents");
 		
 		}

@@ -377,7 +377,7 @@
       <reference-descriptor
          name="aluno"
          class-ref="Dominio.Student"
-         proxy="true"
+         proxy="false"
       >
          <foreignkey field-id-ref="2"/>
       </reference-descriptor> 
