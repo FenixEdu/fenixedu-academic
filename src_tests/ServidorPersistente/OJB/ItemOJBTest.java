@@ -23,14 +23,13 @@ import ServidorPersistente.ISuportePersistente;
 
 /**
  *
- * @authors ss AINDA NAO ESTA PRONTO!
+ * @authors asnr e scpo
  */
+
 public class ItemOJBTest extends TestCaseOJB {
 	
 
 	ISuportePersistente persistentSupport=null;
-	//IPersistentExecutionYear persistentExecutionYear=null;
-	//IPersistentExecutionPeriod persistentExecutionPeriod=null;
 	IDisciplinaExecucaoPersistente persistentExecutionCourse=null;
 	IPersistentSite persistentSite=null;
 	IPersistentSection persistentSection=null;
@@ -56,33 +55,19 @@ public class ItemOJBTest extends TestCaseOJB {
 	try {
 		
 		persistentSupport = SuportePersistenteOJB.getInstance();		
-		//persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-		//persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 		persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 		persistentSite = persistentSupport.getIPersistentSite();
 		persistentSection = persistentSupport.getIPersistentSection();
 		persistentItem = persistentSupport.getIPersistentItem();
 		
 		persistentSupport.iniciarTransaccao();
-		//IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-			
-		//IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º semestre",executionYear);
-		//System.out.println("EXECUTION PERIOD"+executionPeriod.getName());
-
-		IDisciplinaExecucao executionCourse1 = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
-		System.out.println("DISCIPLINA EXECUCAO_TFCI "+executionCourse1.toString());
 		
 		IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","LEEC");
-		System.out.println("DISCIPLINA EXECUCAO_PO "+executionCourse.toString());
 		
-		ISite site1 = persistentSite.readByExecutionCourse(executionCourse1);
-		System.out.println("SITE_TFCI"+site1.getExecutionCourse());
-		
-	
 		ISite site = persistentSite.readByExecutionCourse(executionCourse);
-		System.out.println("SITE_PO"+site.getExecutionCourse());
 		
-		//section = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1dePO");
+		section = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1dePO");
+		
 		persistentSupport.confirmarTransaccao();
 	  	
 	
@@ -114,7 +99,7 @@ public class ItemOJBTest extends TestCaseOJB {
 	  	assertEquals("testReadBySectionAndName:read existing item",item.getInformation(),"item1 da seccao1dePO");
 		assertEquals("testReadBySectionAndName:read existing item",item.getName(),"Item1");
 		assertEquals("testReadBySectionAndName:read existing item",item.getItemOrder(),new Integer(0));
-		assertEquals("testReadBySectionAndName:read existing item",item.getUrgent(),new Integer(1));
+		assertEquals("testReadBySectionAndName:read existing item",item.getUrgent(),new Boolean (true));
 		
 	  	// read unexisting Item
 	  	try {
