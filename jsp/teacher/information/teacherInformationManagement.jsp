@@ -183,45 +183,29 @@
 		</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">7</span>
-			<bean:message key="message.teacherInformation.ownPublications" /></p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
-			<tr> <!-- VER ------------- -->
-				<%--<td><html:textarea name="" property=""/></td> --%>
-			</tr>
-		</table>
-		<%--<table> <!-- VER: Passar a usar a tabela de publicações -->
-			<logic:iterate id="" name="" property="">
-				<tr>
-					<td><bean:write name="" property="" /></td>
-				</tr>
-			</logic:iterate>
-		</table>--%>
-	<%--<div class="gen-button"> <!-- VER ESTE LINK -->
-			<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+			<bean:message key="message.teacherInformation.ownPublications" />
+		</p>
+		<div class="gen-button">
+			<html:link page="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0">
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
-		</div>--%>
+		</div>
+		<br />	
+			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldPublications">
+				<bean:write name="infoOldPublication" property="publication" />
+			</logic:iterate>
 		<br />
 		<p class="infoop"><span class="emphasis-box">8</span>
 			<bean:message key="message.teacherInformation.cientificPublications" /></p>
-		<%--<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
-			<tr>
-				<td><html:textarea name="" property=""/></td> 
-			</tr>
-		</table>--%>
-		<!-- VER ACTUALIZAR AS PUBLICACOES -->
-	<%--<table>
-			<logic:iterate id="" name="" property="">
-			<tr>
-				<td><bean:write name="" property="" /></td>
-			</tr>
+		<div class="gen-button">
+			<html:link page="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0">
+				<bean:message key="label.teacherInformation.manage" />
+			</html:link>
+		</div>
+		<br />	
+			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldPublications">
+				<bean:write name="infoOldPublication" property="publication" />
 			</logic:iterate>
-		</table>--%>
-		<%--<div class="gen-button">
-				<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-					<bean:message key="label.teacherInformation.manage" />
-				</html:link>
-			</div>--%>
 		<br />
 		<p class="infoop"><span class="emphasis-box">9</span>
 			<bean:message key="message.teacherInformation.lectureCourses" />
