@@ -28,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
+import Dominio.Frequenta;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -252,8 +253,14 @@ public class UpdateStudentEnrolments
 			IFrequenta attend = updateAttend(curricularCourse, enrolment, mwEnrolment, sp);
 			if (attend == null)
 			{
+				// NOTE [DAVID]: This kind of report is only pesented the first time the migration process is executed.
+				// This happens because although this is a situation of error report, this kind of error doesn't
+				// forbid the enrolment to be created in the Fenix DB. Thus the second time the process is executed, the
+				// enrolment for this particular CurricularCourse will have already been created in the DB so this
+				// CurricularCourse is no longer considered for this execution of the process.
 				ReportEnrolment.addAttendNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
-				continue;
+				createAttend(curricularCourse, enrolment, mwEnrolment, sp);
+//				continue;
 			}
 		}
 	}
@@ -277,6 +284,11 @@ public class UpdateStudentEnrolments
 		IFrequenta attend = null;
 		if (executionCourse == null)
 		{
+			// NOTE [DAVID]: This kind of report is only pesented the first time the migration process is executed.
+			// This happens because although this is a situation of error report, this kind of error doesn't
+			// forbid the enrolment to be created in the Fenix DB. Thus the second time the process is executed, the
+			// enrolment for this particular CurricularCourse will have already been created in the DB so this
+			// CurricularCourse is no longer considered for this execution of the process.
 			ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 		} else
 		{
@@ -839,6 +851,27 @@ public class UpdateStudentEnrolments
 		}
 
 		return branch;
+	}
+
+	private static void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MwEnrolment mwEnrolment, SuportePersistenteOJB sp) throws ExcepcaoPersistencia
+	{
+		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+
+		if (executionCourse == null)
+		{
+			// NOTE [DAVID]: This error report can be added here even if it was added before in the updateAttend() method
+			// because this addition wont repeat same occurrences.
+			ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
+		} else
+		{
+			IStudent student = sp.getIPersistentStudent().readByNumero(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			IFrequenta attend = new Frequenta();
+			sp.getIFrequentaPersistente().simpleLockWrite(attend);
+			attend.setAluno(student);
+			attend.setDisciplinaExecucao(executionCourse);
+			attend.setEnrolment(enrolment);
+			ReportEnrolment.addCreatedAttend(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString(), executionCourse);
+		}
 	}
 
 }

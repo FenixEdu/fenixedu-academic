@@ -9,6 +9,7 @@ import java.util.Map;
 
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
+import Dominio.IDisciplinaExecucao;
 
 /**
  * @author David Santos
@@ -23,6 +24,7 @@ public class ReportEnrolment
 	private static HashMap notFoundAttends = new HashMap();
 
 	private static HashMap replicatedCurricularCourses = new HashMap();
+	private static HashMap createdAttends = new HashMap();
 
 	/**
 	 * @param courseCode
@@ -147,6 +149,10 @@ public class ReportEnrolment
 		notFoundAttends.put(key.toString(), studentList);
 	}
 
+// ------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * @param courseCode
 	 * @param curricularCourses
@@ -177,6 +183,30 @@ public class ReportEnrolment
 		
 		replicatedCurricularCourses.put(key.toString(), degreeList);
 	}
+
+	public static void addCreatedAttend(String courseCode, String degreeCode, String studentNumber, IDisciplinaExecucao executionCourse)
+	{
+		StringBuffer key = new StringBuffer(degreeCode).append(" - ").append(studentNumber);
+		StringBuffer courseName = new StringBuffer(courseCode).append(" - ").append(executionCourse.getNome());
+
+		List courseList = (List) createdAttends.get(key.toString());
+		if (courseList == null)
+		{
+			courseList = new ArrayList();
+			courseList.add(courseName);
+		} else
+		{
+			if (!courseList.contains(courseName)) {
+				courseList.add(courseName);
+			}
+		}
+		
+		createdAttends.put(key.toString(), courseList);
+	}
+
+//	------------------------------------------------------------------------------------------------------------------------------
+//	------------------------------------------------------------------------------------------------------------------------------
+//	------------------------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * @param out
@@ -248,8 +278,7 @@ public class ReportEnrolment
 			out.println("\t\t\tAlunos = "+ studentList.toString());
 		}
 		
-
-
+//		------------------------------------------------------------------------------------------------------------------------------
 
 		out.println("\n\tDISCIPLINAS REPLICADAS:");
 		Iterator iterator6 = replicatedCurricularCourses.entrySet().iterator();
@@ -267,6 +296,20 @@ public class ReportEnrolment
 			}
 			out.println("");
 		}
+		
+		out.println("\n\tATTENDS CRIADOS:");
+		Iterator iterator8 = createdAttends.entrySet().iterator();
+		int total = 0;
+		while (iterator8.hasNext())
+		{
+			Map.Entry mapEntry = (Map.Entry) iterator8.next();
+			String key = (String) mapEntry.getKey();
+			out.println("\t\t Curso - Aluno = " + key);
+			List courseList = (List) mapEntry.getValue();
+			out.println("\t\t\tDisciplinas = "+ courseList.toString());
+			total = total + courseList.size();
+		}
+		out.println("\t\t\tTotal Attends criados: " + total);
 		
 		out.close();
 	}

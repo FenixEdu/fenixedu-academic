@@ -509,7 +509,7 @@
 	<field-descriptor name="average" column="AVERAGE" jdbc-type="FLOAT"/>
 </class-descriptor>
 
-<class-descriptor class="middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree" table="MW_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE">
+<class-descriptor class="middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree" table="mw_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE">
   <field-descriptor
     name="idInternal"
     column="idInternal"
