@@ -8,6 +8,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
 import Dominio.finalDegreeWork.Group;
 import Dominio.finalDegreeWork.GroupStudent;
 import Dominio.finalDegreeWork.IGroup;
@@ -15,10 +16,13 @@ import Dominio.finalDegreeWork.IGroupStudent;
 import Dominio.finalDegreeWork.IScheduleing;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoCurso;
 
 /**
  * @author Luis Cruz
@@ -38,6 +42,9 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+        IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
+            persistentSupport.getIStudentCurricularPlanPersistente();
+        IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
         IStudent student = persistentStudent.readByUsername(username);
@@ -58,10 +65,24 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService
             {
                 throw new MaximumNumberOfStudentsUndefinedException();
             }
+            else if (scheduleing.getMinimumNumberOfCompletedCourses() == null)
+            {
+                throw new MinimumNumberOfCompletedCoursesUndefinedException();
+            }
             else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group.getGroupStudents().size())
             {
                 throw new MaximumNumberOfStudentsReachedException(
                     scheduleing.getMaximumNumberOfStudents().toString());
+            }
+            else
+            {
+                IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente.readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+                
+                if (studentCurricularPlan != null && studentCurricularPlan.getCompletedCourses().intValue() < scheduleing.getMinimumNumberOfCompletedCourses().intValue())
+                {
+                    throw new MinimumNumberOfCompletedCoursesNotReachedException(
+                            scheduleing.getMinimumNumberOfCompletedCourses().toString());
+                }
             }
 
             IGroupStudent groupStudent = new GroupStudent();
@@ -125,6 +146,64 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService
         }
 
         public MaximumNumberOfStudentsReachedException(String message, Throwable cause)
+        {
+            super(message, cause);
+        }
+    }
+
+    public class MinimumNumberOfCompletedCoursesUndefinedException extends FenixServiceException
+    {
+
+        public MinimumNumberOfCompletedCoursesUndefinedException()
+        {
+            super();
+        }
+
+        public MinimumNumberOfCompletedCoursesUndefinedException(int errorType)
+        {
+            super(errorType);
+        }
+
+        public MinimumNumberOfCompletedCoursesUndefinedException(String s)
+        {
+            super(s);
+        }
+
+        public MinimumNumberOfCompletedCoursesUndefinedException(Throwable cause)
+        {
+            super(cause);
+        }
+
+        public MinimumNumberOfCompletedCoursesUndefinedException(String message, Throwable cause)
+        {
+            super(message, cause);
+        }
+    }
+
+    public class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException
+    {
+
+        public MinimumNumberOfCompletedCoursesNotReachedException()
+        {
+            super();
+        }
+
+        public MinimumNumberOfCompletedCoursesNotReachedException(int errorType)
+        {
+            super(errorType);
+        }
+
+        public MinimumNumberOfCompletedCoursesNotReachedException(String s)
+        {
+            super(s);
+        }
+
+        public MinimumNumberOfCompletedCoursesNotReachedException(Throwable cause)
+        {
+            super(cause);
+        }
+
+        public MinimumNumberOfCompletedCoursesNotReachedException(String message, Throwable cause)
         {
             super(message, cause);
         }

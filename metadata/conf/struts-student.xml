@@ -637,6 +637,12 @@
 			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MinimumNumberOfStudentsNotReachedException"
 						key="error.message.MinimumNumberOfStudentsNotReachedException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumNumberOfCompletedCoursesUndefinedException"
+						key="error.message.InsufficientCompletedCoursesException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumNumberOfCompletedCoursesNotReachedException"
+						key="error.message.InsufficientCompletedCoursesException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="showCandidacyForm" path="df.page.finalDegreeWork.candidacy"/>
 			<forward name="showSelectProposalsForm" path="df.page.finalDegreeWork.selectProposals"/>
 		</action>

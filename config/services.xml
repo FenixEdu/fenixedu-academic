@@ -6498,4 +6498,111 @@
         <filterChains>
         </filterChains>
     </service>
+<service>
+        <name>ReadFinalDegreeWorkStudentGroupByUsername</name>
+        <implementationClass>ServidorAplicacao.Servico.student.ReadFinalDegreeWorkStudentGroupByUsername</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>AddStudentToFinalDegreeWorkStudentGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>RemoveStudentFromFinalDegreeWorkStudentGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.student.RemoveStudentFromFinalDegreeWorkStudentGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAvailableFinalDegreeWorkProposalHeadersForGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.student.ReadAvailableFinalDegreeWorkProposalHeadersForGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>AddFinalDegreeWorkProposalCandidacyForGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>RemoveProposalFromFinalDegreeWorkStudentGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.student.RemoveProposalFromFinalDegreeWorkStudentGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy</name>
+        <implementationClass>ServidorAplicacao.Servico.student.ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>CheckCandidacyConditionsForFinalDegreeWork</name>
+        <implementationClass>ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DefineFinalDegreeWorkCandidacyRequirements</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.DefineFinalDegreeWorkCandidacyRequirements</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>TeacherAttributeFinalDegreeWork</name>
+    	<implementationClass>ServidorAplicacao.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>    	
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>    	
+    </service>
+    <service>
+        <name>ConfirmAttributionOfFinalDegreeWork</name>
+        <implementationClass>ServidorAplicacao.Servico.student.ConfirmAttributionOfFinalDegreeWork</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>AttributeFinalDegreeWork</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.AttributeFinalDegreeWork</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 </serviceDefinitions>

@@ -4,12 +4,12 @@
  */
 package ServidorAplicacao.Servico.student;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudent;
 import Dominio.finalDegreeWork.Group;
+import Dominio.finalDegreeWork.GroupStudent;
 import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupStudent;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -52,8 +52,15 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService
                 throw new GroupProposalCandidaciesExistException();
             }
 
-            persistentFinalDegreeWork.simpleLockWrite(group);
-            CollectionUtils.filter(group.getGroupStudents(), new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID));
+            PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
+            for (int i = 0; i < group.getGroupStudents().size(); i++)
+            {
+                IGroupStudent groupStudent = (IGroupStudent) group.getGroupStudents().get(i);
+                if (!predicate.evaluate(groupStudent))
+                {
+                    persistentFinalDegreeWork.deleteByOID(GroupStudent.class, groupStudent.getIdInternal());
+                }
+            }
             return true;
         }
     }
