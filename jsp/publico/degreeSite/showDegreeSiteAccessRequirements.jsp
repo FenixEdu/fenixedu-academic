@@ -11,23 +11,23 @@
 
 	<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino</html:link> &gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
-			<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
+			<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
 		</html:link>
 		 &gt;&nbsp;<bean:message key="label.accessRequirements"/>
 	</div>
 	
 	<!-- PÁGINA EM INGLÊS -->
-	<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+	<!-- <div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div> -->
 	<div class="clear"></div> 
 	
-	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
-	<h2><span class="greytxt">&nbsp;<bean:message key="label.accessRequirements"/></span></h2>
+	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
+	<h2><span class="greytxt"><bean:message key="label.accessRequirements"/></span></h2>
   <br>
 
 	<!-- NOME(S) DA PROVA(S) DE INGRESSO -->
-	<logic:notEmpty name="infoDegreeInfo" property="testIngression">
-  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.testIngression" /></h2>  
-  <p><bean:write name="infoDegreeInfo" property="testIngression" filter="false" /></p>
+  <logic:notEmpty name="infoDegreeInfo" property="testIngression">
+  	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.testIngression" /></h2>  
+	<p><bean:write name="infoDegreeInfo" property="testIngression" filter="false" /></p>
   </logic:notEmpty>
   
   <!-- VAGAS -->
@@ -69,7 +69,3 @@
 	</logic:notEmpty>
 
 </logic:present>
-<%--
-<logic:notPresent name="infoDegreeInfo">
-	<h1><p><bean:message key="error.impossibleDegreeSite" /></p></h1>
-</logic:notPresent> --%>
