@@ -65,7 +65,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 	{
 		try
 		{
-			System.out.println("-->hasProvilege");
 			List roles = getRoleList((List) id.getRoles());
 
 			ISuportePersistente sp = null;
@@ -77,13 +76,11 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				IStudent student = readStudent(id, sp);
 				if (student == null)
 				{
-					System.out.println("-->student false");
 					return false;
 				}
 
 				if (!verifyStudentLEEC(arguments, sp) || verifyStudentWithTutor(student, sp))
 				{
-					System.out.println("-->student nao é da leec");
 					return false;
 					
 				}
@@ -100,17 +97,14 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				//verify if the coodinator is of the LEEC degree
 				if (roles.contains(RoleType.COORDINATOR))
 				{
-					System.out.println("-->RoleType.COORDINATOR");
 					ITeacher teacher = readTeacher(id, sp);
 					if (teacher == null)
 					{
-						System.out.println("-->RoleType.COORDINATOR: false teacher");
 						return false;
 					}
 
 					if (!verifyCoordinatorLEEC(teacher, arguments, sp))
 					{
-						System.out.println("-->RoleType.COORDINATOR: false coordinator LEEC");
 						return false;
 					}
 				}
@@ -151,7 +145,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			exception.printStackTrace();
 			return false;
 		}
-		System.out.println("-->tem autorizacao");
 		return true;
 	}
 
@@ -227,7 +220,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 
 		List tutors = persistentTutor.readTeachersByStudent(student);
 
-		System.out.println("-->aluno com tutor? " + (tutors != null && tutors.size() > 0));
 		return (tutors != null && tutors.size() > 0);
 	}
 
@@ -242,7 +234,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		throws ExcepcaoPersistencia
 	{
 
-		System.out.println("-->verifyCoordinatorLEEC: args" + arguments[0]);
 		IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 		ICoordinator coordinator =
 			persistentCoordinator.readCoordinatorByTeacherAndExecutionDegreeId(
@@ -250,7 +241,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				(Integer) arguments[0]);
 		if (coordinator == null)
 		{
-			System.out.println("-->verifyCoordinatorLEEC: false coordinator");
 			return false;
 		}
 
@@ -262,8 +252,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			degreeCode = coordinator.getExecutionDegree().getCurricularPlan().getDegree().getSigla();
 		}
 
-		System.out.println("-->verifyCoordinatorLEEC: degreeCode= " + degreeCode);
-		System.out.println("-->verifyCoordinatorLEEC: " + DEGREE_LEEC_CODE.equals(degreeCode));
 		return DEGREE_LEEC_CODE.equals(degreeCode);
 	}
 

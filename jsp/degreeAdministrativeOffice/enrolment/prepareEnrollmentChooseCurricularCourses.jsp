@@ -34,7 +34,9 @@
 	<html:hidden property="studentNumber" />
 	<bean:define id="studentCurricularPlanId" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.idInternal" />
 	<html:hidden property="studentCurricularPlanId" value="<%=studentCurricularPlanId.toString()%>"/>
-	<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
+	<logic:present name="executionDegreeId">
+		<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
+	</logic:present>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
