@@ -66,6 +66,13 @@
 				<br/>
 				<br/>
 			</li>
+			<li>
+				<html:link page="/teachersInformation.do" paramId="executionDegreeId" paramName="infoExecutionDegree" paramProperty="idInternal">
+					<bean:message key="link.coordinator.teachersInformation"/>
+				</html:link>
+				<br/>
+				<br/>
+			</li>
 		</ul>
 	</logic:notEqual> 
 	

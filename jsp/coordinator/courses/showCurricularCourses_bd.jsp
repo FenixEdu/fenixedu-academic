@@ -27,6 +27,9 @@
 				<td class="listClasses-header">
 					<bean:message key="label.hours.load.total"/>				
 				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.courseInformation"/>	
+				</td>
 			</tr>
 
 			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>">
@@ -68,6 +71,11 @@
 							<logic:equal name="executionCourse" property="equalLoad" value="false">	
 								<font color="#FF0000"><bean:message key ="label.hours.load.notEqual" /></font>
 							</logic:equal>
+						</html:link>
+					</td>
+					<td class="listClasses">
+						<html:link page="/courseInformation.do?method=read" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key ="label.courseInformation.view" />
 						</html:link>
 					</td>
 				</tr>
