@@ -62,7 +62,7 @@
 		
 		<!-- Thesis Delivery Date -->
 		<tr >
-			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>S&nbsp;</th>
+			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
 			<td><bean:write name="thesisDeliveryDate"/></td>
 		</tr>
 			
