@@ -26,6 +26,7 @@ import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
@@ -42,6 +43,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IItem;
@@ -128,8 +130,29 @@ public class ExecutionCourseSiteComponentBuilder {
 				sectionIndex);
 		} else if (component instanceof InfoSiteExam) {
 			return getInfoSiteExam((InfoSiteExam) component, site);
-		}
+		}else if (component instanceof InfoSiteEvaluation) {
+		return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
+	}
 		return null;
+	}
+
+	/**
+	 * @param evaluation
+	 * @param site
+	 * @return
+	 */
+	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
+		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		List evaluations = executionCourse.getAssociatedExams();
+		List infoEvaluations = new ArrayList();
+		Iterator iter = evaluations.iterator();
+		while (iter.hasNext()){
+			IEvaluation evaluation = (IEvaluation) iter.next();
+			infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
+		}
+		System.out.println("avaliacoes: " + infoEvaluations.size());
+		component.setInfoEvaluations(infoEvaluations);
+		return component;
 	}
 
 	/**

@@ -15,11 +15,11 @@
 <li><html:link page="/announcementManagementAction.do?method=showAnnouncements" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.announcements"/></html:link></li>
 <li><html:link page="/objectivesManagerDA.do?method=viewObjectives" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.objectives"/></html:link></li>
 <li><html:link page="/programManagerDA.do?method=viewProgram" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.program"/></html:link></li>
-<li><html:link page="/viewEvaluation.do?method=viewEvaluation" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li>
+<li><html:link page="/viewEvaluationMethod.do?method=viewEvaluationMethod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluationMethod"/></html:link></li>
 <li><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.bibliography"/></html:link></li>
 <li><html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.teachers"/></html:link></li>
 <li><html:link page="/studentsByCurricularCourse.do?method=readStudents" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.students"/></html:link></li>
 <%-- <li><html:link page="/readCurricularCourseList.do?method=read" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.students"/></html:link></li> --%>
-<li><html:link page="/viewExams.do?method=viewExams" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.exams"/></html:link></li>
+<li><html:link page="/viewEvaluation.do?method=viewEvaluation" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li>
 <li><html:link page="/sectionViewer.do?method=sectionsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.sectionsManagement"/></html:link></li>
 </ul>

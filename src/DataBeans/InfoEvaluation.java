@@ -5,12 +5,12 @@ import Util.EvaluationType;
 
 
 /**
- * @author dcs-rjao
+ * @author Ângela
  *
- * 19/Mar/2003
+ * 25/6/2003
  */
 
-public class InfoEvaluation  {
+public class InfoEvaluation  extends InfoObject implements ISiteComponent{
 
 	
 	

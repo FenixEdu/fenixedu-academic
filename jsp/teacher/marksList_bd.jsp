@@ -15,10 +15,10 @@
 	<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
 
 	<bean:define id="executionCourseId" name="commonComponent" property="executionCourse.idInternal"/>
-	<bean:define id="examId" name="marksListComponent" property="infoExam.idInternal" />
+	<bean:define id="evaluationId" name="marksListComponent" property="infoEvaluation.idInternal" />
 	
 	<html:hidden property="objectCode" value="<%= executionCourseId.toString() %>" />	
-	<html:hidden property="examCode" value="<%= examId.toString() %>" />
+	<html:hidden property="evaluationCode" value="<%= evaluationId.toString() %>" />
 		
 	<html:hidden property="method" value="writeMarks" />
 
@@ -28,11 +28,11 @@
 			<td colspan="3">
 			 <h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>
 			
-			<logic:present name="marksListComponent" property="infoExam">  		
+			<logic:present name="marksListComponent" property="infoEvaluation">  		
 				<h2>
 				&nbsp;-&nbsp;				
-				<bean:write name="marksListComponent" property="infoExam.season"/>&nbsp;
-				<bean:write name="marksListComponent" property="infoExam.date"/> <i>às</i> <bean:write name="marksListComponent" property="infoExam.beginningHour"/><br />
+				<bean:write name="marksListComponent" property="infoEvaluation.season"/>&nbsp;
+				<bean:write name="marksListComponent" property="infoEvaluation.date"/> <i>às</i> <bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/><br />
 				</h2>
 		   </logic:present>
 		   </td>

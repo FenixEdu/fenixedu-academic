@@ -22,7 +22,7 @@ import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
-import DataBeans.InfoSiteExam;
+import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
 import DataBeans.InfoSiteObjectives;
@@ -419,7 +419,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	//	========================  EvaluationMethod Management  ========================
 
-	public ActionForward viewEvaluation(
+	public ActionForward viewEvaluationMethod(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -429,10 +429,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 		readSiteView(request, evaluationComponent, null, null, null);
 
-		return mapping.findForward("viewEvaluation");
+		return mapping.findForward("viewEvaluationMethod");
 	}
 
-	public ActionForward prepareEditEvaluation(
+	public ActionForward prepareEditEvaluationMethod(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -448,10 +448,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		evaluationForm.set("evaluationElements", ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElements());
 		evaluationForm.set("evaluationElementsEn", ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElementsEn());
 
-		return mapping.findForward("editEvaluation");
+		return mapping.findForward("editEvaluationMethod");
 	}
 
-	public ActionForward editEvaluation(
+	public ActionForward editEvaluationMethod(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -474,7 +474,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		return viewEvaluation(mapping, form, request, response);
+		return viewEvaluationMethod(mapping, form, request, response);
 	}
 
 	//	========================  Bibliographic References Management  ========================
@@ -748,15 +748,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		return viewTeachersByProfessorship(mapping, form, request, response);
 	}
 
-	//	========================  Exams Management  ========================
+	//	========================  Evaluation Management  ========================
 
-	public ActionForward viewExams(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward viewEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
-		ISiteComponent examsComponent = new InfoSiteExam();
-		readSiteView(request, examsComponent, null, null, null);
+		ISiteComponent evaluationComponent = new InfoSiteEvaluation();
+		readSiteView(request, evaluationComponent, null, null, null);
 
-		return mapping.findForward("viewExams");
+		return mapping.findForward("viewEvaluation");
 	}
 
 	//	========================  Sections Management  ========================

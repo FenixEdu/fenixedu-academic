@@ -133,7 +133,6 @@ public class MarkOJBTest extends TestCaseOJB {
 		System.out.println("test-2");
 		IFrequenta attend = null;
 		IStudent student = null;
-		IExam exam = null;
 		IMark mark = null;
 		ISala sala = null;
 		IExecutionPeriod executionPeriod = null;
@@ -251,7 +250,7 @@ public class MarkOJBTest extends TestCaseOJB {
 		}
 		mark =  new Mark(new Integer(0));
 		mark.setAttend(attend);
-		mark.setExam((IExam)examList.get(0));
+		mark.setEvaluation((IExam)examList.get(0));
 		mark.setMark("16");
 		mark.setPublishedMark("");
 		try {
@@ -275,7 +274,7 @@ public class MarkOJBTest extends TestCaseOJB {
 		assertEquals(markRead.getMark(),mark.getMark());
 		//assertEquals(markRead.getPublishedMark(),mark.getPublishedMark());
 		assertEquals(markRead.getAttend(),mark.getAttend());
-		assertEquals(markRead.getExam(),mark.getExam());
+		assertEquals(markRead.getEvaluation(),mark.getEvaluation());
 		
 	
 		}

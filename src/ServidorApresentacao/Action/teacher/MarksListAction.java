@@ -15,6 +15,7 @@ import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoEvaluation;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
@@ -40,10 +41,10 @@ public class MarksListAction extends DispatchAction {
 
 			Integer executionCourseCode = getFromRequest("objectCode", request);
 
-			Integer examCode = getFromRequest("examCode", request);
+			Integer evaluationCode = getFromRequest("evaluationCode", request);
 			
 			ISiteComponent commonComponent = new InfoSiteCommon();
-			Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
+			Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
 			try {
 				TeacherAdministrationSiteView siteView =
@@ -55,7 +56,7 @@ public class MarksListAction extends DispatchAction {
 				throw new FenixActionException(e);
 			}
 
-			request.setAttribute("examCode", examCode);
+			request.setAttribute("evaluationCode", evaluationCode);
 
 			return mapping.findForward("loadMarks");
 		
@@ -77,15 +78,15 @@ public class MarksListAction extends DispatchAction {
 
 		Integer executionCourseCode = (Integer) getFromRequest("objectCode", request);
 
-		Integer examCode = (Integer) getFromRequest("examCode", request);
+		Integer evaluationCode = (Integer) getFromRequest("evaluationCode", request);
 
-		Object[] args = { executionCourseCode, examCode };
+		Object[] args = { executionCourseCode, evaluationCode };
 
 		GestorServicos gestorServicos = GestorServicos.manager();
 		TeacherAdministrationSiteView siteView = null;
 
 		try {
-			siteView = (TeacherAdministrationSiteView) gestorServicos.executar(userView, "ReadStudentsAndMarksByExam", args);
+			siteView = (TeacherAdministrationSiteView) gestorServicos.executar(userView, "ReadStudentsAndMarksByEvaluation", args);
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			throw new FenixActionException(e.getMessage());
@@ -96,7 +97,7 @@ public class MarksListAction extends DispatchAction {
 
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", executionCourseCode);
-		request.setAttribute("examCode", examCode);
+		request.setAttribute("evaluationCode", evaluationCode);
 
 		return mapping.findForward("marksList");
 	}
@@ -113,13 +114,13 @@ public class MarksListAction extends DispatchAction {
 		throws Exception {
 		HttpSession session = request.getSession();
 
-		Integer examCode = getFromRequest("examCode", request);
+		Integer evaluationCode = getFromRequest("evaluationCode", request);
 
 		Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
 
 		ISiteComponent commonComponent = new InfoSiteCommon();
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object[] args = { infoExecutionCourseCode, commonComponent, null, null, null, null };
+		Object[] args = { infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 		TeacherAdministrationSiteView siteView = null;
 		try {
 			siteView =
@@ -134,22 +135,9 @@ public class MarksListAction extends DispatchAction {
 
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", infoExecutionCourseCode);
-		request.setAttribute("examCode", examCode);
+		request.setAttribute("evaluationCode", evaluationCode);
 
 		return mapping.findForward("preparePublishMarks");
-	}
-
-	private Integer getFromRequest(String parameter, HttpServletRequest request) {
-		Integer parameterCode = null;
-		String parameterCodeString = request.getParameter(parameter);
-		if (parameterCodeString == null) {
-			parameterCodeString = (String) request.getAttribute(parameter);
-		}
-		if (parameterCodeString != null) {
-			parameterCode = new Integer(parameterCodeString);
-		}
-		return parameterCode;
-
 	}
 
 	/** 
@@ -164,7 +152,7 @@ public class MarksListAction extends DispatchAction {
 		throws Exception {
 		HttpSession session = request.getSession();
 
-		Integer examCode = getFromRequest("examCode", request);
+		Integer evaluationCode = getFromRequest("evaluationCode", request);
 
 		Integer objectCode = getFromRequest("objectCode", request);
 
@@ -178,7 +166,7 @@ public class MarksListAction extends DispatchAction {
 			announcementTitle = messages.getMessage("message.publishment");
 		}
 		
-		Object[] args = { objectCode, examCode, publishmentMessage, sendSMS, announcementTitle };
+		Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestorServicos = GestorServicos.manager();
 		try {
@@ -196,5 +184,18 @@ public class MarksListAction extends DispatchAction {
 	public ActionForward submitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 		return null;
+	}
+	
+	private Integer getFromRequest(String parameter, HttpServletRequest request) {
+		Integer parameterCode = null;
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null) {
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null) {
+			parameterCode = new Integer(parameterCodeString);
+		}
+		return parameterCode;
+
 	}
 }

@@ -99,7 +99,7 @@ public class InsertExamMarksTest extends TestCaseServices {
 			Object[] args3 = { executionCourseCode, examCode, infoMarksList };
 
 			siteView =
-				(TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args2);
+				(TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args3);
 
 			if (siteView == null) {
 				fail("can't execute service");

@@ -1,4 +1,3 @@
-<html:textarea rows="2" cols="60" name="insertAnnouncementForm" property="title" >
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -41,7 +40,7 @@
 
 <html:hidden property="method" value="publishMarks"/>
 <html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden property="examCode" value="<%= pageContext.findAttribute("examCode").toString() %>" />
+<html:hidden property="evaluationCode" value="<%= pageContext.findAttribute("evaluationCode").toString() %>" />
 
 <html:submit styleClass="inputbutton">
 	<bean:message key="button.save"/>

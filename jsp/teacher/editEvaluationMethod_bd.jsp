@@ -6,7 +6,7 @@
 <logic:present name="siteView">
 	<bean:define id="evaluation" name="siteView" property="component"/>
 	<h2><bean:message key="label.evaluation"/></h2> 
-	<html:form action="/editEvaluation">
+	<html:form action="/editEvaluationMethod">
 		<html:hidden property="page" value="1"/>
 		<table>	
 			<tr>
@@ -32,7 +32,7 @@
 				</td>
 			</tr>
 		</table>   
-		<html:hidden property="method" value="editEvaluation" />
+		<html:hidden property="method" value="editEvaluationMethod" />
 		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 	</html:form>
 </logic:present>

@@ -44,7 +44,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		}
 
 		// Read mark from database.
-		markFromDB = this.readBy(markToWrite.getExam(), markToWrite.getAttend());
+		markFromDB = this.readBy(markToWrite.getEvaluation(), markToWrite.getAttend());
 		// If mark is not in database, then write it.
 		if (markFromDB == null) {
 			super.lockWrite(markToWrite);
@@ -69,7 +69,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		try {
 			
 			String oqlQuery = "select all from " + Mark.class.getName();
-			oqlQuery += " where exam = $1";
+			oqlQuery += " where evaluation = $1";
 			query.create(oqlQuery);
 			query.bind(evaluation.getIdInternal());
 			List result = (List) query.execute();
@@ -86,7 +86,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		try {
 			IMark mark = null;
 			String oqlQuery = "select all from " + Mark.class.getName();
-			oqlQuery += " where exam = $1";
+			oqlQuery += " where evaluation = $1";
 			oqlQuery += " and attend = $2";
 			
 			query.create(oqlQuery);

@@ -4,13 +4,16 @@ package Dominio;
  * @author Tânia Pousão
  * 24 de Junho de 2003	
  */
-public abstract class Evaluation extends DomainObject implements IEvaluation {
+public class Evaluation extends DomainObject implements IEvaluation {
 	private String ojbConcreteClass;
 	private String publishmentMessage;
 
 	public Evaluation() {
 		super();
 		this.ojbConcreteClass = this.getClass().getName();
+	}
+	public Evaluation(Integer idInternal){
+		setIdInternal(idInternal);
 	}
 	
 	/**

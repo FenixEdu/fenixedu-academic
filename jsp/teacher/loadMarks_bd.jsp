@@ -12,7 +12,7 @@
  	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>--%>
 	<html:file property="theFile" />
 	<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-	<html:hidden property="examCode" value="<%= pageContext.findAttribute("examCode").toString()%>" /> 
+	<html:hidden property="evaluationCode" value="<%= pageContext.findAttribute("evaluationCode").toString()%>" /> 
 	<html:hidden property="siteView" value="<%= pageContext.findAttribute("siteView").toString()%>" /> 
 	<br />
 	<br />

@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoEvaluation;
 import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.Servico.UserView;
@@ -38,27 +39,27 @@ public class ShowMarksListOptionsAction extends DispatchAction {
 		}
 		executionCourseCode = new Integer(executionCourseCodeString);
 
-		Integer examCode = null;
-		String examCodeString = request.getParameter("examCode");
-		if (examCodeString == null) {
-			examCodeString = (String) request.getAttribute("examCode");
+		Integer evaluationCode = null;
+		String evaluationCodeString = request.getParameter("evaluationCode");
+		if (evaluationCodeString == null) {
+			evaluationCodeString = (String) request.getAttribute("evaluationCode");
 		}
-		examCode = new Integer(examCodeString);
+		evaluationCode = new Integer(evaluationCodeString);
 
 		ISiteComponent commonComponent = new InfoSiteCommon();
 		Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
+
 		TeacherAdministrationSiteView siteView = null;
 		try {
 			siteView =
 				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
-
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
+
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-		request.setAttribute("examCode", examCode);
+		request.setAttribute("evaluationCode", evaluationCode);
 		
 		return mapping.findForward("showMarksListOptions");
 	}

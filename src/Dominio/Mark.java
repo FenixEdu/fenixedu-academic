@@ -9,12 +9,12 @@ package Dominio;
 public class Mark extends DomainObject implements IMark {
 
 	private Integer keyAttend;
-	private Integer keyExam;
+	private Integer keyEvaluation;
 
 	private String mark;
 	private String publishedMark;
 	private IFrequenta attend;
-	private IExam exam;
+	private IEvaluation evaluation;
 
 	public Mark(Integer idInternal) {
 		setIdInternal(idInternal);
@@ -29,7 +29,7 @@ public class Mark extends DomainObject implements IMark {
 		IFrequenta attend,
 		IExam exam) {
 		setAttend(attend);
-		setExam(exam);
+		setEvaluation(evaluation);
 		setPublishedMark(publishedMark);
 		setMark(mark);
 	}
@@ -52,7 +52,7 @@ public class Mark extends DomainObject implements IMark {
 		result += "idInternal = " + getIdInternal() + "; ";
 		result += "mark = " + this.mark + "; ";
 		result += "published mark = " + this.publishedMark + "; ";
-//		result += "Exam = " + this.exam.getIdInternal() + "; ";
+		result += "Exam = " + this.evaluation.getIdInternal() + "; ";
 		result += "attend = " + this.attend.getIdInternal() + "; ";
 
 		return result;
@@ -61,8 +61,8 @@ public class Mark extends DomainObject implements IMark {
 	/**
 	 * @return
 	 */
-	public IExam getExam() {
-		return exam;
+	public IEvaluation getEvaluation() {
+		return evaluation;
 	}
 
 	/**
@@ -82,8 +82,8 @@ public class Mark extends DomainObject implements IMark {
 	/**
 	 * @return
 	 */
-	public Integer getKeyExam() {
-		return keyExam;
+	public Integer getKeyEvaluation() {
+		return keyEvaluation;
 	}
 
 	/**
@@ -103,8 +103,8 @@ public class Mark extends DomainObject implements IMark {
 	/**
 	 * @param exam
 	 */
-	public void setExam(IExam exam) {
-		this.exam = exam;
+	public void setEvaluation(IEvaluation evaluation) {
+		this.evaluation = evaluation;
 	}
 
 	/**
@@ -124,8 +124,8 @@ public class Mark extends DomainObject implements IMark {
 	/**
 	 * @param integer
 	 */
-	public void setKeyExam(Integer integer) {
-		keyExam = integer;
+	public void setKeyEvaluation(Integer integer) {
+		keyEvaluation = integer;
 	}
 
 	/**

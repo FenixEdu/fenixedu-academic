@@ -537,7 +537,7 @@
          jdbc-type="INTEGER"
       />
       <field-descriptor
-         name="keyExam"
+         name="keyEvaluation"
          column="KEY_EVALUATION"
          jdbc-type="INTEGER"
       />
@@ -551,11 +551,11 @@
       </reference-descriptor> 
       
       <reference-descriptor
-         name="exam"
-         class-ref="Dominio.Exam"
+         name="evaluation"
+         class-ref="Dominio.Evaluation"
       >
          <!-- proxy="true" -->
-         <foreignkey field-ref="keyExam"/>
+         <foreignkey field-ref="keyEvaluation"/>
       </reference-descriptor> 
       
    </class-descriptor> 

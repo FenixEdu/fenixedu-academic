@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoExam;
+import DataBeans.InfoEvaluation;
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
@@ -14,10 +14,10 @@ import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.Exam;
+import Dominio.Evaluation;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IExam;
+import Dominio.IEvaluation;
 import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.ISite;
@@ -35,7 +35,7 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricul
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
@@ -72,46 +72,42 @@ public class InsertExamMarks implements IServico {
 		return _servico;
 	}
 
-	public Object run(
-		Integer executionCourseCode,
-		Integer examCode,
-		List examMarks)
+	public Object run(Integer executionCourseCode, Integer evaluationCode, List examMarks)
 		throws ExcepcaoInexistente, FenixServiceException {
 
 		ISite site = null;
 		IDisciplinaExecucao executionCourse = null;
-		IExam exam = null;
+		IEvaluation evaluation = null;
+		//IExam exam = null;
 		List infoMarksList = null;
 		List marksErrorsInvalidMark = null;
 		List marksErrorsStudentExistence = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
-			IPersistentExam persistentExam = sp.getIPersistentExam();
-			IFrequentaPersistente persistentAttend =
-				sp.getIFrequentaPersistente();
+			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+			//IPersistentExam persistentExam = sp.getIPersistentExam();
+			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 			IPersistentMark persistentMark = sp.getIPersistentMark();
 
 			//Execution Course
 			executionCourse = new DisciplinaExecucao(executionCourseCode);
-			executionCourse =
-				(IDisciplinaExecucao) executionCourseDAO.readByOId(
-					executionCourse,
-					false);
+			executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
 
 			//Site
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
-			//Exam
-			exam = new Exam(examCode);
-			exam = (IExam) persistentExam.readByOId(exam, false);
+			//Evaluation
+			evaluation = new Evaluation();
+			evaluation.setIdInternal(evaluationCode);
+			evaluation = (IEvaluation) persistentEvaluation.readByOId(evaluation, false);
+			//Exam			
+			//			exam = new Exam(examCode);
+			//			exam = (IExam) persistentExam.readByOId(exam, false);
 
 			//Attend List
-			List attendList =
-				persistentAttend.readByExecutionCourse(executionCourse);
-			System.out.println("-->InsertExamMarks: leu attendList");
+			List attendList = persistentAttend.readByExecutionCourse(executionCourse);
 
 			infoMarksList = new ArrayList();
 			marksErrorsInvalidMark = new ArrayList();
@@ -123,68 +119,58 @@ public class InsertExamMarks implements IServico {
 				InfoMark infoMark = (InfoMark) iterMarks.next();
 				if (infoMark == null)
 					marksErrorsStudentExistence.add(infoMark);
-				else{
-			
-				//verify if the student existe
-				infoMark = verifyStudentExistance(infoMark, attendList);
-				if (infoMark.getInfoFrequenta().getAluno().getIdInternal()
-					== null) {
-					marksErrorsStudentExistence.add(infoMark);
-				} else {
-					
-					foundStudent = false;
-					infoMark= completeMark(infoMark, exam, executionCourse);
-					if (infoMark.getMark().length() > 0) {
-						if (!isValidMark(infoMark)) {
-							marksErrorsInvalidMark.add(infoMark);
-						} else {
-							IMark mark = null;
-							ListIterator iterAttend = attendList.listIterator();
-							while (iterAttend.hasNext()) {
-								IFrequenta attend =
-									(IFrequenta) iterAttend.next();
-								if (attend
-									.getAluno()
-									.getNumber()
-									.equals(
-										infoMark
-											.getInfoFrequenta()
-											.getAluno()
-											.getNumber())) {
-									foundStudent = true;
+				else {
 
-									mark = persistentMark.readBy(exam, attend);
-									if (mark == null) {
-										mark = new Mark();
+					//verify if the student existe
+					infoMark = verifyStudentExistance(infoMark, attendList);
+					if (infoMark.getInfoFrequenta().getAluno().getIdInternal() == null) {
+						marksErrorsStudentExistence.add(infoMark);
+					} else {
 
-										persistentMark.simpleLockWrite(mark);
+						foundStudent = false;
+						infoMark = completeMark(infoMark, evaluation, executionCourse);
+						if (infoMark.getMark().length() > 0) {
+							if (!isValidMark(infoMark)) {
+								marksErrorsInvalidMark.add(infoMark);
+							} else {
+								IMark mark = null;
+								ListIterator iterAttend = attendList.listIterator();
+								while (iterAttend.hasNext()) {
+									IFrequenta attend = (IFrequenta) iterAttend.next();
+									if (attend.getAluno().getNumber().equals(infoMark.getInfoFrequenta().getAluno().getNumber())) {
+										foundStudent = true;
 
-										mark.setAttend(attend);
-										mark.setExam(exam);
-										mark.setMark(infoMark.getMark());
-										mark.setPublishedMark(
-											infoMark.getPublishedMark());
-									} else {
-										persistentMark.simpleLockWrite(mark);
+										mark = persistentMark.readBy(evaluation, attend);
+										if (mark == null) {
+											mark = new Mark();
 
-										mark.setMark(infoMark.getMark());
+											persistentMark.simpleLockWrite(mark);
+
+											mark.setAttend(attend);
+											mark.setEvaluation(evaluation);
+											mark.setMark(infoMark.getMark());
+											mark.setPublishedMark(infoMark.getPublishedMark());
+										} else {
+											persistentMark.simpleLockWrite(mark);
+
+											mark.setMark(infoMark.getMark());
+										}
+
+										infoMark = Cloner.copyIMark2InfoMark(mark);
 									}
+								}
 
-									infoMark = Cloner.copyIMark2InfoMark(mark);
+								if (!foundStudent) {
+									marksErrorsStudentExistence.add(infoMark);
+								} else {
+									foundStudent = false;
 								}
 							}
-
-							if (!foundStudent) {
-								marksErrorsStudentExistence.add(infoMark);
-							} else {
-								foundStudent = false;
-							}
 						}
-					}
 
-					infoMarksList.add(infoMark);
+						infoMarksList.add(infoMark);
+					}
 				}
-				}	
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
@@ -193,12 +179,7 @@ public class InsertExamMarks implements IServico {
 			throw newEx;
 		}
 
-		return createSiteView(
-			site,
-			exam,
-			infoMarksList,
-			marksErrorsInvalidMark,
-			marksErrorsStudentExistence);
+		return createSiteView(site, evaluation, infoMarksList, marksErrorsInvalidMark, marksErrorsStudentExistence);
 	}
 
 	/**
@@ -211,47 +192,39 @@ public class InsertExamMarks implements IServico {
 		Iterator iter = attends.iterator();
 		while (iter.hasNext() && !result) {
 			IFrequenta attend = (IFrequenta) iter.next();
-			if (attend
-				.getAluno()
-				.getNumber()
-				.equals(infoMark.getInfoFrequenta().getAluno().getNumber())) {
+			if (attend.getAluno().getNumber().equals(infoMark.getInfoFrequenta().getAluno().getNumber())) {
 				result = true;
-				infoMark.getInfoFrequenta().setAluno(
-					Cloner.copyIStudent2InfoStudent(attend.getAluno()));
+				infoMark.getInfoFrequenta().setAluno(Cloner.copyIStudent2InfoStudent(attend.getAluno()));
 			}
 		}
 		return infoMark;
 	}
 
-	private InfoMark completeMark(
-		InfoMark infoMark,
-		IExam exam,
-		IDisciplinaExecucao disciplinaExecucao) throws FenixServiceException {
+	private InfoMark completeMark(InfoMark infoMark, IEvaluation evaluation, IDisciplinaExecucao disciplinaExecucao)
+		throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
+			//Evaluation
+			InfoEvaluation infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+
 			//Exam
-			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+			//InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 
 			//Student
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			IStudent student = new Student();
 
-			student.setIdInternal(
-				infoMark.getInfoFrequenta().getAluno().getIdInternal());
+			student.setIdInternal(infoMark.getInfoFrequenta().getAluno().getIdInternal());
 			student = (IStudent) persistentStudent.readByOId(student, false);
 			//Attend			
-			IFrequentaPersistente frequentaPersistente =
-				sp.getIFrequentaPersistente();
-			IFrequenta frequenta =
-				frequentaPersistente.readByAlunoAndDisciplinaExecucao(
-					student,
-					disciplinaExecucao);
-			InfoFrequenta infoFrequenta =
-				Cloner.copyIFrequenta2InfoFrequenta(frequenta);
+			IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+			IFrequenta frequenta = frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, disciplinaExecucao);
+			InfoFrequenta infoFrequenta = Cloner.copyIFrequenta2InfoFrequenta(frequenta);
 
 			infoMark.setInfoFrequenta(infoFrequenta);
-			infoMark.setInfoExam(infoExam);
+			infoMark.setInfoEvaluation(infoEvaluation);
+			//infoMark.setInfoExam(infoExam);
 			infoMark.setMark(infoMark.getMark().toUpperCase());
 			return infoMark;
 		} catch (ExcepcaoPersistencia e) {
@@ -261,29 +234,22 @@ public class InsertExamMarks implements IServico {
 
 	private Object createSiteView(
 		ISite site,
-		IExam exam,
+		IEvaluation evaluation,
 		List infoMarksList,
 		List marksErrorsInvalidMark,
 		List marksErrorsStudentExistence)
 		throws FenixServiceException {
 		InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
-		infoSiteMarks.setInfoExam(Cloner.copyIExam2InfoExam(exam));
+		infoSiteMarks.setInfoEvaluation(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
+		//infoSiteMarks.setInfoExam(Cloner.copyIExam2InfoExam(exam));
 		infoSiteMarks.setMarksList(infoMarksList);
 		infoSiteMarks.setMarksListErrors(marksErrorsInvalidMark);
 		infoSiteMarks.setStudentsListErrors(marksErrorsStudentExistence);
 
-		TeacherAdministrationSiteComponentBuilder componentBuilder =
-			new TeacherAdministrationSiteComponentBuilder();
-		ISiteComponent commonComponent =
-			componentBuilder.getComponent(
-				new InfoSiteCommon(),
-				site,
-				null,
-				null,
-				null);
+		TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
+		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
 
-		TeacherAdministrationSiteView siteView =
-			new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
+		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
 		return siteView;
 	}
 
@@ -292,8 +258,7 @@ public class InsertExamMarks implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudentCurricularPlanPersistente curricularPlanPersistente =
-				sp.getIStudentCurricularPlanPersistente();
+			IStudentCurricularPlanPersistente curricularPlanPersistente = sp.getIStudentCurricularPlanPersistente();
 
 			studentCurricularPlan =
 				curricularPlanPersistente.readActiveStudentCurricularPlan(
@@ -303,16 +268,12 @@ public class InsertExamMarks implements IServico {
 			e.printStackTrace();
 		}
 
-		IDegreeCurricularPlan degreeCurricularPlan =
-			studentCurricularPlan.getDegreeCurricularPlan();
+		IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
 		// test marks by execution course: strategy 
-		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
-			DegreeCurricularPlanStrategyFactory.getInstance();
+		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
 		IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
-			degreeCurricularPlanStrategyFactory
-				.getDegreeCurricularPlanStrategy(
-				degreeCurricularPlan);
+			degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
 
 		return degreeCurricularPlanStrategy.checkMark(infoMark.getMark());
 	}

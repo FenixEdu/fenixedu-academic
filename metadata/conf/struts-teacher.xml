@@ -490,16 +490,16 @@
 	<!-- Actions For ExamEnrollments -->
 	
 	<action 
-		path="/viewExams"
+		path="/viewEvaluation"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
-       <forward name="viewExams" path="/viewExams.jsp"/>
+       <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
 	</action>
 	
 	
 	<action 
-		input="/viewExams.do?method=viewExams"
+		input="/viewEvaluation.do?method=viewEvaluation"
 		name="examEnrollmentForm"
 		path="/examEnrollmentEditionManager"
 		parameter="method"
@@ -507,7 +507,7 @@
 		type="ServidorApresentacao.Action.teacher.ExamEnrollmentDispatchAction"
 		validate="true"
         >       
-       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>
+       <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>
 	</action>
 	
 	
@@ -516,27 +516,27 @@
 	
 	<action 
 		input="/viewSite.jsp"
-		path="/viewEvaluation"
+		path="/viewEvaluationMethod"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
         >
-       <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
-       <forward name="editEvaluation" path="/editEvaluation.jsp"/>
+       <forward name="viewEvaluationMethod" path="/viewEvaluationMethod.jsp"/>
+       <forward name="editEvaluationMethod" path="/editEvaluationMethod.jsp"/>
 	</action>
 	<action 
 		name="evaluationForm"
-		input="/editEvaluation.jsp"
-		path="/editEvaluation"
+		input="/editEvaluationMethod.jsp"
+		path="/editEvaluationMethod"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
 		validate="true"
         className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
 			<set-property property="componentClassName" value="DataBeans.InfoEvaluationMethod"/>
-			<set-property property="inputForwardName" value="editEvaluation"/>
-       <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
-       <forward name="editEvaluation" path="/editEvaluation.jsp"/>
+			<set-property property="inputForwardName" value="editEvaluationMethod"/>
+       <forward name="viewEvaluationMethod" path="/viewEvaluationMethod.jsp"/>
+       <forward name="editEvaluationMethod" path="/editEvaluationMethod.jsp"/>
        
 	</action>
 	<!-- start of evaluation mappings -->
@@ -641,7 +641,7 @@
        <forward name="marksList" path="/marksList.jsp" />    
        <forward name="loadMarks" path="/loadMarks.jsp" />            
        <forward name="preparePublishMarks" path="/preparePublishMarks.jsp" />       
-       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>
+       <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>
 	</action>
 	<action 
 		path="/writeMarks"
@@ -652,7 +652,7 @@
 		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
 		>
        <forward name="marksList" path="/marksList.jsp" />
-       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>    
+       <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>    
        <forward name="loadMarks" path="/loadMarks.jsp" />   
 	</action>
 	
@@ -665,7 +665,7 @@
 		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
 		  >
        <forward name="success" path="/markList.jsp" /> 
-       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>  
+       <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>  
             
 	</action>
 	<!-- End Marks List -->

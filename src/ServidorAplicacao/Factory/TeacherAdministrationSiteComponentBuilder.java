@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
@@ -54,7 +57,6 @@ import Dominio.Item;
 import Dominio.Section;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentProfessorship;
@@ -135,8 +137,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 		ISuportePersistente sp;
 		List allSections = null;
 		List infoSectionsList = null;
-		List infoCurricularCourseScopeList = null;
-		List infoCurricularCourseList = null;
 		try {
 			// read sections	
 
@@ -326,7 +326,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentBibliographicReference = sp.getIPersistentBibliographicReference();
 
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
@@ -455,12 +454,19 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
 		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 		List evaluations = executionCourse.getAssociatedExams();
+		
 		List infoEvaluations = new ArrayList();
 		Iterator iter = evaluations.iterator();
 		while (iter.hasNext()) {
 			IEvaluation evaluation = (IEvaluation) iter.next();
 			infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
 		}
+		ComparatorChain comparatorChain = new ComparatorChain();
+		comparatorChain.addComparator(new BeanComparator("day.time"));
+		comparatorChain.addComparator(new BeanComparator("beginning.time"));
+		
+		Collections.sort(infoEvaluations, comparatorChain);
+		
 		component.setInfoEvaluations(infoEvaluations);
 		return component;
 	}
@@ -749,7 +755,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private List readResponsibleTeachers(ISuportePersistente persistentSupport, IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
 		List responsibleDomainTeachersList = null;
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		IPersistentResponsibleFor persistentResponsibleFor = persistentSupport.getIPersistentResponsibleFor();
 		responsibleDomainTeachersList = persistentResponsibleFor.readByExecutionCourse(executionCourse);
 		List responsibleInfoTeachersList = new ArrayList();

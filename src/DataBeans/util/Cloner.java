@@ -150,6 +150,7 @@ import Dominio.Teacher;
 import Dominio.TeacherShiftPercentage;
 import Dominio.Turma;
 import Dominio.Turno;
+import Util.EvaluationType;
 import Util.State;
 
 /**
@@ -1012,12 +1013,12 @@ public abstract class Cloner {
 		copyObjectProperties(infoExam, exam);
 		List infoRooms = new ArrayList();
 		if (exam != null && exam.getAssociatedRooms() != null && exam.getAssociatedRooms().size() > 0) {
-		
+
 			for (int i = 0; i < exam.getAssociatedRooms().size(); i++) {
 				infoRooms.add(copyRoom2InfoRoom((ISala) exam.getAssociatedRooms().get(i)));
-			}}
-			infoExam.setAssociatedRooms(infoRooms);
-		 
+			}
+		}
+		infoExam.setAssociatedRooms(infoRooms);
 
 		return infoExam;
 	}
@@ -1693,7 +1694,8 @@ public abstract class Cloner {
 	public static IEvaluationMethod copyInfoEvaluationMethod2IEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
 
 		IEvaluationMethod evaluationMethod = new EvaluationMethod();
-		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoEvaluationMethod.getInfoExecutionCourse());
+		IDisciplinaExecucao executionCourse =
+			Cloner.copyInfoExecutionCourse2ExecutionCourse(infoEvaluationMethod.getInfoExecutionCourse());
 
 		copyObjectProperties(evaluationMethod, infoEvaluationMethod);
 
@@ -1716,45 +1718,25 @@ public abstract class Cloner {
 	public static IEvaluation copyInfoEvaluation2IEvaluation(InfoEvaluation infoEvaluation) {
 
 		IEvaluation evaluation = null;
-		
-		if (infoEvaluation instanceof IExam) {
-			
-			InfoExam infoExam = new InfoExam();
-			infoExam.setAssociatedRooms(((IExam) infoEvaluation).getAssociatedRooms());
-			infoExam.setBeginning(((IExam)infoEvaluation).getBeginning());
-			infoExam.setDay(((IExam)infoEvaluation).getDay());
-			infoExam.setEnd(((IExam)infoEvaluation).getEnd());
-			infoExam.setEnrollmentBeginDay(((IExam)infoEvaluation).getEnrollmentBeginDay());
-			infoExam.setEnrollmentBeginTime(((IExam)infoEvaluation).getEnrollmentBeginTime());
-			infoExam.setEnrollmentEndDay(((IExam)infoEvaluation).getEnrollmentEndDay());
-			infoExam.setEnrollmentEndTime(((IExam)infoEvaluation).getEnrollmentEndTime());
-			
-			IExam exam = Cloner.copyInfoExam2IExam(infoExam);
-			copyObjectProperties(evaluation, infoEvaluation);
-			
+
+		if (infoEvaluation instanceof InfoExam) {
+			evaluation = new Exam();
 		}
+		
+		copyObjectProperties(evaluation, infoEvaluation);
+		
 		return evaluation;
 	}
 	public static InfoEvaluation copyIEvaluation2InfoEvaluation(IEvaluation evaluation) {
 
-		InfoEvaluation infoEvaluation = new InfoEvaluation();
-		if (evaluation instanceof IExam) {
-		    InfoExam infoExam = new InfoExam();
-			IExam exam = new Exam();
-			exam.setAssociatedExecutionCourses(((IExam)evaluation).getAssociatedExecutionCourses());
-			exam.setAssociatedRooms(((IExam)evaluation).getAssociatedRooms());
-			exam.setBeginning(((IExam)evaluation).getBeginning());
-			exam.setDay(((IExam)evaluation).getDay());
-			exam.setEnd(((IExam)evaluation).getEnd());
-			exam.setEnrollmentBeginDay(((IExam)evaluation).getEnrollmentBeginDay());
-			exam.setEnrollmentBeginTime(((IExam)evaluation).getEnrollmentBeginTime());
-			exam.setEnrollmentEndDay(((IExam)evaluation).getEnrollmentEndDay());
-			exam.setEnrollmentEndTime(((IExam)evaluation).getEnrollmentEndTime());
-	
-			infoExam = Cloner.copyIExam2InfoExam(exam);
-		} 
-		copyObjectProperties(infoEvaluation, evaluation);
+		InfoEvaluation infoEvaluation = null;
 
+		if (evaluation instanceof IExam) {
+			infoEvaluation = new InfoExam();
+			infoEvaluation.setEvaluationType(EvaluationType.EXAM_TYPE);
+		}
+		
+		copyObjectProperties(infoEvaluation, evaluation);
 
 		return infoEvaluation;
 	}
@@ -1861,15 +1843,16 @@ public abstract class Cloner {
 	public static InfoMark copyIMark2InfoMark(IMark mark) {
 		InfoMark infoMark = new InfoMark();
 
-		InfoFrequenta infoFrequenta = new InfoFrequenta();;
+		InfoFrequenta infoFrequenta = new InfoFrequenta();
+		;
 		infoFrequenta = copyIFrequenta2InfoFrequenta(mark.getAttend());
 
-		InfoExam infoExam = new InfoExam();
-		infoExam = copyIExam2InfoExam(mark.getExam());
+		InfoEvaluation infoEvaluation = new InfoExam();
+		infoEvaluation = copyIEvaluation2InfoEvaluation(mark.getEvaluation());
 
 		copyObjectProperties(infoMark, mark);
 		infoMark.setInfoFrequenta(infoFrequenta);
-		infoMark.setInfoExam(infoExam);
+		infoMark.setInfoEvaluation(infoEvaluation);
 
 		return infoMark;
 	}
@@ -1881,18 +1864,18 @@ public abstract class Cloner {
 	public static IMark copyInfoMark2IMark(InfoMark infoMark) {
 		IMark mark = new Mark();
 
-		InfoExam infoExam = infoMark.getInfoExam();
-		IExam exam = Cloner.copyInfoExam2IExam(infoExam);
+		InfoEvaluation infoEvaluation = infoMark.getInfoEvaluation();
+		IEvaluation evaluation = Cloner.copyInfoEvaluation2IEvaluation(infoEvaluation);
 
 		InfoFrequenta infoFrequenta = infoMark.getInfoFrequenta();
 		IFrequenta frequenta = Cloner.copyInfoFrequenta2IFrequenta(infoFrequenta);
-		
+
 		copyObjectProperties(mark, infoMark);
-		mark.setExam(exam);
+		mark.setEvaluation(evaluation);
 		mark.setAttend(frequenta);
 		return mark;
 	}
-	
+
 	/**
 	 * 
 	 * @param IFrquenta
@@ -1900,23 +1883,22 @@ public abstract class Cloner {
 	 */
 	public static InfoFrequenta copyIFrequenta2InfoFrequenta(IFrequenta frequenta) {
 		InfoFrequenta infoFrequenta = new InfoFrequenta();
-		
-		if(frequenta.getAluno() == null) System.out.println("--> frequenta.getAluno() e' null");
+
 		InfoStudent infoStudent = new InfoStudent();
 		infoStudent = Cloner.copyIStudent2InfoStudent(frequenta.getAluno());
-		
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();		
+
+		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(frequenta.getDisciplinaExecucao());
-				
+
 		InfoEnrolment infoEnrolment = null;
 		if (frequenta.getEnrolment() != null) {
 			infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(frequenta.getEnrolment());
 		}
-		
+
 		//copyObjectProperties(infoFrequenta, frequenta);
-	
+
 		infoFrequenta.setAluno(infoStudent);
-		infoFrequenta.setDisciplinaExecucao(infoExecutionCourse);		
+		infoFrequenta.setDisciplinaExecucao(infoExecutionCourse);
 		infoFrequenta.setInfoEnrolment(infoEnrolment);
 
 		return infoFrequenta;
@@ -1929,25 +1911,25 @@ public abstract class Cloner {
 	 */
 	public static IFrequenta copyInfoFrequenta2IFrequenta(InfoFrequenta infoFrequenta) {
 		IFrequenta frequenta = new Frequenta();
-		
+
 		InfoStudent infoStudent = infoFrequenta.getAluno();
 		IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
-		
+
 		InfoExecutionCourse infoExecutionCourse = infoFrequenta.getDisciplinaExecucao();
 		IDisciplinaExecucao disciplinaExecucao = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-		
+
 		InfoEnrolment infoEnrolment = infoFrequenta.getInfoEnrolment();
 		IEnrolment enrolment = null;
-		if(infoEnrolment != null){
+		if (infoEnrolment != null) {
 			enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEnrolment);
 		}
 
 		//copyObjectProperties(frequenta, infoFrequenta);
-		
+
 		frequenta.setAluno(student);
 		frequenta.setDisciplinaExecucao(disciplinaExecucao);
 		frequenta.setEnrolment(enrolment);
-	
+
 		return frequenta;
 	}
 

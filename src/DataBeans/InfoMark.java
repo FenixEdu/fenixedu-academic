@@ -6,7 +6,6 @@
 
 package DataBeans;
 
-
 /**
  *
  * @author  tfc130
@@ -15,51 +14,47 @@ package DataBeans;
 public class InfoMark {
 	protected String mark;
 	protected String publishedMark;
-	private InfoExam infoExam;
+	private InfoEvaluation infoEvaluation;
 	private InfoFrequenta infoFrequenta;
-	
-	
-	public InfoMark() {}
 
-	public InfoMark(String mark, String publishedMark, InfoFrequenta frequenta, InfoExam exam) {
-			setInfoFrequenta(frequenta);
-			setInfoExam(exam);
-			setPublishedMark(mark);
-			setPublishedMark(publishedMark);			
+	public InfoMark() {
 	}
 
-	
+	public InfoMark(String mark, String publishedMark, InfoFrequenta frequenta, InfoEvaluation evaluation) {
+		setInfoFrequenta(frequenta);
+		setInfoEvaluation(evaluation);
+		setPublishedMark(mark);
+		setPublishedMark(publishedMark);
+	}
 
-//  public boolean equals(Object obj) {
-//    boolean resultado = false;
-//    if (obj instanceof InfoMark) {
-//      InfoMark infoMark = (InfoMark)obj;
-//      resultado = getMark().equals(infoMark.getPublishedMark());
-//    }
-//    return resultado;
-//  }
-  
-  public String toString() {
-    String result = "[InfoStudent";
-    result += ", mark=" + mark;
-    result += ", published mark=" + publishedMark;
+	//  public boolean equals(Object obj) {
+	//    boolean resultado = false;
+	//    if (obj instanceof InfoMark) {
+	//      InfoMark infoMark = (InfoMark)obj;
+	//      resultado = getMark().equals(infoMark.getPublishedMark());
+	//    }
+	//    return resultado;
+	//  }
 
-    if (infoExam != null)
-    	result += ", exam" + infoExam.toString();
-    result += "]";
-	if (infoFrequenta != null)
-		   result += ", exam" + infoFrequenta.toString();
-	   result += "]";
-    return result;
-  }
-  
+	public String toString() {
+		String result = "[InfoStudent";
+		result += ", mark=" + mark;
+		result += ", published mark=" + publishedMark;
 
+		if (infoEvaluation != null)
+			result += ", exam" + infoEvaluation.toString();
+		result += "]";
+		if (infoFrequenta != null)
+			result += ", exam" + infoFrequenta.toString();
+		result += "]";
+		return result;
+	}
 
 	/**
 	 * @return
 	 */
-	public InfoExam getInfoExam() {
-		return infoExam;
+	public InfoEvaluation getInfoEvaluation() {
+		return infoEvaluation;
 	}
 
 	/**
@@ -86,8 +81,8 @@ public class InfoMark {
 	/**
 	 * @param exam
 	 */
-	public void setInfoExam(InfoExam exam) {
-		infoExam = exam;
+	public void setInfoEvaluation(InfoEvaluation evaluation) {
+		infoEvaluation = evaluation;
 	}
 
 	/**

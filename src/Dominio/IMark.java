@@ -11,16 +11,18 @@ public interface IMark extends IDomainObject{
 
 	public String getMark();
 	public String getPublishedMark();
-	public Integer getKeyExam();
-	public Integer getKeyAttend();
 	public IFrequenta getAttend();	
-	public IExam getExam();
+	public IEvaluation getEvaluation();
 
+	public Integer getKeyEvaluation();
+	public Integer getKeyAttend();
+	
 	public void setMark(String mark);
 	public void setPublishedMark(String publishedMark);
 	public void setAttend(IFrequenta attend);
-	public void setExam(IExam exam);	
+	public void setEvaluation(IEvaluation evaluation);	
+	
 	public void setKeyAttend(Integer keyAttend);
-	public void setKeyExam(Integer keyExam);	
+	public void setKeyEvaluation(Integer keyEvaluation);	
 
 }

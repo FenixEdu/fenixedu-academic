@@ -7,10 +7,10 @@ import java.util.ListIterator;
 
 import Dominio.Announcement;
 import Dominio.DisciplinaExecucao;
-import Dominio.Exam;
+import Dominio.Evaluation;
 import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IExam;
+import Dominio.IEvaluation;
 import Dominio.IMark;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
@@ -19,7 +19,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentAnnouncement;
-import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -56,7 +56,7 @@ public class PublishMarks implements IServico {
 
 	public Object run(
 		Integer executionCourseCode,
-		Integer examCode,
+		Integer evaluationCode,
 		String publishmentMessage,
 		Boolean sendSMS,
 		String announcementTitle)
@@ -75,15 +75,21 @@ public class PublishMarks implements IServico {
 			ISite site = siteDAO.readByExecutionCourse(executionCourse);
 
 			//Exam
-			IExam exam = new Exam(examCode);
-			IPersistentExam examDAO = sp.getIPersistentExam();
-			exam = (IExam) examDAO.readByOId(exam, true);
+//			IExam exam = new Exam(examCode);
+//			IPersistentExam examDAO = sp.getIPersistentExam();
+//			exam = (IExam) examDAO.readByOId(exam, true);
 
-			examDAO.lockWrite(exam);
+			IEvaluation evaluation = new Evaluation(evaluationCode);
+			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+			persistentEvaluation.readByOId(evaluation, true);
+			
+			persistentEvaluation.lockWrite(evaluation);
+			
+//			examDAO.lockWrite(exam);
 			if (publishmentMessage == null || publishmentMessage.length() == 0) {
-				exam.setPublishmentMessage(" ");
+				evaluation.setPublishmentMessage(" ");
 			} else {
-				exam.setPublishmentMessage(publishmentMessage);
+				evaluation.setPublishmentMessage(publishmentMessage);
 
 				// create announcement
 				Calendar calendar = Calendar.getInstance();
@@ -101,7 +107,7 @@ public class PublishMarks implements IServico {
 
 			// publish marks
 			IPersistentMark persistentMark = sp.getIPersistentMark();
-			List marksList = persistentMark.readBy(exam);
+			List marksList = persistentMark.readBy(evaluation);
 			ListIterator iterMarks = marksList.listIterator();
 			while (iterMarks.hasNext()) {
 				IMark mark = (IMark) iterMarks.next();

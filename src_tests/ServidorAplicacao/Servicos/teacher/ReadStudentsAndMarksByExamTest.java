@@ -29,7 +29,7 @@ public class ReadStudentsAndMarksByExamTest extends TestCaseServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadStudentsAndMarksByExam";
+		return "ReadStudentsAndMarksByEvaluation";
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +49,7 @@ public class ReadStudentsAndMarksByExamTest extends TestCaseServices {
 			GestorServicos serviceManager = GestorServicos.manager();
 			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
 			
-			assertEquals("Error in Exam !", ((InfoSiteMarks)siteView.getComponent()).getInfoExam().getIdInternal().intValue(), 1);
+			assertEquals("Error in Exam !", ((InfoSiteMarks)siteView.getComponent()).getInfoEvaluation().getIdInternal().intValue(), 1);
 			assertEquals("Error in marks list !", ((InfoSiteMarks)siteView.getComponent()).getMarksList().size(), 3);
 						
 		} catch (FenixServiceException e) {

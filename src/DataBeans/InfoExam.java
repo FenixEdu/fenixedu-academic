@@ -16,7 +16,7 @@ import java.util.List;
 
 import Util.Season;
 
-public class InfoExam extends InfoObject implements ISiteComponent {
+public class InfoExam extends InfoEvaluation implements ISiteComponent {
 	protected Calendar day;
 	protected Calendar beginning;
 	protected Calendar end;

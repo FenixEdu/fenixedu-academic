@@ -9,7 +9,7 @@ import java.util.ListIterator;
  * 
  */
 public class InfoSiteMarks implements ISiteComponent {
-	private InfoExam infoExam;
+	private InfoEvaluation infoEvaluation;
 	private List marksList;
 	private List marksListErrors;
 	private List studentsListErrors;
@@ -18,11 +18,11 @@ public class InfoSiteMarks implements ISiteComponent {
 		boolean result = false;
 
 		if (objectToCompare instanceof InfoSiteStudents
-			&& (((((InfoSiteMarks) objectToCompare).getInfoExam() != null
-				&& this.getInfoExam() != null
-				&& ((InfoSiteMarks) objectToCompare).getInfoExam().equals(this.getInfoExam()))
-				|| ((InfoSiteMarks) objectToCompare).getInfoExam() == null
-				&& this.getInfoExam() == null))) {
+			&& (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null
+				&& this.getInfoEvaluation() != null
+				&& ((InfoSiteMarks) objectToCompare).getInfoEvaluation().equals(this.getInfoEvaluation()))
+				|| ((InfoSiteMarks) objectToCompare).getInfoEvaluation() == null
+				&& this.getInfoEvaluation() == null))) {
 			result = true;
 		}
 
@@ -66,15 +66,15 @@ public class InfoSiteMarks implements ISiteComponent {
 	/**
 	 * @return
 	 */
-	public InfoExam getInfoExam() {
-		return infoExam;
+	public InfoEvaluation getInfoEvaluation() {
+		return infoEvaluation;
 	}
 
 	/**
 	 * @param exam
 	 */
-	public void setInfoExam(InfoExam exam) {
-		infoExam = exam;
+	public void setInfoEvaluation(InfoEvaluation evaluation) {
+		infoEvaluation = evaluation;
 	}
 	/**
 	 * @return

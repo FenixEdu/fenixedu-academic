@@ -24,8 +24,8 @@
             <dd><html:link page="<%= "/viewSite.do?method=program" + "&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
 				<bean:message key="link.program"/>
 				</html:link></dd>
-		    	 <dd><html:link page="<%= "/viewSite.do?method=evaluation&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-				<bean:message key="link.evaluation"/>
+		    	 <dd><html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+				<bean:message key="link.evaluationMethod"/>
 				</html:link></dd>	
 			
             <dd><html:link page="<%= "/viewSite.do?method=bibliography&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
@@ -43,8 +43,8 @@
 <li><html:link page="<%= "/viewSite.do" + "?method=shifts&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
 		<bean:message key="link.executionCourse.shifts"/>
 </html:link></li>
-<li><html:link page="<%= "/viewSite.do" + "?method=exams&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-		<bean:message key="link.exams"/>
+<li><html:link page="<%= "/viewSite.do" + "?method=evaluation&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+		<bean:message key="link.evaluation"/>
 </html:link></li>
 </ul>
 <bean:define id="component" name="siteView" property="commonComponent" />

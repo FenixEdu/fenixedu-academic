@@ -31,7 +31,7 @@ public class ViewPublishedMarksAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		Integer objectCode = getFromRequest("objectCode", request);
-		Integer examCode = getFromRequest("examCode", request);
+		Integer examCode = getFromRequest("evaluationCode", request);
 
 		Object[] args = { objectCode, examCode };
 		GestorServicos gestorServicos = GestorServicos.manager();
