@@ -91,10 +91,20 @@ public class EditarTurno implements IServico {
 					.getIDisciplinaExecucaoPersistente()
 					.readByOID(
 					DisciplinaExecucao.class,
-					infoShiftOld.getInfoDisciplinaExecucao().getIdInternal());
+					infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
+
+			System.out.println("infoShiftOld.getInfoDisciplinaExecucao().getNome()= " + infoShiftOld.getInfoDisciplinaExecucao().getNome());
+			System.out.println("infoShiftNew.getInfoDisciplinaExecucao().getNome()= " + infoShiftNew.getInfoDisciplinaExecucao().getNome());
+
 			shift.setDisciplinaExecucao(executionCourse);
 
 			infoShift = Cloner.copyShift2InfoShift(shift);
+			
+			try {
+				sp.getITurnoPersistente().lockWrite(shift);	
+			} catch (ExcepcaoPersistencia ex) {
+				throw new ExistingShiftException(ex);
+			}
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
@@ -156,9 +166,9 @@ public class EditarTurno implements IServico {
 		}
 		
 		// 4. Check if NEW shift capacity is bigger then maximum lesson room capacity
-		if (newShiftCapacity.intValue() > maxCapacity.intValue()) {
-			throw new InvalidNewShiftCapacity();
-		}
+		//if (newShiftCapacity.intValue() > maxCapacity.intValue()) {
+		//	throw new InvalidNewShiftCapacity();
+		//}
 		
 	}
 
@@ -380,6 +390,43 @@ public class EditarTurno implements IServico {
 			Throwable cause) {
 			super(message, cause);
 		}
+
+	}
+
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class ExistingShiftException extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private ExistingShiftException() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private ExistingShiftException(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private ExistingShiftException(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private ExistingShiftException(Throwable cause) {
+			super(cause);
+		}
+
 
 	}
 

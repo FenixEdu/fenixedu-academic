@@ -20,11 +20,7 @@ import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.utils.ContextUtils;
@@ -97,7 +93,7 @@ public class ManageExecutionCoursesDA
 
 		/* Obtain a list of curricular years */
 		List labelListOfCurricularYears =
-			ContextUtils.getLabelListOfCurricularYears();
+			ContextUtils.getLabelListOfOptionalCurricularYears();
 		request.setAttribute(
 			SessionConstants.LABELLIST_CURRICULAR_YEARS,
 			labelListOfCurricularYears);

@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.Util;
 import Util.TipoSala;
 
 /**
@@ -38,6 +40,12 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
 		super.execute(mapping, form, request, response);
 
 		HttpSession session = request.getSession(false);
+
+		List edificios = Util.readExistingBuldings(null, null);
+		List tipos = Util.readTypesOfRooms(null, null);
+
+		request.setAttribute("publico.buildings", edificios);
+		request.setAttribute("publico.types", tipos);
 
 		// Get selected room to edit
 		ArrayList listaSalasBean = (ArrayList) request.getAttribute(SessionConstants.SELECTED_ROOMS);

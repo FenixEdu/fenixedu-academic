@@ -1,17 +1,16 @@
 /*
- * CreateLesson.java
+ * EditarAula.java
  *
- * Created on 2003/08/12
+ * Created on 27 de Outubro de 2002, 19:05
  */
 
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Servi�o CreateLesson.
+ * Servi�o EditarAula.
  *
- * @author Luis Cruz & Sara Ribeiro
+ * @author tfc130
  **/
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,10 +18,10 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
+import DataBeans.KeyLesson;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import Dominio.ITurno;
@@ -35,118 +34,156 @@ import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
-public class CreateLesson implements IServico {
+public class EditLesson implements IServico {
 
-	private static CreateLesson _servico = new CreateLesson();
+	private static EditLesson _servico = new EditLesson();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static CreateLesson getService() {
+	public static EditLesson getService() {
 		return _servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private CreateLesson() {
+	private EditLesson() {
 	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-		return "CreateLesson";
+		return "EditLesson";
 	}
 
-	public InfoLessonServiceResult run(
-		InfoLesson infoLesson,
+	public Object run(
+		KeyLesson aulaAntiga,
+		InfoLesson aulaNova,
 		InfoShift infoShift)
 		throws FenixServiceException {
 
+		IAula aula = null;
 		InfoLessonServiceResult result = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ISala sala =
-				sp.getISalaPersistente().readByName(
-					infoLesson.getInfoSala().getNome());
 
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+			IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
+
+			ISala salaAntiga =
+				sp.getISalaPersistente().readByName(
+					aulaAntiga.getKeySala().getNomeSala());
+			ISala salaNova =
+				sp.getISalaPersistente().readByName(
+					aulaNova.getInfoSala().getNome());
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoLesson
+					aulaNova
 						.getInfoDisciplinaExecucao()
 						.getInfoExecutionPeriod());
 
-			IDisciplinaExecucao executionCourse =
-				executionCourseDAO
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoLesson.getInfoDisciplinaExecucao().getSigla(),
+			aula =
+				aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(
+					aulaAntiga.getDiaSemana(),
+					aulaAntiga.getInicio(),
+					aulaAntiga.getFim(),
+					salaAntiga,
 					executionPeriod);
 
-			IAula aula =
+			IAula newLesson =
 				new Aula(
-					infoLesson.getDiaSemana(),
-					infoLesson.getInicio(),
-					infoLesson.getFim(),
-					infoLesson.getTipo(),
-					sala,
-					executionCourse);
+					aulaNova.getDiaSemana(),
+					aulaNova.getInicio(),
+					aulaNova.getFim(),
+					aulaNova.getTipo(),
+					salaNova,
+					null);
 
-			result = validTimeInterval(aula);
-			if (result.getMessageType() == 1) {
-				throw new InvalidTimeIntervalServiceException();
-			}
-
-			boolean resultB = validNoInterceptingLesson(aula, executionPeriod);
-
-			if (result.isSUCESS() && resultB) {
-				try {
-					sp.getIAulaPersistente().lockWrite(aula);
-
-					ITurno shift =
-						(ITurno) sp.getITurnoPersistente().readByOID(
-							Turno.class,
-							infoShift.getIdInternal());
-
-					InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
-
-					if (infoShiftServiceResult.isSUCESS()) {
-						sp.getITurnoPersistente().lockWrite(shift);
-						shift.getAssociatedLessons().add(aula);
-					} else {
-						throw new InvalidLoadException(infoShiftServiceResult.toString());
-					}
-
-				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException(ex);
+			if (aula != null) {
+				result = valid(newLesson);
+				if (result.getMessageType() == 1) {
+					throw new InvalidTimeIntervalServiceException();
 				}
-			} else {
-				result.setMessageType(2);
+				boolean resultB =
+					validNoInterceptingLesson(newLesson, aula, executionPeriod);
+
+				ITurno shift =
+					(ITurno) sp.getITurnoPersistente().readByOID(
+						Turno.class,
+						infoShift.getIdInternal());
+
+				InfoShiftServiceResult infoShiftServiceResult =
+					valid(shift, aula);
+
+				if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
+					// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
+					aula = (IAula) aulaPersistente.readByOId(aula, true);
+					aula.setDiaSemana(aulaNova.getDiaSemana());
+					aula.setInicio(aulaNova.getInicio());
+					aula.setFim(aulaNova.getFim());
+					aula.setTipo(aulaNova.getTipo());
+					aula.setSala(salaNova);
+				} else if (!infoShiftServiceResult.isSUCESS()) {
+					throw new InvalidLoadException(infoShiftServiceResult.toString());
+				}
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
-
 			throw new FenixServiceException(ex.getMessage());
+		}
+		return result;
+	}
+
+	private InfoLessonServiceResult valid(IAula lesson) {
+		InfoLessonServiceResult result = new InfoLessonServiceResult();
+
+		if (lesson.getInicio().getTime().getTime()
+			>= lesson.getFim().getTime().getTime()) {
+			result.setMessageType(
+				InfoLessonServiceResult.INVALID_TIME_INTERVAL);
 		}
 
 		return result;
 	}
 
 	/**
-	 * @param aula
-	 * @return InfoLessonServiceResult
-	 */
+		   * @param aula
+		   * @return InfoLessonServiceResult
+		   */
+	/*	private boolean validNoInterceptingLesson(IAula lesson) {
+	
+			try {
+				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+	
+				IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+	
+				List lessonMatchList =
+					persistentLesson.readLessonsInBroadPeriod(lesson);
+	
+				System.out.println("Tenho aulas:" + lessonMatchList.size());
+				
+				if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) || (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
+					
+					return false;
+				} else {
+					return true;
+				}
+			} catch (ExcepcaoPersistencia e) {
+				return false;
+	
+			}
+		}
+	*/
+
 	private boolean validNoInterceptingLesson(
-		IAula lesson,
+		IAula newLesson,
+		IAula oldLesson,
 		IExecutionPeriod executionPeriod)
 		throws ExistingServiceException, InterceptingServiceException {
 
@@ -157,12 +194,12 @@ public class CreateLesson implements IServico {
 
 			List lessonMatchList =
 				persistentLesson.readLessonsInBroadPeriod(
-					lesson,
-					null,
+					newLesson,
+					oldLesson,
 					executionPeriod);
 
 			if (lessonMatchList.size() > 0) {
-				if (lessonMatchList.contains(lesson)) {
+				if (lessonMatchList.contains(newLesson)) {
 					throw new ExistingServiceException();
 				} else {
 					throw new InterceptingServiceException();
@@ -173,18 +210,6 @@ public class CreateLesson implements IServico {
 		} catch (ExcepcaoPersistencia e) {
 			return false;
 		}
-	}
-
-	private InfoLessonServiceResult validTimeInterval(IAula lesson) {
-		InfoLessonServiceResult result = new InfoLessonServiceResult();
-
-		if (lesson.getInicio().getTime().getTime()
-			>= lesson.getFim().getTime().getTime()) {
-			result.setMessageType(
-				InfoLessonServiceResult.INVALID_TIME_INTERVAL);
-		}
-
-		return result;
 	}
 
 	private InfoShiftServiceResult valid(ITurno shift, IAula lesson)
@@ -328,7 +353,6 @@ public class CreateLesson implements IServico {
 		private InvalidLoadException(String s, Throwable cause) {
 			super(s, cause);
 		}
-
 
 	}
 

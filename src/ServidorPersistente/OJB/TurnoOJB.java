@@ -309,7 +309,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		criteria.addEqualTo("disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.idInternal", executionDegree.getCurricularPlan().getIdInternal());
 		criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriod.getIdInternal());
 
-		List shifts = queryList(Turno.class, criteria);
+		List shifts = queryList(Turno.class, criteria, true);
 		return shifts;
 	}
 

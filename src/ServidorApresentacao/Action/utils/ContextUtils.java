@@ -652,6 +652,17 @@ public class ContextUtils {
 		return labelListOfCurricularYears;
 	}
 
+	public static List getLabelListOfOptionalCurricularYears() {
+		ArrayList labelListOfCurricularYears = new ArrayList();
+		labelListOfCurricularYears.add(new LabelValueBean("todos", ""));
+		labelListOfCurricularYears.add(new LabelValueBean("1 º", "1"));
+		labelListOfCurricularYears.add(new LabelValueBean("2 º", "2"));
+		labelListOfCurricularYears.add(new LabelValueBean("3 º", "3"));
+		labelListOfCurricularYears.add(new LabelValueBean("4 º", "4"));
+		labelListOfCurricularYears.add(new LabelValueBean("5 º", "5"));
+		return labelListOfCurricularYears;
+	}
+
 	public static List getLabelListOfExecutionDegrees(List executionDegreeList) {
 		List labelListOfExecutionDegrees =
 			(List) CollectionUtils.collect(

@@ -644,7 +644,7 @@
          		    key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                     handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                     />
-        <forward name="Sucesso" path="/manipularSalas.jsp" />
+        <forward name="Sucesso" path="/pesquisarSalas.jsp" />
       </action>
 
       <action attribute="pesquisarSalaForm"

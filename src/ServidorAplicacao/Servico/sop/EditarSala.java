@@ -61,8 +61,9 @@ public class EditarSala implements IServico {
 				if (!sala.getNome().equals(salaNova.getNome())) {
 					ISala roomWithSameName =
 						sp.getISalaPersistente().readByName(salaNova.getNome());
-					if (roomWithSameName != null)
+					if (roomWithSameName != null) {
 						throw new ExistingServiceException();
+					}
 				}
 				// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()				
 				sala = (ISala) sp.getISalaPersistente().readByOId(sala,true);

@@ -14,6 +14,8 @@ import java.util.List;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
+import Dominio.CurricularYear;
+import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -69,12 +71,21 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 				Cloner.copyInfoExecutionDegree2ExecutionDegree(
 					infoExecutionDegree);
 
+			ICurricularYear curricularYearFromDB =
+					(ICurricularYear) sp
+						.getIPersistentCurricularYear()
+						.readByOID(
+						CurricularYear.class,
+						curricularYear);
+
+
 			listDCDE =
 				executionCourseDAO
-					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-					curricularYear,
+					.readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
 					executionPeriod,
-					executionDegree);
+					executionDegree,
+					curricularYearFromDB,
+					"");
 
 			Iterator iterator = listDCDE.iterator();
 			listInfoDE = new ArrayList();

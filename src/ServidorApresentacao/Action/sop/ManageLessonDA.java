@@ -29,17 +29,12 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
+import ServidorAplicacao.Servico.sop.CreateLesson;
+import ServidorAplicacao.Servico.sop.EditLesson;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.InvalidTimeIntervalActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
+import ServidorApresentacao.Action.sop.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -294,10 +289,25 @@ public class ManageLessonDA
 
 			Object args[] = { infoLesson, infoShift };
 
-			ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"CreateLesson",
-				args);
+			try {
+				ServiceUtils.executeService(
+					SessionUtils.getUserView(request),
+					"CreateLesson",
+					args);
+			} catch (CreateLesson.InvalidLoadException ex) {
+				//ActionErrors actionErrors = new ActionErrors();
+				if (ex.getMessage().endsWith("REACHED")) {			
+					actionErrors.add(
+						"errors.shift.hours.limit.reached",
+						new ActionError("errors.shift.hours.limit.reached"));
+				} else {
+					actionErrors.add(
+						"errors.shift.hours.limit.exceeded",
+						new ActionError("errors.shift.hours.limit.exceeded"));					
+				}
+				saveErrors(request, actionErrors);
+				return mapping.getInputForward();
+			}
 
 			return mapping.findForward("EditShift");
 		} else {
@@ -493,14 +503,28 @@ public class ManageLessonDA
 				Object argsEditLesson[] =
 					{
 						keyLessonOld,
-						infoLessonToCreateOrEdited /*, iExecutionPeriod*/
+						infoLessonToCreateOrEdited, /*, iExecutionPeriod*/
+						infoShift		
 				};
 
 				try {
 					ServiceUtils.executeService(
 						SessionUtils.getUserView(request),
-						"EditarAula",
+						"EditLesson",
 						argsEditLesson);
+				} catch (EditLesson.InvalidLoadException ex) {
+					//ActionErrors actionErrors = new ActionErrors();
+					if (ex.getMessage().endsWith("REACHED")) {			
+						actionErrors.add(
+							"errors.shift.hours.limit.reached",
+							new ActionError("errors.shift.hours.limit.reached"));
+					} else {
+						actionErrors.add(
+							"errors.shift.hours.limit.exceeded",
+							new ActionError("errors.shift.hours.limit.exceeded"));					
+					}
+					saveErrors(request, actionErrors);
+					return mapping.getInputForward();
 				} catch (ExistingServiceException ex) {
 					throw new ExistingActionException("A aula", ex);
 				} catch (InterceptingServiceException ex) {
@@ -514,11 +538,25 @@ public class ManageLessonDA
 			} else {
 				Object argsCreateLesson[] =
 					{ infoLessonToCreateOrEdited, infoShift };
-
-				ServiceUtils.executeService(
-					SessionUtils.getUserView(request),
-					"CreateLesson",
-					argsCreateLesson);
+				try {
+					ServiceUtils.executeService(
+						SessionUtils.getUserView(request),
+						"CreateLesson",
+						argsCreateLesson);
+				} catch (CreateLesson.InvalidLoadException ex) {
+					//ActionErrors actionErrors = new ActionErrors();
+					if (ex.getMessage().endsWith("REACHED")) {			
+						actionErrors.add(
+							"errors.shift.hours.limit.reached",
+							new ActionError("errors.shift.hours.limit.reached"));
+					} else {
+						actionErrors.add(
+							"errors.shift.hours.limit.exceeded",
+							new ActionError("errors.shift.hours.limit.exceeded"));					
+					}
+					saveErrors(request, actionErrors);
+					return mapping.getInputForward();
+				}					
 			}
 
 			return mapping.findForward("EditShift");
