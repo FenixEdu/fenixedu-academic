@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td width="200px">
-	  <bean:message key="message.mailAddress"/>
+	  <bean:message key="message.mailAddressCourse"/>
 	<td>
 	  <html:text property="mail" size="30"/>
 	</td>
