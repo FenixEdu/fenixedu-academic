@@ -71,13 +71,14 @@ public class InsertItemServiceTest extends TestCaseCreateServices {
 		
 				  
 		try {
+			
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite isp = sp.getIPersistentSite();
 			persistentSection = sp.getIPersistentSection();
-			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","LEEC");
 			
+			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","MEEC");
 		
 			ISite site= isp.readByExecutionCourse(executionCourse);
 			
@@ -94,7 +95,7 @@ public class InsertItemServiceTest extends TestCaseCreateServices {
 			
 			InfoSection infoSection = Cloner.copyISection2InfoSection(section);
 			argsInsertItem[0] = new InfoItem("item0 da seccao1dePO","Item0dePO",new Integer(0),infoSection,new Boolean(true));
-	
+		
 			return argsInsertItem;
 
 			
@@ -121,7 +122,7 @@ public class InsertItemServiceTest extends TestCaseCreateServices {
 			persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite isp = sp.getIPersistentSite();
 			persistentSection = sp.getIPersistentSection();
-			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","LEEC");
+			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","MEEC");
 		
 			ISite site= isp.readByExecutionCourse(executionCourse);
 
