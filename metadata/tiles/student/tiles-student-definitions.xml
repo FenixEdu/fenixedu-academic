@@ -10,6 +10,13 @@
 	  <put name="body" value=" " />
 	  <put name="footer" value="/student/commons/commonFooterStudent.jsp" />
 	</definition>
+	<definition name="definition.student.one-column" extends="df.layout.one-column">
+	  <put name="title" value=".IST - portalEstudante" />
+	  <put name="serviceName" value="Portal do Estudante" />	
+	  <put name="body" value=" " />
+	  <put name="footer" value="/student/commons/commonFooterStudent.jsp" />
+	</definition>
+	
 	<definition name="definition.student.curricular.course.enrolment" extends="definition.student.masterPage">
 		<put name="body-context" value="/student/enrolmentContext.jsp"/>
 	</definition>
