@@ -13,6 +13,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -29,6 +30,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 	ICursoPersistente persistentDegree = null;
 	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 	IPersistentCurricularCourse persistentCurricularCourse = null;
+	
 
 	public CurricularCourseOJBTest(java.lang.String testName) {
 		super(testName);
