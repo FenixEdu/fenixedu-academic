@@ -42,8 +42,9 @@ public class InfoCurricularCourseScope extends InfoObject implements Serializabl
 			resultado =
 				(getInfoBranch().equals(infoCurricularCourse.getInfoBranch())
 					&& getInfoCurricularCourse().equals(infoCurricularCourse.getInfoCurricularCourse())
-					&& getEndDate().equals(infoCurricularCourse.getEndDate())
-					&& getInfoCurricularSemester().equals(infoCurricularCourse.getInfoCurricularSemester()));
+					&& getInfoCurricularSemester().equals(infoCurricularCourse.getInfoCurricularSemester())
+					&& ((getEndDate() == null && infoCurricularCourse.getEndDate() == null)
+						|| (getEndDate() != null && infoCurricularCourse.getEndDate() != null && getEndDate().equals(infoCurricularCourse.getEndDate()))));
 		}
 		return resultado;
 	}

@@ -12,6 +12,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IFrequenta;
+import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -131,12 +132,18 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 		persistentSupport = SuportePersistenteOJB.getInstance();
 		frequentaPersistente = persistentSupport.getIFrequentaPersistente();
 		try {
-			IFrequenta frequenta = new Frequenta();
-			frequenta.setAluno(enrolment.getStudentCurricularPlan().getStudent());
-			frequenta.setEnrolment(enrolment);
-			frequenta.setDisciplinaExecucao(
-				(IDisciplinaExecucao) enrolment.getCurricularCourseScope().getCurricularCourse().getAssociatedExecutionCourses().get(0));
-			frequentaPersistente.lockWrite(frequenta);
+			IStudent student = enrolment.getStudentCurricularPlan().getStudent();
+			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) enrolment.getCurricularCourseScope().getCurricularCourse().getAssociatedExecutionCourses().get(0);
+
+			IFrequenta frequenta = frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+
+			if (frequenta == null) {
+				frequenta = new Frequenta();
+				frequentaPersistente.simpleLockWrite(frequenta);
+				frequenta.setAluno(student);
+				frequenta.setEnrolment(enrolment);
+				frequenta.setDisciplinaExecucao(executionCourse);
+			}
 		} catch (ExistingPersistentException e) {
 			throw e;
 		} catch (ExcepcaoPersistencia e) {
@@ -148,14 +155,17 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 		persistentSupport = SuportePersistenteOJB.getInstance();
 		persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
 		try {
-			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-			enrolmentEvaluation.setWhen(new Date());
-			// TODO [DAVID]: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
-			enrolmentEvaluation.setCheckSum(null);
-			persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
+			IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment, enrolment.getEnrolmentEvaluationType(), null);
+			if (enrolmentEvaluation == null) {
+				enrolmentEvaluation = new EnrolmentEvaluation();
+				persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluation);
+				enrolmentEvaluation.setEnrolment(enrolment);
+				enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+				enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+				enrolmentEvaluation.setWhen(new Date());
+				// TODO [DAVID]: Quando o algoritmo do checksum estiver feito tem de se actualizar este campo
+				enrolmentEvaluation.setCheckSum(null);
+			}
 		} catch (ExcepcaoPersistencia e) {
 			throw e;
 		}
