@@ -147,8 +147,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
         crit.addEqualTo("executionDegree.executionYear.year", executionYear);
         crit.addEqualTo("executionDegree.curricularPlan.degree.sigla", degreeCode);
         crit.addEqualTo("specialization", specialization.getSpecialization());
-        crit.addOrderBy("candidateNumber", false);
-        Object result = queryObject(MasterDegreeCandidate.class, crit);
+        Object result = queryList(MasterDegreeCandidate.class, crit, "candidateNumber", false).get(0);
 
         if (result != null)
             number = ((IMasterDegreeCandidate) result).getCandidateNumber().intValue();

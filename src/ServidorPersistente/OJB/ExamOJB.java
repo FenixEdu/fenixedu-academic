@@ -36,9 +36,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam
 
     public List readAll() throws ExcepcaoPersistencia
     {
-        Criteria crit = new Criteria();
-        crit.addOrderBy("season", true);
-        return queryList(Exam.class, crit);
+        return queryList(Exam.class, null, "season", true);
 
     }
 

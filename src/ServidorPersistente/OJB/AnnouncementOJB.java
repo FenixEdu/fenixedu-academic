@@ -41,8 +41,7 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 
         Criteria crit = new Criteria();
         crit.addEqualTo("site.idInternal", site.getIdInternal());
-        crit.addOrderBy("lastModifiedDate", false);
-        return queryList(Announcement.class, crit);
+        return queryList(Announcement.class, crit, "lastModifiedDate", false);
 
     }
 
@@ -53,8 +52,7 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("site.idInternal", site.getIdInternal());
-        crit.addOrderBy("lastModifiedDate", false);
-        List result = queryList(Announcement.class, crit);
+        List result = queryList(Announcement.class, crit, "lastModifiedDate", false);
         if (result != null && !result.isEmpty())
         {
             return (IAnnouncement) result.get(0);
@@ -64,7 +62,6 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 
             return null;
         }
-
     }
 
 }

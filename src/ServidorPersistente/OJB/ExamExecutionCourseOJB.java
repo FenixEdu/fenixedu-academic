@@ -12,6 +12,7 @@ package ServidorPersistente.OJB;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.ExamExecutionCourse;
 import Dominio.IExam;
@@ -56,11 +57,10 @@ public class ExamExecutionCourseOJB extends ObjectFenixOJB implements IPersisten
 
     public List readAll() throws ExcepcaoPersistencia
     {
-        Criteria crit = new Criteria();
-        crit.addOrderBy("executionCourse.sigla", true);
-        crit.addOrderBy("exam.season", true);
-        return queryList(ExamExecutionCourse.class, crit);
-
+        QueryByCriteria queryByCriteria = new QueryByCriteria(ExamExecutionCourse.class, null);
+        queryByCriteria.addOrderBy("executionCourse.sigla", true);
+        queryByCriteria.addOrderBy("exam.season", true);
+        return queryList(queryByCriteria);
     }
 
     

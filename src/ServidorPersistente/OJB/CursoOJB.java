@@ -51,8 +51,7 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("tipoCurso", degreeType);
-        criteria.addOrderBy("nome", true);
-        return queryList(Curso.class, criteria);
+        return queryList(Curso.class, criteria, "nome", true);
     }
 
     public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType)

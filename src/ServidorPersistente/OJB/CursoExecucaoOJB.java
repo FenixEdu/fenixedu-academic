@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.CursoExecucao;
 import Dominio.ICurso;
@@ -58,13 +59,9 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 	 */
     public List readByExecutionYear(String executionYear) throws ExcepcaoPersistencia
     {
-
-
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear);
-        criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
-
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(CursoExecucao.class, criteria, "KEY_DEGREE_CURRICULAR_PLAN", true);
     }
 
     /**
@@ -129,12 +126,12 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 
     public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
     {
-
         Criteria criteria = new Criteria();
         criteria.addEqualTo("coordinatorsList.teacher.teacherNumber", teacher.getTeacherNumber());
-        criteria.addOrderBy("curricularPlan.degree.nome", true);
-        criteria.addOrderBy("executionYear.year", false);
-        return queryList(CursoExecucao.class, criteria);
+        QueryByCriteria queryByCriteria = new QueryByCriteria(CursoExecucao.class, criteria, false);
+        queryByCriteria.addOrderBy("curricularPlan.degree.nome", true);
+        queryByCriteria.addOrderBy("executionYear.year", false);
+        return queryList(queryByCriteria);
     }
 
     /*
@@ -149,8 +146,7 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
-        criteria.addOrderBy("keyCurricularPlan", true);
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(CursoExecucao.class, criteria, "keyCurricularPlan", true);
     }
 
     /*
@@ -289,8 +285,7 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
     	Criteria criteria = new Criteria();
     	criteria.addEqualTo("executionYear.idInternal", executionYearOID);
     	criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
-    	criteria.addOrderBy("keyCurricularPlan", true);
-    	return queryList(CursoExecucao.class, criteria);
+    	return queryList(CursoExecucao.class, criteria, "keyCurricularPlan", true);
 	}
 
 }

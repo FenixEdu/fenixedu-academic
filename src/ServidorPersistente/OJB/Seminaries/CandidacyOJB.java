@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
+
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.Seminaries.Candidacy;
@@ -101,9 +103,11 @@ public class CandidacyOJB extends ObjectFenixOJB implements IPersistentSeminaryC
             }
             criteria.addIn("curricular_course_id_internal", curricularCoursesIds);
         }
-        criteria.addOrderBy("seminary_modality_id_internal", true);
-        criteria.addOrderBy("student_id_internal", true);
-        List candidacies = super.queryList(Candidacy.class, criteria);
+        QueryByCriteria queryByCriteria = new QueryByCriteria(Candidacy.class, criteria);
+        queryByCriteria.addOrderBy("seminary_modality_id_internal", true);
+        queryByCriteria.addOrderBy("student_id_internal", true);
+
+        List candidacies = super.queryList(queryByCriteria);
         List filteredCandidacies = new LinkedList();
         for (Iterator iterator = candidacies.iterator(); iterator.hasNext();)
         {

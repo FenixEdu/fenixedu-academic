@@ -56,8 +56,7 @@ public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements
     public List readAll() throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
-        crit.addOrderBy("executionCourse.sigla", true);
-        return queryList(ExamExecutionCourse.class, crit);
+        return queryList(ExamExecutionCourse.class, crit, "executionCourse.sigla", true);
     }
 
     public void delete(IEvaluation evaluation) throws ExcepcaoPersistencia

@@ -42,8 +42,7 @@ public class ReimbursementGuideOJB extends ObjectFenixOJB implements IPersistent
     {
         Integer reimbursementGuideNumber = new Integer(1);
         Criteria crit = new Criteria();
-        crit.addOrderBy("number", false);
-        List reimbursementGuides = queryList(ReimbursementGuide.class, crit);
+        List reimbursementGuides = queryList(ReimbursementGuide.class, crit, "number", false);
 
         if (reimbursementGuides != null && !reimbursementGuides.isEmpty())
         {

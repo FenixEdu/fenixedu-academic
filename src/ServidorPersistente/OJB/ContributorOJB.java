@@ -49,10 +49,7 @@ public class ContributorOJB extends ObjectFenixOJB implements IPersistentContrib
             crit.addEqualTo("contributorNumber", contributorNumber);
         }
 
-        crit.addOrderBy("contributorNumber", true);
-
-        return queryList(Contributor.class, crit);
-
+        return queryList(Contributor.class, crit, "contributorNumber", true);
     }
 
 }

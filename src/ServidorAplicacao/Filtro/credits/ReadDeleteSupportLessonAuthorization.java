@@ -6,6 +6,7 @@ package ServidorAplicacao.Filtro.credits;
 
 import Dominio.ISupportLesson;
 import Dominio.SupportLesson;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 
@@ -26,14 +27,12 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
 	 * 
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
-    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
+    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         Integer supportLessonId = (Integer) arguments[0];
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-        ISupportLesson supportLesson = (ISupportLesson) supportLessonDAO.readByOId(new SupportLesson(
-                supportLessonId),
-                false);
+        ISupportLesson supportLesson = (ISupportLesson) supportLessonDAO.readByOID(SupportLesson.class, supportLessonId, false);
         return supportLesson != null
                 ? supportLesson.getProfessorship().getTeacher().getIdInternal()
                 : null;

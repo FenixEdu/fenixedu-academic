@@ -76,7 +76,6 @@ public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry
     public List readAllCountrys() throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
-        crit.addOrderBy("nationality", true);
-        return queryList(Country.class, crit);
+        return queryList(Country.class, crit, "nationality", true);
     }
 }

@@ -28,10 +28,9 @@ public class GrantOrientationTeacherOJB extends ObjectFenixOJB implements
         List grantOrientationTeacher = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyContract", contract.getIdInternal());
-        criteria.addOrderBy("beginDate", false);
         criteria.addNotEqualTo("idInternal", idInternal);
         grantOrientationTeacher = queryList(GrantOrientationTeacher.class,
-                criteria);
+                criteria, "beginDate", false);
         Iterator respIter = grantOrientationTeacher.iterator();
         IGrantOrientationTeacher orientationTeacher = null;
         if (respIter.hasNext())

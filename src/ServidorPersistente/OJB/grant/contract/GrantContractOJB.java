@@ -40,8 +40,7 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         List contractsList = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_owner", grantOwnerId);
-        criteria.addOrderBy("number", false);
-        contractsList = queryList(GrantContract.class, criteria);
+        contractsList = queryList(GrantContract.class, criteria, "number", false);
         return contractsList;
     }
 
@@ -52,9 +51,8 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_owner", grantOwnerId);
-        criteria.addOrderBy("number", false);
-        grantContract = (IGrantContract) queryObject(GrantContract.class,
-                criteria);
+        grantContract = (IGrantContract) queryList(GrantContract.class,
+                criteria, "number", false).get(0);
         if (grantContract != null)
                 maxGrantContractNumber = grantContract.getContractNumber();
         return maxGrantContractNumber;

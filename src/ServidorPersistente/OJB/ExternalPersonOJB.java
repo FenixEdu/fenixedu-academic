@@ -92,10 +92,8 @@ public class ExternalPersonOJB extends ObjectFenixOJB implements IPersistentExte
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("person.tipoDocumentoIdentificacao", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.EXTERNO));
-		criteria.addOrderBy("person.numeroDocumentoIdentificacao", false);
-		
-		
-		externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
+
+		externalPerson = (IExternalPerson) queryList(ExternalPerson.class, criteria, "person.numeroDocumentoIdentificacao", false).get(0);
 		String lastIdStr = null;
 		if (externalPerson == null)
 		{

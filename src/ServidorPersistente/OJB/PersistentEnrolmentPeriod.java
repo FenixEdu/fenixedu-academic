@@ -53,8 +53,7 @@ public class PersistentEnrolmentPeriod extends ObjectFenixOJB implements IPersis
         crit.addEqualTo("degreeCurricularPlan.degree.sigla", plan.getDegree().getSigla());
         Date date = new Date();
         crit.addGreaterThan("startDate", date);
-        crit.addOrderBy("startDate", true);
-        return (IEnrolmentPeriod) queryObject(EnrolmentPeriod.class, crit);
+        return (IEnrolmentPeriod) queryList(EnrolmentPeriod.class, crit, "startDate", true).get(0);
 
     }
 

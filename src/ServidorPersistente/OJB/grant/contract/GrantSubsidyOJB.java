@@ -27,8 +27,7 @@ public class GrantSubsidyOJB extends ObjectFenixOJB implements
         List subsidyList = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", idContract);
-        criteria.addOrderBy("id_internal", false);
-        subsidyList = queryList(GrantSubsidy.class, criteria);
+        subsidyList = queryList(GrantSubsidy.class, criteria, "id_internal", false);
         return subsidyList;
     }
 
@@ -38,8 +37,7 @@ public class GrantSubsidyOJB extends ObjectFenixOJB implements
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", idContract);
         criteria.addEqualTo("state", state);
-        criteria.addOrderBy("dateBeginSubsidy", false);
-        subsidyList = queryList(GrantSubsidy.class, criteria);
+        subsidyList = queryList(GrantSubsidy.class, criteria, "dateBeginSubsidy", false);
         return subsidyList;
     }
 }

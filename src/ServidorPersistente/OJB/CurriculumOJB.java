@@ -27,8 +27,7 @@ public class CurriculumOJB extends ObjectFenixOJB implements IPersistentCurricul
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyCurricularCourse", curricularCourse.getIdInternal());
-        criteria.addOrderBy("lastModificationDate", false);
-        return (ICurriculum) queryObject(Curriculum.class, criteria);
+        return (ICurriculum) queryList(Curriculum.class, criteria, "lastModificationDate", false).get(0);
     }
     public List readCurriculumHistoryByCurricularCourse(ICurricularCourse curricularCourse)
         throws ExcepcaoPersistencia
@@ -45,8 +44,7 @@ public class CurriculumOJB extends ObjectFenixOJB implements IPersistentCurricul
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyCurricularCourse", curricularCourse.getIdInternal());
         criteria.addLessOrEqualThan("lastModificationDate", executionYear.getEndDate());
-        criteria.addOrderBy("lastModificationDate", false);
-        return (ICurriculum) queryObject(Curriculum.class, criteria);
+        return (ICurriculum) queryList(Curriculum.class, criteria, "lastModificationDate", false);
     }
     
     public List readAll() throws ExcepcaoPersistencia

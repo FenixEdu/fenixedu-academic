@@ -112,9 +112,7 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
             Integer number = new Integer(0);
             Criteria crit = new Criteria();
             crit.addEqualTo("degreeType", degreeType);
-            crit.addOrderBy("number", false);
-           
-            List result = queryList(Student.class,crit);
+            List result = queryList(Student.class,crit, "number", false);
            
 
             if ((result != null) && (result.size() != 0))

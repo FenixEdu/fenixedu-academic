@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
@@ -68,8 +70,7 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         Integer maxGrantOwnerNumber = new Integer(0);
 
         Criteria criteria = new Criteria();
-        criteria.addOrderBy("number", false);
-        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+        grantOwner = (IGrantOwner) queryList(GrantOwner.class, criteria, "number", false).get(0);
         if (grantOwner != null)
             maxGrantOwnerNumber = grantOwner.getNumber();
         return maxGrantOwnerNumber;
@@ -92,12 +93,12 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
     }
 
     private List readBySpanAndCriteria(Integer spanNumber,
-            Integer numberOfElementsInSpan, Criteria criteria)
+            Integer numberOfElementsInSpan, Query query)
             throws ExcepcaoPersistencia {
         
         List result = new ArrayList();
 
-        Iterator iter = readIteratorByCriteria(GrantOwner.class, criteria);
+        Iterator iter = readIteratorByCriteria(query);
 
         int begin = (spanNumber.intValue() - 1) * numberOfElementsInSpan.intValue();
         int end = begin + numberOfElementsInSpan.intValue();
@@ -118,15 +119,14 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
     public List readAllGrantOwnersBySpan(Integer spanNumber,
             Integer numberOfElementsInSpan, String orderBy)
             throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addOrderBy(orderBy, true);
-        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria);
+        QueryByCriteria queryByCriteria = new QueryByCriteria(GrantOwner.class, null);
+        queryByCriteria.addOrderBy(orderBy, true);
+        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,queryByCriteria);
     }
     
     public List readAllGrantOwnersBySpanAndCriteria(String orderBy, Boolean justActiveContracts, Boolean justDesactiveContracts, Date beginContract, Date endContract, Integer spanNumber, Integer numberOfElementsInSpan) 
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addOrderBy(orderBy, true);
         
         criteria.addEqualTo("contractRegimes.state", new Integer(1));
         
@@ -146,7 +146,10 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         if(endContract != null) {
             criteria.addLessOrEqualThan("contractRegimes.dateEndContract",endContract);
         }
-        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria);        
+        QueryByCriteria queryByCriteria = new QueryByCriteria(GrantOwner.class, criteria);
+        queryByCriteria.addOrderBy(orderBy, true);
+
+        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,queryByCriteria);        
     }
 
 }

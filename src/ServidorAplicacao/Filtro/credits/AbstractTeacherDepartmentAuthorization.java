@@ -17,6 +17,7 @@ import ServidorAplicacao.Filtro.AccessControlFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
@@ -80,5 +81,5 @@ public abstract class AbstractTeacherDepartmentAuthorization extends
      * @return
      */
     protected abstract Integer getTeacherId(Object[] arguments,
-            ISuportePersistente sp) throws FenixServiceException;
+            ISuportePersistente sp) throws FenixServiceException, ExcepcaoPersistencia;
 }

@@ -30,9 +30,8 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
         Integer guideNumber = new Integer(0);
         Criteria crit = new Criteria();
         crit.addEqualTo("year", year);
-        crit.addOrderBy("number", false);
 
-        List result = queryList(Guide.class, crit);
+        List result = queryList(Guide.class, crit, "number", false);
 
         if (result != null && result.size() != 0)
         {
@@ -149,9 +148,8 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
 
         criteria.addEqualTo("number", number);
         criteria.addEqualTo("year", year);
-        criteria.addOrderBy("version", true);
 
-        List result = queryList(Guide.class, criteria);
+        List result = queryList(Guide.class, criteria, "version", true);
 
         return result;
     }

@@ -42,10 +42,7 @@ public class ExecutionYearOJB extends ObjectFenixOJB implements IPersistentExecu
 	 */
     public List readAllExecutionYear() throws ExcepcaoPersistencia
     {
-        Criteria crit = new Criteria();
-        crit.addOrderBy("year", false);
-        return queryList(ExecutionYear.class, crit);
-
+        return queryList(ExecutionYear.class, null, "year", false);
     }
     
 

@@ -473,64 +473,37 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return crit;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentObject#getDeletedObjects()
-     */
-    //    public void removeFromCacheDeletedObjects()
-    //    {
-    //
-    //        //
-    // ////////////////////////////////////////////////////////////////////////////////////
-    //        // Do this just to get the broker...
-    //        // There must be a simpler way!
-    //        //
-    // ////////////////////////////////////////////////////////////////////////////////////
-    //
-    //        //obtain current ODMG transaction
-    //        Transaction tx = OJB.getInstance().currentTransaction();
-    //        //TxManagerFactory.instance().getCurrentTransaction();
-    //
-    //        // we allow queries even if no ODMG transaction is running.
-    //        // thus we have to provide a pseudo tx if necessary
-    //        /*
-    //		 * boolean needsCommit = false; if (tx == null) {
-    //		 * System.out.println("Transaction Null!"); //throw new
-    //		 * org.odmg.QueryException("Transaction Null!"); //tx =
-    //		 * OJBFactory.getInstance().newTransaction(); } // we allow to work
-    //		 * with unopened transactions. // we assume that such a tx is to be
-    //		 * closed after performing the query if (!tx.isOpen()) { tx.begin();
-    //		 * needsCommit = true; }
-    //		 */ // obtain a broker instance from the current transaction
-    //        PersistenceBroker broker = ((HasBroker) tx).getBroker();
-    //        //
-    // /////////////////////////////////////////////////////////////////////////////////////////
-    //        //
-    // /////////////////////////////////////////////////////////////////////////////////////////
-    //        /*
-    //		 * Iterator iterator = deletedObject.iterator(); while
-    //		 * (iterator.hasNext()) {
-    //		 *
-    // System.out.println("AQQIWUEWQOIEOQWUIEOIQUWEOI????????????????????????");
-    //		 * Object element = (Object) iterator.next();
-    //		 * broker.removeFromCache(element);
-    //		 */
-    //        broker.clearCache();
-    //    }
     protected List queryList(Class classToQuery, Criteria criteria)
             throws ExcepcaoPersistencia {
         return queryList(classToQuery, criteria, false);
     }
 
+    protected List queryList(Class classToQuery, Criteria criteria, String orderByString, boolean reverseOrder)
+    		throws ExcepcaoPersistencia {
+    	return queryList(classToQuery, criteria, false, orderByString, reverseOrder);
+    }
+
+    protected List queryList(Class classToQuery, Criteria criteria, boolean distinct)
+    	throws ExcepcaoPersistencia {
+    	return queryList(classToQuery, criteria, distinct, null, false);
+    }
+
     protected List queryList(Class classToQuery, Criteria criteria,
-            boolean distinct) throws ExcepcaoPersistencia {
+            boolean distinct, String orderByString, boolean reverseOrder) throws ExcepcaoPersistencia {
+
+        QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, criteria, distinct);
+        if (orderByString != null) {
+        	queryCriteria.addOrderBy(orderByString, reverseOrder);
+        }
+
+        return queryList(queryCriteria);
+    }
+
+    protected List queryList(Query query) throws ExcepcaoPersistencia {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
                 .getBroker();
 
-        Query queryCriteria = new QueryByCriteria(classToQuery, criteria,
-                distinct);
-        List list = (List) pb.getCollectionByQuery(queryCriteria);
+        List list = (List) pb.getCollectionByQuery(query);
         if (list != null) {
             if (!list.isEmpty()
                     && (list.get(0) instanceof MasterDegreeCandidate
@@ -693,11 +666,15 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return iterator;
     }
 
-    public Iterator readIteratorByCriteria(Class classToQuery, Criteria criteria) {
-        PersistenceBroker pb = getCurrentPersistenceBroker();
-        Query query = getQuery(classToQuery, criteria);
+    public Iterator readIteratorByCriteria(Query query) {
+    	PersistenceBroker pb = getCurrentPersistenceBroker();
         Iterator iterator = pb.getIteratorByQuery(query);
-        return iterator;
+        return iterator;    	
+    }
+
+    public Iterator readIteratorByCriteria(Class classToQuery, Criteria criteria) {
+        Query query = getQuery(classToQuery, criteria);
+        return readIteratorByCriteria(query);
     }
 
     /**

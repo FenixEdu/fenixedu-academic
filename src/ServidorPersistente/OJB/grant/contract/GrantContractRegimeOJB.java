@@ -24,8 +24,7 @@ public class GrantContractRegimeOJB extends
         List grantContractRegimes = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", grantContractId);
-        criteria.addOrderBy("dateBeginContract", false);
-        grantContractRegimes = queryList(GrantContractRegime.class, criteria);
+        grantContractRegimes = queryList(GrantContractRegime.class, criteria, "dateBeginContract", false);
         return grantContractRegimes;
     }
 
@@ -35,8 +34,7 @@ public class GrantContractRegimeOJB extends
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_contract", grantContractId);
         criteria.addEqualTo("state", state);
-        criteria.addOrderBy("dateBeginContract", false);
-        grantContractRegime = queryList(GrantContractRegime.class, criteria);
+        grantContractRegime = queryList(GrantContractRegime.class, criteria, "dateBeginContract", false);
         return grantContractRegime;
     }
 }
