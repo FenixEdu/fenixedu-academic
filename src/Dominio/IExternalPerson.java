@@ -18,6 +18,6 @@ public interface IExternalPerson extends IDomainObject {
 	public abstract void setPerson(IPessoa person);
 	public abstract IPessoa getPerson();
 
-	public abstract void setWorkLocation(String workLocation);
-	public abstract String getWorkLocation();
+	public abstract void setWorkLocation(IWorkLocation workLocation);
+	public abstract IWorkLocation getWorkLocation();
 }
