@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
@@ -115,10 +116,28 @@ public class Autenticacao implements IServico {
 				
 			} else userView.setCandidateView(null);
 			
-			
+			filterEmployeeRoleFromTeacher(userView);
 			return filterUserView(userView, application);
 		} else
 			throw new ExcepcaoAutenticacao("Autenticacao incorrecta");
+	}
+
+	/**
+	 * @param userView
+	 */
+	private void filterEmployeeRoleFromTeacher(UserView userView) {
+		if (userView.getUtilizador().charAt(0) == 'd' || userView.getUtilizador().charAt(0) == 'D') {
+			CollectionUtils.filter(userView.getRoles(), new Predicate() {
+				public boolean evaluate(Object arg0) {
+					InfoRole role = (InfoRole) arg0;
+					if (role.getRoleType().getValue() == RoleType.EMPLOYEE_TYPE) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+			});
+		}
 	}
 
 	/**
