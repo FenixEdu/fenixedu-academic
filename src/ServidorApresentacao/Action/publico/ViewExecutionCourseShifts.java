@@ -60,7 +60,7 @@ public class ViewExecutionCourseShifts extends FenixAction {
 				infoShifts,
 				new ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons());
 				
-			//TODO: see how lists can be placed in request	
+		
 			request.setAttribute("publico.infoShifts", infoShifts);
 		} else {
 			

@@ -64,7 +64,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		mailBody += "Path: " + originalMapping.getPath() + "\n";
 		mailBody += "Name: " + originalMapping.getName() + "\n";
 		mailBody += stackTrace2String(stackTrace);
-		//TODO :IMPORTANT change the current mail server and e-mail to the real ones
+	
 		EMail email =null;
 		
 		if (!request.getServerName().equals("localhost")) { email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
