@@ -34,6 +34,8 @@ public class Util {
         edificios.add(new LabelValueBean("Edifício Ciência", "Edifício Ciência"));
         edificios.add(new LabelValueBean("Pavilhão Central", "Pavilhão Central"));
 
+        edificios.add(new LabelValueBean("LTI do CIIST", "LTI do CIIST"));
+
         edificios.add(new LabelValueBean("Pavilhão Civil", "Pavilhão Civil"));
 
         edificios.add(new LabelValueBean("Pavilhão Electricidade", "Pavilhão Electricidade"));
