@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="DataBeans.gesdis.InfoAnnouncement" %>
+<%@ page import="DataBeans.InfoAnnouncement" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.lang.String" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
