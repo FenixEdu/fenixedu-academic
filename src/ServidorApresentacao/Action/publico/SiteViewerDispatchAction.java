@@ -4,7 +4,6 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -13,8 +12,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -40,7 +37,6 @@ import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction
 {
@@ -53,23 +49,12 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         throws FenixActionException
     {
         ISiteComponent firstPageComponent = new InfoSiteFirstPage();
-		HttpSession session = request.getSession(true);
-        String objectCodeString = request.getParameter("objectCode");
+		String objectCodeString = request.getParameter("objectCode");
         if (objectCodeString == null)
         {
             objectCodeString = (String) request.getAttribute("objectCode");
         }
         Integer infoExecutionCourseCode = new Integer(objectCodeString);
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
-		InfoExecutionDegree infoExecutionDegree =
-					(InfoExecutionDegree) request.getAttribute(
-						SessionConstants.EXECUTION_DEGREE);
-
-		
-		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-
 		Integer degreeId = getFromRequest("degreeID", request);
 
 		request.setAttribute("degreeID", degreeId);

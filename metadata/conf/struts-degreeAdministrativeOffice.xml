@@ -33,7 +33,7 @@
 			<form-property name="executionDegree" type="java.lang.String"/>
 			<form-property name="curricularYears" type="java.lang.Integer[]"/>
 			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
-			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="curricularCourses" type="java.lang.String[]"/>
 			<form-property name="unenrollments" type="java.lang.Integer[]"/>			
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>

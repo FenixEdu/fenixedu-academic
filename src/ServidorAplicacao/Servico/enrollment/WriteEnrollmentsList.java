@@ -81,7 +81,11 @@ public class WriteEnrollmentsList implements IService
 				ListIterator iterator = curricularCoursesList.listIterator();
 				while (iterator.hasNext())
 				{
-					Integer curricularCourseID = (Integer) iterator.next();
+				    String enrollmentInfo = (String) iterator.next();
+				    
+					Integer curricularCourseID = new Integer(enrollmentInfo.split("-")[0]);
+					//currently ignoring this value
+					//Integer enrollmentType = new Integer(enrollmentInfo.split("-")[0]);
 
 					IExecutionPeriod executionPeriod =
 						findExecutionPeriod(sp, executionYear, curricularCourseID, degreeType);
@@ -97,8 +101,7 @@ public class WriteEnrollmentsList implements IService
 						studentCurricularPlan.getIdInternal(),
 						curricularCourseID,
 						executionPeriodId,
-						//TODO: JMOTA: FIX THIS ARGUMENT
-						CurricularCourseEnrollmentType.getEnum(1)
+						CurricularCourseEnrollmentType.DEFINITIVE
 					);
 				}
 			}

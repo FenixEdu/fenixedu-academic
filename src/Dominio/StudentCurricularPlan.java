@@ -38,7 +38,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     protected Integer branchKey;
 
     protected Integer degreeCurricularPlanKey;
-
+ 
     protected Integer employeeKey;
 
     protected String ojbConcreteClass;

@@ -503,7 +503,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		TipoCurso degreeType = new TipoCurso();
 		degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
 
-		Integer[] curricularCourses = (Integer[]) enrollForm.get("curricularCourses");
+		String[] curricularCourses = (String[]) enrollForm.get("curricularCourses");
 		List curricularCoursesList = Arrays.asList(curricularCourses);
 
 		Object[] args = { infoStudent, degreeType, infoExecutionYear, curricularCoursesList };

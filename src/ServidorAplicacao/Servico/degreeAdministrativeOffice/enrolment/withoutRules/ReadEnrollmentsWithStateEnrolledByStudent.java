@@ -13,9 +13,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoEnrolmentWithInfoCurricularCourse;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import Dominio.ICursoExecucao;
 import Dominio.IEnrollment;
 import Dominio.IExecutionYear;
@@ -79,8 +80,8 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
                         "error.student.curriculum.not.from.chosen.execution.year");
             }
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException();
+            
+            throw new FenixServiceException(e);
         }
 
         return infoStudentEnrolmentContext;
@@ -93,8 +94,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
      */
     private InfoStudentEnrollmentContext buildResult(
             IStudentCurricularPlan studentCurricularPlan, List enrollments) {
-        InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
-                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudent.newInfoFromDomain(studentCurricularPlan);
 
         List infoEnrollments = new ArrayList();
         if (enrollments != null && enrollments.size() > 0) {
@@ -102,8 +102,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
                     new Transformer() {
                         public Object transform(Object input) {
                             IEnrollment enrolment = (IEnrollment) input;
-                            return Cloner
-                                    .copyIEnrolment2InfoEnrolment(enrolment);
+                            return InfoEnrolmentWithInfoCurricularCourse.newInfoFromDomain(enrolment);
                         }
                     });
             Collections.sort(infoEnrollments, new BeanComparator(

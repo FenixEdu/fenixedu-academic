@@ -18,8 +18,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import DataBeans.enrollment.InfoCurricularCourse2Enroll;
-import Dominio.CurricularCourse;
+import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import Dominio.CursoExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -39,7 +40,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CurricularCourseType;
 import Util.TipoCurso;
 import Util.enrollment.CurricularCourseEnrollmentType;
-import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author Tânia Pousão
@@ -95,91 +95,54 @@ public class ReadCurricularCoursesToEnroll implements IService {
             final List curricularYearsListFinal = verifyYears(curricularYearsList);
             final List curricularSemestersListFinal = verifySemesters(curricularSemestersList);
 
-            if (degreeCurricularPlan.equals(studentCurricularPlan.getDegreeCurricularPlan())) {
-                curricularCoursesFromDegreeCurricularPlan = curricularCoursesFromDegreeCurricularPlan = filterOptionalCourses(studentCurricularPlan
-                        .getCurricularCoursesToEnrollInExecutionYear(executionDegree.getExecutionYear(),
-                                EnrollmentRuleType.EMPTY));
-                if (!((curricularYearsList == null || curricularYearsList.size() <= 0) && (curricularSemestersList == null || curricularSemestersList
-                        .size() <= 0))) {
-                    curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
-                            curricularCoursesFromDegreeCurricularPlan, new Predicate() {
+            curricularCoursesFromDegreeCurricularPlan = filterOptionalCourses(degreeCurricularPlan
+                    .getCurricularCourses());
+            curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
+                    curricularCoursesFromDegreeCurricularPlan, new Predicate() {
+                        public boolean evaluate(Object arg0) {
+                            return !studentCurricularPlan
+                                    .isCurricularCourseApproved(((CurricularCourse2Enroll) arg0)
+                                            .getCurricularCourse())
+                                    && !studentCurricularPlan
+                                            .isCurricularCourseEnrolled(((CurricularCourse2Enroll) arg0)
+                                                    .getCurricularCourse());
+                        }
+                    });
+            if (!((curricularYearsList == null || curricularYearsList.size() <= 0) && (curricularSemestersList == null || curricularSemestersList
+                    .size() <= 0))) {
 
-                                public boolean evaluate(Object arg0) {
-                                    boolean result = false;
-
-                                    CurricularCourse2Enroll curricularCourse = (CurricularCourse2Enroll) arg0;
-                                    List scopes = curricularCourse.getCurricularCourse().getScopes();
-                                    Iterator iter = scopes.iterator();
-                                    while (iter.hasNext() && !result) {
-                                        ICurricularCourseScope scope = (ICurricularCourseScope) iter
-                                                .next();
-                                        if (curricularSemestersListFinal.contains(scope
-                                                .getCurricularSemester().getSemester())
-                                                && curricularYearsListFinal.contains(scope
-                                                        .getCurricularSemester().getCurricularYear()
-                                                        .getYear())) {
-                                            result = true;
-                                        }
-                                    }
-                                    return result;
-                                }
-
-                            });
-
-                }
-            } else {
-
-                curricularCoursesFromDegreeCurricularPlan = filterOptionalCourses(studentCurricularPlan
-                        .getCurricularCoursesToEnrollInExecutionYear(executionDegree.getExecutionYear(),
-                                EnrollmentRuleType.EMPTY));
                 curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
                         curricularCoursesFromDegreeCurricularPlan, new Predicate() {
                             public boolean evaluate(Object arg0) {
-                                return !studentCurricularPlan
-                                        .isCurricularCourseApproved((ICurricularCourse) arg0)
-                                        && !studentCurricularPlan
-                                                .isCurricularCourseEnrolled((ICurricularCourse) arg0);
+                                boolean result = false;
+
+                                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                                List scopes = curricularCourse.getScopes();
+                                Iterator iter = scopes.iterator();
+                                while (iter.hasNext() && !result) {
+                                    ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
+                                    if (curricularSemestersListFinal.contains(scope
+                                            .getCurricularSemester().getSemester())
+                                            && curricularYearsListFinal.contains(scope
+                                                    .getCurricularSemester().getCurricularYear()
+                                                    .getYear())) {
+                                        result = true;
+                                    }
+                                }
+                                return result;
                             }
                         });
-                if (!((curricularYearsList == null || curricularYearsList.size() <= 0) && (curricularSemestersList == null || curricularSemestersList
-                        .size() <= 0))) {
-
-                    curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
-                            degreeCurricularPlan.getCurricularCourses(), new Predicate() {
-                                public boolean evaluate(Object arg0) {
-                                    boolean result = false;
-
-                                    ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                                    List scopes = curricularCourse.getScopes();
-                                    Iterator iter = scopes.iterator();
-                                    while (iter.hasNext() && !result) {
-                                        ICurricularCourseScope scope = (ICurricularCourseScope) iter
-                                                .next();
-                                        if (curricularSemestersListFinal.contains(scope
-                                                .getCurricularSemester().getSemester())
-                                                && curricularYearsListFinal.contains(scope
-                                                        .getCurricularSemester().getCurricularYear()
-                                                        .getYear())) {
-                                            result = true;
-                                        }
-                                    }
-                                    return result;
-                                }
-                            });
-                }
-
             }
+
             curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.collect(
                     curricularCoursesFromDegreeCurricularPlan, new Transformer() {
 
                         public Object transform(Object arg0) {
                             CurricularCourse2Enroll curricularCourse2Enroll = null;
-                            if (arg0 instanceof CurricularCourse) {
-                                curricularCourse2Enroll = new CurricularCourse2Enroll();
-                                curricularCourse2Enroll.setCurricularCourse((ICurricularCourse) arg0);
-                            } else {
-                                curricularCourse2Enroll = (CurricularCourse2Enroll) arg0;
-                            }
+
+                            curricularCourse2Enroll = new CurricularCourse2Enroll();
+                            curricularCourse2Enroll.setCurricularCourse((ICurricularCourse) arg0);
+
                             curricularCourse2Enroll
                                     .setEnrollmentType(CurricularCourseEnrollmentType.DEFINITIVE);
                             return curricularCourse2Enroll;
@@ -235,7 +198,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
 
     private InfoStudentEnrollmentContext buildResult(IStudentCurricularPlan studentCurricularPlan,
             List curricularCoursesToChoose) {
-        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
+        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudent
                 .newInfoFromDomain(studentCurricularPlan);
 
         List infoCurricularCoursesToChoose = new ArrayList();
@@ -244,7 +207,8 @@ public class ReadCurricularCoursesToEnroll implements IService {
                     new Transformer() {
                         public Object transform(Object input) {
                             CurricularCourse2Enroll curricularCourse = (CurricularCourse2Enroll) input;
-                            return InfoCurricularCourse2Enroll.newInfoFromDomain(curricularCourse);
+                            return InfoCurricularCourse2EnrollWithInfoCurricularCourse
+                                    .newInfoFromDomain(curricularCourse);
                         }
                     });
             Collections.sort(infoCurricularCoursesToChoose, new Comparator() {
@@ -273,8 +237,9 @@ public class ReadCurricularCoursesToEnroll implements IService {
     private List filterOptionalCourses(List curricularCourses) {
         List result = (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object arg0) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                return !curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
+                CurricularCourse2Enroll curricularCourse = (CurricularCourse2Enroll) arg0;
+                return !curricularCourse.getCurricularCourse().getType().equals(
+                        CurricularCourseType.OPTIONAL_COURSE_OBJ);
             }
         });
 
