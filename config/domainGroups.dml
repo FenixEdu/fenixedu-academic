@@ -86,10 +86,6 @@ class Dominio.StudentGroupAttend {
 }
 
 
-
-
-
-
 relation sendProposal {
 	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
@@ -121,14 +117,6 @@ relation permission {
 	Dominio.GroupProperties playsRole groupProperties;
 }
 
-//relation ??? {
-//	Dominio.GroupProperties playsRole attendInAttendsSet {
-//		multiplicity *;
-//	}
-//	Dominio.AttendsSet playsRole attendsSet;
-//}
-
-
 
 relation belongsTo {
 	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
@@ -137,18 +125,7 @@ relation belongsTo {
 	Dominio.GroupProperties playsRole groupProperties;
 }
 
-
-//relation ??? {
-//	Dominio.GroupProperties playsRole ??? {
-//		multiplicity ???;
-//	}
-//	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
-//		multiplicity *;
-//	}
-//}
-
-
---->>relation answerExportProposal {
+relation answerExportProposal {
 	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
@@ -156,7 +133,7 @@ relation belongsTo {
 }
 
 
---->>relation makeExportProposal {
+relation makeExportProposal {
 	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
@@ -170,34 +147,12 @@ relation studentGroupBelongsToGroupProperties {
 	Dominio.AttendsSet playsRole attendsSet;
 }
 
-
-//relation ??? {
-//	Dominio.AttendsSet playsRole ??? {
-//		multiplicity ???;
-//	}
-//	Dominio.StudentGroup playsRole studentGroups {
-//		multiplicity *;
-//	}
-//}
-
-
 relation attendsSetHasAttend {
 	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
 	Dominio.AttendsSet playsRole attendsSet;
 }
-
-
-//relation ??? {
-//	Dominio.AttendsSet playsRole ??? {
-//		multiplicity ???;
-//	}
-//	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
-//		multiplicity *;
-//	}
-//}
-
 
 relation attendBelongsToAttendsSet {
 	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
@@ -207,36 +162,22 @@ relation attendBelongsToAttendsSet {
 }
 
 
-//relation ??? {
-//	Dominio.Frequenta playsRole ??? {
-//		multiplicity ???;
-//	}
-//	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
-//		multiplicity *;
-//	}
-//}
-
-
-
-//Não há a collection de nenhum dos lados nos objectos do Dominio!!!
------->>relation ??? {
-	Dominio.StudentGroupAttend playsRole attendInAttendsSet {
+relation StudentGroupAttendFrequenta {
+	Dominio.StudentGroupAttend playsRole studentGroupAttends {
 		multiplicity *;
 	}
 	Dominio.Frequenta playsRole attend;
 }
 
-//Não há a collection de nenhum dos lados nos objectos do Dominio!!!
------->>relation ??? {
-	Dominio.StudentGroupAttend playsRole ??? {
-		multiplicity ???;
+relation StudentGroupAttendStudentGroup {
+	Dominio.StudentGroupAttend playsRole studentGroupAttends {
+		multiplicity *;
 	}
 	Dominio.StudentGroup playsRole studentGroup;
 }
 
-//Não há a collection de nenhum dos lados nos objectos do Dominio!!!
------->>relation ??? {
-	Dominio.StudentGroup playsRole associatedShiftProfessorship {
+relation StudentGroup {
+	Dominio.StudentGroup playsRole associatedStudentGroups {
 		multiplicity *;
 	}
 	Dominio.Turno playsRole shift;
