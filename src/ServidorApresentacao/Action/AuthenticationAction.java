@@ -63,6 +63,15 @@ public class AuthenticationAction extends FenixAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		
+		
+		if (userView.getRoles().isEmpty()) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("errors.noAuthorization",new ActionError("errors.noAuthorization"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		}
+		
 
 		// Invalidate existing session if it exists
 		HttpSession sessao = request.getSession(false);
