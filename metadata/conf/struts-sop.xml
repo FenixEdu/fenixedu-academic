@@ -1115,7 +1115,7 @@
       		  input="/listRoomsForExams.jsp"
               name="indexForm"
               path="/selectRoomToViewForExams"
-              scope="session"
+              scope="request"
               type="ServidorApresentacao.Action.sop.ManipularSalasAction">
         <exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
          	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"

@@ -13,8 +13,8 @@
       <logic:iterate id="infoRoom" name="selectedRooms">
         <tr align="center">
           <td>
-            <html:radio property="index" value="<%= (new Integer(i)).toString()%>"/>
-            <bean:define id="roomId" name="infoRoom" property="idInternal"/>
+          	<bean:define id="roomId" name="infoRoom" property="idInternal"/>
+            <html:radio property="index" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
             <html:hidden property="roomId" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
           </td>
           <td><bean:write name="infoRoom" property="nome"/></td>
