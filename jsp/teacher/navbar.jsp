@@ -17,7 +17,8 @@
 </html:link>
 <html:link page="/programManagerDA.do?method=acessProgram">
 	<li><bean:message key="link.program"/></li>
-</html:link><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference">
+</html:link>
+<html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference&page=0">
 	<li><bean:message key="link.bibliography"/></li>
 </html:link>
 	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">

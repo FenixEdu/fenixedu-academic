@@ -45,6 +45,7 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 	
+	
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
@@ -57,11 +58,12 @@ public class BibliographicReferenceManagerDispatchAction
 		String reference =
 			(String) insertBibliographicReferenceForm.get("reference");
 		String year = (String) insertBibliographicReferenceForm.get("year");
-		String optionalString =
+		String optionalStr =
 			(String) insertBibliographicReferenceForm.get("optional");
-		Boolean optional;
-		if (optionalString != null) {
-			optional = new Boolean(true);
+		Boolean optional;				
+		
+		if (optionalStr.equals(this.getResources(request).getMessage("message.optional"))) {		
+			optional = new Boolean(true);			
 		} else {
 			optional = new Boolean(false);
 		}
@@ -109,9 +111,8 @@ public class BibliographicReferenceManagerDispatchAction
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
-		DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;
-		
-		System.out.println("page depois de edit: "+editBibliographicReferenceForm.get("page"));
+		DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;				
+	
 
 		String title = (String) editBibliographicReferenceForm.get("title");
 		String authors = (String) editBibliographicReferenceForm.get("authors");
@@ -120,9 +121,10 @@ public class BibliographicReferenceManagerDispatchAction
 		String year = (String) editBibliographicReferenceForm.get("year");
 		String optionalStr =
 			(String) editBibliographicReferenceForm.get("optional");
-		Boolean optional;
-
-		if (optionalStr != null) {
+	
+		Boolean optional;							
+			
+		if (optionalStr.equals("opcional")) {
 			optional = new Boolean(true);
 		} else {
 			optional = new Boolean(false);
@@ -266,6 +268,7 @@ public class BibliographicReferenceManagerDispatchAction
 		}
 		
 		if(references.size() == 0) {
+			session.removeAttribute("bibliographicReferenceForm");
 			return mapping.findForward("editBibliographicReference");						
 		}		
 		
@@ -282,8 +285,9 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
+		
 		DynaValidatorForm referenceForm = (DynaValidatorForm) form;
-								
+										
 		String index = request.getParameter("index");
 
 		HttpSession session = request.getSession();
@@ -308,11 +312,11 @@ public class BibliographicReferenceManagerDispatchAction
 			referenceForm.set("authors", infoBibRef.getAuthors());
 			referenceForm.set("reference", infoBibRef.getReference());
 			referenceForm.set("year", infoBibRef.getYear());						
-			
+																								
 			if (infoBibRef.getOptional().equals(new Boolean(true)))
-				referenceForm.set("optional", "1");
+				referenceForm.set("optional", this.getResources(request).getMessage("message.optional"));
 			else
-				referenceForm.set("optional", "0");
+				referenceForm.set("optional", this.getResources(request).getMessage("message.recommended"));
 		} else {
 			session.removeAttribute("edit");			
 			session.removeAttribute("bibliographicReferenceForm");		

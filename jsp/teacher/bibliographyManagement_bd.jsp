@@ -13,12 +13,12 @@
                          <bean:message key="label.insertBibliographicReference"/>                    		     
                     </html:link>                               	       
                     &nbsp;&nbsp;
-                    <br><br><hr>
+                    <br><hr>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <br><h2>
+                <td>                               
+                    <h2>
                     	<bean:message key="message.recommendedBibliography"/>
                     </h2>
                 </td>

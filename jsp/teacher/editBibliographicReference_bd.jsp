@@ -23,8 +23,14 @@
     <span class="error"><html:errors property="year"/></span>
     <p><html:text property="year"/></p>
     
-    <h2><bean:message key="message.bibliographicReferenceOptional"/></h2>
-    <p><html:checkbox property="optional" value="yes"/></p>
+    <h2><bean:message key="message.bibliographicReferenceOptional"/></h2>            
+    <p>
+    <html:select property="optional">
+    		<html:option value="opcional"/>
+    		<html:option value="recomendada"/>
+    </html:select>
+    
+    </p>
     <p>
     
     <h3>

@@ -55,14 +55,14 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-teacher.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
 	 */
 	protected String getRequestPathInfoPathAction() {
-		return "/teacher";
+		return "/teacher";		
 	}
 
 	/* (non-Javadoc)
@@ -197,7 +197,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
 		addRequestParameter("method", "deleteBibliographicReference");
-		addRequestParameter("infoBibliographicReferenceIndex", "0");
+		addRequestParameter("index", "0");
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
 		infoExecutionCourse.setSigla("TFCI");
