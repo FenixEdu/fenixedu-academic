@@ -10,7 +10,7 @@
   </head>
   <body>
     <table>
-    <bean:define id="applicationInfo" name="<%= SessionConstants.APPLICATION_INFO %>" scope="request" />
+    <bean:define id="applicationInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" />
         <logic:present name="applicationInfo">
         
           <!-- Nome -->

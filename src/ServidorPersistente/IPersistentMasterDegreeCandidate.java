@@ -28,7 +28,7 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @return
 	 * @throws ExcepcaoPersistencia
 	 */
-    public IMasterDegreeCandidate readMasterDegreeCandidateByUsername(String username) throws ExcepcaoPersistencia;
+    public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia;
     /**
      * 
      * @param candidateNumber

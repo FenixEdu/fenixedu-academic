@@ -22,6 +22,7 @@ package ServidorAplicacao.Servicos.MasterDegree.Candidate;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +33,6 @@ import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -65,14 +65,15 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
 		
 		UserView userView = this.getUserViewToBeTested("nmsn", true);
 		
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
+
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = this.readMasterDegreeCandidate("nmsn");
 		
 		infoMasterDegreeCandidate.setAverage(new Double(100));
 		infoMasterDegreeCandidate.setMajorDegree("Curso");
 		infoMasterDegreeCandidate.setMajorDegreeSchool("Escola");
 		infoMasterDegreeCandidate.setMajorDegreeYear(new Integer(1));
 		
-		Object[] args = { infoMasterDegreeCandidate, userView}; 
+		Object[] args = { infoMasterDegreeCandidate }; 
 		
         try {
             gestor.executar(userView, "ChangeApplicationInfo", args);
@@ -96,12 +97,10 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
 	   UserView userView = this.getUserViewToBeTested("nmsn", false);
 	   Object args[] = new Object[1];
 		
-	   args[0] = userView;
-
 	   InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
 		try {
-			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ChangeApplicationInfo", args);
+			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ChangeApplicationInfo", null);
 		} catch (FenixServiceException ex) {
 			// All is OK
 		} catch (Exception ex) {
@@ -113,8 +112,9 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
    private UserView getUserViewToBeTested(String username, boolean withRole) {
 	   Collection roles = new ArrayList();
 	   InfoRole infoRole = new InfoRole();
-	   if (withRole)
-		infoRole.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+	   if (withRole) infoRole.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+	   else infoRole.setRoleType(RoleType.PERSON);
+	   
 	   roles.add(infoRole);
 	   UserView userView = new UserView(username, roles);
 	   return userView;
@@ -124,11 +124,13 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
    private InfoMasterDegreeCandidate readMasterDegreeCandidate(String username) {
 	   IMasterDegreeCandidate masterDegreeCandidate = null;
 	   ISuportePersistente sp = null;
+	   List result = null; 
 	   try {
 		   sp = SuportePersistenteOJB.getInstance();
-		   IPersistentMasterDegreeCandidate persistentMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate();
+
 		   sp.iniciarTransaccao();
-		   masterDegreeCandidate = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername(username);
+		   result = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(username);
+
 		   sp.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia e) {
 		   try {
@@ -140,7 +142,7 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
 		   fail("Error reading person to test equal password!");
 	   }
 		
-	   return Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+	   return Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate((IMasterDegreeCandidate) result.get(0));
    }
 }
 

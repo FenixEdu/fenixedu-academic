@@ -46,9 +46,8 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	  GestorServicos gestor = GestorServicos.manager();
  
- 	  Object changeArgs[] = new Object[2];
-	  InfoMasterDegreeCandidate newMasterDegreeCandidate = new InfoMasterDegreeCandidate();
-      
+ 	  Object changeArgs[] = new Object[1];
+	  InfoMasterDegreeCandidate newMasterDegreeCandidate = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
       
 	  newMasterDegreeCandidate.setAverage(Double.valueOf((String) changeApplicationInfoForm.get("average")));
 	  newMasterDegreeCandidate.setMajorDegree((String) changeApplicationInfoForm.get("majorDegree"));
@@ -56,9 +55,11 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 	  newMasterDegreeCandidate.setMajorDegreeYear((Integer) changeApplicationInfoForm.get("majorDegreeYear"));
 	             
 	  changeArgs[0] = newMasterDegreeCandidate;
-	  changeArgs[1] = userView;
 
 	  gestor.executar(userView, "ChangeApplicationInfo", changeArgs);
+
+	  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
+	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, newMasterDegreeCandidate);
  
 	  return mapping.findForward("Success");
 	} else
@@ -77,18 +78,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 	  	
 		if (session != null) {
 		  DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
-
-		  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		  GestorServicos gestor = GestorServicos.manager();
-	
-		  Object changeArgs[] = new Object[1];
-		  changeArgs[0] = userView;
-	
-		  Object result = null;
-	       
-		  result = gestor.executar(userView, "ReadActiveCandidateSituation", changeArgs);
-		
-		  InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result; 
+		  InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
 
 		  if (!infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PENDENTE_STRING)){
 		  	session.setAttribute(SessionConstants.CANDIDATE_SITUATION, infoMasterDegreeCandidate.getInfoCandidateSituation());

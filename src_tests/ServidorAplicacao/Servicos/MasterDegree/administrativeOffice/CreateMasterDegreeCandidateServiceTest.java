@@ -157,8 +157,8 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 	private UserView getUserViewToBeTested(String username, boolean withRole) {
 		Collection roles = new ArrayList();
 		InfoRole infoRole = new InfoRole();
-		if (withRole)
-		 infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+		if (withRole) infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+		else infoRole.setRoleType(RoleType.PERSON);
 		roles.add(infoRole);
 		UserView userView = new UserView(username, roles);
 		return userView;

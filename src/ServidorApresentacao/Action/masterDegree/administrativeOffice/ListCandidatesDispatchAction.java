@@ -44,6 +44,16 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			DynaActionForm createCandidateForm = (DynaActionForm) form;
+			String action = request.getParameter("action");
+			
+			if (action.equals("visualize")) {
+				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
+				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
+			}
+			else if (action.equals("edit")) {
+				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
+				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
+			}
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			
@@ -121,6 +131,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			if (result.size() == 1) {
 				InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 				return mapping.findForward("ActionReady");
 			}
@@ -133,6 +144,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		  else if (situationName != null) query += "\n  - Situação do Candidato: " + situationName.toString();
 		  else if (candidateNumber != null) query += "\n  - Número de Candidato: " + candidateNumber;
 		  
+		  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
+		  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY);
 		  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 		  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
 		  

@@ -109,7 +109,8 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			masterDegreeCandidateTemp = (IMasterDegreeCandidate) result.get(0);
             assertNotNull(masterDegreeCandidateTemp);
             persistentSupport.confirmarTransaccao();
            
@@ -167,8 +168,8 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand_Inex");
-            assertNull(masterDegreeCandidateTemp);
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("desc");
+            assertTrue(result.isEmpty());
             persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
@@ -290,7 +291,8 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-			masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("ars");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("ars");
+			masterDegreeCandidateTemp = (IMasterDegreeCandidate) result.get(0);
             persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
@@ -312,13 +314,14 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertTrue(masterDegreeCandidateTemp.getAverage().equals(new Double(10.00)));
     } 
     
-//    
+    
     public void testDeleteExistingMasterDegreeCandidate() {
         System.out.println("- Test 5 : Delete Existing Master Degree Candidate");
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         try {
             persistentSupport.iniciarTransaccao();
-			masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			masterDegreeCandidateTemp = (IMasterDegreeCandidate) result.get(0);
             persistentMasterDegreeCandidate.delete(masterDegreeCandidateTemp);
             persistentSupport.confirmarTransaccao();
             
@@ -331,8 +334,8 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         // test if it was really deleted
         try {
             persistentSupport.iniciarTransaccao();
-            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
-            assertNull(masterDegreeCandidateTemp);
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+            assertTrue(result.isEmpty());
             persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
@@ -346,7 +349,8 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         try {
             persistentSupport.iniciarTransaccao();
-			masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			masterDegreeCandidateTemp = (IMasterDegreeCandidate) result.get(0);
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -387,8 +391,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         // Test if it was really deleted
         try {
             persistentSupport.iniciarTransaccao();
-            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
-            assertNull(masterDegreeCandidateTemp);
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+
+            assertTrue(result.isEmpty());
             persistentSupport.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {

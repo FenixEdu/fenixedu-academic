@@ -35,7 +35,6 @@ public class ServicosCandidatoSuite extends TestCase {
         //Do NOT change lines enclosed by the --JUNIT: and :JUNIT-- tags.
         
         TestSuite suite = new TestSuite("ServicosCandidatoSuite");
-		suite.addTest(ReadActiveCandidateSituationTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.MasterDegree.Candidate.ChangeApplicationInfoTest.suite());
         
         //:JUNIT--

@@ -16,12 +16,15 @@
     <span class="error"><html:errors/></span>
     <bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />
     <bean:define id="findQuery" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY %>" scope="session" />
-    
+    <bean:define id="title" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" />
+        
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
 	<bean:define id="link">
 		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>candidatePosition=
 	</bean:define>
-        
+    <h2><bean:message name="title"/></h2>
+    
+    
     Critérios de procura:<br><bean:write name="findQuery" /><br><br>
     
     <%= ((List) candidateList).size()%> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
@@ -31,8 +34,6 @@
     		<tr>
 				<td><bean:message key="label.person.name" /></td>
 				<td><bean:message key="label.candidate.candidateNumber" /></td>
-				<td><bean:message key="label.person.identificationDocumentNumber" /></td>
-				<td><bean:message key="label.person.identificationDocumentType" /></td>
 				<td><bean:message key="label.candidate.degree" /></td>
 				<td><bean:message key="label.candidate.specialization" /></td>
 				<td><bean:message key="label.candidate.infoCandidateSituation" /></td>
@@ -53,8 +54,6 @@
     					</html:link>
     				</td>
     				<td><bean:write name="candidate" property="candidateNumber" /></td>
-    				<td><bean:write name="candidate" property="infoPerson.numeroDocumentoIdentificacao" /></td>
-    				<td><bean:write name="candidate" property="infoPerson.tipoDocumentoIdentificacao" /></td>
     				<td><bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" /></td>
     				<td><bean:write name="candidate" property="specialization" /></td>
     				<td><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>

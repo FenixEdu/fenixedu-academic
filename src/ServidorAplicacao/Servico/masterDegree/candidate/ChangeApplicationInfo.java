@@ -19,14 +19,16 @@
 package ServidorAplicacao.Servico.masterDegree.candidate;
 
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
-import ServidorAplicacao.Servico.UserView;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.Specialization;
 
 public class ChangeApplicationInfo implements IServico {
     
@@ -54,7 +56,7 @@ public class ChangeApplicationInfo implements IServico {
     }
     
     
-    public void run(InfoMasterDegreeCandidate newMasterDegreeCandidate, UserView userView) 
+    public void run(InfoMasterDegreeCandidate newMasterDegreeCandidate) 
 	    throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
@@ -62,8 +64,12 @@ public class ChangeApplicationInfo implements IServico {
 
         try {
 	        sp = SuportePersistenteOJB.getInstance();
-			existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByUsername(userView.getUtilizador());
-
+	        ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(newMasterDegreeCandidate.getInfoExecutionDegree());
+			existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
+			                                newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
+											newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao().getTipo(),
+											executionDegree,
+											new Specialization(newMasterDegreeCandidate.getSpecialization()));
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();

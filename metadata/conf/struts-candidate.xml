@@ -63,20 +63,26 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
-      <action path="/index" forward="/indexCand.jsp"/>
       <action path="/naoExecutado" forward="/error.jsp"/>
       <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>      
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       
+
+      <action path="/index"
+      	      type="ServidorApresentacao.Action.masterDegree.candidate.ReadPersonCandidatesAction">
+      	  <forward name="ChooseCandidate" path="/chooseCandidatePage.jsp"/>      	      
+          <forward name="Success" path="/indexCand.jsp"/>      	      
+      </action>     
       
+      <action path="/chooseCandidate"
+   	         input="/startPage.jsp"
+      	      type="ServidorApresentacao.Action.masterDegree.candidate.ChooseCandidateAction">
+      	  <forward name="Success" path="/indexCand.jsp"/>      	      
+      </action>     
 	
       <!-- Action for Visualization Of the Candidate's Application Information -->
-      <action path="/visualizeApplicationInfo"
-   	         input="/indexCand.jsp"
-      	      type="ServidorApresentacao.Action.masterDegree.candidate.VisualizeApplicationInfoAction">
-      	  <forward name="Success" path="/visualizeApplicationInfo.jsp"/>      	      
-      </action>
+      <action path="/visualizeApplicationInfo" forward="/visualizeApplicationInfo.jsp"/>      
 
       <!-- Dispatch Action to Change the Candidate's Application Information -->
       <action path="/changeApplicationInfoDispatchAction"

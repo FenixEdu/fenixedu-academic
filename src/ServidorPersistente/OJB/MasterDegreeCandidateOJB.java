@@ -25,9 +25,9 @@ import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.State;
 import Util.SituationName;
 import Util.Specialization;
+import Util.State;
 
 public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersistentMasterDegreeCandidate{
     
@@ -36,10 +36,8 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     public MasterDegreeCandidateOJB() {
     }
     
-    public IMasterDegreeCandidate readMasterDegreeCandidateByUsername(String username) throws ExcepcaoPersistencia {
+    public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia {
         try {
-            IMasterDegreeCandidate candidate = null;
-
             String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName();
             oqlQuery += " where person.username = $1 ";
 			
@@ -47,10 +45,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
             query.bind(username);
             List result = (List) query.execute();
             lockRead(result);
-            if (result.size() != 0)
-                candidate = (IMasterDegreeCandidate) result.get(0);
-            
-            return candidate;
+            return result;
         } catch (QueryException ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }

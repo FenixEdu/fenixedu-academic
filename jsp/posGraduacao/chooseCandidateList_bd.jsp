@@ -16,10 +16,13 @@
     <bean:define id="specializationList" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="session" />
     <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />
     <bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="session" />
+    <bean:define id="title" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" />
     
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         <input type="hidden" value="getCandidates" name="method"/>
+        <h2><bean:message name="title"/></h2>
+        
        <!-- Degree -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.degree"/></td>

@@ -1,8 +1,6 @@
 /*
- * VisualizeApplicationInfoAction.java
- *
  * 
- * Created on 07 de Dezembro de 2002, 11:16
+ * Created on 27 of March de 2003
  *
  *
  * Autores :
@@ -12,6 +10,8 @@
  */
  
 package ServidorApresentacao.Action.masterDegree.candidate;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +27,7 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
-public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.base.FenixAction {
+public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction {
 
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,
@@ -44,11 +44,15 @@ public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.
       Object args[] = new Object[1];
 	  args[0] = userView;
 	  
-      InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ReadActiveCandidateSituation", args);
-	  
-	   
-      request.setAttribute(SessionConstants.APPLICATION_INFO, infoMasterDegreeCandidate);
-      return mapping.findForward("Success");
+      List candidates = (List) gestor.executar(userView, "ReadPersonCandidates", args);
+	  if (candidates.size() == 1) {
+	  	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, (InfoMasterDegreeCandidate) candidates.get(0));
+		return mapping.findForward("Success");
+	  }
+	  	 
+      session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+      return mapping.findForward("ChooseCandidate");
+
     } else
       throw new Exception();   
   }

@@ -17,7 +17,9 @@
 
 package ServidorAplicacao.Servico.masterDegree.candidate;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -33,28 +35,28 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.State;
 
-public class ReadActiveCandidateSituation implements IServico {
+public class ReadPersonCandidates implements IServico {
     
-    private static ReadActiveCandidateSituation servico = new ReadActiveCandidateSituation();
+    private static ReadPersonCandidates servico = new ReadPersonCandidates();
     
     /**
      * The singleton access method of this class.
      **/
-    public static ReadActiveCandidateSituation getService() {
+    public static ReadPersonCandidates getService() {
         return servico;
     }
     
     /**
      * The actor of this class.
      **/
-    private ReadActiveCandidateSituation() { 
+    private ReadPersonCandidates() { 
     }
     
     /**
      * Returns The Service Name */
     
     public final String getNome() {
-        return "ReadActiveCandidateSituation";
+        return "ReadPersonCandidates";
     }
     
     
@@ -64,36 +66,40 @@ public class ReadActiveCandidateSituation implements IServico {
         ISuportePersistente sp = null;
         
         String username = new String(userView.getUtilizador());
-        IMasterDegreeCandidate masterDegreeCandidate = null;
+        List candidates = null;
          
         try {
             sp = SuportePersistenteOJB.getInstance();
-            masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByUsername(username);
+            candidates = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(username);
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         } 
 
-		if (masterDegreeCandidate == null)
-			throw new ExcepcaoInexistente("Unknown Candidate !!");	
-		
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+		if (candidates == null)
+			throw new ExcepcaoInexistente("No Candidates Found !!");	
 		
 		
-		// Search the candidate's active situation
-		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-	
+		Iterator iterator = candidates.iterator();
+		List result = new ArrayList();
 		while(iterator.hasNext()){
-			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
-			
-			if ((candidateSituationTemp.getValidation().getState()).equals(new Integer(State.ACTIVE))) {
-				InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation(candidateSituationTemp);
-				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-				return infoMasterDegreeCandidate; 
-			}
+			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next(); 
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+			Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+			List situations = new ArrayList();
+			while (situationIterator.hasNext()){ 
+				InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator.next()); 
+				situations.add(infoCandidateSituation);
 				
+				// Check if this is the Active Situation
+				if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+					infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+			}			
+			infoMasterDegreeCandidate.setSituationList(situations);
+			result.add(infoMasterDegreeCandidate);
+			
 		}
-		return null;
+		return result;
     }
 }

@@ -26,6 +26,7 @@
 package ServidorPersistente.OJB;
 
 import java.util.Calendar;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -44,9 +45,9 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPessoaPersistente;
-import Util.State;
 import Util.SituationName;
 import Util.Specialization;
+import Util.State;
 import Util.TipoDocumentoIdentificacao;
 
 public class CandidateSituationOJBTest extends TestCaseOJB {
@@ -100,8 +101,9 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         IMasterDegreeCandidate masterDegreeCandidate = null;
         try {
             persistentSupport.iniciarTransaccao();
-            
-            masterDegreeCandidate = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			
+            List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+            masterDegreeCandidate = (IMasterDegreeCandidate) result.get(0);
             assertNotNull(masterDegreeCandidate);
             
             candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(masterDegreeCandidate);
@@ -171,7 +173,8 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 		IMasterDegreeCandidate candidateTemp = null;        
         try {
             persistentSupport.iniciarTransaccao();
-	        candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			candidateTemp = (IMasterDegreeCandidate) result.get(0);
 	        assertNotNull(candidateTemp);
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
@@ -200,7 +203,8 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 		IMasterDegreeCandidate candidateTemp = null;        
         try {
             persistentSupport.iniciarTransaccao();
-	        candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			candidateTemp = (IMasterDegreeCandidate) result.get(0);
 	        assertNotNull(candidateTemp);
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
@@ -226,7 +230,8 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         try {
             persistentSupport.iniciarTransaccao();
             
-			masterDegreeCandidate = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			masterDegreeCandidate = (IMasterDegreeCandidate) result.get(0);
 			assertNotNull(masterDegreeCandidate);
 
             candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(masterDegreeCandidate);
@@ -262,7 +267,8 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         try {
             persistentSupport.iniciarTransaccao();
             
-			masterDegreeCandidate = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			masterDegreeCandidate = (IMasterDegreeCandidate) result.get(0);
 			assertNotNull(masterDegreeCandidate);
 
 	        candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(masterDegreeCandidate);
@@ -308,7 +314,8 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         try {
             persistentSupport.iniciarTransaccao();
             
-			masterDegreeCandidate = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			masterDegreeCandidate = (IMasterDegreeCandidate) result.get(0);
 			assertNotNull(masterDegreeCandidate);
             
             candidateSituationTemp = persistentCandidateSituation.readActiveCandidateSituation(masterDegreeCandidate);
@@ -332,7 +339,8 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
 		IMasterDegreeCandidate candidateTemp = null;        
         try {
             persistentSupport.iniciarTransaccao();
-	        candidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("nmsn");
+			List result = persistentMasterDegreeCandidate.readMasterDegreeCandidatesByUsername("nmsn");
+			candidateTemp = (IMasterDegreeCandidate) result.get(0);
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
