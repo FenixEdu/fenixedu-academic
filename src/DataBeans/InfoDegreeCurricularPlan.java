@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import Util.DegreeCurricularPlanState;
+import Util.MarkType;
 
 /**
  * @author David Santos
@@ -21,6 +22,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 	private Integer degreeDuration;
 	private Integer minimalYearForOptionalCourses;
 	private Double neededCredits;
+	private MarkType markType;
 
 	public InfoDegreeCurricularPlan() {
 		setName(null);
@@ -169,6 +171,14 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 
 	public void setMinimalYearForOptionalCourses(Integer integer) {
 		minimalYearForOptionalCourses = integer;
+	}
+
+	public MarkType getMarkType() {
+		return markType;
+	}
+
+	public void setMarkType(MarkType type) {
+		markType = type;
 	}
 
 }

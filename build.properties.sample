@@ -38,3 +38,4 @@ validation.doctype=<!DOCTYPE form-validation PUBLIC \n \
                      "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
 
 
+validation.doctype=<!DOCTYPE form-validation SYSTEM "file:///C:/David/Fenix/metadata/conf/validation_1_1.dtd">

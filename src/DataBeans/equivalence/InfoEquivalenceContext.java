@@ -10,14 +10,15 @@ import ServidorAplicacao.IUserView;
 public class InfoEquivalenceContext {
 	private List infoEnrolmentsToGiveEquivalence;
 	private List infoCurricularCourseScopesToGetEquivalence;
-	private InfoExecutionPeriod currentInfoExecutionPeriod;
-	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	private List chosenInfoEnrolmentsToGiveEquivalence;
 	private List chosenInfoCurricularCourseScopesToGetEquivalence;
+	private List chosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade;
+	private List chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade;
+	private List errorMessages;
+	private InfoExecutionPeriod currentInfoExecutionPeriod;
+	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	private IUserView responsible;
 	private boolean success;
-	private List errorMessages;
-	private List chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade;
 	
 	public InfoEquivalenceContext() {
 	}
@@ -170,6 +171,20 @@ public class InfoEquivalenceContext {
 	 */
 	public void setChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade(List list) {
 		chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getChosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade() {
+		return chosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setChosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade(List list) {
+		chosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade = list;
 	}
 
 }

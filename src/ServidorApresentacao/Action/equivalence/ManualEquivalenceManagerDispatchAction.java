@@ -36,7 +36,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 	
-	private final String[] forwards = { "showCurricularCoursesForEquivalence", "verifyCurricularCoursesForEquivalence", "acceptCurricularCoursesForEquivalence", "begin" };
+	private final String[] forwards = { "showCurricularCoursesForEquivalence", "verifyCurricularCoursesForEquivalence", "confirmCurricularCoursesForEquivalence", "acceptCurricularCoursesForEquivalence", "begin", "home" };
 
 	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -72,7 +72,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 	public ActionForward verify(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if (isCancelled(request)) {
-			return mapping.findForward(forwards[3]);
+			return mapping.findForward(forwards[5]);
 		}
 		
 		validateToken(request, form, mapping);
@@ -100,7 +100,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		}
 	}
 
-	public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if (isCancelled(request)) {
 			return mapping.findForward(forwards[0]);
@@ -118,15 +118,42 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 
 		Object args[] = { infoEquivalenceContext };
 
+		infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "ValidateEquivalence", args);
+
+		if(infoEquivalenceContext.isSuccess()) {
+			session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
+			return mapping.findForward(forwards[2]);
+		} else {
+			this.saveErrorsFromInfoEquivalenceContext(request, infoEquivalenceContext);
+			return mapping.findForward(forwards[1]);
+		}
+	}
+
+	public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		if (isCancelled(request)) {
+			return mapping.findForward(forwards[1]);
+		}
+
+		validateToken(request, form, mapping);
+
+		HttpSession session = request.getSession();
+
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) session.getAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
+		
+		Object args[] = { infoEquivalenceContext };
+
 		infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "ConfirmEquivalence", args);
 
 		session.removeAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
 
-		return mapping.findForward(forwards[2]);
+		return mapping.findForward(forwards[3]);
 	}
 
 	public ActionForward begin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return mapping.findForward(forwards[3]);
+		return mapping.findForward(forwards[4]);
 	}
 
 	private void initializeForm(InfoEquivalenceContext infoEquivalenceContext, DynaActionForm equivalenceForm) {
@@ -219,7 +246,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		String[] grades = (String[]) equivalenceForm.get("grades");
 		List chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade = new ArrayList();
 		for(int i = 0; i < grades.length; i++) {
-//			System.out.println("\n\n" + grades[i] + " - " + i + "\n");
+//			if( (grades[i] != null) && (!grades[i].equals("")) ) {
 			if(grades[i] != null) {
 				List chosenInfoCurricularCourseScopesToGetEquivalence = infoEquivalenceContext.getChosenInfoCurricularCourseScopesToGetEquivalence();
 				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) chosenInfoCurricularCourseScopesToGetEquivalence.get(i);
@@ -229,7 +256,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 				chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade.add(infoCurricularCourseScopeGrade);
 			}
 		}
-		
+
 		infoEquivalenceContext.setChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade(chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade);
 
 		return infoEquivalenceContext;

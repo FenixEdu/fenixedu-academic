@@ -38,4 +38,10 @@ public class InfoCurricularCourseScopeGrade {
 		infoCurricularCourseScope = scope;
 	}
 
+	public String toString() {
+		String result = "[" + this.getClass().getName() + "; ";
+		result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
+		result += "grade = " + this.grade + "]\n";
+		return result;
+	}
 }

@@ -83,6 +83,7 @@ public class Enrolment extends DomainObject implements IEnrolment {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
+		result += "idInternal = " + super.getIdInternal() + "; ";
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
 		result += "enrolmentState = " + this.enrolmentState + "; ";
 		result += "execution Period = " + this.executionPeriod + "; ";

@@ -42,7 +42,6 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 
 	public boolean checkMark(String mark){
-
 		return MarkType.getMarks(degreeCurricularPlan.getMarkType()).contains(mark);
 	}
 

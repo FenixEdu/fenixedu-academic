@@ -7,12 +7,12 @@
 
 <bean:define id="infoEquivalenceContext" name="<%= SessionConstants.EQUIVALENCE_CONTEXT_KEY %>" scope="session"/>
 <bean:define id="chosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade" name="infoEquivalenceContext" property="chosenInfoCurricularCourseScopesToGiveEquivalenceWithGrade"/>
-<bean:define id="chosenInfoCurricularCourseScopesToGetEquivalence" name="infoEquivalenceContext" property="chosenInfoCurricularCourseScopesToGetEquivalence"/>
+<bean:define id="chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade" name="infoEquivalenceContext" property="chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade"/>
 
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>"/>
 
 <html:form action="<%= path %>">
-	<html:hidden property="method" value="confirm"/>
+	<html:hidden property="method" value="accept"/>
 
 	<b><bean:message key="label.curricular.courses.that.will.give.equivalence"/></b>
 	<br/>
@@ -37,21 +37,17 @@
 			<th>&nbsp;</th>
 			<th align="center"><bean:message key="label.enrolment.grade"/></th>
 		</tr>
-		<logic:iterate id="infoCurricularCourseScope" name="chosenInfoCurricularCourseScopesToGetEquivalence" indexId="indexId">
+		<logic:iterate id="infoCurricularCourseScopeGrade" name="chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade">
 			<tr>
-				<td valign="middle" align="left">
-					<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/>
-				</td>
-				<td>
-					<html:text size="2" property='<%= "grades" + "["+ indexId + "]" %>'/>
-				</td>
+				<td><bean:write name="infoCurricularCourseScopeGrade" property="infoCurricularCourseScope.infoCurricularCourse.name"/></td>
+				<td align="center"><bean:write name="infoCurricularCourseScopeGrade" property="grade"/></td>
 			</tr>
 		</logic:iterate>
 	</table>
 	<br/>
 	<br/>
 	<html:submit styleClass="inputbutton">	
-		<bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/>
+		<bean:message key="button.finalize.enrolment" bundle="STUDENT_RESOURCES"/>
 	</html:submit>
 	<html:cancel styleClass="inputbutton">
 		<bean:message key="button.change.enrolment" bundle="STUDENT_RESOURCES"/>	
