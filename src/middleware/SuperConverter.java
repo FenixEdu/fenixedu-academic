@@ -71,7 +71,7 @@ public static void main(String args[]) throws Exception{
 	
 	
 	// Converter Alunos de Licenciatura em Persons e em Students
-	superConverter.migrateAluno2Fenix();
+//	superConverter.migrateAluno2Fenix();
 		
 	
 	// Converter Pessoas de Pos Graduacao em Persons
@@ -79,7 +79,7 @@ public static void main(String args[]) throws Exception{
 	
 	
 	// Converter Alunos de Pos Graduacao em Students 
-	
+	superConverter.migratePosgradAluno2Fenix();
 	
 	
 	// Converte Areas Cientificas
@@ -96,6 +96,115 @@ public static void main(String args[]) throws Exception{
 	
 	
 	}
+
+
+	public void migratePosgradAluno2Fenix() throws Exception{
+		IStudent student2Write = null;
+		Posgrad_aluno_mestrado student2Convert = null;
+		List result = null;
+		Query query = null;
+		Criteria criteria = null;
+		QueryByCriteria queryByCriteria = null;
+		try {
+			System.out.print("A Ler Alunos de Pos-Graduacao ...");
+			List studentsPG = getAlunosPOS();
+			System.out.println("  Done !");
+			
+			System.out.println("A Converter " + studentsPG.size() + " alunos de Pos-Graduacao para o Fenix ...");
+
+			// Cria informacao sobre um grupo de alunos
+			IStudentGroupInfo studentGroupInfo = new StudentGroupInfo();
+			
+			studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
+			queryByCriteria = new QueryByCriteria(studentGroupInfo);
+			
+			result = (List) broker.getCollectionByQuery(queryByCriteria);
+			
+			if (result.size() == 0){
+			
+				studentGroupInfo = new StudentGroupInfo();			
+				studentGroupInfo.setMaxCoursesToEnrol(new Integer(7));
+				studentGroupInfo.setMaxNACToEnrol(new Integer(10));
+				studentGroupInfo.setMinCoursesToEnrol(new Integer(3));
+				studentGroupInfo.setStudentType(new StudentType (StudentType.NORMAL));
+				broker.store(studentGroupInfo);
+			} else {
+				studentGroupInfo = (IStudentGroupInfo) result.get(0);
+			}
+
+			Iterator iterator = studentsPG.iterator();
+			while(iterator.hasNext()){
+				student2Convert = (Posgrad_aluno_mestrado) iterator.next();
+		
+				criteria = new Criteria();
+				criteria.addEqualTo("number", new Integer(String.valueOf(student2Convert.getNumero())));
+				criteria.addEqualTo("degreeType", new TipoCurso(TipoCurso.MESTRADO));
+				query = new QueryByCriteria(Student.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+		
+				if (result.size() == 0){
+					
+					// Read the person old person
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("codigointerno", new Integer(String.valueOf(student2Convert.getCodigopessoa())));
+
+					query = new QueryByCriteria(Posgrad_pessoa.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+
+					if (result.size() != 1)
+						throw new Exception("Erro a ler a Pessoa da Pos-Graduacao!");
+					
+					Posgrad_pessoa personOld = (Posgrad_pessoa) result.get(0);
+					
+					// Verificar o Tipo de Documento
+					TipoDocumentoIdentificacao identificationDocumentType = null;
+					if (personOld.getTipodocumentoidentificacao().equalsIgnoreCase("BILHETE DE IDENTIDADE")){
+						identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+					} else if (personOld.getTipodocumentoidentificacao().equalsIgnoreCase("PASSAPORTE")){
+						identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.PASSAPORTE);
+					} else identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.OUTRO);
+
+					criteria = new Criteria();
+					criteria.addEqualTo("numeroDocumentoIdentificacao",personOld.getNumerodocumentoidentificacao());
+					criteria.addEqualTo("tipoDocumentoIdentificacao", identificationDocumentType);
+					query = new QueryByCriteria(Pessoa.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);
+
+					if (result.size() != 1)
+						throw new Exception("Erro a ler a Pessoa do Fenix ! BI: " + personOld.getNumerodocumentoidentificacao());
+					
+					IPessoa person = (IPessoa) result.get(0);
+							
+					// Create a new Student
+					student2Write = new Student();
+					student2Write.setNumber(new Integer(String.valueOf(student2Convert.getNumero())));
+					student2Write.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
+					student2Write.setPerson(person);
+					student2Write.setState(new StudentState(StudentState.INSCRITO));
+					student2Write.setStudentGroupInfo(studentGroupInfo);
+					broker.store(student2Write);
+					
+					
+					
+					
+					
+					// VERIFICAR O ROLE
+					
+					
+				} else System.out.println("O Aluno " + student2Convert.getNumero() + " ja existe. Nenhuma alteracao efectuada");
+		
+			}
+		} catch(Exception e) {;
+			System.out.println("Error converting Student " + student2Convert.getNumero());
+			throw new Exception(e);
+		}
+		
+		
+	}
+
+
+
 
 	public void migratePosgradPessoa2Fenix() throws Exception{
 		IPessoa person2Write = null;

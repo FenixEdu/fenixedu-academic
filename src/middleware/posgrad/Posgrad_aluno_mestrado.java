@@ -23,7 +23,7 @@ public class Posgrad_aluno_mestrado
 
   private String especializacao;
 
-  private float media;
+  private Double media;
 
   private long numero;
 
@@ -109,11 +109,11 @@ public class Posgrad_aluno_mestrado
   }
 
 
-  public float getMedia()
+  public Double getMedia()
   {
      return this.media;
   }
-  public void setMedia(float param)
+  public void setMedia(Double param)
   {
     this.media = param;
   }
