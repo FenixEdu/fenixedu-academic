@@ -31,7 +31,7 @@
 			</td>
 			<td>
 				<html:textarea property="message" rows="4" cols="30" 
-					onkeyup="document.sendSmsForm.charCount.value=160-document.sendSmsForm.message.value.length;" 
+					onkeyup="document.sendSmsForm.charCount.value=140-document.sendSmsForm.message.value.length;" 
 					/>
 			</td>
 		</tr>			
@@ -40,7 +40,7 @@
 				<bean:message key="label.person.remainingChars"/>:
 			</td>
 			<td>
-				<html:text property="charCount" size="4" maxlength="3" readonly="true" value="160" />
+				<html:text property="charCount" size="4" maxlength="3" readonly="true" value="140" />
 			</td>
 		</tr>
 	</table>

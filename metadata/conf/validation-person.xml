@@ -214,7 +214,7 @@
 			<arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
 	        <var>
 				<var-name>maxlength</var-name>
-				<var-value>160</var-value>
+				<var-value>140</var-value>
 			</var>			
 		</field>	    	              
 
