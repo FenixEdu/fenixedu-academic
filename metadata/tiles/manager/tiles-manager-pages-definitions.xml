@@ -84,11 +84,11 @@
 	</definition>
 	<definition name="df.page.insert-branch" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertBranch_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+		<put name="navLocal" value="/manager/manageBranchesNavLocalManager.jsp" />
 	</definition>
 	<definition name="df.page.edit-branch" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editBranch_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+		<put name="navLocal" value="/manager/manageBranchesNavLocalManager.jsp" />
 	</definition>
 	<definition name="df.page.read-execution-course-teachers" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readTeachers_bd.jsp" />
@@ -96,7 +96,7 @@
 	</definition>
 	<definition name="df.page.insert-professorShip-by-number" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertTeacherByNumber_bd.jsp" />
-		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
+		<put name="navLocal" value="/manager/teachersBodyModificationNavLocalManager.jsp" />
 	</definition>	
 	<definition name="df.page.choosePerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/choosePersonPage_bd.jsp" />

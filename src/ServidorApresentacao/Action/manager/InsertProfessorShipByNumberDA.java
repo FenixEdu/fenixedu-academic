@@ -17,8 +17,10 @@ import DataBeans.InfoProfessorShip;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -53,6 +55,8 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 		try {
 			ServiceUtils.executeService(userView, "InsertProfessorShip", args);
 				
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}

@@ -628,7 +628,10 @@
 		scope="request"
 		parameter="method"
 		type="ServidorApresentacao.Action.manager.InsertProfessorShipByNumberDA"
-        validate="true">         
+        validate="true">
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>   
        <forward name="insertProfessorShip" path="df.page.insert-professorShip-by-number"/>
        <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>      	      
 	</action>
@@ -640,6 +643,9 @@
       	input="/readTeacherInCharge.do"
       	scope="request"
       	type="ServidorApresentacao.Action.manager.SaveTeachersBodyAction">
+      	<exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+         	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
     </action>

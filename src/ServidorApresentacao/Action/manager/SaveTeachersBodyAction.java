@@ -12,11 +12,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -35,14 +34,17 @@ public class SaveTeachersBodyAction extends FenixAction {
 		Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
 		Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
 		Object args[] = { responsibleTeachersIds, professorShipTeachersIds, executionCourseId };
-
+		Boolean result;
+		
 		try {
-				ServiceUtils.executeService(userView, "SaveTeachersBody", args);
-		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e.getMessage());
+				result = (Boolean) ServiceUtils.executeService(userView, "SaveTeachersBody", args);
+				
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
+		
+		if(!result.booleanValue())
+			throw new InvalidArgumentsActionException("message.non.existing.teachers");
 		
 		return mapping.findForward("readCurricularCourse");
 	}
