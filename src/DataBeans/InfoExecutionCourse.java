@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author  tfc130
  */
-public class InfoExecutionCourse implements Serializable {
+public class InfoExecutionCourse extends InfoObject implements Serializable  {
 	protected String _nome;
 	protected String _sigla;
 	protected String _programa;
