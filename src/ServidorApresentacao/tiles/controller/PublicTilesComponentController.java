@@ -1,6 +1,7 @@
 package ServidorApresentacao.tiles.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import org.apache.struts.tiles.ControllerSupport;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -21,8 +23,10 @@ import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteMarks;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
+import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShifts;
+import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.SiteView;
@@ -96,8 +100,22 @@ public class PublicTilesComponentController extends ControllerSupport {
 			tileContext.putAttribute(
 				"body",
 				"/publico/viewPublishedMarks_bd.jsp");
+		}else 
+		
+		if (component instanceof InfoSiteProjects) 
+		{
+			List infoGroupPropertiesList = ((InfoSiteProjects)component).getInfoGroupPropertiesList();
+			if(infoGroupPropertiesList.size()==1)
+				tileContext.putAttribute("body","/publico/viewAllGroups_bd.jsp");
+			else
+				tileContext.putAttribute("body","/publico/viewProjectsName_bd.jsp");
 		}
-
+		else if (component instanceof InfoSiteAllGroups) {
+			tileContext.putAttribute("body","/publico/viewAllGroups_bd.jsp");
+		}
+		else if (component instanceof InfoSiteStudentGroup) {
+			tileContext.putAttribute("body","/publico/viewStudentGroupInformation_bd.jsp");
+			}
 	}
 
 }

@@ -21,14 +21,14 @@
            <bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>
 			
 			<bean:write name="infoShift" property="nome"/></h2>	
-               <logic:iterate id="groupNumber" name="infoSiteGroupsByShift" property="groupsNumberList" >
+               <logic:iterate id="infoStudentGroup" name="infoSiteGroupsByShift" property="infoStudentGroupsList" >
         		<tr>
           		<td>
              	<br>
-               	<li><html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="groupNumber" paramName="groupNumber">
-									<bean:message key="label.groupWord"/>
-                					<bean:write name="groupNumber"/>	</h2>
-							</html:link></li>
+               	<li><html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+						<bean:message key="label.groupWord"/>
+                		<bean:write name="infoStudentGroup" property="groupNumber"/>	</h2>
+					</html:link></li>
                
                 
              	</td>
