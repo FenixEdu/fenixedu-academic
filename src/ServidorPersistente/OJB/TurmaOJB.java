@@ -233,49 +233,4 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	/**
-	 * @see ServidorPersistente.ITurmaPersistente#readByExecutionPeriodAndClassNameAndExecutionDegree(Dominio.IExecutionPeriod, java.lang.String, Dominio.ICursoExecucao)
-	 */
-	public ITurma readByExecutionPeriodAndClassNameAndExecutionDegree(
-		IExecutionPeriod executionPeriod,
-		String className,
-		ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
-			
-			ITurma turma = null;
-
-			try {
-				String oqlQuery = "select turmas from " + Turma.class.getName();
-				oqlQuery += " where executionPeriod.executionYear.year = $1"
-					+ " and executionPeriod.name = $2"
-					+ " and nome = $3"
-					+ " and executionDegree.executionYear.year = $4"
-					+ " and executionDegree.curricularPlan.name = $5"
-					+ " and executionDegree.curricularPlan.curso.sigla = $6";
-
-			
-				query.create(oqlQuery);
-
-				query.bind(executionPeriod.getExecutionYear().getYear());
-				query.bind(executionPeriod.getName());
-
-				query.bind(className);
-
-				query.bind(executionDegree.getExecutionYear().getYear());
-				query.bind(executionDegree.getCurricularPlan().getName());
-				query.bind(
-					executionDegree.getCurricularPlan().getCurso().getSigla());
-			
-				List result = (List) query.execute();
-				lockRead(result);
-
-				if (result.size() != 0) {
-					turma = (ITurma) result.get(0);
-				}
-				return turma;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
-	}
-
-
 }

@@ -54,7 +54,7 @@ public class ApagarTurma implements IServico {
 			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
 			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree());
 
-			turma = sp.getITurmaPersistente().readByExecutionPeriodAndClassNameAndExecutionDegree(executionPeriod, infoClass.getNome(), executionDegree);
+			turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(infoClass.getNome(), executionDegree, executionPeriod);
 			try {
 				if(turma != null) {
 					sp.getITurmaPersistente().delete(turma);

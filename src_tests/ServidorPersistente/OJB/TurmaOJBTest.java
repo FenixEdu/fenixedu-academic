@@ -518,6 +518,4 @@ public class TurmaOJBTest extends TestCaseOJB {
 			fail("testReadByNome:fail read existing turma");
 		}
 	}
-	
-
 }
