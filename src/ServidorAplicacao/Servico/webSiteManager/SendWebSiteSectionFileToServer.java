@@ -357,15 +357,15 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		itemFile = itemFile.concat("<p>");
 		itemFile = itemFile.concat(infoWebSiteItem.getMainEntryText());
 		itemFile = itemFile.concat("<br/><br/>\n");
-		itemFile = itemFile.concat(infoWebSiteItem.getInfoEditor().getNome());
-		itemFile = itemFile.concat("<br/>\n");
-		itemFile =
-			itemFile.concat(
-				"<a href='mailto:"
-					+ infoWebSiteItem.getInfoEditor().getEmail()
-					+ "'>"
-					+ infoWebSiteItem.getInfoEditor().getEmail()
-					+ "</a>");
+//		itemFile = itemFile.concat(infoWebSiteItem.getInfoEditor().getNome());
+//		itemFile = itemFile.concat("<br/>\n");
+//		itemFile =
+//			itemFile.concat(
+//				"<a href='mailto:"
+//					+ infoWebSiteItem.getInfoEditor().getEmail()
+//					+ "'>"
+//					+ infoWebSiteItem.getInfoEditor().getEmail()
+//					+ "</a>");
 		itemFile = itemFile.concat("</p>\n");
 		itemFile = itemFile.concat("\t</td>\n</tr>\n");
 
