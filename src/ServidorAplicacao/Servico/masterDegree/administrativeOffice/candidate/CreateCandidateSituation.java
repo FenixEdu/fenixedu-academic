@@ -79,8 +79,8 @@ public class CreateCandidateSituation implements IServico {
 			while (iterator.hasNext()){
 				ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next();
 				if (candidateSituation.getValidation().equals(new State(State.ACTIVE))){
-					candidateSituation.setValidation(new State(State.INACTIVE));
 					sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+					candidateSituation.setValidation(new State(State.INACTIVE));
 				}
 					
 			}

@@ -128,8 +128,6 @@ public class CreateMasterDegreeCandidate implements IServico {
 				
 				String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
 
-System.out.println(username);				
-
 				person.setUsername(username);
 				
 				
