@@ -212,8 +212,9 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		Identity identity = new Identity(obj,broker);
 		IDomainObject result = (IDomainObject) broker.getObjectByIdentity(identity);
 		
-		return  result;
+		broker.close();
 		
+		return  result;
 	}
 
 	public Object readDomainObjectByCriteria(Object obj)
@@ -399,6 +400,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 				LoggerFactory.getDefaultLogger().error(ex);
 			}
 		}
+
+		broker.close();
 
 		return crit;
 	}
