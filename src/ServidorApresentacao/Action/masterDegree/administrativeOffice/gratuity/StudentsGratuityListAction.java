@@ -32,6 +32,8 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
+import Dominio.ExecutionYear;
+import Dominio.IExecutionYear;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -295,20 +297,40 @@ public class StudentsGratuityListAction extends DispatchAction {
         String specialization = "all";
         String situation = "all";
         
-        Date executionDegreeDate = infoExecutionDegree.getInfoExecutionYear().getBeginDate();
-        String year1 = null;
-        String year2 = null;
         
-        if(executionYear.equals(new Integer(1))){
-            //first year selected
-            year1 = new String((executionDegreeDate.getYear()+1900) + "/" + (executionDegreeDate.getYear()+1901));
-            year2 = new String((executionDegreeDate.getYear()+1901) + "/" + (executionDegreeDate.getYear()+1902));
+        Object[] yearArgs = { degreeCurricularPlanID };
+        List executionYearList = null;
+        try {
+            executionYearList = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadExecutionYearsByDegreeCurricularPlanID", yearArgs);
+        } catch (FenixServiceException exception) {
+            exception.printStackTrace();
+            saveErrors(request, errors);
+            return mapping.getInputForward();
         }
-        else{
-            //second year selected
-            year1 = new String((executionDegreeDate.getYear()+1899) + "/" + (executionDegreeDate.getYear()+1900));
-            year2 = new String((executionDegreeDate.getYear()+1900) + "/" + (executionDegreeDate.getYear()+1901));
-        }
+        
+        
+        Date executionDegreeDate = infoExecutionDegree.getInfoExecutionYear().getBeginDate();
+        String year1 = ((InfoExecutionYear)executionYearList.get(0)).getYear();
+        String year2 = ((InfoExecutionYear)executionYearList.get(1)).getYear();;
+        
+//        String year1 = null;
+//        String year2 = null;
+        
+//        if(executionYear.equals(new Integer(1))){
+//            //first year selected
+//            year1 = new String((executionDegreeDate.getYear()+1900) + "/" + (executionDegreeDate.getYear()+1901));
+//            year2 = new String((executionDegreeDate.getYear()+1901) + "/" + (executionDegreeDate.getYear()+1902));
+//        }
+//        else{
+//            //second year selected
+//            year1 = new String((executionDegreeDate.getYear()+1899) + "/" + (executionDegreeDate.getYear()+1900));
+//            year2 = new String((executionDegreeDate.getYear()+1900) + "/" + (executionDegreeDate.getYear()+1901));
+//        }
+        
+        
+        
+        
         
         //getting the gratuity list
         Object[] gratuityArgs = { infoExecutionDegree.getIdInternal(), infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation };
