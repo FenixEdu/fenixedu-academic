@@ -28,17 +28,18 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
     public ActionForward showAllRestrictions(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         return mapping.findForward("showAllRestrictions");
     }
 
-    public ActionForward insertRestriction(ActionMapping mapping, ActionForm actionForm,
+public ActionForward insertRestriction(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String className = request.getParameter("className");
         System.out.println("Class Name Restriction: " + className);
         System.out.println("Class Name Restriction: " + RestrictionByNumberOfCurricularCourses.class.getName());
-        System.out.println("Package Name Restriction: " + RestrictionByNumberOfCurricularCourses.class.getPackage());
+        System.out.println("last Index Restriction: " + RestrictionByNumberOfDoneCurricularCourses.class.getName().lastIndexOf("."));
+        System.out.println("SubString Restriction: " + RestrictionByNumberOfDoneCurricularCourses.class.getName().substring(RestrictionByNumberOfDoneCurricularCourses.class.getName().lastIndexOf(".")+1));
         
         if (className == null || className.length() <= 0) {
             return mapping.getInputForward();
@@ -46,22 +47,23 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
         
         request.setAttribute("className", className);
         
-       if(className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName().split(RestrictionByNumberOfDoneCurricularCourses.class.getPackage().toString())[0].substring(1))) {
+       if(className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName().substring(RestrictionByNumberOfDoneCurricularCourses.class.getName().lastIndexOf(".")+1))) {
             System.out.println("-->Class Name Restriction: " + RestrictionByNumberOfDoneCurricularCourses.class.getName());
-        } else if(className.equals(RestrictionDoneCurricularCourse.class.getName().split(RestrictionDoneCurricularCourse.class.getPackage().toString())[0].substring(1))) {
-            System.out.println("-->Class Name Restriction: " + RestrictionDoneCurricularCourse.class.getName());
-        }else if(className.equals(RestrictionNotDoneCurricularCourse.class.getName().split(RestrictionNotDoneCurricularCourse.class.getPackage().toString())[0].substring(1))) {
-            System.out.println("-->Class Name Restriction: " + RestrictionNotDoneCurricularCourse.class.getName());
-        } else if(className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName().split(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getPackage().toString())[0].substring(1))) {
-            System.out.println("-->Class Name Restriction: " + RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName());
-        } else if(className.equals(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName().split(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getPackage().toString())[0].substring(1))) {
-            System.out.println("-->Class Name Restriction: " + RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName());
-        } else if(className.equals(RestrictionNotDoneCurricularCourse.class.getName().split(RestrictionNotDoneCurricularCourse.class.getPackage().toString())[0].substring(1))) {
-            System.out.println("-->Class Name Restriction: " + RestrictionNotDoneCurricularCourse.class.getName());
-        } else if(className.equals(RestrictionPeriodToApply.class.getName().split(RestrictionPeriodToApply.class.getPackage().toString())[0].substring(1))) {            
+            
+            return mapping.findForward("insertRestrictionByNumber");
+        } else if(className.equals(RestrictionPeriodToApply.class.getName().substring(RestrictionPeriodToApply.class.getName().lastIndexOf(".")+1))) {            
             System.out.println("-->Class Name Restriction: " + RestrictionPeriodToApply.class.getName());
+
+            return mapping.findForward("insertRestrictionByPeriodToApply");
+        } else if( (className.equals(RestrictionDoneCurricularCourse.class.getName().substring(RestrictionDoneCurricularCourse.class.getName().lastIndexOf(".")+1))) 
+                || (className.equals(RestrictionNotDoneCurricularCourse.class.getName().substring(RestrictionNotDoneCurricularCourse.class.getName().lastIndexOf(".")+1))) 
+                || (className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName().substring(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName().lastIndexOf(".")+1))) 
+                || (className.equals(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName().substring(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName().lastIndexOf(".")+1))) 
+                || (className.equals(RestrictionNotDoneCurricularCourse.class.getName().substring(RestrictionNotDoneCurricularCourse.class.getName().lastIndexOf(".")+1))) ) {
+            System.out.println("-->Class Name Restriction: RestrictionByCurricularCourse");
+            
+            return mapping.findForward("insertRestrictionByCurricularCourse");
         }   
     
         return mapping.findForward("insertRestriction");
-    }
-}
+    }}

@@ -1265,6 +1265,9 @@
 	>
 		<forward name="showAllRestrictions" path="df.page.manage.precedences.showAllRestrictions" />
 		<forward name="insertRestriction" path="df.page.manage.precedences.insertRestriction"/>
+		<forward name="insertRestrictionByNumber" path="df.page.manage.precedences.insertRestrictionByNumber"/>
+		<forward name="insertRestrictionByCurricularCourse" path="df.page.manage.precedences.insertRestrictionByCurricularCourse"/>
+		<forward name="insertRestrictionByPeriodToApply" path="df.page.manage.precedences.insertRestrictionByPeriodToApply"/>
 	</action>	
 	
 	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>

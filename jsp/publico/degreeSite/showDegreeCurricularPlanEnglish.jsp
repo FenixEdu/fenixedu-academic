@@ -63,10 +63,10 @@
 			<th colspan="4"><bean:write name="currentYear"/>º&nbsp;<bean:message key="label.manager.curricularCourseScope.curricularYear.en"/></th>
 		</tr>
 		<tr>						
-			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.curricularSemester.en"/></td>
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.semester.en"/></td>
 			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourse.en"/></td>
 			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourseType.en"/></td>
-			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.branch.en"/></td>			
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.branch.en"/></td>			
 			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.credits.en"/></td>
 			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.ectsCredits.en"/></td>
 			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.weight.en"/></td>
@@ -83,14 +83,14 @@
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
 					<!-- cabeçalho -->
 					<tr>
-						<th colspan="4"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message key="label.manager.curricularCourseScope.curricularYear.en"/></th>
+						<th colspan="4"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message key="label.curricular.year.en"/></th>
 					</tr>
 					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
 					<tr>						
-						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.curricularSemester.en"/></td>
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.semester.en"/></td>
 						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourse.en"/></td>
 						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourseType.en"/></td>
-						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.branch.en"/></td>			
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.branch.en"/></td>			
 						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.credits.en"/></td>
 						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.ectsCredits.en"/></td>
 						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.weight.en"/></td>

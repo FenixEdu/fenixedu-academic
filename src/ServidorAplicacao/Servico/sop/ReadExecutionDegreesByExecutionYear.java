@@ -63,8 +63,6 @@ public class ReadExecutionDegreesByExecutionYear implements IService
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
                 infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getCurricularPlan()));
                 infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(InfoDegree.newInfoFromDomain(executionDegree.getCurricularPlan().getDegree()));
-                infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setNome(executionDegree.getCurricularPlan().getDegree().getNome());
-                infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setSigla(executionDegree.getCurricularPlan().getDegree().getSigla());
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
 
