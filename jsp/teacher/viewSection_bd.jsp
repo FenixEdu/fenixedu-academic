@@ -63,7 +63,7 @@
 
 <logic:iterate id="item" name="itemsList">
 <bean:define id="itemCode" name="item" property="idInternal"/>
-<div class="greytxt"><strong><bean:message key="label.item"/><bean:write name="item" property="name"/></strong></div>
+<div class="greytxt"><strong><bean:message key="label.item"/>:&nbsp;<bean:write name="item" property="name"/></strong></div>
 <br/>
 <table>
 	<tr>			
