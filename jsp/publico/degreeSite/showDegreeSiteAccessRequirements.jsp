@@ -71,9 +71,6 @@
 			</logic:notEmpty>
 	  </ul>			
 	</logic:notEmpty>
-
-</logic:present>
-
 <logic:empty name="infoDegreeInfo" property="testIngression">
 <logic:empty name="infoDegreeInfo" property="classifications">
 <logic:empty name="infoDegreeInfo" property="driftsInitial">
@@ -91,3 +88,4 @@
 </logic:empty>
 </logic:empty>	
 </logic:empty> 
+</logic:present>

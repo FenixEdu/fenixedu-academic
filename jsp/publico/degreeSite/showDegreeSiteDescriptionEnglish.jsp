@@ -137,9 +137,6 @@
 				  <p><!-- TEXTO - HISTORIAL DA LICENCIATURA --><bean:write name="infoDegreeInfo" property="historyEn" filter="false" /></p>
 				</div>
 				</logic:notEmpty>
-
-</logic:present>
-
 <logic:empty name="infoDegreeInfo" property="descriptionEn">
 <logic:empty name="infoDegreeInfo" property="objectivesEn">
 <logic:empty name="infoDegreeInfo" property="additionalInfoEn">
@@ -153,3 +150,5 @@
 </logic:empty>	
 </logic:empty>	
 </logic:empty> 
+</logic:present>
+

@@ -138,8 +138,6 @@
 				</div>
 				</logic:notEmpty>
 
-</logic:present>
-
 <logic:empty name="infoDegreeInfo" property="description">
 <logic:empty name="infoDegreeInfo" property="objectives">
 <logic:empty name="infoDegreeInfo" property="additionalInfo">
@@ -153,3 +151,4 @@
 </logic:empty>	
 </logic:empty>	
 </logic:empty>
+</logic:present>
