@@ -1,18 +1,21 @@
 package DataBeans;
 
+import Util.PeriodState;
+
 
 /**
  * @author Nuno & Joana
  */
 public class InfoExecutionYear {
 	private String year;
+	private PeriodState state;
 	
 	public InfoExecutionYear() {
 	}
 
 	public InfoExecutionYear(String year) {
-		setYear(year);
-		}
+		setYear(year);	
+	}
 	/**
 	 * Returns the year.
 	 * @return String
@@ -48,4 +51,19 @@ public class InfoExecutionYear {
 				result += "]";
 			return result;
 		}
+	/**
+	 * @return PeriodState
+	 */
+	public PeriodState getState() {
+		return state;
+	}
+
+	/**
+	 * Sets the periodState.
+	 * @param periodState The periodState to set
+	 */
+	public void setState(PeriodState state) {
+		this.state = state;
+	}
+
 }
