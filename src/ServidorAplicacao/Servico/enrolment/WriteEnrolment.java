@@ -3,10 +3,12 @@ package ServidorAplicacao.Servico.enrolment;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
+import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
@@ -18,11 +20,13 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
@@ -91,6 +95,8 @@ public class WriteEnrolment implements IService
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 
+				createEnrollmentEvaluation(enrolmentToWrite);
+
 				createAttend(
 					studentCurricularPlan.getStudent(),
 					curricularCourse,
@@ -155,5 +161,25 @@ public class WriteEnrolment implements IService
 			enrolment.getCurricularCourse(),
 			enrolment.getExecutionPeriod(),
 			enrolment);
+	}
+
+	private void createEnrollmentEvaluation(IEnrolment enrolment) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistentSuport.getIPersistentEnrolmentEvaluation();
+
+		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+		enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
+		enrolmentEvaluation.setCheckSum(null);
+		enrolmentEvaluation.setEmployee(null);
+		enrolmentEvaluation.setEnrolment(enrolment);
+		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+		enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+		enrolmentEvaluation.setExamDate(null);
+		enrolmentEvaluation.setGrade(null);
+		enrolmentEvaluation.setGradeAvailableDate(null);
+		enrolmentEvaluation.setObservation(null);
+		enrolmentEvaluation.setPersonResponsibleForGrade(null);
+		enrolmentEvaluation.setWhen(null);
 	}
 }

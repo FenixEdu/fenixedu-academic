@@ -27,8 +27,8 @@ public class StartMigrationProcessAction extends Action
 		IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 		String password = request.getParameter("password");
 		String method = request.getParameter("method");
-		String flag = request.getParameter("flag");
-		Object args[] = {password, method, flag};
+		String curriculum = request.getParameter("curriculum");
+		Object args[] = {password, method, curriculum};
 		
 		try
 		{
@@ -38,6 +38,8 @@ public class StartMigrationProcessAction extends Action
 		{
 			throw new FenixActionException(e);
 		}
+		
+		Runtime.getRuntime().gc();
 
 		try
 		{

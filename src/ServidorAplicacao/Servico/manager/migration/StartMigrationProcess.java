@@ -22,36 +22,51 @@ public class StartMigrationProcess implements IService
 {
 	public StartMigrationProcess(){}
 
-	public void run(String password, String method, String flag) throws FenixServiceException
+	public void run(String password, String method, String curriculum) throws FenixServiceException
 	{
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-//			persistentSuport.iniciarTransaccao();
 			IPessoa person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername("L45438");
-//			persistentSuport.confirmarTransaccao();
+
+			boolean areTheesRecordsToBeWriten = false;
+			if (method.equals("write"))
+			{
+				areTheesRecordsToBeWriten = true;
+			}
 
 			if (person != null && person.getPassword().equals(password))
 			{
-				List fileNames = getFileNames(Boolean.valueOf(flag).booleanValue());
+				List fileNames = getFileNames(areTheesRecordsToBeWriten);
 
 				String fileName1 = (String) fileNames.get(0);
 				String fileName2 = (String) fileNames.get(1);
 				
-				if (method.equals("pastCurriculum"))
+				if (curriculum.equals("past"))
 				{
-//					String args[] = { flag, "true", fileName1 };
-//					CreateAndUpdateAllStudentsPastEnrolments.main(args);
-					CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans instance =
-						new CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans();
-					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName1);
-				} else if (method.equals("thisSemester"))
+					if (areTheesRecordsToBeWriten)
+					{
+						CreateUpdateEnrollmentsInPastStudentCurricularPlans instance =
+							new CreateUpdateEnrollmentsInPastStudentCurricularPlans();
+						instance.run(Boolean.TRUE, fileName1);
+					} else
+					{
+						DeleteEnrollmentsInPastStudentCurricularPlans instance = new DeleteEnrollmentsInPastStudentCurricularPlans();
+						instance.run(Boolean.TRUE, fileName1);
+					}
+				} else if (curriculum.equals("current"))
 				{
-//					String args[] = { flag, "true", fileName2 };
-//					UpdateStudentEnrolments.main(args);
-					CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans instance =
-						new CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans();
-					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName2);
+					if (areTheesRecordsToBeWriten)
+					{
+						CreateUpdateEnrollmentsInCurrentStudentCurricularPlans instance =
+							new CreateUpdateEnrollmentsInCurrentStudentCurricularPlans();
+						instance.run(Boolean.TRUE, fileName2);
+					} else
+					{
+						DeleteEnrollmentsInCurrentStudentCurricularPlans instance =
+							new DeleteEnrollmentsInCurrentStudentCurricularPlans();
+						instance.run(Boolean.TRUE, fileName2);
+					}
 				}
 			} else
 			{
@@ -69,7 +84,7 @@ public class StartMigrationProcess implements IService
 	 * @return List of file names
 	 * @throws IOException
 	 */
-	private List getFileNames(boolean recordsToAdd) throws IOException
+	private List getFileNames(boolean areTheesRecordsToBeWriten) throws IOException
 	{
 		Properties properties = new Properties();
 		properties.load(StartMigrationProcess.class.getResourceAsStream("/migrationLog.properties"));
@@ -84,13 +99,14 @@ public class StartMigrationProcess implements IService
 		int year = calendar.get(Calendar.YEAR);
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		int minute = calendar.get(Calendar.MINUTE);
+
 		String action = null;
-		if (recordsToAdd)
+		if (areTheesRecordsToBeWriten)
 		{
-			action = "recordsToAdd";
+			action = "writenRecords";
 		} else
 		{
-			action = "recordsToRemove";
+			action = "deletedRecords";
 		}
 
 		String concat = "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + action + ".txt";

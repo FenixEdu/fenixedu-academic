@@ -245,9 +245,9 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		creditsInAnySecundaryArea = getGivenCreditsInAnySecundaryArea(studentCurricularPlan);
 
 		List specializationAreaCurricularCourses =
-			selectCurricularCoursesFromGivenArea(studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
+			selectAllCurricularCoursesFromGivenArea(studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
 		List secundaryAreaCurricularCourses =
-			selectCurricularCoursesFromGivenArea(studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
+			selectAllCurricularCoursesFromGivenArea(studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
 		List allCurricularCourses = new ArrayList();
 		allCurricularCourses.addAll(specializationAreaCurricularCourses);
 		allCurricularCourses.addAll(secundaryAreaCurricularCourses);
@@ -305,15 +305,10 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		Integer semester)
 		throws ExcepcaoPersistencia
 	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
-		IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
-		IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
-
-		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 		boolean isSpecializationAreaDone = isSpecializationAreaDone(studentCurricularPlan, creditsInSpecializationAreaGroups);
 		boolean isSecundaryAreaDone =
 			isSecundaryAreaDone(studentCurricularPlan, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea);
+		
 		List finalListOfCurricularCourses = null;
 
 		if (isSpecializationAreaDone && isSecundaryAreaDone)
@@ -322,54 +317,26 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		} else if (!isSpecializationAreaDone && isSecundaryAreaDone)
 		{
 			finalListOfCurricularCourses =
-				curricularCourseDAO.readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(
-					studentCurricularPlan.getDegreeCurricularPlan(),
-					studentCurricularPlan.getBranch(),
-					executionPeriod.getSemester());
-			selectDesiredCurricularCourses(enrollmentsWithAprovedState, finalListOfCurricularCourses);
-			selectDesiredCurricularCourses(enrollmentsWithEnrolledState, finalListOfCurricularCourses);
+				selectSpecializationAreaCurricularCoursesFromGroupsNotFull(studentCurricularPlan, creditsInSpecializationAreaGroups);
 		} else if (isSpecializationAreaDone && !isSecundaryAreaDone)
 		{
 			finalListOfCurricularCourses =
-				curricularCourseDAO.readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(
-					studentCurricularPlan.getDegreeCurricularPlan(),
-					studentCurricularPlan.getSecundaryBranch(),
-					executionPeriod.getSemester());
-			selectDesiredCurricularCourses(enrollmentsWithAprovedState, finalListOfCurricularCourses);
-			selectDesiredCurricularCourses(enrollmentsWithEnrolledState, finalListOfCurricularCourses);
+				selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
+					studentCurricularPlan,
+					creditsInSecundaryAreaGroups,
+					creditsInAnySecundaryArea);
 		} else
 		{
-			List specializationAreaCurricularCourses = new ArrayList();
+			List specializationAreaCurricularCourses =
+				selectSpecializationAreaCurricularCoursesFromGroupsNotFull(
+					studentCurricularPlan,
+					creditsInSpecializationAreaGroups);
 
-			List groups =
-				curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
-
-			Iterator iterator = groups.iterator();
-			while (iterator.hasNext())
-			{
-				ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
-				
-				if (!isSpecializationGroupDone(studentCurricularPlan, group, creditsInSpecializationAreaGroups))
-				{
-					specializationAreaCurricularCourses.addAll(group.getCurricularCourses());
-				}
-			}
-
-			List secundaryAreaCurricularCourses = new ArrayList();
-
-			groups =
-				curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
-
-			iterator = groups.iterator();
-			while (iterator.hasNext())
-			{
-				ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
-
-				if (!isSecundaryGroupDone(studentCurricularPlan, group, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea))
-				{
-					secundaryAreaCurricularCourses.addAll(group.getCurricularCourses());
-				}
-			}
+			List secundaryAreaCurricularCourses =
+				selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
+					studentCurricularPlan,
+					creditsInSecundaryAreaGroups,
+					creditsInAnySecundaryArea);
 			
 			List disjunction =
 				(List) CollectionUtils.disjunction(specializationAreaCurricularCourses, secundaryAreaCurricularCourses);
@@ -379,11 +346,79 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			finalListOfCurricularCourses = new ArrayList();
 			finalListOfCurricularCourses.addAll(disjunction);
 			finalListOfCurricularCourses.addAll(intersection);
-			selectDesiredCurricularCourses(enrollmentsWithAprovedState, finalListOfCurricularCourses);
-			selectDesiredCurricularCourses(enrollmentsWithEnrolledState, finalListOfCurricularCourses);
-			selectDesiredCurricularCourses(finalListOfCurricularCourses, semester);
 		}
+		
+		selectDesiredCurricularCourses(enrollmentsWithAprovedState, finalListOfCurricularCourses);
+		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, finalListOfCurricularCourses);
+		selectDesiredCurricularCourses(finalListOfCurricularCourses, semester);
 		return finalListOfCurricularCourses;
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param creditsInSecundaryAreaGroups
+	 * @param creditsInAnySecundaryArea
+	 * @return secundaryAreaCurricularCoursesFromGroupsNotFull
+	 * @throws ExcepcaoPersistencia
+	 */
+	private List selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
+		IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSecundaryAreaGroups,
+		int creditsInAnySecundaryArea)
+		throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+		
+		List secundaryAreaCurricularCourses = new ArrayList();
+
+		List groups =
+			curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
+
+		Iterator iterator = groups.iterator();
+		while (iterator.hasNext())
+		{
+			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
+
+			if (!isSecundaryGroupDone(studentCurricularPlan, group, creditsInSecundaryAreaGroups, creditsInAnySecundaryArea))
+			{
+				secundaryAreaCurricularCourses.addAll(group.getCurricularCourses());
+			}
+		}
+		return secundaryAreaCurricularCourses;
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param creditsInSpecializationAreaGroups
+	 * @return specializationAreaCurricularCoursesFromGroupsNotFull
+	 * @throws ExcepcaoPersistencia
+	 */
+	private List selectSpecializationAreaCurricularCoursesFromGroupsNotFull(
+		IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSpecializationAreaGroups)
+		throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+		
+		List specializationAreaCurricularCourses = new ArrayList();
+
+		List groups =
+			curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
+
+		Iterator iterator = groups.iterator();
+		while (iterator.hasNext())
+		{
+			ICurricularCourseGroup group = (ICurricularCourseGroup) iterator.next();
+			
+			if (!isSpecializationGroupDone(studentCurricularPlan, group, creditsInSpecializationAreaGroups))
+			{
+				specializationAreaCurricularCourses.addAll(group.getCurricularCourses());
+			}
+		}
+
+		return specializationAreaCurricularCourses;
 	}
 
 	/**
@@ -891,9 +926,9 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				ICurricularCourseGroup otherGroup =
 					(ICurricularCourseGroup) curricularCourseGroupDAO.readByOID(CurricularCourseGroup.class, groupID);
 
-				if (otherCredits.intValue() < otherGroup.getMinimumCredits().intValue())
+				if (otherCredits.intValue() >= otherGroup.getMaximumCredits().intValue())
 				{
-					return false;
+					return true;
 				} else
 				{
 					areaCredits += otherCredits.intValue();
@@ -1232,7 +1267,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 * @return curricularCourses
 	 * @throws ExcepcaoPersistencia
 	 */
-	private List selectCurricularCoursesFromGivenArea(
+	private List selectAllCurricularCoursesFromGivenArea(
 		IBranch area,
 		AreaType areaType)
 		throws ExcepcaoPersistencia

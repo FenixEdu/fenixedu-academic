@@ -45,12 +45,15 @@ public class DeleteEnrolment implements IService
 
 			if (enrolment != null)
 			{
-				Iterator iterator = enrolment.getEvaluations().iterator();
-				while (iterator.hasNext())
+				if (enrolment.getEvaluations() != null)
 				{
-					IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-					enrolmentEvaluationDAO.simpleLockWrite(enrolment);
-					enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+					Iterator iterator = enrolment.getEvaluations().iterator();
+					while (iterator.hasNext())
+					{
+						IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+						enrolmentEvaluationDAO.simpleLockWrite(enrolment);
+						enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+					}
 				}
 				
 				deleteAttend(enrolment);
