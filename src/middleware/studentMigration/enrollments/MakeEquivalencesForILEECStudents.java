@@ -2,6 +2,7 @@ package middleware.studentMigration.enrollments;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,8 +16,13 @@ import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
+
+import org.apache.commons.beanutils.BeanComparator;
+
 import Dominio.CurricularCourse;
+import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
+import Dominio.EnrolmentEvaluation;
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -24,18 +30,24 @@ import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DegreeCurricularPlanState;
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 
@@ -46,12 +58,16 @@ import Util.StudentCurricularPlanState;
 
 public class MakeEquivalencesForILEECStudents
 {
-	private static int totalEnrolmentEquivalencesCreated = 0;
-	private static int totalEquivalentEnrolmentForEnrolmentEquivalencesCreated = 0;
-
+	private static HashMap enrollmentsCreated = new HashMap();
+	private static HashMap enrollmentEvaluationsCreated = new HashMap();
 	private static HashMap enrolmentEquivalencesCreated = new HashMap();
 	private static HashMap equivalentEnrolmentForEnrolmentEquivalencesCreated = new HashMap();
 	
+	protected static int totalEnrollmentsCreated = 0;
+	protected static int totalEnrollmentEvaluationsCreated = 0;
+	private static int totalEnrolmentEquivalencesCreated = 0;
+	private static int totalEquivalentEnrolmentForEnrolmentEquivalencesCreated = 0;
+
 	private static HashMap creditEquivalencesType2 = new HashMap();
 	private static HashMap creditEquivalencesType5 = new HashMap();
 	private static HashMap noEquivalences = new HashMap();
@@ -82,8 +98,8 @@ public class MakeEquivalencesForILEECStudents
 				fenixPersistentSuport.iniciarTransaccao();
 				MakeEquivalencesForILEECStudents.makeEquivalences(student, fenixPersistentSuport);
 				fenixPersistentSuport.confirmarTransaccao();
-				MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.clear();
-				MakeEquivalencesForAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
+				MakeEquivalencesForILEECStudents.enrollmentsCreated.clear();
+				MakeEquivalencesForILEECStudents.enrollmentEvaluationsCreated.clear();
 				MakeEquivalencesForILEECStudents.enrolmentEquivalencesCreated.clear();
 				MakeEquivalencesForILEECStudents.equivalentEnrolmentForEnrolmentEquivalencesCreated.clear();
 			}
@@ -93,8 +109,8 @@ public class MakeEquivalencesForILEECStudents
 		}
 
 		System.out.println("[INFO] DONE!");
-		System.out.println("[INFO] Total Enrolments created: [" + MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentsCreated + "].");
-		System.out.println("[INFO] Total EnrolmentEvaluations created: [" + MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentEvaluationsCreated + "].");
+		System.out.println("[INFO] Total Enrolments created: [" + MakeEquivalencesForILEECStudents.totalEnrollmentsCreated + "].");
+		System.out.println("[INFO] Total EnrolmentEvaluations created: [" + MakeEquivalencesForILEECStudents.totalEnrollmentEvaluationsCreated + "].");
 		System.out.println("[INFO] Total Equivalences created: [" + MakeEquivalencesForILEECStudents.totalEnrolmentEquivalencesCreated + "].");
 
 		MakeEquivalencesForILEECStudents.printReport(new PrintWriter(System.out, true));
@@ -208,7 +224,7 @@ public class MakeEquivalencesForILEECStudents
 	private static void writeAndUpdateEquivalences(IStudent student, IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		List realPastEnrolments = pastStudentCurricularPlan.getEnrolments();
-		List pastEnrolmentsTemp = MakeEquivalencesForAllStudentsPastEnrolments.keepOnlyImprovments(realPastEnrolments);
+		List pastEnrolmentsTemp = MakeEquivalencesForILEECStudents.keepOnlyImprovments(realPastEnrolments, fenixPersistentSuport);
 		List pastEnrolments = MakeEquivalencesForILEECStudents.solveSpecificCase(pastEnrolmentsTemp, currentStudentCurricularPlan, fenixPersistentSuport);
 		Iterator iterator = pastEnrolments.iterator();
 		while (iterator.hasNext()) {
@@ -231,11 +247,12 @@ public class MakeEquivalencesForILEECStudents
 						continue;
 					}
 					
-					IEnrolment enrolmentWriten = MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+					IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolment, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
 					if(enrolmentWriten == null)
 					{
 						continue;
 					}
+
 					MakeEquivalencesForILEECStudents.writeEquivalences(enrolment, enrolmentWriten, fenixPersistentSuport);
 				}
 			}
@@ -653,7 +670,7 @@ public class MakeEquivalencesForILEECStudents
 
 			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
 
-			IEnrolment enrolmentWriten = MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
 
 			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSE, enrolmentWriten, fenixPersistentSuport);
 			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSH, enrolmentWriten, fenixPersistentSuport);
@@ -672,7 +689,7 @@ public class MakeEquivalencesForILEECStudents
 
 			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
 
-			IEnrolment enrolmentWriten = MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+			IEnrolment enrolmentWriten = MakeEquivalencesForILEECStudents.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
 
 			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSE, enrolmentWriten, fenixPersistentSuport);
 
@@ -684,11 +701,251 @@ public class MakeEquivalencesForILEECStudents
 			newListOfEnrollments = pastEnrolments;
 		}
 		
-		MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.clear();
-		MakeEquivalencesForAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
+		MakeEquivalencesForILEECStudents.enrollmentsCreated.clear();
+		MakeEquivalencesForILEECStudents.enrollmentEvaluationsCreated.clear();
 		MakeEquivalencesForILEECStudents.enrolmentEquivalencesCreated.clear();
 		MakeEquivalencesForILEECStudents.equivalentEnrolmentForEnrolmentEquivalencesCreated.clear();
 		
 		return newListOfEnrollments;
+	}
+
+	/**
+	 * @param enrolment
+	 * @param curricularCourse
+	 * @param currentStudentCurricularPlan
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Throwable
+	 */
+	protected static IEnrolment writeEnrollment(IEnrolment enrolment, ICurricularCourseScope curricularCourseScope, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
+
+		IExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
+
+		IEnrolment enrolmentToWrite = persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(currentStudentCurricularPlan, curricularCourseScope, executionPeriod);
+
+		if (enrolmentToWrite == null)
+		{
+			IEnrolment enrolmentToObtainKey = new Enrolment();
+			enrolmentToObtainKey.setStudentCurricularPlan(currentStudentCurricularPlan);
+			enrolmentToObtainKey.setCurricularCourseScope(curricularCourseScope);
+			enrolmentToObtainKey.setExecutionPeriod(executionPeriod);
+			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(enrolmentToObtainKey);
+
+			enrolmentToWrite = (IEnrolment) MakeEquivalencesForILEECStudents.enrollmentsCreated.get(key);
+
+			if (enrolmentToWrite == null)
+			{
+				enrolmentToWrite = new Enrolment();
+
+				fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolmentToWrite);
+
+				enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
+				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
+				enrolmentToWrite.setEnrolmentState(enrolment.getEnrolmentState());
+				enrolmentToWrite.setExecutionPeriod(executionPeriod);
+				enrolmentToWrite.setStudentCurricularPlan(currentStudentCurricularPlan);
+
+				MakeEquivalencesForILEECStudents.enrollmentsCreated.put(key, enrolment);
+				MakeEquivalencesForILEECStudents.totalEnrollmentsCreated++;
+			}
+		}
+
+		if (enrolmentToWrite != null)
+		{
+			MakeEquivalencesForILEECStudents.writeEnrollmentEvaluation(enrolment, enrolmentToWrite, fenixPersistentSuport);
+		}
+
+		return enrolmentToWrite;
+	}
+
+	/**
+	 * @param oldEnrolment
+	 * @param newEnrolment
+	 * @param fenixPersistentSuport
+	 * @throws Throwable
+	 */
+	private static void writeEnrollmentEvaluation(IEnrolment oldEnrolment, IEnrolment newEnrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
+		IEnrolmentEvaluation enrolmentEvaluation = MakeEquivalencesForILEECStudents.getLatestEvaluation(oldEnrolment);
+
+		IEnrolmentEvaluation enrolmentEvaluationToWrite = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(newEnrolment, EnrolmentEvaluationType.EQUIVALENCE_OBJ, enrolmentEvaluation.getGrade(), enrolmentEvaluation.getWhen());
+
+		if (enrolmentEvaluationToWrite == null)
+		{
+			IEnrolmentEvaluation enrolmentEvaluationToObtainKey = new EnrolmentEvaluation();
+			enrolmentEvaluationToObtainKey.setEnrolment(newEnrolment);
+			enrolmentEvaluationToObtainKey.setGrade(enrolmentEvaluation.getGrade());
+			enrolmentEvaluationToObtainKey.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
+			enrolmentEvaluationToObtainKey.setWhen(enrolmentEvaluation.getWhen());
+			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
+
+			enrolmentEvaluationToWrite = (IEnrolmentEvaluation) MakeEquivalencesForILEECStudents.enrollmentEvaluationsCreated.get(key);
+
+			if (enrolmentEvaluationToWrite == null)
+			{
+				enrolmentEvaluationToWrite = new EnrolmentEvaluation();
+
+				fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluationToWrite);
+				
+				enrolmentEvaluationToWrite.setEnrolment(newEnrolment);
+				enrolmentEvaluationToWrite.setEnrolmentEvaluationState(enrolmentEvaluation.getEnrolmentEvaluationState());
+				enrolmentEvaluationToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
+				enrolmentEvaluationToWrite.setExamDate(enrolmentEvaluation.getExamDate());
+				enrolmentEvaluationToWrite.setGrade(enrolmentEvaluation.getGrade());
+				enrolmentEvaluationToWrite.setObservation(enrolmentEvaluation.getObservation());
+				enrolmentEvaluationToWrite.setPersonResponsibleForGrade(enrolmentEvaluation.getPersonResponsibleForGrade());
+				enrolmentEvaluationToWrite.setGradeAvailableDate(enrolmentEvaluation.getGradeAvailableDate());
+				enrolmentEvaluationToWrite.setWhen(enrolmentEvaluation.getWhen());
+				enrolmentEvaluationToWrite.setEmployee(enrolmentEvaluation.getEmployee());
+
+				enrolmentEvaluation.setCheckSum(null);
+
+				MakeEquivalencesForILEECStudents.enrollmentEvaluationsCreated.put(key, enrolmentEvaluationToWrite);
+				MakeEquivalencesForILEECStudents.totalEnrollmentEvaluationsCreated++;
+			}
+		}
+	}
+
+	/**
+	 * @param enrolment
+	 * @return
+	 * @throws Throwable
+	 */
+	private static IEnrolmentEvaluation getLatestEvaluation(IEnrolment enrolment) throws Throwable {
+
+		List enrolmentEvaluations = enrolment.getEvaluations();
+
+		if ((enrolment == null) || (enrolment.getEvaluations() == null) || (enrolment.getEvaluations().size() == 0)) {
+			return null;
+		}
+
+		if (enrolmentEvaluations.size() == 1)
+		{
+			return (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
+		}
+
+		BeanComparator dateComparator = new BeanComparator("when");
+		Collections.sort(enrolmentEvaluations, dateComparator);
+		Collections.reverse(enrolmentEvaluations);
+
+		IEnrolmentEvaluation latestEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
+
+		if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED) ||
+				enrolment.getEnrolmentState().equals(EnrolmentState.NOT_EVALUATED) ||
+				enrolment.getEnrolmentState().equals(EnrolmentState.ANNULED))
+		{
+			return latestEvaluation;
+		}
+
+		if (latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
+		{
+			Iterator iterator = enrolmentEvaluations.iterator();
+			while(iterator.hasNext())
+			{
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+				if(enrolmentEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFICATION))
+				{
+					latestEvaluation = enrolmentEvaluation;
+					break;
+				}
+			}
+		}
+
+		if (!latestEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)) {
+			return latestEvaluation;
+		} else {
+			IEnrolmentEvaluation previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(1);
+
+			Integer latestMark = new Integer(0);
+			Integer previousMark = new Integer(0);
+
+			try {
+				latestMark = Integer.valueOf(latestEvaluation.getGrade());
+			} catch (NumberFormatException e) {
+				// Do nothing.
+			}
+
+			try {
+				previousMark = Integer.valueOf(previousEvaluation.getGrade());
+			} catch (NumberFormatException e1) {
+				for (int i = 2; i < enrolmentEvaluations.size(); i++)
+				{
+					previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(i);
+					try {
+						previousMark = Integer.valueOf(previousEvaluation.getGrade());
+					} catch (NumberFormatException e2) {
+						// Do nothing.
+					}
+				}
+			}
+
+			if (previousMark.intValue() > latestMark.intValue()) {
+				return previousEvaluation;
+			} else {
+				return latestEvaluation;
+			}
+		}
+	}
+
+	/**
+	 * @param enrollmentsList
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Throwable
+	 */
+	protected static List keepOnlyImprovments(List enrollmentsList, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IPersistentEnrolment enrolmentDAO = fenixPersistentSuport.getIPersistentEnrolment();
+
+		List enrollmentsToRemove = new ArrayList();
+		List enrollmentsToReturn = new ArrayList();
+		
+		Iterator enrollmentIterator = enrollmentsList.iterator();
+		while (enrollmentIterator.hasNext())
+		{
+			IEnrolment enrolment = (IEnrolment) enrollmentIterator.next();
+			IEnrolmentEvaluation enrolmentEvaluation = MakeEquivalencesForILEECStudents.getLatestEvaluation(enrolment);
+			if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+			{
+				List enrolmentsInSameCourse = enrolmentDAO.readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourseScope().getCurricularCourse(), enrolment.getExecutionPeriod());
+				if(enrolmentsInSameCourse != null || !enrolmentsInSameCourse.isEmpty())
+				{
+					Iterator iterator = enrolmentsInSameCourse.iterator();
+					while (iterator.hasNext())
+					{
+						IEnrolment enrolmentInSameCourse = (IEnrolment) iterator.next();
+						IEnrolmentEvaluation evaluationInSameCourse = MakeEquivalencesForILEECStudents.getLatestEvaluation(enrolmentInSameCourse);
+						try
+						{
+							Integer improvmentGrade = new Integer(enrolmentEvaluation.getGrade());
+							Integer currentGrade = new Integer(evaluationInSameCourse.getGrade());
+							if(currentGrade.intValue() <= improvmentGrade.intValue())
+							{
+								if(!enrollmentsToRemove.contains(enrolmentInSameCourse))
+								{
+									enrollmentsToRemove.add(enrolmentInSameCourse);
+								}
+							} else
+							{
+								if(!enrollmentsToRemove.contains(enrolment))
+								{
+									enrollmentsToRemove.add(enrolment);
+								}
+							}
+						} catch(NumberFormatException e)
+						{
+						}
+					}
+				}
+			}
+
+		}
+
+		enrollmentsToReturn.addAll(enrollmentsList);
+		enrollmentsToReturn.removeAll(enrollmentsToRemove);
+		return enrollmentsToReturn;
 	}
 }

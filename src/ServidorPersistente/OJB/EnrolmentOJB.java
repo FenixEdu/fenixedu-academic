@@ -586,4 +586,14 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
     	criteria.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
     	return queryList(Enrolment.class, criteria);
     }
+
+    public List readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+    	Criteria criteria = new Criteria();
+    	criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
+    	criteria.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
+    	criteria.addNotEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+    	criteria.addEqualTo("enrolmentState", EnrolmentState.APROVED);
+    	return queryList(Enrolment.class, criteria);
+    }
 }

@@ -26,8 +26,8 @@ import Util.EnrolmentState;
 public class GetEnrolmentGrade implements IServico {
 
 	private static GetEnrolmentGrade servico = new GetEnrolmentGrade();
-	private static String RECTIFIED = "RECTIFICADO";
-	private static String RECTIFICATION = "RECTIFICAÇÃO";
+	public static String RECTIFIED = "RECTIFICADO";
+	public static String RECTIFICATION = "RECTIFICAÇÃO";
 	
 	/**
 	 * The singleton access method of this class.

@@ -18,6 +18,7 @@ public class EnrolmentEvaluationType implements Serializable {
     public static final int EXTERNAL = 4; // avaliacao feita fora do IST
     public static final int EQUIVALENCE = 5; // avaliacao feita por equivalencia
     public static final int CLOSED = 6; // inscricao com avaliacao fechada
+
     public static final int FIRST_SEASON = 7;
     // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guardar histórico, não usar para mais nada!
     public static final int SECOND_SEASON = 8;

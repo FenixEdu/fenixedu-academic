@@ -524,12 +524,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.put(key, enrolment);
-
-//			} else {
-//				System.out.println("[WARNING 201] No Enrolment was created!");
 			}
-//		} else {
-//			System.out.println("[WARNING 202] No Enrolment was created!");
 		}
 
 		// Create the EnrolmentEvaluation.
@@ -578,12 +573,10 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			} else {
 				System.out.println("[WARNING 203] No EnrolmentEvaluation was created!");
 				ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
-//				System.out.println(mwEnrolment.toString());
 			}
 		} else {
 			System.out.println("[WARNING 204] No EnrolmentEvaluation was created!");
 			ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
-//			System.out.println(mwEnrolment.toString());
 		}
 
 		CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
