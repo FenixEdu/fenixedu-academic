@@ -52,7 +52,6 @@ public class CreateGrantOwner extends CreatePersonBaseClass implements IServico
     }
 
     private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber)
-        throws ExcepcaoPersistencia
     {
         String result = null;
         result = "B" + grantOwnerNumber.toString();
