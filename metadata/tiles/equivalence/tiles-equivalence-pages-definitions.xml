@@ -33,4 +33,20 @@
 	<definition name="df.page.detailsCurricularCourseScopeForCoordinatorEquivalence" extends="definition.equivalence.for.coordinator">
 		<put name="body" value="/equivalence/detailsCurricularCourseScope.jsp"/>
 	</definition>
+
+	<definition name="df.page.showCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.masterDegreeAdministrativeOffice">
+		<put name="body" value="/equivalence/showCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.verifyCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.masterDegreeAdministrativeOffice">
+		<put name="body" value="/equivalence/verifyCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.confirmCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.masterDegreeAdministrativeOffice">
+		<put name="body" value="/equivalence/confirmCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.acceptCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/equivalence/acceptCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.detailsCurricularCourseScopeForMasterDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.masterDegreeAdministrativeOffice">
+		<put name="body" value="/equivalence/detailsCurricularCourseScope.jsp"/>
+	</definition>
 </tiles-definitions>

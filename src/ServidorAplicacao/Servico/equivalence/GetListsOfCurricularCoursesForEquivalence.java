@@ -29,7 +29,6 @@ import ServidorPersistente.IPersistentEnrolmentEquivalenceRestriction;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.CurricularCourseType;
 import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 
@@ -121,30 +120,53 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 				}
 			});
 
-			List otherIrrelevanteCurricularCourses = (List) CollectionUtils.select(curricularCoursesFromActiveDegreeCurricularPlanForStudent, new Predicate() {
-				public boolean evaluate(Object obj) {
-					ICurricularCourse curricularCourse = (ICurricularCourse) obj;
-					return	curricularCourse.getType().equals(CurricularCourseType.TFC_COURSE_OBJ) ||
-							curricularCourse.getType().equals(CurricularCourseType.TRAINING_COURSE_OBJ);
-				}
-			});
+//			List otherIrrelevanteCurricularCourses = (List) CollectionUtils.select(curricularCoursesFromActiveDegreeCurricularPlanForStudent, new Predicate() {
+//				public boolean evaluate(Object obj) {
+//					ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+//					return	curricularCourse.getType().equals(CurricularCourseType.TFC_COURSE_OBJ) ||
+//							curricularCourse.getType().equals(CurricularCourseType.TRAINING_COURSE_OBJ);
+//				}
+//			});
 
 			Iterator iterator1 = curricularCoursesFromActiveDegreeCurricularPlanForStudent.iterator();
 			List aux1 = new ArrayList();
 			while(iterator1.hasNext()) {
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
-				if	(
-						(curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch()) ||
-						(curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))) &&
-						(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope)) &&
-//						(!otherIrrelevanteCurricularCourses.contains(curricularCourseScope.getCurricularCourse())) &&
-						(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope))
-					) {
-					aux1.add(curricularCourseScope);
+//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
+//				if	(
+//						(curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch()) ||
+//						(curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))) &&
+//						(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope)) &&
+////						(!otherIrrelevanteCurricularCourses.contains(curricularCourseScope.getCurricularCourse())) &&
+//						(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope))
+//					) {
+//					aux1.add(curricularCourseScope);
+//				}
+
+
+				Iterator iterator2 = curricularCourse.getScopes().iterator();
+				while(iterator2.hasNext()) {
+					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
+					/**
+					 * DAVID: Se o ramo ao qual pertence a disciplina é igual ao ramo do aluno ou
+					 * a disicplina é do tronco comum ou
+					 * o aluno está no tronco comum e
+					 * o aluno não foi já dado como aprovado ou inscrito à disicplina
+					 */
+					if	(
+							(curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch()) ||
+							(curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))
+							|| (studentActiveCurricularPlan.getBranch().getName().equals("") && studentActiveCurricularPlan.getBranch().getCode().equals("")))	&&
+							(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope)) &&
+							(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope))
+						) {
+						aux1.add(curricularCourseScope);
+					}
 				}
+
+
 			}
-			
+
 			List aux2 = (List) CollectionUtils.union(curricularCoursesScopesFromStudentAprovedEnrolments, curricularCoursesScopesFromStudentEnroledEnrolments);
 			curricularCourseScopesFromActiveDegreeCurricularPlanForStudent.addAll(this.subtract(aux1, aux2));
 

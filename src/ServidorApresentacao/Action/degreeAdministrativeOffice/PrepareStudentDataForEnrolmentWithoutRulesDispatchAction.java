@@ -44,27 +44,48 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			List infoExecutionDegreesList = null;
+			Integer executionPeriodOID = null;
 			try {
-				Integer degreeType = null;
+				executionPeriodOID = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("executionPeriodOID"));
+			} catch (NumberFormatException e) {
+				executionPeriodOID = (Integer) request.getAttribute("executionPeriodOID");
+				getStudentByNumberAndDegreeTypeForm.set("executionPeriodOID", executionPeriodOID.toString());
+			}
+
+			List infoExecutionDegreesList = null;
+			Integer degreeType = null;
+			try {
 				try {
 					degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
 				} catch (NumberFormatException e) {
 					degreeType = (Integer) request.getAttribute("degreeType");
 					getStudentByNumberAndDegreeTypeForm.set("degreeType", degreeType.toString());
 				}
-				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
+//				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+				InfoExecutionPeriod infoExecutionPeriod = PrepareStudentDataForEnrolmentWithoutRulesDispatchAction.getExecutionPeriod(request, executionPeriodOID);
+
 				TipoCurso realDegreeType = new TipoCurso(degreeType);
 				Object args[] = { infoExecutionPeriod.getInfoExecutionYear(), realDegreeType };
 				infoExecutionDegreesList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
+
+				if(degreeType.intValue() == TipoCurso.MESTRADO) {
+					TipoCurso realDegreeType2 = TipoCurso.LICENCIATURA_OBJ;
+					Object args2[] = { infoExecutionPeriod.getInfoExecutionYear(), realDegreeType2 };
+					List infoExecutionDegreesListToAdd = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYearAndDegreeType", args2);
+					infoExecutionDegreesList.addAll(infoExecutionDegreesListToAdd);
+				}
+
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
 
-			request.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList));
+			request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOID);
+
+			request.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList, degreeType));
 
 			request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, this.generateCurricularYearList());
-			request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, this.generateCurricularSemesterList());
+//			request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, this.generateCurricularSemesterList());
 
 			return mapping.findForward(forwards[0]);
 		} else {
@@ -73,6 +94,18 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 	}
 
 	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List infoExecutionPeriodsList = null;
+		try {
+			HttpSession session = request.getSession();
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			infoExecutionPeriodsList = (List) ServiceUtils.executeService(userView, "ReadAllExecutionPeriodsForEnrollment", null);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute(SessionConstants.EXECUTION_PERIOD, PrepareExecutionPeriodForEnrolmentContextAction.getExecutionPeriodsLableValueBeanList(infoExecutionPeriodsList));
+
 		return mapping.findForward(forwards[1]);
 	}
 
@@ -86,14 +119,14 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 		return years;
 	}
 
-	private List generateCurricularSemesterList() {
-		List years = new ArrayList();
-		years.add("label.first.semester");
-		years.add("label.second.semester");
-		return years;
-	}
+//	private List generateCurricularSemesterList() {
+//		List years = new ArrayList();
+//		years.add("label.first.semester");
+//		years.add("label.second.semester");
+//		return years;
+//	}
 
-	private List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList) {
+	private List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList, Integer degreeType) {
 		ArrayList result = null;
 		if ( (infoExecutionDegreesList != null) && (!infoExecutionDegreesList.isEmpty()) ) {
 			result = new ArrayList();
@@ -101,7 +134,11 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 			while(iterator.hasNext()) {
 				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 				Integer index = new Integer(infoExecutionDegreesList.indexOf(infoExecutionDegree));
-				result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
+				if( (degreeType.intValue() == TipoCurso.MESTRADO) && (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) ) {
+					result.add(new LabelValueBean("Licenciatura em " + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
+				} else {
+					result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
+				}
 			}
 		}
 		this.sort(result);
@@ -116,4 +153,18 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 			Collections.sort(listOfLabelValueBeans, comparatorChain);
 		}
 	}
+
+	public static InfoExecutionPeriod getExecutionPeriod(HttpServletRequest request, Integer executionPeriodOID) throws FenixActionException {
+		InfoExecutionPeriod executionPeriod = null;
+		try {
+			HttpSession session = request.getSession();
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			Object[] args = {executionPeriodOID};
+			executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadExecutionPeriodByOIDForEnrollment", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		return executionPeriod;
+	}
+
 }

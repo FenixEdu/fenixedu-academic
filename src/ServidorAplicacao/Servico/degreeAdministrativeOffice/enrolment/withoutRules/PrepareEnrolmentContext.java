@@ -36,13 +36,13 @@ public class PrepareEnrolmentContext implements IServico {
 		return "PrepareEnrolmentContext";
 	}
 
-	public InfoEnrolmentContext run(InfoStudent infoStudent, InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree, List listOfChosenCurricularSemesters, List listOfChosenCurricularYears) throws FenixServiceException {
+	public InfoEnrolmentContext run(InfoStudent infoStudent, InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree/*, List listOfChosenCurricularSemesters*/, List listOfChosenCurricularYears) throws FenixServiceException {
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
 		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 		try {
-			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(student, executionPeriod, executionDegree, listOfChosenCurricularSemesters, listOfChosenCurricularYears);
+			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(student, executionPeriod, executionDegree/*, listOfChosenCurricularSemesters*/, listOfChosenCurricularYears);
 			infoEnrolmentContext = EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

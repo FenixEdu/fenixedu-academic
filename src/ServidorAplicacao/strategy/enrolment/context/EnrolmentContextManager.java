@@ -24,7 +24,6 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
-import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
@@ -636,7 +635,7 @@ public abstract class EnrolmentContextManager {
 		return enrolmentContext;
 	}
 
-	public static EnrolmentContext initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(IStudent student, IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, List listOfChosenCurricularSemesters, List listOfChosenCurricularYears) throws ExcepcaoPersistencia {
+	public static EnrolmentContext initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(IStudent student, IExecutionPeriod executionPeriod, ICursoExecucao executionDegree/*, List listOfChosenCurricularSemesters*/, List listOfChosenCurricularYears) throws ExcepcaoPersistencia {
 		EnrolmentContext enrolmentContext = new EnrolmentContext();
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
@@ -644,21 +643,21 @@ public abstract class EnrolmentContextManager {
 		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 
-		ICurso degreeCriteria = new Curso();
-		degreeCriteria.setDegreeCurricularPlans(null);
-		degreeCriteria.setIdInternal(null);
-		degreeCriteria.setNome(executionDegree.getCurricularPlan().getDegree().getNome());
-		degreeCriteria.setSigla(executionDegree.getCurricularPlan().getDegree().getSigla());
-		degreeCriteria.setTipoCurso(executionDegree.getCurricularPlan().getDegree().getTipoCurso());
-		IDegreeCurricularPlan degreeCurricularPlanCriteria = new DegreeCurricularPlan();
-		degreeCurricularPlanCriteria.setCurricularCourses(null);
-		degreeCurricularPlanCriteria.setDegree(degreeCriteria);
-		degreeCurricularPlanCriteria.setDegreeDuration(executionDegree.getCurricularPlan().getDegreeDuration());
-		degreeCurricularPlanCriteria.setEndDate(executionDegree.getCurricularPlan().getEndDate());
-		degreeCurricularPlanCriteria.setInitialDate(executionDegree.getCurricularPlan().getInitialDate());
-		degreeCurricularPlanCriteria.setMinimalYearForOptionalCourses(executionDegree.getCurricularPlan().getMinimalYearForOptionalCourses());
-		degreeCurricularPlanCriteria.setName(executionDegree.getCurricularPlan().getName());
-		degreeCurricularPlanCriteria.setState(executionDegree.getCurricularPlan().getState());
+//		ICurso degreeCriteria = new Curso();
+//		degreeCriteria.setDegreeCurricularPlans(null);
+//		degreeCriteria.setIdInternal(null);
+//		degreeCriteria.setNome(executionDegree.getCurricularPlan().getDegree().getNome());
+//		degreeCriteria.setSigla(executionDegree.getCurricularPlan().getDegree().getSigla());
+//		degreeCriteria.setTipoCurso(executionDegree.getCurricularPlan().getDegree().getTipoCurso());
+//		IDegreeCurricularPlan degreeCurricularPlanCriteria = new DegreeCurricularPlan();
+//		degreeCurricularPlanCriteria.setCurricularCourses(null);
+//		degreeCurricularPlanCriteria.setDegree(degreeCriteria);
+//		degreeCurricularPlanCriteria.setDegreeDuration(executionDegree.getCurricularPlan().getDegreeDuration());
+//		degreeCurricularPlanCriteria.setEndDate(executionDegree.getCurricularPlan().getEndDate());
+//		degreeCurricularPlanCriteria.setInitialDate(executionDegree.getCurricularPlan().getInitialDate());
+//		degreeCurricularPlanCriteria.setMinimalYearForOptionalCourses(executionDegree.getCurricularPlan().getMinimalYearForOptionalCourses());
+//		degreeCurricularPlanCriteria.setName(executionDegree.getCurricularPlan().getName());
+//		degreeCurricularPlanCriteria.setState(executionDegree.getCurricularPlan().getState());
 
 //		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
 		IDegreeCurricularPlan degreeCurricularPlanTemp = new DegreeCurricularPlan();
@@ -682,7 +681,8 @@ public abstract class EnrolmentContextManager {
 				Iterator iterator2 = curricularCourse.getScopes().iterator();
 				while(iterator2.hasNext()) {
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
-					if(	listOfChosenCurricularSemesters.contains(curricularCourseScope.getCurricularSemester().getSemester()) &&
+					if(	/*listOfChosenCurricularSemesters.contains(curricularCourseScope.getCurricularSemester().getSemester()) &&*/
+						executionPeriod.getSemester().equals(curricularCourseScope.getCurricularSemester().getSemester()) &&
 						listOfChosenCurricularYears.contains(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()) ) {
 						curricularCoursesScopesFromDegreeCurricularPlan.add(curricularCourseScope);
 					}
@@ -690,13 +690,16 @@ public abstract class EnrolmentContextManager {
 			}
 		}
 
+		final IExecutionPeriod executionPeriod2 = executionPeriod;
+
 		List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentActiveCurricularPlan);
 
 		// Enrolments that have state APROVED are to be subtracted from list of possible choices.
 		List aprovedStudentEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return	enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
+				return	enrolment.getEnrolmentState().equals(EnrolmentState.APROVED) &&
+						enrolment.getExecutionPeriod().equals(executionPeriod2);
 			}
 		});
 
@@ -712,6 +715,7 @@ public abstract class EnrolmentContextManager {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return	(enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED) ||
 						enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)) &&
+						enrolment.getExecutionPeriod().equals(executionPeriod2) &&
 						!enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
 			}
 		});
@@ -720,13 +724,14 @@ public abstract class EnrolmentContextManager {
 		studentEnrolmentsWithStateAprovedAndEnrolled.addAll(aprovedStudentEnrolments);
 //		studentEnrolmentsWithStateAprovedAndEnrolled.addAll(studentEnrolmentsWithStateEnrolled);
 
-		final List listOfChosenCurricularSemesters2 = listOfChosenCurricularSemesters;
+//		final List listOfChosenCurricularSemesters2 = listOfChosenCurricularSemesters;
 		final List listOfChosenCurricularYears2 = listOfChosenCurricularYears;
 		List studentEnrolmentsWithStateAprovedAndEnrolledForSelectedDegree = (List) CollectionUtils.select(studentEnrolmentsWithStateAprovedAndEnrolled, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return	enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan) &&
-						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+//						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+						executionPeriod2.getSemester().equals(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
 						listOfChosenCurricularYears2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear());
 			}
 		});
@@ -735,7 +740,8 @@ public abstract class EnrolmentContextManager {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return	enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan) &&
-						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+//						listOfChosenCurricularSemesters2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
+						executionPeriod2.getSemester().equals(enrolment.getCurricularCourseScope().getCurricularSemester().getSemester()) &&
 						listOfChosenCurricularYears2.contains(enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear());
 			}
 		});

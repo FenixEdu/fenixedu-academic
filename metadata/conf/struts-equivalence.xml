@@ -48,6 +48,9 @@
 		<forward name="backForCoordinator" path="/coordinator/index.do?" contextRelative="true"/>
 		<forward name="equivalenceForCoordinator" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
 
+		<forward name="backToMasterDegreeAdministrativeOffice" path="/posGraduacao/studentSection.do?" contextRelative="true"/>
+		<forward name="equivalenceForMasterDegreeAdministrativeOffice" path="/posGraduacao/equivalence.do" contextRelative="true"/>
+
 		<forward name="ciaplIndex" path="/index.do" contextRelative="true"/>
 		<forward name="logoff" path="/logoff.do" contextRelative="true"/>
 		<forward name="index" path="/index.do" redirect="true"/>
@@ -99,6 +102,25 @@
 			<forward name="detailsCurricularCourseScope" path="df.page.detailsCurricularCourseScopeForCoordinatorEquivalence"/>
 			<forward name="begin" path="/manualEquivalenceManagerForCoordinator.do?method=show"/>
 			<forward name="home" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
+		</action>
+
+		<action	name="manualEquivalenceFrom"
+				type="ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchAction"
+				path="/manualEquivalenceManagerForMasterDegreeAdministrativeOffice"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			<forward name="beginTransaction" path="/manualEquivalenceManagerForMasterDegreeAdministrativeOffice.do?method=show"/>
+			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
+			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
+			<forward name="confirmCurricularCoursesForEquivalence" path="df.page.confirmCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
+			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
+			<forward name="detailsCurricularCourseScope" path="df.page.detailsCurricularCourseScopeForMasterDegreeAdministrativeOfficeEquivalence"/>
+			<forward name="begin" path="/manualEquivalenceManagerForMasterDegreeAdministrativeOffice.do?method=show"/>
+			<forward name="home" path="/posGraduacao/equivalence.do" contextRelative="true"/>
 		</action>
 	</action-mappings>
 

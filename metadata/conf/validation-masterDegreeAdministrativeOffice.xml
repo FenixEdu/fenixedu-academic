@@ -4,12 +4,24 @@
 <form-validation>
   <formset>
 
+		<form name="getStudentByNumberForm">
+			<field property="degreeType" depends="required,integer" page="1">
+				<arg0 key="error.no.degree.type.selected" resource="true"/>
+			</field>
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="error.no.student.selected" resource="true"/>
+			</field>
+		</form>
+
 		<form name="getStudentByNumberAndDegreeTypeForm">
 			<field property="degreeType" depends="required,integer" page="1">
 				<arg0 key="error.no.degree.type.selected" resource="true"/>
 			</field>
 			<field property="studentNumber" depends="required,integer" page="1">
 				<arg0 key="error.no.student.selected" resource="true"/>
+			</field>
+			<field property="executionPeriodOID" depends="required,integer" page="1">
+				<arg0 key="error.no.execution.period.selected" resource="true"/>
 			</field>
 		</form>
 
@@ -28,6 +40,7 @@
 						<var-value>false</var-value>
 					</var>
 			</field>
+			<!--
 			<field property="curricularSemesters" depends="validateMultiBox" page="1">
 				<arg0 key="semestre" resource="true"/>
 					<var>
@@ -39,6 +52,7 @@
 						<var-value>false</var-value>
 					</var>
 			</field>
+			-->
 		</form>
 
     <!-- validation for the Create Candidate Form -->

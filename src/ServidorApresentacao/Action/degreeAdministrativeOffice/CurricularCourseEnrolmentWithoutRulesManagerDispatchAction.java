@@ -15,6 +15,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorApresentacao.Action.commons.GeneralCurricularCourseEnrolmentManagerDispatchAction;
@@ -22,6 +23,8 @@ import ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchA
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.RoleType;
+import Util.TipoCurso;
 
 /**
  * @author David Santos
@@ -43,7 +46,6 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
 		session.removeAttribute(SessionConstants.ACTUAL_ENROLMENT_KEY);
 
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Integer studentOID = (Integer) request.getAttribute("studentOID");
@@ -52,10 +54,14 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		InfoStudent infoStudent = super.getInfoStudent(request, form, userView);
 
 		List listOfChosenCurricularYears = (List) request.getAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY);
-		List listOfChosenCurricularSemesters = (List) request.getAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY);
+//		List listOfChosenCurricularSemesters = (List) request.getAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY);
 		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.DEGREE);
 
-		Object args[] = { infoStudent, infoExecutionPeriod, infoExecutionDegree, listOfChosenCurricularSemesters, listOfChosenCurricularYears };
+//		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		Integer executionPeriodOID = (Integer) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
+		InfoExecutionPeriod infoExecutionPeriod = PrepareStudentDataForEnrolmentWithoutRulesDispatchAction.getExecutionPeriod(request, executionPeriodOID);
+
+		Object args[] = { infoStudent, infoExecutionPeriod, infoExecutionDegree/*, listOfChosenCurricularSemesters*/, listOfChosenCurricularYears };
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		try {
@@ -137,8 +143,18 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
-		request.setAttribute("degreeType", infoEnrolmentContext.getChosenOptionalInfoDegree().getTipoCurso().getTipoCurso());
+		
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		if(AuthorizationUtils.containsRole(userView.getRoles(), RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+			request.setAttribute("degreeType", TipoCurso.MESTRADO_OBJ.getTipoCurso());
+		} else if(AuthorizationUtils.containsRole(userView.getRoles(), RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+			request.setAttribute("degreeType", TipoCurso.LICENCIATURA_OBJ.getTipoCurso());
+		} else {
+			request.setAttribute("degreeType", infoEnrolmentContext.getChosenOptionalInfoDegree().getTipoCurso().getTipoCurso());
+		}
+		
 		request.setAttribute("studentNumber", infoEnrolmentContext.getInfoStudent().getNumber());
+		request.setAttribute("executionPeriodOID", infoEnrolmentContext.getInfoExecutionPeriod().getIdInternal());
 		session.removeAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 		session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
 		session.removeAttribute(SessionConstants.ACTUAL_ENROLMENT_KEY);

@@ -15,6 +15,7 @@
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="executionPeriodOID" type="java.lang.String"/>
 		</form-bean>
 		<form-bean name="getStudentByNumberAndGraduationTypeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
@@ -29,7 +30,8 @@
 			<form-property name="studentOID" type="java.lang.Integer"/>
 			<form-property name="infoExecutionDegree" type="java.lang.String"/>
 			<form-property name="curricularYears" type="java.lang.Integer[]"/>
-			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
+			<!--<form-property name="curricularSemesters" type="java.lang.Integer[]"/>-->
+			<form-property name="executionPeriodOID" type="java.lang.Integer"/>
 		</form-bean>
 
 		<form-bean name="curricularCourseEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -465,6 +467,12 @@
    	        <form-property name="observations" type="java.lang.String"/>
       </form-bean>
      
+		<form-bean name="getStudentByNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+		</form-bean>
 
    </form-beans>
     
@@ -488,7 +496,8 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
 	  <forward name="index" path="index.do" redirect="true"/>
       <forward name="firstPage" path="/index.do"/>
-      <forward name="logoff" path="/logoff.do" contextRelative="true"/> 
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+		<forward name="equivalenceForMasterDegreeAdministrativeOffice" path="/equivalence.do"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -497,7 +506,32 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
-      <action path="/enrollment" forward="/enrollment/chooseStudentForEnrollment.jsp"/>
+      <!--<action path="/enrollment" forward="/enrollment/chooseStudentForEnrollment.jsp"/>-->
+
+		<action	type="ServidorApresentacao.Action.commons.VoidAction"
+				path="/equivalence"
+				scope="request"
+				validate="false">
+			<forward name="Success" path="/equivalence/chooseStudentForManualEquivalence.jsp"/>
+		</action>
+		
+		<action	name="getStudentByNumberForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareStudentDataForManualEquivalenceDispatchAction"
+				path="/prepareStudentDataForManualEquivalence"
+				input="/prepareStudentDataForManualEquivalence.do?method=error&amp;page=0"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="startManualEquivalence" path="/equivalence/manualEquivalenceManagerForMasterDegreeAdministrativeOffice.do?method=show" contextRelative="true"/>
+			<forward name="error" path="/equivalence.do"/>
+		</action>
+
+		<action	type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareExecutionPeriodForEnrolmentContextAction"
+				path="/enrollment"
+				scope="request"
+				validate="false">
+			<forward name="chooseStudentAndExecutionPeriodForEnrollment" path="/enrollment/chooseStudentForEnrollment.jsp"/>
+		</action>
 
 		<action	name="getStudentByNumberAndDegreeTypeForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareStudentDataForEnrolmentWithoutRulesDispatchAction"

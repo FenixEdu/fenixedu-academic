@@ -6,9 +6,10 @@
 
 <bean:define id="infoExecutionDegreesNamesList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>
 <bean:define id="yearsList" name="<%= SessionConstants.ENROLMENT_YEAR_LIST_KEY %>" scope="request"/>
-<bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>
+<%--<bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>--%>
 <bean:define id="infoStudent" name="<%= SessionConstants.STUDENT %>"  scope="request"/>
 <bean:define id="studentOID" name="infoStudent"  property="idInternal"/>
+<bean:define id="executionPeriodOID" name="<%= SessionConstants.EXECUTION_PERIOD_OID %>" scope="request"/>
 
 <h2 align="center"><bean:message key="link.masterDegree.enrollment"/></h2>
 <center>
@@ -25,6 +26,7 @@
 	<html:hidden property="method" value="prepare"/>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="studentOID" value="<%= studentOID.toString() %>"/>
+	<html:hidden property="executionPeriodOID" value="<%= executionPeriodOID.toString() %>"/>
 	<html:hidden name="getStudentByNumberAndDegreeTypeForm" property="degreeType"/>
 	<html:hidden name="getStudentByNumberAndDegreeTypeForm" property="studentNumber"/>
 
@@ -55,6 +57,7 @@
 			</tr>
 		</logic:iterate>
 	</table>
+<%--
 	<br/>
 	<br/>
 	<bean:message key="label.choose.semester"/>
@@ -72,6 +75,7 @@
 			</tr>
 		</logic:iterate>
 	</table>
+--%>
 	<br/>
 	<br/>
 	<html:submit styleClass="inputbutton">

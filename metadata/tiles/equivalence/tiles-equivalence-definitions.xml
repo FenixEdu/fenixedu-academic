@@ -22,10 +22,26 @@
 		<put name="footer" value="/coordinator/copyrightDefault.jsp"/>
 	</definition>
 
+	<definition name="definition.equivalence.for.masterDegreeAdministrativeOffice.masterPage" extends="df.layout.two-column.posGrad">
+		<put name="title" value=".IST - Secretaria de Pós-Graduação - Atribuição Manual de Equivalências"/>
+		<put name="serviceName" value="Secretaria de Pós-Graduação"/>
+		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp"/>
+		<put name="navLocal" value="/posGraduacao/equivalence/equivalenceMenu.jsp"/>
+		<put name="body-context" value=""/>
+		<put name="body" value=""/>
+		<put name="footer" value="/posGraduacao/copyrightDefault.jsp"/>
+	</definition>
+
+
+
+
 	<definition name="definition.equivalence.for.degreeAdministrativeOffice" extends="definition.equivalence.for.degreeAdministrativeOffice.masterPage">
 		<put name="body-context" value="/equivalence/equivalenceContext.jsp"/>
 	</definition>
 	<definition name="definition.equivalence.for.coordinator" extends="definition.equivalence.for.coordinator.masterPage">
+		<put name="body-context" value="/equivalence/equivalenceContext.jsp"/>
+	</definition>
+	<definition name="definition.equivalence.for.masterDegreeAdministrativeOffice" extends="definition.equivalence.for.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body-context" value="/equivalence/equivalenceContext.jsp"/>
 	</definition>
 </tiles-definitions>
