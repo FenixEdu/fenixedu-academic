@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  *fenix-head
  *DataBeans
@@ -12,7 +14,7 @@ package DataBeans;
  *
  */
 public class InfoLink {
-//note: this class does not extends InfoObject because it does not has a counterpart in the Domain. its just a DTO
+	//note: this class does not extends InfoObject because it does not has a counterpart in the Domain. its just a DTO
 	private String linkName;
 	private String link;
 
@@ -27,7 +29,12 @@ public class InfoLink {
 	 * @param link
 	 */
 	public void setLink(String link) {
-		this.link = link;
+		try {
+			this.link = new String(link.getBytes("ISO-8859-1"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			this.link = link;
+		}
+
 	}
 
 	/**
@@ -41,7 +48,13 @@ public class InfoLink {
 	 * @param linkName
 	 */
 	public void setLinkName(String linkName) {
-		this.linkName = linkName;
+		try {
+			this.linkName =
+				new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			this.linkName = linkName;
+		}
+
 	}
 
 }

@@ -42,7 +42,7 @@ public class FileSuportObject {
 	 */
 	public void setFileName(String fileName) {
 		try {
-			this.fileName = new String(fileName.getBytes(), "ISO-8859-1");
+			this.fileName = new String(fileName.getBytes("ISO-8859-1"), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			this.fileName = fileName;
 		}
@@ -109,7 +109,7 @@ public class FileSuportObject {
 	 */
 	public void setLinkName(String linkName) {
 		try {
-			this.linkName = new String(linkName.getBytes(), "ISO-8859-1");
+			this.linkName = new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			this.linkName = linkName;
 		}

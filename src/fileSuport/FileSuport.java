@@ -61,6 +61,7 @@ public class FileSuport implements IFileSuport {
 	public static synchronized FileSuport getInstance() {
 		if (instance == null) {
 			instance = new FileSuport();
+		} else {
 		}
 		
 			return instance;
@@ -79,6 +80,7 @@ public class FileSuport implements IFileSuport {
 			System.out.println("INIT FAILED");
 		}
 		String namespace = Domain.getDefaultNamespace();
+		
 		this.token =
 			Domain.accessNamespace(new SecurityToken(new String()), namespace);
 		this.structure = token.getStructureHelper();
@@ -231,6 +233,8 @@ public class FileSuport implements IFileSuport {
 	private void beginTransaction()throws SlideException, NotSupportedException, SystemException{
 		        System.out.println("beforeBegin->"+token.getStatus());
 				token.begin();	
+		
+				token.setTransactionTimeout(20);
 				System.out.println("afterBegin->"+token.getStatus());
 	}
 

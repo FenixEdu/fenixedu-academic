@@ -891,12 +891,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer itemCode = getItemCode(request);
 		DynaActionForm xptoForm = (DynaActionForm) form;
 		FormFile formFile = (FormFile) xptoForm.get("theFile");
-		Integer objectCode = getObjectCode(request);
+		
 		FileSuportObject file = null;
 		try {
 			file = new FileSuportObject();
 			file.setContent(formFile.getFileData());
-			file.setFileName(formFile.getFileName());
+			file.setFileName(new String((formFile.getFileName()).getBytes(),"ISO-8859-1"));
 			file.setContentType(formFile.getContentType());
 			file.setLinkName((String) xptoForm.get("linkName"));
 			if (file.getLinkName()==null||file.getLinkName()=="") {
