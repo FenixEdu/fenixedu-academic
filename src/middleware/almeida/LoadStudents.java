@@ -251,4 +251,12 @@ public class LoadStudents extends LoadDataFile {
 		writeElement(newRole);
 	}
 
+	/* (non-Javadoc)
+	 * @see middleware.almeida.LoadDataFile#getFilenameOutput()
+	 */
+	protected String getFilenameOutput() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
