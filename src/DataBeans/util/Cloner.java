@@ -363,6 +363,7 @@ public abstract class Cloner {
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		infoExecutionDegree.setInfoDegreeCurricularPlan(
 			infoDegreeCurricularPlan);
+		infoExecutionDegree.setTemporaryExamMap(executionDegree.getTemporaryExamMap());
 
 		return infoExecutionDegree;
 

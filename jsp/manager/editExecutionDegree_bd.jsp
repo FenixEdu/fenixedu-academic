@@ -14,24 +14,11 @@
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="executionDegreeId" value="<%= request.getParameter("executionDegreeId") %>"/>
-	<bean:define id="executionDegree" name="infoExecutionDegree"/>
 	
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.manager.executionDegree.edit.coordinator"/>
-				<bean:define id="coordinator" name="executionDegree" property="infoCoordinator"/>
-				<bean:define id="person" name="coordinator" property="infoPerson"/>
-				<bean:write name="person" property="nome"/>
-			</td>
-			<td>
-				<bean:message key="property.number"/>
-				<bean:write name="coordinator" property="teacherNumber"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.manager.coordinator"/>
+				<bean:message key="label.manager.executionDegree.coordinator"/>
 			</td>
 			<td>	
 				<html:select property="coordinatorId">
@@ -39,16 +26,8 @@
 				</html:select>				
 			</td>
 		</tr>
-		<tr>
 			<td>
-				<bean:message key="label.manager.executionDegree.present.executionYear"/>
-				<bean:define id="executionYear" name="executionDegree" property="infoExecutionYear"/>
-				<bean:write name="executionYear" property="year"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.manager.executionYear"/>
+				<bean:message key="label.manager.executionDegree.executionYear"/>
 			</td>
 			<td>
 				<html:select property="executionYear">
@@ -59,21 +38,12 @@
 		<tr>
 			<td>
 				<bean:message key="label.manager.executionDegree.temporaryExamMap"/>
-				<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
-				<% String printing = "Não";
-					if(tempExamMap.toString() == "true")
-					   printing = "Sim"; %>
-				<%= printing %>
-			</td>
-		<tr>
-			<td>
-				<bean:message key="label.manager.temporaryExamMap"/>
 			</td>
 			<td>
 				<html:select property="tempExamMap">
-				<html:option key="label.manager.choose" value=""/>
-				<html:option key="option.manager.true" value="true"/>
-    			<html:option key="option.manager.false" value="false"/>
+					<html:option key="" value=""/>
+					<html:option key="option.manager.true" value="true"/>
+    				<html:option key="option.manager.false" value="false"/>
     			</html:select>
 			</td>
 		</tr>

@@ -109,10 +109,14 @@
 					<bean:define id="person" name="coordinator" property="infoPerson"/>
 					<td class="listClasses"><bean:write name="person" property="nome"/>
 					</td>
-					<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
-					<% String printing = "Não";
-					   if(tempExamMap.toString() == "true")
-					   		printing = "Sim"; %>
+					<% String printing = "---"; %>
+					<logic:notEmpty name="executionDegree" property="temporaryExamMap">
+						<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
+						<% if(tempExamMap.toString() == "true")
+					   			printing = "Sim";
+					   	   else
+					   	   		printing = "Não"; %>
+					</logic:notEmpty>
 					<td class="listClasses"><%= printing %>
 					</td>
 					<td>

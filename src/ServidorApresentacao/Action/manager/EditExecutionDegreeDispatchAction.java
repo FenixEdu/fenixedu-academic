@@ -43,6 +43,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
+		DynaActionForm dynaForm = (DynaActionForm) form;
 
 		Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
@@ -51,7 +53,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
-			oldInfoExecutionDegree = (InfoExecutionDegree) manager.executar(userView, "ReadExecutionDegree", args);
+				oldInfoExecutionDegree = (InfoExecutionDegree) manager.executar(userView, "ReadExecutionDegree", args);
+				
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -83,7 +86,6 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 				label = infoTeacher.getTeacherNumber() + " - " + infoTeacher.getInfoPerson().getNome();
 				infoTeachersList.add(new LabelValueBean(label, value));
 			}
-			infoTeachersList.add(0, new LabelValueBean("(escolher)", ""));
 			request.setAttribute("infoTeachersList", infoTeachersList);
 		}
 
@@ -104,11 +106,17 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 				label = infoExecutionYear.getYear();
 				infoExecutionYearsList.add(new LabelValueBean(label, value));
 			}
-			infoExecutionYearsList.add(0, new LabelValueBean("(escolher)", ""));
 			request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
 		}
+		
+		Boolean tempExamMap = oldInfoExecutionDegree.getTemporaryExamMap();
+		if(tempExamMap != null)
+			dynaForm.set("tempExamMap", tempExamMap.toString());
+		else
+			dynaForm.set("tempExamMap", "");
+		dynaForm.set("coordinatorId", oldInfoExecutionDegree.getInfoCoordinator().getIdInternal().toString());
+		dynaForm.set("executionYear", oldInfoExecutionDegree.getInfoExecutionYear().getYear());
 
-		request.setAttribute("infoExecutionDegree", oldInfoExecutionDegree);
 		return mapping.findForward("editExecutionDegree");
 	}
 
@@ -125,43 +133,43 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		String coordinatorIdString = (String) dynaForm.get("coordinatorId");
 		String tempExamMapString = (String) dynaForm.get("tempExamMap");
 
-		boolean modified = false;
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
-		if (executionYearString.compareTo("") != 0) {
-			InfoExecutionYear infoExecutionYear = new InfoExecutionYear(executionYearString);
-			infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-			modified = true;
-		}
-		if (coordinatorIdString.compareTo("") != 0) {
-			InfoTeacher infoTeacher = new InfoTeacher();
-			infoTeacher.setIdInternal(new Integer(coordinatorIdString));
-			infoExecutionDegree.setInfoCoordinator(infoTeacher);
-			modified = true;
-		}
-		if (tempExamMapString.compareTo("") != 0) {
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear(executionYearString);
+		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+		
+		InfoTeacher infoTeacher = new InfoTeacher();
+		infoTeacher.setIdInternal(new Integer(coordinatorIdString));
+		infoExecutionDegree.setInfoCoordinator(infoTeacher);
+		
+		if(tempExamMapString.compareTo("") != 0)
 			infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
-			modified = true;
+
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+		infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
+		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+		Object args[] = { infoExecutionDegree, executionDegreeId };
+
+		GestorServicos manager = GestorServicos.manager();
+		Boolean result;
+
+		try {
+				result = (Boolean) manager.executar(userView, "EditExecutionDegree", args);
+				
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e.getMessage(), e);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		
+		if(!result.booleanValue()) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = new ActionError("message.nonExistingExecutionDegree");
+			actionErrors.add("message.nonExistingExecutionDegree", error);
+			saveErrors(request, actionErrors);
 		}
 
-		if (modified) {
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-			infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
-			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-			Object args[] = { infoExecutionDegree, executionDegreeId };
-
-			GestorServicos manager = GestorServicos.manager();
-
-			try {
-				manager.executar(userView, "EditExecutionDegree", args);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e.getMessage(), e);
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(fenixServiceException.getMessage());
-			}
-
-		}
 		return mapping.findForward("readDegreeCurricularPlan");
 	}
 }
