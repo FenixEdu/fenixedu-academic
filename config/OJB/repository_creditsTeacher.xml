@@ -92,6 +92,41 @@
       </reference-descriptor>
 </class-descriptor>
 
+<class-descriptor class="Dominio.credits.ServiceExemptionCreditLine" table="crd_SERVICE_EXEMPTION_CREDIT_LINE">
+      <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
+				        		 primarykey="true" autoincrement="true"/>
+
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" access="anonymous"/>
+
+      <field-descriptor name="type" column="TYPE" jdbc-type="INTEGER" conversion="ServidorPersistente.Conversores.ServiceExemptionTypeFieldConversion"/>
+
+      <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>
+      <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>            
+
+      <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
+      
+      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+         <foreignkey field-ref="keyTeacher"/>
+      </reference-descriptor>
+</class-descriptor>
+
+<class-descriptor class="Dominio.credits.ManagementPositionCreditLine" table="crd_MANAGEMENT_POSITION_CREDIT_LINE">
+      <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
+				        		 primarykey="true" autoincrement="true"/>
+
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" access="anonymous"/>
+
+      <field-descriptor name="position" column="POSITION" jdbc-type="VARCHAR"/>
+
+      <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>
+      <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>            
+
+      <field-descriptor	name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER"	locking="true"/>
+      
+      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+         <foreignkey field-ref="keyTeacher"/>
+      </reference-descriptor>
+</class-descriptor>
 
 <!-- Definitions for Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent -->
 <class-descriptor class="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent" table="TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
