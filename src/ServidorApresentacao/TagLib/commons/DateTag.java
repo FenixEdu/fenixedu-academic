@@ -26,7 +26,7 @@ public class DateTag extends TagSupport {
 	 */
 	public DateTag() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**

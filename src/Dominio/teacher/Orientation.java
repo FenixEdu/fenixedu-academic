@@ -30,7 +30,7 @@ public class Orientation extends DomainObject implements IOrientation
     public Orientation()
     {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
     /**
@@ -39,7 +39,7 @@ public class Orientation extends DomainObject implements IOrientation
     public Orientation(Integer idInternal)
     {
         super(idInternal);
-        // TODO Auto-generated constructor stub
+       
     }
 
     /**

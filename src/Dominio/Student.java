@@ -1,5 +1,6 @@
 package Dominio;
 
+import Util.AgreementType;
 import Util.StudentState;
 import Util.TipoCurso;
 
@@ -15,7 +16,7 @@ public class Student extends DomainObject implements IStudent {
 	protected StudentState state;
 	protected TipoCurso degreeType;
 	private IStudentKind studentKind;
-
+    private AgreementType agreementType;
 	
 	private Integer personKey;
 	private Integer studentKindKey;
@@ -185,4 +186,18 @@ public class Student extends DomainObject implements IStudent {
 
 	
 
+    /**
+     * @return Returns the agreementType.
+     */
+    public AgreementType getAgreementType()
+    {
+        return agreementType;
+    }
+    /**
+     * @param agreementType The agreementType to set.
+     */
+    public void setAgreementType(AgreementType agreementType)
+    {
+        this.agreementType = agreementType;
+    }
 }

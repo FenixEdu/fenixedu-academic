@@ -45,23 +45,9 @@ public class DeleteItem implements IServico {
 			}
 			IFileSuport fileSuport = FileSuport.getInstance();
             long size=1;
-			try {
-				fileSuport.beginTransaction();
-			} catch (Exception e1) {
-				throw new FenixServiceException(e1);
-			} 		
-			size = fileSuport.getDirectorySize(deletedItem.getSlideName());
-            try {
-				fileSuport.commitTransaction();
-			} catch (Exception e2) {
-				try {
-					fileSuport.abortTransaction();
-                    throw new FenixServiceException(e2);
-				} catch (Exception e3) {
-                    throw new FenixServiceException(e3);
-				} 
-			}
 			
+			size = fileSuport.getDirectorySize(deletedItem.getSlideName());
+           			
 			if (size>0) {
 				throw new notAuthorizedServiceDeleteException();
 			}

@@ -3,6 +3,7 @@ package Dominio;
 import Util.StudentType;
 
 
+
 /**
  * @author dcs-rjao
  *
@@ -15,6 +16,7 @@ public class StudentKind extends DomainObject implements IStudentKind {
 	private Integer minCoursesToEnrol;
 	private Integer maxCoursesToEnrol;
 	private Integer maxNACToEnrol;
+   
 	
 	public StudentKind() {
 	}
@@ -69,4 +71,5 @@ public class StudentKind extends DomainObject implements IStudentKind {
 	public void setMinCoursesToEnrol(Integer minCoursesToEnrol) {
 		this.minCoursesToEnrol = minCoursesToEnrol;
 	}
+   
 }

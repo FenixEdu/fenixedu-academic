@@ -40,7 +40,7 @@ public class Curr_lic_ingles extends DomainObject{
 	 */
 	public Curr_lic_ingles() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Integer getAno_curricular() {

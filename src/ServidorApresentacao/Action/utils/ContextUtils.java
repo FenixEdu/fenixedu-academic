@@ -649,7 +649,7 @@ public class ContextUtils
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
         } catch (FenixServiceException e)
         {
-            // TODO Auto-generated catch block
+        
             e.printStackTrace();
         }
 

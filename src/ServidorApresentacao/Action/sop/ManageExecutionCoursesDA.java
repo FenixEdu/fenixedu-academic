@@ -88,7 +88,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 			/* Sort the list of degrees */
 			Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 		} catch (FenixServiceException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

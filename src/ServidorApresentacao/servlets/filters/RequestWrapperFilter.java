@@ -91,7 +91,7 @@ public class RequestWrapperFilter implements Filter
 			{
 				params.add("page");
 			}
-			// TODO Auto-generated method stub
+			
 			return params.elements();
 		}
 

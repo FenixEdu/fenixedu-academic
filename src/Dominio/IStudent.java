@@ -6,12 +6,14 @@
 
 package Dominio;
 
+import Util.AgreementType;
 import Util.StudentState;
 import Util.TipoCurso;
 
 /**
  *
  * @author Ricardo Nortadas
+ * @author João Mota
  */
 
 public interface IStudent extends IDomainObject {
@@ -20,9 +22,9 @@ public interface IStudent extends IDomainObject {
 	public IPessoa getPerson();
 	public IStudentKind getStudentKind();
 	public TipoCurso getDegreeType();
-	
-
-	
+    public AgreementType getAgreementType();
+   
+    public void setAgreementType(AgreementType agreementType);	
 	public void setNumber(Integer number);
 	public void setState(StudentState state);
 	public void setPerson(IPessoa person);

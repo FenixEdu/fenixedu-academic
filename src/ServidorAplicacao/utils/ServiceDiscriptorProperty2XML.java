@@ -68,7 +68,7 @@ public class ServiceDiscriptorProperty2XML extends FileUtil {
 			}
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			

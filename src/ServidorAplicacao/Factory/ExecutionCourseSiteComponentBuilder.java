@@ -423,12 +423,8 @@ public class ExecutionCourseSiteComponentBuilder
 		List infoItemsList = new ArrayList(itemsList.size());
 		Iterator iter = itemsList.iterator();
 		IFileSuport fileSuport = FileSuport.getInstance();
-		try {
-			fileSuport.beginTransaction();
-		} catch (Exception e) {
-			throw new FenixServiceException(e);
-		}
-		try {
+		
+		
 			while (iter.hasNext()) {
 				IItem item = (IItem) iter.next();
 				InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
@@ -440,14 +436,7 @@ public class ExecutionCourseSiteComponentBuilder
 				}
 				infoItemsList.add(infoItem);
 			}
-			fileSuport.commitTransaction();
-		} catch (Exception e1) {
-			try {
-				fileSuport.abortTransaction();
-			} catch (Exception e2) {
-				throw new FenixServiceException(e2);
-			}
-		}
+			
 		Collections.sort(infoItemsList);
 		component.setItems(infoItemsList);
 		return component;

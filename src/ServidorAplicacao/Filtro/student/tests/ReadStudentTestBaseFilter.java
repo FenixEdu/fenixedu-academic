@@ -81,7 +81,7 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
 	 */
     final protected RoleType getRoleType()
     {
-        // TODO Auto-generated method stub
+        
         return RoleType.STUDENT;
     }
 

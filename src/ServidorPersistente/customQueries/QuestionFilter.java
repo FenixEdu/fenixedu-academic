@@ -36,7 +36,7 @@ public class QuestionFilter implements QueryCustomizer
 	 */
 	public void addAttribute(String arg0, String arg1)
 	{
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -45,7 +45,7 @@ public class QuestionFilter implements QueryCustomizer
 	 */
 	public String getAttribute(String arg0, String arg1)
 	{
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -54,7 +54,7 @@ public class QuestionFilter implements QueryCustomizer
 	 */
 	public String getAttribute(String arg0)
 	{
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

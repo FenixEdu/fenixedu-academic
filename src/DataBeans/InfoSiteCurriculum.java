@@ -51,7 +51,7 @@ public class InfoSiteCurriculum extends DataTranferObject implements ISiteCompon
 	 */
 	public InfoSiteCurriculum() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

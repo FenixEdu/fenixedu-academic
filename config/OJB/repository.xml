@@ -38,6 +38,7 @@
 <!ENTITY gaugingTests SYSTEM "repository_gaugingTests.xml">
 <!ENTITY student SYSTEM "repository_student.xml">
 <!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
+<!ENTITY erasmusMigration SYSTEM "repository_erasmus_migration.xml">
 ]>
 
 
@@ -81,4 +82,5 @@
     &gaugingTests;
     &student;
     &finalDegreeWork;
+    &erasmusMigration;
 </descriptor-repository>

@@ -73,6 +73,13 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 				persistentStudent.readStudentByNumberAndDegreeType(
 					studentNumber,
 					TipoCurso.LICENCIATURA_OBJ);
+            if (student == null)
+            {
+                student =
+                    persistentStudent.readStudentByNumberAndDegreeType(
+                        studentNumber,
+                        TipoCurso.MESTRADO_OBJ);
+            }
 			if (student == null)
 			{
 				throw new FenixServiceException("errors.impossible.operation");

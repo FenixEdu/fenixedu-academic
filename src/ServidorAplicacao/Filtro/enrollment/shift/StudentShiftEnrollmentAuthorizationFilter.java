@@ -131,6 +131,12 @@ public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilt
 				persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
 					studentNumber,
 					TipoCurso.LICENCIATURA_OBJ);
+            if (studentCurricularPlan==null) {
+                studentCurricularPlan =
+                    persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
+                        studentNumber,
+                        TipoCurso.MESTRADO_OBJ);
+            }
 
 		}
 		catch (Exception e)

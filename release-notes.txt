@@ -8,6 +8,7 @@ NEW FEATURES:
 - task [#177] Public Listing of Final Degree Work Proposals.
 - Added definition of final degree work candidacy period interface to coordinators portal.
  - new operation in teacher area: delete a grouping.
+- Master Degree Students are now allowed to enroll in execution courses and shifts
 
 NOTES:
 - updateGroupPropertiesTable.sql do an update in table GROUP_PROPERTIES ao campo ENROLMENT_BEGIN_DAY and ENROLMENT_END_DAY. 
@@ -30,6 +31,8 @@ CHANGES:
 
 
 BUG FIXES:
+- fixed bug [ #142 ] master degree students cannot enroll in shifts and execution courses
+- fixed bug [ #143 ] problem with file listing in the sections with files
 - Bug [#106] The missing error page. Fixed.
  - fix bug in master degree area at EditPosGradStudentCurricularPlanStateAndCredits Service for update enrolment state.
  - fix bug in master degree area at create guide.
@@ -41,6 +44,9 @@ KNOWN ISSUES:
   are proposed for. This is due to not yet having information regarding the next execution
   year. This must be resolved by establishing dates when the information must be introduced
   into the database.
+- method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 
+	by execution year and degree code, should return a list and it is returning an object CursoExecucao.
+
 
 
 

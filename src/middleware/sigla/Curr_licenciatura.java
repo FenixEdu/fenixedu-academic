@@ -51,7 +51,7 @@ public class Curr_licenciatura extends DomainObject{
 	 */
 	public Curr_licenciatura() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Integer getAno_curricular() {

@@ -24,7 +24,6 @@ public abstract class ServiceUtils {
 		String serviceName,
 		Object[] serviceArgs)
 		throws FenixServiceException {
-
 		return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
 	}
 

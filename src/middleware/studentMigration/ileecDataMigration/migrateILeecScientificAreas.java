@@ -64,7 +64,7 @@ public class migrateILeecScientificAreas
         }
         catch (ExcepcaoPersistencia e)
         {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
 

@@ -23,7 +23,7 @@ public class ReadStudentTestToDoFilter extends ReadStudentTestBaseFilter
 	 */
     protected boolean canReadTest(Calendar now, Calendar beginDate, Calendar endDate)
     {
-        // TODO Auto-generated method stub
+        
         Calendar endDate2Compare = Calendar.getInstance();
         endDate2Compare.setTimeInMillis(endDate.getTimeInMillis());
         endDate2Compare.set(Calendar.MINUTE, endDate2Compare.get(Calendar.MINUTE)+1);

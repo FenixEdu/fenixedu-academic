@@ -34,7 +34,7 @@ public class DeleteSupportLessonByOID extends DeleteDomainObjectService
      */
     protected Class getDomainObjectClass()
     {
-        // TODO Auto-generated method stub
+        
         return SupportLesson.class;
     }
 

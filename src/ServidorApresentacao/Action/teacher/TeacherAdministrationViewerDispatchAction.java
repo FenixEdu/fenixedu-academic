@@ -1248,13 +1248,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         catch (FileNotFoundException e)
         {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
+            
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
+          
         }
         ActionErrors actionErrors = new ActionErrors();
         System.out.println(file.getFileName());
@@ -1340,8 +1338,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         catch (FenixServiceException e1)
         {
-            // TODO Auto-generated catch block
-            //	e1.printStackTrace();
+          
         }
 
         return viewSection(mapping, form, request, response);

@@ -122,7 +122,7 @@ public class DeleteTeacher implements IServico {
      */
     protected boolean canDeleteResponsibleFor()
     {
-        // TODO Auto-generated method stub
+       
         return false;
     }
 }

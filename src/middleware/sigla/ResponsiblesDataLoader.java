@@ -256,7 +256,7 @@ public class ResponsiblesDataLoader
 	 */
     private List getResponsiblesToWrite(List fenixResponsibles, List siglaResponsibles)
     {
-        // TODO Auto-generated method stub
+       
         return siglaResponsibles;
     }
 

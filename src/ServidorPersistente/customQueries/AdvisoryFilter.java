@@ -40,7 +40,7 @@ public class AdvisoryFilter implements QueryCustomizer {
 	 * @see org.apache.ojb.broker.metadata.AttributeContainer#addAttribute(java.lang.String, java.lang.String)
 	 */
 	public void addAttribute(String arg0, String arg1) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -48,7 +48,7 @@ public class AdvisoryFilter implements QueryCustomizer {
 	 * @see org.apache.ojb.broker.metadata.AttributeContainer#getAttribute(java.lang.String, java.lang.String)
 	 */
 	public String getAttribute(String arg0, String arg1) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -56,7 +56,7 @@ public class AdvisoryFilter implements QueryCustomizer {
 	 * @see org.apache.ojb.broker.metadata.AttributeContainer#getAttribute(java.lang.String)
 	 */
 	public String getAttribute(String arg0) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

@@ -29,7 +29,7 @@ public class InfoPublicationsNumber extends InfoObject
     public InfoPublicationsNumber()
     {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
     /**

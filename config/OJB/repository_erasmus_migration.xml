@@ -1,0 +1,133 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+<class-descriptor class="middleware.erasmus.Dbo_aluno" table="dbo_aluno">
+		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="nome" default-fetch="true" column="NOME" jdbc-type="VARCHAR"/>
+		<field-descriptor name="apelido" default-fetch="true" column="APELIDO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="datnascimento" default-fetch="true" column="DATNASCIMENTO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="sexo" default-fetch="true" column="SEXO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="bi" default-fetch="true" column="BI" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nacionalidade" default-fetch="true" column="NACIONALIDADE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="morad_origem" default-fetch="true" column="MORAD_ORIGEM" jdbc-type="VARCHAR"/>
+		<field-descriptor name="pais_origem" default-fetch="true" column="PAIS_ORIGEM" jdbc-type="VARCHAR"/>
+		<field-descriptor name="morad_local" default-fetch="true" column="MORAD_LOCAL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="localid_morad" default-fetch="true" column="LOCALID_MORAD" jdbc-type="VARCHAR"/>
+		<field-descriptor name="codpost_loca" default-fetch="true" column="CODPOST_LOCA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="localid_postal" default-fetch="true" column="LOCALID_POSTAL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tel_local" default-fetch="true" column="TEL_LOCAL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="univ_origem" default-fetch="true" column="UNIV_ORIGEM" jdbc-type="VARCHAR"/>
+		<field-descriptor name="coord_origem" default-fetch="true" column="COORD_ORIGEM" jdbc-type="VARCHAR"/>
+		<field-descriptor name="coord_local" default-fetch="true" column="COORD_LOCAL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="licenciatura" default-fetch="true" column="LICENCIATURA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipo_frequencia" default-fetch="true" column="TIPO_FREQUENCIA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="datini" default-fetch="true" column="DATINI" jdbc-type="VARCHAR"/>
+		<field-descriptor name="datfim" default-fetch="true" column="DATFIM" jdbc-type="VARCHAR"/>
+		<field-descriptor name="acordo" default-fetch="true" column="ACORDO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipo_aluno" default-fetch="true" column="TIPO_ALUNO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="obs" default-fetch="true" column="OBS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="palavrachave" default-fetch="true" column="PALAVRACHAVE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="codpost_local" default-fetch="true" column="CODPOST_LOCAL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="mo" default-fetch="true" column="MO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="morad_origem2" default-fetch="true" column="MORAD_ORIGEM2" jdbc-type="VARCHAR"/>
+		<field-descriptor name="morad_loca" default-fetch="true" column="MORAD_LOCA" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+	<class-descriptor class="middleware.erasmus.Dbo_anulaCurricular" table="dbo_anulaCurricular">
+		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anoinscricao" default-fetch="true" column="ANOINSCRICAO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anocadeira" default-fetch="true" column="ANOCADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="semestre" default-fetch="true" column="SEMESTRE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nota" default-fetch="true" column="NOTA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="datalancamento" default-fetch="true" column="DATALANCAMENTO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataexame" default-fetch="true" column="DATAEXAME" jdbc-type="VARCHAR"/>
+		<field-descriptor name="grauequiv" default-fetch="true" column="GRAUEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="creditoequiv" default-fetch="true" column="CREDITOEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipo_aluno" default-fetch="true" column="TIPO_ALUNO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="curso" default-fetch="true" column="CURSO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="quemaltera" default-fetch="true" column="QUEMALTERA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataalter" default-fetch="true" column="DATAALTER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="n_reg" default-fetch="true" column="N_REG" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipoalt" default-fetch="true" column="TIPOALT" jdbc-type="VARCHAR"/>
+		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+	<class-descriptor class="middleware.erasmus.Dbo_anulaCurriculares" table="dbo_anulaCurriculares">
+		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anoinscricao" default-fetch="true" column="ANOINSCRICAO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anocadeira" default-fetch="true" column="ANOCADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="semestre" default-fetch="true" column="SEMESTRE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nota" default-fetch="true" column="NOTA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="datalancamento" default-fetch="true" column="DATALANCAMENTO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataexame" default-fetch="true" column="DATAEXAME" jdbc-type="VARCHAR"/>
+		<field-descriptor name="grauequiv" default-fetch="true" column="GRAUEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="creditoequiv" default-fetch="true" column="CREDITOEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipo_aluno" default-fetch="true" column="TIPO_ALUNO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="curso" default-fetch="true" column="CURSO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="quemaltera" default-fetch="true" column="QUEMALTERA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataalter" default-fetch="true" column="DATAALTER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="n_reg" default-fetch="true" column="N_REG" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipoalt" default-fetch="true" column="TIPOALT" jdbc-type="VARCHAR"/>
+		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+	<class-descriptor class="middleware.erasmus.Dbo_cadeira" table="dbo_cadeira">
+		<field-descriptor name="codcurso" default-fetch="true" column="CODCURSO" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="ano" default-fetch="true" column="ANO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="semestre" default-fetch="true" column="SEMESTRE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="codigocad" default-fetch="true" column="CODIGOCAD" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome" default-fetch="true" column="NOME" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+	<class-descriptor class="middleware.erasmus.Dbo_curriculo" table="dbo_curriculo">
+		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anoinscricao" default-fetch="true" column="ANOINSCRICAO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anocadeira" default-fetch="true" column="ANOCADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="semestre" default-fetch="true" column="SEMESTRE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nota" default-fetch="true" column="NOTA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="datalancamento" default-fetch="true" column="DATALANCAMENTO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataexame" default-fetch="true" column="DATAEXAME" jdbc-type="VARCHAR"/>
+		<field-descriptor name="grauequiv" default-fetch="true" column="GRAUEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="creditoequiv" default-fetch="true" column="CREDITOEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipo_aluno" default-fetch="true" column="TIPO_ALUNO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="curso" default-fetch="true" column="CURSO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="quemalter" default-fetch="true" column="QUEMALTER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataalter" default-fetch="true" column="DATAALTER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="n_reg" default-fetch="true" column="N_REG" jdbc-type="VARCHAR"/>
+		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+	<class-descriptor class="middleware.erasmus.Dbo_curriculos" table="dbo_curriculos">
+		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anoinscricao" default-fetch="true" column="ANOINSCRICAO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="anocadeira" default-fetch="true" column="ANOCADEIRA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="semestre" default-fetch="true" column="SEMESTRE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nota" default-fetch="true" column="NOTA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="datalancamento" default-fetch="true" column="DATALANCAMENTO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataexame" default-fetch="true" column="DATAEXAME" jdbc-type="VARCHAR"/>
+		<field-descriptor name="grauequiv" default-fetch="true" column="GRAUEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="creditoequiv" default-fetch="true" column="CREDITOEQUIV" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipo_aluno" default-fetch="true" column="TIPO_ALUNO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="curso" default-fetch="true" column="CURSO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="quemalter" default-fetch="true" column="QUEMALTER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="dataalter" default-fetch="true" column="DATAALTER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="n_reg" default-fetch="true" column="N_REG" jdbc-type="VARCHAR"/>
+		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+	<class-descriptor class="middleware.erasmus.Dbo_curso" table="dbo_curso">
+		<field-descriptor name="codigocurso" default-fetch="true" column="CODIGOCURSO" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="nome" default-fetch="true" column="NOME" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+	<class-descriptor class="middleware.erasmus.Dbo_nacionalidade" table="dbo_nacionalidade">
+		<field-descriptor name="codigonac" default-fetch="true" column="CODIGONAC" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="descricao" default-fetch="true" column="DESCRICAO" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+
+<!-- Mapping of User defined classses ends here -->

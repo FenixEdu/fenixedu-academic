@@ -125,7 +125,7 @@ public class FixCurriculum
         }
         catch (ExcepcaoPersistencia e)
         {
-            // TODO Auto-generated catch block
+         
             e.printStackTrace();
         }
     }
