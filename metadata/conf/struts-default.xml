@@ -29,6 +29,7 @@
     
     <!-- ========== Global Exception Definitions ============================== -->
 	 <global-exceptions>
+	 	    
 		<exception type="java.lang.Exception"
 			       key="java.lang.Exception"
 			       path="/naoExecutado.do"
@@ -45,6 +46,11 @@
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       path="/naoExistente.do"
 			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
+		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			       path="/nonExistingError.jsp"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
+			        /> 	 
     </global-exceptions> 
 
     
@@ -52,6 +58,7 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="firstPage" path="/loginPage.jsp"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+      <forward name="exceptionHandling" path="/exceptionHandlingAction.do?method=goBack" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -62,7 +69,8 @@
       <!-- page fronting actions -->
       <action path="/autenticacao" forward="/autenticacao.jsp" />
       <action path="/naoExistente" forward="/error.jsp" />
-
+  	<!-- null pointer exceptions from readByOId -->
+ 	  <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
 
 
       <action path="/home" 
@@ -90,7 +98,7 @@
 	  <!-- ExceptionHandling -->   
       <action parameter="method"
               name="errorMailForm" 
-              path="/exceptionHandling"
+              path="/exceptionHandlingAction"
               scope="request"
               type="ServidorApresentacao.Action.ExceptionHandlingAction"     
               >

@@ -13,10 +13,10 @@
      <br/> <bean:message key="message.error.sendEmail"/>
      <br/><bean:message key="message.error.goBack"/>
      <br/>
-    <html:link page="/exceptionHandling.do?method=goBack">
+    <html:link page="/exceptionHandlingAction.do?method=goBack">
    	 <center><b><bean:message key="link.goBack"/></b></center>
     </html:link>
-    <html:form action="/exceptionHandling.do?method=sendEmail">
+    <html:form action="/exceptionHandlingAction.do?method=sendEmail">
     <table align="center" >
     	<tr><td>
     	<bean:message key="property.email"/></td><td>

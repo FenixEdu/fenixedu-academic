@@ -107,22 +107,28 @@
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
+		
 		<exception type="java.lang.Exception"
 			       key="java.lang.Exception"
 			       path="/naoExecutado.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+			       handler="ServidorApresentacao.config.FenixPublicExceptionHandler"/>
 		<exception type="ServidorAplicacao.NotAuthorizedException"
 			       key="ServidorAplicacao.NotAuthorizedException"
 			       path="/naoAutorizado.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+			       handler="ServidorApresentacao.config.FenixPublicExceptionHandler"/>
 		<exception type="ServidorAplicacao.NotExecutedException"
 		  	       key="ServidorAplicacao.NotExecutedException"
 		  	       path="/naoExecutado.do"
-		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		  	       handler="ServidorApresentacao.config.FenixPublicExceptionHandler" />
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+			       handler="ServidorApresentacao.config.FenixPublicExceptionHandler" />
+		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			       path="/nonExistingError.jsp"
+			        handler="ServidorApresentacao.config.FenixPublicExceptionHandler" /> 
+			     	       	       
 	</global-exceptions>
 
 
@@ -137,7 +143,8 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
 	    <action path="/consultExams" forward="/consultExams.jsp"/>
     
-    
+    	<!-- null pointer exceptions from readByOId -->
+ 	  <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
 	    <!-- page fronting actions -->
     	
     	<action path="/index"
