@@ -54,7 +54,7 @@ public class ReadLastSummary implements IService {
             }
             
 			List summaries = persistentSummary.readByShift(executionCourse, shift);
-			if(summaries != null || summaries.size() > 0){
+			if(summaries != null && summaries.size() > 0){
 				Comparator comparator = new BeanComparator("summaryDate.timeInMillis");
 				Collections.sort(summaries, comparator);
 				ISummary summary1 = (ISummary) summaries.get(summaries.size() - 1);
@@ -63,7 +63,6 @@ public class ReadLastSummary implements IService {
 			}
 			
 		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}
 		
