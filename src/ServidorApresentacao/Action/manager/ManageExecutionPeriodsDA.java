@@ -2,7 +2,7 @@
  * Created on 2003/07/16
  * 
  */
-package ServidorApresentacao.Action.admin;
+package ServidorApresentacao.Action.manager;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,8 +19,8 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ExecutionPeriodComparator;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.admin.CreateExecutionPeriod.ExistingExecutionPeriod;
-import ServidorAplicacao.Servico.admin.CreateExecutionPeriod.InvalidExecutionPeriod;
+import ServidorAplicacao.Servico.manager.CreateExecutionPeriod.ExistingExecutionPeriod;
+import ServidorAplicacao.Servico.manager.CreateExecutionPeriod.InvalidExecutionPeriod;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -142,8 +142,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 				infoExecutionPeriodToCreate,
 				infoExecutionPeriodToExportDataFrom };
 		try {
-			Boolean result =
-				(Boolean) ServiceUtils.executeService(
+				ServiceUtils.executeService(
 					userView,
 					"CreateExecutionPeriod",
 					argsCreateWorkingArea);
@@ -189,8 +188,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
 		Object[] argsDeleteWorkingArea = { infoExecutionPeriod };
 		try {
-			Boolean result =
-				(Boolean) ServiceUtils.executeService(
+				ServiceUtils.executeService(
 					userView,
 					"DeleteWorkingArea",
 					argsDeleteWorkingArea);
@@ -229,8 +227,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
 		Object[] argsAlterExecutionPeriodState = { infoExecutionPeriod, periodState };
 		try {
-			Boolean result =
-				(Boolean) ServiceUtils.executeService(
+				ServiceUtils.executeService(
 					userView,
 					"AlterExecutionPeriodState",
 					argsAlterExecutionPeriodState);

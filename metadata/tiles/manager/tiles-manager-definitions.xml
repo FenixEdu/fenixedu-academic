@@ -6,9 +6,10 @@
 	<definition name="definition.manager.masterPage" extends="df.layout.two-column">
 	  <put name="title" value=".IST - Portal de Gerência" />
 	  <put name="serviceName" value="Portal de Gerência" />
-	  <put name="navLocal" value="" />	  
-	  <put name="navGeral" value="/manager/commonNavGeralManager.jsp" />
-	  <put name="body-context" value=""/>  
-      <put name="body" value="" />	  
+	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
+	  <put name="navGeral" value="/manager/commons/commonNavGeralManager.jsp" />
+	  <put name="body-context" value=""/>
+      <put name="body" value="" />
+      <put name="footer" value="/manager/commons/commonFooterManager.jsp" />
 	</definition>
 </tiles-definitions>

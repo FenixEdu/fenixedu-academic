@@ -2,7 +2,7 @@
  * Created on 2003/07/16
  * 
  */
-package ServidorAplicacao.Servico.admin;
+package ServidorAplicacao.Servico.manager;
 
 import java.util.List;
 

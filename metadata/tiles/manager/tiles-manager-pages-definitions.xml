@@ -4,35 +4,31 @@
 <tiles-definitions>
 	<definition name="df.page.read-degrees" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readDegrees_bd.jsp" />
-		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.read-degree" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readDegree_bd.jsp" />
-		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.main-page" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/welcomScreen.jsp" />
-		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.insert-degree" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertDegree_bd.jsp" />
-		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.edit-degree" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editDegree_bd.jsp" />
-		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.insert-degree-curricular-plan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertDegreeCurricularPlan_bd.jsp" />
-		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.edit-degree-curricular-plan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editDegreeCurricularPlan_bd.jsp" />
-		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.read-degreeCurricularPlan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readDegreeCurricularPlan_bd.jsp" />
 		<put name="navLocal" value="/manager/mainMenuDegree.jsp" />
 	</definition>
-	
+	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
+	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/manageExecutionPeriods_bd.jsp" />
+	</definition>	
 </tiles-definitions>

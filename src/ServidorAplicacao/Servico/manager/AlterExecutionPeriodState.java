@@ -2,7 +2,7 @@
  * Created on 2003/07/25
  * 
  */
-package ServidorAplicacao.Servico.admin;
+package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoExecutionPeriod;
 import Dominio.IExecutionPeriod;
