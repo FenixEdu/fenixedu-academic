@@ -58,38 +58,35 @@ public class FenixExceptionHandler extends ExceptionHandler {
 		throws ServletException {
 		ActionForward forward = null;
 
-
 		ActionError error = null;
 
 		HttpSession session = request.getSession(false);
-		
-//		if(session == null || request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
-//			ActionErrors errors = new ActionErrors();
-//			error = new ActionError("error.invalid.session");
-//			errors.add("error.invalid.session", error);
-//			request.setAttribute(Globals.ERROR_KEY, errors);
-//			return mapping.findForward("firstPage");
-//		}
 
-		if (ex instanceof InvalidSessionActionException){
-			
+		//		if(session == null || request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
+		//			ActionErrors errors = new ActionErrors();
+		//			error = new ActionError("error.invalid.session");
+		//			errors.add("error.invalid.session", error);
+		//			request.setAttribute(Globals.ERROR_KEY, errors);
+		//			return mapping.findForward("firstPage");
+		//		}
+
+		if (ex instanceof InvalidSessionActionException) {
+
 			ActionErrors errors = new ActionErrors();
 			error = new ActionError("error.invalid.session");
 			errors.add("error.invalid.session", error);
 			request.setAttribute(Globals.ERROR_KEY, errors);
 			return mapping.findForward("firstPage");
-		
+
 		}
 
-		request.getSession(false).setAttribute(
-			SessionConstants.ORIGINAL_MAPPING_KEY,
-			mapping);
+		session.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
 
-		request.getSession(false).setAttribute(
+		session.setAttribute(
 			SessionConstants.EXCEPTION_STACK_TRACE,
 			ex.getStackTrace());
 
-		request.getSession(false).setAttribute(
+		session.setAttribute(
 			SessionConstants.REQUEST_CONTEXT,
 			requestContextGetter(request));
 
@@ -109,12 +106,12 @@ public class FenixExceptionHandler extends ExceptionHandler {
 		}
 
 		// Store the exception
-		request.getSession(false).setAttribute(Globals.EXCEPTION_KEY, ex);
+		session.setAttribute(Globals.EXCEPTION_KEY, ex);
 		super.storeException(request, property, error, forward, ae.getScope());
 
 		// Print info to standard output
 		ex.printStackTrace(System.out);
-	
+
 		return super.execute(ex, ae, mapping, formInstance, request, response);
 	}
 
@@ -134,4 +131,3 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	}
 
 }
-

@@ -34,9 +34,9 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		HttpSession session = request.getSession(false);
-
+		
 		ActionMapping originalMapping =
-			(ActionMapping) request.getSession(false).getAttribute(
+			(ActionMapping) session.getAttribute(
 				SessionConstants.ORIGINAL_MAPPING_KEY);
 
 		DynaActionForm emailForm = (DynaActionForm) form;
@@ -45,10 +45,10 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		String formBody = (String) emailForm.get("body");
 
 		StackTraceElement[] stackTrace =
-			(StackTraceElement[]) request.getSession(false).getAttribute(
+			(StackTraceElement[]) session.getAttribute(
 				SessionConstants.EXCEPTION_STACK_TRACE);
 
-		String requestContext= (String) request.getSession(false).getAttribute(SessionConstants.REQUEST_CONTEXT);
+		String requestContext= (String) session.getAttribute(SessionConstants.REQUEST_CONTEXT);
 
 		String sender = "Sender: " + formEmail;
 		String subject = "Error Report - " + formSubject;
@@ -57,7 +57,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		mailBody += sender +"\n\n";
 		mailBody += "User Comment: \n" + formBody + "\n\n";
 		mailBody += "Error Origin: \n";
-		mailBody += "Exception: \n" + request.getSession(false).getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
+		mailBody += "Exception: \n" + session.getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
 		mailBody += "RequestContext: \n" + requestContext + "\n\n\n";
 		mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
 		mailBody += "Path: " + originalMapping.getPath() + "\n";
@@ -83,7 +83,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 			HttpSession session = request.getSession(false);
 
 			ActionMapping originalMapping =
-				(ActionMapping) request.getSession(false).getAttribute(
+				(ActionMapping) session.getAttribute(
 					SessionConstants.ORIGINAL_MAPPING_KEY);
 				sessionRemover(request);
 			return originalMapping.getInputForward();
