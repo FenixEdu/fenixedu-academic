@@ -129,6 +129,7 @@ import ServidorPersistente.OJB.teacher.CategoryOJB;
 import ServidorPersistente.OJB.teacher.ExternalActivityOJB;
 import ServidorPersistente.OJB.teacher.ServiceProviderRegimeOJB;
 import ServidorPersistente.OJB.teacher.WeeklyOcupationOJB;
+import ServidorPersistente.OJB.teacher.professorship.PersistentShiftProfessorship;
 import ServidorPersistente.Seminaries.IPersistentSeminary;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
