@@ -160,7 +160,6 @@ public class ReadPublicationAttributesAction extends FenixAction {
 			(List) CollectionUtils.collect(authors, new Transformer() {
 				public Object transform(Object o) {
 					IAuthor author = (IAuthor) o;
-					System.out.println("o Nome do Author e:" + author.getAuthor());
 					return Cloner.copyIAuthor2InfoAuthor(author);
 				}
 			});

@@ -1073,6 +1073,16 @@
 			<arg0 key="finalWorkInformationForm.coresponsableNumber" resource="true"/>
 		</field>
 	</form>
-
+	
+	<!-- validation for publicationManagementForm
+	<form name="publicationManagementForm" >
+		<field property="subtype" depends="requiredAttributes">
+			<arg0 key="message.publicationAttribute.notVAlidate.subType" resource="true"/>
+		</field>
+		<field property="language" depends="requiredAttributes">
+			<arg0 key="message.publicationAttribute.notVAlidate.language" resource="true"/>
+		</field>
+	</form>-->
+	
   </formset>
 </form-validation>

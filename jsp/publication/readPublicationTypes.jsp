@@ -31,13 +31,20 @@
 
 <table>
 	<tr>
-		<td><bean:message key="message.publications.publicationType"/></td>
+		<td><bean:message key="message.publications.publicationType"/> &nbsp;</td>
+		<td></td>
+		<td>
+			<html:select property="infoPublicationTypeId">
+				<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
+			</html:select>
+		</td>
+	</tr>
+	<tr>
+		&nbsp;
 	</tr>
 	<tr>
 		<td>
-			<html:select property="infoPublicationTypeId" onchange="this.form.submit()">
-				<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
-			</html:select>
+			<html:button property="idInternal" value="Escolher" styleClass="inputbutton" onclick="this.form.submit()"/>
 		</td>
 	</tr>
 </table>

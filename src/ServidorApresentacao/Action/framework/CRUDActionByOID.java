@@ -382,10 +382,8 @@ public class CRUDActionByOID extends DispatchAction
         if (oid != null)
         {
             Object[] args = { getOIDProperty(crudMapping, form)};
-            System.out.println("OLA1");
             infoObject =
                 (InfoObject) ServiceUtils.executeService(userView, crudMapping.getReadService(), args);
-            System.out.println("OLA2");
         }
         return infoObject;
     }

@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
+import ServidorAplicacao.Servico.exceptions.EmptyRequiredFieldServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
@@ -79,9 +80,15 @@ public class FenixErrorExceptionHandler extends ExceptionHandler
                     ? fenixActionException.getActionForward()
                     : mapping.getInputForward();
         }
+        else if(ex instanceof EmptyRequiredFieldServiceException)
+        {
+        	System.out.println(ex.getMessage());
+        	error = new ActionError(ex.getMessage());
+            property = error.getKey();
+        }
         else
         {
-            error = new ActionError(ae.getKey(), ex.getMessage());
+            error = new ActionError(ae.getKey(),ex.getMessage());
             property = error.getKey();
         }
         //ex.printStackTrace(System.out);

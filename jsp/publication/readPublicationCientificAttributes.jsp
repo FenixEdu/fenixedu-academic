@@ -14,7 +14,7 @@
 		<span class="error">
 			<html:errors />
 		</span>
-</logic:messagesPresent>	
+	</logic:messagesPresent>	
 <br/>
 <h3>	
 		<logic:present name="infoPublication">
@@ -33,8 +33,7 @@
 			<bean:message key="message.publications.managementInsert" />	
 		</logic:notPresent>
 </P>
-
-<h4>
+<p>
 	<bean:message key="message.publications.authorsInserteds"/>
 
 	<br />
@@ -80,10 +79,9 @@
 		</logic:empty>
 	</logic:present>
 	<br />
-
+</p>
 	<bean:message key="message.publications.fieldsToFill"/>
 	
-</h4>
 <table>
 		<logic:iterate id="att" name="infoRequiredAttributeList">
 						

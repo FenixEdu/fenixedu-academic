@@ -40,4 +40,7 @@ public final class PublicationConstants {
 	
 	public static final String BEAN_COMPARATOR_NAME = "name";
 	
+	public static final String AUTHOR_NAME_TO_COMPARE = "authorName";
+	public static final String  DIDATIC_PEDAGOGIC_TO_COMPARE = "Didactico/Pedagogico";
+	
 }

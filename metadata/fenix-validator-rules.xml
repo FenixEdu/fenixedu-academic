@@ -38,131 +38,139 @@
 
 <form-validation>
 
-   <global>
-   
-   	 <validator name="greaterThanOrEqual"
-            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
-               method="validateGreaterThanOrEqual"
-         methodParams="java.lang.Object,
+	<global>
+		<validator name="greaterThanOrEqual" 
+			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			method="validateGreaterThanOrEqual" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="error.greaterThanOrEqual"/>
-
-   	 <validator name="greaterThan"
-            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
-               method="validateGreaterThan"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="error.greaterThanOrEqual"/>
+			
+		<validator name="greaterThan" 
+			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			method="validateGreaterThan" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="error.greaterThan"/>
-
-   	 <validator name="Equal"
-            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
-               method="validateEqual"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="error.greaterThan"/>
+			
+		<validator name="Equal" 
+			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			method="validateEqual" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="error.equal"/>
-
-   	 <validator name="lessThan"
-            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
-               method="validateLessThan"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="error.equal"/>
+			
+		<validator name="lessThan" 
+			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			method="validateLessThan" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="error.lessThan"/>                                        
-                  
-   	 <validator name="lessThanOrEqual"
-            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
-               method="validateLessThanOrEqual"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="error.lessThan"/>
+			
+		<validator name="lessThanOrEqual" 
+			classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields" 
+			method="validateLessThanOrEqual" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="error.lessThanOrEqual"/>
-
-     <validator name="twoFields"
-            classname="ServidorApresentacao.validator.form.ValidateTwoFields"
-               method="validate"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="error.lessThanOrEqual"/>
+			
+		<validator name="twoFields" 
+			classname="ServidorApresentacao.validator.form.ValidateTwoFields" 
+			method="validate" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="errors.different.passwords"/>
-                  
-     <validator name="validateDate"
-            classname="ServidorApresentacao.validator.form.ValidateDate"
-               method="validate"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="errors.different.passwords"/>
+			
+		<validator name="validateDate" 
+			classname="ServidorApresentacao.validator.form.ValidateDate" 
+			method="validate" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="errors.invalid.date"/>
-
-     <validator name="floatGreaterThen"
-            classname="ServidorApresentacao.validator.form.GreaterThen"
-               method="validateFloat"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalid.date"/>
+			
+		<validator name="floatGreaterThen" 
+			classname="ServidorApresentacao.validator.form.GreaterThen" 
+			method="validateFloat" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="errors.invalid.floatValue"/>
-                  
-    <validator name="floatGreater"
-            classname="ServidorApresentacao.validator.form.GreaterThen"
-               method="validateFloat0"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalid.floatValue"/>
+			
+		<validator name="floatGreater" 
+			classname="ServidorApresentacao.validator.form.GreaterThen" 
+			method="validateFloat0" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="errors.invalid.floatValue"/>
-                  
-     <validator name="threeArgsDate"
-            classname="ServidorApresentacao.validator.form.ValidateDate"
-               method="threeArgsDate"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalid.floatValue"/>
+			
+		<validator name="threeArgsDate" 
+			classname="ServidorApresentacao.validator.form.ValidateDate" 
+			method="threeArgsDate" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                  msg="errors.invalidThreeArgs.date"/>
-
-     <validator name="multiBoxWithSelectAllCheckBox"
-     			classname="ServidorApresentacao.validator.form.ValidateMultiBoxWithSelectAllCheckBox" 
-     			method="validate"
-         methodParams="java.lang.Object,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalidThreeArgs.date"/>
+			
+		<validator name="multiBoxWithSelectAllCheckBox" 
+			classname="ServidorApresentacao.validator.form.ValidateMultiBoxWithSelectAllCheckBox" 
+			method="validate" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                msg="errors.required.checkbox"
-                />
-                
-<!-- 
+                       javax.servlet.ServletContext" 
+			msg="errors.required.checkbox" />
+			
+		<validator name="requiredAttributes" 
+			classname="ServidorApresentacao.validator.form.ValidatePublicationForm" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="" />
+		<!-- 
 The validateMultiBox rule is used to ensure that multiboxes have at least one field selected!
 It uses two variables, arrayProperty and femininProperty. The arrayProperty is the name of the
 String Array used by the multibox form, the femininProperty is just for display purposes, 
@@ -185,18 +193,17 @@ Example:
 	</field>
 </form>  
 
--->                
-     <validator name="validateMultiBox"
-     			classname="ServidorApresentacao.validator.form.ValidateMultiBox" 
-     			method="validate"
-         methodParams="java.lang.Object,
+-->
+		<validator name="validateMultiBox" 
+			classname="ServidorApresentacao.validator.form.ValidateMultiBox" 
+			method="validate" 
+			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
                        org.apache.struts.action.ActionErrors,
                        javax.servlet.http.HttpServletRequest,
-                       javax.servlet.ServletContext"
-                msg="errors.required.checkbox"
-                />             
-   </global>
+                       javax.servlet.ServletContext" 
+			msg="errors.required.checkbox" />
+	</global>
 
 </form-validation>
