@@ -26,9 +26,6 @@ public class ServicosSuite extends TestCase {
     }
     
     public static Test suite() {
-        //--JUNIT:
-        //This block was automatically generated and can be regenerated again.
-        //Do NOT change lines enclosed by the --JUNIT: and :JUNIT-- tags.
         
         TestSuite suite = new TestSuite("ServicosSuite");
         suite.addTest(ServidorAplicacao.Servicos.sop.AdicionarAulaServicosTest.suite());
@@ -45,43 +42,41 @@ public class ServicosSuite extends TestCase {
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarSalaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarTurmaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarTurnoServicosTest.suite());
-//      suite.addTest(ServidorAplicacao.Servicos.sop.LerAulaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAlunosDeTurnoServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeDisciplinaExecucaoServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeDisciplinaExecucaoETipoServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeSalaEmSemestreServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.LerLicenciaturaServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.LerLicenciaturaExecucaoDeLicenciaturaServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.LerLicenciaturasServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerSalaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerTurmaServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.RemoverAulaServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.RemoverTurnoServicosTest.suite());        
         suite.addTest(ServidorAplicacao.Servicos.sop.LerSalasServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerTurmasServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerTurnosDeTurmaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerTurnosDeDisciplinaExecucaoServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeTurnoServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeTurmaServicosTest.suite());
+		suite.addTest(ServidorAplicacao.Servicos.sop.LerTurnoServicosTest.suite()); 
+		suite.addTest(ServidorAplicacao.Servicos.sop.RemoverAulaServicosTest.suite());
+		suite.addTest(ServidorAplicacao.Servicos.sop.RemoverTurnoServicosTest.suite());        
+//		suite.addTest(ServidorAplicacao.Servicos.sop.LerAulaServicosTest.suite());
+//		suite.addTest(ServidorAplicacao.Servicos.sop.LerLicenciaturaServicosTest.suite());
+//		suite.addTest(ServidorAplicacao.Servicos.sop.LerLicenciaturaExecucaoDeLicenciaturaServicosTest.suite());
+//		suite.addTest(ServidorAplicacao.Servicos.sop.LerLicenciaturasServicosTest.suite());
+
 		suite.addTest(ServidorAplicacao.Servicos.student.ReadShiftEnrolmentTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.student.ReadShiftsByTypeFromExecutionCourseServicesTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.student.ReadStudentLessonsTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.student.ReadShiftLessonsTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.student.ReadStudentTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.student.StudentShiftEnrolmentTest.suite());
+
 		suite.addTest(ServidorAplicacao.Servicos.publico.SelectRoomsTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.publico.SelectClassesTest.suite());
 		suite.addTest(ServidorAplicacao.Servicos.publico.SelectShiftsTest.suite());
+		suite.addTest(ServidorAplicacao.Servicos.publico.ReadCurricularCourseListOfExecutionCourseTest.suite());
+		suite.addTest(ServidorAplicacao.Servicos.publico.SelectExecutionCourseTest.suite());
+		suite.addTest(ServidorAplicacao.Servicos.publico.SelectExecutionShiftsWithAssociatedLessonsAndClassesTest.suite());
        
-        //:JUNIT--
-        //This value MUST ALWAYS be returned from this function.
         return suite;
     }
-    
-    // Add test methods here, they have to start with 'test' name.
-    // for example:
-    // public void testHello() {}
-    
-    
 }

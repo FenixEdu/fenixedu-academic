@@ -26,7 +26,7 @@ import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turma;
 import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseDeleteServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -40,7 +40,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class RemoverTurnoServicosTest extends TestCaseDeleteServices {
+public class RemoverTurnoServicosTest extends TestCaseDeleteAndEditServices {
 	private InfoClass infoClass = null;
 	private InfoShift infoShift = null;
 
