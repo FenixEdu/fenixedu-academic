@@ -5,31 +5,29 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<div align="left">
-  <table >
-    <tr bgcolor='#ffffff'>
+  <table align="center">
+    <tr>
       <td> 
-        <html:errors/>
+        <span class="error"><html:errors/></span>
       </td>
     </tr>
     <tr>
       <td colspan='2'>
-          <div style='width=580' align="right">
-            <font size="5" face="Arial, Helvetica, sans-serif">
+  			<h2>       
               <bean:message key="consultar.marcacao" />
-            </font>
-          </div><br>
+			</h2>          
+          <br>
       </td>
     </tr>
 <!--    <tr>
-      <td  colspan='2' align="center">
+      <td  colspan="2" align="center">
         <font size="2" face="Arial, Helvetica, sans-serif">
           <b><bean:message key="prompt.listaMarcacoesPonto" /></b>
         </font>
       </td>
     </tr> -->
     <tr>
-      <td  colspan='2'>
+      <td colspan="2">
       	<bean:define id="headers" name="MostrarListaForm" property="headers" />      	
 		<bean:define id="body" name="MostrarListaForm" property="body" />	
 		<tiles:insert definition="definition.report" flush="true">
@@ -42,10 +40,19 @@
       </td>
     </tr>
     <tr>
-      <td colspan='2' align="center">
-        &nbsp;&nbsp;&nbsp; <p></p><p></p>
+      <td colspan="2">
+        <br />
       </td>
     </tr>
+    <tr>
+      <td colspan="2">
+        <logic:equal name="linkBotao" scope="session" value="PrepararConsultarMarcacaoPontoAction">
+          <html:link forward="PrepararConsultarMarcacaoPontoAction"><bean:message key="link.novaConsulta"/></html:link>
+        </logic:equal>
+        <logic:equal name="linkBotao" scope="session" value="ConsultarFuncionarioMostrar">
+          <html:link forward="ConsultarFuncionarioMostrarAction"><bean:message key="link.novaConsulta"/></html:link>
+        </logic:equal>
+        &nbsp;&nbsp;&nbsp;
     <tr>	
       <td colspan='2' align="center">
         <html:form action="/consultarFuncionarioMostrar" focus="submit">
@@ -54,6 +61,12 @@
           </html:submit>
     	</html:form>		   			
       </td>
+      <%--
+      <td align="left">
+        &nbsp;&nbsp;&nbsp;
+        <html:link forward="PortalAssiduidadeAction"><bean:message key="link.menu"/></html:link> 
+      </td>
+      --%>
     </tr>
   </table>
-</div>
+ <br />

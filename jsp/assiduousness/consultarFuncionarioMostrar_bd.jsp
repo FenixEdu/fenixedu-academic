@@ -23,9 +23,7 @@
     		</tr>
         	<tr>
             	<td><bean:message key="prompt.consultar"/>:
-               	</td>
-                <td>
-               		<html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
+            	    <html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
                    	<app:options name="ConsultarFuncionarioMostrarForm" property="listaEscolhas"/>
                    	</html:select> 
                    	<bean:message key="prompt.de"/>
@@ -36,6 +34,9 @@
                     <html:text name="ConsultarFuncionarioMostrarForm" property="diaFimEscolha" size="2" maxlength="2"/> / 
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="mesFimEscolha" size="2" maxlength="2"/> / 
                     <html:text name="ConsultarFuncionarioMostrarForm" property="anoFimEscolha" size="6" maxlength="4"/>
+               	</td>
+                <td>
+
              	</td>
         	</tr>
             <tr>
@@ -51,14 +52,11 @@
        </table>
        <br />
        <br />
-       <div class="infotable" style="display: inline;">
-	   <table width="60%" align="center">
+	   <table width="60%" align="center" class="infotable">
             <tr>
-              <span class="inline"><th colspan="2" class="bottomborder" align="left">
-                <h2>
-                  <bean:message key="prompt.dadosPessoais" />
-                </h2>
-              </th></span>
+              <td colspan="2" class="bottomborder" align="left">
+                <h2 style="display: inline;"><bean:message key="prompt.dadosPessoais" /></h2>
+              </td>
             </tr>
             <tr>
               <td width="30%">  
@@ -112,11 +110,9 @@
               <td colspan="2"><br></td>       
             </tr>      
             <tr>
-              <span class="inline"><th colspan="2" class="bottomborder" align="left">
-                <h2>
-                  <bean:message key="prompt.dadosAssiduidade" />
-                </h2>       
-              </th></span>
+             	<td colspan="2" class="bottomborder" align="left">
+                <h2 style="display: inline;"><bean:message key="prompt.dadosAssiduidade" /></h2>      
+              </td>
             </tr>
 			<tr>
               <td width="30%">
@@ -248,7 +244,6 @@
             </tr>        
             --%>
       </table>
-      </div>
     <br />
     <br />
   </html:form>
