@@ -8,8 +8,8 @@
 	<h2 style="text-align:center">
 		<bean:message key="title.student.shift.enrollment" />
 	</h2>
-	<p align="left">
-		<b><bean:message key="label.warning" /></b>
+	<p align="center">
+		<span class="error"><b><bean:message key="label.warning" /></b></span>
 		<br />
 		
 	</p>
