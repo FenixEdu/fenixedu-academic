@@ -264,15 +264,19 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
         return result;
     }
-    
+
     public List getListOfEnrollmentRulesForOptionalCourses(IStudentCurricularPlan studentCurricularPlan,
             IExecutionPeriod executionPeriod) {
 
-        List result = new ArrayList();       
-//        result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
-//        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
-//                executionPeriod));
-//        result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
+        List result = new ArrayList();
+        //        result.add(new
+        // MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan,
+        // executionPeriod));
+        //        result.add(new
+        // MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
+        //                executionPeriod));
+        //        result.add(new PrecedencesEnrollmentRule(studentCurricularPlan,
+        // executionPeriod));
         return result;
     }
 
@@ -380,53 +384,52 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         return courses;
     }
 
-   public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester,IBranch area){
-        
+    public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, IBranch area) {
+
         List finalCurricularCourses = new ArrayList();
         final Integer wantedSemester = semester;
         final IBranch branch = area;
-            
+
         Collections.sort(getCurricularCourses(), new Comparator() {
-            
+
             public int compare(Object obj1, Object obj2) {
-                
+
                 ICurricularCourse curricularCourse1 = (ICurricularCourse) obj1;
                 ICurricularCourse curricularCourse2 = (ICurricularCourse) obj2;
-                ICurricularYear curricularYear1 = curricularCourse1.getCurricularYearByBranchAndSemester(branch, wantedSemester);
-                ICurricularYear curricularYear2 = curricularCourse2.getCurricularYearByBranchAndSemester(branch, wantedSemester);
-                
-                return curricularYear1.getYear().intValue() - curricularYear2.getYear().intValue();                    
-                }
+                ICurricularYear curricularYear1 = curricularCourse1
+                        .getCurricularYearByBranchAndSemester(branch, wantedSemester);
+                ICurricularYear curricularYear2 = curricularCourse2
+                        .getCurricularYearByBranchAndSemester(branch, wantedSemester);
+
+                return curricularYear1.getYear().intValue() - curricularYear2.getYear().intValue();
             }
-        );
-        
+        });
+
         ICurricularCourse cc = null;
         ICurricularYear curricularYear = null;
-        for(int iter=0; iter<curricularCourses.size(); iter++){
+        for (int iter = 0; iter < curricularCourses.size(); iter++) {
             cc = (ICurricularCourse) curricularCourses.get(iter);
             curricularYear = cc.getCurricularYearByBranchAndSemester(branch, wantedSemester);
-            if( (curricularYear.getYear().intValue() == year) && belongsToSemester(cc,semester) )
+            if ((curricularYear.getYear().intValue() == year) && belongsToSemester(cc, semester))
                 finalCurricularCourses.add(cc);
-            else
-                if(curricularYear.getYear().intValue() > year)
-                    break;
+            else if (curricularYear.getYear().intValue() > year)
+                break;
         }
-                    
+
         return finalCurricularCourses;
     }
-    
-    private boolean belongsToSemester(ICurricularCourse curricularCourse,Integer semester){
+
+    private boolean belongsToSemester(ICurricularCourse curricularCourse, Integer semester) {
         List scopes = curricularCourse.getScopes();
-        ICurricularCourseScope ccs=null;
-        
-        for(int iter=0; iter<scopes.size(); iter++){
+        ICurricularCourseScope ccs = null;
+
+        for (int iter = 0; iter < scopes.size(); iter++) {
             ccs = (ICurricularCourseScope) scopes.get(iter);
-            if(ccs.getCurricularSemester().getSemester().intValue() == semester.intValue())
+            if (ccs.getCurricularSemester().getSemester().intValue() == semester.intValue())
                 return true;
         }
         return false;
     }
-    
 
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
