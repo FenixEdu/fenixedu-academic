@@ -6,4 +6,4 @@
   <tiles:put name="navLocal" value="/sop/commonNavLocalSop.jsp" />
   <tiles:put name="body" value="/sop/adicionarAulas_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
-</tiles:insert>
+</tiles:insert>										

@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.RequestUtils;
 
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -71,7 +72,19 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		email.send("lepc@mega.ist.utl.pt", subject, mailBody);
 		//		removes from session all the un-needed info
 		sessionRemover(request);
-		return originalMapping.getInputForward();
+		
+		
+		
+		ActionForward actionForward = originalMapping.getInputForward();
+		RequestUtils.selectModule(
+				originalMapping.getModuleConfig().getPrefix(),
+				request,
+				this.servlet.getServletContext());
+			
+			actionForward.setPath(actionForward.getPath());
+		
+		
+		return actionForward;
 	}
 
 	public ActionForward goBack(
@@ -86,7 +99,19 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 				(ActionMapping) session.getAttribute(
 					SessionConstants.ORIGINAL_MAPPING_KEY);
 				sessionRemover(request);
-			return originalMapping.getInputForward();
+			
+			ActionForward actionForward = originalMapping.getInputForward();
+			
+			RequestUtils.selectModule(
+				originalMapping.getModuleConfig().getPrefix(),
+				request,
+				this.servlet.getServletContext());
+			
+			actionForward.setPath(actionForward.getPath());
+			//actionForward.setContextRelative(true);
+		
+		
+			return actionForward;
 		}
 
 

@@ -47,7 +47,8 @@
                     </tr>
 
 		            <% int i = 0; %>
-                    <logic:iterate id="elem" name="infoAulasDeDisciplinaExecucao">
+                    <logic:iterate id="elem" 
+                    	name="infoAulasDeDisciplinaExecucao">
                        <% Integer iH = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer iM = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.HOUR_OF_DAY)); %>
