@@ -17,10 +17,24 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 
 public interface ICursoExecucaoPersistente extends IPersistentObject {
-	public void lockWrite(ICursoExecucao cursoExecucao)
-		throws ExcepcaoPersistencia;
-	public void delete(ICursoExecucao cursoExecucao)
-		throws ExcepcaoPersistencia;
+	/**
+	 * 
+	 * @param cursoExecucao
+	 * @throws ExcepcaoPersistencia
+	 */
+	public void lockWrite(ICursoExecucao cursoExecucao) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param cursoExecucao
+	 * @throws ExcepcaoPersistencia
+	 */
+	public void delete(ICursoExecucao cursoExecucao) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
 	public void deleteAll() throws ExcepcaoPersistencia;
 	
 	/**
@@ -63,4 +77,13 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param degreeName
+	 * @param executionYear
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public ICursoExecucao readByDegreeNameAndExecutionYear(String degreeName, IExecutionYear executionYear) throws ExcepcaoPersistencia;
 }

@@ -46,6 +46,7 @@ public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.
 	  
       masterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ReadMasterDegreeCandidateByUsername", args);
 	  
+	  
       request.setAttribute("applicationInfo", masterDegreeCandidate);
       return mapping.findForward("Success");
     } else

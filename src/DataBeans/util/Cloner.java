@@ -557,15 +557,13 @@ public abstract class Cloner {
 			new MasterDegreeCandidate();
 		ICountry country = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoCountry());
 		ICountry nationality = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoNationality());
-		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoMasterDegreeCandidate.getInfoExecutionYear());
-		// FIXME
-		ICurso degree = Cloner.copyInfoDegree2IDegree(infoMasterDegreeCandidate.getInfoDegree());
+
+		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoMasterDegreeCandidate.getInfoExecutionDegree());
 		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
 		masterDegreeCandidate.setIdentificationDocumentType(new TipoDocumentoIdentificacao(infoMasterDegreeCandidate.getInfoIdentificationDocumentType()));
 		masterDegreeCandidate.setCountry(country);
 		masterDegreeCandidate.setNationality(nationality);
-		masterDegreeCandidate.setExecutionYear(executionYear);
-		masterDegreeCandidate.setDegree(degree);
+		masterDegreeCandidate.setExecutionDegree(executionDegree);
 		return masterDegreeCandidate;
 	}
 
@@ -578,22 +576,17 @@ public abstract class Cloner {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate =
 			new InfoMasterDegreeCandidate();
 		copyObjectProperties(infoMasterDegreeCandidate, masterDegreeCandidate);
-		InfoDegree infoDegree =
-			Cloner.copyIDegree2InfoDegree(masterDegreeCandidate.getDegree());
+		InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(masterDegreeCandidate.getExecutionDegree());
 		InfoCountry infoCountry =
 			Cloner.copyICountry2InfoCountry(masterDegreeCandidate.getCountry());
 		InfoCountry infoNationality =
 			Cloner.copyICountry2InfoCountry(
 				masterDegreeCandidate.getNationality());
-		InfoExecutionYear infoExecutionYear =
-			Cloner.copyIExecutionYear2InfoExecutionYear(
-				masterDegreeCandidate.getExecutionYear());
-		infoMasterDegreeCandidate.setInfoDegree(infoDegree);
+		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 		infoMasterDegreeCandidate.setInfoCountry(infoCountry);
 		infoMasterDegreeCandidate.setInfoNationality(infoNationality);
 		infoMasterDegreeCandidate.setInfoIdentificationDocumentType(
 			masterDegreeCandidate.getIdentificationDocumentType().toString());
-		infoMasterDegreeCandidate.setInfoExecutionYear(infoExecutionYear);
 		return infoMasterDegreeCandidate;
 	}
 

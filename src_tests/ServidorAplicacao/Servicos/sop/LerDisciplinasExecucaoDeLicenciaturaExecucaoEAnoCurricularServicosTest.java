@@ -19,6 +19,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
+import Util.TipoCurso;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest
 	extends TestCaseReadServices {
@@ -66,7 +67,8 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 					"plano1",
 					new InfoDegree(
 						"LEIC",
-						"Licenciatura de Engenharia Informatica e de Computadores")),
+						"Licenciatura de Engenharia Informatica e de Computadores",
+						TipoCurso.LICENCIATURA_STRING)),
 				new InfoExecutionYear("2002/2003"));
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod(
@@ -88,7 +90,8 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 					"plano1",
 					new InfoDegree(
 						"LEIC",
-						"Licenciatura de Engenharia Informatica e de Computadores")),
+						"Licenciatura de Engenharia Informatica e de Computadores",
+						TipoCurso.LICENCIATURA_STRING)),
 				new InfoExecutionYear("2002/2003"));
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod(

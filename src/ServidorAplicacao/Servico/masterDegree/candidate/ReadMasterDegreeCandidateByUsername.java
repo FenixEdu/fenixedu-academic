@@ -77,7 +77,7 @@ public class ReadMasterDegreeCandidateByUsername implements IServico {
 
 		if (masterDegreeCandidate == null)
 			throw new ExcepcaoInexistente("Unknown Candidate !!");	
-			
+		
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 		
 		// Search the candidate's active situation

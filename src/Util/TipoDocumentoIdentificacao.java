@@ -34,6 +34,7 @@ public class TipoDocumentoIdentificacao {
     public static final String BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING = "Bilhete de Identidade da Marinha";
     public static final String BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING = "Bilhete de Identidade da Força Aérea";
     public static final String OUTRO_STRING = "Outro";
+    public static final String DEFAULT = "[Escolha um Tipo]";
     
     private Integer tipo;
 
@@ -61,6 +62,7 @@ public class TipoDocumentoIdentificacao {
     
     public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.DEFAULT, null));
 	    result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING, TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING));
 	    result.add(new LabelValueBean(TipoDocumentoIdentificacao.PASSAPORTE_STRING, TipoDocumentoIdentificacao.PASSAPORTE_STRING));
 	    result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING, TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING));

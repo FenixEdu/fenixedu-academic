@@ -144,7 +144,7 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		  changePersonalInfoForm.set("specialization", masterDegreeCandidate.getSpecialization());
 
 		  changePersonalInfoForm.set("candidateNumber", masterDegreeCandidate.getCandidateNumber());
-		  changePersonalInfoForm.set("applicationYear", masterDegreeCandidate.getInfoExecutionYear().getYear());
+		  changePersonalInfoForm.set("applicationYear", masterDegreeCandidate.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 		  changePersonalInfoForm.set("sex", masterDegreeCandidate.getSex());
 
 

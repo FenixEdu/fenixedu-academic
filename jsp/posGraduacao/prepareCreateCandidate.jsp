@@ -1,4 +1,6 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <html>
@@ -6,16 +8,17 @@
     <title><bean:message key="masterDegree.administrativeOffice.createCandidate" /></title>
   </head>
   <body>
-
+   
    <table>
     <span class="error"><html:errors/></span>
     <html:form action="/createCandidateDispatchAction?method=create">
+	   <html:hidden property="page" value="1"/>
 
        <!-- Degree Type -->
        <tr>
-         <td><bean:message key="label.degreeType"/></td>
-         <td><html:select property="degreeType">
-                <html:options collection="degreeTypes" property="value" labelProperty="label"/>
+         <td><bean:message key="label.specialization"/></td>
+         <td><html:select property="specialization">
+                <html:options collection="specializations" property="value" labelProperty="label"/>
              </html:select>
          </td>
        </tr>

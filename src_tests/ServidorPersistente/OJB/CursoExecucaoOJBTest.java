@@ -326,4 +326,20 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		}
 	}
 
+
+	public void testReadByDegreeNameAndExecutionYear(){
+		try {
+			persistentSupport.iniciarTransaccao();
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear);
+			ICursoExecucao result = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Licenciatura de Engenharia Electrotecnica e de Computadores", executionYear);
+			persistentSupport.confirmarTransaccao();
+			assertNotNull(result);
+
+			
+		} catch (ExcepcaoPersistencia ex) {
+			fail("ReadMasterDegrees");
+		}
+	}
+
 }

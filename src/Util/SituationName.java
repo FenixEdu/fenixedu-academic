@@ -28,6 +28,7 @@ public class SituationName {
     public static final int SUPRA_NUMERARIO = 6;
     public static final int EXTRAORDINARIO = 7;
     public static final int DOCENTE_ENSINO_SUPERIOR = 8;
+    public static final int PRE_CANDIDATO = 9;
     
     public static final String PENDENTE_STRING = "Pendente";
     public static final String ADMITIDO_STRING = "Admitido";
@@ -37,8 +38,8 @@ public class SituationName {
     public static final String SUPRA_NUMERARIO_STRING = "Supra Numerário";
     public static final String EXTRAORDINARIO_STRING = "Extraordinário";
     public static final String DOCENTE_ENSINO_SUPERIOR_STRING = "Docento do Ensino Superior";
-    
-    
+    public static final String PRE_CANDIDATO_STRING = "Pré-Candidato";
+	public static final String DEFAULT = "[Escolha uma Situação]";
     
     private Integer situationName;
 
@@ -73,7 +74,8 @@ public class SituationName {
     	if (nomeSituacao.equals(SituationName.DESISTIU_STRING)) this.situationName = new Integer(SituationName.DESISTIU);
     	if (nomeSituacao.equals(SituationName.SUPRA_NUMERARIO_STRING)) this.situationName = new Integer(SituationName.SUPRA_NUMERARIO);
     	if (nomeSituacao.equals(SituationName.EXTRAORDINARIO_STRING)) this.situationName = new Integer(SituationName.EXTRAORDINARIO);
-    	if (nomeSituacao.equals(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING)) this.situationName = new Integer(SituationName.DOCENTE_ENSINO_SUPERIOR);
+		if (nomeSituacao.equals(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING)) this.situationName = new Integer(SituationName.DOCENTE_ENSINO_SUPERIOR);
+		if (nomeSituacao.equals(SituationName.PRE_CANDIDATO_STRING)) this.situationName = new Integer(SituationName.PRE_CANDIDATO);
     }
     
     public String toString() {
@@ -85,11 +87,13 @@ public class SituationName {
 		if (situationName.intValue()== SituationName.SUPRA_NUMERARIO) return SituationName.SUPRA_NUMERARIO_STRING;
 		if (situationName.intValue()== SituationName.EXTRAORDINARIO) return SituationName.EXTRAORDINARIO_STRING;
 		if (situationName.intValue()== SituationName.DOCENTE_ENSINO_SUPERIOR) return SituationName.DOCENTE_ENSINO_SUPERIOR_STRING;
+		if (situationName.intValue()== SituationName.PRE_CANDIDATO) return SituationName.PRE_CANDIDATO_STRING;
 	    return "ERRO!"; // Nunca e atingido
     }
     
     public ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
+		result.add(new LabelValueBean(SituationName.DEFAULT, null));
 	    result.add(new LabelValueBean(SituationName.PENDENTE_STRING , SituationName.PENDENTE_STRING));
 		result.add(new LabelValueBean(SituationName.ADMITIDO_STRING , SituationName.ADMITIDO_STRING));
 		result.add(new LabelValueBean(SituationName.SUPLENTE_STRING , SituationName.SUPLENTE_STRING));
@@ -98,6 +102,7 @@ public class SituationName {
 		result.add(new LabelValueBean(SituationName.SUPRA_NUMERARIO_STRING , SituationName.SUPRA_NUMERARIO_STRING));
 		result.add(new LabelValueBean(SituationName.EXTRAORDINARIO_STRING , SituationName.EXTRAORDINARIO_STRING));
 		result.add(new LabelValueBean(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING , SituationName.DOCENTE_ENSINO_SUPERIOR_STRING));
+		result.add(new LabelValueBean(SituationName.PRE_CANDIDATO_STRING , SituationName.PRE_CANDIDATO_STRING));
 		return result;	
     }
 

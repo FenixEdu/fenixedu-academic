@@ -33,6 +33,7 @@ public class EstadoCivil {
     public static final String VIUVO_STRING = "Viúvo";
     public static final String SEPARADO_STRING = "Separado";
     public static final String UNIAO_DE_FACTO_STRING = "União de Facto";
+	public static final String DEFAULT = "[Escolha uma Situação]";
     
     private Integer estadoCivil;
 
@@ -69,7 +70,8 @@ public class EstadoCivil {
 
     public ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
-	        result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, EstadoCivil.SOLTEIRO_STRING));
+		result.add(new LabelValueBean(EstadoCivil.DEFAULT, null));
+		result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, EstadoCivil.SOLTEIRO_STRING));
 		result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, EstadoCivil.CASADO_STRING));
 		result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING, EstadoCivil.DIVORCIADO_STRING));
 		result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, EstadoCivil.VIUVO_STRING));

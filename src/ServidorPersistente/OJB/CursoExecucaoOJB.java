@@ -220,5 +220,25 @@ public class CursoExecucaoOJB
 		}
 		
 	}
+	
+	public ICursoExecucao readByDegreeNameAndExecutionYear(String degreeName, IExecutionYear executionYear) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + CursoExecucao.class.getName()
+							+ " where executionYear.year = $1"
+							+ " and curricularPlan.curso.nome = $2";
+			query.create(oqlQuery);
+
+			query.bind(executionYear.getYear());
+			query.bind(degreeName);
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				return (ICursoExecucao) result.get(0);
+			return null;
+		} catch (QueryException e) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+	}
 
 }

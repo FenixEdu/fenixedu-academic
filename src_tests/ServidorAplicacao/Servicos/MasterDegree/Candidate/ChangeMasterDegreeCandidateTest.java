@@ -22,7 +22,6 @@ package ServidorAplicacao.Servicos.MasterDegree.Candidate;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
@@ -82,11 +81,9 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         ISuportePersistente sp = null;
         
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(tempCandidate2.getExecutionYear());
                 
 		tempMasterDegreeCandidate.setUsername(tempCandidate2.getUsername());
 		tempMasterDegreeCandidate.setCandidateNumber(tempCandidate2.getCandidateNumber());
-		tempMasterDegreeCandidate.setInfoExecutionYear(infoExecutionYear);
 		tempMasterDegreeCandidate.setIdentificationDocumentNumber(tempCandidate2.getIdentificationDocumentNumber());
 
 
@@ -100,10 +97,6 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
 		} catch (ExcepcaoPersistencia ex) {
 			fail("    -> Erro no teste");
 		}
-				
-		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degree);
-		tempMasterDegreeCandidate.setInfoDegree(infoDegree);
-
 
 		Object args[] = new Object[1];
 		args[0] = tempMasterDegreeCandidate;
@@ -119,7 +112,7 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(2), "2003/2004", "MIC");
+            masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByUsername("Cand2");
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -162,7 +155,6 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         assertTrue(masterDegreeCandidate.getUsername().equals("Cand2"));
         assertTrue(masterDegreeCandidate.getPassword().equals("Pass2"));
         assertTrue(masterDegreeCandidate.getCandidateNumber().equals(new Integer(2)));
-        assertTrue(masterDegreeCandidate.getExecutionYear().getYear().equals("2003/2004"));
         assertEquals(masterDegreeCandidate.getSpecialization(), new Specialization(Specialization.MESTRADO));
         assertTrue(masterDegreeCandidate.getMajorDegreeSchool().equals("IST"));
         assertTrue(masterDegreeCandidate.getMajorDegreeYear().equals(new Integer(2000)));
@@ -189,15 +181,12 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         }
 
 		InfoMasterDegreeCandidate masterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(tempCandidate1);        
-    	InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(tempCandidate2.getExecutionYear());
 
-
-		masterDegreeCandidate.setInfoExecutionYear(infoExecutionYear);
 		masterDegreeCandidate.setUsername("Inexistente");
 		masterDegreeCandidate.setCandidateNumber(new Integer(1000));
 
 
-    	masterDegreeCandidate.setInfoDegree(new InfoDegree(tempCandidate2.getDegree().getSigla(), tempCandidate2.getDegree().getNome()));
+//    	masterDegreeCandidate.setInfoExecutionDegree(new InfoDegree(tempCandidate2.getDegree().getSigla(), tempCandidate2.getDegree().getNome()));
 
 
 		Object args[] = new Object[1];
@@ -205,7 +194,7 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
 
 		Object result = null;        
         try {
-            result = gestor.executar(userView1, "ChangeMasterDegreeCandidate", args);
+            result = gestor.executar(userView1, "ChangeMasterDegreeCandidate", null);
             fail("Espected Error !!!");
         } catch (Exception ex) {
             // All Is OK

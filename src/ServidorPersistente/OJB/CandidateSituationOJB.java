@@ -37,8 +37,8 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
             
             String oqlQuery = "select all from " + CandidateSituation.class.getName()
             + " where masterDegreeCandidate.candidateNumber = $1"
-            + " and masterDegreeCandidate.degree.sigla = $2"
-            + " and masterDegreeCandidate.executionYear.year = $3"
+            + " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
+            + " and masterDegreeCandidate.executionDegree.executionYear.year = $3"
             + " and validation = $4";
             
             query.create(oqlQuery);
@@ -61,8 +61,8 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
 		try {
 			String oqlQuery = "select all from " + CandidateSituation.class.getName()
 			+ " where masterDegreeCandidate.candidateNumber = $1"
-			+ " and masterDegreeCandidate.degree.sigla = $2"
-			+ " and masterDegreeCandidate.executionYear.year = $3";
+			+ " and masterDegreeCandidate.executionDegree.curricularPlan.curso.sigla = $2"
+			+ " and masterDegreeCandidate.executionDegree.executionYear.year = $3";
             
 			query.create(oqlQuery);
 			query.bind(candidateNumber);

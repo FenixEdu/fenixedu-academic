@@ -58,12 +58,12 @@
           <!-- Ano de Candidatura -->
           <tr>
             <td><bean:message key="candidate.applicationYear" /></td>
-            <td><bean:write name="applicationInfo" property="infoExecutionYear.year"/></td>
+            <td><bean:write name="applicationInfo" property="infoExecutionDegree.infoExecutionYear.year"/></td>
           </tr>
           <!-- Curso Pretendido -->
           <tr>
             <td><bean:message key="candidate.degreeName" /></td>
-            <td><bean:write name="applicationInfo" property="infoDegree.nome"/> - <bean:write name="applicationInfo" property="infoDegree.sigla"/></td>
+            <td><bean:write name="applicationInfo" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> - <bean:write name="applicationInfo" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/></td>
           </tr>
           <!-- Especializacao -->
           <tr>
@@ -117,7 +117,7 @@
           <!-- Tipo do Documento de Identificacao -->
           <tr>
             <td><bean:message key="candidate.identificationDocumentType" /></td>
-            <td><bean:write name="applicationInfo" property="identificationDocumentType"/></td>
+            <td><bean:write name="applicationInfo" property="infoIdentificationDocumentType"/></td>
           </tr>
           <!-- Local de Emissao do Documento de Identificacao -->
           <tr>

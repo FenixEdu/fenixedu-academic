@@ -27,6 +27,7 @@ public class Specialization {
     public static final String MESTRADO_STRING = "Mestrado";
     public static final String INTEGRADO_STRING = "Integrado";
     public static final String ESPECIALIZACAO_STRING = "Especialização";
+	public static final String DEFAULT = "[Escolha uma Especialização]";
     
     
     private Integer specialization;
@@ -49,8 +50,9 @@ public class Specialization {
 		if (nomeEspecializacao.equals(Specialization.ESPECIALIZACAO_STRING)) this.specialization = new Integer(Specialization.ESPECIALIZACAO);
     }
 
-    public ArrayList toArrayList() {
+    public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
+		result.add(new LabelValueBean(Specialization.DEFAULT, null));
 	    result.add(new LabelValueBean(Specialization.MESTRADO_STRING, Specialization.MESTRADO_STRING));
 		result.add(new LabelValueBean(Specialization.INTEGRADO_STRING, Specialization.INTEGRADO_STRING));
 		result.add(new LabelValueBean(Specialization.ESPECIALIZACAO_STRING, Specialization.ESPECIALIZACAO_STRING));

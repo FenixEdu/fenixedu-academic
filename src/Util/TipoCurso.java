@@ -20,13 +20,14 @@ public class TipoCurso {
     public static final int MESTRADO_INTEGRADO = 3;
     public static final int ESPECIALIZACAO = 4;
     public static final int DOUTORAMENTO = 5;
+    
 
     public static final String LICENCIATURA_STRING = "Licenciatura";
     public static final String MESTRADO_STRING = "Mestrado";
     public static final String MESTRADO_INTEGRADO_STRING = "Mestrado Integrado";
     public static final String ESPECIALIZACAO_STRING = "Especialização";
     public static final String DOUTORAMENTO_STRING = "Doutoramento";
-	
+	public static final String DEFAULT = "[Escolha uma Especialização]";	
 
     private Integer tipoCurso;    
     
@@ -49,12 +50,11 @@ public class TipoCurso {
 		if (tipoCurso.equals(TipoCurso.DOUTORAMENTO_STRING)) this.tipoCurso = new Integer(TipoCurso.DOUTORAMENTO);
 	}
     
-    public static ArrayList toArrayList(boolean masterDegrees) {
+    public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
-		if (!masterDegrees) {
-			result.add(new LabelValueBean(TipoCurso.LICENCIATURA_STRING, TipoCurso.LICENCIATURA_STRING));
-			result.add(new LabelValueBean(TipoCurso.DOUTORAMENTO_STRING, TipoCurso.DOUTORAMENTO_STRING));
-		}
+		result.add(new LabelValueBean(TipoCurso.DEFAULT, null));
+		result.add(new LabelValueBean(TipoCurso.LICENCIATURA_STRING, TipoCurso.LICENCIATURA_STRING));
+		result.add(new LabelValueBean(TipoCurso.DOUTORAMENTO_STRING, TipoCurso.DOUTORAMENTO_STRING));
 		result.add(new LabelValueBean(TipoCurso.MESTRADO_STRING, TipoCurso.MESTRADO_STRING));
 		result.add(new LabelValueBean(TipoCurso.MESTRADO_INTEGRADO_STRING, TipoCurso.MESTRADO_INTEGRADO_STRING));
 		result.add(new LabelValueBean(TipoCurso.ESPECIALIZACAO_STRING, TipoCurso.ESPECIALIZACAO_STRING));

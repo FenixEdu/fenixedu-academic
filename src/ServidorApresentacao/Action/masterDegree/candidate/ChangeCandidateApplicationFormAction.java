@@ -104,7 +104,6 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 						   country, 
 						   nationality, 
 						   (String) changePersonalInformationForm.get("specialization"),
-						   applicationYear,
 						   ((Integer) changePersonalInformationForm.get("candidateNumber")),
 						   (new Double(Double.parseDouble((String) changePersonalInformationForm.get("average")))),
 						   birthDate.getTime(),
@@ -113,7 +112,7 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
            
       	InfoMasterDegreeCandidate sessionInfoMasterDegreeCandidate = (InfoMasterDegreeCandidate) sessao.getAttribute("candidateInformation"); 
 		
-		infoMasterDegreeCandidate.setInfoDegree(sessionInfoMasterDegreeCandidate.getInfoDegree());
+		infoMasterDegreeCandidate.setInfoExecutionDegree(sessionInfoMasterDegreeCandidate.getInfoExecutionDegree());
       
 		changeArgs[0] = infoMasterDegreeCandidate;
 

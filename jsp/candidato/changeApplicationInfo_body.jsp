@@ -28,17 +28,17 @@
         <!-- Ano de Candidatura -->
         <tr>
          <td><bean:message key="candidate.applicationYear" /></td>
-          <td><bean:write name="candidateInformation" property="infoExecutionYear.year"/></td>
+          <td><bean:write name="candidateInformation" property="infoExecutionDegree.infoExecutionYear.year"/></td>
         </tr>
         <!-- Nome do Curso -->
         <tr>
          <td><bean:message key="candidate.degreeName" /></td>
-          <td><bean:write name="candidateInformation" property="infoDegree.nome"/></td>
+          <td><bean:write name="candidateInformation" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/></td>
         </tr>
         <!-- Sigla do Curso -->
         <tr>
          <td><bean:message key="candidate.degreeCode" /></td>
-          <td><bean:write name="candidateInformation" property="infoDegree.sigla"/></td>
+          <td><bean:write name="candidateInformation" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/></td>
         </tr>
         <!-- Especializacao -->
         <tr>
@@ -188,7 +188,7 @@
 	<!-- Data de Validade do Documento de Identificacao -->
         <tr>
          <td><bean:message key="candidate.identificationDocumentExpirationDate" /></td>
-          <td><bean:message key="candidate.year" />   
+         <td><bean:message key="candidate.year" />   
              <html:select property="idExpirationDateYear">
                 <html:options collection="expirationYears" property="value" labelProperty="label"/>
              </html:select>

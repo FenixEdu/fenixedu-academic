@@ -13,6 +13,7 @@
  */
 package ServidorPersistente;
 
+import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
 
 public interface IPersistentMasterDegreeCandidate {
@@ -57,5 +58,16 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public Integer generateCandidateNumber(String executionYear, String degreeName) throws ExcepcaoPersistencia; 
+	
+	/**
+	 * 
+	 * @param identificationDocumentNumber
+	 * @param IdentificationDocumentType
+	 * @param executionDegree
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegree(String identificationDocumentNumber, 
+				Integer IdentificationDocumentType, ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 
 } // End of class definition

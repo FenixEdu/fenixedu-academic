@@ -25,6 +25,7 @@ public class Sexo {
     
     public static final String MASCULINO_STRING = "Masculino";
     public static final String FEMININO_STRING = "Feminino";
+	public static final String DEFAULT = "[Escolha o Sexo]";
     
     private Integer sexo;
 
@@ -57,6 +58,7 @@ public class Sexo {
 
     public ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
+		result.add(new LabelValueBean(Sexo.DEFAULT, null));
 	    result.add(new LabelValueBean(Sexo.MASCULINO_STRING, Sexo.MASCULINO_STRING));
 		result.add(new LabelValueBean(Sexo.FEMININO_STRING, Sexo.FEMININO_STRING));
 		return result;	

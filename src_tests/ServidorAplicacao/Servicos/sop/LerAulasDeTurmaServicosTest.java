@@ -27,6 +27,7 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import Util.DiaSemana;
 import Util.TipoAula;
+import Util.TipoCurso;
 import Util.TipoSala;
 
 public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
@@ -72,7 +73,8 @@ public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
 						"plano1",
 						new InfoDegree(
 							"LEIC",
-							"Licenciatura de Engenharia Informatica e de Computadores")),
+							"Licenciatura de Engenharia Informatica e de Computadores",
+							TipoCurso.LICENCIATURA_STRING)),
 					new InfoExecutionYear("2002/2003")),
 				new InfoExecutionPeriod(
 					"2º Semestre",
@@ -94,7 +96,8 @@ public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
 						"plano1",
 						new InfoDegree(
 							"LEIC",
-							"Licenciatura de Engenharia Informatica e de Computadores")),
+							"Licenciatura de Engenharia Informatica e de Computadores",
+							TipoCurso.LICENCIATURA_STRING)),
 					new InfoExecutionYear("2002/2003")),
 				new InfoExecutionPeriod(
 					"2º Semestre",
