@@ -40,7 +40,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 // NOT TESTED 
 
-public class EditItemActionTest extends TestCasePresentationTeacherPortal {
+public class EditItemDispatchActionTest extends TestCasePresentationTeacherPortal {
 
 	private InfoSection infoSection = null;
 	private List infoItemsList = null;
@@ -50,7 +50,7 @@ public class EditItemActionTest extends TestCasePresentationTeacherPortal {
 	/**
 	 * @param testName
 	 */
-	public EditItemActionTest(String testName) {
+	public EditItemDispatchActionTest(String testName) {
 		super(testName);
 	}
 

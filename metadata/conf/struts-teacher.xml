@@ -326,8 +326,9 @@
 	<action name="itemForm"
 		path="/editItem"
 		parameter="method"
-		type="ServidorApresentacao.Action.teacher.EditItemAction"
+		type="ServidorApresentacao.Action.teacher.EditItemDispatchAction"
         validate="false" >
+         <forward name="editItem" path="/editItem.jsp"/>
        <forward name="viewSection" path="/viewSection.do"/>
 	</action>
 	
