@@ -1,6 +1,5 @@
 package Dominio;
 
-import java.util.List;
 
 /**
  * @author Tânia Pousão
@@ -8,8 +7,6 @@ import java.util.List;
  */
 public interface ICampus extends IDomainObject {
 	public String getName();
-	public List getExecutionDegreeList();
-	
+
 	public void setName(String name);
-	public void setExecutionDegreeList(List executionDegreeList);
 }
