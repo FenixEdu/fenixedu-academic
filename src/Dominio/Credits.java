@@ -1,5 +1,9 @@
 package Dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  * @author Alexandra Alves
  */
@@ -77,6 +81,18 @@ public class Credits extends DomainObject implements ICredits {
 					&& this.getTeacher().equals(credits.getTeacher());
 		}
 		return result;
+	}
+	/* (non-Javadoc)
+	 * @see Dominio.IDomainObject#getUniqueProperties()
+	 */
+	public List getUniqueProperties() {
+		List list = new ArrayList();
+		list.add("executionPeriod.semester");
+		list.add("executionPeriod.name");
+		list.add("executionPeriod.executionYear.year");
+		list.add("teacher.teacherNumber");
+		list.add("teacher.person.username");
+		return list;
 	}
 
 }
