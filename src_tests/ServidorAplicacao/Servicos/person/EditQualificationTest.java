@@ -186,7 +186,7 @@ public class EditQualificationTest
 		return args;
 	}
 
-	/****************************** INICIO DOS TESTES********************/
+	/** **************************** INICIO DOS TESTES******************* */
 
 	/*
 	 * Um Grant Owner Manager tenta criar com sucesso uma qualificação a um
@@ -214,7 +214,7 @@ public class EditQualificationTest
 			fail("Creating a new Qualification for GrantOwner: " + e);
 		}
 	}
-	
+
 	/*
 	 * Um Grant Owner Manager tenta editar com sucesso uma qualificação de um
 	 * Grant Owner
@@ -241,7 +241,7 @@ public class EditQualificationTest
 			fail("Editing a Qualification for a GrantOwner: " + e);
 		}
 	}
-	
+
 	/*
 	 * Um professor tenta criar com sucesso uma qualificação sua.
 	 */
@@ -267,7 +267,7 @@ public class EditQualificationTest
 			fail("Creating a new Qualification for Teacher: " + e);
 		}
 	}
-	
+
 	/*
 	 * Um professor tenta editar com sucesso uma qualificação sua
 	 */
@@ -294,7 +294,7 @@ public class EditQualificationTest
 	}
 
 	/*
-	 *  Valid user(teacher), but wrong arguments(Grant Owner)
+	 * Valid user(teacher), but wrong arguments(Grant Owner)
 	 */
 	public void testCreateQualificationUnsuccessfull1() {
 
@@ -320,7 +320,7 @@ public class EditQualificationTest
 			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 	}
-	
+
 	/*
 	 * Valid user(Grant Owner), but wrong arguments(Teacher)
 	 */
@@ -347,9 +347,10 @@ public class EditQualificationTest
 			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 	}
-	
+
 	/*
-	 * Valid user, but wrong arguments (editing a qualification that does't exists)
+	 * Valid user, but wrong arguments (editing a qualification that does't
+	 * exists)
 	 */
 	public void testCreateQualificationUnsuccessfull3() {
 		try {
@@ -379,95 +380,20 @@ public class EditQualificationTest
 
 	}
 
-	/****************************** FIM DOS TESTES********************/
+	/** **************************** FIM DOS TESTES******************* */
 
 	protected InfoPerson getInfoPersonGO() {
-		InfoPerson info =
-			new InfoPerson(
-				"161616161",
-				new TipoDocumentoIdentificacao(
-					TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE),
-				"Lisboa",
-				getDateByArgs(2002, 10, 12),
-				getDateByArgs(2002, 10, 12),
-				"Nome da Pessoa",
-				new Sexo(Sexo.MASCULINO),
-				new EstadoCivil(EstadoCivil.SOLTEIRO),
-				getDateByArgs(2002, 10, 12),
-				"Nome do Pai",
-				"Nome da Mae",
-				"Portuguesa",
-				"Freguesia",
-				"Concelho",
-				"Distrito",
-				"Morada",
-				"localidade",
-				"1700-200",
-				"l200",
-				"frequesia morada",
-				"concelho morada",
-				"distrito morada",
-				"214443523",
-				"965463210",
-				"s@h.c",
-				"http",
-				"1111111111",
-				"Profissao",
-				"14",
-				"pass",
-				new InfoCountry("Portugal", "PT", "Portuguesa"),
-				"1111111111");
+		InfoPerson info = new InfoPerson();
 		info.setIdInternal(new Integer(14));
+		info.setUsername("user_gom");
 		return info;
 	}
 	protected InfoPerson getInfoPersonT() {
-		InfoPerson info =
-			new InfoPerson(
-				"696969692",
-				new TipoDocumentoIdentificacao(
-					TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE),
-				"Lisboa",
-				getDateByArgs(2002, 10, 12),
-				getDateByArgs(2002, 10, 12),
-				"Teacher",
-				new Sexo(Sexo.MASCULINO),
-				new EstadoCivil(EstadoCivil.SOLTEIRO),
-				getDateByArgs(2002, 10, 12),
-				"Nome do Pai",
-				"Nome da Mae",
-				"Portuguesa",
-				"Freguesia",
-				"Concelho",
-				"Distrito",
-				"Morada",
-				"localidade",
-				"1700-200",
-				"l200",
-				"frequesia morada",
-				"concelho morada",
-				"distrito morada",
-				"214443523",
-				"965463210",
-				"s@h.c",
-				"http",
-				"1111111111",
-				"Profissao",
-				"user_t",
-				"pass",
-				new InfoCountry("Portugal", "PT", "Portuguesa"),
-				"1111111111");
+		InfoPerson info = new InfoPerson();
 		info.setIdInternal(new Integer(18));
+		info.setUsername("user_t");
 		return info;
 	}
+	
 
-	/*
-	 * TODO: alterar date para calendar.. o mesmo na Infoperson!
-	 */
-	protected Date getDateByArgs(int year, int month, int day) {
-		Date d = new Date();
-		d.setYear(year);
-		d.setMonth(month);
-		d.setDate(day);
-		return d;
-	}
 }
