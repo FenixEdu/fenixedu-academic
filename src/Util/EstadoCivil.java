@@ -70,9 +70,6 @@ public class EstadoCivil {
 		else if (estadoCivil.equals(EstadoCivil.UNIAO_DE_FACTO_STRING)) this.estadoCivil = new Integer(EstadoCivil.UNIAO_DE_FACTO);
 		else if (estadoCivil.equals(EstadoCivil.DESCONHECIDO_STRING)) this.estadoCivil = new Integer(EstadoCivil.DESCONHECIDO);
 		else this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
-		
-		
-		System.out.println(this.estadoCivil);
     }
 
     public ArrayList toArrayList() {
