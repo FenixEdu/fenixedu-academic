@@ -66,7 +66,7 @@ public class ReadDegreeAction extends FenixAction  {
 						saveErrors(request, actionErrors);
 						return mapping.findForward("readDegrees");
 				}
-				
+			
 				// in case the degree really exists
 				List degreeCurricularPlans = null;
 		

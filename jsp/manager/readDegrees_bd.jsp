@@ -21,6 +21,8 @@
 		</td>
 		<td class="listClasses-header"><bean:message key="label.manager.degree.name" />
 		</td>
+		<td class="listClasses-header"><bean:message key="label.manager.degree.tipoCurso" />
+		</td>
 	</tr>
 		 
 	<logic:iterate id="degree" name="<%= SessionConstants.INFO_DEGREES_LIST %>">			
@@ -33,6 +35,9 @@
 			<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="sigla"/></html:link>
 			</td>			
 			<td class="listClasses"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
+			</td>
+			<bean:define id="tipoCurso" name="degree" property="tipoCurso"/>
+			<td class="listClasses"><%= tipoCurso.toString() %>
 			</td>
 	 	</tr>	
 	 </logic:iterate>
