@@ -86,12 +86,12 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	public void lockRead(List list) throws ExcepcaoPersistencia {
 		try {
-			
+
 			tx = odmg.currentTransaction();
 
 			if (tx == null)
 				throw new ExcepcaoPersistencia("No current transaction!");
-			if (list != null){
+			if (list != null) {
 				for (int i = 0; i < list.size(); i++) {
 					Object obj = list.get(i);
 					tx.lock(obj, Transaction.READ);
@@ -112,7 +112,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 				ExcepcaoPersistencia.UPGRADE_LOCK,
 				ex);
 		}
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -130,8 +130,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 				ex);
 		}
 	}
-
-	
 
 	/**
 	 * Locks to WRITE and delete the object from database...
@@ -318,7 +316,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 				} else {
 					tx.lock(objectReaded, Transaction.READ);
 				}
-			}else if (lockWrite == true){
+			} else if (lockWrite == true) {
 				tx.lock(domainObject, Transaction.WRITE);
 				objectReaded = domainObject;
 			}
@@ -560,10 +558,10 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		throws ExcepcaoPersistencia {
 		PersistenceBroker pb =
 			((HasBroker) odmg.currentTransaction()).getBroker();
-			
+
 		Query queryCriteria = new QueryByCriteria(classToQuery, criteria);
 		List list = (List) pb.getCollectionByQuery(queryCriteria);
-		
+
 		lockRead(list);
 		return list;
 	}
@@ -577,4 +575,12 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		}
 		return obj;
 	}
+
+	public IDomainObject readByOID(Class classToQuery, Integer oid)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("idInternal",oid);
+		return (IDomainObject) queryObject(classToQuery,criteria);
+	}
+
 }
