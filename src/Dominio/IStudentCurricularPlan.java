@@ -49,7 +49,8 @@ public interface IStudentCurricularPlan extends IDomainObject
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
-	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType) throws ExcepcaoPersistencia;
+	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
+            throws ExcepcaoPersistencia;
 	public List getAllStudentEnrolledEnrollments();
 	public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 	public List getStudentTemporarilyEnrolledEnrollments();

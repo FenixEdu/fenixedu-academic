@@ -299,7 +299,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return allEnrollments;
     }
 
-    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType) {
+    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
+        throws ExcepcaoPersistencia {
 
         executionPeriod = getExecutionPeriod(executionPeriod);
         List setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionPeriod.getSemester());
@@ -417,7 +418,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         });
     }
 
-    public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
         final IExecutionPeriod executionPeriod2Compare = getExecutionPeriod(executionPeriod);
 
@@ -578,18 +579,14 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return curricularCourses;
     }
 
-    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod) {
+    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
         IExecutionPeriod executionPeriod2Return = executionPeriod;
         
         if (executionPeriod == null) {
-            try {
-                ISuportePersistente daoFactory = SuportePersistenteOJB.getInstance();
-                IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
-                executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
-            } catch (ExcepcaoPersistencia e) {
-                throw new RuntimeException(e);
-            }
+            ISuportePersistente daoFactory = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
+            executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
         }
         
         return executionPeriod2Return;
