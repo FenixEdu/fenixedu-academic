@@ -82,7 +82,7 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 		Season season = new Season(Season.SEASON1);
 
 
-		InfoExam infoExam = new InfoExam(beginning.getTime(), beginning, null, season);
+		InfoExam infoExam = new InfoExam(beginning, beginning, null, season);
 		List infoExecutionCourses = new ArrayList();
 		infoExecutionCourses.add(infoExecutionCourse);
 
@@ -125,7 +125,7 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 		Season season = new Season(Season.SEASON1);
 
 		Object argsDeleteExam[] = new Object[1];
-		argsDeleteExam[0] = new InfoExam(beginning.getTime(), beginning, null, season);
+		argsDeleteExam[0] = new InfoExam(beginning, beginning, null, season);
 
 		return argsDeleteExam;
 	}
