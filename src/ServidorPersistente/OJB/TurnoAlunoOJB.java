@@ -23,6 +23,7 @@ import Dominio.ITurnoAluno;
 import Dominio.TurnoAluno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoAlunoPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 public class TurnoAlunoOJB
@@ -59,8 +60,33 @@ public class TurnoAlunoOJB
 		}
 	}
 
-	public void lockWrite(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia {
-		super.lockWrite(turnoAluno);
+	public void lockWrite(ITurnoAluno shiftStudentToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+		ITurnoAluno shiftStudentFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (shiftStudentToWrite == null)
+			return;
+
+		// Read shiftStudent from database.
+		shiftStudentFromDB =
+			this.readByTurnoAndAluno(
+				shiftStudentToWrite.getTurno(),
+				shiftStudentToWrite.getAluno());
+
+		// If shiftStudent is not in database, then write it.
+		if (shiftStudentFromDB == null)
+			super.lockWrite(shiftStudentToWrite);
+		// else If the shiftStudent is mapped to the database, then write any existing changes.
+		else if (
+			(shiftStudentToWrite instanceof TurnoAluno)
+				&& ((TurnoAluno) shiftStudentFromDB).getCodigoInterno().equals(
+					((TurnoAluno) shiftStudentToWrite).getCodigoInterno())) {
+			super.lockWrite(shiftStudentToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
 	}
 
 	public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia {

@@ -25,6 +25,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 public class TurnoOJBTest extends TestCaseOJB {
@@ -79,25 +80,36 @@ public class TurnoOJBTest extends TestCaseOJB {
 
 
   public void testCreateExistingTurno() {
- 	IDisciplinaExecucao executionCourse = null;
+	IDisciplinaExecucao executionCourse = null;
 
 	// Write existing
 
 	try {
-	   persistentSupport.iniciarTransaccao();
+		persistentSupport.iniciarTransaccao();
 
-	   executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
-	   assertNotNull(executionCourse);
+		executionCourse =
+			persistentExecutionCourse
+				.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+				"TFCI",
+				"2002/2003",
+				"LEIC");
+		assertNotNull(executionCourse);
 
-	   ITurno shift = new Turno("turno1", new TipoAula(TipoAula.TEORICA), new Integer(100), executionCourse);
-	   
-	   persistentShift.lockWrite(shift);
-	   persistentSupport.confirmarTransaccao();
-	   fail("testCreateExistingTurno");
-	 } catch (ExcepcaoPersistencia ex) {
-	   //all is ok
-	 }
+		ITurno shift =
+			new Turno(
+				"turno1",
+				new TipoAula(TipoAula.TEORICA),
+				new Integer(100),
+				executionCourse);
 
+		persistentShift.lockWrite(shift);
+		persistentSupport.confirmarTransaccao();
+		fail("testCreateExistingTurno: Expected an Exception");
+	} catch (ExistingPersistentException ex) {
+		assertNotNull("testCreateExistingTurno");
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testCreateExistingTurno: Unexpected Exception");
+	}
 	// Write non existing
 	 
 	try {

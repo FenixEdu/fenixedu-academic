@@ -57,6 +57,7 @@ CREATE TABLE DEGREE_CURRICULAR_PLAN (
    
 #------------------------------------------
 # Table structure for STUDENT_CURRICULAR_PLAN
+# FIXME : The current state should not belong the the unique of the class, should it?
 #------------------------------------------
 drop table if exists STUDENT_CURRICULAR_PLAN;
 create table STUDENT_CURRICULAR_PLAN (

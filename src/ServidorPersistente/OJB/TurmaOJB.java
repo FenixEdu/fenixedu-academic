@@ -23,11 +23,40 @@ import Dominio.Turma;
 import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurmaPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 
-	public void lockWrite(ITurma turma) throws ExcepcaoPersistencia {
-		super.lockWrite(turma);
+	public void lockWrite(ITurma classToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+		ITurma classFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (classToWrite == null)
+			return;
+
+		// Read class from database.
+		classFromDB = this.readByNameAndExecutionDegreeAndExecutionPeriod(
+				classToWrite.getNome(),
+				classToWrite.getExecutionDegree(),
+				classToWrite.getExecutionPeriod());
+
+		// If class is not in database, then write it.
+		if (classFromDB == null)
+			super.lockWrite(classToWrite);
+		// else If the class is mapped to the database, then write any existing changes.
+		else if (
+			(classToWrite instanceof Turma)
+				&& ((Turma) classFromDB)
+					.getCodigoInterno()
+					.equals(
+					((Turma) classToWrite)
+						.getCodigoInterno())) {
+			super.lockWrite(classToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
 	}
 
 	public void delete(ITurma turma) throws ExcepcaoPersistencia {

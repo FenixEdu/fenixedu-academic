@@ -23,6 +23,7 @@ import Dominio.ITurno;
 import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurmaTurnoPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class TurmaTurnoOJB
 	extends ObjectFenixOJB
@@ -69,8 +70,33 @@ public class TurmaTurnoOJB
 		}
 	}
 
-	public void lockWrite(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia {
-		super.lockWrite(turmaTurno);
+	public void lockWrite(ITurmaTurno classShiftToWrite)
+			throws ExcepcaoPersistencia, ExistingPersistentException {
+
+		ITurmaTurno classShiftFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (classShiftToWrite == null)
+			return;
+
+		// Read classShift from database.
+		classShiftFromDB =
+			this.readByTurmaAndTurno(
+				classShiftToWrite.getTurma(),
+				classShiftToWrite.getTurno());
+
+		// If classShift is not in database, then write it.
+		if (classShiftFromDB == null)
+			super.lockWrite(classShiftToWrite);
+		// else If the classShift is mapped to the database, then write any existing changes.
+		else if (
+			(classShiftToWrite instanceof TurmaTurno)
+				&& ((TurmaTurno) classShiftFromDB).getCodigoInterno().equals(
+					((TurmaTurno) classShiftToWrite).getCodigoInterno())) {
+			super.lockWrite(classShiftToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
 	}
 
 	public void delete(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia {

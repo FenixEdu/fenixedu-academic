@@ -31,6 +31,7 @@ import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.TurnoAluno;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 public class TurnoAlunoOJBTest extends TestCaseOJB {
@@ -195,8 +196,10 @@ public class TurnoAlunoOJBTest extends TestCaseOJB {
 
 	  persistentSupport.confirmarTransaccao();
 	  fail("testReadByTurmaAndTurno:fail write existing turmaTurno");
+	} catch (ExistingPersistentException ex) {
+		assertNotNull("testCreateExistingTurnoAluno:" + ex);
 	} catch (ExcepcaoPersistencia ex) {
-	  // All is OK
+		fail("testCreateExistingTurnoAluno: Unexpected Excpetion");
 	}
   }
 

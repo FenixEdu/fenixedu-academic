@@ -21,6 +21,7 @@ import Dominio.ISala;
 import Dominio.Sala;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISalaPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
    
@@ -41,9 +42,31 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
         }
     }
         
-    public void lockWrite(ISala sala) throws ExcepcaoPersistencia {
-        super.lockWrite(sala);
-    }
+	public void lockWrite(ISala roomToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+			ISala roomFromDB = null;
+
+			// If there is nothing to write, simply return.
+			if (roomToWrite == null)
+				return;
+
+			// Read room from database.
+			roomFromDB = this.readByName(roomToWrite.getNome());
+
+			// If room is not in database, then write it.
+			if (roomFromDB == null)
+				super.lockWrite(roomToWrite);
+			// else If the room is mapped to the database, then write any existing changes.
+			else if (
+				(roomToWrite instanceof Sala)
+					&& ((Sala) roomFromDB).getCodigoInterno().equals(
+						((Sala) roomToWrite).getCodigoInterno())) {
+				super.lockWrite(roomToWrite);
+				// else Throw an already existing exception
+			} else
+				throw new ExistingPersistentException();
+	}
     
     public void delete(ISala sala) throws ExcepcaoPersistencia {
 		try {

@@ -38,6 +38,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
@@ -126,10 +127,12 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
             persistentSupport.iniciarTransaccao();
             persistentStudentCurricularPlan.lockWrite(studentCurricularPlan);
             persistentSupport.confirmarTransaccao();
-            fail("    -> Espected Error");            
-        } catch (ExcepcaoPersistencia ex) {
-			// All is OK
-        }
+            fail("testWriteExisting: Expected an Exception");
+        } catch (ExistingPersistentException ex) {
+			assertNotNull("testWriteExisting", ex);
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testWriteExisting: Unexpected Exception");
+		}
 	}    
 
     public void testWriteNonExisting() {
@@ -159,7 +162,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			persistentSupport.confirmarTransaccao();
 
 		} catch (ExcepcaoPersistencia ex) {
-			fail(" Fail");            		}
+			fail(" Fail " + ex);            		}
 	}    
 	
     public void testDeleteExisting() {

@@ -13,13 +13,14 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 import Dominio.IStudentCurricularPlan;
 
 public interface IStudentCurricularPlanPersistente extends IPersistentObject {
     IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber, TipoCurso degreeType ) throws ExcepcaoPersistencia;
-    void lockWrite(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia;
+    void lockWrite(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia, ExistingPersistentException;
     void delete(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAllFromStudent(int studentNumber /*, StudentType studentType */) throws ExcepcaoPersistencia;

@@ -32,6 +32,7 @@ import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class TurmaTurnoOJBTest extends TestCaseOJB {
     public TurmaTurnoOJBTest(java.lang.String testName) {
@@ -145,9 +146,11 @@ public class TurmaTurnoOJBTest extends TestCaseOJB {
 		persistentClassShift.lockWrite(turmaTurno);
 		persistentSupport.confirmarTransaccao();
 		
-		fail("testCreateExistingTurmaTurno");	
+		fail("testCreateExistingTurmaTurno: Expected an Exception");	
+	} catch (ExistingPersistentException ex) {
+		assertNotNull("testCreateExistingTurmaTurno");
 	} catch (ExcepcaoPersistencia ex) {
-	//all is ok
+		fail("testCreateExistingTurmaTurno: Unexpected Exception");
 	}
   }
 

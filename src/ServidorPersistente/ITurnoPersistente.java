@@ -15,10 +15,11 @@ import java.util.List;
 
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface ITurnoPersistente extends IPersistentObject{
 	public ITurno readByNameAndExecutionCourse(String nome, IDisciplinaExecucao IDE) throws ExcepcaoPersistencia;
-    public void lockWrite(ITurno turno) throws ExcepcaoPersistencia;
+    public void lockWrite(ITurno turno) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(ITurno turno) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
     public Integer countAllShiftsOfAllClassesAssociatedWithShift(ITurno shift) throws ExcepcaoPersistencia;    

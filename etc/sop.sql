@@ -100,6 +100,7 @@ create table SHIFT_LESSON (
 
 #----------------------------
 # Table structure for attend
+# FIXME : This should associate students with shifts, not with execution courses.
 #----------------------------
 drop table if exists ATTEND;
 create table ATTEND (
@@ -112,6 +113,8 @@ create table ATTEND (
 
 #----------------------------
 # Table structure for enrolment
+# FIXME : This should associate students with execution courses, not with curricular courses.
+#               The curricular course can be reached through the students curricular plan.
 #----------------------------
 drop table if exists ENROLMENT;
 create table ENROLMENT (

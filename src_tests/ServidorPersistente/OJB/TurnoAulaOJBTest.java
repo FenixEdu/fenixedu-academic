@@ -36,6 +36,7 @@ import Dominio.Sala;
 import Dominio.Turno;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 
 public class TurnoAulaOJBTest extends TestCaseOJB {
@@ -410,9 +411,11 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			persistentShiftLesson.lockWrite(turnoAula);
 			persistentSupport.confirmarTransaccao();
-			fail("testCreateExistingTurnoAula");
+			fail("testCreateExistingTurnoAula: Expected an Exception");
+		} catch (ExistingPersistentException ex) {
+			assertNotNull("testCreateExistingTurnoAula");
 		} catch (ExcepcaoPersistencia ex) {
-			//all is ok
+			fail("testCreateExistingTurnoAula: Unexpected Excpetion");
 		}
 	}
 

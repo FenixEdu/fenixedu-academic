@@ -24,6 +24,7 @@ import Dominio.ICurso;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
     public PlanoCurricularCursoOJBTest(java.lang.String testName) {
@@ -104,10 +105,11 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
             persistentDegreeCurricularPlan.escreverPlanoCurricular(degreeCurricularPlan);
             persistentSupport.confirmarTransaccao();
             fail("testEscreverPlanoCurricular: confirmarTransaccao_1");
-        } catch(ExcepcaoPersistencia ex2) {
-			// All Is Ok
-        }
-        
+        } catch(ExistingPersistentException ex) {
+			assertNotNull("Write DegreeCurricularPlan: Exception an exception: ", ex);
+		} catch(ExcepcaoPersistencia ex) {
+			fail("Write DegreeCurricularPlan: unexpected exception: " + ex);
+		}        
         // Write non Existing
 		ICurso degreeTemp = null;
 		try {

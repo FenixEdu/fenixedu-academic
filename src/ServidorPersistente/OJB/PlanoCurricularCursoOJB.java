@@ -22,6 +22,7 @@ import Dominio.IPlanoCurricularCurso;
 import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCurricularCursoPersistente {
     
@@ -46,9 +47,34 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
 		}
     }
     
-    public void escreverPlanoCurricular(IPlanoCurricularCurso planoCurricularCurso) throws ExcepcaoPersistencia {
-        super.lockWrite(planoCurricularCurso);
-    }
+	public void escreverPlanoCurricular(IPlanoCurricularCurso degreeCurricularPlanToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+		IPlanoCurricularCurso degreeCurricularPlanFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (degreeCurricularPlanToWrite == null)
+			return;
+
+		// Read degreeCurricularPlan from database.
+		degreeCurricularPlanFromDB =
+			this.readByNameAndDegree(
+				degreeCurricularPlanToWrite.getName(),
+				degreeCurricularPlanToWrite.getCurso());
+
+		// If degreeCurricularPlan is not in database, then write it.
+		if (degreeCurricularPlanFromDB == null)
+			super.lockWrite(degreeCurricularPlanToWrite);
+		// else If the degreeCurricularPlan is mapped to the database, then write any existing changes.
+		else if (
+			(degreeCurricularPlanToWrite instanceof PlanoCurricularCurso)
+				&& ((PlanoCurricularCurso) degreeCurricularPlanFromDB).getCodigoInterno().equals(
+					((PlanoCurricularCurso) degreeCurricularPlanToWrite).getCodigoInterno())) {
+			super.lockWrite(degreeCurricularPlanToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
+	}
     
     public ArrayList lerTodosOsPlanosCurriculares() throws ExcepcaoPersistencia {
         try {

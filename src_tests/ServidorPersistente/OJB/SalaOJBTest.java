@@ -18,6 +18,7 @@ import junit.framework.TestSuite;
 import Dominio.ISala;
 import Dominio.Sala;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoSala;
 
 public class SalaOJBTest extends TestCaseOJB {
@@ -74,10 +75,12 @@ public class SalaOJBTest extends TestCaseOJB {
       persistentSupport.iniciarTransaccao();
       persistentRoom.lockWrite(room);
       persistentSupport.confirmarTransaccao();
-      fail("testCreateExistingSala");
-    } catch (ExcepcaoPersistencia ex) {
-      //all is ok
-    }
+      fail("testCreateExistingSala: expected an exception");
+    } catch (ExistingPersistentException ex) {
+      	assertNotNull("Write Existing Room:");
+	} catch (ExcepcaoPersistencia ex) {
+		fail("Write Existing Room: unexpected exception");
+	}
   }
 
   // write new non-existing room

@@ -13,10 +13,11 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ISala;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface ISalaPersistente extends IPersistentObject {
 	public ISala readByName(String nome) throws ExcepcaoPersistencia;
-	public void lockWrite(ISala sala) throws ExcepcaoPersistencia;
+	public void lockWrite(ISala sala) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(ISala sala) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
