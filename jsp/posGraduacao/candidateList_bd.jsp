@@ -35,7 +35,7 @@
 	    <table>
     		<tr>
 				<td><bean:message key="label.person.name" /></td>
-				<td><bean:message key="label.candidate.candidateNumber" /></td>
+				<td><bean:message key="label.candidate.number" /></td>
 				<td><bean:message key="label.candidate.degree" /></td>
 				<td><bean:message key="label.candidate.specialization" /></td>
 				<td><bean:message key="label.candidate.infoCandidateSituation" /></td>
@@ -56,7 +56,7 @@
     					</html:link>
     				</td>
     				<td><bean:write name="candidate" property="candidateNumber" /></td>
-    				<td><bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" /></td>
+    				<td><bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome" /></td>
     				<td><bean:write name="candidate" property="specialization" /></td>
     				<td><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
 		            <logic:present name="candidate" property="infoCandidateSituation.date" >
