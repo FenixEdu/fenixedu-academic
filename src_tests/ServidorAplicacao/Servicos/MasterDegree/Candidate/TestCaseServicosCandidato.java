@@ -60,25 +60,8 @@ public class TestCaseServicosCandidato extends TestCase {
 	  	} catch (Exception ex) {
 	  		System.out.println("Setup failed :o("+ex);
 	  	}
-        
-
       
         gestor = GestorServicos.manager();    
-        
-        String authenticationArgs[] = { "Cand1", "Pass1" };
-        try {
-            userView1 = (IUserView) gestor.executar(null, "CandidateAuthentication", authenticationArgs);
-        } catch (Exception ex) {
-            System.out.println("Service Not Executed: " + ex);
-        }  
-        
-        String argsAutenticacao2[] = { "Cand2", "Pass2" };
-        try {
-            userView2 = (IUserView) gestor.executar(null, "CandidateAuthentication", argsAutenticacao2);
-        } catch (Exception ex) {
-            System.out.println("Service Not Executed: " + ex);
-        }  
-        
     }
     protected void tearDown() {
    	  	try {
