@@ -5,6 +5,10 @@
 <h2><bean:message key="title.manage.working.area"/></h2>
 <br />
 
+<strong>Nota:</strong> As operações disponíveis nesta página envolvem a manipulação
+de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
+<br /><br />
+
 <bean:message key="list.title.working.areas"/>
 <br />
 <logic:present name="<%= SessionConstants.LIST_WORKING_AREAS %>" scope="request">
