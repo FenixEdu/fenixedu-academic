@@ -30,6 +30,7 @@ public class StudentGroupInfo extends DomainObject implements IStudentGroupInfo 
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
+		result += "idInternal = " + this.getIdInternal() + "; ";
 		result += "studentType = " + this.studentType + "; ";
 		result += "minCoursesToEnrol = " + this.minCoursesToEnrol + "; ";
 		result += "maxNACToEnrol = " + this.maxNACToEnrol + "; ";

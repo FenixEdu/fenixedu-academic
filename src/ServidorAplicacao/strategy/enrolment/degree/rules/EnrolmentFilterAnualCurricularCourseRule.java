@@ -9,7 +9,7 @@ import org.apache.commons.collections.Predicate;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import Util.ScopeType;
+import Util.CurricularCourseExecutionScope;
 
 /**
  * @author dcs-rjao
@@ -26,7 +26,7 @@ public class EnrolmentFilterAnualCurricularCourseRule implements IEnrolmentRule 
 		List anualCurricularCourseScopes = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
 			public boolean evaluate(Object obj) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-				return curricularCourseScope.getScopeType().equals(new ScopeType(ScopeType.ANUAL));
+				return curricularCourseScope.getCurricularCourse().getCurricularCourseExecutionScope().equals(new CurricularCourseExecutionScope(CurricularCourseExecutionScope.ANUAL));
 			}
 		});
 		

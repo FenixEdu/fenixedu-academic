@@ -8,8 +8,6 @@ package DataBeans;
 
 import java.io.Serializable;
 
-import Util.ScopeType;
-
 /**
  *
  * @author  tfc130
@@ -18,7 +16,6 @@ public class InfoCurricularCourseScope implements Serializable {
 	private InfoCurricularCourse infoCurricularCourse;
 	private InfoCurricularSemester infoCurricularSemester;
 	private InfoBranch infoBranch;
-	ScopeType scopeType;
 
 
 	public InfoCurricularCourseScope() {}
@@ -39,7 +36,6 @@ public class InfoCurricularCourseScope implements Serializable {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "CurricularCourse = " + this.infoCurricularCourse + "; ";
 		result += "CurricularSemester = " + this.infoCurricularSemester+ "; ";
-		result += "scopeType = " + this.scopeType + "; ";
 		result += "Branch = " + this.infoBranch + "]\n";
 		
 		return result;
@@ -87,20 +83,5 @@ public class InfoCurricularCourseScope implements Serializable {
 	 */
 	public void setInfoCurricularSemester(InfoCurricularSemester infoCurricularSemester) {
 		this.infoCurricularSemester = infoCurricularSemester;
-	}
-
-	/**
-	 * @return ScopeType
-	 */
-	public ScopeType getScopeType() {
-		return scopeType;
-	}
-
-	/**
-	 * Sets the scopeType.
-	 * @param scopeType The scopeType to set
-	 */
-	public void setScopeType(ScopeType hasAlternativeSemester) {
-		this.scopeType = hasAlternativeSemester;
 	}
 }

@@ -5,22 +5,21 @@ package Util;
  *
  * 25/Mar/2003
  */
-public class ScopeType {
+public class CurricularCourseExecutionScope {
 
-	public static final int NORMAL = 0;
-	public static final int ANUAL = 1;
-	public static final int MANDATORY = 2;
+	public static final int SEMESTRIAL = 1;
+	public static final int ANUAL = 2;
 	
 	private Integer type;
 
-	public ScopeType() {
+	public CurricularCourseExecutionScope() {
 	}
 
-	public ScopeType(int state) {
+	public CurricularCourseExecutionScope(int state) {
 		this.type = new Integer(state);
 	}
 
-	public ScopeType(Integer state) {
+	public CurricularCourseExecutionScope(Integer state) {
 		this.type = state;
 	}
 
@@ -33,8 +32,8 @@ public class ScopeType {
 	}
 
 	public boolean equals(Object o) {
-		if (o instanceof ScopeType) {
-			ScopeType aux = (ScopeType) o;
+		if (o instanceof CurricularCourseExecutionScope) {
+			CurricularCourseExecutionScope aux = (CurricularCourseExecutionScope) o;
 			return this.type.equals(aux.getType());
 		} else {
 			return false;
@@ -47,14 +46,11 @@ public class ScopeType {
 		String valueS = null;
 
 		switch (value) {
-			case NORMAL :
-				valueS = "NORMAL";
+			case SEMESTRIAL :
+				valueS = "SEMESTRIAL";
 				break;
 			case ANUAL :
 				valueS = "ANUAL";
-				break;
-			case MANDATORY:
-				valueS = "MANDATORY";
 				break;
 			default:
 				break;

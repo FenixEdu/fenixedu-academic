@@ -42,143 +42,143 @@ insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 1);
 
 -- -----------------------------
 -- Data for table 'CURRICULAR_COURSE'
--- (ID_INTERNAL, KEY_DEPARTMENT_COURSE, KEY_DEGREE_CURRICULAR_PLAN, CREDITS, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS, NAME, CODE, TYPE)
+-- (ID_INTERNAL, KEY_DEPARTMENT_COURSE, KEY_DEGREE_CURRICULAR_PLAN, CREDITS, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS, NAME, CODE, TYPE, EXECUTION_SCOPE, MANDATORY)
 -- -----------------------------
 -- PRIMEIRO ANO, PRIMEIRO SEMESTRE:
 delete from CURRICULAR_COURSE;
-insert into CURRICULAR_COURSE values (1, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À PROGRAMAÇÃO", "IK", 1);
-insert into CURRICULAR_COURSE values (2, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1);
-insert into CURRICULAR_COURSE values (3, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1);
-insert into CURRICULAR_COURSE values (4, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DIGITAIS", "TU", 1);
-insert into CURRICULAR_COURSE values (5, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "TEORIA DA COMPUTAÇÃO", "VI", 1);
+insert into CURRICULAR_COURSE values (1, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À PROGRAMAÇÃO", "IK", 1, 1, 0);
+insert into CURRICULAR_COURSE values (2, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1, 1, 1);
+insert into CURRICULAR_COURSE values (3, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1);
+insert into CURRICULAR_COURSE values (4, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DIGITAIS", "TU", 1, 1, 0);
+insert into CURRICULAR_COURSE values (5, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "TEORIA DA COMPUTAÇÃO", "VI", 1, 1, 0);
 -- PRIMEIRO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ALGORITMOS E ESTRUTURA DE DADOS", "01", 1);
-insert into CURRICULAR_COURSE values (7, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ARQUITECTURA DE COMPUTADORES", "02", 1);
-insert into CURRICULAR_COURSE values (8, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA II", "P5", 1);
-insert into CURRICULAR_COURSE values (9, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA I - CURSO INFORMÁTICA", "A37", 1);
-insert into CURRICULAR_COURSE values (10, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MATEMÁTICA COMPUTACIONAL", "AG7", 1);
+insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ALGORITMOS E ESTRUTURA DE DADOS", "01", 1, 1, 0);
+insert into CURRICULAR_COURSE values (7, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ARQUITECTURA DE COMPUTADORES", "02", 1, 1, 0);
+insert into CURRICULAR_COURSE values (8, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA II", "P5", 1, 1, 1);
+insert into CURRICULAR_COURSE values (9, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA I - CURSO INFORMÁTICA", "A37", 1, 1, 0);
+insert into CURRICULAR_COURSE values (10, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MATEMÁTICA COMPUTACIONAL", "AG7", 1, 1, 0);
 -- SEGUNDO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "", 1);
-insert into CURRICULAR_COURSE values (12, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA II", "", 1);
-insert into CURRICULAR_COURSE values (13, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS OPERATIVOS", "", 1);
-insert into CURRICULAR_COURSE values (14, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROGRAMAÇÃO COM OBJECTOS", "", 1);
-insert into CURRICULAR_COURSE values (15, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES I", "", 1);
+insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "", 1, 1, 1);
+insert into CURRICULAR_COURSE values (12, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA II", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (13, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS OPERATIVOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (14, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROGRAMAÇÃO COM OBJECTOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (15, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES I", "", 1, 1, 0);
 -- SEGUNDO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA IV", "", 1);
-insert into CURRICULAR_COURSE values (17, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROBABILIDADES E ESTATÍSTICA", "", 1);
-insert into CURRICULAR_COURSE values (18, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO GRÁFICA", "", 1);
-insert into CURRICULAR_COURSE values (19, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SINAIS E SISTEMAS", "", 1);
-insert into CURRICULAR_COURSE values (20, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "BASES DE DADOS", "", 1);
+insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA IV", "", 1, 1, 1);
+insert into CURRICULAR_COURSE values (17, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROBABILIDADES E ESTATÍSTICA", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (18, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO GRÁFICA", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (19, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SINAIS E SISTEMAS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (20, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "BASES DE DADOS", "", 1, 1, 0);
 -- TERCEIRO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (21, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA I", "", 1);
-insert into CURRICULAR_COURSE values (22, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "FUNDAMENTOS DAS TELECOMUNICAÇÕES", "", 1);
-insert into CURRICULAR_COURSE values (23, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DISTRIBUÍDOS", "", 1);
-insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES II", "", 1);
-insert into CURRICULAR_COURSE values (25, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "INTERFACES PESSOA-MÁQUINA", "", 1);
-insert into CURRICULAR_COURSE values (26, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1);
+insert into CURRICULAR_COURSE values (21, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA I", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (22, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "FUNDAMENTOS DAS TELECOMUNICAÇÕES", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (23, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES II", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (25, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "INTERFACES PESSOA-MÁQUINA", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (26, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0);
 -- TERCEIRO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (27, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA II", "", 1);
-insert into CURRICULAR_COURSE values (28, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS EMBEBIDOS", "", 1);
-insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROPAGAÇÃO E ANTENAS", "", 1);
-insert into CURRICULAR_COURSE values (30, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES COM INTEGRAÇÃO DE SERVIÇOS", "", 1);
-insert into CURRICULAR_COURSE values (31, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTELIGÊNCIA ARTIFICIAL", "", 1);
-insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES EM REDES DE GRANDE ESCALA", "", 1);
-insert into CURRICULAR_COURSE values (33, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "COMPILADORES", "", 1);
-insert into CURRICULAR_COURSE values (34, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MODELAÇÃO DE SISTEMAS DE INFORMAÇÃO", "", 1);
+insert into CURRICULAR_COURSE values (27, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA II", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (28, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS EMBEBIDOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROPAGAÇÃO E ANTENAS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (30, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES COM INTEGRAÇÃO DE SERVIÇOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (31, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTELIGÊNCIA ARTIFICIAL", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES EM REDES DE GRANDE ESCALA", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (33, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "COMPILADORES", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (34, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MODELAÇÃO DE SISTEMAS DE INFORMAÇÃO", "", 1, 1, 0);
 -- QUARTO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (35, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "SOFTWARE DE TELECOMUNICAÇÕES", "", 1);
-insert into CURRICULAR_COURSE values (37, 1, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "SEGURANÇA EM REDES", "", 1);
-insert into CURRICULAR_COURSE values (38, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "SISTEMAS DE TELECOMUNICAÇÕES", "", 1);
-insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES PARA SISTEMAS EMBEBIDOS", "", 1);
-insert into CURRICULAR_COURSE values (40, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DE SOFTWARE", "", 1);
-insert into CURRICULAR_COURSE values (41, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "GESTÃO DE PROJECTOS INFORMÁTICOS", "", 1);
+insert into CURRICULAR_COURSE values (35, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "SOFTWARE DE TELECOMUNICAÇÕES", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (37, 1, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "SEGURANÇA EM REDES", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (38, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "SISTEMAS DE TELECOMUNICAÇÕES", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES PARA SISTEMAS EMBEBIDOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (40, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DE SOFTWARE", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (41, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "GESTÃO DE PROJECTOS INFORMÁTICOS", "", 1, 1, 0);
 -- QUARTO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (42, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "REDES MÓVEIS E SEM FIOS", "", 1);
-insert into CURRICULAR_COURSE values (43, 1, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "REDES DE ACESSO", "", 1);
-insert into CURRICULAR_COURSE values (44, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1);
-insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PLANEAMENTO DE PROJECTO E REDES", "", 1);
-insert into CURRICULAR_COURSE values (46, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "COMPUTAÇÃO MÓVEL", "", 1);
-insert into CURRICULAR_COURSE values (47, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PRODUÇÃO DE CONTEÚDOS MULTIMÉDIA", "", 1);
-insert into CURRICULAR_COURSE values (48, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PROJECTO DE APLICAÇÕES E SERVIÇOS", "", 1);
-insert into CURRICULAR_COURSE values (50, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CARTEIRA PESSOAL", "", 1);
+insert into CURRICULAR_COURSE values (42, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "REDES MÓVEIS E SEM FIOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (43, 1, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "REDES DE ACESSO", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (44, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PLANEAMENTO DE PROJECTO E REDES", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (46, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "COMPUTAÇÃO MÓVEL", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (47, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PRODUÇÃO DE CONTEÚDOS MULTIMÉDIA", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (48, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PROJECTO DE APLICAÇÕES E SERVIÇOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (50, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CARTEIRA PESSOAL", "", 1, 1, 0);
 -- QUINTO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (51, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO I", "", 2);
-insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO II", "", 2);
-insert into CURRICULAR_COURSE values (53, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO", "", 4);
+insert into CURRICULAR_COURSE values (51, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO I", "", 2, 1, 0);
+insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO II", "", 2, 1, 0);
+insert into CURRICULAR_COURSE values (53, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO", "", 4, 1, 0);
 -- QUINTO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (54, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "OPÇÃO III", "", 2);
-insert into CURRICULAR_COURSE values (55, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO IV", "", 2);
-insert into CURRICULAR_COURSE values (56, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO II", "", 4);
+insert into CURRICULAR_COURSE values (54, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "OPÇÃO III", "", 2, 1, 0);
+insert into CURRICULAR_COURSE values (55, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO IV", "", 2, 1, 0);
+insert into CURRICULAR_COURSE values (56, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO II", "", 4, 1, 0);
 -- CADEIRAS DE OPÇÃO:
-insert into CURRICULAR_COURSE values (57, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA I", "", 1);
-insert into CURRICULAR_COURSE values (58, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA II", "", 1);
-insert into CURRICULAR_COURSE values (59, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA III", "", 1);
-insert into CURRICULAR_COURSE values (60, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA IV", "", 1);
-insert into CURRICULAR_COURSE values (61, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA V", "", 1);
-insert into CURRICULAR_COURSE values (62, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA VI", "", 1);
-insert into CURRICULAR_COURSE values (63, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA VII", "", 1);
-insert into CURRICULAR_COURSE values (64, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA VIII", "", 1);
+insert into CURRICULAR_COURSE values (57, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA I", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (58, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA II", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (59, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA III", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (60, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA IV", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (61, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA V", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (62, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA VI", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (63, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA VII", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (64, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "ESCOLHA VIII", "", 1, 1, 0);
 
 -- -----------------------------
 -- Data for table 'CURRICULAR_COURSE_SCOPE'
--- (ID_INTERNAL, KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS, SCOPE_TYPE)
+-- (ID_INTERNAL, KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS)
 -- -----------------------------
 delete from CURRICULAR_COURSE_SCOPE;
-insert into CURRICULAR_COURSE_SCOPE  values (1, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (2, 1, 2, 1, 0.0, 0.0, 0.0, 0.0, 2);
-insert into CURRICULAR_COURSE_SCOPE  values (3, 1, 3, 1, 0.0, 0.0, 0.0, 0.0, 2);
-insert into CURRICULAR_COURSE_SCOPE  values (4, 1, 4, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (5, 1, 5, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (6, 1, 6, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (7, 2, 7, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (8, 2, 8, 1, 0.0, 0.0, 0.0, 0.0, 2);
-insert into CURRICULAR_COURSE_SCOPE  values (9, 2, 9, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (10, 2, 10, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (11, 2, 11, 1, 0.0, 0.0, 0.0, 0.0, 2);
-insert into CURRICULAR_COURSE_SCOPE  values (12, 2, 12, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (13, 3, 13, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (14, 3, 14, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (15, 3, 15, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (16, 3, 16, 1, 0.0, 0.0, 0.0, 0.0, 2);
-insert into CURRICULAR_COURSE_SCOPE  values (17, 3, 17, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (18, 3, 18, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (19, 4, 19, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (20, 4, 20, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (21, 4, 21, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (22, 4, 22, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (23, 4, 23, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (24, 4, 24, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (25, 5, 48, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (26, 5, 50, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (27, 5, 25, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (28, 5, 26, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (29, 5, 27, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (30, 5, 28, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (31, 6, 29, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (32, 6, 30, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (33, 6, 31, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (34, 6, 32, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (35, 6, 33, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (36, 6, 34, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (37, 7, 35, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (38, 7, 53, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (39, 7, 37, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (40, 7, 38, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (41, 7, 56, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (42, 7, 39, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (43, 8, 40, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (44, 8, 41, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (45, 8, 42, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (46, 8, 43, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (47, 8, 44, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (48, 9, 45, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (49, 10, 46, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (50, 10, 47, 1, 0.0, 0.0, 0.0, 0.0, 0);
+insert into CURRICULAR_COURSE_SCOPE  values (1, 1, 1, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (2, 1, 2, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (3, 1, 3, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (4, 1, 4, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (5, 1, 5, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (6, 1, 6, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (7, 2, 7, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (8, 2, 8, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (9, 2, 9, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (10, 2, 10, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (11, 2, 11, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (12, 2, 12, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (13, 3, 13, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (14, 3, 14, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (15, 3, 15, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (16, 3, 16, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (17, 3, 17, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (18, 3, 18, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (19, 4, 19, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (20, 4, 20, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (21, 4, 21, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (22, 4, 22, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (23, 4, 23, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (24, 4, 24, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (25, 5, 48, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (26, 5, 50, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (27, 5, 25, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (28, 5, 26, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (29, 5, 27, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (30, 5, 28, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (31, 6, 29, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (32, 6, 30, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (33, 6, 31, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (34, 6, 32, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (35, 6, 33, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (36, 6, 34, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (37, 7, 35, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (38, 7, 53, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (39, 7, 37, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (40, 7, 38, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (41, 7, 56, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (42, 7, 39, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (43, 8, 40, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (44, 8, 41, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (45, 8, 42, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (46, 8, 43, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (47, 8, 44, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (48, 9, 45, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (49, 10, 46, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (50, 10, 47, 1, 0.0, 0.0, 0.0, 0.0);
 
-insert into CURRICULAR_COURSE_SCOPE  values (51, 9, 51, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (52, 9, 52, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (53, 10, 54, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (54, 10, 55, 1, 0.0, 0.0, 0.0, 0.0, 0);
+insert into CURRICULAR_COURSE_SCOPE  values (51, 9, 51, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (52, 9, 52, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (53, 10, 54, 1, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (54, 10, 55, 1, 0.0, 0.0, 0.0, 0.0);
 
 -- -----------------------------
 -- Data for table 'POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE'

@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.List;
 
+import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
 /**
@@ -25,6 +26,8 @@ public class CurricularCourse implements ICurricularCourse {
 	private IDisciplinaDepartamento departmentCourse;
 	private IDegreeCurricularPlan degreeCurricularPlan;
 	private CurricularCourseType type;
+	private CurricularCourseExecutionScope curricularCourseExecutionScope;
+	private Boolean mandatory;
 
 	private List associatedExecutionCourses;
 	private List scopes;
@@ -386,4 +389,23 @@ public class CurricularCourse implements ICurricularCourse {
 		this.type = type;
 	}
 
+	public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
+		return curricularCourseExecutionScope;
+	}
+
+	public Boolean getMandatory() {
+		return mandatory;
+	}
+
+	public boolean curricularCourseIsMandatory() {
+		return mandatory.booleanValue();
+	}
+
+	public void setCurricularCourseExecutionScope(CurricularCourseExecutionScope scope) {
+		curricularCourseExecutionScope = scope;
+	}
+
+	public void setMandatory(Boolean boolean1) {
+		mandatory = boolean1;
+	}
 }

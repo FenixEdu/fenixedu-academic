@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.List;
 
+import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
 /**
@@ -27,6 +28,11 @@ public interface ICurricularCourse {
 	public void setScopes(List scopes);
 	public void setType(CurricularCourseType type);
 
+	public void setCurricularCourseExecutionScope(CurricularCourseExecutionScope scope);
+	public void setMandatory(Boolean boolean1);
+
+	public boolean curricularCourseIsMandatory();
+
 	public Double getCredits();
 	public Double getTheoreticalHours();
 	public Double getPraticalHours();
@@ -41,5 +47,7 @@ public interface ICurricularCourse {
 //	public List getAssociatedCurricularSemesters();
 	public List getScopes();
 	public CurricularCourseType getType();
+	public CurricularCourseExecutionScope getCurricularCourseExecutionScope();
+	public Boolean getMandatory();
 
 }

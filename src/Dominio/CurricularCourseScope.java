@@ -1,6 +1,5 @@
 package Dominio;
 
-import Util.ScopeType;
 
 
 /**
@@ -19,7 +18,6 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	private ICurricularCourse curricularCourse;
 	private ICurricularSemester curricularSemester;
 	private IBranch branch;
-	ScopeType scopeType;
 	
 	public CurricularCourseScope() {
 		setInternalID(null);
@@ -31,7 +29,6 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		setBranchKey(null);
 		setCurricularCourseKey(null);
 		setCurricularSemesterKey(null);
-		setScopeType(null);
 	}
 
 	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) {
@@ -39,14 +36,6 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		setCurricularCourse(curricularCourse);
 		setCurricularSemester(curricularSemester);
 		setBranch(branch);
-	}
-
-	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch, ScopeType hasAlternativeSemester) {
-		this();
-		setCurricularCourse(curricularCourse);
-		setCurricularSemester(curricularSemester);
-		setBranch(branch);
-		setScopeType(hasAlternativeSemester);
 	}
 
 	public boolean equals(Object obj) {
@@ -69,7 +58,6 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 		result += "idInternal = " + this.internalID + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "; ";
 		result += "curricularSemester = " + this.curricularSemester + "; ";
-		result += "scopeType = " + this.scopeType + "; ";
 		result += "branch = " + this.branch + "]\n";
 
 		return result;
@@ -179,20 +167,5 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	 */
 	public void setInternalID(Integer internalID) {
 		this.internalID = internalID;
-	}
-
-	/**
-	 * @return ScopeType
-	 */
-	public ScopeType getScopeType() {
-		return scopeType;
-	}
-
-	/**
-	 * Sets the scopeType.
-	 * @param scopeType The scopeType to set
-	 */
-	public void setScopeType(ScopeType hasAlternativeSemester) {
-		this.scopeType = hasAlternativeSemester;
 	}
 }

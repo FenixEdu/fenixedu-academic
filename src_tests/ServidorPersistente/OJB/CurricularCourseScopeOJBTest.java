@@ -18,7 +18,6 @@ import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.ScopeType;
 
 /**
  * @author dcs-rjao
@@ -103,7 +102,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 		// CurricularCourseScope inexistente
 		this.loadDataFromDB(false);
 		curricularCourseScope = new CurricularCourseScope(this.curricularCourse, this.curricularSemester, this.branch);
-		curricularCourseScope.setScopeType(new ScopeType(ScopeType.MANDATORY));
+		curricularCourseScope.getCurricularCourse().setMandatory(new Boolean(true));
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentCurricularCourseScope.lockWrite(curricularCourseScope);

@@ -8,6 +8,7 @@ package DataBeans;
 
 import java.util.List;
 
+import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
 /**
@@ -26,6 +27,8 @@ public class InfoCurricularCourse  extends InfoObject{
 	//	private List associatedInfoCurricularSemesters;
 	private List infoScopes;
 	private CurricularCourseType type;
+	private CurricularCourseExecutionScope curricularCourseExecutionScope;
+	private Boolean mandatory;
 
 	public InfoCurricularCourse() {
 	}
@@ -257,4 +260,23 @@ public class InfoCurricularCourse  extends InfoObject{
 		this.type = type;
 	}
 
+	public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
+		return curricularCourseExecutionScope;
+	}
+
+	public Boolean getMandatory() {
+		return mandatory;
+	}
+
+	public void setCurricularCourseExecutionScope(CurricularCourseExecutionScope scope) {
+		curricularCourseExecutionScope = scope;
+	}
+
+	public void setMandatory(Boolean boolean1) {
+		mandatory = boolean1;
+	}
+
+	public boolean infoCurricularCourseIsMandatory() {
+		return mandatory.booleanValue();
+	}
 }

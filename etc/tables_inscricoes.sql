@@ -62,9 +62,9 @@ create table DEGREE_CURRICULAR_PLAN (
    unique U1 (NAME, KEY_DEGREE)
 )type=InnoDB;
 
---
+-- ----------------------------
 -- Table struture for ENROLMENT_PERIOD
---
+-- ----------------------------
 drop table if exists ENROLMENT_PERIOD;
 create table ENROLMENT_PERIOD (
 	ID_INTERNAL int(11) not null auto_increment,
@@ -92,6 +92,8 @@ create table CURRICULAR_COURSE (
    NAME varchar(100) not null,
    CODE varchar(50) not null,
    TYPE int(11),
+   EXECUTION_SCOPE int(11),
+   MANDATORY bit,
    PRIMARY KEY  (ID_INTERNAL),
    UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
@@ -187,7 +189,7 @@ create table CURRICULAR_COURSE_SCOPE (
    PRATICAL_HOURS double default '0',
    THEO_PRAT_HOURS double default '0',
    LAB_HOURS double default '0',
-   SCOPE_TYPE int(11) not null,
+   -- SCOPE_TYPE int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 )type=InnoDB;

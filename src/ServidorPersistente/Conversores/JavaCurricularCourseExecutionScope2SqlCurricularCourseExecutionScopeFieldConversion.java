@@ -2,7 +2,7 @@ package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.ScopeType;
+import Util.CurricularCourseExecutionScope;
 
 /**
  * @author dcs-rjao
@@ -10,11 +10,11 @@ import Util.ScopeType;
  * 19/Mar/2003
  */
 
-public class JavaScopeType2SqlScopeTypeFieldConversion implements FieldConversion {
+public class JavaCurricularCourseExecutionScope2SqlCurricularCourseExecutionScopeFieldConversion implements FieldConversion {
 
 	public Object javaToSql(Object source) {
-		if (source instanceof ScopeType) {
-			ScopeType src = (ScopeType) source;
+		if (source instanceof CurricularCourseExecutionScope) {
+			CurricularCourseExecutionScope src = (CurricularCourseExecutionScope) source;
 			return src.getType();
 		} else {
 			return source;
@@ -24,7 +24,7 @@ public class JavaScopeType2SqlScopeTypeFieldConversion implements FieldConversio
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
-			return new ScopeType(src);
+			return new CurricularCourseExecutionScope(src);
 		} else {
 			return source;
 		}
