@@ -238,9 +238,8 @@
       <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyOptions"
               path="/candidacyOptions"
               validate="true">
-        <forward name="candidaciesLimitReached" path="/candidacyLimitReached.jsp"/>
+        <forward name="candidaciesLimitReached" path="/listAllSeminaries.do"/>
         <forward name="showCandidacyOptions" path="/viewCandidacyOptions.jsp"/>
-		showCandidacyOptions
         <forward name="invalidQueryString" path="naoAutorizado.do"/>
       </action>
 
