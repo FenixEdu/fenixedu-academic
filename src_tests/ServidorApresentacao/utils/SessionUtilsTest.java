@@ -26,14 +26,18 @@ import servletunit.HttpSessionSimulator;
 import servletunit.ServletContextSimulator;
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionYear;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.Departamento;
 import Dominio.DisciplinaDepartamento;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -136,7 +140,7 @@ public class SessionUtilsTest extends TestCase {
 				_degreeInitials,
 				_degreeName,
 				new TipoCurso(TipoCurso.LICENCIATURA));
-		_executionDegree = new CursoExecucao(_schoolYear, _degree);
+		_executionDegree = new CursoExecucao(new ExecutionYear(_schoolYear),new PlanoCurricularCurso("plano1", _degree));
 
 		IPlanoCurricularCurso degreeCurriculum =
 			new PlanoCurricularCurso("Plano 1", _degree);
@@ -170,11 +174,11 @@ public class SessionUtilsTest extends TestCase {
 					"Disciplina " + i,
 					"D" + i,
 					"Programa",
-					_executionDegree,
 					new Double(2.0),
 					new Double(2.0),
 					new Double(0),
-					new Double(0));
+					new Double(0),
+					new ExecutionPeriod("2º Semestre",new ExecutionYear("2002/2003")));
 
 			List list = new ArrayList();
 
@@ -226,8 +230,8 @@ public class SessionUtilsTest extends TestCase {
 		} catch (Exception e) {
 			fail("Executing copyExecutionCourseToInfoExecutionCourse");
 		}
-
-		infoExecutionDegree.setInfoLicenciatura(infoDegree);
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan= new InfoDegreeCurricularPlan("plano1",infoDegree);
+		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		infoExecutionCourse.setInfoLicenciaturaExecucao(infoExecutionDegree);
 	}
 
@@ -346,7 +350,7 @@ public class SessionUtilsTest extends TestCase {
 
 		List executionCourseList2 = null;
 		try {
-			executionCourseList2 = SessionUtils.getExecutionCourses(request, c);
+			executionCourseList2 = SessionUtils.getExecutionCourses(request);
 		} catch (Exception e) {
 			fail("Exception running getExecutionCourses");
 		}
@@ -368,7 +372,7 @@ public class SessionUtilsTest extends TestCase {
 		List infoExecutionCourseList = null;
 		try {
 			infoExecutionCourseList =
-				SessionUtils.getExecutionCourses(request, c);
+				SessionUtils.getExecutionCourses(request);
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 			fail("testGetExecutionCoursesNotYetInSession: Executing getExecutionCourses");
@@ -426,7 +430,7 @@ public class SessionUtilsTest extends TestCase {
 
 		InfoDegree infoDegree = new InfoDegree(_degreeInitials, _degreeName);
 		InfoExecutionDegree infoExecutionDegree =
-			new InfoExecutionDegree(_schoolYear, infoDegree);
+			new InfoExecutionDegree(new InfoDegreeCurricularPlan("plano1",infoDegree),new InfoExecutionYear(_schoolYear));
 		c.setInfoLicenciaturaExecucao(infoExecutionDegree);
 
 		return c;
