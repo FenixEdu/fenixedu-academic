@@ -29,6 +29,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDepartment;
 import DataBeans.InfoDepartmentCourse;
 import DataBeans.InfoDistributedTest;
+import DataBeans.InfoEmployee;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
@@ -40,6 +41,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoExternalPerson;
 import DataBeans.InfoFinalEvaluation;
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoGratuity;
@@ -51,6 +53,9 @@ import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMark;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoMasterDegreeProofVersion;
+import DataBeans.InfoMasterDegreeThesis;
+import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
@@ -288,8 +293,7 @@ public abstract class Cloner {
 	private static void copyObjectProperties(Object destination, Object source) {
 		if (source != null)
 			try {
-				
-			BeanUtils.copyProperties(destination, source);
+				BeanUtils.copyProperties(destination, source);
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException(e);
@@ -2562,4 +2566,233 @@ public abstract class Cloner {
 
 		return infoWebSiteItem;
 	}
+	
+	public static List copyListIPerson2ListInfoPerson(List listIPerson) {
+			List listInfoPerson = new ArrayList();
+
+			Iterator iterListIPerson = listIPerson.iterator();
+
+			while (iterListIPerson.hasNext()) {
+				IPessoa person = (IPessoa) iterListIPerson.next();
+				InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(person);
+				listInfoPerson.add(infoPerson);
+			}
+
+			return listInfoPerson;
+	}
+
+	public static List copyListInfoPerson2ListIPerson(List listInfoPerson) {
+		List listPerson = new ArrayList();
+
+		Iterator iterListInfoPerson = listInfoPerson.iterator();
+
+		while (iterListInfoPerson.hasNext()) {
+			InfoPerson infoPerson = (InfoPerson) iterListInfoPerson.next();
+			IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
+			listPerson.add(person);
+		}
+
+		return listPerson;
+	}
+
+	public static IMasterDegreeThesisDataVersion copyInfoMasterDegreeThesisDataVersion2IMasterDegreeThesisDataVersion(
+			InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion) {
+		IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion();
+
+		copyObjectProperties(masterDegreeThesisDataVersion, infoMasterDegreeThesisDataVersion);
+
+		IMasterDegreeThesis masterDegreeThesis = Cloner.copyInfoMasterDegreeThesis2IMasterDegreeThesis(infoMasterDegreeThesisDataVersion
+				.getInfoMasterDegreeThesis());
+		IEmployee employee = Cloner.copyInfoEmployee2IEmployee(infoMasterDegreeThesisDataVersion.getInfoResponsibleEmployee());
+
+		List externalAssistentGuiders = Cloner.copyListInfoExternalPerson2ListIExternalPerson(infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders());
+		List assistentGuiders = Cloner.copyListInfoTeacher2ListITeacher(infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders());
+		List guiders = Cloner.copyListInfoTeacher2ListITeacher(infoMasterDegreeThesisDataVersion.getInfoGuiders());
+
+		masterDegreeThesisDataVersion.setMasterDegreeThesis(masterDegreeThesis);
+		masterDegreeThesisDataVersion.setResponsibleEmployee(employee);
+		masterDegreeThesisDataVersion.setExternalAssistentGuiders(externalAssistentGuiders);
+		masterDegreeThesisDataVersion.setAssistentGuiders(assistentGuiders);
+		masterDegreeThesisDataVersion.setGuiders(guiders);
+
+		return masterDegreeThesisDataVersion;
+	}
+
+	public static InfoMasterDegreeThesisDataVersion copyIMasterDegreeThesisDataVersion2InfoMasterDegreeThesisDataVersion(
+			IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+
+		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = new InfoMasterDegreeThesisDataVersion();
+
+		copyObjectProperties(infoMasterDegreeThesisDataVersion, masterDegreeThesisDataVersion);
+
+		InfoMasterDegreeThesis infoMasterDegreeThesis = Cloner.copyIMasterDegreeThesis2InfoMasterDegreeThesis(masterDegreeThesisDataVersion
+				.getMasterDegreeThesis());
+		InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(masterDegreeThesisDataVersion.getResponsibleEmployee());
+
+		List infoExternalAssistentGuiders = Cloner.copyListIExternalPerson2ListInfoExternalPerson(masterDegreeThesisDataVersion.getExternalAssistentGuiders());
+		List infoAssistentGuiders = Cloner.copyListITeacher2ListInfoTeacher(masterDegreeThesisDataVersion.getAssistentGuiders());
+		List infoGuiders = Cloner.copyListITeacher2ListInfoTeacher(masterDegreeThesisDataVersion.getGuiders());
+
+		infoMasterDegreeThesisDataVersion.setInfoMasterDegreeThesis(infoMasterDegreeThesis);
+		infoMasterDegreeThesisDataVersion.setInfoResponsibleEmployee(infoEmployee);
+		infoMasterDegreeThesisDataVersion.setInfoExternalAssistentGuiders(infoExternalAssistentGuiders);
+		infoMasterDegreeThesisDataVersion.setInfoAssistentGuiders(infoAssistentGuiders);
+		infoMasterDegreeThesisDataVersion.setInfoGuiders(infoGuiders);
+
+		return infoMasterDegreeThesisDataVersion;
+
+	}
+
+	public static IMasterDegreeProofVersion copyInfoMasterDegreeProofVersion2IMasterDegreeProofVersion(
+			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion) {
+		IMasterDegreeProofVersion masterDegreeProofVersion = new MasterDegreeProofVersion();
+
+		copyObjectProperties(masterDegreeProofVersion, infoMasterDegreeProofVersion);
+
+		IMasterDegreeThesis masterDegreeThesis = Cloner.copyInfoMasterDegreeThesis2IMasterDegreeThesis(infoMasterDegreeProofVersion
+				.getInfoMasterDegreeThesis());
+		IEmployee employee = Cloner.copyInfoEmployee2IEmployee(infoMasterDegreeProofVersion.getInfoResponsibleEmployee());
+
+		masterDegreeProofVersion.setMasterDegreeThesis(masterDegreeThesis);
+		masterDegreeProofVersion.setResponsibleEmployee(employee);
+
+		return masterDegreeProofVersion;
+	}
+
+	public static InfoMasterDegreeProofVersion copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(
+			IMasterDegreeProofVersion masterDegreeProofVersion) {
+		InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = new InfoMasterDegreeProofVersion();
+
+		copyObjectProperties(infoMasterDegreeProofVersion, masterDegreeProofVersion);
+
+		InfoMasterDegreeThesis infoMasterDegreeThesis = Cloner.copyIMasterDegreeThesis2InfoMasterDegreeThesis(masterDegreeProofVersion
+				.getMasterDegreeThesis());
+		InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(masterDegreeProofVersion.getResponsibleEmployee());
+
+		infoMasterDegreeProofVersion.setInfoMasterDegreeThesis(infoMasterDegreeThesis);
+		infoMasterDegreeProofVersion.setInfoResponsibleEmployee(infoEmployee);
+
+		return infoMasterDegreeProofVersion;
+
+	}
+
+	public static InfoMasterDegreeThesis copyIMasterDegreeThesis2InfoMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) {
+		InfoMasterDegreeThesis infoMasterDegreeThesis = new InfoMasterDegreeThesis();
+		InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(masterDegreeThesis
+				.getStudentCurricularPlan());
+		copyObjectProperties(infoMasterDegreeThesis, masterDegreeThesis);
+		infoMasterDegreeThesis.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+
+		return infoMasterDegreeThesis;
+	}
+
+	public static IMasterDegreeThesis copyInfoMasterDegreeThesis2IMasterDegreeThesis(InfoMasterDegreeThesis infoMasterDegreeThesis) {
+		IMasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis();
+		IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoMasterDegreeThesis
+				.getInfoStudentCurricularPlan());
+		copyObjectProperties(masterDegreeThesis, infoMasterDegreeThesis);
+		masterDegreeThesis.setStudentCurricularPlan(studentCurricularPlan);
+
+		return masterDegreeThesis;
+	}
+
+	public static InfoEmployee copyIEmployee2InfoEmployee(IEmployee employee) {
+		InfoEmployee infoEmployee = new InfoEmployee();
+		InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(employee.getPerson());
+		infoEmployee.setIdInternal(employee.getIdInternal());
+		infoEmployee.setPerson(infoPerson);
+
+		return infoEmployee;
+	}
+
+	public static IEmployee copyInfoEmployee2IEmployee(InfoEmployee infoEmployee) {
+		IEmployee employee = new Employee();
+		IPessoa person = Cloner.copyInfoPerson2IPerson(infoEmployee.getPerson());
+		copyObjectProperties(employee, infoEmployee);
+		employee.setPerson(person);
+
+		return employee;
+	}
+
+	public static IExternalPerson copyInfoExternalPerson2IExternalPerson(InfoExternalPerson infoExternalPerson) {
+		IExternalPerson externalPerson = new ExternalPerson();
+		copyObjectProperties(externalPerson, infoExternalPerson);
+		IPessoa person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
+		externalPerson.setPerson(person);
+
+		return externalPerson;
+	}
+
+	public static InfoExternalPerson copyIExternalPerson2InfoExternalPerson(IExternalPerson externalPerson) {
+		InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+		copyObjectProperties(infoExternalPerson, externalPerson);
+		InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(externalPerson.getPerson());
+		infoExternalPerson.setInfoPerson(infoPerson);
+
+		return infoExternalPerson;
+	}
+	
+	public static List copyListIExternalPerson2ListInfoExternalPerson(List listIExternalPerson) {
+		List listInfoExternalPersons = new ArrayList();
+
+		Iterator iterListIExternalPerson = listIExternalPerson.iterator();
+
+		while (iterListIExternalPerson.hasNext()) {
+			IExternalPerson externalPerson = (IExternalPerson) iterListIExternalPerson.next();
+			InfoExternalPerson infoExternalPerson = Cloner.copyIExternalPerson2InfoExternalPerson(externalPerson);
+			listInfoExternalPersons.add(infoExternalPerson);
+		}
+
+		return listInfoExternalPersons;
+	}
+	
+	public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson) {
+		List listExternalPersons = new ArrayList();
+
+		Iterator iterListInfoExternalPerson = listInfoExternalPerson.iterator();
+
+		while (iterListInfoExternalPerson.hasNext()) {
+			InfoExternalPerson infoExternalPerson = (InfoExternalPerson) iterListInfoExternalPerson.next();
+			IExternalPerson externalPerson = Cloner.copyInfoExternalPerson2IExternalPerson(infoExternalPerson);
+			listExternalPersons.add(externalPerson);
+		}
+
+		return listExternalPersons;
+	}
+	
+	public static List copyListITeacher2ListInfoTeacher(List listITeacher) {
+		List listInfoTeacher = new ArrayList();
+
+		Iterator iterListITeachers = listITeacher.iterator();
+
+		while (iterListITeachers.hasNext()) {
+			ITeacher teacher = (ITeacher) iterListITeachers.next();
+			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+			listInfoTeacher.add(infoTeacher);
+		}
+
+		return listInfoTeacher;
+	}
+	
+	public static List copyListInfoTeacher2ListITeacher(List listInfoTeacher) {
+		List listITeacher = new ArrayList();
+
+		Iterator iterListInfoTeacher = listInfoTeacher.iterator();
+		
+		while (iterListInfoTeacher.hasNext()) {
+			InfoTeacher infoTeacher = (InfoTeacher) iterListInfoTeacher.next();
+			ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+			listITeacher.add(teacher);
+		}
+
+		return listITeacher;
+	}
+
+	
+	
+	
+
+	
+	
+
 }
