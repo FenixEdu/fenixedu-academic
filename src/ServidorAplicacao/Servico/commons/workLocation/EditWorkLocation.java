@@ -48,12 +48,12 @@ public class EditWorkLocation implements IService
 
             if (oldWorkLocation == null)
             {
-                throw new NonExistingServiceException("error.exception.commons.workLocationNotFound");
+                throw new NonExistingServiceException("error.exception.commons.workLocation.workLocationNotFound");
             }
 
             if ((storedWorkLocation != null) && (!storedWorkLocation.equals(oldWorkLocation)))
             {
-                throw new ExistingServiceException("error.exception.commons.workLocationAlreadyExists");
+                throw new ExistingServiceException("error.exception.commons.workLocation.workLocationAlreadyExists");
             }
 
             oldWorkLocation.setName(newWorkLocationName);

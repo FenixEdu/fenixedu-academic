@@ -45,7 +45,7 @@ public class InsertWorkLocation implements IService
 
             if (storedWorkLocation != null)
             {
-                throw new ExistingServiceException("error.exception.commons.workLocationAlreadyExists");
+                throw new ExistingServiceException("error.exception.commons.workLocation.workLocationAlreadyExists");
             }
 
             sp.getIPersistentWorkLocation().simpleLockWrite(workLocation);
