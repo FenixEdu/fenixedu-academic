@@ -1,0 +1,12 @@
+O intuito desta alteração é:
+	adicionar campos
+	eliminar o campo year
+	adicionar o campo date
+	converter a informação do campo year para o campo date
+	alterar o unique da tabela (passando do campo year para o campo date)
+	
+Passos a seguir:
+
+	Correr o ficheiro updateQualificationBeforeScript.sql (dentro do mysql) - Adiciona campos e remove o unique
+	Correr o script updateQualification.sql (prompt>mysql -uroot fenix < updateQualification.sql | mysql fenix) - passa os dados do campo year para o campo date
+	Correr o ficheiro updateQualification.sql (dentro do mysql) - Remove o campo year e adiciona um unique
