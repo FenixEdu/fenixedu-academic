@@ -279,9 +279,8 @@ relation ExamExecutionCourseExam {
 }
 
 relation WrittenTestRoomOccupation {
-	domain.WrittenTest playsRole writtenTests {
-		multiplicity 0..1;
-	}
+	domain.WrittenTest playsRole writtenTests;
+	
 	domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
@@ -325,9 +324,8 @@ relation LessonExecutionPeriod {
 }
 
 relation WrittenEvaluationRoomOccupation {
-	domain.WrittenEvaluation playsRole writtenEvaluation {
-		multiplicity 0..1;
-	}
+	domain.WrittenEvaluation playsRole writtenEvaluation;
+	
 	domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
@@ -485,9 +483,8 @@ relation OnlineTestExecutionCourse {
 }
 
 relation LessonRoomOccupation {
-	domain.Lesson playsRole lesson {
-		multiplicity 0..1;
-	}
+	domain.Lesson playsRole lesson;
+	
 	domain.RoomOccupation playsRole roomOccupation;
 }
 
@@ -690,9 +687,8 @@ relation EnrolmentExecutionPeriod {
 }
 
 relation ExamRoomOccupation {
-	domain.Exam playsRole exam {
-		multiplicity 0..1;
-	}
+	domain.Exam playsRole exam;
+	
 	domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
