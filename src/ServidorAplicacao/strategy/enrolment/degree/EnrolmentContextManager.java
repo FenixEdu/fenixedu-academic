@@ -22,7 +22,6 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
