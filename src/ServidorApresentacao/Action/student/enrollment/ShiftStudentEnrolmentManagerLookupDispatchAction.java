@@ -230,9 +230,9 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 
 		HashMap shiftsMap = buildDataToForm(infoClassEnrollmentDetails);
 		enrollmentForm.set("shiftMap", shiftsMap);
-		/* :AQUI: acrescentei este set */
 		enrollmentForm.set("studentId", infoClassEnrollmentDetails.getInfoStudent().getIdInternal());
-
+		enrollmentForm.set("classId", ((InfoClass) infoClassEnrollmentDetails.getInfoClassList().get(0)).getIdInternal());
+	
 		order(infoClassEnrollmentDetails);
 
 		request.setAttribute("infoClassEnrollmentDetails", infoClassEnrollmentDetails);
