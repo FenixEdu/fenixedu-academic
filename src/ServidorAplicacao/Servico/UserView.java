@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico;
 
 import java.util.Collection;
-import java.util.Set;
 
 import ServidorAplicacao.IUserView;
 
@@ -10,29 +9,23 @@ import ServidorAplicacao.IUserView;
  */
 public class UserView implements IUserView {
 	private String utilizador;
-	private Set _privilegios;
 	private Collection roles;
 
-	public UserView(String utilizador, Set privilegios) {
+	public UserView(String utilizador, Collection roles) {
 		setUtilizador(utilizador);
-		setPrivilegios(privilegios);
+		this.roles = roles;
 	}
 
 	public String getUtilizador() {
 		return utilizador;
 	}
 
-	public Set getPrivilegios() {
-		return _privilegios;
-	}
 
 	public void setUtilizador(String utilizador) {
 		this.utilizador = utilizador;
 	}
 
-	public void setPrivilegios(Set privilegios) {
-		_privilegios = privilegios;
-	}
+
 	/**
 	 * @return Collection
 	 */
