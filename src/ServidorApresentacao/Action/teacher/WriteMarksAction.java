@@ -47,6 +47,7 @@ public class WriteMarksAction extends DispatchAction {
 		List marksList = null;
 		
 		//TODO: transform form into list with student's number and students's mark
+		
 		Integer objectCode = getObjectCode(request);
 		Integer examCode = getExamCode(request);
 
@@ -55,11 +56,13 @@ public class WriteMarksAction extends DispatchAction {
 		Object[] args = { objectCode, examCode, marksList };
 		GestorServicos manager = GestorServicos.manager();
 		TeacherAdministrationSiteView siteView = null;
+		
 		try {
 			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertExamMarks", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		
 		//		check for errors in service
 		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
 		if (infoSiteMarks.getMarksListErrors() != null && infoSiteMarks.getMarksListErrors().size() > 0) {
@@ -117,5 +120,4 @@ public class WriteMarksAction extends DispatchAction {
 
 		return degreeCurricularPlanStrategy.checkMark(infoMark.getMark());
 	}
-
 }

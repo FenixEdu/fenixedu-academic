@@ -12,25 +12,12 @@ import DataBeans.InfoMark;
 import DataBeans.InfoRole;
 import DataBeans.InfoSiteMarks;
 import DataBeans.InfoStudent;
-import DataBeans.InfoTeacher;
 import DataBeans.TeacherAdministrationSiteView;
-import DataBeans.util.Cloner;
-import Dominio.Credits;
-import Dominio.ICredits;
-import Dominio.IExecutionPeriod;
-import Dominio.ITeacher;
-import Dominio.Teacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCreditsTeacher;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 
 /**
@@ -49,14 +36,14 @@ public class InsertExamMarksTest extends TestCaseServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "InsertExamMarksTest";
+		return "InsertExamMarks";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseServices#getDataSetFilePath()
 	 */
 	protected String getDataSetFilePath() {
-		return "etc/testDataSetForTeacherCredits.xml";
+		return "etc/testDataSetForMarksList.xml";
 	}
 
 	public static void main(java.lang.String[] args) {
