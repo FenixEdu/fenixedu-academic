@@ -25,7 +25,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class ManageGrantOwnerAction extends FenixDispatchAction {
     public ActionForward prepareManageGrantOwnerForm(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         try {
             Integer idInternal = null;
             if (verifyParameterInRequest(request, "idInternal")) {
@@ -50,7 +50,7 @@ public class ManageGrantOwnerAction extends FenixDispatchAction {
 
             request.setAttribute("infoGrantOwner", infoGrantOwner);
             return mapping.findForward("manage-grant-owner");
-            
+
         } catch (Exception e) {
             return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-owner", null);
         }

@@ -150,4 +150,16 @@ public class GrantContract extends DomainObject implements IGrantContract {
     public void setDateAcceptTerm(Date dateAcceptTerm) {
         this.dateAcceptTerm = dateAcceptTerm;
     }
+    /**
+     * @return Returns the contractRegimes.
+     */
+    public List getContractRegimes() {
+        return contractRegimes;
+    }
+    /**
+     * @param contractRegimes The contractRegimes to set.
+     */
+    public void setContractRegimes(List contractRegimes) {
+        this.contractRegimes = contractRegimes;
+    }
 }

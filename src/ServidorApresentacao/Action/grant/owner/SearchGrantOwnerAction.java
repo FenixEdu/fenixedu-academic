@@ -32,12 +32,12 @@ public class SearchGrantOwnerAction extends SearchAction {
         String idNumber = (String) searchGrantOwnerForm.get("idNumber");
         Integer idType = (Integer) searchGrantOwnerForm.get("idType");
         Integer startIndex = (Integer) searchGrantOwnerForm.get("startIndex");
-        String justGrantOwner = (String)searchGrantOwnerForm.get("justGrantOwner");
-        
+        String justGrantOwner = (String) searchGrantOwnerForm.get("justGrantOwner");
+
         Boolean onlyGrantOwner = new Boolean(false);
         if (justGrantOwner.equals("on")) {
             onlyGrantOwner = new Boolean(true);
-        } 
+        }
         request.setAttribute("justGrantOwner", justGrantOwner);
         request.setAttribute("name", name);
 
@@ -48,25 +48,26 @@ public class SearchGrantOwnerAction extends SearchAction {
     protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request,
             Collection result) throws Exception {
 
-        if(result != null && result.size() == 3) {
+        if (result != null && result.size() == 3) {
             Iterator iterator = result.iterator();
             Object object0 = iterator.next();
-            if(object0 instanceof Integer) {
-	            //Lets set up the span
-	            Integer numberOfElementsOfSearch = (Integer)object0;
-	            Integer startIndex = (Integer) iterator.next();
-	            List infoListGrantOwner = (List) iterator.next();
+            if (object0 instanceof Integer) {
+                //Lets set up the span
+                Integer numberOfElementsOfSearch = (Integer) object0;
+                Integer startIndex = (Integer) iterator.next();
+                List infoListGrantOwner = (List) iterator.next();
 
-	            if(hasBeforeSpan(startIndex, numberOfElementsOfSearch)) {
-	                request.setAttribute("beforeSpan", getBeforeSpan(startIndex, numberOfElementsOfSearch));
-	            }
-	            if(hasNextSpan(startIndex, numberOfElementsOfSearch)) {
-	                request.setAttribute("nextSpan", getNextSpan(startIndex, numberOfElementsOfSearch));
-	            }
-	            result = infoListGrantOwner;
-	            request.setAttribute("numberOfTotalElementsInSearch",numberOfElementsOfSearch);
-	            request.setAttribute("actualPage", getActualPage(startIndex));
-	            request.setAttribute("numberOfPages", getTotalNumberOfPages(numberOfElementsOfSearch));
+                if (hasBeforeSpan(startIndex, numberOfElementsOfSearch)) {
+                    request.setAttribute("beforeSpan", getBeforeSpan(startIndex,
+                            numberOfElementsOfSearch));
+                }
+                if (hasNextSpan(startIndex, numberOfElementsOfSearch)) {
+                    request.setAttribute("nextSpan", getNextSpan(startIndex, numberOfElementsOfSearch));
+                }
+                result = infoListGrantOwner;
+                request.setAttribute("numberOfTotalElementsInSearch", numberOfElementsOfSearch);
+                request.setAttribute("actualPage", getActualPage(startIndex));
+                request.setAttribute("numberOfPages", getTotalNumberOfPages(numberOfElementsOfSearch));
             }
         }
         return result;
@@ -77,33 +78,41 @@ public class SearchGrantOwnerAction extends SearchAction {
         List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
         request.setAttribute("documentTypeList", documentTypeList);
     }
-    
+
     private boolean hasNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
-        
-        if((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1) < numberOfElementsInResult.intValue()) {
+
+        if ((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1) < numberOfElementsInResult
+                .intValue()) {
             return true;
-        }            
+        }
         return false;
     }
+
     private boolean hasBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
-        if((startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() + 1) > 0) {
+        if ((startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() + 1) > 0) {
             return true;
-        }            
+        }
         return false;
     }
-    
+
     private Integer getNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
-        
-        return new Integer(startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
+
+        return new Integer(startIndex.intValue()
+                + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
     }
+
     private Integer getBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
-        return new Integer(startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
+        return new Integer(startIndex.intValue()
+                - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
     }
-    
+
     private Integer getActualPage(Integer startIndex) {
-        return new Integer((startIndex.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue()) + 1);
+        return new Integer((startIndex.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN
+                .intValue()) + 1);
     }
+
     private Integer getTotalNumberOfPages(Integer numberOfElements) {
-        return new Integer((numberOfElements.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue()) +1 );
+        return new Integer((numberOfElements.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN
+                .intValue()) + 1);
     }
 }

@@ -37,7 +37,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
      */
     public ActionForward prepareEditGrantPartForm(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         Integer idGrantPart = null;
         Integer loaddb = null;
         if (verifyParameterInRequest(request, "loaddb")) {
@@ -50,7 +50,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm grantPartForm = (DynaValidatorForm) form;
 
-        if (loaddb != null && loaddb.equals(new Integer(1))) { 
+        if (loaddb != null && loaddb.equals(new Integer(1))) {
             //load contents from database
             if (idGrantPart != null) { //Editing a grant part
                 try {
@@ -91,7 +91,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
      */
     public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        
+
         DynaValidatorForm editGrantPartForm = (DynaValidatorForm) form;
         InfoGrantPart infoGrantPart = null;
         IUserView userView = SessionUtils.getUserView(request);
@@ -153,7 +153,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
             ServiceUtils.executeService(userView, "EditGrantPart", args);
 
             request.setAttribute("idSubsidy", editGrantPartForm.get("grantSubsidyId"));
-            
+
         } catch (InvalidPartResponsibleTeacherException e) {
             return setError(request, mapping, "errors.grant.part.invalidPartTeacher", null,
                     infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber());
@@ -182,7 +182,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 
             request.setAttribute("idSubsidy", idSubsidy);
             return mapping.findForward("manage-grant-part");
-            
+
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.part.delete", null, null);
         } catch (Exception e) {

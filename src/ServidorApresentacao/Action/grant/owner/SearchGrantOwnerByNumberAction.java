@@ -35,14 +35,14 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
             Object[] args = { null, null, null, grantOwnerNumber, null, null };
             IUserView userView = SessionUtils.getUserView(request);
             infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner", args);
-            
+
         } catch (Exception e) {
             return setError(request, mapping, "errors.grant.unrecoverable", "search-unSuccesfull", null);
         }
 
-        if (infoGrantOwnerList.isEmpty()) 
-        {
-            return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull",grantOwnerNumber);
+        if (infoGrantOwnerList.isEmpty()) {
+            return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull",
+                    grantOwnerNumber);
         }
 
         request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);

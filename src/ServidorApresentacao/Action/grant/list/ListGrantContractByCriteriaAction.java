@@ -35,9 +35,9 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         DynaValidatorForm listForm = (DynaValidatorForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
-		request.setAttribute("grantTypeList", createGrantTypeList(userView));
-        
-        listForm.set("filterType", new Integer(1)); 
+        request.setAttribute("grantTypeList", createGrantTypeList(userView));
+
+        listForm.set("filterType", new Integer(1));
         return mapping.findForward("select-criteria");
     }
 
@@ -162,7 +162,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             form.set("beginContract", sdf.format(infoSpanByCriteriaListGrantOwner.getBeginContract()));
         if (infoSpanByCriteriaListGrantOwner.getEndContract() != null)
             form.set("endContract", sdf.format(infoSpanByCriteriaListGrantOwner.getEndContract()));
-        if(infoSpanByCriteriaListGrantOwner.getGrantTypeId() != null) 
+        if (infoSpanByCriteriaListGrantOwner.getGrantTypeId() != null)
             form.set("grantTypeId", infoSpanByCriteriaListGrantOwner.getGrantTypeId());
         else
             form.set("grantTypeId", new Integer(0));
@@ -195,8 +195,8 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         if (verifyStringParameterInForm(form, "endContract")) {
             infoSpanByCriteriaListGrantOwner.setEndContract(sdf.parse((String) form.get("endContract")));
         }
-        Integer grantTypeId = (Integer)form.get("grantTypeId");
-        if(!grantTypeId.equals(new Integer(0))) {
+        Integer grantTypeId = (Integer) form.get("grantTypeId");
+        if (!grantTypeId.equals(new Integer(0))) {
             infoSpanByCriteriaListGrantOwner.setGrantTypeId(grantTypeId);
         }
         return infoSpanByCriteriaListGrantOwner;
@@ -230,24 +230,24 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             infoSpanByCriteriaListGrantOwner.setEndContract(sdf.parse(request
                     .getParameter("endContract")));
         }
-        
+
         Integer grantType = new Integer(request.getParameter("grantTypeId"));
-        if(!grantType.equals(new Integer(0))) {
+        if (!grantType.equals(new Integer(0))) {
             infoSpanByCriteriaListGrantOwner.setGrantTypeId(grantType);
         }
         return infoSpanByCriteriaListGrantOwner;
     }
-    
-    private List createGrantTypeList(IUserView userView) throws FenixServiceException{
+
+    private List createGrantTypeList(IUserView userView) throws FenixServiceException {
         //Read grant types for the contract
-		Object[] args = { };
-		List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);			
-		//Adding a select country line to the list (presentation reasons)
-		GrantType grantType = new GrantType();
-		grantType.setIdInternal(null);
-		grantType.setSigla("[Escolha um tipo de bolsa]");
-		grantTypeList.add(0, grantType);
-		return grantTypeList;
+        Object[] args = {};
+        List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
+        //Adding a select country line to the list (presentation reasons)
+        GrantType grantType = new GrantType();
+        grantType.setIdInternal(null);
+        grantType.setSigla("[Escolha um tipo de bolsa]");
+        grantTypeList.add(0, grantType);
+        return grantTypeList;
     }
 
 }

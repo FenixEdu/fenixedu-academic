@@ -30,7 +30,7 @@ public class ManageGrantContractRegimeAction extends FenixDispatchAction {
     public ActionForward prepareManageGrantContractRegime(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
-            
+
             Integer idContract = null;
             try {
                 if (request.getAttribute("idContract") != null) {
@@ -55,15 +55,16 @@ public class ManageGrantContractRegimeAction extends FenixDispatchAction {
             request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
             Object[] argsActiveContractRegime = { idContract, InfoGrantContractRegime.getActiveState() };
-            Object[] argsNotActiveContractRegime = { idContract, InfoGrantContractRegime.getInactiveState() };
+            Object[] argsNotActiveContractRegime = { idContract,
+                    InfoGrantContractRegime.getInactiveState() };
             List infoGrantActiveContractRegimeList = (List) ServiceUtils.executeService(userView,
                     "ReadGrantContractRegimeByContractAndState", argsActiveContractRegime);
             List infoGrantNotActiveContractRegimeList = (List) ServiceUtils.executeService(userView,
                     "ReadGrantContractRegimeByContractAndState", argsNotActiveContractRegime);
 
             //If they exist put them on request
-            if (infoGrantActiveContractRegimeList != null && 
-                    !infoGrantActiveContractRegimeList.isEmpty()) {
+            if (infoGrantActiveContractRegimeList != null
+                    && !infoGrantActiveContractRegimeList.isEmpty()) {
                 request.setAttribute("infoGrantActiveContractRegimeList",
                         infoGrantActiveContractRegimeList);
             }
@@ -79,7 +80,7 @@ public class ManageGrantContractRegimeAction extends FenixDispatchAction {
             request.setAttribute("grantContractNumber", infoGrantContract.getContractNumber());
 
             return mapping.findForward("manage-grant-contract-regime");
-            
+
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.unrecoverable",
                     "manage-grant-contract-regime", null);

@@ -108,7 +108,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
             request.setAttribute("idContract", request.getParameter("idContract"));
         }
         return mapping.findForward("edit-grant-contract-regime");
-        
+
     }
 
     /*
@@ -118,11 +118,12 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         try {
             InfoGrantContractRegime infoGrantContractRegime = populateInfoFromForm((DynaValidatorForm) form);
-            
-            if(infoGrantContractRegime.getDateBeginContract().after(infoGrantContractRegime.getDateEndContract())) {
+
+            if (infoGrantContractRegime.getDateBeginContract().after(
+                    infoGrantContractRegime.getDateEndContract())) {
                 return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
             }
-            
+
             IUserView userView = SessionUtils.getUserView(request);
 
             //Verify the teacher

@@ -66,7 +66,7 @@ public class ManageGrantPartAction extends FenixDispatchAction {
             //Presenting adittional information
             request.setAttribute("subsidyValue", infoGrantSubsidy.getValue());
             request.setAttribute("subsidyTotalCost", infoGrantSubsidy.getTotalCost());
-            
+
             return mapping.findForward("manage-grant-part");
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-part", null);

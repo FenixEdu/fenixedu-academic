@@ -140,4 +140,16 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
     public void setKeyPerson(Integer personKey) {
         this.keyPerson = personKey;
     }
+    /**
+     * @return Returns the grantContracts.
+     */
+    public List getGrantContracts() {
+        return grantContracts;
+    }
+    /**
+     * @param grantContracts The grantContracts to set.
+     */
+    public void setGrantContracts(List grantContracts) {
+        this.grantContracts = grantContracts;
+    }
 }

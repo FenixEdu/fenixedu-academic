@@ -24,30 +24,21 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Barbosa
  * @author Pica
  */
-public class ManageGrantProjectAction extends FenixDispatchAction
-{
+public class ManageGrantProjectAction extends FenixDispatchAction {
 
-    public ActionForward prepareManageGrantProject(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-        try
-        {
+    public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
             Object[] args = { InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass() };
             IUserView userView = SessionUtils.getUserView(request);
-            List infoGrantProjectList =
-                (List) ServiceUtils.executeService(userView, "ReadAllGrantPaymentEntitiesByClassName", args);
+            List infoGrantProjectList = (List) ServiceUtils.executeService(userView,
+                    "ReadAllGrantPaymentEntitiesByClassName", args);
 
             if (infoGrantProjectList != null && !infoGrantProjectList.isEmpty())
                 request.setAttribute("infoGrantProjectList", infoGrantProjectList);
-            
+
             return mapping.findForward("manage-grant-project");
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-project", null);
         }
     }
