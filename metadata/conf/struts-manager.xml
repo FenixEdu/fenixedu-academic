@@ -24,7 +24,16 @@
 				<form-property name="degreeId" type="java.lang.Integer" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
-
+		
+		<form-bean name="degreeCurricularPlanForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+				<form-property name="degreeCurricularPlanId" type="java.lang.Integer" />
+				<form-property name="degreeId" type="java.lang.Integer" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>  
+		
 		<form-bean name="readForm"
 					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 					dynamic="true">        
@@ -116,7 +125,7 @@
       <action 
       		 path="/deleteDegrees"
       		 name="deleteForm"
-      		 input="/readDegreesInput.do"
+      		 input="/readDegreeInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
       	  <forward name="readDegrees" path="/readDegrees.do"/>      	      
@@ -146,8 +155,8 @@
       <!-- Action for deleting degreeCurricularPlans --> 
       <action 
       		 path="/deleteDegreeCurricularPlans"
-      		 name="deleteForm"
-      		 input="/readDegreesInput.do"
+      		 name="degreeCurricularPlanForm"
+      		 input="/deleteDegreeCurricularPlansInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreeCurricularPlansAction">
       	  <forward name="readDegree" path="/readDegree.do"/>      	      
@@ -168,6 +177,12 @@
      		scope="request"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.read-degrees"/>      	      
+      </action>
+      
+      <action path="/readDegreeInput"
+     		scope="request"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.read-degree"/>      	      
       </action>
       
       <action path="/mainPageInput"

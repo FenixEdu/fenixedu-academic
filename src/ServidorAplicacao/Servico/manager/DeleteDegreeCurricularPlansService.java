@@ -39,7 +39,7 @@ public class DeleteDegreeCurricularPlansService implements IServico {
 	public List run(List degreeCurricularPlansIds) throws FenixServiceException {
 
 		try {
-
+System.out.println("INICIO DO SERVICO");
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
 
@@ -59,7 +59,7 @@ public class DeleteDegreeCurricularPlansService implements IServico {
 				if(result.equals(new Boolean(false)))				
 					undeletedDegreeCurricularPlansNames.add((String) degreeCurricularPlan.getName());	
 			}
-			
+System.out.println("FIM DO SERVICO" + undeletedDegreeCurricularPlansNames.size());		
 			return undeletedDegreeCurricularPlansNames;
 
 		} catch (ExcepcaoPersistencia e) {

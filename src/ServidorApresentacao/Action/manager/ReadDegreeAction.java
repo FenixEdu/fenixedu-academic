@@ -45,7 +45,11 @@ public class ReadDegreeAction extends FenixAction  {
 						
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
+					
+				// Caso em que vimos do readDegrees:
 				Integer degreeId = (Integer) readDegreeForm.get("degreeId");
+System.out.println("ACCAO READ INICIO, DEGREE ID = " + degreeId);				
+					
 				Object args[] = { degreeId };
 				
 				GestorServicos manager = GestorServicos.manager();
@@ -77,10 +81,9 @@ public class ReadDegreeAction extends FenixAction  {
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
-				
+System.out.println("ACCAO READ FIM, DEGREE ID = " + degreeId);				
 				Collections.sort(degreeCurricularPlans);
-				System.out.println("ANTES----DEGREEIDaaaaaaaaaaaaaaaaaaaAA"+degreeId);
-				request.setAttribute("degreeId",degreeId);
+				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("infoDegree", degree);					
 				request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST, degreeCurricularPlans);
 				return mapping.findForward("viewDegree");

@@ -8,28 +8,28 @@
 <table>
 	
 <tr>
-	<logic:present name="infoDegree" >
+	<logic:present name="infoDegree">
 	<td>
-		<h3><bean:message key="label.manager.degree.editing" /></h3>
+		<h3><bean:message key="label.manager.degree.editing"/></h3>
 	</td>
 	<td>
-		<h2><b><bean:write name="infoDegree" property="sigla" /> - </b></h2>
+		<h2><b><bean:write name="infoDegree" property="sigla"/> - </b></h2>
 	</td>
 	<td>
-		<h2><bean:write name="infoDegree" property="nome" /></h2>
+		<h2><bean:write name="infoDegree" property="nome"/></h2>
 	</td>
 	</logic:present>		
 </tr>
 </table>
 
-		<h3><bean:message key="label.manager.degreeCurricularPlans" /></h3>
+		<h3><bean:message key="label.manager.degreeCurricularPlans"/></h3>
 
 <ul style="list-style-type: square;">
 	<li><html:link page="/editDegree.do?method=prepareEdit"  paramId="degreeId" paramName="degreeId"><bean:message key="label.manager.edit.degree"/></html:link></li>
 </ul>
 
 <logic:present name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>" scope="request">
-<logic:notEmpty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>" >
+<logic:notEmpty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">
 	
 <ul style="list-style-type: square;">
 	<li><html:link page="/insertDegreeCurricularPlan.do?method=prepareInsert"><bean:message key="label.manager.insert.degreeCurricularPlan"/></html:link></li>			
@@ -37,7 +37,7 @@
 
 <br>
 	
-<html:form action="/deleteDegrees" method="get">
+<html:form action="/deleteDegreeCurricularPlans" method="get">
 <table width="50%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header">
