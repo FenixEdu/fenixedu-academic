@@ -43,17 +43,17 @@ public class InsertDistributedTestTest extends
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser() {
-        String[] args = { "D3673", "pass", getApplication()};
+        String[] args = { "D3673", "pass", getApplication() };
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
     protected String[] getNotAuthenticatedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
@@ -84,13 +84,13 @@ public class InsertDistributedTestTest extends
         CorrectionAvailability correctionAvailability = new CorrectionAvailability(
                 1);
         Boolean imsFeedback = new Boolean(true);
-        String[] selected = { new String("2516")};
+        String[] selected = { new String("2516") };
         Boolean shifts = new Boolean(false);
         String path = new String(
                 "e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
         Object[] args = { executionCourseId, testId, info, beginDate,
                 beginHour, endDate, endHour, testType, correctionAvailability,
-                imsFeedback, selected, shifts, path};
+                imsFeedback, selected, shifts, path };
         return args;
     }
 
@@ -109,9 +109,10 @@ public class InsertDistributedTestTest extends
                     .defaultPersistenceBroker();
 
             Criteria criteria = new Criteria();
-            criteria.addOrderBy("idInternal", false);
+
             Query queryCriteria = new QueryByCriteria(DistributedTest.class,
                     criteria);
+            ((QueryByCriteria) queryCriteria).addOrderBy("idInternal", false);
             IDistributedTest distributedTest = (IDistributedTest) broker
                     .getObjectByQuery(queryCriteria);
             broker.close();

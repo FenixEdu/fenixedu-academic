@@ -2,7 +2,7 @@
 Release 2004-05-26
 ---------------------------------------------------------------------
  
-NEW FEATURES:
+NEW FEATURES: 
 =============
 - [on 01-06-2004 by Fernanda Quitério] public portal - added warning about changes in LEIC degree curricular plan
 - [on 01-06-2004 by Fernanda Quitério] public portal - changed label in IST main page from 'Instituto' to 'Início'

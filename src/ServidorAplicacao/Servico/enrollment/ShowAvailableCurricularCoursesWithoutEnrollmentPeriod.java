@@ -113,7 +113,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                         .newInfoFromDomain(studentCurricularPlan));
         infoStudentEnrolmentContext
                 .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                        .newInfoFromDomain(null));
+                        .newInfoFromDomain(getCurrentExecutionPeriod()));
     }
 
     /**
