@@ -9,7 +9,7 @@
 <%@ page import="DataBeans.InfoMasterDegreeCandidate" %>
 <%@ page import="Util.SituationName" %>
 
-
+<p>hello!</p>
 <span class="error"><html:errors/></span>
 	<br />
 	<h2>Ordenação de Candidatos Suplentes</h2>

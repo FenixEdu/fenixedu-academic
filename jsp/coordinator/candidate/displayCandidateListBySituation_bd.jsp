@@ -6,17 +6,14 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-
+<br />
 <span class="error"><html:errors/></span>
-	<br />
 	<bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="request" />
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
 </logic:present>
-
-	<h2><bean:message key="label.numerusClausus" /> <bean:write name="numerusClausus" /></h2>
-
+	<p><bean:message key="label.numerusClausus" /> <span class="emphasis"><bean:write name="numerusClausus" /></span></p>
     <logic:present name="candidateList">
             <bean:message key="title.masterDegree.administrativeOffice.listCandidates" />
         <br /><br />

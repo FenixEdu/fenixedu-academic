@@ -7,31 +7,17 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="Util.Data" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
-
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    	<tr align="center">
-    		<td bgcolor="#FFFFFF" class="infoselected"><p>
-    			<strong><jsp:include page="../context.jsp"/></strong>
-             </td>
-        </tr>
-    </table>
-
-
-    <br> <br>
-    <span class="error"><html:errors/></span>
-       
-    <span class="error"><html:errors/></span>
-    <bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />
-        
+<jsp:include page="../context.jsp"/>
+<p><span class="error"><html:errors/></span></p>
+<p>
+    <bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />        
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
 	<bean:define id="link">
-		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>page=0<%= "&" %>candidatePosition=
+		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>page=0<%= "&" %>candidatePosition= 
 	</bean:define>
-    
-    <%= ((List) candidateList).size()%> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
+    <span class="emphasis"><%= ((List) candidateList).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
     <% if (((List) candidateList).size() != 0) { %>
-    
+</p>    
 	    <table>
     		<tr>
 	    		<td class="listClasses-header"><bean:message key="label.name" /></td>
@@ -39,8 +25,6 @@
 				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></td>
 				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
 			</tr>
-    		
-        
     		<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
     			<bean:define id="candidateLink">
     				<bean:write name="link"/><bean:write name="indexCandidate"/>

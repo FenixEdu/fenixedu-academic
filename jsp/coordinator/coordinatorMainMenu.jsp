@@ -6,19 +6,21 @@
 <%@ page import="Util.TipoCurso" %>
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
-
 	<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
-		<html:link page="/candidateSection.do"><bean:message key="link.coordinator.candidate"/></html:link>
-		<br/>
-		<html:link page="/studentSection.do"><bean:message key="link.coordinator.student"/></html:link>
-		<br/>
+		<p><strong>&raquo; <bean:message key="link.coordinator.candidate"/></html:link></strong>
+		<ul>
+	        <li><html:link page="/candidateOperation.do?method=getCandidates&action=visualize&page=0"><bean:message key="link.coordinator.visualizeCandidate" /></html:link></li>
+	        <li><html:link page="/prepareCandidateApproval.do?method=chooseExecutionDegree&page=0"><bean:message key="link.coordinator.approveCandidates" /></html:link></li>
+			<li><html:link page="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link></li>
+		</ul></p>
+		<p><strong>&raquo; <bean:message key="link.coordinator.student"/></strong>
+		<ul>
+			<li><html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0"><bean:message key="link.coordinator.studentListByDegree" /></html:link><br></li>
+			<li><html:link page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0"><bean:message key="link.studentListByCourse" /></html:link></li>
+		</ul></p>	
 	</logic:equal>
 	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
-		<html:link forward="equivalenceForCoordinator"><bean:message key="link.coordinator.equivalence"/></html:link>
-		<br/>
-		<br/>
+		<li><html:link forward="equivalenceForCoordinator"><bean:message key="link.coordinator.equivalence"/></html:link></li>
 	</logic:notEqual>
-	<html:link forward="backForCoordinator"><bean:message key="link.coordinator.back"/></html:link>
-	<br/>
-	<br/>
+	<%--<li><html:link forward="backForCoordinator"><bean:message key="link.coordinator.back"/></html:link></li>--%>
 </logic:present>
