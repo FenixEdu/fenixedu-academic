@@ -43,10 +43,7 @@ public class InfoExecutionDegree extends InfoObject {
         boolean result = false;
         if (obj instanceof InfoExecutionDegree) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) obj;
-            result = getInfoExecutionYear().equals(
-                    infoExecutionDegree.getInfoExecutionYear())
-                    && getInfoDegreeCurricularPlan().equals(
-                            infoExecutionDegree.getInfoDegreeCurricularPlan());
+            result = getIdInternal().equals(infoExecutionDegree.getIdInternal());
         }
         return result;
     }
