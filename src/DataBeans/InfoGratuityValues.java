@@ -25,8 +25,26 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	private InfoExecutionDegree infoExecutionDegree;
 	
 	private InfoEmployee infoEmployee;
+	private Date when;
 	
 	private List infoPaymentPhases;
+	
+	
+	/**
+	 * @return Returns the when.
+	 */
+	public Date getWhen()
+	{
+		return when;
+	}
+
+	/**
+	 * @param when The when to set.
+	 */
+	public void setWhen(Date when)
+	{
+		this.when = when;
+	}
 	
 	/**
 	 * @return Returns the registrationPayment.

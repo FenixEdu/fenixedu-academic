@@ -13,7 +13,8 @@ CREATE TABLE GRATUITY_VALUES (
 	START_PAYMENT date,
 	END_PAYMENT date,
 	KEY_EXECUTION_DEGREE int(11),
-	KEY_EMPLOYEE int(11),
+	KEY_EMPLOYEE int(11) unsigned default NULL,
+  	WHEN_ALTER timestamp(14) NOT NULL,
 	ACK_OPT_LOCK int(11) default NULL,
 	primary key (ID_INTERNAL)
 ) type=InnoDB;
@@ -28,6 +29,8 @@ CREATE TABLE GRATUITY_SITUATION(
 	EXEMPTION_DESCRIPTION varchar(50), 
 	KEY_GRATUITY int(11),
 	KEY_STUDENT_CURRICULAR_PLAN int(11),
+	KEY_EMPLOYEE int(11) unsigned default NULL,
+  	WHEN_ALTER timestamp(14) NOT NULL,
 	ACK_OPT_LOCK int(11) default NULL,
 	primary key (ID_INTERNAL)
 ) type=InnoDB;

@@ -5,6 +5,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import Util.ExemptionGratuityType;
@@ -25,8 +26,44 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 		
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	
+	private InfoEmployee infoEmployee;
+	private Date when;
+	
 	private List transactionList;
 	
+	
+	/**
+	 * @return Returns the infoEmployee.
+	 */
+	public InfoEmployee getInfoEmployee()
+	{
+		return infoEmployee;
+	}
+
+	/**
+	 * @param infoEmployee The infoEmployee to set.
+	 */
+	public void setInfoEmployee(InfoEmployee infoEmployee)
+	{
+		this.infoEmployee = infoEmployee;
+	}
+	
+	/**
+	 * @return Returns the when.
+	 */
+	public Date getWhen()
+	{
+		return when;
+	}
+
+	/**
+	 * @param when The when to set.
+	 */
+	public void setWhen(Date when)
+	{
+		this.when = when;
+	}
+		
 	/**
 	 * @return Returns the exemptionDescription.
 	 */

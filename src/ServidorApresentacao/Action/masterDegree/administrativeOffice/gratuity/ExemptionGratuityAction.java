@@ -272,7 +272,7 @@ public class ExemptionGratuityAction extends DispatchAction
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		DynaActionForm exemptionForm = (DynaActionForm) actionForm;
-		InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(request, exemptionForm);
+		InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(userView, request, exemptionForm);
 
 		Object[] args = { infoGratuitySituation };
 		try
@@ -299,7 +299,7 @@ public class ExemptionGratuityAction extends DispatchAction
 	}
 
 	private InfoGratuitySituation fillInfoGratuityValues(
-		HttpServletRequest request,
+		IUserView userView, HttpServletRequest request,
 		DynaActionForm exemptionForm)
 	{
 		Integer valueExemptionGratuity =

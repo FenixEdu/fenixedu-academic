@@ -9,12 +9,18 @@ import java.util.ListIterator;
 
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
+import Dominio.CursoExecucao;
+import Dominio.Employee;
 import Dominio.GratuityValues;
+import Dominio.ICursoExecucao;
+import Dominio.IEmployee;
 import Dominio.IGratuityValues;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentGratuityValues;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -56,7 +62,22 @@ public class InsertGratuityData implements IServico
 	{
 		if (infoGratuityValues == null)
 		{
-			throw new FenixServiceException();
+			throw new FenixServiceException("impossible.insertGratuityValues");
+		}
+
+		if (infoGratuityValues.getInfoExecutionDegree() == null
+			|| infoGratuityValues.getInfoExecutionDegree().getIdInternal() == null
+			|| infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue() <= 0)
+		{
+			throw new FenixServiceException("impossible.insertGratuityValues");
+		}
+
+		if (infoGratuityValues.getInfoEmployee() == null
+			|| infoGratuityValues.getInfoEmployee().getPerson() == null
+			|| infoGratuityValues.getInfoEmployee().getPerson().getUsername() == null
+			|| infoGratuityValues.getInfoEmployee().getPerson().getUsername().length() <= 0)
+		{
+			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
 
 		validateGratuity(infoGratuityValues);
@@ -73,15 +94,25 @@ public class InsertGratuityData implements IServico
 			gratuityValues.setIdInternal(infoGratuityValues.getIdInternal());
 
 			gratuityValues = (IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, true);
-			if (gratuityValues == null)//it doesn't exists in database, then write it
+			if (gratuityValues == null) //it doesn't exists in database, then write it
 			{
-				
+
 				gratuityValues = new GratuityValues();
+
+				//execution Degree
+				ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+				ICursoExecucao executionDegree = new CursoExecucao();
+				executionDegree.setIdInternal(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
 				
-				
-				
-				
+				executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+				gratuityValues.setExecutionDegree(executionDegree);
 			}
+			
+			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+			IEmployee employee = new Employee();
+			employee = (IEmployee) persistentEmployee.readByOId(employee, false);
+			
+			
 
 		}
 		catch (ExcepcaoPersistencia e)

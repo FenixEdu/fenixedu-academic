@@ -25,12 +25,29 @@ public class GratuityValues extends DomainObject implements IGratuityValues
 	private ICursoExecucao executionDegree;
 	private Integer keyExecutionDegree;
 	
+	private Date when;
 	private IEmployee employee;
 	private Integer keyEmployee;
 	
 	private List paymentPhaseList;
 	
 	
+	/**
+	 * @return Returns the when.
+	 */
+	public Date getWhen()
+	{
+		return when;
+	}
+
+	/**
+	 * @param when The when to set.
+	 */
+	public void setWhen(Date when)
+	{
+		this.when = when;
+	}
+
 	/**
 	 * @return Returns the anualValue.
 	 */

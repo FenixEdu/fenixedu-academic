@@ -4,6 +4,7 @@
  */
 package Dominio;
 
+import java.util.Date;
 import java.util.List;
 
 import Util.ExemptionGratuityType;
@@ -26,8 +27,60 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	private IStudentCurricularPlan studentCurricularPlan;
 	private Integer keyStudentCurricularPlan;
 	
+	private Date when;
+	private IEmployee employee;
+	private Integer keyEmployee; 
+	
 	private List transactionList;
 	
+	/**
+	 * @return Returns the employee.
+	 */
+	public IEmployee getEmployee()
+	{
+		return employee;
+	}
+
+	/**
+	 * @param employee The employee to set.
+	 */
+	public void setEmployee(IEmployee employee)
+	{
+		this.employee = employee;
+	}
+
+	/**
+	 * @return Returns the employeeKey.
+	 */
+	public Integer getEmployeeKey()
+	{
+		return keyEmployee;
+	}
+
+	/**
+	 * @param employeeKey The employeeKey to set.
+	 */
+	public void setEmployeeKey(Integer employeeKey)
+	{
+		this.keyEmployee = employeeKey;
+	}
+
+	/**
+	 * @return Returns the when.
+	 */
+	public Date getWhen()
+	{
+		return when;
+	}
+
+	/**
+	 * @param when The when to set.
+	 */
+	public void setWhen(Date when)
+	{
+		this.when = when;
+	}
+
 	/**
 	 * @return Returns the exemptionDescription.
 	 */

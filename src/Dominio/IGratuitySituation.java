@@ -4,6 +4,7 @@
  */
 package Dominio;
 
+import java.util.Date;
 import java.util.List;
 
 import Util.ExemptionGratuityType;
@@ -22,6 +23,8 @@ public interface IGratuitySituation extends IDomainObject
 	public IGratuityValues getGratuityValues();
 	public IStudentCurricularPlan getStudentCurricularPlan();
 	public List getTransactionList();
+	public IEmployee getEmployee();
+	public Date getWhen();
 	
 	public void setPayedValue(Double payedValue);
 	public void setRemainingValue(Double remainingValue);
@@ -31,4 +34,6 @@ public interface IGratuitySituation extends IDomainObject
 	public void setGratuityValues(IGratuityValues gratuity);
 	public void setStudentCurricularPlan(IStudentCurricularPlan student);
 	public void setTransactionList(List transactionList);
+	public void setEmployee(IEmployee funcionario);
+	public void setWhen(Date date);
 }

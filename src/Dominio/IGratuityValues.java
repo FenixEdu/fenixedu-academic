@@ -23,6 +23,7 @@ public interface IGratuityValues extends IDomainObject
 	public Date getEndPayment();
 	public ICursoExecucao getExecutionDegree();
 	public IEmployee getEmployee();
+	public Date getWhen();
 	public List getPaymentPhaseList();
 	
 	public void setAnualValue(Double anualValue);
@@ -35,6 +36,6 @@ public interface IGratuityValues extends IDomainObject
 	public void setEndPayment(Date endPayment);
 	public void setExecutionDegree(ICursoExecucao executionDegree);
 	public void setEmployee(IEmployee employee);
-
+	public void setWhen(Date date);
 	public void setPaymentPhaseList(List paymentPhaseList);
 }

@@ -1328,6 +1328,12 @@
    		column="KEY_EMPLOYEE"
    		jdbc-type="INTEGER"
    	/>   	   	
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>   	
     <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -1410,7 +1416,18 @@
    		name="keyStudentCurricularPlan"
    		column="KEY_STUDENT_CURRICULAR_PLAN"
    		jdbc-type="INTEGER"   		
-   	/>   	   	   	   	   	   	
+   	/>   	   	   	   	   	  
+    <field-descriptor
+		name="keyEmployee"
+		column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"	
+	/>
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>   	 	
     <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
