@@ -105,6 +105,13 @@
 			>
 			<forward name="viewQuestions" path="definition.schoolRegistration.inquiry"/>
 		</action>
+<!--		<action path="/schoolRegistration"
+			scope="request"
+			name="schoolRegistrationForm"
+			type="ServidorApresentacao.Action.student.schoolRegistration.EnrollAction"
+			input="/VisualizeFistTimeStudentPersonalInfoAction.do"
+			>
+		</action>-->
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
