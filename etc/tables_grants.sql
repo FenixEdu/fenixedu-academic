@@ -12,7 +12,7 @@
 DROP TABLE IF EXISTS GRANT_OWNER;
 CREATE TABLE GRANT_OWNER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACK_OPT_LOCK int(11),
+   ACK_OPT_LOCK int(11),
   KEY_PERSON int(11) unsigned NOT NULL default '0',
   NUMBER int(11) unsigned NOT NULL default '0',
   DATE_SEND_CGD date default NULL,
@@ -20,10 +20,6 @@ CREATE TABLE GRANT_OWNER (
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE KEY UNIQUE1 (NUMBER,KEY_PERSON)
 ) TYPE=InnoDB;
-
-#
-# Dumping data for table 'grant_owner'
-#
 
 
 #
@@ -33,7 +29,7 @@ CREATE TABLE GRANT_OWNER (
 DROP TABLE IF EXISTS GRANT_CONTRACT;
 CREATE TABLE GRANT_CONTRACT (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACK_OPT_LOCK int(11),
+   ACK_OPT_LOCK int(11),
   NUMBER int(11) unsigned NOT NULL default '0',
   DATE_BEGIN_CONTRACT date default NULL,
   DATE_END_CONTRACT date default NULL,
@@ -45,10 +41,6 @@ CREATE TABLE GRANT_CONTRACT (
   UNIQUE KEY UNIQUE1 (NUMBER,KEY_GRANT_OWNER)
 ) TYPE=InnoDB;
 
-#
-# Dumping data for table 'grant_contract'
-#
-
 
 #
 # Table structure for table 'grant_type'
@@ -57,22 +49,17 @@ CREATE TABLE GRANT_CONTRACT (
 DROP TABLE IF EXISTS GRANT_TYPE;
 CREATE TABLE GRANT_TYPE (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACK_OPT_LOCK int(11),
-  NAME varchar(50) NOT NULL default '',
-  SIGLA varchar(50) NOT NULL default '',
-  MIN_PERIOD_DAYS int(2) unsigned NOT NULL default '0',
-  MAX_PERIOD_DAYS int(2) unsigned NOT NULL default '0',
-  INDICATIVE_VALUE double(10,2) NOT NULL default '0.00',
-  SOURCE varchar(10) NOT NULL default '',
+   ACK_OPT_LOCK int(11),
+  NAME varchar(50) NOT NULL,
+  SIGLA varchar(50) NOT NULL,
+  MIN_PERIOD_DAYS int(2) unsigned,
+  MAX_PERIOD_DAYS int(2) unsigned,
+  INDICATIVE_VALUE double(10,2),
+  SOURCE varchar(10),
   STATE date default NULL,
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE KEY UNIQUE1 (SIGLA)
 ) TYPE=InnoDB;
-
-
-#
-# Dumping data for table 'grant_type'
-#
 
 
 #
@@ -82,7 +69,7 @@ CREATE TABLE GRANT_TYPE (
 DROP TABLE IF EXISTS GRANT_RESPONSIBLE_TEACHER;
 CREATE TABLE GRANT_RESPONSIBLE_TEACHER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACK_OPT_LOCK int(11),
+   ACK_OPT_LOCK int(11),
   DATE_BEGIN date NOT NULL,
   DATE_END date default NULL,
   KEY_GRANT_CONTRACT int(11) unsigned NOT NULL default '0',
@@ -90,11 +77,6 @@ CREATE TABLE GRANT_RESPONSIBLE_TEACHER (
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE KEY UNIQUE1 (DATE_BEGIN,DATE_END,KEY_GRANT_CONTRACT,KEY_GRANT_TEACHER)
 ) TYPE=InnoDB;
-
-
-#
-# Dumping data for table 'grant_responsible_teacher'
-#
 
 
 #
@@ -104,7 +86,7 @@ CREATE TABLE GRANT_RESPONSIBLE_TEACHER (
 DROP TABLE IF EXISTS GRANT_ORIENTATION_TEACHER;
 CREATE TABLE GRANT_ORIENTATION_TEACHER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACK_OPT_LOCK int(11),
+   ACK_OPT_LOCK int(11),
   DATE_BEGIN date NOT NULL,
   DATE_END date default NULL,
   KEY_GRANT_CONTRACT int(11) unsigned NOT NULL default '0',
@@ -115,60 +97,48 @@ CREATE TABLE GRANT_ORIENTATION_TEACHER (
 
 
 #
-# Dumping data for table 'grant_orientation_teacher'
+# Table structure for table 'grant_subsidy'
 #
+
+DROP TABLE IF EXISTS GRANT_SUBSIDY;
+CREATE TABLE GRANT_SUBSIDY (
+  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
+   ACK_OPT_LOCK int(11),
+  VALUE_FULL_NAME varchar(255),
+  VALUE DOUBLE(11,2) unsigned default '0.00',
+  TOTAL_COST DOUBLE(11,2) unsigned default '0,00',
+  KEY_GRANT_CONTRACT int(11) unsigned,
+  PRIMARY KEY  (ID_INTERNAL)
+) TYPE=InnoDB;
+
+#
+# Table structure for table 'grant_part'
+#
+
+DROP TABLE IF EXISTS GRANT_PART;
+CREATE TABLE GRANT_PART (
+  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
+   ACK_OPT_LOCK int(11),
+  PERCENTAGE int(11) unsigned,
+  KEY_GRANT_SUBSIDY int(11) unsigned,
+  KEY_GRANT_PAYMENT_ENTITY int(11) unsigned,
+  KEY_TEACHER int(11) unsigned,
+  PRIMARY KEY  (ID_INTERNAL),
+  UNIQUE KEY UNIQUE1 (KEY_GRANT_SUBSIDY, KEY_GRANT_PAYMENT_ENTITY)
+) TYPE=InnoDB;
 
 
 #
-# Table structure for table 'payment_entity'
-#
-#
-#DROP TABLE IF EXISTS PAYMENT_ENTITY;
-#CREATE TABLE GRANT_PAYMENT_ENTITY (
-#  ID_INTERNAL int(11) not null auto_increment,
-#   ACK_OPT_LOCK int(11),
-#  KEY_COST_CENTER int(11) default NULL,
-#  KEY_PROJECT int(11) default NULL,
-#  PRIMARY KEY  (ID_INTERNAL)
-#) TYPE=InnoDB;
-#
-#
-# Dumping data for table 'payment_entity'
+# Table structure for table 'grant_payment_entity'
 #
 
-
-#
-# Table structure for table 'cost_center'
-#
-#
-#CREATE TABLE COST_CENTER (
-#  ID_INTERNAL int(11) not null auto_increment,
-#   ACK_OPT_LOCK int(11),
-#  NUMBER int(11) NOT NULL default '0',
-#  DESIGNATION varchar(50) NOT NULL default '',
-#  PRIMARY KEY  (ID_INTERNAL),
-#  UNIQUE KEY UNIQUE1 (NUMBER)
-#) TYPE=InnoDB;
-#
-#
-# Dumping data for table 'cost_center'
-#
-
-
-#
-# Table structure for table 'project'
-#
-#
-#CREATE TABLE PROJECT (
-#  ID_INTERNAL int(11) unsigned not null auto_increment,
-#   ACK_OPT_LOCK int(11),
-#  NUMBER varchar(255) default NULL,
-#  DESIGNATION varchar(255) default NULL,
-#  KEY_TEACHER int(11) default NULL,
-#  PRIMARY KEY  (ID_INTERNAL)
-#) TYPE=InnoDB;
-#
-#
-# Dumping data for table 'project'
-#
-
+DROP TABLE IF EXISTS GRANT_PAYMENT_ENTITY;
+CREATE TABLE GRANT_PAYMENT_ENTITY (
+  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
+   ACK_OPT_LOCK int(11),
+  CLASS_NAME varchar(250) NOT NULL,
+  NUMBER int(11) unsigned NOT NULL,
+  DESIGNATION varchar(50) NOT NULL,
+  KEY_TEACHER int(11) unsigned,
+  PRIMARY KEY  (ID_INTERNAL)
+) TYPE=InnoDB;
