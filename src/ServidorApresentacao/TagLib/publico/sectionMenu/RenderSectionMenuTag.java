@@ -28,6 +28,7 @@ import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlot
 public class RenderSectionMenuTag extends TagSupport {
 
 	private String name;
+	private String path;
 	private String activeSectionName;
 	private SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer =
 		new SectionMenuContentRenderer();
@@ -71,7 +72,7 @@ public class RenderSectionMenuTag extends TagSupport {
 		SectionMenuMapRenderer renderer =
 			new SectionMenuMapRenderer(
 				sectionMenuMap,
-				this.sectionMenuSlotContentRenderer);
+				this.sectionMenuSlotContentRenderer,getPath());
 
 		try {
 			writer.print(renderer.render());
@@ -113,6 +114,20 @@ public class RenderSectionMenuTag extends TagSupport {
 	 */
 	public void setActiveSectionName(String string) {
 		activeSectionName = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setPath(String string) {
+		path = string;
 	}
 
 }

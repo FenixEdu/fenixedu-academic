@@ -5,6 +5,7 @@
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorApresentacao.TagLib.publico.sectionMenu.renderers;
+import javax.servlet.jsp.tagext.TagSupport;
 
 import DataBeans.gesdis.InfoSection;
 
@@ -14,7 +15,7 @@ import DataBeans.gesdis.InfoSection;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class SectionMenuContentRenderer
+public class SectionMenuContentRenderer extends TagSupport
 	implements SectionMenuSlotContentRenderer {
 	
 	private InfoSection infoSection;
@@ -28,9 +29,9 @@ public class SectionMenuContentRenderer
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer#renderSectionLabel(ServidorApresentacao.TagLib.publico.sectionMenu.SectionMenuSlot)
 	 */
-	public StringBuffer renderSectionLabel(int i) {
+	public StringBuffer renderSectionLabel(int i,String path) {
 		StringBuffer strBuffer = new StringBuffer();
-		strBuffer.append(renderDepthContent(getInfoSection(),i));
+		strBuffer.append(renderDepthContent(getInfoSection(),i,path));
 		return strBuffer;
 	}
 
@@ -43,14 +44,17 @@ public class SectionMenuContentRenderer
 		}
 		return strBuffer;
 	}
-	private StringBuffer renderDepthContent(InfoSection infoSection, int i) {
+	private StringBuffer renderDepthContent(InfoSection infoSection, int i,String path) {
 			StringBuffer strBuffer = new StringBuffer();
 			int depth = infoSection.getSectionDepth().intValue();
 			if (depth == 0){
 				//adds the info
+			
 			strBuffer.append("<ul><li>\n");
-			strBuffer.append("<a href=\"/ciapl/publico/viewSection.do?index="+i+"\""+ " onclick=\"houdini('"+infoSection.getName()+"');\">\n");
-			//falta o index 
+			
+			
+			strBuffer.append("<a href=\""+path+"/viewSection.do?index="+i+"\""+ " onclick=\"houdini('"+infoSection.getName()+"');\">\n");
+			
 			strBuffer.append(renderDepthIdent(getInfoSection()));
 			strBuffer.append(infoSection.getName());
 			strBuffer.append("</a>");
@@ -58,7 +62,9 @@ public class SectionMenuContentRenderer
 			else {
 				//adds the info
 			strBuffer.append("<dd>");
-			strBuffer.append("<a href=\"/ciapl/publico/viewSection.do?index="+i+"\" >");
+					
+			
+			strBuffer.append("<a href=\"viewSection.do?index="+i+"\" >");
 			//falta o index 
 			strBuffer.append(renderDepthIdent(getInfoSection()));
 			strBuffer.append(infoSection.getName());
@@ -82,5 +88,7 @@ public class SectionMenuContentRenderer
 	public void setInfoSection(InfoSection infoSection) {
 		this.infoSection = infoSection;
 	}
+
+
 
 }

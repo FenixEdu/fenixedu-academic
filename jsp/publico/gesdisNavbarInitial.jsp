@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -37,10 +38,10 @@
   </dl>
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
 	<logic:present name="<%= SessionConstants.INFO_SECTION %>" >
-	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" />
+	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" />
 	</logic:present>
 	<logic:notPresent name="<%= SessionConstants.INFO_SECTION %>" >
-	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" />
+	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)  %>" />
 	</logic:notPresent>		
 </logic:present>	
 	

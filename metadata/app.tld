@@ -144,6 +144,11 @@
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
+    <attribute>
+      <name>path</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
 	 <attribute>
       <name>activeSectionName</name>
       <required>false</required>

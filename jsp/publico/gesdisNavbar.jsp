@@ -40,10 +40,10 @@
   </dl>
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
 	<logic:present name="<%= SessionConstants.INFO_SECTION %>" >
-	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" />
+	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" />
 	</logic:present>
 	<logic:notPresent name="<%= SessionConstants.INFO_SECTION %>" >
-	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" />
+	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" />
 	</logic:notPresent>		
 </logic:present>	
 </div>

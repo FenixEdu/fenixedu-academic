@@ -32,15 +32,16 @@ import ServidorApresentacao
 public class SectionMenuMapRenderer {
 	private SectionMenuMap sectionMenuMap;
 	private SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer;
-
+	private String path;
 	/**
 	 * 
 	 */
 	public SectionMenuMapRenderer(
 		SectionMenuMap sectionMenuMap,
-		SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer) {
+		SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer, String path) {
 		setSectionMenuMap(sectionMenuMap);
 		setSectionMenuSlotContentRenderer(sectionMenuSlotContentRenderer);
+		setPath(path);
 	}
 
 	/**
@@ -85,7 +86,7 @@ public class SectionMenuMapRenderer {
 				InfoSection infoSection = (InfoSection) sections.get(i);
 				SectionMenuSlotContentRenderer sectionMenuSlot =
 					new SectionMenuContentRenderer(infoSection);
-				strBuffer.append(sectionMenuSlot.renderSectionLabel(i));
+				strBuffer.append(sectionMenuSlot.renderSectionLabel(i,getPath()));
 				strBuffer.append(renderSuffix(sections, i));
 				
 				i=i+1;
@@ -125,4 +126,18 @@ public class SectionMenuMapRenderer {
 		}	
 		return strBuffer;
 	}
+	/**
+	 * @return
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setPath(String string) {
+		path = string;
+	}
+
 }
