@@ -136,7 +136,7 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="Dominio.Curso"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>
 </class-descriptor>
@@ -225,7 +225,8 @@
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.DisciplinaExecucao"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
@@ -233,7 +234,8 @@
 			name="associatedBranches"
 			element-class-ref="Dominio.Branch"
 			indirection-table="CURRICULAR_COURSE_BRANCH"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
@@ -241,7 +243,8 @@
 			name="associatedCurricularSemesters"
 			element-class-ref="Dominio.CurricularSemester"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_SEMESTER"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_SEMESTER"/>
 	</collection-descriptor>
@@ -295,7 +298,8 @@
 			name="associatedBranches"
 			element-class-ref="Dominio.Branch"
 			indirection-table="STUDENT_CURRICULAR_PLAN_BRANCH"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_STUDENT_CURRICULAR_PLAN"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
@@ -325,13 +329,13 @@
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>      
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 </class-descriptor>
@@ -385,7 +389,8 @@
 			name="associatedCurricularCourses"
 			element-class-ref="Dominio.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_SEMESTER"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_SEMESTER"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
@@ -416,7 +421,8 @@
 			name="associatedCurricularCourses"
 			element-class-ref="Dominio.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_BRANCH"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_BRANCH"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
@@ -424,7 +430,8 @@
 			name="associatedStudentCurricularPlans"
 			element-class-ref="Dominio.StudentCurricularPlan"
 			indirection-table="STUDENT_CURRICULAR_PLAN_BRANCH"
-			auto-retrieve="true">
+			auto-retrieve="true"
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_BRANCH"/>
 		<fk-pointing-to-element-class column="KEY_STUDENT_CURRICULAR_PLAN"/>
 	</collection-descriptor>
@@ -460,13 +467,13 @@
 	<reference-descriptor
 			name="equivalentEnrolment"
 			class-ref="Dominio.Enrolment"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-id-ref="2"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="enrolment"
 			class-ref="Dominio.Enrolment"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-id-ref="3"/>
 	</reference-descriptor>
 </class-descriptor>
