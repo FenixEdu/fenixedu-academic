@@ -43,7 +43,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentationSopPortal {
 		
 
     // define mapping de origem
-    setRequestPathInfo("", "/editarTurnoForm");
+    setRequestPathInfo("sop", "/editarTurnoForm");
     // Preenche campos do formulario
     addRequestParameter("nome", "NovoTurno1");
     addRequestParameter("lotacao",new Integer(50).toString());
@@ -90,7 +90,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentationSopPortal {
     public void testUnsuccessfulEditarTurno() {
 		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
     	
-    setRequestPathInfo("", "/editarTurnoForm");
+    setRequestPathInfo("sop", "/editarTurnoForm");
 
     addRequestParameter("nome", "turno2");
     addRequestParameter("lotacao",new Integer(100).toString());
@@ -125,7 +125,7 @@ setAuthorizedUser();
     }
 
     actionPerform();
-    verifyForwardPath("/editarTurno.jsp");
+    verifyForwardPath("/sop/editarTurno.jsp");
     
     verifyActionErrors(new String[] {"error.exception.existing"});
   }
