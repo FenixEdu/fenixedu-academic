@@ -98,7 +98,7 @@
 <!-- CURRICULAR COURSE INFO -->
 <logic:notEmpty name="infoCurriculum" property="generalObjectivesEn">
 		<logic:notEqual name="infoCurriculum" property="generalObjectivesEn" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.generalObjectives.eng" />	</h2>
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="message.generalObjectivesEn" />	</h2>
 		<p>
 			<bean:write name="infoCurriculum" property="generalObjectivesEn" filter="false"/>
 		</p>
@@ -106,7 +106,7 @@
 </logic:notEmpty>
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectivesEn">
 		<logic:notEqual name="infoCurriculum" property="operacionalObjectivesEn" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.operacionalObjectives.eng" /></h2>
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="message.operacionalObjectivesEn" /></h2>
 		<p>
 			<bean:write name="infoCurriculum" property="operacionalObjectivesEn" filter="false"/>
 		</p>
@@ -116,7 +116,7 @@
 <br/>
 <logic:notEmpty name="infoCurriculum" property="programEn">
 	<logic:notEqual name="infoCurriculum" property="programEn" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.program.eng" /></h2>	
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="message.programEn" /></h2>	
 		<p>
 			<bean:write name="infoCurriculum" property="programEn" filter="false" />
 		</p>	
