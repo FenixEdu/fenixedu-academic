@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.util.Cloner;
+import DataBeans.InfoPerson;
 import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -65,13 +65,17 @@ public class GetEnrolmentGrade implements IServico {
 	}
 
 	private InfoEnrolmentEvaluation getInfoLatestEvaluation(IEnrolmentEvaluation latestEvaluation) throws ExcepcaoPersistencia {
-		InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
+		//CLONER
+		//InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
+		InfoEnrolmentEvaluation infolatestEvaluation = InfoEnrolmentEvaluation.newInfoFromDomain(latestEvaluation);		
 		if (latestEvaluation.getEmployee() != null) {
 			if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
 				|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
 				IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
                 latestEvaluation.setEmployee(employee);
-                infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
+                //CLONER
+                //infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
+                infolatestEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(employee.getPerson()));
 			}
 		}
 		return infolatestEvaluation;

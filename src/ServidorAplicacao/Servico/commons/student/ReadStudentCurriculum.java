@@ -12,7 +12,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.util.Cloner;
+import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
@@ -71,8 +71,10 @@ public class ReadStudentCurriculum implements IService
 
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(enrolmentTemp);
 
-			InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentTemp);
-
+			//CLONER
+			//InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentTemp);
+			InfoEnrolment infoEnrolment = InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear.newInfoFromDomain(enrolmentTemp);
+			
 			infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
 
 			result.add(infoEnrolment);

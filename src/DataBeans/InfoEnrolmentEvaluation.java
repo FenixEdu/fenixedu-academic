@@ -2,6 +2,7 @@ package DataBeans;
 
 import java.util.Date;
 
+import Dominio.IEnrolmentEvaluation;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 
@@ -175,5 +176,26 @@ public class InfoEnrolmentEvaluation extends InfoObject
     {
         when = date;
     }
-
+    
+	public void copyFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+		super.copyFromDomain(enrolmentEvaluation);
+		if(enrolmentEvaluation != null) {
+			setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+			setState(enrolmentEvaluation.getEnrolmentEvaluationState());
+			setGrade(enrolmentEvaluation.getGrade());
+			setExamDate(enrolmentEvaluation.getExamDate());
+			setGradeAvailableDate(enrolmentEvaluation.getGradeAvailableDate());
+			setObservation(enrolmentEvaluation.getObservation());
+		}
+	}
+	
+	public static InfoEnrolmentEvaluation newInfoFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
+		if(enrolmentEvaluation != null) {
+			infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+			infoEnrolmentEvaluation.copyFromDomain(enrolmentEvaluation);
+		}
+		
+		return infoEnrolmentEvaluation;
+	}
 }

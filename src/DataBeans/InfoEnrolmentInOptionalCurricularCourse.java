@@ -1,5 +1,7 @@
 package DataBeans;
 
+import Dominio.IEnrolment;
+import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Util.EnrolmentState;
 
 /**
@@ -45,4 +47,17 @@ public class InfoEnrolmentInOptionalCurricularCourse extends InfoEnrolment {
 	public void setInfoCurricularCourseForOption(InfoCurricularCourse infoCurricularCourseForOption) {
 		this.infoCurricularCourseForOption = infoCurricularCourseForOption;
 	}
+	
+	public void copyFromDomain(IEnrolment enrolment) {
+		super.copyFromDomain(enrolment);		
+	}
+	
+	public static InfoEnrolmentInOptionalCurricularCourse newInfoFromDomain(IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse) {
+		InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = null;
+		if(enrolmentInOptionalCurricularCourse != null) {
+			infoEnrolmentInOptionalCurricularCourse = new InfoEnrolmentInOptionalCurricularCourse();
+			infoEnrolmentInOptionalCurricularCourse .copyFromDomain(enrolmentInOptionalCurricularCourse);
+		}
+		return infoEnrolmentInOptionalCurricularCourse;
+	} 
 }

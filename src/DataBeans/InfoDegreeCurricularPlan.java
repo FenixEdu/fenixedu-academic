@@ -258,6 +258,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         if (plan != null) {
             setName(plan.getName());
             setState(plan.getState());
+            setInitialDate(plan.getInitialDate());
+            setEndDate(plan.getEndDate());
         }
     }
 

@@ -10,7 +10,7 @@
 package ServidorAplicacao.Servico.commons.student;
 
 import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegree;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
@@ -75,7 +75,8 @@ public class ReadStudentCurricularPlan implements IServico {
 		if (studentCurricularPlan == null){
 			throw new NonExistingServiceException();
 		}
-
-		return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+		
+		//return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+		return InfoStudentCurricularPlanWithInfoStudentAndDegree.newInfoFromDomain(studentCurricularPlan);
     }
 }
