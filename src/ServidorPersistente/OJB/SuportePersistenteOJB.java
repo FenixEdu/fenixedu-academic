@@ -25,7 +25,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -33,8 +32,7 @@ import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCandidateSituation;
-import ServidorPersistente
-	.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCreditsTeacher;
@@ -45,12 +43,13 @@ import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEnrolmentEquivalenceRestriction;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
-import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -59,6 +58,7 @@ import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.IPersistentGuideEntry;
 import ServidorPersistente.IPersistentGuideSituation;
@@ -76,6 +76,8 @@ import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentStudentGroup;
+import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.IPersistentStudentKind;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTeacherShiftPercentage;
@@ -480,13 +482,26 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEmployee getIPersistentEmployee() {
 		return new EmployeeOJB();
 	}
-	
+
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction() {
 		return new EnrolmentEquivalenceRestrictionOJB();
 	}
 	
+	
 	public IPersistentQualification getIPersistentQualification() {
 		return new QualificationOJB();
 	}
+	
+	
+	public IPersistentStudentGroup getIPersistentStudentGroup() {
+		return new StudentGroupOJB();
+	}
 
+	public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {
+		return new StudentGroupAttendOJB();
+	}
+
+	public IPersistentGroupProperties getIPersistentGroupProperties() {
+		return new GroupPropertiesOJB();
+	}
 }
