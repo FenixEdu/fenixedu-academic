@@ -10,9 +10,15 @@ package ServidorAplicacao.Servico.student;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
@@ -35,8 +41,6 @@ import Dominio.TurmaTurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.student.ReadDisciplinesByStudent;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
@@ -44,15 +48,6 @@ import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
 
 /**
  * Describe class <code>ReadStudentShiftEnrolment</code> here.
@@ -325,11 +320,7 @@ public class ReadStudentShiftEnrolment implements IServico {
       if (!containsOneOfThese){
 	result.add(thisClass);
       }
-    }
-    for (int  j = 0; j < result.size(); j++) {
-      System.out.println("turma distinta: " + (ITurma) result.get(j));
-    } // end of for (int  = 0;  < ; ++)
-    
+    }    
     return result;
   }
 
