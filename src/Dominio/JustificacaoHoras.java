@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import ServidorApresentacao.formbeans.assiduousness.IntroduzirJustificacaoForm;
 import Util.FormataCalendar;
 import constants.assiduousness.Constants;
+
 /**
  *
  * @author  Fernanda Quitério e Tania Pousão
@@ -76,28 +77,28 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 	public void setListaJustificacoesBody(ParamJustificacao paramJustificacao, Justificacao justificacao, ArrayList listaJustificacoesBody) {
 		Calendar calendario = Calendar.getInstance();
 
-		listaJustificacoesBody.add(0, paramJustificacao.getSigla());
-		listaJustificacoesBody.add(1, paramJustificacao.getTipo());
+		listaJustificacoesBody.add(1, paramJustificacao.getSigla());
+		listaJustificacoesBody.add(2, paramJustificacao.getTipo());
 
 		calendario.clear();
 		calendario.setTime(justificacao.getDiaInicio());
 
-		listaJustificacoesBody.add(2, FormataCalendar.data(calendario));
+		listaJustificacoesBody.add(3, FormataCalendar.data(calendario));
 
 		if (justificacao.getDiaFim() != null) {
 			calendario.clear();
 			calendario.setTime(justificacao.getDiaFim());
-			listaJustificacoesBody.add(3, FormataCalendar.data(calendario));
+			listaJustificacoesBody.add(4, FormataCalendar.data(calendario));
 		} else {
-			listaJustificacoesBody.add(3, new String("&nbsp;"));
+			listaJustificacoesBody.add(4, new String("&nbsp;"));
 		}
 		calendario.clear();
 		calendario.setTimeInMillis(justificacao.getHoraInicio().getTime());
-		listaJustificacoesBody.add(4, FormataCalendar.horasMinutos(calendario));
+		listaJustificacoesBody.add(5, FormataCalendar.horasMinutos(calendario));
 
 		calendario.clear();
 		calendario.setTimeInMillis(justificacao.getHoraFim().getTime());
-		listaJustificacoesBody.add(5, FormataCalendar.horasMinutos(calendario));
+		listaJustificacoesBody.add(6, FormataCalendar.horasMinutos(calendario));
 	} /* setListaJustificacoesBody */
 
 	public void updateSaldosHorarioVerbeteBody(

@@ -13,7 +13,6 @@ import java.util.Properties;
 import ServidorPersistenteJDBC.config.IST2002Properties;
 
 public class UtilRelacional {
-	//private static String _dataSource;
 	private static String _userName;
 	private static String _password;
 	private static String _urlBD;
@@ -22,13 +21,12 @@ public class UtilRelacional {
 	private static Map mapaLigacoes = new HashMap();
 
 	public static synchronized void inicializarBaseDados(String filename) {
-		_properties = new IST2002Properties(filename);	
+		_properties = new IST2002Properties(filename);
 		_userName = _properties.getProperty("IST2002.ServidorPersistente.usernameBD");
 		_password = _properties.getProperty("IST2002.ServidorPersistente.passwordBD");
 		_urlBD = _properties.getProperty("IST2002.ServidorPersistente.URLServidorBD");
-		_urlBD = _properties.getProperty("IST2002.ServidorPersistente.URLServidorBD");
-			if (_userName == null || _password == null) {
-			System.out.println("ServidorPersistente: propriedades indefinidas.");
+		if (_userName == null || _password == null) {
+			System.out.println("UtilRelacional: propriedades indefinidas.");
 		}
 		loadDriver();
 	}
@@ -81,7 +79,7 @@ public class UtilRelacional {
 			Connection ligacao = (Connection) mapaLigacoes.get(Thread.currentThread());
 			ligacao.setAutoCommit(false);
 		} catch (SQLException e) {
-			System.out.println("ServidorPersistente: " + e.toString());
+			System.out.println("UtilRelacional: " + e.toString());
 			System.out.println("Não conseguiu iniciar transacção");
 			throw new Exception("Não conseguiu iniciar transacção");
 		}
@@ -93,7 +91,7 @@ public class UtilRelacional {
 			ligacao.commit();
 			fecharLigacao();
 		} catch (SQLException e) {
-			System.out.println("ServidorPersistente: " + e.toString());
+			System.out.println("UtilRelacional: " + e.toString());
 			System.out.println("Não conseguiu confirmar transacção");
 			throw new Exception("Não conseguiu confirmar transacção");
 		}
@@ -105,7 +103,7 @@ public class UtilRelacional {
 			ligacao.rollback();
 			fecharLigacao();
 		} catch (SQLException e) {
-			System.out.println("ServidorPersistente: " + e.toString());
+			System.out.println("UtilRelacional: " + e.toString());
 			System.out.println("Não conseguiu cancelar transacção");
 			throw new Exception("Não conseguiu cancelar transacção");
 		}
@@ -118,7 +116,7 @@ public class UtilRelacional {
 				try {
 					_ligacaoPartilhada = DriverManager.getConnection(_urlBD, _userName, _password);
 				} catch (java.sql.SQLException e) {
-					System.out.println("ServidorPersistente: " + e.toString());
+					System.out.println("UtilRelacional: " + e.toString());
 					System.out.println("Erro no prepararComando1");
 				}
 			ligacao = _ligacaoPartilhada;
@@ -142,7 +140,7 @@ public class UtilRelacional {
 		try {
 			sql = ligacao.prepareStatement(statement);
 		} catch (java.sql.SQLException e) {
-			System.out.println("ServidorPersistente: " + e.toString());
+			System.out.println("UtilRelacional: " + e.toString());
 		} finally {
 			return sql;
 		}
@@ -150,10 +148,9 @@ public class UtilRelacional {
 
 	private static void loadDriver() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			//Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+			Class.forName("com.mysql.jdbc.Driver"/*"org.gjt.mm.mysql.Driver"*/).newInstance();
 		} catch (Exception e) {
-			System.out.println("ServidorPersistente: erro a carregar o driver: " + e.toString());
+			System.out.println("UtilRelacional: erro a carregar o driver: " + e.toString());
 		}
 	}
 
@@ -162,7 +159,7 @@ public class UtilRelacional {
 			Connection ligacao = DriverManager.getConnection(_urlBD, _userName, _password);
 			mapaLigacoes.put(Thread.currentThread(), ligacao);
 		} catch (Exception e) {
-			System.out.println("ServidorPersistente: " + e.toString());
+			System.out.println("UtilRelacional: " + e.toString());
 			System.out.println("Não foi possível iniciar a ligação");
 		}
 	}
@@ -173,7 +170,7 @@ public class UtilRelacional {
 			ligacao.close();
 			mapaLigacoes.remove(Thread.currentThread());
 		} catch (Exception e) {
-			System.out.println("ServidorPersistente: " + e.toString());
+			System.out.println("UtilRelacional: " + e.toString());
 			System.out.println("Não foi possível fechar a ligação");
 		}
 	}

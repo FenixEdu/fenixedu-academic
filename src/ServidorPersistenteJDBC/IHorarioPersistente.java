@@ -49,6 +49,11 @@ public interface IHorarioPersistente {
 
 	public ArrayList lerRotacoesPorNumMecanografico(int numMecanografico);
 	
+	public ArrayList lerTodosHorariosExcepcao(Date dataInicio, Date dataFim);
+	public ArrayList lerTodosHorarios(Date dataInicio, Date dataFim);
+	public ArrayList lerTodosHorariosExcepcaoComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim);
+	public ArrayList lerTodosHorariosComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim);
+	  
 	public int ultimoCodigoInterno();
 	public int ultimoCodigoInternoExcepcaoHorario();
 }

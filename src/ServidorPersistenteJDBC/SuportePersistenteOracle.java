@@ -7,6 +7,7 @@ import ServidorPersistenteJDBC.Relacional.JustificacaoRelacionalOracle;
 import ServidorPersistenteJDBC.Relacional.MarcacaoPontoRelacionalOracle;
 import ServidorPersistenteJDBC.Relacional.RegularizacaoMarcacaoPontoRelacionalOracle;
 import ServidorPersistenteJDBC.Relacional.UtilRelacionalOracle;
+import constants.assiduousness.Constants;
 
 /**
  *
@@ -57,7 +58,7 @@ public class SuportePersistenteOracle {
   
   public static synchronized SuportePersistenteOracle getInstance() {    
     if (_instance == null) {
-      _instance = new SuportePersistenteOracle("/ServidorPersistenteOracleConfig.properties");
+      _instance = new SuportePersistenteOracle(Constants.CONFIG_SERVIDORPERSISTENTE_ORACLE);
     }
     return _instance;
   }

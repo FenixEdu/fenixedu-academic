@@ -3,7 +3,7 @@ package ServidorPersistenteJDBC;
 import java.util.ArrayList;
 
 import Dominio.RegularizacaoMarcacaoPonto;
-
+ 
 /**
  *
  * @author  Fernanda Quitério e Tania Pousão

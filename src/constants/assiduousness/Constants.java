@@ -25,6 +25,9 @@ public final class Constants {
 	public static final String FIM_CONSULTA = "dataFinalConsulta";
 
 	public static final String APPLICATION_RESOURCES = "ApplicationResources";
+	public static final String CONFIG_FTP = "/ServidorFTPConfig.properties";
+	public static final String CONFIG_SERVIDORPERSISTENTE = "/ServidorPersistenteConfig.properties";
+	public static final String CONFIG_SERVIDORPERSISTENTE_ORACLE = "/ServidorPersistenteOracleConfig.properties";
 
 	public static final int MAX_DIGITOS_MECANOGRAFICO = 8;
 	public static final int MAX_SIGLA = 8;
@@ -73,7 +76,9 @@ public final class Constants {
 	
 	/* Sigla de dia Injustificado */
 	public static final String INJUSTIFICADO = "FINJUST";
-
+	/* Sigla de funcionário Desligado */
+	public static final String DESLIGADO = "DESLIGAD";
+	
 	/* Regimes de Horários */
 	public static final String NORMAL = new String("normal");
 	public static final String TE = new String("trabalhadorEstudante");
@@ -85,12 +90,50 @@ public final class Constants {
 	public static final String MOTIVOSSAUDE = new String("motivosSaude");
 	public static final String SERVICO = new String("convenienciaServico");
 	
+	/* Rotacao de Horario por omissao */
+	public static final int NUMDIAS_ROTACAO = 5;
+	public static final int INICIO_ROTACAO = 2;
+
+	/* Chave Horário Tipo */
+	public static final int CHAVE_HTIPO = 1;
+
+	/* Sigla dos dias anterior e seguinte */
+	public static final String DIA_ANTERIOR = new String("A");
+	public static final String DIA_SEGUINTE = new String("S");
+
+	/* Justificacao de Ocorrência */
+	public static final String JUSTIFICACAO_OCORRENCIA = new String("OC");
+	/* Justificacao de Horas */
+	public static final String JUSTIFICACAO_HORAS = new String("JH");
+	/* Justificacao de Saldo */
+	public static final String JUSTIFICACAO_SALDO = new String("SALD");
+
+	/* Tipo de Dia da Parametrizacao de Justificacao */
+	public static final String UTEIS = new String("U");
+	public static final String TODOS = new String("T");
+	
+	/* Status Assiduidade */
+	public static final String ASSIDUIDADE_ACTIVO = "activo";
+	public static final String ASSIDUIDADE_INACTIVO = "inactivo";
+	public static final String ASSIDUIDADE_PENDENTE = "pendente";
+
+	/* Servidor de FTP */
+	public static final String SERVIDOR_FTP = "ftp://fernanda@salad22.ist.utl.pt";
+	
+	/* Estados dos Funcionários */
+	public static final String TODOS_FUNCIONARIOS = "Todos";
+	public static final String FUNCIONARIOS_AUSENTES = "Ausentes";
+	public static final String FUNCIONARIOS_PRESENTES = "Presentes";
+
 	/* Semana */
 	public static final int NUM_DIAS_SEMANA = 7;
-
+	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// Constantes a parametrizar
+	//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	/* Expediente */
 	public static final long EXPEDIENTE_MINIMO = 7 * 3600 * 1000 - 3600 * 1000; //7 horas 
-	//	6horas e 30minutos e 59segundos do dia seguinte
+	//6horas e 30minutos e 59segundos do dia seguinte
 	public static final long EXPEDIENTE_MAXIMO = (30 * 3600 + 30 * 60) * 1000 - 3600 * 1000;
 
 	/* Trabalho Nocturno */
@@ -98,9 +141,9 @@ public final class Constants {
 	public static final long FIM_TRABALHO_NOCTURNO = 31 * 3600 * 1000 - 3600 * 1000; //7 horas do dia seguinte
 
 	/* Isencao de Periodos Fixos */
-	public static final long INICIO_REFEICAO_IPF = (11 * 3600 + 30 * 60) * 1000 - 3600 * 1000;
+	public static final long INICIO_REFEICAO_IPF = (11 * 3600 + 30 * 60) * 1000 - 3600 * 1000;//NAO USADA
 	//11 horas e 30 minutos em milisegundos(retira 1 hora para acertos)
-	public static final long FIM_REFEICAO_IPF = (15 * 3600 + 30 * 60) * 1000 - 3600 * 1000;
+	public static final long FIM_REFEICAO_IPF = (15 * 3600 + 30 * 60) * 1000 - 3600 * 1000;//NAO USADA
 	//15 horas e 30 minutos em milisegundos(retira 1 hora para acertos)
 
 	/* Horario Flexivel */
@@ -135,37 +178,7 @@ public final class Constants {
 	public static final long VALIDADE_MINIMA = 31 * 24 * 3600; //1 mes em segundos
 	public static final long VALIDADE_MAXIMA = 365 * 2 * 24 * 3600; //2 anos em segundos
 
-	/* Rotacao de Horario por omissao */
-	public static final int NUMDIAS_ROTACAO = 5;
-	public static final int INICIO_ROTACAO = 2;
-
-	/* Chave Horário Tipo */
-	public static final int CHAVE_HTIPO = 1;
-
-	/* Sigla dos dias anterior e seguinte */
-	public static final String DIA_ANTERIOR = new String("A");
-	public static final String DIA_SEGUINTE = new String("S");
-
-	/* Justificacao de Ocorrência */
-	public static final String JUSTIFICACAO_OCORRENCIA = new String("OC");
-	/* Justificacao de Horas */
-	public static final String JUSTIFICACAO_HORAS = new String("JH");
-	/* Justificacao de Saldo */
-	public static final String JUSTIFICACAO_SALDO = new String("SALD");
-
-	/* Tipo de Dia da Parametrizacao de Justificacao */
-	public static final String UTEIS = new String("U");
-	public static final String TODOS = new String("T");
-
 	/*Trabalho Extraordinário */
 	public static final long PRIMEIRO_ESCALAO = 3600 * 1000; // uma hora
-	public static final long SEGUNDO_ESCALAO = 2 * 3600 * 1000; // duas horas
-	
-	/* Status Assiduidade */
-	public static final String ASSIDUIDADE_ACTIVO = "activo";
-	public static final String ASSIDUIDADE_INACTIVO = "inactivo";
-	public static final String ASSIDUIDADE_PENDENTE = "pendente";
-
-	/* Servidor de FTP */
-	public static final String SERVIDOR_FTP = "ftp://fernanda@salad22.ist.utl.pt";
+	public static final long SEGUNDO_ESCALAO = 2 * 3600 * 1000; // duas horas	
 }

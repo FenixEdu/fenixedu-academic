@@ -12,9 +12,12 @@ public interface IParamJustificacaoPersistente {
   public boolean alterarParamJustificacao(ParamJustificacao paramJustificacao);
   public boolean apagarParamJustificacao(String sigla);
   public boolean escreverParamJustificacao(ParamJustificacao paramJustificacao);
+	public ArrayList lerGruposParamJustificacoes();
 	public ParamJustificacao lerParamJustificacao(int codigoInterno);
   public ParamJustificacao lerParamJustificacao(String sigla);
   public ArrayList lerParamJustificacoes(ArrayList listaJustificacoes);
   public ArrayList lerSiglasJustificacao();
+  public ArrayList lerTipoDiasParamJustificacoes();
+  public ArrayList lerTiposParamJustificacoes();
   public ArrayList lerTodasParamJustificacoes(String ordem);
 }

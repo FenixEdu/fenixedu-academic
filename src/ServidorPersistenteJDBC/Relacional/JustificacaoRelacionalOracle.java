@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Dominio.Justificacao;
 import ServidorPersistenteJDBC.IJustificacaoPersistente;
@@ -145,13 +146,19 @@ public class JustificacaoRelacionalOracle implements IJustificacaoPersistente {
 			} catch (SQLException SQLe) {
 				SuportePersistenteOracle.getInstance().cancelarTransaccao();
 				System.out.println("JustificacaoRelacionalOracle.lerTodasJustificacoes: " + SQLe.toString());
+				SQLe.printStackTrace();
 				return null;
 			}
 			SuportePersistenteOracle.getInstance().confirmarTransaccao();
 		} catch (Exception e) {
 			System.out.println("JustificacaoRelacionalOracle.lerTodasJustificacoes: " + e.toString());
+			e.printStackTrace();
 		} finally {
 			return listaJustificacoes;
 		}
 	} /* lerTodasJustificacoes */
+
+	public ArrayList consultarJustificacoes(ArrayList listaChaveFuncionarios, ArrayList listaChaveParamJustificacoes, Date dataInicio, Date dataFim) {
+		return null;
+	} /* consultarJustificacoes */
 }

@@ -680,7 +680,6 @@ public class MarcacaoPontoRelacionalOracle implements IMarcacaoPontoPersistente 
 	 * @see ServidorPersistente.IMarcacaoPontoPersistente#alterarMarcacaoPontoRegularizacao(Dominio.RegularizacaoMarcacaoPonto)
 	 */
 	public boolean alterarMarcacaoPontoRegularizacao(RegularizacaoMarcacaoPonto regularizacao) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -688,7 +687,6 @@ public class MarcacaoPontoRelacionalOracle implements IMarcacaoPontoPersistente 
 	 * @see ServidorPersistente.IMarcacaoPontoPersistente#alterarMarcacaoPontoEscreverRegularizacao(Dominio.RegularizacaoMarcacaoPonto)
 	 */
 	public boolean alterarMarcacaoPontoEscreverRegularizacao(RegularizacaoMarcacaoPonto regularizacao) {
-		// TODO Auto-generated method stub
 		return false;
 	} /* ultimoCodigoInterno */
 }

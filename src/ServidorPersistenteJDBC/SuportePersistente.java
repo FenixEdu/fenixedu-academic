@@ -22,6 +22,7 @@ import ServidorPersistenteJDBC.Relacional.RegularizacaoMarcacaoPontoRelacional;
 import ServidorPersistenteJDBC.Relacional.StatusAssiduidadeRelacional;
 import ServidorPersistenteJDBC.Relacional.UnidadeMarcacaoRelacional;
 import ServidorPersistenteJDBC.Relacional.UtilRelacional;
+import constants.assiduousness.Constants;
 
 public class SuportePersistente {
 	private static SuportePersistente _instance = null;
@@ -68,7 +69,7 @@ public class SuportePersistente {
 
 	public static synchronized SuportePersistente getInstance() {
 		if (_instance == null) {
-			_instance = new SuportePersistente("/ServidorPersistenteConfig.properties");
+			_instance = new SuportePersistente(Constants.CONFIG_SERVIDORPERSISTENTE);
 		}
 		return _instance;
 	}
@@ -106,7 +107,6 @@ public class SuportePersistente {
 	public IPaisesPersistente iPaisesPersistente() {
 		return new PaisesRelacional();
 	}
-
 	public IFeriasPersistente iFeriasPersistente() {
 		return new FeriasRelacional();
 	}

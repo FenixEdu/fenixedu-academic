@@ -15,8 +15,8 @@ package Dominio;
 
 import java.util.Date;
 
-import Util.State;
 import Util.SituationName;
+import Util.State;
 
 public interface ICandidateSituation {
     

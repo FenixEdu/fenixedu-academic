@@ -41,6 +41,8 @@ public class Horario {
 
 	private int quem;
 	private Timestamp quando;
+	
+	private int codigoMapeamenento = 0;
 
 	/* Construtores */
 	public Horario() {
@@ -506,6 +508,10 @@ public class Horario {
 		return sigla;
 	}
 
+	public int getCodigoMapeamenento() {
+		return codigoMapeamenento;
+	}
+	
 	/**
 	 * Sets the chaveFuncionario.
 	 * @param chaveFuncionario The chaveFuncionario to set
@@ -722,6 +728,9 @@ public class Horario {
 		this.sigla = sigla;
 	}
 
+	public void setCodigoMapeamenento(int codigoMapeamenento) {
+		this.codigoMapeamenento = codigoMapeamenento;
+	}
 	/**
 	* equals
 	* @param obj 

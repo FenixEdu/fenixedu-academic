@@ -19,5 +19,7 @@ public interface IHorarioTipoPersistente {
   public ArrayList lerHorariosTipoSemTurnos();
   public ArrayList lerHorarioTipoRegime(int chaveHorarioTipo);
   public ArrayList lerRegimes(int chaveHorario);  
+  
+  public ArrayList lerTodosHorariosTipoComRegime(int chaveRegime);
 }
 

@@ -2,7 +2,6 @@ package ServidorPersistenteJDBC;
 
 import Dominio.FuncNaoDocente;
 
-
 /**
  *
  * @author  Fernanda Quitério e Tania Pousão

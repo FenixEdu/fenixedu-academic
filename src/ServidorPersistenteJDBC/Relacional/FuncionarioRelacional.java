@@ -52,7 +52,11 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sql.setString(10, funcionario.getCalendario());
 			sql.setInt(11, funcionario.getChaveStatus());
 			sql.setDate(12, new java.sql.Date(funcionario.getDataInicio().getTime()));
-			sql.setDate(13, new java.sql.Date(funcionario.getDataFim().getTime()));
+			if (funcionario.getDataFim() == null) {
+				sql.setDate(13, null);
+			} else {
+				sql.setDate(13, new java.sql.Date(funcionario.getDataFim().getTime()));
+			}
 			sql.setInt(14, funcionario.getQuem());
 			sql.setTimestamp(15, new Timestamp(funcionario.getQuando().getTime()));
 			sql.setInt(16, funcionario.getNumeroMecanografico());
@@ -104,7 +108,11 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sql.setString(10, funcionario.getCalendario());
 			sql.setInt(11, funcionario.getChaveStatus());
 			sql.setDate(12, new java.sql.Date(funcionario.getDataInicio().getTime()));
-			sql.setDate(13, new java.sql.Date(funcionario.getDataFim().getTime()));
+			if (funcionario.getDataFim() == null) {
+				sql.setDate(13, null);
+			} else {
+				sql.setDate(13, new java.sql.Date(funcionario.getDataFim().getTime()));
+			}
 			sql.setInt(14, funcionario.getQuem());
 			sql.setTimestamp(15, new Timestamp(funcionario.getQuando().getTime()));
 
@@ -175,7 +183,8 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 		Funcionario funcionario = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT chaveFuncionario FROM ass_FUNC_NAO_DOCENTE WHERE codigoInterno = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT chaveFuncionario FROM ass_FUNC_NAO_DOCENTE WHERE codigoInterno = ?");
 			sql.setInt(1, chaveFuncNaoDocente);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -342,49 +351,104 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 		}
 	} /* lerFuncionarioPorPessoa */
 
-		public ArrayList lerStatusAssiduidade(int numMecanografico, Timestamp dataInicial, Timestamp dataFinal) {
-			ArrayList listaStatusAssiduidade = null;
+	public ArrayList lerFuncionariosCCLocalTrabalho(int chaveCCLocalTrabalho, Date data) {
+		ArrayList listaFuncionarios = null;
+		
+		//TODO: rever quando se passar a ter historico de funcionario
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO " +
+				"WHERE chaveCCLocalTrabalho=? ORDER BY numeroMecanografico");
+				sql.setInt(1, chaveCCLocalTrabalho);
 
-			try {
-				PreparedStatement sql = UtilRelacional.prepararComando("SELECT chaveStatus FROM ass_FUNCIONARIO where numeroMecanografico = ?");
-				sql.setInt(1, numMecanografico);
-				ResultSet resultado = sql.executeQuery();
-
-				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_STATUS where codigoInterno = ?");
-				ResultSet resultado2 = null;
-
-				listaStatusAssiduidade = new ArrayList();
-				while (resultado.next()) {
-					sql2.setInt(1, resultado.getInt("chaveStatus"));
-					resultado2 = sql2.executeQuery();
-
-					if (resultado2.next()) {
-						listaStatusAssiduidade.add(
-							new StatusAssiduidade(
-								resultado2.getInt("codigoInterno"),
-								resultado2.getString("sigla"),
-								resultado2.getString("designacao"),
-								resultado2.getString("estado"),
-								resultado2.getString("assiduidade")));
-					}
+			ResultSet resultado = sql.executeQuery();
+			listaFuncionarios = new ArrayList();
+			Date antiguidade = null;
+			Date dataInicio = null;
+			Date dataFim = null;
+			Timestamp dataQuando = null;
+			while (resultado.next()) {
+				if (resultado.getString("antiguidade") != null) {
+					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
 				}
-				sql2.close();
-				sql.close();
-			
-			} catch (Exception e) {
-				System.out.println("FuncionarioRelacional.lerStatusAssiduidade: " + e.toString());
-				return null;
-			} finally {
-				return listaStatusAssiduidade;
+				if (resultado.getString("dataInicio") != null) {
+					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
+				}
+				if (resultado.getString("dataFim") != null) {
+					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
+				}
+				if (resultado.getString("quando") != null) {
+					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
+				}
+
+				listaFuncionarios.add(
+					new Funcionario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chavePessoa"),
+						resultado.getInt("numeroMecanografico"),
+						resultado.getInt("chaveHorarioActual"),
+						antiguidade,
+						resultado.getInt("chaveFuncResponsavel"),
+						resultado.getInt("chaveCCLocalTrabalho"),
+						resultado.getInt("chaveCCCorrespondencia"),
+						resultado.getInt("chaveCCVencimento"),
+						resultado.getString("calendario"),
+						resultado.getInt("chaveStatus"),
+						dataInicio,
+						dataFim,
+						resultado.getInt("quem"),
+						dataQuando));
 			}
-		} /* lerStatusAssiduidade */
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("FuncionarioRelacional.lerFuncionariosCCLocalTrabalho: " + e.toString());
+			return null;
+		} finally {
+			return listaFuncionarios;
+		}
+	} /* lerFuncionariosCCLocalTrabalho */
+
+	public ArrayList lerStatusAssiduidade(int numMecanografico, Timestamp dataInicial, Timestamp dataFinal) {
+		ArrayList listaStatusAssiduidade = null;
+
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT chaveStatus FROM ass_FUNCIONARIO where numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+			ResultSet resultado = sql.executeQuery();
+
+			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_STATUS where codigoInterno = ?");
+			ResultSet resultado2 = null;
+
+			listaStatusAssiduidade = new ArrayList();
+			while (resultado.next()) {
+				sql2.setInt(1, resultado.getInt("chaveStatus"));
+				resultado2 = sql2.executeQuery();
+
+				if (resultado2.next()) {
+					listaStatusAssiduidade.add(
+						new StatusAssiduidade(
+							resultado2.getInt("codigoInterno"),
+							resultado2.getString("sigla"),
+							resultado2.getString("designacao"),
+							resultado2.getString("estado"),
+							resultado2.getString("assiduidade")));
+				}
+			}
+			sql2.close();
+			sql.close();
+
+		} catch (Exception e) {
+			System.out.println("FuncionarioRelacional.lerStatusAssiduidade: " + e.toString());
+			return null;
+		} finally {
+			return listaStatusAssiduidade;
+		}
+	} /* lerStatusAssiduidade */
 
 	public ArrayList lerTodosFuncionarios() {
 		ArrayList listaFuncionarios = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
 
 			ResultSet resultado = sql.executeQuery();
 			listaFuncionarios = new ArrayList();
@@ -575,14 +639,14 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT numeroMecanografico FROM funcionario ORDER BY numeroMecanografico");
 			ResultSet resultado = sql.executeQuery();
-
+			
 			PreparedStatement sqlChaveFuncionario =
 				UtilRelacional.prepararComando("SELECT codigoInterno FROM funcionario " + "WHERE numeroMecanografico = ?");
 			ResultSet resultadoChaveFuncionario = null;
-
+			
 			PreparedStatement sqlAssiduidade = UtilRelacional.prepararComando("SELECT * FROM horario " + "WHERE chaveFuncionario = ?");
 			ResultSet resultadoAssiduidade = null;
-
+			
 			listaNumeros = new ArrayList();
 			while (resultado.next()) {
 				//chave do Funcionario
@@ -742,7 +806,8 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 			//escreve a data fim de assiduidade nos actuais registos
 			sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(dataAssiduidade.getTime()));
 			resultadoQuery = sql.executeQuery(); //registos actuais de assiduidade
@@ -758,7 +823,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			}
 			sqlEscrita.close();
 			sql.close();
-			
+
 			//TODO: completar o fim de assiduidade introduzindo um novo record de funcionario com o novo status
 			resultado = true;
 		} catch (Exception e) {
@@ -770,8 +835,8 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 	//Se retornar null ocorreu um erro ou o funcionário não tem fim de Assiduidade
 	//Se retornar uma data pode não ser o fim de Assiduidade ou  o fim do horário
-	public Date lerFimAssiduidade(int numMecanografico) {
-		Date dataAssiduidade = null;
+	public Timestamp lerFimAssiduidade(int numMecanografico) {
+		Timestamp dataAssiduidade = null;
 
 		try {
 			PreparedStatement sql =
@@ -801,7 +866,9 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sql.setDate(2, new java.sql.Date(dataInicioAssiduidade.getTime()));
 			resultadoQuery = sql.executeQuery();
 			if (resultadoQuery.next()) {
-				dataAssiduidade = resultadoQuery.getDate("dataFim");
+				if (resultadoQuery.getString("dataFim") != null) {
+					dataAssiduidade = new Timestamp(Timestamp.valueOf(resultadoQuery.getString("dataFim") + " 23:59:59.0").getTime());
+				}
 			}
 			sql.close();
 		} catch (Exception e) {
@@ -811,8 +878,8 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 		}
 	} /* lerFimAssiduidade */
 
-	public Date lerInicioAssiduidade(int numMecanografico) {
-		Date dataAssiduidade = null;
+	public Timestamp lerInicioAssiduidade(int numMecanografico) {
+		Timestamp dataAssiduidade = null;
 
 		try {
 			PreparedStatement sql =
@@ -833,7 +900,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			resultadoQuery = sql.executeQuery();
 
 			if (resultadoQuery.next()) {
-				dataAssiduidade = resultadoQuery.getDate("MIN(dataInicio)");
+				dataAssiduidade = new Timestamp(resultadoQuery.getDate("MIN(dataInicio)").getTime());
 			}
 			sql.close();
 		} catch (Exception e) {

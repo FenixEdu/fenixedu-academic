@@ -19,5 +19,7 @@ public interface IFeriadoPersistente {
   public Horario horarioFeriado(Date dia);
   public Horario horarioFeriado(int numMecanografico, Date dia);
   public Feriado lerFeriado(int codigoInterno);  
+  public Feriado lerFeriado(Date dia);
+	public Feriado lerFeriado(String string, Date date);
   public ArrayList lerTodosCalendarios();
 }

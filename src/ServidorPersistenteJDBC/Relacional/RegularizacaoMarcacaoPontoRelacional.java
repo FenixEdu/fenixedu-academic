@@ -13,8 +13,7 @@ import ServidorPersistenteJDBC.IRegularizacaoMarcacaoPontoPersistente;
  *
  * @author  Fernanda Quitério e Tania Pousão
  */
-public class RegularizacaoMarcacaoPontoRelacional
-	implements IRegularizacaoMarcacaoPontoPersistente {
+public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarcacaoPontoPersistente {
 
 	public boolean alterarRegularizacaoMarcacaoPonto(RegularizacaoMarcacaoPonto regularizacao) {
 		boolean resultado = false;
@@ -35,9 +34,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 			sql.setInt(3, regularizacao.getChaveParamRegularizacao());
 			sql.setInt(4, regularizacao.getQuem());
 			if (regularizacao.getQuando() != null) {
-				sql.setTimestamp(
-					5,
-					new Timestamp((regularizacao.getQuando()).getTime()));
+				sql.setTimestamp(5, new Timestamp((regularizacao.getQuando()).getTime()));
 			} else {
 				sql.setTimestamp(5, null);
 			}
@@ -47,9 +44,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 			sql.close();
 			resultado = true;
 		} catch (Exception e) {
-			System.out.println(
-				"RegularizacaoMarcacaoPontoRelacional.alterarRegularizacaoMarcacaoPonto: "
-					+ e.toString());
+			System.out.println("RegularizacaoMarcacaoPontoRelacional.alterarRegularizacaoMarcacaoPonto: " + e.toString());
 		} finally {
 			return resultado;
 		}
@@ -59,10 +54,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"DELETE FROM ass_REGULARIZACAO_MARCACAO "
-						+ "WHERE chaveMarcacaoPonto=?");
+			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_REGULARIZACAO_MARCACAO " + "WHERE chaveMarcacaoPonto=?");
 
 			sql.setInt(1, chaveMarcacaoPonto);
 
@@ -70,9 +62,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 			sql.close();
 			resultado = true;
 		} catch (Exception e) {
-			System.out.println(
-				"RegularizacaoMarcacaoPontoRelacional.apagarRegularizacaoMarcacaoPonto: "
-					+ e.toString());
+			System.out.println("RegularizacaoMarcacaoPontoRelacional.apagarRegularizacaoMarcacaoPonto: " + e.toString());
 		} finally {
 			return resultado;
 		}
@@ -82,23 +72,16 @@ public class RegularizacaoMarcacaoPontoRelacional
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"DELETE FROM ass_REGULARIZACAO_MARCACAO");
-
+			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_REGULARIZACAO_MARCACAO");
 			sql.executeUpdate();
 			sql.close();
-
-			/*sql =
-				UtilRelacional.prepararComando(
-					"ALTER TABLE ass_REGULARIZACAO_MARCACAO auto_increment=1");
-			sql.execute();
+			/*
+			sql = UtilRelacional.prepararComando("ALTER TABLE ass_REGULARIZACAO_MARCACAO auto_increment=1");
+			sql.executeUpdate();
 			sql.close();*/
 			resultado = true;
 		} catch (Exception e) {
-			System.out.println(
-				"RegularizacaoMarcacaoPontoRelacional.apagarRegularizacoesMarcacoesPonto: "
-					+ e.toString());
+			System.out.println("RegularizacaoMarcacaoPontoRelacional.apagarRegularizacoesMarcacoesPonto: " + e.toString());
 		} finally {
 			return resultado;
 		}
@@ -107,19 +90,14 @@ public class RegularizacaoMarcacaoPontoRelacional
 	public boolean escreverRegularizacaoMarcacaoPonto(RegularizacaoMarcacaoPonto regularizacao) {
 		boolean resultado = false;
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"INSERT INTO ass_REGULARIZACAO_MARCACAO "
-						+ "VALUES (?, ?, ?, ?, ?)");
+			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_REGULARIZACAO_MARCACAO " + "VALUES (?, ?, ?, ?, ?)");
 
 			sql.setInt(1, regularizacao.getCodigoInterno());
 			sql.setInt(2, regularizacao.getChaveMarcacaoPonto());
 			sql.setInt(3, regularizacao.getChaveParamRegularizacao());
 			sql.setInt(4, regularizacao.getQuem());
 			if (regularizacao.getQuando() != null) {
-				sql.setTimestamp(
-					5,
-					new Timestamp((regularizacao.getQuando()).getTime()));
+				sql.setTimestamp(5, new Timestamp((regularizacao.getQuando()).getTime()));
 			} else {
 				sql.setTimestamp(5, null);
 			}
@@ -127,9 +105,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 			sql.close();
 			resultado = true;
 		} catch (Exception e) {
-			System.out.println(
-				"RegularizacaoMarcacaoPontoRelacional.escreverRegularizacaoMarcacaoPonto: "
-					+ e.toString());
+			System.out.println("RegularizacaoMarcacaoPontoRelacional.escreverRegularizacaoMarcacaoPonto: " + e.toString());
 		} finally {
 			return resultado;
 		}
@@ -142,9 +118,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 		RegularizacaoMarcacaoPonto regularizacao = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"INSERT INTO ass_REGULARIZACAO_MARCACAO VALUES (?, ?, ?, ?, ?)");
+			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_REGULARIZACAO_MARCACAO VALUES (?, ?, ?, ?, ?)");
 
 			while (iterador.hasNext()) {
 				regularizacao = (RegularizacaoMarcacaoPonto) iterador.next();
@@ -154,9 +128,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 				sql.setInt(3, regularizacao.getChaveParamRegularizacao());
 				sql.setInt(4, regularizacao.getQuem());
 				if (regularizacao.getQuando() != null) {
-					sql.setTimestamp(
-						5,
-						new Timestamp((regularizacao.getQuando()).getTime()));
+					sql.setTimestamp(5, new Timestamp((regularizacao.getQuando()).getTime()));
 				} else {
 					sql.setTimestamp(5, null);
 				}
@@ -165,53 +137,48 @@ public class RegularizacaoMarcacaoPontoRelacional
 			sql.close();
 			resultado = true;
 		} catch (Exception e) {
-			System.out.println(
-				"RegularizacaoMarcacaoPontoRelacional.escreverRegularizacoesMarcacoesPonto: "
-					+ e.toString());
+			System.out.println("RegularizacaoMarcacaoPontoRelacional.escreverRegularizacoesMarcacoesPonto: " + e.toString());
 		} finally {
 			return resultado;
 		}
 	} /* escreverRegularizacoesMarcacoesPonto */
 
 	public boolean existeRegularizacaoMarcacaoPonto (RegularizacaoMarcacaoPonto regularizacao) {
-		boolean resultado = false;
+			boolean resultado = false;
 
-		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_REGULARIZACAO_MARCACAO "
-			+ "WHERE chaveMarcacaoPonto = ? "
-			+ "AND chaveParamRegularizacao = ? "
-			+ "AND quem = ? "
-			+ "AND quando = ?");
+			try {
+				PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_REGULARIZACAO_MARCACAO "
+				+ "WHERE chaveMarcacaoPonto = ? "
+				+ "AND chaveParamRegularizacao = ? "
+				+ "AND quem = ? "
+				+ "AND quando = ?");
 
-			sql.setInt(1, regularizacao.getChaveMarcacaoPonto());
-			sql.setInt(2, regularizacao.getChaveParamRegularizacao());
-			sql.setInt(3, regularizacao.getQuem());
-			if (regularizacao.getQuando() != null) {
-				sql.setTimestamp(4, new Timestamp((regularizacao.getQuando()).getTime()));
-			} else {
-				sql.setTimestamp(4, null);
+				sql.setInt(1, regularizacao.getChaveMarcacaoPonto());
+				sql.setInt(2, regularizacao.getChaveParamRegularizacao());
+				sql.setInt(3, regularizacao.getQuem());
+				if (regularizacao.getQuando() != null) {
+					sql.setTimestamp(4, new Timestamp((regularizacao.getQuando()).getTime()));
+				} else {
+					sql.setTimestamp(4, null);
+				}
+				ResultSet resultadoQuery = sql.executeQuery();
+				if (resultadoQuery.next()) {
+					resultado = true;
+				}
+				sql.close();
+			} catch (Exception e) {
+				System.out.println("RegularizacaoMarcacaoPontoRelacional.existeRegularizacaoMarcacaoPonto : " + e.toString());
+				e.printStackTrace();
+			} finally {
+				return resultado;
 			}
-			ResultSet resultadoQuery = sql.executeQuery();
-			if (resultadoQuery.next()) {
-				resultado = true;
-			}
-			sql.close();
-		} catch (Exception e) {
-			System.out.println("RegularizacaoMarcacaoPontoRelacional.existeRegularizacaoMarcacaoPonto : " + e.toString());
-			e.printStackTrace();
-		} finally {
-			return resultado;
-		}
-	} /* existeRegularizacaoMarcacaoPonto */
-	
+		} /* existeRegularizacaoMarcacaoPonto */
+		
 	public RegularizacaoMarcacaoPonto lerRegularizacaoMarcacaoPonto(int chaveMarcacaoPonto) {
 		RegularizacaoMarcacaoPonto regularizacao = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"SELECT * FROM ass_REGULARIZACAO_MARCACAO "
-						+ "WHERE chaveMarcacaoPonto=?");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_REGULARIZACAO_MARCACAO " + "WHERE chaveMarcacaoPonto=?");
 
 			sql.setInt(1, chaveMarcacaoPonto);
 
@@ -227,9 +194,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 			}
 			sql.close();
 		} catch (Exception e) {
-			System.out.println(
-				"RegularizacaoMarcacaoPontoRelacional.lerRegularizacaoMarcacaoPonto: "
-					+ e.toString());
+			System.out.println("RegularizacaoMarcacaoPontoRelacional.lerRegularizacaoMarcacaoPonto: " + e.toString());
 		} finally {
 			return regularizacao;
 		}
@@ -239,9 +204,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 		ArrayList regularizacoes = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"SELECT * FROM ass_REGULARIZACAO_MARCACAO");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_REGULARIZACAO_MARCACAO");
 
 			ResultSet resultado = sql.executeQuery();
 			regularizacoes = new ArrayList();
@@ -256,9 +219,7 @@ public class RegularizacaoMarcacaoPontoRelacional
 			}
 			sql.close();
 		} catch (Exception e) {
-			System.out.println(
-				"RegularizacaoMarcacaoPontoRelacional.lerTodasRegularizacoes: "
-					+ e.toString());
+			System.out.println("RegularizacaoMarcacaoPontoRelacional.lerTodasRegularizacoes: " + e.toString());
 		} finally {
 			return regularizacoes;
 		}

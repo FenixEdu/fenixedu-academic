@@ -370,7 +370,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 					resultadoQuery = sql.executeQuery();
 
 					if (resultadoQuery.next()) {
-						listaPessoas.add(resultadoQuery);
+						listaPessoas.add(constroiPessoa(resultadoQuery));
 					}
 				}
 				sql.close();

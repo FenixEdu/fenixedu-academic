@@ -1,5 +1,4 @@
 package ServidorPersistenteJDBC.Relacional;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,7 +16,6 @@ import ServidorPersistenteJDBC.config.IST2002Properties;
  * @author  Nanda & Tânia
  */
 public class UtilRelacionalOracle {
-	//private static String _dataSource;
 	private static String _userName;
 	private static String _password;
 	private static String _urlBD;
@@ -30,7 +28,7 @@ public class UtilRelacionalOracle {
 		_userName = _properties.getProperty("IST2002.ServidorPersistente.usernameBD");
 		_password = _properties.getProperty("IST2002.ServidorPersistente.passwordBD");
 		_urlBD = _properties.getProperty("IST2002.ServidorPersistente.URLServidorBD");
-		if(_userName == null || _password == null) {
+		if (_userName == null || _password == null) {
 			System.out.println("UtilRelacionalOracle: propriedades indefinidas.");
 		}
 		loadDriver();
@@ -98,7 +96,7 @@ public class UtilRelacionalOracle {
 
 	public static synchronized PreparedStatement prepararComando(String statement) {
 		Connection ligacao = (Connection) mapaLigacoes.get(Thread.currentThread());
-		// CODIGO A RETIRAR SE TODO O SERVIDOR DOCENTE USAR EXPLICITANENTE TRANSACCOES...
+		// CODIGO A RETIRAR SE O SERVIDOR DOCENTE USAR EXPLICITANENTE TRANSACCOES...
 		if (ligacao == null) {
 			if (_ligacaoPartilhada == null)
 				try {
@@ -121,8 +119,7 @@ public class UtilRelacionalOracle {
 	private static void loadDriver() {
 		try {
 			//driver de oracle
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			//Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+			Class.forName("com.mysql.jdbc.Driver"/*"org.gjt.mm.mysql.Driver"*/).newInstance();
 		} catch (Exception e) {
 			System.out.println("UtilRelacionalOracle: erro a carregar o driver: " + e.toString());
 		}

@@ -10,11 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.IPessoa;

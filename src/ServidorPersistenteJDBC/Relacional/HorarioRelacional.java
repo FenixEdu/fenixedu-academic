@@ -103,7 +103,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT chaveHorarioActual FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT chaveHorarioActual FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numeroMecanografico);
 			ResultSet resultadoQuery = sql.executeQuery();
 			int chaveHorarioActual = 0;
@@ -115,7 +116,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 			sql.close();
 
-			sql = UtilRelacional.prepararComando("UPDATE ass_HORARIO SET " + "dataFim = ? " + "WHERE codigoInterno = ? ");
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_HORARIO SET " + "dataFim = ? " + "WHERE codigoInterno = ? ");
 			sql.setDate(1, new java.sql.Date(dataFim.getTime()));
 			sql.setInt(2, chaveHorarioActual);
 			sql.executeUpdate();
@@ -133,7 +136,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_HORARIO " + "WHERE codigoInterno = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("DELETE FROM ass_HORARIO " + "WHERE codigoInterno = ?");
 
 			sql.setInt(1, codigoInterno);
 
@@ -154,19 +158,19 @@ public class HorarioRelacional implements IHorarioPersistente {
 			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_HORARIO");
 			sql.executeUpdate();
 			sql.close();
-
-			/*sql = UtilRelacional.prepararComando("ALTER TABLE ass_HORARIO auto_increment=1");
+			/*
+			sql = UtilRelacional.prepararComando("ALTER TABLE ass_HORARIO auto_increment=1");
 			sql.execute();
 			sql.close();*/
 
 			sql = UtilRelacional.prepararComando("DELETE FROM ass_HORARIO_EXCEPCAO");
 			sql.executeUpdate();
 			sql.close();
-
-			/*sql = UtilRelacional.prepararComando("ALTER TABLE ass_HORARIO_EXCEPCAO auto_increment=1");
+			/*
+			sql = UtilRelacional.prepararComando("ALTER TABLE ass_HORARIO_EXCEPCAO auto_increment=1");
 			sql.execute();
 			sql.close();*/
-						
+
 			resultado = true;
 		} catch (Exception e) {
 			System.out.println("HorarioRelacional.apagarHorario: " + e.toString());
@@ -179,7 +183,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		boolean resultado;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO " + "ass_HORARIOEXCEPCAO_REGIME VALUES (?, ?)");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("INSERT INTO " + "ass_HORARIOEXCEPCAO_REGIME VALUES (?, ?)");
 
 			sql.setInt(1, chaveHorario);
 			sql.setInt(2, chaveRegime);
@@ -198,7 +203,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		boolean resultado;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO " + "ass_HORARIO_REGIME VALUES (?, ?)");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("INSERT INTO " + "ass_HORARIO_REGIME VALUES (?, ?)");
 
 			sql.setInt(1, chaveHorario);
 			sql.setInt(2, chaveRegime);
@@ -213,7 +219,10 @@ public class HorarioRelacional implements IHorarioPersistente {
 		return resultado;
 	} /* associarHorarioRegime */
 
-	public int calcularIndiceRotacao(int numDiasRotacao, java.util.Date dataInicioHorario, java.util.Date dataConsulta) {
+	public int calcularIndiceRotacao(
+		int numDiasRotacao,
+		java.util.Date dataInicioHorario,
+		java.util.Date dataConsulta) {
 		int indiceRotacao = 0;
 
 		try {
@@ -231,7 +240,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 			if (inicioHorario.get(Calendar.YEAR) < diaConsulta.get(Calendar.YEAR)) {
 				Calendar fimAnoHorario = Calendar.getInstance();
 				fimAnoHorario.set(inicioHorario.get(Calendar.YEAR), Calendar.DECEMBER, 31, 00, 00, 00);
-				numDias = fimAnoHorario.get(Calendar.DAY_OF_YEAR) - inicioHorario.get(Calendar.DAY_OF_YEAR) + 1;
+				numDias =
+					fimAnoHorario.get(Calendar.DAY_OF_YEAR) - inicioHorario.get(Calendar.DAY_OF_YEAR) + 1;
 				//numero de dias para o fim do ano do horario
 
 				Calendar calendario = Calendar.getInstance();
@@ -252,7 +262,10 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			} else if (inicioHorario.get(Calendar.YEAR) == diaConsulta.get(Calendar.YEAR)) {
 				numDias =
-					new BigInteger(String.valueOf((diaConsulta.get(Calendar.DAY_OF_YEAR) - inicioHorario.get(Calendar.DAY_OF_YEAR)) + 1))
+					new BigInteger(
+						String.valueOf(
+							(diaConsulta.get(Calendar.DAY_OF_YEAR) - inicioHorario.get(Calendar.DAY_OF_YEAR))
+								+ 1))
 						.abs()
 						.intValue();
 
@@ -260,7 +273,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 				//CONSULTA POSSIVELMENTE INCORRECTA
 				Calendar fimAnoHorario = Calendar.getInstance();
 				fimAnoHorario.set(diaConsulta.get(Calendar.YEAR), Calendar.DECEMBER, 31, 00, 00, 00);
-				numDias = fimAnoHorario.get(Calendar.DAY_OF_YEAR) - diaConsulta.get(Calendar.DAY_OF_YEAR) + 1;
+				numDias =
+					fimAnoHorario.get(Calendar.DAY_OF_YEAR) - diaConsulta.get(Calendar.DAY_OF_YEAR) + 1;
 				//numero de dias para o fim do ano da consulta
 
 				Calendar calendario = Calendar.getInstance();
@@ -281,7 +295,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 
 			indiceRotacao =
-				new BigInteger(String.valueOf(numDias + indiceInicioHorario)).mod(new BigInteger(String.valueOf(numDiasRotacao))).intValue();
+				new BigInteger(String.valueOf(numDias + indiceInicioHorario))
+					.mod(new BigInteger(String.valueOf(numDiasRotacao)))
+					.intValue();
 			/*
 			int indiceDescanso =
 				new BigInteger(String.valueOf(indiceRotacao))
@@ -297,7 +313,10 @@ public class HorarioRelacional implements IHorarioPersistente {
 		}
 	} /* calcularIndiceRotacao */
 
-	public int calculaIndiceReferenciaDescanso(int indiceRotacao, int indiceDescanso, int numDiasRotacao) {
+	public int calculaIndiceReferenciaDescanso(
+		int indiceRotacao,
+		int indiceDescanso,
+		int numDiasRotacao) {
 		if (indiceDescanso == 0) { //é sábado
 			indiceRotacao = indiceRotacao - 1;
 			if (indiceRotacao < 0) {
@@ -314,7 +333,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 		try {
 			indiceDescanso =
-				new BigInteger(String.valueOf(indiceRotacao)).mod(new BigInteger(String.valueOf(Constants.NUM_DIAS_SEMANA))).intValue();
+				new BigInteger(String.valueOf(indiceRotacao))
+					.mod(new BigInteger(String.valueOf(Constants.NUM_DIAS_SEMANA)))
+					.intValue();
 			// se é 0 entao é sábado
 			// se é 1 entao é domingo
 		} catch (ArithmeticException ea) {
@@ -329,7 +350,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
-					"INSERT INTO ass_HORARIO_EXCEPCAO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO ass_HORARIO_EXCEPCAO "
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			sql.setInt(1, horario.getCodigoInterno());
 			sql.setInt(2, horario.getChaveHorarioTipo());
@@ -387,7 +409,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
-					"INSERT INTO ass_HORARIO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO ass_HORARIO "
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			sql.setInt(1, horario.getCodigoInterno());
 			sql.setInt(2, horario.getChaveHorarioTipo());
@@ -449,7 +472,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 			ResultSet resultadoQuery = null;
 
 			while (iterador.hasNext()) {
-				horario = (Horario) iterador.next();
+				horario = (Horario)iterador.next();
 
 				sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_TIPO " + "WHERE sigla = ?");
 				sql.setString(1, horario.getSigla());
@@ -462,7 +485,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 				sql =
 					UtilRelacional.prepararComando(
-						"INSERT INTO ass_HORARIO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						"INSERT INTO ass_HORARIO "
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 				sql.setInt(1, horario.getCodigoInterno());
 				sql.setInt(2, horario.getChaveHorarioTipo());
@@ -514,12 +538,15 @@ public class HorarioRelacional implements IHorarioPersistente {
 		return null;
 	} /* lerExcepcoesHorarioPorNumMecanografico */
 
-	public Horario lerExcepcaoHorarioPorNumMecanografico(int numMecanografico, Timestamp dataConsulta) {
+	public Horario lerExcepcaoHorarioPorNumMecanografico(
+		int numMecanografico,
+		Timestamp dataConsulta) {
 		//ATENCAO: esta função é idêntica à função lerHorarioPorNumMecanografico		
 		Horario horario = null;
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -554,7 +581,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			//número de dias da rotação
 			sql =
 				UtilRelacional.prepararComando(
-					"SELECT MAX(numDias+posicao) FROM ass_HORARIO_EXCEPCAO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
+					"SELECT MAX(numDias+posicao) FROM ass_HORARIO_EXCEPCAO "
+						+ "WHERE chaveFuncionario = ? "
+						+ "AND dataInicio = ?");
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(dataInicioHorario.getTime()));
 			resultado = sql.executeQuery();
@@ -573,7 +602,11 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			// indice do horário da rotação a ser cumprido agora
 			Calendar agora = Calendar.getInstance();
-			int indiceRotacao = calcularIndiceRotacao(numDiasRotacao, dataInicioHorario, new java.util.Date(dataConsulta.getTime()));
+			int indiceRotacao =
+				calcularIndiceRotacao(
+					numDiasRotacao,
+					dataInicioHorario,
+					new java.util.Date(dataConsulta.getTime()));
 
 			// horário a ser cumprido agora
 			sql =
@@ -624,7 +657,6 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando"));
 			} else {
-				System.out.println("---> indice de rotacao:" + indiceRotacao);
 				// possivelmente é um dia de descanso
 				if (indiceRotacao == 1) {
 					//é um DS, ie Domingo
@@ -641,18 +673,23 @@ public class HorarioRelacional implements IHorarioPersistente {
 			sql.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("HorarioRelacional.lerExcepcaoHorarioPorNumMecanografico: " + e.toString());
+			System.out.println(
+				"HorarioRelacional.lerExcepcaoHorarioPorNumMecanografico: " + e.toString());
 		} finally {
 			return horario;
 		}
 	} /* lerExcepcaoHorarioPorNumMecanografico */
 
-	public ArrayList lerExcepcoesHorarioPorNumMecanografico(int numMecanografico, Date dataInicio, Date dataFim) {
+	public ArrayList lerExcepcoesHorarioPorNumMecanografico(
+		int numMecanografico,
+		Date dataInicio,
+		Date dataFim) {
 		ArrayList listaHorarios = null;
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -715,7 +752,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 			sql.close();
 		} catch (Exception e) {
-			System.out.println("HorarioRelacional.lerExcepcoesHorarioPorNumMecanografico: " + e.toString());
+			System.out.println(
+				"HorarioRelacional.lerExcepcoesHorarioPorNumMecanografico: " + e.toString());
 		} finally {
 			return listaHorarios;
 		}
@@ -726,7 +764,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -786,7 +825,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 			sql.close();
 
 		} catch (Exception e) {
-			System.out.println("HorarioRelacional.lerHistoricoHorarioPorNumMecanografico: " + e.toString());
+			System.out.println(
+				"HorarioRelacional.lerHistoricoHorarioPorNumMecanografico: " + e.toString());
 		} finally {
 			return historicoHorario;
 		}
@@ -796,7 +836,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		Horario horario = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE codigoInterno = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE codigoInterno = ?");
 
 			sql.setInt(1, codigoInterno);
 
@@ -855,7 +896,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		Horario horario = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ?");
 
 			sql.setInt(1, chaveFuncionario);
 
@@ -910,7 +952,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno, chaveHorarioActual FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno, chaveHorarioActual FROM ass_FUNCIONARIO "
+						+ "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -927,7 +971,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			//TODO: verifica se o horário a cumprir não é uma excepção
 
 			// data de inicio do horário e número de dias da rotação
-			sql = UtilRelacional.prepararComando("SELECT dataInicio, numDias, posicao FROM ass_HORARIO " + "WHERE codigoInterno = ?");
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT dataInicio, numDias, posicao FROM ass_HORARIO " + "WHERE codigoInterno = ?");
 			sql.setInt(1, chaveHorario);
 			resultado = sql.executeQuery();
 			java.util.Date dataInicioHorario = null;
@@ -964,7 +1010,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			// todos os horarios da rotacao
 			sql =
 				UtilRelacional.prepararComando(
-					"SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ? ORDER BY posicao");
+					"SELECT * FROM ass_HORARIO "
+						+ "WHERE chaveFuncionario = ? "
+						+ "AND dataInicio = ? ORDER BY posicao");
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(dataInicioHorario.getTime()));
 			resultado = sql.executeQuery();
@@ -977,14 +1025,19 @@ public class HorarioRelacional implements IHorarioPersistente {
 				// Primeiro dia da proxima rotacao deste horario
 				dataHorario = Calendar.getInstance();
 				if (resultado.getInt("codigoInterno") == chaveHorarioAgora) {
-					dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
+					dataHorario.set(
+						Calendar.DAY_OF_MONTH,
+						agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
 				} else {
 					if (indiceRotacao > resultado.getInt("posicao")) {
 						dataHorario.set(
 							Calendar.DAY_OF_MONTH,
-							agora.get(Calendar.DAY_OF_MONTH) + ((numDiasRotacao - indiceRotacao) + resultado.getInt("posicao")));
+							agora.get(Calendar.DAY_OF_MONTH)
+								+ ((numDiasRotacao - indiceRotacao) + resultado.getInt("posicao")));
 					} else if (indiceRotacao < resultado.getInt("posicao")) {
-						dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
+						dataHorario.set(
+							Calendar.DAY_OF_MONTH,
+							agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
 					}
 				}
 				dataCumprir = dataHorario.getTime();
@@ -1037,7 +1090,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		Horario horario = null;
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -1072,7 +1126,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			//número de dias da rotação
 			sql =
 				UtilRelacional.prepararComando(
-					"SELECT MAX(numDias+posicao) FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
+					"SELECT MAX(numDias+posicao) FROM ass_HORARIO "
+						+ "WHERE chaveFuncionario = ? "
+						+ "AND dataInicio = ?");
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(dataInicioHorario.getTime()));
 			resultado = sql.executeQuery();
@@ -1091,10 +1147,14 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			// indice do horário da rotação a ser cumprido agora
 			Calendar agora = Calendar.getInstance();
-			int indiceRotacao = calcularIndiceRotacao(numDiasRotacao, dataInicioHorario, new java.util.Date(dataConsulta.getTime()));
+			int indiceRotacao =
+				calcularIndiceRotacao(
+					numDiasRotacao,
+					dataInicioHorario,
+					new java.util.Date(dataConsulta.getTime()));
 			int indiceDescanso = calcularIndiceDescanso(indiceRotacao);
-			indiceRotacao = calculaIndiceReferenciaDescanso(indiceRotacao, indiceDescanso, numDiasRotacao);
-			System.out.println("Indices: " + indiceRotacao + " Descanso: " + indiceDescanso);
+			indiceRotacao =
+				calculaIndiceReferenciaDescanso(indiceRotacao, indiceDescanso, numDiasRotacao);
 
 			// horário a ser cumprido agora
 			sql =
@@ -1146,14 +1206,12 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("quando"));
 
 				if (indiceDescanso == 1) {
-					System.out.println("É DOMINGO - DS");
 					//é um DS, ie Domingo
 					horario.setSigla(Constants.DS);
 					//Expediente de dias de Descanso
 					horario.setInicioExpediente(new Timestamp(Constants.EXPEDIENTE_MINIMO));
 					horario.setFimExpediente(new Timestamp(Constants.EXPEDIENTE_MAXIMO));
 				} else if (indiceDescanso == 0) {
-					System.out.println("É SÁBADO - DSC");
 					//é um DSC, ie Sabado					
 					horario.setSigla(Constants.DSC);
 					// Expediente de dias de Descanso
@@ -1173,12 +1231,16 @@ public class HorarioRelacional implements IHorarioPersistente {
 		}
 	} /* lerHorarioPorNumFuncionario */
 
-	public ArrayList lerHorariosPorNumMecanografico(int numMecanografico, Date dataInicio, Date dataFim) {
+	public ArrayList lerHorariosPorNumMecanografico(
+		int numMecanografico,
+		Date dataInicio,
+		Date dataFim) {
 		ArrayList listaHorarios = null;
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -1210,11 +1272,12 @@ public class HorarioRelacional implements IHorarioPersistente {
 			} else {
 				sql =
 					UtilRelacional.prepararComando(
-						"SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND (? BETWEEN dataInicio AND dataFim)");
+						"SELECT * FROM ass_HORARIO "
+							+ "WHERE chaveFuncionario = ? "
+							+ "AND (? BETWEEN dataInicio AND dataFim)");
 
 				sql.setInt(1, chaveFuncionario);
 				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
-				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
 
 				resultado = sql.executeQuery();
 			}
@@ -1264,7 +1327,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -1276,7 +1340,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 			sql.close();
 
-			sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? AND horario.dataFim IS NULL");
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? AND horario.dataFim IS NULL");
 			sql.setInt(1, chaveFuncionario);
 
 			resultado = sql.executeQuery();
@@ -1324,7 +1390,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 		ArrayList listaRegimes = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_REGIME " + "WHERE chaveHorario = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIO_REGIME " + "WHERE chaveHorario = ?");
 
 			sql.setInt(1, chaveHorario);
 
@@ -1352,11 +1420,14 @@ public class HorarioRelacional implements IHorarioPersistente {
 			Horario horario = null;
 			ArrayList listaRegimes = null;
 
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIOTIPO_REGIME WHERE chaveHorarioTipo = ?");
-			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT designacao FROM regime WHERE codigoInterno = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIOTIPO_REGIME WHERE chaveHorarioTipo = ?");
+			PreparedStatement sql2 =
+				UtilRelacional.prepararComando("SELECT designacao FROM regime WHERE codigoInterno = ?");
 
 			while (iterador.hasNext()) {
-				horario = (Horario) iterador.next();
+				horario = (Horario)iterador.next();
 
 				sql.setInt(1, horario.getChaveHorarioTipo());
 				resultadoQuery = sql.executeQuery();
@@ -1387,7 +1458,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT codigoInterno, chaveHorarioActual FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+				UtilRelacional.prepararComando(
+					"SELECT codigoInterno, chaveHorarioActual FROM ass_FUNCIONARIO "
+						+ "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
 			int chaveFuncionario = 0;
@@ -1404,7 +1477,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			//TODO: verifica se o horário a cumprir não é uma excepção
 
 			// data de inicio do horário e número de dias da rotação
-			sql = UtilRelacional.prepararComando("SELECT dataInicio, numDias, posicao FROM ass_HORARIO " + "WHERE codigoInterno = ?");
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT dataInicio, numDias, posicao FROM ass_HORARIO " + "WHERE codigoInterno = ?");
 			sql.setInt(1, chaveHorario);
 			resultado = sql.executeQuery();
 			java.util.Date dataInicioHorario = null;
@@ -1441,7 +1516,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			// todos os horarios da rotacao
 			sql =
 				UtilRelacional.prepararComando(
-					"SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ? ORDER BY posicao");
+					"SELECT * FROM ass_HORARIO "
+						+ "WHERE chaveFuncionario = ? "
+						+ "AND dataInicio = ? ORDER BY posicao");
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(dataInicioHorario.getTime()));
 			resultado = sql.executeQuery();
@@ -1454,14 +1531,19 @@ public class HorarioRelacional implements IHorarioPersistente {
 				// Primeiro dia da proxima rotacao deste horario
 				dataHorario = Calendar.getInstance();
 				if (resultado.getInt("codigoInterno") == chaveHorarioAgora) {
-					dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
+					dataHorario.set(
+						Calendar.DAY_OF_MONTH,
+						agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
 				} else {
 					if (indiceRotacao > resultado.getInt("posicao")) {
 						dataHorario.set(
 							Calendar.DAY_OF_MONTH,
-							agora.get(Calendar.DAY_OF_MONTH) + ((numDiasRotacao - indiceRotacao) + resultado.getInt("posicao")));
+							agora.get(Calendar.DAY_OF_MONTH)
+								+ ((numDiasRotacao - indiceRotacao) + resultado.getInt("posicao")));
 					} else if (indiceRotacao < resultado.getInt("posicao")) {
-						dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
+						dataHorario.set(
+							Calendar.DAY_OF_MONTH,
+							agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
 					}
 				}
 				dataCumprir = dataHorario.getTime();
@@ -1510,11 +1592,364 @@ public class HorarioRelacional implements IHorarioPersistente {
 		}
 	} /* lerRotacoesPorNumMecanografico */
 
+	public ArrayList lerTodosHorariosExcepcao(Date dataInicio, Date dataFim) {
+		ArrayList listaHorarios = null;
+
+		try {
+			PreparedStatement sql = null;
+			ResultSet resultado = null;
+			if (dataFim != null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_HORARIO_EXCEPCAO "
+							+ "WHERE ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim BETWEEN ? AND ?) OR (dataInicio <= ? AND dataFim >= ?))");
+
+				sql.setDate(1, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(2, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(5, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(6, new java.sql.Date(dataFim.getTime()));
+
+				resultado = sql.executeQuery();
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_HORARIO_EXCEPCAO " + "WHERE ? BETWEEN dataInicio AND dataFim");
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+
+				resultado = sql.executeQuery();
+			}
+
+			listaHorarios = new ArrayList();
+			while (resultado.next()) {
+				listaHorarios.add(
+					new Horario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chaveHorarioTipo"),
+						resultado.getInt("chaveFuncionario"),
+						resultado.getString("sigla"),
+						resultado.getString("modalidade"),
+						resultado.getFloat("duracaoSemanal"),
+						resultado.getTimestamp("inicioPF1"),
+						resultado.getTimestamp("fimPF1"),
+						resultado.getTimestamp("inicioPF2"),
+						resultado.getTimestamp("fimPF2"),
+						resultado.getTimestamp("inicioHN1"),
+						resultado.getTimestamp("fimHN1"),
+						resultado.getTimestamp("inicioHN2"),
+						resultado.getTimestamp("fimHN2"),
+						resultado.getTimestamp("inicioRefeicao"),
+						resultado.getTimestamp("fimRefeicao"),
+						resultado.getTime("descontoObrigatorio"),
+						resultado.getTime("descontoMinimo"),
+						resultado.getTimestamp("inicioExpediente"),
+						resultado.getTimestamp("fimExpediente"),
+						null,
+						java.sql.Date.valueOf(resultado.getString("dataInicio")),
+						null,
+						resultado.getInt("numDias"),
+						resultado.getInt("posicao"),
+						resultado.getInt("quem"),
+						resultado.getTimestamp("quando")));
+			}
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("HorarioRelacional.lerTodosHorariosExcepcao: " + e.toString());
+		} finally {
+			return listaHorarios;
+		}
+	} /* lerTodosHorariosExcepcao */
+
+	public ArrayList lerTodosHorarios(Date dataInicio, Date dataFim) {
+		ArrayList listaHorarios = null;
+
+		try {
+			PreparedStatement sql = null;
+			ResultSet resultado = null;
+			if (dataFim != null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_HORARIO "
+							+ "WHERE ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim BETWEEN ? AND ?) OR (dataInicio <= ? AND dataFim >= ?))");
+
+				sql.setDate(1, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(2, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(5, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(6, new java.sql.Date(dataFim.getTime()));
+
+				resultado = sql.executeQuery();
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_HORARIO " + "WHERE ? BETWEEN dataInicio AND dataFim");
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+
+				resultado = sql.executeQuery();
+			}
+
+			listaHorarios = new ArrayList();
+			while (resultado.next()) {
+				listaHorarios.add(
+					new Horario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chaveHorarioTipo"),
+						resultado.getInt("chaveFuncionario"),
+						resultado.getString("sigla"),
+						resultado.getString("modalidade"),
+						resultado.getFloat("duracaoSemanal"),
+						resultado.getTimestamp("inicioPF1"),
+						resultado.getTimestamp("fimPF1"),
+						resultado.getTimestamp("inicioPF2"),
+						resultado.getTimestamp("fimPF2"),
+						resultado.getTimestamp("inicioHN1"),
+						resultado.getTimestamp("fimHN1"),
+						resultado.getTimestamp("inicioHN2"),
+						resultado.getTimestamp("fimHN2"),
+						resultado.getTimestamp("inicioRefeicao"),
+						resultado.getTimestamp("fimRefeicao"),
+						resultado.getTime("descontoObrigatorio"),
+						resultado.getTime("descontoMinimo"),
+						resultado.getTimestamp("inicioExpediente"),
+						resultado.getTimestamp("fimExpediente"),
+						null,
+						java.sql.Date.valueOf(resultado.getString("dataInicio")),
+						null,
+						resultado.getInt("numDias"),
+						resultado.getInt("posicao"),
+						resultado.getInt("quem"),
+						resultado.getTimestamp("quando")));
+			}
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("HorarioRelacional.lerTodosHorarios: " + e.toString());
+		} finally {
+			return listaHorarios;
+		}
+	} /* lerTodosHorarios */
+
+	public ArrayList lerTodosHorariosExcepcaoComRegime(
+		int chaveRegime,
+		ArrayList listaHorariosTipoComRegime,
+		Date dataInicio,
+		Date dataFim) {
+		ArrayList listaHorarios = null;
+
+		try {
+			//construção da query   
+			String query =
+				new String(
+					"SELECT ass_HORARIO_EXCEPCAO.* FROM ass_HORARIO_EXCEPCAO "
+						+ "LEFT JOIN ass_HORARIOEXCEPCAO_REGIME "
+						+ "ON (ass_HORARIO_EXCEPCAO.codigoInterno = ass_HORARIOEXCEPCAO_REGIME.chaveHorario) ");
+			if (dataFim != null) {
+				query =
+					query.concat(
+						"WHERE (dataFim IS NOT NULL AND ((dataInicio BETWEEN ? AND ?) OR (dataFim BETWEEN ? AND ?) OR (dataInicio <= ? AND dataFim >= ?))) ");
+			} else {
+				query =
+					query.concat(
+						"WHERE ((dataFim IS NOT NULL AND ? BETWEEN dataInicio AND dataFim) OR (dataFim IS NULL)) ");
+			}
+			query = query.concat("AND ((ass_HORARIOEXCEPCAO_REGIME.chaveRegime = ?)");
+			if (listaHorariosTipoComRegime != null) {
+				ListIterator iterador = listaHorariosTipoComRegime.listIterator();
+				while (iterador.hasNext()) {
+					iterador.next();
+					query = query.concat(" OR (ass_HORARIO_EXCEPCAO.chaveHorarioTipo = ?)");
+				}
+			}
+			query = query.concat(")");
+
+			PreparedStatement sql = UtilRelacional.prepararComando(query);
+
+			//set dos dados
+			int indice = 2;
+			if (dataFim != null) {
+				sql.setDate(1, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(2, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(5, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(6, new java.sql.Date(dataFim.getTime()));
+				indice = 7;
+			} else {
+				sql.setDate(1, new java.sql.Date(dataInicio.getTime()));
+			}
+			sql.setInt(indice, chaveRegime);
+			if (listaHorariosTipoComRegime != null) {
+				ListIterator iterador = listaHorariosTipoComRegime.listIterator();
+				while (iterador.hasNext()) {
+					indice++;
+					sql.setInt(indice, ((Integer)iterador.next()).intValue());
+				}
+			}
+
+			ResultSet resultado = sql.executeQuery();
+
+			listaHorarios = new ArrayList();
+			while (resultado.next()) {
+				if (resultado.getString("dataFim") != null) {
+					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
+				} else {
+					dataFim = null;
+				}
+
+				listaHorarios.add(
+					new Horario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chaveHorarioTipo"),
+						resultado.getInt("chaveFuncionario"),
+						resultado.getString("sigla"),
+						resultado.getString("modalidade"),
+						resultado.getFloat("duracaoSemanal"),
+						resultado.getTimestamp("inicioPF1"),
+						resultado.getTimestamp("fimPF1"),
+						resultado.getTimestamp("inicioPF2"),
+						resultado.getTimestamp("fimPF2"),
+						resultado.getTimestamp("inicioHN1"),
+						resultado.getTimestamp("fimHN1"),
+						resultado.getTimestamp("inicioHN2"),
+						resultado.getTimestamp("fimHN2"),
+						resultado.getTimestamp("inicioRefeicao"),
+						resultado.getTimestamp("fimRefeicao"),
+						resultado.getTime("descontoObrigatorio"),
+						resultado.getTime("descontoMinimo"),
+						resultado.getTimestamp("inicioExpediente"),
+						resultado.getTimestamp("fimExpediente"),
+						null,
+						java.sql.Date.valueOf(resultado.getString("dataInicio")),
+						dataFim,
+						resultado.getInt("numDias"),
+						resultado.getInt("posicao"),
+						resultado.getInt("quem"),
+						resultado.getTimestamp("quando")));
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.lerTodosHorariosExcepcaoComRegime: " + e.toString());
+		} finally {
+			return listaHorarios;
+		}
+	} /* lerTodosHorariosExcepcaoComRegime */
+
+	public ArrayList lerTodosHorariosComRegime(
+		int chaveRegime,
+		ArrayList listaHorariosTipoComRegime,
+		Date dataInicio,
+		Date dataFim) {
+		ArrayList listaHorarios = null;
+
+		try {
+			//construção da query   
+					String query =
+						new String(
+							"SELECT ass_HORARIO.* FROM ass_HORARIO "
+								+ "LEFT JOIN ass_HORARIO_REGIME "
+								+ "ON (ass_HORARIO.codigoInterno = ass_HORARIO_REGIME.chaveHorario) ");
+					if (dataFim != null) {
+						query =
+							query.concat(
+								"WHERE (dataFim IS NOT NULL AND ((dataInicio BETWEEN ? AND ?) OR (dataFim BETWEEN ? AND ?) OR (dataInicio <= ? AND dataFim >= ?))) ");
+					} else {
+						query =
+							query.concat(
+								"WHERE ((dataFim IS NOT NULL AND ? BETWEEN dataInicio AND dataFim) OR (dataFim IS NULL)) ");
+					}
+					query = query.concat("AND ((ass_HORARIO_REGIME.chaveRegime = ?)");
+					if (listaHorariosTipoComRegime != null) {
+						ListIterator iterador = listaHorariosTipoComRegime.listIterator();
+						while (iterador.hasNext()) {
+							iterador.next();
+							query = query.concat(" OR (ass_HORARIO.chaveHorarioTipo = ?)");
+						}
+					}
+					query = query.concat(")");
+
+					PreparedStatement sql = UtilRelacional.prepararComando(query);
+
+					//set dos dados
+					int indice = 2;
+					if (dataFim != null) {
+						sql.setDate(1, new java.sql.Date(dataInicio.getTime()));
+						sql.setDate(2, new java.sql.Date(dataFim.getTime()));
+						sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+						sql.setDate(4, new java.sql.Date(dataFim.getTime()));
+						sql.setDate(5, new java.sql.Date(dataInicio.getTime()));
+						sql.setDate(6, new java.sql.Date(dataFim.getTime()));
+						indice = 7;
+					} else {
+						sql.setDate(1, new java.sql.Date(dataInicio.getTime()));
+					}
+					sql.setInt(indice, chaveRegime);
+					if (listaHorariosTipoComRegime != null) {
+						ListIterator iterador = listaHorariosTipoComRegime.listIterator();
+						while (iterador.hasNext()) {
+							indice++;
+							sql.setInt(indice, ((Integer)iterador.next()).intValue());
+						}
+					}
+
+					ResultSet resultado = sql.executeQuery();
+
+					listaHorarios = new ArrayList();
+					while (resultado.next()) {
+						if (resultado.getString("dataFim") != null) {
+							dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
+						} else {
+							dataFim = null;
+						}
+
+						listaHorarios.add(
+							new Horario(
+								resultado.getInt("codigoInterno"),
+								resultado.getInt("chaveHorarioTipo"),
+								resultado.getInt("chaveFuncionario"),
+								resultado.getString("sigla"),
+								resultado.getString("modalidade"),
+								resultado.getFloat("duracaoSemanal"),
+								resultado.getTimestamp("inicioPF1"),
+								resultado.getTimestamp("fimPF1"),
+								resultado.getTimestamp("inicioPF2"),
+								resultado.getTimestamp("fimPF2"),
+								resultado.getTimestamp("inicioHN1"),
+								resultado.getTimestamp("fimHN1"),
+								resultado.getTimestamp("inicioHN2"),
+								resultado.getTimestamp("fimHN2"),
+								resultado.getTimestamp("inicioRefeicao"),
+								resultado.getTimestamp("fimRefeicao"),
+								resultado.getTime("descontoObrigatorio"),
+								resultado.getTime("descontoMinimo"),
+								resultado.getTimestamp("inicioExpediente"),
+								resultado.getTimestamp("fimExpediente"),
+								null,
+								java.sql.Date.valueOf(resultado.getString("dataInicio")),
+								dataFim,
+								resultado.getInt("numDias"),
+								resultado.getInt("posicao"),
+								resultado.getInt("quem"),
+								resultado.getTimestamp("quando")));
+					}
+					sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.lerTodosHorariosComRegime: " + e.toString());
+		} finally {
+			return listaHorarios;
+		}
+	} /* lerTodosHorariosComRegime */
+
 	public int ultimoCodigoInterno() {
 		int ultimo = 0;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT MAX(codigoInterno) FROM ass_HORARIO");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT MAX(codigoInterno) FROM ass_HORARIO");
 
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
@@ -1532,7 +1967,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		int ultimo = 0;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT MAX(codigoInterno) FROM ass_HORARIO_EXCEPCAO");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT MAX(codigoInterno) FROM ass_HORARIO_EXCEPCAO");
 
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {

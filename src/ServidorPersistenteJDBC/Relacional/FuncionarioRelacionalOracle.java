@@ -9,7 +9,7 @@ import java.util.Date;
 import Dominio.Funcionario;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistenteOracle;
-import constants.assiduousness.Constants;
+import constants.assiduousness.Constants;;
 
 /**
  * 
@@ -138,7 +138,7 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 										resultado.getString("ASS_HISEMP_DHFIM").indexOf(" ")));
 										
 					
-							System.out.println("ler Funcionario: dataFim em ASS_HISEMPREG: " + dataFimHorario);
+							//System.out.println("ler Funcionario: dataFim em ASS_HISEMPREG: " + dataFimHorario);
 							funcionario.setDataFim(dataFimHorario);
 						}
 					}
@@ -198,11 +198,11 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 		* Assiduidade do Funcionario 
 		*******************************************************************************************/
 
-	public Date lerFimAssiduidade(int numeroMecanografico) {
+	public Timestamp lerFimAssiduidade(int numeroMecanografico) {
 		return null;
 	}
 
-	public Date lerInicioAssiduidade(int numMecanografico) {
+	public Timestamp lerInicioAssiduidade(int numMecanografico) {
 		return null;
 	}
 
@@ -212,5 +212,13 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 
 	public boolean escreveFimAssiduidade(int numMecanografico, Date fimAssiduidade, int status) {
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IFuncionarioPersistente#lerFuncionariosCCLocalTrabalho(int, java.util.Date)
+	 */
+	public ArrayList lerFuncionariosCCLocalTrabalho(int chaveCCLocalTrabalho, Date data) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

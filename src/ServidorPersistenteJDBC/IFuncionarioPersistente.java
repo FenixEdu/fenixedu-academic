@@ -18,6 +18,7 @@ public interface IFuncionarioPersistente {
 	public Funcionario lerFuncionarioPorFuncNaoDocente(int chaveFuncNaoDocente);
 	public Funcionario lerFuncionarioPorNumMecanografico(int numMecanografico);
 	public Funcionario lerFuncionarioPorPessoa(int chavePessoa);
+	public ArrayList lerFuncionariosCCLocalTrabalho(int chaveCCLocalTrabalho, Date data);
 	public ArrayList lerStatusAssiduidade(int numMecanografico, Timestamp dataInicio, Timestamp dataFim);
 	public ArrayList lerTodosFuncionarios();
 	public ArrayList lerTodosFuncionariosAssiduidade();
@@ -31,7 +32,7 @@ public interface IFuncionarioPersistente {
 	* Assiduidade do Funcionario 
 	*******************************************************************************************/
 	public boolean escreveFimAssiduidade(int numMecanografico, Date fimAssiduidade, int status);
-	public Date lerFimAssiduidade(int numeroMecanografico);
-	public Date lerInicioAssiduidade(int numMecanografico);
+	public Timestamp lerFimAssiduidade(int numeroMecanografico);
+	public Timestamp lerInicioAssiduidade(int numMecanografico);
 	public boolean verificaFimAssiduidade(int numMecanografico, Date dataFimAssiduidade);
 }

@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ListIterator;
 
 import Dominio.Justificacao;
 import ServidorPersistenteJDBC.IJustificacaoPersistente;
 import constants.assiduousness.Constants;
-
 
 /**
  *
@@ -106,10 +106,11 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_JUSTIFICACAO");
 			sql.executeUpdate();
 			sql.close();
-			
-			/*sql = UtilRelacional.prepararComando("ALTER TABLE ass_JUSTIFICACAO auto_increment=1");
-			sql.execute();
+			/*
+			sql = UtilRelacional.prepararComando("ALTER TABLE ass_JUSTIFICACAO auto_increment=1");
+			sql.executeUpdate();
 			sql.close();*/
+
 			resultado = true;
 		} catch (Exception e) {
 			System.out.println("JustificacaoRelacional.apagarTodasJustificacoes: " + e.toString());
@@ -118,11 +119,138 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 		}
 	} /* apagarTodasJustificacoes */
 
+	public ArrayList consultarJustificacoes(
+		ArrayList listaChaveFuncionarios,
+		ArrayList listaChaveParamJustificacoes,
+		Date dataInicio,
+		Date dataFim) {
+		ArrayList justificacoes = null;
+
+		try {
+			PreparedStatement sql = null;
+			ResultSet resultado = null;
+
+			// obtem as justficacoes no intervalo de datas
+			String query =
+				new String(
+					"SELECT * FROM ass_JUSTIFICACAO WHERE "
+						+ "((diaInicio BETWEEN ? AND ?) OR (diaFim BETWEEN ? AND ?) OR (diaInicio <= ? AND diaFim >= ?))");
+
+			if (listaChaveFuncionarios != null) {
+				if (listaChaveFuncionarios.size() > 0) {
+					query = query.concat(" AND (");
+
+					ListIterator iterListaFuncionarios = listaChaveFuncionarios.listIterator();
+					while (iterListaFuncionarios.hasNext()) {
+						iterListaFuncionarios.next();
+						if (iterListaFuncionarios.hasNext()) {
+							query = query.concat("chaveFuncionario = ? OR ");
+						} else {
+							query = query.concat("chaveFuncionario = ?)");
+						}
+					}
+				}
+			}
+
+			if (listaChaveParamJustificacoes != null) {
+				if (listaChaveParamJustificacoes.size() > 0) {
+					query = query.concat(" AND (");
+
+					ListIterator iterListaParamJustificacoes = listaChaveParamJustificacoes.listIterator();
+					while (iterListaParamJustificacoes.hasNext()) {
+						iterListaParamJustificacoes.next();
+						if (iterListaParamJustificacoes.hasNext()) {
+							query = query.concat("chaveParamJustificacao = ? OR ");
+						} else {
+							query = query.concat("chaveParamJustificacao = ?)");
+						}
+					}
+				}
+			}
+
+			sql = UtilRelacional.prepararComando(query);
+			sql.setDate(1, new java.sql.Date(dataInicio.getTime()));
+			sql.setDate(2, new java.sql.Date(dataFim.getTime()));
+			sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+			sql.setDate(4, new java.sql.Date(dataFim.getTime()));
+			sql.setDate(5, new java.sql.Date(dataInicio.getTime()));
+			sql.setDate(6, new java.sql.Date(dataFim.getTime()));
+
+			// indice do comando sql
+			int indice = 7;
+
+			if (listaChaveFuncionarios != null) {
+				ListIterator iterListaFuncionarios = listaChaveFuncionarios.listIterator();
+				Integer numFuncionario = null;
+
+				while (iterListaFuncionarios.hasNext()) {
+					numFuncionario = (Integer) iterListaFuncionarios.next();
+					sql.setInt(indice, numFuncionario.intValue());
+					indice++;
+				}
+			}
+
+			if (listaChaveParamJustificacoes != null) {
+				ListIterator iterListaParamJustificacoes = listaChaveParamJustificacoes.listIterator();
+				Integer paramJustificacao = null;
+
+				while (iterListaParamJustificacoes.hasNext()) {
+					paramJustificacao = (Integer) iterListaParamJustificacoes.next();
+					sql.setInt(indice, paramJustificacao.intValue());
+					indice++;
+				}
+			}
+
+			query = query.concat(" ORDER BY chaveFuncionario, chaveParamJustificacao");
+
+			resultado = sql.executeQuery();
+			justificacoes = new ArrayList();
+
+			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT tipo FROM ass_PARAM_JUSTIFICACAO WHERE codigoInterno= ?");
+			ResultSet resultado2 = null;
+
+			while (resultado.next()) {
+				sql2.setInt(1, resultado.getInt("chaveParamJustificacao"));
+				resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					Time horaInicio = null;
+					if (resultado2.getString("tipo").equals(Constants.JUSTIFICACAO_SALDO)) {
+						horaInicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000);
+						// duracao, logo adiciona-se uma hora
+					} else {
+						horaInicio = resultado.getTime("horaInicio");
+					}
+					justificacoes.add(
+						new Justificacao(
+							resultado.getInt("codigoInterno"),
+							resultado.getInt("chaveParamJustificacao"),
+							resultado.getInt("chaveFuncionario"),
+							java.sql.Date.valueOf(resultado.getString("diaInicio")),
+							horaInicio,
+							java.sql.Date.valueOf(resultado.getString("diaFim")),
+							resultado.getTime("horaFim"),
+							resultado.getString("observacao"),
+							resultado.getInt("quem"),
+							Timestamp.valueOf(resultado.getString("quando"))));
+				}
+			}
+			sql2.close();
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("JustificacaoRelacional.consultarJustificacoes: " + e.toString());
+			e.printStackTrace();
+			return null;
+		} finally {
+			return justificacoes;
+		}
+	} /* consultarJustificacoes */
+
 	public boolean escreverJustificacao(Justificacao justificacao) {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_JUSTIFICACAO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("INSERT INTO ass_JUSTIFICACAO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			sql.setInt(1, justificacao.getCodigoInterno());
 			sql.setInt(2, justificacao.getChaveParamJustificacao());
@@ -163,7 +291,8 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 		Justificacao justificacao = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_JUSTIFICACAO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("INSERT INTO ass_JUSTIFICACAO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			while (iterador.hasNext()) {
 				justificacao = (Justificacao) iterador.next();
@@ -203,55 +332,55 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 	} /* escreverJustificacoes */
 
 	public boolean existeJustificacao(Justificacao justificacao) {
-			boolean resultado = false;
+		boolean resultado = false;
 
-			try {
-				PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_JUSTIFICACAO "
-				+ "WHERE chaveParamJustificacao = ? "
-				+ "AND chaveFuncionario = ? "
-				+ "AND diaInicio = ? "
-				+ "AND horaInicio = ? "
-				+ "AND diaFim = ? "
-				+ "AND horaFim = ? "
-				+ "AND observacao = ? "
-				+ "AND quem = ? "
-				+ "AND quando = ?");
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_JUSTIFICACAO "
+						+ "WHERE chaveParamJustificacao = ? "
+						+ "AND chaveFuncionario = ? "
+						+ "AND diaInicio = ? "
+						+ "AND (horaInicio is null OR (horaInicio is not null AND horaInicio = ?)) "
+						+ "AND diaFim = ? "
+						+ "AND (horaFim is null OR (horaFim is not null AND horaFim = ?)) "
+						+ "AND quem = ? "
+						+ "AND quando = ?");
 
-				sql.setInt(1, justificacao.getChaveParamJustificacao());
-				sql.setInt(2, justificacao.getChaveFuncionario());
-				if (justificacao.getDiaInicio() != null) {
-					sql.setDate(3, new java.sql.Date((justificacao.getDiaInicio()).getTime()));
-				} else {
-					sql.setDate(3, null);
-				}
-				sql.setTime(4, justificacao.getHoraInicio());
-				if (justificacao.getDiaFim() != null) {
-					sql.setDate(5, new java.sql.Date((justificacao.getDiaFim()).getTime()));
-				} else {
-					sql.setDate(5, null);
-				}
-				sql.setTime(6, justificacao.getHoraFim());
-				sql.setString(7, justificacao.getObservacao());
-				sql.setInt(8, justificacao.getQuem());
-				if (justificacao.getQuando() != null) {
-					sql.setTimestamp(9, new Timestamp((justificacao.getQuando()).getTime()));
-				} else {
-					sql.setTimestamp(9, null);
-				}
-
-				ResultSet resultadoQuery = sql.executeQuery();
-				if (resultadoQuery.next()) {
-					resultado = true;
-				}
-				sql.close();
-			} catch (Exception e) {
-				System.out.println("JustificacaoRelacional.existeJustificacao: " + e.toString());
-				e.printStackTrace();
-			} finally {
-				return resultado;
+			sql.setInt(1, justificacao.getChaveParamJustificacao());
+			sql.setInt(2, justificacao.getChaveFuncionario());
+			if (justificacao.getDiaInicio() != null) {
+				sql.setDate(3, new java.sql.Date((justificacao.getDiaInicio()).getTime()));
+			} else {
+				sql.setDate(3, null);
 			}
-		} /* existeJustificacao */
-		
+			sql.setTime(4, justificacao.getHoraInicio());
+			if (justificacao.getDiaFim() != null) {
+				sql.setDate(5, new java.sql.Date((justificacao.getDiaFim()).getTime()));
+			} else {
+				sql.setDate(5, null);
+			}
+			sql.setTime(6, justificacao.getHoraFim());
+			sql.setInt(7, justificacao.getQuem());
+			if (justificacao.getQuando() != null) {
+				sql.setTimestamp(8, new Timestamp((justificacao.getQuando()).getTime()));
+			} else {
+				sql.setTimestamp(8, null);
+			}
+
+			ResultSet resultadoQuery = sql.executeQuery();
+			if (resultadoQuery.next()) {
+				resultado = true;
+			}
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("JustificacaoRelacional.existeJustificacao: " + e.toString());
+			e.printStackTrace();
+		} finally {
+			return resultado;
+		}
+	} /* existeJustificacao */
+
 	public Justificacao lerJustificacao(
 		int chaveFuncionario,
 		java.util.Date diaInicio,
@@ -273,13 +402,14 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
-				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT tipo FROM param_justificacao WHERE codigoInterno=?");
+				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT tipo FROM ass_PARAM_JUSTIFICACAO WHERE codigoInterno=?");
 				sql2.setInt(1, resultado.getInt("chaveParamJustificacao"));
 				ResultSet resultado2 = sql2.executeQuery();
 				if (resultado2.next()) {
 					Time inicio = null;
 					if (resultado2.getString("tipo").equals(Constants.JUSTIFICACAO_SALDO)) {
-						inicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000); // duracao, logo adiciona-se uma hora
+						inicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000);
+						// duracao, logo adiciona-se uma hora
 					} else {
 						inicio = resultado.getTime("horaInicio");
 					}
@@ -328,7 +458,8 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 				if (resultado2.next()) {
 					Time horaInicio = null;
 					if (resultado2.getString("tipo").equals(Constants.JUSTIFICACAO_SALDO)) {
-						horaInicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000); // duracao, logo adiciona-se uma hora
+						horaInicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000);
+						// duracao, logo adiciona-se uma hora
 					} else {
 						horaInicio = resultado.getTime("horaInicio");
 					}
@@ -534,22 +665,23 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 				if (resultado2.next()) {
 					Time horaInicio = null;
 					if (resultado2.getString("tipo").equals(Constants.JUSTIFICACAO_SALDO)) {
-						horaInicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000); // duracao, logo adiciona-se uma hora
+						horaInicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000);
+						// duracao, logo adiciona-se uma hora
 					} else {
 						horaInicio = resultado.getTime("horaInicio");
 					}
-				listaJustificacoes.add(
-					new Justificacao(
-						resultado.getInt("codigoInterno"),
-						resultado.getInt("chaveParamJustificacao"),
-						resultado.getInt("chaveFuncionario"),
-						java.sql.Date.valueOf(resultado.getString("diaInicio")),
-						horaInicio,
-						java.sql.Date.valueOf(resultado.getString("diaFim")),
-						resultado.getTime("horaFim"),
-						resultado.getString("observacao"),
-						resultado.getInt("quem"),
-						Timestamp.valueOf(resultado.getString("quando"))));
+					listaJustificacoes.add(
+						new Justificacao(
+							resultado.getInt("codigoInterno"),
+							resultado.getInt("chaveParamJustificacao"),
+							resultado.getInt("chaveFuncionario"),
+							java.sql.Date.valueOf(resultado.getString("diaInicio")),
+							horaInicio,
+							java.sql.Date.valueOf(resultado.getString("diaFim")),
+							resultado.getTime("horaFim"),
+							resultado.getString("observacao"),
+							resultado.getInt("quem"),
+							Timestamp.valueOf(resultado.getString("quando"))));
 				}
 			}
 			sql2.close();
@@ -570,7 +702,7 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 
 			ResultSet resultado = sql.executeQuery();
 			listaJustificacoes = new ArrayList();
-			
+
 			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT tipo FROM ass_PARAM_JUSTIFICACAO WHERE codigoInterno= ?");
 			ResultSet resultado2 = null;
 
@@ -580,22 +712,23 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 				if (resultado2.next()) {
 					Time horaInicio = null;
 					if (resultado2.getString("tipo").equals(Constants.JUSTIFICACAO_SALDO)) {
-						horaInicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000); // duracao, logo adiciona-se uma hora
+						horaInicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000);
+						// duracao, logo adiciona-se uma hora
 					} else {
 						horaInicio = resultado.getTime("horaInicio");
 					}
-				listaJustificacoes.add(
-					new Justificacao(
-						resultado.getInt("codigoInterno"),
-						resultado.getInt("chaveParamJustificacao"),
-						resultado.getInt("chaveFuncionario"),
-						java.sql.Date.valueOf(resultado.getString("diaInicio")),
-						horaInicio,
-						java.sql.Date.valueOf(resultado.getString("diaFim")),
-						resultado.getTime("horaFim"),
-						resultado.getString("observacao"),
-						resultado.getInt("quem"),
-						Timestamp.valueOf(resultado.getString("quando"))));
+					listaJustificacoes.add(
+						new Justificacao(
+							resultado.getInt("codigoInterno"),
+							resultado.getInt("chaveParamJustificacao"),
+							resultado.getInt("chaveFuncionario"),
+							java.sql.Date.valueOf(resultado.getString("diaInicio")),
+							horaInicio,
+							java.sql.Date.valueOf(resultado.getString("diaFim")),
+							resultado.getTime("horaFim"),
+							resultado.getString("observacao"),
+							resultado.getInt("quem"),
+							Timestamp.valueOf(resultado.getString("quando"))));
 				}
 			}
 			sql2.close();

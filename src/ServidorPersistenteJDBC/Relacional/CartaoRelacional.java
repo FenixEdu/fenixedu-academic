@@ -110,9 +110,9 @@ public class CartaoRelacional implements ICartaoPersistente {
 			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_CARTAO");
 			sql.executeUpdate();
 			sql.close();
-			
-			/*sql = UtilRelacional.prepararComando("ALTER TABLE ass_CARTAO auto_increment=1");
-			sql.execute();
+			/*
+			sql = UtilRelacional.prepararComando("ALTER TABLE ass_CARTAO auto_increment=1");
+			sql.executeUpdate();
 			sql.close();*/
 			resultado = true;
 		} catch (Exception e) {

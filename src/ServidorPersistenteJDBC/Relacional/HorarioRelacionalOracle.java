@@ -792,4 +792,36 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 	public int ultimoCodigoInternoExcepcaoHorario() {
 		return 0;
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorariosExcepcao(java.util.Date, java.util.Date)
+	 */
+	public ArrayList lerTodosHorariosExcepcao(Date dataInicio, Date dataFim) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorarios(java.util.Date, java.util.Date)
+	 */
+	public ArrayList lerTodosHorarios(Date dataInicio, Date dataFim) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorariosExcepcaoComRegime(int, java.util.ArrayList, java.util.Date, java.util.Date)
+	 */
+	public ArrayList lerTodosHorariosExcepcaoComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorariosComRegime(int, java.util.ArrayList, java.util.Date, java.util.Date)
+	 */
+	public ArrayList lerTodosHorariosComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -75,7 +75,8 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_HORARIO_TIPO " + "WHERE sigla = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("DELETE FROM ass_HORARIO_TIPO " + "WHERE sigla = ?");
 
 			sql.setString(1, sigla);
 
@@ -93,7 +94,8 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO " + "ass_HORARIOTIPO_REGIME VALUES (?, ?)");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("INSERT INTO " + "ass_HORARIOTIPO_REGIME VALUES (?, ?)");
 
 			sql.setInt(1, chaveHorarioTipo);
 			sql.setInt(2, chaveRegime);
@@ -113,7 +115,9 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("INSERT INTO ass_HORARIO_TIPO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				UtilRelacional.prepararComando(
+					"INSERT INTO ass_HORARIO_TIPO "
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			sql.setInt(1, horarioTipo.getCodigoInterno());
 			sql.setString(2, horarioTipo.getSigla());
@@ -148,7 +152,8 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 		HorarioTipo horarioTipo = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_TIPO " + "WHERE sigla = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_TIPO " + "WHERE sigla = ?");
 
 			sql.setString(1, sigla);
 
@@ -156,9 +161,11 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 			if (resultado.next()) {
 				Time descontoObrigatorio = null;
 				Time descontoMinimo = null;
-				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+				if (resultado.getTime("descontoObrigatorio") != null
+					&& resultado.getTime("descontoMinimo") != null) {
 					//				duracao, logo adiciona-se uma hora
-					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoObrigatorio =
+						new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
 					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
 				}
 
@@ -178,8 +185,8 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-				descontoObrigatorio,
-				descontoMinimo,
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"));
 			}
@@ -195,7 +202,9 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 		HorarioTipo horarioTipo = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_TIPO " + "WHERE codigoInterno = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIO_TIPO " + "WHERE codigoInterno = ?");
 
 			sql.setInt(1, codigoInterno);
 
@@ -203,9 +212,11 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 			if (resultado.next()) {
 				Time descontoObrigatorio = null;
 				Time descontoMinimo = null;
-				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+				if (resultado.getTime("descontoObrigatorio") != null
+					&& resultado.getTime("descontoMinimo") != null) {
 					//				duracao, logo adiciona-se uma hora
-					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoObrigatorio =
+						new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
 					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
 				}
 				horarioTipo =
@@ -242,16 +253,19 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 		ArrayList horariosTipo = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_TIPO ORDER BY modalidade");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_TIPO ORDER BY modalidade");
 
 			ResultSet resultado = sql.executeQuery();
 			horariosTipo = new ArrayList();
 			while (resultado.next()) {
 				Time descontoObrigatorio = null;
 				Time descontoMinimo = null;
-				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+				if (resultado.getTime("descontoObrigatorio") != null
+					&& resultado.getTime("descontoMinimo") != null) {
 					// duracao, logo adiciona-se uma hora
-					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoObrigatorio =
+						new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
 					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
 				}
 				horariosTipo.add(
@@ -270,8 +284,8 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-				descontoObrigatorio,
-				descontoMinimo,
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente")));
 			}
@@ -289,20 +303,22 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_TIPO " +
-				"WHERE modalidade <> \"turnos\" ORDER BY modalidade");
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIO_TIPO " + "WHERE modalidade <> \"turnos\" ORDER BY modalidade");
 
 			ResultSet resultado = sql.executeQuery();
 			horariosTipo = new ArrayList();
 			while (resultado.next()) {
 				Time descontoObrigatorio = null;
 				Time descontoMinimo = null;
-				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+				if (resultado.getTime("descontoObrigatorio") != null
+					&& resultado.getTime("descontoMinimo") != null) {
 					//duracao, logo adiciona-se uma hora
-					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoObrigatorio =
+						new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
 					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
 				}
-					
+
 				horariosTipo.add(
 					new HorarioTipo(
 						resultado.getInt("codigoInterno"),
@@ -319,8 +335,8 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-				descontoObrigatorio,
-				descontoMinimo,
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente")));
 			}
@@ -338,7 +354,9 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 		ArrayList horarioRegime = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIOTIPO_REGIME " + "WHERE chaveHorarioTipo = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIOTIPO_REGIME " + "WHERE chaveHorarioTipo = ?");
 
 			sql.setInt(1, chaveHorarioTipo);
 
@@ -360,7 +378,9 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 		ArrayList listaRegimes = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIOTIPO_REGIME " + "WHERE chaveHorarioTipo = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIOTIPO_REGIME " + "WHERE chaveHorarioTipo = ?");
 
 			sql.setInt(1, chaveHorario);
 
@@ -377,4 +397,32 @@ public class HorarioTipoRelacional implements IHorarioTipoPersistente {
 			return listaRegimes;
 		}
 	} /* lerRegimes */
+
+	public ArrayList lerTodosHorariosTipoComRegime(int chaveRegime) {
+		ArrayList listaHorarios = null;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+				"SELECT ass_HORARIO_TIPO.codigoInterno FROM ass_HORARIO_TIPO " 
+				+ "LEFT JOIN ass_HORARIOTIPO_REGIME "
+				+ "ON (ass_HORARIO_TIPO.codigoInterno = ass_HORARIOTIPO_REGIME.chaveHorarioTipo)" 
+				+ "WHERE ass_HORARIOTIPO_REGIME.chaveRegime = ?");
+
+			sql.setInt(1, chaveRegime);
+
+			ResultSet resultado = sql.executeQuery();
+			
+			listaHorarios = new ArrayList();
+			while (resultado.next()) {
+				listaHorarios.add(new Integer(resultado.getInt(1)));
+			}
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("HorarioTipoRelacional.lerTodosHorariosTipoComRegime: " + e.toString());
+			return null;
+		} finally {
+			return listaHorarios;
+		}	
+	} /* lerTodosHorariosTipoComRegime */
 }

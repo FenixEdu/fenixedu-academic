@@ -2115,6 +2115,8 @@ public class Flexivel implements IStrategyHorarios {
 			listaSaldos.set(8, new Long(saldoPrimEscalao));
 			listaSaldos.set(9, new Long(saldoSegEscalao));
 			listaSaldos.set(10, new Long(saldoDepoisSegEscalao));
+			
+			System.out.println("------>SALDO EXTRA NOCTURNO: " + 	saldoPrimEscalao + " - " + saldoSegEscalao + " - " + saldoDepoisSegEscalao);
 
 			//calculo do trabalho extraordinário diurno
 			saldoExtraordinario = ((Long)listaSaldos.get(0)).longValue() - saldoExtraordinario;
@@ -2140,6 +2142,8 @@ public class Flexivel implements IStrategyHorarios {
 			listaSaldos.set(2, new Long(saldoPrimEscalao));
 			listaSaldos.set(3, new Long(saldoSegEscalao));
 			listaSaldos.set(4, new Long(saldoDepoisSegEscalao));
+			
+			System.out.println("------>SALDO EXTRA DIURNO: " + 	saldoPrimEscalao + " - " + saldoSegEscalao + " - " + saldoDepoisSegEscalao);
 		}
 	} /* calcularHorasExtraorinarias */
 
