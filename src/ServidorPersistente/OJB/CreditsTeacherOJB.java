@@ -1,10 +1,6 @@
 package ServidorPersistente.OJB;
 
-import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.odmg.HasBroker;
 
 import Dominio.Credits;
 import Dominio.ICredits;
@@ -18,31 +14,36 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * @author Tânia Pousão
  *
  */
-public class CreditsTeacherOJB extends ObjectFenixOJB implements IPersistentCreditsTeacher {
+public class CreditsTeacherOJB
+	extends ObjectFenixOJB
+	implements IPersistentCreditsTeacher {
 
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentTeacherShiftPercentage#readByUnique(Dominio.ITeacherShiftPercentage)
 	 */
-	public ICredits readByUnique(ICredits creditsTeacher) throws ExcepcaoPersistencia {
+	public ICredits readByUnique(ICredits creditsTeacher)
+		throws ExcepcaoPersistencia {
 		ICredits creditsTeacherFromBD = null;
-
-		PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker();
-
 		Criteria criteria = new Criteria();
 
 		IExecutionPeriod executionPeriod = creditsTeacher.getExecutionPeriod();
-		criteria.addEqualTo("executionPeriod.semester", executionPeriod.getSemester());
+		criteria.addEqualTo(
+			"executionPeriod.semester",
+			executionPeriod.getSemester());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-		criteria.addEqualTo("executionPeriod.state.stateCode", executionPeriod.getState().getCode());
-		criteria.addEqualTo("executionPeriod.executionYear.state.stateCode", executionPeriod.getExecutionYear().getState().getCode());
-		criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo(
+			"executionPeriod.executionYear.year",
+			executionPeriod.getExecutionYear().getYear());
 
 		ITeacher teacher = creditsTeacher.getTeacher();
-		criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
-		criteria.addEqualTo("teacher.person.username", teacher.getPerson().getUsername());
+		criteria.addEqualTo(
+			"teacher.teacherNumber",
+			teacher.getTeacherNumber());
+		criteria.addEqualTo(
+			"teacher.person.username",
+			teacher.getPerson().getUsername());
 
-		Query queryPB = new QueryByCriteria(Credits.class, criteria);
-		creditsTeacherFromBD = (ICredits) broker.getObjectByQuery(queryPB);
+		creditsTeacherFromBD = (ICredits) queryObject(Credits.class, criteria);
 		return creditsTeacherFromBD;
 	}
 
@@ -54,16 +55,20 @@ public class CreditsTeacherOJB extends ObjectFenixOJB implements IPersistentCred
 
 			ICredits creditsTeacherToWrite = (ICredits) obj;
 
-			ICredits creditsTeacherFromBD = this.readByUnique(creditsTeacherToWrite);
-			
+			ICredits creditsTeacherFromBD =
+				this.readByUnique(creditsTeacherToWrite);
+
 			// If department is not in database, then write it.
+			System.out.println("OID"+ creditsTeacherToWrite.getIdInternal());
+			
+			if (creditsTeacherFromBD != null)
+				System.out.println("OID"+ creditsTeacherFromBD.getIdInternal());
+			
 			if (creditsTeacherFromBD == null) {
 				super.lockWrite(creditsTeacherToWrite);
+				//				else If the department is mapped to the database, then write any existing changes.				
 			} else if (
-				// else If the department is mapped to the database, then write any existing changes.
-			creditsTeacherFromBD
-				.getIdInternal()
-				.equals(
+				creditsTeacherFromBD.getIdInternal().equals(
 					creditsTeacherToWrite.getIdInternal())) {
 				super.lockWrite(creditsTeacherToWrite);
 
@@ -77,6 +82,6 @@ public class CreditsTeacherOJB extends ObjectFenixOJB implements IPersistentCred
 	 * @see ServidorPersistente.IPersistentCreditsTeacher#delete(Dominio.ICredits)
 	 */
 	public void delete(ICredits creditsTeacher) throws ExcepcaoPersistencia {
-		super.delete(creditsTeacher);		
+		super.delete(creditsTeacher);
 	}
 }
