@@ -68,6 +68,7 @@
             <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
         	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
         	<form-property name="username" type="java.lang.String" /> 
+        	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
       </form-bean>
 
     </form-beans>

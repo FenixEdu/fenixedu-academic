@@ -158,6 +158,11 @@
          <td><bean:message key="label.person.postCode" /></td>
           <td><html:text property="postCode"/></td>
         </tr>
+        <!-- Area do Codigo Postal -->
+        <tr>
+         <td><bean:message key="label.person.areaOfPostCode" /></td>
+          <td><html:text property="areaOfAreaCode"/></td>
+        </tr>
         <!-- Freguesia de Morada -->
         <tr>
          <td><bean:message key="label.person.addressParish" /></td>

@@ -103,8 +103,9 @@ public class ChangePersonalInfo implements IServico {
 		person.setNomePai(newInfoPerson.getNomePai());
 		person.setNomeMae(newInfoPerson.getNomeMae());
 		person.setFreguesiaNaturalidade(newInfoPerson.getFreguesiaNaturalidade());
-		person.setConcelhoMorada(newInfoPerson.getConcelhoNaturalidade());
+		person.setConcelhoNaturalidade(newInfoPerson.getConcelhoNaturalidade());
 		person.setDistritoNaturalidade(newInfoPerson.getDistritoNaturalidade());
+		person.setLocalidadeCodigoPostal(newInfoPerson.getLocalidadeCodigoPostal());
 		person.setMorada(newInfoPerson.getMorada());						
 		person.setLocalidade(newInfoPerson.getLocalidade());
 		person.setCodigoPostal(newInfoPerson.getCodigoPostal());
@@ -117,7 +118,7 @@ public class ChangePersonalInfo implements IServico {
 		person.setEnderecoWeb(newInfoPerson.getEnderecoWeb());
 		person.setNumContribuinte(newInfoPerson.getNumContribuinte());
 		person.setProfissao(newInfoPerson.getProfissao());
-		
+		person.setNacionalidade(newInfoPerson.getNacionalidade());
 		try {
             sp.getIPessoaPersistente().escreverPessoa(person);
 	    } catch (ExcepcaoPersistencia ex) {

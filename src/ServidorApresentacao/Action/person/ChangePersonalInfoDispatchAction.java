@@ -109,6 +109,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 	  infoPerson.setNumContribuinte((String) changePersonalInformationForm.get("contributorNumber"));
 	  infoPerson.setProfissao((String) changePersonalInformationForm.get("occupation"));
 	  infoPerson.setUsername((String) changePersonalInformationForm.get("username"));
+	  infoPerson.setLocalidadeCodigoPostal((String) changePersonalInformationForm.get("areaOfAreaCode"));
            
 	  changeArgs[0] = infoPerson;
 	  changeArgs[1] = userView;
@@ -208,6 +209,8 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		  changePersonalInfoForm.set("contributorNumber", infoPerson.getNumContribuinte());
 		  changePersonalInfoForm.set("occupation", infoPerson.getProfissao());
 		  changePersonalInfoForm.set("username", infoPerson.getUsername());
+		  changePersonalInfoForm.set("areaOfAreaCode", infoPerson.getLocalidadeCodigoPostal());
+		  
 		  
 	  
 		  if (infoPerson.getSexo() != null)

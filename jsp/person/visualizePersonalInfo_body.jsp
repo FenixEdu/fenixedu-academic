@@ -125,6 +125,11 @@
             <td><bean:message key="label.person.postCode" /></td>
             <td><bean:write name="personalInfo" property="codigoPostal"/></td>
           </tr>
+          <!-- Area do Codigo Postal -->
+          <tr>
+            <td><bean:message key="label.person.areaOfPostCode" /></td>
+            <td><bean:write name="personalInfo" property="localidadeCodigoPostal"/></td>
+          </tr>
           <!-- Localidade de Residencia -->
           <tr>
             <td><bean:message key="label.person.place" /></td>

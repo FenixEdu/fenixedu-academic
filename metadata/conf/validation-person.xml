@@ -31,6 +31,10 @@
       <field property="name" depends="required" page="1">
         <arg0 key="label.person.name" />
       </field>
+
+      <field property="areaOfAreaCode" depends="required" page="1">
+        <arg0 key="label.person.areaOfPostCode" />
+      </field>
       
       <field property="fatherName" depends="required" page="1">
         <arg0 key="label.person.fatherName" />
