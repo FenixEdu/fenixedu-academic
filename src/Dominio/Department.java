@@ -1,83 +1,103 @@
 /*
  * Department.java
- *
+ * 
  * Created on 6 de Novembro de 2002, 15:57
  */
 
 /**
- *
- * @author  Nuno Nunes & Joana Mota
+ * @author Nuno Nunes & Joana Mota
  */
 
 package Dominio;
 
 import java.util.Set;
 
-public class Department extends DomainObject implements IDepartment {
-    
+public class Department extends DomainObject implements IDepartment
+{
+
     private String name;
     private String code;
     private Set disciplinasAssociadas;
-        
-    public Department() {
+
+    public Department()
+    {
     }
-    
-    public Department(String nome, String sigla) {
-        setName(nome);
-        setCode(sigla);
+
+    public Department(String name, String code)
+    {
+        setName(name);
+        setCode(code);
     }
-    
-    public boolean equals(Object obj) {
+
+    /**
+	 * @param departmentId
+	 */
+    public Department(Integer departmentId)
+    {
+        super(departmentId);
+    }
+
+    public boolean equals(Object obj)
+    {
         boolean resultado = false;
-        if (obj instanceof IDepartment ) {
-            IDepartment d = (IDepartment)obj;
+        if (obj instanceof IDepartment)
+        {
+            IDepartment d = (IDepartment) obj;
             resultado = getCode().equals(d.getCode());
         }
         return resultado;
     }
-    
-    
-  public String toString() {
-    String result = "[DEPARTAMENT";
-    result += ", codInt=" + getIdInternal();
-    result += ", sigla=" + code;
-    result += ", nome=" + name;
-    //result += ", disciplinasAssociadas=" + disciplinasAssociadas;
-    result += "]";
-    return result;
-  }    
-    
 
-	/**
+    public String toString()
+    {
+        String result = "[DEPARTAMENT";
+        result += ", codInt=" + getIdInternal();
+        result += ", sigla=" + code;
+        result += ", nome=" + name;
+        //result += ", disciplinasAssociadas=" + disciplinasAssociadas;
+        result += "]";
+        return result;
+    }
+
+    /**
 	 * Returns the disciplinasAssociadas.
+	 * 
 	 * @return Set
 	 */
-	public Set getDisciplinasAssociadas() {
-		return disciplinasAssociadas;
-	}
+    public Set getDisciplinasAssociadas()
+    {
+        return disciplinasAssociadas;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode()
+    {
+        return code;
+    }
 
-	/**
+    /**
 	 * Sets the disciplinasAssociadas.
-	 * @param disciplinasAssociadas The disciplinasAssociadas to set
+	 * 
+	 * @param disciplinasAssociadas
+	 *                   The disciplinasAssociadas to set
 	 */
-	public void setDisciplinasAssociadas(Set disciplinasAssociadas) {
-		this.disciplinasAssociadas = disciplinasAssociadas;
-	}
+    public void setDisciplinasAssociadas(Set disciplinasAssociadas)
+    {
+        this.disciplinasAssociadas = disciplinasAssociadas;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code)
+    {
+        this.code = code;
+    }
 
 }
