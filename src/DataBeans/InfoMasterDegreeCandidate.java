@@ -30,6 +30,7 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	private InfoCandidateSituation infoCandidateSituation = null;
 	private List situationList = null;
 	private String specializationArea;
+	private Integer substituteOrder;
 	
     	
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
@@ -92,16 +93,17 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	}
 
 	public String toString() {
-		   String result = "Master Degree Candidate :\n";
-		   result += "\n  - Person : " + infoPerson;
-		   result += "\n  - Major Degree : " + majorDegree;
-		   result += "\n  - Candidate Number : " + candidateNumber;
-		   result += "\n  - Specialization : " + specialization;
-		   result += "\n  - Major Degree School : " + majorDegreeSchool;
-		   result += "\n  - Major Degree Year : " + majorDegreeYear;
-		   result += "\n  - Major Degree Average : " + average;
-		   result += "\n  - Master Degree : " + infoExecutionDegree;
-		   result += "\n  - Specialization Area  : " + specializationArea;
+	   String result = "Master Degree Candidate :\n";
+	   result += "\n  - Person : " + infoPerson;
+	   result += "\n  - Major Degree : " + majorDegree;
+	   result += "\n  - Candidate Number : " + candidateNumber;
+	   result += "\n  - Specialization : " + specialization;
+	   result += "\n  - Major Degree School : " + majorDegreeSchool;
+	   result += "\n  - Major Degree Year : " + majorDegreeYear;
+	   result += "\n  - Major Degree Average : " + average;
+	   result += "\n  - Master Degree : " + infoExecutionDegree;
+	   result += "\n  - Specialization Area  : " + specializationArea;
+	   result += "\n  - Substitute Order  : " + substituteOrder;
 
         
 		   return result;
@@ -245,6 +247,20 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	 */
 	public void setSpecialization(String string) {
 		specialization = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getSubstituteOrder() {
+		return substituteOrder;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setSubstituteOrder(Integer integer) {
+		substituteOrder = integer;
 	}
 
 }
