@@ -100,7 +100,7 @@
     </action-mappings> 
     
     <!-- ========== Controller Configuration ================================ -->
-     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" />
@@ -111,5 +111,11 @@
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-default.xml"/>
     </plug-in>
 
+	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>   
 </struts-config>
 
