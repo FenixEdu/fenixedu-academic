@@ -919,6 +919,22 @@
         <forward name="ViewEditExamForm" path="/editExam.jsp"/>
     </action>
 
+      <action path="/consultRoomsForExams"
+              type="ServidorApresentacao.Action.publico.PrepareConsultRoomsFormAction"
+              parameter="method"
+              >
+          <forward name="Sucess" path="/consultRoomsForExams.jsp"/>
+      </action>
+
+      <action attribute="roomForm"
+              input="/consultRooms.jsp"
+              name="roomForm"
+              path="/chooseRoomsForm"
+              scope="request"
+              validate="true"
+              type="ServidorApresentacao.Action.sop.SelectRoomsFormAction">
+        <forward name="Sucess" path="/chooseRoom.jsp"/>
+      </action>
       
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
