@@ -86,14 +86,16 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	public void lockRead(List list) throws ExcepcaoPersistencia {
 		try {
-			ListIterator iterator = list.listIterator();
+			
 			tx = odmg.currentTransaction();
 
 			if (tx == null)
-				throw new ExcepcaoPersistencia("Não há transacção em curso");
-			while (iterator.hasNext()) {
-				Object obj = iterator.next();
-				tx.lock(obj, Transaction.READ);
+				throw new ExcepcaoPersistencia("No current transaction!");
+			if (list != null){
+				for (int i = 0; i < list.size(); i++) {
+					Object obj = list.get(i);
+					tx.lock(obj, Transaction.READ);
+				}
 			}
 		} catch (ODMGRuntimeException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.READ_LOCK, ex);
@@ -547,8 +549,10 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		throws ExcepcaoPersistencia {
 		PersistenceBroker pb =
 			((HasBroker) odmg.currentTransaction()).getBroker();
+			
 		Query queryCriteria = new QueryByCriteria(classToQuery, criteria);
 		List list = (List) pb.getCollectionByQuery(queryCriteria);
+		
 		lockRead(list);
 		return list;
 	}
