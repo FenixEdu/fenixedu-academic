@@ -18,9 +18,7 @@
 				<bean:message key="label.manager.executionDegree.coordinator"/>
 			</td>
 			<td>
-				<html:select property="coordinatorId">
-					<html:options collection="infoTeachersList" property="value" labelProperty="label"/>
-				</html:select>				
+				<html:text property="coordinatorNumber" />
 			</td>
 		</tr>
 		<tr>
@@ -29,10 +27,21 @@
 			</td>
 			<td>
 				<html:select property="executionYearId">
-					<html:options collection="infoExecutionYearsList" property="value" labelProperty="label"/>
+					<html:options collection="infoExecutionYearsList" property="idInternal" labelProperty="year"/>
 				</html:select>				
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<bean:message key="label.manager.executionDegree.campus"/>
+			</td>
+			<td>
+				<html:select property="campusId">
+					<html:options collection="infoCampusList" property="idInternal" labelProperty="name"/>
+				</html:select>				
+			</td>
+		</tr>
+		
 		<tr>
 			<td>
 				<bean:message key="label.manager.executionDegree.temporaryExamMap"/>

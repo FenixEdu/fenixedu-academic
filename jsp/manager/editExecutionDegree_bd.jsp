@@ -21,9 +21,7 @@
 				<bean:message key="label.manager.executionDegree.coordinator"/>
 			</td>
 			<td>	
-				<html:select property="coordinatorId">
-					<html:options collection="infoTeachersList" property="value" labelProperty="label"/>
-				</html:select>				
+				<html:text property="coordinatorNumber"/>
 			</td>
 		</tr>
 			<td>
@@ -31,7 +29,17 @@
 			</td>
 			<td>
 				<html:select property="executionYearId">
-					<html:options collection="infoExecutionYearsList" property="value" labelProperty="label"/>
+					<html:options collection="infoExecutionYearsList" property="idInternal" labelProperty="year"/>
+				</html:select>				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="label.manager.executionDegree.campus"/>
+			</td>
+			<td>
+				<html:select property="campusId">
+					<html:options collection="infoCampusList" property="idInternal" labelProperty="name"/>
 				</html:select>				
 			</td>
 		</tr>
@@ -40,12 +48,7 @@
 				<bean:message key="label.manager.executionDegree.temporaryExamMap"/>
 			</td>
 			<td>
-			<html:checkbox property="tempExamMap" value="true"/>
-				<%--<html:select property="tempExamMap">
-				<html:option  value="">&nbsp;</html:option>
-					<html:option key="option.manager.true" value="true"/>
-    				<html:option key="option.manager.false" value="false"/>
-    			</html:select>--%>
+				<html:checkbox property="tempExamMap" value="true"/>
 			</td>
 		</tr>
 	</table>
