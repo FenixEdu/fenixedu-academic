@@ -59,7 +59,7 @@
 			</th>
 			<th class="listClasses-header">
 				<bean:message key="property.context.semester"/>
-			</td>
+			</th>
 			<th class="listClasses-header">
 				<bean:message key="property.context.curricular.year"/> 
 			</th>

@@ -67,6 +67,7 @@ public class ShowMarkDispatchAction extends DispatchAction
 			saveErrors(request, errors);
 			return mapping.findForward("NoStudents");
 		}
+
 		request.setAttribute("showMarks", "showMarks");
 		request.setAttribute("studentList", listEnrolmentEvaluation);
 		

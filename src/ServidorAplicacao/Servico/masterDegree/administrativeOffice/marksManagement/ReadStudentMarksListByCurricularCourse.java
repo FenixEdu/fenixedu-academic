@@ -120,6 +120,7 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
                         .executeService(userView, "GetEnrolmentGrade", args);
                 if (infoEnrolmentEvaluation != null) {
+					        
                     InfoEnrolment infoEnrolment = Cloner
                             .copyIEnrolment2InfoEnrolment(enrolment);
                     infoEnrolment
