@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
+import ServidorAplicacao.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
  * @author jpvl
@@ -26,24 +29,90 @@ public abstract class RequestUtils {
 		String infoExecutionCourseInitials)
 		throws Exception {
 
+		List executionCourseList = SessionUtils.getExecutionCourses(request);
 
-		List executionCourseList =
-			SessionUtils.getExecutionCourses(request);
-			
 		HttpSession session = request.getSession(false);
-		
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);	
+
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		
-		
+
 		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		infoExecutionCourse.setSigla(infoExecutionCourseInitials);
-		int indexOf =
-			executionCourseList.indexOf(infoExecutionCourse);
+		int indexOf = executionCourseList.indexOf(infoExecutionCourse);
 
 		if (indexOf != -1)
 			return (InfoExecutionCourse) executionCourseList.get(indexOf);
 		else
 			throw new IllegalArgumentException("Not find executionCourse!");
+	}
+
+	public static final InfoExecutionCourse getExecutionCourseFromRequest(HttpServletRequest request)
+		throws FenixActionException {
+			InfoExecutionCourse infoExecutionCourse = null;
+		try {
+			InfoExecutionPeriod infoExecutionPeriod =
+				getExecutionPeriodFromRequest(request);
+			//TODO: verify which is the parameter for the executionCourse code	
+			String code = request.getParameter("eCCode");
+			Object[] args = {  infoExecutionPeriod,code };
+			infoExecutionCourse = (InfoExecutionCourse)
+				 ServiceUtils.executeService(
+					null,
+					"ReadExecutionCourse",
+					args);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		if (infoExecutionCourse == null) {
+			System.out.println("there is a link missing the eCCode parameter");
+		}
+		return infoExecutionCourse;
+	}
+
+	public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request)
+		throws FenixActionException {
+		InfoExecutionYear infoExecutionYear = null;
+		try {
+			String year = request.getParameter("eYName");
+			Object[] args = { year };
+			infoExecutionYear =
+				(InfoExecutionYear) ServiceUtils.executeService(
+					null,
+					"ReadExecutionYear",
+					args);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		if (infoExecutionYear == null) {
+			System.out.println("there is a link missing the eYName parameter");
+		}
+		return infoExecutionYear;
+	}
+
+	public static final InfoExecutionPeriod getExecutionPeriodFromRequest(HttpServletRequest request)
+		throws FenixActionException {
+		InfoExecutionPeriod infoExecutionPeriod = null;
+		try {
+			InfoExecutionYear infoExecutionYear =
+				getExecutionYearFromRequest(request);
+			String name = request.getParameter("ePName");
+			Object[] args = { name, infoExecutionYear };
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					null,
+					"ReadExecutionPeriod",
+					args);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		if (infoExecutionPeriod == null) {
+			System.out.println("there is a link missing the ePName parameter");
+		}
+		return infoExecutionPeriod;
 	}
 }
