@@ -7,7 +7,11 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
+import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -92,9 +96,44 @@ public class ExecutionYearOJB
 			while (iter.hasNext()) {
 				IExecutionYear executionYear = (IExecutionYear) iter.next();
 				super.delete(executionYear);
+
 			}
 			return true;
 		} catch (ExcepcaoPersistencia e) {
+			return false;
+		}
+	}
+
+	public boolean delete(IExecutionYear executionYear) {
+		try {
+			ExecutionPeriodOJB executionPeriodOJB = new ExecutionPeriodOJB();
+			String oqlQuery =
+				"select all from " + ExecutionPeriod.class.getName();
+			oqlQuery += " where executionYear.year= $1 ";
+			query.create(oqlQuery);
+			query.bind(executionYear.getYear());
+			List result = (List) query.execute();
+			Iterator iter = result.iterator();
+			while (iter.hasNext()) {
+				IExecutionPeriod executionPeriod =
+					(IExecutionPeriod) iter.next();
+				executionPeriodOJB.delete(executionPeriod);
+			}
+			CursoExecucaoOJB executionDegreeOJB = new CursoExecucaoOJB();
+			String oqlQuery1 =
+				"select all from " + CursoExecucao.class.getName();
+			oqlQuery1 += " where executionYear.year= $1 ";
+			query.create(oqlQuery1);
+			query.bind(executionYear.getYear());
+			List result1 = (List) query.execute();
+			Iterator iter1 = result1.iterator();
+			while (iter1.hasNext()) {
+				ICursoExecucao executionDegree = (ICursoExecucao) iter1.next();
+				executionDegreeOJB.delete(executionDegree);
+			}
+			super.delete(executionYear);
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
 	}

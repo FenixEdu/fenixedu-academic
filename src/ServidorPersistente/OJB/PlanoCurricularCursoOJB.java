@@ -13,7 +13,9 @@ import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
+import Dominio.CursoExecucao;
 import Dominio.ICurso;
+import Dominio.ICursoExecucao;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -120,6 +122,25 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
     }
     
     public void apagarPlanoCurricular(IPlanoCurricularCurso planoCurricularCurso) throws ExcepcaoPersistencia {
-        super.delete(planoCurricularCurso);
+       try {
+       			CursoExecucaoOJB executionDegreeOJB = new CursoExecucaoOJB();
+				 String oqlQuery = "select all from " + CursoExecucao.class.getName();
+			    oqlQuery += " where degreeCurricularPlan.name = $1 ";
+			    oqlQuery += " and degreeCurricularPlan.degree.code = $2 ";
+			    query.create(oqlQuery);
+			    query.bind(planoCurricularCurso.getName());
+			    query.bind(planoCurricularCurso.getCurso().getSigla());
+			    List result = (List) query.execute();
+			    Iterator iter = result.iterator();
+			    while(iter.hasNext()){
+			    	ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
+			    	executionDegreeOJB.delete(executionDegree);
+			    
+			    }
+		super.delete(planoCurricularCurso);
+		} catch (Exception e) {
+			e.printStackTrace();
+		throw new ExcepcaoPersistencia();
+		}
     }
 }
