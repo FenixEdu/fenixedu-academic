@@ -6,6 +6,7 @@ import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAllOptio
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAnualCurricularCourseRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAutomaticEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterCurricularYearPrecedence;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterFinalistRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceRule;
@@ -45,6 +46,9 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);		
 
 		enrolmentRule = new EnrolmentFilterPrecedenceRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		enrolmentRule = new EnrolmentFilterCurricularYearPrecedence();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada

@@ -167,7 +167,7 @@ public abstract class EnrolmentContextManager {
 		return computeScopesOfCurricularCourses(coursesNotDone);
 	}
 
-	private static List computeScopesOfCurricularCourses(List curricularCourses) {
+	public static List computeScopesOfCurricularCourses(List curricularCourses) {
 
 		List scopes = new ArrayList();
 

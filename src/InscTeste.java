@@ -27,7 +27,7 @@ public class InscTeste {
 		
 		autentication();
 
-		Object serviceArgs1[] = { userView, new Integer(1)};
+		Object serviceArgs1[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
 
@@ -73,10 +73,10 @@ public class InscTeste {
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs9);
 		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
 */
-		for(int i = 0; i < 4; i++) {
-			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-		}
+//		for(int i = 0; i < 1; i++) {
+//			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
+//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//		}
 
 //		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
@@ -92,10 +92,10 @@ public class InscTeste {
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 
 
-		Object serviceArgs10[] = {infoEnrolmentContext};
-		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
-		showActualEnrolments(infoEnrolmentContext);
-		showEnrolmentValidationResultMessages(infoEnrolmentContext);
+//		Object serviceArgs10[] = {infoEnrolmentContext};
+//		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
+//		showActualEnrolments(infoEnrolmentContext);
+//		showEnrolmentValidationResultMessages(infoEnrolmentContext);
 
 //		Object serviceArgs11[] = {userView};
 //		executeService("ChangeEnrolmentStateFromTemporarilyToEnroled", serviceArgs11);		

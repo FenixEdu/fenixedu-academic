@@ -266,22 +266,22 @@ insert into CURRICULAR_COURSE_SCOPE  values (73, 10, 50, 1, 0.0, 0.0, 0.0, 0.0, 
 ;
 delete from ENROLMENT;
 insert into ENROLMENT values (1, 1, 1, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (2, 1, 2, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (3, 1, 3, 1, 2, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (2, 1, 2, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (3, 1, 3, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (4, 1, 4, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (5, 1, 5, 1, 1, 'Dominio.Enrolment', null);
 
-insert into ENROLMENT values (6, 1, 6, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (7, 1, 7, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (8, 1, 8, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (9, 1, 9, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (10, 1, 10, 1, 2, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (6, 1, 6, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (7, 1, 7, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (8, 1, 8, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (9, 1, 9, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (10, 1, 10, 1, 1, 'Dominio.Enrolment', null);
 
-#insert into ENROLMENT values (11, 1, 11, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (12, 1, 12, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (13, 1, 13, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (14, 1, 14, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (15, 1, 15, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (11, 1, 11, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (12, 1, 12, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (13, 1, 13, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (14, 1, 14, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (15, 1, 15, 1, 1, 'Dominio.Enrolment', null);
 
 #insert into ENROLMENT values (16, 1, 16, 1, 1, 'Dominio.Enrolment', null);
 #insert into ENROLMENT values (17, 1, 17, 1, 1, 'Dominio.Enrolment', null);
@@ -405,7 +405,7 @@ insert into RESTRICTION values (30, 'Dominio.CurricularCourseDoneRestriction', 2
 insert into RESTRICTION values (31, 'Dominio.CurricularCourseDoneRestriction', 24, 14, 0);
 insert into RESTRICTION values (32, 'Dominio.CurricularCourseDoneRestriction', 25, 15, 0);
 insert into RESTRICTION values (33, 'Dominio.CurricularCourseDoneRestriction', 26, 1, 0);
-insert into RESTRICTION values (34, 'Dominio.CurricularCourseDoneRestriction', 27, 14, 0);
+insert into RESTRICTION values (34, 'Dominio.CurricularCourseDoneRestriction', 27, 6, 0);
 insert into RESTRICTION values (35, 'Dominio.CurricularCourseDoneRestriction', 28, 3, 0);
 insert into RESTRICTION values (36, 'Dominio.CurricularCourseDoneRestriction', 28, 14, 0);
 insert into RESTRICTION values (37, 'Dominio.CurricularCourseDoneRestriction', 29, 17, 0);
@@ -430,17 +430,25 @@ insert into RESTRICTION values (51, 'Dominio.CurricularCourseDoneRestriction', 3
 #-----------------------------
 ;
 DELETE FROM ENROLMENT_PERIOD;
-INSERT into ENROLMENT_PERIOD values (1, 1, 3, SYSDATE(), '2010-01-10');
+INSERT into ENROLMENT_PERIOD values (1, 1, 6, SYSDATE(), '2010-01-10');
 
 # Isto e para sair
 ;
 DELETE FROM EXECUTION_PERIOD;
 INSERT INTO EXECUTION_PERIOD values (1, '1º Semestre', 1, 'NO', 1);
 INSERT INTO EXECUTION_PERIOD values (2, '2º Semestre', 1, 'NO', 2);
-INSERT INTO EXECUTION_PERIOD values (3, '1º Semestre', 2, 'A', 1);
+INSERT INTO EXECUTION_PERIOD values (3, '1º Semestre', 2, 'NO', 1);
+INSERT INTO EXECUTION_PERIOD values (4, '2º Semestre', 2, 'NO', 2);
+INSERT INTO EXECUTION_PERIOD values (5, '1º Semestre', 3, 'NO', 1);
+INSERT INTO EXECUTION_PERIOD values (6, '2º Semestre', 3, 'NO', 2);
+INSERT INTO EXECUTION_PERIOD values (7, '1º Semestre', 4, 'NO', 1);
+INSERT INTO EXECUTION_PERIOD values (8, '2º Semestre', 4, 'NO', 2);
+INSERT INTO EXECUTION_PERIOD values (9, '1º Semestre', 5, 'NO', 1);
+INSERT INTO EXECUTION_PERIOD values (10, '2º Semestre', 5, 'NO', 2);
 
 DELETE FROM EXECUTION_YEAR;
 INSERT INTO EXECUTION_YEAR values (1, '2002/2003','NO');
 INSERT INTO EXECUTION_YEAR values (2, '2003/2004','A');
 INSERT INTO EXECUTION_YEAR values (3, '2005/2006','NO');
 INSERT INTO EXECUTION_YEAR values (4, '2006/2007','NO');
+INSERT INTO EXECUTION_YEAR values (5, '2007/2008','NO');
