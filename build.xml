@@ -6,6 +6,8 @@
 
 	<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask"/>
 
+    <taskdef name="strutsdoc" classname="strutsdoc.Main"/>
+
     <property environment="env"/>
 
 	<property file="build.properties"/>
@@ -55,8 +57,6 @@
   	<property name="compile.optimize"    value="on"/>
 
 	<property name="encoding" value="ISO-8859-15"/>	
-
-
 
   <target name="prepare">
     <!-- Create build directories as needed -->
@@ -987,6 +987,14 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 		      </fileset>
 		    </classpath>
          </javadoc>
+    </target>
+
+    <target name="Generate StrutsDoc">
+        <strutsdoc destdir="docs/api/strutsDoc"
+        		   webxml="${metadata}/web.xml"
+        		   configdir="${metadata}/conf"
+        			>
+        </strutsdoc>
     </target>
 
 	<!-- Define the classpath for the build -->
