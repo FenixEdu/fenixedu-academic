@@ -10,7 +10,6 @@
 <html:form action="/alternativeSite">
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <br />
-<br />
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="" />

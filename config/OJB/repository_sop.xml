@@ -397,7 +397,7 @@
 <!-- Definitions for Dominio.Exam -->
    <class-descriptor
    	  class="Dominio.Exam"
-   	  table="EXAM"
+   	  table="EVALUATION"
    >
       <field-descriptor
          name="idInternal"
@@ -468,7 +468,7 @@
 			auto-update="false"
 			auto-delete="false"
 			>
-		<fk-pointing-to-this-class column="KEY_EXAM"/>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
 	<collection-descriptor
@@ -481,7 +481,7 @@
 			auto-update="false"
 			auto-delete="false"
 			>
-		<fk-pointing-to-this-class column="KEY_EXAM"/>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_ROOM"/>
 	</collection-descriptor>
 </class-descriptor>
@@ -489,7 +489,7 @@
 <class-descriptor class="Dominio.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
       					autoincrement="true"/>
-      <field-descriptor name="keyExam" column="KEY_EXAM"  jdbc-type="INTEGER"/>      
+      <field-descriptor name="keyExam" column="KEY_EVALUATION"  jdbc-type="INTEGER"/>      
       <field-descriptor name="keyStudent" column="KEY_STUDENT"  jdbc-type="INTEGER"/>      
       <field-descriptor name="keyRoom" column="KEY_ROOM"  jdbc-type="INTEGER"/>
       <reference-descriptor name="exam" class-ref="Dominio.Exam" proxy="false">
@@ -533,7 +533,7 @@
       />
       <field-descriptor
          name="keyExam"
-         column="KEY_EXAM"
+         column="KEY_EVALUATION"
          jdbc-type="INTEGER"
       />
      
@@ -573,7 +573,7 @@
       />
       <field-descriptor id="2"
          name="keyExam"
-         column="KEY_EXAM"
+         column="KEY_EVALUATION"
          jdbc-type="INTEGER"
       />
       <field-descriptor id="3"
@@ -595,7 +595,6 @@
       </reference-descriptor>
    </class-descriptor>
    
-
 
 
 

@@ -9,7 +9,7 @@ import Util.Season;
  *   18/Mar/2003
  *   @author     Luis Cruz & Sara Ribeiro
  */
-public interface IExam extends IDomainObject {
+public interface IExam extends IEvaluation {
 
 	public Calendar getBeginning();
 	public Calendar getDay();
@@ -21,7 +21,6 @@ public interface IExam extends IDomainObject {
 	public Calendar getEnrollmentEndDay();
 	public Calendar getEnrollmentBeginTime() ;
 	public Calendar getEnrollmentEndTime();
-	public String getPublishmentMessage();
 	
 
 	public void setBeginning(Calendar beginning);
@@ -34,6 +33,5 @@ public interface IExam extends IDomainObject {
 	public void setEnrollmentEndDay(Calendar calendar);
 	public void setEnrollmentBeginTime(Calendar calendar);
 	public void setEnrollmentEndTime(Calendar calendar);
-	public void setPublishmentMessage(String revisionInformation);
 
 }

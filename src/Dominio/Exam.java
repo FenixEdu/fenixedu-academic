@@ -12,7 +12,7 @@ import Util.Season;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class Exam extends DomainObject implements IExam {
+public class Exam extends Evaluation implements IExam {
 
 	protected Calendar day;
 	protected Calendar beginning;
@@ -24,7 +24,6 @@ public class Exam extends DomainObject implements IExam {
 	protected Calendar enrollmentBeginTime;
 	protected Calendar enrollmentEndDay;
 	protected Calendar enrollmentEndTime;
-	protected String publishmentMessage;
 
 	public Exam() {
 	}
@@ -71,20 +70,6 @@ public class Exam extends DomainObject implements IExam {
 		this.setBeginning(beginning);
 		this.setEnd(end);
 		this.setSeason(season);
-	}
-
-	/**
-	 * @return
-	 */
-	public String getPublishmentMessage() {
-		return publishmentMessage;
-	}
-
-	/**
-	 * @param publishmentMessage
-	 */
-	public void setPublishmentMessage(String publishmentMessage) {
-		this.publishmentMessage = publishmentMessage;
 	}
 
 	/**

@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <h2><bean:message key="title.exams"/></h2>
 <br />
-<br />
 <logic:present name="siteView" property="component">
 <bean:define id="infoExamList" name="siteView" property="component.infoExams"/>  
 <span class="error"><html:errors/></span>	

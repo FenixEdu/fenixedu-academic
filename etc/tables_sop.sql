@@ -138,11 +138,12 @@ create table EXECUTION_YEAR (
    type=InnoDB comment="InnoDB free: 373760 kB";
 
 #----------------------------
-# Table structure for exam
+# Table structure for evaluation
 #----------------------------
-DROP TABLE IF EXISTS EXAM;
-CREATE TABLE EXAM (
+DROP TABLE IF EXISTS EVALUATION;
+CREATE TABLE EVALUATION (
   ID_INTERNAL int(11) not null auto_increment,
+  CLASS_NAME varchar(250) NOT NULL,
   DAY date,
   BEGINNING time,
   END time,
@@ -156,15 +157,15 @@ CREATE TABLE EXAM (
 ) TYPE=InnoDB;
 
 #----------------------------
-# Table structure for exam_executionDegree
+# Table structure for exam_executionCourse
 #----------------------------
 drop table if exists EXAM_EXECUTION_COURSE;
 create table EXAM_EXECUTION_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_EXAM int(11) not null,
+   KEY_EVALUATION int(11) not null,
    KEY_EXECUTION_COURSE int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_EXAM, KEY_EXECUTION_COURSE))
+   unique U1 (KEY_EVALUATION, KEY_EXECUTION_COURSE))
    type=InnoDB;
 
 #----------------------------
@@ -173,10 +174,10 @@ create table EXAM_EXECUTION_COURSE (
 drop table if exists EXAM_ROOM;
 create table EXAM_ROOM (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_EXAM int(11) not null,
+   KEY_EVALUATION int(11) not null,
    KEY_ROOM int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_EXAM, KEY_ROOM))
+   unique U1 (KEY_EVALUATION, KEY_ROOM))
    type=InnoDB;
 
 #----------------------------
@@ -185,10 +186,10 @@ create table EXAM_ROOM (
 drop table if exists EXAM_STUDENT;
 create table EXAM_STUDENT (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_EXAM int(11) not null,
+   KEY_EVALUATION int(11) not null,
    KEY_STUDENT int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_EXAM, KEY_STUDENT))
+   unique U1 (KEY_EVALUATION, KEY_STUDENT))
    type=InnoDB;
 
 #----------------------------
@@ -197,23 +198,9 @@ create table EXAM_STUDENT (
 drop table if exists EXAM_STUDENT_ROOM;
 create table EXAM_STUDENT_ROOM (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_EXAM int(11) not null,
+   KEY_EVALUATION int(11) not null,
    KEY_STUDENT int(11) not null,
    KEY_ROOM int(11) ,   
    primary key (ID_INTERNAL),
-   unique U1 (KEY_EXAM, KEY_STUDENT))
-   type=InnoDB;
-   
-#----------------------------
-# Table structure for mark
-#----------------------------
-drop table if exists MARK;
-create table MARK (
-   ID_INTERNAL int(11) not null auto_increment,
-   MARK varchar (4),
-   PUBLISHED_MARK varchar(4),
-   KEY_EXAM int(11) not null,
-   KEY_ATTEND int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (KEY_EXAM, KEY_ATTEND))
+   unique U1 (KEY_EVALUATION, KEY_STUDENT))
    type=InnoDB;
