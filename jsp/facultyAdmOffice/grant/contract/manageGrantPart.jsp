@@ -4,16 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<p class="infoselected">
-	<b><bean:message key="label.grant.subsidy.information"/></b><br/>
-    <bean:message key="label.grant.subsidy.value"/>:&nbsp;<bean:write name="subsidyValue"/><br/>
-    <bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;<bean:write name="subsidyTotalCost"/>
-</p>
-
-<p><b><bean:message key="label.grant.part.information"/></b></p><br/>
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
+
 <center><b><bean:message key="label.grant.part.information"/></b></center>
 <span class="error">
 	<html:errors/>
@@ -21,6 +15,13 @@
 </logic:messagesPresent>
 
 <logic:messagesNotPresent>
+<p class="infoselected">
+	<b><bean:message key="label.grant.subsidy.information"/></b><br/>
+    <bean:message key="label.grant.subsidy.value"/>:&nbsp;<bean:write name="subsidyValue"/><br/>
+    <bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;<bean:write name="subsidyTotalCost"/>
+</p>
+
+<p><b><bean:message key="label.grant.part.information"/></b></p><br/>
 
 <logic:present name="infoGrantPartList">
     <table border="0" cellspacing="1" cellpadding="1">

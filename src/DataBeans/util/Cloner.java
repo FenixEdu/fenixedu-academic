@@ -962,13 +962,15 @@ public abstract class Cloner
 	public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
 	{
 		InfoGrantContract infoGrantContract = null;
+        IGrantOwner grantOwner = null;
 
 		if (grantContract != null)
 		{
 			infoGrantContract = new InfoGrantContract();
 			InfoGrantOwner infoGrantOwner = null;
-			if (grantContract.getGrantOwner() != null)
-				infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantContract.getGrantOwner());
+            grantOwner = grantContract.getGrantOwner();
+			if (grantOwner != null)
+				infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
 			InfoGrantType infoGrantType = null;
 			if (grantContract.getGrantType() != null)
 				infoGrantType = Cloner.copyIGrantType2InfoGrantType(grantContract.getGrantType());
