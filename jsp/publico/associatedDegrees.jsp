@@ -8,7 +8,7 @@
 <logic:present name="publico.infoCurricularCourses" scope="session">
 	<div id="associated-degrees">
 		<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
-			<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+			<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/><br>
 		</logic:iterate>
 	</div>
 </logic:present>	

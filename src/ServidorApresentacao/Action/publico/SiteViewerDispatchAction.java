@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
@@ -236,7 +237,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					"publico.infoCurricularCourses",
 					infoCurricularCourses);
 			}
-
+					System.out.println("size="+infoCurricularCourses.size() );
+			System.out.println("scopesize="+((InfoCurricularCourse)infoCurricularCourses.get(0)).getInfoScopes().size() );
 			// Read list of Lessons to show execution course schedule.
 			Object argsReadLessonsOfExecutionCours[] = { infoExecCourse };
 			List infoLessons =

@@ -23,7 +23,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadCurricularCourseListOfExecutionCourse implements IServico {
 
-	private static ReadCurricularCourseListOfExecutionCourse _servico = new ReadCurricularCourseListOfExecutionCourse();
+	private static ReadCurricularCourseListOfExecutionCourse _servico =
+		new ReadCurricularCourseListOfExecutionCourse();
 
 	/**
 	  * The actor of this class.
@@ -48,31 +49,57 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
 		return _servico;
 	}
 
-	public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoInexistente, FenixServiceException {
+	public Object run(InfoExecutionCourse infoExecCourse)
+		throws ExcepcaoInexistente, FenixServiceException {
 
 		List infoCurricularCourseList = new ArrayList();
-		List infoCurricularCourseScopeList = new ArrayList();
+		List infoCurricularCourseScopeList = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
+			IDisciplinaExecucaoPersistente executionCourseDAO =
+				sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao executionCourse =
+				Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
 			executionCourse =
-				executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(executionCourse.getSigla(), executionCourse.getExecutionPeriod());
-			if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null)
-				for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-					ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse.getAssociatedCurricularCourses().get(i);
-					InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-					
-					for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-						ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(j);
-						InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-						infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+				executionCourseDAO
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					executionCourse.getSigla(),
+					executionCourse.getExecutionPeriod());
+			if (executionCourse != null
+				&& executionCourse.getAssociatedCurricularCourses() != null)
+				for (int i = 0;
+					i < executionCourse.getAssociatedCurricularCourses().size();
+					i++) {
+					ICurricularCourse curricularCourse =
+						(ICurricularCourse) executionCourse
+							.getAssociatedCurricularCourses()
+							.get(
+							i);
+					InfoCurricularCourse infoCurricularCourse =
+						Cloner.copyCurricularCourse2InfoCurricularCourse(
+							curricularCourse);
+					infoCurricularCourseScopeList = new ArrayList();
+					for (int j = 0;
+						j < curricularCourse.getScopes().size();
+						j++) {
+						ICurricularCourseScope curricularCourseScope =
+							(ICurricularCourseScope) curricularCourse
+								.getScopes()
+								.get(
+								j);
+						InfoCurricularCourseScope infoCurricularCourseScope =
+							Cloner
+								.copyICurricularCourseScope2InfoCurricularCourseScope(
+								curricularCourseScope);
+						infoCurricularCourseScopeList.add(
+							infoCurricularCourseScope);
 					}
 
-					infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+					infoCurricularCourse.setInfoScopes(
+						infoCurricularCourseScopeList);
 					infoCurricularCourseList.add(infoCurricularCourse);
-					
+
 				}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
