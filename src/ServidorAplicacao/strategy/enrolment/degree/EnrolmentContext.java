@@ -33,7 +33,7 @@ public final class EnrolmentContext {
 	/**
 	 *  
 	 */
-	public EnrolmentContext() {
+	protected EnrolmentContext() {
 		super();
 		actualEnrolment = new ArrayList();
 	}
