@@ -110,7 +110,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (NotAuthorizedException e)
 		{
-			if (e.getCause().getCause().getMessage() != null)
+			if (e.getMessage() != null)
 			{
 				addAuthorizationErrors(errors, e);
 			}

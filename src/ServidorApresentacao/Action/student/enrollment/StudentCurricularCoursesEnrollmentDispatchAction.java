@@ -35,7 +35,6 @@ public class StudentCurricularCoursesEnrollmentDispatchAction extends DispatchAc
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		IUserView userView = SessionUtils.getUserView(request);
 
-		System.out.println("-->entrando no form de inscricao no estudante");
 		InfoStudent infoStudent = new InfoStudent();
 		Object[] args = { userView.getUtilizador()};
 		try
@@ -51,8 +50,6 @@ public class StudentCurricularCoursesEnrollmentDispatchAction extends DispatchAc
 			throw new FenixActionException(e);
 		}
 		enrollmentForm.set("studentNumber", infoStudent.getNumber().toString());
-
-		System.out.println("-->estudante: " + infoStudent.getNumber());
 
 		return mapping.findForward("curricularCoursesEnrollment");
 	}
