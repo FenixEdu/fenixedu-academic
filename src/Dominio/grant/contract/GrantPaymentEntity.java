@@ -12,7 +12,7 @@ import Dominio.ITeacher;
  */
 public abstract class GrantPaymentEntity extends DomainObject implements
         IGrantPaymentEntity {
-
+	
     protected String number;
 
     protected String designation;
@@ -104,5 +104,4 @@ public abstract class GrantPaymentEntity extends DomainObject implements
     public void setResponsibleTeacher(ITeacher responsibleTeacher) {
         this.responsibleTeacher = responsibleTeacher;
     }
-
 }

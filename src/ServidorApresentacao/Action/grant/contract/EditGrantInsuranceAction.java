@@ -3,6 +3,8 @@
  */
 package ServidorApresentacao.Action.grant.contract;
 
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,7 +14,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.grant.contract.InfoGrantContract;
+import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantInsurance;
+import DataBeans.grant.contract.InfoGrantPaymentEntity;
+import DataBeans.grant.contract.InfoGrantProject;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -35,65 +40,40 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm grantInsuranceForm = (DynaValidatorForm) form;
 		
-		Integer idInsurance = null;
+		Integer idGrantOwner = null;
 		Integer idContract = null;
 		try
 		//Probably a validation error
 		{
-			if (!verifyParameterInRequest(request, "idInsurance"))
-			{
-				//Check if is a new Insurance
-				idContract = new Integer(request.getParameter("idContract"));
-			}
-			else
-			{
-				idInsurance = new Integer(request.getParameter("idInsurance"));
-			}
+			idContract = new Integer(request.getParameter("idContract"));
+			idGrantOwner = new Integer(request.getParameter("idGrantOwner"));
 		}
 		catch (Exception e)
 		{
 			request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
 			request.setAttribute("contractNumber", request.getParameter("contractNumber"));
-			request.setAttribute("grantTypeName", request.getParameter("grantTypeName"));
-			if (verifyParameterInRequest(request,"idInsurance"))
-				request.setAttribute("idInsurance", new Integer(request.getParameter("idInsurance")));
+
 			return mapping.findForward("edit-grant-insurance");
 		}
 		
 		try
 		{
+			//Read the insurance
+			Object[] args = { idContract };
 			InfoGrantContract infoGrantContract = null;
-		
-			if (idContract != null)	//if is a new Insurance
-			{
+			InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) ServiceUtils.executeService(userView, "ReadGrantInsuranceByGrantContract", args);
+			
+			if(infoGrantInsurance == null) { //Is a new Insurance
 				//Read the contract
-				Object[] args3 = {idContract};
-				infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
-						"ReadGrantContract", args3);
+				Object[] argsContract = {idContract};
+				infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,"ReadGrantContract", argsContract);
 				if (infoGrantContract != null)
 				{
 					request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-					request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
-					grantInsuranceForm.set("state", new Integer(-1));
 				}
-			}
-			else
-			{
-				//Read the Insurance
-				Object[] args = {idInsurance};
-				InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) ServiceUtils.executeService(
-						userView, "ReadGrantInsurance", args);
-				
-				idContract = infoGrantInsurance.getInfoGrantContract().getIdInternal();
-				//Read the contract
-				Object[] args2 = {idContract};
-				infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
-						"ReadGrantContract", args2);
-				if (infoGrantContract != null)
-				{
-					request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-					request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
-				}
+
+			} else {
+				infoGrantContract = infoGrantInsurance.getInfoGrantContract();
 				//Populate the form
 				if (infoGrantInsurance != null)
 				{
@@ -108,14 +88,15 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		}
 		catch (FenixServiceException e)
 		{
-			return setError(request, mapping, "errors.grant.insurance.read", "manage-grant-insurance", null);
+			return setError(request, mapping, "errors.grant.insurance.read", "edit-grant-insurance", null);
 		}
 		catch (Exception e)
 		{
-			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-insurance",null);
+			return setError(request, mapping, "errors.grant.unrecoverable", "edit-grant-insurance",null);
 		}
 		return mapping.findForward("edit-grant-insurance");
 	}
+	
 	
 	public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
@@ -123,12 +104,45 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		try
 		{
 			DynaValidatorForm editGrantInsuranceForm = (DynaValidatorForm) form;
+			
+			//Verificar se foi escolhida UMA E SO UMA entidade pagadora
+			if (!verifyStringParameterInForm(editGrantInsuranceForm, "project")
+				&& !verifyStringParameterInForm(editGrantInsuranceForm, "costcenter"))
+			{
+				return setError(request,mapping,"errors.grant.insurance.mustHaveOnePaymentEntity",null,null);
+			}
+			if (verifyStringParameterInForm(editGrantInsuranceForm, "project")
+				&& verifyStringParameterInForm(editGrantInsuranceForm, "costcenter"))
+			{
+				return setError(request,mapping,"errors.grant.insurance.mustBeOnePaymentEntity",null,null);
+			}
+			
 			InfoGrantInsurance infoGrantInsurance = populateInfoFromForm(editGrantInsuranceForm);
 			IUserView userView = SessionUtils.getUserView(request);
-			
-			if(infoGrantInsurance.getState().equals(new Integer(-1))) //If is a new Insurance
+
+			//Let's read the payment entity
+			if(infoGrantInsurance.getInfoGrantPaymentEntity().getNumber() != null)
 			{
-				infoGrantInsurance.setState(new Integer(1)); //Active this insurance
+				Object[] args = { infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), infoGrantInsurance.getInfoGrantPaymentEntity().getOjbConcreteClass()};
+				InfoGrantPaymentEntity infoGrantPaymentEntity =
+					(InfoGrantPaymentEntity) ServiceUtils.executeService(userView,"ReadPaymentEntityByNumberAndClass",args);
+				
+				if(infoGrantPaymentEntity == null)
+				{
+					if(verifyStringParameterInForm(editGrantInsuranceForm, "project"))
+					{
+						return setError(request, mapping, "errors.grant.paymententity.unknownProject", null, infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
+					}
+					else if(verifyStringParameterInForm(editGrantInsuranceForm, "costcenter"))
+					{
+						return setError(request, mapping, "errors.grant.paymententity.unknownCostCenter", null, infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
+					}
+					else
+					{
+						return setError(request, mapping, "errors.grant.part.invalidPaymentEntity", null, null);
+					}
+				}
+				infoGrantInsurance.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
 			}
 			
 			//Save the insurance
@@ -144,7 +158,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		{
 			return setError(request, mapping, "errors.grant.unrecoverable", null, null);
 		}
-		return mapping.findForward("manage-grant-insurance");
+		return mapping.findForward("manage-grant-contract");
 	}
 	/*
 	 * Populates form from InfoSubsidy
@@ -152,53 +166,54 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 	private void setFormGrantInsurance(DynaValidatorForm form, InfoGrantInsurance infoGrantInsurance)
 			throws Exception
 	{
-	    //TODO
-//		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//		
-//		form.set("idGrantSubsidy", infoGrantInsurance.getIdInternal());
-//		if (infoGrantInsurance.getValue() != null)
-//			form.set("value", infoGrantInsurance.getValue().toString());
-//		if (infoGrantInsurance.getValueFullName() != null)
-//			form.set("valueFullName", infoGrantInsurance.getValueFullName());
-//		if (infoGrantInsurance.getTotalCost() != null)
-//			form.set("totalCost", infoGrantInsurance.getTotalCost().toString());
-//		if (infoGrantInsurance.getDateBeginSubsidy() != null)
-//			form.set("dateBeginSubsidy", sdf.format(infoGrantInsurance.getDateBeginSubsidy()));
-//		if (infoGrantInsurance.getDateEndSubsidy() != null)
-//			form.set("dateEndSubsidy", sdf.format(infoGrantInsurance.getDateEndSubsidy()));
-//		//In case state is null.. than this is a new subsidy, put the state -1
-//		if (infoGrantInsurance.getState() != null)
-//			form.set("state", infoGrantInsurance.getState());
-//		else
-//			form.set("state", new Integer(-1));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+		form.set("idGrantInsurance", infoGrantInsurance.getIdInternal());
+		if(infoGrantInsurance.getTotalValue() != null)
+			form.set("totalValue", infoGrantInsurance.getTotalValue().toString());
+		if(infoGrantInsurance.getInfoGrantPaymentEntity() != null) {
+			if(infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject)
+				form.set("project", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
+			else
+				form.set("costcenter", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
+		}
+		if(infoGrantInsurance.getDateBeginInsurance() != null)
+			form.set("dateBeginInsurance", sdf.format(infoGrantInsurance.getDateBeginInsurance()));
+		if(infoGrantInsurance.getDateEndInsurance() != null)
+			form.set("dateEndInsurance", sdf.format(infoGrantInsurance.getDateEndInsurance()));
 	}
 	private InfoGrantInsurance populateInfoFromForm(DynaValidatorForm editGrantInsuranceForm)
 			throws Exception
 	{
-//		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//		
-//		InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
-//		InfoGrantContract infoGrantContract = new InfoGrantContract();
-//		if (verifyStringParameterInForm(editGrantSubsidyForm, "idGrantSubsidy"))
-//			infoGrantSubsidy.setIdInternal((Integer) editGrantSubsidyForm.get("idGrantSubsidy"));
-//		if (verifyStringParameterInForm(editGrantSubsidyForm, "value"))
-//			infoGrantSubsidy.setValue(new Double((String) editGrantSubsidyForm.get("value")));
-//		if (verifyStringParameterInForm(editGrantSubsidyForm, "valueFullName"))
-//			infoGrantSubsidy.setValueFullName((String) editGrantSubsidyForm.get("valueFullName"));
-//		if (verifyStringParameterInForm(editGrantSubsidyForm, "totalCost"))
-//			infoGrantSubsidy.setTotalCost(new Double((String) editGrantSubsidyForm.get("totalCost")));
-//		infoGrantContract.setIdInternal((Integer) editGrantSubsidyForm.get("idContract"));
-//		
-//		if (verifyStringParameterInForm(editGrantSubsidyForm, "dateBeginSubsidy"))
-//			infoGrantSubsidy.setDateBeginSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateBeginSubsidy")));
-//		
-//		if (verifyStringParameterInForm(editGrantSubsidyForm, "dateEndSubsidy"))
-//			infoGrantSubsidy.setDateEndSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateEndSubsidy")));
-//		
-//		infoGrantSubsidy.setInfoGrantContract(infoGrantContract);
-//		infoGrantSubsidy.setState((Integer) editGrantSubsidyForm.get("state"));
-//		return infoGrantSubsidy;
-	    //TODO
-	    return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
+		InfoGrantInsurance infoGrantInsurance = new InfoGrantInsurance();
+		if(verifyStringParameterInForm(editGrantInsuranceForm, "idGrantInsurance"))
+			infoGrantInsurance.setIdInternal((Integer) editGrantInsuranceForm.get("idGrantInsurance"));
+		if(verifyStringParameterInForm(editGrantInsuranceForm, "dateBeginInsurance"))
+			infoGrantInsurance.setDateBeginInsurance(sdf.parse((String) editGrantInsuranceForm.get("dateBeginInsurance")));
+		if(verifyStringParameterInForm(editGrantInsuranceForm, "dateEndInsurance"))
+			infoGrantInsurance.setDateBeginInsurance(sdf.parse((String) editGrantInsuranceForm.get("dateEndInsurance")));
+		if(verifyStringParameterInForm(editGrantInsuranceForm, "totalValue"))
+			infoGrantInsurance.setTotalValue((Double) editGrantInsuranceForm.get("totalValue"));
+
+		InfoGrantContract infoGrantContract = new InfoGrantContract();
+		infoGrantContract.setIdInternal((Integer) editGrantInsuranceForm.get("idContract"));
+		infoGrantInsurance.setInfoGrantContract(infoGrantContract);
+		
+		InfoGrantPaymentEntity infoGrantPaymentEntity = null;
+		if(verifyStringParameterInForm(editGrantInsuranceForm, "project")) {
+			infoGrantPaymentEntity = new InfoGrantProject();
+			infoGrantPaymentEntity.setNumber((String) editGrantInsuranceForm.get("project"));
+			infoGrantPaymentEntity.setOjbConcreteClass(InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass());
+			
+		} else if (verifyStringParameterInForm(editGrantInsuranceForm, "costcenter")) {
+			infoGrantPaymentEntity = new InfoGrantCostCenter();
+			infoGrantPaymentEntity.setNumber((String) editGrantInsuranceForm.get("costcenter"));
+			infoGrantPaymentEntity.setOjbConcreteClass(InfoGrantPaymentEntity.getGrantCostCenterOjbConcreteClass());
+		}
+		infoGrantInsurance.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
+	    
+		return infoGrantInsurance;
 	}
 }

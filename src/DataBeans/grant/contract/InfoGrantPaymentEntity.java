@@ -13,6 +13,9 @@ import Dominio.grant.contract.IGrantPaymentEntity;
  */
 public abstract class InfoGrantPaymentEntity extends InfoObject {
 
+	private static final String grantCostCenterOjbConcreteClass = "Dominio.grant.contract.GrantCostCenter";
+	private static final String grantProjectOjbConcreteClass = "Dominio.grant.contract.GrantProject";
+	
     protected String number;
 
     protected String designation;
@@ -72,6 +75,20 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
     public InfoTeacher getInfoResponsibleTeacher() {
         return infoResponsibleTeacher;
     }
+    
+	/**
+	 * @return Returns the grantCostCenterOjbConcreteClass.
+	 */
+	public static String getGrantCostCenterOjbConcreteClass() {
+		return grantCostCenterOjbConcreteClass;
+	}
+	/**
+	 * @return Returns the grantProjectOjbConcreteClass.
+	 */
+	public static String getGrantProjectOjbConcreteClass() {
+		return grantProjectOjbConcreteClass;
+	}
+
 
     /**
      * @param infoResponsibleTeacher

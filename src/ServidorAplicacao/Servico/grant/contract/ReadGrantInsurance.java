@@ -4,7 +4,7 @@
 package ServidorAplicacao.Servico.grant.contract;
 
 import DataBeans.InfoObject;
-import DataBeans.grant.contract.InfoGrantInsuranceWithContract;
+import DataBeans.grant.contract.InfoGrantInsuranceWithContractAndPaymentEntity;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantInsurance;
 import Dominio.grant.contract.IGrantInsurance;
@@ -43,7 +43,7 @@ public class ReadGrantInsurance extends ReadDomainObjectService {
      */
     protected InfoObject clone2InfoObject(IDomainObject domainObject) {
 
-        return InfoGrantInsuranceWithContract.newInfoFromDomain((IGrantInsurance) domainObject);
+        return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain((IGrantInsurance) domainObject);
     }
 
 }

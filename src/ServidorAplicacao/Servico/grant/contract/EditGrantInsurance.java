@@ -12,12 +12,14 @@ import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantInsurance;
 import Dominio.grant.contract.IGrantContract;
+import Dominio.grant.contract.IGrantContractRegime;
 import Dominio.grant.contract.IGrantInsurance;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.grant.IPersistentGrantContractRegime;
 import ServidorPersistente.grant.IPersistentGrantInsurance;
 
 
@@ -46,6 +48,28 @@ public class EditGrantInsurance extends EditDomainObjectService {
 		IGrantInsurance grantInsurance = (IGrantInsurance) domainObject;
 		return persistentGrantInsurance.readByOID(GrantInsurance.class, grantInsurance.getIdInternal());
 	}
+	
+	protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject, ISuportePersistente sp)
+            throws FenixServiceException {
+		InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) infoObject;
+		
+		try
+		{
+			if(infoGrantInsurance.getDateEndInsurance() == null) 
+			{
+				IPersistentGrantContractRegime persistentGrantContractRegime = sp.getIPersistentGrantContractRegime();
+				List grantContractRegimeList = persistentGrantContractRegime.readGrantContractRegimeByGrantContractAndState(infoGrantInsurance.getInfoGrantContract().getIdInternal(), new Integer(1));
+				IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeList.get(0);
+				infoGrantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
+			}
+			
+			infoGrantInsurance.setTotalValue(infoGrantInsurance.calculateTotalValue());
+			
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException();
+		}
+    }
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -65,37 +89,7 @@ public class EditGrantInsurance extends EditDomainObjectService {
 		grantContract.setIdInternal(infoGrantInsurance.getInfoGrantContract().getIdInternal());
 		
 		grantInsurance.setGrantContract(grantContract);
-		domainObjectLocked = (IDomainObject) grantInsurance;
-		
-		/*
-		 * If this is a active insurance, set all others to state 0 (Desactive)
-		 */
-		if (grantInsurance.getState().equals(new Integer(1)))
-		{
-			try
-			{
-				IPersistentGrantInsurance persistentGrantInsurance = sp.getIPersistentGrantInsurance();
-				List activeInsurances = persistentGrantInsurance.readGrantInsuranceByGrantContractAndState(
-						grantInsurance.getGrantContract().getIdInternal(), new Integer(1));
-				if (activeInsurances != null && activeInsurances.size() != 0)
-				{
-					//Desactivate the Insurances
-					for (int i = 0; i < activeInsurances.size(); i++)
-					{
-						IGrantInsurance grantInsuranceTemp = (IGrantInsurance) activeInsurances.get(i);
-						if (!grantInsuranceTemp.equals(grantInsurance))
-						{
-						    persistentGrantInsurance.simpleLockWrite(grantInsuranceTemp);
-							grantInsuranceTemp.setState(new Integer(0));
-						}
-					}
-				}
-			}
-			catch (ExcepcaoPersistencia persistentException)
-			{
-				throw new FenixServiceException(persistentException.getMessage());
-			}
-		}
+		domainObjectLocked = (IDomainObject) grantInsurance;		
 	}
 	public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException
 	{
@@ -106,10 +100,10 @@ public class EditGrantInsurance extends EditDomainObjectService {
 	    IGrantInsurance grantInsurance = new GrantInsurance();
 	    if(infoGrantInsurance != null) {
 	        grantInsurance.setIdInternal(infoGrantInsurance.getIdInternal());
-	        grantInsurance.setState(infoGrantInsurance.getState());
+	        grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
+	        grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
+	        grantInsurance.setTotalValue(infoGrantInsurance.getTotalValue());
 
-	        //TODO.. copy properties
-	        
 	        IGrantContract grantContract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantInsurance.getInfoGrantContract());
 	        grantInsurance.setGrantContract(grantContract);
 	    }

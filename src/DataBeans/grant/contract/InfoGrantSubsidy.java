@@ -14,6 +14,9 @@ import Dominio.grant.contract.IGrantSubsidy;
  */
 public class InfoGrantSubsidy extends InfoObject {
 
+	private static final int activeState = 1;
+	private static final int inactiveState = 0;
+	
     private Integer state;
     private Date dateBeginSubsidy;
     private Date dateEndSubsidy;
@@ -126,7 +129,15 @@ public class InfoGrantSubsidy extends InfoObject {
     public void setState(Integer state) {
         this.state = state;
     }
+    public Integer getActiveStateValue() {
+    	return new Integer(activeState);
+    }
     
+    public Integer getInactiveStateValue() {
+    	return new Integer(inactiveState);
+    }
+
+
     /**
      * @param GrantSubsidy
      */

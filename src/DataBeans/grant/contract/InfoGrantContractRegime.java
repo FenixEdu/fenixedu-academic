@@ -16,7 +16,10 @@ import Dominio.grant.contract.IGrantContractRegime;
  * @author Barbosa
  */
 public class InfoGrantContractRegime extends InfoObject {
-
+	
+	private static final int activeState = 1;
+	private static final int inactiveState = 0;
+	
     private Integer state;
     private Date dateBeginContract;
     private Date dateEndContract;
@@ -168,6 +171,14 @@ public class InfoGrantContractRegime extends InfoObject {
     	} else {
     		return false;
     	}
+    }
+    
+    public Integer getActiveStateValue() {
+    	return new Integer(activeState);
+    }
+    
+    public Integer getInactiveStateValue() {
+    	return new Integer(inactiveState);
     }
     
     /**

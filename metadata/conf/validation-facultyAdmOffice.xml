@@ -717,6 +717,36 @@
 		    </field>			
 		</form>
 
+        <!-- Edit a Grant Contract Insurance form -->
+    	<form name="editGrantInsuranceForm">
+			<field property="dateBeginInsurance" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.insurance.dateBeginInsurance" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+					</var>
+			</field>	    
+			<field property="dateEndInsurance" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.insurance.dateEndInsurance" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+					</var>
+			</field>	    
+    	</form>
+
     </formset>
 </form-validation>
 

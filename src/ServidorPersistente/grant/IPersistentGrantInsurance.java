@@ -3,8 +3,7 @@
  */
 package ServidorPersistente.grant;
 
-import java.util.List;
-
+import Dominio.grant.contract.IGrantInsurance;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
@@ -15,6 +14,5 @@ import ServidorPersistente.IPersistentObject;
  */
 public interface IPersistentGrantInsurance extends IPersistentObject
 {
-    public List readGrantInsuranceByGrantContract(Integer key_contract) throws ExcepcaoPersistencia;
-    public List readGrantInsuranceByGrantContractAndState(Integer key_contract, Integer state) throws ExcepcaoPersistencia;
+    public IGrantInsurance readGrantInsuranceByGrantContract(Integer key_contract) throws ExcepcaoPersistencia;
 }

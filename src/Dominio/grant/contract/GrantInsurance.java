@@ -3,6 +3,8 @@
  */
 package Dominio.grant.contract;
 
+import java.util.Date;
+
 import Dominio.DomainObject;
 
 
@@ -11,14 +13,17 @@ import Dominio.DomainObject;
  * @author Pica
  */
 public class GrantInsurance extends DomainObject implements IGrantInsurance {
-
-    private Integer state;
+	
+    private Date dateBeginInsurance;
+    private Date dateEndInsurance;
+    private Double totalValue;
     
+    private IGrantPaymentEntity grantPaymentEntity;
+    private Integer keyGrantPaymentEntity;
     private IGrantContract grantContract;
     private Integer keyGrantContract;
     
     public GrantInsurance() {
-        super();
     }
 
     /**
@@ -28,19 +33,6 @@ public class GrantInsurance extends DomainObject implements IGrantInsurance {
         super(idInternal);
     }
     
-    
-    /**
-     * @return Returns the state.
-     */
-    public Integer getState() {
-        return state;
-    }
-    /**
-     * @param state The state to set.
-     */
-    public void setState(Integer state) {
-        this.state = state;
-    }
     /**
      * @return Returns the grantContract.
      */
@@ -65,7 +57,74 @@ public class GrantInsurance extends DomainObject implements IGrantInsurance {
     public void setKeyGrantContract(Integer keyGrantContract) {
         this.keyGrantContract = keyGrantContract;
     }
-    
-    
-
+	/**
+	 * @return Returns the beginInsurance.
+	 */
+	public Date getDateBeginInsurance()
+	{
+		return dateBeginInsurance;
+	}
+	/**
+	 * @param beginInsurance The beginInsurance to set.
+	 */
+	public void setDateBeginInsurance(Date beginInsurance)
+	{
+		this.dateBeginInsurance = beginInsurance;
+	}
+	/**
+	 * @return Returns the endInsurance.
+	 */
+	public Date getDateEndInsurance()
+	{
+		return dateEndInsurance;
+	}
+	/**
+	 * @param endInsurance The endInsurance to set.
+	 */
+	public void setDateEndInsurance(Date endInsurance)
+	{
+		this.dateEndInsurance = endInsurance;
+	}
+	/**
+	 * @return Returns the totalValue.
+	 */
+	public Double getTotalValue()
+	{
+		return totalValue;
+	}
+	/**
+	 * @param totalValue The totalValue to set.
+	 */
+	public void setTotalValue(Double totalValue)
+	{
+		this.totalValue = totalValue;
+	}
+	/**
+	 * @return Returns the grantPaymentEntity.
+	 */
+	public IGrantPaymentEntity getGrantPaymentEntity()
+	{
+		return grantPaymentEntity;
+	}
+	/**
+	 * @param grantPaymentEntity The grantPaymentEntity to set.
+	 */
+	public void setGrantPaymentEntity(IGrantPaymentEntity grantPaymentEntity)
+	{
+		this.grantPaymentEntity = grantPaymentEntity;
+	}
+	/**
+	 * @return Returns the keyGrantPaymentEntity.
+	 */
+	public Integer getKeyGrantPaymentEntity()
+	{
+		return keyGrantPaymentEntity;
+	}
+	/**
+	 * @param keyGrantPaymentEntity The keyGrantPaymentEntity to set.
+	 */
+	public void setKeyGrantPaymentEntity(Integer keyGrantPaymentEntity)
+	{
+		this.keyGrantPaymentEntity = keyGrantPaymentEntity;
+	}	
 }

@@ -10,21 +10,22 @@ import Dominio.grant.contract.IGrantInsurance;
  * @author Pica
  * @author Barbosa
  */
-public class InfoGrantInsuranceWithContract extends InfoGrantInsurance {
+public class InfoGrantInsuranceWithContractAndPaymentEntity extends InfoGrantInsurance {
 
     public void copyFromDomain(IGrantInsurance grantInsurance)
 	{
 		super.copyFromDomain(grantInsurance);
 		if(grantInsurance != null){
 		    setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantInsurance.getGrantContract()));
+		    setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantInsurance.getGrantPaymentEntity()));
 		}
 	}
 	
 	public static InfoGrantInsurance newInfoFromDomain(IGrantInsurance grantInsurance)
 	{
-		InfoGrantInsuranceWithContract infoGrantInsuranceWithContract = null;
+		InfoGrantInsuranceWithContractAndPaymentEntity infoGrantInsuranceWithContract = null;
 		if(grantInsurance != null){
-			infoGrantInsuranceWithContract = new InfoGrantInsuranceWithContract();
+			infoGrantInsuranceWithContract = new InfoGrantInsuranceWithContractAndPaymentEntity();
 			infoGrantInsuranceWithContract.copyFromDomain(grantInsurance);
 		}
 		return infoGrantInsuranceWithContract;

@@ -15,7 +15,7 @@ import Dominio.ITeacher;
  */
 public class GrantContractRegime extends DomainObject implements
         IGrantContractRegime {
-
+	
     private Integer state;
 
     private Date dateBeginContract;
@@ -215,6 +215,5 @@ public class GrantContractRegime extends DomainObject implements
     	} else {
     		return false;
     	}
-    }
-
+    }    
 }

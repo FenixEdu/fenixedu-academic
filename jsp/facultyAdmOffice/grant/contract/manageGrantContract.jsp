@@ -38,6 +38,7 @@
         <td class="listClasses-header">&nbsp;</td>
         <td class="listClasses-header">&nbsp;</td>
         <td class="listClasses-header">&nbsp;</td>
+        <td class="listClasses-header">&nbsp;</td>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantContract" name="infoGrantContractList">
@@ -81,6 +82,13 @@
                         <bean:message key="link.manage.grant.contract.regime" />
                     </html:link>        
             </td>
+            <td class="listClasses">
+	            <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
+	            <bean:define id="idGrantOwner" name="infoGrantContract" property="grantOwnerInfo.idInternal"/>
+	            <html:link page='<%= "/editGrantInsurance.do?method=prepareEditGrantInsuranceForm&amp;idContract=" + idContract + "&amp;idGrantOwner=" + idGrantOwner %>' > 
+	                <bean:message key="link.grant.insurance.edit" />
+	            </html:link>        
+			</td>
         </tr>
     </logic:iterate>
     </table>

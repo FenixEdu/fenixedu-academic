@@ -565,3 +565,63 @@
 
 
 
+<!-- ************************************************************** -->
+<!-- Definitions for Dominio.grant.contract.GrantInsurance          -->
+<!-- ************************************************************** -->
+   <class-descriptor
+   	  class="Dominio.grant.contract.GrantInsurance"
+   	  table="GRANT_INSURANCE"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <field-descriptor
+		name="dateBeginInsurance"
+		column="DATE_BEGIN_INSURANCE"
+		jdbc-type="DATE"
+	  />
+	  <field-descriptor
+		name="dateEndInsurance"
+		column="DATE_END_INSURANCE"
+		jdbc-type="DATE"
+	  />
+	 <field-descriptor
+		name="totalValue"
+		column="TOTAL_VALUE"
+		jdbc-type="DOUBLE"
+	 />
+	 <field-descriptor
+		name="keyGrantContract"
+		column="KEY_GRANT_CONTRACT"
+		jdbc-type="INTEGER"
+	 />
+	 <field-descriptor
+		name="keyGrantPaymentEntity"
+		column="KEY_GRANT_PAYMENT_ENTITY"
+		jdbc-type="INTEGER"
+	 />
+	 <reference-descriptor
+		name="grantPaymentEntity"
+		class-ref="Dominio.grant.contract.GrantPaymentEntity"
+		proxy="true">
+		<foreignkey field-ref="keyGrantPaymentEntity"/>
+	</reference-descriptor>
+	<reference-descriptor
+		name="grantContract"
+		class-ref="Dominio.grant.contract.GrantContract"
+		proxy="true">
+		<foreignkey field-ref="keyGrantContract"/>
+	</reference-descriptor>
+   </class-descriptor>
+
+

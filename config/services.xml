@@ -6520,7 +6520,37 @@
 			<chain name="PersonAuthorization"/>
         </filterChains>
     </service> 
-                   
+    <service>
+        <name>ReadGrantInsuranceByGrantContract</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadGrantInsuranceByGrantContract</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadGrantInsurance</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadGrantInsurance</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditGrantInsurance</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.EditGrantInsurance</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->

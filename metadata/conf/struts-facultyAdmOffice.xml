@@ -230,8 +230,13 @@
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="idGrantOwner" type="java.lang.Integer"/>
 				<form-property name="idContract" type="java.lang.Integer"/>
-				
-				<form-property name="state" type="java.lang.Integer"/>
+
+				<form-property name="idGrantInsurance" type="java.lang.Integer"/>
+				<form-property name="dateEndInsurance" type="java.lang.String"/>
+				<form-property name="dateBeginInsurance" type="java.lang.String"/>
+				<form-property name="totalValue" type="java.lang.Double"/>
+				<form-property name="project" type="java.lang.String"/>
+				<form-property name="costcenter" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 
@@ -610,17 +615,7 @@
    			validate="true"
    			type="ServidorApresentacao.Action.grant.contract.EditGrantInsuranceAction">
   			<forward name="edit-grant-insurance" path="editGrantInsuranceForm"/>
-  			<forward name="manage-grant-insurance" path="/manageGrantInsurance.do?method=prepareManageGrantInsuranceForm"/>
-    </action>
-
-	<!-- ===================== USE CASE: MANAGE GRANT INSURANCE ============================== -->
-	<action path="/manageGrantInsurance" 
-			input="/manageGrantInsurance.do?page=0&amp;method=prepareManageGrantInsuranceForm" 
-			name="voidForm" 
-			scope="request"
-   			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantInsuranceAction">
-  			<forward name="manage-grant-insurance" path="manageGrantInsurance"/> 
+  			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
     </action>
 
     <!-- ===================== USE CASE: SHOW TEACHERS LIST ============================== -->
@@ -711,7 +706,7 @@
 		    validate="true"
    			type="ServidorApresentacao.Action.grant.list.ListGrantOwnerActionByCriteria">
    			<forward name="select-criteria" path="selectCriteria"/>
-   			<forward name="list-grant-owner" path="listGrantOwner"/>
+   			<!-- <forward name="list-grant-owner-byCriteria" path="listGrantOwnerByCriteria"/> -->
    			<forward name="show-grant-owner" path="showGrantOwner"/>
     </action>
 

@@ -401,11 +401,22 @@
 	<html:hidden property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
 	<html:hidden property="method" value="prepareEditGrantOwnerForm"/>				
 	<html:hidden property="loaddb" value="1"/>
-	
-	<html:submit styleClass="inputbutton">
-		<bean:message key="button.edit"/>
-	</html:submit> 
+	<table>
+		<tr>
+			<td width=100>
+				<html:submit styleClass="inputbutton">
+					<bean:message key="button.edit"/>
+	            </html:submit>
+			</td>
+			<td>
+            	<html:link page='<%= "/listGrantOwner.do?method=showGrantOwner&amp;grantOwnerId=" + idGrantOwner.toString() %>' > 
+                	<bean:message key="link.grant.owner.show" />
+				</html:link>    
+			</td>
+		</tr>
+	</table>
 </html:form>
+
 
 <br/>
 

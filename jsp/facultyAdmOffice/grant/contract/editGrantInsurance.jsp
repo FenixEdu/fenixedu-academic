@@ -6,7 +6,6 @@
 <p class="infoselected">
 		<b><bean:message key="label.grant.contract.information"/></b><br/>
     	<bean:message key="label.grant.contract.contractnumber"/>:&nbsp;<bean:write name="contractNumber"/><br/>
-    	<bean:message key="label.grant.contract.type"/>:&nbsp;<bean:write name="grantTypeName"/>
 	</p>
 	
 <strong><p align="center"><bean:message key="label.grant.insurance.edition"/></p></strong><br/>
@@ -24,20 +23,69 @@
 
 	<%-- In case of validation error --%>
 	<html:hidden property="contractNumber" value='<%= request.getAttribute("contractNumber").toString() %>' />
-	<html:hidden property="grantTypeName" value='<%= request.getAttribute("grantTypeName").toString() %>' />
 	
 	<%-- grant contract --%>
 	<html:hidden property="idContract"/> 
-	
+	<%-- grant owner  --%>
+	<html:hidden property="idGrantOwner"/>	
 	<%-- grant insurance --%>
 	<html:hidden property="idGrantInsurance"/>
-	<html:hidden property="state"/>
-
-	<%-- grant owner  --%>
-	<html:hidden property="idGrantOwner"/>
-
+	<html:hidden property="totalValue"/>
+	
 	<table>
-
+		<logic:present name="totalValue">
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.insurance.totalValue"/>:&nbsp;
+			</td>
+			<td>
+				<bean:write name="totalValue"/>
+			</td>
+		</tr>
+		</logic:present>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.insurance.dateBeginInsurance"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateBeginInsurance" size="10"/>&nbsp;<bean:message key="label.requiredfield"/><bean:message key="label.dateformat"/>
+			</td>
+		</tr>
+		<tr>
+		<td align="left">
+			<bean:message key="label.grant.insurance.dateEndInsurance"/>:&nbsp;
+		</td>
+		<td>
+			<html:text property="dateEndInsurance" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+		</td>
+		</tr>
+		<tr>
+			<td align="left" colspan="2">
+				<bean:message key="label.grant.insurance.grantPaymentEntity.number"/> &nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				&nbsp;&nbsp;&nbsp;&nbsp;<bean:message key="label.grant.insurance.paymentEntity.project"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="project" size="10"/>&nbsp; 
+					<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;project=1" %>' target="_blank">
+						<bean:message key="link.grantproject.showList"/>
+					</html:link>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				&nbsp;&nbsp;&nbsp;&nbsp;<bean:message key="label.grant.insurance.paymentEntity.costCenter"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="costcenter" size="10"/>&nbsp; 
+				<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;costcenter=1" %>' target="_blank">
+					<bean:message key="link.grantcostcenter.showList"/>
+				</html:link>
+			</td>
+		</tr>
 	</table>
 
 	<br/>
@@ -51,10 +99,10 @@
 </html:form>
 			</td>
 			<td>
-				<html:form action="/manageGrantInsurance" style="display:inline">
-				<html:hidden property="method" value="prepareManageGrantInsuranceForm"/>
+				<html:form action="/manageGrantContract" style="display:inline">
+				<html:hidden property="method" value="prepareManageGrantContractForm"/>
 				<html:hidden property="page" value="1"/>
-				<html:hidden property="idContract" value='<%= request.getAttribute("idContract").toString() %>'/>
+				<html:hidden property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
 					<html:submit styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>
