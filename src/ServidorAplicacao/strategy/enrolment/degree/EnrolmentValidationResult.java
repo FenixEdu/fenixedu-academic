@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 public class EnrolmentValidationResult {
-
+	public static final String ACUMULATED_CURRICULAR_COURSES="message.acumulated.curricular.courses";
+	public static final String MINIMUM_CURRICULAR_COURSES_TO_ENROLL = "message.minimum.number.curricular.courses.to.enroll";
+	public static final String MAXIMUM_CURRICULAR_COURSES_TO_ENROLL = "message.maximum.number.curricular.courses.to.enroll";
+	public static final String MUST_ENROLL_IN_EARLIER_CURRICULAR_COURSES="message.enrolment.earlier.curricular.courses";
+	public static final String SUCCESS_ENROLMENT = "message.enrolment.success";
+	
 	private Map message;
 	private boolean sucess;
 
