@@ -494,11 +494,11 @@
       
       <!-- Action... -->
       <action 
-      	path="/associateExecutionCoursesToCurricularCourse"
+      	path="/associateExecutionCourseToCurricularCourse"
       	name="curricularCourseForm"
-      	input="/readExecutionCoursesToAssociateCurricularCourse.do"
+      	input="/readExecutionCourseToAssociateCurricularCourse.do"
       	scope="request"
-      	type="ServidorApresentacao.Action.manager.AssociateExecutionCoursesToCurricularCourseAction">
+      	type="ServidorApresentacao.Action.manager.AssociateExecutionCourseToCurricularCourseAction">
       	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>

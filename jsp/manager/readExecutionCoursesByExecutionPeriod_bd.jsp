@@ -23,7 +23,7 @@
 
 <logic:notEmpty name="infoExecutionCoursesList" scope="request">
 
-<html:form action="/associateExecutionCoursesToCurricularCourse" method="get">
+<html:form action="/associateExecutionCourseToCurricularCourse" method="get">
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>

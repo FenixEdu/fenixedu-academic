@@ -55,7 +55,7 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico {
 					curricularCourseToRead.setIdInternal(curricularCourseId);
 			ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseToRead, false);	
 		    allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
-		    
+//		 
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}

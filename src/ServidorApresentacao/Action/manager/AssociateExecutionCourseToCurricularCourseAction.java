@@ -25,7 +25,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author lmac1
  */
 
-public class AssociateExecutionCoursesToCurricularCourseAction extends FenixAction {
+public class AssociateExecutionCourseToCurricularCourseAction extends FenixAction {
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
@@ -43,12 +43,15 @@ public class AssociateExecutionCoursesToCurricularCourseAction extends FenixActi
 			GestorServicos manager = GestorServicos.manager();
 
 			try {
-					manager.executar(userView, "AssociateExecutionCoursesToCurricularCourse", args);
+					manager.executar(userView, "AssociateExecutionCourseToCurricularCourse", args);
 			} catch (NonExistingServiceException ex) {
 				throw new NonExistingActionException(ex.getMessage());
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
+			
+			
+			
 			return mapping.findForward("readCurricularCourse");
 		}
 	}

@@ -22,19 +22,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class AssociateExecutionCoursesToCurricularCourse implements IServico {
+public class AssociateExecutionCourseToCurricularCourse implements IServico {
 	
-	private static AssociateExecutionCoursesToCurricularCourse service = new AssociateExecutionCoursesToCurricularCourse();
+	private static AssociateExecutionCourseToCurricularCourse service = new AssociateExecutionCourseToCurricularCourse();
 
-	public static AssociateExecutionCoursesToCurricularCourse getService() {
+	public static AssociateExecutionCourseToCurricularCourse getService() {
 		return service;
 	}
 
-	private AssociateExecutionCoursesToCurricularCourse() {
+	private AssociateExecutionCourseToCurricularCourse() {
 	}
-
+ 
 	public final String getNome() {
-		return "AssociateExecutionCoursesToCurricularCourse";
+		return "AssociateExecutionCourseToCurricularCourse";
 	}
 	
 
@@ -50,13 +50,15 @@ public class AssociateExecutionCoursesToCurricularCourse implements IServico {
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
 				
 				if(curricularCourse == null)
-					throw new NonExistingServiceException("b", null);
+					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 					
 				List executionCourses = curricularCourse.getAssociatedExecutionCourses();
 				
 				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
+				
 				if(executionCourse == null)
-					throw new NonExistingServiceException("c", null);
+					throw new NonExistingServiceException("message.non.existing.execution.course", null);
+					
 				else {
 						List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 						if(!executionCourses.contains(executionCourse) && !curricularCourses.contains(curricularCourse)) {
@@ -65,7 +67,7 @@ public class AssociateExecutionCoursesToCurricularCourse implements IServico {
 							curricularCourses.add(curricularCourse);
 							curricularCourse.setAssociatedExecutionCourses(executionCourses);
 							executionCourse.setAssociatedCurricularCourses(curricularCourses);
-						}
+						}	
 				}	 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
