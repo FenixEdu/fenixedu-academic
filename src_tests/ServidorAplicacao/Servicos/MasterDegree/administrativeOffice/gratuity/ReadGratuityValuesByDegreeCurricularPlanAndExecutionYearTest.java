@@ -8,7 +8,6 @@ import DataBeans.InfoGratuityValues;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import framework.factory.ServiceManagerServiceFactory;
-
 /**
  * @author Tânia Pousão
  *  
