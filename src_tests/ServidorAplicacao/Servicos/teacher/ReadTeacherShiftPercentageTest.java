@@ -14,8 +14,6 @@ import DataBeans.InfoRole;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftPercentage;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.FenixServiceException;
@@ -24,7 +22,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servicos.TestCaseServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -61,18 +58,9 @@ public class ReadTeacherShiftPercentageTest extends TestCaseServices {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Execution Course
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-			executionCourse.setIdInternal(new Integer(1));
 
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
-			executionCourse =
-				(IDisciplinaExecucao) executionCourseDAO.readByOId(
-					executionCourse);
-
-			InfoExecutionCourse infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse);
+			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+			infoExecutionCourse.setIdInternal(new Integer(1));
 
 			//Teacher		
 			ITeacher teacher = new Teacher();
