@@ -4401,28 +4401,42 @@ public abstract class Cloner
     	return paymentPhase;
     }
     
-    public static InfoGratuitySituation copyIGratuitySituation2InfoGratuitySituation(IGratuitySituation gratuitySituation){
+    public static InfoGratuitySituation copyIGratuitySituation2InfoGratuitySituation(IGratuitySituation gratuitySituation)
+    {
     	InfoGratuitySituation infoGratuitySituation = new InfoGratuitySituation();
     	copyObjectProperties(infoGratuitySituation, gratuitySituation);
-    	
-    	InfoGratuityValues infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuitySituation.getGratuityValues());
-    	infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
-    	
-    	InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(gratuitySituation.getStudentCurricularPlan());
+
+    	if (gratuitySituation.getGratuityValues() != null)
+    	{
+    		InfoGratuityValues infoGratuityValues =
+    		Cloner.copyIGratuityValues2InfoGratuityValues(gratuitySituation.getGratuityValues());
+    		infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
+    	}
+
+    	InfoStudentCurricularPlan infoStudentCurricularPlan =
+    	Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(
+    			gratuitySituation.getStudentCurricularPlan());
     	infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-    	    	
+
     	return infoGratuitySituation;
     }
-    
-    public static IGratuitySituation copyInfoGratuitySituation2IGratuitySituation(InfoGratuitySituation infoGratuitySituation){
+
+    public static IGratuitySituation copyInfoGratuitySituation2IGratuitySituation(InfoGratuitySituation infoGratuitySituation)
+    {
     	IGratuitySituation gratuitySituation = new GratuitySituation();
-    	
-    	IGratuityValues gratuityValues = Cloner.copyInfoGratuityValues2IGratuityValues(infoGratuitySituation.getInfoGratuityValues());
-    	gratuitySituation.setGratuityValues(gratuityValues);
-    	
-    	IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoGratuitySituation.getInfoStudentCurricularPlan());
+
+    	if (infoGratuitySituation.getInfoGratuityValues() != null)
+    	{
+    		IGratuityValues gratuityValues =
+    		Cloner.copyInfoGratuityValues2IGratuityValues(
+    				infoGratuitySituation.getInfoGratuityValues());
+    		gratuitySituation.setGratuityValues(gratuityValues);
+    	}
+    	IStudentCurricularPlan studentCurricularPlan =
+    	Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(
+    			infoGratuitySituation.getInfoStudentCurricularPlan());
     	gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
-    	
+
     	return gratuitySituation;
     }
 }
