@@ -12,7 +12,7 @@
 <br />
 <logic:present name="siteView"> 
 <bean:define id="component" name="siteView" property="component"/>
-<bean:define id="executionCourse" name="component" property="executionCourse"/>
+<bean:define id="executionCourse" name="component" property="executionCourse"/> 
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
 Mostrar Sumários:
 <html:link page="/summariesManager.do?method=showSummaries" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
