@@ -10,13 +10,11 @@ import org.apache.struts.action.ActionMapping;
 
 import ServidorApresentacao.Action.FenixAction;
 
-
 /**
  * @author tfc130
  */
 
 public class EditarAulasDeTurnoFormAction extends FenixAction {
-
 
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,
@@ -26,6 +24,7 @@ public class EditarAulasDeTurnoFormAction extends FenixAction {
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
          /* Obtem o parametro do submit que indica a operacao a realizar */
+         /* :FIXME: change this to international form */
         String parameter = request.getParameter(new String("operation"));
         
 		return mapping.findForward(parameter);
@@ -34,7 +33,5 @@ public class EditarAulasDeTurnoFormAction extends FenixAction {
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
   }
  
-
 }
-
 

@@ -92,13 +92,13 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentation {
 		//perform
 		actionPerform();
 
-		//checks forward
-		verifyForward("forwardChoose");
- 
 		//checks for errors
 		verifyNoActionErrors();
+
+		//checks forward
+		verifyForward("forwardChoose"); 
 	}
-	
+
 	public void testUnSuccessfulChooseExecutionCourse() {
 
 		//required to put form escolherDisciplinaExecucaoForm in session
@@ -147,11 +147,10 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentation {
 		//perform
 		actionPerform();
 
-		//checks forward
-		verifyForward("showForm");
- 
 		//checks for errors
 		verifyNoActionErrors();
+
+		//checks forward
+		verifyForward("showForm"); 
 	}
-	
 }
