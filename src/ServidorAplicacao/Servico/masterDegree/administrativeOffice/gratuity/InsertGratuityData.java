@@ -161,8 +161,6 @@ public class InsertGratuityData implements IService
 			}
 		}
 
-		System.out.println("obteve o valor da propina: " + gratuityValue);
-
 		List paymentPhasesList = infoGratuityValues.getInfoPaymentPhases();
 		if (paymentPhasesList != null && paymentPhasesList.size() > 0)
 		{
@@ -176,15 +174,10 @@ public class InsertGratuityData implements IService
 			}
 			if (totalValuePaymentPhases > gratuityValue.doubleValue())
 			{
-				System.out.println("valores de prestacoes sao maiores que o valor da propina");
-
 				throw new FenixServiceException("error.masterDegree.gatuyiuty.totalValuePaymentPhases");
 			}
-			System.out.println("os valores das prestacoes estao correctos");
-
 			//verify if all payment phases's dates are correct
 			validateDatesOfPaymentPhases(paymentPhasesList);
-			System.out.println("validou datas de prestacoes");
 
 			//registration Payment
 			if (infoGratuityValues.getRegistrationPayment() != null
@@ -193,8 +186,6 @@ public class InsertGratuityData implements IService
 				iterator = paymentPhasesList.listIterator();
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 				infoPaymentPhase.setDescription(SessionConstants.REGISTRATION_PAYMENT);
-				System.out.println("mudou a descricao da prestacao de registo");
-
 			}
 		}
 	}
@@ -213,8 +204,6 @@ public class InsertGratuityData implements IService
 				InfoPaymentPhase infoPaymentPhase2Compare = (InfoPaymentPhase) iterator.next();
 				if (!infoPaymentPhase.getEndDate().before(infoPaymentPhase2Compare.getStartDate()))
 				{
-					System.out.println("datas de prestacoes coincidentes");
-
 					throw new FenixServiceException("error.impossible.paymentPhaseWithWrongDates");
 				}
 				iterator.previous();
@@ -227,7 +216,6 @@ public class InsertGratuityData implements IService
 		IGratuityValues gratuityValues)
 		throws FenixServiceException
 	{
-		System.out.println("em validatePaymentPhasesWithTransaction");
 		//verify if any payment phase has any transaction associated
 		IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
 		if (gratuityValues.getPaymentPhaseList() != null
@@ -241,8 +229,6 @@ public class InsertGratuityData implements IService
 				if (paymentPhase.getTransactionList() != null
 					&& paymentPhase.getTransactionList().size() > 0)
 				{
-					System.out.println("ja existem transaccoes para as prestacoes");
-
 					throw new FenixServiceException("error.impossible.paymentPhaseWithTransactional");
 				}
 			}
@@ -284,8 +270,6 @@ public class InsertGratuityData implements IService
 			if (gratuityValues.getPaymentPhaseList() != null
 				&& gratuityValues.getPaymentPhaseList().size() > 0)
 			{
-				System.out.println("ha prestacoes, apagam-se");
-
 				persistentPaymentPhase.deletePaymentPhasesOfThisGratuity(gratuityValues.getIdInternal());
 			}
 
@@ -347,8 +331,6 @@ public class InsertGratuityData implements IService
 							&& !gratuitySituation.getGratuityValues().getIdInternal().equals(
 								gratuityValues.getIdInternal()))))
 				{
-					System.out.println("actualiza situacao de propina");
-
 					gratuitySituation.setGratuityValues(gratuityValues);
 					persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 				}
