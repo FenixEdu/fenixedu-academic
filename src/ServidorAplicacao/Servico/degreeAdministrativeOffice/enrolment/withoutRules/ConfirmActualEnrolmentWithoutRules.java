@@ -12,6 +12,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.enrolment.degree.ChangeEnrolmentStateFromTemporarilyToEnroled;
@@ -29,6 +30,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.CurricularCourseType;
+import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
@@ -78,6 +80,7 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			persistentEnrolment = sp.getIPersistentEnrolment();
 			persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 
+			// FIXME [DAVID]: De futuro passar a ler todos os enrolments do plano curricular e periodo de execução que vem no enrolmentContext.
 			List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan());
 
 			// List of all enrolments with state 'enrolled' and 'temporarily enrolled'.
@@ -90,14 +93,16 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 				}
 			});
 
-			List enrolmentsToDelete = this.subtract(studentEnroledAndTemporarilyEnroledEnrolments, enrolmentContext.getActualEnrolments(), enrolmentContext.getChosenOptionalDegree());
+			List enrolmentsToDelete = this.subtract(studentEnroledAndTemporarilyEnroledEnrolments, enrolmentContext.getActualEnrolments(), enrolmentContext.getChosenOptionalDegree(), enrolmentContext.getExecutionPeriod());
 
 			// Delete from data base the enrolments that don't mather.
 			Iterator iterator = enrolmentsToDelete.iterator();
 			while(iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
 				ConfirmActualEnrolmentWithoutRules.deleteAttendAndEnrolmentEvaluations(enrolment);
-				persistentEnrolment.delete(enrolment);
+//				persistentEnrolment.delete(enrolment);
+				persistentEnrolment.simpleLockWrite(enrolment);
+				enrolment.setEnrolmentState(EnrolmentState.ANNULED);
 			}
 
 			iterator = enrolmentContext.getActualEnrolments().iterator();
@@ -140,14 +145,15 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 		}
 	}
 
-	private List subtract(List fromList, List toRemoveList, ICurso chosenDegree) {
+	private List subtract(List fromList, List toRemoveList, ICurso chosenDegree, IExecutionPeriod executionPeriod) {
 		List result = new ArrayList();
 		if( (fromList != null) && (toRemoveList != null) && (!fromList.isEmpty()) ) {
 
 			Iterator iterator = fromList.iterator();
 			while(iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
-				if(enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().getDegree().equals(chosenDegree)) {
+				if(enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().getDegree().equals(chosenDegree) &&
+				   enrolment.getExecutionPeriod().equals(executionPeriod)) {
 					result.add(enrolment);
 				}
 			}
@@ -184,7 +190,9 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			while(iterator.hasNext()) {
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
 				if(enrolmentEvaluation != null) {
-					persistentEnrolmentEvaluation.delete(enrolmentEvaluation);
+//					persistentEnrolmentEvaluation.delete(enrolmentEvaluation);
+					persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluation);
+					enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.ANNULED_OBJ);
 				}
 			}
 		}
