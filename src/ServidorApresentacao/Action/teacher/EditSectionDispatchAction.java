@@ -30,7 +30,6 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
-			System.out.println("prepareEdit");	
 			return mapping.findForward("editSection");
 		} 
 

@@ -10,7 +10,7 @@
 		<bean:message key="message.sectionName"/>
 	</td>
 	<td>
-		<html:text property="name"/>
+		<html:textarea rows="2" cols="50" property="name" />
 	</td>
 </tr>
 <tr>
@@ -18,7 +18,7 @@
 		<bean:message key="message.sectionOrder"/>
 	</td>
 	<td>
-		<html:text property="order"/>
+		<html:text size="5" property="order"/>
 	</td>
 </tr>
 <tr>

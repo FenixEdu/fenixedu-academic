@@ -11,7 +11,7 @@
 		<bean:message key="message.sectionName"/>
 	</td>
 	<td>
-		<html:text name="<%=SessionConstants.INFO_SECTION %>" property="name"/>
+		<html:textarea rows="2" cols="50" name="<%=SessionConstants.INFO_SECTION %>" property="name" />
 	</td>
 </tr>
 <tr>
@@ -19,7 +19,7 @@
 		<bean:message key="message.sectionOrder"/>
 	</td>
 	<td>
-		<html:text name="<%=SessionConstants.INFO_SECTION %>" property="sectionOrder"/>
+		<html:text size="5" name="<%=SessionConstants.INFO_SECTION %>" property="sectionOrder"/>
 	</td>
 </tr>
 
