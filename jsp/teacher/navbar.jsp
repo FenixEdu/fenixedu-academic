@@ -4,10 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <logic:present name="siteView">
 	<bean:define id="component" name="siteView" property="commonComponent" />
 	<bean:define id="executionCourse" name="component" property="executionCourse" />
+	<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 	<ul>
 	<li><html:link page="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.home"/></html:link></li>
 	</ul>
@@ -31,8 +32,10 @@
 	<li><html:link page="/studentsByCurricularCourse.do?method=readStudents" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.students"/></html:link></li>
 	<%-- <li><html:link page="/readCurricularCourseList.do?method=read" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.students"/></html:link></li> --%>
 	<%-- <li><html:link page="/viewEvaluation.do?method=viewEvaluation" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li> --%>
-	<%-- <li><html:link page="/testsManagement.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.testsManagement"/></html:link></li> --%>
-	<li><html:link page="/viewExecutionCourseProjects.do?method=viewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.groupsManagement"/></html:link></li>
+	<logic:equal name="userView" property="utilizador" value="D2543">
+	<li><html:link page="/testsManagement.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.testsManagement"/></html:link></li>
+	</logic:equal>
+<li><html:link page="/viewExecutionCourseProjects.do?method=viewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.groupsManagement"/></html:link></li>
 	</ul>
 	<p>
 	<ul>
