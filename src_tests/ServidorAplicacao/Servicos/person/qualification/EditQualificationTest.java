@@ -1,8 +1,8 @@
 /*
- * Created on 111/Nov/2003
+ * Created on 05/Nov/2003
+ *  
  */
-
-package ServidorAplicacao.Servicos.person;
+package ServidorAplicacao.Servicos.person.qualification;
 
 import DataBeans.InfoPerson;
 import DataBeans.person.InfoQualification;
@@ -10,16 +10,18 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Barbosa
  * @author Pica
+ *  
  */
 
-public class DeleteQualificationTest
+public class EditQualificationTest
 	extends QualificationServiceNeedsAuthenticationTestCase {
 
-	public DeleteQualificationTest(java.lang.String testName) {
+	public EditQualificationTest(java.lang.String testName) {
 		super(testName);
 	}
 
@@ -37,7 +39,7 @@ public class DeleteQualificationTest
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "DeleteQualification";
+		return "EditQualification";
 	}
 	/*
 	 * (non-Javadoc)
@@ -45,7 +47,7 @@ public class DeleteQualificationTest
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
 	 */
 	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/person/qualification/testDeleteQualificationDataSet.xml";
+		return "etc/datasets/servicos/person/testEditQualificationDataSet.xml";
 	}
 	/*
 	 * (non-Javadoc)
@@ -82,7 +84,11 @@ public class DeleteQualificationTest
 	protected Object[] getAuthorizeArgumentsGrantOwnerManager() {
 		//Qualificação de um bolseiro
 		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(2));
+		info.setIdInternal(new Integer(1));
+		info.setQualificationMark("mark");
+		info.setQualificationSchool("tagus");
+		info.setQualificationTitle("title");
+		info.setQualificationYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonGO());
 
 		Integer infoManagerPersonCode = new Integer(17);
@@ -98,7 +104,11 @@ public class DeleteQualificationTest
 	protected Object[] getAuthorizeArgumentsTeacher() {
 		//Qualificação de um professor
 		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(3));
+		info.setIdInternal(new Integer(1));
+		info.setQualificationMark("mark");
+		info.setQualificationSchool("tagus");
+		info.setQualificationTitle("Sr. Dr. Eng.");
+		info.setQualificationYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonT());
 
 		Integer infoManagerPersonCode = new Integer(18);
@@ -112,10 +122,13 @@ public class DeleteQualificationTest
 	 * 
 	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_GrantOwnerManager()
 	 */
-	protected Object[] getAuthorizeArgumentsDeleteQualificationGrantOwner() {
+	protected Object[] getAuthorizeArgumentsCreateQualificationGrantOwner() {
 		//Qualificação de um bolseiro
 		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(1));
+		info.setQualificationMark("mark");
+		info.setQualificationSchool("tagus");
+		info.setQualificationTitle("title");
+		info.setQualificationYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonGO());
 
 		Integer infoManagerPersonCode = new Integer(17);
@@ -124,12 +137,43 @@ public class DeleteQualificationTest
 		return args;
 	}
 
-	protected Object[] getAuthorizeArgumentsDeleteQualificationTeacher() {
+	protected Object[] getAuthorizeArgumentsCreateQualificationTeacher() {
 		//Qualificação de um professor
 		InfoQualification info = new InfoQualification();
-		info.setIdInternal(new Integer(4));
+		info.setQualificationMark("mark");
+		info.setQualificationSchool("tagus");
+		info.setQualificationTitle("Sr. Dr. Eng.");
+		info.setQualificationYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonT());
 
+		Integer infoManagerPersonCode = new Integer(18);
+
+		Object[] args = { infoManagerPersonCode, info };
+		return args;
+	}
+
+	protected Object[] getAuthorizeArgumentsEditQualificationGrantOwner() {
+		//Qualificação de um bolseiro já existente
+
+		InfoQualification info = new InfoQualification();
+		info.setIdInternal(new Integer(2));
+		info.setQualificationSchool("NewSchool");
+		info.setQualificationYear(new Integer(2003));
+		info.setPersonInfo(getInfoPersonGO());
+		Integer infoManagerPersonCode = new Integer(17);
+
+		Object[] args = { infoManagerPersonCode, info };
+		return args;
+	}
+
+	protected Object[] getAuthorizeArgumentsEditQualificationTeacher() {
+		//Qualificação de um professor já existente
+
+		InfoQualification info = new InfoQualification();
+		info.setIdInternal(new Integer(1));
+		info.setQualificationYear(new Integer(2000));
+		info.setQualificationSchool("tagus");
+		info.setPersonInfo(getInfoPersonT());
 		Integer infoManagerPersonCode = new Integer(18);
 
 		Object[] args = { infoManagerPersonCode, info };
@@ -139,7 +183,7 @@ public class DeleteQualificationTest
 	/** **************************** INICIO DOS TESTES******************* */
 
 	/*
-	 * Um Grant Owner Manager tenta apagar com sucesso uma qualificação a um
+	 * Um Grant Owner Manager tenta criar com sucesso uma qualificação a um
 	 * Grant Owner
 	 */
 	public void testCreateQualificationGOMSuccessfull() {
@@ -147,11 +191,11 @@ public class DeleteQualificationTest
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
 			Object[] argserv =
-				getAuthorizeArgumentsDeleteQualificationGrantOwner();
+				getAuthorizeArgumentsCreateQualificationGrantOwner();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteGOMQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditCreateGOMQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -159,25 +203,52 @@ public class DeleteQualificationTest
 					+ this.getClass().getName());
 
 		} catch (FenixServiceException e) {
-			fail("Deleting a Qualification for GrantOwner: " + e);
+			fail("Creating a new Qualification for GrantOwner: " + e);
 		} catch (Exception e) {
-			fail("Deleting a Qualification for GrantOwner: " + e);
+			fail("Creating a new Qualification for GrantOwner: " + e);
 		}
 	}
 
 	/*
-	 * Um professor tenta apagar com sucesso uma qualificação sua.
+	 * Um Grant Owner Manager tenta editar com sucesso uma qualificação de um
+	 * Grant Owner
+	 */
+	public void testEditQualificationGOMSuccessfull() {
+		try {
+			String[] args = getAuthorizedUserGrantOwnerManager();
+			IUserView user = authenticateUser(args);
+			Object[] argserv =
+				getAuthorizeArgumentsEditQualificationGrantOwner();
+
+			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationGOMSuccesfullDataSet.xml");
+
+			System.out.println(
+				getNameOfServiceToBeTested()
+					+ " was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (FenixServiceException e) {
+			fail("Editing a Qualification for a GrantOwner: " + e);
+		} catch (Exception e) {
+			fail("Editing a Qualification for a GrantOwner: " + e);
+		}
+	}
+
+	/*
+	 * Um professor tenta criar com sucesso uma qualificação sua.
 	 */
 	public void testCreateQualificationTSuccessfull() {
 		try {
 			String[] args = getAuthorizedUserTeacher();
 			IUserView user = authenticateUser(args);
 			Object[] argserv =
-				getAuthorizeArgumentsDeleteQualificationTeacher();
+				getAuthorizeArgumentsCreateQualificationTeacher();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteTQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditCreateTQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -185,9 +256,34 @@ public class DeleteQualificationTest
 					+ this.getClass().getName());
 
 		} catch (FenixServiceException e) {
-			fail("Deleting a Qualification for Teacher: " + e);
+			fail("Creating a new Qualification for Teacher: " + e);
 		} catch (Exception e) {
-			fail("Deleting Qualification for Teacher: " + e);
+			fail("Creating a new Qualification for Teacher: " + e);
+		}
+	}
+
+	/*
+	 * Um professor tenta editar com sucesso uma qualificação sua
+	 */
+	public void testEditQualificationTSuccessfull() {
+		try {
+			String[] args = getAuthorizedUserTeacher();
+			IUserView user = authenticateUser(args);
+			Object[] argserv = getAuthorizeArgumentsEditQualificationTeacher();
+
+			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationTSuccesfullDataSet.xml");
+
+			System.out.println(
+				getNameOfServiceToBeTested()
+					+ " was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (FenixServiceException e) {
+			fail("Editing a Qualification for a teacher: " + e);
+		} catch (Exception e) {
+			fail("Editing a Qualification for a teacher: " + e);
 		}
 	}
 
@@ -200,22 +296,22 @@ public class DeleteQualificationTest
 			String[] args = getAuthorizedUserTeacher();
 			IUserView user = authenticateUser(args);
 			Object[] argserv =
-				getAuthorizeArgumentsDeleteQualificationGrantOwner();
+				getAuthorizeArgumentsCreateQualificationGrantOwner();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			fail("Delete Qualification Unsuccessfull.");
+			fail("CreateQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		} catch (FenixServiceException e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
+			fail("CreateQualificationUnsuccessfull: " + e);
 		} catch (Exception e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
+			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 	}
 
@@ -227,27 +323,27 @@ public class DeleteQualificationTest
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
 			Object[] argserv =
-				getAuthorizeArgumentsDeleteQualificationTeacher();
+				getAuthorizeArgumentsCreateQualificationTeacher();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			fail("Delete Qualification Unsuccessfull.");
+			fail("CreateQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		} catch (FenixServiceException e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
+			fail("CreateQualificationUnsuccessfull: " + e);
 		} catch (Exception e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
+			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 	}
 
 	/*
-	 * Valid user, but wrong arguments (deleting a qualification that does't
+	 * Valid user, but wrong arguments (editing a qualification that does't
 	 * exists)
 	 */
 	public void testCreateQualificationUnsuccessfull3() {
@@ -255,57 +351,25 @@ public class DeleteQualificationTest
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
 			Object[] argserv =
-				getAuthorizeArgumentsDeleteQualificationGrantOwner();
+				getAuthorizeArgumentsEditQualificationGrantOwner();
 
 			//Invalid qualification
 			 ((InfoQualification) argserv[1]).setIdInternal(new Integer(1220));
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			fail("Delete Qualification Unsuccessfull.");
+			fail("CreateQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		} catch (FenixServiceException e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
+			fail("CreateQualificationUnsuccessfull: " + e);
 		} catch (Exception e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
-		}
-
-	}
-
-	/*
-	 * Valid user, but wrong arguments (qualification id is null)
-	 */
-	public void testCreateQualificationUnsuccessfull4() {
-		try {
-			String[] args = getAuthorizedUserGrantOwnerManager();
-			IUserView user = authenticateUser(args);
-			Object[] argserv =
-				getAuthorizeArgumentsDeleteQualificationGrantOwner();
-
-			//Invalid qualification
-			 ((InfoQualification) argserv[1]).setIdInternal(null);
-
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
-
-			fail("Delete Qualification Unsuccessfull.");
-
-		} catch (NotAuthorizedException e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
-		} catch (FenixServiceException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-
-		} catch (Exception e) {
-			fail("DeleteQualificationUnsuccessfull: " + e);
+			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 
 	}
@@ -324,5 +388,6 @@ public class DeleteQualificationTest
 		info.setUsername("user_t");
 		return info;
 	}
+	
 
 }

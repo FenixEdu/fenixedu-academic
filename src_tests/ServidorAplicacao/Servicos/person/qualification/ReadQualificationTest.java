@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.person;
+package ServidorAplicacao.Servicos.person.qualification;
 
 import DataBeans.InfoPerson;
 import DataBeans.person.InfoQualification;
@@ -6,6 +6,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase;
 
 /*
  * Created on 12/Nov/2003
@@ -46,7 +47,7 @@ public class ReadQualificationTest
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
 	 */
 	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/person/qualification/testReadQualificationDataSet.xml";
+		return "etc/datasets/servicos/person/testReadQualificationDataSet.xml";
 	}
 	/*
 	 * (non-Javadoc)
@@ -122,7 +123,7 @@ public class ReadQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedReadQualificationDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -147,7 +148,7 @@ public class ReadQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedReadQualificationDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -176,7 +177,7 @@ public class ReadQualificationTest
 			fail("ReadQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedReadQualificationDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -202,7 +203,7 @@ public class ReadQualificationTest
 			fail("ReadQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedReadQualificationDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -232,7 +233,7 @@ public class ReadQualificationTest
 			fail("ReadQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedReadQualificationDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -263,7 +264,7 @@ public class ReadQualificationTest
 		} catch (NotAuthorizedException e) {
 			fail("ReadQualificationUnsuccessfull: " + e);
 		} catch (FenixServiceException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedReadQualificationDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
