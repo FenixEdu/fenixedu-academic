@@ -135,7 +135,8 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	public void calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan, InfoFinalResult infoFinalResult) throws ExcepcaoPersistencia {
 		
 		// Degrees that use the Mixed Average (Average between Simple and Weighted average)
-		if (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/03")){
+		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/03")) || 
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))){
 			Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 			Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
 			
@@ -148,6 +149,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 		// Degrees that use the Best Average (Best between Simple and Weighted average)
 		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MB02/03")) || 
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MB03/04")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MIOES02/03"))) {
 				Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 				Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
@@ -166,13 +168,18 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		
 		// Degrees that use the Weighted Average 
 		if ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE03/05")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MF02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MF03/05")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MC02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MC03/05")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEMAT02/03")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEQ03/04")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MSIG02/03")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MCES02/03")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC02/03")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC03/05")) ||
+			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML03/05")) ||
 			(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/03"))) {
 				
 				Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
