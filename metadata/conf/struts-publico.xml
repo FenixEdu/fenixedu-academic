@@ -245,21 +245,24 @@
         <forward name="AlternativeSite" path="/alternativeSite.jsp" />       
 	</action>
 
+	<!-- access to objectives -->
+	<action 
+		type="ServidorApresentacao.Action.publico.AccessObjectivesAction" 
+		path="/accessObjectives">
+        <forward name="Objectives" path="/objectives.jsp" />       
+	</action>
+
 	<!-- Actions For Teachers  -->
 	<action 
 		input="/viewTeachers.jsp"
 		parameter="method"
 		path="/teachersManagerDA"
-        type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
-        >    
-	
+        type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction" >
                 	
     <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
-     
     
 	</action>
 	<action 
-		
 		input="/associateTeacher.jsp"
 		parameter="method"
 		path="/teacherManagerDA"
@@ -269,36 +272,7 @@
     <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
     
 	</action>
-	<!-- Actions For Objectives and Program -->
-	<action 
-		parameter="method"
-		input="/editObjectives.jsp"
-		path="/objectivesManagerDA"
-		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-       >    
-    <forward name="viewObjectives" path="/viewObjectives.jsp"/>    
-         
-	</action>
-	
-	<action 
-		parameter="method"
-		input="/editProgram.jsp"
-		path="/programManagerDA"
-		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-       	>    
-     <forward name="viewProgram" path="/viewProgram.jsp"/>
-          
-	</action>
-	
-	<action 
-		parameter="method"
-		input="/viewObjectives.jsp"
-		path="/curriculumManagerDA"
-		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-       	>    
-       <forward name="viewCurriculum" path="/viewSite.jsp"/>
-	</action>
-	
+
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
      <forward name="viewSite" path="/viewExecutionCourse.jsp"/>         

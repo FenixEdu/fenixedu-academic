@@ -15,7 +15,7 @@
 <html:link  page="/accessAnnouncements.do">
 	<li><bean:message key="link.announcements"/></li>
 </html:link>
-<html:link page="/objectivesManagerDA.do?method=acessObjectives">
+<html:link page="/accessObjectives.do">
 	<li><bean:message key="link.objectives"/></li>
 </html:link>
 <html:link page="/programManagerDA.do?method=acessProgram">
