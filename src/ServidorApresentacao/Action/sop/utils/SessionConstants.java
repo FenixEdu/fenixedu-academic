@@ -118,6 +118,7 @@ public abstract class SessionConstants {
 	public static final String ENROLMENT_LIST = "enrolmentList";
 	public static final String APROVMENT = "aproveitamento";	
 	public static final String INFO_EXECUTION_YEAR = "info_execution_year";
+	public static final String INFO_EVALUATION_LIST = "infoEvaluations";
 	
 	
 	

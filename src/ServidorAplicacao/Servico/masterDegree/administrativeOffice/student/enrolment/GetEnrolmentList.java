@@ -17,6 +17,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentState;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -46,7 +47,7 @@ public class GetEnrolmentList implements IServico {
 		return "GetEnrolmentList";
 	}
 
-	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, Exception {
+	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan, EnrolmentState enrolmentState) throws FenixServiceException, Exception {
 
 		ISuportePersistente sp = null;
 		List enrolmentList = null;
@@ -56,25 +57,20 @@ public class GetEnrolmentList implements IServico {
 			
 			// Read the list 
 			
-			enrolmentList = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(iStudentCurricularPlan);		
+			enrolmentList = sp.getIPersistentEnrolment().readEnrolmentsByStudentCurricularPlanAndEnrolmentState(iStudentCurricularPlan, enrolmentState);
+	
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		} 
-		
-//		if (enrolmentList.size() == 0) 
-//			throw new NonExistingActionException("No Enrolment Found !!");
-//		
+
 			
-			
-		
 		List result = new ArrayList();
 		Iterator iterator = enrolmentList.iterator();
 		
-		while(iterator.hasNext()) {	
+		while(iterator.hasNext()) {				
 			result.add(Cloner.copyIEnrolment2InfoEnrolment((IEnrolment) iterator.next()));	
-			
 		}
 		
 		return result;		

@@ -614,7 +614,12 @@
 
 	  <!-- Print Declaration -->
       <action path="/printCertificate"
+		      attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	          input="/certificate/chooseCertificate.jsp"
+	      	  validate="true"
 		      parameter="method"
+  	          scope="request"
               type="ServidorApresentacao.Action.certificate.PrintCertificateDispatchAction"
 			  >
 	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
@@ -633,7 +638,7 @@
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
-      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>
+      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
       </action>
 
 		<!-- Action to prepare the chooseCertificateInfoForm -->

@@ -53,6 +53,10 @@ public class InfoEnrolment implements Serializable {
 		result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
 		result += "state = " + this.state + "; ";		
 		result += "infoCurricularCourse = " + this.infoCurricularCourse + "]\n";
+		result += "enrolmentEvaluationType = " + this.evaluationType + "]\n";
+		result += "universityCode = " + this.universityCode + "]\n";
+		result += "infoEvaluations = " + this.infoEvaluations + "]\n";
+		
 		return result;
 	}
 

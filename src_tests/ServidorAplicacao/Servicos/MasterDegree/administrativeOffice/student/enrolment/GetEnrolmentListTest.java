@@ -14,6 +14,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servicos.TestCaseReadServicesIntranet;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentState;
 import Util.Specialization;
 import Util.TipoCurso;
 
@@ -61,7 +62,7 @@ public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
 		sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
 		IStudentCurricularPlan iStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentAndSpecializationCurricularPlan(
-														new Integer(41329), new TipoCurso(TipoCurso.MESTRADO_STRING), new Specialization(Specialization.MESTRADO_STRING));
+														new Integer(46865), new TipoCurso(TipoCurso.MESTRADO_STRING), new Specialization(Specialization.ESPECIALIZACAO_STRING));
 		assertNotNull(iStudentCurricularPlan);	
 		
 		infoStudentCurricularPlan = Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(iStudentCurricularPlan);	
@@ -71,7 +72,7 @@ public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
 		fail("Error !");  		
 	}
 
-	Object[] args = { infoStudentCurricularPlan };
+	Object[] args = { infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.ENROLED) };
 
 	return args;
  
