@@ -1,5 +1,5 @@
 /*  -------------------------------------
-	GESDIS CSS - WEB | 21.03.2003
+	GESDIS CSS - WEB | 01.04.2003
 	------------------------------------- */
 
 /*****************************************
@@ -12,7 +12,7 @@ body {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	background-color: #fff;
+	background-color: #fff !important;
 	}
 
 p 	{
@@ -49,7 +49,7 @@ h3 {
 	font-weight: bold;
 	color: #fff;
 	padding: 0.5em;
-	background-color: #B5BED6;
+	background-color: #B5BED6 !important;
 	}
 	
 /* Sub-t—picos */
@@ -67,16 +67,25 @@ h4	{
 	links - geral
 *******************************************/
 
-a, a:visited	{
+a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: underline;
+	background-color: transparent;
+	}
+	
+a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #00427b;
+	text-decoration: underline;
+	background-color: transparent;
 	}
 
 a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: none;
+	background-color: transparent;
 	}
 
 /******************************************
@@ -94,7 +103,7 @@ a:hover {
 	padding: 2.5em 5em 2.5em 5em;
 	border: 0;
 	vertical-align: top;
-	background-color: #fff;
+	background-color: #fff !important;
 	}
 
 #header {
@@ -107,6 +116,8 @@ a:hover {
 
 #barraist {
 	text-align: center;
+	vertical-align: top;
+	background-color: #B5BED6 !important;
 	}
 
 #barraist img {
@@ -119,17 +130,22 @@ a:hover {
 	width: 180px;
 	margin: 0;
 	border: 0;
-	background-color: #EBEFFA;
+	background-color: #EBEFFA !important;
 	}
 
 #anuncios {
-	background-color: #ff9;
 	margin: 0;
 	padding: 0;
 	border: 1px solid #333;
+	background-color: #ff9 !important;
 	}
 	
-#anuncios a, a:visited	{
+#anuncios a:link {
+	color: #333;
+	text-decoration: none;
+	}
+	
+#anuncios a:visited	{
 	color: #333;
 	text-decoration: none;
 	}
@@ -162,7 +178,7 @@ a:hover {
 
 
 /******************************************
- 	links para menu de navega?‹o
+ 	links para menu de navega‹o
  *******************************************/	
  
 #nav ul li a:link, ul li a:visited {
@@ -173,10 +189,14 @@ a:hover {
 	padding: 5px 0 5px 0;
 	border-bottom: 1px solid #ccc;
 	width: 180px;
-	voice-family: "\"}\""; 
+	voice-family: "\"}\"";		/* Box model hack para IE 5.0 / IE 5.5 Windows */
   	voice-family:inherit;
-	width: 176px;
-	} 
+	width: 176px;				/* valor correcto para browsers standards compliant */
+	}
+	
+body>#nav	{
+	width: 176px;				/* para o Opera ...*/
+	}
 
 #nav ul li a:hover {
 	text-decoration: none;
@@ -195,14 +215,20 @@ a:hover {
  *******************************************/	
 
 dd	{
+	font: 11px  Verdana, Arial, Helvetica, sans-serif;
 	padding: 5px 0 5px 0;
 	}
 	
-dd a:link, dd a:visited {
+dd a:link {
 	color: #666;
 	text-decoration: none;
 	}
 	
+dd a:visited {
+	color: #666;
+	text-decoration: none;
+	}
+		
 dd a:hover {
 	color: #00427b;
 	text-decoration: underline;
@@ -280,14 +306,14 @@ p.citation-author	{
 	background-color: transparent;
 	}
 
-.mais-anuncio a:link, a:active, a:visited	{
-	color: #fff;
+.mais-anuncio a:link, a:visited	{
+	color: #333;
 	text-decoration: underline;
 	background-color: transparent;
 	}
 	
 .mais-anuncio a:hover	{
-	color: #fff;
+	color: #333;
 	text-decoration: none;
 	background-color: transparent;
 	}
@@ -312,33 +338,42 @@ p.contacto {
  	display: inline;
  	color: #999;
  	}
-/**********************************************
+
+ /**********************************************
 	 FORMS Classes: inputs
 ***********************************************/
 
 .error {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	color: #900;
-	background-color: #fff9cc;
+	background-color: #fff9cc !important;
 }
 .inputlist {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #333333;
+	color: #333;
 }
 .inputbutton {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	background-color: #b5bdd6;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	background-color: #b5bdd6 !important;
 	width: 100px;
 }
 .inputbuttonSmall {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	background-color: #b5bdd6;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	background-color: #b5bdd6 !important;
 }
- 	
+
+/**********************************************
+	Footer
+***********************************************/
+
+.footer {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	text-align: center;
+	padding: 20px;
+	border-top: 4px solid #999;
+	}
