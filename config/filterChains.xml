@@ -697,4 +697,11 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>	
+    <filterChain>
+        <name>SearchPersonAuthorization</name>
+        <expression>ManagerAuthorization || OperatorAuthorization || PersonAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>	
 </filterChainsDefinitions>

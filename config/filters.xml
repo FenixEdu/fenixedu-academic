@@ -669,4 +669,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>  
+    <filter>
+        <name>OperatorAuthorization</name>
+        <implementationClass>ServidorAplicacao.Filtro.OperatorAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>    
 </filterDefinitions>
