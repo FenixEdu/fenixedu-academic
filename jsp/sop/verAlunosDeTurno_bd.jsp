@@ -40,13 +40,13 @@
                 <logic:iterate id="elem" name="infoAlunosDeTurno">
                     <tr align="center">
                         <td>
-                            <bean:write name="elem" property="numero"/>
+                            <bean:write name="elem" property="number"/>
                         </td>
                         <td>
-                            <bean:write name="elem" property="infoPessoa.nome"/>
+                            <bean:write name="elem" property="infoPerson.nome"/>
                         </td>
                         <td>
-                            <a href="mailto:"><bean:write name="elem" property="infoPessoa.email"/></a>
+                            <a href="mailto:"><bean:write name="elem" property="infoPerson.email"/></a>
                         </td>
                     </tr>
                 </logic:iterate>

@@ -37,7 +37,7 @@ public class ViewClassesWithShift extends FenixShiftAndExecutionCourseAndExecuti
 		try {
 			//DynaValidatorForm shiftForm = (DynaValidatorForm) form;
 			//String name = (String) shiftForm.get("name");
-			String name = request.getParameter("name");
+			//String name = request.getParameter("name");
 			InfoShift infoShift = getInfoShift(request);
 			
 			System.out.println("InfoShift= " + infoShift);
@@ -53,7 +53,7 @@ public class ViewClassesWithShift extends FenixShiftAndExecutionCourseAndExecuti
 				ActionErrors actionErrors = new ActionErrors();
 				actionErrors.add(
 					"message.shift.no.classes",
-					new ActionError("message.shift.no.classes", name));
+					new ActionError("message.shift.no.classes", infoShift.getNome()));
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}

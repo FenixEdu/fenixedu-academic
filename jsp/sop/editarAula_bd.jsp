@@ -86,7 +86,6 @@
 <bean:define id="infoAula_oid"
 			 name="infoAula"
 			 property="idInternal"/>
-################# <bean:write name="infoAula_oid"/>
 <html:hidden property="infoAula_oid"
 			 value="<%= pageContext.findAttribute("infoAula_oid").toString() %>"/>
 

@@ -729,8 +729,9 @@
           <forward name="Sucesso" path="/adicionarAulas.jsp"/>
       </action>
 
+              <!--input="/adicionarAulas.jsp"-->
       <action attribute="adicionarAulasForm"
-              input="/adicionarAulas.jsp"
+              input="/prepararAdicionarAulasDeTurno.do"
               name="adicionarAulasForm"
               path="/adicionarAulasForm"
               scope="request"
