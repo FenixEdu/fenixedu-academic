@@ -18,48 +18,62 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadExecutionCourse implements IServico {
+public class ReadExecutionCourse implements IServico
+{
 
 	private static ReadExecutionCourse service = new ReadExecutionCourse();
 
 	/**
-	* The singleton access method of this class.
-	*/
-	public static ReadExecutionCourse getService() {
+	 * The singleton access method of this class.
+	 */
+	public static ReadExecutionCourse getService()
+	{
 		return service;
 	}
 
 	/**
-	* The constructor of this class.
-	*/
-	private ReadExecutionCourse() { }
+	 * The constructor of this class.
+	 */
+	private ReadExecutionCourse()
+	{
+	}
 
 	/**
-	* Service name
-	*/
-	public final String getNome() {
+	 * Service name
+	 */
+	public final String getNome()
+	{
 		return "ReadExecutionCourse";
 	}
 
 	/**
-	* Executes the service. Returns the current InfoExecutionCourse.
-	*/
-	public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException {
-		
+	 * Executes the service. Returns the current InfoExecutionCourse.
+	 */
+	public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException
+	{
+
 		IExecutionCourse executionCourse = null;
-		
-		try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(new ExecutionCourse(idInternal), false);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia){
+		InfoExecutionCourse infoExecutionCourse = null;
+		try
+		{
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			executionCourse =
+				(IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
+					new ExecutionCourse(idInternal),
+					false);
+
+			if (executionCourse == null)
+			{
+				throw new NonExistingServiceException();
+			}
+
+			infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+		}
+		catch (ExcepcaoPersistencia excepcaoPersistencia)
+		{
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
-     
-		if (executionCourse == null) {
-			throw new NonExistingServiceException();
-		}
 
-		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse); 
 		return infoExecutionCourse;
 	}
 }

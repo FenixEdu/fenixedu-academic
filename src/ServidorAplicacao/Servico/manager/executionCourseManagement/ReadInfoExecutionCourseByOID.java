@@ -81,7 +81,7 @@ public class ReadInfoExecutionCourseByOID implements IServico {
 				}
 			}, infoCurricularCourses);
 
-			infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+			infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 			infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);

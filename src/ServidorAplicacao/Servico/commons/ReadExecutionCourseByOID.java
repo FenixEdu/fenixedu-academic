@@ -52,7 +52,7 @@ public class ReadExecutionCourseByOID implements IServico {
 					oid);
 			if (executionCourse != null) {
 				result =
-					Cloner.copyIExecutionCourse2InfoExecutionCourse(
+					(InfoExecutionCourse) Cloner.get(
 						executionCourse);
 			}
 			

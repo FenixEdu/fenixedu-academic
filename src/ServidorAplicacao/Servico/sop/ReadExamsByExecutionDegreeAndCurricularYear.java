@@ -13,6 +13,7 @@ package ServidorAplicacao.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseAndExams;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -77,7 +78,7 @@ public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
 					new InfoExecutionCourseAndExams();
 
 				infoExecutionCourseAndExams.setInfoExecutionCourse(
-					Cloner.copyIExecutionCourse2InfoExecutionCourse(
+					(InfoExecutionCourse) Cloner.get(
 						executionCourse));
 
 				for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {

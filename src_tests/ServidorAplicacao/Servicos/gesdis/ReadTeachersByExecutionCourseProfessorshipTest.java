@@ -77,14 +77,15 @@ public class ReadTeachersByExecutionCourseProfessorshipTest
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 					"TFCI",
 					executionPeriod);
+			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+			Object[] args = {infoExecutionCourse
+			};
 			persistentSupport.confirmarTransaccao();
+			return args;
 		} catch (ExcepcaoPersistencia e) {
 			fail("failed in the test setup");
 		}
-		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		Object[] args = {infoExecutionCourse
-		};
-		return args;
+		return null;
 	}
 
 	/* (non-Javadoc)

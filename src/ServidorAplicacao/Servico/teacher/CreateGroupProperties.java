@@ -4,6 +4,7 @@
 */
 package ServidorAplicacao.Servico.teacher;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
@@ -61,7 +62,7 @@ public class CreateGroupProperties implements IServico {
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseCode), false);
 
-			infoGroupProperties.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+			infoGroupProperties.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
 
 			IGroupProperties newGroupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
 

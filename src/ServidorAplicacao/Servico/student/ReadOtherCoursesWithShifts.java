@@ -107,7 +107,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 		for(int i = 0; i < ldE.size(); i++) {
 			IExecutionCourse disciplinaExecucao = (IExecutionCourse) ldE.get(i);
 			
-			InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(disciplinaExecucao);
+			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(disciplinaExecucao);
 			
 //			InfoDegree iD = new InfoDegree();
 //			iD.setNome(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getNome());

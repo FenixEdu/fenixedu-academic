@@ -54,7 +54,7 @@ public class ReadExecutionCourse implements IServico {
  			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 			iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(code, executionPeriod);
 			if (iExecCourse != null)
-				infoExecCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(iExecCourse);
+				infoExecCourse = (InfoExecutionCourse) Cloner.get(iExecCourse);
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 			FenixServiceException newEx = new FenixServiceException("");

@@ -176,7 +176,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
 		{
 			IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
 			InfoExecutionCourse infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+				(InfoExecutionCourse) Cloner.get(executionCourse);
 			infoExecutionCourse.setHasSite(
 				persistentExecutionCourse.readSite(executionCourse.getIdInternal()));
 			infoExecutionCourses.add(infoExecutionCourse);

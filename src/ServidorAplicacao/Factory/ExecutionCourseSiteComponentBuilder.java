@@ -296,7 +296,7 @@ public class ExecutionCourseSiteComponentBuilder
             component.setInfoSummaries(result);
             component.setInfoSite(Cloner.copyISite2InfoSite(site));
             component.setExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                (InfoExecutionCourse) Cloner.get(executionCourse));
 
             return component;
         }
@@ -395,9 +395,16 @@ public class ExecutionCourseSiteComponentBuilder
         component.setTitle(site.getExecutionCourse().getNome());
         component.setMail(site.getMail());
         component.setSections(infoSectionsList);
-        InfoExecutionCourse executionCourse =
-            Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
-        component.setExecutionCourse(executionCourse);
+        InfoExecutionCourse executionCourse;
+		try
+		{
+			executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			throw new FenixServiceException(e);
+		}
+		component.setExecutionCourse(executionCourse);
         return component;
     }
 
@@ -1025,10 +1032,18 @@ public class ExecutionCourseSiteComponentBuilder
         {
             throw new FenixServiceException(excepcaoPersistencia);
         }
+
         component.setAssociatedCurricularCourses(infoCurricularCourseList);
-        InfoExecutionCourse executionCourse =
-            Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
-        component.setInfoExecutionCourse(executionCourse);
+        InfoExecutionCourse executionCourse;
+		try
+		{
+			executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			throw new FenixServiceException(e);
+		}
+		component.setInfoExecutionCourse(executionCourse);
         component.setInfoShiftsWithAssociatedClassesList(infoShiftsWithAssociatedClassesList);
 
         return component;

@@ -96,7 +96,7 @@ public class ReadDistributedTestsTest extends TestCaseReadServices {
 			sp.confirmarTransaccao();
 			
 			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse);
 			InfoDistributedTest infoDistributedTest23 =
 				Cloner.copyIDistributedTest2InfoDistributedTest(

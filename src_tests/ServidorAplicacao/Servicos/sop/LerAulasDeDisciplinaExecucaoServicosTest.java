@@ -112,7 +112,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 				ide = new ExecutionCourse("NOME", "SIGLA", new Double(1.5), new Double(1.5), new Double(1.5), new Double(1.5), iep);
 			}
 			
-			this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(ide);
+			this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(ide);
 
 			sp.confirmarTransaccao();
 

@@ -74,7 +74,7 @@ public class EditExecutionCourse implements IServico {
 			executionCourse.setLabHours(infoExecutionCourse.getLabHours());
 
 			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse);
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());

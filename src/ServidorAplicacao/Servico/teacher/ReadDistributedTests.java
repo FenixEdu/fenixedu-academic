@@ -10,6 +10,7 @@ import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoDistributedTest;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTests;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
@@ -74,7 +75,7 @@ public class ReadDistributedTests implements IServico
             InfoSiteDistributedTests bodyComponent = new InfoSiteDistributedTests();
             bodyComponent.setInfoDistributedTests(result);
             bodyComponent.setExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                (InfoExecutionCourse) Cloner.get(executionCourse));
             SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
             return siteView;
         } catch (ExcepcaoPersistencia e)

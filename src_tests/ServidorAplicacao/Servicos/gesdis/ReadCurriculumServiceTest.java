@@ -54,6 +54,7 @@ public class ReadCurriculumServiceTest extends TestCaseReadServices
         IExecutionYear executionYear = null;
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
+		Object[] args = new Object[1];
         try
         {
             sp = SuportePersistenteOJB.getInstance();
@@ -70,15 +71,16 @@ public class ReadCurriculumServiceTest extends TestCaseReadServices
             executionCourse =
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("PO", executionPeriod);
 
+			InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) Cloner.get(executionCourse);
+			args[1] = infoExecutionCourse;
+
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e)
         {
             System.out.println("failed setting up the test data");
         }
 
-        InfoExecutionCourse infoExecutionCourse =
-            Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-        Object[] args = { infoExecutionCourse };
         return args;
 
     }
@@ -94,6 +96,7 @@ public class ReadCurriculumServiceTest extends TestCaseReadServices
         IExecutionYear executionYear = null;
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
+		Object[] args = new Object[1];
         try
         {
             sp = SuportePersistenteOJB.getInstance();
@@ -110,15 +113,16 @@ public class ReadCurriculumServiceTest extends TestCaseReadServices
             executionCourse =
                 idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
+			InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) Cloner.get(executionCourse);
+			args[1] = infoExecutionCourse;
+
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e)
         {
             System.out.println("failed setting up the test data");
         }
 
-        InfoExecutionCourse infoExecutionCourse =
-            Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-        Object[] args = { infoExecutionCourse };
         return args;
 
     }

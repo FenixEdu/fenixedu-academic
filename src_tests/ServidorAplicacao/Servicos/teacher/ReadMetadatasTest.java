@@ -106,7 +106,7 @@ public class ReadMetadatasTest extends TestCaseReadServices {
 
 			sp.confirmarTransaccao();
 			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse);
 			InfoMetadata infoMetadata1 =
 				Cloner.copyIMetadata2InfoMetadata(metadata1);

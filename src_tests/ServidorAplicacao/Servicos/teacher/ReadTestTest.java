@@ -91,7 +91,7 @@ public class ReadTestTest extends TestCaseReadServices
             testQuestion = (ITestQuestion) persistentTestQuestion.readByOId(testQuestion, false);
             assertNotNull("testQuestion null", testQuestion);
             sp.confirmarTransaccao();
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             infoTest = Cloner.copyITest2InfoTest(test);
 
             ParseQuestion parse = new ParseQuestion();

@@ -84,7 +84,7 @@ public class ReadTestsTest extends TestCaseReadServices {
 			sp.confirmarTransaccao();
 
 			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse);
 			InfoTest infoTest3 = Cloner.copyITest2InfoTest(test3);
 			InfoTest infoTest4 = Cloner.copyITest2InfoTest(test4);

@@ -221,7 +221,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 			assertNotNull(executionCourse);
 
 			this.infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse);
 
 //			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();

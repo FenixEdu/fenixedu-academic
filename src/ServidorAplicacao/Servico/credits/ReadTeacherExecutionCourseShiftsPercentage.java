@@ -79,7 +79,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
             ITeacher teacher = readTeacher(infoTeacher, sp);
 
             result.setInfoExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                (InfoExecutionCourse) Cloner.get(executionCourse));
             result.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();

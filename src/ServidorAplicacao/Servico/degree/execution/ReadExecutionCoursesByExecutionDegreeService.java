@@ -96,9 +96,17 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService
                         public Object transform(Object input)
                         {
                             IExecutionCourse executionCourse = (IExecutionCourse) input;
-                            InfoExecutionCourse infoExecutionCourse = Cloner
-                                    .copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-                            return infoExecutionCourse;
+                            InfoExecutionCourse infoExecutionCourse;
+							try
+							{
+								infoExecutionCourse = (InfoExecutionCourse) Cloner
+										        .get(executionCourse);
+							}
+							catch (ExcepcaoPersistencia e)
+							{
+								throw new RuntimeException();
+							}
+							return infoExecutionCourse;
                         }
                     });
         }

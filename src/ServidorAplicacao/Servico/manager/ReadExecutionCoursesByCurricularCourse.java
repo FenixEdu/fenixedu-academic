@@ -25,82 +25,83 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class ReadExecutionCoursesByCurricularCourse implements IServico
 {
 
-    private static ReadExecutionCoursesByCurricularCourse service =
-        new ReadExecutionCoursesByCurricularCourse();
+	private static ReadExecutionCoursesByCurricularCourse service =
+		new ReadExecutionCoursesByCurricularCourse();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExecutionCoursesByCurricularCourse getService()
-    {
-        return service;
-    }
+	/**
+	 * The singleton access method of this class.
+	 */
+	public static ReadExecutionCoursesByCurricularCourse getService()
+	{
+		return service;
+	}
 
-    /**
-     * The constructor of this class.
-     */
-    private ReadExecutionCoursesByCurricularCourse()
-    {
-    }
+	/**
+	 * The constructor of this class.
+	 */
+	private ReadExecutionCoursesByCurricularCourse()
+	{
+	}
 
-    /**
-     * Service name
-     */
-    public final String getNome()
-    {
-        return "ReadExecutionCoursesByCurricularCourse";
-    }
+	/**
+	 * Service name
+	 */
+	public final String getNome()
+	{
+		return "ReadExecutionCoursesByCurricularCourse";
+	}
 
-    /**
-     * Executes the service. Returns the current collection of infoExecutionCourses.
-     */
-    public List run(Integer curricularCourseId) throws FenixServiceException
-    {
-        ISuportePersistente sp;
-        List allExecutionCourses = null;
-        try
-        {
-            sp = SuportePersistenteOJB.getInstance();
-            ICurricularCourse curricularCourseToRead = new CurricularCourse();
-            curricularCourseToRead.setIdInternal(curricularCourseId);
-            ICurricularCourse curricularCourse =
-                (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
-                    curricularCourseToRead,
-                    false);
+	/**
+	 * Executes the service. Returns the current collection of infoExecutionCourses.
+	 */
+	public List run(Integer curricularCourseId) throws FenixServiceException
+	{
+		ISuportePersistente sp;
+		List allExecutionCourses = null;
+		try
+		{
+			sp = SuportePersistenteOJB.getInstance();
+			ICurricularCourse curricularCourseToRead = new CurricularCourse();
+			curricularCourseToRead.setIdInternal(curricularCourseId);
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
+					curricularCourseToRead,
+					false);
 
-            if (curricularCourse == null)
-                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+			if (curricularCourse == null)
+				throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
-            allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
+			allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+			if (allExecutionCourses == null || allExecutionCourses.isEmpty())
+				return allExecutionCourses;
 
-        if (allExecutionCourses == null || allExecutionCourses.isEmpty())
-            return allExecutionCourses;
+			// build the result of this service
+			Iterator iterator = allExecutionCourses.iterator();
+			List result = new ArrayList(allExecutionCourses.size());
 
-        // build the result of this service
-        Iterator iterator = allExecutionCourses.iterator();
-        List result = new ArrayList(allExecutionCourses.size());
-
-        Boolean hasSite;
-        while (iterator.hasNext())
-        {
-            InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse((IExecutionCourse) iterator.next());
-            try
-            {
-                hasSite =
-                    sp.getIPersistentExecutionCourse().readSite(infoExecutionCourse.getIdInternal());
-            } catch (ExcepcaoPersistencia ex)
-            {
-                throw new FenixServiceException(ex);
-            }
-            infoExecutionCourse.setHasSite(hasSite);
-            result.add(infoExecutionCourse);
-        }
-        return result;
-    }
+			Boolean hasSite;
+			while (iterator.hasNext())
+			{
+				InfoExecutionCourse infoExecutionCourse =
+					(InfoExecutionCourse) Cloner.get((IExecutionCourse) iterator.next());
+				try
+				{
+					hasSite =
+						sp.getIPersistentExecutionCourse().readSite(infoExecutionCourse.getIdInternal());
+				}
+				catch (ExcepcaoPersistencia ex)
+				{
+					throw new FenixServiceException(ex);
+				}
+				infoExecutionCourse.setHasSite(hasSite);
+				result.add(infoExecutionCourse);
+			}
+			return result;
+		}
+		catch (ExcepcaoPersistencia excepcaoPersistencia)
+		{
+			throw new FenixServiceException(excepcaoPersistencia);
+		}
+	}
 }

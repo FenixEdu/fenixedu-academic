@@ -102,16 +102,15 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(
 					"TFCI",
 					executionPeriod);
-
+			InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) Cloner.get(executionCourse);
+			Object[] args = { infoExecutionCourse };
 			sp.confirmarTransaccao();
+			return args;
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
 		}
-
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		Object[] args = { infoExecutionCourse };
-		return args;
+		return null;
 	}
 
 	/* (non-Javadoc)

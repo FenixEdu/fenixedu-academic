@@ -148,8 +148,8 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
 				infoShift.setInfoLessons(new ArrayList());
 				InfoExecutionCourse infoExecutionCourse =
-					Cloner.copyIExecutionCourse2InfoExecutionCourse(
-						((ITurno) shifts.get(i)).getDisciplinaExecucao());
+					(InfoExecutionCourse) Cloner.get(
+							((ITurno) shifts.get(i)).getDisciplinaExecucao());
 				infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 				for (int j = 0; j < ((ITurno) shifts.get(i)).getAssociatedLessons().size(); j++)
 				{

@@ -92,7 +92,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico
 			{
 				IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
 				Boolean hasSite = persistentExecutionCourse.readSite(executionCourse.getIdInternal());
-				infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+				infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 				infoExecutionCourse.setHasSite(hasSite);
 				allExecutionCourses.add(infoExecutionCourse);
 			}

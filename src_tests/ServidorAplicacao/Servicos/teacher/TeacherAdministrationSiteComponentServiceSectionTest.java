@@ -95,7 +95,7 @@ public class TeacherAdministrationSiteComponentServiceSectionTest extends TestCa
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new ExecutionCourse(new Integer(27)),
                     false);
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 

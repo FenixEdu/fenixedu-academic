@@ -110,7 +110,7 @@ public class ReadExamsByDayAndBeginningServiceTest
 				for(int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++ ) {
 					IExecutionCourse executionCourse =
 						(IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
-					tempInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+					tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 
 					tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
 					for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {

@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoDistributedTest;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTest;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
@@ -73,7 +74,7 @@ public class ReadDistributedTest implements IServico {
 				new InfoSiteDistributedTest();
 			bodyComponent.setInfoDistributedTest(infoDistributedTest);
 			bodyComponent.setExecutionCourse(
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse));
 			SiteView siteView =
 				new ExecutionCourseSiteView(bodyComponent, bodyComponent);

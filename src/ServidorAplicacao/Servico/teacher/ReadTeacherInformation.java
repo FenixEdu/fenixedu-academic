@@ -215,9 +215,16 @@ public class ReadTeacherInformation implements IServico
                         return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                     }
                 });
-                InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-                infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+                InfoExecutionCourse infoExecutionCourse;
+				try
+				{
+					infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+				}
+				catch (ExcepcaoPersistencia e)
+				{
+					throw new RuntimeException(e);
+				}
+				infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
         });
@@ -277,9 +284,16 @@ public class ReadTeacherInformation implements IServico
                         return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                     }
                 });
-                InfoExecutionCourse infoExecutionCourse =
-                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-                infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+                InfoExecutionCourse infoExecutionCourse;
+				try
+				{
+					infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+				}
+				catch (ExcepcaoPersistencia e)
+				{
+					throw new RuntimeException(e);
+				}
+				infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
         });

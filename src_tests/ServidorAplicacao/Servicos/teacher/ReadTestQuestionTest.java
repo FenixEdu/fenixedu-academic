@@ -100,7 +100,7 @@ public class ReadTestQuestionTest extends TestCaseReadServices
             assertNotNull("TestQuestion null", testQuestion);
 
             sp.confirmarTransaccao();
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
             ParseQuestion parse = new ParseQuestion();

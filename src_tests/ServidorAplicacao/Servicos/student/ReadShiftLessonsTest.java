@@ -12,6 +12,7 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
@@ -56,12 +57,12 @@ public class ReadShiftLessonsTest extends TestCaseReadServices {
   		executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		assertNotNull(executionCourse);
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
+		Object[] result = { new InfoShift("turnoINEX", null, null, (InfoExecutionCourse) Cloner.get(executionCourse)) };
+		return result;
+  	} catch (ExcepcaoPersistencia ex) {
 		ex.printStackTrace();
 	}
-
-    Object[] result = { new InfoShift("turnoINEX", null, null, Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse)) };
-	return result;
+  	return null;
   }
 
   protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
@@ -71,12 +72,12 @@ public class ReadShiftLessonsTest extends TestCaseReadServices {
 		executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		assertNotNull(executionCourse);
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		Object[] result = { new InfoShift("turno4", null, null, (InfoExecutionCourse) Cloner.get(executionCourse)) };
+		return result;
 	} catch (ExcepcaoPersistencia ex) {
 		ex.printStackTrace();
 	}
-
-	Object[] result = { new InfoShift("turno4", null, null, Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse)) };
-	return result;
+	return null;
   }
 
   protected int getNumberOfItemsToRetrieve() {

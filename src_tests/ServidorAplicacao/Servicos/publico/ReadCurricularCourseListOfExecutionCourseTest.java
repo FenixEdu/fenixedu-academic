@@ -165,7 +165,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 			}
 			
 			this.infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {

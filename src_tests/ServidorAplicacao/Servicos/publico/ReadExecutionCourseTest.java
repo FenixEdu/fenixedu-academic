@@ -158,7 +158,7 @@ public class ReadExecutionCourseTest
 			assertNotNull(executionCourse);
 
 			this.infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+				(InfoExecutionCourse) Cloner.get(executionCourse);
 			
 			if (!exists)
 				disciplinaExecucaoPersistente.deleteExecutionCourse(executionCourse);

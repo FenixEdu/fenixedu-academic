@@ -93,7 +93,7 @@ public class ReadMetadatasByDistributedTestTest extends TestCaseReadServices {
 
 			sp.confirmarTransaccao();
 			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					executionCourse);
 			InfoMetadata infoMetadata2 =
 				Cloner.copyIMetadata2InfoMetadata(metadata2);

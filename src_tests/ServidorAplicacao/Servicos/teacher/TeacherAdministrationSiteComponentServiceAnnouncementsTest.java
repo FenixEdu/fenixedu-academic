@@ -90,7 +90,7 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends 
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new ExecutionCourse(new Integer(26)),
                     false);
-            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 

@@ -6,6 +6,7 @@
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ExecutionCourseSiteView;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteSummary;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
@@ -65,7 +66,7 @@ public class ReadSummary implements IServico {
 			bodyComponent.setInfoSummary(
 				Cloner.copyISummary2InfoSummary(summary));
 			bodyComponent.setExecutionCourse(
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				(InfoExecutionCourse) Cloner.get(
 					summary.getExecutionCourse()));
 
 			SiteView siteView =

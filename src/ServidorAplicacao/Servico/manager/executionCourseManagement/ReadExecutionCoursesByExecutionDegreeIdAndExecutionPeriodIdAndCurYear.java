@@ -165,7 +165,14 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 				public Object transform(Object input)
 				{
 					IExecutionCourse executionCourse = (IExecutionCourse) input;
-					return Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+					try
+					{
+						return Cloner.get(executionCourse);
+					}
+					catch (ExcepcaoPersistencia e)
+					{
+						throw new RuntimeException(e);
+					}
 				}
 			}, infoExecutionCourseList);
 		}

@@ -70,7 +70,7 @@ public class ReadDisciplinesByStudent implements IServico {
 			if (disciplines != null)
 				for (int i = 0; i < disciplines.size(); i++) {
 					IExecutionCourse executionCourse = (IExecutionCourse) disciplines.get(i);
-					InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+					InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 					courses.add(infoExecutionCourse);
 				}
 		

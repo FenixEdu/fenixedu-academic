@@ -603,10 +603,17 @@ public class ReadStudentShiftEnrolment implements IServico
             ITurnoAluno shiftStudent = (ITurnoAluno) arg0;
             InfoShift shift = new InfoShift();
             shift.setAvailabilityFinal(shiftStudent.getShift().getAvailabilityFinal());
-            InfoExecutionCourse infoExecutionCourse =
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(
-                    shiftStudent.getShift().getDisciplinaExecucao());
-            shift.setInfoDisciplinaExecucao(infoExecutionCourse);
+            InfoExecutionCourse infoExecutionCourse;
+			try
+			{
+				infoExecutionCourse = (InfoExecutionCourse) Cloner.get(
+					    shiftStudent.getShift().getDisciplinaExecucao());
+			}
+			catch (ExcepcaoPersistencia e)
+			{
+				throw new RuntimeException(e);
+			}
+			shift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
             shift.setLotacao(shiftStudent.getShift().getLotacao());
             shift.setNome(shiftStudent.getShift().getNome());

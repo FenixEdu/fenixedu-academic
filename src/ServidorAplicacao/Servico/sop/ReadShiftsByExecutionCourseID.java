@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
@@ -60,7 +61,7 @@ public class ReadShiftsByExecutionCourseID implements IServico {
 	
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
 		
-			infoExecutionCourseOccupancy.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+			infoExecutionCourseOccupancy.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
 			
 			Iterator iterator = shifts.iterator();
 			while(iterator.hasNext()) {

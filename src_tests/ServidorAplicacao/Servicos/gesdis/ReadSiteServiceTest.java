@@ -77,16 +77,16 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 					"TFCI",
 					executionPeriod);
 
+			InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) Cloner.get(executionCourse);
+			Object[] args = { infoExecutionCourse };
 			sp.confirmarTransaccao();
+			return args;
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
 		}
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		Object[] args = { infoExecutionCourse };
-		return args;
-
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -126,20 +126,23 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 					"TFCI",
 					executionPeriod);
 
+			InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) Cloner.get(executionCourse);
+	
+			InfoSite infoSite = new InfoSite( infoExecutionCourse);
+
 			sp.confirmarTransaccao();
+
+			return infoSite;
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
 		}
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-	
-		InfoSite infoSite = new InfoSite( infoExecutionCourse);
 	//the site no longer knows his sections	
 	//	infoSections.add(new InfoSection( "Seccao1deTFCI", new Integer(0), infoSite, null, null, null));
 	//	infoSite.setInfoSections(infoSections);
-		return infoSite;
-
+		
+		return null;
 	}
 
 }

@@ -14,6 +14,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoDistributedTestMarks;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTestMarks;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
@@ -162,7 +163,7 @@ public class ReadDistributedTestMarks implements IServico
             infoSiteDistributedTestMarks.setNotAnsweredPercentage(notAnsweredList);
 
             infoSiteDistributedTestMarks.setExecutionCourse(
-                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+                (InfoExecutionCourse) Cloner.get(executionCourse));
         } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);

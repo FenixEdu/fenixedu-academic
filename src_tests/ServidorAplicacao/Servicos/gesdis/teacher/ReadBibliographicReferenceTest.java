@@ -60,16 +60,18 @@ public class ReadBibliographicReferenceTest extends TestCaseReadServices {
 					"TFCI",
 					executionPeriod);
 
+			InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) Cloner.get(executionCourse);
+			Object[] testArgs = { infoExecutionCourse, null};
+
 			sp.confirmarTransaccao();
+			return testArgs;
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
 			e.printStackTrace();
 		}
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		Object[] testArgs = { infoExecutionCourse, null};
-		return testArgs;
+		return null;
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
