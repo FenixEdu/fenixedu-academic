@@ -2769,6 +2769,14 @@
         <filterChains/>
     </service>
     <service>
+        <name>ReadExternalPersonsByWorkLocation</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.externalPerson.ReadExternalPersonsByWorkLocation</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
         <name>ReadBibliographicReference</name>
         <implementationClass> 
             ServidorAplicacao.Servico.gesdis.teacher.ReadBibliographicReference</implementationClass>
@@ -5255,9 +5263,7 @@
             ServidorAplicacao.Servico.commons.workLocation.ReadAllWorkLocations</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain"/>
-        </filterChains>
+        <filterChains />
     </service>
     <service>
         <name>InsertWorkLocation</name>
@@ -5265,9 +5271,7 @@
             ServidorAplicacao.Servico.commons.workLocation.InsertWorkLocation</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain"/>
-        </filterChains>
+        <filterChains />
     </service>
     <service>
         <name>EditWorkLocation</name>
@@ -5275,9 +5279,7 @@
             ServidorAplicacao.Servico.commons.workLocation.EditWorkLocation</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain"/>
-        </filterChains>
+        <filterChains />
     </service>
     <service>
         <name>ReadExecutionCoursesByDegreeAndExecutionPeriodId</name>
@@ -5295,9 +5297,15 @@
             ServidorAplicacao.Servico.commons.externalPerson.InsertExternalPerson</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain"/>
-        </filterChains>
+        <filterChains />
+    </service>
+    <service>
+        <name>EditExternalPerson</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.externalPerson.EditExternalPerson</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains />
     </service>
     <service>
         <name>ReadInfoTeacherByTeacherNumber</name>
@@ -6826,6 +6834,15 @@
         </filterChains>
     </service>
 	<service>
+    	<name>ProcessSibsPaymentFile</name>
+    	<implementationClass>ServidorAplicacao.Servico.manager.gratuity.ProcessSibsPaymentFile</implementationClass>
+    	<description />
+    	<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
         <name>ReadCurricularCourseGroupsByDegreeCurricularPlan</name>
         <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.ReadCurricularCourseGroupsByDegreeCurricularPlan</implementationClass>
         <description>Returns a List of all curricular course groups of a degree curricular plan</description>
@@ -6843,6 +6860,7 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
+
 
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->
