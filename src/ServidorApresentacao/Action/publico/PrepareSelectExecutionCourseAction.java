@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -37,19 +36,15 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 
 			InfoExecutionCourse executionCourse = new InfoExecutionCourse();
 			
-			CurricularYearAndSemesterAndInfoExecutionDegree ctx =
-				(CurricularYearAndSemesterAndInfoExecutionDegree) request
-					.getSession()
-					.getAttribute(SessionConstants.CONTEXT_KEY);
 			
-			executionCourse.setInfoLicenciaturaExecucao(
-				ctx.getInfoLicenciaturaExecucao());
-			executionCourse.setSemester(ctx.getSemestre());
+			
+			
 				
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) sessao.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) sessao.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);							
-			
-			Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, ctx.getAnoCurricular()};
+			executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+			Integer curricularYear = (Integer) sessao.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);			
+			Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear};
 			
 			List infoExecutionCourses =
 				(List) gestor.executar(null, "SelectExecutionCourse", argsSelectExecutionCourse);

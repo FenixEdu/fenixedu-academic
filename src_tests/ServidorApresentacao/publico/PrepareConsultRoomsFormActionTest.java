@@ -2,13 +2,13 @@ package ServidorApresentacao.publico;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import servletunit.struts.MockStrutsTestCase;
+import ServidorApresentacao.TestCasePresentation;
 
 /**
  * @author tfc130
  *
  */
-public class PrepareConsultRoomsFormActionTest extends MockStrutsTestCase {
+public class PrepareConsultRoomsFormActionTest extends TestCasePresentation {
 
   public static void main(java.lang.String[] args) {
     junit.textui.TestRunner.run(suite());
@@ -26,9 +26,7 @@ public class PrepareConsultRoomsFormActionTest extends MockStrutsTestCase {
     setServletConfigFile("/WEB-INF/tests/web-publico.xml");
   }
   
-  public void tearDown() throws Exception {
-    super.tearDown();
-  }
+  
   
   public PrepareConsultRoomsFormActionTest(String testName) {
     super(testName);
