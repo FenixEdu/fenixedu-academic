@@ -46,9 +46,9 @@ public class ValidateDate {
 			return true;
 		}
 
-		Integer year = new Integer(ValidatorUtil.getValueAsString(bean,field.getProperty()));
-		Integer month = new Integer(ValidatorUtil.getValueAsString(bean,sProperty2));
-		Integer day = new Integer(ValidatorUtil.getValueAsString(bean,sProperty3));
+		Integer year = new Integer(valueString);
+		Integer month = new Integer(sProperty2);
+		Integer day = new Integer(sProperty3);
 
 		
 		if (!GenericValidator.isBlankOrNull(valueString)) {
