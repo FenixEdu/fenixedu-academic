@@ -117,26 +117,25 @@ public class InfoGrantContractMovement extends InfoObject
     /**
      * @param grantMovement
      */
-    public void copyToDomain(IGrantContractMovement grantMovement)
+    public IGrantContractMovement copyToDomain()
     {
-    	super.copyToDomain(grantMovement);
-    	if (grantMovement != null)
+        IGrantContractMovement grantContractMovement = new GrantContractMovement();
+    	super.copyToDomain(grantContractMovement);
+    	if (grantContractMovement != null)
     	{
-    		grantMovement.setLocation(getLocation());
-    		grantMovement.setArrivalDate(getArrivalDate());
-    		grantMovement.setDepartureDate(getDepartureDate());
+    		grantContractMovement.setLocation(getLocation());
+    		grantContractMovement.setArrivalDate(getArrivalDate());
+    		grantContractMovement.setDepartureDate(getDepartureDate());
     	}
+    	return grantContractMovement;
     }
     
     /**
      * @param GrantMovement
      * @return
      */
-    public static IGrantContractMovement newDomainFromInfo(InfoGrantContractMovement infoGrantContractMovement)
+    public IGrantContractMovement newDomainFromInfo()
     {
-    	IGrantContractMovement grantMovement = new GrantContractMovement();
-    	infoGrantContractMovement.copyToDomain(grantMovement);
-    	
-    	return grantMovement;
+    	return copyToDomain();
     }
 }

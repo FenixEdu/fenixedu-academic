@@ -40,7 +40,16 @@
 				<bean:message key="label.grant.insurance.totalValue"/>:&nbsp;
 			</td>
 			<td>
-				<p><bean:write name="editGrantInsuranceForm" property="totalValue"/>€</p>
+				<logic:present name="editGrantInsuranceForm" property="totalValue">
+					<bean:define id="totalValue" name="editGrantInsuranceForm" property="totalValue"/>
+					<%-- This part of the code is used to truncate the totalValue--%>
+					<% 
+						int totalValueTruncated = (int)(((Double)totalValue).doubleValue() / 100);
+						double totalValueRounded = ((double)totalValueTruncated) * 100;
+						totalValue = new Double(totalValueRounded);
+					%>
+					<p><bean:write name="totalValue"/>&nbsp;<bean:message key="label.euroSymbol"/></p>
+				</logic:present>
 			</td>
 		</tr>
 		<tr>
@@ -64,7 +73,7 @@
 		</tr>
 		<tr>
 			<td align="left" colspan="2">
-				<bean:message key="label.grant.insurance.grantPaymentEntity.number"/> &nbsp;
+				<bean:message key="label.grant.insurance.grantPaymentEntity.number"/> &nbsp;<bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -116,9 +125,11 @@
 	</table>	
 <br/><br/>
 
-<bean:message key="message.grant.contract.movement.manage"/>:&nbsp;
-<bean:define id="idContract" name="editGrantInsuranceForm" property="idContract"/>
-<bean:define id="idGrantOwner" name="editGrantInsuranceForm" property="idGrantOwner"/>
-<html:link page='<%= "/manageGrantContractMovement.do?method=prepareManageGrantContractMovement&amp;idContract=" + idContract + "&amp;idGrantOwner=" + idGrantOwner %>'>
-	<bean:message key="link.grant.contract.movement.manage"/>
-</html:link>
+<logic:present name="editGrantInsuranceForm" property="idGrantInsurance">
+	<bean:message key="message.grant.contract.movement.manage"/>:&nbsp;
+	<bean:define id="idContract" name="editGrantInsuranceForm" property="idContract"/>
+	<bean:define id="idGrantOwner" name="editGrantInsuranceForm" property="idGrantOwner"/>
+	<html:link page='<%= "/manageGrantContractMovement.do?method=prepareManageGrantContractMovement&amp;idContract=" + idContract + "&amp;idGrantOwner=" + idGrantOwner %>'>
+		<bean:message key="link.grant.contract.movement.manage"/>
+	</html:link>
+</logic:present>

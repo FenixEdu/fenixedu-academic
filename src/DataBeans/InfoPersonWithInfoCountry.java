@@ -27,4 +27,21 @@ public class InfoPersonWithInfoCountry extends InfoPerson {
         }
         return infoPerson;
     }
+    
+    public IPessoa copyToDomain()
+    {
+        IPessoa person = super.copyToDomain();
+        if (person != null)
+    	{
+            InfoCountry infoCountry = super.getInfoPais();
+    		person.setPais(infoCountry.newDomainFromInfo());
+    	}
+        return person;
+    }
+    
+    public IPessoa newDomainFromInfo()
+    {
+        return this.copyToDomain();
+    }
+	
 }

@@ -35,4 +35,21 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends
         return infoGrantContract;
     }
 
+    public IGrantContract copyToDomain()
+    {
+        IGrantContract grantContract = super.copyToDomain();
+        if (grantContract != null)
+    	{
+            InfoGrantOwnerWithPerson infoGrantOwnerWithPerson = (InfoGrantOwnerWithPerson) super.getGrantOwnerInfo();
+    		grantContract.setGrantOwner(infoGrantOwnerWithPerson.newDomainFromInfo());
+    		grantContract.setGrantType(super.getGrantTypeInfo().newDomainFromInfo());
+    	}
+        return grantContract;
+    }
+    
+    public IGrantContract newDomainFromInfo()
+    {
+        return this.copyToDomain();
+    }
+    
 }

@@ -6,6 +6,7 @@
 
 package DataBeans;
 
+import Dominio.Country;
 import Dominio.ICountry;
 
 /**
@@ -113,5 +114,23 @@ public class InfoCountry extends InfoObject {
         }
         return infoCountry;
     }
+    
+    public ICountry copyToDomain()
+    {
+        ICountry country = new Country(); 
+        super.copyToDomain(country);
+        
+        country.setCode(getCode());
+        country.setName(getName());
+        country.setNationality(getNationality());
+        
+        return country;
+    }
+    
+    public ICountry newDomainFromInfo()
+    {
+        return this.copyToDomain();
+    }
+	
 
 }

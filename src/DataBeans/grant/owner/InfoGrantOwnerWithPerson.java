@@ -32,4 +32,20 @@ public class InfoGrantOwnerWithPerson extends InfoGrantOwner
 		return infoGrantOwner;
 	}
 	
+	public IGrantOwner copyToDomain()
+    {
+        IGrantOwner grantOwner = super.copyToDomain();
+        if (grantOwner != null)
+    	{
+            InfoPersonWithInfoCountry infoPersonWithInfoCountry = (InfoPersonWithInfoCountry) super.getPersonInfo();
+    		grantOwner.setPerson(infoPersonWithInfoCountry.newDomainFromInfo());
+    	}
+        return grantOwner;
+    }
+    
+    public IGrantOwner newDomainFromInfo()
+    {
+        return this.copyToDomain();
+    }
+	
 }

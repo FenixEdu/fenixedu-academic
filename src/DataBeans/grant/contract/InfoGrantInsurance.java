@@ -139,7 +139,7 @@ public class InfoGrantInsurance extends InfoObject {
 		{
 			Integer daysBetweenDates = CalendarUtil.getNumberOfDaysBetweenDates(dateBegin,dateEnd);
 			double numberOfDays = daysBetweenDates.doubleValue();
-			
+
 			return new Double(numberOfDays * getDayValueOfInsurance().doubleValue());
 		}
 		return new Double(0);		

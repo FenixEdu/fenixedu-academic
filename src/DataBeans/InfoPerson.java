@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import Dominio.IPessoa;
+import Dominio.Pessoa;
 import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
@@ -857,5 +858,62 @@ public class InfoPerson extends InfoObject {
            infoPerson.copyFromDomain(person);
         }
         return infoPerson;
+    }
+    
+    public IPessoa copyToDomain()
+    {
+        IPessoa person = new Pessoa();
+        super.copyToDomain(person);
+        
+        person.setNome(getNome());
+        person.setNumeroDocumentoIdentificacao(getNumeroDocumentoIdentificacao());
+        person.setTipoDocumentoIdentificacao(getTipoDocumentoIdentificacao());
+        person.setLocalEmissaoDocumentoIdentificacao(getLocalEmissaoDocumentoIdentificacao());
+        person.setDataEmissaoDocumentoIdentificacao(getDataEmissaoDocumentoIdentificacao());
+        person.setDataValidadeDocumentoIdentificacao(getDataValidadeDocumentoIdentificacao());
+        
+        person.setSexo(getSexo());
+        person.setEstadoCivil(getEstadoCivil());
+
+        person.setEmail(getEmail());
+        person.setAvailableEmail(getAvailableEmail());
+        person.setEnderecoWeb(getEnderecoWeb());
+        person.setAvailableWebSite(getAvailableWebSite());
+        person.setTelefone(getTelefone());
+        person.setTelemovel(getTelemovel());
+        person.setWorkPhone(getWorkPhone());
+                    
+        person.setProfissao(getProfissao());
+        
+        person.setMorada(getMorada());
+        person.setCodigoPostal(getCodigoPostal());
+        person.setLocalidade(getLocalidade());
+        person.setFreguesiaMorada(getFreguesiaMorada());
+        person.setConcelhoMorada(getConcelhoMorada());
+        person.setDistritoMorada(getDistritoMorada());
+        
+        person.setConcelhoNaturalidade(getConcelhoNaturalidade());
+        person.setDistritoNaturalidade(getDistritoNaturalidade());
+        person.setFreguesiaNaturalidade(getFreguesiaNaturalidade());
+
+        person.setLocalidadeCodigoPostal(getLocalidadeCodigoPostal());
+        person.setNacionalidade(getNacionalidade());
+
+        person.setNascimento(getNascimento());
+        person.setNomeMae(getNomeMae());
+        person.setNomePai(getNomePai());
+        
+        person.setNumContribuinte(getNumContribuinte());
+        person.setCodigoFiscal(getCodigoFiscal());
+
+        person.setPassword(getPassword());
+        person.setUsername(getUsername());
+        
+        return person;
+    }
+    
+    public IPessoa newDomainFromInfo()
+    {
+        return this.copyToDomain();
     }
 }

@@ -6,8 +6,11 @@
 package DataBeans.grant.owner;
 
 import java.util.Date;
+
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
+import DataBeans.InfoPersonWithInfoCountry;
+import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 /**
  * @author Barbosa
@@ -122,4 +125,22 @@ public class InfoGrantOwner extends InfoObject
 		}
 		return infoGrantOwner;
 	}
+	
+	public IGrantOwner copyToDomain()
+    {
+        IGrantOwner grantOwner = new GrantOwner(); 
+        super.copyToDomain(grantOwner);
+        
+        grantOwner.setCardCopyNumber(getCardCopyNumber());
+        grantOwner.setDateSendCGD(getDateSendCGD());
+        grantOwner.setNumber(getGrantOwnerNumber());
+        
+        return grantOwner;
+    }
+    
+    public IGrantOwner newDomainFromInfo()
+    {
+        return this.copyToDomain();
+    }
+    
 }

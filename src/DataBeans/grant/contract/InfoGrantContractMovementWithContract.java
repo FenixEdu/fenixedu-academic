@@ -33,25 +33,24 @@ public class InfoGrantContractMovementWithContract extends InfoGrantContractMove
 	
 	/**
      * @param grantMovement
-     *//*
-    public void copyToDomain(IGrantContractMovement grantMovement)
+     */
+    public IGrantContractMovement copyToDomain()
     {
-    	super.copyToDomain(grantMovement);
-    	if (grantMovement != null)
+    	IGrantContractMovement grantContractMovement = super.copyToDomain();
+    	if (grantContractMovement != null)
     	{
-    		grantMovement.setGrantContract(Cloner.copyInfoGrantContract2IGrantContract());
+    	    InfoGrantContractWithGrantOwnerAndGrantType infoGrantContractWithGrantOwnerAndGrantType = (InfoGrantContractWithGrantOwnerAndGrantType) getInfoGrantContract();
+    		grantContractMovement.setGrantContract(infoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo());
     	}
+    	return grantContractMovement;
     }
     
-    *//**
+    /**
      * @param GrantMovement
      * @return
-     *//*
-    public static IGrantContractMovement newDomainFromInfo(InfoGrantContractMovement infoGrantContractMovement)
+     */
+    public IGrantContractMovement newDomainFromInfo()
     {
-    	IGrantContractMovement grantMovement = new GrantContractMovement();
-    	infoGrantContractMovement.copyToDomain(grantMovement);
-    	
-    	return grantMovement;
-    }*/
+    	return this.copyToDomain();
+    }
 }

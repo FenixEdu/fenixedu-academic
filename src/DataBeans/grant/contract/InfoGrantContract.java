@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.owner.InfoGrantOwner;
+import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.IGrantContract;
 
 /**
@@ -171,4 +172,22 @@ public class InfoGrantContract extends InfoObject {
         }
         return active.booleanValue();
     }
+    
+    public IGrantContract copyToDomain()
+    {
+        IGrantContract grantContract = new GrantContract();
+        super.copyToDomain(grantContract);
+        
+        grantContract.setContractNumber(getContractNumber());
+        grantContract.setEndContractMotive(getEndContractMotive());
+        grantContract.setDateAcceptTerm(getDateAcceptTerm());
+        
+        return grantContract;
+    }
+    
+    public IGrantContract newDomainFromInfo()
+    {
+        return this.copyToDomain();
+    }
+    
 }

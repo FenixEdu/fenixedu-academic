@@ -32,8 +32,8 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return Cloner
-                .copyInfoGrantContractMovement2IGrantContractMovement((InfoGrantContractMovement) infoObject);
+        //return Cloner.copyInfoGrantContractMovement2IGrantContractMovement((InfoGrantContractMovement) infoObject);
+        return ((InfoGrantContractMovement) infoObject).newDomainFromInfo();
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {

@@ -6,6 +6,7 @@ package DataBeans.grant.contract;
 import java.util.Date;
 
 import DataBeans.InfoObject;
+import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantType;
 
 /**
@@ -152,6 +153,28 @@ public class InfoGrantType extends InfoObject {
     	}
     	return infoGrantType;
     }
+    
+    public IGrantType copyToDomain()
+    {
+        IGrantType grantType = new GrantType(); 
+        super.copyToDomain(grantType);
+        
+        grantType.setName(getName());
+        grantType.setSigla(getSigla());
+        grantType.setMinPeriodDays(getMinPeriodDays());
+        grantType.setMaxPeriodDays(getMaxPeriodDays());
+        grantType.setIndicativeValue(getIndicativeValue());
+        grantType.setSource(getSource());
+        grantType.setState(getState());
+        
+        return grantType;
+    }
+    
+    public IGrantType newDomainFromInfo()
+    {
+        return this.copyToDomain();
+    }
+    
     
 }
     
