@@ -32,7 +32,7 @@ public class CriarAulaFormAction extends FenixAction {
 
 	public static String INVALID_TIME_INTERVAL = "errors.lesson.invalid.time.interval";
 	public static String UNKNOWN_ERROR = "errors.unknown";
-//	public static String INTERCEPTING_LESSON = "errors.lesson.intercepting.lesson";
+
 
 	public ActionForward execute(
 		ActionMapping mapping,

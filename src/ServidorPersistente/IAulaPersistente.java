@@ -29,6 +29,7 @@ public interface IAulaPersistente extends IPersistentObject {
     public void deleteAll() throws ExcepcaoPersistencia;
     public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
     public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	public List readLessonsInBroadPeriod(IAula lesson) throws ExcepcaoPersistencia ;
 	/**
 	 * Method readByDisciplinaExecucaoETipo.
 	 * @param executionCourse

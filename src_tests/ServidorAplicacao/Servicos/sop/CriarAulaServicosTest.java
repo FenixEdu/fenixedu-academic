@@ -157,66 +157,66 @@ public class CriarAulaServicosTest extends TestCaseServicos {
 		UserView userView = new UserView("user", privileges);
 		try {
 			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
-			fail("testCreateExistingLessonCompleteMatch");
+		
 		} catch (Exception ex) {
 			// all is ok
-			assertNull("testCreateExistingLessonCompleteMatch", result);
+			fail("testCreateExistingLessonCompleteMatch");
+
 		}
 	}
 
 //	write new existing lesson with intercepting match
-//	 public void testCreateExistingLessonInterceptingMatch() {
-//		 InfoRoom infoSala =
-//			 new InfoRoom(
-//				 "Ga1",
-//				 "Pavilhao Central",
-//				 new Integer(0),
-//				 new TipoSala(1),
-//				 new Integer(100),
-//				 new Integer(50));
-//		 InfoExecutionCourse infoDisciplinaExecucao =
-//			 new InfoExecutionCourse(
-//				 "Trabalho Final de Curso I",
-//				 "TFCI",
-//				 "programa1",
-//				 new Double(0),
-//				 new Double(0),
-//				 new Double(0),
-//				 new Double(0), 
-//				 new InfoExecutionPeriod(
-//					 "2º Semestre",
-//					 new InfoExecutionYear("2002/2003")));
-//		 Object argsCriarAula[] = new Object[1];
-//		 Calendar inicio = Calendar.getInstance();
-//		 Calendar fim = Calendar.getInstance();
-//		 inicio.set(Calendar.HOUR_OF_DAY, 8);
-//		 inicio.set(Calendar.MINUTE, 30);
-//		 inicio.set(Calendar.SECOND, 0);
-//		 fim.set(Calendar.HOUR_OF_DAY, 9);
-//		 fim.set(Calendar.MINUTE, 30);
-//		 fim.set(Calendar.SECOND, 0);
-//		 argsCriarAula[0] =
-//			 new InfoLesson(
-//				 new DiaSemana(2),
-//				 inicio,
-//				 fim,
-//				 new TipoAula(1),
-//				 infoSala,
-//				 infoDisciplinaExecucao);
-//		 GestorServicos serviceManager = GestorServicos.manager();
-//		 Object result = null;
-//		 HashSet privileges = new HashSet();
-//		 privileges.add("CriarAula");
-//		 privileges.add("LerAulasDeDisciplinaExecucaoETipo");
-//		 UserView userView = new UserView("user", privileges);
-//		 try {
-//			 result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
-//			 fail("testCreateExistingLessonInterceptingMatch");
-//		 } catch (Exception ex) {
-//			 // all is ok
-//			 assertNull("testCreateExistingLessonInterceptingMatch", result);
-//		 }
-//	 }
+	 public void testCreateExistingLessonInterceptingMatch() {
+		 InfoRoom infoSala =
+			 new InfoRoom(
+				 "Ga1",
+				 "Pavilhao Central",
+				 new Integer(0),
+				 new TipoSala(1),
+				 new Integer(100),
+				 new Integer(50));
+		 InfoExecutionCourse infoDisciplinaExecucao =
+			 new InfoExecutionCourse(
+				 "Trabalho Final de Curso I",
+				 "TFCI",
+				 "programa1",
+				 new Double(0),
+				 new Double(0),
+				 new Double(0),
+				 new Double(0), 
+				 new InfoExecutionPeriod(
+					 "2º Semestre",
+					 new InfoExecutionYear("2002/2003")));
+		 Object argsCriarAula[] = new Object[1];
+		 Calendar inicio = Calendar.getInstance();
+		 Calendar fim = Calendar.getInstance();
+		 inicio.set(Calendar.HOUR_OF_DAY, 8);
+		 inicio.set(Calendar.MINUTE, 30);
+		 inicio.set(Calendar.SECOND, 0);
+		 fim.set(Calendar.HOUR_OF_DAY, 9);
+		 fim.set(Calendar.MINUTE, 0);
+		 fim.set(Calendar.SECOND, 0);
+		 argsCriarAula[0] =
+			 new InfoLesson(
+				 new DiaSemana(2),
+				 inicio,
+				 fim,
+				 new TipoAula(1),
+				 infoSala,
+				 infoDisciplinaExecucao);
+		 GestorServicos serviceManager = GestorServicos.manager();
+		 Object result = null;
+		 HashSet privileges = new HashSet();
+		 privileges.add("CriarAula");
+		 privileges.add("LerAulasDeDisciplinaExecucaoETipo");
+		 UserView userView = new UserView("user", privileges);
+		 try {
+			 result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
+			
+		 } catch (Exception ex) {
+			fail("testCreateExistingLessonInterceptingMatch");
+		 }
+	 }
 
 	// write new non-existing aula
 	public void testCreateNonExistingAula() {
