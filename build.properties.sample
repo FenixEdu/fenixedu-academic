@@ -1,0 +1,26 @@
+#
+# This is a Sample of the build.properties File.
+# It's necessary to fill in the token values to deploy the application
+# in a determined machine.
+#
+
+
+app.name=ciapl
+
+app.path=/${app.name}
+manager.password=admin
+manager.url=http://localhost:8080/manager
+manager.username=admin
+
+# Tokens for replace
+db.name=ciapl
+db.user=root
+db.pass=
+db.alias=//localhost:3306/ciapl
+login.page=https://fenix.ist.utl.pt/loginPage.jsp
+
+validation.doctype=<!DOCTYPE form-validation PUBLIC \n \
+                     "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN" \n \
+                     "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+
