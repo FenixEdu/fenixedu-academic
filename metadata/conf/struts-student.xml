@@ -28,6 +28,8 @@
       	<form-property name="method" type="java.lang.String" />
       	<form-property name="page" type="java.lang.Integer"/>
       	<form-property name="curricularCourses" type="java.lang.Integer[]" />
+      	<form-property name="optionalCourseIndex" type="java.lang.Integer" />
+      	<form-property name="optionalCurricularCourse" type="java.lang.Integer" />      	
       </form-bean>
       
 
@@ -93,11 +95,13 @@
     	<exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
 		           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
                    handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-
         <forward name="beginTransaction" path="/curricularCourseEnrolmentManager.do?method=start"/>              
+
         <forward name="showAvailableCurricularCourses" path="/showAvailableCurricularCourses.jsp"/>
-        <forward name="verifyEnrolment" path="/verifyEnrolment.jsp"/>        
-        <forward name="acceptEnrolment" path="/acceptEnrolment.jsp"/>                
+        <forward name="verifyEnrolment" path="/verifyEnrolment.jsp"/>
+        <forward name="acceptEnrolment" path="/acceptEnrolment.jsp"/>
+        <forward name="concreteOptionalList" path="/concreteOptionalList.jsp"/>
+        <forward name="searchOptionalCurricularCourses" path="/searchOptionalCurricularCourses.jsp"/>
       </action>
 
       <action type="ServidorApresentacao.Action.student.ShiftEnrolmentAction"
