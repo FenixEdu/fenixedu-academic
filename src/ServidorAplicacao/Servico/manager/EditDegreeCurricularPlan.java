@@ -3,8 +3,6 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.List;
-
 import DataBeans.InfoDegreeCurricularPlan;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurso;
@@ -49,8 +47,6 @@ public class EditDegreeCurricularPlan implements IServico {
 			persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 			oldDegreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(oldDegreeCPId), false);
 
-			List degreeCurricularPlans = persistentDegreeCurricularPlan.readAll();
-			degreeCurricularPlans.remove((IDegreeCurricularPlan) oldDegreeCP);
 
 			persistentDegree = persistentSuport.getICursoPersistente();
 			Integer degreeId = oldDegreeCP.getDegree().getIdInternal();

@@ -25,9 +25,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -51,6 +53,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 		try {
 			oldInfoCurricularCourseScope = (InfoCurricularCourseScope) manager.executar(userView, "ReadCurricularCourseScope", args);
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException("O âmbito", mapping.findForward("readCurricularCourse"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -109,8 +113,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		return mapping.findForward("editCurricularCourseScope");
 	}
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException /*,ExistingActionException*/ {
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -192,6 +195,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 		try {
 			manager.executar(userView, "EditCurricularCourseScope", args);
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException("O âmbito", mapping.findForward("readCurricularCourse"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {

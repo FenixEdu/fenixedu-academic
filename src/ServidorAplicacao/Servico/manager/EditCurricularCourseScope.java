@@ -13,6 +13,7 @@ import Dominio.ICurricularSemester;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourseScope;
@@ -95,7 +96,8 @@ public class EditCurricularCourseScope implements IServico {
 						ex);
 				}
 
-			}
+			}else
+			throw new NonExistingServiceException();
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);

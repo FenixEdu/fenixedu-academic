@@ -9,6 +9,7 @@ import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -49,22 +50,19 @@ public class ReadCurricularCourseScope implements IServico {
 			ICurricularCourseScope curricularCourseScopeToRead = new CurricularCourseScope();
 			curricularCourseScopeToRead.setIdInternal(idInternal);
 			curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope().readByOId(curricularCourseScopeToRead, false);
-			System.out.println("CURRICULAR COURSE Scope"+curricularCourseScope);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia){
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
      
 		if (curricularCourseScope == null) {
-			return null;
+			throw new NonExistingServiceException();
 		}
 
-		//TODO:perguntar joao funciona no branch(so tem o getInternalId) e nao funciona no semester:NAO SEI ENTAO QUAL O ERRO(getInternalID( se eu nao usar este o ID vem a null)(e eh este que ta  a usar) e tem getInternalId)
 		Integer curricularSemesterId = curricularCourseScope.getCurricularSemester().getIdInternal();
 		InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
 		
 		infoCurricularCourseScope.getInfoCurricularSemester().setIdInternal(curricularSemesterId);
 		
-		System.out.println("IIIIIIIIIIIIIIIIII"+curricularCourseScope.getCurricularSemester().getIdInternal());
 		
 		return infoCurricularCourseScope;
 	}

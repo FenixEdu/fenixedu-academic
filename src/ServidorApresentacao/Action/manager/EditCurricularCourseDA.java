@@ -18,9 +18,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CurricularCourseType;
 
@@ -44,6 +46,8 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
 		try {
 			oldInfoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
+		} catch (NonExistingServiceException ex) {
+					throw new NonExistingActionException("A disciplina curricular", mapping.findForward("readDegreeCP"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -102,10 +106,13 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		GestorServicos manager = GestorServicos.manager();
 		try {
 			manager.executar(userView, "EditCurricularCourse", args);
+		} catch (NonExistingServiceException ex) {
+							throw new NonExistingActionException("A disciplina curricular", mapping.findForward("readDegreeCP"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
+		
 		}
 
 		return mapping.findForward("readDegreeCP");

@@ -9,6 +9,7 @@ import Dominio.ICurricularCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
@@ -60,7 +61,8 @@ public class EditCurricularCourse implements IServico {
 				} catch (ExistingPersistentException ex) {
 					throw new ExistingServiceException("A disciplina curricular de nome "+newName+" e sigla "+newCode, ex);
 				}
-			}
+			}else
+			throw new NonExistingServiceException();
 		
 		
 			

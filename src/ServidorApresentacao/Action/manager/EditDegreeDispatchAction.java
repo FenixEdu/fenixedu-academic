@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -50,28 +48,11 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		try {
 			oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
 		
-		}catch (NonExistingServiceException e) {
-					ActionErrors actionErrors = new ActionErrors();
-					actionErrors.add(
-						"nonExisting",
-						new ActionError("errors.non.existing"));
-					saveErrors(request, actionErrors);
-					return mapping.findForward("readDegrees");
-
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException("O curso", mapping.findForward("readDegrees"));
 				}  catch (FenixServiceException fenixServiceException) {
 	throw new FenixActionException(fenixServiceException.getMessage());
 		}
-				
-//		catch (NonExistingServiceException e) {
-//					throw new NonExistingActionException("O curso", e);
-//				}
-//		if (oldInfoDegree == null) {
-//					ActionErrors actionErrors = new ActionErrors();
-//					ActionError error = new ActionError("message.nonExistingDegree");
-//					actionErrors.add("message.nonExistingDegree", error);
-//					saveErrors(request, actionErrors);
-//					return mapping.findForward("readDegrees");
-//				}
 
 
 		TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
@@ -102,8 +83,8 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
 		try {
 			manager.executar(userView, "EditDegree", args);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O curso", e);
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException("O curso", mapping.findForward("readDegrees"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {
