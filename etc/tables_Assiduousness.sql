@@ -110,6 +110,7 @@ CREATE TABLE ass_FUNCIONARIO (
   numeroMecanografico int(11) NOT NULL default '0',
   chaveHorarioActual int(11) NOT NULL default '0',
   antiguidade date NOT NULL default '0000-00-00',
+  ACTIVE bit NOT NULL default 1,
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (numeroMecanografico),
   UNIQUE KEY u2 (chavePessoa)
