@@ -46,6 +46,7 @@ public class JBossIntegrationTest
 			
 			System.out.println("\n\n\n\n\nJBossIntegrationTest ex= " + ex.getClass().getName());
 			System.out.println("JBossIntegrationTest ex= " + ex.getMessage());
+			ex.printStackTrace();
 			if (ex instanceof FenixRemoteServiceException)
 			{	
 				System.out.println("JBossIntegrationTest ex= " + ((FenixRemoteServiceException) ex).getCauseClassName());
