@@ -11,9 +11,11 @@
 	</html:text>
 	<html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives" >
 	</html:text>
-	<html:reset value="clean" styleClass="inputbutton">
+	<html:reset  styleClass="inputbutton">
           <bean:message key="label.clear"/>
     </html:reset>
-    <html:submit property="method" value="editObjectives" titleKey="button.save">
+    <html:hidden property="method" value="editObjectives"/>
+    <html:submit >
+	<bean:message key="button.save"/>
 	</html:submit>
 </html:form>

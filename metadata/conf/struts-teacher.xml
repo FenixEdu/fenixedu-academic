@@ -22,9 +22,9 @@
       
       
 	<form-bean name="executionCourseObjectivesForm"
-		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="operacionalObjectives" type="java.lang.String" />
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
 		<form-property name="generalObjectives" type="java.lang.String" />
+		<form-property name="operacionalObjectives" type="java.lang.String" />
 	</form-bean>
 
 	<form-bean name="announcementManagementForm"
