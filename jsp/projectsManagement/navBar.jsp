@@ -8,11 +8,6 @@
 <br />
 <logic:present name="userView" name="<%= SessionConstants.U_VIEW %>"
 	scope="session">
-	<%net.sourceforge.fenixedu.applicationTier.IUserView userView = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
-        if (userView.hasRoleType(net.sourceforge.fenixedu.util.RoleType.PROJECTS_MANAGER)) {
-
-        %>
 	<p><strong><bean:message key="label.listByProject" /></strong></p>
 	<ul>
 		<li><html:link
@@ -78,9 +73,6 @@
 			<bean:message key="link.showAccesses" />
 		</html:link></li>
 	</ul>
-	<%}
-
-    %>
 	<br />
 	<br />
 </logic:present>
