@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <p align="left">
 	<bean:message key="message.student.shiftEnrollment" />
 </p>
@@ -16,7 +17,7 @@
 	<html:link page="/studentShiftEnrolmentManager.do?method=start"><bean:message key="link.shift.chooseCourses" /></html:link>
 	<br />
 
-	<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + pageContext.fincAttribute("studentId").toString()%>"><bean:message key="link.shift.enrolement.edit" /></html:link>
+	<html:link page="<%= "/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;studentId=" + pageContext.findAttribute("studentId").toString()%>"><bean:message key="link.shift.enrolement.edit" /></html:link>
 
 	<logic:present name="infoShiftEnrollment" property="infoShiftEnrollment">
 		<table>
@@ -41,9 +42,13 @@
 							<li>
 								<bean:write name="infoLesson" property="diaSemana" />
 								&nbsp;
-								<bean:write name="infoLesson" property="inicio" />
+								<dt:format pattern="HH:mm">
+									<bean:write name="infoLesson" property="inicio.timeInMillis" />
+								</dt:format>								
 								&nbsp;-&nbsp;
-								<bean:write name="infoLesson" property="fim" />
+								<dt:format pattern="HH:mm">
+									<bean:write name="infoLesson" property="fim.timeInMillis" />
+								</dt:format>
 								&nbsp;
 								<bean:write name="infoLesson" property="tipo" />								
 								&nbsp;
