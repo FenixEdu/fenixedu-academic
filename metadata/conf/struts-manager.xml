@@ -67,7 +67,7 @@
       <action path="/readDegree"
              input="readDegreesInput.do"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
-      	  <forward name="viewDegree" path="/df.page.read-degree"/>      	      
+      	  <forward name="viewDegree" path="df.page.read-degree"/>      	      
       </action>
          
 	<!-- Action for deleting a degree --> 
@@ -93,6 +93,8 @@
       	     type="ServidorApresentacao.Action.manager.DegreesToDeleteAction">
       	  <forward name="degreesToDelete" path="df.page.degrees-to-delete"/>      	      
       </action>
+      
+      <!--Input actions-->
       
      <action path="/readDegreesInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
