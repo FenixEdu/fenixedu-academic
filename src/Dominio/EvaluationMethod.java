@@ -7,7 +7,7 @@ package Dominio;
 
 /**
  * @author João Mota
- *
+ * @deprecated
  * 
  */
 public class EvaluationMethod
