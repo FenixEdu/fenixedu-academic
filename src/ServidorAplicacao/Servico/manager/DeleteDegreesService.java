@@ -39,8 +39,8 @@ public class DeleteDegreesService implements IServico {
 			ICursoPersistente persistentDegree = sp.getICursoPersistente();
 
 			Iterator iter = degreesInternalIds.iterator();
-//			String undeletedDegreeName = "null";
-            Boolean result= new Boolean(true);
+
+            Boolean result = new Boolean(true);
 			List undeletedDegreesNames = new ArrayList();
 
 			while (iter.hasNext()) {
