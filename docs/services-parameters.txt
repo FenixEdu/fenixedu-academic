@@ -97,26 +97,31 @@ Role: teacher
 ----------------------------------------------
 Nome:InsertBibliographicReference
 Parametros:InfoExecutionCourse infoExecutionCourse,	String title,String authors,String reference,String year,Boolean optional
+(executionCourse->sigla,executionPeriod) (executionPeriod->name,executionYear) (executionYear->name)
 Role: teacher
 ----------------------------------------------
 Nome:InsertCurriculum
-Parametros:InfoCurriculum infoCurriculum
+Parametros:InfoCurriculum infoCurriculum (curriculum->executionCourse) (executionCourse->sigla, executionPeriod)
 Role: teacher
 ----------------------------------------------
 Nome:InsertItem
 Parametros:InfoItem infoItem
+(item->section,name,order,information,urgent) (section->site)(site->executionCourse) (executionCourse->sigla, executionPeriod) (executionPeriod->name,executionYear) (executionYear->name)
 Role: teacher
 ----------------------------------------------
 Nome:InsertSection
 Parametros:InfoSection infoSection
+(section->site,name,*superiorSection,order)(site->executionCourse) (executionCourse->sigla, executionPeriod) (executionPeriod->name,executionYear) (executionYear->name)
 Role: teacher
 ----------------------------------------------
 Nome:ReadBibliographicReference
 Parametros:InfoExecutionCourse infoExecutionCourse, Boolean optional
+(executionCourse->sigla, executionPeriod) (executionPeriod->name,executionYear) (executionYear->name)
 Role: teacher
 ----------------------------------------------
 Nome:ReadProfessorships
 Parametros:InfoTeacher infoTeacher
+(infoTeacher->teacherNumber)
 Role: teacher
 ----------------------------------------------
 Nome:ReadTeacherByUsername
@@ -129,6 +134,7 @@ Role: teacher
 ----------------------------------------------
 Nome:RemoveTeacher
 Parametros:InfoExecutionCourse infoExecutionCourse,	Integer teacherNumber
+(executionCourse->sigla, executionPeriod) (executionPeriod->name,executionYear) (executionYear->name)
 Role: teacher
 ----------------------------------------------
 
