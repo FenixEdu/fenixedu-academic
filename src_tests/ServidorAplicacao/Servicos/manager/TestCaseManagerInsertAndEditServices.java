@@ -54,10 +54,8 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 
 		if(args != null) {
 			
-			
 			try {
 				Object result =_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
-				System.out.println("RESULTADO DO SERVIÇO"+result);
 				System.out.println("testUnsuccessfulExecutionOfService was UNSUCCESSFULY run by class: " + this.getClass().getName());
 				fail("testUnsuccessfulExecutionOfService");
 			} catch (Exception ex) {
@@ -74,7 +72,6 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 		if(args != null) {
 			
 			try {
-				System.out.println("USER_VIEW"+_userView);
 				_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
 				System.out.println("testSuccessfulExecutionOfService was SUCCESSFULY run by class: " + this.getClass().getName());
 			} catch (Exception ex) {
@@ -95,20 +92,26 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 	 * This method is to be called when it is intended to test a single situation of failure.
 	 * This method must return null if not to be used.
 	 */
-	protected abstract Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly();
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		return null;
+	}
 
 	/**
 	 * This method must return the service arguments that makes it execute correctly.
 	 * This method must return null if not to be used.
 	 */
-	protected abstract Object[] getArgumentsOfServiceToBeTestedSuccessfuly();
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		return null;
+	}
 
 	/**
 	 * This method must return the service arguments that makes it fail it's execution.
 	 * This method is to be called when it is intended to test multiple situations of failure.
 	 * This method must return null if not to be used.
 	 */
-	protected abstract HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly();
+	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+		return null;
+	}
 
 	/**
 	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.

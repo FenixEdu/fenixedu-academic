@@ -3,8 +3,6 @@
  */
 package ServidorAplicacao.Servicos.manager;
 
-import java.util.HashMap;
-
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import Util.DegreeCurricularPlanState;
@@ -21,13 +19,9 @@ public class InsertDegreeCurricularPlanTest extends TestCaseManagerInsertAndEdit
 	protected String getNameOfServiceToBeTested(){
 		return "InsertDegreeCurricularPlan";
 	}
-		
-	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly(){
-		return null;
-	}
 
 //	insert curricular course with name existing in DB but another key_degree_curricular_plan 	
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly(){
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 		
 		InfoDegree infoDegree = new InfoDegree();
 		infoDegree.setIdInternal(new Integer(8));
@@ -43,11 +37,11 @@ public class InsertDegreeCurricularPlanTest extends TestCaseManagerInsertAndEdit
 		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(5));
 		
 		Object[] args = { infoDegreeCurricularPlan };
-					return args;
+		return args;
 	}
 
 //	insert curricular course with name and key_degree already existing in DB
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly(){
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		
 		InfoDegree infoDegree = new InfoDegree();
 		infoDegree.setIdInternal(new Integer(10));
@@ -63,7 +57,7 @@ public class InsertDegreeCurricularPlanTest extends TestCaseManagerInsertAndEdit
 		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(5));
 		
 		Object[] args = { infoDegreeCurricularPlan };
-					return args;	}
+		return args;	}
 
 }
 
