@@ -1,15 +1,15 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import framework.factory.ServiceManagerServiceFactory;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -19,6 +19,7 @@ import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author João Mota
@@ -65,7 +66,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-
+		Collections.sort(infoExecutionCourses,new BeanComparator("nome"));
 		request.setAttribute("exeCourseList", infoExecutionCourses);
 		return mapping.findForward("sucess");
 	}
