@@ -9,30 +9,42 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 
-	<h2><bean:message key="title.ExecutionCourseProjects"/></h2>
-	<br>
+
+	<logic:empty name="component" property="infoGroupPropertiesList">
+	<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="infoop">
+			<bean:message key="label.teacher.emptyProjectsAndLink.description" />
+		</td>
+	</tr>
+	</table>
 	
-<table width="100%" cellpadding="0" cellspacing="0">
+	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
+	
+	<html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link>
+
+	</logic:empty>
+	
+
+
+ 
+ <logic:notEmpty name="component" property="infoGroupPropertiesList"> 
+ 
+	<h2><bean:message key="title.ExecutionCourseProjects"/></h2>
+	
+	<table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
 			<bean:message key="label.teacher.viewProjectsAndLink.description" />
 		</td>
 	</tr>
-</table>
-
-	<logic:empty name="component" property="infoGroupPropertiesList">
-	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
-	</logic:empty>
-	
-	
-<br>
-<br>
-<b><html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link></b>
-<br>
-<br>
-<br>
- 
- <logic:notEmpty name="component" property="infoGroupPropertiesList"> 
+	</table>
+<br/>
+<br/>
+	<html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link>
+<br/>
+<br/>
+<br/>
 <table border="0" style="text-align: left;">
         <tbody>
     	 <tr>

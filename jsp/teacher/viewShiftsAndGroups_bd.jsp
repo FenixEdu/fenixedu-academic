@@ -16,37 +16,55 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 
-<h2><bean:message key="title.ShiftsAndGroups"/></h2>
-<br>
-
-
-<table width="100%" cellpadding="0" cellspacing="0">
+	<logic:present name="noShifts">
+	<table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
-			<bean:message key="label.teacher.viewShiftsAndGroups.description" />
+			<bean:message key="label.teacher.emptyShiftsAndGroups.description" />
 		</td>
 	</tr>
-</table>
-<br/>
-
-     <span class="error"><html:errors/></span> 	
-<br/>		
-<br/>
-
-<table width="95%" border="0" style="text-align: left;">
+	</table>
+	
+	
+	<h2><bean:message key="message.shifts.not.available"/></h2>
+	
+	<span class="error"><html:errors/></span> 	
+	<br/>
+	<br/>
+	
+	<table width="95%" border="0" style="text-align: left;">
 	<tbody>
 	<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 		<bean:message key="link.editGroupProperties"/></html:link>
-</table>
-<br>
+	</table>
 
-	<logic:present name="noShifts">
-	<h2><bean:message key="message.shifts.not.available"/>
-	</h2>
 	</logic:present>
 	
 		
 	<logic:notPresent name="noShifts">
+	
+	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
+
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.teacher.viewShiftsAndGroups.description" />
+			</td>
+		</tr>
+	</table>
+	
+	<br/>
+	     <span class="error"><html:errors/></span> 	
+	<br/>
+	<br/>
+	
+	<table width="95%" border="0" style="text-align: left;">
+	<tbody>
+		<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<bean:message key="link.editGroupProperties"/>
+		</html:link>
+	</table>
+	<br/>
 <table width="95%" border="0" style="text-align: left;">	
 	
 	<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">

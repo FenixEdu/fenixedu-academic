@@ -48,6 +48,7 @@
 	
 	
 	</logic:empty>	
+	
 	<logic:notEmpty name="component" property="infoSiteStudentInformationList">
 	
 	<table width="100%" cellpadding="0" cellspacing="0">
@@ -197,7 +198,7 @@
 			<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
 	   </html:link>
 	<br/>
-	<br/>   
+ 
 	 <b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
 	<br/>	  
 	<tr>
