@@ -190,6 +190,70 @@
       >
          <inverse-foreignkey field-id-ref="2"/>
       </collection-descriptor>    
+    
+    <collection-descriptor
+         name="personRoles"
+         element-class-ref="Dominio.Role"
+         proxy="false"
+         indirection-table = "PERSON_ROLE"
+         auto-retrieve="true"
+         auto-update="false"
+         auto-delete="false"
+      >
+    	<fk-pointing-to-this-class  column="KEY_PERSON" />
+    	<fk-pointing-to-element-class column="KEY_ROLE" />
+      </collection-descriptor>    
+      
+</class-descriptor>
+<!-- ***********************************
+     Definitions for Dominio.Role 
+     *********************************** -->
+<class-descriptor class="Dominio.Role"
+                  table="ROLE">
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+        id="1"
+    />
+
+    <field-descriptor
+        name="roleType"
+        column="ROLE_TYPE"
+        nullable = "false"
+	conversion="ServidorPersistente.Conversores.RoleTypeFieldConversion"        
+        jdbc-type="INTEGER"
+        id="2"
+    />
+    <field-descriptor 
+        name="portalAction"
+        column="PORTAL_ACTION"
+	nullable="true"
+        jdbc-type="VARCHAR"
+        id="3"
+    />
+    <field-descriptor 
+        name="portalActionNameProperty"
+        column="PORTAL_ACTION_NAME_PROPERTY"
+	nullable="true"
+        jdbc-type="VARCHAR"
+        id="4"
+    />
+    
+    <collection-descriptor
+         name="rolePersons"
+         element-class-ref="Dominio.Pessoa"
+         proxy="true"
+         indirection-table = "PERSON_ROLE"
+         auto-retrieve="true"
+         auto-update="false"
+         auto-delete="false"
+      >
+    	<fk-pointing-to-this-class  column="KEY_ROLE" />
+    	<fk-pointing-to-element-class column="KEY_PERSON" />
+    </collection-descriptor> 
 </class-descriptor>
 
 <!-- Definitions for Dominio.Student -->
