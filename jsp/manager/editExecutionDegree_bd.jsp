@@ -18,13 +18,6 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.manager.executionDegree.coordinator"/>
-			</td>
-			<td>	
-				<html:text property="coordinatorNumber"/>
-			</td>
-		</tr>
-			<td>
 				<bean:message key="label.manager.executionDegree.executionYear"/>
 			</td>
 			<td>

@@ -18,7 +18,6 @@ import DataBeans.InfoCampus;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
-import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -75,8 +74,6 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction
 
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
         infoExecutionYear.setIdInternal(new Integer((String) dynaForm.get("executionYearId")));
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setTeacherNumber(Integer.valueOf((String) dynaForm.get("coordinatorNumber")));
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
 

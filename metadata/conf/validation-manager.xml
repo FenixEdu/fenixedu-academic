@@ -307,11 +307,11 @@
       </field>
     </form>
     
-    <form name="executionDegreeForm">
+    <!--<form name="executionDegreeForm">
       <field property="coordinatorNumber" depends="required, integer" page="1" >
         <arg0 key="label.manager.executionDegree.coordinator" resource="true"/>
       </field>
-    </form>
+    </form> -->
 
     <form name="teacherManagementForm">
       <field property="teacherNumber" depends="required,integer" page="1" >

@@ -18,7 +18,6 @@ import DataBeans.InfoCampus;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
-import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -100,7 +99,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String executionYearString = (String) dynaForm.get("executionYearId");
-        String coordinatorNumberString = (String) dynaForm.get("coordinatorNumber");
+        //String coordinatorNumberString = (String) dynaForm.get("coordinatorNumber");
         String campusIdString = (String) dynaForm.get("campusId");
         String tempExamMapString = (String) dynaForm.get("tempExamMap");
 
@@ -110,8 +109,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction
         infoExecutionYear.setIdInternal(new Integer(executionYearString));
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setTeacherNumber(new Integer(coordinatorNumberString));
+        //InfoTeacher infoTeacher = new InfoTeacher();
+        //infoTeacher.setTeacherNumber(new Integer(coordinatorNumberString));
         //infoExecutionDegree.setInfoCoordinator(infoTeacher);
 
         infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));

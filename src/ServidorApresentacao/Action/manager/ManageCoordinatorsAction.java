@@ -40,7 +40,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		System.out.println("ManageCoordinatorsAction");
+		//System.out.println("ManageCoordinatorsAction");
 		ActionErrors errors = new ActionErrors();
 
 		Integer executionDegreeId =
@@ -78,7 +78,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		if (!errors.isEmpty()) {
 			saveErrors(request, errors);
 		}
-		System.out.println("View Responsables " + infoExecutionDegree.getCoordinatorsList().size());
+		//System.out.println("View Responsables " + infoExecutionDegree.getCoordinatorsList().size());
 		
 		Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(
 		infoExecutionDegree.getCoordinatorsList());
@@ -140,7 +140,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		System.out.println("ManageCoordinatorsAction: insert");
+		//System.out.println("ManageCoordinatorsAction: insert");
 		ActionErrors errors = new ActionErrors();
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -175,7 +175,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			saveErrors(request, errors);
 		}
 
-		System.out.println("A sair ... (ManageCoordinatorsAction)");
+		//System.out.println("A sair ... (ManageCoordinatorsAction)");
 		return mapping.findForward("viewCoordinators");
 	}
 
@@ -211,7 +211,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		if (responsibleCoordinatorsIds != null) {
 			List responsibleCoordinatorsIdsList =
 				Arrays.asList(responsibleCoordinatorsIds);
-			System.out.println("ManageCoordinatorsAction: edit " + responsibleCoordinatorsIdsList.size());
+			//System.out.println("ManageCoordinatorsAction: edit " + responsibleCoordinatorsIdsList.size());
 			Object[] args =
 				{ executionDegreeId, responsibleCoordinatorsIdsList };
 			try {
@@ -233,7 +233,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		if (deletedCoordinatorsIds != null) {
 			List deletedCoordinatorsIdsList =
 				Arrays.asList(deletedCoordinatorsIds);
-			System.out.println("ManageCoordinatorsAction: remove " + deletedCoordinatorsIdsList.size());
+			//System.out.println("ManageCoordinatorsAction: remove " + deletedCoordinatorsIdsList.size());
 			Object[] args = { executionDegreeId, deletedCoordinatorsIdsList };
 			try {
 				ServiceManagerServiceFactory.executeService(

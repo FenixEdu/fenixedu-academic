@@ -50,38 +50,40 @@
 	 		    <strong><bean:message key="label.coordinators" /></strong>
 
 	 		    <br />
-			  	<bean:size id="campusSize" name="infoExecutionDegrees" />
+			  	<bean:size id="executionDegreesSize" name="infoExecutionDegrees" />
 
-			  	<logic:iterate id="executionDegree" name="infoExecutionDegrees" indexId="indexCampus" >
-				  	<bean:message key="label.title.coordinator" />&nbsp; 
-					
-						<logic:notEmpty name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
-							<bean:define id="homepage" name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb" />						
-
-							<a href=" <%= homepage %>">
-							<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />						
-							</a>
-						</logic:notEmpty>		
+			  	<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees" indexId="executionDegreesSize" >
+			  		<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
+					  	<bean:message key="label.title.coordinator" />&nbsp; 
 						
-						<logic:empty name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
-							<logic:notEmpty name="executionDegree" property="infoCoordinator.infoPerson.email">
-								<bean:define id="email" name="executionDegree" property="infoCoordinator.infoPerson.email" />
+							<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
+								<bean:define id="homepage" name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb" />						
+	
+								<a href=" <%= homepage %>">
+								<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />						
+								</a>
+							</logic:notEmpty>		
 							
-								<a href="mailto: <%= email %>">
-								<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />						
-								</a>											
-							</logic:notEmpty>						
-						</logic:empty>		
-						
-						<logic:empty name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
-							<logic:notEmpty name="executionDegree" property="infoCoordinator.infoPerson.email">
-								<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />											
-							</logic:notEmpty>						
-						</logic:empty>	
-						
-						<logic:lessThan name="indexCampus" value="campusSize" >
-					  	<br />
-					  </logic:lessThan>
+							<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
+								<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.email">
+									<bean:define id="email" name="infoCoordinator" property="infoTeacher.infoPerson.email" />
+								
+									<a href="mailto: <%= email %>">
+									<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />						
+									</a>											
+								</logic:notEmpty>						
+							</logic:empty>		
+							
+							<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
+								<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.email">
+									<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />											
+								</logic:notEmpty>						
+							</logic:empty>	
+							
+							<logic:lessThan name="executionDegreesSize" value="executionDegreesSize" >
+						  	<br />
+						  </logic:lessThan>
+					  </logic:iterate>
 				  </logic:iterate>
 			  </logic:present>			
 			  <!-- COORDINATOR END-->
