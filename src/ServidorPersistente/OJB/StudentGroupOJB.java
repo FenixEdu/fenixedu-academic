@@ -30,7 +30,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("keyAttendsSet", attendsSet.getIdInternal());
+        criteria.addEqualTo("attendsSet.idInternal", attendsSet.getIdInternal());
         criteria.addEqualTo("groupNumber", studentGroupNumber);
 
         return (IStudentGroup) queryObject(StudentGroup.class, criteria);
@@ -42,7 +42,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("keyAttendsSet", attendsSet.getIdInternal());
+        criteria.addEqualTo("attendsSet.idInternal", attendsSet.getIdInternal());
 
         return queryList(StudentGroup.class, criteria);
     }
@@ -55,8 +55,8 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("keyAttendsSet", attendsSet.getIdInternal());
-        criteria.addEqualTo("keyShift", shift.getIdInternal());
+        criteria.addEqualTo("attendsSet.idInternal", attendsSet.getIdInternal());
+        criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
 
         return queryList(StudentGroup.class, criteria);
     }
@@ -86,7 +86,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("keyShift", shift.getIdInternal());
+        criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
 
         return queryList(StudentGroup.class, criteria);
     }
