@@ -41,8 +41,52 @@
     <property name="deploy"          location="${env.CATALINA_HOME}/webapps"/>
     <property name="deploy.jars"     value="deploy/jars"/>
   
-  
     <!-- TARGETS -->
+
+    <target name="tomcat-start"
+            description="Starts tomcat">
+      <parallel>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
+	  	      vmlauncher="true"
+	  	      failonerror="true"
+	  	      os="Linux, Unix">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="start"/>
+	  	</exec>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
+	  	      vmlauncher="true"
+	  	      failonerror="true"
+	  	      os="Windows, Windows 2000, Windows XP">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="start"/>
+	  	</exec>
+     </parallel>
+    </target>
+
+    <target name="tomcat-stop"
+            description="Stops tomcat">
+      <parallel>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
+	  	      vmlauncher="true"
+	  	      failonerror="true"
+	  	      os="Linux, Unix">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="stop"/>
+	  	</exec>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
+	  	      vmlauncher="true"
+	  	      failonerror="true"
+	  	      os="Windows, Windows 2000, Windows XP">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="stop"/>
+	  	</exec>
+     </parallel>
+    </target>
+
+    <target name="stop-deploy-start"
+    		description="Stops tomcat"
+    		depends="tomcat-stop,deploy-standalone,tomcat-start"
+    		/>
   
     <target name="compile-proj"
             description="Compila o projecto principal">
