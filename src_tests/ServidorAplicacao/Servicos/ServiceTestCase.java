@@ -76,7 +76,7 @@ public abstract class ServiceTestCase extends TestCase {
 //			super.tearDown();
 //			loadDataBase();
 //		} catch (Exception ex) {
-//			System.out.println("Tear down failed: " + ex);
+//			fail("Tear down failed: " + ex);
 //		}
 	}
 
