@@ -31,7 +31,6 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = request.getSession(false);
 			
-			if (session.getAttribute("insertAnnouncementForm")==null) System.out.println("session.getAttribute(insertAnnouncementForm)==null");
 			session.removeAttribute("insertAnnouncementForm");
 			
 			return mapping.findForward("insertAnnouncement");

@@ -113,6 +113,7 @@
 		type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
 		path="/accessAnnouncementManagementAction">
         <forward name="AnnouncementManagement" path="/announcementManagementAction.do?method=showAnnouncements" />
+        <forward name="EditAnnouncement" path="/announcementManagementAction.do?method=prepareCreateAnnouncement" />        
 	</action>
 
 	<!-- input of actions for announcement management -->	
