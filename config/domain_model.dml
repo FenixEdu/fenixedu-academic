@@ -4,7 +4,7 @@
  * 
  */
 
-class net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.DomainObject implements java.io.Serializable {
 	Integer ackOptLock;
 	Integer idInternal;
 }
