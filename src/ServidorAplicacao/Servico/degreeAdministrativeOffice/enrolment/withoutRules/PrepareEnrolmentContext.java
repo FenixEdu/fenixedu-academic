@@ -1,5 +1,7 @@
 package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
+import java.util.List;
+
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
@@ -34,13 +36,13 @@ public class PrepareEnrolmentContext implements IServico {
 		return "PrepareEnrolmentContext";
 	}
 
-	public InfoEnrolmentContext run(InfoStudent infoStudent, InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree, Integer semester, Integer year) throws FenixServiceException {
+	public InfoEnrolmentContext run(InfoStudent infoStudent, InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree, List listOfChosenCurricularSemesters, List listOfChosenCurricularYears) throws FenixServiceException {
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
 		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 		try {
-			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice2(student, executionPeriod, executionDegree, semester, year);
+			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(student, executionPeriod, executionDegree, listOfChosenCurricularSemesters, listOfChosenCurricularYears);
 			infoEnrolmentContext = EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

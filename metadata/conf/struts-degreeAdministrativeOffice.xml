@@ -22,6 +22,7 @@
 		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="studentOID" type="java.lang.Integer"/>
 			<form-property name="infoExecutionDegree" type="java.lang.String"/>
 			<form-property name="curricularYears" type="java.lang.Integer[]"/>
 			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
@@ -39,7 +40,7 @@
 		<form-bean name="curricularCourseEnrolmentWithoutRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
-			<form-property name="enrolmentToRemoveIndex" type="java.lang.Integer"/>
+			<form-property name="studentOID" type="java.lang.Integer"/>
 		</form-bean>
 	</form-beans>
 
@@ -152,7 +153,7 @@
 				input="/prepareEnrolmentContext.do?method=error&amp;page=0"
 				parameter="method"
 				scope="request"
-				validate="true">
+				validate="false">
 			<forward name="showAvailableCurricularCourses" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
 			<forward name="error" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=1"/>
 			<forward name="home" path="df.page.main"/>
@@ -204,11 +205,14 @@
 				parameter="method"
 				scope="session"
 				validate="false">
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			<forward name="beginTransaction" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=error"/>
 			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
-			<forward name="cancel" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules"/>
-			<forward name="home" path="df.page.main"/>
+			<forward name="error" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=0"/>
 		</action>
 	</action-mappings>
 

@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +12,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoStudent;
-import DataBeans.degreeAdministrativeOffice.InfoCurricularCourseEnromentWithoutRules;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -26,7 +27,7 @@ import Util.TipoCurso;
  * @author David Santos
  */
 
-public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends PrepareStudentDataAction {
+public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends PrepareStudentDataDispatchAction {
 	
 	private final String[] forwards = { "startCurricularCourseEnrolmentWithoutRules", "error" };
 
@@ -42,7 +43,13 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 
 			List infoExecutionDegreesList = null;
 			try {
-				Integer degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
+				Integer degreeType = null;
+				try {
+					degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
+				} catch (NumberFormatException e) {
+					degreeType = (Integer) request.getAttribute("degreeType");
+					getStudentByNumberAndDegreeTypeForm.set("degreeType", degreeType.toString());
+				}
 				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 				TipoCurso realDegreeType = new TipoCurso(degreeType);
 				Object args[] = { infoExecutionPeriod.getInfoExecutionYear(), realDegreeType };
@@ -51,12 +58,8 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 				throw new FenixActionException(e);
 			}
 
-			InfoStudent infoStudent = (InfoStudent) request.getAttribute(SessionConstants.STUDENT);
-			InfoCurricularCourseEnromentWithoutRules infoCurricularCourseEnromentWithoutRules = new InfoCurricularCourseEnromentWithoutRules();
-			infoCurricularCourseEnromentWithoutRules.setInfoExecutionDegreesList(infoExecutionDegreesList);
-			infoCurricularCourseEnromentWithoutRules.setInfoStudent(infoStudent);
+			request.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList));
 
-			session.setAttribute(SessionConstants.ENROLMENT_WITHOUT_RULES_INFO_KEY, infoCurricularCourseEnromentWithoutRules);
 			request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, this.generateCurricularYearList());
 			request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, this.generateCurricularSemesterList());
 
@@ -85,5 +88,20 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 		years.add("label.first.semester");
 		years.add("label.second.semester");
 		return years;
+	}
+
+	public List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList) {
+		ArrayList result = null;
+		if ( (infoExecutionDegreesList != null) && (!infoExecutionDegreesList.isEmpty()) ) {
+			result = new ArrayList();
+			result.add(new LabelValueBean("Escolha", ""));
+			Iterator iterator = infoExecutionDegreesList.iterator();
+			while(iterator.hasNext()) {
+				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+				Integer index = new Integer(infoExecutionDegreesList.indexOf(infoExecutionDegree));
+				result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
+			}
+		}
+		return result;	
 	}
 }

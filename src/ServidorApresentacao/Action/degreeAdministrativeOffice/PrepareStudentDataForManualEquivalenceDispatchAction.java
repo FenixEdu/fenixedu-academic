@@ -20,7 +20,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author David Santos
  */
 
-public class PrepareStudentDataForManualEquivalenceDispatchAction extends PrepareStudentDataAction {
+public class PrepareStudentDataForManualEquivalenceDispatchAction extends PrepareStudentDataDispatchAction {
 	
 	private final String[] forwards = { "startManualEquivalence", "error" };
 

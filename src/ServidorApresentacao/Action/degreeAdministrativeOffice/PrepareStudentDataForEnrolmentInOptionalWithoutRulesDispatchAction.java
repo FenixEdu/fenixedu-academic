@@ -11,7 +11,7 @@ import org.apache.struts.action.ActionMapping;
  * @author David Santos
  */
 
-public class PrepareStudentDataForEnrolmentInOptionalWithoutRulesDispatchAction extends PrepareStudentDataAction {
+public class PrepareStudentDataForEnrolmentInOptionalWithoutRulesDispatchAction extends PrepareStudentDataDispatchAction {
 	
 	private final String[] forwards = { "startOptionalCurricularCourseEnrolmentWithoutRules", "error" };
 

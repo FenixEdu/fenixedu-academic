@@ -5,21 +5,11 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.EnrolmentState" %>
 
 <bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" scope="session"/>
-<bean:define id="studentNumber" name="<%= SessionConstants.ENROLMENT_STUDENT_NUMBER_KEY %>" scope="session"/>
-<bean:define id="degreeName" name="<%= SessionConstants.ENROLMENT_DEGREE_NAME_KEY %>" scope="session"/>
-<bean:define id="semester" name="<%= SessionConstants.ENROLMENT_SEMESTER_KEY %>" scope="session"/>
-<bean:define id="year" name="<%= SessionConstants.ENROLMENT_YEAR_KEY %>" scope="session"/>
-<bean:define id="sizeAutomaticalyEnroled" name="<%= SessionConstants.ENROLMENT_CAN_BE_REMOVED_KEY %>" scope="session"/>
-
+<bean:define id="studentNumber" name="infoEnrolmentContext" property="infoStudent.number"/>
+<bean:define id="degreeName" name="infoEnrolmentContext" property="chosenOptionalInfoDegree.nome"/>
 <bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled"/>
 <bean:size id="sizeAprovedAndEnroled" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent"/>
 
-<logic:equal name="sizeToBeEnroled" value="0">
-	<b><bean:message key="message.no.curricular.course.for.enrolment" arg0="<%= studentNumber.toString() %>" arg1="<%= degreeName.toString() %>" arg2="<%= semester.toString() %>" arg3="<%= year.toString() %>"/></b>
-	<br/>
-	<br/>
-	<hr/>
-</logic:equal>
 <logic:notEqual name="sizeAprovedAndEnroled" value="0">
 	<br/>
 	<b><bean:message key="message.curricular.courses.from.this.degree" arg0="<%= degreeName.toString() %>" arg1="<%= studentNumber.toString() %>"/></b>
@@ -44,60 +34,40 @@
 					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
 				</td>
 				<td align="center">
-					<bean:define id="link">
-						/curricularCourseEnrolmentWithoutRulesManager.do?method=unEnroll&enrolmentToRemoveIndex=<bean:write name="index"/>
-					</bean:define>
-
 					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
 						<bean:message key="message.enrolment.state.aproved"/>
 					</logic:equal>
 					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.ENROLED.toString() %>">
-						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page="<%= pageContext.findAttribute("link").toString() %>"><bean:message key="link.student.unenrolment"/></html:link>
+						<bean:message key="message.enrolment.state.enroled"/>
 					</logic:equal>
 					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.TEMPORARILY_ENROLED.toString() %>">
-						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page="<%= pageContext.findAttribute("link").toString() %>"><bean:message key="link.student.unenrolment"/></html:link>
+						<bean:message key="message.enrolment.state.enroled"/>
 					</logic:equal>
-
-<%--
-					<logic:equal name="infoEnrolment" property="enrolmentState.value" value="1">
-						<bean:message key="message.enrolment.state.aproved"/>
-					</logic:equal>
-					<logic:equal name="infoEnrolment" property="enrolmentState.value" value="3">
-						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page="<%= pageContext.findAttribute("link").toString() %>"><bean:message key="link.student.unenrolment"/></html:link>
-					</logic:equal>
-					<logic:equal name="infoEnrolment" property="enrolmentState.value" value="4">
-						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page="<%= pageContext.findAttribute("link").toString() %>"><bean:message key="link.student.unenrolment"/></html:link>
-					</logic:equal>
---%>
-
 				</td>
 			</tr>
 		</logic:iterate>
 	</table>
+	<logic:equal name="sizeToBeEnroled" value="0">
+		<br/>
+		<br/>
+		<b><bean:message key="message.no.curricular.course.for.enrolment" arg0="<%= studentNumber.toString() %>" arg1="<%= degreeName.toString() %>"/></b>
+	</logic:equal>
 </logic:notEqual>
-
-<logic:equal name="sizeToBeEnroled" value="0">
-	<logic:notEqual name="sizeAutomaticalyEnroled" value="0">
-		<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
-			<html:hidden property="method" value="verifyEnrolment"/>
-			<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/></html:submit>
-			<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
-		</html:form>
-	</logic:notEqual>
-</logic:equal>
-
 <logic:notEqual name="sizeToBeEnroled" value="0">
-	<br/>
-	<hr/>
-	<br/>
 	<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
 		<html:hidden property="method" value="verifyEnrolment"/>
+		<br/>
+		<hr>
+		<br/>
 		<b><bean:message key="label.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b>
 		<br/>
+		<bean:message key="label.enrolment.note"/>
 		<br/>
-		<table border="1" cellpadding="2" cellspacing="0">
+		<br/>
+		<table border="0" cellpadding="2" cellspacing="0">
 			<tr>
-				<td colspan="2" align="center"><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
+				<td>&nbsp;</td>
+				<td align="left"><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
 				<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 				<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
 			</tr>

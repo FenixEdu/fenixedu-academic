@@ -69,8 +69,9 @@ public class GeneralCurricularCourseEnrolmentManagerDispatchAction extends Trans
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
-		if (request.getParameter("curricularCourses") == null)
+		if (enrolmentForm.get("curricularCourses") == null) {
 			enrolmentForm.set("curricularCourses", new Integer[infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().size()]);
+		}
 
 		Integer[] curricularCourses = (Integer[]) enrolmentForm.get("curricularCourses");
 
@@ -83,6 +84,10 @@ public class GeneralCurricularCourseEnrolmentManagerDispatchAction extends Trans
 		List optionalCurricularCoursesChoosen = new ArrayList();
 		if (curricularCourses != null) {
 			for (int i = 0; i < curricularCourses.length; i++) {
+				// TODO see if is struts-bug : When parameter is null it won't reset array position.
+				if (request.getParameter("curricularCourses["+ i + "]") == null) {
+					curricularCourses[i] = null;
+				}
 				Integer curricularCourseIndex = curricularCourses[i];
 				if (curricularCourseIndex != null) {
 					InfoCurricularCourseScope curricularCourseScope = (InfoCurricularCourseScope) curricularCourseScopesToBeEnrolled.get(curricularCourseIndex.intValue());

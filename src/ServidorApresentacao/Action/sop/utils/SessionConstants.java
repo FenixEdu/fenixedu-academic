@@ -23,21 +23,12 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	public static final String ENROLMENT_TO_REMOVE_LIST_KEY = "erolmentsToRemoveList";
 	public static final String ACTUAL_ENROLMENT_KEY = "actualEnrolment";
-	public static final String ENROLMENT_WITHOUT_RULES_INFO_KEY = "enrolmentWithoutRulesInfo";
 	public static final String ENROLMENT_YEAR_LIST_KEY = "curricularYears";
 	public static final String ENROLMENT_SEMESTER_LIST_KEY = "curricularSemesters";
 
 	public static final String EQUIVALENCE_CONTEXT_KEY = "equivalenceContext";
 	public static final String INFO_ENROLMENT_KEY = "infoEnrolment";
 	public static final String INFO_ENROLMENT_EVALUATION_KEY = "infoEnrolmentEvaluation";
-
-//	A SEREM REMOVIDAS:
-	public static final String ENROLMENT_CAN_BE_REMOVED_KEY = "canRemoveEnrolments";
-	public static final String ENROLMENT_ACTOR_KEY = "actor";
-	public static final String ENROLMENT_DEGREE_NAME_KEY = "degreeName";
-	public static final String ENROLMENT_SEMESTER_KEY = "semester";
-	public static final String ENROLMENT_STUDENT_NUMBER_KEY = "studentNumber";
-	public static final String ENROLMENT_YEAR_KEY = "year";
 
 	//
 	// Constants for Student Enrolment...

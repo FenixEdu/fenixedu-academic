@@ -20,7 +20,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author David Santos
  */
 
-public class PrepareStudentDataAction extends DispatchAction {
+public class PrepareStudentDataDispatchAction extends DispatchAction {
 
 	protected boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request) throws Exception {
 
@@ -31,8 +31,17 @@ public class PrepareStudentDataAction extends DispatchAction {
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
-		Integer studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
+		Integer degreeType = null;
+		Integer studentNumber = null;
+		try {
+			degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
+			studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
+		} catch (NumberFormatException e) {
+			degreeType = (Integer) request.getAttribute("degreeType");
+			studentNumber = (Integer) request.getAttribute("studentNumber");
+			getStudentByNumberAndDegreeTypeForm.set("degreeType", degreeType.toString());
+			getStudentByNumberAndDegreeTypeForm.set("studentNumber", studentNumber.toString());
+		}
 
 		InfoStudent infoStudent = null;
 
