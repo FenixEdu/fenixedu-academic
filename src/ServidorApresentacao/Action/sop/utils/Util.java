@@ -33,43 +33,40 @@ public class Util {
 
 		edificios.add(
 			new LabelValueBean("Pavilhão Central", "Pavilhão Central"));
+
 		edificios.add(new LabelValueBean("Pavilhão Civil", "Pavilhão Civil"));
-		edificios.add(
-			new LabelValueBean("Pavilhão Mecânica II", "Pavilhão Mecânica II"));
-		edificios.add(new LabelValueBean("Pavilhão Minas", "Pavilhão Minas"));
-		edificios.add(
-			new LabelValueBean(
-				"Pavilhão Novas Licenciaturas",
-				"Pavilhão Novas Licenciaturas"));
-		edificios.add(new LabelValueBean("Pavilhão Pós-Graduação", "Pavilhão Pós-Graduação"));
-		edificios.add(
-			new LabelValueBean(
-				"Pavilhão de Electricidade",
-				"Pavilhão de Electricidade"));
-		edificios.add(
-			new LabelValueBean(
-				"Pavilhão de Mecânica I",
-				"Pavilhão de Mecânica I"));
-		edificios.add(
-			new LabelValueBean("Pavilhão Mecânica II", "Pavilhão Mecânica II"));
 
 		edificios.add(
 			new LabelValueBean(
-				"Pavilhão de Mecânica III",
-				"Pavilhão de Mecânica III"));
+				"Pavilhão Electricidade",
+				"Pavilhão Electricidade"));
 
 		edificios.add(
 			new LabelValueBean(
 				"Pavilhão Pós-Graduação",
 				"Pavilhão Pós-Graduação"));
-				
+
+		edificios.add(
+			new LabelValueBean("Pavilhão Química", "Pavilhão Química"));
+
+		edificios.add(
+			new LabelValueBean("Pavilhão Mecânica I", "Pavilhão Mecânica I"));
+		
+		edificios.add(
+			new LabelValueBean("Pavilhão Mecânica II", "Pavilhão Mecânica II"));
+
 		edificios.add(
 			new LabelValueBean(
-				"Pavilhão de Química",
-				"Pavilhão de Química"));
+				"Pavilhão Mecânica III",
+				"Pavilhão Mecânica III"));
 
-		edificios.add(new LabelValueBean("Torre Norte", "Torre Norte"));
-		edificios.add(new LabelValueBean("Torre Sul", "Torre Sul"));
+		edificios.add(new LabelValueBean("Pavilhão Minas", "Pavilhão Minas"));
+		
+		edificios.add(
+			new LabelValueBean(
+				"Pavilhão Novas Licenciaturas",
+				"Pavilhão Novas Licenciaturas"));
+
 		edificios.add(
 			new LabelValueBean(
 				"TagusPark - Bloco A - Poente",
@@ -78,14 +75,19 @@ public class Util {
 			new LabelValueBean(
 				"TagusPark - Bloco A - Nascente",
 				"TagusPark - Bloco A - Nascente"));
-		edificios.add(
-			new LabelValueBean(
-				"TagusPark - Bloco B - Poente",
-				"TagusPark - Bloco B - Poente"));
+
 		edificios.add(
 			new LabelValueBean(
 				"TagusPark - Bloco B - Nascente",
 				"TagusPark - Bloco B - Nascente"));
+
+		edificios.add(
+			new LabelValueBean(
+				"TagusPark - Bloco B - Poente",
+				"TagusPark - Bloco B - Poente"));
+
+		edificios.add(new LabelValueBean("Torre Norte", "Torre Norte"));
+		edificios.add(new LabelValueBean("Torre Sul", "Torre Sul"));
 
 		return edificios;
 	}
@@ -238,18 +240,25 @@ public class Util {
 	public static ArrayList getMonthsOfYear() {
 		ArrayList monthsOfYearList = new ArrayList();
 
-		monthsOfYearList.add(new LabelValueBean("Janeiro", "" + Calendar.JANUARY));
-		monthsOfYearList.add(new LabelValueBean("Fevereiro", "" + Calendar.FEBRUARY));
+		monthsOfYearList.add(
+			new LabelValueBean("Janeiro", "" + Calendar.JANUARY));
+		monthsOfYearList.add(
+			new LabelValueBean("Fevereiro", "" + Calendar.FEBRUARY));
 		monthsOfYearList.add(new LabelValueBean("Março", "" + Calendar.MARCH));
 		monthsOfYearList.add(new LabelValueBean("Abril", "" + Calendar.APRIL));
 		monthsOfYearList.add(new LabelValueBean("Maio", "" + Calendar.MAY));
 		monthsOfYearList.add(new LabelValueBean("Junho", "" + Calendar.JUNE));
 		monthsOfYearList.add(new LabelValueBean("Julho", "" + Calendar.JULY));
-		monthsOfYearList.add(new LabelValueBean("Agosto", "" + Calendar.AUGUST));
-		monthsOfYearList.add(new LabelValueBean("Setembro", "" + Calendar.SEPTEMBER));
-		monthsOfYearList.add(new LabelValueBean("Outubro", "" + Calendar.OCTOBER));
-		monthsOfYearList.add(new LabelValueBean("Novembro", "" + Calendar.NOVEMBER));
-		monthsOfYearList.add(new LabelValueBean("Dezembro", "" + Calendar.DECEMBER));
+		monthsOfYearList.add(
+			new LabelValueBean("Agosto", "" + Calendar.AUGUST));
+		monthsOfYearList.add(
+			new LabelValueBean("Setembro", "" + Calendar.SEPTEMBER));
+		monthsOfYearList.add(
+			new LabelValueBean("Outubro", "" + Calendar.OCTOBER));
+		monthsOfYearList.add(
+			new LabelValueBean("Novembro", "" + Calendar.NOVEMBER));
+		monthsOfYearList.add(
+			new LabelValueBean("Dezembro", "" + Calendar.DECEMBER));
 
 		return monthsOfYearList;
 	}
@@ -261,12 +270,13 @@ public class Util {
 	public static ArrayList getExamSeasons() {
 		ArrayList examSeasonsList = new ArrayList();
 
-		examSeasonsList.add(new LabelValueBean(Season.SEASON1_STRING, "" + Season.SEASON1));
-		examSeasonsList.add(new LabelValueBean(Season.SEASON2_STRING, "" + Season.SEASON2));
+		examSeasonsList.add(
+			new LabelValueBean(Season.SEASON1_STRING, "" + Season.SEASON1));
+		examSeasonsList.add(
+			new LabelValueBean(Season.SEASON2_STRING, "" + Season.SEASON2));
 
 		return examSeasonsList;
 	}
-
 
 	/**
 	 * Method getYears.
@@ -284,7 +294,6 @@ public class Util {
 		return yearsList;
 	}
 
-
 	/**
 	 * Method getHoras.
 	 * @return ArrayList
@@ -296,10 +305,5 @@ public class Util {
 		hoursList.add("17");
 		return hoursList;
 	}
-		
-		
-	
-
-
 
 }
