@@ -114,6 +114,9 @@
         <form-property name="generalObjectivesEn" type="java.lang.String"/>
         <form-property name="operacionalObjectivesEn" type="java.lang.String"/>
         <form-property name="programEn" type="java.lang.String"/>        
+        <form-property name="infoExecutionDegreeCode" type="java.lang.String"/>        
+        <form-property name="infoCurricularCourseCode" type="java.lang.String"/>        
+        <form-property name="infoCurriculumCode" type="java.lang.String"/>        
       </form-bean>
 			
     </form-beans>
@@ -406,6 +409,10 @@
 				scope="request"
 				validate="true"
 				input="/chooseDegree.do">
+		   <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+        key="ServidorApresentacao.Action.exceptions.FenixActionException"
+        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+
 			<forward name="showActiveCurricularCourses" path="activeDegreeCurricularPlan" />
 			<forward name="showCurricularCoursesHistory" path="degreeCurricularPlanHistory" />
 			<forward name="degreeCurricularPlanManagement" path="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses" />

@@ -1505,9 +1505,12 @@ public abstract class Cloner
         InfoCurricularCourse infoCurricularCourse =
             Cloner.copyCurricularCourse2InfoCurricularCourse(curriculum.getCurricularCourse());
 
+        InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(curriculum.getPersonWhoAltered());
+        
         copyObjectProperties(infoCurriculum, curriculum);
         infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
-
+        infoCurriculum.setInfoPersonWhoAltered(infoPerson);
+        
         return infoCurriculum;
     }
 
@@ -1522,8 +1525,11 @@ public abstract class Cloner
         ICurricularCourse curricularCourse =
             Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurriculum.getInfoCurricularCourse());
 
+        IPessoa person = Cloner.copyInfoPerson2IPerson(infoCurriculum.getInfoPersonWhoAltered());
+        
         copyObjectProperties(curriculum, infoCurriculum);
         curriculum.setCurricularCourse(curricularCourse);
+        curriculum.setPersonWhoAltered(person);
 
         return curriculum;
     }

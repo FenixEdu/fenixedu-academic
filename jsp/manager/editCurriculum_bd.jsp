@@ -43,13 +43,13 @@
 		<tr>
 			<html:textarea property="program" rows="3" cols="60"/>
 		</tr>
-		<br>
+<%--		<br>
 		<tr>
 			<b><bean:message key="message.evaluationElements"/></b>
 		</tr>
 		<tr>
 			<html:textarea property="evaluationElements" rows="3" cols="60"/>
-		</tr>	
+		</tr>--%>	
 	</table>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.save"/>

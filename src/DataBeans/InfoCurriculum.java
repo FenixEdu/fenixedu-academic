@@ -23,6 +23,8 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent{
 	
 	protected InfoCurricularCourse infoCurricularCourse;
 	
+	protected InfoPerson infoPersonWhoAltered;
+	
 	public InfoCurriculum() {
 
 	}
@@ -179,6 +181,22 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent{
 
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
+	}
+
+	/**
+	 * @return Returns the infoPersonWhoAltered.
+	 */
+	public InfoPerson getInfoPersonWhoAltered()
+	{
+		return infoPersonWhoAltered;
+	}
+
+	/**
+	 * @param infoPersonWhoAltered The infoPersonWhoAltered to set.
+	 */
+	public void setInfoPersonWhoAltered(InfoPerson infoPersonWhoAltered)
+	{
+		this.infoPersonWhoAltered = infoPersonWhoAltered;
 	}
 
 }

@@ -6,6 +6,8 @@
 
 package Dominio;
 
+import java.util.Date;
+
 /**
  *
  * @author  EP 15 - fjgc
@@ -19,6 +21,8 @@ public interface ICurriculum extends IDomainObject {
 	public String getOperacionalObjectivesEn();
 	public String getProgramEn();
 	public ICurricularCourse getCurricularCourse();
+	public IPessoa getPersonWhoAltered();
+	public Date getLastModificationDate();
 
 
 	public void setGeneralObjectives(String generalObjectives);
@@ -28,5 +32,7 @@ public interface ICurriculum extends IDomainObject {
 	public void setOperacionalObjectivesEn(String operacionalObjectivesEn);
 	public void setProgramEn(String programEn);
 	public void setCurricularCourse(ICurricularCourse CurricularCourse);
+	public void setPersonWhoAltered(IPessoa personWhoAltered);
+	public void setLastModificationDate(Date lastModificationDate);
 	
 }

@@ -24,6 +24,9 @@ public class Curriculum extends DomainObject implements ICurriculum {
 	
 	protected ICurricularCourse curricularCourse;
 	private Integer keyCurricularCourse;
+	
+	protected IPessoa personWhoAltered;
+	private Integer keyPersonWhoAltered;
 	/**
 	 * @return
 	 */
@@ -169,4 +172,36 @@ public class Curriculum extends DomainObject implements ICurriculum {
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
 	}
+	/**
+	 * @return Returns the keyPersonWhoAltered.
+	 */
+	public Integer getKeyPersonWhoAltered()
+	{
+		return keyPersonWhoAltered;
+	}
+
+	/**
+	 * @param keyPersonWhoAltered The keyPersonWhoAltered to set.
+	 */
+	public void setKeyPersonWhoAltered(Integer keyPersonWhoAltered)
+	{
+		this.keyPersonWhoAltered = keyPersonWhoAltered;
+	}
+
+	/**
+	 * @return Returns the personWhoAltered.
+	 */
+	public IPessoa getPersonWhoAltered()
+	{
+		return personWhoAltered;
+	}
+
+	/**
+	 * @param personWhoAltered The personWhoAltered to set.
+	 */
+	public void setPersonWhoAltered(IPessoa personWhoAltered)
+	{
+		this.personWhoAltered = personWhoAltered;
+	}
+
 }
