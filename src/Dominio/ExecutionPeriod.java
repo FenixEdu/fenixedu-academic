@@ -100,5 +100,19 @@ public class ExecutionPeriod implements IExecutionPeriod {
 		result += "]";
 		return result;
 	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof IExecutionPeriod){
+			IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
+			return getName().equals(executionPeriod.getName()) && getExecutionYear().equals(executionPeriod.getExecutionYear());
+		
+		}
+		return super.equals(obj);
+	}
 
 }
