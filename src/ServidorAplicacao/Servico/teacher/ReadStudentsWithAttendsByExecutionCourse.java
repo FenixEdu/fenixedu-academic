@@ -59,10 +59,11 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AttendacyStateSelectionType;
 import Util.EnrolmentEvaluationType;
+import Util.StudentCurricularPlanState;
 import Util.TipoAula;
 
 /**
- * @author André Fernandes / João Brito
+ * @author Andrï¿½ Fernandes / Joï¿½o Brito
  */
 public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
@@ -82,6 +83,18 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 lastCP = cp;
         }
         return lastCP;
+    }
+    
+    
+    private IStudentCurricularPlan GetActiveCurricularPlan(List cps){
+        Iterator i = cps.iterator();
+        
+        while (i.hasNext()){
+            IStudentCurricularPlan cp = (IStudentCurricularPlan)i.next(); 
+            if(cp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ))
+                return cp;
+        }
+        return GetLastCurricularPlan(cps);
     }
     
 
@@ -354,7 +367,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
     IStudentCurricularPlan getStudentCurricularPlanFromAttends(IFrequenta attendance)
     {
         if (attendance.getEnrolment() == null)
-            return GetLastCurricularPlan(attendance.getAluno().getStudentCurricularPlans());
+            return GetActiveCurricularPlan(attendance.getAluno().getStudentCurricularPlans());
         else
             return attendance.getEnrolment().getStudentCurricularPlan();
     }
