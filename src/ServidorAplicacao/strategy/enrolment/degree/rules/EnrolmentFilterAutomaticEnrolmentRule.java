@@ -67,10 +67,9 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 				
 		// ---------------------------------------------------------------------------- //
 
-final Integer semester = enrolmentContext.getSemester();
 		//	Alternative curricular course filter
-		List alternativeSemesterScopes =
-			(List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
+		final Integer semester = enrolmentContext.getSemester();
+		List alternativeSemesterScopes = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
 			public boolean evaluate(Object obj) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
 				return( (curricularCourseScope.getScopeType().equals(new ScopeType(ScopeType.MANDATORY))) &&
@@ -78,20 +77,16 @@ final Integer semester = enrolmentContext.getSemester();
 			}
 		});
 
-//		if (enrolmentContext.getSemester().intValue() == 1) {
-//			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(alternativeSemesterScopes);
-//		} else {
-			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(alternativeSemesterScopes);
+		enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().removeAll(alternativeSemesterScopes);
 
-			Iterator iteratorAlternative = alternativeSemesterScopes.iterator();
-			while (iteratorAlternative.hasNext()) {
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorAlternative.next();
-				if ((curricularCourseScope.getBranch().equals(enrolmentContext.getStudentActiveCurricularPlan().getBranch()))
-					|| (curricularCourseScope.getBranch().getName().equals(""))) {
-					enrolmentContext.getCurricularCoursesScopesEnroledByStudent().add(curricularCourseScope);
-				}
+		Iterator iteratorAlternative = alternativeSemesterScopes.iterator();
+		while (iteratorAlternative.hasNext()) {
+			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorAlternative.next();
+			if ((curricularCourseScope.getBranch().equals(enrolmentContext.getStudentActiveCurricularPlan().getBranch()))
+				|| (curricularCourseScope.getBranch().getName().equals(""))) {
+				enrolmentContext.getCurricularCoursesScopesEnroledByStudent().add(curricularCourseScope);
 			}
-//		}
+		}
 
 		return enrolmentContext;
 	}
