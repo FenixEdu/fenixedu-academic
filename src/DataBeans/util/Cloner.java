@@ -96,7 +96,6 @@ import Dominio.Student;
 import Dominio.Teacher;
 import Dominio.Turma;
 import Dominio.Turno;
-import Util.TipoCurso;
 
 /**
  * @author jpvl
