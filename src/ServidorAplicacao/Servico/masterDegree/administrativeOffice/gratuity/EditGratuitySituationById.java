@@ -4,19 +4,25 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import java.util.Calendar;
+
 import DataBeans.InfoGratuitySituation;
 import DataBeans.util.Cloner;
 import Dominio.GratuitySituation;
 import Dominio.GratuityValues;
+import Dominio.IEmployee;
 import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
+import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentGratuitySituation;
 import ServidorPersistente.IPersistentGratuityValues;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -76,6 +82,7 @@ public class EditGratuitySituationById implements IServico
 			{
 				gratuitySituation = new GratuitySituation();
 
+				//gratuity values
 				IGratuityValues gratuityValues = new GratuityValues();
 				if (infoGratuitySituation.getInfoGratuityValues() != null)
 				{
@@ -88,6 +95,7 @@ public class EditGratuitySituationById implements IServico
 					gratuitySituation.setGratuityValues(gratuityValues);
 				}
 
+				//student curricular plan
 				IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 				studentCurricularPlan.setIdInternal(
 					infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal());
@@ -101,14 +109,31 @@ public class EditGratuitySituationById implements IServico
 
 				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 			}
+
+			//employee who made register
+			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+			IPessoa person =
+				persistentPerson.lerPessoaPorUsername(
+					infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
+			if (person != null)
+			{
+				IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+				IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+				gratuitySituation.setEmployee(employee);
+			}
+
+			Calendar now = Calendar.getInstance();
+			gratuitySituation.setWhen(now.getTime());
+			
 			gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
 			gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
 			gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
 
 			//gratuitySituation.setPayedValue(infoGratuitySituation.getPayedValue());
 			//gratuitySituation.setRemainingValue(infoGratuitySituation.getRemainingValue());
-			
-			infoGratuitySituation = Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
+
+			infoGratuitySituation =
+				Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
 		}
 		catch (ExcepcaoPersistencia e)
 		{

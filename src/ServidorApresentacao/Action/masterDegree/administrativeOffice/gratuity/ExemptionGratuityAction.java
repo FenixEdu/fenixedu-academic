@@ -18,8 +18,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoEmployee;
 import DataBeans.InfoGratuitySituation;
 import DataBeans.InfoGratuityValues;
+import DataBeans.InfoPerson;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -355,6 +357,7 @@ public class ExemptionGratuityAction extends DispatchAction
 		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
 		infoStudentCurricularPlan.setIdInternal(Integer.valueOf(studentCurricularPlanID));
 		infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+		
 		//Gratuity Values
 		if (gratuityValuesID != null)
 		{
@@ -362,6 +365,16 @@ public class ExemptionGratuityAction extends DispatchAction
 			infoGratuityValues.setIdInternal(Integer.valueOf(gratuityValuesID));
 			infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 		}
+		
+		//employee who made register
+		InfoPerson infoPerson = new InfoPerson();
+		infoPerson.setUsername(userView.getUtilizador());
+		
+		InfoEmployee infoEmployee = new InfoEmployee();
+		infoEmployee.setPerson(infoPerson);
+				
+		infoGratuitySituation.setInfoEmployee(infoEmployee);
+		
 		return infoGratuitySituation;
 	}
 
