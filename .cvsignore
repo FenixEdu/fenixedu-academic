@@ -22,4 +22,6 @@ build.properties.david
 build2.xml
 buildDavid.xml
 .uml
-javaDoc
+javaDocSource
+javaDocTests
+

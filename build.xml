@@ -12,7 +12,8 @@
     <property name="src.tests" location="src_tests" /> 
     <property name="src.jsp" location="jsp" />
     <property name="metadata" location="metadata" />
-    <property name="javadoc.home" location="javaDoc" />
+    <property name="javadoc.source.home" location="javaDocSource" />
+    <property name="javadoc.test.home" location="javaDocTests" />
     
 	<property name="build.home" location="build"/>
 
@@ -717,8 +718,8 @@
 	</target>
 	
 	
-   <target name="Generate JavaDoc">
-        <javadoc destdir="${javadoc.home}" 
+   <target name="Generate JavaDoc - Source Code">
+        <javadoc destdir="${javadoc.source.home}" 
         		 access="public"
         		 use="true"
         		 author="true"
@@ -738,5 +739,31 @@
            
          </javadoc>
     </target>
+
+
+   <target name="Generate JavaDoc - Test Code"
+		   depends="compile-proj">
+        <javadoc destdir="${javadoc.test.home}" 
+        		 access="public"
+        		 use="true"
+        		 author="true"
+	             version="true"
+	             windowtitle="Fenix Class OverView">
+	             
+            <packageset dir="${src.tests}" defaultexcludes="yes">
+              <include name="**" />
+            </packageset>
+
+		    <classpath>
+              <pathelement path="${webapp.classes}"/>
+
+		      <pathelement path="${lib}"/>
+		      <fileset dir="lib">
+		        <include name="**/*.jar"/>
+		      </fileset>
+		    </classpath>
+         </javadoc>
+    </target>
+
 	
 </project>
