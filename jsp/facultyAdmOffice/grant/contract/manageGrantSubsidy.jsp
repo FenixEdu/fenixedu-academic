@@ -26,7 +26,7 @@
 <%-- LISTA DE SUBSIDIOS ACTIVOS --%>
 
 <logic:present name="infoGrantActiveSubsidyList">
-	<b><bean:message key="label.grant.subsidy.active.list"/></b><br/>
+	<b><bean:message key="label.grant.subsidy.state.actual"/></b><br/>
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with subsidy description rows --%>
     <tr>

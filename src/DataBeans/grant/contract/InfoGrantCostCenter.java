@@ -20,6 +20,7 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
     public void copyFromDomain(IGrantCostCenter grantCostCenter)
     {
     	if(grantCostCenter != null){
+    		setIdInternal(grantCostCenter.getIdInternal()); //FIXME
     		setNumber(grantCostCenter.getNumber());
     		setDesignation(grantCostCenter.getDesignation());
     		setOjbConcreteClass(grantCostCenter.getOjbConcreteClass());

@@ -7,8 +7,10 @@ package ServidorAplicacao.Servico.grant.owner;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.owner.InfoGrantOwner;
+import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
 import DataBeans.util.Cloner;
 import Dominio.IPessoa;
 import Dominio.grant.owner.IGrantOwner;
@@ -54,7 +56,7 @@ public class SearchGrantOwner implements IService
 				grantOwner = persistentGrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
 				if (grantOwner != null)
 				{
-					InfoGrantOwner newInfoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
+					InfoGrantOwner newInfoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
 					infoGrantOwnerList.add(newInfoGrantOwner);
 					return infoGrantOwnerList;
 				}
@@ -93,7 +95,7 @@ public class SearchGrantOwner implements IService
 					grantOwner = persistentGrantOwner.readGrantOwnerByPerson(newPerson.getIdInternal());
 					if (grantOwner != null)
 						//The person is a GrantOwner
-						infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
+						infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
 					else
 					{
 						//The person is NOT a GrantOwner
@@ -106,7 +108,7 @@ public class SearchGrantOwner implements IService
 			{
 				for(int i = 0; i < grantOwnerList.size(); i++)
 				{
-					InfoGrantOwner infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner((IGrantOwner)grantOwnerList.get(i));
+					InfoGrantOwner infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain((IGrantOwner)grantOwnerList.get(i));
 					infoGrantOwnerList.add(infoGrantOwner);
 				}
 			}

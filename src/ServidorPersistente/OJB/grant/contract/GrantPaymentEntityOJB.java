@@ -19,32 +19,29 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  * @author pica
  * @author barbosa
  */
-public class GrantPaymentEntityOJB extends ObjectFenixOJB implements
-        IPersistentGrantPaymentEntity {
+public class GrantPaymentEntityOJB extends ObjectFenixOJB implements IPersistentGrantPaymentEntity {
 
-    public IGrantPaymentEntity readByNumberAndClass(String entityNumber,
-            String entityClass) throws ExcepcaoPersistencia {
-        IGrantPaymentEntity paymentEntity = null;
+    public IGrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass)
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("number", entityNumber);
         criteria.addEqualTo("ojbConcreteClass", entityClass);
-        paymentEntity = (IGrantPaymentEntity) queryObject(
+        IGrantPaymentEntity paymentEntity = paymentEntity = (IGrantPaymentEntity) queryObject(
                 GrantPaymentEntity.class, criteria);
         return paymentEntity;
     }
 
-    public List readAllPaymentEntitiesByClassName(String className)
-            throws ExcepcaoPersistencia {
+    public List readAllPaymentEntitiesByClassName(String className) throws ExcepcaoPersistencia {
         List result = null;
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("ojbConcreteClass", className);
 
-        if (className.equals("Dominio.grant.contract.GrantCostCenter"))
-                result = queryList(GrantCostCenter.class, criteria);
-        if (className.equals("Dominio.grant.contract.GrantProject"))
-                result = queryList(GrantProject.class, criteria);
+        if (className.equals(GrantPaymentEntity.getGrantCostCenterOjbConcreteClass()))
+            result = queryList(GrantCostCenter.class, criteria);
+        if (className.equals(GrantPaymentEntity.getGrantProjectOjbConcreteClass()))
+            result = queryList(GrantProject.class, criteria);
 
         return result;
     }

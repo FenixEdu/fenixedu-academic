@@ -5,6 +5,7 @@
 package DataBeans.grant.contract;
 
 import DataBeans.InfoTeacherWithPerson;
+import DataBeans.util.Cloner;
 import Dominio.grant.contract.IGrantPart;
 
 
@@ -18,7 +19,7 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
 	{
 		super.copyFromDomain(grantPart);
 		if(grantPart != null){
-		    setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantPart.getGrantPaymentEntity()));
+		    setInfoGrantPaymentEntity(Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPart.getGrantPaymentEntity()));
 			setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantPart.getResponsibleTeacher()));
 			setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantPart.getGrantSubsidy()));
 		}

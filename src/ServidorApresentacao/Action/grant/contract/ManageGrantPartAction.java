@@ -24,63 +24,52 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Barbosa
  * @author Pica
  */
-public class ManageGrantPartAction extends FenixDispatchAction
-{
-	/*
-	 * Fills the form with the correspondent data
-	 */
-	public ActionForward prepareManageGrantPart(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		try
-		{
-			Integer idSubsidy = null;
-			try
-			{
-				if (request.getAttribute("idSubsidy") != null)
-				{
-					idSubsidy = (Integer) request.getAttribute("idSubsidy");
-				}
-				else
-				{
-					idSubsidy = new Integer(request.getParameter("idSubsidy"));
-				}
-			}
-			catch (Exception e)
-			{
-				request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
-				request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-				return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-part",null);
-			}
+public class ManageGrantPartAction extends FenixDispatchAction {
+    /*
+     * Fills the form with the correspondent data
+     */
+    public ActionForward prepareManageGrantPart(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
 
-			//Read Subsidy
-			Object[] args = { idSubsidy };
-			IUserView userView = SessionUtils.getUserView(request);
-			InfoGrantSubsidy infoGrantSubsidy =
-				(InfoGrantSubsidy) ServiceUtils.executeService(userView, "ReadGrantSubsidy", args);
+            Integer idSubsidy = null;
+            try {
+                if (request.getAttribute("idSubsidy") != null) {
+                    idSubsidy = (Integer) request.getAttribute("idSubsidy");
+                } else {
+                    idSubsidy = new Integer(request.getParameter("idSubsidy"));
+                }
+            } catch (Exception e) {
+                request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
+                request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
+                return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-part",
+                        null);
+            }
 
-			request.setAttribute("idSubsidy", idSubsidy);
-			request.setAttribute("idContract", infoGrantSubsidy.getInfoGrantContract().getIdInternal());
-			request.setAttribute("idGrantOwner",infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().getIdInternal());
+            //Read Subsidy
+            Object[] args = { idSubsidy };
+            IUserView userView = SessionUtils.getUserView(request);
+            InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ServiceUtils.executeService(userView,
+                    "ReadGrantSubsidy", args);
 
-			List infoGrantPartList =
-				(List) ServiceUtils.executeService(userView, "ReadAllGrantPartsByGrantSubsidy", args);
+            request.setAttribute("idSubsidy", idSubsidy);
+            request.setAttribute("idContract", infoGrantSubsidy.getInfoGrantContract().getIdInternal());
+            request.setAttribute("idGrantOwner", infoGrantSubsidy.getInfoGrantContract()
+                    .getGrantOwnerInfo().getIdInternal());
 
-			if (infoGrantPartList != null && !infoGrantPartList.isEmpty())
-				request.setAttribute("infoGrantPartList", infoGrantPartList);
+            List infoGrantPartList = (List) ServiceUtils.executeService(userView,
+                    "ReadAllGrantPartsByGrantSubsidy", args);
 
-			//Presenting adittional information
-			request.setAttribute("subsidyValue", infoGrantSubsidy.getValue());
-			request.setAttribute("subsidyTotalCost", infoGrantSubsidy.getTotalCost());
-		}
-		catch (FenixServiceException e)
-		{
-			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-part", null);
-		}
-		return mapping.findForward("manage-grant-part");
-	}
+            if (infoGrantPartList != null && !infoGrantPartList.isEmpty())
+                request.setAttribute("infoGrantPartList", infoGrantPartList);
+
+            //Presenting adittional information
+            request.setAttribute("subsidyValue", infoGrantSubsidy.getValue());
+            request.setAttribute("subsidyTotalCost", infoGrantSubsidy.getTotalCost());
+            
+            return mapping.findForward("manage-grant-part");
+        } catch (FenixServiceException e) {
+            return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-part", null);
+        }
+    }
 }

@@ -70,14 +70,14 @@ public class EditGrantSubsidy extends EditDomainObjectService
 		/*
 		 * If this is a active subsidy, set all others to state 0 (Desactive)
 		 */
-		if (grantSubsidy.getState().equals(new Integer(1)))
+		if (grantSubsidy.getState().equals(InfoGrantSubsidy.getActiveStateValue()))
 		{
 			try
 			{
 				IPersistentGrantSubsidy persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
 				List activeSubsidy = persistentGrantSubsidy.readAllSubsidiesByGrantContractAndState(
-						grantSubsidy.getGrantContract().getIdInternal(), new Integer(1));
-				if (activeSubsidy != null && activeSubsidy.size() != 0)
+						grantSubsidy.getGrantContract().getIdInternal(), InfoGrantSubsidy.getActiveStateValue());
+				if (activeSubsidy != null && !activeSubsidy.isEmpty())
 				{
 					//Desactivate the Subsidy
 					for (int i = 0; i < activeSubsidy.size(); i++)
@@ -86,7 +86,7 @@ public class EditGrantSubsidy extends EditDomainObjectService
 						if (!grantSubsidyTemp.equals(grantSubsidy))
 						{
 							persistentGrantSubsidy.simpleLockWrite(grantSubsidyTemp);
-							grantSubsidyTemp.setState(new Integer(0));
+							grantSubsidyTemp.setState(InfoGrantSubsidy.getInactiveStateValue());
 						}
 					}
 				}

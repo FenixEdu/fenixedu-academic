@@ -18,34 +18,28 @@ import Util.TipoDocumentoIdentificacao;
  * @author Barbosa
  * @author Pica
  */
-public class SearchGrantOwnerAction extends SearchAction
-{
-	protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
-		throws Exception
-	{
-		DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
-		String name = (String) searchGrantOwnerForm.get("name");
-		String idNumber = (String) searchGrantOwnerForm.get("idNumber");
-		Integer idType = (Integer) searchGrantOwnerForm.get("idType");
-		
-		Boolean onlyGrantOwner = new Boolean(false);
-		if(searchGrantOwnerForm.get("justGrantOwner") != null)
-		{
-			request.setAttribute("justGrantOwner","yes");
-			onlyGrantOwner = new Boolean(true);
-		}
-		
-		Object[] args = { name, idNumber, idType, null, onlyGrantOwner };
-		return args;
-	}
+public class SearchGrantOwnerAction extends SearchAction {
+    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
+            throws Exception {
+        
+        DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
+        String name = (String) searchGrantOwnerForm.get("name");
+        String idNumber = (String) searchGrantOwnerForm.get("idNumber");
+        Integer idType = (Integer) searchGrantOwnerForm.get("idType");
 
-	protected void prepareFormConstants(
-		ActionMapping mapping,
-		HttpServletRequest request,
-		ActionForm form)
-		throws Exception
-	{
-		List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-		request.setAttribute("documentTypeList", documentTypeList);
-	}
+        Boolean onlyGrantOwner = new Boolean(false);
+        if (searchGrantOwnerForm.get("justGrantOwner") != null) {
+            request.setAttribute("justGrantOwner", "yes");
+            onlyGrantOwner = new Boolean(true);
+        }
+
+        Object[] args = { name, idNumber, idType, null, onlyGrantOwner };
+        return args;
+    }
+
+    protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
+            ActionForm form) throws Exception {
+        List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
+        request.setAttribute("documentTypeList", documentTypeList);
+    }
 }

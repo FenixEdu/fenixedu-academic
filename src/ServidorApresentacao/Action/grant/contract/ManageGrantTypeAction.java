@@ -23,31 +23,24 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Barbosa
  * @author Pica
  */
-public class ManageGrantTypeAction extends FenixDispatchAction
-{
+public class ManageGrantTypeAction extends FenixDispatchAction {
 
-	public ActionForward prepareManageGrantTypeForm(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		try
-		{
+	public ActionForward prepareManageGrantTypeForm(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		try {
 			Object[] args = {};
 			IUserView userView = SessionUtils.getUserView(request);
-			List infoGrantTypeList =
-				(List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
+			List infoGrantTypeList = (List) ServiceUtils.executeService(
+					userView, "ReadAllGrantTypes", args);
 
 			if (infoGrantTypeList != null && !infoGrantTypeList.isEmpty())
 				request.setAttribute("infoGrantTypeList", infoGrantTypeList);
-			
+
 			return mapping.findForward("manage-grant-type");
-		}
-		catch (FenixServiceException e)
-		{
-			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-type", null);
+		} catch (FenixServiceException e) {
+			return setError(request, mapping, "errors.grant.unrecoverable",
+					"manage-grant-type", null);
 		}
 	}
 }

@@ -6,9 +6,10 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContract;
+import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantSubsidy;
+import DataBeans.grant.contract.InfoGrantSubsidyWithContract;
 import DataBeans.grant.owner.InfoGrantOwner;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantSubsidy;
@@ -44,7 +45,7 @@ public class ReadGrantSubsidy extends ReadDomainObjectService
 
 	protected InfoObject clone2InfoObject(IDomainObject domainObject)
 	{
-		return Cloner.copyIGrantSubsidy2InfoGrantSubsidy((IGrantSubsidy) domainObject);
+		return InfoGrantSubsidyWithContract.newInfoFromDomain((IGrantSubsidy) domainObject);
 	}
 
 	/*
@@ -56,7 +57,7 @@ public class ReadGrantSubsidy extends ReadDomainObjectService
 	{
 		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) super.run(objectId);
 
-		//The ReadDomainObjectService only reads 2level depth of references to other objects.
+		//TODO The ReadDomainObjectService only reads 2level depth of references to other objects.
 		//In this case we have InfoGrantSubsidy and its reference to InfoGrantContract.
 		//Now we need to get the references of InfoGrantContract, e.g., InfoGrantOwner
 		try
@@ -65,12 +66,12 @@ public class ReadGrantSubsidy extends ReadDomainObjectService
 			IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
 
 			InfoGrantContract infoGrantContract =
-				Cloner.copyIGrantContract2InfoGrantContract(
+				InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(
 					(IGrantContract) pgc.readByOID(
 						GrantContract.class,
 						infoGrantSubsidy.getInfoGrantContract().getIdInternal()));
 
-			//TODO... this section of code is temporary!!!!
+			//this section of code is temporary!!!! (see above the reason)
 			if(infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
 				infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
 			

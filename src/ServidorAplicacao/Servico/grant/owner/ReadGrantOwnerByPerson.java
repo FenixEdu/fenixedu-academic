@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.grant.owner;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.owner.InfoGrantOwner;
-import DataBeans.util.Cloner;
+import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -31,7 +31,7 @@ public class ReadGrantOwnerByPerson implements IService {
             IPersistentGrantOwner persistentGrantOwner = sp.getIPersistentGrantOwner();
             IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personId);
 
-            infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
+            infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
         }

@@ -50,15 +50,29 @@ public class EditGrantContractAction extends FenixDispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		Integer idContract = null;
-		if (verifyParameterInRequest(request,"idContract"))
+	    IUserView userView = SessionUtils.getUserView(request);
+		try
 		{
+			//Read grant types for the contract
+			Object[] args2 = { };
+			List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
+			request.setAttribute("grantTypeList", grantTypeList);
+		}
+		catch (FenixServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.type.read", "manage-grant-contract", null);
+		}
+		
+		if (!verifyParameterInRequest(request,"loaddb")) {
+			//Validation error
+		    request.setAttribute("idInternal",request.getParameter("idInternal"));
+		    return mapping.findForward("edit-grant-contract");
+		}
+		Integer idContract = null;
+		if (verifyParameterInRequest(request,"idContract")) {
 			idContract = new Integer(request.getParameter("idContract"));
 		}
-
-		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm grantContractForm = (DynaValidatorForm) form;
-		
 		if (idContract != null)
 		{
 			try
@@ -103,17 +117,6 @@ public class EditGrantContractAction extends FenixDispatchAction
 			}
 		}
 
-		try
-		{
-			//Read grant types for the contract
-			Object[] args2 = { };
-			List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
-			request.setAttribute("grantTypeList", grantTypeList);
-		}
-		catch (FenixServiceException e)
-		{
-			return setError(request, mapping, "errors.grant.type.read", "manage-grant-contract", null);
-		}
 		return mapping.findForward("edit-grant-contract");
 	}
 
@@ -133,6 +136,11 @@ public class EditGrantContractAction extends FenixDispatchAction
 		{
 			DynaValidatorForm editGrantContractForm = (DynaValidatorForm) form;
 			InfoGrantContract infoGrantContract = populateInfoGrantContractFromForm(editGrantContractForm);
+			InfoGrantContractRegime infoGrantContractRegime = populateInfoGrantContractRegimeFromForm(editGrantContractForm, infoGrantContract);
+
+			if(infoGrantContractRegime.getDateBeginContract().after(infoGrantContractRegime.getDateEndContract())) {
+			    return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
+			}
 			IUserView userView = SessionUtils.getUserView(request);
 	
 			orientationTeacherNumber = infoGrantContract.getGrantOrientationTeacherInfo().getOrientationTeacherInfo().getTeacherNumber();			
@@ -149,7 +157,6 @@ public class EditGrantContractAction extends FenixDispatchAction
 			}
 			
 			//Edit Grant Contract Regime
-			InfoGrantContractRegime infoGrantContractRegime = populateInfoGrantContractRegimeFromForm(editGrantContractForm, infoGrantContract);
 			Object[] argregime = { infoGrantContractRegime };
 			ServiceUtils.executeService(userView, "EditGrantContractRegime", argregime);
 			

@@ -13,7 +13,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantInsurance;
 
-
 /**
  * @author Barbosa
  * @author Pica
@@ -23,26 +22,23 @@ public class ReadGrantInsuranceByGrantContract implements IService {
     public ReadGrantInsuranceByGrantContract() {
     }
 
-	public InfoGrantInsurance run(Integer idContract) throws FenixServiceException
-	{
-		IGrantInsurance grantInsurance = null;
-		IPersistentGrantInsurance persistentGrantInsurance = null;
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			persistentGrantInsurance = sp.getIPersistentGrantInsurance();
-			grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(idContract);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
+    public InfoGrantInsurance run(Integer idContract) throws FenixServiceException {
+        IGrantInsurance grantInsurance = null;
+        IPersistentGrantInsurance persistentGrantInsurance = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            persistentGrantInsurance = sp.getIPersistentGrantInsurance();
+            grantInsurance = persistentGrantInsurance.readGrantInsuranceByGrantContract(idContract);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
+        }
 
-		InfoGrantInsurance infoGrantInsurance = null;
-		if(grantInsurance != null) {			
-			infoGrantInsurance = InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain(grantInsurance);
-		}
-		return infoGrantInsurance;		
-	}
-    
+        InfoGrantInsurance infoGrantInsurance = null;
+        if (grantInsurance != null) {
+            infoGrantInsurance = InfoGrantInsuranceWithContractAndPaymentEntity
+                    .newInfoFromDomain(grantInsurance);
+        }
+        return infoGrantInsurance;
+    }
+
 }

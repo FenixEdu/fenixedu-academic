@@ -31,7 +31,7 @@ public class GrantTypeOJB extends ServidorPersistente.OJB.ObjectFenixOJB
     }
 
     public List readAll() throws ExcepcaoPersistencia {
-        List grantTypes = queryList(GrantType.class, null);
+        List grantTypes = queryList(GrantType.class, null,"sigla",true);
         return grantTypes;
     }
 }

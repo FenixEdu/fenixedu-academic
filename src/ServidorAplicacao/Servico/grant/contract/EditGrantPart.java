@@ -50,13 +50,11 @@ public class EditGrantPart extends EditDomainObjectService {
         return sp.getIPersistentGrantPart();
     }
 
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
         IPersistentGrantPart pgs = sp.getIPersistentGrantPart();
         IGrantPart grantPart = (IGrantPart) domainObject;
-
-        return pgs.readGrantPartByUnique(grantPart.getGrantSubsidy(), grantPart
-                .getGrantPaymentEntity());
+        return pgs.readGrantPartByUnique(grantPart.getGrantSubsidy(), grantPart.getGrantPaymentEntity());
     }
 
     /*
@@ -65,31 +63,27 @@ public class EditGrantPart extends EditDomainObjectService {
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
      *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
      */
-    protected void doAfterLock(IDomainObject domainObjectToLock,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
+    protected void doAfterLock(IDomainObject domainObjectToLock, InfoObject infoObject,
+            ISuportePersistente sp) throws FenixServiceException {
         IGrantPart grantPart = (IGrantPart) domainObjectToLock;
         InfoGrantPart infoGrantPart = (InfoGrantPart) infoObject;
         IGrantPaymentEntity paymentEntity = null;
 
         //set the payment entity
         try {
-            IPersistentGrantPaymentEntity pgp = sp
-                    .getIPersistentGrantPaymentEntity();
+            IPersistentGrantPaymentEntity pgp = sp.getIPersistentGrantPaymentEntity();
 
-            paymentEntity = (IGrantPaymentEntity) pgp.readByOID(
-                    GrantPaymentEntity.class, infoGrantPart
-                            .getInfoGrantPaymentEntity().getIdInternal());
-            if (paymentEntity != null) {
-                if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter)
-                    grantPart.setGrantPaymentEntity(new GrantCostCenter());
-                else if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantProject)
-                        grantPart.setGrantPaymentEntity(new GrantProject());
-
-                BeanUtils.copyProperties(grantPart.getGrantPaymentEntity(),
-                        paymentEntity);
-            } else
+            paymentEntity = (IGrantPaymentEntity) pgp.readByOID(GrantPaymentEntity.class, infoGrantPart
+                    .getInfoGrantPaymentEntity().getIdInternal());
+            if (paymentEntity == null) {
                 throw new InvalidGrantPaymentEntityException();
+            }
+            if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter)
+                grantPart.setGrantPaymentEntity(new GrantCostCenter());
+            else if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantProject)
+                grantPart.setGrantPaymentEntity(new GrantProject());
+
+            BeanUtils.copyProperties(grantPart.getGrantPaymentEntity(), paymentEntity);
 
             domainObjectToLock = grantPart;
         } catch (Exception e) {
@@ -102,16 +96,15 @@ public class EditGrantPart extends EditDomainObjectService {
 
             IPersistentTeacher pt = sp.getIPersistentTeacher();
 
-            teacher = pt.readByNumber(infoGrantPart.getInfoResponsibleTeacher()
-                    .getTeacherNumber());
-            if (teacher != null) {
-                grantPart.setResponsibleTeacher(new Teacher());
-                BeanUtils.copyProperties(grantPart.getResponsibleTeacher(),
-                        teacher);
-            } else
+            teacher = pt.readByNumber(infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber());
+            if (teacher == null) {
                 throw new InvalidPartResponsibleTeacherException();
+            }
+            grantPart.setResponsibleTeacher(new Teacher());
+            BeanUtils.copyProperties(grantPart.getResponsibleTeacher(), teacher);
 
             domainObjectToLock = grantPart;
+
         } catch (InvalidPartResponsibleTeacherException e) {
             throw new InvalidPartResponsibleTeacherException();
         } catch (Exception e) {

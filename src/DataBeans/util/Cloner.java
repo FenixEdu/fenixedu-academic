@@ -122,10 +122,12 @@ import DataBeans.gesdis.InfoCourseHistoric;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantCostCenter;
+import DataBeans.grant.contract.InfoGrantCostCenterWithTeacher;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
 import DataBeans.grant.contract.InfoGrantPart;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import DataBeans.grant.contract.InfoGrantProject;
+import DataBeans.grant.contract.InfoGrantProjectWithTeacherAndCostCenter;
 import DataBeans.grant.contract.InfoGrantSubsidy;
 import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.grant.owner.InfoGrantOwner;
@@ -974,24 +976,24 @@ public abstract class Cloner
      * @param grantOwner
      * @return InfoGrantOwner
      */
-    public static InfoGrantOwner copyIGrantOwner2InfoGrantOwner(IGrantOwner grantOwner)
-    {
-        InfoGrantOwner infoGrantOwner = null;
-        if (grantOwner != null)
-        {
-            infoGrantOwner = new InfoGrantOwner();
-            InfoPerson infoPerson = null;
-            IPessoa person = grantOwner.getPerson();
-            if (person != null)
-            {
-                infoPerson = Cloner.copyIPerson2InfoPerson(person);
-            }
-            infoGrantOwner.setGrantOwnerNumber(grantOwner.getNumber());
-            copyObjectProperties(infoGrantOwner, grantOwner);
-            infoGrantOwner.setPersonInfo(infoPerson);
-        }
-        return infoGrantOwner;
-    }
+//    public static InfoGrantOwner copyIGrantOwner2InfoGrantOwner(IGrantOwner grantOwner)
+//    {
+//        InfoGrantOwner infoGrantOwner = null;
+//        if (grantOwner != null)
+//        {
+//            infoGrantOwner = new InfoGrantOwner();
+//            InfoPerson infoPerson = null;
+//            IPessoa person = grantOwner.getPerson();
+//            if (person != null)
+//            {
+//                infoPerson = Cloner.copyIPerson2InfoPerson(person);
+//            }
+//            infoGrantOwner.setGrantOwnerNumber(grantOwner.getNumber());
+//            copyObjectProperties(infoGrantOwner, grantOwner);
+//            infoGrantOwner.setPersonInfo(infoPerson);
+//        }
+//        return infoGrantOwner;
+//    }
 
     /**
      * Method copyInfoGrantContract2IGrantContract.
@@ -1023,28 +1025,28 @@ public abstract class Cloner
      * @param grantContract
      * @return InfoGrantContract
      */
-    public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
-    {
-        InfoGrantContract infoGrantContract = null;
-        IGrantOwner grantOwner = null;
-
-        if (grantContract != null)
-        {
-            infoGrantContract = new InfoGrantContract();
-            InfoGrantOwner infoGrantOwner = null;
-            grantOwner = grantContract.getGrantOwner();
-            if (grantOwner != null)
-                infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
-            InfoGrantType infoGrantType = null;
-            if (grantContract.getGrantType() != null)
-                infoGrantType = Cloner.copyIGrantType2InfoGrantType(grantContract.getGrantType());
-
-            copyObjectProperties(infoGrantContract, grantContract);
-            infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
-            infoGrantContract.setGrantTypeInfo(infoGrantType);
-        }
-        return infoGrantContract;
-    }
+//    public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
+//    {
+//        InfoGrantContract infoGrantContract = null;
+//        IGrantOwner grantOwner = null;
+//
+//        if (grantContract != null)
+//        {
+//            infoGrantContract = new InfoGrantContract();
+//            InfoGrantOwner infoGrantOwner = null;
+//            grantOwner = grantContract.getGrantOwner();
+//            if (grantOwner != null)
+//                infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
+//            InfoGrantType infoGrantType = null;
+//            if (grantContract.getGrantType() != null)
+//                infoGrantType = InfoGrantType.newInfoFromDomain(grantContract.getGrantType());
+//
+//            copyObjectProperties(infoGrantContract, grantContract);
+//            infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
+//            infoGrantContract.setGrantTypeInfo(infoGrantType);
+//        }
+//        return infoGrantContract;
+//    }
 
     /**
      * Method copyInfoGrantType2IGrantType.
@@ -1070,17 +1072,17 @@ public abstract class Cloner
      * @param grantType
      * @return InfoGrantType
      */
-    public static InfoGrantType copyIGrantType2InfoGrantType(IGrantType grantType)
-    {
-        InfoGrantType infoGrantType = null;
-
-        if (grantType != null)
-        {
-            infoGrantType = new InfoGrantType();
-            copyObjectProperties(infoGrantType, grantType);
-        }
-        return infoGrantType;
-    }
+//    public static InfoGrantType copyIGrantType2InfoGrantType(IGrantType grantType)
+//    {
+//        InfoGrantType infoGrantType = null;
+//
+//        if (grantType != null)
+//        {
+//            infoGrantType = new InfoGrantType();
+//            copyObjectProperties(infoGrantType, grantType);
+//        }
+//        return infoGrantType;
+//    }
 
     /**
      * Method copyInfoGrantOrientationTeacher2IGrantOrientationTeacher.
@@ -1118,27 +1120,27 @@ public abstract class Cloner
      * @param grantOrientationTeacher
      * @return InfoGrantOrientationTeacher
      */
-    public static InfoGrantOrientationTeacher copyIGrantOrientationTeacher2InfoGrantOrientationTeacher(IGrantOrientationTeacher grantOrientationTeacher)
-    {
-        InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
-
-        if (grantOrientationTeacher != null)
-        {
-            infoGrantOrientationTeacher = new InfoGrantOrientationTeacher();
-            copyObjectProperties(infoGrantOrientationTeacher, grantOrientationTeacher);
-            InfoGrantContract infoGrantContract = null;
-            infoGrantContract =
-                Cloner.copyIGrantContract2InfoGrantContract(grantOrientationTeacher.getGrantContract());
-            InfoTeacher infoOrientationTeacher = null;
-            if (grantOrientationTeacher.getOrientationTeacher() != null)
-                infoOrientationTeacher =
-                    Cloner.copyITeacher2InfoTeacher(grantOrientationTeacher.getOrientationTeacher());
-
-            infoGrantOrientationTeacher.setOrientationTeacherInfo(infoOrientationTeacher);
-            infoGrantOrientationTeacher.setGrantContractInfo(infoGrantContract);
-        }
-        return infoGrantOrientationTeacher;
-    }
+//    public static InfoGrantOrientationTeacher copyIGrantOrientationTeacher2InfoGrantOrientationTeacher(IGrantOrientationTeacher grantOrientationTeacher)
+//    {
+//        InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
+//
+//        if (grantOrientationTeacher != null)
+//        {
+//            infoGrantOrientationTeacher = new InfoGrantOrientationTeacher();
+//            copyObjectProperties(infoGrantOrientationTeacher, grantOrientationTeacher);
+//            InfoGrantContract infoGrantContract = null;
+//            infoGrantContract =
+//                Cloner.copyIGrantContract2InfoGrantContract(grantOrientationTeacher.getGrantContract());
+//            InfoTeacher infoOrientationTeacher = null;
+//            if (grantOrientationTeacher.getOrientationTeacher() != null)
+//                infoOrientationTeacher =
+//                    Cloner.copyITeacher2InfoTeacher(grantOrientationTeacher.getOrientationTeacher());
+//
+//            infoGrantOrientationTeacher.setOrientationTeacherInfo(infoOrientationTeacher);
+//            infoGrantOrientationTeacher.setGrantContractInfo(infoGrantContract);
+//        }
+//        return infoGrantOrientationTeacher;
+//    }
 
     /**
      * Method copyIGrantProject2InfoGrantProject.
@@ -1146,29 +1148,29 @@ public abstract class Cloner
      * @param grantProject
      * @return InfoGrantProject
      */
-    public static InfoGrantProject copyIGrantProject2InfoGrantProject(IGrantProject grantProject)
-    {
-        InfoGrantProject infoGrantProject = null;
-
-        if (grantProject != null)
-        {
-            infoGrantProject = new InfoGrantProject();
-            copyObjectProperties(infoGrantProject, grantProject);
-
-			
-			InfoTeacher infoResponsibleTeacher = null;
-			if(grantProject.getResponsibleTeacher() != null)
-				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());
-            infoGrantProject.setInfoResponsibleTeacher(infoResponsibleTeacher);
-
-			
-			InfoGrantCostCenter infoGrantCostCenter = null;
-			if(grantProject.getGrantCostCenter() != null)
-				infoGrantCostCenter = Cloner.copyIGrantCostCenter2InfoGrantCostCenter(grantProject.getGrantCostCenter());
-            infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
-        }
-        return infoGrantProject;
-    }
+//    public static InfoGrantProject copyIGrantProject2InfoGrantProject(IGrantProject grantProject)
+//    {
+//        InfoGrantProject infoGrantProject = null;
+//
+//        if (grantProject != null)
+//        {
+//            infoGrantProject = new InfoGrantProject();
+//            copyObjectProperties(infoGrantProject, grantProject);
+//
+//			
+//			InfoTeacher infoResponsibleTeacher = null;
+//			if(grantProject.getResponsibleTeacher() != null)
+//				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());
+//            infoGrantProject.setInfoResponsibleTeacher(infoResponsibleTeacher);
+//
+//			
+//			InfoGrantCostCenter infoGrantCostCenter = null;
+//			if(grantProject.getGrantCostCenter() != null)
+//				infoGrantCostCenter = Cloner.copyIGrantCostCenter2InfoGrantCostCenter(grantProject.getGrantCostCenter());
+//            infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
+//        }
+//        return infoGrantProject;
+//    }
 
     /**
      * Method copyInfoGrantProjectTeacher2IGrantProject.
@@ -1194,8 +1196,8 @@ public abstract class Cloner
             if (infoGrantProject.getInfoGrantCostCenter() != null)
             {
                 IGrantCostCenter costCenter =
-                    Cloner.copyInfoGrantCostCenter2IGrantCostCenter(
-                        infoGrantProject.getInfoGrantCostCenter());
+                    Cloner.copyInfoGrantCostCenter2IGrantCostCenter(infoGrantProject.getInfoGrantCostCenter());
+                
                 grantProject.setGrantCostCenter(costCenter);
             }
         }
@@ -1208,23 +1210,23 @@ public abstract class Cloner
      * @param grantCostCenter
      * @return InfoCostCenter
      */
-	public static InfoGrantCostCenter copyIGrantCostCenter2InfoGrantCostCenter(
-			IGrantCostCenter grantCostCenter)
-    {
-        InfoGrantCostCenter infoGrantCostCenter = null;
-		InfoTeacher infoResponsibleTeacher = null;
-
-        if (grantCostCenter != null)
-        {
-            infoGrantCostCenter = new InfoGrantCostCenter();
-            copyObjectProperties(infoGrantCostCenter, grantCostCenter);
-
-			if(grantCostCenter.getResponsibleTeacher() != null)
-				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantCostCenter.getResponsibleTeacher());
-            infoGrantCostCenter.setInfoResponsibleTeacher(infoResponsibleTeacher);
-        }
-        return infoGrantCostCenter;
-    }
+//	public static InfoGrantCostCenter copyIGrantCostCenter2InfoGrantCostCenter(
+//			IGrantCostCenter grantCostCenter)
+//    {
+//        InfoGrantCostCenter infoGrantCostCenter = null;
+//		InfoTeacher infoResponsibleTeacher = null;
+//
+//        if (grantCostCenter != null)
+//        {
+//            infoGrantCostCenter = new InfoGrantCostCenter();
+//            copyObjectProperties(infoGrantCostCenter, grantCostCenter);
+//
+//			if(grantCostCenter.getResponsibleTeacher() != null)
+//				infoResponsibleTeacher = Cloner.copyITeacher2InfoTeacher(grantCostCenter.getResponsibleTeacher());
+//            infoGrantCostCenter.setInfoResponsibleTeacher(infoResponsibleTeacher);
+//        }
+//        return infoGrantCostCenter;
+//    }
 
     /**
      * Method copyInfoGrantCostCenter2IGrantCostCenter.
@@ -1262,11 +1264,11 @@ public abstract class Cloner
         if (grantPaymentEntity != null)
         {
             if (grantPaymentEntity instanceof IGrantCostCenter) {
-                return Cloner.copyIGrantCostCenter2InfoGrantCostCenter(
-                    (IGrantCostCenter) grantPaymentEntity);}
-            else if (grantPaymentEntity instanceof IGrantProject) {
-                return Cloner.copyIGrantProject2InfoGrantProject((IGrantProject) grantPaymentEntity);
-        }}
+                return InfoGrantCostCenterWithTeacher.newInfoFromDomain((IGrantCostCenter) grantPaymentEntity);
+            } else if (grantPaymentEntity instanceof IGrantProject) {
+                return InfoGrantProjectWithTeacherAndCostCenter.newInfoFromDomain((IGrantProject) grantPaymentEntity);
+                }
+        }
         return null;
     }
 
@@ -1296,28 +1298,27 @@ public abstract class Cloner
      * @param grantPart
      * @return InfoPart
      */
-    public static InfoGrantPart copyIGrantPart2InfoGrantPart(IGrantPart grantPart)
-    {
-        InfoGrantPart infoGrantPart = null;
-
-        if (grantPart != null)
-        {
-            infoGrantPart = new InfoGrantPart();
-            copyObjectProperties(infoGrantPart, grantPart);
-
-            InfoGrantSubsidy infoGrantSubsidy =
-                Cloner.copyIGrantSubsidy2InfoGrantSubsidy(grantPart.getGrantSubsidy());
-            InfoTeacher infoResponsibleTeacher =
-                Cloner.copyITeacher2InfoTeacher(grantPart.getResponsibleTeacher());
-            InfoGrantPaymentEntity infoGrantPaymentEntity =
-                Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPart.getGrantPaymentEntity());
-            infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
-            infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
-            infoGrantPart.setInfoResponsibleTeacher(infoResponsibleTeacher);
-        }
-
-        return infoGrantPart;
-    }
+//    public static InfoGrantPart copyIGrantPart2InfoGrantPart(IGrantPart grantPart)
+//    {
+//        InfoGrantPart infoGrantPart = null;
+//
+//        if (grantPart != null)
+//        {
+//            infoGrantPart = new InfoGrantPart();
+//            copyObjectProperties(infoGrantPart, grantPart);
+//
+//            InfoGrantSubsidy infoGrantSubsidy =
+//                Cloner.copyIGrantSubsidy2InfoGrantSubsidy(grantPart.getGrantSubsidy());
+//            InfoTeacher infoResponsibleTeacher =
+//                Cloner.copyITeacher2InfoTeacher(grantPart.getResponsibleTeacher());
+//            InfoGrantPaymentEntity infoGrantPaymentEntity = InfoGrantPaymentEntity.newInfoFromDomain(grantPart.getGrantPaymentEntity());
+//            infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
+//            infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
+//            infoGrantPart.setInfoResponsibleTeacher(infoResponsibleTeacher);
+//        }
+//
+//        return infoGrantPart;
+//    }
 
     /**
      * Method copyInfoGrantPart2IGrantPart.
@@ -1356,21 +1357,21 @@ public abstract class Cloner
      * @param grantSubsidy
      * @return InfoSubsidy
      */
-    public static InfoGrantSubsidy copyIGrantSubsidy2InfoGrantSubsidy(IGrantSubsidy grantSubsidy)
-    {
-        InfoGrantSubsidy infoGrantSubsidy = null;
-
-        if (grantSubsidy != null)
-        {
-            infoGrantSubsidy = new InfoGrantSubsidy();
-            copyObjectProperties(infoGrantSubsidy, grantSubsidy);
-
-            InfoGrantContract infoGrantContract =
-                Cloner.copyIGrantContract2InfoGrantContract(grantSubsidy.getGrantContract());
-            infoGrantSubsidy.setInfoGrantContract(infoGrantContract);
-        }
-        return infoGrantSubsidy;
-    }
+//    public static InfoGrantSubsidy copyIGrantSubsidy2InfoGrantSubsidy(IGrantSubsidy grantSubsidy)
+//    {
+//        InfoGrantSubsidy infoGrantSubsidy = null;
+//
+//        if (grantSubsidy != null)
+//        {
+//            infoGrantSubsidy = new InfoGrantSubsidy();
+//            copyObjectProperties(infoGrantSubsidy, grantSubsidy);
+//
+//            InfoGrantContract infoGrantContract = 
+//                Cloner.copyIGrantContract2InfoGrantContract(grantSubsidy.getGrantContract());
+//            infoGrantSubsidy.setInfoGrantContract(infoGrantContract);
+//        }
+//        return infoGrantSubsidy;
+//    }
 
     /**
      * Method copyInfoGrantSubsidy2IGrantSubsidy.

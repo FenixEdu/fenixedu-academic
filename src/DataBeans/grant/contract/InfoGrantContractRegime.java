@@ -213,4 +213,16 @@ public class InfoGrantContractRegime extends InfoObject {
     	return infoGrantContractRegime;
     }
     
+    /**
+     * @return Returns the activeState.
+     */
+    public static Integer getActiveState() {
+        return new Integer(activeState);
+    }
+    /**
+     * @return Returns the inactiveState.
+     */
+    public static Integer getInactiveState() {
+        return new Integer(inactiveState);
+    }
 }

@@ -13,37 +13,43 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
-
 /**
  * @author Barbosa
  * @author Pica
  */
 public class ReadGrantInsurance extends ReadDomainObjectService {
 
-    public ReadGrantInsurance () {
-        
+    public ReadGrantInsurance() {
+
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
      */
     protected Class getDomainObjectClass() {
         return GrantInsurance.class;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentGrantInsurance();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
     protected InfoObject clone2InfoObject(IDomainObject domainObject) {
 
-        return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain((IGrantInsurance) domainObject);
+        return InfoGrantInsuranceWithContractAndPaymentEntity
+                .newInfoFromDomain((IGrantInsurance) domainObject);
     }
 
 }

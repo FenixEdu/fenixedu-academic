@@ -40,7 +40,7 @@
 				<bean:message key="label.grant.insurance.totalValue"/>:&nbsp;
 			</td>
 			<td>
-				<p><bean:write name="editGrantInsuranceForm" property="totalValue"/></p>
+				<p><bean:write name="editGrantInsuranceForm" property="totalValue"/>€</p>
 			</td>
 		</tr>
 		<tr>

@@ -12,7 +12,6 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantType;
-import DataBeans.util.Cloner;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -56,7 +55,7 @@ public class ReadAllGrantTypes implements IService
             {
                 IGrantType grantType = (IGrantType) input;
                 InfoGrantType infoGrantType =
-                    Cloner.copyIGrantType2InfoGrantType(grantType);
+                    InfoGrantType.newInfoFromDomain(grantType);
                 return infoGrantType;
             }
         });

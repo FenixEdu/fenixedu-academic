@@ -68,6 +68,7 @@
 			</td>
 			<td>
 				<html:text property="dateBeginSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+				<bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -76,6 +77,7 @@
 			</td>
 			<td>
 				<html:text property="dateEndSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+				<bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 	</table>

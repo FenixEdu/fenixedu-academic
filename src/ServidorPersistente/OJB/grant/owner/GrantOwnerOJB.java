@@ -116,7 +116,7 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 			Integer numberOfElementsInSpan, String orderBy)
 			throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
-		return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria, orderBy, false);
+		return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria, orderBy, true);
 	}
 
 }

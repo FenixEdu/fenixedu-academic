@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -35,7 +36,7 @@ public class ManageGrantProjectAction extends FenixDispatchAction
     {
         try
         {
-            Object[] args = { "Dominio.grant.contract.GrantProject" };
+            Object[] args = { InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass() };
             IUserView userView = SessionUtils.getUserView(request);
             List infoGrantProjectList =
                 (List) ServiceUtils.executeService(userView, "ReadAllGrantPaymentEntitiesByClassName", args);

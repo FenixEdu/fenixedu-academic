@@ -105,7 +105,7 @@ public class EditGrantContract extends EditDomainObjectService {
         IGrantType grantType = new GrantType();
         try {
             grantType = pt.readGrantTypeBySigla(sigla);
-            infoGrantType = Cloner.copyIGrantType2InfoGrantType(grantType);
+            infoGrantType = InfoGrantType.newInfoFromDomain(grantType);
             if (infoGrantType == null)
                 throw new GrantTypeNotFoundException();
         } catch (ExcepcaoPersistencia persistentException) {

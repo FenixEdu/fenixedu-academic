@@ -7,7 +7,9 @@ package ServidorAplicacao.Servico.grant.contract;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContract;
+import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
+import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
@@ -52,7 +54,7 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 	 */
 	protected InfoObject clone2InfoObject(IDomainObject domainObject)
 	{
-		return Cloner.copyIGrantContract2InfoGrantContract((IGrantContract) domainObject);
+		return InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain((IGrantContract) domainObject);
 	}
 
 	/*
@@ -84,7 +86,7 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 			IGrantOrientationTeacher orientationTeacher =
 				pgot.readActualGrantOrientationTeacherByContract(contract, new Integer(0));
 			InfoGrantOrientationTeacher infoOrientationTeacher =
-				Cloner.copyIGrantOrientationTeacher2InfoGrantOrientationTeacher(orientationTeacher);
+				InfoGrantOrientationTeacherWithTeacherAndGrantContract.newInfoFromDomain(orientationTeacher);
 			infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
 			
 			return infoGrantContract;

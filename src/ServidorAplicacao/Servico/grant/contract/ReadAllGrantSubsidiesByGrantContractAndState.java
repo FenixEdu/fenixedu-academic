@@ -5,12 +5,14 @@
 package ServidorAplicacao.Servico.grant.contract;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantSubsidy;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantSubsidyWithContract;
 import Dominio.grant.contract.IGrantSubsidy;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -23,41 +25,36 @@ import ServidorPersistente.grant.IPersistentGrantSubsidy;
  * @author Pica
  *  
  */
-public class ReadAllGrantSubsidiesByGrantContractAndState implements IService
-{
-	/**
-	 * The constructor of this class.
-	 */
-	public ReadAllGrantSubsidiesByGrantContractAndState()
-	{
-	}
+public class ReadAllGrantSubsidiesByGrantContractAndState implements IService {
+    /**
+     * The constructor of this class.
+     */
+    public ReadAllGrantSubsidiesByGrantContractAndState() {
+    }
 
-	public List run(Integer idContract, Integer state) throws FenixServiceException
-	{
-		List subsidies = null;
-		IPersistentGrantSubsidy persistentGrantSubsidy = null;
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
-			subsidies = persistentGrantSubsidy.readAllSubsidiesByGrantContractAndState(idContract, state);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
-
-		if (subsidies == null)
-			return new ArrayList();
-        
-        Iterator iterSubsidy = subsidies.iterator();
-        List infoSubsidies = new ArrayList();
-        while(iterSubsidy.hasNext())
-        {
-            InfoGrantSubsidy infoGrantSubsidy = Cloner.copyIGrantSubsidy2InfoGrantSubsidy((IGrantSubsidy)iterSubsidy.next());
-            infoSubsidies.add(infoGrantSubsidy);
+    public List run(Integer idContract, Integer state) throws FenixServiceException {
+        List subsidies = null;
+        IPersistentGrantSubsidy persistentGrantSubsidy = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
+            subsidies = persistentGrantSubsidy
+                    .readAllSubsidiesByGrantContractAndState(idContract, state);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
         }
 
-		return infoSubsidies;
-	}
+        if (subsidies == null)
+            return new ArrayList();
+
+        ArrayList infoSubsidyList = (ArrayList) CollectionUtils.collect(subsidies, new Transformer() {
+            public Object transform(Object input) {
+                IGrantSubsidy grantSubsidy = (IGrantSubsidy) input;
+                InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
+                        .newInfoFromDomain(grantSubsidy);
+                return infoGrantSubsidy;
+            }
+        });
+        return infoSubsidyList;
+    }
 }

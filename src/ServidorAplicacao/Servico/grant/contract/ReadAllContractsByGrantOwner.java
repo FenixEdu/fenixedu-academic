@@ -11,8 +11,9 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantContract;
+import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
 import Dominio.grant.contract.IGrantOrientationTeacher;
@@ -39,11 +40,10 @@ public class ReadAllContractsByGrantOwner implements IService {
     public List run(Integer grantOwnerId) throws FenixServiceException {
         List contracts = null;
         IPersistentGrantOrientationTeacher pgot = null;
-        IPersistentGrantContract pgc = null;
         IPersistentGrantContractRegime persistentGrantContractRegime = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            pgc = sp.getIPersistentGrantContract();
+            IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
             pgot = sp.getIPersistentGrantOrientationTeacher();
             persistentGrantContractRegime = sp.getIPersistentGrantContractRegime();
             contracts = pgc.readAllContractsByGrantOwner(grantOwnerId);
@@ -51,28 +51,25 @@ public class ReadAllContractsByGrantOwner implements IService {
             throw new FenixServiceException(e.getMessage());
         }
 
-        if (contracts == null)
+        if (contracts == null) {
             return new ArrayList();
+        }
 
         Iterator contractIter = contracts.iterator();
-        ArrayList contractList = new ArrayList();
+        List contractList = new ArrayList();
 
         //gather information related to each contract
         while (contractIter.hasNext()) {
             try {
                 IGrantContract grantContract = (IGrantContract) contractIter
                         .next();
-                InfoGrantContract infoGrantContract = Cloner
-                        .copyIGrantContract2InfoGrantContract(grantContract);
+                InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
 
                 //get the GrantOrientationTeacher for each contract
                 IGrantOrientationTeacher orientationTeacher = pgot
-                        .readActualGrantOrientationTeacherByContract(
-                                grantContract, new Integer(0));
-                InfoGrantOrientationTeacher infoOrientationTeacher = Cloner
-                        .copyIGrantOrientationTeacher2InfoGrantOrientationTeacher(orientationTeacher);
-                infoGrantContract
-                        .setGrantOrientationTeacherInfo(infoOrientationTeacher);
+                        .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
+                InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract.newInfoFromDomain(orientationTeacher);
+                infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
 
                 /*
                  * Verify if the contract is active or not. The contract is
@@ -80,16 +77,13 @@ public class ReadAllContractsByGrantOwner implements IService {
                  * 	 1- The end contract motive is not filled
                  *   2 - The actual grant contract regime is active
                  */
-                if (infoGrantContract.getEndContractMotive() != null
-                        && !infoGrantContract.getEndContractMotive().equals("")) {
+                if (infoGrantContract.getEndContractMotiveSet()) {
                     infoGrantContract.setActive(new Boolean(false));
                 } else {
                     List grantContractRegimeActual = persistentGrantContractRegime.readGrantContractRegimeByGrantContractAndState(infoGrantContract.getIdInternal(), new Integer(1));
-                    //It should only have one result!!
                     IGrantContractRegime grantContractRegime = (IGrantContractRegime)grantContractRegimeActual.get(0); 
                     infoGrantContract.setActive(new Boolean(grantContractRegime.getContractRegimeActive()));
                 }
-
                 contractList.add(infoGrantContract);
             } catch (ExcepcaoPersistencia e) {
                 throw new FenixServiceException(e.getMessage());

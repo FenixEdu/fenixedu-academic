@@ -35,11 +35,10 @@ public class EditGrantType extends EditDomainObjectService {
         return sp.getIPersistentGrantType();
     }
 
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
         IPersistentGrantType pgs = sp.getIPersistentGrantType();
         IGrantType grantType = (IGrantType) domainObject;
-
         return pgs.readGrantTypeBySigla(grantType.getSigla());
     }
 

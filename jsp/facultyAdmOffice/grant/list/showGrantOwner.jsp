@@ -815,7 +815,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left" colspan="2">
+			<td align="left">
 				<bean:message key="label.grant.part.grantPaymentEntity.designation"/>:&nbsp;
 			</td>
 			<td>

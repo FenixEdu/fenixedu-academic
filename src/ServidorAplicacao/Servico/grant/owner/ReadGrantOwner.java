@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.grant.owner;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
-import DataBeans.util.Cloner;
+import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
 import Dominio.IDomainObject;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
@@ -39,7 +39,7 @@ public class ReadGrantOwner extends ReadDomainObjectService implements IService 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
     protected InfoObject clone2InfoObject(IDomainObject domainObject) {
-        return Cloner.copyIGrantOwner2InfoGrantOwner((IGrantOwner) domainObject);
+        return InfoGrantOwnerWithPerson.newInfoFromDomain((IGrantOwner) domainObject);
     }
 
     /*

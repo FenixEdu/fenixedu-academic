@@ -64,7 +64,7 @@
             </td>
             <td class="listClasses">
                     <bean:define id="idContract" name="infoGrantContract" property="idInternal"/>
-                    <html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idContract=" + idContract %>' > 
+                    <html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idContract=" + idContract + "&amp;loaddb=1" %>' > 
                         <bean:message key="link.grant.contract.edit" />
                     </html:link>        
             </td>

@@ -16,13 +16,13 @@ import DataBeans.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import DataBeans.grant.contract.InfoGrantPart;
+import DataBeans.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import DataBeans.grant.contract.InfoGrantSubsidy;
 import DataBeans.grant.contract.InfoGrantSubsidyWithContract;
 import DataBeans.grant.list.InfoListGrantContract;
 import DataBeans.grant.list.InfoListGrantOwnerComplete;
 import DataBeans.grant.list.InfoListGrantSubsidy;
 import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
-import DataBeans.util.Cloner;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
 import Dominio.grant.contract.IGrantOrientationTeacher;
@@ -135,7 +135,7 @@ public class ShowGrantOwner implements IService
 				Iterator partsIter = subsidyParts.iterator();
 				while (partsIter.hasNext())
 				{
-					InfoGrantPart newInfoGrantPart = Cloner.copyIGrantPart2InfoGrantPart((IGrantPart) partsIter.next());
+					InfoGrantPart newInfoGrantPart = InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain((IGrantPart) partsIter.next());
 					infoSubsidyParts.add(newInfoGrantPart);
 				}
 				newInfoListGrantSubsidy.setInfoGrantParts(infoSubsidyParts);

@@ -85,7 +85,7 @@
             </td>
             <td class="listClasses">
                 <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>
-                <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime %>' > 
+                <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime + "&amp;loaddb=1"%>' > 
                     <bean:message key="link.grant.contract.regime.edit" />
                 </html:link>        
             </td>
@@ -170,7 +170,7 @@
             </td>
             <td class="listClasses">
                 <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>
-                <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime %>' > 
+                <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime + "&amp;loaddb=1" %>' > 
                     <bean:message key="link.grant.contract.regime.edit" />
                 </html:link>        
             </td>

@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantType;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantType;
@@ -45,7 +45,7 @@ public class ReadGrantType extends ReadDomainObjectService implements IService
      */
     protected InfoObject clone2InfoObject(IDomainObject domainObject)
     {
-        return Cloner.copyIGrantType2InfoGrantType((IGrantType) domainObject);
+        return InfoGrantType.newInfoFromDomain((IGrantType) domainObject);
     }
 
     /*

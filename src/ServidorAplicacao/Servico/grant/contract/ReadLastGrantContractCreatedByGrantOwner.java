@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantContract;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import Dominio.grant.contract.IGrantContract;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -53,7 +53,7 @@ public class ReadLastGrantContractCreatedByGrantOwner implements IService
 		InfoGrantContract infoGrantContract = null;
 		try
 		{
-			infoGrantContract = Cloner.copyIGrantContract2InfoGrantContract(grantContract);
+			infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
 		}
 		catch (Exception e)
 		{

@@ -22,49 +22,37 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Pica
  */
 
-public class ManageGrantOwnerAction extends FenixDispatchAction
-{
-	public ActionForward prepareManageGrantOwnerForm(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		try
-		{
+public class ManageGrantOwnerAction extends FenixDispatchAction {
+    public ActionForward prepareManageGrantOwnerForm(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        try {
             Integer idInternal = null;
-			if (verifyParameterInRequest(request,"idInternal"))
-			{
-				idInternal = new Integer(request.getParameter("idInternal"));
-			}
-			else if ((Integer) request.getAttribute("idInternal") != null)
-			{
-				idInternal = (Integer) request.getAttribute("idInternal");
-			}
+            if (verifyParameterInRequest(request, "idInternal")) {
+                idInternal = new Integer(request.getParameter("idInternal"));
+            } else if ((Integer) request.getAttribute("idInternal") != null) {
+                idInternal = (Integer) request.getAttribute("idInternal");
+            }
 
-			if(idInternal == null)
-			{
-				throw new Exception();
-			}
-			
-			//Read Grant Owner
-			Object[] args = { idInternal };
-			IUserView userView = SessionUtils.getUserView(request);
-			InfoGrantOwner infoGrantOwner =
-				(InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
+            if (idInternal == null) {
+                throw new Exception();
+            }
 
-			if (infoGrantOwner == null)
-			{
-            	throw new Exception();
-			}
+            //Read Grant Owner
+            Object[] args = { idInternal };
+            IUserView userView = SessionUtils.getUserView(request);
+            InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(userView,
+                    "ReadGrantOwner", args);
+
+            if (infoGrantOwner == null) {
+                throw new Exception();
+            }
 
             request.setAttribute("infoGrantOwner", infoGrantOwner);
-		}
-		catch (Exception e)
-		{
+            return mapping.findForward("manage-grant-owner");
+            
+        } catch (Exception e) {
             return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-owner", null);
-		}
-		return mapping.findForward("manage-grant-owner");
-	}    
+        }
+    }
 }
