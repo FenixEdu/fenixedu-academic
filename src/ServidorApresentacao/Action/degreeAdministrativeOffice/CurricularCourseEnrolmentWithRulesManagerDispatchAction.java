@@ -73,11 +73,14 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Gen
 
 		super.validateToken(request, form, mapping, "error.transaction.enrolment");
 
+		HttpSession session = request.getSession();
+
 		if (isCancelled(request)) {
+			session.removeAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+			session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
+			session.removeAttribute(SessionConstants.ACTUAL_ENROLMENT_KEY);
 			return mapping.findForward(forwards[3]);
 		}
-
-		HttpSession session = request.getSession();
 
 		session.removeAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 		session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);

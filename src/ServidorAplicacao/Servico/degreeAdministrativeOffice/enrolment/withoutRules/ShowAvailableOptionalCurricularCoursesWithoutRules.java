@@ -1,7 +1,9 @@
 package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -28,10 +30,11 @@ public class ShowAvailableOptionalCurricularCoursesWithoutRules implements IServ
 		return "ShowAvailableOptionalCurricularCoursesWithoutRules";
 	}
 
-	public InfoEnrolmentContext run(InfoStudent infoStudent) throws FenixServiceException {
+	public InfoEnrolmentContext run(InfoStudent infoStudent, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 		try {
 			IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
-			return EnrolmentContextManager.getInfoEnrolmentContext(EnrolmentContextManager.initialOptionalEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(student));
+			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+			return EnrolmentContextManager.getInfoEnrolmentContext(EnrolmentContextManager.initialOptionalEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(student, executionPeriod));
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

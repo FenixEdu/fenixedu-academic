@@ -93,7 +93,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 		}
 	}
 
-	private EnrolmentContext updateActualEnrolment(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia{
+	private EnrolmentContext updateActualEnrolment(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSupport =	SuportePersistenteOJB.getInstance();
 

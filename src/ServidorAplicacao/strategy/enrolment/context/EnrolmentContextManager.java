@@ -558,25 +558,16 @@ public abstract class EnrolmentContextManager {
 //		return possibleCurricularCoursesScopesToChoose;
 //	}
 
-	public static EnrolmentContext initialOptionalEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(IStudent student) throws ExcepcaoPersistencia {
+	public static EnrolmentContext initialOptionalEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(IStudent student, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 		EnrolmentContext enrolmentContext = new EnrolmentContext();
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSupport.getIPersistentEnrolmentPeriod();
 
 		IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 		IDegreeCurricularPlan degreeCurricularPlan = studentActiveCurricularPlan.getDegreeCurricularPlan();
 		List curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
-
-		IEnrolmentPeriod enrolmentPeriod = null;
-		try {
-			enrolmentPeriod = getEnrolmentPeriod(enrolmentPeriodDAO, studentActiveCurricularPlan);
-		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
-			//FIXME DAVID-RICARDO: There is nothing to do!?
-		}
-		IExecutionPeriod executionPeriod = enrolmentPeriod.getExecutionPeriod();
 
 		List curricularCoursesScopesFromDegreeCurricularPlan = new ArrayList();
 		Iterator iterator = curricularCoursesFromDegreeCurricularPlan.iterator();

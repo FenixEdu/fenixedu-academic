@@ -137,13 +137,9 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 						(curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch()) ||
 						(curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))) &&
 						(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope)) &&
-						(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope)) &&
-						(!otherIrrelevanteCurricularCourses.contains(curricularCourseScope.getCurricularCourse()))
+//						(!otherIrrelevanteCurricularCourses.contains(curricularCourseScope.getCurricularCourse())) &&
+						(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope))
 					) {
-					// TODO DAVID-RICARDO: Perguntar se são estas mesmo as disciplinas a remover (TFC, estágios, etc...)
-					// In this manner, for this list, we are excluding curricular courses from other branches that not the student's;
-					// curricular courses already aproved, enroled and temporarily enroled;
-					// TFC and training curricular courses.
 					aux1.add(curricularCourseScope);
 				}
 			}

@@ -16,6 +16,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
@@ -44,10 +45,11 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		session.removeAttribute(SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY);
 		session.removeAttribute(SessionConstants.ACTUAL_ENROLMENT_KEY);
 
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoStudent infoStudent = super.getInfoStudent(request, form, userView);
-		Object args[] = { infoStudent };
+		Object args[] = { infoStudent, infoExecutionPeriod };
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableOptionalCurricularCoursesWithoutRules", args);
 		ManualEquivalenceManagerDispatchAction.sort(infoEnrolmentContext.getInfoEnrolmentsAprovedByStudent(), infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled());

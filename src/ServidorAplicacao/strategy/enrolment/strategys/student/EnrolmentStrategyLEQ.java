@@ -15,6 +15,7 @@ import ServidorAplicacao.strategy.enrolment.rules.EnrolmentValidateNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategy;
 import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -91,5 +92,8 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 		super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
 
 		return super.getEnrolmentContext();
+	}
+
+	private void check() throws ExcepcaoPersistencia {
 	}
 }
