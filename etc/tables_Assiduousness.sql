@@ -15,8 +15,6 @@ CREATE TABLE ass_CARGO (
   PRIMARY KEY  (chaveCargo)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-
-
 --
 -- Table structure for table 'ass_CARGO_URL'
 --
@@ -45,7 +43,6 @@ CREATE TABLE ass_CARTAO (
   estado varchar(50) NOT NULL default '',
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
-
 
 
 --
@@ -78,6 +75,7 @@ CREATE TABLE ass_FERIADO (
   UNIQUE KEY u1 (tipoFeriado,data)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
+
 --
 -- Table structure for table 'ass_FERIAS'
 --
@@ -100,25 +98,9 @@ CREATE TABLE ass_FERIAS (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
---
--- Dumping data for table 'ass_FERIAS'
---
-
 
 --
--- Table structure for table 'ass_FUNC_NAO_DOCENTE'
---
-
-DROP TABLE IF EXISTS ass_FUNC_NAO_DOCENTE;
-CREATE TABLE ass_FUNC_NAO_DOCENTE (
-  codigoInterno int(11) NOT NULL default '0' auto_increment,
-  chaveFuncionario int(11) NOT NULL default '0',
-  PRIMARY KEY  (codigoInterno),
-  UNIQUE KEY u1 (chaveFuncionario)
-) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
-
---
--- Table structure for table `ass_FUNCIONARIO`
+-- Table structure for table 'ass_FUNCIONARIO'
 --
 
 DROP TABLE IF EXISTS ass_FUNCIONARIO;
@@ -136,6 +118,7 @@ CREATE TABLE ass_FUNCIONARIO (
 --
 -- Table structure for table 'ass_FUNCIONARIO_HISTORICO'
 --
+
 DROP TABLE IF EXISTS ass_FUNCIONARIO_HISTORICO;
 CREATE TABLE ass_FUNCIONARIO_HISTORICO (
   codigoInterno int(11) NOT NULL auto_increment,
@@ -152,6 +135,20 @@ CREATE TABLE ass_FUNCIONARIO_HISTORICO (
   quando datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB;
+
+
+--
+-- Table structure for table 'ass_FUNC_NAO_DOCENTE'
+--
+
+DROP TABLE IF EXISTS ass_FUNC_NAO_DOCENTE;
+CREATE TABLE ass_FUNC_NAO_DOCENTE (
+  codigoInterno int(11) NOT NULL auto_increment,
+  chaveFuncionario int(11) NOT NULL default '0',
+  PRIMARY KEY  (codigoInterno),
+  UNIQUE KEY u1 (chaveFuncionario)
+) TYPE=InnoDB;
+
 
 --
 -- Table structure for table 'ass_HORARIO'
@@ -183,10 +180,36 @@ CREATE TABLE ass_HORARIO (
   dataFim date default NULL,
   numDias int(10) default NULL,
   posicao int(10) default NULL,
+  trabalhoConsecutivo time default NULL,
   quem int(11) NOT NULL default '0',
   quando datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
+
+
+--
+-- Table structure for table 'ass_HORARIOEXCEPCAO_REGIME'
+--
+
+DROP TABLE IF EXISTS ass_HORARIOEXCEPCAO_REGIME;
+CREATE TABLE ass_HORARIOEXCEPCAO_REGIME (
+  chaveHorario int(11) NOT NULL default '0',
+  chaveRegime int(11) NOT NULL default '0',
+  PRIMARY KEY  (chaveHorario,chaveRegime)
+) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
+
+
+
+--
+-- Table structure for table 'ass_HORARIOTIPO_REGIME'
+--
+
+DROP TABLE IF EXISTS ass_HORARIOTIPO_REGIME;
+CREATE TABLE ass_HORARIOTIPO_REGIME (
+  chaveHorarioTipo int(11) NOT NULL default '0',
+  chaveRegime int(11) NOT NULL default '0',
+  PRIMARY KEY  (chaveHorarioTipo,chaveRegime)
+) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
 
 --
@@ -219,14 +242,11 @@ CREATE TABLE ass_HORARIO_EXCEPCAO (
   dataFim date default NULL,
   numDias int(10) default NULL,
   posicao int(10) default NULL,
+  trabalhoConsecutivo time default NULL,
   quem int(11) NOT NULL default '0',
   quando datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
-
---
--- Dumping data for table 'ass_HORARIO_EXCEPCAO'
---
 
 
 --
@@ -239,10 +259,6 @@ CREATE TABLE ass_HORARIO_REGIME (
   chaveRegime int(11) NOT NULL default '0',
   PRIMARY KEY  (chaveHorario,chaveRegime)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
-
---
--- Dumping data for table 'ass_HORARIO_REGIME'
---
 
 
 --
@@ -269,36 +285,11 @@ CREATE TABLE ass_HORARIO_TIPO (
   descontoMinimo time default NULL,
   inicioExpediente datetime default NULL,
   fimExpediente datetime default NULL,
+  trabalhoConsecutivo time default NULL,
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
 
---
--- Table structure for table 'ass_HORARIOEXCEPCAO_REGIME'
---
-
-DROP TABLE IF EXISTS ass_HORARIOEXCEPCAO_REGIME;
-CREATE TABLE ass_HORARIOEXCEPCAO_REGIME (
-  chaveHorario int(11) NOT NULL default '0',
-  chaveRegime int(11) NOT NULL default '0',
-  PRIMARY KEY  (chaveHorario,chaveRegime)
-) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
-
---
--- Dumping data for table 'ass_HORARIOEXCEPCAO_REGIME'
---
-
-
---
--- Table structure for table 'ass_HORARIOTIPO_REGIME'
---
-
-DROP TABLE IF EXISTS ass_HORARIOTIPO_REGIME;
-CREATE TABLE ass_HORARIOTIPO_REGIME (
-  chaveHorarioTipo int(11) NOT NULL default '0',
-  chaveRegime int(11) NOT NULL default '0',
-  PRIMARY KEY  (chaveHorarioTipo,chaveRegime)
-) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
 --
 -- Table structure for table 'ass_JUSTIFICACAO'
@@ -316,16 +307,10 @@ CREATE TABLE ass_JUSTIFICACAO (
   observacao varchar(50) default NULL,
   quem int(11) NOT NULL default '0',
   quando datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (codigoInterno)
+  PRIMARY KEY  (codigoInterno),
+  KEY indexFuncionario (chaveFuncionario),
+  KEY indexDatas (diaInicio,diaFim)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
-
---
--- Dumping data for table 'ass_JUSTIFICACAO'
---
-INSERT INTO ass_JUSTIFICACAO VALUES (44462,27,1,'2003-05-19','11:00:00','2003-05-19','13:00:00',NULL,1796,'2003-05-26 15:26:29');
-INSERT INTO ass_JUSTIFICACAO VALUES (44463,45,1,'2003-05-20','11:00:00','2003-05-20','12:00:00',NULL,1796,'2003-05-26 15:29:42');
-INSERT INTO ass_JUSTIFICACAO VALUES (91752,27,1,'2003-05-19','11:00:00','2003-05-19','13:00:00',NULL,1796,'2003-05-26 15:26:29');
-INSERT INTO ass_JUSTIFICACAO VALUES (91753,45,1,'2003-05-20','11:00:00','2003-05-20','12:00:00',NULL,1796,'2003-05-26 15:29:42');
 
 
 --
@@ -344,9 +329,6 @@ CREATE TABLE ass_MARCACAO_PONTO (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
---
--- Dumping data for table 'ass_MARCACAO_PONTO'
---
 
 
 --
@@ -361,20 +343,6 @@ CREATE TABLE ass_MODALIDADE (
   UNIQUE KEY u1 (designacao)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
---
--- Table structure for table 'ass_PAISES'
---
-
-DROP TABLE IF EXISTS ass_PAISES;
-CREATE TABLE ass_PAISES (
-  codigoInterno int(11) NOT NULL auto_increment,
-  codigoPais int(11) NOT NULL default '0',
-  nomePais varchar(10) NOT NULL default '',
-  nacionalidade varchar(50) NOT NULL default '',
-  sigla varchar(5) NOT NULL default '',
-  PRIMARY KEY  (codigoInterno),
-  UNIQUE KEY U1 (codigoPais)
-) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
 --
 -- Table structure for table 'ass_PARAM_FERIAS'
@@ -388,6 +356,7 @@ CREATE TABLE ass_PARAM_FERIAS (
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
+
 
 --
 -- Table structure for table 'ass_PARAM_JUSTIFICACAO'
@@ -407,6 +376,7 @@ CREATE TABLE ass_PARAM_JUSTIFICACAO (
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
 
+
 --
 -- Table structure for table 'ass_PARAM_REGULARIZACAO'
 --
@@ -421,6 +391,7 @@ CREATE TABLE ass_PARAM_REGULARIZACAO (
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
+
 
 --
 -- Table structure for table 'ass_PERIODO_FERIAS'
@@ -439,53 +410,6 @@ CREATE TABLE ass_PERIODO_FERIAS (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
---
--- Dumping data for table 'ass_PERIODO_FERIAS'
---
-
-
---
--- Table structure for table 'ass_PESSOA'
---
-
-DROP TABLE IF EXISTS ass_PESSOA;
-CREATE TABLE ass_PESSOA (
-  codigoInterno int(11) NOT NULL default '0',
-  numeroDocumentoIdentificacao varchar(50) NOT NULL default '',
-  tipoDocumentoIdentificacao int(11) NOT NULL default '0',
-  localEmissaoDocumentoIdentificacao varchar(100) default NULL,
-  dataEmissaoDocumentoIdentificacao date default NULL,
-  dataValidadeDocumentoIdentificacao date default NULL,
-  nome varchar(100) default NULL,
-  sexo int(11) default NULL,
-  estadoCivil int(11) default NULL,
-  nascimento date default NULL,
-  nomePai varchar(100) default NULL,
-  nomeMae varchar(100) default NULL,
-  nacionalidade varchar(50) default NULL,
-  freguesiaNaturalidade varchar(100) default NULL,
-  concelhoNaturalidade varchar(100) default NULL,
-  distritoNaturalidade varchar(100) default NULL,
-  morada varchar(100) default NULL,
-  localidade varchar(100) default NULL,
-  codigoPostal varchar(8) default NULL,
-  localidadeCodigoPostal varchar(100) default NULL,
-  freguesiaMorada varchar(100) default NULL,
-  concelhoMorada varchar(100) default NULL,
-  distritoMorada varchar(100) default NULL,
-  telefone varchar(50) default NULL,
-  telemovel varchar(50) default NULL,
-  email varchar(100) default NULL,
-  enderecoWeb varchar(200) default NULL,
-  numContribuinte varchar(50) default NULL,
-  profissao varchar(100) default NULL,
-  username varchar(50) default NULL,
-  password varchar(50) default NULL,
-  nacionalidadeCompleta int(11) default NULL,
-  codigoFiscal varchar(50) NOT NULL default '',
-  PRIMARY KEY  (codigoInterno),
-  UNIQUE KEY U1 (numeroDocumentoIdentificacao,tipoDocumentoIdentificacao)
-) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
 --
 -- Table structure for table 'ass_PESSOA_CARGO'
@@ -498,6 +422,7 @@ CREATE TABLE ass_PESSOA_CARGO (
   PRIMARY KEY  (chavePessoa,chaveCargo)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
+
 --
 -- Table structure for table 'ass_REGIME'
 --
@@ -509,6 +434,7 @@ CREATE TABLE ass_REGIME (
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (designacao)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
+
 
 --
 -- Table structure for table 'ass_REGULARIZACAO_MARCACAO'
@@ -525,11 +451,6 @@ CREATE TABLE ass_REGULARIZACAO_MARCACAO (
   UNIQUE KEY u1 (chaveMarcacaoPonto)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
---
--- Dumping data for table 'ass_REGULARIZACAO_MARCACAO'
---
-
-
 
 --
 -- Table structure for table 'ass_STATUS'
@@ -542,9 +463,12 @@ CREATE TABLE ass_STATUS (
   designacao varchar(50) NOT NULL default '',
   estado enum('activo','inactivo','pendente') NOT NULL default 'activo',
   assiduidade enum('true','false') NOT NULL default 'true',
+  quem int(11) NOT NULL default '0',
+  quando datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (designacao)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
+
 
 --
 -- Table structure for table 'ass_UNIDADE_MARCACAO'
