@@ -4,8 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <%-- Present number of hits of search --%>
-<bean:define id="resultSize" name="numberOfTotalElementsInSearch"/>
-<p><bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/></p>
+<logic:present name="numberOfTotalElementsInSearch">
+	<bean:define id="resultSize" name="numberOfTotalElementsInSearch"/>
+	<p><bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/></p>
+</logic:present>
+
 
 <logic:equal name="justGrantOwner" value="on">
 <br/><strong><bean:message key="label.grant.owner.filter"/></strong>
