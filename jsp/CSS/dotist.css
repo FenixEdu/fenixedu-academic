@@ -217,10 +217,18 @@ a:hover {
 .infoselected {
 	background-color: #FFFFCC;
 	padding: 10px 20px;
-	border-width: 1px;
-	border-style: dotted;
-	border-color: #333333;
+	border: 1px dotted #333;
 	text-align: left;
+	}
+
+.infotable {
+	background-color: #EBECED;
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	}
+	
+.bottomborder {
+	border-bottom: 1px solid #ccc;
 	}
 	
 .formTD	{
@@ -246,4 +254,13 @@ a:hover {
 
 .tall-td {
 	height: 50px;
+	}
+
+/*****************************************************************
+	Misc text styles
+******************************************************************/
+
+.greytxt {
+	font: 11px  Arial, Helvetica, sans-serif;
+	color: #666;
 	}
