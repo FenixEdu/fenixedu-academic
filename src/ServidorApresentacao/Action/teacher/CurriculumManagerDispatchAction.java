@@ -106,16 +106,13 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		throws Exception {
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = getSession(request);
-		session.removeAttribute(SessionConstants.INFO_SITE_SECTION);
-		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT);
-		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-		session.removeAttribute("ReferenciaBibliografica");
-		session.removeAttribute(SessionConstants.EXECUTION_COURSE_CURRICULUM);
+	
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 		InfoCurriculum curriculumView;
+		System.out.println(infoSite);
 		try {
 			Object args[] = { infoSite.getInfoExecutionCourse()};
 			GestorServicos serviceManager = GestorServicos.manager();
@@ -138,7 +135,33 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		SessionUtils.validSessionVerification(request, mapping);
+			SessionUtils.validSessionVerification(request, mapping);
+			HttpSession session = request.getSession();
+			DynaActionForm objectivesForm = (DynaActionForm) form;
+			InfoCurriculum oldCurriculum =
+				(InfoCurriculum) session.getAttribute(
+					SessionConstants.EXECUTION_COURSE_CURRICULUM);
+
+			InfoCurriculum newCurriculum = new InfoCurriculum();
+			BeanUtils.copyProperties(oldCurriculum, newCurriculum);
+			newCurriculum.setProgram(
+				(String) objectivesForm.get("program"));
+			Object args[] = { oldCurriculum, newCurriculum };
+			UserView userView =
+				(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			try {
+				GestorServicos serviceManager = GestorServicos.manager();
+				InfoCurriculum curriculumView =
+					(InfoCurriculum) serviceManager.executar(
+						userView,
+						"EditCurriculum",
+						args);
+				session.setAttribute(
+					SessionConstants.EXECUTION_COURSE_CURRICULUM,
+					curriculumView);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
 		return mapping.findForward("viewProgram");
 	}
 	public ActionForward prepareEditProgram(

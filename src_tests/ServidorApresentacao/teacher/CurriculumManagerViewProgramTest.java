@@ -1,5 +1,5 @@
 /*
- * Created on 18/Mar/2003
+ * Created on 20/Mar/2003
  *
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
@@ -22,16 +22,15 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class CurriculumManagerViewObjectivesTest
+public class CurriculumManagerViewProgramTest
 	extends TestCasePresentationTeacherPortal {
 
 	/**
 	 * @param testName
 	 */
-	public CurriculumManagerViewObjectivesTest(String testName) {
+	public CurriculumManagerViewProgramTest(String testName) {
 		super(testName);
-
-	}
+		}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
@@ -51,7 +50,7 @@ public class CurriculumManagerViewObjectivesTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/objectivesManagerDA";
+		return "/programManagerDA";
 	}
 
 	/**
@@ -59,7 +58,7 @@ public class CurriculumManagerViewObjectivesTest
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-		String[] result = { "java.lang.Exception" };
+		String[] result = {"java.lang.Exception"};
 		return result;
 	}
 
@@ -81,7 +80,7 @@ public class CurriculumManagerViewObjectivesTest
 	 * This method must return a string identifying the forward when the action executes successfuly.
 	 */
 	protected String getSuccessfulForward() {
-		return "viewObjectives";
+		return "viewProgram";
 	}
 
 	/**
@@ -159,7 +158,7 @@ public class CurriculumManagerViewObjectivesTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		Map result = new HashMap();
-		result.put("method","acessObjectives");
+		result.put("method","acessProgram");
 		return result;
 	}
 
@@ -172,7 +171,7 @@ public class CurriculumManagerViewObjectivesTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
 		Map result = new HashMap();
-	result.put("method","acessObjectives");
+	result.put("method","acessProgram");
 	return result;
 	}
 
@@ -183,8 +182,7 @@ public class CurriculumManagerViewObjectivesTest
 	 * This method must return null if not to be used.
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		
-	return null;
+			return null;
 	}
 
 	/**
@@ -216,5 +214,4 @@ public class CurriculumManagerViewObjectivesTest
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
 		return null;
 	}
-
 }
