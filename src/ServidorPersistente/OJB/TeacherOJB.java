@@ -7,7 +7,9 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.IDisciplinaExecucao;
+import Dominio.IPessoa;
 import Dominio.ITeacher;
+import Dominio.Pessoa;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
@@ -40,6 +42,18 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	
+	public ITeacher readTeacherByUsernamePB(String user)
+			throws ExcepcaoPersistencia {
+			
+				ITeacher teacher = new Teacher();
+				IPessoa person = new Pessoa();
+				person.setUsername(user);
+				teacher.setPerson(person);
+				teacher= (ITeacher) readDomainObjectByCriteria(teacher);
+				return teacher;
+			
+		}
 	public ITeacher readTeacherByNumber(Integer teacherNumber)
 		throws ExcepcaoPersistencia {
 		try {

@@ -33,10 +33,11 @@ public class ResponsibleForOJB
 	public ResponsibleForOJB() {
 		super();
 	}
-	
-	public List readAll()throws ExcepcaoPersistencia {
+
+	public List readAll() throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + ResponsibleFor.class.getName();
+			String oqlQuery =
+				"select all from " + ResponsibleFor.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			lockRead(result);
@@ -44,132 +45,146 @@ public class ResponsibleForOJB
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
-		}
-	
+	}
+
 	public IResponsibleFor readByTeacherAndExecutionCourse(
-			ITeacher teacher,
-			IDisciplinaExecucao executionCourse)
-			throws ExcepcaoPersistencia {
-			try {
-				IResponsibleFor responsibleFor = null;
-				String oqlQuery =
-					"select responsibleFor from "
-						+  ResponsibleFor.class.getName()
-						+ " where teacher.teacherNumber = $1"
-						+ " and executionCourse.sigla = $2"
-						+ " and executionCourse.executionPeriod.name = $3"
-						+ " and executionCourse.executionPeriod.executionYear.year = $4";
+		ITeacher teacher,
+		IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		try {
+			IResponsibleFor responsibleFor = null;
+			String oqlQuery =
+				"select responsibleFor from "
+					+ ResponsibleFor.class.getName()
+					+ " where teacher.teacherNumber = $1"
+					+ " and executionCourse.sigla = $2"
+					+ " and executionCourse.executionPeriod.name = $3"
+					+ " and executionCourse.executionPeriod.executionYear.year = $4";
 
-				query.create(oqlQuery);
-				query.bind(teacher.getTeacherNumber());
-				query.bind(executionCourse.getSigla());
-				query.bind(executionCourse.getExecutionPeriod().getName());
-				query.bind(
-					executionCourse
-						.getExecutionPeriod()
-						.getExecutionYear()
-						.getYear());
+			query.create(oqlQuery);
+			query.bind(teacher.getTeacherNumber());
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
 
-				List result = (List) query.execute();
-				lockRead(result);
-				if (result.size() != 0)
-					responsibleFor = (IResponsibleFor) result.get(0);
-				return responsibleFor;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				responsibleFor = (IResponsibleFor) result.get(0);
+			return responsibleFor;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
 
-		public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
-			try {
+	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
+		try {
 
-				String oqlQuery =
-					"select responsibleFor from "
-						+ ResponsibleFor.class.getName()
-						+ " where teacher.teacherNumber = $1";
+			String oqlQuery =
+				"select responsibleFor from "
+					+ ResponsibleFor.class.getName()
+					+ " where teacher.teacherNumber = $1";
 
-				query.create(oqlQuery);
-				query.bind(teacher.getTeacherNumber());
+			query.create(oqlQuery);
+			query.bind(teacher.getTeacherNumber());
 
-				List result = (List) query.execute();
-				lockRead(result);
+			List result = (List) query.execute();
+			lockRead(result);
 
-				return result;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
 
-		public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
-			throws ExcepcaoPersistencia {
-			try {
-				
-				String oqlQuery =
-					"select responsibleFor from "
-						+ ResponsibleFor.class.getName()
-						+ " where executionCourse.sigla = $1"
-						+ " and executionCourse.executionPeriod.name = $2"
-						+ " and executionCourse.executionPeriod.executionYear.year = $3";
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		try {
 
-				query.create(oqlQuery);
-				query.bind(executionCourse.getSigla());
-				query.bind(executionCourse.getExecutionPeriod().getName());
-				query.bind(
-					executionCourse
-						.getExecutionPeriod()
-						.getExecutionYear()
-						.getYear());
+			String oqlQuery =
+				"select responsibleFor from "
+					+ ResponsibleFor.class.getName()
+					+ " where executionCourse.sigla = $1"
+					+ " and executionCourse.executionPeriod.name = $2"
+					+ " and executionCourse.executionPeriod.executionYear.year = $3";
 
-				List result = (List) query.execute();
-				lockRead(result);
+			query.create(oqlQuery);
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
 
-				return result;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+			List result = (List) query.execute();
+			lockRead(result);
+
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
 
-		public void delete(IResponsibleFor responsibleFor)
-			throws ExcepcaoPersistencia {
-			super.delete(responsibleFor);
-		}
+	public void delete(IResponsibleFor responsibleFor)
+		throws ExcepcaoPersistencia {
+		super.delete(responsibleFor);
+	}
 
-		
+	public void deleteAll() throws ExcepcaoPersistencia {
+		String oqlQuery = "select all from " + ResponsibleFor.class.getName();
+		super.deleteAll(oqlQuery);
+	}
 
-		
+	public void lockWrite(IResponsibleFor responsibleFor)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+		IResponsibleFor responsibleForFromDB = null;
 
-		public void deleteAll() throws ExcepcaoPersistencia {
-			String oqlQuery = "select all from " + ResponsibleFor.class.getName();
-			super.deleteAll(oqlQuery);
-		}
+		// If there is nothing to write, simply return.
+		if (responsibleFor == null)
+			return;
 
-		public void lockWrite(IResponsibleFor responsibleFor)
-				throws ExcepcaoPersistencia, ExistingPersistentException {
-					IResponsibleFor responsibleForFromDB = null;
+		// Read responsibleFor from database.
+		responsibleForFromDB =
+			this.readByTeacherAndExecutionCourse(
+				responsibleFor.getTeacher(),
+				responsibleFor.getExecutionCourse());
 
-				// If there is nothing to write, simply return.
-				if (responsibleFor == null)
-					return;
+		// If responsibleFor is not in database, then write it.
+		if (responsibleForFromDB == null)
+			super.lockWrite(responsibleFor);
 
-				// Read responsibleFor from database.
-				responsibleForFromDB =
-					this.readByTeacherAndExecutionCourse(
-					responsibleFor.getTeacher(),
-					responsibleFor.getExecutionCourse());
+		// else If the responsibleFor is mapped to the database, then write any existing changes.
+		else if (
+			(responsibleFor instanceof ResponsibleFor)
+				&& ((Professorship) responsibleForFromDB).getIdInternal().equals(
+					((Professorship) responsibleFor).getIdInternal())) {
+			super.lockWrite(responsibleFor);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
+	}
 
-				// If responsibleFor is not in database, then write it.
-				if (responsibleForFromDB == null)
-					super.lockWrite(responsibleFor);
-				
-				// else If the responsibleFor is mapped to the database, then write any existing changes.
-				else if (
-					(responsibleFor instanceof ResponsibleFor)
-						&& ((Professorship) responsibleForFromDB).getIdInternal().equals(
-							((Professorship) responsibleFor).getIdInternal())) {
-					super.lockWrite(responsibleFor);
-					// else Throw an already existing exception
-				} else
-					throw new ExistingPersistentException();
-				}
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCoursePB(Dominio.ITeacher, Dominio.IDisciplinaExecucao)
+	 */
+	public IResponsibleFor readByTeacherAndExecutionCoursePB(
+		ITeacher teacher,
+		IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+
+		IResponsibleFor responsibleFor = new ResponsibleFor();
+		responsibleFor.setExecutionCourse(executionCourse);
+		responsibleFor.setTeacher(teacher);
+		responsibleFor =
+			(IResponsibleFor) readDomainObjectByCriteria(responsibleFor);
+
+		return responsibleFor;
+
+	}
 
 }

@@ -84,6 +84,19 @@ public class ProfessorshipOJB
 		}
 	}
 
+	public IProfessorship readByTeacherAndExecutionCoursePB(
+			ITeacher teacher,
+			IDisciplinaExecucao executionCourse)
+			throws ExcepcaoPersistencia {
+			
+				IProfessorship professorship = new Professorship();
+				professorship.setExecutionCourse(executionCourse);
+				professorship.setTeacher(teacher);
+				professorship = (IProfessorship) readDomainObjectByCriteria(professorship);				
+				return professorship;
+			
+		}
+
 	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 		try {
 

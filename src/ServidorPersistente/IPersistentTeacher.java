@@ -55,5 +55,7 @@ public interface IPersistentTeacher extends IPersistentObject{
 	 */
 	public List readAll() throws ExcepcaoPersistencia;
 
+	public ITeacher readTeacherByUsernamePB(String user)
+				throws ExcepcaoPersistencia;
 	
 }

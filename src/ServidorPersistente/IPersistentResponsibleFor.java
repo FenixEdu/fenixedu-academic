@@ -23,6 +23,10 @@ public interface IPersistentResponsibleFor extends IPersistentObject {
 		ITeacher teacher,
 		IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia;
+	public IResponsibleFor readByTeacherAndExecutionCoursePB(
+		ITeacher teacher,
+		IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia;	
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia;
 	public void delete(IResponsibleFor responsibleFor)

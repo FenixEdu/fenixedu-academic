@@ -266,34 +266,38 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		//////////////////////////////////////////////////////////////////////////////////////
 
 		//obtain current ODMG transaction
-		Transaction tx = TxManagerFactory.instance().getTransaction();
-
+//		Transaction tx = TxManagerFactory.instance().getTransaction();
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		// we allow queries even if no ODMG transaction is running.
 		// thus we have to provide a pseudo tx if necessary
-		boolean needsCommit = false;
-		if (tx == null) {
-			System.out.println("Transaction Null!");
-			//throw new org.odmg.QueryException("Transaction Null!");
-			//tx = OJBFactory.getInstance().newTransaction();
-		}
+		//boolean needsCommit = false;
+//		if (tx == null) {
+//			System.out.println("Transaction Null!");
+//			//throw new org.odmg.QueryException("Transaction Null!");
+//			//tx = OJBFactory.getInstance().newTransaction();
+//		}
 
 		// we allow to work with unopened transactions.
 		// we assume that such a tx is to be closed after performing the query
-		if (!tx.isOpen()) {
-			tx.begin();
-			needsCommit = true;
-		}
+//		if (!tx.isOpen()) {
+//			tx.begin();
+//			needsCommit = true;
+//		}
 		// obtain a broker instance from the current transaction
-		PersistenceBroker broker = ((HasBroker) tx).getBroker();
+//		PersistenceBroker broker = ((HasBroker) tx).getBroker();
 		///////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////
 
 		Class c = ProxyHelper.getRealClass(anExample);
 		ClassDescriptor cld =
-			broker.getDescriptorRepository().getDescriptorFor(c);
-		//DescriptorRepository.getDefaultInstance().getDescriptorFor(
-		//	anExample.getClass());
+			broker.getClassDescriptor(c);
+		
+//		DescriptorRepository descriptorRepository=broker.getDescriptorRepository();	
+//		descriptorRepository.
+			
 		FieldDescriptor[] fds = cld.getFieldDescriptions();
+		
+		
 		PersistentField f;
 		Object value;
 		Vector ref = cld.getObjectReferenceDescriptors();
@@ -306,9 +310,9 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		///////////////////////////////////////////////////////////////////////////////////////////
 
 		// if query was executed with pseudo tx or with unopened tx, commit it
-		if (needsCommit) {
-			tx.commit();
-		}
+//		if (needsCommit) {
+//			tx.commit();
+//		}
 		///////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////
 
