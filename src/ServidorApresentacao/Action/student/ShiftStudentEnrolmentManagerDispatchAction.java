@@ -314,7 +314,8 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 					       HttpServletResponse response)
     throws Exception {
     // inscrever nas cadeiras 
-
+    // EXPLICAÇÂO: supostamente haveria um passo intermedio onde se inscreve nas cadeiras que escolheu antes de escolher as turmas
+    //                        mas acho q deixou de ser necessário ao tratar disso na action anterior. ou não...                            
     // return initializeShiftEnrolment
     return initializeShiftEnrolment(mapping, form, request, response);
   }
@@ -360,6 +361,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 
 
     //TODO:  tdi-dev (edgar.goncalves2bruno.lopes) -> divideMethod isn't necessary. remove? (change if below)
+    //ANSWER: tdi-dev (bruno.lopes2edgar.goncalves) -> indeed. (when (stable) (remove offending-code)) 
     if (divisor == null || divisor.equals("classes")) {
       return mapping.findForward("selectClass");
     } else { // assume that if the user doesn't want to choose a class, then he wants to choose by course
@@ -428,11 +430,11 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 				 shiftClassesWithLessons);
       }
     }
-
+    //request.setAttribute(wantedClass, filter)
     infoShiftStudentEnrolment.setDividedList(infoShiftDividedList);
-    //        session.setAttribute(
-    //            SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
-    //            infoShiftStudentEnrolment);
+            session.setAttribute(
+                SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
+                infoShiftStudentEnrolment);
     initializeForm(infoShiftStudentEnrolment, (DynaActionForm) form);
     return mapping.findForward("showAvailableShifts");
   }
