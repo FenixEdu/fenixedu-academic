@@ -86,8 +86,8 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		// else If the shift is mapped to the database, then write any existing changes.
 		else if (
 			(shiftToWrite instanceof Turno)
-				&& ((Turno) shiftFromDB).getCodigoInterno().equals(
-					((Turno) shiftToWrite).getCodigoInterno())) {
+				&& ((Turno) shiftFromDB).getIdInternal().equals(
+					((Turno) shiftToWrite).getIdInternal())) {
 			super.lockWrite(shiftToWrite);
 			// else Throw an already existing exception
 		} else
