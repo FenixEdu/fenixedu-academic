@@ -24,7 +24,7 @@ import ServidorPersistente.ISuportePersistente;
 
 /**
  *
- * @authors ss AINDA NAO ESTA PRONTO!
+ * @authors asnr e scpo
  */
 
 public class SiteOJBTest extends TestCaseOJB{
@@ -85,6 +85,7 @@ public class SiteOJBTest extends TestCaseOJB{
 		try{
 			 persistentSupport.iniciarTransaccao();
 		 	 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");	
+		 	 System.out.println("EXECUTION COURSE"+executionCourse.toString());
 		 	 assertNotNull(executionCourse);
 		 	 persistentSupport.confirmarTransaccao();
 		

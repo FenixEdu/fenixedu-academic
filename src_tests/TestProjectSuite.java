@@ -6,7 +6,9 @@
  * Created on 26 de Agosto de 2002, 0:49
  */
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
