@@ -93,7 +93,7 @@
 			<td><bean:message key="label.masterDegree.administrativeOffice.creationDate" /></td>
             <logic:present name="infoGuide" property="creationDate" >
 	            <bean:define id="date" name="infoGuide" property="creationDate" />
-				<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+				<td><%= Data.format2DayMonthYear((Date) date,"-") %></td>   
 			</logic:present>
 		</tr>
 		<tr>
@@ -132,7 +132,7 @@
 			<td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
             <logic:present name="guideSituation" property="date" >
 	            <bean:define id="date" name="guideSituation" property="date" />
-				<td><%= Data.format2DayMonthYear((Date) date) %></td>   			
+				<td><%= Data.format2DayMonthYear((Date) date, "-") %></td>   			
 			</logic:present>
            </tr>
            <% if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) { %>
@@ -144,7 +144,7 @@
         			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
 		            <logic:present name="infoGuide" property="paymentDate" >
 			            <bean:define id="date" name="infoGuide" property="paymentDate" />
-						<td><%= Data.format2DayMonthYear((Date) date) %></td>   			
+						<td><%= Data.format2DayMonthYear((Date) date, "-") %></td>   			
 					</logic:present>
         		</tr>
          	<% } %>
