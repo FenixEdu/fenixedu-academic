@@ -45,7 +45,7 @@ public class SectionMenuContentRenderer extends TagSupport implements ISectionMe
         }
         return strBuffer;
     }
-
+    
     private StringBuffer renderDepthContent(InfoSection infoSection, int i, String path,
             boolean hasChilds) {
         StringBuffer strBuffer = new StringBuffer();
@@ -53,22 +53,24 @@ public class SectionMenuContentRenderer extends TagSupport implements ISectionMe
         if (depth == 0) {
             //adds the info
 
-            strBuffer.append("<ul><li>\n");
-            strBuffer.append(renderDepthIdent(getInfoSection()));
+            strBuffer.append("<li>\n");
+          //  strBuffer.append(renderDepthIdent(getInfoSection()));
 
             strBuffer.append("<a href=\"").append(path).append("/viewSite.do?method=section&amp;index=")
                     .append(i).append("&amp;objectCode=").append(
                             getInfoSection().getInfoSite().getIdInternal()).append("\"");
-            if (hasChilds)
-                strBuffer.append(" onclick=\"houdini('").append(infoSection.getName()).append("');\"");
+//            if (hasChilds)
+//                strBuffer.append(" onclick=\"houdini('").append(infoSection.getName()).append("');\"");
 
             strBuffer.append(">\n").append(infoSection.getName());
-            strBuffer.append("</a>").append("</li></ul>\n");
+            strBuffer.append("</a>").append("</li>\n");
         } else {
             //adds the info
-            strBuffer.append("<dd>");
+            strBuffer.append("<dd style=\"padding:0 0 0 ");
+            strBuffer.append((getInfoSection().getSectionDepth().intValue()+1)*10);
+            strBuffer.append("px\">");
 
-            strBuffer.append(renderDepthIdent(getInfoSection()));
+         //   strBuffer.append(renderDepthIdent(getInfoSection()));
             strBuffer.append("<a href=\"viewSite.do?method=section&amp;index=" + i + "&amp;objectCode="
                     + getInfoSection().getInfoSite().getIdInternal() + "\" >");
             //falta o index

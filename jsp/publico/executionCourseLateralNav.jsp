@@ -39,7 +39,8 @@
 
 	<logic:notEmpty name="sections" >
 		<logic:present name="infoSection" >
-			<li><html:link page="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>"></html:link></li>
+<%-- 			<li><html:link page="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>"></html:link></li>
+--%>
 			<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="infoSection" />
 		</logic:present>
 		<logic:notPresent name="infoSection" >
