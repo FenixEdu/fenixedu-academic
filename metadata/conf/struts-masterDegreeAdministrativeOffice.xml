@@ -16,6 +16,12 @@
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
+		<form-bean name="getStudentByNumberAndGraduationTypeForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="graduationType" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+		</form-bean>
 
 		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
@@ -215,7 +221,51 @@
         	<form-property name="specializationArea" type="java.lang.String" />
         	<form-property name="candidateID" type="java.lang.Integer" />
       </form-bean>
+      
+      <!-- Bean for change of Application Information -->
+      <form-bean name="changePersonalInfoForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" />
 
+        	<form-property name="identificationDocumentType" type="java.lang.String" />
+        	<form-property name="identificationDocumentNumber" type="java.lang.String" />
+        	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
+        	<form-property name="name" type="java.lang.String" />
+        	<form-property name="sex" type="java.lang.String" />
+        	<form-property name="maritalStatus" type="java.lang.String" />
+        	<form-property name="nationality" type="java.lang.String" />
+        	<form-property name="fatherName" type="java.lang.String" />
+        	<form-property name="motherName" type="java.lang.String" />
+        	<form-property name="birthPlaceParish" type="java.lang.String" />
+        	<form-property name="birthPlaceMunicipality" type="java.lang.String" />
+        	<form-property name="birthPlaceDistrict" type="java.lang.String" />
+        	<form-property name="address" type="java.lang.String" />
+        	<form-property name="place" type="java.lang.String" />
+        	<form-property name="postCode" type="java.lang.String" />
+        	<form-property name="addressParish" type="java.lang.String" />
+        	<form-property name="addressMunicipality" type="java.lang.String" />
+        	<form-property name="addressDistrict" type="java.lang.String" />
+        	<form-property name="telephone" type="java.lang.String" />
+        	<form-property name="mobilePhone" type="java.lang.String" />
+        	<form-property name="email" type="java.lang.String" />
+        	<form-property name="webSite" type="java.lang.String" />
+        	<form-property name="contributorNumber" type="java.lang.String" />
+        	<form-property name="occupation" type="java.lang.String" />
+        	<form-property name="birthDay" type="java.lang.String" /> 
+            <form-property name="birthMonth" type="java.lang.String" /> 
+        	<form-property name="birthYear" type="java.lang.String" /> 
+        	<form-property name="idIssueDateDay" type="java.lang.String" /> 
+            <form-property name="idIssueDateMonth" type="java.lang.String" /> 
+        	<form-property name="idIssueDateYear" type="java.lang.String" /> 
+        	<form-property name="idExpirationDateDay" type="java.lang.String" /> 
+            <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
+        	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
+        	<form-property name="username" type="java.lang.String" /> 
+        	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
+			<form-property name="studentNumber" type="java.lang.String"/>
+      </form-bean>
+      
 
 	  <!-- Bean to Change the Guide Situation  -->
       <form-bean name="editGuideSituationForm" 
@@ -1454,11 +1504,45 @@
 	         <forward name="Print" path="candidate/candidateRegistrationTemplate.jsp"/> 
 	         
       </action>
-
+      
+	<!-- visualize Student Informations -->
+      
+ 	  
+	  <action path="/chooseStudentToVisualizeInformations"
+      	      name="changePersonalInfoForm"
+      		  parameter="method"
+      		  scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
+			  >
+	         <forward name="Success" path="/student/visualizePersonalStudentInfo.jsp"/> 
+      </action>
+      
+      <action path="/editStudentToVisualizeInformations"
+      	      name="changePersonalInfoForm"
+      		  parameter="method"
+      		  scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
+			  >
+	         <forward name="Success" path="/student/editStudentInfo.jsp"/> 
+      </action>
+	<!-- end visualize student informations -->
 	
+	<!-- edit student informations -->
+	  <action path="/editStudentInfo"
+	  		  input="/editStudentToVisualizeInformations.do?method=execute&amp;page=0"
+      	      name="changePersonalInfoForm"     
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.EditStudentInfoDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
+	         <forward name="Success" path="/student/visualizePersonalStudentInfo.jsp"/>  
+       </action>
+      <!-- end of edit student information -->
 
-
-		<action	name="seeStudentCurricularPlansForm"
+	  <action	name="seeStudentCurricularPlansForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentAndCurricularPlansDispatchAction"
 				path="/seeStudentCurricularPlans"
 				parameter="method"
