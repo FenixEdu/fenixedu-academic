@@ -67,7 +67,7 @@ public class Sexo {
     public String toString() {
 		if (sexo.intValue()== Sexo.MASCULINO) return Sexo.MASCULINO_STRING;
 	    if (sexo.intValue()== Sexo.FEMININO) return Sexo.FEMININO_STRING;
-	    return "ERRO!"; // Nunca e atingido
+	    return ""; // Nunca e atingido
     }
 
 
