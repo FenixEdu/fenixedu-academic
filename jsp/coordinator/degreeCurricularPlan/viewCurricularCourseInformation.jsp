@@ -39,7 +39,7 @@
 				<logic:equal name="canEdit" value="true">
 					<%-- user has authorization to edit information --%>
 					<b><bean:message key="label.generalObjectives"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;whatToEdit=generalObjectives" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -65,7 +65,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">
 					<b><bean:message key="label.operacionalObjectives"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;whatToEdit=operacionalObjectives" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)			
 				</logic:equal>
@@ -90,7 +90,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">	
 					<b><bean:message key="label.program"/></b>&nbsp;			
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;whatToEdit=program" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -115,7 +115,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">
 					<b><bean:message key="label.generalObjectives.eng"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;whatToEdit=generalObjectivesEn" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;language=English" %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -140,7 +140,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">				
 					<b><bean:message key="label.operacionalObjectives.eng"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;whatToEdit=operacionalObjectivesEn" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;language=English" %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -165,7 +165,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">
 					<b><bean:message key="label.program.eng"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;whatToEdit=programEn" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;language=English" %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -230,32 +230,36 @@
 				<logic:notEmpty name="infoCurriculum" property="infoCurricularCourse.infoScopes">
 					<table width="100%" cellpadding="0" border="0">
 						<tr>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
+							<td class="listClasses-header" colspan="4"><bean:message key="label.coordinator.degreeCurricularPlan.scope.numberHours" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.praticalHours" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.maxIncrementNac" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoPratHours" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.minIncrementNac" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.labHours" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.credits" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.maxIncrementNac" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.ectsCredits" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.minIncrementNac" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.weigth" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.credits" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.branch" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.ectsCredits" />
+							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.beginDate" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.weigth" />
+						</tr>
+						<tr>
+							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.theoretical" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
+							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.practical" />
 							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" />
+							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.theoreticalPractical" />
 							</td>
+							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.laboratorial" />
+							</td>						
 						</tr>
 						<logic:iterate id="curricularCourseScope" name="infoCurriculum" property="infoCurricularCourse.infoScopes">
 							<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>

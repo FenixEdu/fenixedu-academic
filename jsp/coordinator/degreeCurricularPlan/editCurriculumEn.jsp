@@ -13,6 +13,7 @@
 			<html:hidden property="infoCurriculumCode" value="<%=infoCurriculumId.toString()%>"/>
 			<html:hidden property="infoExecutionDegreeCode" value="<%=pageContext.findAttribute("infoExecutionDegreeCode").toString()%>"/>
 			<html:hidden property="infoCurricularCourseCode" value="<%=pageContext.findAttribute("infoCurricularCourseCode").toString()%>"/>
+			<html:hidden property="language" value="English"/>
 			<table>
 				<tr>
 					<td>
@@ -31,11 +32,11 @@
 									<br />
 								</td>								
 								<td width="5%">
-									<img alt="" src="<%= request.getContextPath() %>/images/england-flag.gif" width="30" height="20"/>
+									<img alt="" src="<%= request.getContextPath() %>/images/portugal-flag.gif" width="30" height="20"/>
 									<br />
 								</td>
 								<td width="20%">
-									<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;language=English"%>"><bean:message key="label.coordinator.degreeCurricularPlan.curriculum.english"/></html:link>
+									<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>"><bean:message key="label.coordinator.degreeCurricularPlan.curriculum.portuguese"/></html:link>
 									<br />
 								</td>
 							</tr>
@@ -43,7 +44,7 @@
 					</td>
 				</tr>
 			
-				<tr>
+<%--				<tr>
 					<td><br />
 						<b><bean:message key="label.generalObjectives"/></b>
 					</td>
@@ -66,8 +67,8 @@
 				</tr>
 				<tr>
 					<td><html:textarea property="program" cols="80" rows="6"/></td>
-				</tr>
-<%--				<tr>
+				</tr>--%>
+				<tr>
 					<td><br />
 						<b><bean:message key="label.generalObjectives.eng"/></b>
 					</td>
@@ -91,7 +92,7 @@
 				<tr>
 					<td><html:textarea property="programEn" cols="80" rows="6"/><br /></td>
 				</tr>
---%>				
+				
 				<logic:notEmpty name="infoCurriculum" property="lastModificationDate">
 					<tr>
 						<td>

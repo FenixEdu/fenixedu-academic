@@ -63,4 +63,8 @@
 		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
 		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculum.jsp" />
 	</definition>	
+	<definition name="editCurriculumEn" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
+		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculumEn.jsp" />
+	</definition>	
 </tiles-definitions>	
