@@ -20,3 +20,11 @@ ALTER TABLE MARK CHANGE KEY_EXAM KEY_EVALUATION int(11) not null;
 -- ALTERAR OS RECORDS DA TABELA EVALUATION
 -- --------------------------------------------------------------
 UPDATE EVALUATION SET CLASS_NAME='Dominio.Exam';
+
+-- --------------------------------------------------------------
+-- ALTER TABLE CREDITS
+-- --------------------------------------------------------------
+ALTER TABLE CREDITS ADD ADDITIONAL_CREDITS float;
+ALTER TABLE CREDITS ADD ADDITIONAL_CREDITS_JUSTIFICATION varchar (250);
+UPDATE CREDITS set ADDITIONAL_CREDITS = NULL , ADDITIONAL_CREDITS_JUSTIFICATION = NULL;
+s
