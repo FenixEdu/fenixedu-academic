@@ -350,6 +350,20 @@ select.courseEnroll {
 	height: 50px;
 	}
 
+.ects_headertable {
+	border: 1px solid #666;
+	}
+
+.ects_headertable td {
+	color: #333;
+	padding: 5px;
+	background:#EBECED;
+	}
+	
+table#ects {
+	page-break-after: always;
+	}
+
 /*****************************************************************
 	Assiduidade - layout verbete
 ******************************************************************/
