@@ -32,7 +32,6 @@ h2	{
 	font-size: 14px;
 	color: #003366;
 	background-color: transparent;
-	display: inline;
 	}
 
 /******************************************
@@ -264,4 +263,14 @@ a:hover {
 .greytxt {
 	font: 11px  Arial, Helvetica, sans-serif;
 	color: #666;
+	}
+
+.inline {
+	display: inline;
+	}
+	
+.px9-b {
+	font: bold 9px/1em Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	background-color: transparent;
 	}

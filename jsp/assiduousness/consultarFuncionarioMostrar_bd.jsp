@@ -5,20 +5,24 @@
 <%@ taglib uri="/WEB-INF/struts-form.tld" prefix="form" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<div align="left">
- <html:form action="/consultarFuncionarioEscolha" focus="diaInicioEscolha">
- <html:errors/>
+ 	<html:form action="/consultarFuncionarioEscolha" focus="diaInicioEscolha">
  	<br />
- 	<div align="center">
- 	<h2>
-      	<bean:message key="consultarFuncionario.titulo" />&nbsp;&nbsp;
-        <bean:write name="ConsultarFuncionarioMostrarForm" property="numMecanografico" filter="true"/>
-   	</h2>
-   	</div>
     <br />
     	<table width="60%" align="center" border="0">
+    		<tr>
+    			<td>
+    			<h2>
+      				<bean:message key="consultarFuncionario.titulo" />&nbsp;&nbsp;
+        			<bean:write name="ConsultarFuncionarioMostrarForm" property="numMecanografico" filter="true"/>
+   				</h2>
+    			</td>
+    		</tr>
+    		<tr>
+    			<td><html:errors/>
+    			</td>
+    		</tr>
         	<tr>
-            	<td width="100"><bean:message key="prompt.consultar"/>:
+            	<td><bean:message key="prompt.consultar"/>:
                	</td>
                 <td>
                		<html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
@@ -46,12 +50,14 @@
             </tr>
        </table>
        <br />
-	   <table width=60%" class="infotable" align="center">
+       <br />
+       <div class="infotable" style="display: inline;">
+	   <table width=60%" align="center">
             <tr>
               <th colspan="2" class="bottomborder" align="left">
-                <h2>
+                <span class="inline"><h2>
                   <bean:message key="prompt.dadosPessoais" />
-                </h2>
+                </h2></span>
               </th>
             </tr>
             <tr>
@@ -107,9 +113,9 @@
             </tr>      
             <tr>
               <th colspan="2" class="bottomborder" align="left">
-                <h2>
+                <span class="inline"><h2>
                   <bean:message key="prompt.dadosAssiduidade" />
-                </h2>       
+                </h2></span>       
               </th>
             </tr>
 			<tr>
@@ -242,6 +248,7 @@
             </tr>        
             --%>
       </table>
+      </div>
+    <br />
     <br />
   </html:form>
-</div>
