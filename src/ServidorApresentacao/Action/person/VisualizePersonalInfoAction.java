@@ -10,7 +10,7 @@
  *   - Joana Mota (jccm@rnl.ist.utl.pt)
  *
  */
- 
+
 package ServidorApresentacao.Action.person;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,36 +24,34 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
-public class VisualizePersonalInfoAction extends ServidorApresentacao.Action.base.FenixAction {
-	
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                                HttpServletRequest request,
-                                HttpServletResponse response)
-      throws Exception {
+public class VisualizePersonalInfoAction
+	extends ServidorApresentacao.Action.base.FenixAction {
 
-	
-	SessionUtils.validSessionVerification(request, mapping);
+	public ActionForward execute(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+		HttpSession session = request.getSession(false);
+		IUserView userView = (IUserView) session.getAttribute("UserView");
+		GestorServicos gestor = GestorServicos.manager();
+		InfoPerson infoPerson = null;
 
-	HttpSession session = request.getSession(false);
-	if (session != null) {
-      IUserView userView = (IUserView) session.getAttribute("UserView");
-      GestorServicos gestor = GestorServicos.manager();
-	  InfoPerson infoPerson = null;
-	  
-      Object args[] = new Object[1];
-	  args[0] = userView;
-	  
-      infoPerson = (InfoPerson) gestor.executar(userView, "ReadPersonByUsername", args);
-	  
-	  request.removeAttribute("personalInfo");
-      request.setAttribute("personalInfo", infoPerson);
+		Object args[] = new Object[1];
+		args[0] = userView;
 
+		infoPerson =
+			(InfoPerson) gestor.executar(
+				userView,
+				"ReadPersonByUsername",
+				args);
 
-      return mapping.findForward("Success");
-    } else
-      throw new Exception();   
-  }
+		request.removeAttribute("personalInfo");
+		request.setAttribute("personalInfo", infoPerson);
+
+		return mapping.findForward("Success");
+	}
 
 }
