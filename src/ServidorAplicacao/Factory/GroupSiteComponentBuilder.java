@@ -5,8 +5,11 @@
 package ServidorAplicacao.Factory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteAllGroups;
@@ -216,87 +219,46 @@ public class GroupSiteComponentBuilder {
 		return component;
 		}
 			
-	
-		
-		public List readStudentGroupInformation(Integer studentGroupCode) {
-		
-			List studentGroupAttendInformationList = null;
-			try 
-			{
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				
-				//IGroupProperties groupProperties =(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
-				
-				IStudentGroup studentGroup= (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
-				 
-				List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
-				
-				studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
-				Iterator iter = studentGroupAttendList.iterator();
-				InfoSiteStudentInformation  infoSiteStudentInformation;
-				InfoStudentGroupAttend infoStudentGroupAttend = null;
-				int size = 0;
-				while(iter.hasNext())
-				{
-					infoSiteStudentInformation = new InfoSiteStudentInformation();
-					infoStudentGroupAttend = Cloner.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
-					infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno().getNumber());
-					infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
-					infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
-					studentGroupAttendInformationList = insertWithOrder(studentGroupAttendInformationList,infoSiteStudentInformation);
-					
-				}
 			
-				
+	public List readStudentGroupInformation(Integer studentGroupCode) {
+
+		List studentGroupAttendInformationList = null;
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+			IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
+
+			List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
+
+			studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
+			Iterator iter = studentGroupAttendList.iterator();
+			InfoSiteStudentInformation infoSiteStudentInformation = null;
+			InfoStudentGroupAttend infoStudentGroupAttend = null;
+
+			while (iter.hasNext()) {
+
+				infoSiteStudentInformation = new InfoSiteStudentInformation();
+
+				infoStudentGroupAttend = Cloner.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
+
+				infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno().getNumber());
+
+				infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
+
+				infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
+
+				studentGroupAttendInformationList.add(infoSiteStudentInformation);
+
+			}
+
+			Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+
 			} catch (ExcepcaoPersistencia ex) {
-					ex.printStackTrace();
-			}
-			return studentGroupAttendInformationList;
+			ex.printStackTrace();
 		}
-		
-		
-		
-	public static List insertWithOrder(List infoSiteStudentGroupsList,InfoSiteStudentInformation infoSiteStudentInformation)
-	{
-			int size = infoSiteStudentGroupsList.size();
-			List finalList = null;
-			int lastNumber;
-			if(size==0)
-			{
-				infoSiteStudentGroupsList.add(infoSiteStudentInformation);
-				return infoSiteStudentGroupsList;
-			}
-			if(size==1)
-			{
-				lastNumber =((InfoSiteStudentInformation)(infoSiteStudentGroupsList.get(0))).getNumber().intValue(); 
-				if(lastNumber<infoSiteStudentInformation.getNumber().intValue())
-				{
-					infoSiteStudentGroupsList.add(infoSiteStudentInformation);
-					return infoSiteStudentGroupsList;
-				}
-				else
-				{	
-					infoSiteStudentGroupsList.add(0,infoSiteStudentInformation);
-					return infoSiteStudentGroupsList;
-				}
-			}
-			else
-				
-			lastNumber =((InfoSiteStudentInformation)(infoSiteStudentGroupsList.get(size-1))).getNumber().intValue();
-			
-				
-				if(lastNumber<infoSiteStudentInformation.getNumber().intValue())
-				{
-				
-					infoSiteStudentGroupsList.add(infoSiteStudentInformation);
-					 return infoSiteStudentGroupsList;
-				}
-				else
-				{
-					finalList = insertWithOrder(infoSiteStudentGroupsList.subList(0,size-2),infoSiteStudentInformation); 
-					finalList.add(infoSiteStudentGroupsList.get(size-1));
-					return finalList;
-				}
+		return studentGroupAttendInformationList;
 	}
 
+		
+		
 }

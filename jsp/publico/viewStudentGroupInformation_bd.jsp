@@ -1,12 +1,12 @@
 
-
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2><bean:message key="title.StudentGroupInformation"/></h2>
+
+
 
  <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
@@ -15,7 +15,7 @@
 	</logic:empty> 
 
 <table width="50%" cellpadding="0" border="0">
-
+<h2><bean:message key="title.StudentGroupInformation"/></h2>
 	
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.numberWord" />
