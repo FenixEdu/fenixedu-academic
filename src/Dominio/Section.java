@@ -219,5 +219,21 @@ public class Section implements ISection {
 		this.keySuperiorSection = keySuperiorSection;
 	}
 
-//TODO: toString
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		String result = "[SECTION";
+		result += ", codInt=" + getInternalCode();
+		result += ", sectionOrder=" + getSectionOrder();
+		result += ", name=" + getName();
+		result += ", lastModifiedDate=" + getLastModifiedDate();
+//		result += ", site=" + getSite();
+		result += ", superiorSection=" + getSuperiorSection();
+		result += ", inferiorSections=" + getInferiorSections();
+		result += ", items=" + getItems();
+		result += "]";
+
+		return result;
+	}
 }
