@@ -40,7 +40,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			oqlQuery += " and turma.executionPeriod.name = $2 ";
 			oqlQuery += " and turma.executionPeriod.executionYear.year = $3 ";
 			oqlQuery += " and turma.cursoExecucao.executionYear.year = $4 ";
-			oqlQuery += "  and turma.cursoExecucao.degreeCurricularPlan.nome = $5 ";
+			oqlQuery += " and turma.cursoExecucao.degreeCurricularPlan.nome = $5 ";
 			oqlQuery += " and turma.cursoExecucao.degreeCurricularPlan.curso.sigla = $6 ";
 
 			query.create(oqlQuery);
@@ -51,12 +51,12 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			query.bind(turma.getExecutionDegree().getCurricularPlan().getName());
 			query.bind(turma.getExecutionDegree().getCurricularPlan().getCurso().getSigla());			
 			List result = (List) query.execute();
-			lockRead(result);
 			Iterator iterador = result.iterator();
 			while (iterador.hasNext()) {
 				turmaTurno = (ITurmaTurno) iterador.next();
 				turmaTurnoOJB.delete(turmaTurno);
 			}
+			super.delete(turma);
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
