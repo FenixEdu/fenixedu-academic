@@ -30,6 +30,7 @@ import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
+import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
 import DataBeans.InfoSiteSection;
@@ -40,6 +41,7 @@ import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.BibliographicReference;
 import Dominio.Curriculum;
+import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
 import Dominio.EvaluationExecutionCourse;
 import Dominio.FinalEvaluation;
@@ -53,6 +55,7 @@ import Dominio.IEvaluationMethod;
 import Dominio.IEvalutionExecutionCourse;
 import Dominio.IExam;
 import Dominio.IFinalEvaluation;
+import Dominio.IGroupProperties;
 import Dominio.IItem;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -61,6 +64,7 @@ import Dominio.ISite;
 import Dominio.ITeacher;
 import Dominio.Item;
 import Dominio.Section;
+import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -181,6 +185,11 @@ public class TeacherAdministrationSiteComponentBuilder {
 				site,
 				(Integer) obj1);
 		}
+		else if (component instanceof InfoSiteProjects) {
+					return getInfoSiteProjects(
+						(InfoSiteProjects) component,
+						site);
+				}
 		return null;
 	}
 
@@ -1027,4 +1036,52 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		return curriculums;
 	}
+	
+	/**
+	* @param component
+	* @param site
+	* @return
+	*/
+		
+		private ISiteComponent getInfoSiteProjects(
+			InfoSiteProjects component,
+			ISite site)
+			throws FenixServiceException {
+			
+			
+				List infoGroupPropertiesList = readExecutionCourseProjects(site.getExecutionCourse().getIdInternal());
+				component.setInfoGroupPropertiesList(infoGroupPropertiesList);
+				return component;
+			}
+	
+	
+		public List readExecutionCourseProjects(Integer executionCourseCode)throws ExcepcaoInexistente, FenixServiceException {
+		
+			List projects = null;
+		
+			try 
+			{
+				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao)sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode),false);
+				
+				List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
+			
+				projects = new ArrayList();
+				Iterator iterator = executionCourseProjects.iterator();
+			
+				while (iterator.hasNext()) {
+					projects.add(Cloner.copyIGroupProperties2InfoGroupProperties((IGroupProperties)iterator.next()));
+
+				}
+			} catch (ExcepcaoPersistencia e) {
+				e.printStackTrace();
+				throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
+			}
+			
+			return projects;
+		}
+
+
+	
+	
 }

@@ -752,6 +752,7 @@
        <forward name="insertSummary" path="/insertSummaries.jsp" />    
         <forward name="editSummary" path="/editSummary.jsp" />    
 	</action>
+	
 	<action 
 		name="summaryForm1"
 		path="/summariesManager1"
@@ -764,6 +765,16 @@
        <forward name="showSummaries" path="/showSummaries.jsp" />       
        <forward name="insertSummary" path="/insertSummaries.jsp" />    
         <forward name="editSummary" path="/editSummary.jsp" />    
+	</action>
+	
+	<!-- Actions For Groups -->
+	
+	<action 
+		path="/viewExecutionCourseProjects"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
+       <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
 	</action>
 	
 	</action-mappings>

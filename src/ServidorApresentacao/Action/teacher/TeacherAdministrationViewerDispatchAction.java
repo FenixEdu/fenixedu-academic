@@ -32,6 +32,7 @@ import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
+import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
 import DataBeans.InfoSiteSection;
@@ -55,10 +56,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.notAuthorizedActionDeleteException;
+import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
@@ -1668,4 +1666,26 @@ public class TeacherAdministrationViewerDispatchAction
 
 		return showSummaries(mapping, form, request, response);
 	}
+	
+//	========================  GROUPS MANAGEMENT  ========================
+	
+	public ActionForward viewExecutionCourseProjects(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		Integer sectionCode = getSectionCode(request);
+
+		ISiteComponent viewProjectsComponent = new InfoSiteProjects();
+			
+		readSiteView(request, viewProjectsComponent, null, null, null);
+		System.out.println("<------------FAZ A ACCAO 12:27");
+		return mapping.findForward("viewProjectsAndLink");
+		
+			
+	}
+
+	
 }
