@@ -30,9 +30,10 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent
     protected Integer enrolledStudents;
 
     /**
-	 * The following variable serves the purpose of indicating the execution course associated with this
-	 * exam through which the exam was obtained. It should serve only for view purposes!!! It was
-	 * created to be used and set by the ExamsMap Utilities. It has no meaning in the business logic.
+	 * The following variable serves the purpose of indicating the execution
+	 * course associated with this exam through which the exam was obtained. It
+	 * should serve only for view purposes!!! It was created to be used and set
+	 * by the ExamsMap Utilities. It has no meaning in the business logic.
 	 */
     private InfoExecutionCourse infoExecutionCourse;
 
@@ -335,7 +336,8 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent
             {
                 result += "0";
                 result += calendar.get(Calendar.MINUTE);
-            } else
+            }
+            else
             {
                 result += calendar.get(Calendar.MINUTE);
             }
@@ -362,6 +364,10 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent
 
     public boolean getEnrollmentAuthorization()
     {
+        if (getEnrollmentEndDay() == null)
+        {
+            return false;
+        }
         Calendar enrollmentEnd = Calendar.getInstance();
         enrollmentEnd.set(Calendar.DAY_OF_MONTH, getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
         enrollmentEnd.set(Calendar.MONTH, getEnrollmentEndDay().get(Calendar.MONTH));
@@ -372,10 +378,12 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent
         if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis())
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
+
     }
 
     public boolean equals(Object obj)
@@ -383,7 +391,7 @@ public class InfoExam extends InfoEvaluation implements ISiteComponent
         boolean result = false;
         if (obj instanceof InfoExam)
         {
-            InfoExam infoExam = (InfoExam)obj;
+            InfoExam infoExam = (InfoExam) obj;
 
             result =
                 getIdInternal().equals(infoExam.getIdInternal())
