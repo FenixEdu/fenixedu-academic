@@ -25,7 +25,7 @@
     <h2><bean:message name="title"/></h2>
     
     
-    Critérios de procura:<br><bean:write name="findQuery" /><br><br>
+    Critérios de procura:<br><bean:write name="findQuery" filter="false"/><br><br>
     
     <%= ((List) candidateList).size()%> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
     <% if (((List) candidateList).size() != 0) { %>

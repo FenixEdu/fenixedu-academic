@@ -159,10 +159,13 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		  String query = new String();
 		  if (degreeName == null && specialization == null && situationName == null && candidateNumber == null)
 		  	query = "  - Todos os criterios";
-		  else if (degreeName != null) query += "\n  - Curso";
-		  else if (specialization != null) query += "\n  - Tipo de Especialização: " + specialization.toString();
-		  else if (situationName != null) query += "\n  - Situação do Candidato: " + situationName.toString();
-		  else if (candidateNumber != null) query += "\n  - Número de Candidato: " + candidateNumber;
+		  else {
+		  	if (degreeName != null) query += "  - Curso: " + degreeName + "<br />";
+			if (specialization != null) query += "  - Tipo de Especialização: " + specialization.toString() + "<br />";
+		    if (situationName != null) query += "  - Situação do Candidato: " + situationName.toString() + "<br />";
+		    if (candidateNumber != null) query += "  - Número de Candidato: " + candidateNumber + "<br />";
+		  }
+		  
 		  
 		  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
 		  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY);
