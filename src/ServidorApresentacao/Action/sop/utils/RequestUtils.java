@@ -53,9 +53,9 @@ public abstract class RequestUtils {
 		infoExecutionCourse.setSigla(infoExecutionCourseInitials);
 		int indexOf = executionCourseList.indexOf(infoExecutionCourse);
 
-		if (indexOf != -1)
-			return (InfoExecutionCourse) executionCourseList.get(indexOf);
-		else
+		if (indexOf != -1){
+			return (InfoExecutionCourse) executionCourseList.get(indexOf);}
+		
 			throw new IllegalArgumentException("Not find executionCourse!");
 	}
 

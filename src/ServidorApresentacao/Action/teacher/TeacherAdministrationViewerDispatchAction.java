@@ -164,12 +164,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                     "lastModifiedDate"), true));
             return mapping.findForward("showAnnouncements");
         }
-        else
-        {
+        
             HttpSession session = request.getSession(false);
             session.removeAttribute("insertAnnouncementForm");
             return mapping.findForward("insertAnnouncement");
-        }
+        
     }
 
     public ActionForward prepareCreateAnnouncement(ActionMapping mapping, ActionForm form,
@@ -292,11 +291,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         {
             return mapping.findForward("showAnnouncements");
         }
-        else
-        {
+      
             session.removeAttribute("insertAnnouncementForm");
             return mapping.findForward("insertAnnouncement");
-        }
+        
     }
 
     //	======================== Objectives Management ========================
@@ -667,13 +665,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         {
             return mapping.findForward("bibliographyManagement");
         }
-        else
-        {
+     
             HttpSession session = request.getSession(false);
             session.removeAttribute("bibliographicReferenceForm");
-            //return mapping.findForward("insertBibliographicReference");
+            
             return mapping.findForward("bibliographyManagement");
-        }
+        
     }
 
     public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form,
@@ -1026,10 +1023,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			if (superiorSectionCode != null)
 			{
 				return viewSection(mapping, form, request, response, superiorSectionCode);
-			} else
-			{
+			} 
 				return sectionsFirstPage(mapping, form, request, response);
-			}
+			
 		} catch (notAuthorizedServiceDeleteException notnotAuthorizedServiceDeleteException)
 		{
 			ActionErrors actionErrors = new ActionErrors();
@@ -1039,10 +1035,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			if (superiorSectionCode != null)
 			{
 				return viewSection(mapping, form, request, response, superiorSectionCode);
-			} else
-			{
+			} 
 				return sectionsFirstPage(mapping, form, request, response);
-			}
+			
 		} catch (FenixServiceException fenixServiceException)
 		{
 			throw new FenixActionException(fenixServiceException.getMessage());

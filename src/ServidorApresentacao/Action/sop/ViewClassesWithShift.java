@@ -84,9 +84,9 @@ public class ViewClassesWithShift extends FenixShiftAndExecutionCourseAndExecuti
 				"ReadShiftByOID",
 				args);
 		
-		if (infoShift == null)
-			throw new IllegalStateException("O turno pretendido não existe");
-		else
+		if (infoShift == null){
+			throw new IllegalStateException("O turno pretendido não existe");}
+		
 			return infoShift;
 	}
 }

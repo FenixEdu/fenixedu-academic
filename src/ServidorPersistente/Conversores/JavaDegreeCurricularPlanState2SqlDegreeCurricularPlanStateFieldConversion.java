@@ -16,18 +16,18 @@ public class JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConv
 		if (source instanceof DegreeCurricularPlanState) {
 			DegreeCurricularPlanState s = (DegreeCurricularPlanState) source;
 			return s.getDegreeState();
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
 			return new DegreeCurricularPlanState(src);
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 }

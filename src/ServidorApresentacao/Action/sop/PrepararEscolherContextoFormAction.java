@@ -122,9 +122,9 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
 			request.setAttribute("licenciaturas", licenciaturas);
 
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 	/**
 	 * Method existencesOfInfoDegree.

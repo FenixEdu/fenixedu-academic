@@ -394,10 +394,9 @@ public class SendMailToAllStudents extends FenixDispatchAction
         String text = request.getParameter("text");
         String subject = request.getParameter("subject");
         if (request.getParameter("candidaciesSend") != null
-            && request.getParameter("candidaciesSend").equals("true"))
-            return this.sendMailCandidacies(mapping, form, request, response);
-        else
-        {
+            && request.getParameter("candidaciesSend").equals("true")){
+            return this.sendMailCandidacies(mapping, form, request, response);}
+       
             try
             {
                 groupCode = new Integer(request.getParameter("studentGroupCode"));
@@ -484,7 +483,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
             }
             getFailedMails(request, infoSiteStudents.getStudents(), failedEmails);
             return mapping.findForward("mailSent");
-        }
+        
     }
     /**
      * @param request

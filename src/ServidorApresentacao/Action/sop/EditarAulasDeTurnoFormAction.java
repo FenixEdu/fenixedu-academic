@@ -30,8 +30,8 @@ public class EditarAulasDeTurnoFormAction
         
 		return mapping.findForward(parameter);
 		
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception(); 
   }
  
 }

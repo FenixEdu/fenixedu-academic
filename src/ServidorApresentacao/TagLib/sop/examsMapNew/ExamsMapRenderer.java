@@ -834,13 +834,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer
     }
 
     private void writeLineForExecutionCourseAndExamOfSeason(StringBuffer strBuffer, InfoExecutionCourse infoExecutionCourse, int season) {
-        boolean hasExam = false;
-
-    	for (int j = 0; j < infoExecutionCourse.getAssociatedInfoExams().size(); j++) {
+        for (int j = 0; j < infoExecutionCourse.getAssociatedInfoExams().size(); j++) {
     	    InfoExam infoExam = (InfoExam) infoExecutionCourse.getAssociatedInfoExams().get(j);
    	        if (infoExam.getSeason().getSeason().intValue() == season) {
-   	            hasExam = true;
-
    	            strBuffer.append("<td>" + season + "ª </td>");
                    strBuffer.append("<td>" + infoExam.getDate() + "</td>");
                    strBuffer.append("<td>" + infoExam.getBeginningHour() + "</td>");

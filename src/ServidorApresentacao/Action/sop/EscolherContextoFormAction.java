@@ -40,9 +40,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
-//		SessionUtils.removeAttributtes(
-//			session,
-//			SessionConstants.CONTEXT_PREFIX);
+
 
 		if (session != null) {
 			InfoExecutionPeriod infoExecutionPeriod =
@@ -66,8 +64,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
 				Integer.parseInt((String) escolherContextoForm.get("index"));
 
 			request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
-			//request.setAttribute("anoCurricular", anoCurricular);
-			//request.setAttribute("semestre", semestre);
+			
 
 			Object argsLerLicenciaturas[] =
 				{ infoExecutionPeriod.getInfoExecutionYear()};
@@ -89,25 +86,17 @@ public class EscolherContextoFormAction extends FenixContextAction {
 						infoExecutionDegree);
 				request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
 
-//				request.setAttribute(
-//					SessionConstants.CURRICULAR_YEAR_KEY,
-//					anoCurricular);
-//				request.setAttribute(
-//					SessionConstants.INFO_EXECUTION_DEGREE_KEY,
-//					infoExecutionDegree);
+
 				request.setAttribute(
 					SessionConstants.EXECUTION_DEGREE,
 					infoExecutionDegree);
 			} else {
-//				request.removeAttribute(SessionConstants.CONTEXT_KEY);
-//				request.removeAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
-//				request.removeAttribute(
-//					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

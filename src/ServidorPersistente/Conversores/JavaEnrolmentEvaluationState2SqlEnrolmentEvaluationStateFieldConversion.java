@@ -22,9 +22,9 @@ public class JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConver
             EnrolmentEvaluationState s = (EnrolmentEvaluationState) source;
             return s.getState();
         }
-        else {
+       
             return source;
-        }
+        
     }    
 
    /*
@@ -37,9 +37,8 @@ public class JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConver
             Integer src = (Integer) source;
             return new EnrolmentEvaluationState(src);
         }
-        else
-        {
+       
             return source;
-        }
+        
     }    
 }

@@ -4,14 +4,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.IWebSiteItem;
-import Dominio.IWebSiteSection;
 import Dominio.WebSiteItem;
-import Dominio.WebSiteSection;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentWebSiteItem;
-import ServidorPersistente.IPersistentWebSiteSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -45,13 +42,8 @@ public class DeleteItems implements IServico {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB
                     .getInstance();
-            IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
-                    .getIPersistentWebSiteSection();
             IPersistentWebSiteItem persistentWebSiteItem = persistentSuport
                     .getIPersistentWebSiteItem();
-
-            IWebSiteSection webSiteSection = (IWebSiteSection) persistentWebSiteSection
-                    .readByOID(WebSiteSection.class, sectionCode);
 
             Iterator iterItemsCode = itemsToDelete.iterator();
             while (iterItemsCode.hasNext()) {

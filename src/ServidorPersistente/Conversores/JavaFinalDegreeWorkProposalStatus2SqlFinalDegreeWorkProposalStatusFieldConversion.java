@@ -24,9 +24,9 @@ public class JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusF
         	FinalDegreeWorkProposalStatus status = (FinalDegreeWorkProposalStatus) source;
             return status.getStatus();
         }
-        else {
+       
             return source;
-        }
+        
     }    
 
    /*
@@ -39,10 +39,9 @@ public class JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusF
             Integer src = (Integer) source;
             return new FinalDegreeWorkProposalStatus(src);
         }
-        else
-        {
+       
             return source;
-        }
+        
     }
 
 }

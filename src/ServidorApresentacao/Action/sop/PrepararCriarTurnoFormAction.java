@@ -41,10 +41,9 @@ public class PrepararCriarTurnoFormAction extends FenixExecutionDegreeAndCurricu
         tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString() ));
         request.setAttribute("tiposAula", tiposAula);
         
-	  //request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-	  //request.removeAttribute(SessionConstants.CLASS_VIEW);
+	 
       return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception();  
   }
 }

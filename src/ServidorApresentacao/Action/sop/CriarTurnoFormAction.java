@@ -56,8 +56,8 @@ public class CriarTurnoFormAction extends FenixExecutionDegreeAndCurricularYearC
 			}
 
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

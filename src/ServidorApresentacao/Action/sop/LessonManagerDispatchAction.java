@@ -153,12 +153,12 @@ public class LessonManagerDispatchAction
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
-			} else {
+			} 
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
-			}
+			
 
-		} else
+		} 
 			throw new Exception();
 	}
 
@@ -315,11 +315,11 @@ public class LessonManagerDispatchAction
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
-			} else {
+			} 
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
-			}
-		} else
+			
+		} 
 			throw new Exception();
 	}
 
@@ -435,11 +435,11 @@ public class LessonManagerDispatchAction
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
-			} else {
+			}
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
-			}
-		} else
+			
+		} 
 			throw new Exception();
 	}
 
@@ -536,11 +536,11 @@ public class LessonManagerDispatchAction
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
-			} else {
+			} 
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
-			}
-		} else
+			
+		} 
 			throw new Exception();
 	}
 
@@ -666,7 +666,7 @@ public class LessonManagerDispatchAction
 			RequestUtils.setLessonTypes(request);
 
 			return mapping.findForward("Input");
-		} else
+		} 
 			throw new Exception();
 
 		

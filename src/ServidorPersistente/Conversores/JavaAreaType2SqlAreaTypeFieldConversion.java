@@ -25,10 +25,9 @@ public class JavaAreaType2SqlAreaTypeFieldConversion implements FieldConversion
             AreaType a = (AreaType) source;
             return a.getAreaType();
         }
-        else
-        {
+       
             return source;
-        }
+        
     }
 
     /*
@@ -41,10 +40,9 @@ public class JavaAreaType2SqlAreaTypeFieldConversion implements FieldConversion
             Integer src = (Integer) source;
             return new AreaType(src);
         }
-        else
-        {
+        
             return source;
-        }
+        
     }
 
 }

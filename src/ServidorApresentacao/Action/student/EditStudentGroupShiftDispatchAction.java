@@ -101,8 +101,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             saveErrors(request, actionErrors3);
             request.setAttribute("groupPropertiesCode", groupPropertiesCode);
             return mapping.findForward("viewStudentGroupInformation");
-        } else
-        {
+        } 
 
             ArrayList shiftsList = new ArrayList();
             InfoShift oldInfoShift = new InfoShift();
@@ -140,7 +139,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             request.setAttribute("shift", oldInfoShift);
 
             return mapping.findForward("sucess");
-        }
+        
 
     }
 
@@ -172,8 +171,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             saveErrors(request, actionErrors);
             return prepareEdit(mapping, form, request, response);
 
-        } else
-        {
+        } 
             Integer newShiftCode = new Integer(newShiftString);
             Object args[] = { studentGroupCode, newShiftCode, userView.getUtilizador()};
 
@@ -214,7 +212,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
             }
             return mapping.findForward("viewShiftsAndGroups");
 
-        }
+        
 
     }
 }

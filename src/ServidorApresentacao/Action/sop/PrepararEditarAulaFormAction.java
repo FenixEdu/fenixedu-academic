@@ -100,8 +100,8 @@ public class PrepararEditarAulaFormAction
 			RequestUtils.setLessonTypes(request);
 
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

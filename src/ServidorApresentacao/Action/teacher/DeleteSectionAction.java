@@ -67,10 +67,10 @@ public class DeleteSectionAction extends FenixAction{
     
 					return mapping.findForward("AccessSiteManagement");		
 		   	}
-		    else {
+		    
 		    		session.setAttribute(SessionConstants.INFO_SECTION,infoSuperiorSection);
 			        return mapping.findForward("AccessSectionManagement");
-		          }
+		          
 		   }
 			catch (FenixServiceException fenixServiceException){
 					   throw new FenixActionException(fenixServiceException.getMessage());

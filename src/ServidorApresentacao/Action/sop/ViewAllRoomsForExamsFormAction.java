@@ -63,9 +63,9 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 			request.setAttribute(SessionConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
 
 			return mapping.findForward("Sucess");
-		} else {
-			throw new FenixActionException();
 		}
+			throw new FenixActionException();
+		
 
 	}
 }

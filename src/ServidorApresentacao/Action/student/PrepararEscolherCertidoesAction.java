@@ -39,9 +39,8 @@ public class PrepararEscolherCertidoesAction extends Action {
 
 		
 	  return mapping.findForward("sucesso");
-	} else
-		{
-	  throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao
-		}
+	} 
+	  throw new Exception();  
+		
   }
 }

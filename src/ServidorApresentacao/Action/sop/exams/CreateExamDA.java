@@ -772,10 +772,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
         {
             return mapping.findForward("Sucess");
         }
-        else
-        {
+       
 			return mapping.findForward("sucessSearchByDate");
-        }
+        
     }
 
     public ActionForward dissociateExecutionCourse(

@@ -21,7 +21,6 @@ import DataBeans.InfoStudentTestQuestion;
 import DataBeans.InfoStudentTestQuestionWithAll;
 import DataBeans.SiteView;
 import Dominio.DistributedTest;
-import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
 import Dominio.IStudentTestQuestion;
@@ -56,9 +55,6 @@ public class ReadInquiryStatistics implements IService {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB
 					.getInstance();
-			IExecutionCourse executionCourse = new ExecutionCourse(
-					executionCourseId);
-
 			IDistributedTest distributedTest = (IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest().readByOID(
 							DistributedTest.class, distributedTestId);

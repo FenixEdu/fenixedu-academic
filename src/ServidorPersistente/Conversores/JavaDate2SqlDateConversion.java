@@ -24,10 +24,9 @@ public class JavaDate2SqlDateConversion implements FieldConversion
         {
             Date date = (Date) source;
             return new java.sql.Date(date.getTime());
-        } else
-        {
+        } 
             return source;
-        }
+        
     }
 
     /*
@@ -40,10 +39,9 @@ public class JavaDate2SqlDateConversion implements FieldConversion
             java.sql.Date sqlDate = (java.sql.Date) source;
             Date date = new Date(sqlDate.getTime());
             return date;
-        } else
-        {
+        } 
             return source;
-        }
+        
     }
 
 }

@@ -78,9 +78,9 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 			request.setAttribute("publico.infoRoom", infoRoom);
 
 			return mapping.findForward("Sucess");
-		} else {
+		} 
 			throw new FenixActionException();
-		}
+		
 
 	}
 }

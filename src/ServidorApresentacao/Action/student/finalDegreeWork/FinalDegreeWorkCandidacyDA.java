@@ -352,10 +352,9 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
             {
                 return true;
             }
-            else
-            {
+           
                 return false;
-            }
+            
         }
 
         public PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(Integer degreeCurricularPlanID)

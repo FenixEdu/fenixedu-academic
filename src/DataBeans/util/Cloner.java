@@ -1921,7 +1921,6 @@ public abstract class Cloner
         InfoExam infoExam = new InfoExam();
 
         copyObjectProperties(infoExam, exam);
-        List infoRooms = new ArrayList();
         List infoCurricularCourseScope = new ArrayList();
         List infoRoomOccupation = new ArrayList();
         List infoExecutionCourse = new ArrayList();

@@ -62,9 +62,9 @@ public class ManageLessonDA
 		String action = request.getParameter("action");
 		if (action != null && action.equals("edit")) {
 			return prepareEdit(mapping, form, request, response);
-		} else {
+		} 
 			return prepareCreate(mapping, form, request, response);
-		}
+		
 
 	}
 
@@ -221,10 +221,10 @@ public class ManageLessonDA
 			request.setAttribute("manageLessonForm", manageLessonForm);
 
 			return mapping.findForward("ShowChooseRoomForm");
-		} else {
+		} 
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
-		}
+		
 
 	}
 
@@ -308,10 +308,10 @@ public class ManageLessonDA
 			}
 
 			return mapping.findForward("EditShift");
-		} else {
+		} 
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
-		}
+		
 	}
 
 	private String formDay2EnumerateDay(String string) {
@@ -557,10 +557,10 @@ public class ManageLessonDA
 			}
 
 			return mapping.findForward("EditShift");
-		} else {
+		} 
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
-		}
+		
 	}
 
 }

@@ -153,17 +153,17 @@ public class EscolherAulasFormAction
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
 
-			//sessao.removeAttribute("listaAulas");
+			
 			if (infoAulas != null && !infoAulas.isEmpty()) {
 				Collections.sort(
 					infoAulas,
 					new InfoLessonComparatorByWeekDayAndTime());
 				request.setAttribute("listaAulas", infoAulas);
 			}
-			//sessao.removeAttribute(SessionConstants.CLASS_VIEW);
+			
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

@@ -20,7 +20,6 @@ import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 import framework.factory.ServiceManagerServiceFactory;
 
@@ -136,16 +135,7 @@ public class CreateStudentCurricularPlanDispatchAction extends DispatchAction
 	{
 		List labelValueBeans = new ArrayList();
 		
-		LabelValueBean active = new LabelValueBean(StudentCurricularPlanState.ACTIVE_STRING, String
-			.valueOf(StudentCurricularPlanState.ACTIVE));
-		LabelValueBean concluded = new LabelValueBean(StudentCurricularPlanState.CONCLUDED_STRING, String
-			.valueOf(StudentCurricularPlanState.CONCLUDED));
-		LabelValueBean inactive = new LabelValueBean(StudentCurricularPlanState.INACTIVE_STRING, String
-			.valueOf(StudentCurricularPlanState.INACTIVE));
-		LabelValueBean incomplete = new LabelValueBean(StudentCurricularPlanState.INCOMPLETE_STRING, String
-			.valueOf(StudentCurricularPlanState.INCOMPLETE));
-		LabelValueBean schoolPartConcluded = new LabelValueBean(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_STRING, String
-			.valueOf(StudentCurricularPlanState.SCHOOLPARTCONCLUDED));
+		
 
 		return labelValueBeans;
 	}

@@ -16,18 +16,18 @@ public class JavaEquivalenceType2SqlEquivalenceTypeFieldConversion implements Fi
 		if (source instanceof EnrolmentEquivalenceType) {
 			EnrolmentEquivalenceType src = (EnrolmentEquivalenceType) source;
 			return src.getEquivalenceType();
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
 			return new EnrolmentEquivalenceType(src);
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 }

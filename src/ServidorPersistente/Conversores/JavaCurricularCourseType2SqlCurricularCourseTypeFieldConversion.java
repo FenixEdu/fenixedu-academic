@@ -16,18 +16,18 @@ public class JavaCurricularCourseType2SqlCurricularCourseTypeFieldConversion imp
 		if (source instanceof CurricularCourseType) {
 			CurricularCourseType src = (CurricularCourseType) source;
 			return src.getCurricularCourseType();
-		} else {
-			return source;
 		}
+			return source;
+		
 	}
 
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
 			return new CurricularCourseType(src);
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 }

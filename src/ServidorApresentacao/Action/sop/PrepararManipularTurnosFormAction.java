@@ -50,7 +50,7 @@ public class PrepararManipularTurnosFormAction extends FenixExecutionCourseAndEx
 		request.removeAttribute(SessionConstants.SHIFT);	
 		request.removeAttribute(SessionConstants.CLASS_VIEW);
       return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception();  
   }
 }

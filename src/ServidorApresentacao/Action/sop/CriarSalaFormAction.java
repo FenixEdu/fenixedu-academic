@@ -62,8 +62,8 @@ public class CriarSalaFormAction extends Action {
 					ex);
 			} 
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 		throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

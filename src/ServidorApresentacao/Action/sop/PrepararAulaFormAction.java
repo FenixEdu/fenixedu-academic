@@ -32,7 +32,7 @@ public class PrepararAulaFormAction
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
-			//        diasSemana.add(new LabelValueBean("escolher", ""));
+			
 			ArrayList diasSemana = Util.getDaysOfWeek();
 			request.setAttribute("diasSemana", diasSemana);
 
@@ -44,34 +44,14 @@ public class PrepararAulaFormAction
 			ArrayList minutos = Util.getMinutes();
 			request.setAttribute("minutos", minutos);
 
-			//			// Ler as Salas
-			//			Object argsLerSalas[] = new Object[0];
-			//			ArrayList infoSalas =
-			//				(ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
-			//
-			//			//Collections.sort(infoSalas);
-			//
-			//			ArrayList listaSalas = new ArrayList();
-			//			listaSalas.add(new LabelValueBean("escolher", ""));
-			//			for (int i = 0; i < infoSalas.size(); i++) {
-			//				InfoRoom elem = (InfoRoom) infoSalas.get(i);
-			//				listaSalas.add(
-			//					new LabelValueBean(elem.getNome(), elem.getNome()));
-			//			}
-			//			sessao.setAttribute("listaSalas", listaSalas);
-			//			sessao.setAttribute("listaInfoSalas", infoSalas);
-
-			// Fim ler salas.d
-
-			// Ler Disciplinas em Execucao
+		
 			SessionUtils.getExecutionCourses(request);
 
-			//sessao.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-			//sessao.removeAttribute(SessionConstants.CLASS_VIEW);
+			
 
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

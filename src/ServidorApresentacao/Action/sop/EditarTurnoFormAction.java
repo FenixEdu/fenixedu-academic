@@ -69,31 +69,19 @@ public class EditarTurnoFormAction extends FenixShiftAndExecutionCourseAndExecut
 						"EditarTurno",
 						argsEditarTurno);
 			} catch (ExistingServiceException e) {
-//NOTE: Agora com as excepções este erro não é utilizado
-//				actionErrors = new ActionErrors();
-//				actionErrors.add(
-//					"error.shift.duplicate",
-//					new ActionError(
-//						"error.shift.duplicate",
-//						infoTurnoNovo.getNome(),
-//						infoTurnoAntigo.getInfoDisciplinaExecucao().getNome()));
-//				editarTurnoForm.set("nome", infoTurnoAntigo.getNome());
-//				saveErrors(request, actionErrors);
+
 				throw new ExistingActionException("O Turno", e);
 
 			}
 
 			if (actionErrors == null) {
-//				infoTurnos.set(
-//					infoTurnos.indexOf(infoTurnoAntigo),
-//					infoTurnoNovo);
-				//session.removeAttribute("indexTurno");
+
 				return (mapping.findForward("Guardar"));
-			} else {
+			} 
 				return mapping.getInputForward();
-			}
-		} else
+			
+		} 
 			throw new FenixActionException();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

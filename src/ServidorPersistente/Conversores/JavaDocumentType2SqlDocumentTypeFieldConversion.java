@@ -16,18 +16,18 @@ public class JavaDocumentType2SqlDocumentTypeFieldConversion implements FieldCon
 		if (source instanceof DocumentType) {
 			DocumentType s = (DocumentType) source;
 			return s.getType();
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
 			return new DocumentType(src);
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 }

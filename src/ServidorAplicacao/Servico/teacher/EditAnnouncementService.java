@@ -12,8 +12,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentAnnouncement;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -26,13 +24,7 @@ public class EditAnnouncementService implements IService {
 
     ISuportePersistente persistentSupport = null;
 
-    private IPersistentSite persistentSite = null;
-
     private IPersistentAnnouncement persistentAnnouncement = null;
-
-    private IPersistentExecutionCourse persistentExecutionCourse = null;
-
-    private static EditAnnouncementService service = new EditAnnouncementService();
 
     /**
      * The constructor of this class.
@@ -72,9 +64,8 @@ public class EditAnnouncementService implements IService {
         IAnnouncement iAnnouncement = null;
         try {
             persistentSupport = SuportePersistenteOJB.getInstance();
-            persistentExecutionCourse = persistentSupport
-                    .getIPersistentExecutionCourse();
-            persistentSite = persistentSupport.getIPersistentSite();
+           
+          
             persistentAnnouncement = persistentSupport
                     .getIPersistentAnnouncement();
 

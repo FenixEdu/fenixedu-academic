@@ -145,10 +145,9 @@ public class SmsUtil
 
 		httpMethod.setQueryString(query);
 
-		int statusCode = -1;
 		try
 		{
-			statusCode = client.executeMethod(httpMethod);
+			client.executeMethod(httpMethod);
 
 			String result = httpMethod.getResponseBodyAsString();
 			System.err.println(result);
@@ -199,10 +198,9 @@ public class SmsUtil
 
 		httpMethod.setQueryString(query);
 
-		int statusCode = -1;
 		try
 		{
-			statusCode = client.executeMethod(httpMethod);
+			 client.executeMethod(httpMethod);
 
 			String result = httpMethod.getResponseBodyAsString();
 			System.err.println(result);

@@ -71,7 +71,6 @@ public class Profiler {
     public static void stop(Object hashKey) {
         Calendar stopTime = Calendar.getInstance();
         Calendar startTime = (Calendar) startTimes.get(hashKey);
-        HashKey hashKey2 = (HashKey) hashKey;
         Long executionTime = new Long(stopTime.getTimeInMillis() - startTime.getTimeInMillis());
         times.put(hashKey, executionTime);
     }

@@ -56,9 +56,9 @@ public class ViewAllRoomsSchedulesDA  extends FenixContextDispatchAction {
 				pavillionsNamesList);
 
 			return mapping.findForward("choose");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 	
 	
@@ -131,9 +131,9 @@ public class ViewAllRoomsSchedulesDA  extends FenixContextDispatchAction {
 			}
 
 			return mapping.findForward("list");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 	
 }

@@ -58,9 +58,9 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
             request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST, executionDegreeList);
 
             return mapping.findForward("choose");
-        } else
+        } 
             throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
+        
     }
 
     public ActionForward list(
@@ -122,8 +122,8 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
             }
 
             return mapping.findForward("list");
-        } else
+        } 
             throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
+        
     }
 }

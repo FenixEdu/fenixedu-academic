@@ -97,9 +97,9 @@ public class SelectRoomsFormAction extends FenixAction
 
             return mapping.findForward("Sucess");
         }
-        else
+        
             throw new FenixActionException();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
+        
     }
 
     private String readFormValue(DynaActionForm roomForm, String name)
@@ -114,16 +114,16 @@ public class SelectRoomsFormAction extends FenixAction
     private Integer readIntegerFormValue(DynaActionForm roomForm, String name)
     {
         String obj = readFormValue(roomForm, name);
-        if (obj != null) return new Integer(obj);
-        else
+        if (obj != null) {return new Integer(obj);}
+        
             return null;
     }
 
     private TipoSala readTypeRoomFormValue(DynaActionForm roomForm, String name)
     {
         Integer obj = readIntegerFormValue(roomForm, name);
-        if (obj != null) return new TipoSala(obj);
-        else
+        if (obj != null){ return new TipoSala(obj);}
+        
             return null;
     }
 

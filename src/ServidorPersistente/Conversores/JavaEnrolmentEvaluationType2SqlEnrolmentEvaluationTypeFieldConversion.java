@@ -22,9 +22,9 @@ public class JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversi
             EnrolmentEvaluationType s = (EnrolmentEvaluationType) source;
             return s.getType();
         }
-        else {
+       
             return source;
-        }
+        
     }    
 
    /*
@@ -37,9 +37,8 @@ public class JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversi
             Integer src = (Integer) source;
             return new EnrolmentEvaluationType(src);
         }
-        else
-        {
+       
             return source;
-        }
+        
     }    
 }

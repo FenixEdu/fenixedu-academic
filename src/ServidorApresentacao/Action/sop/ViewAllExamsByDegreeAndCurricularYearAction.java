@@ -87,9 +87,9 @@ public class ViewAllExamsByDegreeAndCurricularYearAction extends FenixContextAct
 			}
 
 			return mapping.findForward("Sucess");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 	
 	/**

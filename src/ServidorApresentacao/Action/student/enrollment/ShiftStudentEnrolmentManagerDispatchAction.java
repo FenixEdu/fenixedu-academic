@@ -115,8 +115,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			order(infoShiftEnrollment);
 			return mapping.findForward("showShiftsEnrollment");
 		}
-		else
-		{
+		
 			//order degree's list and format them names
 			if (infoShiftEnrollment.getInfoExecutionDegreesList() != null
 				&& infoShiftEnrollment.getInfoExecutionDegreesList().size() > 0)
@@ -130,7 +129,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			}
 
 			return mapping.findForward("selectCourses");
-		}
+		
 	}
 
 	private void order(InfoShiftEnrollment infoShiftEnrollment)

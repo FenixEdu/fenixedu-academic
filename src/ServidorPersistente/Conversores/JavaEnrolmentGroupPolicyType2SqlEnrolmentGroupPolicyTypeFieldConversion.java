@@ -28,7 +28,7 @@ public class JavaEnrolmentGroupPolicyType2SqlEnrolmentGroupPolicyTypeFieldConver
 			EnrolmentGroupPolicyType s = (EnrolmentGroupPolicyType) source;
 			return s.getType();
 		}
-		else 			
+		 			
 			return source;
 	
 	}    
@@ -43,10 +43,9 @@ public class JavaEnrolmentGroupPolicyType2SqlEnrolmentGroupPolicyTypeFieldConver
 				Integer src = (Integer) source;
 				return new EnrolmentGroupPolicyType(src);
 			}
-			else
-			{
+		
 				return source;
-			}
+			
 		}
 
 

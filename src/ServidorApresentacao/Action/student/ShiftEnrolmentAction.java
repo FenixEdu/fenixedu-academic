@@ -74,10 +74,10 @@ public class ShiftEnrolmentAction extends Action {
 
 		if (actionErrors.isEmpty()){
 			return mapping.findForward("sucess");
-		}else{
+		}
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
-		}
+		
 	}
 	/**
 	 * Method getActionErrors.

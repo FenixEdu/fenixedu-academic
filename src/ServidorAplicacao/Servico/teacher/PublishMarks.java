@@ -27,7 +27,6 @@ import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.sms.IPersistentSentSms;
 
 /**
  * @author Fernanda Quitério
@@ -44,10 +43,6 @@ public class PublishMarks implements IService {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentSentSms persistentSentSms = sp.getIPersistentSentSms();
-
-            //Execution Course
-
             IPersistentExecutionCourse executionCourseDAO = sp
                     .getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO

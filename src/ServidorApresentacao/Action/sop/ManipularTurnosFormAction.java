@@ -23,13 +23,13 @@ public class ManipularTurnosFormAction extends FenixExecutionCourseAndExecutionD
 		
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
-         /* Obtem o parametro do submit que indica a operacao a realizar */
+        
         String parameter = request.getParameter(new String("operation"));
         
 		return mapping.findForward(parameter);
 		
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception();  
   }
  
 }

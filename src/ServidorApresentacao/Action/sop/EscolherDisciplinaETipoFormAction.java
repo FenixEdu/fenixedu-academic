@@ -35,8 +35,8 @@ public class EscolherDisciplinaETipoFormAction extends FenixAction
                 ((Integer) escolherDisciplinaETipoForm.get("indexDisciplinaExecucao")).intValue() - 1;
             sessao.setAttribute("infoDisciplinaExecucao", infoDisciplinasExecucao.get(i));
             return mapping.findForward("Sucesso");
-        } else
-            throw new Exception(); // nao ocorre... pedido passa pelo filtro Autorizacao 
+        } 
+            throw new Exception(); 
     }
 
 }

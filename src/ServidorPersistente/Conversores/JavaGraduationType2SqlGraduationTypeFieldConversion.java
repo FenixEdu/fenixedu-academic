@@ -16,18 +16,18 @@ public class JavaGraduationType2SqlGraduationTypeFieldConversion implements Fiel
 		if (source instanceof GraduationType) {
 			GraduationType s = (GraduationType) source;
 			return s.getType();
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
 			return new GraduationType(src);
-		} else {
+		} 
 			return source;
-		}
+		
 	}
 
 }

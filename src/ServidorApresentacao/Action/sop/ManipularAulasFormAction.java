@@ -44,8 +44,8 @@ public class ManipularAulasFormAction
 
 			return (mapping.findForward("voltar"));
 
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

@@ -24,10 +24,9 @@ public class JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion
         {
         	ExemptionGratuityType exemptionGratuityType = (ExemptionGratuityType) source;
         	return new Integer(exemptionGratuityType.getValue());
-        } else
-        {
+        } 
             return source;
-        }
+        
     }
 
     public Object sqlToJava(Object source)
@@ -36,10 +35,9 @@ public class JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion
         {
             Integer src = (Integer) source;
             return ExemptionGratuityType.getEnum(src.intValue());
-        } else
-        {
+        } 
             return source;
-        }
+        
     }
 
 }

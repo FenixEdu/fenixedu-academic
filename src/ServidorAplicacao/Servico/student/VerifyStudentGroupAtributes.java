@@ -29,10 +29,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class VerifyStudentGroupAtributes implements IServico {
 
-    private ISuportePersistente persistentSupport = null;
-
-    //private IPersistentGroupProperties persistentGroupProperties = null;
-
     private static VerifyStudentGroupAtributes service = new VerifyStudentGroupAtributes();
 
     /**

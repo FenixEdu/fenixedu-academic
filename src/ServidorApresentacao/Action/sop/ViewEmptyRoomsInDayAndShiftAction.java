@@ -79,8 +79,8 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 			}
 
 			return mapping.findForward("View");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

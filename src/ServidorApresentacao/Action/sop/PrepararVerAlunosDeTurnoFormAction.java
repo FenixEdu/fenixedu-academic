@@ -62,7 +62,7 @@ public class PrepararVerAlunosDeTurnoFormAction extends FenixShiftAndExecutionCo
 		if (!infoAlunosDeTurno.isEmpty())
 	        request.setAttribute("infoAlunosDeTurno", infoAlunosDeTurno);
       return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception();  
   }
 }

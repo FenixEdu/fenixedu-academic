@@ -54,7 +54,7 @@ public class PrepararEscolherDisciplinaExecucaoFormAction extends Action {
         request.setAttribute("infoDisciplinasExecucao", infoDisciplinasExecucao);    
 
       return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception();  
   }
 }

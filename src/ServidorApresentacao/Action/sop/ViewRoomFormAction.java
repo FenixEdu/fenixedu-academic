@@ -120,15 +120,14 @@ public class ViewRoomFormAction extends
 
             request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
                     executionPeriodsLabelValueList);
-            //--------------------
+           
 
             return mapping.findForward("Sucess");
 
         }
-        else
-        {
+       
             throw new FenixActionException();
-        }
+        
 
     }
 }

@@ -103,17 +103,17 @@ public class ClassManagerDispatchAction
 					throw new ExistingActionException("A Turma", e);
 				}
 				return viewClass(mapping, form, request, response);
-			} else {
+			} 
 				ActionErrors actionErrors = new ActionErrors();
 				actionErrors.add(
 					"existingClass",
 					new ActionError("errors.existClass", className));
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
-			}
-		} else {
+			
+		} 
 			return mapping.getInputForward();
-		}
+		
 
 	}
 

@@ -234,7 +234,7 @@ public class ManageClassDA
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 
-		} else {
+		} 
 			List shiftOIDs = new ArrayList();
 			for (int i = 0; i < selectedShifts.length; i++) {
 				shiftOIDs.add(new Integer(selectedShifts[i]));
@@ -251,7 +251,7 @@ public class ManageClassDA
 				args);
 
 			return mapping.findForward("EditClass");
-		}
+		
 	}
 
 }

@@ -226,7 +226,6 @@ public class SelectCandidacies extends FenixDispatchAction
     {
         HttpSession session = this.getSession(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        ActionForward destiny = null;
         DynaActionForm selectCases = (DynaActionForm) form;
         Integer[] selectedStudents = null;
         Integer[] previousSelected = null;

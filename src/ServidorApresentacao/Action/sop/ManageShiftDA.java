@@ -201,8 +201,7 @@ public class ManageShiftDA
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
         }
-        else
-        {
+        
 
             List classOIDs = new ArrayList();
             for (int i = 0; i < selectedClasses.length; i++)
@@ -216,7 +215,7 @@ public class ManageShiftDA
             ServiceUtils.executeService(SessionUtils.getUserView(request), "RemoveClasses", args);
 
             return mapping.findForward("EditShift");
-        }
+        
     }
 
     public ActionForward deleteLessons(
@@ -240,8 +239,7 @@ public class ManageShiftDA
             return mapping.getInputForward();
 
         }
-        else
-        {
+       
 
             List lessonOIDs = new ArrayList();
             for (int i = 0; i < selectedLessons.length; i++)
@@ -250,13 +248,13 @@ public class ManageShiftDA
             }
 
             Object args[] = { lessonOIDs };
-            //System.out.println("Starting delete.");
+            
             ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", args);
-            //System.out.println("Done deleting.");
+          
 
             return mapping.findForward("EditShift");
 
-        }
+        
     }
 
     public ActionForward viewStudentsEnroled(

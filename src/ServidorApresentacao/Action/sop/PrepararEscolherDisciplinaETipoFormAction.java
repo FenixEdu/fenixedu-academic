@@ -33,7 +33,7 @@ public class PrepararEscolherDisciplinaETipoFormAction extends Action {
     if (sessao != null) {
         IUserView userView = (IUserView) sessao.getAttribute("UserView");
         
-		// Ler Disciplinas em Execucao
+		
         InfoExecutionDegree iLE = (InfoExecutionDegree) request.getAttribute("infoLicenciaturaExecucao");
         Integer semestre = (Integer) request.getAttribute("semestre");
         Integer anoCurricular = (Integer) request.getAttribute("anoCurricular");
@@ -41,7 +41,7 @@ public class PrepararEscolherDisciplinaETipoFormAction extends Action {
         Object argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular[] = { new CurricularYearAndSemesterAndInfoExecutionDegree(anoCurricular, semestre, iLE) };
 		ArrayList infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 
-        //Collections.sort(infoDisciplinasExecucao);
+      
 
         ArrayList disciplinasExecucao = new ArrayList();
         disciplinasExecucao.add(new LabelValueBean("escolher", ""));
@@ -56,7 +56,7 @@ public class PrepararEscolherDisciplinaETipoFormAction extends Action {
 
 
       return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
+    } 
+      throw new Exception();  
   }
 }

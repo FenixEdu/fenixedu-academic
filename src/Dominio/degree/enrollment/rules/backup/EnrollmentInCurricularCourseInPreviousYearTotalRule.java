@@ -43,7 +43,6 @@ public class EnrollmentInCurricularCourseInPreviousYearTotalRule implements IEnr
 
         for (int iter = 0; iter < curricularCoursesToBeEnrolledIn.size(); iter++) {
             ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToBeEnrolledIn.get(iter);
-            ICurricularYear curricularYear = curricularCourse.getCurricularYearByBranchAndSemester(studentBranch, executionPeriod.getSemester());
             int year = maxCurricularYear.getYear().intValue();
 
             if (year >= maxYear)

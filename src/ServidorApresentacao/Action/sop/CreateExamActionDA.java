@@ -110,10 +110,9 @@ public class CreateExamActionDA extends FenixCurricularYearsAndExecutionCourseAn
 			if (nextPage != null) {
 				//System.out.println("returning to next page forward");
 				return mapping.findForward(nextPage);
-			} else {
-				//System.out.println("returning sucess forward");
+			} 
 				return mapping.findForward("Sucess");
-			}
+			
 	}
 
 }

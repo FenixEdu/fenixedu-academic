@@ -71,8 +71,8 @@ public class PrepararEditarAulasDeTurnoFormAction
 			if (!infoAulasDeTurno.isEmpty())
 				request.setAttribute("infoAulasDeTurno", infoAulasDeTurno);
 			return mapping.findForward("Sucesso");
-		} else
+		} 
 			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 }

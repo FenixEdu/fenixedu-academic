@@ -26,9 +26,9 @@ public class JavaEstadoCivil2SqlEstadoCivilFieldConversion implements FieldConve
             EstadoCivil s = (EstadoCivil) source;
             return s.getEstadoCivil();
         }
-        else {
+       
             return source;
-        }
+        
     }    
 
    /*
@@ -41,9 +41,8 @@ public class JavaEstadoCivil2SqlEstadoCivilFieldConversion implements FieldConve
             Integer src = (Integer) source;
             return new EstadoCivil(src);
         }
-        else
-        {
+       
             return source;
-        }
+        
     }    
 }

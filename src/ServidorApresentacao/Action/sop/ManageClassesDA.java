@@ -166,7 +166,7 @@ public class ManageClassesDA
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 
-		} else {
+		} 
 			List classOIDs = new ArrayList();
 			for (int i = 0; i < selectedClasses.length; i++) {
 				classOIDs.add(new Integer(selectedClasses[i]));
@@ -179,7 +179,7 @@ public class ManageClassesDA
 				args);
 
 			return mapping.findForward("ShowShiftList");
-		}
+		
 	}
 
 }

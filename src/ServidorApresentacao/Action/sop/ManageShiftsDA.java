@@ -171,7 +171,7 @@ public class ManageShiftsDA extends
                     "errors.shifts.notSelected"));
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
-        } else {
+        } 
 
             List shiftOIDs = new ArrayList();
             for (int i = 0; i < selectedShifts.length; i++) {
@@ -198,6 +198,6 @@ public class ManageShiftsDA extends
             }
 
             return mapping.findForward("ShowShiftList");
-        }
+        
     }
 }

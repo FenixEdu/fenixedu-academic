@@ -43,11 +43,12 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		session.setAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST, announcements);
 
 		session.removeAttribute("insertAnnouncementForm");
-//		session.removeAttribute("Announcement");
 
-		if (!(announcements.isEmpty()))
-			return mapping.findForward("AnnouncementManagement");
-		else {session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
+
+		if (!(announcements.isEmpty())){
+			return mapping.findForward("AnnouncementManagement");}
+		
+		    session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 			return mapping.findForward("EditAnnouncement");} 
-	}
+	
 }

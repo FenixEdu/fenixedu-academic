@@ -17,10 +17,9 @@ public class JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion imple
         {
             EnrollmentCondition condition = (EnrollmentCondition) source;
             return condition.getName();
-        } else
-        {
+        } 
             return source;
-        }
+        
     }
 
     public Object sqlToJava(Object source)
@@ -29,10 +28,9 @@ public class JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion imple
         {
             String src = (String) source;
             return EnrollmentCondition.getEnum(src);
-        } else
-        {
+        } 
             return source;
-        }
+        
     }
     
     

@@ -83,13 +83,13 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
 			saveErrors(request, actionErrors);
 
 			return mapping.getInputForward();
-		} else {
+		} 
 			request.setAttribute(
 				SessionConstants.EXECUTION_DEGREE,
 				infoExecutionDegree);
 
 			return mapping.findForward("ManageExams");
-		}
+		
 
 	}
 
