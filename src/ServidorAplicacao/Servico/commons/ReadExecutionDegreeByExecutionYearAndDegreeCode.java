@@ -57,7 +57,7 @@ public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IServico
 
             if (executionDegree != null)
             {
-                result = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                result = (InfoExecutionDegree) Cloner.get(executionDegree);
             }
         } catch (ExcepcaoPersistencia ex)
         {

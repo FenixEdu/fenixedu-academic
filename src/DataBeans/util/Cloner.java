@@ -415,7 +415,7 @@ public abstract class Cloner
 	{
 		InfoClass infoClass = new InfoClass();
 		InfoExecutionDegree infoExecutionDegree =
-			Cloner.copyIExecutionDegree2InfoExecutionDegree(classD.getExecutionDegree());
+			(InfoExecutionDegree) Cloner.get(classD.getExecutionDegree());
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) Cloner.get(classD.getExecutionPeriod());
 
@@ -496,8 +496,9 @@ public abstract class Cloner
 	 * @param executionDegree
 	 * @return InfoExecutionDegree
 	 */
-
-	public static InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(ICursoExecucao executionDegree)
+	//public static InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(ICursoExecucao executionDegree)
+	// DO NOT DELETE - this is used locally through introspection!!!
+	private static InfoExecutionDegree copy(CursoExecucao executionDegree)
 	{
 
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
@@ -1122,7 +1123,7 @@ public abstract class Cloner
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
 
 		InfoExecutionDegree infoExecutionDegree =
-			Cloner.copyIExecutionDegree2InfoExecutionDegree(masterDegreeCandidate.getExecutionDegree());
+			(InfoExecutionDegree) Cloner.get(masterDegreeCandidate.getExecutionDegree());
 		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
 		InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(masterDegreeCandidate.getPerson());
@@ -1754,7 +1755,7 @@ public abstract class Cloner
 		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(guide.getContributor()));
 		infoGuide.setInfoPerson(Cloner.copyIPerson2InfoPerson(guide.getPerson()));
 		infoGuide.setInfoExecutionDegree(
-			Cloner.copyIExecutionDegree2InfoExecutionDegree(guide.getExecutionDegree()));
+			(InfoExecutionDegree) Cloner.get(guide.getExecutionDegree()));
 
 		List infoGuideEntries = new ArrayList();
 		if (guide.getGuideEntries() != null)
@@ -3730,7 +3731,7 @@ public abstract class Cloner
 	{
 		InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(coordinator.getTeacher());
 		InfoExecutionDegree infoExecutionDegree =
-			Cloner.copyIExecutionDegree2InfoExecutionDegree(coordinator.getExecutionDegree());
+			(InfoExecutionDegree) Cloner.get(coordinator.getExecutionDegree());
 		InfoCoordinator infoCoordinator = new InfoCoordinator();
 		copyObjectProperties(infoCoordinator, coordinator);
 		infoCoordinator.setInfoExecutionDegree(infoExecutionDegree);

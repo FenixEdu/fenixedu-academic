@@ -13,6 +13,7 @@ import framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.InfoRole;
@@ -125,7 +126,7 @@ public class CreateGuideTest extends TestCaseServicos
         infoGuide.setCreationDate(Calendar.getInstance().getTime());
 
         infoGuide.setInfoExecutionDegree(
-            Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
+            (InfoExecutionDegree) Cloner.get(executionDegree));
 
         InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
         infoGuideEntry.setDescription(price.getDescription());

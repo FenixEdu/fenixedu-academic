@@ -87,7 +87,7 @@ public class ReadCoordinatedDegrees implements IServico {
 		List result = new ArrayList();
 		while(iterator.hasNext()){
 			ICursoExecucao executionDegree = (ICursoExecucao) iterator.next(); 
-			result.add(Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
+			result.add(Cloner.get(executionDegree));
 		}
 
 		return result;

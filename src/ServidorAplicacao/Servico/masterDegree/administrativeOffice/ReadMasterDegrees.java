@@ -79,7 +79,7 @@ public class ReadMasterDegrees implements IServico {
 		ArrayList degrees = new ArrayList();
 		Iterator iterator = result.iterator();
 		while (iterator.hasNext()) {
-			InfoExecutionDegree infoExecutionDegree =Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()); 
+			InfoExecutionDegree infoExecutionDegree =(InfoExecutionDegree) Cloner.get((ICursoExecucao) iterator.next()); 
 			degrees.add(infoExecutionDegree);
 		}
 		

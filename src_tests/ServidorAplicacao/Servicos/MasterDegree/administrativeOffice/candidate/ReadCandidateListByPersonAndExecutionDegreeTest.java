@@ -118,7 +118,7 @@ public class ReadCandidateListByPersonAndExecutionDegreeTest extends TestCaseRea
   		IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername("nmsn");
   		assertNotNull(person);
   		
-		infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+		infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 		infoPerson = Cloner.copyIPerson2InfoPerson(person); 
   		
   		sp.confirmarTransaccao();

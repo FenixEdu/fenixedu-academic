@@ -80,8 +80,8 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 
 			for (int k = 0; k < executionDegrees.size(); k++) {
 				InfoExecutionDegree infoExecutionDegree =
-					Cloner.copyIExecutionDegree2InfoExecutionDegree(
-						(ICursoExecucao) executionDegrees.get(k));
+					(InfoExecutionDegree) Cloner.get(
+							(ICursoExecucao) executionDegrees.get(k));
 
 				for (int curricularYear = 1;
 					curricularYear <= 5;

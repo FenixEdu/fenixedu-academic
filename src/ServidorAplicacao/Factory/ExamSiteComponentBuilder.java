@@ -13,6 +13,7 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
@@ -204,7 +205,7 @@ public class ExamSiteComponentBuilder {
 			 } catch (ExcepcaoPersistencia ex) {
 				 throw new FenixServiceException(ex);
 			 }
-			component.setInfoExecutionDegree(Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));	
+			component.setInfoExecutionDegree((InfoExecutionDegree) Cloner.get(executionDegree));	
 			component.setInfoExamsMap(infoExamsMap);
 
 		return component;

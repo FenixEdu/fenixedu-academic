@@ -107,7 +107,7 @@ public class ReadDegreeCandidatesTest extends TestCaseServicos {
 				executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 				assertNotNull(executionDegree);
 		
-				this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+				this.infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 				sp.confirmarTransaccao();
 	
 			} catch (ExcepcaoPersistencia excepcao) {

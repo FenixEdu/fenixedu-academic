@@ -107,7 +107,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico
                 ICursoExecucao executionDegree = (ICursoExecucao) listIterator.next();
 
                 InfoExecutionDegree infoExecutionDegree =
-                    Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                    (InfoExecutionDegree) Cloner.get(executionDegree);
                 if (executionDegree.getCoordinatorsList() != null)
                 {
                 	List infoCoordinatorList = new ArrayList();

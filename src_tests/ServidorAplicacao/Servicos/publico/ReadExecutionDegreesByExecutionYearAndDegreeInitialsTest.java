@@ -172,7 +172,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest
 				cursoExecucaoPersistente.delete(executionDegree);
 
 			this.infoExecutionDegree =
-				Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+				(InfoExecutionDegree) Cloner.get(executionDegree);
 
 			sp.confirmarTransaccao();
 

@@ -77,7 +77,7 @@ public class PrepareCreateGuideTest extends TestCaseServicos {
 			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 			assertNotNull(executionDegree);
 	
-			infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+			infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 
 			sp.confirmarTransaccao();
 		} catch (Exception e) {

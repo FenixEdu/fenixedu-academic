@@ -79,8 +79,8 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                         public Object transform(Object input)
                         {
                             ICursoExecucao executionDegree = (ICursoExecucao) input;
-                            InfoExecutionDegree infoExecutionDegree = Cloner
-                                    .copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+									        .get(executionDegree);
                             return infoExecutionDegree;
                         }
                     });
