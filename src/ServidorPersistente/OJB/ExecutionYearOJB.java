@@ -37,23 +37,9 @@ public class ExecutionYearOJB
 	 */
 	public IExecutionYear readExecutionYearByName(String year)
 		throws ExcepcaoPersistencia {
-		try {
-
-			IExecutionYear executionYear = null;
-			String oqlQuery =
-				"select all from " + ExecutionYear.class.getName();
-			oqlQuery += " where year = $1 ";
-			query.create(oqlQuery);
-			query.bind(year);
-
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				executionYear = (IExecutionYear) result.get(0);
-			return executionYear;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("year", year);
+		return (IExecutionYear) queryObject(ExecutionYear.class, criteria);
 	}
 		
 	/**
