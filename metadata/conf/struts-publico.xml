@@ -285,8 +285,7 @@
 
 	<!-- access to objectives -->
 	<action 
-		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction" 
-		parameter="method"
+		type="ServidorApresentacao.Action.publico.ViewObjectives" 
 		scope="session"
 		path="/accessObjectives">
         <forward name="viewObjectives" path="/objectives.jsp" />       
@@ -294,8 +293,7 @@
 
 	<!-- access to program -->
 	<action 
-		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction" 
-		parameter="method"
+		type="ServidorApresentacao.Action.publico.ViewProgramAction" 
 		scope="session"
 		path="/accessProgram">
         <forward name="viewProgram" path="/program.jsp" />       
@@ -303,9 +301,11 @@
 
 	
 	<!-- Site viewer -->
-	<action path="/viewSite"
-        type="ServidorApresentacao.Action.teacher.ReadSite">    
-     <forward name="viewSite" path="/viewExecutionCourse.jsp"/>         
+	<action 
+		path="/viewSite"
+		parameter="method"
+        type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
+     <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>         
 	</action>
 	
 	
@@ -418,7 +418,7 @@
 
     
     <!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor" />
+	<!--<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor" />-->
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" />
