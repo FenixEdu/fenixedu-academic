@@ -20,6 +20,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	private Date endDate;
 	private Integer degreeDuration;
 	private Integer minimalYearForOptionalCourses;
+	private Double neededCredits;
 
 	public InfoDegreeCurricularPlan() {
 		setName(null);
@@ -58,8 +59,25 @@ public class InfoDegreeCurricularPlan implements Serializable {
 		result += "initialDate = " + this.initialDate + "; ";
 		result += "endDate = " + this.endDate + "; ";
 		result += "state = " + this.state + "; ";
+		result += "NeededCredits = " + this.neededCredits + "; ";
 		result += "degree = " + this.infoDegree + "]";
 		return result;
+	}
+
+	
+
+	/**
+	 * @return Needed Credtis to Finish the Degree
+	 */
+	public Double getNeededCredits() {
+		return neededCredits;
+	}
+
+	/**
+	 * @param neededCredits
+	 */
+	public void setNeededCredits(Double neededCredits) {
+		this.neededCredits = neededCredits;
 	}
 
 	/**
