@@ -5,14 +5,14 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>"/>
+<bean:define id="infoDegreesList" name="infoEnrolmentContext" property="infoDegreesForOptionalCurricularCourses"/>
 
-<html:form action="/curricularCourseEnrolmentWithRulesManager.do">
-	<html:hidden property="step" value="0"/>
-	<html:hidden property="method" value="chooseOptionalCourse"/>
-	<logic:iterate id="curricularCourse" name="infoEnrolmentContext" property="optionalInfoCurricularCoursesToChooseFromDegree" indexId="index">
-		<html:radio property="optionalCurricularCourse" value="<%= pageContext.findAttribute("index").toString() %>"/>
-		<bean:write name="curricularCourse" property="name"/><br/>
-	</logic:iterate>
+<html:form action="/optionalCurricularCourseEnrolmentWithoutRulesManager.do">
+	<html:hidden property="method" value="showOptionalCurricularCourses"/>
+
+	<html:select property="infoDegree" size="1">
+		<html:options collection="infoDegreesList" property="idInternal" labelProperty="nome"/>
+	</html:select>
 	<br/>
 	<br/>
 	<html:submit styleClass="inputbutton">

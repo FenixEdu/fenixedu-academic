@@ -87,8 +87,7 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 						(!finalCurricularCourseList.contains(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) &&
 						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) &&
-//						(!enrolmentContext.getEnrolmentsAprovedByStudent().contains(curricularCourseScope.getCurricularCourse())) &&
-						(enrolmentContext.isCurricularCourseDone(curricularCourseScope.getCurricularCourse())) &&
+						(!enrolmentContext.isCurricularCourseDone(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCoursesEnroledByStudent.contains(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCoursesFromFinalSpan.contains(curricularCourseScope.getCurricularCourse())) &&
 						(!opionalCurricularCoursesEnrolmentsList.contains(curricularCourseScope.getCurricularCourse()))

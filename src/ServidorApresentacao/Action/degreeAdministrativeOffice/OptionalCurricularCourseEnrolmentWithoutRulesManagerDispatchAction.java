@@ -40,7 +40,7 @@ import Util.CurricularCourseType;
 
 public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends DispatchAction {
 
-	private final String[] forwards = { "showAvailableOptionalCurricularCourses", "verifyEnrolment", "acceptEnrolment", "cancel", "home" };
+	private final String[] forwards = { "showAvailableOptionalCurricularCourses", "verifyEnrolment", "acceptEnrolment", "searchOptionalCurricularCourses", "concreteOptionalList", "cancel", "home" };
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -139,50 +139,72 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		}
 
 	}
-
+*/
 	public ActionForward startEnrolmentInOptional(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		validateToken(request, form, mapping);
+
+		HttpSession session = request.getSession();
+
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+
+		// Small trick just to be able to chow some information in the JSP.
+		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
+		Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
+		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(optionalCurricularCourseIndex.intValue());
+		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(infoCurricularCourseScope);
+
+		Object args[] = { infoEnrolmentContext };
+
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableDegreesForOptionWithoutRules", args);
+
+		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
+
+		return mapping.findForward(forwards[3]);
+	}
+
+	public ActionForward showOptionalCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		if (isCancelled(request)) {
-			return mapping.findForward("showAvailableCourses");
+			return mapping.findForward(forwards[0]);
 		}
 		validateToken(request, form, mapping);
 
 		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
 		HttpSession session = request.getSession();
 
-		enrolmentForm.set("optionalCurricularCourse", null);
-
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
+		// Small trick just to be able to chow some information in the JSP.
 		Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
-
 		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(optionalCurricularCourseIndex.intValue());
-
 		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(infoCurricularCourseScope);
+
+		enrolmentForm.set("optionalCurricularCourse", null);
+		Integer infoDegreeInternalId = (Integer) enrolmentForm.get("infoDegree");
+		List infoDegreeList = infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses();
+		
+		Iterator iterator = infoDegreeList.iterator();
+		InfoDegree infoDegree = null;
+		while(iterator.hasNext()) {
+			InfoDegree infoDegree2 = (InfoDegree) iterator.next();
+			if(infoDegree2.getIdInternal().equals(infoDegreeInternalId)) {
+				infoDegree = infoDegree2;
+				break;
+			}
+		}
+		infoEnrolmentContext.setChosenOptionalInfoDegree(infoDegree);
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableDegreesForOptionWithRules", args);
-
-		List infoDegreeList = infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses();
-		ActionForward forward = null;
-		if (infoDegreeList.size() == 1) {
-			infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoDegreeList.get(0));
-
-			args[0] = infoEnrolmentContext;
-
-			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesForOptionWithRules", args);
-			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-			forward = mapping.findForward("concreteOptionalList");
-		} else {
-			forward = mapping.findForward("searchOptionalCurricularCourses");
-		}
-
-		return forward;
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesForOptionWithoutRules", args);
+		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
+		return mapping.findForward(forwards[4]);
 	}
 
+/*
 	public ActionForward chooseOptionalCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if (isCancelled(request)) {

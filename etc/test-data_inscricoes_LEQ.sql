@@ -207,6 +207,33 @@ insert into CURRICULAR_COURSE_SCOPE  values (64, 3, 19, 1, 0.0, 0.0, 0.0, 0.0, 2
 insert into CURRICULAR_COURSE_SCOPE  values (65, 6, 26, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
 insert into CURRICULAR_COURSE_SCOPE  values (66, 5, 34, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
 
+-- opções
+insert into CURRICULAR_COURSE_SCOPE  values (67, 7, 53, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (68, 7, 54, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (69, 7, 55, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (70, 7, 56, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (71, 7, 57, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (72, 7, 58, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (73, 7, 59, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (74, 8, 60, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (75, 8, 61, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (76, 8, 62, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (77, 8, 63, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (78, 8, 64, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (79, 8, 65, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (80, 8, 66, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (81, 8, 67, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (82, 8, 68, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (83, 8, 69, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (84, 9, 70, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (85, 9, 71, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (86, 9, 72, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (87, 9, 73, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (88, 9, 74, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (89, 9, 75, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (90, 9, 76, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (91, 9, 77, 1, 0.0, 0.0, 0.0, 0.0, 2, 1, 1);
+
 -- -----------------------------
 -- Data for table 'POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE'
 -- (ID_INTERNAL, KEY_POSSIBLE_CURRICULAR_COURSE, KEY_OPTIONAL_CURRICULAR_COURSE)
