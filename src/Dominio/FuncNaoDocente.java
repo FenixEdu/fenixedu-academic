@@ -13,6 +13,8 @@ public class FuncNaoDocente {
     
     private int codigoInterno = 0;    
     private int chaveFuncionario = 0;
+    private Funcionario funcionario = null;
+    
     
     /** Construtor por defeito */
     public FuncNaoDocente() {
@@ -66,4 +68,18 @@ public class FuncNaoDocente {
         this.chaveFuncionario = chaveFuncionario;
     }
     
+		/**
+		 * @return
+		 */
+		public Funcionario getFuncionario() {
+			return funcionario;
+		}
+
+		/**
+		 * @param funcionario
+		 */
+		public void setFuncionario(Funcionario funcionario) {
+			this.funcionario = funcionario;
+		}
+
 }

@@ -29,7 +29,9 @@ public class Funcionario {
 	private Date dataFim = null;
 	private int quem = 0;
 	private Timestamp quando = null;
-
+	
+	private IPessoa person = null;
+	
 	/** Construtor por omissao */
 	public Funcionario() {
 		this.codigoInterno = 0;
@@ -380,6 +382,20 @@ public class Funcionario {
 	 */
 	public void setQuem(int quem) {
 		this.quem = quem;
+	}
+
+	/**
+	 * @return
+	 */
+	public IPessoa getPerson() {
+		return person;
+	}
+
+	/**
+	 * @param pessoa
+	 */
+	public void setPerson(IPessoa person) {
+		this.person = person;
 	}
 
 }
