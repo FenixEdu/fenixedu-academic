@@ -11,7 +11,7 @@ body {
 table, div, span {
 	background-color: #fff;
 	}
-	
+
 h1 {
 	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #036;
@@ -38,6 +38,14 @@ a:link, a:visited {
 	background: #fff;
 	width:500px;
 	border: 1px solid #333;
+	padding: 0 0 20px 0;
+	}
+
+#darkcontainer {
+	margin: 100px auto 0 auto;
+	background: #000;
+	width:500px;
+	border: 1px solid #ddd;
 	padding: 0 0 20px 0;
 	}
 
