@@ -76,7 +76,7 @@ public class MakeEquivalencesForILEECStudents
 			Iterator iterator = result.iterator();
 			while (iterator.hasNext()) {
 				student = (IStudent) iterator.next();
-				System.out.println("[INFO] Updating student with number [" + student.getNumber() + "]...");
+//				System.out.println("[INFO] Updating student with number [" + student.getNumber() + "]...");
 				fenixPersistentSuport.iniciarTransaccao();
 				MakeEquivalencesForILEECStudents.makeEquivalences(student, fenixPersistentSuport);
 				fenixPersistentSuport.confirmarTransaccao();
@@ -205,8 +205,9 @@ public class MakeEquivalencesForILEECStudents
 	 */
 	private static void writeAndUpdateEquivalences(IStudent student, IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-//		List pastEnrolments = pastStudentCurricularPlan.getEnrolments();
-		List pastEnrolments = MakeEquivalencesForILEECStudents.solveSpecificCase(pastStudentCurricularPlan, currentStudentCurricularPlan, fenixPersistentSuport);
+		List realPastEnrolments = pastStudentCurricularPlan.getEnrolments();
+		List pastEnrolmentsTemp = MakeEquivalencesForAllStudentsPastEnrolments.keepOnlyImprovments(realPastEnrolments);
+		List pastEnrolments = MakeEquivalencesForILEECStudents.solveSpecificCase(pastEnrolmentsTemp, currentStudentCurricularPlan, fenixPersistentSuport);
 		Iterator iterator = pastEnrolments.iterator();
 		while (iterator.hasNext()) {
 
@@ -597,13 +598,12 @@ public class MakeEquivalencesForILEECStudents
 	 * @return
 	 * @throws Throwable
 	 */
-	private static List solveSpecificCase(IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static List solveSpecificCase(List pastEnrolments, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IEnrolment enrolmentInSE = null;
 		IEnrolment enrolmentInSH = null;
 		List newListOfEnrollments = null;
 
-		List pastEnrolments = pastStudentCurricularPlan.getEnrolments();
 		Iterator iterator = pastEnrolments.iterator();
 		while (iterator.hasNext())
 		{
@@ -636,8 +636,6 @@ public class MakeEquivalencesForILEECStudents
 			newListOfEnrollments.addAll(pastEnrolments);
 			newListOfEnrollments.remove(enrolmentInSE);
 			newListOfEnrollments.remove(enrolmentInSH);
-
-			System.out.println("PASSEI NO enrolmentInSE e enrolmentInSH");
 		} else if(enrolmentInSE != null && enrolmentInSH == null)
 		{
 			ICurricularCourse curricularCourseCriteria = new CurricularCourse();
@@ -654,9 +652,7 @@ public class MakeEquivalencesForILEECStudents
 
 			newListOfEnrollments = new ArrayList();
 			newListOfEnrollments.addAll(pastEnrolments);
-			newListOfEnrollments.remove(enrolmentInSH);
-
-			System.out.println("PASSEI NO enrolmentInSH");
+			newListOfEnrollments.remove(enrolmentInSE);
 		} else
 		{
 			newListOfEnrollments = pastEnrolments;

@@ -1,5 +1,6 @@
 package middleware.studentMigration.enrollments;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
@@ -154,7 +156,8 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 */
 	private static void writeAndUpdateEnrolments(IStudent student, IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		List pastEnrolments = pastStudentCurricularPlan.getEnrolments();
+		List realPastEnrolments = pastStudentCurricularPlan.getEnrolments();
+		List pastEnrolments = MakeEquivalencesForAllStudentsPastEnrolments.keepOnlyImprovments(realPastEnrolments);
 		Iterator iterator = pastEnrolments.iterator();
 		while (iterator.hasNext()) {
 			IEnrolment enrolment = (IEnrolment) iterator.next();
@@ -400,6 +403,44 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		{
 			return false;
 		}
+	}
+
+	/**
+	 * @param enrollmentsList
+	 */
+	protected static List keepOnlyImprovments(List enrollmentsList)
+	{
+		List enrollmentsToRemove = new ArrayList();
+		List enrollmentsToReturn = new ArrayList();
+		
+		Iterator iterator1 = enrollmentsList.iterator();
+		while (iterator1.hasNext())
+		{
+			IEnrolment enrolment = (IEnrolment) iterator1.next();
+			List evaluations = enrolment.getEvaluations();
+			Iterator iterator2 = evaluations.iterator();
+			while (iterator2.hasNext())
+			{
+				EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iterator2.next();
+				if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+				{
+					Iterator iterator3 = enrollmentsList.iterator();
+					while (iterator3.hasNext())
+					{
+						IEnrolment enrolment2 = (IEnrolment) iterator3.next();
+						String courseCode = enrolment2.getCurricularCourseScope().getCurricularCourse().getCode();
+						String improvmentCourseCode = enrolment.getCurricularCourseScope().getCurricularCourse().getCode();
+						if(courseCode.equals(improvmentCourseCode) && !enrolment2.equals(enrolment))
+						{
+							enrollmentsToRemove.add(enrolment2);
+						}
+					}
+				}
+			}
+		}
+		enrollmentsToReturn.addAll(enrollmentsList);
+		enrollmentsToReturn.removeAll(enrollmentsToRemove);
+		return enrollmentsToReturn;
 	}
 
 }
