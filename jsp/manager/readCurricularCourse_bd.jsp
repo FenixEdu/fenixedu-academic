@@ -20,6 +20,8 @@
 	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
 	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
 </ul>
+
+<span class="error"><html:errors/></span>
 	
 	<h3><bean:message key="label.manager.executionCourses"/></h3>
 
@@ -56,8 +58,6 @@
 			<br>
 		</logic:notEmpty>	 	
 	</logic:present>
-	
-<span class="error"><html:errors/></span>
 	
 	<h3><bean:message key="label.manager.curricularCourseScopes"/></h3>
 

@@ -43,7 +43,7 @@ public class DeleteDegreeCurricularPlansAction extends FenixAction {
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		List degreeCurricularPlansIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
-		Integer degreeId = new Integer(request.getParameter("degreeId"));
+
 		Object args[] = { degreeCurricularPlansIds };
 		GestorServicos manager = GestorServicos.manager();
 		List errorNames = new ArrayList();

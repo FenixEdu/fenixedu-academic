@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,6 +28,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -57,24 +60,31 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			List result = null;
 			try {
 					result = (List) manager.executar(userView, "ReadBranchesByDegreeCurricularPlan", args);
+			
+			} catch (NonExistingServiceException ex) {
+				ActionErrors errors = new ActionErrors();
+				ActionError actionError = new ActionError("message.insert.degreeCurricularCourseScope.error");
+				errors.add("message.insert.degreeCurricularCourseScope.error", actionError);
+				saveErrors(request, errors);
+				return mapping.findForward("readCurricularCourse");
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
 			
 //			creation of bean of InfoBranches for use in jsp
 			ArrayList branchesList = new ArrayList();
-			if(result != null) {
-				InfoBranch infoBranch;
-				Iterator iter = result.iterator();
-				String label, value;
-				while(iter.hasNext()) {
-					infoBranch = (InfoBranch) iter.next();
-					value = infoBranch.getIdInternal().toString();
-					label = infoBranch.getCode() + " - " + infoBranch.getName();
-					branchesList.add(new LabelValueBean(label, value));
-				}
-				request.setAttribute("branchesList", branchesList);
+			
+			InfoBranch infoBranch;
+			Iterator iter = result.iterator();
+			String label, value;
+			while(iter.hasNext()) {
+				infoBranch = (InfoBranch) iter.next();
+				value = infoBranch.getIdInternal().toString();
+				label = infoBranch.getCode() + " - " + infoBranch.getName();
+				branchesList.add(new LabelValueBean(label, value));
 			}
+			
+			request.setAttribute("branchesList", branchesList);
 			
 			return mapping.findForward("insertCurricularCourseScope");
 		}

@@ -24,6 +24,8 @@
 	<li><html:link page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
 </ul>
 
+<span class="error"><html:errors/></span>
+
 <h3><bean:message key="label.manager.curricularCourses"/></h3>
 
 <logic:empty name="curricularCoursesList">
@@ -69,7 +71,7 @@
 </logic:present>
 
 <br>
-<span class="error"><html:errors/></span>
+
 <br>
 <h3><bean:message key="label.manager.executionDegrees"/></h3>
 

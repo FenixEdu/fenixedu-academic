@@ -62,7 +62,6 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
     	
 		Object args[] = { infoDegree };
 		GestorServicos manager = GestorServicos.manager();
-		List serviceResult = null;
 		
 		try {
 				manager.executar(userView, "InsertDegree", args);

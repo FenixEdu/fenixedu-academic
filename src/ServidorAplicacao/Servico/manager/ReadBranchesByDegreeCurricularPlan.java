@@ -13,6 +13,7 @@ import Dominio.IBranch;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -59,7 +60,7 @@ public class ReadBranchesByDegreeCurricularPlan implements IServico {
 	}
 
 	if(allBranches == null || allBranches.isEmpty()) 
-		return allBranches;
+		throw new NonExistingServiceException();
 
 	// build the result of this service
 	Iterator iterator = allBranches.iterator();
