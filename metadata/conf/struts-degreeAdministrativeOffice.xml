@@ -14,7 +14,7 @@
 			<form-property name="secondaryArea" type="java.lang.Integer"/>
 			<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
 			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
-			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="unenrolledCurricularCourses" type="java.lang.String[]"/>
 			<form-property name="executionYear" type="java.lang.String"/>
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
