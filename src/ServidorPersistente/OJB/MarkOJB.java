@@ -47,15 +47,12 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		markFromDB = this.readBy(markToWrite.getExam(), markToWrite.getAttend());
 		// If mark is not in database, then write it.
 		if (markFromDB == null) {
-			System.out.println("MarkOJB: nao existe na BD");
 			super.lockWrite(markToWrite);
 		// else If the mark is mapped to the database, then write any existing changes.
 		} else if ((markToWrite instanceof Mark) && ((Mark) markFromDB).getIdInternal().equals(((Mark) markToWrite).getIdInternal())) {
-			System.out.println("MarkOJB: ja existe na BD");
 			super.lockWrite(markToWrite);
 			// else Throw an already existing exception
 		} else
-		System.out.println("MarkOJB: excepcao");
 			throw new ExistingPersistentException();
 	}
 
