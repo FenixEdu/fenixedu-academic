@@ -10,11 +10,9 @@ package Dominio;
  *
  * @author  tfc130
  */
-import java.util.List;
-
 import Util.TipoSala;
 
-public class Sala implements ISala, IDomainObject {
+public class Sala extends DomainObject implements ISala {
 	protected String _nome;
 	protected String _edificio;
 	protected Integer _piso;
@@ -22,8 +20,8 @@ public class Sala implements ISala, IDomainObject {
 	protected Integer _capacidadeExame;
 	protected TipoSala _tipo;
 
-	// códigos internos da base de dados
-	private Integer idInternal;
+	
+	
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
 	public Sala() {
@@ -111,7 +109,7 @@ public class Sala implements ISala, IDomainObject {
 
 	public String toString() {
 		String result = "[SALA";
-		result += ", codInt=" + idInternal;
+		result += ", codInt=" + getIdInternal();
 		result += ", nome=" + _nome;
 		result += ", edificio=" + _edificio;
 		result += ", piso=" + _piso;
@@ -120,20 +118,6 @@ public class Sala implements ISala, IDomainObject {
 		result += ", capacidadeExame=" + _capacidadeExame;
 		result += "]";
 		return result;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
-
-	/**
-	 * @param internal
-	 */
-	public void setIdInternal(Integer internal) {
-		idInternal = internal;
 	}
 
 }
