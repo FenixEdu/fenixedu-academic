@@ -17,10 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoEnrolment;
 import DataBeans.InfoObject;
-import DataBeans.teacher.credits.InfoCredits;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
