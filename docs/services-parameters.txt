@@ -1,10 +1,43 @@
 
-
-
-
-
+----------------------------------------------
+Public Services (before Gesdis):
+----------------------------------------------
+----------------------------------------------
+Nome:ReadCurricularCourseListOfExecutionCourse
+Parametros:InfoExecutionCourse infoExecCourse
+Role: none
+----------------------------------------------
+Nome:ReadExecutionCourse
+Parametros:InfoExecutionPeriod infoExecutionPeriod, String code
+Role: none
+----------------------------------------------
+Nome:ReadExecutionDegreesByExecutionYearAndDegreeInitials
+Parametros:InfoExecutionYear infoExecutionYear,	String degreeInitials,String nameDegreeCurricularPlan
+Role: none
+----------------------------------------------
+Nome:SelectClasses
+Parametros:InfoClass infoClass
+Role: none
+----------------------------------------------
+Nome:SelectExecutionCourse
+Parametros:InfoExecutionDegree infoExecutionDegree,	InfoExecutionPeriod infoExecutionPeriod,Integer curricularYear
+Role: none
+----------------------------------------------
+Nome:SelectExecutionShiftsWithAssociatedLessonsAndClasses
+Parametros:InfoExecutionCourse infoExecutionCourse
+Role: none
+----------------------------------------------
+Nome:SelectRooms
+Parametros:InfoRoom InfoRoom
+Role: none
+----------------------------------------------
+Nome:SelectShifts
+Parametros:InfoShift infoShift
+Role: none
+----------------------------------------------
 ----------------------------------------------
 Teacher Services:
+----------------------------------------------
 ----------------------------------------------
 Nome:AssociateTeacher
 Parametros:InfoExecutionCourse infoExecutionCourse,Integer teacherNumber
