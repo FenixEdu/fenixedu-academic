@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolment;
@@ -25,8 +24,8 @@ import DataBeans.equivalence.InfoCurricularCourseScopeGrade;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.FenixTransactionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -35,13 +34,13 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * 9/Jul/2003
  */
 
-public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
+public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatchAction /*DispatchAction*/ {
 	
 	private final String[] forwards = { "showCurricularCoursesForEquivalence", "verifyCurricularCoursesForEquivalence", "confirmCurricularCoursesForEquivalence", "acceptCurricularCoursesForEquivalence", "detailsCurricularCourseScope", "begin", "home" };
 
 	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		createToken(request);
+		super.createToken(request);
 
 		DynaActionForm equivalenceForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -76,7 +75,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 			return mapping.findForward(forwards[6]);
 		}
 		
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
 
 		DynaActionForm equivalenceForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -107,7 +106,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 			return mapping.findForward(forwards[0]);
 		}
 
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
 
 		HttpSession session = request.getSession();
 
@@ -136,7 +135,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 			return mapping.findForward(forwards[1]);
 		}
 
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
 
 		HttpSession session = request.getSession();
 
@@ -159,7 +158,7 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 			return mapping.findForward(forwards[0]);
 		}
 
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.equivalence");
 
 		DynaActionForm equivalenceForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -306,18 +305,18 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		saveErrors(request, actionErrors);
 	}
 
-	private void createToken(HttpServletRequest request) {
-		generateToken(request);
-		saveToken(request);
-	}
-
-	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
-
-		if (!isTokenValid(request)) {
-			form.reset(mapping, request);
-			throw new FenixTransactionException("error.transaction.equivalence");
-		} else {
-			createToken(request);
-		}
-	}
+//	private void createToken(HttpServletRequest request) {
+//		generateToken(request);
+//		saveToken(request);
+//	}
+//
+//	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
+//
+//		if (!isTokenValid(request)) {
+//			form.reset(mapping, request);
+//			throw new FenixTransactionException("error.transaction.equivalence");
+//		} else {
+//			createToken(request);
+//		}
+//	}
 }

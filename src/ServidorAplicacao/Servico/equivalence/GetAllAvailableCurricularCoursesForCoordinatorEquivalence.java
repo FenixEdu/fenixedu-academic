@@ -89,7 +89,10 @@ public class GetAllAvailableCurricularCoursesForCoordinatorEquivalence implement
 							}
 						});
 
-						midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan);
+						List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences = GetListsOfCurricularCoursesForEquivalence.getEnrolmentsWithNoEquivalences(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan, persistentSupport);
+
+						midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences);
+//						midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan);
 					}
 				}
 //			}

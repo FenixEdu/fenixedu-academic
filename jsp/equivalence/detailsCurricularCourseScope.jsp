@@ -77,7 +77,7 @@
 			</table>
 			<br/>
 			<br/>
-			<html:cancel styleClass="inputbutton"><bean:message key="link.coordinator.back"/></html:cancel>
+			<html:cancel styleClass="inputbutton"><bean:message key="button.back"/></html:cancel>
 	</html:form>
 </logic:present>
 </center>

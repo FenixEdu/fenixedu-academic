@@ -21,7 +21,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class PrepareStudentDataAction extends DispatchAction {
 
-	public boolean getUserViewFromStudentNumberAndDegreeType(ActionForm form, HttpServletRequest request) throws Exception {
+	protected boolean getUserViewFromStudentNumberAndDegreeType(ActionForm form, HttpServletRequest request) throws Exception {
 
 		boolean result = false;
 
@@ -53,7 +53,7 @@ public class PrepareStudentDataAction extends DispatchAction {
 		return result;
 	}
 
-	public void setNoStudentError(Integer studentNumber, HttpServletRequest request) {
+	protected void setNoStudentError(Integer studentNumber, HttpServletRequest request) {
 		ActionErrors actionErrors = new ActionErrors();
 		ActionError actionError = new ActionError("error.no.student.in.database", studentNumber.toString());
 		actionErrors.add("error.no.student.in.database", actionError);

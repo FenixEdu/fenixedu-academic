@@ -25,6 +25,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -134,8 +135,13 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 				}
 			});
 
-			if(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan != null && curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent != null) {
-				infoEquivalenceContext.setInfoEnrolmentsToGiveEquivalence(this.cloneEnrolmentsToInfoEnrolments(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan));
+			List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences = GetListsOfCurricularCoursesForEquivalence.getEnrolmentsWithNoEquivalences(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan, persistentSupport);
+
+//			if(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan != null && curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent != null) {
+//				infoEquivalenceContext.setInfoEnrolmentsToGiveEquivalence(this.cloneEnrolmentsToInfoEnrolments(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan));
+//				infoEquivalenceContext.setInfoCurricularCourseScopesToGetEquivalence(this.cloneCurricularCourseScopesToInfoCurricularCourseScopes(curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent));
+			if(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences != null && curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent != null) {
+				infoEquivalenceContext.setInfoEnrolmentsToGiveEquivalence(this.cloneEnrolmentsToInfoEnrolments(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences));
 				infoEquivalenceContext.setInfoCurricularCourseScopesToGetEquivalence(this.cloneCurricularCourseScopesToInfoCurricularCourseScopes(curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent));
 			} else {
 				infoEquivalenceContext.setInfoEnrolmentsToGiveEquivalence(new ArrayList());
@@ -173,5 +179,19 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 			infoEnrolments.add(infoEnrolment);
 		}
 		return infoEnrolments;
+	}
+
+	public static List getEnrolmentsWithNoEquivalences(List enrolments, ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+		List enrolmentsWithNoEquivalences = new ArrayList();
+		Iterator iterator = enrolments.iterator();
+		while(iterator.hasNext()) {
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = persistentSupport.getIPersistentEquivalence();
+			List result = persistentEnrolmentEquivalence.readEnrolmentEquivalencesByEnrolment(enrolment);
+			if(result.isEmpty()) {
+				enrolmentsWithNoEquivalences.add(enrolment);
+			}
+		}
+		return enrolmentsWithNoEquivalences;
 	}
 }

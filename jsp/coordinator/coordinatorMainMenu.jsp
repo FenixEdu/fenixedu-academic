@@ -18,8 +18,10 @@
 	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
 		<html:link forward="equivalenceForCoordinator"><bean:message key="link.coordinator.equivalence"/></html:link>
 		<br/>
+		<br/>
 	</logic:notEqual>
 	<html:link forward="backForCoordinator"><bean:message key="link.coordinator.back"/></html:link>
+	<br/>
 	<br/>
 </logic:present>
 
