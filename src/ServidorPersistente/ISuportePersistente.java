@@ -97,5 +97,6 @@ public interface ISuportePersistente {
 	public IPersistentStudentKind getIPersistentStudentKind();
 	
 	public IPersistentTeacherShiftPercentage getIPersistentTeacherShiftPercentage();
+	public IPersistentCreditsTeacher getIPersistentCreditsTeacher();
 	
 }

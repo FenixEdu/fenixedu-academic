@@ -49,6 +49,7 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoTeacher;
+import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.Announcement;
 import Dominio.Aula;
@@ -57,6 +58,7 @@ import Dominio.Branch;
 import Dominio.CandidateSituation;
 import Dominio.Contributor;
 import Dominio.Country;
+import Dominio.Credits;
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
@@ -85,6 +87,7 @@ import Dominio.IBranch;
 import Dominio.ICandidateSituation;
 import Dominio.IContributor;
 import Dominio.ICountry;
+import Dominio.ICredits;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
@@ -1907,6 +1910,44 @@ public abstract class Cloner {
 					
 		return professorship;
 	}
+	
+	public static ICredits copyInfoCreditsTeacher2ICreditsTeacher(InfoCredits infoCreditsTeacher) {
+
+		InfoTeacher infoTeacher = infoCreditsTeacher.getInfoTeacher();
+		ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+
+		InfoExecutionPeriod infoExecutionPeriod = infoCreditsTeacher.getInfoExecutionPeriod();
+		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+
+		ICredits creditsTeacher = new Credits();
+		copyObjectProperties(creditsTeacher, infoCreditsTeacher);
+		
+		creditsTeacher.setTeacher(teacher);
+		creditsTeacher.setExecutionPeriod(executionPeriod);	
+		creditsTeacher.setCredits(infoCreditsTeacher.getCredits());
+		creditsTeacher.setTfcStudentsNumber(infoCreditsTeacher.getTfcStudentsNumber());
+
+		return creditsTeacher;
+	}
+
+	public static InfoCredits copyICreditsTeacher2InfoCreditsTeacher(ICredits creditsTeacher) {
+		ITeacher teacher = creditsTeacher.getTeacher();
+		InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+		
+		IExecutionPeriod executionPeriod = creditsTeacher.getExecutionPeriod();
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+		
+		InfoCredits infoCreditsTeacher = new InfoCredits();
+		copyObjectProperties(infoCreditsTeacher, creditsTeacher);
+		
+		infoCreditsTeacher.setInfoTeacher(infoTeacher);
+		infoCreditsTeacher.setInfoExecutionPeriod(infoExecutionPeriod);
+		infoCreditsTeacher.setCredits(creditsTeacher.getCredits());
+		infoCreditsTeacher.setTfcStudentsNumber(creditsTeacher.getTfcStudentsNumber());
+
+		return infoCreditsTeacher;
+	}
+	
 	
 	public static InfoExamEnrollment copyIExamEnrollment2InfoExamEnrollment(IExamEnrollment examEnrollment) {
 			InfoExamEnrollment infoExamEnrollment = new InfoExamEnrollment();

@@ -12,7 +12,7 @@ package Dominio;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface ICredits {
+public interface ICredits extends IDomainObject {
 	public abstract Double getCredits();
 	public abstract IExecutionPeriod getExecutionPeriod();
 	public abstract ITeacher getTeacher();

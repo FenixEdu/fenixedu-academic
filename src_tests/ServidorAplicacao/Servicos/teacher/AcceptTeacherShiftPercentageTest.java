@@ -28,7 +28,6 @@ import Dominio.Turno;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.teacher.credits.ShiftPercentageExceededException;
 import ServidorAplicacao.Servicos.TestCaseServices;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorPersistente.ExcepcaoPersistencia;

@@ -9,7 +9,7 @@
   <table align="center">
     <tr>
       <td> 
-        <html:errors/>
+        <span class="error"><html:errors/></span>
       </td>
     </tr>
     <tr>

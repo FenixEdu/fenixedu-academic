@@ -15,7 +15,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.MessageResources;
 
 import Dominio.Funcionario;
 import Dominio.Pessoa;
@@ -42,13 +41,11 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
   throws IOException, ServletException {
     System.out.println("--->No ConsultarFuncionarioMostrarAction...");
     
-    Locale locale = getLocale(request);
-    MessageResources messages = getResources(request);
     ActionErrors errors = new ActionErrors();
     HttpSession session = request.getSession();
         
     Pessoa pessoa = (Pessoa)session.getAttribute(Constants.USER_KEY);
-    
+
     ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
     ServicoSeguroLerFuncionario servicoSeguroLerFuncionario =
     new ServicoSeguroLerFuncionario(servicoAutorizacaoLer, pessoa.getCodigoInterno().intValue());

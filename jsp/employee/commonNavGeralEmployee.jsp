@@ -6,7 +6,7 @@
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 <table width="50%" border="0" align="center" cellpadding="0" cellspacing="2">
 	<tr>
-		<td width="20%" nowrap class="navopgeral">
+		<td width="20%" nowrap class="navopgeral-td">
 			<html:link page="/home.do">Home</html:link>
 		</td>
 		<logic:iterate id="role" name="userView" property="roles">

@@ -1,18 +1,11 @@
-/*
- * Created on 15/Mai/2003 by jpvl
- *
- */
 package ServidorAplicacao.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRole;
 import DataBeans.InfoTeacher;
-import DataBeans.teacher.credits.InfoShiftPercentage;
+import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
 import Dominio.Teacher;
@@ -28,14 +21,14 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 
 /**
- * @author jpvl
+ * @author Tânia Pousão
+ *
  */
-public class ReadTeacherShiftPercentageTest extends TestCaseServices {
-
+public class WriteCreditsTeacherTest extends TestCaseServices {
 	/**
 	 * @param testName
 	 */
-	public ReadTeacherShiftPercentageTest(String testName) {
+	public WriteCreditsTeacherTest(String testName) {
 		super(testName);
 	}
 
@@ -43,7 +36,7 @@ public class ReadTeacherShiftPercentageTest extends TestCaseServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadTeacherExecutionCourseShiftsPercentage";
+		return "WriteCreditsTeacherTest";
 	}
 
 	/* (non-Javadoc)
@@ -53,56 +46,68 @@ public class ReadTeacherShiftPercentageTest extends TestCaseServices {
 		return "etc/testDataSetForTeacherCredits.xml";
 	}
 
-	public void testSucessfullExecution() {
+	public void test() {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			//Execution Course
-			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-			infoExecutionCourse.setIdInternal(new Integer(1));
-
 			//Teacher		
 			ITeacher teacher = new Teacher();
-			teacher.setIdInternal(new Integer(1));
+			teacher.setIdInternal(new Integer(2));
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			teacher = (ITeacher) teacherDAO.readByOId(teacher);
 
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
+			//Service: insert
 			GestorServicos serviceManager = GestorServicos.manager();
+			Integer tfcStudentsNumber = new Integer(4);
 
-			Object[] args = { infoTeacher, infoExecutionCourse };
+			Object[] args = { infoTeacher, tfcStudentsNumber };
 
-			List infoShiftPercentageList = (List) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+			Boolean result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
-			assertNotNull("is null!", infoShiftPercentageList);
-
-			assertEquals("size not 10!", 10, infoShiftPercentageList.size());
-
-			Iterator iterator = infoShiftPercentageList.iterator();
-			while (iterator.hasNext()) {
-				InfoShiftPercentage infoShiftPercentage = (InfoShiftPercentage) iterator.next();
-				int internalCode = infoShiftPercentage.getShift().getIdInternal().intValue();
-				switch (internalCode) {
-					case 1 :
-						assertEquals("shift 1 - 1", new Double(0), infoShiftPercentage.getAvailablePercentage());
-						assertEquals("shift 1 - 2", 2, infoShiftPercentage.getTeacherShiftPercentageList().size());
-						break;
-					case 2 :
-						assertEquals("shift 2 - 1", new Double(75), infoShiftPercentage.getAvailablePercentage());
-						assertEquals("shift 2 - 2", 1, infoShiftPercentage.getTeacherShiftPercentageList().size());
-						break;
-					default :
-						assertEquals("shift " + internalCode + " - 1", new Double(100), infoShiftPercentage.getAvailablePercentage());
-						assertEquals("shift " + internalCode + " - 2", 0, infoShiftPercentage.getTeacherShiftPercentageList().size());
-						break;
-				}
+			if (!result.booleanValue()) {
+				fail("can't execute service");
 			}
+
+			testCredits(infoTeacher, tfcStudentsNumber);
+
+
+			//Service: change
+			serviceManager = GestorServicos.manager();
+			tfcStudentsNumber = new Integer(6);
+
+			Object[] args2 = { infoTeacher, tfcStudentsNumber };
+
+			result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args2);
+
+			if (!result.booleanValue()) {
+				fail("can't execute service");
+			}
+
+			testCredits(infoTeacher, tfcStudentsNumber);
 
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("Reading database!");
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			fail("Executing  Service!");
+		}
+	}
+
+	public void testCredits(InfoTeacher infoTeacher, Integer tfcStudentsNumber) {
+		try {
+			//Service
+			GestorServicos serviceManager = GestorServicos.manager();
+
+			Object[] args = { infoTeacher };
+
+			InfoCredits credits = (InfoCredits) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+
+			assertEquals("TfcStudentsnumber", tfcStudentsNumber, credits.getTfcStudentsNumber());
+
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			fail("Executing  Service!");

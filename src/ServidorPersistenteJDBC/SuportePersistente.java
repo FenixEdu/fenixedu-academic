@@ -11,7 +11,6 @@ import ServidorPersistenteJDBC.Relacional.HorarioTipoRelacional;
 import ServidorPersistenteJDBC.Relacional.JustificacaoRelacional;
 import ServidorPersistenteJDBC.Relacional.MarcacaoPontoRelacional;
 import ServidorPersistenteJDBC.Relacional.ModalidadeRelacional;
-import ServidorPersistenteJDBC.Relacional.PaisesRelacional;
 import ServidorPersistenteJDBC.Relacional.ParamFeriasRelacional;
 import ServidorPersistenteJDBC.Relacional.ParamJustificacaoRelacional;
 import ServidorPersistenteJDBC.Relacional.ParamRegularizacaoRelacional;
@@ -104,9 +103,7 @@ public class SuportePersistente {
 	public ICartaoPersistente iCartaoPersistente() {
 		return new CartaoRelacional();
 	}
-	public IPaisesPersistente iPaisesPersistente() {
-		return new PaisesRelacional();
-	}
+
 	public IFeriasPersistente iFeriasPersistente() {
 		return new FeriasRelacional();
 	}

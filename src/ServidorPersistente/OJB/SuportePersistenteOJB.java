@@ -35,6 +35,7 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
+import ServidorPersistente.IPersistentCreditsTeacher;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
@@ -439,11 +440,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			return new StudentKindOJB();
 		}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherShiftPercentage()
-	 */
 	public IPersistentTeacherShiftPercentage getIPersistentTeacherShiftPercentage() {
 		return new TeacherShiftPercentageOJB();
+	}
+
+	public IPersistentCreditsTeacher getIPersistentCreditsTeacher() {
+		return new CreditsTeacherOJB();
 	}
 
 }
