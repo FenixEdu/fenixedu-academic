@@ -8,13 +8,16 @@
 <script language=javascript>
 <!--
 
+//TODO: Insert bean instead of integer, to be easily changed from the application
+maximumNumberOfCoursesAllowedPerStudent = 8;
+
 function addToList(listField, newText, newValue) {
-if (listField.length > 2){
-alert("Não se pode escolher mais de 2 disciplinas");
+if (listField.length > maximumNumberOfCoursesAllowedPerStudent){
+alert("Não se pode escolher mais de " + maximumNumberOfCoursesAllowedPerStudent + " disciplinas");
 return true;
 }
    if ( ( newValue == "" ) || ( newText == "" ) ) {
-      alert("You cannot add blank values!");
+      alert("Por favor, escolha uma disciplina!");
    } else {
      for (i = 0; i < listField.length; i++){
        if (listField[i].value == newValue){
@@ -31,11 +34,13 @@ return true;
 
 function removeFromList(listField) {
    if ( listField.length == -1) {  // If the list is empty
-      alert("There are no values which can be removed!");
+      //Does not do nothing, for there is nothing to be removed and the user
+      //doesn't want to know that!
+      //alert("There are no values which can be removed!");
    } else {
       var selected = listField.selectedIndex;
       if (selected == -1) {
-         alert("You must select an entry to be removed!");
+         alert("Por favor, selecione uma disciplina para ser removida antes de pressionar este botao!");
       } else {  // Build arrays with the text and values to remain
          var replaceTextArray = new Array(listField.length-1);
          var replaceValueArray = new Array(listField.length-1);
@@ -55,51 +60,98 @@ function removeFromList(listField) {
    } // Ends the check for there being none in the list
 }
 
+function selectAll() {
+  var i = 0;
+  document.studentShiftEnrolmentForm.wantedCourse.multiple=true;
+  while( i < document.studentShiftEnrolmentForm.wantedCourse.options.length ) {
+    document.studentShiftEnrolmentForm.wantedCourse.options[i].selected = true;
+    i+=1;
+  }
+}
+
 //-->
 </script>
 
 <center>
 
 <html:form  action="studentShiftEnrolmentManager" method="POST">
- <html:hidden property="method" value="proceedToShiftEnrolment" />
+<html:hidden property="method" value="proceedToShiftEnrolment" />
 
-
- <html:select property="degree" 
-	      size="1"
-	      onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';document.studentShiftEnrolmentForm.submit();">
-	      <logic:iterate  id="executionDegree" name="degreeList">
-	      <bean:define id="deg" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree"/>
-	      <option value="<%= ((InfoDegree)deg).getSigla() %>"> <bean:write name="deg" property="nome" /> </option> 
-	      </logic:iterate>
+<strong>Escolhe o curso das cadeiras a que te queres inscrever:</strong>
+<br/>
+<html:select property="degree" 
+size="1"
+onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';selectAll();document.studentShiftEnrolmentForm.submit();">
+<logic:iterate  id="executionDegree" name="degreeList">
+ <bean:define id="deg" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree"/>
+ <option value="<%= ((InfoDegree)deg).getSigla() %>"> <bean:write name="deg" property="nome" /> </option> 
+</logic:iterate>
  </html:select>
- <br/>
- <br/>
+   <br/>
+   <br/>
 
- <html:select property="course" size="12"> 
-   <html:options collection="courseList" 
-	         labelProperty="nome"
-		 property="idInternal"/>
- </html:select>
+<%--
+<bean:define id="wantedCourseList" name="wantedCourseList" property="wantedCourseList" type="java.util.ArrayList"/>
+--%>
 
- <html:select property="wantedCourse" size="12"> 
-   <html:options collection="wantedCourse" 
-	         labelProperty="nome"
-		 property="idInternal"/>
- </html:select>
+   
+<table>
+  <TR>
+    <TH>
+      Disciplinas do curso selecionado:
+    </TH>
+    <TH>
+    </TH>
+    <TH>
+      Disciplinas a que estás inscrito:
+    </TH>
+  </TR>
+  <TR>
+    <TD>
+      <html:select property="course" size="12"> 
+      <html:options collection="courseList" 
+      labelProperty="nome"
+      property="idInternal"/>
+      </html:select>
+       <br/>
+      <br/>
+      <input type=button 
+      value="Adicionar Disciplina" 
+      onclick="addToList(wantedCourse,course[course.selectedIndex].text,course[course.selectedIndex].value);"
+      />
+    </TD>
+    <TD>
+      Actualiza a coluna<br>
+      da direita para<br>
+      reflectir as disciplinas<br>
+      a que te queres<br>
+      inscrever, <br>
+      utilizando os<br>
+      botões abaixo.<br>
+      <br>
+      Lembra-te que podes <br>
+      modificar a tua escolha <br>
+      posteriormente!
+    </TD>
+    <TD>
+      <html:select property="wantedCourse" multiple="false" size="12"> 
+      <html:options  collection="wantedCourse" 
+      labelProperty="nome"
+      property="idInternal"/>
+      </html:select>
+      <br/>
+      <br/>
+      <input type=button 
+      value="Remover Disciplina" 
+      onclick="removeFromList(wantedCourse);"
+      />
+    </TD>
+  </TR>
+</table>
 
- <br/>
- <br/>
 
- <input type=button 
-        value="add" 
-	onclick="addToList(wantedCourse,course[course.selectedIndex].text,course[course.selectedIndex].value);"
-	/>
- <input type=button 
-        value="remove" 
-	onclick="removeFromList(wantedCourse);"
-        />
- <br>
- <html:submit value="Continuar inscrição"/>
+<br>
+<html:submit value="Continuar inscrição" onclick="selectAll();alert('deu');"/>
 
 </html:form>
 

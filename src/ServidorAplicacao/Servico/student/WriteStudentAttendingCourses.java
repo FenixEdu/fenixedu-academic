@@ -4,6 +4,7 @@ package ServidorAplicacao.Servico.student;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
@@ -52,13 +53,27 @@ public class WriteStudentAttendingCourses implements IServico {
     return _servico;
   }
 
+  /**
+   * Describe <code>run</code> method here.
+   *
+   * @param infoStudent an <code>InfoStudent</code>,
+   * @param infoExecutionCourses a <code>List</code> with the wanted executionCourse.idInternal's of the ATTEND table.
+   * @return a <code>Boolean</code> to indicate if all went fine.
+   * @exception FenixServiceException if an error occurs.
+   */
   public Boolean run(InfoStudent infoStudent,
-		    List infoExecutionCourses) 
-      throws FenixServiceException{
+		     List infoExecutionCourses) 
+    throws FenixServiceException{
 
+
+    if ( infoExecutionCourses== null ||  infoExecutionCourses.size() == 0 ||infoStudent == null) {
+      return new Boolean(false);
+    } // end of if ()
 
 
     boolean result = false;
+
+
     try {
       List executionCourseList = null;
       
@@ -84,15 +99,32 @@ public class WriteStudentAttendingCourses implements IServico {
       
       i = infoExecutionCourses.iterator();
       while ( i.hasNext()) {
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) i.next();
-	IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-	
-	IDisciplinaExecucao executionCourseFromDB = executionCourseDAO
-	  .readByExecutionCourseInitialsAndExecutionPeriod(executionCourse.getSigla(), 
-							   executionCourse.getExecutionPeriod());
+	Integer executionCourseId = new Integer((String) i.next()); 
+	IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+	executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
 
-	IFrequenta attendsEntry = new Frequenta(student, executionCourseFromDB);
-	attendsDAO.lockWrite(attendsEntry);
+	if ( executionCourse == null) {
+	  System.out.println("Execution course with ID=" + executionCourseId + " does not exist in the database!");
+	  throw new FenixServiceException();
+	} // end of if ()
+	else {
+	  
+
+	
+	
+	  IDisciplinaExecucao executionCourseFromDB = executionCourseDAO
+	    .readByExecutionCourseInitialsAndExecutionPeriod(executionCourse.getSigla(), 
+							     executionCourse.getExecutionPeriod());
+
+	  IFrequenta attendsEntry = new Frequenta();
+	  //FIXME: (tdi-dev:edgar.goncalves) - lockWrite ain't working...
+	  attendsDAO.lockWrite(attendsEntry);
+	  attendsEntry.setAluno(student);
+	  attendsEntry.setDisciplinaExecucao(executionCourseFromDB);
+	  
+	} // end of if () else
+	
+
       } // end of while ()
 
       result = true;

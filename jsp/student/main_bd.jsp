@@ -20,7 +20,7 @@
 	</tr>
 	<tr>
 		<td>
-			<html:link page="/studentShiftEnrolmentOptions.do?method=enrollCourses">
+			<html:link page="/studentShiftEnrolmentManager.do?method=enrollCourses">
 				<bean:message key="link.shift.enrolment"/>
 			</html:link>
 		</td>
