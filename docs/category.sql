@@ -6,7 +6,6 @@ Source Database:       ciapl
 Date:                  2003-11-19 15:57:19
 */
 
-use fenix ;
 #----------------------------
 # Table structure for CATEGORY
 #----------------------------
