@@ -14,10 +14,7 @@
 
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
-	<logic:empty name="component" property="infoSiteGroupsByShiftList">
-	<h2><bean:message key="message.infoSiteGroupsByShiftList.not.available" /></h2>
-	</logic:empty>
-	
+		
 <table border="0" style="text-align: left;">
 	<tbody>
 	<b><html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
@@ -26,6 +23,10 @@
 	<br>
 	
 	<logic:notPresent name="noShifts">
+	<logic:empty name="component" property="infoSiteGroupsByShiftList">
+	<h2><bean:message key="message.infoSiteGroupsByShiftList.not.available" /></h2>
+	</logic:empty>
+	
 	<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 					<b><bean:message key="link.insertGroup"/></b></html:link>
     <logic:iterate id="infoSiteGroupsByShift" name="component" property="infoSiteGroupsByShiftList" >
@@ -134,26 +135,32 @@
             </td>
             </tr>
             </logic:iterate>
-            
-</logic:notPresent>
+ 
+          
+
             <br>
-            <span class="error"><html:errors/></span>
+           <span class="error"><html:errors/></span> 
         </tbody>
-
-</table>
-
-
-	<html:form action="/viewProjectStudentGroups" method="get">
-
+       
+<table border="0" style="text-align: left;">
+<tbody>
+<tr>
+<td><br/>
+  <html:form action="/viewProjectStudentGroups" method="get">
 	<html:submit styleClass="inputbutton"><bean:message key="button.refresh"/>                    		         	
 	</html:submit>
 	
 	<html:hidden property="method" value="viewProjectStudentGroups"/>
 	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
 	<html:hidden  property="objectCode" value="<%= request.getParameter("objectCode")%>"/>
-	</html:form>
+	</html:form> 
+</td>
+</tr>
+</tbody>
+</table>
 	
-	
+</logic:notPresent>	
+</table>
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">

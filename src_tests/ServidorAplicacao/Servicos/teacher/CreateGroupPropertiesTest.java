@@ -1,8 +1,6 @@
 /*
  * Created on 28/Jul/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -23,18 +21,45 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author lmac
+ * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 
+
+	IDisciplinaExecucao executionCourse = null;
+	
 	/**
 	 * @param testName
 	 */
 	public CreateGroupPropertiesTest(String testName) {
 		super(testName);
+	}
+
+	protected void setUp() {
+		ISuportePersistente persistentSupport = null;
+		IPersistentExecutionYear persistentExecutionYear = null;
+		IPersistentExecutionPeriod persistentExecutionPeriod = null;
+		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+		
+
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentSupport.iniciarTransaccao();
+
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII", executionPeriod);
+			persistentSupport.confirmarTransaccao();
+			
+		} catch (ExcepcaoPersistencia e) {
+			System.out.println("failed setting up the test data");
+		}
+
+		super.setUp();
 	}
 
 	/**
@@ -48,54 +73,18 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+		IGroupProperties groupProperties = new GroupProperties(executionCourse, "projecto A");
+		Object[] args = { executionCourse.getIdInternal(), Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties)};
+		return args;
 	}
 
 	/**
 	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISuportePersistente persistentSupport = null;
-		IPersistentExecutionYear persistentExecutionYear = null;
-		IPersistentExecutionPeriod persistentExecutionPeriod = null;
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
-		IDisciplinaExecucao executionCourse = null;
 
-		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentExecutionYear =
-				persistentSupport.getIPersistentExecutionYear();
-			persistentExecutionPeriod =
-				persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse =
-				persistentSupport.getIDisciplinaExecucaoPersistente();
-			persistentSupport.iniciarTransaccao();
-
-			IExecutionYear executionYear =
-				persistentExecutionYear.readExecutionYearByName("2002/2003");
-			IExecutionPeriod executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					"2º Semestre",
-					executionYear);
-			executionCourse =
-				persistentExecutionCourse
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCII",
-					executionPeriod);
-			persistentSupport.confirmarTransaccao();
-
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
-
-		IGroupProperties groupProperties =
-			new GroupProperties(executionCourse, "newName");
-		Object[] args =
-			{
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse).getIdInternal(),
-				Cloner.copyIGroupProperties2InfoGroupProperties(
-					groupProperties)};
+		IGroupProperties groupProperties = new GroupProperties(executionCourse, "newName");
+		Object[] args = { executionCourse.getIdInternal(), Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties)};
 		return args;
 	}
 

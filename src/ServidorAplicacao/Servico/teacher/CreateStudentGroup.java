@@ -98,7 +98,6 @@ public class CreateStudentGroup implements IServico {
 		throws FenixServiceException {
 
 
-		System.out.println("---------------ENTRA NO SERVICO CREATE STUDENT GROUP");
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentGroupProperties persistentGroupProperites = null;

@@ -30,7 +30,7 @@
          		
 			<logic:notEmpty name="infoSiteGroupsByShift" property="infoShift">
 			<bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>	
-			<table width="400" cellpadding="0" border="1" bgColor="black" style="text-align: left;" > 		
+			<table width="400" cellpadding="0" border="6" style="text-align: left;" > 		
 																
 											
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
@@ -93,10 +93,10 @@
         		<tr>
           		<td>
              	
-               	<li><html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+               	<BLOCKQUOTE><li><html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
 						<bean:message key="label.groupWord"/>
                 		<bean:write name="infoStudentGroup" property="groupNumber"/>	</h2>
-					</html:link></li>
+					</html:link></li></BLOCKQUOTE>
                
                 
              	</td>

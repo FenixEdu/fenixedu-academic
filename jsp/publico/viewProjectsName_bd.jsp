@@ -13,17 +13,29 @@
 	</logic:empty>
 <table border="0" style="text-align: left;">
         <tbody>
+        
+        <tr>
+			<td class="listClasses-header"><bean:message key="label.projectName" />
+			</td>
+			<td class="listClasses-header"><bean:message key="label.projectDescription" />
+			</td>
+		</tr>
             <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
                 <tr>
-                    <td>
+                    <td class="listClasses">
                         <br>
                         <b>
 							<li><html:link page="<%= "/viewSite.do" + "?method=viewProjectStudentGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
 								<bean:write name="infoGroupProperties" property="name"/></b>
-							</html:link> - <bean:write name="infoGroupProperties" property="projectDescription"/></BLOCKQUOTE>
+							</html:link>
 							</li>
 							
                     </td>
+                    
+                     <td class="listClasses">
+                    <html:textarea name="infoGroupProperties" property="projectDescription" cols="30" rows="4"/>
+                   
+                	</td>
                 </tr>
 
             </logic:iterate>
