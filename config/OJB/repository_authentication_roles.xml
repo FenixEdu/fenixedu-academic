@@ -2,6 +2,7 @@
      Definitions for Dominio.Pessoa 
      *********************************** -->
 <class-descriptor class="Dominio.Pessoa"
+				  proxy="dynamic"
                   table="PERSON">
     <field-descriptor
         name="idInternal"
@@ -243,12 +244,7 @@
     	<query-customizer
 	    	class="ServidorPersistente.customQueries.AdvisoryFilter">
 	    </query-customizer>
-      </collection-descriptor>    
-      
-	<attribute
-     	attribute-name="cacheable"
-     	attribute-value="false" />
-      
+      </collection-descriptor>
 </class-descriptor>
 <!-- ***********************************
      Definitions for Dominio.Role 
