@@ -575,7 +575,7 @@ public abstract class Cloner {
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoExecutionDegree.setTemporaryExamMap(executionDegree.getTemporaryExamMap());
 
-        //added by T?nia Pous?o
+        //added by Tânia Pousão
         InfoCampus infoCampus = Cloner.copyICampus2InfoCampus(executionDegree.getCampus());
         infoExecutionDegree.setInfoCampus(infoCampus);
 
@@ -2574,7 +2574,7 @@ public abstract class Cloner {
     }
 
     /**
-     * @author T?nia Pous?o Created on 13/Nov/2003
+     * @author Tânia Pousão Created on 13/Nov/2003
      */
     public static InfoCampus copyICampus2InfoCampus(ICampus campus) {
         InfoCampus infoCampus = new InfoCampus();
@@ -2584,7 +2584,7 @@ public abstract class Cloner {
     }
 
     /**
-     * @author T?nia Pous?o Created on 13/Nov/2003
+     * @author Tânia Pousão Created on 13/Nov/2003
      */
     public static ICampus copyInfoCampus2ICampus(InfoCampus infoCampus) {
         ICampus campus = new Campus();

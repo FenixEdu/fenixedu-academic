@@ -457,7 +457,7 @@ public interface ISuportePersistente {
 
     public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse();
     
-    // Rita Ferreira e Jo?o Fialho
+    // Rita Ferreira e João Fialho
     public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
     
     public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
@@ -480,5 +480,4 @@ public interface ISuportePersistente {
     public IPersistentProjectAccess getIPersistentProjectAccess();
 
     public IPersistentBuilding getIPersistentBuilding();
-    
 }

@@ -1271,7 +1271,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     	return new PublicationAuthorOJB();
     }
 
-    // Rita Ferreira e Jo?o Fialho
+    // Rita Ferreira e João Fialho
 	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
 		return new OldInquiriesSummaryOJB();
 	}
