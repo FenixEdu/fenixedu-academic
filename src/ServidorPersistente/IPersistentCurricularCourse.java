@@ -12,10 +12,11 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  */
 
 public interface IPersistentCurricularCourse extends IPersistentObject {
-    
-    public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
-    public ArrayList readAll() throws ExcepcaoPersistencia;
-    public void lockWrite(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia, ExistingPersistentException;
-    public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+
+	public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
+	public ArrayList readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia;
+	public ArrayList readAll() throws ExcepcaoPersistencia;
+	public void lockWrite(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia, ExistingPersistentException;
+	public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
+	public void deleteAll() throws ExcepcaoPersistencia;
 }

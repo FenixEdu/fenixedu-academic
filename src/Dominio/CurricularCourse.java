@@ -28,8 +28,8 @@ public class CurricularCourse implements ICurricularCourse {
 	private List associatedCurricularSemesters;
 
 	// Para sair:
-	private Integer curricularYear;
-	private Integer semester;
+//	private Integer curricularYear;
+//	private Integer semester;
 
 	public CurricularCourse() {
 
@@ -50,11 +50,11 @@ public class CurricularCourse implements ICurricularCourse {
 		setAssociatedExecutionCourses(null);
 		setAssociatedBranches(null);
 		setAssociatedCurricularSemesters(null);
-
-		setCurricularYear(null);
-		setSemester(null);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public CurricularCourse(
 		Double credits,
 		Double theoreticalHours,
@@ -82,6 +82,29 @@ public class CurricularCourse implements ICurricularCourse {
 		setCurricularYear(curricularYear);
 		setSemester(semester);
 
+	}
+
+	public CurricularCourse(
+		Double credits,
+		Double theoreticalHours,
+		Double praticalHours,
+		Double theoPratHours,
+		Double labHours,
+		String name,
+		String code,
+		IDisciplinaDepartamento departmentCourse,
+		IDegreeCurricularPlan degreeCurricularPlan) {
+
+		this();
+		setCode(code);
+		setCredits(credits);
+		setDegreeCurricularPlan(degreeCurricularPlan);
+		setDepartmentCourse(departmentCourse);
+		setLabHours(labHours);
+		setName(name);
+		setPraticalHours(praticalHours);
+		setTheoPratHours(theoPratHours);
+		setTheoreticalHours(theoreticalHours);
 	}
 
 //	public boolean equals(Object obj) {
@@ -148,7 +171,10 @@ public class CurricularCourse implements ICurricularCourse {
 	 * @return int
 	 */
 	public Integer getCurricularYear() {
-		return curricularYear;
+		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().getYear();
+		}
+		return null;
 	}
 
 	/**
@@ -220,7 +246,10 @@ public class CurricularCourse implements ICurricularCourse {
 	 * @return int
 	 */
 	public Integer getSemester() {
-		return semester;
+		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getSemester();
+		}
+		return null;
 	}
 
 	/**
@@ -252,7 +281,9 @@ public class CurricularCourse implements ICurricularCourse {
 	 * @param curricularYear The curricularYear to set
 	 */
 	public void setCurricularYear(Integer curricularYear) {
-		this.curricularYear = curricularYear;
+		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().setYear(curricularYear);
+		}
 	}
 
 	/**
@@ -308,7 +339,9 @@ public class CurricularCourse implements ICurricularCourse {
 	 * @param semester The semester to set
 	 */
 	public void setSemester(Integer semester) {
-		this.semester = semester;
+		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).setSemester(semester);
+		}
 	}
 
 	/**

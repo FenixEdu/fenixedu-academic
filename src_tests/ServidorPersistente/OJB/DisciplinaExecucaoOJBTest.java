@@ -151,7 +151,7 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		// Read Existing	
 		
 		persistentSupport.iniciarTransaccao();
-		executionCourseList = persistentExecutionCourse.readByCurricularYearAndExecutionPeriodAndExecutionDegree(new Integer(2), executionPeriod, executionDegree);
+		executionCourseList = persistentExecutionCourse.readByCurricularYearAndExecutionPeriodAndExecutionDegree(new Integer(1), executionPeriod, executionDegree);
 		assertEquals(executionCourseList.isEmpty(), false);
 		persistentSupport.confirmarTransaccao();
 

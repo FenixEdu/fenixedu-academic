@@ -94,8 +94,6 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 				new Double(0.0),
 				new Double(0.0),
 				new Double(0.0),
-				new Integer(2),
-				new Integer(1),
 				"Trabalho Final de Curso I",
 				"TFCI",
 				departmentCourse,
@@ -127,8 +125,6 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 				new Double(0.0),
 				new Double(0.0),
 				new Double(0.0),
-				new Integer(2),
-				new Integer(1),
 				"Trabalho Final de Curso IX",
 				"TFCIX",
 				departmentCourse,
@@ -275,5 +271,25 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(list);
 		assertEquals(list.size(), 10);
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------------------------------
+
+	public void testReadCurricularCoursesByCurricularYear() {
+
+		// CurricularCourses existentes
+		System.out.println("\n- Test 6.1 : Read Existing CurricularCourses\n");
+
+		ArrayList list = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			list = persistentCurricularCourse.readCurricularCoursesByCurricularYear(new Integer(1));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read Existing CurricularCourse");
+		}
+		assertNotNull(list);
+		System.out.println("*********** " + list.toString());
+		System.out.println("\nSIZE: " + list.size());
 	}
 }

@@ -118,6 +118,31 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 	
-	
+	public ArrayList readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia {
+		try {
+			ArrayList list = new ArrayList();
+			String oqlQuery = "select all from " + CurricularCourse.class.getName();
+			oqlQuery += " where associatedCurricularSemesters.curricularYear.year = $1";
+			query.create(oqlQuery);
+			query.bind(year);
+			List result = (List) query.execute();
+
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+
+			if ((result != null) && (result.size() != 0)) {
+				ListIterator iterator = result.listIterator();
+				while (iterator.hasNext())
+					list.add((ICurricularCourse) iterator.next());
+			}
+			return list;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 	
 }

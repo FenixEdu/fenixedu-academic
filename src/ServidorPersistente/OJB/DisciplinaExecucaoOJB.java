@@ -141,8 +141,9 @@ public class DisciplinaExecucaoOJB
 			String oqlQuery =
 				"select distinct all from "
 					+ CurricularCourse.class.getName()
-					+ " where curricularYear = $1 "
-					+ " and degreeCurricularPlan.name = $2 "
+					+ " where associatedCurricularSemesters.curricularYear.year = $1"
+//					+ " where curricularYear = $1 "
+					+ " and degreeCurricularPlan.name = $2"
 					+ " and degreeCurricularPlan.degree.sigla = $3";
 
 			query.create(oqlQuery);

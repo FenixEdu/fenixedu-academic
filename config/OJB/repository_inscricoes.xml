@@ -187,18 +187,18 @@
 		column="LAB_HOURS"
 		jdbc-type="DOUBLE"
 	/>
-	<!-- ESTE E' PARA SAIR -->
+<!-- ESTE E' PARA SAIR
 	<field-descriptor
 		name="curricularYear"
 		column="CURRICULAR_YEAR"
 		jdbc-type="INTEGER"
 	/>
-	<!-- ESTE E' PARA SAIR -->
 	<field-descriptor
 		name="semester"
 		column="SEMESTER"
 		jdbc-type="INTEGER"
 	/>
+-->
 	<field-descriptor
 		name="name"
 		column="NAME"

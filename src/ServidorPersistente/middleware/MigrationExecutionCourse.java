@@ -309,7 +309,7 @@ public class MigrationExecutionCourse {
 							.getDegree()
 							.getSigla())
 					.append(",Ano:")
-					.append(curricularCourse.getCurricularYear())
+//					.append(curricularCourse.getCurricularYear())
 					.append(")\r\n");
 			}
 		}

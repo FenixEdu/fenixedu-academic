@@ -102,13 +102,13 @@ public class LoadCourses extends DataFileLoader {
 		ICurricularCourse disciplinaCurricular = new CurricularCourse();
 		disciplinaCurricular.setCode(sigla);
 		disciplinaCurricular.setCredits(null);
-		disciplinaCurricular.setCurricularYear(new Integer(anoCurricular));
+//		disciplinaCurricular.setCurricularYear(new Integer(anoCurricular));
 
 		disciplinaCurricular.setDepartmentCourse(null);
 		disciplinaCurricular.setLabHours(new Double(cargaHorariaLaboratorial));
 		disciplinaCurricular.setName(nomeDisciplina);
 		disciplinaCurricular.setPraticalHours(new Double(cargaHorariaPratica));
-		disciplinaCurricular.setSemester(new Integer(semestre));
+//		disciplinaCurricular.setSemester(new Integer(semestre));
 		disciplinaCurricular.setTheoPratHours(
 			new Double(cargaHorariaTeoricoPratica));
 		disciplinaCurricular.setTheoreticalHours(
@@ -140,7 +140,7 @@ public class LoadCourses extends DataFileLoader {
 
 		
 		ICurricularCourse criteriaCurricularCourse = new CurricularCourse();
-		criteriaCurricularCourse.setSemester(disciplinaCurricular.getSemester());
+//		criteriaCurricularCourse.setSemester(disciplinaCurricular.getSemester());
 		criteriaCurricularCourse.setName(disciplinaCurricular.getName());
 		criteriaCurricularCourse.setCode(disciplinaCurricular.getCode());
 		

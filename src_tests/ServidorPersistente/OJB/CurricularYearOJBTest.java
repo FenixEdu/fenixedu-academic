@@ -56,7 +56,7 @@ public class CurricularYearOJBTest extends TestCaseOJB {
 	public void testWriteCurricularYear() {
 
 		// CurricularYear ja existente
-		ICurricularYear curricularYear = new CurricularYear(new Integer(2003));
+		ICurricularYear curricularYear = new CurricularYear(new Integer(1));
 
 		System.out.println("\n- Test 1.1 : Write Existing CurricularYear\n");
 		try {
@@ -77,7 +77,7 @@ public class CurricularYearOJBTest extends TestCaseOJB {
 		}
 
 		// CurricularYear inexistente
-		curricularYear = new CurricularYear(new Integer(2000));
+		curricularYear = new CurricularYear(new Integer(6));
 
 		System.out.println("\n- Test 1.2 : Write Non Existing CurricularYear\n");
 		try {
@@ -92,7 +92,7 @@ public class CurricularYearOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			cy = persistentCurricularYear.readCurricularYearByYear(new Integer(2000));
+			cy = persistentCurricularYear.readCurricularYearByYear(new Integer(6));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing CurricularYear Just Writen Before");
@@ -141,20 +141,20 @@ public class CurricularYearOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 3.1 : Read Existing CurricularYear\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(2003));
+			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing CurricularYear");
 		}
 		assertNotNull(curricularYear);
-		assertTrue(curricularYear.getYear().intValue() == 2003);
+		assertTrue(curricularYear.getYear().intValue() == 1);
 
 		// CurricularYear inexistente
 		curricularYear = null;
 		System.out.println("\n- Test 3.2 : Read Non Existing CurricularYear");
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(2000));
+			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(6));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Non Existing CurricularYear");
@@ -172,7 +172,7 @@ public class CurricularYearOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 4.1 : Delete Existing CurricularYear\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(2003));
+			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Existing CurricularYear To Delete");
@@ -190,7 +190,7 @@ public class CurricularYearOJBTest extends TestCaseOJB {
 		ICurricularYear cy = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			cy = persistentCurricularYear.readCurricularYearByYear(new Integer(2003));
+			cy = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Just Deleted CurricularYear");
@@ -223,7 +223,7 @@ public class CurricularYearOJBTest extends TestCaseOJB {
 			fail("Read All CurricularYears");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 2);
+		assertEquals(list.size(), 5);
 	}
 
 }
