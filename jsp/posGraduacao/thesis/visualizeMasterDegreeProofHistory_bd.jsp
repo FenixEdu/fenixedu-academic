@@ -102,10 +102,11 @@
 		</tr>
 				
 		<!-- Juries -->
-		<tr>
-			<th align="left" colspan="2"><bean:message key="label.masterDegree.administrativeOffice.juries"/></th>				
-		</tr>
+	
 			<logic:present name="<%= SessionConstants.JURIES_LIST %>" scope="request">
+				<tr>
+					<th align="left" colspan="2"><bean:message key="label.masterDegree.administrativeOffice.juries"/></th>				
+				</tr>
 				<bean:define id="juriesList" name="<%= SessionConstants.JURIES_LIST %>" type="java.util.List"/>
 				<tr>
 					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
