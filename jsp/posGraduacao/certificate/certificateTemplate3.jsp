@@ -2,5 +2,4 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <p>O curso tem a duração máxima de quatro semestres, compreendendo a frequência do curso de especialização, e a apresentação de uma dissertação original.</p>

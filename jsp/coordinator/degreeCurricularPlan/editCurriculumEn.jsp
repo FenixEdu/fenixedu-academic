@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
-<%@ page import="DataBeans.InfoCurricularCourseScope, java.lang.Boolean, Util.Data, java.util.Calendar" %>
+<%@ page import="Util.Data" %>
 <logic:equal name="canEdit" value="true">
 	<logic:present name="infoCurriculum">
 		<h2><str:upperCase><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></str:upperCase>&nbsp;<str:upperCase><bean:message key="label.coordinator.degreeCurricularPlan.current.information"/></str:upperCase>&nbsp;-&nbsp;<bean:write name="infoCurriculum" property="infoCurricularCourse.name"/></h2>

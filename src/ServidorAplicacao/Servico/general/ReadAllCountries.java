@@ -15,7 +15,6 @@
 package ServidorAplicacao.Servico.general;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

@@ -1,13 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="java.util.Collection" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.RoleType" %>
-<%@ page import="DataBeans.InfoRole" %>
-<%@ page import="DataBeans.InfoCandidateSituation" %>
-<%@ page import="ServidorAplicacao.Servico.UserView" %>
-<%@ page import="ServidorAplicacao.IUserView" %>
 <html>
   <head>
     <title><bean:message key="label.person.title.changePersonalInfo" /></title>

@@ -4,19 +4,15 @@
  */
 package ServidorAplicacao.Servico.department;
 
-import java.util.List;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDepartment;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDepartment;
-import Dominio.IPessoa;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
-import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 

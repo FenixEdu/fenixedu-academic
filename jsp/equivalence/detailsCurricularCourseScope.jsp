@@ -5,9 +5,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="org.apache.struts.action.Action" %>
-<%@ page import="Util.Data" %>
-<%@ page import="java.util.Date" %>
+<%@ page import="org.apache.struts.Globals" %>
 
 <bean:define id="infoEnrolment" name="<%= SessionConstants.INFO_ENROLMENT_KEY %>" scope="request"/>
 <bean:define id="infoEnrolmentEvaluation" name="<%= SessionConstants.INFO_ENROLMENT_EVALUATION_KEY %>" scope="request"/>
@@ -21,7 +19,7 @@
 	<br/>
 	<br/>
 
-	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>"/>
+	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>"/>
 
 	<html:form action="<%= path %>">
 		<html:hidden property="method" value="details"/>

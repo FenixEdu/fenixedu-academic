@@ -1,7 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="Util.Data" %>
-<%@ page import="java.util.Date" %>
 <span class="error"><html:errors/></span>
 
 <h2><bean:message key="label.manager.findPerson" /></h2>

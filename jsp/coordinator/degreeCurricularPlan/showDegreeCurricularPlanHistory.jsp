@@ -2,7 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="DataBeans.InfoCurricularCourseScope, java.util.Calendar, Util.Data, java.util.Map, java.lang.Integer" %>
+<%@ page import="DataBeans.InfoCurricularCourseScope, Util.Data, java.util.Map, java.lang.Integer" %>
+
 <h2><bean:message key="label.coordinator.degreeCurricular.history"/></h2>
 <logic:present name="curricularCourseScopesHashMap">
 	<logic:iterate id="curricularCourseScopeElem" name="allCurricularCourseScopes" type="InfoCurricularCourseScope" length="1">
