@@ -27,7 +27,8 @@
        <tr>
          <td><bean:message key="label.candidate.degree"/></td>
          <td><html:select property="degree">
-                <html:options collection="degreeList" property="value" labelProperty="label"/>
+         		<option value="" selected="selected"><bean:message key="label.candidate.degree.default"/></option>
+                <html:options collection="degreeList" property="infoDegreeCurricularPlan.infoDegree.nome" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
              </html:select>
          </td>
        </tr>

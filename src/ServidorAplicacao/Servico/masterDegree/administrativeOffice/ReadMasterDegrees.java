@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.util.*;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.FenixServiceException;
@@ -64,14 +65,13 @@ public class ReadMasterDegrees implements IServico {
 			newEx.fillInStackTrace();
 			throw newEx;
 		} 
+
+		ArrayList degrees = new ArrayList();
+		Iterator iterator = result.iterator();
+		while(iterator.hasNext())
+			degrees.add(Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()));
+
+		return degrees;
 		
-		ArrayList degreeNames = new ArrayList();
-		if (!result.isEmpty()){
-			Iterator iterador = result.iterator();
-			while (iterador.hasNext()) {
-				degreeNames.add(((ICursoExecucao) iterador.next()).getCurricularPlan().getDegree().getNome());
-			}
-		}
-		return degreeNames;
 	}
 }

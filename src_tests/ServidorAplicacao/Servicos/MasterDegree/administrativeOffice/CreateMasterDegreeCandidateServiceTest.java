@@ -17,6 +17,10 @@ import java.util.Collection;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import DataBeans.InfoRole;
@@ -66,7 +70,22 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 		infoMasterDegreeCandidate.setSpecialization(Specialization.INTEGRADO_STRING);
 		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 		
-		Object[] args = {infoMasterDegreeCandidate, "Licenciatura de Engenharia Electrotecnica e de Computadores", userView};
+		InfoDegree infoDegree = new InfoDegree();
+		infoDegree.setNome("Licenciatura de Engenharia Electrotecnica e de Computadores");
+		
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+		
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+		infoExecutionYear.setYear("2003/2004");
+		
+		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		
+		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+		
+		Object[] args = {infoMasterDegreeCandidate};
 	
 		 InfoMasterDegreeCandidate newInfoMasterDegreeCandidate = null;
 		 

@@ -13,14 +13,12 @@ import DataBeans.util.Cloner;
 import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.person.GenerateUsername;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -59,15 +57,12 @@ public class CreateMasterDegreeCandidate implements IServico {
 		return "CreateMasterDegreeCandidate";
 	}
 
-	public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate, String degreeName, IUserView userView)
+	public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate)
 		throws Exception{
 
 		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 		
 		ISuportePersistente sp = null;
-
-		// Get the Actual Execution Year
-		IExecutionYear executionYear = null;
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
@@ -93,11 +88,11 @@ public class CreateMasterDegreeCandidate implements IServico {
 				sp.getIPessoaPersistente().escreverPessoa(person);
 			}
 			
-			executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();		
-  		    
 			// Read the Execution of this degree in the current execution Year
 			
-			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYear(degreeName, executionYear);
+			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYear(
+			             newMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
+			             Cloner.copyInfoExecutionYear2IExecutionYear(newMasterDegreeCandidate.getInfoExecutionDegree().getInfoExecutionYear()));
 			
 			// Create the Candidate
 			
@@ -121,7 +116,7 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 			// Generate the Candidate's number	
 			Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
-								executionYear.getYear(),
+								masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear(),
 								masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getNome(), 
 								masterDegreeCandidate.getSpecialization());
 

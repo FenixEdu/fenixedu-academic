@@ -16,8 +16,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.GestorServicos;
@@ -56,7 +56,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			ArrayList specializations = Specialization.toArrayList();
 			session.setAttribute("specializations", specializations);
 			
-			// Create the Degree List
+			// Get the Degree List
 			
 			ArrayList degreeList = null; 			
 			try {
@@ -65,17 +65,8 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 				throw new ExistingActionException(e);
 			}
 
-			ArrayList temp = new ArrayList();
-			if (!degreeList.isEmpty()){
-				Iterator iterator = degreeList.iterator();
-				temp.add(new LabelValueBean("[Escolha um curso]", null));
-				while(iterator.hasNext()){
-					String degreeName = (String) iterator.next();
-					temp.add(new LabelValueBean(degreeName, degreeName)); 
-				}
-			}
-			session.setAttribute("degreeList", temp);
-			
+			session.setAttribute("degreeList", degreeList);
+						
 			// Create the type of Identification Document
 			session.setAttribute("identificationDocumentTypeList", TipoDocumentoIdentificacao.toArrayList());  
 			
@@ -109,8 +100,21 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			String identificationDocumentNumber = (String) createCandidateForm.get("identificationDocumentNumber");
 			String identificationDocumentType = (String) createCandidateForm.get("identificationDocumentType");
 
+			ArrayList degrees = (ArrayList) session.getAttribute("degreeList");
+			
+			Iterator iterator = degrees.iterator();
+			InfoExecutionDegree infoExecutionDegree = null; 
+			while (iterator.hasNext()){
+				InfoExecutionDegree infoExecutionDegreeTemp = (InfoExecutionDegree) iterator.next(); 
+				if (infoExecutionDegreeTemp.getInfoDegreeCurricularPlan().getInfoDegree().getNome().equals(degreeName))
+					infoExecutionDegree = infoExecutionDegreeTemp;					
+			}
+
+
 			// Create the new Master Degree Candidate
 			InfoMasterDegreeCandidate newMasterDegreeCandidate = new InfoMasterDegreeCandidate();
+			newMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+
 			InfoPerson infoPerson = new InfoPerson();
 			infoPerson.setNome(name);
 			infoPerson.setNumeroDocumentoIdentificacao(identificationDocumentNumber);
@@ -119,7 +123,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			newMasterDegreeCandidate.setSpecialization(degreeType);
 			newMasterDegreeCandidate.setInfoPerson(infoPerson);
 			
-			Object args[] = { newMasterDegreeCandidate , degreeName , userView};
+			Object args[] = { newMasterDegreeCandidate };
 	  
 	  		InfoMasterDegreeCandidate createdCandidate = null;
 			try {
