@@ -66,18 +66,15 @@ create table DEGREE_CURRICULAR_PLAN (
    unique U1 (NAME, KEY_DEGREE)
 )type=InnoDB;
 
--- ----------------------------
--- Table struture for ENROLMENT_PERIOD
--- ----------------------------
-drop table if exists ENROLMENT_PERIOD;
-create table ENROLMENT_PERIOD (
-	ID_INTERNAL int(11) not null auto_increment,
-	KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
-	KEY_EXECUTION_PERIOD int(11) not null,
-	START_DATE date not null,
-	END_DATE date not null,
-	primary key (ID_INTERNAL),
-	unique U1 (KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD)
+drop table if exists BRANCH;
+create table BRANCH (
+   ID_INTERNAL int(11) not null auto_increment,
+   BRANCH_CODE varchar(50) not null,
+   BRANCH_NAME varchar(255) not null,
+   KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
+   primary key (ID_INTERNAL),
+   index U2 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN),
+   unique U1 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
 -- ----------------------------
@@ -100,7 +97,8 @@ create table CURRICULAR_COURSE (
    MANDATORY bit,
    UNIVERSITY_CODE varchar(255),
    PRIMARY KEY  (ID_INTERNAL),
-   UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
+   UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN),
+   index U2 (CODE, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
 -- ----------------------------
@@ -159,56 +157,10 @@ create table ENROLMENT_EVALUATION (
    KEY_EMPLOYEE int(11),
    OBSERVATION varchar(255),
    primary key (ID_INTERNAL),
+   index U2 (KEY_ENROLMENT, EVALUATION_TYPE, GRADE),
    unique U1 (KEY_ENROLMENT, EVALUATION_TYPE, GRADE)
 )type=InnoDB;
 
--- ==================================================================================
---  ZONA TABELAS NOVAS
--- ==================================================================================
-
--- ----------------------------
---  Table structure for CURRICULAR_YEAR
--- ----------------------------
-drop table if exists CURRICULAR_YEAR;
-create table CURRICULAR_YEAR (
-   ID_INTERNAL int(11) not null auto_increment,
-   YEAR int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (YEAR)
-)type=InnoDB;
-
--- ----------------------------
---  Table structure for CURRICULAR_SEMESTER
--- ----------------------------
-drop table if exists CURRICULAR_SEMESTER;
-create table CURRICULAR_SEMESTER (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_CURRICULAR_YEAR int(11) not null,
-   SEMESTER int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (SEMESTER, KEY_CURRICULAR_YEAR)
-)type=InnoDB;
-
--- ----------------------------
---  Table structure for BRANCH
--- ----------------------------
-drop table if exists BRANCH;
-create table BRANCH (
-   ID_INTERNAL int(11) not null auto_increment,
-   BRANCH_CODE varchar(50) not null,
-   BRANCH_NAME varchar(255) not null,
-   KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
-)type=InnoDB;
-
--- ==================================================================================
---  ZONA TABELAS DE RELACAO MUITOS PARA MUITOS
--- ==================================================================================
-
--- ----------------------------
---  Table structure for CURRICULAR_COURSE_SCOPE
--- ----------------------------
 drop table if exists CURRICULAR_COURSE_SCOPE;
 create table CURRICULAR_COURSE_SCOPE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -222,16 +174,19 @@ create table CURRICULAR_COURSE_SCOPE (
    MAX_INCREMENT_NAC int(11) not null,
    MIN_INCREMENT_NAC int(11) not null,
    WEIGTH int(11) not null,
+   CREDITS double,
+   EXECUTION_YEAR int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
+   unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, EXECUTION_YEAR),
+   index U2 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, EXECUTION_YEAR)
 )type=InnoDB;
 
 
 -- ----------------------------
---  Table structure for EQUIVALENCE
+--  Table structure for ENROLMENT_EQUIVALENCE
 -- ----------------------------
-drop table if exists EQUIVALENCE;
-create table EQUIVALENCE (
+drop table if exists ENROLMENT_EQUIVALENCE;
+create table ENROLMENT_EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EQUIVALENT_ENROLMENT int(11) not null,
    KEY_ENROLMENT int(11) not null,
@@ -293,3 +248,79 @@ CREATE TABLE RESTRICTION (
   NUMBER_OF_CURRICULAR_COURSE_DONE int(11),
   primary key (ID_INTERNAL)) TYPE=InnoDB;
 
+#----------------------------
+# Table structure for EXECUTION_PERIOD
+# State : A = Actual; O= Open; NO= Not open; C= Closed
+#----------------------------
+drop table if exists EXECUTION_PERIOD;
+create table EXECUTION_PERIOD (
+   ID_INTERNAL int(11) not null auto_increment,
+   NAME varchar(50) not null,
+   KEY_EXECUTION_YEAR int(11) not null,
+   STATE varchar(3) not null default "NO",
+   SEMESTER int (11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (NAME, KEY_EXECUTION_YEAR))
+   type=InnoDB comment="InnoDB free: 373760 kB";
+   
+   
+#----------------------------
+# Table structure for EXECUTION_YEAR
+#----------------------------
+drop table if exists EXECUTION_YEAR;
+create table EXECUTION_YEAR (
+   ID_INTERNAL int(11) not null auto_increment,
+   `YEAR` varchar(9) not null,
+   STATE varchar(3) not null default "NO",   
+   primary key (ID_INTERNAL),
+   unique U1 (`YEAR`))
+   type=InnoDB comment="InnoDB free: 373760 kB";
+
+-- ----------------------------
+--  Table structure for CURRICULAR_COURSE_EQUIVALENCE
+-- ----------------------------
+drop table if exists CURRICULAR_COURSE_EQUIVALENCE;
+create table CURRICULAR_COURSE_EQUIVALENCE (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EQUIVALENT_CURRICULAR_COURSE int(11) not null,
+   KEY_CURRICULAR_COURSE int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EQUIVALENT_CURRICULAR_COURSE, KEY_CURRICULAR_COURSE)
+)type=InnoDB;
+
+-- ----------------------------
+-- Table struture for ENROLMENT_PERIOD
+-- ----------------------------
+drop table if exists ENROLMENT_PERIOD;
+create table ENROLMENT_PERIOD (
+	ID_INTERNAL int(11) not null auto_increment,
+	KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
+	KEY_EXECUTION_PERIOD int(11) not null,
+	START_DATE date not null,
+	END_DATE date not null,
+	primary key (ID_INTERNAL),
+	unique U1 (KEY_DEGREE_CURRICULAR_PLAN, KEY_EXECUTION_PERIOD)
+)type=InnoDB;
+
+-- ----------------------------
+--  Table structure for CURRICULAR_YEAR
+-- ----------------------------
+drop table if exists CURRICULAR_YEAR;
+create table CURRICULAR_YEAR (
+   ID_INTERNAL int(11) not null auto_increment,
+   YEAR int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (YEAR)
+)type=InnoDB;
+
+-- ----------------------------
+--  Table structure for CURRICULAR_SEMESTER
+-- ----------------------------
+drop table if exists CURRICULAR_SEMESTER;
+create table CURRICULAR_SEMESTER (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_CURRICULAR_YEAR int(11) not null,
+   SEMESTER int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (SEMESTER, KEY_CURRICULAR_YEAR)
+)type=InnoDB;

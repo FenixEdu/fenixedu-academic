@@ -453,8 +453,10 @@
 			proxy="false">
 		<foreignkey field-ref="curricularCourseScopeKey"/>
 	</reference-descriptor>      
-	<reference-descriptor name="executionPeriod"
-		class-ref="Dominio.ExecutionPeriod" proxy="false">
+	<reference-descriptor 
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="false">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -515,8 +517,10 @@
 			proxy="false">
 		<foreignkey field-ref="curricularCourseScopeKey"/>
 	</reference-descriptor>      
-	<reference-descriptor name="executionPeriod"
-		class-ref="Dominio.ExecutionPeriod" proxy="false">
+	<reference-descriptor 
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="false">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -585,8 +589,10 @@
 			proxy="false">
 		<foreignkey field-ref="curricularCourseScopeKey"/>
 	</reference-descriptor>      
-	<reference-descriptor name="executionPeriod"
-		class-ref="Dominio.ExecutionPeriod" proxy="false">
+	<reference-descriptor 
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="false">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -732,9 +738,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.Equivalence -->
+<!-- Definitions for Dominio.EnrolmentEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.Equivalence" table="EQUIVALENCE">
+<class-descriptor class="Dominio.EnrolmentEquivalence" table="ENROLMENT_EQUIVALENCE">
 	<field-descriptor
 		name="internalID"
 		column="ID_INTERNAL"
@@ -832,6 +838,16 @@
 		name="labHours"
 		column="LAB_HOURS"
 		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="credits"
+		column="CREDITS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="executionYear"
+		column="EXECUTION_YEAR"
+		jdbc-type="INTEGER"
 	/>
 	<reference-descriptor
 			name="curricularCourse"
@@ -1000,7 +1016,6 @@
 			proxy="false">
 		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>
-	
 	<reference-descriptor
 			name="employee"
 			class-ref="Dominio.Funcionario"
@@ -1013,6 +1028,41 @@
 			class-ref="Dominio.Enrolment"
 			proxy="false">
 		<foreignkey field-ref="enrolmentKey"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.CurricularCourseEquivalence -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.CurricularCourseEquivalence" table="CURRICULAR_COURSE_EQUIVALENCE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="equivalentCurricularCourseKey"
+		column="KEY_EQUIVALENT_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularCourseKey"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+			name="equivalentCurricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="false">
+		<foreignkey field-ref="equivalentCurricularCourseKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="curricularCourse"
+			class-ref="Dominio.CurricularCourse"
+			proxy="false">
+		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>
 </class-descriptor>
 
