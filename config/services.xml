@@ -5707,4 +5707,11 @@
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service> 
+    <service>
+    	<name>WriteStudentAttendingCourse</name>
+    	<description>Writes the attending of a student in an execution course</description>
+    	<implementationClass>ServidorAplicacao.Servico.student.WriteStudentAttendingCourse</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service> 
 </serviceDefinitions>
