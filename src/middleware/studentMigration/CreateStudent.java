@@ -78,10 +78,6 @@ public class CreateStudent {
 	
 	public static void createStudent(MWAluno oldStudent) throws Exception {
 		
-		
-		System.out.println("Aluno " + oldStudent.getNumber());
-		
-		
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
