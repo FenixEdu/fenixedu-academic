@@ -2554,7 +2554,15 @@
         <isTransactional>true</isTransactional>
         <filterChains/>
     </service>
-    <service>
+	<service>
+        <name>ReadOpenExecutionPeriodsByTeacherExecutionCourses</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.ReadOpenExecutionPeriodsByTeacherExecutionCourses</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+	<service>
         <name>ReadExecutionPeriods</name>
         <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionPeriods</implementationClass>
         <description/>
@@ -6202,6 +6210,16 @@
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="CoordinatorAndLEECAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>ViewStudentsByTutor</name>
+        <description>Reads students associated with the teacher</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.teacher.ViewStudentsByTutor</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="TutorAuthorization"/>
         </filterChains>
     </service>
     <service>

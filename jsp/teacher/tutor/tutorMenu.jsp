@@ -8,6 +8,13 @@
 <p>
 <ul>
 	<li>
+		<html:link page="<%= "/viewStudentsByTutor.do?method=execute"%>">
+			<bean:message key="link.students.tutor" /></html:link> 
+			<br/>
+			<br/>
+		</html:link>
+	</li>
+	<li>
 		<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView"%>">
 		    <bean:message key="link.student.curriculum" /></html:link>
 		    <br/>

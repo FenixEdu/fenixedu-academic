@@ -621,7 +621,14 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>
-    <filterChain>
+	<filterChain>
+        <name>TutorAuthorization</name>
+        <expression>TutorAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
+    </filterChain>
+	<filterChain>
         <name>EnrollmentAuthorization</name>
         <expression>EnrollmentAuthorization</expression>
         <description/>

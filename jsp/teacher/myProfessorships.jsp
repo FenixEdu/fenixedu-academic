@@ -1,13 +1,40 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <tiles:importAttribute />
 <logic:notEmpty name="professorshipList" >	
 	<bean:define id="titleKey">
 		<tiles:getAsString name="title"/>
 	</bean:define>
 	<h2><bean:message key="<%= titleKey %>" /></h2>
+	
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td nowrap="nowrap">
+			<bean:message key="property.executionPeriod"/>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	</td>
+    
+    	
+			<html:form action="/manageExecutionCourses" >
+			<td nowrap="nowrap">
+				<html:hidden property="method" value="perform"/>
+				<html:hidden property="page" value="1"/>
+				<html:select property="selectedExecutionPeriodId" size="1" onchange="document.executionPeriodForm.submit();">
+				<html:options	property="value" 
+     						labelProperty="label" 
+							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />
+				</html:select>
+				</td>
+			</html:form>
+		
+	</tr>
+</table>
+	<br />
+	<br />
+	
 		<table width="90%"cellpadding="5" border="0">
 			<tr>
 				<td class="listClasses-header"><bean:message key="label.professorships.acronym" />

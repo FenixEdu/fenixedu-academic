@@ -170,6 +170,11 @@
 		<put name="body" 
 			value="/degreeAdministrativeOffice/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
 	</definition>
+	<definition name="df.page.viewStudentsByTutor" 
+		extends="definition.teacher.two-column.extra-menu.tutor">
+		<put name="body" 
+			value="/degreeAdministrativeOffice/curriculum/viewStudentsByTutor.jsp"/>
+	</definition>
 	<definition name="df.page.showStudentCurricularPlans" 
 		extends="definition.teacher.two-column.extra-menu.tutor">
 		<put name="body" 

@@ -70,16 +70,16 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
         if (argumentos == null) {
             return false;
         }
-
+        if(argumentos[0] == null)return false;	
+        
         ISuportePersistente sp;
         String degreeCode = null;
         try {
-
-            sp = SuportePersistenteOJB.getInstance();
+        	sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+            
+           	IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
             ICoordinator coordinator = persistentCoordinator
                     .readCoordinatorByTeacherAndExecutionDegreeId(teacher, (Integer) argumentos[0]);
             if (coordinator != null && coordinator.getExecutionDegree() != null

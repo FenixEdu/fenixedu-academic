@@ -598,7 +598,14 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter> 
-    <filter>
+	<filter>
+        <name>TutorAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.TutorAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter> 
+	<filter>
         <name>EnrollmentAuthorization</name>
         <implementationClass> 
             ServidorAplicacao.Filtro.enrollment.EnrollmentAuthorizationFilter</implementationClass>

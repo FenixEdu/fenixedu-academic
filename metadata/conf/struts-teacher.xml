@@ -754,6 +754,14 @@
         	<form-property name="curYear" type="java.lang.String" initial="0"/>
 		</form-bean>	
 
+
+		<form-bean name="executionPeriodForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="selectedExecutionPeriodId" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -895,7 +903,7 @@
             <forward name="success" path="df.page.teacher-index"/>
         </action>
         <action path="/manageExecutionCourses" type="org.apache.struts.actions.ForwardAction" 
-            parameter="df.page.management.execution-courses" />
+            parameter="df.page.management.execution-courses" name="executionPeriodForm" scope="request" attribute="executionPeriodForm"/>
         <!--	<action	path="/manageCredits" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.credits" />	 -->
         <action path="/viewSite" type="ServidorApresentacao.Action.teacher.ReadSite">
             <forward name="viewSite" path="/viewSite.jsp"/>
@@ -1952,6 +1960,13 @@
 			<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
 	    </action>
 	      	
+		<action path="/viewStudentsByTutor"
+		   	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentsByTutorDispatchAction"
+	       	parameter="method">
+			<forward name="viewStudentsByTutor" path="df.page.viewStudentsByTutor"/>        	
+	    </action>
+
+
 		<action path="/viewCurriculum"
 		  	type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
 			name="studentCurricularPlanAndEnrollmentsSelectionForm"
@@ -1965,7 +1980,7 @@
 	        <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
 	        <forward name="NotAuthorized" path="df.page.notAuthorized"/>	
 	    </action>
-	    
+
 	    <!-- Final Degree Work -->
 	    <action path="/finalWorkManagement"
 	    	type="ServidorApresentacao.Action.teacher.FinalWorkManagementAction"
