@@ -151,6 +151,7 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 				infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled().remove(infoEnrolment.getInfoCurricularCourseScope());
 			}
 			infoEnrolmentContext.getInfoEnrolmentsAprovedByStudent().remove(erolmentToRemoveIndex.intValue());
+			infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().add(infoEnrolment.getInfoCurricularCourseScope());
 		} catch (IndexOutOfBoundsException e) {
 			// FIXME DAVID-RICARDO: O que fazer neste caso?
 			throw new FenixActionException(e);
