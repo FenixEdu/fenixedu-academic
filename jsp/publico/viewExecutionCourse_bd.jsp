@@ -116,9 +116,6 @@
 
 	</br>
 	</br>
-	<a href="viewExecutionCourseShifts.do">
-		<bean:message key="link.executionCourse.shifts"/>
-	</a>
 	</br>
 	</br>
 

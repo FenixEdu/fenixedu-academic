@@ -198,6 +198,9 @@ a:hover {
 	width: 176px;
 } 
 
+html>#nav {
+	width: 176px;
+	}
 	
 #nav ul li a:hover {
 	text-decoration: none;
@@ -362,4 +365,17 @@ p.contacto {
 	color: #333333;
 	background-color: #b5bdd6;
 }
- 	
+
+/**********************************************
+	Footer
+***********************************************/
+
+.footer {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	text-align: center;
+	padding: 20px;
+	border-top-width: 4px;
+	border-top-style: solid;
+	border-top-color: #999; 	

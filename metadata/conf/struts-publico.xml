@@ -219,7 +219,107 @@
           <forward name="Sucess" path="/viewShiftTimeTable.jsp"/>
       </action>
 
+<!-- Start of Gesdis-->
+<action     path="/bibliographicReferenceManager"
+				parameter="method"      			
+				scope="session"
+      			input="/editBibliographicReference.jsp"
+                type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"            
+                validate="true">	           
+				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
+	</action>             
+	<!-- access to announcement management -->
+	<action 
+		type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
+		path="/accessAnnouncementManagementAction">
+        <forward name="AnnouncementManagement" path="/announcementManagementAction.do?method=showAnnouncements" />       
+	</action>
 
+	<!-- input of actions for announcement management -->	
+	<action 
+		type="ServidorApresentacao.Action.teacher.AnnouncementManagementDispatchAction"
+		scope="session"
+		parameter="method"      			
+        path="/announcementManagementAction" 
+        input="/insertAnnouncement.jsp"
+		>
+		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction.do"/>	            
+
+        <forward name="showAnnouncements" path="/announcementManagement.jsp" />
+	</action>
+
+	<action 
+		type="ServidorApresentacao.Action.teacher.AnnouncementManagementDispatchAction"
+		scope="session"
+		parameter="method"      			
+        path="/editAnnouncement" 
+        input="/editAnnouncement.jsp"
+		>
+		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction.do"/>	            
+
+        <forward name="showAnnouncements" path="/announcementManagement.jsp" />
+	</action>
+
+		 	
+	<!-- Actions For Teachers  -->
+	<action 
+		input="/viewTeachers.jsp"
+		parameter="method"
+		path="/teachersManagerDA"
+        type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
+        >    
+	
+                	
+    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
+     
+    
+	</action>
+	<action 
+		
+		input="/associateTeacher.jsp"
+		parameter="method"
+		path="/teacherManagerDA"
+		type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
+        >    
+
+    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
+    
+	</action>
+	<!-- Actions For Objectives and Program -->
+	<action 
+		parameter="method"
+		input="/editObjectives.jsp"
+		path="/objectivesManagerDA"
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+       >    
+    <forward name="viewObjectives" path="/viewObjectives.jsp"/>    
+         
+	</action>
+	
+	<action 
+		parameter="method"
+		input="/editProgram.jsp"
+		path="/programManagerDA"
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+       	>    
+     <forward name="viewProgram" path="/viewProgram.jsp"/>
+          
+	</action>
+	
+	<action 
+		parameter="method"
+		input="/viewObjectives.jsp"
+		path="/curriculumManagerDA"
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+       	>    
+       <forward name="viewCurriculum" path="/viewSite.jsp"/>
+	</action>
+	
+	<action path="/viewSite"
+        type="ServidorApresentacao.Action.teacher.ReadSite">    
+     <forward name="viewSite" path="/viewExecutionCourse.jsp"/>         
+	</action>
+<!-- End of Gesdis-->
 
     <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 		<action path="/siteViewer"

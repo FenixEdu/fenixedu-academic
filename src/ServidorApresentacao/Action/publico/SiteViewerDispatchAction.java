@@ -17,10 +17,13 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
+import DataBeans.gesdis.InfoAnnouncement;
+import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -199,8 +202,30 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					"LerAulasDeDisciplinaExecucao",
 					argsReadLessonsOfExecutionCours);
 			
-			if (infoLessons != null)
-				session.setAttribute(SessionConstants.LESSON_LIST_ATT, infoLessons);
+			if (infoLessons != null){
+				session.setAttribute(SessionConstants.LESSON_LIST_ATT, infoLessons);}
+			
+			//start reading Gesdis related info
+//read site
+			GestorServicos manager = GestorServicos.manager();
+			InfoSite site=null;
+			Object[] args2 = {infoExecCourse};
+			site = (InfoSite) manager.executar(userView,"ReadSite",args2);
+			session.setAttribute(SessionConstants.INFO_SITE,site);
+//read Sections			
+			
+//			Read last Anouncement
+			 Object args1[] = new Object[1];
+					  args1[0] = site;
+
+					  InfoAnnouncement lastAnnouncement = null;		
+					 
+					  try {
+						  lastAnnouncement = (InfoAnnouncement) manager.executar(userView, "ReadLastAnnouncement", args1);
+						  session.setAttribute(SessionConstants.LAST_ANNOUNCEMENT, lastAnnouncement);
+					  } catch (FenixServiceException fenixServiceException){
+						  throw new FenixActionException(fenixServiceException.getMessage());
+					  }
 
 			return mapping.findForward("executionCourseViewer");
 		} else {
