@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoAula;
 
@@ -38,7 +39,7 @@ public class PrepararCriarTurnoFormAction extends Action {
         tiposAula.add(new LabelValueBean("Duvidas", (new Integer(TipoAula.DUVIDAS)).toString() ));
         tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString() ));
         sessao.setAttribute("tiposAula", tiposAula);
-
+	  sessao.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

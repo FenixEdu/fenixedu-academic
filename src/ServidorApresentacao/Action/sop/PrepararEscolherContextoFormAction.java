@@ -106,6 +106,7 @@ public class PrepararEscolherContextoFormAction extends Action {
 
 			request.setAttribute("licenciaturas", licenciaturas);
 
+			session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 			return mapping.findForward("Sucesso");
 		} else
 			throw new Exception();
