@@ -103,7 +103,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 
 			assertTrue(section.equals(iSection));
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteSectionDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedReadSiteSectionDataSet.xml");
 
 			System.out.println(
 				"testReadSiteSection was SUCCESSFULY runned by class: "

@@ -86,7 +86,7 @@ public class ReadSiteSectionsTest extends ServiceNeedsAuthenticationTestCase {
 			List sections = commonComponent.getSections();
 			assertEquals(sections.size(), 5);
 			
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteSectionsDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedReadSiteSectionsDataSet.xml");
 
 			System.out.println(
 				"testReadSiteSections was SUCCESSFULY runned by class: "

@@ -107,7 +107,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 
 			assertEquals(items.size(), 2);
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteItemDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedReadSiteItemDataSet.xml");
 
 			System.out.println(
 				"testReadSiteItems was SUCCESSFULY runned by class: "
@@ -145,7 +145,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 			System.out.println(
 				"testReadNonSiteItem was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testDeleteExistingItem");
+			fail("testReadNonSiteItem");
 		} catch (Exception ex) {
 			System.out.println(
 				"testReadNonSiteItem was SUCCESSFULY runned by class: "
