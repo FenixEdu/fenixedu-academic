@@ -78,8 +78,8 @@ public class CreateDeclaration implements IServico {
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-System.out.println("serviço create declaration");
-		if (studentCurricularPlan==null)
+
+		if (studentCurricularPlan == null)
 		    return null;
 		else
 			return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);

@@ -107,6 +107,8 @@ public abstract class SessionConstants {
 	public static final String DECLARATION_LIST = "declaration_list";
 	public static final String INFO_STUDENT_CURRICULAR_PLAN = "info_student_curricular_plan";
 	public static final String DOCUMENT_REASON = "document_Reason"; 
+	public static final String DEGREE_TYPE = "degree_type"; 
+	
 	
 
 	// -------------------------------------------------------------------------------

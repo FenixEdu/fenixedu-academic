@@ -238,7 +238,7 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
 	  <forward name="index" path="index.do" redirect="true"/>
       <forward name="firstPage" path="/index.do"/>
-      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/> 
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -254,8 +254,7 @@
 			  >
 	         <forward name="Success" path="/guide/printGuidePage.jsp"/> 
       </action>
-
-
+ 
       <action path="/candidateSection"
 		      parameter="method"
               type="ServidorApresentacao.Action.commons.VoidAction"
@@ -290,6 +289,13 @@
 			  >
 	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
       </action>    
+      
+      <action path="/printDeclarationPage"  
+	    	  parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+              >
+	     	 <forward name="Success" path="/certificate/printDeclarationPage.jsp"/> 
+      </action>
       
       <!-- action definition -->
       
@@ -628,21 +634,21 @@
 
 		<!-- Action to prepare the chooseCertificateInfoForm -->
       <action path="/chooseDeclarationInfoAction"
-	     attribute="chooseCertificateInfoForm"
+	          attribute="chooseCertificateInfoForm"
 	          name="chooseCertificateInfoForm"
-	         input="/certificate/chooseDeclaration.jsp"
-	      validate="true"
-		 parameter="method"
-  	         scope="request"
+	          input="/certificate/chooseDeclaration.jsp"
+	      	  validate="true"
+			  parameter="method"
+  	          scope="request"
       	      type="ServidorApresentacao.Action.certificate.ChooseDeclarationInfoAction">
    		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
             key="ServidorApresentacao.Action.exceptions.ExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-      	  <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
-      	  <forward name="ChooseSuccess" path="/certificate/printDeclarationPage.jsp"/>
-          <forward name="ShowDeclarationTypes" path="/guide/chooseTypeDeclaration.jsp"/>  
+      	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
+      	 <forward name="ChooseSuccess" path="/certificate/showDeclaration.jsp"/>   
       </action>
-
+    
+  
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

@@ -9,7 +9,7 @@ hello ?
 	<%-- The Original Guide --%>
 	<jsp:include page="./declarationTemplate1.jsp" flush="true" />
 
-	<%-- The Original Guide --%>
+	<%-- The Original Guide --%> 
 	<%-- <jsp:include page="./declarationTemplate1.jsp" flush="true" /> --%>
 
 

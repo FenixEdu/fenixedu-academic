@@ -276,7 +276,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 					password = RandomStringGenerator.getRandomStringGenerator(8);
 					newInfoGuide.getInfoPerson().setPassword(password);					
 
-System.out.println("New Password: " + newInfoGuide.getInfoPerson().getPassword());
 
 					// Write the Person
 					try {
