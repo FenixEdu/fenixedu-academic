@@ -5907,7 +5907,7 @@
             ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareDegreesListByStudentNumber</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5917,7 +5917,7 @@
             ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadEnrollmentsWithStateEnrolledByStudent</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5927,7 +5927,7 @@
             ServidorAplicacao.Servico.enrolment.DeleteEnrollmentsList</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5937,7 +5937,7 @@
             ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnroll</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5947,7 +5947,7 @@
             ServidorAplicacao.Servico.enrolment.WriteEnrollmentsList</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>

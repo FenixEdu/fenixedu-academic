@@ -159,7 +159,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		TipoCurso degreeType = new TipoCurso();
 		degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
 
-		Object[] args = { infoStudent, degreeType };
+		Object[] args = { infoStudent, degreeType, executionYear };
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 		try
 		{
@@ -178,7 +178,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		{
 			e.printStackTrace();
 
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
 			saveErrors(request, errors);
 
 			return mapping.getInputForward();
@@ -189,6 +189,9 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 			if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans"))
 			{
 				errors.add("noStudentCurricularPlan", new ActionError(e.getMessage(), studentNumber));
+			} else if (e.getMessage() != null && e.getMessage().endsWith("not.from.chosen.execution.year"))
+			{
+				errors.add("notFromChosenExecutionYear", new ActionError(e.getMessage(), studentNumber));
 			}
 			else
 			{
@@ -243,7 +246,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		{
 			e.printStackTrace();
 
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
 			saveErrors(request, errors);
 
 			return mapping.getInputForward();
@@ -447,7 +450,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		{
 			e.printStackTrace();
 
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
 			saveErrors(request, errors);
 
 			return mapping.getInputForward();
@@ -512,7 +515,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		{
 			e.printStackTrace();
 
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
 			saveErrors(request, errors);
 
 			return mapping.getInputForward();

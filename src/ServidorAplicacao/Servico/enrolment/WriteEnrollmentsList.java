@@ -4,10 +4,8 @@
  */
 package ServidorAplicacao.Servico.enrolment;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionYear;
@@ -34,11 +32,8 @@ import Util.TipoCurso;
  */
 public class WriteEnrollmentsList implements IService
 {
-	private static Map createdAttends = null;
-
 	public WriteEnrollmentsList()
 	{
-		createdAttends = new HashMap();
 	}
 
 	public void run(
@@ -88,7 +83,7 @@ public class WriteEnrollmentsList implements IService
 					Integer curricularCourseID = (Integer) iterator.next();
 
 					IExecutionPeriod executionPeriod =
-						findExecutionPeriod(sp, executionYear, curricularCourseID);
+						findExecutionPeriod(sp, executionYear, curricularCourseID, degreeType);
 					Integer executionPeriodId = null;
 					if (executionPeriod != null)
 					{
@@ -120,31 +115,30 @@ public class WriteEnrollmentsList implements IService
 	private IExecutionPeriod findExecutionPeriod(
 		ISuportePersistente sp,
 		IExecutionYear executionYear,
-		Integer curricularCourseID)
+		Integer curricularCourseID,
+		TipoCurso degreeType)
 		throws ExcepcaoPersistencia, FenixServiceException
 	{
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 		IExecutionPeriod executionPeriod = null;
 
 		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 		ICurricularCourse curricularCourse =
-			(ICurricularCourse) persistentCurricularCourse.readByOID(
-				CurricularCourse.class,
-				curricularCourseID);
+			(ICurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, curricularCourseID);
+		
 		if (curricularCourse == null)
 		{
 			throw new FenixServiceException("");
 		}
 
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 		List curricularCourseScopes = curricularCourse.getScopes();
 
 		Integer semester = findBestSemester(persistentExecutionPeriod, curricularCourseScopes);
 		if (semester != null)
 		{
-			executionPeriod =
-				persistentExecutionPeriod.readBySemesterAndExecutionYear(semester, executionYear);
+			executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(semester, executionYear);
 		}
-
+		
 		return executionPeriod;
 
 	}

@@ -628,8 +628,8 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>EnrollmentLEECWithoutRulesAuthorization</name>
-        <expression>EnrollmentLEECWithoutRulesAuthorization</expression>
+        <name>EnrollmentWithoutRulesAuthorization</name>
+        <expression>EnrollmentLEECWithoutRulesAuthorization || MasterDegreeEnrollmentWithoutRulesAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

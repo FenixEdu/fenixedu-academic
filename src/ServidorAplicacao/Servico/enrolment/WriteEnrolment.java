@@ -188,19 +188,28 @@ public class WriteEnrolment implements IService
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistentSuport.getIPersistentEnrolmentEvaluation();
 
-		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-		enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
-		enrolmentEvaluation.setCheckSum(null);
-		enrolmentEvaluation.setEmployee(null);
-		enrolmentEvaluation.setEnrolment(enrolment);
-		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-		enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-		enrolmentEvaluation.setExamDate(null);
-		enrolmentEvaluation.setGrade(null);
-		enrolmentEvaluation.setGradeAvailableDate(null);
-		enrolmentEvaluation.setObservation(null);
-		enrolmentEvaluation.setPersonResponsibleForGrade(null);
-		enrolmentEvaluation.setWhen(null);
+		IEnrolmentEvaluation enrolmentEvaluation =
+			enrollmentEvaluationDAO.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
+				enrolment,
+				EnrolmentEvaluationType.NORMAL_OBJ,
+				null);
+
+		if (enrolmentEvaluation == null)
+		{
+			enrolmentEvaluation = new EnrolmentEvaluation();
+			enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
+			enrolmentEvaluation.setEnrolment(enrolment);
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+			enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+			enrolmentEvaluation.setCheckSum(null);
+			enrolmentEvaluation.setEmployee(null);
+			enrolmentEvaluation.setExamDate(null);
+			enrolmentEvaluation.setGrade(null);
+			enrolmentEvaluation.setGradeAvailableDate(null);
+			enrolmentEvaluation.setObservation(null);
+			enrolmentEvaluation.setPersonResponsibleForGrade(null);
+			enrolmentEvaluation.setWhen(null);
+		}
 	}
 
 	public static void resetAttends()

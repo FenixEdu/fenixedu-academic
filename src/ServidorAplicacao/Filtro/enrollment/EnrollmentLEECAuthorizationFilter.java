@@ -64,7 +64,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		return roles;
 	}
 
-	protected String hasProvilege(IUserView id, Object[] arguments)
+	protected String hasPrevilege(IUserView id, Object[] arguments)
 	{
 		try
 		{

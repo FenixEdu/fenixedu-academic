@@ -70,7 +70,7 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro
 	public void execute(ServiceRequest request, ServiceResponse response) throws Exception
 	{
 		IUserView id = (IUserView) request.getRequester();
-		String messageException = hasProvilege(id, request.getArguments());
+		String messageException = hasPrevilege(id, request.getArguments());
 		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
 			|| (id != null && id.getRoles() != null && messageException != null)
 			|| (id == null)
@@ -85,5 +85,5 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro
 	 * @param argumentos
 	 * @return
 	 */
-	abstract protected String hasProvilege(IUserView id, Object[] arguments);
+	abstract protected String hasPrevilege(IUserView id, Object[] arguments);
 }

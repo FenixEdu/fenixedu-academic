@@ -606,6 +606,14 @@
         <isTransactional>true</isTransactional>
     </filter>  
     <filter>
+        <name>MasterDegreeEnrollmentWithoutRulesAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>  
+	
+	<filter>
         <name>EditStudentCourseReportAuthorization</name>
         <implementationClass> 
             ServidorAplicacao.Filtro.student.EditStudentCourseReportAuthorizationFilter</implementationClass>

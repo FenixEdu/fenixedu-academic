@@ -16,12 +16,16 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
 import Dominio.IEnrolment;
+import Dominio.IExecutionYear;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -39,7 +43,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 	{
 	}
 
-	public Object run(InfoStudent infoStudent, TipoCurso degreeType) throws FenixServiceException
+	public Object run(InfoStudent infoStudent, TipoCurso degreeType, String executionYear) throws FenixServiceException
 	{
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 		try
@@ -61,17 +65,23 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 				throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 			}
 
-			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
-			List enrollments =
-				persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-					studentCurricularPlan,
-					EnrolmentState.ENROLED);
-
-			infoStudentEnrolmentContext = buildResult(studentCurricularPlan, enrollments);
-
-			if (infoStudentEnrolmentContext == null)
+			if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionYear))
 			{
-				throw new FenixServiceException();
+				IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+				List enrollments =
+				persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+						studentCurricularPlan,
+						EnrolmentState.ENROLED);
+
+				infoStudentEnrolmentContext = buildResult(studentCurricularPlan, enrollments);
+
+				if (infoStudentEnrolmentContext == null)
+				{
+					throw new FenixServiceException();
+				}
+			} else
+			{
+				throw new FenixServiceException("error.student.curriculum.not.from.chosen.execution.year");
 			}
 		}
 		catch (ExcepcaoPersistencia e)
@@ -114,5 +124,34 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 		infoStudentEnrolmentContext.setStudentInfoEnrollmentsWithStateEnrolled(infoEnrollments);
 
 		return infoStudentEnrolmentContext;
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param year
+	 * @return true/false
+	 * @throws ExcepcaoPersistencia
+	 */
+	private boolean isStudentCurricularPlanFromChosenExecutionYear(
+		IStudentCurricularPlan studentCurricularPlan,
+		String year) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+		IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+		
+		IExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
+		if (executionYear != null)
+		{
+			ICursoExecucao executionDegree =
+				executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
+					studentCurricularPlan.getDegreeCurricularPlan(),
+					executionYear);
+			
+			return executionDegree != null;
+		} else
+		{
+			return false;
+		}
 	}
 }
