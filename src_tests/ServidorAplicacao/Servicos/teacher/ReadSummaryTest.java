@@ -1,109 +1,109 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSummary;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
-import Dominio.ISummary;
-import Dominio.Summary;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentSummary;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
- * @author João Mota
- * @author Susana Fernandes
+ * @author Leonor Almeida
+ * @author Sérgio Montelobo
  */
-public class ReadSummaryTest extends TestCaseReadServices {
+public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 	/**
 	 * @param testName
 	 */
 	public ReadSummaryTest(String testName) {
 		super(testName);
-
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
+	protected String getDataSetFilePath() {
+		return "etc/testReadSummaryDataSet.xml";
+	}
+
 	protected String getNameOfServiceToBeTested() {
 		return "ReadSummary";
-
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+	protected String[] getAuthorizedUser() {
 
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(24), new Integer(261)};
+		String[] args = { "user", "pass", getApplication() };
 		return args;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-	protected int getNumberOfItemsToRetrieve() {
-		return 0;
+	protected String[] getUnauthorizedUser() {
+
+		String[] args = { "julia", "pass", getApplication() };
+		return args;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-	protected Object getObjectToCompare() {
+	protected String[] getNonTeacherUser() {
 
-		InfoSiteSummary bodyComponent = new InfoSiteSummary();
-		InfoExecutionCourse infoExecutionCourse = null;
-		InfoSummary infoSummary = null;
+		String[] args = { "jccm", "pass", getApplication() };
+		return args;
+	}
+
+	protected Object[] getAuthorizeArguments() {
+
+		Integer executionCourseId = new Integer(24);
+		Integer summaryId = new Integer(261);
+
+		Object[] args = { executionCourseId, summaryId };
+		return args;
+	}
+
+	protected Object[] getTestSummarySuccessfullArguments() {
+
+		Integer executionCourseId = new Integer(24);
+		Integer summaryId = new Integer(261);
+
+		Object[] args = { executionCourseId, summaryId };
+		return args;
+	}
+
+	protected Object[] getTestSummaryUnsuccessfullArguments() {
+
+		Integer executionCourseId = new Integer(25);
+		Integer summaryId = new Integer(261);
+
+		Object[] args = { executionCourseId, summaryId };
+		return args;
+	}
+
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
+	}
+
+	public void testSuccessfull() {
+
 		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
-			IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(new Integer(24));
-			ISummary summary = new Summary(new Integer(261));
+			SiteView result = null;
 
-			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			assertNotNull("executionCourse null", executionCourse);
-			summary = (ISummary) persistentSummary.readByOId(summary, false);
-			assertNotNull("summary null", summary);
-			sp.confirmarTransaccao();
-			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse);
-			infoSummary = Cloner.copyISummary2InfoSummary(summary);
-		} catch (ExcepcaoPersistencia e) {
-			fail("exception: ExcepcaoPersistencia ");
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			result =
+				(SiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					getAuthorizeArguments());
+
+			InfoSummary oldInfoSummary = new InfoSummary();
+			// TODO: falta criar o sumario para fazer a comparação
+
+			InfoSiteSummary infoSiteSummary =
+				(InfoSiteSummary) result.getComponent();
+			InfoSummary newInfoSummary = infoSiteSummary.getInfoSummary();
+			assertEquals(newInfoSummary, oldInfoSummary);
+			// verifica se a base de dados nao foi alterada
+			compareDataSet(getDataSetFilePath());
+		} catch (FenixServiceException ex) {
+			fail("Reading the Summary of a Site" + ex);
+		} catch (Exception ex) {
+			fail("Reading the Summary of a Site" + ex);
 		}
-		bodyComponent.setExecutionCourse(infoExecutionCourse);
-		bodyComponent.setInfoSummary(infoSummary);
-
-		SiteView siteView =
-			new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-		return siteView;
-	}
-
-	protected boolean needsAuthorization() {
-		return true;
 	}
 }
