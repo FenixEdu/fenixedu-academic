@@ -6876,5 +6876,14 @@
         <filterChains>         
         </filterChains>
     </service>
+    <service>
+        <name>ReadStudentEnrollmentsAndClass</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.schoolRegistration.ReadStudentEnrollmentsAndClass</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>         
+        </filterChains>
+    </service>
 
 </serviceDefinitions>
