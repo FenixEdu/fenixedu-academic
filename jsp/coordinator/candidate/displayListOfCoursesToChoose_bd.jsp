@@ -142,8 +142,8 @@
 		
 		<div class="infoop">
 			<span class="error"><strong>Nota:</strong></span>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das Áreas Científicas aparecem por baixo do nome da disciplina e ligeiramente mais à frente.
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina não pertença a nenhuma Área Científica, a opção para a sua selecção aparecerá imediatamente antes do seu nome. 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp; - O nome das Áreas Científicas aparecem por baixo do nome da disciplina e ligeiramente mais à frente. Nesse caso a opção é feita no quadrado à frente da área científica.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp; - Caso a disciplina não pertença a nenhuma Área Científica, a opção para a sua selecção aparecerá imediatamente antes do seu nome. 
 		</div>
 
 		<br />
