@@ -960,7 +960,7 @@
 
 	<action path="/addExecutionCourseToExam"
     		type="ServidorApresentacao.Action.sop.AddExecutionCourseToExamAction"
-    		input="/viewExamsByDayAndShift.jsp"
+    		input="/viewExamsDayAndShiftForm.do?method=view"
     		>
     	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
         		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"

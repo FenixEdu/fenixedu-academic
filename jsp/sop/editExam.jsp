@@ -11,5 +11,5 @@
   <tiles:put name="context" value="/commons/contextExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
   <tiles:put name="context" value="/commons/contextExecutionDegreeAndCurricularYears.jsp" />
 --%>
-  <tiles:put name="context" value="/commons/contextCurricularYearsExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+  <tiles:put name="context" value="/commons/contextDateAndTimeAndCurricularYearsExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 </tiles:insert>

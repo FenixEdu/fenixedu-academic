@@ -24,10 +24,20 @@
 		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 --%>
-		<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
-					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-		<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
-					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+
+		<logic:present name="examDateAndTime">
+			<html:hidden property="<%= SessionConstants.EXAM_DATEANDTIME %>"
+						 value="<%= pageContext.findAttribute("examDateAndTime").toString() %>"/>
+		</logic:present>
+
+		<logic:present name="executionDegreeOID">
+			<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+						 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+		</logic:present>
+		<logic:present name="executionCourseOID">
+			<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+						 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+		</logic:present>
 
 		<bean:define id="oldExamSeason"
 					 name="<%= SessionConstants.INFO_EXAMS_KEY %>"
@@ -40,28 +50,30 @@
 						 value="<%= pageContext.findAttribute(SessionConstants.NEXT_PAGE).toString() %>"/>
 		</logic:present>
 
-	<logic:iterate id="year" name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
-		<logic:equal name="year" value="1">
-			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_1 %>"
-						 value="1"/>
-		</logic:equal>
-		<logic:equal name="year" value="2">
-			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_2 %>"
-						 value="2"/>
-		</logic:equal>
-		<logic:equal name="year" value="3">
-			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_3 %>"
-						 value="3"/>
-		</logic:equal>
-		<logic:equal name="year" value="4">
-			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_4 %>"
-						 value="4"/>
-		</logic:equal>
-		<logic:equal name="year" value="5">
-			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_5 %>"
-						 value="5"/>
-		</logic:equal>
-	</logic:iterate>
+	<logic:present name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
+		<logic:iterate id="year" name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
+			<logic:equal name="year" value="1">
+				<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_1 %>"
+							 value="1"/>
+			</logic:equal>
+			<logic:equal name="year" value="2">
+				<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_2 %>"
+							 value="2"/>
+			</logic:equal>
+			<logic:equal name="year" value="3">
+				<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_3 %>"
+							 value="3"/>
+			</logic:equal>
+			<logic:equal name="year" value="4">
+				<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_4 %>"
+							 value="4"/>
+			</logic:equal>
+			<logic:equal name="year" value="5">
+				<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_5 %>"
+							 value="5"/>
+			</logic:equal>
+		</logic:iterate>
+	</logic:present>
 
 	<table cellpadding="0" cellspacing="2">
     	<tr>
@@ -202,6 +214,10 @@
 							+ SessionConstants.CURRICULAR_YEARS_5
 							+ "="
   							+ pageContext.findAttribute("curricularYears_5")
+							+ "&amp;"
+							+ SessionConstants.EXAM_DATEANDTIME
+							+ "="
+  							+ pageContext.findAttribute("examDateAndTime")
 					 %>">
 
 

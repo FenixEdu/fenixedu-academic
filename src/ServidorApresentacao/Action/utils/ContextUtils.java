@@ -122,7 +122,11 @@ public class ContextUtils {
 
 		Integer executionDegreeOID = null;
 		if (executionDegreeOIDString != null) {
-			executionDegreeOID = new Integer(executionDegreeOIDString);
+			try {
+				executionDegreeOID = new Integer(executionDegreeOIDString);
+			} catch (NumberFormatException ex) {
+				return;
+			}
 		}
 
 		InfoExecutionDegree infoExecutionDegree = null;

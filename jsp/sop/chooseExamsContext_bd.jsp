@@ -10,7 +10,12 @@
 
 		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-        	
+
+		<logic:present name="examDateAndTime">
+			<html:hidden property="<%= SessionConstants.EXAM_DATEANDTIME %>"
+						 value="<%= pageContext.findAttribute("examDateAndTime").toString() %>"/>
+		</logic:present>
+
 			<html:hidden property="<%= SessionConstants.NEXT_PAGE %>"
 						 value="<%= pageContext.findAttribute("nextPage").toString() %>"/>
         	<html:hidden property="page" value="1"/>

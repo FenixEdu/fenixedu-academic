@@ -26,6 +26,16 @@
 		<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
+		<logic:present name="examDateAndTime">
+			<html:hidden property="<%= SessionConstants.EXAM_DATEANDTIME %>"
+						 value="<%= pageContext.findAttribute("examDateAndTime").toString() %>"/>
+		</logic:present>
+
+		<logic:present name="examDateAndTime">
+			<html:hidden property="<%= SessionConstants.EXAM_DATEANDTIME %>"
+						 value="<%= pageContext.findAttribute("examDateAndTime").toString() %>"/>
+		</logic:present>
+
     	<table border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td nowrap="nowrap" class="formTD"><bean:message key="property.course"/></td>

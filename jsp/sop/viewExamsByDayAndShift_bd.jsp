@@ -67,9 +67,43 @@
 					<%= ((InfoViewExamByDayAndShift) infoViewExam).getNumberStudentesAttendingCourse().intValue() - seatsReserved %>
 				</td>
 				<td class="listClasses">
-					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=edit"><bean:message key="label.edit"/></html:link>;
-					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=delete" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'><bean:message key="label.delete"/></html:link>
-					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=addExecutionCourse"><br /><bean:message key="label.add.executionCourse"/></html:link>
+					<html:link paramId="indexExam" paramName="index"
+							   page="<%= "/viewExamsDayAndShiftForm.do?method=edit&amp;"
+							   				+ SessionConstants.EXECUTION_PERIOD_OID
+											+ "="
+  											+ pageContext.findAttribute("executionPeriodOID")
+											+ "&amp;"
+							   				+ SessionConstants.EXAM_DATEANDTIME
+											+ "="
+  											+ pageContext.findAttribute("examDateAndTime")
+  									%>">
+						<bean:message key="label.edit"/>
+					</html:link>;
+					<html:link paramId="indexExam" paramName="index"
+							   onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'
+							   page="<%= "/viewExamsDayAndShiftForm.do?method=delete&amp;"
+							   				+ SessionConstants.EXECUTION_PERIOD_OID
+											+ "="
+  											+ pageContext.findAttribute("executionPeriodOID")
+											+ "&amp;"
+							   				+ SessionConstants.EXAM_DATEANDTIME
+											+ "="
+  											+ pageContext.findAttribute("examDateAndTime")
+  									%>">
+						<bean:message key="label.delete"/>
+					</html:link>
+					<html:link paramId="indexExam" paramName="index"
+							   page="<%= "/viewExamsDayAndShiftForm.do?method=addExecutionCourse&amp;"
+							   				+ SessionConstants.EXECUTION_PERIOD_OID
+											+ "="
+  											+ pageContext.findAttribute("executionPeriodOID")
+											+ "&amp;"
+							   				+ SessionConstants.EXAM_DATEANDTIME
+											+ "="
+  											+ pageContext.findAttribute("examDateAndTime")
+  									%>">
+						<br /><bean:message key="label.add.executionCourse"/>
+					</html:link>
 				</td>
 			</tr>
 		</logic:iterate>

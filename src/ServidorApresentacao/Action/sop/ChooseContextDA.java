@@ -13,7 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.base.FenixContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixDateAndTimeDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -23,7 +23,7 @@ import ServidorApresentacao.Action.utils.ContextUtils;
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
-public class ChooseContextDA extends FenixContextDispatchAction {
+public class ChooseContextDA extends FenixDateAndTimeDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,

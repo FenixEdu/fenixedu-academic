@@ -30,8 +30,8 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.base.FenixDateAndTimeDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -40,7 +40,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class ChooseContextDispatchAction extends FenixContextDispatchAction {
+public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction {
 
 	protected static final String INFO_DEGREE_INITIALS_PARAMETER = "degreeInitials";
 	protected static final String SEMESTER_PARAMETER = "semester";

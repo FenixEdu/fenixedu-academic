@@ -57,6 +57,7 @@ public class DeleteExam implements IServico {
 				(IExam) sp.getIPersistentExam().readByOId(
 					Cloner.copyInfoExam2IExam(infoViewExam.getInfoExam()),
 					false);
+			sp.getIPersistentExam().simpleLockWrite(examToDelete);
 
 			sp.getIPersistentExam().delete(examToDelete);
 			result = true;

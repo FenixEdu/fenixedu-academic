@@ -11,8 +11,8 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.sop.base.FenixDateAndTimeContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -20,7 +20,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class AddExecutionCourseToExamAction extends FenixAction {
+public class AddExecutionCourseToExamAction extends FenixDateAndTimeContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -29,16 +29,20 @@ public class AddExecutionCourseToExamAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		System.out.println("####################### AddExecutionCourseToExamAction ########################");
+		
 		//HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		InfoExecutionCourse executionCourse =
 			(InfoExecutionCourse) request.getAttribute(
-				SessionConstants.EXECUTION_COURSE_KEY);
+				SessionConstants.EXECUTION_COURSE);
+		System.out.println("executionCourse=" + executionCourse);
 
 		InfoViewExamByDayAndShift infoViewExams =
-			(InfoViewExamByDayAndShift) request.getAttribute(
+			(InfoViewExamByDayAndShift) request.getSession().getAttribute(
 				SessionConstants.INFO_VIEW_EXAM);
+		System.out.println("infoViewExams=" + infoViewExams);
 
 		// Create new association between exam and executionCourse
 		Object argsCreateExam[] = { infoViewExams, executionCourse };
@@ -54,6 +58,7 @@ public class AddExecutionCourseToExamAction extends FenixAction {
 				ex);
 		}
 
+		request.getSession().removeAttribute(SessionConstants.INFO_VIEW_EXAM);
 		return mapping.findForward("Sucess");
 	}
 
