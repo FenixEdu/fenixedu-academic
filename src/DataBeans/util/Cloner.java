@@ -92,6 +92,7 @@ import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.InfoTest;
 import DataBeans.InfoTestQuestion;
+import DataBeans.InfoTutor;
 import DataBeans.InfoUniversity;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
@@ -278,11 +279,11 @@ public abstract class Cloner
 			{
 				System.out.println("  interface: " + interfaces[i].getName());
 				if (Arrays.asList(interfaces[i].getInterfaces()).contains(IDomainObject.class)
-                    || ((interfaces[i].getSuperclass() != null)
-                        && (interfaces[i]
-                            .getSuperclass()
-                            .getName()
-                            .equals(IDomainObject.class.getName()))))
+					|| ((interfaces[i].getSuperclass() != null)
+						&& (interfaces[i]
+							.getSuperclass()
+							.getName()
+							.equals(IDomainObject.class.getName()))))
 				{
 					parameters = new Class[1];
 					parameters[0] = interfaces[i];
@@ -2526,8 +2527,8 @@ public abstract class Cloner
 		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
 
 		InfoStudent infoStudent = null;
-        if (studentCurricularPlan.getStudent() != null)
-        {
+		if (studentCurricularPlan.getStudent() != null)
+		{
 			infoStudent = Cloner.copyIStudent2InfoStudent(studentCurricularPlan.getStudent());
 		}
 		InfoBranch infoBranch = null;
@@ -2542,9 +2543,9 @@ public abstract class Cloner
 				Cloner.copyIBranch2InfoBranch(studentCurricularPlan.getSecundaryBranch());
 		}
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-        if (studentCurricularPlan.getDegreeCurricularPlan() != null)
-        {
-			infoDegreeCurricularPlan = 
+		if (studentCurricularPlan.getDegreeCurricularPlan() != null)
+		{
+			infoDegreeCurricularPlan =
 				Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
 					studentCurricularPlan.getDegreeCurricularPlan());
 		}
@@ -2581,9 +2582,9 @@ public abstract class Cloner
 				enrolment.getStudentCurricularPlan());
 		InfoCurricularCourse infoCurricularCourse =
 			Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
-		InfoExecutionPeriod infoExecutionPeriod = 
+		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) Cloner.get(enrolment.getExecutionPeriod());
-	
+
 		List infoEnrolmentEvaluationsList = new ArrayList();
 		List enrolmentEvaluationsList = enrolment.getEvaluations();
 
@@ -4785,6 +4786,7 @@ public abstract class Cloner
 	{
 		IGratuitySituation gratuitySituation = new GratuitySituation();
 
+		copyObjectProperties(gratuitySituation, infoGratuitySituation);
 		if (infoGratuitySituation.getInfoGratuityValues() != null)
 		{
 			IGratuityValues gratuityValues =
@@ -4798,5 +4800,31 @@ public abstract class Cloner
 		gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
 
 		return gratuitySituation;
+	}
+
+	public static InfoTutor copyITutor2InfoTutor(ITutor tutor)
+	{
+		InfoTutor infoTutor = new InfoTutor();
+		copyObjectProperties(infoTutor, tutor);
+		InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(tutor.getTeacher());
+		infoTutor.setInfoTeacher(infoTeacher);
+
+		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(tutor.getStudent());
+		infoTutor.setInfoStudent(infoStudent);
+
+		return infoTutor;
+	}
+
+	public ITutor copyInfoTutor2ITutor(InfoTutor infoTutor)
+	{
+		ITutor tutor = new Tutor();
+		copyObjectProperties(tutor, infoTutor);
+		ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTutor.getInfoTeacher());
+		tutor.setTeacher(teacher);
+
+		IStudent student = Cloner.copyInfoStudent2IStudent(infoTutor.getInfoStudent());
+		tutor.setStudent(student);
+
+		return tutor;
 	}
 }

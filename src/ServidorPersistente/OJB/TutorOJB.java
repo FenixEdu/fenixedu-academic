@@ -54,9 +54,8 @@ public class TutorOJB extends ObjectFenixOJB implements IPersistentTutor
 		}
 		if (teacher != null && teacher.getTeacherNumber() != null)
 		{
-			criteria.addEqualTo("teacher.number", teacher.getTeacherNumber());
+			criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
 		}
 		return queryList(Tutor.class, criteria);
 	}
-
 }

@@ -5610,10 +5610,19 @@
         <filterChains/>
     </service>  
     <service>
+    	<name>ReadStudentsByTutor</name>
+    	<description>Reads students associated with the teacher</description>
+    	<implementationClass>ServidorAplicacao.Servico.coordinator.ReadStudentsByTutor</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAuthorization"/>
+        </filterChains>
+    </service>  
+    <service>
     	<name>ReadNotClosedPublicExecutionPeriods</name>
     	<description>Reads all public execution periods that are not closed</description>
     	<implementationClass>ServidorAplicacao.Servico.commons.ReadNotClosedPublicExecutionPeriods</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains/>
-    </service>  
+    </service> 
 </serviceDefinitions>

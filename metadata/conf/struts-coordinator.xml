@@ -127,7 +127,11 @@
       		type="org.apache.struts.validator.DynaValidatorForm"
 	        dynamic="true">
         <form-property name="page" type="java.lang.Integer" initial="0"/>
+        <form-property name="executionDegreeId" type="java.lang.Integer"/>
 	    <form-property name="tutorNumber" type="java.lang.Integer"/>
+	    <form-property name="deletedTutorsIds" type="java.lang.Integer[]" />
+	    <form-property name="studentNumberFirst" type="java.lang.Integer"/>
+	    <form-property name="studentNumberSecond" type="java.lang.Integer"/>	    
       </form-bean>
     </form-beans>
     
@@ -464,8 +468,21 @@
 	  	name="tutorForm"
 	  	parameter="method"
 	  	scope="request"
+	  	input="/tutorManagement.do?method=prepareChooseTutor&amp;page=0"
 	  >
 	  	<forward name="chooseTutor" path="chooseTutor" />
+	  	<forward name="showStudentsByTutor" path="showStudentsByTutor" />
+	  </action>
+	  
+	  <action type="ServidorApresentacao.Action.coordinator.TutorManagementLookupDispatchAction"
+	  	path="/tutorManagementLookup"
+	  	name="tutorForm"
+	  	parameter="method"
+	  	scope="request"
+	  	input="/tutorManagement.do?method=prepareChooseTutor&amp;page=0"
+	  >
+	  	<forward name="chooseTutor" path="chooseTutor" />
+	  	<forward name="showStudentsByTutor" path="showStudentsByTutor" />
 	  </action>
     </action-mappings>
     

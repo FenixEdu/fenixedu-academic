@@ -255,5 +255,6 @@ public interface ISuportePersistente
 	
 	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea();
 	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea();
-
+	
+	public IPersistentTutor getIPersistentTutor();
 }

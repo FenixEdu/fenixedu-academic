@@ -80,7 +80,10 @@
 	</definition>
 	
 	<definition name="chooseTutor" extends="definition.coordinator.two-column">
-		 <put name="body" value="/tutor/chooseTutor.jsp" />
+		 <put name="body" value="/coordinator/tutors/chooseTutor.jsp" />
+	</definition>
+	<definition name="showStudentsByTutor" extends="definition.coordinator.two-column">
+		 <put name="body" value="/coordinator/tutors/showStudentsByTutor.jsp" />
 	</definition>
 	
 </tiles-definitions>

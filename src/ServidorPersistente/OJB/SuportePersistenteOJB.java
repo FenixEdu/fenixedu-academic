@@ -990,4 +990,12 @@ public class SuportePersistenteOJB
 	{
 		return new GrantSubsidyOJB();
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTutor()
+	 */
+	public IPersistentTutor getIPersistentTutor()
+	{
+		return new TutorOJB();
+	}
 }
