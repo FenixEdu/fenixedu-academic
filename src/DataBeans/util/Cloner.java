@@ -96,6 +96,7 @@ import DataBeans.degree.finalProject.InfoDegreeFinalProject;
 import DataBeans.degree.finalProject.InfoOrientation;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.grant.owner.InfoGrantOwner;
+import DataBeans.person.InfoQualification;
 import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
 import DataBeans.teacher.InfoExternalActivity;
@@ -3647,5 +3648,25 @@ public abstract class Cloner
 		shiftProfessorship.setProfessorship(professorship);
 		shiftProfessorship.setShift(shift);
 		return shiftProfessorship;
-	}    
+	}
+    
+    public static IQualification copyInfoQualification2IQualification(InfoQualification infoQualification)
+    {
+        IQualification qualification = new Qualification();
+        IPessoa person = copyInfoPerson2IPerson(infoQualification.getInfoPerson());
+        copyObjectProperties(qualification, infoQualification);
+        
+        qualification.setPerson(person);
+        return qualification;
+    }
+    
+    public static InfoQualification copyIQualification2InfoQualification(IQualification qualification)
+    {
+        InfoQualification infoQualification = new InfoQualification();
+        InfoPerson infoPerson = copyIPerson2InfoPerson(qualification.getPerson());
+        copyObjectProperties(infoQualification, qualification);
+        
+        infoQualification.setInfoPerson(infoPerson);
+        return infoQualification;
+    }
 }
