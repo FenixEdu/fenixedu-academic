@@ -35,7 +35,6 @@ INSERT INTO SECTION VALUES (1, 'Seccao1dePO',0,4,null,'2003-01-21');
 #INSERT INTO SECTION VALUES (7, 'SubSeccao2deAC',1,7,5,'2003-02-15');
 #INSERT INTO SECTION VALUES (8, 'SubSubSeccao1deAC',0,7,7,'2003-02-16');
 
-
 #
 # Data for table 'ITEM'
 #
@@ -91,4 +90,5 @@ INSERT INTO responsablefor VALUES (1, 26);
 
 DELETE FROM announcement;
 INSERT INTO announcement VALUES (1, 'announcement1', '2003-01-21', '2003-01-21', 'information1', 1);
+
 
