@@ -219,7 +219,7 @@ create table CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE (
 )type=InnoDB;
 
 #--------------------------------------------
-# Table structure for DEGREE_ENROLMENT_INFO
+# Table structure for DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO
 #--------------------------------------------
 drop table if exists DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
 create table DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO (
