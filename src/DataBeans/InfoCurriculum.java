@@ -5,7 +5,6 @@
  */
 package DataBeans;
 
-
 /**
  * @author João Mota
  */
@@ -13,6 +12,9 @@ public class InfoCurriculum {
 	protected String generalObjectives;
 	protected String operacionalObjectives;
 	protected String program;
+	protected String generalObjectivesEn;
+	protected String operacionalObjectivesEn;
+	protected String programEn;
 	protected InfoExecutionCourse infoExecutionCourse;
 	/**
 	 * 
@@ -30,11 +32,17 @@ public class InfoCurriculum {
 		String generalObjectives,
 		String operacionalObjectives,
 		String program,
+		String generalObjectivesEn,
+		String operacionalObjectivesEn,
+		String programEn,
 		InfoExecutionCourse infoExecutionCourse) {
 		setInfoExecutionCourse(infoExecutionCourse);
 		setGeneralObjectives(generalObjectives);
 		setOperacionalObjectives(operacionalObjectives);
 		setProgram(program);
+		setGeneralObjectivesEn(generalObjectivesEn);
+		setOperacionalObjectivesEn(operacionalObjectivesEn);
+		setProgramEn(programEn);
 
 	}
 
@@ -102,24 +110,63 @@ public class InfoCurriculum {
 		boolean result = false;
 		if (obj instanceof InfoCurriculum) {
 			InfoCurriculum infoCurriculum = (InfoCurriculum) obj;
-			result =
-				getOperacionalObjectives().equals(
-					infoCurriculum.getOperacionalObjectives())
-					&& getGeneralObjectives().equals(
-						infoCurriculum.getGeneralObjectives())
-					&& getInfoExecutionCourse().equals(
-						infoCurriculum.getInfoExecutionCourse())
-					&& getProgram().equals(infoCurriculum.getProgram());
+			result = getInfoExecutionCourse().equals(
+						infoCurriculum.getInfoExecutionCourse());
 		}
 		return result;
 	}
 	public String toString() {
-			String result = "[INFOCURRICULUM";
-			result += ", getGeneralObjectives=" + getGeneralObjectives();
-			result += ", getOperacionalObjectives=" + getOperacionalObjectives();
-			result += ", getProgram=" + getProgram();
-			result += ", getInfoExecutionCourse=" + getInfoExecutionCourse();
-			result += "]";
-			return result;
-		}
+		String result = "[INFOCURRICULUM";
+		result += ", getGeneralObjectives=" + getGeneralObjectives();
+		result += ", getOperacionalObjectives=" + getOperacionalObjectives();
+		result += ", getProgram=" + getProgram();
+		result += ", getGeneralObjectivesEn=" + getGeneralObjectivesEn();
+		result += ", getOperacionalObjectivesEn=" + getOperacionalObjectivesEn();
+		result += ", getProgramEn=" + getProgramEn();
+		result += ", getInfoExecutionCourse=" + getInfoExecutionCourse();
+		result += "]";
+		return result;
+	}
+	/**
+	 * @return
+	 */
+	public String getGeneralObjectivesEn() {
+		return generalObjectivesEn;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getOperacionalObjectivesEn() {
+		return operacionalObjectivesEn;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getProgramEn() {
+		return programEn;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setGeneralObjectivesEn(String string) {
+		generalObjectivesEn = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setOperacionalObjectivesEn(String string) {
+		operacionalObjectivesEn = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setProgramEn(String string) {
+		programEn = string;
+	}
+
 }

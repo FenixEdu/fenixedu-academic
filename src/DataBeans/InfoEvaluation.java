@@ -62,6 +62,7 @@ public class InfoEvaluation implements ISiteComponent{
 		String result = "[Evaluation";
 
 		result += ", evaluationElements =" + getEvaluationElements();
+		result += ", evaluationElementsEn =" + getEvaluationElementsEn();
 		result += ", executionCourse =" + getInfoExecutionCourse();
 		result += "]";
 		return result;

@@ -13,7 +13,9 @@ package Dominio;
 public interface IEvaluation {
 
 	public String getEvaluationElements();
+	public String getEvaluationElementsEn();
 	public void setEvaluationElements(String string);
+	public void setEvaluationElementsEn(String string);
 	public Integer getKeyExecutionCourse();
 	public void setKeyExecutionCourse(Integer integer);
 	public IDisciplinaExecucao getExecutionCourse();
