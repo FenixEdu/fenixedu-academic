@@ -139,6 +139,11 @@ public abstract class PersonUtils
 				{
 					PersonUtils.updatePerson(personByUsername, personByBi);
 					person = personByUsername;
+					System.out.println(
+							"PERSON username: "
+							+ personByUsername.getUsername()
+							+ "- bi:"
+							+ personByUsername.getNumeroDocumentoIdentificacao());
 					broker.delete(personByBi);
 				}
 			}
