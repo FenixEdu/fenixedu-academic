@@ -229,7 +229,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		ICurricularCourse curricularCourse,
 		IExecutionPeriod executionPeriod) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getInternalCode());
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getIdInternal());
 		criteria.addEqualTo("curricularCourse.idInternal", ((CurricularCourse) curricularCourse).getIdInternal());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 		criteria.addEqualTo("executionPeriod.name.executionYear.year", executionPeriod.getExecutionYear().getYear());
@@ -504,7 +504,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public List readAllEnrolmentsFromStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getInternalCode());
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getIdInternal());
 		return query(Enrolment.class, criteria);
 	}
 
@@ -651,7 +651,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IEnrolment readEnrolmentByUnique(IStudentCurricularPlan plan, ICurricularCourseScope scope, IExecutionPeriod period) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getInternalCode());
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getIdInternal());
 		criteria.addEqualTo("curricularCourseScope.idInternal", scope.getIdInternal());
 		criteria.addEqualTo("executionPeriod.idInternal", period.getIdInternal());
 		List result = query(Enrolment.class, criteria);
@@ -665,7 +665,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndScope(IStudentCurricularPlan plan, ICurricularCourseScope scope) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getInternalCode());
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getIdInternal());
 		criteria.addEqualTo("curricularCourseScope.idInternal", scope.getIdInternal());
 		List result = query(Enrolment.class, criteria);
 		if (result.size() == 1) {

@@ -121,7 +121,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
 		
 				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
-				//Get the Chosen Master Degree
+				//Get the Selected Degree Curricular Plan
 				Integer degreeCurricularPlanID = new Integer((String) request.getParameter("curricularPlanID"));
 			
 				Object args[] = { degreeCurricularPlanID , TipoCurso.MESTRADO_OBJ };
@@ -135,8 +135,8 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
 					throw new NonExistingActionException("error.exception.noStudents", "");
 				}
 
-				BeanComparator nameComparator = new BeanComparator("infoPerson.nome");
-				Collections.sort(result, nameComparator);
+				BeanComparator numberComparator = new BeanComparator("infoStudent.number");
+				Collections.sort(result, numberComparator);
 
 				request.setAttribute(SessionConstants.STUDENT_LIST, result);
 			

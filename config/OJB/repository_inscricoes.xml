@@ -273,7 +273,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.StudentCurricularPlan" table="STUDENT_CURRICULAR_PLAN">
 	<field-descriptor
-		name="internalCode"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
@@ -334,6 +334,14 @@
 			proxy="false">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
+	
+	<collection-descriptor
+			name="enrolments"
+			element-class-ref="Dominio.Enrolment"
+			proxy="true">
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>    
+	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

@@ -107,8 +107,8 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		// else If the studentCurricularPlan is mapped to the database, then write any existing changes.
 		else if (
 			(studentCurricularPlanToWrite instanceof StudentCurricularPlan)
-				&& ((StudentCurricularPlan) studentCurricularPlanFromDB).getInternalCode().equals(
-					((StudentCurricularPlan) studentCurricularPlanToWrite).getInternalCode())) {
+				&& ((StudentCurricularPlan) studentCurricularPlanFromDB).getIdInternal().equals(
+					((StudentCurricularPlan) studentCurricularPlanToWrite).getIdInternal())) {
 			super.lockWrite(studentCurricularPlanToWrite);
 			// else Throw an already existing exception
 		} else

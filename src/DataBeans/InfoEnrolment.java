@@ -18,6 +18,9 @@ public class InfoEnrolment extends InfoObject implements Serializable {
 	private EnrolmentState enrolmentState;
 	private EnrolmentEvaluationType evaluationType;
 	private InfoCurricularCourseScope infoCurricularCourseScope;
+	
+	// to be used to keep the actual enrolment evaluation
+	private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
 
 	private List infoEvaluations;
 
@@ -134,6 +137,20 @@ public class InfoEnrolment extends InfoObject implements Serializable {
 
 	public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope) {
 		infoCurricularCourseScope = scope;
+	}
+
+	/**
+	 * @return InfoEnrolmentEvaluation
+	 */
+	public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
+		return infoEnrolmentEvaluation;
+	}
+
+	/**
+	 * @param evaluation
+	 */
+	public void setInfoEnrolmentEvaluation(InfoEnrolmentEvaluation evaluation) {
+		infoEnrolmentEvaluation = evaluation;
 	}
 
 }

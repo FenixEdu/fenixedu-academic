@@ -414,7 +414,7 @@ public class MigrateInscricoes2FenixEnrolments {
 	private IEnrolment getEnrolment2Write(IEnrolment enrolment, PersistenceBroker broker) throws Exception {
 		
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlanKey", new Integer(String.valueOf(((StudentCurricularPlan) enrolment.getStudentCurricularPlan()).getInternalCode())));
+		criteria.addEqualTo("studentCurricularPlanKey", new Integer(String.valueOf(((StudentCurricularPlan) enrolment.getStudentCurricularPlan()).getIdInternal())));
 		criteria.addEqualTo("keyExecutionPeriod", new Integer(String.valueOf(((ExecutionPeriod) enrolment.getExecutionPeriod()).getIdInternal())));
 		criteria.addEqualTo("curricularCourseScopeKey", new Integer(String.valueOf(((CurricularCourseScope) enrolment.getCurricularCourseScope()).getIdInternal())));
 		Query query = new QueryByCriteria(Enrolment.class,criteria);

@@ -1,14 +1,14 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.List;
 
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 
-public class StudentCurricularPlan implements IStudentCurricularPlan {
+public class StudentCurricularPlan extends DomainObject implements IStudentCurricularPlan {
 
-	protected Integer internalCode;
-	protected Integer studentKey;
+	protected Integer studentKey; 
 	protected Integer branchKey;
 	protected Integer degreeCurricularPlanKey;
 	protected Specialization specialization;
@@ -19,9 +19,9 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	protected IDegreeCurricularPlan degreeCurricularPlan;
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
+	protected List enrolments;
 
 	public StudentCurricularPlan() {
-		setInternalCode(null);
 		setStudent(null);
 		setBranch(null);
 		setDegreeCurricularPlan(null);
@@ -56,7 +56,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
-		result += "internalCode = " + this.internalCode + "; ";
+		result += "internalCode = " + getIdInternal() + "; ";
 		result += "student = " + this.student + "; ";
 		result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
 		result += "startDate = " + this.startDate + "; ";
@@ -89,14 +89,6 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	 */
 	public StudentCurricularPlanState getCurrentState() {
 		return currentState;
-	}
-
-	/**
-	 * Returns the internalCode.
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
 	}
 
 	/**
@@ -145,14 +137,6 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	 */
 	public void setCurrentState(StudentCurricularPlanState currentState) {
 		this.currentState = currentState;
-	}
-
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
 	}
 
 	/**
@@ -236,5 +220,20 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	public void setGivenCredits(Double givenCredits) {
 		this.givenCredits = givenCredits;
 	}
+
+	/**
+	 * @return Enrolments
+	 */
+	public List getEnrolments() {
+		return enrolments;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setEnrolments(List list) {
+		enrolments = list;
+	}
+
 
 }

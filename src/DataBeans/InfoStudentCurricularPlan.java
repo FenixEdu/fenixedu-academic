@@ -16,7 +16,7 @@ import Util.StudentCurricularPlanState;
  *
  * @author  tfc130
  */
-public class InfoStudentCurricularPlan implements Serializable {
+public class InfoStudentCurricularPlan extends InfoObject implements Serializable {
 
 	protected InfoStudent infoStudent;
 	protected InfoBranch infoBranch;

@@ -32,6 +32,7 @@ public abstract class SessionConstants {
 	// Constants for Student Enrolment...
 	//
 	public static final String INFO_ENROLMENT_CONTEXT_KEY = "INFO_ENROLMENT_CONTEXT_KEY";
+	public static final String CURRICULUM = "curriculum";
 
 	// -------------------------------------------------------------------------------
 	//    General Purpose Constants - For Specialized Action Mapping

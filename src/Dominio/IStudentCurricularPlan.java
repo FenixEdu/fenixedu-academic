@@ -7,6 +7,7 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.List;
 
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
@@ -17,7 +18,7 @@ import Util.StudentCurricularPlanState;
  * @author  Nuno Nunes & Joana Mota
  */
 
-public interface IStudentCurricularPlan {
+public interface IStudentCurricularPlan extends IDomainObject {
   public IStudent getStudent();
   public IBranch getBranch();
   public IDegreeCurricularPlan getDegreeCurricularPlan();
@@ -25,7 +26,7 @@ public interface IStudentCurricularPlan {
   public Date getStartDate();
   public Specialization getSpecialization();
   public Double getGivenCredits();
-  public Integer getInternalCode();
+  public List getEnrolments();
   
   public void setStudent(IStudent student);
   public void setBranch(IBranch branch);
@@ -34,4 +35,6 @@ public interface IStudentCurricularPlan {
   public void setStartDate(Date startDate);
   public void setSpecialization(Specialization specialization);
   public void setGivenCredits(Double givenCredits);
+  public void setEnrolments(List enrolments);
+  
 }

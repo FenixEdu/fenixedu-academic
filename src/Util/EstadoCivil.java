@@ -35,7 +35,7 @@ public class EstadoCivil {
     public static final String SEPARADO_STRING = "Separado";
 	public static final String UNIAO_DE_FACTO_STRING = "União de Facto";
 	public static final String DESCONHECIDO_STRING = "Desconhecido";
-	public static final String DEFAULT = "[Escolha uma Situação]";
+	public static final String DEFAULT = "";
     
     private Integer estadoCivil;
 

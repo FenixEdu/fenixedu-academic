@@ -22,7 +22,7 @@ public class Data {
   public static String OCTOBER_STRING = "Outubro";
   public static String NOVEMBER_STRING = "Novembro";
   public static String DECEMBER_STRING = "Dezembro";
-  public static String OPTION_STRING = "[Escolha uma opção]";
+  public static String OPTION_STRING = "";
   
   public static Integer JANUARY = new Integer(0);
   public static Integer FEBRUARY = new Integer(1);
