@@ -23,8 +23,8 @@ import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.util.Cloner;
 import Dominio.IProfessorship;
-import Dominio.ITeacher;
 import Dominio.IShiftProfessorship;
+import Dominio.ITeacher;
 import Dominio.ITurno;
 import Dominio.Professorship;
 import Dominio.Teacher;
@@ -36,8 +36,8 @@ import ServidorAplicacao.Servicos.TestCaseServices;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentShiftProfessorship;
+import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -152,7 +152,7 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 			assertEquals(
 				"shiftWithErrors whith shift 1",
 				1,
-				((ITurno) (Cloner.copyInfoShift2IShift((InfoShift) shiftWithErrors.get(0)))).getIdInternal().intValue());
+				(Cloner.copyInfoShift2IShift((InfoShift) shiftWithErrors.get(0))).getIdInternal().intValue());
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			fail("Executing Service!");

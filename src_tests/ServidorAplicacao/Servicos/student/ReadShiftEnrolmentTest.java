@@ -10,17 +10,13 @@ package ServidorAplicacao.Servicos.student;
  *
  * @author tfc130
  */
-import java.util.List;
-
-import framework.factory.ServiceManagerServiceFactory;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.Servicos.TestCaseServicos;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadShiftEnrolmentTest extends TestCaseServicos {
 
@@ -253,13 +249,13 @@ public class ReadShiftEnrolmentTest extends TestCaseServicos {
 				.getInfoEnrolmentWithShift()
 				.get(1);
 		assertEquals("testAuthorizedReadShiftEnrolment", "Engenharia da Programacao",
-			         ((InfoExecutionCourse) pair1.getInfoExecutionCourse()).getNome());
+			         pair1.getInfoExecutionCourse().getNome());
 		assertEquals("testAuthorizedReadShiftEnrolment", "Aprendizagem",
-					 ((InfoExecutionCourse) pair2.getInfoExecutionCourse()).getNome());
+					 pair2.getInfoExecutionCourse().getNome());
 		assertEquals("testAuthorizedReadShiftEnrolment", 3,
-					 ((List) pair1.getTypeLessonsAndInfoShifts()).size());
+					 pair1.getTypeLessonsAndInfoShifts().size());
 		assertEquals("testAuthorizedReadShiftEnrolment", 2,
-					 ((List) pair2.getTypeLessonsAndInfoShifts()).size());
+					 pair2.getTypeLessonsAndInfoShifts().size());
 	  } catch (Exception ex) {
 		fail("testAuthorizedReadShiftEnrolment");
 	  }
