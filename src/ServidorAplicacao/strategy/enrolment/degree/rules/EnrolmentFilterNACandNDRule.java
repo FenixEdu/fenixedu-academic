@@ -43,8 +43,8 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 					possibleScopes.add(curricularCourseScope);
 					possibleND = possibleND + 1;
 
-					if (acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse())) {
-						if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse())).intValue() > 0) {
+					if (acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())) {
+						if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())).intValue() > 0) {
 							possibleNAC = possibleNAC + 2;
 						}
 					} else {

@@ -4,6 +4,7 @@ import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.enrolment.degree.IEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -46,8 +47,8 @@ public class ValidateActualEnrolment implements IServico {
 
 		try {
 			//			FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
-			IEnrolmentStrategy strategy =
-				EnrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
+			IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
+			IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
 
 			return EnrolmentContextManager.getInfoEnrolmentContext(strategy.validateEnrolment());
 

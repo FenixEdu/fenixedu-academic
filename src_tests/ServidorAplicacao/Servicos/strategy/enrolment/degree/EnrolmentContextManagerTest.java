@@ -18,6 +18,7 @@ import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.enrolment.degree.IEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -72,12 +73,13 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 			fail("Getting initial enrolment Context");			
 		}
 
+		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
 		IEnrolmentStrategy enrolmentStrategy = null;
 		try {
 			sp.iniciarTransaccao();
 			
 			enrolmentStrategy =
-				EnrolmentStrategyFactory.getEnrolmentStrategyInstance(
+			enrolmentStrategyFactory.getEnrolmentStrategyInstance(
 					enrolmentContext);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

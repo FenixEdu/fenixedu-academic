@@ -79,7 +79,7 @@ public abstract class EnrolmentContextManager {
 		List curricularCoursesEnrolled = (List) CollectionUtils.collect(enrolmentsWithStateNotApproved, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getCurricularCourse();
+				return (enrolment.getCurricularCourse().getCode() + enrolment.getCurricularCourse().getName());
 			}
 		});
 

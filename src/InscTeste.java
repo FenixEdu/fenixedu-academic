@@ -33,7 +33,7 @@ public class InscTeste {
 
 
 			Iterator iterator = infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
-			for(int i = 0; i < 8; i++) {
+			for(int i = 0; i < 7; i++) {
 //			while (iterator.hasNext()) {
 //				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
 				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);

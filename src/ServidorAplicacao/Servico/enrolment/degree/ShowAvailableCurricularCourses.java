@@ -7,6 +7,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.enrolment.degree.IEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -57,8 +58,8 @@ public class ShowAvailableCurricularCourses implements IServico {
 			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
 
 			//			FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
-			IEnrolmentStrategy strategy =
-				EnrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student, semester));
+			IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
+			IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student, semester));
 
 			return EnrolmentContextManager.getInfoEnrolmentContext(strategy.getAvailableCurricularCourses());
 

@@ -50,9 +50,6 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		this.enrolmentContext = enrolmentContext;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy#validateEnrolment()
-	 */
 	public EnrolmentContext validateEnrolment() throws ExcepcaoPersistencia {
 		IEnrolmentRule validateRule = null;
 

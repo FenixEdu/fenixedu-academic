@@ -274,4 +274,7 @@ insert into ENROLMENT VALUES (8, 1, 8, 1, 1);
 insert into ENROLMENT VALUES (9, 1, 9, 1, 1);
 insert into ENROLMENT VALUES (10, 1, 10, 1, 1);
 
-#insert into ENROLMENT VALUES (11, 1, 3, 2, 2);
+insert into ENROLMENT VALUES (11, 1, 11, 1, 2);
+insert into ENROLMENT VALUES (12, 1, 12, 1, 2);
+insert into ENROLMENT VALUES (13, 1, 13, 1, 2);
+insert into ENROLMENT VALUES (14, 1, 14, 1, 2);

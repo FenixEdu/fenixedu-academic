@@ -19,8 +19,6 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 		
-System.out.println("SIZE[" + enrolmentContext.getActualEnrolment().size() + "]");
-
 		List validateMessages = new ArrayList();
 
 		HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
@@ -29,8 +27,8 @@ System.out.println("SIZE[" + enrolmentContext.getActualEnrolment().size() + "]")
 		Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			if (acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse())) {
-				if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse())).intValue() > 0) {
+			if (acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())) {
+				if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())).intValue() > 0) {
 					NAC = NAC + 2;
 				}
 			} else {
