@@ -89,32 +89,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	/**
-	 * @deprecated
-	 * @see ServidorPersistente.ITurmaPersistente#readBySemestreAndAnoCurricularAndSiglaLicenciatura(Integer, Integer, String)
-	 */
-	public List readBySemestreAndAnoCurricularAndSiglaLicenciatura(
-		Integer semestre,
-		Integer anoCurricular,
-		String siglaLicenciatura)
-		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select turmas from " + Turma.class.getName();
-			oqlQuery += " where semestre = $1";
-			oqlQuery += " and anoCurricular = $2";
-			oqlQuery += " and licenciatura.sigla = $3";
-			query.create(oqlQuery);
-			query.bind(semestre);
-			query.bind(anoCurricular);
-			query.bind(siglaLicenciatura);
-			List result = (List) query.execute();
-			lockRead(result);
 
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
 	/**
 	 * @see ServidorPersistente.ITurmaPersistente#readByExecutionPeriodAndCurricularYearAndExecutionDegree(Dominio.IExecutionPeriod, java.lang.Integer, Dominio.ICursoExecucao)
 	 */

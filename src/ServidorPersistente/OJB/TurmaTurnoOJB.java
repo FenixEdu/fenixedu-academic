@@ -76,8 +76,7 @@ public class TurmaTurnoOJB
 		super.deleteAll(oqlQuery);
 	}
 
-	public List readTurnosDeTurma(String nomeTurma)
-		throws ExcepcaoPersistencia {
+	public List readTurnosDeTurma(String nomeTurma) throws ExcepcaoPersistencia{
 		try {
 			String oqlQuery = "select all from " + TurmaTurno.class.getName();
 			oqlQuery += " where turma.nome = $1";
@@ -169,5 +168,6 @@ public class TurmaTurnoOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
 
 }

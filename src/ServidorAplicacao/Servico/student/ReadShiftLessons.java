@@ -14,11 +14,7 @@ package ServidorAplicacao.Servico.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoLesson;
-import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
@@ -65,51 +61,7 @@ public class ReadShiftLessons implements IServico {
 			for (int i = 0; i < lessons.size(); i++) {
 				IAula lesson = (IAula) lessons.get(i);
 
-				InfoRoom infoRoom =
-					new InfoRoom(
-						lesson.getSala().getNome(),
-						lesson.getSala().getEdificio(),
-						lesson.getSala().getPiso(),
-						lesson.getSala().getTipo(),
-						lesson.getSala().getCapacidadeNormal(),
-						lesson.getSala().getCapacidadeExame());
-				InfoDegree infoDegree =
-					new InfoDegree(
-						lesson
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getCurso()
-							.getSigla(),
-						lesson
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getCurso()
-							.getNome());
-				InfoExecutionDegree infoED =
-					new InfoExecutionDegree(
-						lesson
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getAnoLectivo(),
-						infoDegree);
-				InfoExecutionCourse infoEC =
-					new InfoExecutionCourse(
-						lesson.getDisciplinaExecucao().getNome(),
-						lesson.getDisciplinaExecucao().getSigla(),
-						lesson.getDisciplinaExecucao().getPrograma(),
-						infoED,
-						lesson.getDisciplinaExecucao().getTheoreticalHours(),
-						lesson.getDisciplinaExecucao().getPraticalHours(),
-						lesson.getDisciplinaExecucao().getTheoPratHours(),
-						lesson.getDisciplinaExecucao().getLabHours());
-				InfoLesson infoLesson =
-					new InfoLesson(
-						lesson.getDiaSemana(),
-						lesson.getInicio(),
-						lesson.getFim(),
-						lesson.getTipo(),
-						infoRoom,
-						infoEC);
+				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
 
 				infoLessons.add(infoLesson);
 			}

@@ -24,14 +24,6 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	public void deleteAll() throws ExcepcaoPersistencia;
 	
 	/**
-	 * @deprecated
-	 * @param sigla
-	 * @return ICursoExecucao
-	 * @throws ExcepcaoPersistencia
-	 */
-	public ICursoExecucao readBySigla(String sigla)
-		throws ExcepcaoPersistencia;
-	/**
 	 * Method readByExecutionYear.
 	 * @param executionYear
 	 * @return List

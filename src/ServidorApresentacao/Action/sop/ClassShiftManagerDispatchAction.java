@@ -20,9 +20,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.ClassAndShiftKeys;
-import DataBeans.ClassKey;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -187,8 +188,14 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		String className)
 		throws Exception {
 
-		ClassKey keyClass = new ClassKey(className);
-		Object argsLerTurnosTurma[] = { keyClass };
+
+		
+		HttpSession session = request.getSession();
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+		
+		Object argsLerTurnosTurma[] = { className, infoExecutionDegree, infoExecutionPeriod};
 
 		setShiftListToRequest(
 			request,
@@ -204,8 +211,13 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		String className)
 		throws Exception {
 
-		ClassKey keyClass = new ClassKey(className);
-		Object argsLerTurnosTurma[] = { keyClass };
+		
+		HttpSession session = request.getSession();
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+		
+		Object argsLerTurnosTurma[] = { className, infoExecutionDegree, infoExecutionPeriod};
 
 		ArrayList list =
 			returnShiftList(

@@ -6,11 +6,9 @@
 
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
@@ -47,78 +45,6 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 		}
 	}
 
-	public IDisciplinaExecucao lerDisciplinaExecucao(
-		int chaveLicenciaturaExecucao,
-		String sigla) {
-		try {
-			IDisciplinaExecucao de = null;
-			String oqlQuery =
-				"select all from " + DisciplinaExecucao.class.getName();
-			oqlQuery += " where sigla = $1 and chaveLicenciaturaExecucao = $2";
-			query.create(oqlQuery);
-			query.bind(sigla);
-			query.bind(new Integer(chaveLicenciaturaExecucao));
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				return null;
-			}
-			if (result.size() != 0)
-				de = (IDisciplinaExecucao) result.get(0);
-			return de;
-		} catch (QueryException ex) {
-			return null;
-		}
-	}
-
-	public boolean apagarDisciplinaExecucao(
-		int chaveLicenciaturaExecucao,
-		String sigla) {
-		try {
-			String oqlQuery =
-				"select all from " + DisciplinaExecucao.class.getName();
-			oqlQuery += " where sigla = $1 and chaveLicenciaturaExecucao = $2";
-			query.create(oqlQuery);
-			query.bind(sigla);
-			query.bind(new Integer(chaveLicenciaturaExecucao));
-			List result = (List) query.execute();
-			ListIterator iterator = result.listIterator();
-			try {
-				while (iterator.hasNext())
-					super.delete(iterator.next());
-			} catch (ExcepcaoPersistencia ex) {
-				return false;
-			}
-			return true;
-		} catch (QueryException ex) {
-			return false;
-		}
-	}
-
-	public ArrayList lerTodasDisciplinaExecucao() {
-		try {
-			ArrayList listade = new ArrayList();
-			String oqlQuery =
-				"select all from " + DisciplinaExecucao.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				return null;
-			}
-			if (result.size() != 0) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					listade.add((IDisciplinaExecucao) iterator.next());
-			}
-			return listade;
-		} catch (QueryException ex) {
-			return null;
-		}
-	}
-
 	public IDisciplinaExecucao readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 		String sigla,
 		String anoLectivo,
@@ -145,61 +71,6 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 		}
 	}
 
-	/**
-	 * 
-	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(Integer, String, Integer, String)
-	 */
-	public List readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(
-		Integer anoCurricular,
-		String anoLectivo,
-		Integer semestre,
-		String siglaLicenciatura)
-		throws ExcepcaoPersistencia {
-		try {
-
-			String oqlQuery =
-				"select distinct all from "
-					+ DisciplinaExecucao.class.getName();
-			oqlQuery += " where licenciaturaExecucao.curso.sigla = $1";
-			oqlQuery += " and licenciaturaExecucao.anoLectivo = $2";
-			oqlQuery += " and semester = $3 ";
-
-			query.create(oqlQuery);
-			query.bind(siglaLicenciatura);
-			query.bind(anoLectivo);
-			query.bind(semestre);
-
-			List result = (List) query.execute();
-
-			Iterator iterator = result.listIterator();
-
-			List resultList = new LinkedList();
-			lockRead(result);
-
-			while (iterator.hasNext()) {
-				IDisciplinaExecucao disciplinaExecucao =
-					(IDisciplinaExecucao) iterator.next();
-				Iterator iterator2 =
-					disciplinaExecucao
-						.getAssociatedCurricularCourses()
-						.iterator();
-				while (iterator2.hasNext()) {
-					ICurricularCourse curricularCourse =
-						(ICurricularCourse) iterator2.next();
-					//if ((curricularCourse.getSemester().equals(semestre)) &&			
-					if (curricularCourse
-						.getCurricularYear()
-						.equals(anoCurricular))
-						//)
-						resultList.add(disciplinaExecucao);
-					break;
-				}
-			}
-			return resultList;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
 	/**
 	 * :FIXME: THIS QUERY IS TOO SLOW... Must implement indirection Class.
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer, Dominio.IExecutionPeriod, java.lang.String)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -58,16 +59,16 @@ public class ReadDisciplinesByStudent implements IServico {
 			if (student != null) {
 					List frequencies = sp.getIFrequentaPersistente().readByStudentId(number);
 					for(int i = 0; i < frequencies.size(); i++) {
-					IFrequenta frequent = (IFrequenta) frequencies.get(i);
-					IDisciplinaExecucao ExecutionDiscipline = frequent.getDisciplinaExecucao();
+						IFrequenta frequent = (IFrequenta) frequencies.get(i);
+						IDisciplinaExecucao executionCourse = frequent.getDisciplinaExecucao();
 					/*InfoExecutionCourse infoExecutionDiscipline = new InfoExecutionCourse(
 													ExecutionDiscipline.getNome(),
 													ExecutionDiscipline.getNome(),
 													ExecutionDiscipline.getPrograma(),
 													null);*/
 					//disciplines.add(infoExecutionDiscipline);
-					disciplines.add(ExecutionDiscipline);
-					System.out.println(ExecutionDiscipline.getNome());
+					disciplines.add(executionCourse);
+					
 					
 					}
 				  }
@@ -76,18 +77,9 @@ public class ReadDisciplinesByStudent implements IServico {
 					
 			if (disciplines != null)
 				for (int i = 0; i < disciplines.size(); i++) {
-					IDisciplinaExecucao discipline = (IDisciplinaExecucao) disciplines.get(i);
-					InfoExecutionCourse course =
-						new InfoExecutionCourse(
-							discipline.getNome(),
-							discipline.getSigla(),
-							discipline.getPrograma(),
-							null,
-							discipline.getTheoreticalHours(),
-							discipline.getPraticalHours(),
-							discipline.getTheoPratHours(),
-							discipline.getLabHours());
-				courses.add(course);
+					IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) disciplines.get(i);
+					InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+					courses.add(infoExecutionCourse);
 				}
 			
 			System.out.println("Vou escrever as disciplinas do InfoExecutionCourse:");

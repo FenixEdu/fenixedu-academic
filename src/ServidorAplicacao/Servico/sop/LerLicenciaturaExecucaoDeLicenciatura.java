@@ -12,13 +12,9 @@ package ServidorAplicacao.Servico.sop;
  * @author tfc130
  **/
 import DataBeans.DegreeKey;
-import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import Dominio.ICursoExecucao;
 import ServidorAplicacao.IServico;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerLicenciaturaExecucaoDeLicenciatura implements IServico {
 
@@ -46,20 +42,20 @@ public class LerLicenciaturaExecucaoDeLicenciatura implements IServico {
 
     ICursoExecucao licenciaturaExecucao = null;
     InfoExecutionDegree infoLicenciaturaExecucao = null;
-
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      licenciaturaExecucao = sp.getICursoExecucaoPersistente().readBySigla(keyLicenciatura.getSigla());
-	  if (licenciaturaExecucao != null) {
-	  	InfoDegree infoLicenciatura = new InfoDegree(licenciaturaExecucao.getCurso().getSigla(),
-	  	                                                         licenciaturaExecucao.getCurso().getNome());
-	  	infoLicenciaturaExecucao = new InfoExecutionDegree(licenciaturaExecucao.getAnoLectivo(),
-	                                                            infoLicenciatura);
-      }
-
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-    }
+//
+//    try {
+//      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+//      licenciaturaExecucao = sp.getICursoExecucaoPersistente().readBySigla(keyLicenciatura.getSigla());
+//	  if (licenciaturaExecucao != null) {
+//	  	InfoDegree infoLicenciatura = new InfoDegree(licenciaturaExecucao.getCurso().getSigla(),
+//	  	                                                         licenciaturaExecucao.getCurso().getNome());
+//	  	infoLicenciaturaExecucao = new InfoExecutionDegree(licenciaturaExecucao.getAnoLectivo(),
+//	                                                            infoLicenciatura);
+//      }
+//
+//    } catch (ExcepcaoPersistencia ex) {
+//      ex.printStackTrace();
+//    }
     return infoLicenciaturaExecucao;
   }
 

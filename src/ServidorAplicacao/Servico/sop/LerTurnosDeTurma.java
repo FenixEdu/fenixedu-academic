@@ -15,15 +15,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.ClassKey;
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoShift;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.ITurma;
 import Dominio.ITurno;
+import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerTurnosDeTurma implements IServico {
@@ -48,29 +51,32 @@ public class LerTurnosDeTurma implements IServico {
     return "LerTurnosDeTurma";
   }
 
-  public Object run(ClassKey keyTurma) {
+  public Object run(String className, InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod) {
     ArrayList infoTurnos = null;
 
     try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      List turnos = sp.getITurmaTurnoPersistente().readTurnosDeTurma(keyTurma.getNomeTurma());
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       
-      Iterator iterator = turnos.iterator();
+      	ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();  
+      
+      IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+      ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+      
+      ITurma group = new Turma();
+      
+	  group.setExecutionDegree(executionDegree);
+      group.setExecutionPeriod(executionPeriod);
+      group.setNome(className);
+      
+      List shiftList = classShiftDAO.readByClass(group);
+      
+      
+      
+      Iterator iterator = shiftList.iterator();
       infoTurnos = new ArrayList();
       while(iterator.hasNext()) {
       	ITurno elem = (ITurno)iterator.next();
-      	InfoDegree infoLicenciatura = new InfoDegree(elem.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla(),
-      	                                                         elem.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome());
-      	InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(elem.getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo(),
-      	                                                                                 infoLicenciatura);
-      	InfoExecutionCourse infoDisciplinaExecucao = new InfoExecutionCourse(elem.getDisciplinaExecucao().getNome(),
-      	                                                                           elem.getDisciplinaExecucao().getSigla(),
-      	                                                                           elem.getDisciplinaExecucao().getPrograma(),
-     	                                                                           infoLicenciaturaExecucao,elem.getDisciplinaExecucao().getTheoreticalHours(),
-     	                                                                           elem.getDisciplinaExecucao().getPraticalHours(),elem.getDisciplinaExecucao().getTheoPratHours(),
-     	                                                                           elem.getDisciplinaExecucao().getLabHours());
-        infoTurnos.add(new InfoShift(elem.getNome(), elem.getTipo(), elem.getLotacao(),
-                                  infoDisciplinaExecucao));
+        infoTurnos.add(Cloner.copyIShift2InfoShift(elem));
       }
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();

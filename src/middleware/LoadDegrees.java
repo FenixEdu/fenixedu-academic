@@ -99,8 +99,8 @@ public class LoadDegrees extends DataFileLoader{
 			// Criar licenciaturas execução.
 			IExecutionYear executionYear = new ExecutionYear("2002/03");
 			IPlanoCurricularCurso curricularPlan = new PlanoCurricularCurso("planoCurricular",degree);
-			ICursoExecucao executionDegree =
-				new CursoExecucao("2002/2003", degree,executionYear,curricularPlan);
+			ICursoExecucao executionDegree = null;
+				new CursoExecucao(executionYear,curricularPlan);
 
 			iLicenciaturaExecucaoPersistente.lockWrite(executionDegree);
 

@@ -64,6 +64,11 @@ public class CursoExecucaoOJB
 		super.deleteAll(oqlQuery);
 	}
 
+	/**
+	 * 
+	 * @see ServidorPersistente.ICursoExecucaoPersistente#readBySigla(String)
+	 * @deprecated 
+	 */
 	public ICursoExecucao readBySigla(String sigla)
 		throws ExcepcaoPersistencia {
 		try {
@@ -127,7 +132,8 @@ public class CursoExecucaoOJB
 			lockRead(result);
 			if (result.size() != 0)
 				return (ICursoExecucao) result.get(0);
-			else return null;
+			else
+				return null;
 		} catch (QueryException e) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
 		}

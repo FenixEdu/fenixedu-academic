@@ -21,19 +21,6 @@ public interface ITurmaPersistente extends IPersistentObject {
 	public void delete(ITurma turma) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
-	/**
-	 * @deprecated
-	 * @param semestre
-	 * @param anoCurricular
-	 * @param siglaLicenciatura
-	 * @return List
-	 * @throws ExcepcaoPersistencia
-	 */
-	public List readBySemestreAndAnoCurricularAndSiglaLicenciatura(
-		Integer semestre,
-		Integer anoCurricular,
-		String siglaLicenciatura)
-		throws ExcepcaoPersistencia;
 
 	public List readByExecutionPeriodAndCurricularYearAndExecutionDegree(
 		IExecutionPeriod executionPeriod,

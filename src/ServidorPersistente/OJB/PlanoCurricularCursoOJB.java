@@ -48,23 +48,6 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
         super.lockWrite(planoCurricularCurso);
     }
     
-    public IPlanoCurricularCurso lerPlanoCurricularPorNomeESigla(String nome, String sigla) throws ExcepcaoPersistencia {
-        try {
-            IPlanoCurricularCurso de = null;
-            String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
-            oqlQuery += " where nome = $1 and sigla = $2";
-            query.create(oqlQuery);
-            query.bind(nome);
-            query.bind(sigla);
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if (result.size() != 0)
-                de = (IPlanoCurricularCurso) result.get(0);
-            return de;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
     
     public IPlanoCurricularCurso lerPlanoCurricularPorNomeSiglaCurso(String nome, String sigla, ICurso curso) throws ExcepcaoPersistencia {
         try {

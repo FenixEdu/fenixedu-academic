@@ -11,12 +11,9 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoLesson;
-import DataBeans.InfoRoom;
 import DataBeans.KeyLesson;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
@@ -57,22 +54,7 @@ public class LerAula implements IServico {
       IAula aula1 = sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(keyAula.getDiaSemana(),
                     keyAula.getInicio(), keyAula.getFim(), sala);
       if (aula1 != null) {
-      	InfoDegree infoLicenciatura = new InfoDegree(aula1.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla(),
-      	                                                         aula1.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome());
-      	InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(aula1.getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo(),
-      	                                                                                 infoLicenciatura);
-      	InfoExecutionCourse infoDisciplinaExecucao = new InfoExecutionCourse(aula1.getDisciplinaExecucao().getNome(),
-      	                                                                           aula1.getDisciplinaExecucao().getSigla(),
-      	                                                                           aula1.getDisciplinaExecucao().getPrograma(),
-     	                                                                           infoLicenciaturaExecucao,aula1.getDisciplinaExecucao().getTheoreticalHours(),
-     	                                                                           aula1.getDisciplinaExecucao().getPraticalHours(),aula1.getDisciplinaExecucao().getTheoPratHours(),
-     	                                                                           aula1.getDisciplinaExecucao().getLabHours());
-      	InfoRoom infoSala = new InfoRoom(aula1.getSala().getNome(), aula1.getSala().getEdificio(),
-      	                                 aula1.getSala().getPiso(), aula1.getSala().getTipo(),
-      	                                 aula1.getSala().getCapacidadeNormal(),
-      	                                 aula1.getSala().getCapacidadeExame());
-      	infoAula = new InfoLesson(aula1.getDiaSemana(), aula1.getInicio(), aula1.getFim(),
-      	                        aula1.getTipo(), infoSala, infoDisciplinaExecucao);
+      	infoAula = Cloner.copyILesson2InfoLesson(aula1);
       }
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
