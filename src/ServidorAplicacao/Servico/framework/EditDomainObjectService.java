@@ -20,6 +20,8 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.FenixUtil;
+import Util.beanUtils.FenixPropertyUtils;
 
 /**
  * @author Leonor Almeida
@@ -89,9 +91,9 @@ public abstract class EditDomainObjectService implements IService {
      * @param sp
      */
     private void fillAssociatedObjects(IDomainObject newDomainObject,
-            IPersistentObject po) throws FenixServiceException {
+            IPersistentObject po, IDomainObject objectToEdit) throws FenixServiceException {
         try {
-            Map propertiesMap = PropertyUtils.describe(newDomainObject);
+            Map propertiesMap = PropertyUtils.describe(objectToEdit);
             Iterator iterator = propertiesMap.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry entry = (Map.Entry) iterator.next();
@@ -172,10 +174,11 @@ public abstract class EditDomainObjectService implements IService {
             persistentObject.simpleLockWrite(domainObject);
             Integer ackOptLock = domainObject.getAckOptLock();
             Integer id = domainObject.getIdInternal();
-            PropertyUtils.copyProperties(domainObject, objectToEdit);
+            //PropertyUtils.copyProperties(domainObject, objectToEdit);
+            FenixPropertyUtils.copyProperties(domainObject, objectToEdit);
             domainObject.setIdInternal(id);
             domainObject.setAckOptLock(ackOptLock);
-            fillAssociatedObjects(domainObject, persistentObject);
+            fillAssociatedObjects(domainObject, persistentObject, objectToEdit);
 
             doAfterLock(domainObject, infoObject, sp);
         } catch (ExcepcaoPersistencia e) {

@@ -14,6 +14,7 @@ import Dominio.grant.contract.GrantInsurance;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
 import Dominio.grant.contract.IGrantInsurance;
+import Dominio.grant.contract.IGrantPaymentEntity;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -49,28 +50,6 @@ public class EditGrantInsurance extends EditDomainObjectService {
 		return persistentGrantInsurance.readByOID(GrantInsurance.class, grantInsurance.getIdInternal());
 	}
 	
-	protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
-		InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) infoObject;
-		
-		try
-		{
-			if(infoGrantInsurance.getDateEndInsurance() == null) 
-			{
-				IPersistentGrantContractRegime persistentGrantContractRegime = sp.getIPersistentGrantContractRegime();
-				List grantContractRegimeList = persistentGrantContractRegime.readGrantContractRegimeByGrantContractAndState(infoGrantInsurance.getInfoGrantContract().getIdInternal(), new Integer(1));
-				IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeList.get(0);
-				infoGrantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
-			}
-			
-			infoGrantInsurance.setTotalValue(); //Automatically calculate the value using date begin and
-												//date end of insurance.
-			
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException();
-		}
-    }
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -90,7 +69,21 @@ public class EditGrantInsurance extends EditDomainObjectService {
 		grantContract.setIdInternal(infoGrantInsurance.getInfoGrantContract().getIdInternal());
 		
 		grantInsurance.setGrantContract(grantContract);
-		domainObjectLocked = (IDomainObject) grantInsurance;		
+		domainObjectLocked = (IDomainObject) grantInsurance;	
+		
+		try
+		{
+			if(grantInsurance.getDateEndInsurance() == null) 
+			{
+				IPersistentGrantContractRegime persistentGrantContractRegime = sp.getIPersistentGrantContractRegime();
+				List grantContractRegimeList = persistentGrantContractRegime.readGrantContractRegimeByGrantContractAndState(infoGrantInsurance.getInfoGrantContract().getIdInternal(), new Integer(1));
+				IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeList.get(0);				
+				grantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
+			}
+			grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance.getDateBeginInsurance(), grantInsurance.getDateEndInsurance()));
+		}catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException();
+		}
 	}
 	public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException
 	{
@@ -107,6 +100,8 @@ public class EditGrantInsurance extends EditDomainObjectService {
 
 	        IGrantContract grantContract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantInsurance.getInfoGrantContract());
 	        grantInsurance.setGrantContract(grantContract);
+	        IGrantPaymentEntity grantPaymentEntity = Cloner.copyInfoGrantPaymentEntity2IGrantPaymentEntity(infoGrantInsurance.getInfoGrantPaymentEntity());
+	        grantInsurance.setGrantPaymentEntity(grantPaymentEntity);
 	    }
 	    return grantInsurance;
 	}

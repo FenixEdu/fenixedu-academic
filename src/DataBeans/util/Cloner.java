@@ -1271,10 +1271,10 @@ public abstract class Cloner
     {
         if (grantPaymentEntity != null)
         {
-            if (grantPaymentEntity instanceof GrantCostCenter) {
+            if (grantPaymentEntity instanceof IGrantCostCenter) {
                 return Cloner.copyIGrantCostCenter2InfoGrantCostCenter(
                     (IGrantCostCenter) grantPaymentEntity);}
-            else if (grantPaymentEntity instanceof GrantProject) {
+            else if (grantPaymentEntity instanceof IGrantProject) {
                 return Cloner.copyIGrantProject2InfoGrantProject((IGrantProject) grantPaymentEntity);
         }}
         return null;

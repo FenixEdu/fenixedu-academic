@@ -5,6 +5,7 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantInsurance;
+import DataBeans.grant.contract.InfoGrantInsuranceWithContractAndPaymentEntity;
 import Dominio.grant.contract.IGrantInsurance;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -38,8 +39,8 @@ public class ReadGrantInsuranceByGrantContract implements IService {
 		}
 
 		InfoGrantInsurance infoGrantInsurance = null;
-		if(grantInsurance != null) {
-			infoGrantInsurance = InfoGrantInsurance.newInfoFromDomain(grantInsurance);
+		if(grantInsurance != null) {			
+			infoGrantInsurance = InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain(grantInsurance);
 		}
 		return infoGrantInsurance;		
 	}

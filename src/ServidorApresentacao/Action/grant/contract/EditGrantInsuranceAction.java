@@ -75,11 +75,9 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 			} else {
 				infoGrantContract = infoGrantInsurance.getInfoGrantContract();
 				//Populate the form
-				if (infoGrantInsurance != null)
-				{
-					setFormGrantInsurance(grantInsuranceForm, infoGrantInsurance);
-					request.setAttribute("idInsurance", infoGrantInsurance.getIdInternal());
-				}
+				setFormGrantInsurance(grantInsuranceForm, infoGrantInsurance);
+				request.setAttribute("idInsurance", infoGrantInsurance.getIdInternal());
+				request.setAttribute("contractNumber", infoGrantInsurance.getInfoGrantContract().getContractNumber());
 			}
 			grantInsuranceForm.set("idContract", idContract);
 			request.setAttribute("idContract", idContract);
@@ -144,11 +142,11 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 				}
 				infoGrantInsurance.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
 			}
-			
 			//Save the insurance
 			Object[] args = {infoGrantInsurance};			
 			ServiceUtils.executeService(userView, "EditGrantInsurance", args);
 			request.setAttribute("idInternal", editGrantInsuranceForm.get("idGrantOwner"));
+			
 		}
 		catch (FenixServiceException e)
 		{
@@ -170,7 +168,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 
 		form.set("idGrantInsurance", infoGrantInsurance.getIdInternal());
 		if(infoGrantInsurance.getTotalValue() != null)
-			form.set("totalValue", infoGrantInsurance.getTotalValue().toString());
+			form.set("totalValue", infoGrantInsurance.getTotalValue());
 		if(infoGrantInsurance.getInfoGrantPaymentEntity() != null) {
 			if(infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject)
 				form.set("project", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
@@ -193,7 +191,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		if(verifyStringParameterInForm(editGrantInsuranceForm, "dateBeginInsurance"))
 			infoGrantInsurance.setDateBeginInsurance(sdf.parse((String) editGrantInsuranceForm.get("dateBeginInsurance")));
 		if(verifyStringParameterInForm(editGrantInsuranceForm, "dateEndInsurance"))
-			infoGrantInsurance.setDateBeginInsurance(sdf.parse((String) editGrantInsuranceForm.get("dateEndInsurance")));
+			infoGrantInsurance.setDateEndInsurance(sdf.parse((String) editGrantInsuranceForm.get("dateEndInsurance")));
 		if(verifyStringParameterInForm(editGrantInsuranceForm, "totalValue"))
 			infoGrantInsurance.setTotalValue((Double) editGrantInsuranceForm.get("totalValue"));
 

@@ -3,27 +3,28 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<p class="infoselected">
-		<b><bean:message key="label.grant.contract.information"/></b><br/>
-    	<bean:message key="label.grant.contract.contractnumber"/>:&nbsp;<bean:write name="contractNumber"/><br/>
-	</p>
-	
-<strong><p align="center"><bean:message key="label.grant.insurance.edition"/></p></strong><br/>
+<%-- Presenting errors --%>
+<logic:messagesPresent>
+<span class="error">
+	<html:errors/>
+</span><br/>
+</logic:messagesPresent>
+
 
 <html:form action="/editGrantInsurance" style="display:inline">
-	<%-- Presenting errors --%>
-	<logic:messagesPresent>
-	<span class="error">
-		<html:errors/>
-	</span><br/>
-	</logic:messagesPresent>
 
+	<p class="infoselected">
+	<b><bean:message key="label.grant.contract.information"/></b><br/>
+	<bean:message key="label.grant.contract.contractnumber"/>:&nbsp;<bean:write name="contractNumber"/><br/>
+	</p>
+
+<strong><p align="center"><bean:message key="label.grant.insurance.edition"/></p></strong><br/>
+
+	
 	<html:hidden property="method" value="doEdit"/>
 	<html:hidden property="page" value="1"/>
 
 	<%-- In case of validation error --%>
-	<html:hidden property="contractNumber" value='<%= request.getAttribute("contractNumber").toString() %>' />
-	
 	<%-- grant contract --%>
 	<html:hidden property="idContract"/> 
 	<%-- grant owner  --%>
@@ -32,17 +33,16 @@
 	<html:hidden property="idGrantInsurance"/>
 	<html:hidden property="totalValue"/>
 	
+	
 	<table>
-		<logic:present name="totalValue">
 		<tr>
 			<td align="left">
 				<bean:message key="label.grant.insurance.totalValue"/>:&nbsp;
 			</td>
 			<td>
-				<bean:write name="totalValue"/>
+				<bean:write name="editGrantInsuranceForm" property="totalValue"/>
 			</td>
 		</tr>
-		</logic:present>
 		<tr>
 			<td align="left">
 				<bean:message key="label.grant.insurance.dateBeginInsurance"/>:&nbsp;
@@ -96,6 +96,7 @@
 				<html:submit styleClass="inputbutton">
 					<bean:message key="button.save"/>
 				</html:submit>
+
 </html:form>
 			</td>
 			<td>
@@ -109,6 +110,5 @@
 				</html:form>
 			</td>
 		</tr>
-	</table>
-	
+	</table>	
 <br/><br/>
