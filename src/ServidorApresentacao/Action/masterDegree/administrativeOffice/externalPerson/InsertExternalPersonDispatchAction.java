@@ -43,11 +43,31 @@ public class InsertExternalPersonDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		IUserView userView = SessionUtils.getUserView(request);
+
 		ActionErrors actionErrors = new ActionErrors();
+		ArrayList workLocations = getWorkLocations(request);
+
+		if ((workLocations == null) || (workLocations.isEmpty()))
+		{
+			actionErrors.add(
+				"label.masterDegree.administrativeOffice.nonExistingWorkLocations",
+				new ActionError("label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
+
+			saveErrors(request, actionErrors);
+			return mapping.findForward("error");
+		}
+
+		return mapping.findForward("start");
+
+	}
+
+	private ArrayList getWorkLocations(HttpServletRequest request) throws FenixActionException
+	{
+		IUserView userView = SessionUtils.getUserView(request);
 		ArrayList workLocations = null;
 
-		Object args[] = {};
+		Object args[] = {
+		};
 		try
 		{
 			workLocations =
@@ -76,16 +96,7 @@ public class InsertExternalPersonDispatchAction extends DispatchAction
 
 				request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, workLocationsValueBeanList);
 			}
-
-		if ((workLocations == null) || (workLocations.isEmpty()))
-			actionErrors.add(
-				"label.masterDegree.administrativeOffice.searchResultsEmpty",
-				new ActionError("label.masterDegree.administrativeOffice.searchResultsEmpty"));
-
-		saveErrors(request, actionErrors);
-
-		return mapping.findForward("start");
-
+		return workLocations;
 	}
 
 	public ActionForward insert(
@@ -111,15 +122,17 @@ public class InsertExternalPersonDispatchAction extends DispatchAction
 
 		try
 		{
-			ServiceUtils.executeService(userView, "CreateExternalPerson", args);
+			ServiceUtils.executeService(userView, "InsertExternalPerson", args);
 		}
 		catch (ExistingServiceException e)
 		{
-			throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
+			getWorkLocations(request);
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
 		}
 		catch (FenixServiceException e)
 		{
-			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+			getWorkLocations(request);
+			throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
 		}
 
 		return mapping.findForward("success");

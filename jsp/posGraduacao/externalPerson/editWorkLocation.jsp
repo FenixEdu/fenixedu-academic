@@ -9,12 +9,12 @@
 <span class="error"><html:errors/></span>
 
 <br/>
-<logic:present name="<%= SessionConstants.WORK_LOCATIONS_LIST %>" scope="request">
 	<html:form action="/editWorkLocation.do?method=edit" >
 		<html:hidden property="page" value="1" />
 		<table>
 			<tr>
-				<td>			
+				<td>
+					<bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/>:&nbsp;					
 					<html:select property="workLocationId">
 			    		<html:options collection="<%= SessionConstants.WORK_LOCATIONS_LIST %>" property="value" labelProperty="label" />
 			   		</html:select> 
@@ -23,7 +23,7 @@
 			<tr>
 				<td>
 					<!-- Name -->
-					<bean:message key="label.masterDegree.administrativeOffice.workLocationName"/>:
+					<bean:message key="label.masterDegree.administrativeOffice.newWorkLocationName"/>:
 					<html:text property="name" />	
 				</td>
 			</tr>
@@ -40,8 +40,5 @@
 			</tr>
 		</table>
 	</html:form>
-</logic:present>
-<logic:notPresent name="<%= SessionConstants.WORK_LOCATIONS_LIST %>" scope="request">
-	<bean:message key="label.masterDegree.administrativeOffice.nonExistingWorkLocations" />
-</logic:notPresent>
+
 </center>

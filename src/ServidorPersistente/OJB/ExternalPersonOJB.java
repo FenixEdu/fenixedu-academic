@@ -15,6 +15,7 @@ import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExternalPerson;
+import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author
@@ -22,13 +23,16 @@ import ServidorPersistente.IPersistentExternalPerson;
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *
  */
-public class ExternalPersonOJB extends ObjectFenixOJB implements IPersistentExternalPerson {
+public class ExternalPersonOJB extends ObjectFenixOJB implements IPersistentExternalPerson
+{
 
 	/** Creates a new instance of ExternalPersonOJB */
-	public ExternalPersonOJB() {
+	public ExternalPersonOJB()
+	{
 	}
 
-	public IExternalPerson readByUsername(String username) throws ExcepcaoPersistencia {
+	public IExternalPerson readByUsername(String username) throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 		IExternalPerson externalPerson = null;
 
@@ -39,7 +43,8 @@ public class ExternalPersonOJB extends ObjectFenixOJB implements IPersistentExte
 
 	}
 
-	public List readByName(String name) throws ExcepcaoPersistencia {
+	public List readByName(String name) throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 		List externalPersons = new ArrayList();
 
@@ -49,5 +54,52 @@ public class ExternalPersonOJB extends ObjectFenixOJB implements IPersistentExte
 		return externalPersons;
 
 	}
+
+	public IExternalPerson readByNameAndAddressAndWorkLocationID(
+		String name,
+		String address,
+		Integer workLocationID)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		IExternalPerson externalPerson = null;
+
+		criteria.addEqualTo("person.nome", name);
+		criteria.addEqualTo("person.address", address);
+		criteria.addEqualTo("workLocation.idInternal", workLocationID);
+		externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
+
+		return externalPerson;
+	}
+
+	public List readByWorkLocation(Integer workLocationID) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		List externalPersons = new ArrayList();
+
+		if (workLocationID != null)
+			criteria.addEqualTo("workLocation.idInternal", workLocationID);
+
+		externalPersons = queryList(ExternalPerson.class, criteria);
+
+		return externalPersons;
+
+	}
+
+	public String readLastDocumentIdNumber() throws ExcepcaoPersistencia
+	{
+		IExternalPerson externalPerson = null;
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("person.tipoDocumentoIdentificacao", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.EXTERNO));
+		criteria.addOrderBy("person.numeroDocumentoIdentificacao", false);
+		
+		
+		externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
+
+		return externalPerson.getPerson().getNumeroDocumentoIdentificacao();
+	}
+	
+	
 
 }

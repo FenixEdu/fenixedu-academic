@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -33,82 +35,94 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class EditWorkLocationDispatchAction extends DispatchAction
 {
 
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-        IUserView userView = SessionUtils.getUserView(request);
-        Object args[] = { };
+	public ActionForward prepare(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		IUserView userView = SessionUtils.getUserView(request);
+		ActionErrors actionErrors = new ActionErrors();
+		Object args[] = {
+		};
 
-        try
-        {
-            List infoWorkLocations =
-                (List) ServiceUtils.executeService(userView, "ReadAllWorkLocations", args);
+		try
+		{
+			List infoWorkLocations =
+				(List) ServiceUtils.executeService(userView, "ReadAllWorkLocations", args);
 
-            if (infoWorkLocations != null)
-            {
-                if (infoWorkLocations.isEmpty() == false)
-                {
-                    ArrayList infoWorkLocationsValueBeanList = new ArrayList();
-                    Iterator it = infoWorkLocations.iterator();
-                    InfoWorkLocation infoWorkLocation = null;
+			if (infoWorkLocations != null)
+			{
+				if (infoWorkLocations.isEmpty() == false)
+				{
+					ArrayList infoWorkLocationsValueBeanList = new ArrayList();
+					Iterator it = infoWorkLocations.iterator();
+					InfoWorkLocation infoWorkLocation = null;
 
-                    while (it.hasNext())
-                    {
-                        infoWorkLocation = (InfoWorkLocation) it.next();
-                        infoWorkLocationsValueBeanList.add(
-                            new LabelValueBean(
-                                infoWorkLocation.getName(),
-                                infoWorkLocation.getIdInternal().toString()));
-                    }
+					while (it.hasNext())
+					{
+						infoWorkLocation = (InfoWorkLocation) it.next();
+						infoWorkLocationsValueBeanList.add(
+							new LabelValueBean(
+								infoWorkLocation.getName(),
+								infoWorkLocation.getIdInternal().toString()));
+					}
 
-                    request.setAttribute(
-                        SessionConstants.WORK_LOCATIONS_LIST,
-                        infoWorkLocationsValueBeanList);
-                }
-            }
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+					request.setAttribute(
+						SessionConstants.WORK_LOCATIONS_LIST,
+						infoWorkLocationsValueBeanList);
+				}
+			}
 
-        return mapping.findForward("start");
-    }
+			if ((infoWorkLocations == null) || (infoWorkLocations.isEmpty()))
+			{
+				actionErrors.add(
+					"label.masterDegree.administrativeOffice.nonExistingWorkLocations",
+					new ActionError("label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
 
-    public ActionForward edit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-        IUserView userView = SessionUtils.getUserView(request);
+				saveErrors(request, actionErrors);
+				return mapping.findForward("error");
+			}
+		}
+		catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		}
 
-        DynaActionForm editWorkLocationForm = (DynaActionForm) form;
+		return mapping.findForward("start");
+	}
 
-        Integer oldWorkLocationId = (Integer) editWorkLocationForm.get("workLocationId");
-        String newWorkLocationName = (String) editWorkLocationForm.get("name");
+	public ActionForward edit(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		IUserView userView = SessionUtils.getUserView(request);
 
-        Object args[] = { oldWorkLocationId, newWorkLocationName };
+		DynaActionForm editWorkLocationForm = (DynaActionForm) form;
 
-        try
-        {
-            ServiceUtils.executeService(userView, "EditWorkLocation", args);
-        }
-        catch (ExistingServiceException e)
-        {
-            throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+		Integer oldWorkLocationId = (Integer) editWorkLocationForm.get("workLocationId");
+		String newWorkLocationName = (String) editWorkLocationForm.get("name");
 
-        return mapping.findForward("success");
-    }
+		Object args[] = { oldWorkLocationId, newWorkLocationName };
+
+		try
+		{
+			ServiceUtils.executeService(userView, "EditWorkLocation", args);
+		}
+		catch (ExistingServiceException e)
+		{
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
+		}
+		catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		}
+
+		return mapping.findForward("success");
+	}
 
 }
