@@ -40,14 +40,20 @@ create table QUALIFICATION(
    ID_INTERNAL integer(11) not null auto_increment,
    ACK_OPT_LOCK int(11),
    KEY_PERSON integer(11) not null ,
-   YEAR integer(11) not null,
    MARK varchar(200),
    SCHOOL varchar(200) not null,
    TITLE varchar(200),
    DEGREE varchar(200),
-   LAST_MODIFICATION_DATE timestamp(14) not null,   
+   LAST_MODIFICATION_DATE timestamp(14) not null,
+   DATE date not null,
+   BRANCH varchar(100),
+   SPECIALIZATION_AREA varchar(200),
+   DEGREE_RECOGNITION varchar(200),
+   EQUIVALENCE_DATE date,
+   EQUIVALENCE_SCHOOL varchar(200),
+   KEY_COUNTRY integer(11),
    primary key (ID_INTERNAL),
-   unique U1 (YEAR,SCHOOL,KEY_PERSON))
+   unique U1 (DATE,SCHOOL,KEY_PERSON))
    type=InnoDB;
 
 #------------------------------------------
