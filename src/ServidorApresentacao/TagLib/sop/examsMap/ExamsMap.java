@@ -44,7 +44,7 @@ public class ExamsMap {
 		}
 
 		for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR);
-			 day < lastDayOfSeason.get(Calendar.DAY_OF_YEAR);
+			 day < lastDayOfSeason.get(Calendar.DAY_OF_YEAR) + 1;
 			 day++) {
 			Calendar tempDayToAdd = makeDay(firstDayOfSeason,
 				day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));
