@@ -6,7 +6,7 @@
 <logic:present name="infoSiteCoursesInformation">
 	<logic:present name="infoExecutionDegree">
 		<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
-		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<table width="90%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="center" class="infoselected">
 					<p>
@@ -29,7 +29,7 @@
   				<dt:currentTime/>
   			</dt:format>)
   	</h2>
-	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
+	<table width="90%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<td class="listClasses-header">
 				<bean:message key="label.gep.courseYear" bundle="GEP_RESOURCES"/><br />
