@@ -28,6 +28,11 @@
          name="alternativeSite"
          column="ALTERNATIVE_SITE"
     	 jdbc-type="VARCHAR"/>
+    	 
+   	<field-descriptor id="5"
+         name="mail"
+         column="MAIL"
+    	 jdbc-type="VARCHAR"/>
 	
     <reference-descriptor
          name="executionCourse"
