@@ -86,7 +86,7 @@ public class ReadBibliographicReference implements IServico {
 			while(iterator.hasNext()) {
 				IBibliographicReference bibRef = (IBibliographicReference)iterator.next();
 				InfoBibliographicReference infoBibRef = Cloner.copyIBibliographicReference2InfoBibliographicReference(bibRef);
-				infoBibRefs.add(infoBibRefs);		
+				infoBibRefs.add(infoBibRef);		
 			}										
 
 		} catch (ExistingPersistentException e) {

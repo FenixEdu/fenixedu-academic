@@ -5,13 +5,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <span class="error"><html:errors/></span>	
-<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" scope="session">
-	<bean:message key="message.unavailableObjectives" />	
-</logic:notPresent>
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" scope="session">
-	<bean:message key="label.program" />	
-	<bean:write name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program>
-	</bean:write>
-	<html:submit property="method" value="acessObjectives" titleKey="button.edit">
+<html:form action="/programManagerDA">
+		
+	<html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program >
+	</html:text>
+	<html:reset value="clean" styleClass="inputbutton">
+          <bean:message key="label.clear"/>
+    </html:reset>
+    <html:submit property="method" value="editObjectives" titleKey="button.save">
 	</html:submit>
-</logic:present>
+</html:form>
+

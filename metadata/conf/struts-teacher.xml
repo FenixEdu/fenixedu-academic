@@ -207,12 +207,12 @@
 		<forward name="DeleteAnnouncement" path="/deleteAnnouncement.jsp" />
 	</action>
 	
-	<action parameter="method"      			
+	<action     path="/bibliographicReferenceManager"
+				parameter="method"      			
+				scope="request"
       			name="bibliographicReferenceForm"
-                type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"
-                path="/bibliographicReferenceManager"
+                type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"            
                 validate="false">
-	            <forward name="deleteBibliographicReference" path="/deleteBibliographicReference.jsp"/>
 	            <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"/>
 				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>

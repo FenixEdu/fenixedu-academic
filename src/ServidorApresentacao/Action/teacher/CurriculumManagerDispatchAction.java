@@ -1,12 +1,16 @@
 package ServidorApresentacao.Action.teacher;
+import java.lang.reflect.InvocationTargetException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
 import DataBeans.gesdis.InfoCurriculum;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
@@ -68,7 +72,8 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
+			try {	
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession();
 		DynaActionForm objectivesForm = (DynaActionForm) form;
@@ -84,7 +89,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		Object args[] = { oldCurriculum, newCurriculum };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		try {
+		
 			GestorServicos serviceManager = GestorServicos.manager();
 			InfoCurriculum curriculumView =
 				(InfoCurriculum) serviceManager.executar(
@@ -96,7 +101,12 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 				curriculumView);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
+		} catch (IllegalAccessException e) {
+			throw new FenixActionException(e);
+		} catch (InvocationTargetException e) {
+			throw new FenixActionException(e);
 		}
+		
 		return mapping.findForward("viewObjectives");
 	}
 
@@ -105,7 +115,8 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
+			try {
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = getSession(request);
 
@@ -115,7 +126,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 		InfoCurriculum curriculumView;
 		System.out.println(infoSite);
-		try {
+		
 			Object args[] = { infoSite.getInfoExecutionCourse()};
 			GestorServicos serviceManager = GestorServicos.manager();
 			curriculumView =
@@ -136,7 +147,8 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
+			try {	
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession();
 		DynaActionForm objectivesForm = (DynaActionForm) form;
@@ -149,7 +161,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		Object args[] = { oldCurriculum, newCurriculum };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		try {
+		
 			GestorServicos serviceManager = GestorServicos.manager();
 			InfoCurriculum curriculumView =
 				(InfoCurriculum) serviceManager.executar(
@@ -160,6 +172,10 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 				SessionConstants.EXECUTION_COURSE_CURRICULUM,
 				curriculumView);
 		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		} catch (IllegalAccessException e) {
+			throw new FenixActionException(e);
+		} catch (InvocationTargetException e) {
 			throw new FenixActionException(e);
 		}
 		return mapping.findForward("viewProgram");

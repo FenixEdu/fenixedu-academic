@@ -15,6 +15,6 @@
 	<bean:message key="label.operacionalObjectives" />
 	<bean:write name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives">
 	</bean:write>
-	<html:submit property="method" value="editObjectives" titleKey="button.edit">
+	<html:submit property="method" value="prepareEditObjectives" titleKey="button.edit">
 	</html:submit>
 </logic:present>
