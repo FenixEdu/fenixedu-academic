@@ -35,6 +35,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoFinalEvaluation;
 import DataBeans.InfoFrequenta;
+import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.InfoGuideSituation;
@@ -52,108 +53,14 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.InfoStudentGroup;
+import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
-import Dominio.Announcement;
-import Dominio.Aula;
-import Dominio.BibliographicReference;
-import Dominio.Branch;
-import Dominio.CandidateSituation;
-import Dominio.Contributor;
-import Dominio.Country;
-import Dominio.Credits;
-import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
-import Dominio.CurricularSemester;
-import Dominio.CurricularYear;
-import Dominio.Curriculum;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
-import Dominio.DegreeCurricularPlan;
-import Dominio.DisciplinaExecucao;
-import Dominio.Enrolment;
-import Dominio.EnrolmentEvaluation;
-import Dominio.EnrolmentInOptionalCurricularCourse;
-import Dominio.EvaluationMethod;
-import Dominio.Exam;
-import Dominio.ExecutionPeriod;
-import Dominio.ExecutionYear;
-import Dominio.FinalEvaluation;
-import Dominio.Frequenta;
-import Dominio.Guide;
-import Dominio.GuideEntry;
-import Dominio.GuideSituation;
-import Dominio.IAnnouncement;
-import Dominio.IAula;
-import Dominio.IBibliographicReference;
-import Dominio.IBranch;
-import Dominio.ICandidateSituation;
-import Dominio.IContributor;
-import Dominio.ICountry;
-import Dominio.ICredits;
-import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
-import Dominio.ICurricularSemester;
-import Dominio.ICurricularYear;
-import Dominio.ICurriculum;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IDepartment;
-import Dominio.IDisciplinaExecucao;
-import Dominio.IEnrolment;
-import Dominio.IEnrolmentEvaluation;
-import Dominio.IEnrolmentInExtraCurricularCourse;
-import Dominio.IEnrolmentInOptionalCurricularCourse;
-import Dominio.IEvaluation;
-import Dominio.IEvaluationMethod;
-import Dominio.IExam;
-import Dominio.IExamStudentRoom;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import Dominio.IFinalEvaluation;
-import Dominio.IFrequenta;
-import Dominio.IGuide;
-import Dominio.IGuideEntry;
-import Dominio.IGuideSituation;
-import Dominio.IItem;
-import Dominio.IMark;
-import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
-import Dominio.IPrice;
-import Dominio.IProfessorship;
-import Dominio.IRole;
-import Dominio.ISala;
-import Dominio.ISection;
-import Dominio.ISite;
-import Dominio.IStudent;
-import Dominio.IStudentCurricularPlan;
-import Dominio.IStudentKind;
-import Dominio.ISummary;
-import Dominio.ITeacher;
-import Dominio.ITeacherShiftPercentage;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Item;
-import Dominio.Mark;
-import Dominio.MasterDegreeCandidate;
-import Dominio.Pessoa;
-import Dominio.Price;
-import Dominio.Professorship;
-import Dominio.Sala;
-import Dominio.Section;
-import Dominio.Site;
-import Dominio.Student;
-import Dominio.StudentCurricularPlan;
-import Dominio.StudentKind;
-import Dominio.Summary;
-import Dominio.Teacher;
-import Dominio.TeacherShiftPercentage;
-import Dominio.Turma;
-import Dominio.Turno;
+import Dominio.*;
 import Util.EvaluationType;
 import Util.State;
 
@@ -2009,21 +1916,131 @@ public abstract class Cloner {
 		copyObjectProperties(infoDeparment, department);
 		return infoDeparment;
 	}
-	
 	public static InfoSummary copyISummary2InfoSummary(ISummary summary){
-		InfoSummary infoSummary = new InfoSummary();
-		copyObjectProperties(infoSummary,summary);
-		InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(summary.getExecutionCourse());
-		infoSummary.setInfoExecutionCourse(infoExecutionCourse);
-		return infoSummary;
-	}
-	
-	public static ISummary copyInfoSummary2ISummary(InfoSummary infoSummary){
-			ISummary summary = new Summary();
-			copyObjectProperties(summary,infoSummary);
-			IDisciplinaExecucao executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoSummary.getInfoExecutionCourse());
-			summary.setExecutionCourse(executionCourse);
-			return summary;
+			InfoSummary infoSummary = new InfoSummary();
+			copyObjectProperties(infoSummary,summary);
+			InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(summary.getExecutionCourse());
+			infoSummary.setInfoExecutionCourse(infoExecutionCourse);
+			return infoSummary;
 		}
+	
+		public static ISummary copyInfoSummary2ISummary(InfoSummary infoSummary){
+				ISummary summary = new Summary();
+				copyObjectProperties(summary,infoSummary);
+				IDisciplinaExecucao executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoSummary.getInfoExecutionCourse());
+				summary.setExecutionCourse(executionCourse);
+				return summary;
+			}
+	
+	/**
+	* @param groupProperties
+	* @return infoGroupProperties
+	*/
+	
+	
+	public static InfoGroupProperties copyIGroupProperties2InfoGroupProperties(IGroupProperties groupProperties) {
+			InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
+			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+			copyObjectProperties(infoGroupProperties, groupProperties);
+			infoExecutionCourse= copyIExecutionCourse2InfoExecutionCourse(groupProperties.getExecutionCourse());
+			infoGroupProperties.setInfoExecutionCourse(infoExecutionCourse);
+			return infoGroupProperties;
+	}
+
+	/**
+	* 
+	* @param infoGroupProperties
+	* @return IGroupProperties
+	*/
+	
+	public static IGroupProperties copyInfoGroupProperties2IGroupProperties(InfoGroupProperties infoGroupProperties) {
+			IGroupProperties groupProperties = new GroupProperties();
+			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			copyObjectProperties(groupProperties, infoGroupProperties);
+			executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoGroupProperties.getInfoExecutionCourse());
+			groupProperties.setExecutionCourse(executionCourse);
+			return groupProperties;
+		}
+
+	/**
+	* @param studentGroup
+	* @return infoStudentGroup
+	*/
+	
+	
+	public static InfoStudentGroup copyIStudentGroup2InfoStudentGroup(IStudentGroup studentGroup) {
+			InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+			InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
+			InfoShift infoShift = new InfoShift();
+			
+			copyObjectProperties(infoStudentGroup, studentGroup);
+			infoGroupProperties= copyIGroupProperties2InfoGroupProperties(studentGroup.getGroupProperties());
+			infoShift = copyIShift2InfoShift(studentGroup.getShift());
+			infoStudentGroup.setInfoGroupProperties(infoGroupProperties);
+			infoStudentGroup.setInfoShift(infoShift);
+			return infoStudentGroup;
+	}
+
+		/**
+		* 
+		* @param infoStudentGroup
+		* @return IStudentGroup
+		*/
+	
+		public static IStudentGroup copyInfoStudentGroup2IStudentGroup(InfoStudentGroup infoStudentGroup) {
+				IStudentGroup studentGroup = new StudentGroup();
+				ITurno shift = new Turno();
+				IGroupProperties groupProperties = new GroupProperties();
+				
+				copyObjectProperties(studentGroup, infoStudentGroup);
+				shift = copyInfoShift2IShift(infoStudentGroup.getInfoShift());
+				groupProperties = copyInfoGroupProperties2IGroupProperties(infoStudentGroup.getInfoGroupProperties());
+				studentGroup.setShift(shift);
+				studentGroup.setGroupProperties(groupProperties);
+				
+				return studentGroup;
+			}
+
+	/**
+	* @param studentGroupAttend
+	* @return infoStudentGroupAttend
+	*/
+	
+	
+	public static InfoStudentGroupAttend copyIStudentGroupAttend2IStudentGroupAttend(IStudentGroupAttend studentGroupAttend) {
+			InfoStudentGroupAttend infoStudentGroupAttend = new InfoStudentGroupAttend();
+			InfoFrequenta infoAttend = new InfoFrequenta();
+			InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+			
+			copyObjectProperties(infoStudentGroupAttend, studentGroupAttend);
+			infoAttend= copyIFrequenta2InfoFrequenta(studentGroupAttend.getAttend());
+			infoStudentGroup = copyIStudentGroup2InfoStudentGroup(studentGroupAttend.getStudentGroup());
+			
+			infoStudentGroupAttend.setInfoAttend(infoAttend);
+			infoStudentGroupAttend.setInfoStudentGroup(infoStudentGroup);
+			return infoStudentGroupAttend;
+	}
+
+		/**
+		* 
+		* @param infoStudentGroupAttend
+		* @return IStudentGroupAttend
+		*/
+	
+		public static IStudentGroupAttend copyInfoStudentGroupAttend2IStudentGroupAttend(InfoStudentGroupAttend infoStudentGroupAttend) {
+				
+				IStudentGroupAttend studentGroupAttend = new StudentGroupAttend();
+				IStudentGroup studentGroup = new StudentGroup();
+				IFrequenta attend = new Frequenta();
+				
+				
+				copyObjectProperties(studentGroupAttend, infoStudentGroupAttend);
+				studentGroup = copyInfoStudentGroup2IStudentGroup(infoStudentGroupAttend.getInfoStudentGroup());
+				attend = copyInfoFrequenta2IFrequenta(infoStudentGroupAttend.getInfoAttend());
+				studentGroupAttend.setStudentGroup(studentGroup);
+				studentGroupAttend.setAttend(attend);
+				return studentGroupAttend;
+			}
+
 
 }

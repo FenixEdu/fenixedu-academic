@@ -665,8 +665,8 @@
     <field-descriptor id="5"
          name="enrolmentPolicy"
          column="ENROLMENT_POLICY"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	 jdbc-type="INTEGER"
+    	 conversion="ServidorPersistente.Conversores.JavaEnrolmentPolicyType2SqlEnrolmentPolicyTypeFieldConversion"
     />
     
     <field-descriptor id="6"
@@ -675,7 +675,13 @@
     	  jdbc-type="INTEGER"
     />
 
-    <field-descriptor id="7"
+	<field-descriptor id="7"
+		name="projectName"
+        column="PROJECT_NAME"
+    	jdbc-type="VARCHAR"
+    />
+	
+    <field-descriptor id="8"
          name="keyExecutionCourse"
          column="KEY_EXECUTION_COURSE"
     	  jdbc-type="INTEGER"
@@ -686,7 +692,7 @@
          class-ref="Dominio.DisciplinaExecucao"
          proxy="true"
     >
-	<foreignkey field-id-ref="7"/>
+	<foreignkey field-id-ref="8"/>
 	
 	</reference-descriptor>
 

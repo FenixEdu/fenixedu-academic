@@ -190,10 +190,11 @@ create table GROUP_PROPERTIES (
    MAXIMUM_CAPACITY int(11) unsigned not null default '0',
    MINIMUM_CAPACITY int(11) unsigned not null default '0',
    IDEAL_CAPACITY int(11) unsigned not null default '0',
-   ENROLMENT_POLICY text,
+   ENROLMENT_POLICY int(11),
    GROUP_MAXIMUM_NUMBER int(11) unsigned not null default'0',
+   PROJECT_NAME varchar(50) not null,
    KEY_EXECUTION_COURSE int(11) unsigned not null default'0',
    primary key (ID_INTERNAL),
-   unique ID_INTERNAL (KEY_EXECUTION_COURSE))
+   unique ID_INTERNAL (PROJECT_NAME,KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
    
