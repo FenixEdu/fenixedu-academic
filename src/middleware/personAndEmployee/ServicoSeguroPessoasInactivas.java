@@ -8,12 +8,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
-import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.Role;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import Util.RoleType;
 
@@ -59,7 +56,7 @@ public class ServicoSeguroPessoasInactivas {
 			broker.beginTransaction();
 
 			//Read all person from Data Base
-			servico._listaPessoasFromDB = readAllPersonsEmployee(broker);
+			servico._listaPessoasFromDB = PersonUtils.readAllPersonsEmployee(broker);
 			if (servico._listaPessoasFromDB != null) {
 
 				Iterator iterador = servico._listaPessoasFromDB.iterator();
@@ -82,6 +79,22 @@ public class ServicoSeguroPessoasInactivas {
 							//person is inactive, then delete roles and put password null
 							pessoaFromDB.setPassword(null);
 							pessoaFromDB.setPersonRoles(null);
+							pessoaFromDB.setUsername(
+									"INA" + pessoaFromDB.getNumeroDocumentoIdentificacao());
+
+							pessoaFromDB.getPersonRoles().remove(
+									PersonUtils.descobreRole(broker, RoleType.EMPLOYEE));
+							pessoaFromDB.getPersonRoles().remove(PersonUtils.descobreRole(broker, RoleType.TEACHER));
+
+							Role rolePerson = PersonUtils.descobreRole(broker, RoleType.PERSON);
+							if (pessoaFromDB.getPersonRoles().size() == 1
+									&& pessoaFromDB.getPersonRoles().contains(rolePerson))
+							{
+								pessoaFromDB.getPersonRoles().remove(rolePerson);
+							}					
+							
+							
+							
 							broker.store(pessoaFromDB);
 							counter++;
 							//System.out.println("Inactive person: " + pessoaFromDB.getNumeroDocumentoIdentificacao() + "-" + pessoaFromDB.getTipoDocumentoIdentificacao().getTipo());
@@ -99,18 +112,5 @@ public class ServicoSeguroPessoasInactivas {
 			//close databases
 			broker.commitTransaction();
 		}
-	}
-
-	private static List readAllPersonsEmployee(PersistenceBroker broker) {
-		System.out.println("Reading persons from DB");
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("personRoles.roleType", RoleType.EMPLOYEE);
-
-		Query query = new QueryByCriteria(Pessoa.class, criteria);
-
-		List result = (List) broker.getCollectionByQuery(query);
-
-		System.out.println("Finished read persons from DB(" + result.size() + ")");
-		return result;
 	}
 }

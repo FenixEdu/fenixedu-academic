@@ -16,6 +16,8 @@ import DataBeans.util.CopyUtils;
 import Dominio.ICountry;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
+import Dominio.Role;
+import Util.RoleType;
 
 /**
  * @author jpvl
@@ -142,6 +144,40 @@ public abstract class PersonUtils
 			return null;
 		}
 		return person;
+	}
+	
+	public static Role descobreRole(PersistenceBroker broker, RoleType roleType) throws Exception
+	{
+		Role role = null;
+
+		Criteria criteria = new Criteria();
+		Query query = null;
+		criteria.addEqualTo("roleType", roleType);
+		query = new QueryByCriteria(Role.class, criteria);
+
+		List result = (List) broker.getCollectionByQuery(query);
+		if (result.size() == 0)
+		{
+			throw new Exception("Role Desconhecido !!!");
+		}
+		else
+		{
+			role = (Role) result.get(0);
+		}
+		return role;
+	}
+	
+	public static List readAllPersonsEmployee(PersistenceBroker broker) {
+		System.out.println("Reading persons from DB");
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("personRoles.roleType", RoleType.EMPLOYEE);
+
+		Query query = new QueryByCriteria(Pessoa.class, criteria);
+
+		List result = (List) broker.getCollectionByQuery(query);
+
+		System.out.println("Finished read persons from DB(" + result.size() + ")");
+		return result;
 	}
 
 	private static List doQuery(PersistenceBroker broker, Criteria criteria, Class classToQuery)

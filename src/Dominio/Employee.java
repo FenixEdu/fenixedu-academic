@@ -115,26 +115,26 @@ public class Employee extends DomainObject implements IEmployee {
 			while (iterator.hasNext()) {
 				historic = (EmployeeHistoric) iterator.next();
 
-				if (historic.getKeyResponsableEmployee() != null) {
+				if (historic.getKeyResponsableEmployee() != null && historic.getKeyResponsableEmployee().intValue() > 0) {
 					employeeHistoric.setKeyResponsableEmployee(historic.getKeyResponsableEmployee());
 					employeeHistoric.setResponsableEmployee(historic.getResponsableEmployee());
 				}
-				if (historic.getKeyMailingCostCenter() != null) {
+				if (historic.getKeyMailingCostCenter() != null && historic.getKeyMailingCostCenter().intValue() > 0) {
 					employeeHistoric.setKeyMailingCostCenter(historic.getKeyMailingCostCenter());
 					employeeHistoric.setMailingCostCenter(historic.getMailingCostCenter());
 				}
-				if (historic.getKeyWorkingPlaceCostCenter() != null) {
+				if (historic.getKeyWorkingPlaceCostCenter() != null && historic.getKeyWorkingPlaceCostCenter().intValue() > 0) {
 					employeeHistoric.setKeyWorkingPlaceCostCenter(historic.getKeyWorkingPlaceCostCenter());
 					employeeHistoric.setWorkingPlaceCostCenter(historic.getWorkingPlaceCostCenter());
 				}
-				if (historic.getKeySalaryCostCenter() != null) {
+				if (historic.getKeySalaryCostCenter() != null && historic.getKeySalaryCostCenter().intValue() > 0) {
 					employeeHistoric.setKeySalaryCostCenter(historic.getKeySalaryCostCenter());
 					employeeHistoric.setSalaryCostCenter(historic.getSalaryCostCenter());
 				}
 				if (historic.getCalendar() != null) {
 					employeeHistoric.setCalendar(historic.getCalendar());
 				}
-				if (historic.getKeyStatus() != null) {
+				if (historic.getKeyStatus() != null && historic.getKeyStatus().intValue() > 0) {
 					employeeHistoric.setKeyStatus(historic.getKeyStatus());
 					employeeHistoric.setStatus(historic.getStatus());
 				}

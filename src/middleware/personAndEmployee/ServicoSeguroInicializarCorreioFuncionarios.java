@@ -1,25 +1,32 @@
 package middleware.personAndEmployee;
 
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 
-import Dominio.CentroCusto;
-import Dominio.Funcionario;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+
+import Dominio.CostCenter;
+import Dominio.Employee;
+import Dominio.EmployeeHistoric;
+import Dominio.ICostCenter;
+import Dominio.IEmployee;
+import Dominio.IEmployeeHistoric;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
-import ServidorPersistenteJDBC.ICentroCustoPersistente;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
 
 /**
- * @author  Fernanda Quitério & Tânia Pousão
+ * @author Fernanda Quitério & Tânia Pousão
  */
-public class ServicoSeguroInicializarCorreioFuncionarios {
+public class ServicoSeguroInicializarCorreioFuncionarios
+{
 
 	private static String ficheiro = null;
 	private static String delimitador;
@@ -28,8 +35,9 @@ public class ServicoSeguroInicializarCorreioFuncionarios {
 	private static Collection lista;
 
 	/** Construtor */
-	public ServicoSeguroInicializarCorreioFuncionarios(String[] args) {
-		ficheiro = args[0];
+	public ServicoSeguroInicializarCorreioFuncionarios(String[] args)
+	{
+		ficheiro = "E:/Projectos/_carregamentos/funcionario-correio.dat"; //args[0];
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -53,72 +61,98 @@ public class ServicoSeguroInicializarCorreioFuncionarios {
 		ordem.add("seccao2");
 	}
 
-	/** Executa a actualizacao da tabela funcionario e o preenchimento da tabela centro_custo na Base de Dados */
-	public static void main(String[] args) throws NotExecuteException {
+	/**
+	 * Executa a actualizacao da tabela funcionario e o preenchimento da tabela centro_custo na Base de
+	 * Dados
+	 */
+	public static void main(String[] args) throws NotExecuteException
+	{
 		new ServicoSeguroInicializarCorreioFuncionarios(args);
 
-		LeituraFicheiroFuncionarioCentroCusto servicoLeitura = new LeituraFicheiroFuncionarioCentroCusto();
+		LeituraFicheiroFuncionarioCentroCusto servicoLeitura =
+			new LeituraFicheiroFuncionarioCentroCusto();
 
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
-		/* ciclo para percorrer a Collection de Correio dos Funcionarios */
-		/* algoritmo */
-
-		/* Recuperar registos */
 		System.out.println("ServicoSeguroInicializarCorreioFuncionarios.main:Lista de Resultados...");
-		Iterator iterador = lista.iterator();
-		while (iterador.hasNext()) {
-			System.out.println(iterador.next());
-		}
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+		broker.clearCache();
+		broker.beginTransaction();
 
 		Iterator iteradorNovo = lista.iterator();
-		while (iteradorNovo.hasNext()) {
-			ICentroCustoPersistente iCentroCustoPersistente = SuportePersistente.getInstance().iCentroCustoPersistente();
-			IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
-			Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
+		while (iteradorNovo.hasNext())
+		{
+			try
+			{
+				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
 
-			Integer numeroMecanografico = new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
-			String sigla = (String) instanciaTemporaria.get("sigla");
-			String departamento = (String) instanciaTemporaria.get("departamento");
-			String seccao1 = (String) instanciaTemporaria.get("seccao1");
-			String seccao2 = (String) instanciaTemporaria.get("seccao2");
+				Integer numeroMecanografico =
+					new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
+				String sigla = (String) instanciaTemporaria.get("sigla");
+				String departamento = (String) instanciaTemporaria.get("departamento");
+				String seccao1 = (String) instanciaTemporaria.get("seccao1");
+				String seccao2 = (String) instanciaTemporaria.get("seccao2");
 
-			// verifica se o centro de custo ja existe na tabela. caso contrario escreve.
-			if (sigla != null) {
-				CentroCusto centroCusto = null;
-				if ((centroCusto = iCentroCustoPersistente.lerCentroCusto(sigla)) == null) {
-					centroCusto = new CentroCusto(sigla, departamento, seccao1, seccao2);
-					if (!iCentroCustoPersistente.escreverCentroCusto(centroCusto)) {
-						continue;
-					}
-					centroCusto = iCentroCustoPersistente.lerCentroCusto(sigla);
+				ICostCenter costCenter = null;
+
+				// verify if the cost center already exists in data base. If not write it.
+				Criteria criteria = new Criteria();
+				Query query = null;
+
+				criteria.addEqualTo("code", sigla);
+				query = new QueryByCriteria(CostCenter.class, criteria);
+				List resultCC = (List) broker.getCollectionByQuery(query);
+				if (resultCC.size() == 0)
+				{
+					costCenter = new CostCenter(sigla, departamento, seccao1, seccao2);
+					broker.store(costCenter);
+				}
+				else
+				{
+					costCenter = (CostCenter) resultCC.get(0);
 				}
 
-				Funcionario funcionario = null;
-				if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numeroMecanografico.intValue()))
-					== null) {
-					continue;
+				IEmployee employee = null;
+				// Read the employee
+				criteria = new Criteria();
+				query = null;
+				criteria.addEqualTo("employeeNumber", numeroMecanografico);
+				query = new QueryByCriteria(Employee.class, criteria);
+				List resultEmployee = (List) broker.getCollectionByQuery(query);
+
+				if (resultEmployee.size() == 0)
+				{
+					throw new Exception(
+						"Erro ao Ler centro de custo do Funcionario " + numeroMecanografico);
+				}
+				else
+				{
+					employee = (IEmployee) resultEmployee.get(0);
 				}
 
-				//data inicio da assiduidade
-				Timestamp dataInicioAssiduidade = new Timestamp(0);
-				funcionario.setDataInicio(dataInicioAssiduidade);
-				if ((dataInicioAssiduidade = iFuncionarioPersistente.lerInicioAssiduidade(numeroMecanografico.intValue())) != null) {
-					funcionario.setDataInicio(new Date(dataInicioAssiduidade.getTime()));
-				}
+				//Read hisctoric employee
+				employee.fillEmployeeHistoric();
+				IEmployeeHistoric employeeHistoric = employee.getEmployeeHistoric();
+				if (employeeHistoric == null
+					|| employeeHistoric.getMailingCostCenter() == null
+					|| !employeeHistoric.getMailingCostCenter().equals(costCenter))
+				{
+					employeeHistoric = new EmployeeHistoric();
+					employeeHistoric.setEmployee(employee);
+					employeeHistoric.setMailingCostCenter(costCenter);
+					employeeHistoric.setBeginDate(Calendar.getInstance().getTime());
+					employeeHistoric.setWhen(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+					employeeHistoric.setWho(new Integer(0));
 
-				//agora
-				Calendar agora = Calendar.getInstance();
-				funcionario.setQuando(new Timestamp(agora.getTimeInMillis()));
-
-				//regista historico para correio do funcionario
-				funcionario.setChaveCCCorrespondencia(new Integer(centroCusto.getCodigoInterno()));
-				if (!iFuncionarioPersistente.existeHistoricoCCCorrespondencia(funcionario)) {
-					if (!iFuncionarioPersistente.escreverCCCorrespondencia(funcionario)) {
-						throw new NotExecuteException("error.centroCusto.impossivelEscrever");
-					}
+					broker.store(employeeHistoric);
 				}
 			}
+			catch (Exception exception)
+			{
+				exception.printStackTrace();
+				continue;
+			}
 		}
+		broker.commitTransaction();
 	}
 }
