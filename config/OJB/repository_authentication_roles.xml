@@ -17,8 +17,8 @@
         name="roleType"
         column="ROLE_TYPE"
         nullable = "false"
-	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.RoleTypeFieldConversion"        
-        jdbc-type="INTEGER"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRoleType2SqlRoleTypeFieldConversion"
+        jdbc-type="VARCHAR"
         id="2"
     />
     <field-descriptor 

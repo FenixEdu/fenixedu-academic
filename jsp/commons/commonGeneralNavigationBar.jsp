@@ -11,9 +11,9 @@
 		<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 	
 		<logic:iterate id="role" name="userView" property="roles">
-			<logic:notEqual name="role" property="roleType.name" value="grantOwnerManager">
-				<logic:notEqual name="role" property="roleType.name" value="creditsManager">
-					<logic:notEqual name="role" property="roleType.name" value="role.department.credits.manager">				
+			<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.GRANT_OWNER_MANAGER">
+				<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.CREDITS_MANAGER">
+					<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.DEPARTMENT_CREDITS_MANAGER">
 						<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
 						<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
 						<li>
@@ -32,7 +32,7 @@
 				</logic:notEqual>
 			</logic:notEqual>
 		</logic:iterate>	
-		<logic:present role="grantOwnerManager,creditsManager">
+		<logic:present role="GRANT_OWNER_MANAGER,CREDITS_MANAGER">
 			<li>
 				<logic:equal name="modulePrefix" value="/facultyAdmOffice">
 					<html:link href='<%= request.getContextPath() + "/dotIstPortal.do?prefix=/facultyAdmOffice&amp;page=/index.do" %>'  styleClass="active">
