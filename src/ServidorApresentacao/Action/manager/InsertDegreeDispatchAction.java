@@ -63,7 +63,7 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 			ServiceUtils.executeService(userView, "InsertDegree", args);
 				
 		} catch (ExistingServiceException ex) {
-			throw new ExistingActionException("Um curso com esses dados", ex);
+			throw new ExistingActionException("message.already.existing.degree", mapping.findForward("readDegrees"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}

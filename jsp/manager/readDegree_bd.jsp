@@ -58,7 +58,7 @@
 		<logic:iterate id="degreeCurricularPlan" name="curricularPlansList">			
 		<td class="listClasses">
 		<html:multibox property="internalIds">
-		<bean:write name="degreeCurricularPlan" property="idInternal"/>
+			<bean:write name="degreeCurricularPlan" property="idInternal"/>
 		</html:multibox>
 		</td>				
 		<td class="listClasses"><html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getParameter("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>

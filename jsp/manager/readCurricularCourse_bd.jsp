@@ -74,7 +74,7 @@
 							<html:link page="<%="/dissociateExecutionCourse.do?&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal" onclick='<%= deleteConfirm.toString() %>'>
 								<bean:message key="label.manager.dissociate.execution.course"/>
 							</html:link> /
-							<html:link page="<%="/readTeacherInCharge.do?&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;infoCurricularCourse=" + request.getAttribute("infoCurricularCourse")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+							<html:link page="<%="/readTeacherInCharge.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
 								<bean:message key="label.manager.edit.execution.course.teachers"/>
 							</html:link>
 						</td>

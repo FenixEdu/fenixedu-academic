@@ -10,7 +10,7 @@ package Dominio;
  *
  * 
  */
-public interface IResponsibleFor {
+public interface IResponsibleFor extends IDomainObject {
 	public ITeacher getTeacher();
 	public IDisciplinaExecucao getExecutionCourse();
 

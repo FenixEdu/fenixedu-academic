@@ -106,6 +106,15 @@
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+		
+		<form-bean name="teacherForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+                <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
+                <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
+				<form-property name="number" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 
@@ -601,15 +610,39 @@
        <forward name="editBranch" path="df.page.edit-branch"/>
 	</action>
     
-    <!--name="curricularCourseForm" Action reading teachers of a curricular course  -->
+    <!--Action for reading teachers of an execution course  -->
 	<action
 	    path="/readTeacherInCharge"
+	    name="teacherForm"
 	    input="/readCurricularCourse.do"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.ReadTeacherInChargeAction"
-        validate="true">         
+		type="ServidorApresentacao.Action.manager.ReadTeacherInChargeAction">         
        <forward name="readExecutionCourseTeachers" path="df.page.read-execution-course-teachers"/>      	      
 	</action>
+	
+	<!--Actions for inserting teachers at an execution course  -->
+	<action
+	    path="/insertProfessorShipByNumber"
+	    name="teacherForm"
+	    input="/insertProfessorShipByNumber.do?method=prepareInsert&amp;page=0"
+		scope="request"
+		parameter="method"
+		type="ServidorApresentacao.Action.manager.InsertProfessorShipByNumberDA"
+        validate="true">         
+       <forward name="insertProfessorShip" path="df.page.insert-professorShip-by-number"/>
+       <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>      	      
+	</action>
+	
+	<!-- Action for saving modifications at teachers body --> 
+    <action 
+      	path="/saveTeachersBody"
+      	name="teacherForm"
+      	input="/readTeacherInCharge.do"
+      	scope="request"
+      	type="ServidorApresentacao.Action.manager.SaveTeachersBodyAction">
+       <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+    </action>
     
       <!--Input actions-->  
      <action path="/readDegreesInput"
