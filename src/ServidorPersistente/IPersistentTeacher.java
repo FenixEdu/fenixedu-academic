@@ -10,7 +10,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ITeacher;
-public interface IPersistentTeacher {
+public interface IPersistentTeacher extends IPersistentObject{
 
 	/**
 	 * 
