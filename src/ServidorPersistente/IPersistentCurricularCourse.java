@@ -28,4 +28,5 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 	public void lockWrite(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
+	public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(IDegreeCurricularPlan degreeCurricularPlan,Boolean basic) throws ExcepcaoPersistencia;
 }

@@ -28,7 +28,7 @@ public interface ICurricularCourse extends IDomainObject {
 	public void setCurricularCourseExecutionScope(CurricularCourseExecutionScope scope);
 	public void setMandatory(Boolean boolean1);
 	public void setUniversity(IUniversity code);
-	public void setBasic(Boolean basic);
+	public void setBasic(boolean basic);
 	
 		
 	public boolean isBasic();	
@@ -50,5 +50,5 @@ public interface ICurricularCourse extends IDomainObject {
 	public Boolean getMandatory();
 	public IUniversity getUniversity();
 	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester);
-	public Boolean getBasic();
+	public boolean getBasic();
 }

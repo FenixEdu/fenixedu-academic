@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
@@ -209,6 +210,14 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
+	public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(IDegreeCurricularPlan degreeCurricularPlan,Boolean basic) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyDegreeCurricularPlan",degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("basic",basic);
+		return queryList(CurricularCourse.class,criteria);
+		}
 
 	public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia {
 		try {
