@@ -14,23 +14,24 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionDegree;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -43,6 +44,8 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 
 	protected ISuportePersistente _sp = null;
 	protected ICursoPersistente _degreeDAO = null;
+	protected IPersistentExecutionPeriod executionPeriodDAO = null;
+	protected IPersistentExecutionYear executionYearDAO = null;
 	protected ICursoExecucaoPersistente _executionDegreeDAO = null;
 	protected ICurso _degree = null;
 	protected ICursoExecucao _executionDegree = null;
@@ -70,28 +73,48 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		// define ficheiro de configuracao Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-publico.xml");
+		setServletConfigFile("/WEB-INF/web.xml");
 		startPersistentLayer();
 		cleanData();
 		try {
+			_sp.iniciarTransaccao();
+			IExecutionYear executionYear = null;
+			executionYear =
+				executionYearDAO.readExecutionYearByName("2003/2004");
+
+			_sp.confirmarTransaccao();
+			if (executionYear == null) {
+				executionYear = new ExecutionYear("2003/2004");
+				_sp.iniciarTransaccao();
+				executionYearDAO.lockWrite(executionYear);
+				_sp.confirmarTransaccao();
+			}
+
 			_sp.iniciarTransaccao();
 			_infoDegreeList = new ArrayList();
 			for (int i = 1; i < 10; i++) {
 				String degreeName = "Lic " + i;
 				String degreeInitials = "L" + i;
 				_infoDegreeList.add(new InfoDegree(degreeInitials, degreeName));
-				_degree =
-					new Curso(
-						degreeInitials,
-						degreeName,
-						new TipoCurso(TipoCurso.LICENCIATURA));
-				_executionDegree =
-					new CursoExecucao(
-						new ExecutionYear("2003/2004"),
-						new DegreeCurricularPlan("plano1", _degree));
 
-				_degreeDAO.lockWrite(_degree);
-				_executionDegreeDAO.lockWrite(_executionDegree);
+				_degree = _degreeDAO.readBySigla(degreeInitials);
+				if (_degree == null){
+					_degree =
+						new Curso(
+							degreeInitials,
+							degreeName,
+							new TipoCurso(TipoCurso.LICENCIATURA));
+					_degreeDAO.lockWrite(_degree);					
+				}
+				
+				_executionDegree = _executionDegreeDAO.readByDegreeNameAndExecutionYear(degreeName, executionYear);
+				if (_executionDegree == null){
+					_executionDegree =
+						new CursoExecucao(
+							executionYear,
+							new DegreeCurricularPlan("plano1", _degree));
+					_executionDegreeDAO.lockWrite(_executionDegree);
+				}
 			}
 			_sp.confirmarTransaccao();
 		} catch (Throwable e) {
@@ -101,105 +124,25 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 
 	}
 
-	public void testPrepareSearch() {
+	public void testClassSearch() {
+		String chooseContext = "chooseContext";
+		String nextPage = "classSearch";
+		String curricularYear = "1";
+		String index = "0";
 
-		setRequestPathInfo(moduleName, "/chooseClassSearchContextDA");
-		addRequestParameter("method", "prepare");
-
-		actionPerform();
-
-		verifyNoActionErrors();
-
-		verifyForward("formPage");
-
-		List attributesList = new ArrayList();
-
-		attributesList.add(SessionConstants.SEMESTER_LIST_KEY);
-		attributesList.add(SessionConstants.CURRICULAR_YEAR_LIST_KEY);
-		attributesList.add(SessionConstants.INFO_DEGREE_LIST_KEY);
-
-		verifySessionAttributes(getSession(), attributesList, null);
-
-		assertTrue(
-			"Semester list must be not empty!",
-			!((List) getSession()
-				.getAttribute(SessionConstants.SEMESTER_LIST_KEY))
-				.isEmpty());
-
-		assertTrue(
-			"Curricular Year list must be not empty!",
-			!((List) getSession()
-				.getAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY))
-				.isEmpty());
-
-		assertTrue(
-			"Info Degree list must be not empty!",
-			!((List) getSession()
-				.getAttribute(SessionConstants.INFO_DEGREE_LIST_KEY))
-				.isEmpty());
-
+		doPrepare(chooseContext, nextPage);
+		doNextPage(nextPage, curricularYear, index);
 	}
 
-	public void testNextPage() {
-		setRequestPathInfo(moduleName, "/chooseClassSearchContextDA");
-		addRequestParameter("method", "nextPage");
 
-		addRequestParameter(
-			ChooseContextDispatchAction.CURRICULAR_YEAR_PARAMETER,
-			"2");
-		addRequestParameter(
-			ChooseContextDispatchAction.SEMESTER_PARAMETER,
-			"2");
-		addRequestParameter(
-			ChooseContextDispatchAction.INFO_DEGREE_INITIALS_PARAMETER,
-			"L1");
+	public void testExecutionCourseSearch() {
+		String chooseContext = "chooseContext";
+		String nextPage = "classSearch";
+		String curricularYear = "1";
+		String index = "0";
 
-		getSession().setAttribute(
-			SessionConstants.SEMESTER_LIST_KEY,
-			new ArrayList());
-		getSession().setAttribute(
-			SessionConstants.CURRICULAR_YEAR_LIST_KEY,
-			new ArrayList());
-		getSession().setAttribute(
-			SessionConstants.INFO_DEGREE_LIST_KEY,
-			_infoDegreeList);
-
-		actionPerform();
-
-		verifyNoActionErrors();
-
-		verifyForward("nextPage");
-
-		List attributesList = new ArrayList();
-		attributesList.add(SessionConstants.CONTEXT_KEY);
-		attributesList.add(SessionConstants.SEMESTER_LIST_KEY);
-		attributesList.add(SessionConstants.CURRICULAR_YEAR_LIST_KEY);
-		attributesList.add(SessionConstants.INFO_DEGREE_LIST_KEY);
-
-		verifySessionAttributes(getSession(), attributesList, null);
-
-		CurricularYearAndSemesterAndInfoExecutionDegree ctx =
-			SessionUtils.getContext(getRequest());
-
-		assertNotNull("Context is null.", ctx);
-
-		InfoExecutionDegree infoExecutionDegree =
-			ctx.getInfoLicenciaturaExecucao();
-
-		assertNotNull("Info Execution Degree is null.", infoExecutionDegree);
-		assertNotNull(
-			"Info Degree is null.",
-			infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
-
-		assertEquals(
-			"Degree Initials value ",
-			"L1",
-			infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
-		assertEquals("Semester value ", new Integer(2), ctx.getSemestre());
-		assertEquals(
-			"Curricular Year value ",
-			new Integer(2),
-			ctx.getAnoCurricular());
+		doPrepare(chooseContext, nextPage);
+		doNextPage(nextPage, curricularYear, index);
 	}
 
 	/**
@@ -246,6 +189,8 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 		}
 		_degreeDAO = _sp.getICursoPersistente();
 		_executionDegreeDAO = _sp.getICursoExecucaoPersistente();
+		executionPeriodDAO = _sp.getIPersistentExecutionPeriod();
+		executionYearDAO = _sp.getIPersistentExecutionYear();
 	}
 
 	protected void cleanData() {
@@ -253,10 +198,80 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 			_sp.iniciarTransaccao();
 			_degreeDAO.deleteAll();
 			_executionDegreeDAO.deleteAll();
+			executionPeriodDAO.deleteAll();
+			executionYearDAO.deleteAll();
 			_sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when cleaning data");
 		}
+	}
+	private void doNextPage(
+		String nextPage,
+		String curricularYear,
+		String index)
+		throws AssertionFailedError {
+		setRequestPathInfo(moduleName, "/chooseContextDA");
+
+		addRequestParameter("method", "nextPage");
+		addRequestParameter("curricularYear", curricularYear);
+		addRequestParameter("index", index);
+
+		actionPerform();
+		verifyNoActionErrors();
+
+		verifyForward(nextPage);
+		List attributesList = new ArrayList();
+
+		attributesList.add(SessionConstants.CURRICULAR_YEAR_LIST_KEY);
+		attributesList.add(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+		attributesList.add(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+		attributesList.add(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+
+		// FIXME: put this in Constants ... 
+		attributesList.add("anoCurricular");
+		attributesList.add("semestre");
+
+		verifySessionAttributes(getSession(), attributesList, null);
+		//		TODO:Test if execution degree is the correct.
+	}
+
+	private void doPrepare(String chooseContext, String nextPage)
+		throws AssertionFailedError {
+
+		setRequestPathInfo(moduleName, "/chooseContextDA");
+		addRequestParameter("method", "prepare");
+		addRequestParameter(SessionConstants.INPUT_PAGE, chooseContext);
+		addRequestParameter(SessionConstants.NEXT_PAGE, nextPage);
+		actionPerform();
+
+		verifyNoActionErrors();
+
+		verifyForward("chooseContext");
+
+		assertNotNull(
+			"Request degrees!",
+			getRequest().getAttribute(SessionConstants.DEGREES));
+
+		List attributesList = new ArrayList();
+
+		attributesList.add(SessionConstants.CURRICULAR_YEAR_LIST_KEY);
+		attributesList.add(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+
+		verifySessionAttributes(getSession(), attributesList, null);
+
+		assertTrue(
+			"Curricular Year list must be not empty!",
+			!((List) getSession()
+				.getAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY))
+				.isEmpty());
+		List infoExecutionDegreeList =
+			(List) getSession().getAttribute(
+				SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+		assertTrue(
+			"Info Degree list must be not empty!",
+			!(infoExecutionDegreeList.isEmpty()));
+			
+		// TODO:Test if the list is the correct			
 	}
 
 }
