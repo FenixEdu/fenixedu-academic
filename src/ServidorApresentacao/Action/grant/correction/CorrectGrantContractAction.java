@@ -84,7 +84,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			//Read the grant owner
-			Object[] argsGrantOwner = {null, null, null, grantOwnerNumber};
+			Object[] argsGrantOwner = {null, null, null, grantOwnerNumber, new Boolean(false)};
 			List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",argsGrantOwner);
 			if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1)
 			{
@@ -152,7 +152,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			//Read the grant owner
-			Object[] argsGrantOwner = {null, null, null, grantOwnerNumber};
+			Object[] argsGrantOwner = {null, null, null, grantOwnerNumber, new Boolean(false)};
 			List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
 					argsGrantOwner);
 			if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1)
@@ -227,7 +227,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			//Read the original grant owner
-			Object[] argsOriginalGrantOwner = {null, null, null, grantOwnerNumber};
+			Object[] argsOriginalGrantOwner = {null, null, null, grantOwnerNumber, new Boolean(false)};
 			List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",argsOriginalGrantOwner);
 			if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1)
 			{
@@ -237,7 +237,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction
 			InfoGrantOwner originalGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 			
 			//Read the new grant owner
-			Object[] argsNewGrantOwner = {null, null, null, newGrantOwnerNumber};
+			Object[] argsNewGrantOwner = {null, null, null, newGrantOwnerNumber, new Boolean(false)};
 			infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",argsNewGrantOwner);
 			if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1)
 			{
