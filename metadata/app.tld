@@ -129,6 +129,23 @@
     </attribute>
 
   </tag>
+   <tag>
+
+    <name>generateSectionMenu</name>
+    <tagclass>ServidorApresentacao.TagLib.publico.sectionMenu.RenderSectionMenuTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    
+    <info>
+        Generates a Menu of sections.
+    </info>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
 
 
 <tag>
