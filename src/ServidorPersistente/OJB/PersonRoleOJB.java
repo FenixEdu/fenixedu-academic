@@ -34,7 +34,7 @@ public class PersonRoleOJB extends ObjectFenixOJB implements IPersistentPersonRo
 
 			// Read personRole from database.
 			personRoleBD = this.readByPersonAndRole(personRoleToWrite.getPerson(), personRoleToWrite.getRole());
-
+			
 			// If personRole is not in database, then write it.
 			if (personRoleBD == null)
 				super.lockWrite(personRoleToWrite);
@@ -46,6 +46,7 @@ public class PersonRoleOJB extends ObjectFenixOJB implements IPersistentPersonRo
 				// else Throw an already existing exception
 			} else
 				throw new ExistingPersistentException();
+				
 	}
 
 

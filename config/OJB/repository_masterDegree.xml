@@ -80,6 +80,7 @@
 	         name="situations"
 	         collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"
 	         element-class-ref="Dominio.CandidateSituation"
+	         refresh="true"
            >
            <inverse-foreignkey field-id-ref="5"/>
          </collection-descriptor>

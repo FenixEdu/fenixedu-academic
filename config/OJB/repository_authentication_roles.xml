@@ -186,6 +186,7 @@
          proxy="false"
          indirection-table = "PERSON_ROLE"
          auto-retrieve="true"
+         refresh="true"
          auto-update="false"
          auto-delete="false"
       >
