@@ -69,7 +69,9 @@ public class ServicoSeguroActualizarFuncsDocentes {
 		/* algoritmo */
 
 		System.out.println("A converter " + lista.size() + " Docentes ... ");
-
+		int newTeachers = 0;
+		int newRoles = 0;
+		
 		broker.beginTransaction();
 
 		/* Procurar chaveFuncionario correspondente e criar funcNaoDocente */
@@ -125,15 +127,20 @@ public class ServicoSeguroActualizarFuncsDocentes {
 				teacher.setPerson(person);
 				teacher.setTeacherNumber(numeroMecanografico); 
 				broker.store(teacher);
-
+				newTeachers++;
+				
 				IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.TEACHER, broker);
 				if (personRole == null){
 					RoleFunctions.giveRole(person, RoleType.TEACHER, broker);
+					newRoles++;
 				}
 			}
 		}
 		broker.commitTransaction();
+		System.out.println("New Teachers added : " + newTeachers);
+		System.out.println("New Roles added : " + newRoles);
 		System.out.println("  Done !");
+
 	}
 
 }

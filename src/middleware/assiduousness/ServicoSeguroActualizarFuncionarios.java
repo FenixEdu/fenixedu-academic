@@ -63,7 +63,10 @@ public class ServicoSeguroActualizarFuncionarios {
 		Funcionario funcionario2Write = null;
 		Integer numeroMecanografico = null;
 		IPersonRole newRole = null;
-
+		
+		int newEmployees = 0;
+		int newRoles = 0;
+		
 		broker.beginTransaction();
 
 		try {
@@ -73,10 +76,12 @@ public class ServicoSeguroActualizarFuncionarios {
 			/* algoritmo */
 	
 			/* Recuperar registos */
-			System.out.println("ServicoSeguroActualizarFuncionarios.main:Lista de Resultados...");
+			
 	
 			/* Procurar chavePessoa correspondente e criar funcionario */
 			Iterator iteradorNovo = lista.iterator();
+
+			System.out.println("Migrating " + lista.size() + " Employees ...");
 
 			while (iteradorNovo.hasNext()) {
 				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
@@ -142,6 +147,7 @@ public class ServicoSeguroActualizarFuncionarios {
 							else roleBD = (Role) result.get(0);
 			 
 							person.getPersonRoles().add(roleBD);
+							newRoles++;
 						}
 					} else {
 						// Decision Time ... Keep The Old NumeroMecanografico or Put The new ?
@@ -153,6 +159,7 @@ public class ServicoSeguroActualizarFuncionarios {
 						}
 					}
 					broker.store(funcionario2Write);
+					newEmployees++;
 
 				} 
 				
@@ -165,6 +172,9 @@ public class ServicoSeguroActualizarFuncionarios {
 			throw new Exception("\nError Migrating Employee " + numeroMecanografico + "\n" + e);
 		}
 		broker.commitTransaction();
-		broker.close();
+		System.out.println("New Funcionarios added : " + newEmployees);
+		System.out.println("New Roles added : " + newRoles);
+		System.out.println("  Done !");
+
 	}
 }

@@ -62,6 +62,9 @@ public class ServicoSeguroActualizarFuncsNaoDocentes {
 
 		System.out.println("Migrating " + lista.size() + " Funcionarios Nao Docentes ... ");
 
+		int newEmployees = 0;
+		int newRoles = 0;
+
 		FuncNaoDocente funcNaoDocente = null;
 		Integer numeroMecanografico = null; 
 		
@@ -125,10 +128,12 @@ public class ServicoSeguroActualizarFuncsNaoDocentes {
 					funcNaoDocente = new FuncNaoDocente();
 					funcNaoDocente.setChaveFuncionario(funcionario.getCodigoInterno());
 					broker.store(funcNaoDocente);
+					newEmployees++;
 					
 					IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
 					if (personRole == null){
 						RoleFunctions.giveRole(person, RoleType.EMPLOYEE, broker);
+						newRoles++;
 					}
 					
 				}
@@ -138,6 +143,8 @@ public class ServicoSeguroActualizarFuncsNaoDocentes {
 			broker.commitTransaction();
 			throw new Exception("Error migrating employee " + numeroMecanografico + "\n"+ e);
 		}
+		System.out.println("New Funcionarios Nao Docentes added : " + newEmployees);
+		System.out.println("New Roles added : " + newRoles);
 		System.out.println("  Done !");
 	}
 }
