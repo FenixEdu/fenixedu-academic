@@ -7,8 +7,8 @@
 <%@ page import="Util.State" %>
 <%@ page import="Util.Data" %>
 <%@ page import="DataBeans.InfoCandidateSituation" %>
-<bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" property="infoPerson"/>
-<bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
+<bean:define id="personalInfo" name="masterDegreeCandidate" scope="request" property="infoPerson"/>
+<bean:define id="masterDegreeCandidate" name="masterDegreeCandidate" scope="request"/>
 <jsp:include page="../context.jsp"/>
 <h2><bean:message key="title.candidate.info" /></h2>
 	<table>

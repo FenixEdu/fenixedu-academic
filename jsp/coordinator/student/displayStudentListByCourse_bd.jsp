@@ -11,7 +11,8 @@
 </logic:present>
   <span class="error"><html:errors/></span>
   <bean:define id="enrolmentList" name="enrolment_list" scope="request" />
-  <bean:define id="link">/studentCurriculum.do?method=getCurriculum<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
+  <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
+  <bean:define id="link">/studentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
   <p>
     <h3><%= ((List) enrolmentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        
     <% if (((List) enrolmentList).size() != 0) { %>
@@ -19,12 +20,12 @@
         <bean:message key="label.masterDegree.chooseOne"/><br><br><br>
         
         <logic:equal name="viewPhoto" value="true">
-	        <html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=false">
+	        <html:link page="<%= "/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=false&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
     	    	<bean:message key="label.notViewPhoto"/>
         	</html:link>
         </logic:equal>
         <logic:notEqual name="viewPhoto" value="true">
-	        <html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=true">
+	        <html:link page="<%= "/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=true&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
     	    	<bean:message key="label.viewPhoto"/>
         	</html:link>
         </logic:notEqual>
@@ -43,8 +44,7 @@
         	<bean:define id="studentLink">
         		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.idInternal"/>&amp;
 				<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
-					<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
-		    			&amp;executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&amp;
+					<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&degreeCurricularPlanID=<%=degreeCurricularPlanID%>
 	    		</logic:present>
         	</bean:define>
         <tr>

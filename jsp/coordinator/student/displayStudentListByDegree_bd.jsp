@@ -6,20 +6,20 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
   <bean:define id="studentList" name="<%= SessionConstants.STUDENT_LIST %>" scope="request" />
-  <bean:define id="link">/studentCurriculum.do?method=getCurriculum<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
+  <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
+  <bean:define id="link">/studentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
   	<p>
     <span class="emphasis"><%= ((List) studentList).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/>       
     <% if (((List) studentList).size() != 0) { %>
         </p>
         <bean:message key="label.masterDegree.chooseOne"/><br><br><br>
-        
         <logic:equal name="viewPhoto" value="true">
-	        <html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=false">
+	        <html:link page="<%= "/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&viewPhoto=false&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
     	    	<bean:message key="label.notViewPhoto"/>
         	</html:link>
         </logic:equal>
         <logic:notEqual name="viewPhoto" value="true">
-	        <html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=true">
+	        <html:link page="<%= "/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&viewPhoto=true&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
     	    	<bean:message key="label.viewPhoto"/>
         	</html:link>
         </logic:notEqual>
@@ -35,8 +35,7 @@
     		</tr>
      	<logic:iterate id="studentCP" name="studentList">
         	<bean:define id="studentLink">
-        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal"/>&amp;
-        		&amp;executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&amp;
+        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal"/>&amp;executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID%>
         	</bean:define>
         <tr>
 	        <logic:equal name="viewPhoto" value="true">

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
 <br />
 <span class="error"><html:errors/><br /><br /></span>
@@ -17,6 +18,7 @@
 <td align="center">
 <html:form action="/manageFinalDegreeWork">
 	<html:hidden property="method" value="setFinalDegreeProposalPeriod"/>
+	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:hidden property="page" value="1"/>
 
 	<strong><bean:message key="finalDegreeWorkProposal.setProposalPeriod.header"/></strong>
@@ -103,6 +105,7 @@
 		</tr>
 	</table>
 	<br />
+	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.button"/>
 	</html:submit>
@@ -115,6 +118,7 @@
 <html:form action="/setFinalDegreeWorkCandidacyRequirements">
 	<html:hidden property="method" value="setFinalDegreeCandidacyRequirements"/>
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 
 	<html:messages id="msg" message="true">
 		<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
@@ -170,6 +174,7 @@
 <html:form action="/finalDegreeWorkProposal">
 	<html:hidden property="method" value="createNewFinalDegreeWorkProposal"/>
 	<html:hidden property="page" value="0"/>
+	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:submit>
 		<bean:message key="finalDegreeWorkProposal.create.new.button"/>
 	</html:submit>
@@ -177,6 +182,7 @@
 <html:form action="/manageFinalDegreeWork">
 	<html:hidden property="method" value="publishAprovedProposals"/>
 	<html:hidden property="page" value="0"/>
+	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:submit>
 		<bean:message key="finalDegreeWorkProposal.publishAproved.button"/>
 	</html:submit>
@@ -186,6 +192,7 @@
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
 	<html:form action="/manageFinalDegreeWork">
 		<html:hidden property="method" value="aproveSelectedProposalsStatus"/>
+		<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 		<html:hidden property="selectedGroupProposal"/>
 		<html:hidden property="page" value="0"/>
 
@@ -234,7 +241,7 @@
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 					</td>
 					<td class="listClasses" rowspan="2">
-			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((DataBeans.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((DataBeans.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 							<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 				        </html:link>
 					</td>

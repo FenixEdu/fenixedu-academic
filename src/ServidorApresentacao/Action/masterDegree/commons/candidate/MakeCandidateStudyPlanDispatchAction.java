@@ -22,6 +22,7 @@ import org.apache.struts.util.LabelValueBean;
 import DataBeans.InfoCandidateEnrolment;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
@@ -34,6 +35,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NoChoiceMadeActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.exceptions.NotAuthorizedActionException;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.SituationName;
 import framework.factory.ServiceManagerServiceFactory;
@@ -57,39 +59,35 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-
-        //DynaActionForm approvalForm = (DynaActionForm) form;
-
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        String executionYear = getFromRequest("executionYear", request);
-        if (executionYear == null) {
-            executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+        Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID",
+                request));
+        ActionErrors errors = new ActionErrors();
+        Object[] args = { degreeCurricularPlanID, new Integer(1) };
+
+        InfoExecutionDegree infoExecutionDegree = null;
+        try {
+            infoExecutionDegree = (InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan) ServiceUtils
+                    .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", args);
+        } catch (NonExistingServiceException e) {
+            errors.add("nonExisting", new ActionError("error.exception.masterDegree.nonExistingExecutionDegree"));
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
         }
+        
+        if (infoExecutionDegree == null) {
+            errors.add("nonExisting", new ActionError("error.exception.masterDegree.nonExistingExecutionDegree"));
+        }
+
+
         String degree = getFromRequest("degree", request);
-        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
+        Integer executionDegree = infoExecutionDegree.getIdInternal();
+        String executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
 
-        if (executionYear == null) {
-            if (infoExecutionDegree != null) {
-                executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
-            }
-            /*
-             * else { executionYear = executionYear;//(String)
-             * approvalForm.get("executionYear"); }
-             */
-
+        if (degree == null && infoExecutionDegree != null) {
+            degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         }
 
-        if (degree == null) {
-            if (infoExecutionDegree != null) {
-                degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName(); //getInfoDegree().getSigla();
-            }
-
-            /*
-             * else { degree = (String) approvalForm.get("degree"); }
-             */
-        }
         List candidateList = null;
 
         List admitedSituations = new ArrayList();
@@ -98,20 +96,26 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_FINALIST));
         admitedSituations.add(new SituationName(SituationName.ADMITED_CONDICIONAL_OTHER));
 
-        Object args[] = { executionDegree, admitedSituations };
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+
+        Object args1[] = { executionDegree, admitedSituations };
 
         try {
             candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadCandidatesForSelection", args);
+                    "ReadCandidatesForSelection", args1);
         } catch (NonExistingServiceException e) {
-            ActionErrors errors = new ActionErrors();
             errors.add("nonExisting", new ActionError(
                     "error.masterDegree.administrativeOffice.nonExistingAdmitedCandidates"));
             saveErrors(request, errors);
-            return mapping.getInputForward();
+            //return mapping.getInputForward();
 
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
+        }
+        
+        if (!errors.isEmpty()) {
+            saveErrors(request, errors);
+            return mapping.getInputForward();
         }
 
         BeanComparator nameComparator = new BeanComparator("infoPerson.nome");
@@ -121,6 +125,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         request.setAttribute("degree", degree);
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
         request.setAttribute("candidateList", candidateList);
+
         return mapping.findForward("PrepareSuccess");
     }
 
@@ -194,6 +199,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
         request.setAttribute("executionYear", getFromRequest("executionYear", request));
         request.setAttribute("candidateID", chooseMDForm.get("candidateID"));
+        request.setAttribute("degreeCurricularPlanID", chooseMDForm.get("degreeCurricularPlanID"));
 
         String degree = (String) chooseMDForm.get("masterDegree");
 
@@ -218,6 +224,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
         String executionYear = getFromRequest("executionYear", request);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         String degree = getFromRequest("degree", request);
         String candidateID = getFromRequest("candidateID", request);
@@ -241,7 +249,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
         List curricularCourseList = null;
         try {
 
-            Object args[] = { executionYear, degree };
+            Object args[] = { degreeCurricularPlanID };
             curricularCourseList = (List) ServiceManagerServiceFactory.executeService(userView,
                     "ReadCurricularCoursesByDegree", args);
 
@@ -405,6 +413,10 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer[] selection = (Integer[]) chooseCurricularCoursesForm.get("selection");
+
+        Integer degreeCurricularPlanID = (Integer) chooseCurricularCoursesForm
+                .get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         if (!validChoice(selection)) {
             throw new NoChoiceMadeActionException(null);

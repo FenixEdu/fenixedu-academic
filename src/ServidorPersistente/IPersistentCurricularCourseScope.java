@@ -37,9 +37,6 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
     public List readActiveCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse)
             throws ExcepcaoPersistencia;
 
-    public List readActiveCurricularCourseScopesByDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
-
     public List readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
             ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
@@ -109,6 +106,13 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
 
     public List readCurricularCourseScopesByDegreeCurricularPlanAndExecutionYear(
             IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia;
+
+    /**
+     * @param degreeCurricularPlanId
+     * @return
+     */
+    public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(Integer degreeCurricularPlanId)
             throws ExcepcaoPersistencia;
 
 }

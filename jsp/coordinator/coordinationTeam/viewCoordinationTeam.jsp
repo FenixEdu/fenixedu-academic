@@ -2,13 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
 
 <logic:present name="coordinators">
 <h3><bean:message key="title.coordinationTeam"/></h3>
 <html:form action="/viewCoordinationTeam">
 <html:hidden property="method" value="removeCoordinators" />
+<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 <table>
 <tr><td class="listClasses-header">Nome</td>
 	<td class="listClasses-header">
@@ -51,7 +52,7 @@
 
 <html:link 
 	page="<%= "/viewCoordinationTeam.do?method=prepareAddCoordinator&infoExecutionDegreeId="+ 
-	infoExecutionDegreeId.toString()  %>" >
+	infoExecutionDegreeId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>" >
 	<bean:message key="title.addCoordinator"/>
 	</html:link>
 </logic:equal>	

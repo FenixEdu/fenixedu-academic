@@ -111,6 +111,8 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession();
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         request.setAttribute("courseID", getFromRequest("courseID", request));
 

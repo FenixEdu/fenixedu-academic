@@ -82,6 +82,8 @@ public abstract class SessionConstants {
 
     public static final String LESSON_OID = "lessonOID";
 
+	public static final String MASTER_DEGREE_CURRICULAR_PLAN_ID = "master_degree_curricular_plan_id";
+
     public static final String SHIFT = "shift";
 
     public static final String SHIFT_OID = "shift_oid";
@@ -91,6 +93,8 @@ public abstract class SessionConstants {
     public static final String DEGREES = "licenciaturas";
 
     public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";
+
+	public static final String NUMERUS_CLAUSUS = "numerusClausus";
 
     public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";
 

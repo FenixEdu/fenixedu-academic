@@ -8,7 +8,7 @@
 	<h2><str:upperCase><bean:message key="label.coordinator.degreeCurricularPlan.history.information"/></str:upperCase>&nbsp;-&nbsp;<bean:write name="infoCurricularCourseName"/></h2>	
 	<%-- <h2><bean:write name="infoCurricularCourseName"/></h2> --%>
 	<span class="error"><html:errors/></span>
-	<p>(<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewActiveCurricularCourseInformation&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") %>">
+	<p>(<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewActiveCurricularCourseInformation&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID")%>">
 		<font color="#0066CC"><bean:message key="link.coordinator.degreeCurricularPlan.see"/>&nbsp;<bean:message key="label.coordinator.degreeCurricularPlan.current.information"/></font>
 	</html:link>)</p>
 	<table>
@@ -19,11 +19,11 @@
 			<tr>
 				<td>
 <%--					<bean:define id="stringExecutionYear" name="executionYear" property="label"/>
-					<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewCurricularCourseInformationHistory&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;executionYear=" + stringExecutionYear + "&amp;infoCurricularCourseName=" + infoCurricularCourseName %>">
+					<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewCurricularCourseInformationHistory&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;executionYear=" + stringExecutionYear + "&amp;infoCurricularCourseName=" + infoCurricularCourseName + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID")%>">
 						<bean:write name="executionYear" property="label"/>
 					</html:link> --%>
 					<bean:define id="stringExecutionYear" name="executionYear" property="year"/>
-					<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewCurricularCourseInformationHistory&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;executionYear=" + stringExecutionYear + "&amp;infoCurricularCourseName=" + infoCurricularCourseName %>">
+					<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewCurricularCourseInformationHistory&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;executionYear=" + stringExecutionYear + "&amp;infoCurricularCourseName=" + infoCurricularCourseName + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID")%>">
 						<bean:write name="executionYear" property="year"/>
 					</html:link>
 				</td>

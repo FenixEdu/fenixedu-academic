@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -28,7 +29,6 @@ import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -36,30 +36,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.State;
 
-public class ReadDegreeCandidates implements IServico {
-
-    private static ReadDegreeCandidates servico = new ReadDegreeCandidates();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadDegreeCandidates getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadDegreeCandidates() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ReadDegreeCandidates";
-    }
+public class ReadDegreeCandidates implements IService {
 
     public List run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoInexistente,
             FenixServiceException {
@@ -106,6 +83,49 @@ public class ReadDegreeCandidates implements IServico {
                 //InfoCandidateSituation infoCandidateSituation =
                 // Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation)
                 // situationIter.next());
+                InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
+                        .newInfoFromDomain((ICandidateSituation) situationIter.next());
+                situations.add(infoCandidateSituation);
+
+                // Check if this is the Active Situation
+                if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+                    infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+            }
+            infoMasterDegreeCandidate.setSituationList(situations);
+            result.add(infoMasterDegreeCandidate);
+        }
+
+        return result;
+    }
+
+    public List run(Integer degreeCurricularPlanId) throws ExcepcaoInexistente, FenixServiceException,
+            ExcepcaoPersistencia {
+
+        ISuportePersistente sp = null;
+
+        List candidates = null;
+
+        sp = SuportePersistenteOJB.getInstance();
+
+        // Read the Candidates
+        candidates = sp.getIPersistentMasterDegreeCandidate().readByDegreeCurricularPlanId(
+                degreeCurricularPlanId);
+
+        if (candidates == null)
+            return new ArrayList();
+
+        Iterator iterator = candidates.iterator();
+        List result = new ArrayList();
+        while (iterator.hasNext()) {
+            // For all candidates ...
+            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                    .newInfoFromDomain(masterDegreeCandidate);
+            // Copy all Situations
+            List situations = new ArrayList();
+            Iterator situationIter = masterDegreeCandidate.getSituations().iterator();
+            while (situationIter.hasNext()) {
+
                 InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
                         .newInfoFromDomain((ICandidateSituation) situationIter.next());
                 situations.add(infoCandidateSituation);

@@ -172,15 +172,16 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction {
 
         if (session != null) {
             session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-            Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+            Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 
             if (curricularPlanID == null) {
-                curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+                curricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
 
             }
 
             request.setAttribute(SessionConstants.EXECUTION_DEGREE, request
                     .getParameter("executionDegreeID"));
+            request.setAttribute("degreeCurricularPlanID", curricularPlanID);
             return mapping.findForward("ChooseSuccess");
         }
         throw new Exception();

@@ -4,11 +4,13 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoTeacher" %>
 <%@ page import="DataBeans.InfoPerson" %>
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
 <h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
 <span class="error">
 	<html:errors/><br />
 </span>
+
 <html:form action="/finalDegreeWorkProposal">
 	<html:hidden property="page" value="2"/>
 	<html:hidden property="method" value="submit"/>
@@ -17,6 +19,8 @@
 	<html:hidden property="orientatorOID"/>
 	<html:hidden property="coorientatorOID"/>
 	<html:hidden property="alteredField"/>
+	<html:hidden property="degreeCurricularPlanID"/>
+	
 
 	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
 	<br><html:text property="title" size="85"/>

@@ -769,6 +769,20 @@
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
 	<filterChain>
+        <name>ManagerOrCoordinatorAuthorization</name>
+        <expression>ManagerAuthorization || CoordinatorAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>      
+    <filterChain>
+        <name>MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization</name>
+        <expression>MasterDegreeAdministrativeOfficeAuthorization || CoordinatorAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+	<filterChain>
 		<name>EmployeeBelongsToTeacherDepartment</name>
 		<expression>EmployeeBelongsToTeacherDepartment</expression>
     	<description>Verifies whether a given employee belongs to the same department the teacher does</description>
@@ -777,7 +791,7 @@
 	</filterChain>
 	<filterChain>
 		<name>ReadStudentCurricularPlansAccess</name>
-		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization</expression>
+		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || CoordinatorAuthorization</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

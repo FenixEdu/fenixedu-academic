@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -33,14 +35,25 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
-        Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-        Object[] args = { infoExecutionDegreeId };
+        
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
+        
+        Integer infoExecutionDegreeID = null;
+        Object[] infoArgs = { degreeCurricularPlanID, new Integer(2) };
+ 
+	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan) ServiceUtils
+	    .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", infoArgs);
+
+        infoExecutionDegreeID = infoExecutionDegree.getIdInternal();
+
+        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeID);
+        Object[] args = { infoExecutionDegreeID };
         List coordinators = new ArrayList();
         try {
             coordinators = (List) ServiceUtils.executeService(userView, "ReadCoordinationTeam", args);
@@ -49,7 +62,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             throw new FenixActionException(e);
         }
         Boolean result = new Boolean(false);
-        Object[] args1 = { infoExecutionDegreeId, userView };
+        Object[] args1 = { infoExecutionDegreeID, userView };
         try {
             result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility",
                     args1);
@@ -67,6 +80,10 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        
+        Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
@@ -117,13 +134,13 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);        
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
         List coordinators = Arrays.asList(coordinatorsIds);
-
+        
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);

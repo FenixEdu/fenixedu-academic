@@ -175,7 +175,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 
             InfoCandidateRegistration infoCandidateRegistration = null;
             try {
-                Object args[] = { candidateID, branchID, studentNumber };
+                Object args[] = { candidateID, branchID, studentNumber, userView };
                 infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory
                         .executeService(userView, "RegisterCandidate", args);
             } catch (InvalidStudentNumberServiceException e) {

@@ -1,46 +1,46 @@
 package ServidorAplicacao.Servico.commons.degree;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.DegreeCurricularPlan;
+import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionDegree;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
+ * 
+ * modified by:
+ * @author  <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
+ * @author  <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  */
 public class ReadNumerusClausus implements IService {
 
-    /**
-     *  
-     */
-    public ReadNumerusClausus() {
+	public Integer run(Integer degreeCurricularPlanID)
+			throws NonExistingServiceException {
 
-    }
+		IDegreeCurricularPlan degreeCurricularPlan = null;
 
-    public Integer run(Integer executionDegreeID) throws NonExistingServiceException {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ICursoExecucao executionDegree = null;
+			IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = sp
+					.getIPersistentDegreeCurricularPlan();
+			degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
+					.readByOID(DegreeCurricularPlan.class,
+							degreeCurricularPlanID);
 
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia ex) {
+			throw new RuntimeException(ex);
+		}
 
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            executionDegree = (CursoExecucao) executionDegreeDAO.readByOID(CursoExecucao.class,
-                    executionDegreeID);
+		if (degreeCurricularPlan == null) {
+			throw new NonExistingServiceException();
+		}
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new RuntimeException(ex);
-        }
-
-        if (executionDegree == null) {
-            throw new NonExistingServiceException();
-        }
-
-        return executionDegree.getCurricularPlan().getNumerusClausus();
-    }
+		return degreeCurricularPlan.getNumerusClausus();
+	}
 
 }

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
@@ -91,7 +91,9 @@
 		<html:form action="/displayCourseListToStudyPlan?method=chooseCurricularCourses">
 	   	  	<html:hidden property="page" value="1"/> 
 	   	  	<html:hidden property="candidateID"/> 
-	   	  	<html:hidden property="executionYear"/> 
+	   	  	<html:hidden property="executionYear"/>´
+	   	  	<html:hidden property="degreeCurricularPlanID"/>
+
 			<!-- CurricularCourse -->
 			<table>
 				<tr>

@@ -51,4 +51,37 @@ public class EditDescriptionDegreeCurricularPlan implements IService {
 
         return infoDegreeCurricularPlan;
     }
+
+    public InfoDegreeCurricularPlan run(InfoDegreeCurricularPlan newInfoDegreeCP)
+            throws FenixServiceException {
+        if (newInfoDegreeCP == null) {
+            throw new FenixServiceException("error.impossibleEditDegreeInfo");
+        }
+
+        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
+        IDegreeCurricularPlan degreeCP = null;
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
+
+            degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+                    DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal(), true);
+            if (degreeCP == null) {
+                throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
+            }
+
+            degreeCP.setDescription(newInfoDegreeCP.getDescription());
+            degreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
+
+            infoDegreeCurricularPlan = Cloner
+                    .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCP);
+        } catch (ExistingPersistentException ex) {
+            throw new ExistingServiceException(ex);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+
+        return infoDegreeCurricularPlan;
+    }
 }

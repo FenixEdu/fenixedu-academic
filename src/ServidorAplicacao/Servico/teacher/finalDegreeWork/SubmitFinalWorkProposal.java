@@ -19,6 +19,7 @@ import Dominio.finalDegreeWork.IProposal;
 import Dominio.finalDegreeWork.IScheduleing;
 import Dominio.finalDegreeWork.Proposal;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.OutOfPeriodException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentExecutionCourse;
@@ -57,6 +58,9 @@ public class SubmitFinalWorkProposal implements IService {
 
             IScheduleing scheduleing = persistentFinalWork
                     .readFinalDegreeWorkScheduleing(executionDegreeId);
+            if(scheduleing == null){
+                throw new OutOfPeriodException(null, null, null);
+            }
 
             IProposal proposal = null;
             if (infoProposal.getIdInternal() != null) {

@@ -33,6 +33,7 @@
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
 		<html:hidden property="candidateID" />
+   	  	<html:hidden property="degreeCurricularPlanID"/>
 	<html:submit value="Submeter" styleClass="inputbutton" property="ok"/></td>
 	</html:form> 
 </logic:present>

@@ -1118,7 +1118,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerAuthorization"/>
+            <chain name="ManagerOrCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -1325,7 +1325,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerAuthorization"/>
+            <chain name="ManagerOrCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -2675,7 +2675,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5391,9 +5391,9 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadActiveDegreeCurricularPlanByExecutionDegreeCode</name>
+        <name>ReadActiveDegreeCurricularPlanScopes</name>
         <implementationClass> 
-            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.ReadActiveDegreeCurricularPlanByExecutionDegreeCode</implementationClass>
+            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.ReadActiveDegreeCurricularPlanScopes</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5437,7 +5437,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CurrentDegreeCoordinatorAuthorization"/>
+            <chain name="CoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -6488,7 +6488,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
  	<service>
@@ -7756,6 +7756,69 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
+	<service>
+		<name>ReadMasterDegreeCandidateByID</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate.ReadMasterDegreeCandidateByID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadExecutionDegreeByDegreeCurricularPlanID</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate.ReadExecutionDegreeByDegreeCurricularPlanID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.coordinator.degreeCurricularPlanManagement.ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorAuthorization"/>
+		</filterChains>
+	</service>
+    <service>
+        <name>ReadDegreeInfoByDegreeCurricularPlanID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.coordinator.ReadDegreeInfoByDegreeCurricularPlanID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadActiveExecutionDegreebyDegreeCurricularPlanID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.ReadActiveExecutionDegreebyDegreeCurricularPlanID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditDegreeInfoByDegreeCurricularPlanID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.coordinator.EditDegreeInfoByDegreeCurricularPlanID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAuthorization"/>
+        </filterChains>
+    </service>
 	<service>
 		<name>ReadSchoolClassByNameInCurrentExecutionPeriod</name>
 		<implementationClass> 

@@ -35,6 +35,7 @@
                 <html:hidden property='<%= "remarks[" + indexCandidate + "]" %>' />					
                 <html:hidden property='<%= "substitutes[" + indexCandidate + "]" %>' />	
                 <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />				
+                <html:hidden property="degreeCurricularPlanID"/>
         	</logic:iterate> 
     	    <html:submit value="Confirmar" styleClass="inputbutton" property="OK"/>
     	    <html:submit value="Cancelar" styleClass="inputbutton" property="NotOK"/>

@@ -271,11 +271,18 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         return queryList(MasterDegreeCandidate.class, crit);
 
     }
+    
+    public List readByDegreeCurricularPlanId(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("executionDegree.curricularPlan.idInternal", degreeCurricularPlanId);
+
+        return queryList(MasterDegreeCandidate.class, crit);
+    }
 
     public List readByPersonID(Integer personID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", personID);
         return queryList(MasterDegreeCandidate.class, criteria);
     }
-
+    
 } // End of class definition

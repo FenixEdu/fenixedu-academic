@@ -6,11 +6,12 @@
 <p><span class="error"><html:errors/></span></p>
 
 <html:form action="/degreeSiteManagement">
-	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegreeID"/>
-	<html:hidden property="infoExecutionDegreeID" value="<%=  infoExecutionDegreeID.toString() %>"/>
+
+	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
 	
 	<bean:define id="infoDegreeInfoID" name="infoDegreeInfoID"/>
 	<html:hidden property="infoDegreeInfoID" value="<%=  infoDegreeInfoID.toString() %>"/>
+	<html:hidden property="degreeCurricularPlanID" value="<%=  degreeCurricularPlanID.toString() %>"/>
 
 	<html:hidden property="method" value="editDegreeInformation" />
 	
@@ -31,7 +32,7 @@
 			<logic:present name="info" >
 			<logic:equal name="info" value="description" >		
 			<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: English version!" width="16" height="12" />
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
 			</html:link>
 			</logic:equal>
@@ -40,7 +41,7 @@
 			<logic:present name="info" >
 			<logic:equal name="info" value="acess" >		
 			<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: English version!" width="16" height="12" />
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 				<bean:message key="link.coordinator.degreeSite.editPortuguese"/>
 			</html:link>
 			</logic:equal>
@@ -53,7 +54,7 @@
 			<logic:present name="info" >
 			<logic:equal name="info" value="description" >
 			<img src="<%= request.getContextPath() %>/images/england-flag.gif" alt="Icon: English version!" width="16" height="12" />
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;inEnglish=true&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;inEnglish=true&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
 			</html:link>
 			</logic:equal>
@@ -62,7 +63,7 @@
 			<logic:present name="info" >
 			<logic:equal name="info" value="acess" >			
 			<img src="<%= request.getContextPath() %>/images/england-flag.gif" alt="Icon: English version!" width="16" height="12" />
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;inEnglish=true&amp;infoExecutionDegreeID=" + infoExecutionDegreeID.toString()%>">
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=acess&amp;inEnglish=true&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 				<bean:message key="link.coordinator.degreeSite.editEnglish"/>
 			</html:link>			
 			</logic:equal>

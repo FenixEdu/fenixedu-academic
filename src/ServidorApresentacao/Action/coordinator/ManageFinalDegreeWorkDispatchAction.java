@@ -36,6 +36,7 @@ import DataBeans.finalDegreeWork.InfoProposal;
 import DataBeans.finalDegreeWork.InfoScheduleing;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.OutOfPeriodException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -44,6 +45,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.utils.CommonServiceRequests;
 import Util.FinalDegreeWorkProposalStatus;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz
@@ -55,9 +57,21 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         HttpSession session = request.getSession(false);
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
+//        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+//                .getAttribute(SessionConstants.MASTER_DEGREE);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        InfoExecutionDegree infoExecutionDegree = null;
 
+        Object args_tmp[] = { degreeCurricularPlanID, new Integer(2) };
+        
+        try {
+            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView,
+                    "ReadExecutionDegreeByDegreeCurricularPlanID", args_tmp);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        
         Object args[] = { infoExecutionDegree.getIdInternal() };
         List finalDegreeWorkProposalHeaders = null;
         try {
@@ -194,8 +208,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
-
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
         if (finalDegreeWorkProposalOIDString != null
                 && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
             IUserView userView = SessionUtils.getUserView(request);
@@ -312,6 +329,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward createNewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         IUserView userView = SessionUtils.getUserView(request);
+        
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         HttpSession session = request.getSession(false);
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
@@ -460,7 +480,22 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
 
-        String idInternal = (String) finalWorkForm.get("idInternal");
+        IUserView userView = SessionUtils.getUserView(request);
+        
+        Integer degreeCurricularPlanID = (Integer) finalWorkForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
+        
+        Object[] args = { degreeCurricularPlanID, new Integer(1)};
+        InfoExecutionDegree infoExecutionDegree = null;
+        try {
+            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadExecutionDegreeByDegreeCurricularPlanID", args);
+        } catch (FenixServiceException exception) {
+            exception.printStackTrace();
+        }
+        
+        String idInternal = infoExecutionDegree.getIdInternal().toString();
         String title = (String) finalWorkForm.get("title");
         String responsibleCreditsPercentage = (String) finalWorkForm.get("responsibleCreditsPercentage");
         String coResponsibleCreditsPercentage = (String) finalWorkForm
@@ -576,11 +611,19 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
 
         try {
-            IUserView userView = SessionUtils.getUserView(request);
             Object argsProposal[] = { infoFinalWorkProposal };
             ServiceUtils.executeService(userView, "SubmitFinalWorkProposal", argsProposal);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+        } catch (Exception e) {
+            if(e instanceof OutOfPeriodException){
+                ActionErrors actionErrors = new ActionErrors();
+                actionErrors.add("finalWorkInformationForm.scheduling.invalidInterval",
+                        new ActionError("finalWorkInformationForm.scheduling.invalidInterval"));
+                saveErrors(request, actionErrors);
+                return mapping.getInputForward();
+            }
+            else{
+                throw new FenixActionException(e);
+            }
         }
 
         return mapping.findForward("show-final-degree-work-list");
@@ -657,8 +700,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String degreeId = (String) finalWorkForm.get("degree");
-        finalWorkForm.set("degreeType", "" + TipoCurso.LICENCIATURA);
+        finalWorkForm.set("degreeType", "" + TipoCurso.LICENCIATURA);        
 
+        Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
         InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView,
                 new Integer(degreeId));
 

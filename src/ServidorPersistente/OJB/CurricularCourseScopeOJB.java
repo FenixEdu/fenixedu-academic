@@ -18,19 +18,15 @@ import ServidorPersistente.IPersistentCurricularCourseScope;
 
 /**
  * @author dcs-rjao
- * 
  * 24/Mar/2003
+ * 
  */
 
 public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         IPersistentCurricularCourseScope {
 
     public void delete(ICurricularCourseScope scope) throws ExcepcaoPersistencia {
-        try {
             super.delete(scope);
-        } catch (ExcepcaoPersistencia ex) {
-            throw ex;
-        }
     }
 
     public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
@@ -137,14 +133,12 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         return result;
     }
 
-    public List readActiveCurricularCourseScopesByDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit
-                .addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan
-                        .getIdInternal());
+    public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(
+            final Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
+        final Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlanId);
         crit.addIsNull("endDate");
-        List result = queryList(CurricularCourseScope.class, crit);
+        final List result = queryList(CurricularCourseScope.class, crit);
         return result;
     }
 

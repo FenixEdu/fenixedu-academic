@@ -33,7 +33,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward subMenu(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-
+        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
         return mapping.findForward("degreeSiteMenu");
     }
 
@@ -45,8 +46,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+
+        //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+        //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
@@ -55,12 +59,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         String info2Edit = getFromRequestString("info", request);
         request.setAttribute("info", info2Edit);
 
-        Object[] args = { infoExecutionDegreeId };
-
+        Object[] args = { degreeCurricularPlanID };
         InfoDegreeInfo infoDegreeInfo = null;
         try {
             infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadDegreeInfoByExecutionDegree", args);
+                    "ReadDegreeInfoByDegreeCurricularPlanID", args);
         } catch (NotAuthorizedException e) {
             errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
         } catch (FenixServiceException e) {
@@ -98,8 +101,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+
+        //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+        //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
 
         Integer infoDegreeInfoId = getFromRequest("infoDegreeInfoID", request);
         request.setAttribute("infoDegreeInfoID", infoDegreeInfoId);
@@ -112,11 +118,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         infoDegreeInfo.setIdInternal(infoDegreeInfoId);
         fillInfoDegreeInfo(degreeInfoForm, infoDegreeInfo);
 
-        Object[] args = { infoExecutionDegreeId, infoDegreeInfoId, infoDegreeInfo };
+        Object[] args = { degreeCurricularPlanID, infoDegreeInfoId, infoDegreeInfo };
 
         try {
             infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(userView,
-                    "EditDegreeInfoByExecutionDegree", args);
+                    "EditDegreeInfoByDegreeCurricularPlanID", args);
         } catch (NotAuthorizedException e) {
             errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
         } catch (FenixServiceException e) {
@@ -207,44 +213,62 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
+        //        Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+        //        request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
 
-        Object[] args = { infoExecutionDegreeId };
+        Integer degreeCurricularPlanID = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
-        InfoExecutionDegree infoExecutionDegree = null;
+        // Object[] args = { infoExecutionDegreeId };
+
+        //        InfoExecutionDegree infoExecutionDegree = null;
+        //        try {
+        //            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+        //                    userView, "ReadExecutionDegreeByOID", args);
+        //        } catch (NotAuthorizedException e) {
+        //            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
+        //        } catch (NonExistingServiceException e) {
+        //            errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
+        //        } catch (FenixServiceException e) {
+        //            if (e.getMessage().equals("error.invalidExecutionDegree")) {
+        //                errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
+        //            } else {
+        //                e.printStackTrace();
+        //                throw new FenixActionException(e);
+        //            }
+        //        }
+
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+        Object[] args = { degreeCurricularPlanID };
         try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadExecutionDegreeByOID", args);
+            infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadDegreeCurricularPlan", args);
         } catch (NotAuthorizedException e) {
             errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
-        } catch (NonExistingServiceException e) {
-            errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
         } catch (FenixServiceException e) {
             if (e.getMessage().equals("error.invalidExecutionDegree")) {
-                errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
+                errors.add("noDegreeCurricularPlan", new ActionError("error.coordinator.chosenDegree"));
             } else {
                 e.printStackTrace();
                 throw new FenixActionException(e);
             }
         }
-        if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null) {
-            errors.add("noDegreeCurricularPlan", new ActionError(
-                    "error.coordinator.noDegreeCurricularPlan"));
+
+        if (infoDegreeCurricularPlan == null) {
+            errors.add("noDegreeCurricularPlan", new ActionError("error.coordinator.chosenDegree"));
         }
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
             return (new ActionForward(mapping.getInput()));
         }
 
-        request.setAttribute("infoDegreeCurricularPlanID", infoExecutionDegree
-                .getInfoDegreeCurricularPlan().getIdInternal());
+        request.setAttribute("infoDegreeCurricularPlanID", degreeCurricularPlanID);
 
         DynaActionForm descriptionCurricularPlanForm = (DynaActionForm) form;
-        descriptionCurricularPlanForm.set("descriptionDegreeCurricularPlan", infoExecutionDegree
-                .getInfoDegreeCurricularPlan().getDescription());
-        descriptionCurricularPlanForm.set("descriptionDegreeCurricularPlanEn", infoExecutionDegree
-                .getInfoDegreeCurricularPlan().getDescriptionEn());
+        descriptionCurricularPlanForm.set("descriptionDegreeCurricularPlan", infoDegreeCurricularPlan
+                .getDescription());
+        descriptionCurricularPlanForm.set("descriptionDegreeCurricularPlanEn", infoDegreeCurricularPlan
+                .getDescriptionEn());
 
         return mapping.findForward("viewDescriptionCurricularPlan");
     }
@@ -256,6 +280,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession();
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Integer infoExecutionDegreeId = getFromRequest("infoExecutionDegreeID", request);
         request.setAttribute("infoExecutionDegreeID", infoExecutionDegreeId);
@@ -273,7 +299,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         infoDegreeCurricularPlan.setDescriptionEn((String) descriptionCurricularPlanForm
                 .get("descriptionDegreeCurricularPlanEn"));
 
-        Object[] args = { infoExecutionDegreeId, infoDegreeCurricularPlan };
+        Object[] args = { infoDegreeCurricularPlan };
         try {
             infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory
                     .executeService(userView, "EditDescriptionDegreeCurricularPlan", args);
@@ -309,18 +335,23 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
 
         ActionErrors errors = new ActionErrors();
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute("UserView");
 
-        Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-        request.setAttribute("infoExecutionDegreeID", executionDegreeId);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
+//        Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);
+//        request.setAttribute("infoExecutionDegreeID", executionDegreeId);
 
         //read execution degree
-        Object[] args = { executionDegreeId };
+        Object[] args = { degreeCurricularPlanID };
 
         InfoExecutionDegree infoExecutionDegree = null;
         Integer degreeId = null;
         try {
             infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    null, "ReadExecutionDegreeByOID", args);
+                    userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
         } catch (FenixServiceException e) {
             errors.add("impossibleHistoricDegreeSite", new ActionError(
                     "error.coordinator.impossibleHistoricDegreeSite"));

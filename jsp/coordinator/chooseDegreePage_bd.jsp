@@ -6,35 +6,32 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
 <bean:define id="degreeList" name="<%= SessionConstants.MASTER_DEGREE_LIST %>" scope="session" />
-<bean:define id="link">/chooseDegree.do?degree=</bean:define>
+<bean:define id="link">/chooseDegree.do?degreeCurricularPlanID=</bean:define>
 <p><span class="emphasis"><%= ((List) degreeList).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.degreesFound"/></p>
 <p><bean:message key="label.masterDegree.chooseOne"/></p>
 <table>
 	<tr>
 		<td class="listClasses-header">Nome</td>
-		<td class="listClasses-header">Ano Lectivo</td>
 		<td class="listClasses-header">Plano Curricular</td>
 	</tr>
-	<logic:iterate id="degree" name="degreeList" indexId="indexDegree">
+	
+	<logic:iterate id="degree" name="degreeList">
 		<bean:define id="degreeLink">
-			<bean:write name="link"/><bean:write name="indexDegree"/>
+			<bean:write name="link"/><bean:write name="degree" property="idInternal"/>
 		</bean:define>            	
+
 		<tr>
-			<td class="listClasses">
-				<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
-					<bean:write name="degree" property="infoDegreeCurricularPlan.infoDegree.nome" /> 
+		   <td class="listClasses">
+		        <html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
+					<bean:write name="degree" property="infoDegree.nome" />
 				</html:link>
 		   </td>
 		   <td class="listClasses">
 				<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
-					<bean:write name="degree" property="infoExecutionYear.year" />
+					<bean:write name="degree" property="name" /> 
 				</html:link>
-		   </td>
-			<td class="listClasses">
-				<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
-					<bean:write name="degree" property="infoDegreeCurricularPlan.name" />
-				</html:link>
-		   </td>
+		   </td>	   
 		</tr>
 	</logic:iterate>
+
 </table>

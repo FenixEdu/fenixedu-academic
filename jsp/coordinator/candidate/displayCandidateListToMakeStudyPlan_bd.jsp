@@ -6,6 +6,7 @@
 
 		<bean:define id="link">/displayCourseListToStudyPlan.do?method=prepareSelectCourseList<%= "&" %>candidateID=
 		</bean:define>
+		<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 	<br />
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
@@ -26,7 +27,7 @@
     			</bean:define>
     		<tr>
     		<td class="listClasses">
-      			<html:link page="<%= pageContext.findAttribute("candidateLink").toString() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") %>">
+      			<html:link page="<%= pageContext.findAttribute("candidateLink").toString() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
     				<bean:write name="candidate" property="infoPerson.nome" />
     			</html:link>
     		</td>

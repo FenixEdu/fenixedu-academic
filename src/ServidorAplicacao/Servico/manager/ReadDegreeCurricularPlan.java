@@ -28,22 +28,23 @@ public class ReadDegreeCurricularPlan implements IService {
 
     /**
      * Executes the service. Returns the current InfoDegreeCurricularPlan.
+     * 
+     * @throws ExcepcaoPersistencia
      */
-    public InfoDegreeCurricularPlan run(Integer idInternal) throws FenixServiceException {
-        IDegreeCurricularPlan degreeCurricularPlan;
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
-                    .readByOID(DegreeCurricularPlan.class, idInternal);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+    public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException,
+            ExcepcaoPersistencia {
+
+        final IDegreeCurricularPlan degreeCurricularPlan;
+
+        final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
+                .readByOID(DegreeCurricularPlan.class, idInternal);
 
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();
         }
 
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree
+        final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree
                 .newInfoFromDomain(degreeCurricularPlan);
 
         return infoDegreeCurricularPlan;

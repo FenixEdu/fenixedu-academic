@@ -16,6 +16,8 @@ public interface IPersistentCoordinator extends IPersistentObject {
 
     public List readExecutionDegreesByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 
+    public List readCurricularPlansByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
+
     public List readCoordinatorsByExecutionDegree(ICursoExecucao executionDegree)
             throws ExcepcaoPersistencia;
 
@@ -24,4 +26,7 @@ public interface IPersistentCoordinator extends IPersistentObject {
 
     public ICoordinator readCoordinatorByTeacherAndExecutionDegree(ITeacher teacher,
             ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+
+    public ICoordinator readCoordinatorByTeacherAndDegreeCurricularPlanID(ITeacher teacher,
+            Integer degreeCurricularPlanID) throws ExcepcaoPersistencia;
 }

@@ -149,13 +149,13 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 
         if (session != null) {
             session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-            Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+            Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 
             if (curricularPlanID == null) {
                 curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
 
             }
-            request.setAttribute("curricularPlanID", curricularPlanID);
+            request.setAttribute("degreeCurricularPlanID", curricularPlanID);
 
             request.setAttribute(SessionConstants.EXECUTION_DEGREE, request
                     .getParameter("executionDegreeID"));
@@ -174,7 +174,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
             // Create the Degree Type List
             List specializations = Specialization.toArrayList();
             request.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
-            Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+            Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 
             String executionDegreeId = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
             if (executionDegreeId == null) {

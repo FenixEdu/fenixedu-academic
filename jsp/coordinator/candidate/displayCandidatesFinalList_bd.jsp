@@ -34,7 +34,8 @@
                 <html:hidden property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
                 <html:hidden property='<%= "situations[" + indexCandidate + "]" %>' />					
                 <html:hidden property='<%= "remarks[" + indexCandidate + "]" %>' />					
-                <html:hidden property='<%= "substitutes[" + indexCandidate + "]" %>' />					
+                <html:hidden property='<%= "substitutes[" + indexCandidate + "]" %>' />
+                <html:hidden property="degreeCurricularPlanID" />					
         	</logic:iterate> 
         	 <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
     	    <html:submit value="Confirmar" styleClass="inputbutton" property="OK"/>

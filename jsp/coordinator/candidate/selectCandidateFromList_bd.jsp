@@ -10,10 +10,11 @@
 <jsp:include page="../context.jsp"/>
 <p><span class="error"><html:errors/></span></p>
 <p>
-    <bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />        
+    <bean:define id="candidateList" name="masterDegreeCandidateList" scope="request" />
+    <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />        
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<bean:define id="link">
-		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>page=0<%= "&" %>candidatePosition= 
+		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>page=0<%= "&" %>degreeCurricularPlanID=<%= degreeCurricularPlanID %>
 	</bean:define>
     <span class="emphasis"><%= ((List) candidateList).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
     <% if (((List) candidateList).size() != 0) { %>
@@ -25,9 +26,9 @@
 				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></td>
 				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
 			</tr>
-    		<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
+    		<logic:iterate id="candidate" name="candidateList" >
     			<bean:define id="candidateLink">
-    				<bean:write name="link"/><bean:write name="indexCandidate"/>
+    				<bean:write name="link"/>&candidateID=<bean:write name="candidate" property="idInternal"/>
     			</bean:define>
     			<tr>
     				<td class="listClasses">

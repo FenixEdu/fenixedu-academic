@@ -19,6 +19,7 @@
             <bean:message key="title.masterDegree.administrativeOffice.listCandidates" />
         <br /><br />
         <html:form action="/displayListToSelectCandidates.do?method=selectCandidates">
+        	<html:hidden property="degreeCurricularPlanID"/>
 		    <table>	        
         	<!-- Candidate List -->
         	<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">

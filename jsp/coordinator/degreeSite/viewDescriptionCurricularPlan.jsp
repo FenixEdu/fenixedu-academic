@@ -11,8 +11,8 @@
 
 	<h2><bean:message key="title.coordinator.degreeSite.edit"/></h2>
 
-	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegreeID"/>
-	<html:hidden property="infoExecutionDegreeID" value="<%=  infoExecutionDegreeID.toString() %>"/>
+	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
+	<html:hidden property="degreeCurricularPlanID" value="<%=  degreeCurricularPlanID.toString() %>"/>
 	
 	<bean:define id="infoDegreeCurricularPlanID" name="infoDegreeCurricularPlanID"/>
 	<html:hidden property="infoDegreeCurricularPlanID" value="<%=  infoDegreeCurricularPlanID.toString() %>"/>

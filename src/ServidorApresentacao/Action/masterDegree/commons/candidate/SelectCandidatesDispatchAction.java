@@ -47,8 +47,15 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
-        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+
+        Integer executionDegree = (Integer) request.getAttribute("executionDegreeID");
+        if (executionDegree == null) {
+            executionDegree = Integer.valueOf((String) request.getAttribute(SessionConstants.EXECUTION_DEGREE));
+        }
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+
+        Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+
         if (executionYear == null) {
             executionYear = (String) approvalForm.get("executionYear");
         }
@@ -60,7 +67,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
         // Get Numerus Clausus
         Integer numerusClausus = null;
         try {
-            Object args[] = { executionDegree };
+            Object args[] = { degreeCurricularPlanID };
             numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
                     "ReadNumerusClausus", args);
         } catch (NonExistingServiceException e) {
@@ -73,7 +80,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
             return mapping.findForward("NumerusClaususNotDefined");
         }
 
-        request.setAttribute("numerusClausus", numerusClausus);
+        request.setAttribute(SessionConstants.NUMERUS_CLAUSUS, numerusClausus);
 
         //Create the Candidate Situation List
         List situationsList = new ArrayList();
@@ -109,7 +116,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
         activeSituations.add(new SituationName(SituationName.FALTA_CERTIFICADO));
 
         Object args[] = { executionDegree, activeSituations };
-
         try {
             candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
                     "ReadCandidatesForSelection", args);
@@ -151,6 +157,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
         request.setAttribute("candidateList", candidateList);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         return mapping.findForward("PrepareSuccess");
     }
 
@@ -167,6 +174,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
             return mapping.findForward("BackError");
         }
 
+        Integer degreeCurricularPlanID = (Integer) approvalForm.get("degreeCurricularPlanID");
         String[] candidateList = (String[]) approvalForm.get("situations");
         String[] ids = (String[]) approvalForm.get("candidatesID");
         String[] remarks = (String[]) approvalForm.get("remarks");
@@ -187,6 +195,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
             throw new ExistingActionException(e);
         }
 
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         request.setAttribute("candidatesID", ids);
         request.setAttribute("situations", candidateList);
         request.setAttribute("remarks", remarks);
@@ -199,7 +208,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
         Integer numerusClausus = null;
         try {
             //Object args[] = { executionYear, degree };
-            Object args[] = { executionDegree };
+            //Object args[] = { executionDegree };
+            Object args[] = { degreeCurricularPlanID };
             numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
                     "ReadNumerusClausus", args);
         } catch (NonExistingServiceException e) {
@@ -322,6 +332,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
         String[] ids = (String[]) resultForm.get("candidatesID");
         String[] remarks = (String[]) resultForm.get("remarks");
         String[] substitutes = (String[]) resultForm.get("substitutes");
+        Integer degreeCurricularPlanID = (Integer) resultForm.get("degreeCurricularPlanID");
 
         String executionDegree = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
         if (executionDegree == null)
@@ -330,6 +341,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
             return mapping.findForward("BackError");
         }
 
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         request.setAttribute("situations", candidateList);
         request.setAttribute("candidatesID", ids);
         request.setAttribute("remarks", remarks);
@@ -547,6 +559,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 
         substituteForm.set("executionYear", substituteForm.get("executionYear"));
         substituteForm.set("degree", substituteForm.get("degree"));
+        request.setAttribute("executionDegreeID", executionDegree);
 
         if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null)) {
 

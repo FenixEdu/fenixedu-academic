@@ -56,10 +56,10 @@ public class WriteCandidateEnrolments implements IService {
                 curricularCoursesToEnroll.add(selection[i]);
             }
 
-            filterEnrollments(persistentCandidateEnrolment, masterDegreeCandidate,
-                    candidateEnrollmentsToDelete, curricularCoursesToEnroll);
+            List curricularCoursesToEnrollFiltered = filterEnrollments(persistentCandidateEnrolment,
+                    masterDegreeCandidate, candidateEnrollmentsToDelete, curricularCoursesToEnroll);
 
-            writeFilteredEnrollments(sp, masterDegreeCandidate, curricularCoursesToEnroll);
+            writeFilteredEnrollments(sp, masterDegreeCandidate, curricularCoursesToEnrollFiltered);
 
             deleteRemainingEnrollments(persistentCandidateEnrolment, candidateEnrollmentsToDelete);
         } catch (ExcepcaoPersistencia ex) {
@@ -119,7 +119,7 @@ public class WriteCandidateEnrolments implements IService {
      * @param curricularCoursesToEnroll
      * @throws ExcepcaoPersistencia
      */
-    private void filterEnrollments(IPersistentCandidateEnrolment persistentCandidateEnrolment,
+    private List filterEnrollments(IPersistentCandidateEnrolment persistentCandidateEnrolment,
             IMasterDegreeCandidate masterDegreeCandidate, List candidateEnrollmentsToDelete,
             List curricularCoursesToEnroll) throws ExcepcaoPersistencia {
         List existentCandidateEnrollments = persistentCandidateEnrolment
@@ -135,6 +135,20 @@ public class WriteCandidateEnrolments implements IService {
                 candidateEnrollmentsToDelete.add(existentCandidateEnrolment);
             }
         }
+
+        //remove repeated Enrollments to "protect" the service
+        // in order to avoid the listing of a course with more than one scientific area
+        List result = new ArrayList();
+        for (Iterator iter = curricularCoursesToEnroll.iterator(); iter.hasNext();) {
+            Integer curricularCourse = (Integer) iter.next();
+
+            if (!result.contains(curricularCourse)) {
+                result.add(curricularCourse);
+            }
+        }
+
+        return result;
+
     }
 
     /**

@@ -79,7 +79,7 @@ abstract public class DomainObject implements IDomainObject {
 
     }
 
-    private class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
+    public class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
 
         public boolean evaluate(Object arg0) {
             Class class1 = (Class) arg0;

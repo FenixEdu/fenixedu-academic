@@ -21,7 +21,7 @@
         	<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
 				<tr>
 					<td>
-				        <html:hidden property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
+				        <html:hidden property='<%= "candidatesID[" + indexCandidate + "]" %>' />
 					<bean:write name="candidate" property="infoPerson.nome"/></td>
 					<td>
                         <html:select property='<%= "situations[" + indexCandidate + "]" %>' >
@@ -34,6 +34,7 @@
         	</logic:iterate>
         	</table>	
         	<html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
+        	<html:hidden property="degreeCurricularPlanID" />
 		   <html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
         </html:form>	
    </logic:present>

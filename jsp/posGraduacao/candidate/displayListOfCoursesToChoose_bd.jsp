@@ -81,7 +81,8 @@
 	
 		<html:form action="/displayCourseListToStudyPlan?method=chooseCurricularCourses">
 	   	  	<html:hidden property="page" value="1"/> 
-	   	  	<html:hidden property="candidateID"/> 
+	   	  	<html:hidden property="candidateID"/>
+	   	  	<html:hidden property="degreeCurricularPlanID"/> 
 			<!-- CurricularCourse -->
 			<table>
 				<tr>

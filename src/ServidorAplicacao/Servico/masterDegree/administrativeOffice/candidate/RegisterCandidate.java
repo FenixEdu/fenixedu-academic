@@ -2,6 +2,7 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,6 +39,7 @@ import Dominio.MasterDegreeCandidate;
 import Dominio.Qualification;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -78,7 +80,7 @@ public class RegisterCandidate implements IService {
     public RegisterCandidate() {
     }
 
-    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber)
+    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
             throws FenixServiceException {
 
         ISuportePersistente sp = null;
@@ -204,6 +206,14 @@ public class RegisterCandidate implements IService {
             // ActiveStudentCurricularPlanAlreadyExistsServiceException();
             //            }
 
+            IStudentCurricularPlan existingStudentCurricularPlan = sp
+                    .getIStudentCurricularPlanPersistente().readByStudentDegreeCurricularPlanAndState(
+                            student, masterDegreeCandidate.getExecutionDegree().getCurricularPlan(),
+                            StudentCurricularPlanState.ACTIVE_OBJ);
+            if (existingStudentCurricularPlan != null) {
+                throw new ExistingServiceException();
+            }
+
             IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
             sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
 
@@ -248,6 +258,8 @@ public class RegisterCandidate implements IService {
                         EnrolmentEvaluationType.NORMAL));
 
                 enrolment.getEvaluations().add(enrolmentEvaluation);
+                enrolment.setCreationDate(new Date());
+                enrolment.setCreatedBy(userView.getUtilizador());
             }
 
             // Change the Candidate Situation

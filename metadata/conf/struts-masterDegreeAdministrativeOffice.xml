@@ -388,6 +388,7 @@
         	<form-property name="executionYear" type="java.lang.String" />
             <form-property name="degree" type="java.lang.String" />
    	        <form-property name="substitutes" type="java.lang.String[]"/>
+   	        <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
        </form-bean>
 
 	  <!-- Bean to Choose the Situation for the Candidate  -->
@@ -426,6 +427,7 @@
          <form-property name="page" type="java.lang.Integer" />
          <form-property name="masterDegree" type="java.lang.String" />
          <form-property name="candidateID" type="java.lang.Integer"/>
+         <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
       </form-bean>
       
       <!-- Bean to Choose the Course List for Study Plan  -->
@@ -439,6 +441,7 @@
    	        <form-property name="givenCreditsRemarks" type="java.lang.String"/>
         	<form-property name="selection" type="java.lang.Integer[]"/>
         	<form-property name="attributedCredits" type="java.lang.String"/>
+        	<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
       </form-bean>
       
       <!-- Bean to Choose the Course List for Study Plan  -->

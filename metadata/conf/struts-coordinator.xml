@@ -48,6 +48,7 @@
         	<form-property name="executionYear" type="java.lang.String" />
             <form-property name="degree" type="java.lang.String" />
    	        <form-property name="substitutes" type="java.lang.String[]"/>
+   	        <form-property name="degreeCurricularPlanID" type="java.lang.Integer" />
        </form-bean>
 
   	  <!-- Bean to Choose the second Master Degree for Study Plan -->
@@ -70,6 +71,7 @@
    	        <form-property name="executionYear" type="java.lang.String"/>
         	<form-property name="selection" type="java.lang.Integer[]"/>
         	<form-property name="attributedCredits" type="java.lang.String"/>
+        	<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
       </form-bean>     
       
       
@@ -241,6 +243,7 @@
 			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
 			<form-property name="alteredField" type="java.lang.String" />
 			<form-property name="status" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 
 		<!-- STUDENTS GRATUITY LIST -->		
@@ -248,10 +251,14 @@
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="chosenYear" type="java.lang.String"/>
             <form-property name="executionYear" type="java.lang.String"/>
             <form-property name="specialization" type="java.lang.String"/>
             <form-property name="degree" type="java.lang.String"/>
             <form-property name="situation" type="java.lang.String" />
+            <form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
+            <form-property name="order" type="java.lang.String"/>
+            
 		</form-bean>
 
 		<!-- VIEW STUDENT CURRICULUM FORMS -->

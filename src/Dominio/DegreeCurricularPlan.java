@@ -247,6 +247,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         this.ojbConcreteClass = ojbConcreteClass;
     }
 
+    
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
@@ -430,4 +431,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
     // END: Only for enrollment purposes
     // -------------------------------------------------------------
 
+    
+    
+    
 }

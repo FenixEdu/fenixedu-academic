@@ -77,6 +77,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 	        IPersistentFinalDegreeWork persistentFinalDegreeWork = sp.getIPersistentFinalDegreeWork();
 	        
 	        IStudent student1 = sp.getIPersistentStudent().readByUsername(username);
+	        
 	        List students = sp.getIPersistentStudent().readbyPerson(student1.getPerson());
 	        
 	        // for each of the Person's Student roles

@@ -211,7 +211,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O aluno");
             }
-            
+
             if (certificateString.equals("Duração do Curso")) {
                 int initialYear = infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
                         .getInitialDate().getYear() + 1900;

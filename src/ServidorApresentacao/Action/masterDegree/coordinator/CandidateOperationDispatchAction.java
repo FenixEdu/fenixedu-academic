@@ -11,13 +11,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import framework.factory.ServiceManagerServiceFactory;
 
 public class CandidateOperationDispatchAction extends DispatchAction {
@@ -30,11 +30,10 @@ public class CandidateOperationDispatchAction extends DispatchAction {
         if (session != null) {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                    .getAttribute(SessionConstants.MASTER_DEGREE);
+            Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanID"));
 
             List candidates = null;
-            Object args[] = { infoExecutionDegree };
+            Object args[] = { degreeCurricularPlanId };
 
             try {
                 candidates = (List) ServiceManagerServiceFactory.executeService(userView,
@@ -46,8 +45,8 @@ public class CandidateOperationDispatchAction extends DispatchAction {
             if (candidates.size() == 0)
                 throw new NonExistingActionException("error.exception.nonExistingCandidates", "", null);
 
-            session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+            request.setAttribute("masterDegreeCandidateList", candidates);
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
             return mapping.findForward("ViewList");
         }
@@ -55,26 +54,28 @@ public class CandidateOperationDispatchAction extends DispatchAction {
     }
 
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-        HttpSession session = request.getSession(false);
+        IUserView userView = SessionUtils.getUserView(request);
 
-        if (session != null) {
-            List candidateList = (List) session
-                    .getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
+        Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+        Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
 
-            Integer choosenCandidatePosition = Integer
-                    .valueOf(request.getParameter("candidatePosition"));
+        Object[] args = { candidateID };
 
-            // Put the selected Candidate in Session
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) candidateList
-                    .get(choosenCandidatePosition.intValue());
-
-            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-            return mapping.findForward("ActionReady");
-
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate;
+        try {
+            infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadMasterDegreeCandidateByID", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException();
         }
-        throw new Exception();
+        
+        request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+
+        return mapping.findForward("ActionReady");
     }
 
 }

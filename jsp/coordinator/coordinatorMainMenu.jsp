@@ -8,7 +8,7 @@
 
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
-	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegree" property="idInternal"/>
+	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
 	<%-- Start of Master Degree Coordinator Options --%>
 	<logic:equal name="infoExecutionDegree" 
@@ -18,16 +18,16 @@
 			<strong>&raquo; <bean:message key="link.coordinator.candidate"/></strong>
 			<ul>
 	        	<li>
-		        	<html:link page="/candidateOperation.do?method=getCandidates&action=visualize&page=0">
+		        	<html:link page="<%= "/candidateOperation.do?method=getCandidates&action=visualize&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 		        	<bean:message key="link.coordinator.visualizeCandidate" /></html:link>
 		        	<br/>
 					<br/>
 		        </li>
 	        	<li>
-	        		<bean:define id="link">/prepareCandidateApproval.do?method=chooseExecutionDegree&page=0&executionDegreeID=
+	        		<bean:define id="link">/prepareCandidateApproval.do?method=chooseExecutionDegree&page=0&degreeCurricularPlanID=
 	        		</bean:define>
 		        	<bean:define id="prepareCandidateApprovalLink">
-    					<bean:write name="link"/><bean:write name="infoExecutionDegreeId"/>
+    					<bean:write name="link"/><bean:write name="degreeCurricularPlanID"/>
     				</bean:define> 	
 		        	
 		        	<html:link page='<%= pageContext.findAttribute("prepareCandidateApprovalLink").toString() %>'>
@@ -36,10 +36,10 @@
 					<br/>		        	
 		        </li>
 				<li>
-					<bean:define id="link2">/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0&executionDegreeID=
+					<bean:define id="link2">/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&page=0&degreeCurricularPlanID=
 	        		</bean:define>
 		        	<bean:define id="displayCandidateListToMakeStudyPlanLink">
-    					<bean:write name="link2"/><bean:write name="infoExecutionDegreeId"/>
+    					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
     				</bean:define> 	
 					<html:link page="<%= pageContext.findAttribute("displayCandidateListToMakeStudyPlanLink").toString() %>">
 					<bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link>
@@ -51,27 +51,31 @@
 			<p><strong>&raquo; <bean:message key="link.coordinator.student"/></strong>
 			<ul>
 				<li>
-					<html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0">
+					<bean:define id="link2">/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&degreeCurricularPlanID=
+	        		</bean:define>
+		        	<bean:define id="listStudentsForCoordinator">
+    					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
+    				</bean:define> 	
+					<html:link page="<%= pageContext.findAttribute("listStudentsForCoordinator").toString() %>">
 					<bean:message key="link.coordinator.studentListByDegree" /></html:link>
 		        	<br/>
 					<br/>
 				</li>
 				<li>
-					<html:link page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0">
-				<bean:message key="link.studentListByCourse" /></html:link>
+				
+					<bean:define id="link2">/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0&degreeCurricularPlanID=
+	        		</bean:define>
+		        	<bean:define id="studentListByDegree">
+    					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
+    				</bean:define> 	
+					<html:link page="<%= pageContext.findAttribute("studentListByDegree").toString() %>">
+					<bean:message key="link.studentListByCourse" /></html:link>					
+					
 		        	<br/>
 					<br/>
 				</li>
 				<li>
-					<%
-						String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
-			            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
-			            name = name + ">" + infoExecutionDegree.getIdInternal().toString();
-			            String linkListStudents = "/studentsGratuityList.do?method=studentsGratuityList&amp;order=studentNumber&amp;executionYear=" + infoExecutionDegree.getInfoExecutionYear().getYear()  + "&amp;specialization=all&situation=all&degree=" + name;
-					
-					%>
-						
-					<html:link page='<%= linkListStudents %>'>
+					<html:link page='<%= "/studentsGratuityList.do?method=coordinatorStudentsGratuityList&amp;chosenYear=1&amp;order=studentNumber&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
 						<bean:message key="link.coordinator.studentAndGratuityListByDegree"/>
 					</html:link>
 					<br/>
@@ -122,7 +126,7 @@
 	<ul>
 		<li>
 			<bean:define id="infoExecutionDegreeCode" name="infoExecutionDegree" property="idInternal"/>
-			<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;infoExecutionDegreeCode=" + infoExecutionDegreeCode %>">
+			<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
 			</html:link> 
 			<br/>
@@ -130,8 +134,8 @@
 		</li>
 
 		<li>
-			<html:link page="<%= "/viewCoordinationTeam.do?method=viewTeam&infoExecutionDegreeId="+ 
-			infoExecutionDegreeId.toString()  %>" >
+			<html:link page="<%= "/viewCoordinationTeam.do?method=viewTeam&degreeCurricularPlanID="+ 
+			degreeCurricularPlanID.toString()  %>" >
 				Equipa de Coordenação
 			</html:link> 
 			<br/>
@@ -139,7 +143,7 @@
 		</li>
 	
 		<li>
-			<html:link page="<%= "/degreeSiteManagement.do?method=subMenu&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+			<html:link page="<%= "/degreeSiteManagement.do?method=subMenu&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 				<bean:message key="link.coordinator.degreeSite.management"/>		
 			</html:link> 
 			<br/>
@@ -147,7 +151,7 @@
 		</li>
 
        	<li>
-        	<html:link page="<%= "/manageFinalDegreeWork.do?method=prepare&amp;executionDegreeOID=" + infoExecutionDegreeId.toString()%>">
+        	<html:link page="<%= "/manageFinalDegreeWork.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 	        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
 	        </html:link>
         </li>
