@@ -266,7 +266,6 @@
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
-        id="1"
     />
 
     <field-descriptor
@@ -274,14 +273,12 @@
         column="KEY_ROLE"
         nullable = "false"
         jdbc-type="INTEGER"
-        id="2"
     />
     <field-descriptor 
         name="keyPerson"
         column="KEY_PERSON"
 		nullable="false"
         jdbc-type="INTEGER"
-        id="3"
     />
 
       <reference-descriptor
@@ -289,7 +286,7 @@
          class-ref="Dominio.Role"
          proxy="false"
 	  >
-         <foreignkey field-id-ref="2"/>
+         <foreignkey field-ref="keyRole"/>
       </reference-descriptor>
       
      <reference-descriptor
@@ -297,7 +294,7 @@
          class-ref="Dominio.Pessoa"
          proxy="false"
 	  >
-         <foreignkey field-id-ref="3"/>
+         <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>
 
 </class-descriptor>
