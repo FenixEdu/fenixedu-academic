@@ -1,0 +1,1 @@
+alter table TEACHER ADD KEY_CATEGORY int(11);
