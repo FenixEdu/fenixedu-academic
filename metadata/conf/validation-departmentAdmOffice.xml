@@ -2,10 +2,32 @@
 <!-- @validation.doctype@ -->
 <form-validation>
     <formset>
-    	<!-- é para apagar este form assim que tivermos um form para inserir -->
-    	<form name="xxxxx">
+    	<form name="teacherSearchForm">
     		<field property="x1" depends="required"></field>
     	</form>
+
+    	<form name="professorshipForm">
+    		<field property="x1" depends="required"></field>
+    	</form>
+
+    	<form name="teacherExecutionCourseShiftProfessorshipForm">
+    		<field property="x1" depends="required"></field>
+    	</form>
+
+    	<form name="supportLessonForm">
+    		<field property="x1" depends="required"></field>
+    	</form>
+
+    	<form name="teacherDegreeFinalProjectStudentForm">
+    		<field property="x1" depends="required"></field>
+    	</form>
+    	
+    	<form name="teacherInstitutionWorkingTimeForm">
+    		<field property="x1" depends="required"></field>
+    	</form>
+
+
+
     </formset>
 </form-validation>
 
