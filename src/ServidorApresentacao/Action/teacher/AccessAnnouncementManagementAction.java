@@ -1,6 +1,5 @@
 package ServidorApresentacao.Action.teacher;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
@@ -43,12 +41,6 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 		//put new announcement list
 		session.setAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST, announcements);
-		
-		Iterator iterador =  announcements.iterator();
-		System.out.println("Announcements");
-		while(iterador.hasNext()){
-			System.out.println((InfoAnnouncement) iterador.next());
-		}
 		
 		if (!(announcements.isEmpty()))
 			return mapping.findForward("AnnouncementManagement");
