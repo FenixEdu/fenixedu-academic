@@ -2,7 +2,7 @@ package ServidorAplicacao.Servico.student;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudent;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentWithInfoPerson;
 import Dominio.IStudent;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,7 +34,9 @@ public class ReadStudentByNumberAndAllDegreeTypes implements IService {
       }
       if (student != null) {
 
-		infoStudent = Cloner.copyIStudent2InfoStudent(student);
+          //CLONER
+          infoStudent=InfoStudentWithInfoPerson.newInfoFromDomain(student);
+          //infoStudent = Cloner.copyIStudent2InfoStudent(student);
       }
       
     } catch (ExcepcaoPersistencia ex) {

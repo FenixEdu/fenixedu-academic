@@ -35,12 +35,7 @@
 						</html:link>
 					</td>
 					<td class="listClasses">
-						<logic:notEmpty name="curricularCourseScopeElem" property="infoBranch.prettyCode">
-							<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
-						</logic:notEmpty>
-						<logic:empty name="curricularCourseScopeElem" property="infoBranch.prettyCode">
-							&nbsp;
-						</logic:empty>
+						&nbsp;<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
 					</td>
 				</tr>
 			</logic:iterate>

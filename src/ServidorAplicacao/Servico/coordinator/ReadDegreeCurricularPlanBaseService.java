@@ -7,6 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
@@ -27,7 +28,6 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService
 		ISuportePersistente sp)
 		throws FenixServiceException
 	{
-		//        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 		List infoActiveScopes = null;
 		try
 		{
@@ -53,8 +53,11 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService
 						{
 							ICurricularCourseScope curricularCourseScope =
 								(ICurricularCourseScope) input;
-							return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-								curricularCourseScope);
+							//CLONER
+							return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+                                    .newInfoFromDomain(curricularCourseScope);
+							//return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+							//	curricularCourseScope);
 						}
 					}, infoActiveScopes);
 				}
