@@ -101,7 +101,7 @@ public class InsertTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
             criteria = new Criteria();
             criteria.addEqualTo("idInternal", args[1]);
             queryCriteria = new QueryByCriteria(Test.class, criteria);
-            ITest test = (ITest) broker.getObjectByQuery(queryCriteria);
+            //ITest test = (ITest) broker.getObjectByQuery(queryCriteria);
 
             broker.close();
 

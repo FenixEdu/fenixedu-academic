@@ -114,8 +114,9 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase
             PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
             Criteria criteria = new Criteria();
-            criteria.addOrderBy("lastModifiedDate", false);
+            //criteria.addOrderBy("lastModifiedDate", false);
             Query queryCriteria = new QueryByCriteria(Summary.class, criteria);
+            ((QueryByCriteria)queryCriteria).addOrderBy("lastModifiedDate", false);
             ISummary summary = (ISummary) broker.getObjectByQuery(queryCriteria);
             broker.close();
 
