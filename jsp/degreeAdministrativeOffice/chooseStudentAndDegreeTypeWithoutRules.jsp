@@ -7,7 +7,7 @@
 
 <center>
 <h2><bean:message key="title.student.enrolment.without.rules"/></h2>
-<html:form action="/getStudentByNumberAndDegreeType">
+<html:form action="/getStudentByNumberAndDegreeType.do?method=withoutRules">
 	<%--<html:hidden property="page" value="1"/>--%>
 	<html:hidden property="method" value="start"/>
 	<table border="0">

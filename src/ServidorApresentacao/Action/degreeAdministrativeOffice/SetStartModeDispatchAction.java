@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -23,18 +22,18 @@ public class SetStartModeDispatchAction extends DispatchAction {
 	private final String[] forwards = { "chooseStudentAndDegreeTypeWithRules", "chooseStudentAndDegreeTypeWithoutRules" };
 
 	public ActionForward withRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 
-		session.setAttribute(SessionConstants.ENROLMENT_MODE_KEY, "withRules");
+//		session.setAttribute(SessionConstants.ENROLMENT_MODE_KEY, "withRules");
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
 		return mapping.findForward(forwards[0]);
 	}
 
 	public ActionForward withoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 
-		session.setAttribute(SessionConstants.ENROLMENT_MODE_KEY, "withoutRules");
+//		session.setAttribute(SessionConstants.ENROLMENT_MODE_KEY, "withoutRules");
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
 		return mapping.findForward(forwards[1]);

@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.actions.DispatchAction;
 
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -20,12 +20,22 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author David Santos
  */
 
-public class GetStudentByNumberAndDegreeTypeAction extends Action {
+public class GetStudentByNumberAndDegreeTypeDispatchAction extends DispatchAction {
 	
 	private final String[] forwards = { "startCurricularCourseEnrolmentWithRules", "startCurricularCourseEnrolmentWithoutRules" };
-	private final String[] modes = { "withRules", "withoutRules" };
+//	private final String[] modes = { "withRules", "withoutRules" };
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward withRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		doIt(mapping, form, request, response);
+		return mapping.findForward(forwards[0]);
+	}
+
+	public ActionForward withoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		doIt(mapping, form, request, response);
+		return mapping.findForward(forwards[1]);
+	}
+
+	public void doIt(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -44,19 +54,18 @@ public class GetStudentByNumberAndDegreeTypeAction extends Action {
 			throw new FenixActionException(e);
 		}
 		
-		String mode = (String) session.getAttribute(SessionConstants.ENROLMENT_MODE_KEY);
-		String forward = null;
-		if(mode.equals(modes[0])) {
-			forward = new String(forwards[0]);
-		} else if(mode.equals(modes[1])) {
-			forward = new String(forwards[1]);
-		}
+//		String mode = (String) session.getAttribute(SessionConstants.ENROLMENT_MODE_KEY);
+//		String forward = null;
+//		if(mode.equals(modes[0])) {
+//			forward = new String(forwards[0]);
+//		} else if(mode.equals(modes[1])) {
+//			forward = new String(forwards[1]);
+//		}
 
 		// FIXME DAVID-RICARDO: Devido a remover este atributo, se for feito um refresh á página e o código desta
 		// action for executado sem executar o código da action que coloca este atributo na sessão, vai dar uma excepção
 		// (java.lang.NullPointerException) no if acima.
-		session.removeAttribute(SessionConstants.ENROLMENT_MODE_KEY);
+//		session.removeAttribute(SessionConstants.ENROLMENT_MODE_KEY);
 		session.setAttribute(SessionConstants.ENROLMENT_ACTOR_KEY, actor);
-		return mapping.findForward(forward);
 	}
 }
