@@ -142,6 +142,16 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
+	public List readCurricularCourseByCodeAndNameInDegreeActive(String name, String code) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("name", name);
+		criteria.addEqualTo("degreeCurricularPlan.state", new Integer(DegreeCurricularPlanState.ACTIVE));
+		criteria.addEqualTo("code", code);
+		List result = query(CurricularCourse.class, criteria);
+	
+		return result;
+	}
+	
 	public Almeida_disc readAlmeidaCurricularCourseByCodeAndDegree(String code, long curso) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("coddis", code);
@@ -284,7 +294,10 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return result;
 	}
 
-	public ICurricularCourse readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(String code, String name, IDegreeCurricularPlan degreeCurricularPlan) {
+	public ICurricularCourse readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(
+		String code,
+		String name,
+		IDegreeCurricularPlan degreeCurricularPlan) {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
@@ -295,7 +308,8 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		if (result.size() == 1) {
 			return (ICurricularCourse) result.get(0);
 		} else if (result.size() > 1) {
-			System.out.println("readCurricularCourseByCodeAndNameAndDegreeCurricularPlan: name = " + name + " result.size = " + result.size());
+			System.out.println(
+				"readCurricularCourseByCodeAndNameAndDegreeCurricularPlan: name = " + name + " result.size = " + result.size());
 		}
 		return null;
 	}
@@ -334,7 +348,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	public ICurricularCourse readCurricularCourseByNameAndDegreeCurricularPlan(String name, IDegreeCurricularPlan degreeCurricularPlan) {
+	public ICurricularCourse readCurricularCourseByNameAndDegreeCurricularPlan(
+		String name,
+		IDegreeCurricularPlan degreeCurricularPlan) {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);
@@ -413,7 +429,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
-	public ICurricularCourse readCurricularCourseByCodeAndDegreeCurricularPlan(String code, IDegreeCurricularPlan degreeCurricularPlan) {
+	public ICurricularCourse readCurricularCourseByCodeAndDegreeCurricularPlan(
+		String code,
+		IDegreeCurricularPlan degreeCurricularPlan) {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
@@ -481,7 +499,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return query(Almeida_curram.class, null);
 	}
 
-	public IDegreeCurricularPlan readDegreeCurricularPlanByDegreeKeyAndState(Integer degreeKey, DegreeCurricularPlanState degreeCurricularPlanState) {
+	public IDegreeCurricularPlan readDegreeCurricularPlanByDegreeKeyAndState(
+		Integer degreeKey,
+		DegreeCurricularPlanState degreeCurricularPlanState) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("degree.idInternal", degreeKey);
 		criteria.addEqualTo("state", degreeCurricularPlanState);
@@ -532,7 +552,12 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 			return (IBranch) result.get(0);
 		} else if (result.size() > 1) {
 			System.out.println(
-				"readBranchByUnique: code [" + code + "] e plano curricular [" + degreeCurricularPlan.getIdInternal() + "] result.size = " + result.size());
+				"readBranchByUnique: code ["
+					+ code
+					+ "] e plano curricular ["
+					+ degreeCurricularPlan.getIdInternal()
+					+ "] result.size = "
+					+ result.size());
 		}
 		return null;
 	}
@@ -547,7 +572,15 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 			return (Almeida_curram) result.get(0);
 		} else if (result.size() > 1) {
 			System.out.println(
-				"readAlmeidaCurramByUnique:" + " codcur = " + curso + " codRam =  " + ramo + " codorien =  " + orientacao + " result.size = " + result.size());
+				"readAlmeidaCurramByUnique:"
+					+ " codcur = "
+					+ curso
+					+ " codRam =  "
+					+ ramo
+					+ " codorien =  "
+					+ orientacao
+					+ " result.size = "
+					+ result.size());
 		}
 		return null;
 	}
@@ -605,7 +638,10 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
-	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndTypeAndGrade(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {
+	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndTypeAndGrade(
+		IEnrolment enrolment,
+		EnrolmentEvaluationType type,
+		String grade) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
 		criteria.addEqualTo("enrolmentEvaluationType", type);
@@ -705,7 +741,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return result;
 	}
 
-	public IEnrolmentEquivalenceRestriction readEnrolmentEquivalenceRestrictionByUnique(IEnrolment enrolment, IEnrolmentEquivalence enrolmentEquivalence) {
+	public IEnrolmentEquivalenceRestriction readEnrolmentEquivalenceRestrictionByUnique(
+		IEnrolment enrolment,
+		IEnrolmentEquivalence enrolmentEquivalence) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
 		criteria.addEqualTo("equivalentEnrolment.idInternal", enrolment.getIdInternal());
@@ -920,7 +958,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
-	public IStudentCurricularPlan readStudentCurricularPlanByStudentAndState(IStudent student, StudentCurricularPlanState studentCurricularPlanState) {
+	public IStudentCurricularPlan readStudentCurricularPlanByStudentAndState(
+		IStudent student,
+		StudentCurricularPlanState studentCurricularPlanState) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("student.idInternal", student.getIdInternal());
 		criteria.addEqualTo("currentState", studentCurricularPlanState);
@@ -934,5 +974,4 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 		return null;
 	}
-
 }

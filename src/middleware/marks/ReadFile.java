@@ -334,7 +334,7 @@ public class ReadFile extends LoadDataFile {
 
 		//Filter curricular courses ocurred in degree active
 		List curricularCoursesListInDegreeActive =
-			persistentObjectOJB.readCurricularCourseByCodeAndNameInDegreeActive(almeida_disc.getCoddis(), almeida_disc.getNomedis());
+			persistentObjectOJB.readCurricularCourseByCodeAndNameInDegreeActive(almeida_disc.getNomedis(), almeida_disc.getCoddis());
 		if (curricularCoursesListInDegreeActive == null || curricularCoursesListInDegreeActive.size() == 0) {
 			logString += numberLine + "-ERRO: Curricular Course " + almeida_disc.getCoddis() + " unknown in active degree\n";
 			return curricularCourseAndScope;
@@ -384,8 +384,8 @@ public class ReadFile extends LoadDataFile {
 				persistentObjectOJB.readCurricularCourseScopeByUnique(
 					curricularCourse,
 					branch,
-					curricularSemester,
-					new Integer(String.valueOf(almeida_enrolment.getAnoins())));
+					curricularSemester);
+					//new Integer(String.valueOf(almeida_enrolment.getAnoins())));
 		} else {
 			curricularCourseScope =
 				persistentObjectOJB.readCurricularCourseScopeByUniqueWithoutBranch(
