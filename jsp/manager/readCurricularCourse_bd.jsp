@@ -29,7 +29,7 @@
 <html:form action="/readCurricularCourse">
 	<h3><bean:message key="label.manager.executionCourses"/></h3>
 
-	<logic:empty name="executionCoursesList">
+<logic:empty name="executionCoursesList">
 		<i><bean:message key="label.manager.executionCourses.nonExisting"/></i>
 	</logic:empty>
 	
@@ -38,7 +38,7 @@
 
 			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
 			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
-			<html:hidden property="degreeId" value=" degreeId.toString() "/>
+			<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
 			
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
@@ -60,7 +60,7 @@
 						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/>
 						</td>
 	 				</tr>
-	 			</logic:iterate>						
+	 			</logic:iterate>					
 			</table>
 			
 			<br>
@@ -78,10 +78,11 @@
 	<logic:present name="curricularCourseScopesList" scope="request">
 		<logic:notEmpty name="curricularCourseScopesList">
 	
-			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
 			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
 			<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
-			<table width="70%" cellpadding="0" border="0">
+			
+		<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
 					</td>
@@ -134,11 +135,14 @@
 						</td>
 						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
 						</td>
+						<td>
+							<ul style="list-style-type: square;">
+								<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getAttribute("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>
+							</ul>
+						</td>
 	 				</tr>
-	 				<%--PASSAR O ID DO SCOPE PA TIRAR O INFO NA ACTION--%>
-	 				<ul style="list-style-type: square;">
-						<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getAttribute("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScopeId"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>
-					</ul>
+	 				<!--PASSAR O ID DO SCOPE PA TIRAR O INFO NA ACTION-->
+	 				
 	 				
 	 			</logic:iterate>			
 			</table>
@@ -147,5 +151,5 @@
 		</logic:notEmpty>	 	
 	</logic:present>
 	
-	<span class="error"><html:errors/></span>
+	
 </html:form> 

@@ -48,12 +48,17 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				
 				GestorServicos manager = GestorServicos.manager();
 				InfoCurricularCourse infoCurricularCourse = null;
+				
+//				System.out.println("ANTES DO SERVICO READ CURRICULAR COURSE");
+				
 								
 				try {
 					infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
 				} catch(FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
+			    
+//				System.out.println("DEPOIS/RESULTADO DO SERVICO READ CURRICULAR COURSE"+infoCurricularCourse);
 			    
 				// trying to read a curricular course that doesn´t exist in the database
 				if(infoCurricularCourse == null) {

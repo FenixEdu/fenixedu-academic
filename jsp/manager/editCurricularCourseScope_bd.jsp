@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<bean:define id="infoCurricularCourseScope" name="infoCurricularCourseScope" property="infoBranch"/>
+<%--<bean:define id="infoCurricularCourseScope" name="infoCurricularCourseScope" property="infoBranch"/>
 <bean:define id="infoCurricularSemester" name="infoCurricularCourseScope" property="infoCurricularSemester"/>
-<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
+<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>--%>
 				
 
 				
@@ -23,12 +23,12 @@
 	
 	
 	<table>
-		<tr>
+		<%--<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.curricularYear"/>
+				<bean:message key="message.manager.curricular.course.scope.curricularYear"/>
 			</td>
-			<td><%--ALTERAR APROPERTY YE VER S POSSO TIRAR AS OPTIONS        --%>
-				<html:select name="infoCurricularYear" property="year">
+			<td>
+				<html:select property="curricularYear">
 				<html:option key="option.curricular.course.scope.year1" value="1"/>
     			<html:option key="option.curricular.course.scope.year2" value="2"/>
     			<html:option key="option.curricular.course.scope.year3" value="3"/>
@@ -36,14 +36,14 @@
     			<html:option key="option.curricular.course.scope.year5" value="5"/>
     			</html:select>
 			</td>
-		</tr>
+		</tr>--%>
 
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.curricularSemester"/>
+				<bean:message key="message.manager.curricular.course.scope.curricularSemester"/>
 			</td>
 			<td><%--ALTERAR APROPERTY YE VER S POSSO TIRAR AS OPTIONS        --%>
-				<html:select name="infoCurricularSemester" property="semester">
+				<html:select property="curricularSemesterId">
 				<html:option key="option.curricular.course.scope.semester.1" value="1"/>
     			<html:option key="option.curricular.course.scope.semester.2" value="2"/>
     			<html:option key="option.curricular.course.scope.semester.3" value="3"/>
@@ -60,19 +60,19 @@
 
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.branchCode"/>
+				<bean:message key="message.manager.curricular.course.scope.branchCode"/>
 			</td>
 			<td><%--nao tenho certeza de property--%>
-				<html:text size="60" name="infoBranch" property="code"/>
+				<html:text size="60" property="branchCode"/>
 			</td>
 			<td>
-				<span class="error"><html:errors name="infoBranch" property="code"/></span>
+			<span class="error"><html:errors property="branchCode"/></span>
 			</td>
 		</tr>
 
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.theoreticalHours"/>
+				<bean:message key="message.manager.curricular.course.scope.theoreticalHours"/>
 			</td>
 			<td>
 				<html:text size="60" property="theoreticalHours" />
@@ -84,7 +84,7 @@
 		
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.praticalHours"/>
+				<bean:message key="message.manager.curricular.course.scope.praticalHours"/>
 			</td>
 			<td>
 				<html:text size="60" property="praticalHours" />
@@ -95,7 +95,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.theoPratHours"/>
+				<bean:message key="message.manager.curricular.course.scope.theoPratHours"/>
 			</td>
 			<td>
 				<html:text size="60" property="theoPratHours" />
@@ -106,7 +106,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.labHours"/>
+				<bean:message key="message.manager.curricular.course.scope.labHours"/>
 			</td>
 			<td>
 				<html:text size="60" property="labHours" />
@@ -117,7 +117,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.maxIncrementNac"/>
+				<bean:message key="message.manager.curricular.course.scope.maxIncrementNac"/>
 			</td>
 			<td>
 				<html:text size="60" property="maxIncrementNac" />
@@ -128,7 +128,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.minIncrementNac"/>
+				<bean:message key="message.manager.curricular.course.scope.minIncrementNac"/>
 			</td>
 			<td>
 				<html:text size="60" property="minIncrementNac" />
@@ -139,7 +139,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.weight"/>
+				<bean:message key="message.manager.curricular.course.scope.weight"/>
 			</td>
 			<td>
 				<html:text size="60" property="weight" />
@@ -150,7 +150,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.manager.message.manager.curricular.course.scope.credits"/>
+				<bean:message key="message.manager.curricular.course.scope.credits"/>
 			</td>
 			<td>
 				<html:text size="60" property="credits" />

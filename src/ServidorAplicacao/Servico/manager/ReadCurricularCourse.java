@@ -18,45 +18,44 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadCurricularCourse implements IServico {
 
-  private static ReadCurricularCourse service = new ReadCurricularCourse();
+	private static ReadCurricularCourse service = new ReadCurricularCourse();
 
-  /**
-   * The singleton access method of this class.
-   */
-  public static ReadCurricularCourse getService() {
-	return service;
-  }
+  	/**
+   	* The singleton access method of this class.
+   	*/
+  	public static ReadCurricularCourse getService() {
+		return service;
+  	}
 
-  /**
-   * The constructor of this class.
-   */
-  private ReadCurricularCourse() { }
+  	/**
+   	* The constructor of this class.
+   	*/
+  	private ReadCurricularCourse() { }
 
-  /**
-   * Service name
-   */
-  public final String getNome() {
-	return "ReadCurricularCourse";
-  }
+  	/**
+   	* Service name
+   	*/
+  	public final String getNome() {
+		return "ReadCurricularCourse";
+  	}
 
-  /**
-   * Executes the service. Returns the current InfoCurricularCourse.
-   */
-  public InfoCurricularCourse run(Integer idInternal) throws FenixServiceException {
-	ICurricularCourse curricularCourse;
-	try {
+  	/**
+   	* Executes the service. Returns the current InfoCurricularCourse.
+   	*/
+  	public InfoCurricularCourse run(Integer idInternal) throws FenixServiceException {
+		ICurricularCourse curricularCourse;
+		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(new CurricularCourse(idInternal), false);
-//		    curricularCourse = (ICurricularCourse) sp.getIPersistentDegreeCurricularPlan().readByOId(new DegreeCurricularPlan(idInternal), false);
-	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-		throw new FenixServiceException(excepcaoPersistencia);
-	}
+		} catch (ExcepcaoPersistencia excepcaoPersistencia){
+			throw new FenixServiceException(excepcaoPersistencia);
+		}
      
-	if (curricularCourse == null) {
-		return null;
-	}
+		if (curricularCourse == null) {
+			return null;
+		}
 
-	InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse); 
-	return infoCurricularCourse;
-  }
+		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse); 
+		return infoCurricularCourse;
+  	}
 }

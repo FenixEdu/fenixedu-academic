@@ -9,7 +9,7 @@ import java.util.List;
  * 19/Mar/2003
  */
 
-public interface ICurricularSemester {
+public interface ICurricularSemester extends IDomainObject{
 
 	public Integer getSemester();
 //	public List getAssociatedCurricularCourses();

@@ -8,7 +8,7 @@ import java.util.List;
  * 19/Mar/2003
  */
 
-public class CurricularSemester implements ICurricularSemester {
+public class CurricularSemester extends DomainObject implements ICurricularSemester {
 
 	private Integer internalID;
 	private Integer curricularYearKey;
@@ -27,6 +27,8 @@ public class CurricularSemester implements ICurricularSemester {
 		setCurricularYear(null);
 		setScopes(null);
 	}
+//ACRESCENTEI NAO SEI S E BOM MAS E PA O READ BY OID FUNCIONAR
+public CurricularSemester(Integer idInternal){setInternalID(idInternal);}
 
 	public CurricularSemester(Integer semester, ICurricularYear curricularYear) {
 		this();

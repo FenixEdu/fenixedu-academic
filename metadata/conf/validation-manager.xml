@@ -106,12 +106,7 @@
  
   <!--validation to the form to insert and edit a CurricularCourseScope-->
     <form name="curricularCourseScopeForm">
-      <field property="curricularYear" depends="required,integer" page="1">
-       <arg0 key="message.manager.curricular.course.scope.curricularYear" resource="true" />
-      </field>
-      <field property="curricularSemester" depends="required,integer" page="1">
-        <arg0 key="message.manager.curricular.course.scope.curricularSemester" resource="true" />
-      </field>
+      
       <field property="branchCode" depends="required" page="1">
         <arg0 key="message.manager.curricular.course.scope.branchCode" resource="true" />
       </field>

@@ -92,9 +92,6 @@ public class AlterExecutionPeriodState implements IServico {
 	 */
 	public class InvalidExecutionPeriod extends FenixServiceException {
 
-		/**
-		 * 
-		 */
 		private InvalidExecutionPeriod() {
 			super();
 		}
