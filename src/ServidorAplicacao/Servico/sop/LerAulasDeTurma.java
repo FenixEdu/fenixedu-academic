@@ -17,6 +17,7 @@ import java.util.List;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ITurma;
@@ -65,14 +66,21 @@ public class LerAulasDeTurma implements IServico {
       
 	  infoLessonList = new ArrayList();
       
+      
+      
+      
       while (iterator.hasNext()) {
 		ITurno shift = (ITurno) iterator.next();
+		InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
 		List lessonList = shiftLessonDAO.readByShift(shift);
 		Iterator lessonIterator = lessonList.iterator();		
 		while(lessonIterator.hasNext()) {
 		  IAula elem = (IAula)lessonIterator.next();
 		  InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+		  
+		  infoLesson.getInfoShiftList().add(infoShift);
 		  infoLessonList.add(infoLesson);
+		  
 		}
 	  }
     } catch (ExcepcaoPersistencia ex) {
