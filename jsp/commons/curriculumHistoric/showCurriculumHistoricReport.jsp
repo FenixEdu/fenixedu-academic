@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="Util.EnrollmentState" %>
+<%@ page import="Util.EnrolmentEvaluationState" %>
 <span class="error"><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
 <logic:present name="infoCurriculumHistoricReport">
 	<bean:define id="executionYear" name="infoCurriculumHistoricReport" property="infoExecutionYear"/>
@@ -91,7 +92,7 @@
 					 </td>
 					 <td class="listClasses">
 					 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation">
-					 		<logic:notPresent name="enrollment" property="infoNormalEnrolmentEvaluation.grade">
+					 		<logic:notPresent name="enrollment" property="infoNormalEnrolmentEvaluation.grade">								
 								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 							</logic:notPresent>
 						 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation.grade">
@@ -105,10 +106,17 @@
 									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
 								<logic:greaterThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="0">
-									<logic:lessThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="101">
-										<bean:write name="enrollment" property="infoNormalEnrolmentEvaluation.grade"/>
+									 <logic:lessThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="101">
+										<logic:notEqual name="enrollment" property="infoEnrolmentEvaluation.state" 
+											value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+											<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+										</logic:notEqual>
+										<logic:equal name="enrollment" property="infoEnrolmentEvaluation.state" 
+											value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+											<bean:write name="enrollment" property="infoNormalEnrolmentEvaluation.grade"/>
+										</logic:equal>	
 									</logic:lessThan>
-								</logic:greaterThan>
+								</logic:greaterThan>								
 							</logic:present>
 						</logic:present>
 						<logic:notPresent name="enrollment" property="infoNormalEnrolmentEvaluation">
