@@ -167,7 +167,7 @@ public class WriteMarksAction extends DispatchAction {
 		}
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", objectCode);
-		request.setAttribute("examCode", evaluationCode);
+		request.setAttribute("evaluationCode", evaluationCode);
 		
 		// check for errors in service
 		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();

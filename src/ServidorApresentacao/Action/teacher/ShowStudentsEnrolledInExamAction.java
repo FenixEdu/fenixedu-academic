@@ -54,7 +54,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction{
 		String executionCourseCodeString=  request.getParameter("objectCode");
 
 		Integer executionCourseCode = new Integer(executionCourseCodeString);
-		String examCodeString = request.getParameter("examCode");
+		String examCodeString = request.getParameter("evaluationCode");
 		Integer examCode = new Integer(examCodeString);
 		Object[] args={executionCourseCode,examCode};
 		SiteView siteView=null;

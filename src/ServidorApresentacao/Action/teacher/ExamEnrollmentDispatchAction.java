@@ -40,7 +40,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		Integer examIdInternal = new Integer(request.getParameter("examCode"));
+		Integer examIdInternal = new Integer(request.getParameter("evaluationCode"));
 		Integer disciplinaExecucaoIdInternal =
 			new Integer(request.getParameter("objectCode"));
 
@@ -119,7 +119,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		request.setAttribute("examCode", examIdInternal);
+		request.setAttribute("evaluationCode", examIdInternal);
 		request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
 
 		return mapping.findForward("viewExams");
