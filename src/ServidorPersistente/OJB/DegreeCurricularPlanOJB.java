@@ -13,6 +13,7 @@ import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -90,45 +91,31 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 	}
 
 	public Boolean deleteDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
-		try {
+		
 				// Check for related ExecutionDegrees
-				String oqlQuery = "select executionDegree from " + CursoExecucao.class.getName();
-				oqlQuery += " where degreecurricularPlan.name = $1 ";
-				oqlQuery += "and degreeCurricularPlan.degree.sigla = $2";
-				query.create(oqlQuery);
-				query.bind(degreeCurricularPlan.getName());
-				query.bind(degreeCurricularPlan.getDegree().getSigla());
-				List result = (List) query.execute();
+				Criteria crit = new Criteria();
+				crit.addEqualTo("keyCurricularPlan", degreeCurricularPlan.getIdInternal());
+				List result = queryList(CursoExecucao.class, crit);
 				if (!result.isEmpty())
 					return new Boolean(false);
-
+							
 				// Check for related CurricularCourses
-				oqlQuery = "select curricularCourse from " + CurricularCourse.class.getName();
-				oqlQuery += " where degreeCurricularPlan.name = $1 ";
-				oqlQuery += " and degreeCurricularPlan.degree.sigla = $2 ";
-				query.create(oqlQuery);
-				query.bind(degreeCurricularPlan.getName());
-				query.bind(degreeCurricularPlan.getDegree().getSigla());
-				result = (List) query.execute();
+				Criteria criter = new Criteria();
+				criter.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+				result = queryList(CurricularCourse.class, criter);
 				if (!result.isEmpty())
 					return new Boolean(false);
 					
-				//Check for related StudentCurricularPlans
-				oqlQuery = "select studentCurricularPlan from " + CurricularCourse.class.getName();
-				oqlQuery += " where degreeCurricularPlan.name = $1 ";
-				oqlQuery += " and degreeCurricularPlan.degree.sigla = $2 ";
-				query.create(oqlQuery);
-				query.bind(degreeCurricularPlan.getName());
-				query.bind(degreeCurricularPlan.getDegree().getSigla());
-				result = (List) query.execute();
+//				//Check for related StudentCurricularPlans
+				Criteria criteria = new Criteria();
+				criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+				result = queryList(StudentCurricularPlan.class, criteria);
 				if (!result.isEmpty())
 					return new Boolean(false);
 
 				super.delete(degreeCurricularPlan);
 				return new Boolean(true);
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		
 
 	}
 
