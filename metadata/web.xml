@@ -67,7 +67,11 @@
         <init-param>
             <param-name>config/person</param-name>
             <param-value>/WEB-INF/conf/struts-person.xml</param-value>
-        </init-param>        
+        </init-param>   
+        <init-param>
+            <param-name>config/employee</param-name>
+            <param-value>/WEB-INF/conf/struts-employee.xml</param-value>
+        </init-param>              
         <init-param>
             <param-name>config/assiduousness</param-name>
             <param-value>/WEB-INF/conf/struts-assiduousness.xml</param-value>

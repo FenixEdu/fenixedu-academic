@@ -18,7 +18,8 @@
     			</td>
     		</tr>
     		<tr>
-    			<td colspan="2"><span class="error"><html:errors/></span>
+    			<td colspan="2">
+    				<span class="error"><html:errors/></span>
     			</td>
     		</tr>
         	<tr>
@@ -26,7 +27,9 @@
             	    <html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
                    	<app:options name="ConsultarFuncionarioMostrarForm" property="listaEscolhas"/>
                    	</html:select> 
-                   	<bean:message key="prompt.de"/>
+                   	<br />
+                   	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   	<bean:message key="prompt.data" />:
                   	<html:text name="ConsultarFuncionarioMostrarForm" property="diaInicioEscolha" size="2" maxlength="2"/> / 
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="mesInicioEscolha" size="2" maxlength="2"/> / 
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="anoInicioEscolha" size="4" maxlength="4"/>
@@ -35,9 +38,6 @@
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="mesFimEscolha" size="2" maxlength="2"/> / 
                     <html:text name="ConsultarFuncionarioMostrarForm" property="anoFimEscolha" size="6" maxlength="4"/>
                	</td>
-                <td>
-
-             	</td>
         	</tr>
             <tr>
               <td class="tall-td" colspan="2"><br />

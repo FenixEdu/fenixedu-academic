@@ -1,4 +1,4 @@
-<%@page contentType="text/html"%>
+ <%@page contentType="text/html"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-form.tld" prefix="form" %>

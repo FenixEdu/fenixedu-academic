@@ -23,7 +23,7 @@
 
   <!-- ========== Global Forward Definitions ============================== -->
   <global-forwards type="org.apache.struts.action.ActionForward">
-	<forward name="Logoff" path="/logoff.do" contextRelative="true"/>
+	<forward name="logoff" path="/logoff.do" contextRelative="true"/>
     <forward name="Logon" path="/logon.jsp" />
     <forward name="Index" path="/index.jsp" />
     <forward name="FirstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
@@ -32,7 +32,7 @@
 	<forward name="AlterarPassword" path="/person/alterarPassword.jsp" />
 	<forward name="AlterarPasswordConfirmar" path="/person/alterarPasswordConfirmar.jsp" />
 	 
-    <!-- Nanda e Tania -->
+    <!-- Nanda e Tania -->    
     <forward name="LogonAcademicaAction" path="/logonAcademica.do" />
     <forward name="MenuAcademica" path="/menuAcademica.jsp" />
 
@@ -58,7 +58,14 @@
 
   <!-- ========== Action Mapping Definitions ============================== -->
   <action-mappings type="org.apache.struts.action.ActionMapping">
-
+    <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
+    
+    <action path="/home" 
+  			forward="/switchAction.do?prefix=&amp;page=/home.do" />
+    
+    <action path="/assiduousness" 
+    		forward="/index.do"/>
+    		
     <action path="/logon"
             type="Log.LogonAction"
             name="LogonForm"
@@ -70,8 +77,6 @@
             type="Log.LogoffAction">
             <forward name="sucesso" path="/index.html" />
     </action>
-            
-    <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
     
     <action path="/forgotPassword"
             type="ServidorApresentacao.Action.person.ForgotPasswordAction"
@@ -92,6 +97,7 @@
     <action path="/index"
             type="ServidorApresentacao.Action.assiduousness.IndexAction">
     </action>
+    
     <action path="/portalAssiduidade"
             type="ServidorApresentacao.Action.assiduousness.PortalAssiduidadeAction"
             input="/output.jsp">

@@ -5,6 +5,7 @@
   <tiles:put name="navLocal" value="/employee/mainMenu.jsp" />
   <tiles:put name="navGeral" value="/employee/commonNavGeralEmployee.jsp" />
   <tiles:put name="body-context" value=""/>  
-  <tiles:put name="body" value="/assiduousness/consultarJustificacoesMostrar_bd.jsp" />
+  <tiles:put name="body" value="/employee/welcomeScreen.jsp" />
   <tiles:put name="footer" value="/employee/commonFooter.jsp" />
 </tiles:insert>
+

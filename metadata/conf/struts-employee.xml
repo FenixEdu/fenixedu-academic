@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC       
+	  "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions =================================== -->
+
+  <!-- ========== Global Forward Definitions ============================== -->
+  <global-forwards type="org.apache.struts.action.ActionForward">
+    <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+    <forward name="Logon" path="/logon.jsp" />
+    <forward name="Index" path="/index.jsp" />
+    <forward name="FirstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
+  </global-forwards>
+
+  <!-- ========== Action Mapping Definitions ============================== -->
+  <action-mappings type="org.apache.struts.action.ActionMapping">
+  	<action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
+  	<action path="/assiduousness" forward="/switchAction.do?prefix=&amp;page=/assiduousness/index.do"/>
+    <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
+  </action-mappings>
+  
+  <!-- ========== Controller Configuration ================================ -->
+
+</struts-config>
