@@ -51,10 +51,16 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 			SessionUtils.validSessionVerification(request, mapping);
-			
+
 			HttpSession session = request.getSession(false);
 			if (session != null) {
-				session.setAttribute("nextPage",request.getParameter("nextPage"));
+				// TODO : update public interface links acordingly
+				String inputPage = request.getParameter("inputPage");
+				String nextPage = request.getParameter("nextPage");
+				if (inputPage != null)
+					session.setAttribute("inputPage", inputPage);
+				if (nextPage != null)
+					session.setAttribute("nextPage", nextPage);				
 				
 				IUserView userView = SessionUtils.getUserView(request);
 
@@ -126,7 +132,13 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 				request.setAttribute("licenciaturas", licenciaturas);
 
-				return mapping.findForward("formPage");
+				if (inputPage != null)
+					return mapping.findForward(inputPage);
+				// else should be removed once the variable input page is
+				// used across all envocations of this function.
+				// TODO : update public interface links acordingly
+				else
+					return mapping.findForward("formPage");
 			} else
 				throw new Exception();
 			// nao ocorre... pedido passa pelo filtro Autorizacao
@@ -161,16 +173,12 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 				IUserView userView = (IUserView) session.getAttribute("UserView");
 			
-
 				session.setAttribute("anoCurricular", anoCurricular);
 				session.setAttribute("semestre", semestre);
-
 
 				List infoExecutionDegreeList = (List) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
 			
 				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
-
-
 			
 				if (infoExecutionDegree != null) {
 					CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
@@ -187,8 +195,14 @@ public class ChooseContextDispatchAction extends DispatchAction {
 					return mapping.findForward("Licenciatura execucao inexistente");
 				}
 
-				System.out.println("blablabla dois pontos - " + session.getAttribute("nextPage"));
-				return mapping.findForward("nextPage");
+				String nextPage = (String) session.getAttribute("nextPage");
+				if (nextPage != null)
+					return mapping.findForward(nextPage);
+				// this else must be removed once the links from the
+				// public interface are updated acordingly
+				// TODO : update public interface links acordingly
+				else
+					return mapping.findForward("nextPage");
 			} else
 				throw new Exception();
 			// nao ocorre... pedido passa pelo filtro Autorizacao
