@@ -11,30 +11,22 @@
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_student.gif" width="192" />
-	</td>
-    <td class="header"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
-    </td>
-  </tr>
-</table>
+<div id="header">	
+	<img alt="Logo dot ist" src="<%= request.getContextPath() %>/images/dotist-id.gif" />
+    <p><tiles:getAsString name="serviceName" /></p>
+</div>
+<div id="hdr-nav"><a href="mailto:suporte@dotist.utl.pt"><img alt="Icon de Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a href="logout.do"><img alt="Icon de Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
 <!-- End Header -->
 <!-- NavGeral -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="navbargeral"><tiles:insert attribute="navGeral" />
-    </td>
-  </tr>
-</table>
+<tiles:insert attribute="navGeral" />
 <!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0">
    <tr>
-     <td width="25%" align="left" valign="top" nowrap="nowrap">
+     <td id="navlateral_photos"width="25%" valign="top" nowrap="nowrap">
      	<tiles:insert attribute="photos" />
      </td>
-     <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent">
+     <td id="bodycontent" width="100%" valign="top" >
      	<tiles:insert attribute="contextBody" />     
      	<tiles:insert attribute="body" />
 	</td>
@@ -42,12 +34,9 @@
 </table>
 <!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="footer"><tiles:insert attribute="footer" />
-    </td>
-  </tr>
-</table>
+<div id="footer">
+    <p><tiles:insert attribute="footer" /></p>
+</div>
 <!--End Footer -->
 </body>
 </html:html>

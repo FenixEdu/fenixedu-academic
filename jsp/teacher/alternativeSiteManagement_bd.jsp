@@ -4,9 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.personalizationOptions"/></h2>
-
 <logic:present name="siteView"> 
-
 <html:form action="/alternativeSite">
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <br />

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<table width="50%" border="0" align="center" cellpadding="0" cellspacing="2">
+<table width="50%" align="center" cellpadding="0">
 	<tr>
 	    <td width="50%" nowrap="nowrap" class="navopgeral-td">
     		<html:link forward="home">Home</html:link>

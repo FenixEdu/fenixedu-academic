@@ -6,8 +6,6 @@
 
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 
-Hello World
-
 <logic:iterate id="role" name="userView" property="roles">
 <%--	<bean:write name="role" property="page"/><br/>
 	<bean:write name="role" property="portalSubApplication"/><br/>
@@ -18,7 +16,7 @@ Hello World
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	  <tr>
 	    <td nowrap="nowrap" class="infoIcons">
-	    	<img alt="" src="<%= request.getContextPath() %>/images/info.gif"> 
+	    	<img alt="" src="<%= request.getContextPath() %>/images/square-bullet.gif"> 
 	    </td>
 	    <td class="infoop">
 	    	<strong><html:link page='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></strong>

@@ -10,30 +10,24 @@
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
-<table id="header" width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="header-td" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_sop.gif" width="192" />
-	</td>
-    <td class="header-td"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
-    </td>
-  </tr>
-</table>
+<div id="header">	
+	<img alt="Logo dot ist" src="<%= request.getContextPath() %>/images/dotist-id.gif" />
+    <p><tiles:getAsString name="serviceName" /></p>
+</div>
+<div id="hdr-nav"><a href="mailto:suporte@dotist.utl.pt"><img alt="Icon de Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a href="logout.do"><img alt="Icon de Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
 <!-- End Header -->
 <!-- Navbar Lateral e Body Content -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0">
    <tr>
-    <td width="100%" align="left" valign="top" class="bodycontent"><tiles:insert attribute="body" />
+    <td id="bodycontent" width="100%" align="left" valign="top"><tiles:insert attribute="body" />
 	</td>
   </tr>
 </table>
 <!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
-<table id="footer" width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="footer-td"><tiles:insert attribute="footer" />
-    </td>
-  </tr>
-</table>
+<div id="footer">
+    <tiles:insert attribute="footer" />
+</div>
 <!--End Footer -->
 </body>
 </html:html>
