@@ -21,7 +21,7 @@ public class RestrictionAlreadyOrActuallyEnroledInCurricularCourse extends Restr
 		Integer acumulatedEnrolments =
 			enrolmentContext.getCurricularCourseAcumulatedEnrolments(
 				curricularCourseAlreadyEnroled);
-		List actualEnrolment = enrolmentContext.getActualEnrolment();
+		List actualEnrolment = enrolmentContext.getActualEnrolments();
 
 		return actualEnrolment.contains(curricularCourseAlreadyEnroled)
 			|| acumulatedEnrolments.intValue() > 0;

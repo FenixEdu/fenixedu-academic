@@ -115,7 +115,7 @@ public class ConfirmActualEnrolment implements IServico {
 			
 			// lista de todos os enrolments a escrever
 			List temporarilyEnrolmentsToWrite = new ArrayList();
-			Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
+			Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());

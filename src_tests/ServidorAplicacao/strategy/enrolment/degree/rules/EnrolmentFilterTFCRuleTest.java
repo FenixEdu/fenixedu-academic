@@ -19,7 +19,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class EnrolmentFilterFinalistRuleTest extends BaseEnrolmentRuleTestCase {
+public class EnrolmentFilterTFCRuleTest extends BaseEnrolmentRuleTestCase {
 
 	private dbaccess dbAcessPoint;
 
@@ -28,7 +28,7 @@ public class EnrolmentFilterFinalistRuleTest extends BaseEnrolmentRuleTestCase {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(EnrolmentFilterFinalistRuleTest.class);
+		TestSuite suite = new TestSuite(EnrolmentFilterTFCRuleTest.class);
 		return suite;
 	}
 

@@ -34,7 +34,7 @@ public final class EnrolmentContext {
 	private ICurricularCourseScope chosenOptionalCurricularCourseScope;
 
 	private List curricularCoursesDoneByStudent;
-	private List actualEnrolment;
+	private List actualEnrolments;
 	private List curricularCoursesFromStudentCurricularPlan;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
 	private List curricularCoursesScopesAutomaticalyEnroled;
@@ -48,7 +48,7 @@ public final class EnrolmentContext {
 	 */
 	protected EnrolmentContext() {
 		super();
-		actualEnrolment = new ArrayList();
+		actualEnrolments = new ArrayList();
 	}
 
 	/**
@@ -127,8 +127,8 @@ public final class EnrolmentContext {
 	/**
 	 * @return
 	 */
-	public List getActualEnrolment() {
-		return actualEnrolment;
+	public List getActualEnrolments() {
+		return actualEnrolments;
 	}
 
 	/**
@@ -141,8 +141,8 @@ public final class EnrolmentContext {
 	/**
 	 * @param list
 	 */
-	public void setActualEnrolment(List list) {
-		actualEnrolment = list;
+	public void setActualEnrolments(List list) {
+		actualEnrolments = list;
 	}
 
 	/**
@@ -171,7 +171,7 @@ public final class EnrolmentContext {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "\n";
 		result += "StudentActiveCurricularPlan = " + this.studentActiveCurricularPlan + "\n";
-		result += "actualEnrolment = " + this.actualEnrolment + "\n";
+		result += "actualEnrolments = " + this.actualEnrolments + "\n";
 		result += "finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "\n";
 		result += "enrolmentValidationResult = " + this.enrolmentValidationResult + "\n";
 		result += "chosenOptionalDegree = " + this.chosenOptionalDegree + "\n";

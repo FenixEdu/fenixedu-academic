@@ -133,8 +133,8 @@ public class ShowAvailableCurricularCourses implements IServico {
 				noOptionalCourseScopes.add(curricularCourseScope);
 			}
 		}
-		enrolmentContext.setActualEnrolment(noOptionalCourseScopes);
-		enrolmentContext.getActualEnrolment().addAll(enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled());
+		enrolmentContext.setActualEnrolments(noOptionalCourseScopes);
+		enrolmentContext.getActualEnrolments().addAll(enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled());
 		enrolmentContext.setOptionalCurricularCoursesEnrolments(enrolmentsInOptionalCurricularCourses);
 		
 		return enrolmentContext;

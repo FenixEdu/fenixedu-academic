@@ -45,7 +45,7 @@ public class EnrolmentValidatePrecedenceDuringEnrolmentRule extends PrecedenceRu
 	protected List getListOfCurricularCoursesToApply(EnrolmentContext enrolmentContext) {
 		// FIXME : Put enrolment in optional to...
 		List actualEnrolment =
-			enrolmentContext.getActualEnrolment();
+			enrolmentContext.getActualEnrolments();
 		return actualEnrolment;
 	}
 

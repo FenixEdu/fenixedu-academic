@@ -27,7 +27,7 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 		int maxNAC = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMaxNACToEnrol().intValue();
 		int minCourses = enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getMinCoursesToEnrol().intValue();
 
-		Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
+		Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
@@ -52,10 +52,10 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 			}
 		}
 
-		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < minCourses) {
+		if ((enrolmentContext.getActualEnrolments().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < minCourses) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MINIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(minCourses));
 		}
-		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) > maxCourses) {
+		if ((enrolmentContext.getActualEnrolments().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) > maxCourses) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MAXIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(maxCourses));
 		}
 		if (NAC > maxNAC) {

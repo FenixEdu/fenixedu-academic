@@ -20,7 +20,7 @@ public class EnrolmentValidateLEQLaboratoryRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
-		List labsEnroled = (List) CollectionUtils.select(enrolmentContext.getActualEnrolment(), new Predicate() {
+		List labsEnroled = (List) CollectionUtils.select(enrolmentContext.getActualEnrolments(), new Predicate() {
 			public boolean evaluate(Object obj) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
 				return curricularCourseScope.getCurricularCourse().getType().equals(CurricularCourseType.LABORATORY_COURSE_OBJ);

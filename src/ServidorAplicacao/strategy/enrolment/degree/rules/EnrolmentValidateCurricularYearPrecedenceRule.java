@@ -31,7 +31,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 		int year = 0;
 		int year2 = 0;
 
-		Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
+		Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 			year2 = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue();
@@ -85,7 +85,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 //				ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
-				if( (!enrolmentContext.getActualEnrolment().contains(curricularCourseScope)) && (!curricularCoursesOfOption.contains(curricularCourseScope)) ){
+				if( (!enrolmentContext.getActualEnrolments().contains(curricularCourseScope)) && (!curricularCoursesOfOption.contains(curricularCourseScope)) ){
 					enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MUST_ENROLL_IN_EARLIER_CURRICULAR_COURSES);
 					return enrolmentContext;
 				}				

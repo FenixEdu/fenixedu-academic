@@ -134,7 +134,7 @@ public abstract class EnrolmentContextManager {
 		
 //		enrolmentContext.setChosenOptionalDegree(new Curso());
 //		enrolmentContext.setChosenOptionalCurricularCourseScope(new CurricularCourseScope());
-		enrolmentContext.setActualEnrolment(new ArrayList());
+		enrolmentContext.setActualEnrolments(new ArrayList());
 		enrolmentContext.setDegreesForOptionalCurricularCourses(new ArrayList());
 		enrolmentContext.setOptionalCurricularCoursesEnrolments(new ArrayList());
 		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(new ArrayList());
@@ -318,7 +318,7 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCourseScopeList);
 		enrolmentContext.setStudent(student);
-		enrolmentContext.setActualEnrolment(curricularCourseScopeList2);
+		enrolmentContext.setActualEnrolments(curricularCourseScopeList2);
 		enrolmentContext.setCurricularCoursesScopesAutomaticalyEnroled(enroledCurricularCourseScopeList);
 		enrolmentContext.setChosenOptionalDegree(degree);
 		enrolmentContext.setDegreesForOptionalCurricularCourses(optionalDegreeList);
@@ -355,7 +355,7 @@ public abstract class EnrolmentContextManager {
 
 		// Transform list of curricular course scopes being enroled to respective info:
 		List infoCurricularCourseScopeList2 = new ArrayList();
-		List curricularCourseScopeList2 = enrolmentContext.getActualEnrolment();
+		List curricularCourseScopeList2 = enrolmentContext.getActualEnrolments();
 		if (curricularCourseScopeList2 != null && !curricularCourseScopeList2.isEmpty()) {
 			Iterator iterator = curricularCourseScopeList2.iterator();
 			while (iterator.hasNext()) {

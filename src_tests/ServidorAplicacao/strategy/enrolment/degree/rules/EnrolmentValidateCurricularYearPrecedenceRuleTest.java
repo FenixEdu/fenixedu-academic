@@ -35,11 +35,11 @@ public class EnrolmentValidateCurricularYearPrecedenceRuleTest extends BaseEnrol
 		EnrolmentContext enrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs);
 
 		// tudo ok
-		enrolmentContext.getActualEnrolment().clear();
+		enrolmentContext.getActualEnrolments().clear();
 		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope =
 				(ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 
 		doApplyRule(new EnrolmentValidateCurricularYearPrecedenceRule(), enrolmentContext);
@@ -47,9 +47,9 @@ public class EnrolmentValidateCurricularYearPrecedenceRuleTest extends BaseEnrol
 		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 		// falha
-		enrolmentContext.getActualEnrolment().clear();
+		enrolmentContext.getActualEnrolments().clear();
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
-		enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+		enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 
 		doApplyRule(new EnrolmentValidateCurricularYearPrecedenceRule(), enrolmentContext);
 		assertEquals(enrolmentContext.getEnrolmentValidationResult().isSucess(), false);

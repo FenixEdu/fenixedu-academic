@@ -35,10 +35,10 @@ public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase
 		EnrolmentContext enrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs);
 
 		// tudo ok
-		enrolmentContext.getActualEnrolment().clear();
+		enrolmentContext.getActualEnrolments().clear();
 		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
@@ -46,10 +46,10 @@ public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase
 		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 		// menos que 3
-		enrolmentContext.getActualEnrolment().clear();
+		enrolmentContext.getActualEnrolments().clear();
 		for (int i = 0; i < 2; i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
@@ -57,14 +57,14 @@ public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase
 		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 		// mais que 7
-		enrolmentContext.getActualEnrolment().clear();
+		enrolmentContext.getActualEnrolments().clear();
 		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 		for (int i = 0; i < enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().get(i);
-			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
@@ -72,14 +72,14 @@ public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase
 		enrolmentContext.getEnrolmentValidationResult().setSucess(true);
 
 		// mais que 10 acumuladas
-		enrolmentContext.getActualEnrolment().clear();
+		enrolmentContext.getActualEnrolments().clear();
 		for (int i = 0; i < enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getCurricularCoursesScopesAutomaticalyEnroled().get(i);
-			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 		for (int i = 0; i < enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().size(); i++) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-			enrolmentContext.getActualEnrolment().add(curricularCourseScope);
+			enrolmentContext.getActualEnrolments().add(curricularCourseScope);
 		}
 
 		doApplyRule(new EnrolmentValidateNACandNDRule(), enrolmentContext);
