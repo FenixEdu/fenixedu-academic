@@ -157,6 +157,9 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
 		HttpSession session = request.getSession();
 
+		enrolmentForm.set("optionalCurricularCourse", null);
+		
+		
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
