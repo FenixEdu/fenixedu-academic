@@ -11,7 +11,7 @@
 <logic:present name="infoExecutionDegree" >
 	<bean:define id="executionDegreeId" name="infoExecutionDegree" property="idInternal" />
 	<bean:define id="degreeId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal" />	
-	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularplan.idInternal" />
+	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal" />
 
 	<table>
 		<tr>

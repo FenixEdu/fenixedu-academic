@@ -79,10 +79,10 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			saveErrors(request, errors);
 		}
 
-		Integer[] responsibleCoordinatorsIds =
-			(Integer[]) findResponsibleCoodinators(
-					infoExecutionDegree.getCoordinatorsList());
+		Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(
+		infoExecutionDegree.getCoordinatorsList());
 		DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
+		
 		coordinatorsForm.set(
 			"responsibleCoordinatorsIds",
 			responsibleCoordinatorsIds);
@@ -113,7 +113,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 	 * @param list
 	 * @return Integer[]
 	 */
-	private Object[] findResponsibleCoodinators(List coordinatorsList) {
+	private Integer[] findResponsibleCoodinators(List coordinatorsList) {
 		List responsibleCoordinatorsList =
 			(List) CollectionUtils.select(coordinatorsList, new Predicate() {
 			public boolean evaluate(Object obj) {
@@ -130,8 +130,8 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			
 			responsibleCoordinatorsIdsList.add(infoCoordinator.getIdInternal());
 		}
-
-		return responsibleCoordinatorsIdsList.toArray();
+				
+		return (Integer[]) responsibleCoordinatorsIdsList.toArray(new Integer[] {});
 	}
 
 	public ActionForward insert(
