@@ -37,7 +37,7 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements I
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
      */
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         return InfoGrantPaymentEntity.newDomainFromInfo((InfoGrantPaymentEntity) infoObject);

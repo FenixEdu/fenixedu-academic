@@ -399,7 +399,7 @@
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoManagementPosition" />
             <set-property property="infoObjectClassName" 
-                value="DataBeans.credits.InfoManagementPositionCreditLine" />
+                value="net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositionCreditLine" />
 			
 			<exception key="error.credits.nonExistingManagementPosition" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException" path="/prepareManagementPositionsManagement.do?method=doSearch" />	
 
@@ -423,7 +423,7 @@
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoServiceExemption" />
             <set-property property="infoObjectClassName" 
-                value="DataBeans.credits.InfoServiceExemptionCreditLine" />
+                value="net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine" />
             <forward name="show-form" path="editServiceExemption"/>
             <forward name="successfull-edit" 
                 path="/prepareServiceExemptionsManagement.do?method=doSearch"/>

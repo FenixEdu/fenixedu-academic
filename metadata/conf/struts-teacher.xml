@@ -883,7 +883,7 @@
             name="bibliographicReferenceForm" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteBibliography"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography"/>
             <set-property property="inputForwardName" value="editErrorValidation"/>
             <forward name="editErrorValidation" 
                 path="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference&amp;page=0"/>
@@ -896,7 +896,7 @@
             name="bibliographicReferenceForm" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteBibliography"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography"/>
             <set-property property="inputForwardName" value="insertBibliographicReference"/>
             <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"/>
             <forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
@@ -914,7 +914,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             scope="session" parameter="method" path="/announcementManagementAction" validate="true" 
             className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteAnnouncement"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement"/>
             <set-property property="inputForwardName" value="insertAnnouncement"/>
             <forward name="showAnnouncements" path="/announcementManagement.jsp" />
             <forward name="insertAnnouncement" path="/insertAnnouncement.jsp" />
@@ -924,7 +924,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             scope="session" parameter="method" path="/editAnnouncement" input="/editAnnouncement.jsp" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoAnnouncement"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement"/>
             <set-property property="inputForwardName" value="editAnnouncement"/>
             <forward name="editAnnouncement" path="/editAnnouncement.jsp" />
             <forward name="showAnnouncements" path="/announcementManagement.jsp" />
@@ -934,7 +934,7 @@
         <action parameter="method" path="/teachersManagerDA" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteTeachers"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers"/>
             <set-property property="inputForwardName" value="viewTeachers"/>
             <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException" 
                 key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException" 
@@ -944,7 +944,7 @@
         <action path="/teacherManagerDA" name="teacherForm" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteTeachers"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers"/>
             <set-property property="inputForwardName" value="associateTeacher"/>
             <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
                 key="ServidorApresentacao.Action.exceptions.ExistingActionException" 
@@ -960,7 +960,7 @@
             input="/editObjectives.jsp" path="/objectivesManagerDA" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="false" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteObjectives"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteObjectives"/>
             <set-property property="inputForwardName" value="editObjectives"/>
             <forward name="notAuthorized" path="/objectivesManagerDA.do?method=viewObjectives" />
             <forward name="viewObjectives" path="/viewObjectives.jsp"/>
@@ -974,7 +974,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="false" 
             className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSitePrograms"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSitePrograms"/>
             <set-property property="inputForwardName" value="editProgram"/>
             <forward name="notAuthorized" path="/programManagerDA.do?method=viewProgram" />
             <forward name="viewProgram" path="/viewProgram.jsp"/>
@@ -999,7 +999,7 @@
         <action name="sectionForm" path="/createSection" parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteRootSections"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteRootSections"/>
             <set-property property="inputForwardName" value="createSection"/>
             <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
                 key="ServidorApresentacao.Action.exceptions.ExistingActionException" 
@@ -1012,7 +1012,7 @@
         <action name="editSectionForm" path="/editSection" parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteSections"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteSections"/>
             <set-property property="inputForwardName" value="editSection"/>
             <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
                 key="ServidorApresentacao.Action.exceptions.ExistingActionException" 
@@ -1055,7 +1055,7 @@
         <action name="itemForm" input="/editItem.jsp" path="/editItem" parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteItems"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteItems"/>
             <set-property property="inputForwardName" value="editItem"/>
             <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
                 key="ServidorApresentacao.Action.exceptions.ExistingActionException" 
@@ -1067,7 +1067,7 @@
         <action name="itemForm" path="/insertItem" parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoSiteSection"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection"/>
             <set-property property="inputForwardName" value="insertItem"/>
             <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
                 key="ServidorApresentacao.Action.exceptions.ExistingActionException" 
@@ -1106,7 +1106,7 @@
             parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="false" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="DataBeans.InfoEvaluationMethod"/>
+            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod"/>
             <set-property property="inputForwardName" value="editEvaluationMethod"/>
             <forward name="viewEvaluationMethod" path="/viewEvaluationMethod.jsp"/>
             <forward name="editEvaluationMethod" path="/editEvaluationMethod.jsp"/>
@@ -1741,7 +1741,7 @@
             <set-property property="readService" value="ReadCareer" />
             <set-property property="oidProperty" value="idInternal" />
             <set-property property="requestAttribute" value="infoProfessionalCareer" />
-            <set-property property="infoObjectClassName" value="DataBeans.teacher.InfoProfessionalCareer" />
+            <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer" />
             <forward name="show-form" path="edit-professional-career"/>
             <forward name="successfull-edit" path="/readCareers.do?careerType=Professional&amp;page=0"/>
             <forward name="successfull-read" path="/readCareers.do?careerType=Professional&amp;page=0"/>
@@ -1757,7 +1757,7 @@
             <set-property property="readService" value="ReadCareer" />
             <set-property property="oidProperty" value="idInternal" />
             <set-property property="requestAttribute" value="infoTeachingCareer" />
-            <set-property property="infoObjectClassName" value="DataBeans.teacher.InfoTeachingCareer" />
+            <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer" />
             <forward name="show-form" path="edit-teaching-career"/>
             <forward name="successfull-edit" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
             <forward name="successfull-read" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
@@ -1785,7 +1785,7 @@
             <set-property property="readService" value="ReadOldPublication"/>
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoOldPublication"/>
-            <set-property property="infoObjectClassName" value="DataBeans.teacher.InfoOldPublication" />
+            <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication" />
             <forward name="show-form" path="edit-old-cientific-publication"/>
             <forward name="successfull-edit" 
                 path="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0"/>
@@ -1804,7 +1804,7 @@
             <set-property property="readService" value="ReadOldPublication"/>
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoOldPublication"/>
-            <set-property property="infoObjectClassName" value="DataBeans.teacher.InfoOldPublication" />
+            <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication" />
             <forward name="show-form" path="edit-old-didactic-publication"/>
             <forward name="successfull-edit" 
                 path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
@@ -1946,7 +1946,7 @@
             <set-property property="readService" value="ReadPublication"/>
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoPublication"/>
-            <set-property property="infoObjectClassName" value="DataBeans.publication.InfoPublication" />
+            <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication" />
              <exception 
 				type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EmptyRequiredFieldServiceException" 
 				key="error.exception.notAuthorized" 
@@ -1975,7 +1975,7 @@
             <set-property property="readService" value="ReadPublication"/>
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoPublication"/>
-            <set-property property="infoObjectClassName" value="DataBeans.publication.InfoPublication" />
+            <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication" />
             <exception 
 				type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EmptyRequiredFieldServiceException" 
 				key="error.exception.notAuthorized" 
@@ -2047,7 +2047,7 @@
             <set-property property="readService" value="ReadExternalActivity" />
             <set-property property="oidProperty" value="idInternal" />
             <set-property property="requestAttribute" value="infoExternalActivity" />
-            <set-property property="infoObjectClassName" value="DataBeans.teacher.InfoExternalActivity" />
+            <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity" />
             <forward name="show-form" path="edit-external-activity"/>
             <forward name="successfull-edit" path="/readExternalActivities.do?page=0"/>
             <forward name="successfull-read" path="/readExternalActivities.do?page=0"/>

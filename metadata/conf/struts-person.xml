@@ -218,7 +218,7 @@
  		<set-property property="readService" value="ReadQualification"/>
   		<set-property property="oidProperty" value="idInternal"/>
     	<set-property property="requestAttribute" value="infoQualification" />
-    	<set-property property="infoObjectClassName" value="DataBeans.person.InfoQualification" />
+    	<set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification" />
  		<forward name="show-form" path="edit-qualification"/> 
  		<forward name="successfull-edit" path="/readQualifications.do?page=0"/> 
    		<forward name="successfull-read" path="/readQualifications.do?page=0"/>

@@ -64,7 +64,7 @@ public class ReadQualification extends ReadDomainObjectService {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(DataBeans.InfoObject)
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
      */
     protected ISiteComponent getISiteComponent(InfoObject infoObject) {
         return (InfoQualification) infoObject;

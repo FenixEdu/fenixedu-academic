@@ -56,7 +56,7 @@ public class EditGrantPart extends EditDomainObjectService {
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
-     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
      */
     protected void doAfterLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {

@@ -426,7 +426,7 @@
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoSupportLesson" />
             <set-property property="infoObjectClassName" 
-                value="DataBeans.teacher.professorship.InfoSupportLesson" />
+                value="net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson" />
             <exception 
                 type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLessonByOID$InvalidPeriodException" 
                 key="message.invalidPeriod" 
@@ -479,7 +479,7 @@
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoTeacherDegreeFinalProjectStudent" />
             <set-property property="infoObjectClassName" 
-                value="DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent" />
+                value="net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent" />
 
             <exception 
                 type="net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException" 
@@ -548,7 +548,7 @@
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoTeacherInstitutionWorkingTime" />
             <set-property property="infoObjectClassName" 
-                value="DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime" />
+                value="net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime" />
             <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0"/>
@@ -647,7 +647,7 @@
             <set-property property="oidProperty" value="idInternal"/>
             <set-property property="requestAttribute" value="infoOtherTypeCreditLine" />
             <set-property property="infoObjectClassName" 
-                value="DataBeans.credits.InfoOtherTypeCreditLine" />
+                value="net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine" />
             <forward name="show-form" path="editOtherTypeCreditLine"/>
             <forward name="successfull-edit" 
                 path="/teacherSearchForOtherTypeCreditLine.do?method=doSearch"/>

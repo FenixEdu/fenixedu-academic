@@ -52,7 +52,7 @@ public class EditGrantInsurance extends EditDomainObjectService {
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
-     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
      */
     protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {

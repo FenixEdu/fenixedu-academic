@@ -61,7 +61,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
      */
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         return Cloner.copyInfoSupportLesson2ISupportLesson((InfoSupportLesson) infoObject);
@@ -93,7 +93,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
-     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
      */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws Exception {
