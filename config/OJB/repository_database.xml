@@ -39,3 +39,29 @@ using the MetadataManager.
             <attribute attribute-name="grabSize" attribute-value="20"/>
         </sequence-manager>
    </jdbc-connection-descriptor>
+
+    <jdbc-connection-descriptor
+   		jcd-alias="assiduousness"
+   		default-connection="false"
+   		platform="@db.assiduousness.platform@"
+   		jdbc-level="2.0"
+   		driver="@db.assiduousness.driver@"
+   		protocol="@db.assiduousness.protocol@"
+   		subprotocol="@db.assiduousness.subprotocol@"
+   		dbalias="@db.assiduousness.alias@"
+   		username="@db.assiduousness.user@"
+   		password="@db.assiduousness.pass@"
+   		batch-mode="false"
+        useAutoCommit="2"
+        ignoreAutoCommitExceptions="false"
+     >
+
+        <connection-pool
+            maxActive="21"
+            validationQuery="select 1"
+            whenExhaustedAction="2"/>
+
+<!--        <sequence-manager className="org.apache.ojb.broker.util.sequence.SequenceManagerHighLowImpl">
+            <attribute attribute-name="grabSize" attribute-value="20"/>
+        </sequence-manager> -->
+   </jdbc-connection-descriptor>
