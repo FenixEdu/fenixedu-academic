@@ -29,6 +29,7 @@
 <!ENTITY scientific_council SYSTEM "repository_scientificCouncil.xml">
 <!ENTITY seminary SYSTEM "repository_seminary.xml">
 <!ENTITY advisory SYSTEM "repository_advisory.xml">
+<!ENTITY middleware SYSTEM "repository_middleware.xml">
 ]>
 
 
@@ -63,5 +64,6 @@
     &scientific_council;
 	&seminary;
     &advisory;
+    &middleware;
 	
 </descriptor-repository>

@@ -118,7 +118,7 @@ public class DuplicateDegreeCurricularPlan {
 		
 		String dcps[] = new String[1];
 
-		dcps[0] = "MEIC03/05";
+		dcps[0] = "MMA03/05";
 
 
 		for(int i = 0; i < dcps.length ; i++){
@@ -202,14 +202,12 @@ public class DuplicateDegreeCurricularPlan {
 		executionPeriod = (IExecutionPeriod) executionPeriodResult.get(0);
 
 		broker.commitTransaction();
+		broker.beginTransaction();
 		
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext()){
 			ICurricularCourse  curricularCourse = (ICurricularCourse) iterator.next();
-			
-			if (curricularCourse.getIdInternal().equals(new Integer(4630))){
-				continue;
-			}
+
 			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
 			executionCourse.setAssociatedCurricularCourses(new ArrayList());
 			executionCourse.getAssociatedCurricularCourses().add(curricularCourse);
@@ -226,11 +224,13 @@ public class DuplicateDegreeCurricularPlan {
 			executionCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
 
 			broker.store(executionCourse);
+			
 			Site site = new Site();
 			site.setExecutionCourse(executionCourse);
 			broker.store(site);
+			
 		}		
-		
+		broker.commitTransaction();
 		System.out.println("Done !");
 		System.out.println(" - " + result.size() + " Execution Course(s) written ");
 		
