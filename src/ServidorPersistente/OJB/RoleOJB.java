@@ -40,4 +40,8 @@ public class RoleOJB extends ObjectFenixOJB	implements IPersistentRole {
 		}
 	}
 
+	public List readAll() throws ExcepcaoPersistencia {
+		return queryList(Role.class, null);
+	}
+
 }

@@ -9,6 +9,8 @@ package ServidorPersistente;
 /**
  * 
  */
+import java.util.List;
+
 import Dominio.IRole;
 import Util.RoleType;
 
@@ -20,5 +22,6 @@ public interface IPersistentRole {
      * @return Role
      * @throws ExcepcaoPersistencia
      */
-	IRole readByRoleType(RoleType roleType) throws ExcepcaoPersistencia;
+	public IRole readByRoleType(RoleType roleType) throws ExcepcaoPersistencia;
+	public List readAll() throws ExcepcaoPersistencia;
 }

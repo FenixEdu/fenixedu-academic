@@ -128,7 +128,7 @@
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageExecutionPeriods_bd.jsp" />
-	</definition>	
+	</definition>
 	<!-- ========== CACHE MANIPULATION ========== -->
 	<definition name="df.page.manage-cache" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageCache_bd.jsp" />
@@ -136,5 +136,9 @@
 	<!-- ========== ADVISORY MANIPULATION ========== -->
 	<definition name="df.page.manage-advisories" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageAdvisories_bd.jsp" />
-	</definition>	
+	</definition>
+	<!-- ========== ROLES MANIPULATION ========== -->
+	<definition name="df.page.manage-roles" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/manageRoles_bd.jsp" />
+	</definition>
 </tiles-definitions>

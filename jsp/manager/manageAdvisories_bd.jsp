@@ -4,6 +4,7 @@
 <%@ page import="Util.AdvisoryRecipients" %>
 <h2><bean:message key="title.manage.advisories"/></h2>
 <br />
+<span class="error">Nota: A validação deste form ainda não está a funcionar.</span>
 <html:form action="/manageAdvisories">
 	<html:hidden property="method" value="createAdvisory"/>
 	<html:hidden property="page" value="1"/>
@@ -30,7 +31,7 @@
 				<bean:message key="property.advisory.expirationDate"/>
 			</td>
 			<td>
-				<html:text property="experationDate" size="25"/>
+				<html:text property="experationDate" size="25"/> (yyyy/MM/dd hh:mm)
 			</td>
 		</tr>
 		<tr>

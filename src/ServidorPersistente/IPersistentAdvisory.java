@@ -3,6 +3,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IAdvisory;
+import Dominio.IPessoa;
 import Util.AdvisoryRecipients;
 
 
@@ -18,6 +19,7 @@ public interface IPersistentAdvisory extends IPersistentObject {
 	 * @param advisory
 	 * @param advisoryRecipients
 	 */
-	void write(IAdvisory advisory, AdvisoryRecipients advisoryRecipients) throws ExcepcaoPersistencia;
-	void write(IAdvisory advisory, List group) throws ExcepcaoPersistencia;
+	public void write(IAdvisory advisory, AdvisoryRecipients advisoryRecipients) throws ExcepcaoPersistencia;
+	public void write(IAdvisory advisory, List group) throws ExcepcaoPersistencia;
+	public void write(IAdvisory advisory, IPessoa person) throws ExcepcaoPersistencia;
 }

@@ -177,6 +177,15 @@
         <form-property name="recipients" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
+
+     <form-bean name="rolesForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="roleOIDs" type="java.lang.String[]"/>
+        <form-property name="username" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
      
 	<form-bean name="newPasswordForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
@@ -862,6 +871,20 @@
               >
           <forward name="Manage" path="df.page.manage-advisories"/>
       </action>
+
+	<!-- ========== ROLE MANIPULATION ========== -->
+      <action path="/manageRoles"
+      		  name="rolesForm"
+		      input="/manageRoles.do?method=prepareAddRoleToPerson"
+              type="ServidorApresentacao.Action.manager.ManageRolesDA"
+              parameter="method"
+              validate="true"
+              scope="request"
+              >
+          <forward name="SelectUserPage" path="df.page.manage-roles"/>
+          <forward name="Manage" path="df.page.manage-roles"/>
+      </action>
+
 <action	name="newPasswordForm"
 				attribute="newPasswordForm"
 				type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"

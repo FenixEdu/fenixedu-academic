@@ -18,6 +18,10 @@ public abstract class SessionConstants {
 	// Constants for Student Shift Enrolment	
 	public static final String INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY ="INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY";
 
+	public static String ROLES = "roles";
+	public static String USER_ROLES = "user_roles";
+	public static String USERNAME = "username";
+
 	// -------------------------------------------------------------------------------
 	//    Degree Administrative Office Constants
 	// -------------------------------------------------------------------------------
@@ -35,6 +39,7 @@ public abstract class SessionConstants {
 	//
 	public static final String INFO_ENROLMENT_CONTEXT_KEY = "INFO_ENROLMENT_CONTEXT_KEY";
 	public static final String CURRICULUM = "curriculum";
+
 
 	// -------------------------------------------------------------------------------
 	//    General Purpose Constants - For Specialized Action Mapping

@@ -28,18 +28,17 @@
 	</html:link>
 </strong></p>
 
-<p><strong>&raquo; 
+<p><strong>&raquo;
 	<html:link page="/manageAdvisories.do?method=prepare">
 		Gest&atilde;o da Avisos
 	</html:link>
 </strong></p>
 
-<p><strong>&raquo; Gest&atilde;o de Previlégios</strong></p>
-<ul>
-  <li>Criar Role</html:link></li>
-  <li>Atribuir Roles</li>
-</ul>
-
+<p><strong>&raquo;
+	<html:link page="/manageRoles.do?method=prepare">
+		Gest&atilde;o de Previlégios
+	</html:link>
+</strong></p>
 
 <p><strong>&raquo;
 	<html:link page="/generateNewPassword.do?method=prepare&page=0"><bean:message key="link.operator.newPassword" /></html:link>
