@@ -30,6 +30,10 @@
 					<bean:message key="label.departmentTeachersList.teacherCategory" />
 				</html:link>
 			</td>
+			<td class="listClasses-header">
+				<bean:message key="label.departmentTeachersList.teacherCreditsSheet" />
+			</td>
+			
 		</tr>
 		<logic:iterate id="infoTeacher" name="infoTeacherList">
 			<tr>	
@@ -47,7 +51,11 @@
 						--
 					</logic:notPresent>
 				</td>
-				
+				<td class="listClasses">
+					<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&amp;page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+						<bean:message key="link.view"/>
+					</html:link>
+				</td>
 			</tr>
 		</logic:iterate>
 	</table>

@@ -26,7 +26,11 @@
 					<bean:message key="link.teacher-working-time-management"/>
 				</html:link>
 			</li>
-			<li><bean:message key="link.teacher.sheet"/></li>
+			<li>
+				<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=searchForm&amp;page=0">
+					<bean:message key="link.teacher.sheet"/>
+				</html:link>
+			</li>
 			<li>
 				<html:link page="/prepareListDepartmentTeachers.do">
 					<bean:message key="link.list-department-teachers"/>
