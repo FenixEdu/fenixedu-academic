@@ -1,6 +1,7 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagement;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -12,23 +13,18 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
-import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
-import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExam;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -99,17 +95,18 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			Iterator iterEnrolment = enrolments.listIterator();
 			while (iterEnrolment.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
-				if(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)){
+				if (enrolment
+					.getStudentCurricularPlan()
+					.getDegreeCurricularPlan()
+					.getDegree()
+					.getTipoCurso()
+					.equals(TipoCurso.MESTRADO_OBJ)) {
 					List allEnrolmentEvaluations = (List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
 					IEnrolmentEvaluation enrolmentEvaluation =
 						(IEnrolmentEvaluation) allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1);
 					enrolmentEvaluations.add(enrolmentEvaluation);
-					
+
 				}
-//				List allEnrolmentEvaluations = (List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
-//				IEnrolmentEvaluation enrolmentEvaluation =
-//					(IEnrolmentEvaluation) allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1);
-//				enrolmentEvaluations.add(enrolmentEvaluation);
 			}
 
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
@@ -122,8 +119,18 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 
 				//				get teacher responsible for final evaluation - he is responsible for all evaluations for this
 				//				curricularCourse
-				IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
-				if (person != null) {
+				List enrolmentEvaluationsWithResponsiblePerson = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
+					public boolean evaluate(Object arg0) {
+						IEnrolmentEvaluation enrolEval = (IEnrolmentEvaluation) arg0;
+						if (enrolEval.getPersonResponsibleForGrade() != null) {
+							return true;
+						}
+						return false;
+					}
+				});
+				if (enrolmentEvaluationsWithResponsiblePerson.size() > 0) {
+					IPessoa person =
+						((IEnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson.get(0)).getPersonResponsibleForGrade();
 					ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 					infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 				}
@@ -169,69 +176,69 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		IPersistentExecutionYear persistentExecutionYear,
 		IPersistentCurricularCourse persistentCurricularCourse,
 		ICurricularCourse curricularCourse)
-		throws ExcepcaoPersistencia, NonExistingServiceException{
-		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(yearString);
+		throws ExcepcaoPersistencia, NonExistingServiceException {
 
-		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-		IExecutionPeriod executionPeriod = new ExecutionPeriod();
-		executionPeriod.setExecutionYear(executionYear);
-		executionCourse.setExecutionPeriod(executionPeriod);
-		List curricularCourses = new ArrayList();
-		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-		ICurricularCourse curricularCourseForCriteria = Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurricularCourse);
-		curricularCourses.add(curricularCourseForCriteria);
+		Date lastEvaluationDate = null;
+		Iterator iterator = curricularCourse.getAssociatedExecutionCourses().listIterator();
+		while (iterator.hasNext()) {
+			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator.next();
+			if (executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(yearString)) {
 
-		executionCourse.setAssociatedCurricularCourses(curricularCourses);
-		executionCourse = (IDisciplinaExecucao) persistentCurricularCourse.readDomainObjectByCriteria(executionCourse);
-
-		if(executionCourse == null){
-			throw new NonExistingServiceException();
-		}
-		List evaluationsWithoutFinal = (List) CollectionUtils.select(executionCourse.getAssociatedEvaluations(), new Predicate() {
-			public boolean evaluate(Object input) {
-					//for now returns only exams
+				if (executionCourse.getAssociatedEvaluations() != null && executionCourse.getAssociatedEvaluations().size() > 0) {
+					List evaluationsWithoutFinal =
+						(List) CollectionUtils.select(executionCourse.getAssociatedEvaluations(), new Predicate() {
+						public boolean evaluate(Object input) {
+								//for now returns only exams
 	if (input instanceof IExam)
-					return true;
-				return false;
+								return true;
+							return false;
+						}
+					});
+
+					ComparatorChain comparatorChain = new ComparatorChain();
+					comparatorChain.addComparator(new BeanComparator("day.time"));
+					comparatorChain.addComparator(new BeanComparator("beginning.time"));
+					Collections.sort(evaluationsWithoutFinal, comparatorChain);
+
+					if (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1) instanceof IExam) {
+						IExam lastEvaluation = (IExam) (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1));
+						if (lastEvaluationDate != null) {
+							if (lastEvaluationDate.before(lastEvaluation.getDay().getTime())) {
+								lastEvaluationDate = lastEvaluation.getDay().getTime();
+							}
+						} else {
+							lastEvaluationDate = lastEvaluation.getDay().getTime();
+						}
+					}
+				}
 			}
-		});
-
-		ComparatorChain comparatorChain = new ComparatorChain();
-		comparatorChain.addComparator(new BeanComparator("day.time"));
-		comparatorChain.addComparator(new BeanComparator("beginning.time"));
-
-		Collections.sort(evaluationsWithoutFinal, comparatorChain);
-
-		if (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1) instanceof IExam) {
-			IExam lastEvaluation = (IExam) (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1));
-			return lastEvaluation.getDay().getTime();
 		}
-		return null;
+
+		if (lastEvaluationDate == null) {
+			Calendar calendar = Calendar.getInstance();
+			lastEvaluationDate = calendar.getTime();
+		}
+		return lastEvaluationDate;
 	}
 
-	public List run(Integer curricularCourseID, Integer studentNumber, String executionYear) 
-		throws FenixServiceException {
-		
+	public List run(Integer curricularCourseID, Integer studentNumber, String executionYear) throws FenixServiceException {
+
 		List enrolmentEvaluations = null;
 		InfoTeacher infoTeacher = null;
 		List infoSiteEnrolmentEvaluations = new ArrayList();
 		ICurricularCourse curricularCourse = null;
 		IEnrolment enrolment = new Enrolment();
 		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-		
-		
-		
-			
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			
+
 			//read curricularCourse by ID
 			ICurricularCourse curricularCourseTemp = new CurricularCourse();
 			curricularCourseTemp.setIdInternal(curricularCourseID);
 			curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseTemp, false);
-
 
 			//			get student curricular Plan
 			IStudentCurricularPlan studentCurricularPlan =
@@ -241,14 +248,13 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			if (studentCurricularPlan == null) {
 				throw new ExistingServiceException();
 			}
-			
 
 			enrolment =
 				(IEnrolment) sp.getIPersistentEnrolment().readEnrolmentByStudentCurricularPlanAndCurricularCourse(
 					studentCurricularPlan,
 					curricularCourse,
 					executionYear);
-			
+
 			if (enrolment != null) {
 
 				//						ListIterator iter1 = enrolments.listIterator();
@@ -260,7 +266,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 					(List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationState(
 						enrolment,
 						enrolmentEvaluationState);
-//				enrolmentEvaluations = enrolment.getEvaluations();
+				//				enrolmentEvaluations = enrolment.getEvaluations();
 
 				List infoTeachers = new ArrayList();
 				if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
@@ -281,13 +287,13 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 							Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment()));
 
 						if (enrolmentEvaluation != null) {
-							if(enrolmentEvaluation.getEmployee() != null){
+							if (enrolmentEvaluation.getEmployee() != null) {
 								IPessoa person = new Pessoa();
 								person.setIdInternal(new Integer(enrolmentEvaluation.getEmployee().getChavePessoa()));
-								IPessoa person2 = (IPessoa) sp.getIPessoaPersistente().readByOId(person,false);
+								IPessoa person2 = (IPessoa) sp.getIPessoaPersistente().readByOId(person, false);
 								infoEnrolmentEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(person2));
 							}
-			
+
 						}
 						infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 					}
@@ -295,16 +301,15 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 				}
 				InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
 				infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-				infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);				
+				infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
 				infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
 
 			}
 		} catch (ExcepcaoPersistencia ex) {
-							FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-							newEx.fillInStackTrace();
-							throw newEx;
-					}
-	
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
 
 		return infoSiteEnrolmentEvaluations;
 	}
