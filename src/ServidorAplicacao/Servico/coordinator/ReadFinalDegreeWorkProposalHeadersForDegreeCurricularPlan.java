@@ -56,6 +56,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implement
                         finalDegreeWorkProposalHeader.setIdInternal(proposal.getIdInternal());
                         finalDegreeWorkProposalHeader.setProposalNumber(proposal.getProposalNumber());
                         finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
+                        finalDegreeWorkProposalHeader.setExecutionYear(proposal.getExecutionDegree().getExecutionYear().getYear());
                         if (proposal.getOrientator() != null) {
                             finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()
                                     .getIdInternal());

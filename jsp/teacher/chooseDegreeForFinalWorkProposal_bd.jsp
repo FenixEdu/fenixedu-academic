@@ -67,7 +67,18 @@
 		        	<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
 	    	    </td>
 			</tr>
+			<% java.util.Set processedExecutionDegreeIds = new java.util.HashSet(); %>
 			<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
+				<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
+				<% if (executionDegreeId != null && !processedExecutionDegreeIds.contains(executionDegreeId)) { %>
+					<% processedExecutionDegreeIds.add(executionDegreeId); %>
+					<tr>
+						<td class="listClasses-header"colspan="7">
+							<bean:write name="finalDegreeWorkProposalHeader" property="degreeCode"/> -
+							<bean:write name="finalDegreeWorkProposalHeader" property="executionYear"/>
+						</td>				
+				</tr>
+				<% } %>
 				<tr>
 					<td class="listClasses-header" rowspan="2" colspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.proposal"/>

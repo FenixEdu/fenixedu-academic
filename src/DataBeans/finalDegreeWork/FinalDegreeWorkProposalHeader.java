@@ -19,6 +19,8 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 
     private Integer executionDegreeOID;
 
+    private String executionYear;
+
     private String title;
 
     private Integer orientatorOID;
@@ -277,4 +279,14 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     public void setBranches(List branches) {
         this.branches = branches;
     }
+
+    public String getExecutionYear() {
+        return executionYear;
+    }
+    
+
+    public void setExecutionYear(String executionYear) {
+        this.executionYear = executionYear;
+    }
+    
 }

@@ -60,6 +60,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
                         finalDegreeWorkProposalHeader.setExecutionDegreeOID(proposal
                                 .getExecutionDegree().getIdInternal());
                         finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
+                        finalDegreeWorkProposalHeader.setExecutionYear(proposal.getExecutionDegree().getExecutionYear().getYear());
                         finalDegreeWorkProposalHeader.setProposalNumber(proposal.getProposalNumber());
                         if (proposal.getOrientator() != null) {
                             finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()

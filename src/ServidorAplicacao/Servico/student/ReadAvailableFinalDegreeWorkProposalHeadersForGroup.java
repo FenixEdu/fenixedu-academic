@@ -62,6 +62,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements ISer
                             finalDegreeWorkProposalHeader
                                     .setProposalNumber(proposal.getProposalNumber());
                             finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
+                            finalDegreeWorkProposalHeader.setExecutionYear(proposal.getExecutionDegree().getExecutionYear().getYear());
                             if (proposal.getOrientator() != null) {
                                 finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()
                                         .getIdInternal());
