@@ -1,5 +1,8 @@
 package ServidorAplicacao.Servico.enrolment;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
@@ -35,9 +38,13 @@ import Util.EnrolmentState;
  */
 public class WriteEnrolment implements IService
 {
+	private static Map createdAttends = null;
+	
 	public WriteEnrolment()
 	{
+		createdAttends = new HashMap();
 	}
+
 	// some of these arguments may be null. they are only needed for filter
 	public void run(
 		Integer executionDegreeId, 
@@ -110,6 +117,7 @@ public class WriteEnrolment implements IService
 			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}
+		resetAttends();
 	}
 
 	/**
@@ -137,6 +145,12 @@ public class WriteEnrolment implements IService
 		if (executionCourse != null)
 		{
 			IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+			String key = student.getIdInternal().toString() + "-" + executionCourse.getIdInternal().toString();
+			
+			if (attend == null)
+			{
+				attend = (IFrequenta) createdAttends.get(key);
+			}
 
 			if (attend != null)
 			{
@@ -150,6 +164,7 @@ public class WriteEnrolment implements IService
 				attendToWrite.setAluno(student);
 				attendToWrite.setDisciplinaExecucao(executionCourse);
 				attendToWrite.setEnrolment(enrolmentToWrite);
+				createdAttends.put(key, attendToWrite);
 			}
 		}
 	}
@@ -182,4 +197,13 @@ public class WriteEnrolment implements IService
 		enrolmentEvaluation.setPersonResponsibleForGrade(null);
 		enrolmentEvaluation.setWhen(null);
 	}
+
+	public static void resetAttends()
+	{
+		if (createdAttends != null && !createdAttends.isEmpty())
+		{
+			createdAttends.clear();
+		}
+	}
+
 }

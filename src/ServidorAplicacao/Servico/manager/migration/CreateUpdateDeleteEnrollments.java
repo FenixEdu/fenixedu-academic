@@ -341,7 +341,11 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected String getPersonKey(IPessoa person)
 	{
-		return person.getNumeroDocumentoIdentificacao() + person.getUsername() + person.getTipoDocumentoIdentificacao().toString();
+		return person.getNumeroDocumentoIdentificacao()
+			+ "-"
+			+ person.getUsername()
+			+ "-"
+			+ person.getTipoDocumentoIdentificacao().toString();
 	}
 
 	/**
@@ -350,7 +354,11 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected String getStudentKey(IStudent student)
 	{
-		return this.getPersonKey(student.getPerson()) + student.getNumber().toString() + student.getDegreeType().toString();
+		return this.getPersonKey(student.getPerson())
+			+ "-"
+			+ student.getNumber().toString()
+			+ "-"
+			+ student.getDegreeType().toString();
 	}
 
 	/**
@@ -359,7 +367,7 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected String getDegreeKey(ICurso degree)
 	{
-		return degree.getSigla() + degree.getNome() + degree.getTipoCurso().toString();
+		return degree.getSigla() + "-" + degree.getNome() + "-" + degree.getTipoCurso().toString();
 	}
 
 	/**
@@ -368,7 +376,7 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected String getDegreeCurricularPlanKey(IDegreeCurricularPlan degreeCurricularPlan)
 	{
-		return this.getDegreeKey(degreeCurricularPlan.getDegree()) + degreeCurricularPlan.getName();
+		return this.getDegreeKey(degreeCurricularPlan.getDegree()) + "-" + degreeCurricularPlan.getName();
 	}
 
 	/**
@@ -378,8 +386,8 @@ public abstract class CreateUpdateDeleteEnrollments
 	protected String getStudentCurricularPlanKey(IStudentCurricularPlan studentCurricularPlan)
 	{
 		return this.getStudentKey(studentCurricularPlan.getStudent())
-			+ this.getDegreeCurricularPlanKey(studentCurricularPlan.getDegreeCurricularPlan())
-			+ studentCurricularPlan.getCurrentState().toString();
+			+ "-" + this.getDegreeCurricularPlanKey(studentCurricularPlan.getDegreeCurricularPlan())
+			+ "-" + studentCurricularPlan.getCurrentState().toString();
 	}
 
 	/**
@@ -397,7 +405,7 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected String getCurricularSemesterKey(ICurricularSemester curricularSemester)
 	{
-		return this.getCurricularYearKey(curricularSemester.getCurricularYear()) + curricularSemester.getSemester().toString();
+		return this.getCurricularYearKey(curricularSemester.getCurricularYear()) + "-" + curricularSemester.getSemester().toString();
 	}
 
 	/**
@@ -407,8 +415,8 @@ public abstract class CreateUpdateDeleteEnrollments
 	protected String getCurricularCourseKey(ICurricularCourse curricularCourse)
 	{
 		return this.getDegreeCurricularPlanKey(curricularCourse.getDegreeCurricularPlan())
-			+ curricularCourse.getName()
-			+ curricularCourse.getCode();
+			+ "-" + curricularCourse.getName()
+			+ "-" + curricularCourse.getCode();
 	}
 
 	/**
@@ -417,7 +425,7 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected String getBranchKey(IBranch branch)
 	{
-		return this.getDegreeCurricularPlanKey(branch.getDegreeCurricularPlan()) + branch.getCode();
+		return this.getDegreeCurricularPlanKey(branch.getDegreeCurricularPlan()) + "-" + branch.getCode();
 	}
 
 	/**
@@ -428,7 +436,9 @@ public abstract class CreateUpdateDeleteEnrollments
 	{
 		return this.getCurricularSemesterKey(curricularCourseScope.getCurricularSemester())
 			+ this.getCurricularCourseKey(curricularCourseScope.getCurricularCourse())
+			+ "-"
 			+ this.getBranchKey(curricularCourseScope.getBranch())
+			+ "-"
 			+ curricularCourseScope.getBeginDate().get(Calendar.YEAR)
 			+ "-"
 			+ curricularCourseScope.getBeginDate().get(Calendar.MONTH)
@@ -451,7 +461,7 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected String getExecutionPeriodKey(IExecutionPeriod executionPeriod)
 	{
-		return this.getExecutionYearKey(executionPeriod.getExecutionYear()) + executionPeriod.getName();
+		return this.getExecutionYearKey(executionPeriod.getExecutionYear()) + "-" + executionPeriod.getName();
 	}
 
 	/**
@@ -461,8 +471,8 @@ public abstract class CreateUpdateDeleteEnrollments
 	protected String getEnrollmentKey(IEnrolment enrolment)
 	{
 		return this.getStudentCurricularPlanKey(enrolment.getStudentCurricularPlan())
-			+ this.getCurricularCourseKey(enrolment.getCurricularCourse())
-			+ this.getExecutionPeriodKey(enrolment.getExecutionPeriod());
+			+ "-" + this.getCurricularCourseKey(enrolment.getCurricularCourse())
+			+ "-" + this.getExecutionPeriodKey(enrolment.getExecutionPeriod());
 	}
 
 	/**
@@ -477,7 +487,9 @@ public abstract class CreateUpdateDeleteEnrollments
 
 		return this.getEnrollmentKey(enrolmentEvaluation.getEnrolment())
 			+ enrolmentEvaluation.getGrade()
+			+ "-"
 			+ enrolmentEvaluation.getEnrolmentEvaluationType().toString()
+			+ "-"
 			+ calendar.get(Calendar.YEAR)
 			+ "-"
 			+ calendar.get(Calendar.MONTH)

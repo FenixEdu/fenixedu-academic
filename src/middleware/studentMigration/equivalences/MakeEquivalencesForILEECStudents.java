@@ -1076,66 +1076,71 @@ public class MakeEquivalencesForILEECStudents
 		ISuportePersistente fenixPersistentSuport)
 		throws Throwable
 	{
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWEquivalenciaIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
-
-		IPersistentCreditsInAnySecundaryArea creditsInAnySecundaryAreaDAO =
-			fenixPersistentSuport.getIPersistentCreditsInAnySecundaryArea();
-		IPersistentCreditsInSpecificScientificArea creditsInSpecificScientificAreaDAO =
-			fenixPersistentSuport.getIPersistentCreditsInSpecificScientificArea();
-
-		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourse();
-
-		MWEquivalenciaIleec mwEquivalenciaIleec =
-			mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(
-				new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA),
-				oldCurricularCourse.getCode());
-		if (mwEquivalenciaIleec == null)
+		if (oldEnrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 		{
-			mwEquivalenciaIleec =
+			IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+			IPersistentMWEquivalenciaIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
+
+			IPersistentCreditsInAnySecundaryArea creditsInAnySecundaryAreaDAO =
+				fenixPersistentSuport.getIPersistentCreditsInAnySecundaryArea();
+			IPersistentCreditsInSpecificScientificArea creditsInSpecificScientificAreaDAO =
+				fenixPersistentSuport.getIPersistentCreditsInSpecificScientificArea();
+
+			ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourse();
+
+			MWEquivalenciaIleec mwEquivalenciaIleec =
 				mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(
-					new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA),
+					new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA),
 					oldCurricularCourse.getCode());
 			if (mwEquivalenciaIleec == null)
 			{
-				return Boolean.FALSE;
-			} else
-			{
-				IScientificArea scientificArea =
-					MakeEquivalencesForILEECStudents.getScientificArea(mwEquivalenciaIleec, fenixPersistentSuport);
-				if (scientificArea == null)
+				mwEquivalenciaIleec =
+					mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(
+						new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA),
+						oldCurricularCourse.getCode());
+				if (mwEquivalenciaIleec == null)
 				{
 					return Boolean.FALSE;
-				}
-
-				ICreditsInScientificArea creditsInSpecificScientificArea =
-					creditsInSpecificScientificAreaDAO.readByStudentCurricularPlanAndEnrollmentAndScientificArea(
-						currentStudentCurricularPlan,
-						oldEnrolment,
-						scientificArea);
-				if (creditsInSpecificScientificArea == null)
+				} else
 				{
-					creditsInSpecificScientificArea = new CreditsInScientificArea();
-					creditsInSpecificScientificAreaDAO.simpleLockWrite(creditsInSpecificScientificArea);
-					creditsInSpecificScientificArea.setEnrolment(oldEnrolment);
-					creditsInSpecificScientificArea.setGivenCredits(new Integer(MakeEquivalencesForILEECStudents.GIVEN_CREDITS));
-					creditsInSpecificScientificArea.setScientificArea(scientificArea);
-					creditsInSpecificScientificArea.setStudentCurricularPlan(currentStudentCurricularPlan);
-					MakeEquivalencesForILEECStudents.totalCreditsInSpecificScientificArea++;
+					IScientificArea scientificArea =
+						MakeEquivalencesForILEECStudents.getScientificArea(mwEquivalenciaIleec, fenixPersistentSuport);
+					if (scientificArea == null)
+					{
+						return Boolean.FALSE;
+					}
+
+					ICreditsInScientificArea creditsInSpecificScientificArea =
+						creditsInSpecificScientificAreaDAO.readByStudentCurricularPlanAndEnrollmentAndScientificArea(
+							currentStudentCurricularPlan,
+							oldEnrolment,
+							scientificArea);
+					if (creditsInSpecificScientificArea == null)
+					{
+						creditsInSpecificScientificArea = new CreditsInScientificArea();
+						creditsInSpecificScientificAreaDAO.simpleLockWrite(creditsInSpecificScientificArea);
+						creditsInSpecificScientificArea.setEnrolment(oldEnrolment);
+						creditsInSpecificScientificArea.setGivenCredits(new Integer(MakeEquivalencesForILEECStudents.GIVEN_CREDITS));
+						creditsInSpecificScientificArea.setScientificArea(scientificArea);
+						creditsInSpecificScientificArea.setStudentCurricularPlan(currentStudentCurricularPlan);
+						MakeEquivalencesForILEECStudents.totalCreditsInSpecificScientificArea++;
+					}
 				}
-			}
-		} else
-		{
-			ICreditsInAnySecundaryArea creditsInAnySecundaryArea =
-				creditsInAnySecundaryAreaDAO.readByStudentCurricularPlanAndEnrollment(currentStudentCurricularPlan, oldEnrolment);
-			if (creditsInAnySecundaryArea == null)
+			} else
 			{
-				creditsInAnySecundaryArea = new CreditsInAnySecundaryArea();
-				creditsInAnySecundaryAreaDAO.simpleLockWrite(creditsInAnySecundaryArea);
-				creditsInAnySecundaryArea.setEnrolment(oldEnrolment);
-				creditsInAnySecundaryArea.setGivenCredits(new Integer(MakeEquivalencesForILEECStudents.GIVEN_CREDITS));
-				creditsInAnySecundaryArea.setStudentCurricularPlan(currentStudentCurricularPlan);
-				MakeEquivalencesForILEECStudents.totalCreditsInAnySecundaryArea++;
+				ICreditsInAnySecundaryArea creditsInAnySecundaryArea =
+					creditsInAnySecundaryAreaDAO.readByStudentCurricularPlanAndEnrollment(
+						currentStudentCurricularPlan,
+						oldEnrolment);
+				if (creditsInAnySecundaryArea == null)
+				{
+					creditsInAnySecundaryArea = new CreditsInAnySecundaryArea();
+					creditsInAnySecundaryAreaDAO.simpleLockWrite(creditsInAnySecundaryArea);
+					creditsInAnySecundaryArea.setEnrolment(oldEnrolment);
+					creditsInAnySecundaryArea.setGivenCredits(new Integer(MakeEquivalencesForILEECStudents.GIVEN_CREDITS));
+					creditsInAnySecundaryArea.setStudentCurricularPlan(currentStudentCurricularPlan);
+					MakeEquivalencesForILEECStudents.totalCreditsInAnySecundaryArea++;
+				}
 			}
 		}
 

@@ -21,6 +21,7 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.enrolment.DeleteEnrolment;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -54,7 +55,7 @@ public class DeleteEnrollmentsInCurrentStudentCurricularPlans
 		super.maximumNumberOfElementsToConsider = 10000;
 	}
 
-	public void run(Boolean toLogToFile, String fileName)
+	public void run(Boolean toLogToFile, String fileName) throws FenixServiceException
 	{
 		MWStudent mwStudent = null;
 
@@ -101,6 +102,7 @@ public class DeleteEnrollmentsInCurrentStudentCurricularPlans
 			super.out.println("[ERROR 101.2] Branch: [" + mwStudent.getBranchcode() + "]");
 			e.fillInStackTrace();
 			e.printStackTrace(super.out);
+			throw new FenixServiceException(e);
 		}
 
 		ReportEnrolment.report(super.out);
@@ -248,7 +250,7 @@ public class DeleteEnrollmentsInCurrentStudentCurricularPlans
 					+ curricularCourse.getName()
 					+ "] and code ["
 					+ curricularCourse.getCode()
-					+ "with grade ["
+					+ "] with grade ["
 					+ grade
 					+ "] from degree with name ["
 					+ curricularCourse.getDegreeCurricularPlan().getName()

@@ -68,7 +68,7 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
 			{
 				super.out.println(
-					"[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
+					"[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree curricular plan!");
 				return studentCurricularPlan.getDegreeCurricularPlan();
 			} else
 			{

@@ -107,7 +107,6 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 
 			if (studentCurricularPlan == null)
 			{
-
 				IBranch branch = this.getBranch(mwStudent.getDegreecode(), mwStudent.getBranchcode(), degreeCurricularPlan);
 				if (branch == null)
 				{
@@ -241,7 +240,7 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 			IUniversity university = this.getUniversity(mwEnrolment.getUniversitycode());
 			if (university == null)
 			{
-				super.out.println("[ERROR 202] No record of University with code: [" + mwEnrolment.getUniversitycode() + "]!");
+				super.out.println("[WARNING 201] No record of University with code: [" + mwEnrolment.getUniversitycode() + "]!");
 			} else
 			{
 				curricularCourseDAO.simpleLockWrite(curricularCourse);

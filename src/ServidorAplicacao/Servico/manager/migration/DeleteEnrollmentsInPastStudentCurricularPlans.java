@@ -22,6 +22,7 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -56,7 +57,7 @@ public class DeleteEnrollmentsInPastStudentCurricularPlans
 		super.maximumNumberOfElementsToConsider = 10000;
 	}
 
-	public void run(Boolean toLogToFile, String fileName)
+	public void run(Boolean toLogToFile, String fileName) throws FenixServiceException 
 	{
 		MWStudent mwStudent = null;
 
@@ -102,7 +103,9 @@ public class DeleteEnrollmentsInPastStudentCurricularPlans
 			super.out.println("[ERROR 201.2] Number: [" + mwStudent.getNumber() + "]");
 			super.out.println("[ERROR 201.2] Degree: [" + mwStudent.getDegreecode() + "]");
 			super.out.println("[ERROR 201.2] Branch: [" + mwStudent.getBranchcode() + "]");
+			e.fillInStackTrace();
 			e.printStackTrace(super.out);
+			throw new FenixServiceException(e);
 		}
 
 		ReportAllPastEnrollmentMigration.report(super.out);
@@ -249,7 +252,7 @@ public class DeleteEnrollmentsInPastStudentCurricularPlans
 					+ curricularCourse.getName()
 					+ "] and code ["
 					+ curricularCourse.getCode()
-					+ "with grade ["
+					+ "] with grade ["
 					+ grade
 					+ "] from degree with name ["
 					+ curricularCourse.getDegreeCurricularPlan().getName()

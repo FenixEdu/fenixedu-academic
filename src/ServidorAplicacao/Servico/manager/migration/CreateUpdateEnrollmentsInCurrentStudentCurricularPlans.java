@@ -27,6 +27,7 @@ import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.enrolment.WriteEnrolment;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -63,11 +64,11 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 		this.enrollmentEvaluationsCreated = new HashMap();
 		super.executionPeriod = null;
 		super.out = null;
-		super.numberOfElementsInSpan = 50;
+		super.numberOfElementsInSpan = 150;
 		super.maximumNumberOfElementsToConsider = 10000;
 	}
 
-	public void run(Boolean toLogToFile, String fileName)
+	public void run(Boolean toLogToFile, String fileName) throws FenixServiceException
 	{
 		MWStudent mwStudent = null;
 
@@ -115,8 +116,10 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 			super.out.println("[ERROR 101.1] Branch: [" + mwStudent.getBranchcode() + "]");
 			e.fillInStackTrace();
 			e.printStackTrace(super.out);
+			throw new FenixServiceException(e);
 		}
 
+		WriteEnrolment.resetAttends();
 		ReportEnrolment.report(super.out);
 		super.out.close();
 	}
@@ -209,7 +212,7 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 				IFrequenta attend = this.updateAttend(curricularCourse, enrolment, mwEnrolment);
 				if (attend == null)
 				{
-					// NOTE [DAVID]: This kind of report is only pesented the first time the migration
+					// NOTE [DAVID]: This kind of report is only presented the first time the migration
 					// process is executed.
 					// This happens because although this is a situation of error report, this kind of error
 					// doesn't forbid the enrolment to be created in the Fenix DB. Thus the second time the process

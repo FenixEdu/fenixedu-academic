@@ -24,6 +24,7 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -60,7 +61,7 @@ public class CreateUpdateEnrollmentsInPastStudentCurricularPlans
 		super.studentCurricularPlansCreated = new HashMap();
 		super.curricularCoursesCreated = new HashMap();
 		super.out = null;
-		super.numberOfElementsInSpan = 50;
+		super.numberOfElementsInSpan = 150;
 		super.maximumNumberOfElementsToConsider = 10000;
 	}
 
@@ -68,7 +69,7 @@ public class CreateUpdateEnrollmentsInPastStudentCurricularPlans
 	 * @param toLogToFile
 	 * @param fileName
 	 */
-	public void run(Boolean toLogToFile, String fileName)
+	public void run(Boolean toLogToFile, String fileName) throws FenixServiceException
 	{
 		MWStudent mwStudent = null;
 
@@ -114,7 +115,9 @@ public class CreateUpdateEnrollmentsInPastStudentCurricularPlans
 			super.out.println("[ERROR 201.1] Number: [" + mwStudent.getNumber() + "]");
 			super.out.println("[ERROR 201.1] Degree: [" + mwStudent.getDegreecode() + "]");
 			super.out.println("[ERROR 201.1] Branch: [" + mwStudent.getBranchcode() + "]");
+			e.fillInStackTrace();
 			e.printStackTrace(super.out);
+			throw new FenixServiceException(e);
 		}
 
 		ReportAllPastEnrollmentMigration.addStudentCurricularPlansMigrated(super.studentCurricularPlansCreated.size());
@@ -187,7 +190,7 @@ public class CreateUpdateEnrollmentsInPastStudentCurricularPlans
 			{
 				// This can only happen if the CreateAndUpdateAllPastCurriculums migration was not runed before this one!
 				super.out.println("[ERROR 205.1] No record of Degree with code: [" + mwEnrolment.getDegreecode() + "]!");
-				return;
+				continue;
 			}
 
 			ICurricularCourse curricularCourse = super.getCurricularCourse(mwEnrolment, degreeCurricularPlan);
